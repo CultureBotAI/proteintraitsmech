@@ -9,7 +9,7 @@ databases. PTM had records for nine of them. This seeds the rest:
     PRINTS  2,106   fingerprints (ordered motif sets)   SEQUENCE
     SSF     2,019   SUPERFAMILY, SCOP-based HMMs        SEQUENCE
     SMART   1,322   domain models (EMBL)                SEQUENCE
-    SFLD      303   enzyme superfamily/group/family     FUNCTION
+    SFLD      303   legacy flattened records; migration blocked
 
 ONE SEEDER, NOT SIX
 -------------------
@@ -26,7 +26,11 @@ Two inputs, both already public-domain EBI releases:
     for why the API and not a bulk file: SUPERFAMILY has NO name in the XML, and
     the names that are there are cryptic short forms).
   * `data/raw/interpro/interpro.xml.gz` -- the integrating entry's curated
-    abstract, which becomes the definition.
+    abstract, which becomes the definition for sources without a better native
+    description.
+  * `data/raw/interpro_members/prints42_0.kdat` -- the checksum-pinned PRINTS
+    title, native `gd` description, and ordered final motif sets. For PRINTS,
+    the native description takes precedence over the integrating abstract.
 
 Going to each database's own site was the alternative. SUPERFAMILY's hosts all
 time out, and SMART's EMBLEM licence forbids redistribution and derivative works.
@@ -46,17 +50,22 @@ structural. SUPERFAMILY is the sharp case: its class boundaries come from SCOP,
 but the model is an HMM, so it is SEQ_HOMOLOGOUS_SUPERFAMILY. The SCOP class node
 itself is separately seeded from SCOPe; these are the models that detect it.
 
-SFLD is the deliberate exception: its classes are defined by conserved chemistry
-(a shared partial reaction), which is the same "defined by conserved function"
-test that routes NCBIfam equivalogs to FUNC_PROTEIN_FAMILY.
+SFLD is not safe to route from the API ``type`` or a database-wide override. Source
+audit found 299 executable HMMER3 models across native superfamily/subgroup/family
+levels, with correlated functional-site tuples and localized match semantics, while
+four API signatures lack a model. Existing SFLD records remain gated and every
+``--apply`` invocation refuses until a dedicated hierarchy/profile/site-aware
+migration has been reviewed.
 
 Idempotent; dry-run unless --apply. Stdlib-only.
 """
+
 from __future__ import annotations
 
 import argparse
 import gzip
 import html
+import io
 import json
 import re
 import sys
@@ -64,6 +73,23 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from interpro_text import clean_abstract as _clean  # noqa: E402
+from prints_kdat import (  # noqa: E402
+    PRINTS_42_0_SHA256,
+    PrintsFingerprint,
+    PrintsKdatError,
+    PrintsRelease,
+    build_fingerprint_representation,
+    parse_prints_kdat,
+)
+from prints_snapshot import (  # noqa: E402
+    EXPECTED_PRINTS_SNAPSHOT_ID,
+    HIERARCHY_NAME,
+    MANIFEST_NAME,
+    PrintsSnapshotError,
+    VerifiedPrintsSnapshot,
+    load_hierarchy_jsonl,
+    load_verified_prints_snapshot,
+)
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -72,7 +98,8 @@ MEMBERS_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
 INTERPRO = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 SFLD_HIERARCHY = MEMBERS_DIR / "sfld_hierarchy_flat.txt"
 PRINTS_KDAT = MEMBERS_DIR / "prints42_0.kdat"
-PRINTS_HIERARCHY = MEMBERS_DIR / "FingerPRINTShierarchy21Feb2012"
+PRINTS_HIERARCHY = MEMBERS_DIR / HIERARCHY_NAME
+PRINTS_MANIFEST = MEMBERS_DIR / MANIFEST_NAME
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 DEF_CAP = 1800
 
@@ -87,8 +114,8 @@ DEF_CAP = 1800
 # distributed under the Creative Commons Attribution (CC BY 4.0) License".
 LICENSES: dict[str, str] = {
     "prints": "CC0-1.0 (InterPro CC0 dedication covers PRINTS)",
-    "sfld":   "CC0-1.0 (InterPro CC0 dedication covers SFLD)",
-    "hamap":  "CC-BY 4.0 (SIB HAMAP)",
+    "sfld": "CC0-1.0 (InterPro CC0 dedication covers SFLD)",
+    "hamap": "CC-BY 4.0 (SIB HAMAP)",
 }
 
 # A database absent from LICENSES cannot be seeded. This is a hard refusal rather
@@ -96,37 +123,40 @@ LICENSES: dict[str, str] = {
 # repo has no right to publish -- and that is not something a later run can undo.
 UNSETTLED = {
     "smart": "the EMBLEM SMART licence forbids redistribution and derivative "
-             "works, and InterPro's CC0 dedication does not name SMART",
+    "works, and InterPro's CC0 dedication does not name SMART",
     "pirsf": "PIR's terms are unverified, and InterPro's CC0 dedication names "
-             "only InterPro, Pfam, PRINTS and SFLD",
-    "ssf":   "SUPERFAMILY's terms are unverified and its own hosts are "
-             "unreachable; InterPro's CC0 dedication does not name it",
+    "only InterPro, Pfam, PRINTS and SFLD",
+    "ssf": "SUPERFAMILY's terms are unverified and its own hosts are "
+    "unreachable; InterPro's CC0 dedication does not name it",
 }
 
 # InterPro `source_database` -> (CURIE prefix, slug fallback, accession pattern).
 # The prefixes are NOT invented here: they are the corpus-canonical spellings
 # already used by scripts/fetch_interpro_frame.py's DB_PREFIX map.
 MEMBER_DBS: dict[str, tuple[str, str, re.Pattern]] = {
-    "pirsf":  ("PIRSF",       "pirsf",       re.compile(r"^PIRSF\d+$")),
-    "prints": ("PRINTS",      "prints",      re.compile(r"^PR\d+$")),
-    "ssf":    ("SUPERFAMILY", "superfamily", re.compile(r"^SSF\d+$")),
-    "sfld":   ("SFLD",        "sfld",        re.compile(r"^SFLD[SGF]\d+$")),
-    "smart":  ("SMART",       "smart",       re.compile(r"^SM\d+$")),
-    "hamap":  ("HAMAP",       "hamap",       re.compile(r"^MF_\d+(_[A-Z])?$")),
+    "pirsf": ("PIRSF", "pirsf", re.compile(r"^PIRSF\d+$")),
+    "prints": ("PRINTS", "prints", re.compile(r"^PR\d+$")),
+    "ssf": ("SUPERFAMILY", "superfamily", re.compile(r"^SSF\d+$")),
+    "sfld": ("SFLD", "sfld", re.compile(r"^SFLD[SGF]\d+$")),
+    "smart": ("SMART", "smart", re.compile(r"^SM\d+$")),
+    "hamap": ("HAMAP", "hamap", re.compile(r"^MF_\d+(_[A-Z])?$")),
 }
 
 # InterPro signature `type` -> (axis, category, directory under data/traits/).
 # Mirrors seed_interpro.TYPE_MAP, which routes the corresponding ENTRY types.
 TYPE_MAP: dict[str, tuple[str, str, str]] = {
-    "family":                 ("SEQUENCE", "SEQ_FAMILY",                 "sequence/family"),
-    "domain":                 ("SEQUENCE", "SEQ_DOMAIN",                 "sequence/domain"),
-    "homologous_superfamily": ("SEQUENCE", "SEQ_HOMOLOGOUS_SUPERFAMILY",
-                               "sequence/homologous_superfamily"),
-    "repeat":                 ("SEQUENCE", "SEQ_REPEAT",                 "sequence/repeat"),
-    "conserved_site":         ("SEQUENCE", "SEQ_CONSERVATION",           "sequence/conservation"),
-    "active_site":            ("SEQUENCE", "SEQ_ACTIVE_SITE",            "sequence/active_site"),
-    "binding_site":           ("SEQUENCE", "SEQ_BINDING_SITE",           "sequence/binding_site"),
-    "ptm":                    ("SEQUENCE", "SEQ_PTM_SITE",               "sequence/ptm_ontology"),
+    "family": ("SEQUENCE", "SEQ_FAMILY", "sequence/family"),
+    "domain": ("SEQUENCE", "SEQ_DOMAIN", "sequence/domain"),
+    "homologous_superfamily": (
+        "SEQUENCE",
+        "SEQ_HOMOLOGOUS_SUPERFAMILY",
+        "sequence/homologous_superfamily",
+    ),
+    "repeat": ("SEQUENCE", "SEQ_REPEAT", "sequence/repeat"),
+    "conserved_site": ("SEQUENCE", "SEQ_CONSERVATION", "sequence/conservation"),
+    "active_site": ("SEQUENCE", "SEQ_ACTIVE_SITE", "sequence/active_site"),
+    "binding_site": ("SEQUENCE", "SEQ_BINDING_SITE", "sequence/binding_site"),
+    "ptm": ("SEQUENCE", "SEQ_PTM_SITE", "sequence/ptm_ontology"),
 }
 
 # A whole database whose routing does not follow the signature type. SFLD's
@@ -151,8 +181,7 @@ def is_curated_abstract(entry: dict | None) -> bool:
     deliberately (#92). Factored out here rather than copied a seventh time;
     seed_panther.py has the same predicate inline twice.
     """
-    return bool(entry and entry.get("abstract")
-                and (not entry.get("llm") or entry.get("reviewed")))
+    return bool(entry and entry.get("abstract") and (not entry.get("llm") or entry.get("reviewed")))
 
 
 def clean_abstract(raw: str) -> str:
@@ -164,7 +193,11 @@ def clean_abstract(raw: str) -> str:
     return _clean(raw)
 
 
-def interpro_entries() -> dict[str, dict]:
+def interpro_entries(
+    path: Path | None = None,
+    *,
+    captured_gzip: bytes | None = None,
+) -> dict[str, dict]:
     """InterPro accession -> its name, abstract and LLM flags.
 
     Keyed by ENTRY, not by member signature: the API already tells us which entry
@@ -177,9 +210,15 @@ def interpro_entries() -> dict[str, dict]:
     two -- 19 PIRSF and 7 SSF "signatures" in this release are citations in
     someone's abstract.
     """
-    if not INTERPRO.exists():
-        print(f"missing {INTERPRO} — run `just fetch-interpro` first; refusing to "
-              f"seed with every definition composed", file=sys.stderr)
+    if path is not None and captured_gzip is not None:
+        raise ValueError("pass an InterPro XML path or captured bytes, not both")
+    source_path = path or INTERPRO
+    if captured_gzip is None and not source_path.exists():
+        print(
+            f"missing {source_path} — run `just fetch-interpro` first; refusing to "
+            f"seed with every definition composed",
+            file=sys.stderr,
+        )
         raise SystemExit(1)
 
     ent = re.compile(r'<interpro id="(IPR\d+)"')
@@ -194,10 +233,20 @@ def interpro_entries() -> dict[str, dict]:
 
     def flush():
         if cur:
-            out[cur] = {"name": name, "abstract": clean_abstract(" ".join(buf)),
-                        "llm": llm, "reviewed": reviewed}
+            out[cur] = {
+                "name": name,
+                "abstract": clean_abstract(" ".join(buf)),
+                "llm": llm,
+                "reviewed": reviewed,
+            }
 
-    with gzip.open(INTERPRO, "rt", encoding="utf-8", errors="replace") as fh:
+    if captured_gzip is None:
+        source_handle = gzip.open(source_path, "rt", encoding="utf-8", errors="replace")
+    else:
+        compressed = gzip.GzipFile(fileobj=io.BytesIO(captured_gzip), mode="rb")
+        source_handle = io.TextIOWrapper(compressed, encoding="utf-8", errors="replace")
+
+    with source_handle as fh:
         for line in fh:
             m = ent.search(line)
             if m:
@@ -220,7 +269,7 @@ def interpro_entries() -> dict[str, dict]:
                 # and substituted a composed stub, so the guard meant to stop LLM
                 # text being promoted was discarding curator text instead.
                 inabs = "</abstract>" not in line
-                buf = [] if inabs else [line[a.end():].split("</abstract>", 1)[0]]
+                buf = [] if inabs else [line[a.end() :].split("</abstract>", 1)[0]]
                 continue
             if inabs:
                 if "</abstract>" in line:
@@ -258,14 +307,21 @@ def sfld_parents() -> dict[str, str]:
             continue
         acc, rest = line.split(":", 1)
         ancestors[acc.strip()] = rest.split()
-    depth = {a: len(ancestors.get(a, ())) for a in
-             {x for v in ancestors.values() for x in v} | set(ancestors)}
-    return {acc: max(anc, key=lambda a: depth.get(a, 0))
-            for acc, anc in ancestors.items() if anc}
+    depth = {
+        a: len(ancestors.get(a, ()))
+        for a in {x for v in ancestors.values() for x in v} | set(ancestors)
+    }
+    return {acc: max(anc, key=lambda a: depth.get(a, 0)) for acc, anc in ancestors.items() if anc}
 
 
-def prints_titles() -> dict[str, dict]:
-    """PRINTS accession -> its real title and motif count, from the .kdat.
+def prints_release() -> PrintsRelease:
+    """Load the exact checksum-pinned PRINTS 42.0 source or fail closed."""
+
+    return parse_prints_kdat(PRINTS_KDAT, PRINTS_42_0_SHA256)
+
+
+def prints_titles(release: PrintsRelease | None = None) -> dict[str, dict]:
+    """PRINTS accession -> source title, description, and fingerprint model.
 
     The API cannot supply this. A fingerprint's `name` in the API is its CODE:
     PR00001 comes back as "GLABLOOD", and the detail endpoint shows why --
@@ -273,66 +329,44 @@ def prints_titles() -> dict[str, dict]:
     so seeding from the API alone would label 2,106 records with strings like
     RETINOIDXR and MTVERTEBRATE.
 
-    The .kdat is a tagged flat file; the two tags that matter are
+    The .kdat is a tagged flat file. In addition to the title and declared
+    motif count, its final ``fc/fl/ft/fd`` blocks are the source-native ordered
+    fingerprint model; :mod:`prints_kdat` validates and content-addresses them.
 
         gx; PR00439                 accession
         gt; 11-S seed storage protein family signature
 
-    and `gn; COMPOUND(6)` gives the number of motifs, which is worth stating
-    because a fingerprint IS an ordered set of motifs -- that is what
-    distinguishes it from a single-motif signature.
+    ``gd`` is the native record description and takes precedence over a broader
+    integrating InterPro abstract when a PRINTS record is emitted.
     """
-    if not PRINTS_KDAT.exists():
-        return {}
-    out: dict[str, dict] = {}
-    acc = title = motifs = None
-    for line in PRINTS_KDAT.open(encoding="utf-8", errors="replace"):
-        if line.startswith("gc;"):
-            acc = title = motifs = None
-        elif line.startswith("gx;"):
-            acc = line[3:].strip()
-        elif line.startswith("gt;"):
-            title = line[3:].strip()
-        elif line.startswith("gn;"):
-            m = re.search(r"\((\d+)\)", line)
-            motifs = int(m.group(1)) if m else None
-        if acc and title is not None:
-            out[acc] = {"title": title, "motifs": motifs}
-    return out
+    parsed = release or prints_release()
+    return {
+        accession: {
+            "title": fingerprint.title,
+            "motifs": fingerprint.declared_motif_count,
+            "description": fingerprint.description,
+            "fingerprint": fingerprint,
+            "source_release": parsed.release,
+            "source_artifact_sha256": parsed.source_artifact_sha256,
+            "representation": build_fingerprint_representation(parsed, fingerprint),
+        }
+        for accession, fingerprint in parsed.fingerprints.items()
+    }
 
 
-def prints_parents() -> dict[str, str]:
-    """PRINTS accession -> its immediate parent, from the FingerPRINTS hierarchy.
+def prints_parents(hierarchy_rows: list[dict[str, object]] | None = None) -> dict[str, str]:
+    """Validate the PRINTS relation table and emit no subclass parents.
 
-    Format is `CODE|ACCESSION|evalue|level|descendant,codes` with `*` for a leaf.
-    Note field 5 lists DESCENDANTS by code, not the parent, and lists the whole
-    subtree rather than direct children -- GPCRRHODOPSN names hundreds. So the
-    immediate parent of X is the entry with the SMALLEST descendant set that
-    still contains X, which is the same "nearest enclosing set" rule
-    `sfld_parents` uses, inverted.
+    InterProScan defines the final source column as post-processing sibling /
+    hierarchical relations (with ``*`` as a domain flag), not descendants.
+    Earlier seeding misread those relations as a tree and created cyclic
+    ``parent_traits``.  A real class hierarchy needs an independent source; do
+    not manufacture it from this scanning table.
     """
-    if not PRINTS_HIERARCHY.exists():
-        return {}
-    code_to_acc: dict[str, str] = {}
-    subtree: dict[str, set[str]] = {}
-    for line in PRINTS_HIERARCHY.read_text(encoding="utf-8", errors="replace").splitlines():
-        if not line.strip() or line.startswith("#"):
-            continue
-        parts = line.split("|")
-        if len(parts) < 5:
-            continue
-        code, acc, kids = parts[0].strip(), parts[1].strip(), parts[4].strip()
-        code_to_acc[code] = acc
-        if kids and kids != "*":
-            subtree[code] = {k.strip() for k in kids.split(",") if k.strip()}
-    parents: dict[str, str] = {}
-    for child_code, child_acc in code_to_acc.items():
-        holders = [c for c, kids in subtree.items()
-                   if child_code in kids and c != child_code]
-        if holders:
-            nearest = min(holders, key=lambda c: len(subtree[c]))
-            parents[child_acc] = code_to_acc[nearest]
-    return parents
+
+    if hierarchy_rows is None:
+        load_hierarchy_jsonl(PRINTS_HIERARCHY)
+    return {}
 
 
 def resolve_label(sig: dict, titles: dict[str, dict] | None) -> str:
@@ -347,18 +381,72 @@ def resolve_label(sig: dict, titles: dict[str, dict] | None) -> str:
     return extra.get("title") or sig["name"] or sig["accession"]
 
 
-def compose_definition(prefix: str, acc: str, label: str, kind: str,
-                       motifs: int | None = None) -> str:
+def compose_definition(
+    prefix: str, acc: str, label: str, kind: str, motifs: int | None = None
+) -> str:
     """Fallback when the signature has no usable InterPro abstract."""
-    what = (f"a {motifs}-element fingerprint" if motifs
-            else f"a protein {kind} signature")
-    return (f"{label} — {what} modelled by {prefix} {acc}. "
-            f"No curated InterPro abstract is available for this signature.")
+    what = f"a {motifs}-element fingerprint" if motifs else f"a protein {kind} signature"
+    return (
+        f"{label} — {what} modelled by {prefix} {acc}. "
+        f"No curated InterPro abstract is available for this signature."
+    )
 
 
-def build_yaml(db: str, sig: dict, entry: dict | None,
-               parents: dict[str, str] | None = None,
-               titles: dict[str, dict] | None = None) -> tuple[str, str, str]:
+def append_prints_representation(lines: list[str], extra: dict) -> None:
+    """Emit one compact representation backed by the pinned raw KDAT record."""
+
+    fingerprint = extra.get("fingerprint")
+    if not isinstance(fingerprint, PrintsFingerprint):
+        return
+    representation = extra.get("representation")
+    if not isinstance(representation, dict):
+        raise ValueError(f"{fingerprint.accession}: missing canonical representation")
+
+    lines += [
+        "sequence_fingerprint_representations:",
+        f"  - source_accession: {representation['source_accession']}",
+        f"    source_release: {yaml_escape(representation['source_release'])}",
+        f"    representation_type: {representation['representation_type']}",
+        f"    source_artifact: {yaml_escape(representation['source_artifact'])}",
+        f"    source_artifact_sha256: {representation['source_artifact_sha256']}",
+        f"    source_record_sha256: {representation['source_record_sha256']}",
+        f"    compatible_derivation_tool_hint: {representation['compatible_derivation_tool_hint']}",
+        f"    motif_count: {representation['motif_count']}",
+        "    motifs:",
+    ]
+    for motif in representation["motifs"]:
+        lines += [
+            f"      - ordinal: {motif['ordinal']}",
+            f"        motif_code: {yaml_escape(motif['motif_code'])}",
+            f"        length: {motif['length']}",
+            f"        description: {yaml_escape(motif['description'])}",
+            f"        training_instance_count: {motif['training_instance_count']}",
+            f"        source_motif_sha256: {motif['source_motif_sha256']}",
+            "        training_distance_from_previous_min: "
+            f"{motif['training_distance_from_previous_min']}",
+            "        training_distance_from_previous_max: "
+            f"{motif['training_distance_from_previous_max']}",
+        ]
+        constraint = motif.get("inter_motif_distance_constraint")
+        if isinstance(constraint, dict):
+            lines += [
+                "        inter_motif_distance_constraint:",
+                f"          region_start_ordinal: {constraint['region_start_ordinal']}",
+                f"          region_end_ordinal: {constraint['region_end_ordinal']}",
+                f"          minimum: {constraint['minimum']}",
+                f"          maximum: {constraint['maximum']}",
+                "          repeat_qualified: "
+                f"{'true' if constraint['repeat_qualified'] else 'false'}",
+            ]
+
+
+def build_yaml(
+    db: str,
+    sig: dict,
+    entry: dict | None,
+    parents: dict[str, str] | None = None,
+    titles: dict[str, dict] | None = None,
+) -> tuple[str, str, str]:
     """Return (yaml_text, subdir, identifier) for one member signature."""
     prefix, fallback, _ = MEMBER_DBS[db]
     acc = sig["accession"]
@@ -367,49 +455,85 @@ def build_yaml(db: str, sig: dict, entry: dict | None,
     axis, category, subdir = DB_OVERRIDE.get(db) or TYPE_MAP[sig["type"]]
     ipr = sig.get("integrated")
     kind = sig["type"].replace("_", " ")
+    prints_description = extra.get("description") if db == "prints" else None
 
-    if is_curated_abstract(entry):
-        definition = entry["abstract"][:DEF_CAP]
+    if prints_description:
+        definition = prints_description
+        source = f"PRINTS:{acc} gd description (release {extra.get('source_release', '42.0')})"
+        method = "SOURCED"
+    elif is_curated_abstract(entry):
+        # Keep the complete curated abstract. A blind 1,800-character head slice
+        # truncated 295/755 records in the first PRINTS review shard, usually in
+        # mid-word, and for subtype signatures (for example Wnt-10) removed the
+        # entry-specific sentences at the end while retaining only the generic
+        # family preamble. That changes what the record defines; the schema has
+        # no definition-length ceiling, so preserve the source text.
+        definition = entry["abstract"]
         source = f"InterPro:{ipr} abstract ({prefix} {acc} is a member signature)"
         method = "SOURCED"
     else:
-        definition = compose_definition(prefix, acc, label, kind,
-                                        extra.get("motifs"))
+        definition = compose_definition(prefix, acc, label, kind, extra.get("motifs"))
         source = f"{prefix} signature name (composed; no curated InterPro abstract)"
         method = "GENERATED"
 
     lines = [f"identifier: {prefix}:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
-    lines += [f"definition_source: {yaml_escape(source)}",
-              f"trait_axis: {axis}",
-              f"trait_category: {category}",
-              "term_kind: CLASS",
-              "mapping_status: SEEDED"]
+    lines += [
+        f"definition_source: {yaml_escape(source)}",
+        f"trait_axis: {axis}",
+        f"trait_category: {category}",
+        "term_kind: CLASS",
+        "mapping_status: SEEDED",
+    ]
 
     parent = (parents or {}).get(acc)
     if parent:
         lines += ["parent_traits:", f"  - {prefix}:{parent}"]
 
     if entry and entry.get("name") and entry["name"].strip().lower() != label.strip().lower():
-        lines += ["synonyms:",
-                  f"  - synonym_text: {yaml_escape(entry['name'])}",
-                  "    synonym_type: RELATED_SYNONYM",
-                  f"    source: InterPro:{ipr}"]
+        lines += [
+            "synonyms:",
+            f"  - synonym_text: {yaml_escape(entry['name'])}",
+            "    synonym_type: RELATED_SYNONYM",
+            f"    source: InterPro:{ipr}",
+        ]
 
     if ipr:
         # `mapped_xrefs`, not `xrefs`: the association is asserted by InterPro's
         # integration, not by the member database's own record.
-        lines += ["mapped_xrefs:",
-                  f"  - object: InterPro:{ipr}",
-                  "    mapping_source: interpro-member-list"]
+        lines += [
+            "mapped_xrefs:",
+            f"  - object: InterPro:{ipr}",
+            "    mapping_source: interpro-member-list",
+        ]
+
+    append_prints_representation(lines, extra)
 
     defs = [("GENERAL", definition, source, method)]
+    if (
+        prints_description
+        and is_curated_abstract(entry)
+        and entry["abstract"].strip() != prints_description.strip()
+    ):
+        defs.append(
+            (
+                "GENERAL",
+                entry["abstract"],
+                f"InterPro:{ipr} abstract (PRINTS {acc} is a member signature)",
+                "SOURCED",
+            )
+        )
     # An unreviewed LLM abstract is kept but never promoted to `definition`.
     if entry and entry.get("abstract") and not is_curated_abstract(entry):
-        defs.append(("GENERAL", entry["abstract"][:DEF_CAP],
-                     f"InterPro:{ipr} abstract (LLM-generated, not curator-reviewed)",
-                     "GENERATED"))
+        defs.append(
+            (
+                "GENERAL",
+                entry["abstract"][:DEF_CAP],
+                f"InterPro:{ipr} abstract (LLM-generated, not curator-reviewed)",
+                "GENERATED",
+            )
+        )
     lines.append("definitions:")
     for kind_, text, src, meth in defs:
         # `folded` indents by two, which is right for a top-level key. A
@@ -417,9 +541,13 @@ def build_yaml(db: str, sig: dict, entry: dict | None,
         # six. Emitting four produced YAML whose text sat at the same depth as
         # its own `text:` key.
         d = folded(text)
-        lines += [f"  - kind: {kind_}", f"    text: {d[0]}",
-                  f"      {d[1].strip()}",
-                  f"    source: {yaml_escape(src)}", f"    method: {meth}"]
+        lines += [
+            f"  - kind: {kind_}",
+            f"    text: {d[0]}",
+            f"      {d[1].strip()}",
+            f"    source: {yaml_escape(src)}",
+            f"    method: {meth}",
+        ]
 
     lines.append(f"license: {LICENSES[db]}")
     return "\n".join(lines) + "\n", f"{subdir}/{fallback}", f"{prefix}:{acc}"
@@ -428,17 +556,20 @@ def build_yaml(db: str, sig: dict, entry: dict | None,
 def load_signatures(db: str) -> list[dict]:
     path = MEMBERS_DIR / f"{db}.jsonl"
     if not path.exists():
-        print(f"missing {path} — run `just fetch-interpro-members --db {db}` first",
-              file=sys.stderr)
+        print(
+            f"missing {path} — run `just fetch-interpro-members --db {db}` first", file=sys.stderr
+        )
         raise SystemExit(1)
     return [json.loads(ln) for ln in path.open(encoding="utf-8") if ln.strip()]
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--db", required=True, choices=sorted(MEMBER_DBS),
-                    help="which member database to seed")
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    ap.add_argument(
+        "--db", required=True, choices=sorted(MEMBER_DBS), help="which member database to seed"
+    )
     ap.add_argument("--apply", action="store_true", help="write files")
     ap.add_argument("--force", action="store_true", help="overwrite existing")
     ap.add_argument("--limit", type=int, default=0)
@@ -447,21 +578,93 @@ def main() -> int:
     db = args.db
     if db not in LICENSES:
         why = UNSETTLED.get(db, "no licence has been recorded for this database")
-        print(f"refusing to seed {db}: {why}.\n"
-              f"Settle the licence and add an entry to LICENSES first — a record "
-              f"published without redistribution rights cannot be un-published.",
-              file=sys.stderr)
+        print(
+            f"refusing to seed {db}: {why}.\n"
+            f"Settle the licence and add an entry to LICENSES first — a record "
+            f"published without redistribution rights cannot be un-published.",
+            file=sys.stderr,
+        )
+        return 2
+    if db == "prints" and args.apply:
+        print(
+            "refusing PRINTS --apply: existing records require a dedicated validated "
+            "source-model migration; ordinary reseeding (including --force and "
+            "PTM_RESEED_REFRESH_DEFINITIONS) cannot safely replace their definitions",
+            file=sys.stderr,
+        )
+        return 2
+    if db == "sfld":
+        print(
+            "refusing SFLD seeding: the pinned hierarchy/profile/site source model is "
+            "not yet integrated into this seeder; a dedicated validated migration is "
+            "required before even dry-run output can represent definitions, routing, "
+            "and localized evidence safely",
+            file=sys.stderr,
+        )
         return 2
     prefix, fallback, pattern = MEMBER_DBS[db]
-    signatures = load_signatures(db)
+    prints_data: PrintsRelease | None = None
+    prints_snapshot: VerifiedPrintsSnapshot | None = None
+    if db == "prints":
+        try:
+            prints_snapshot = load_verified_prints_snapshot(
+                PRINTS_MANIFEST,
+                expected_manifest_id=EXPECTED_PRINTS_SNAPSHOT_ID,
+                api_path=MEMBERS_DIR / "prints.jsonl",
+                kdat_path=PRINTS_KDAT,
+                hierarchy_path=PRINTS_HIERARCHY,
+                interpro_xml_path=INTERPRO,
+            )
+            manifest = prints_snapshot.manifest
+            prints_data = prints_snapshot.kdat_release
+        except (PrintsKdatError, PrintsSnapshotError) as error:
+            print(
+                f"refusing to seed PRINTS without an exact raw snapshot: {error}", file=sys.stderr
+            )
+            return 2
+
+    signatures = (
+        prints_snapshot.load_api_rows() if prints_snapshot is not None else load_signatures(db)
+    )
     print(f"{db}: {len(signatures):,} signatures", file=sys.stderr)
 
+    if db == "prints":
+        assert prints_data is not None
+        signature_accessions = {
+            signature["accession"]
+            for signature in signatures
+            if pattern.fullmatch(signature["accession"])
+        }
+        source_accessions = set(prints_data.fingerprints)
+        if signature_accessions != source_accessions:
+            missing = sorted(signature_accessions - source_accessions)
+            extra = sorted(source_accessions - signature_accessions)
+            print(
+                "refusing to seed PRINTS: pinned API signatures and KDAT primary "
+                f"accessions differ (missing from KDAT={missing[:5]!r}; "
+                f"missing from API={extra[:5]!r})",
+                file=sys.stderr,
+            )
+            return 2
+        print(
+            f"  {len(prints_data.fingerprints):,} checksum-verified source fingerprints "
+            f"({manifest['manifest_id']})",
+            file=sys.stderr,
+        )
+
     print("indexing InterPro abstracts…", file=sys.stderr)
-    entries = interpro_entries()
+    entries = (
+        interpro_entries(captured_gzip=prints_snapshot.interpro_xml_bytes)
+        if prints_snapshot is not None
+        else interpro_entries()
+    )
     print(f"  {len(entries):,} InterPro entries", file=sys.stderr)
-    parents = {"sfld": sfld_parents, "prints": prints_parents}.get(
-        db, dict)()
-    titles = prints_titles() if db == "prints" else {}
+    parents = (
+        prints_parents(prints_snapshot.load_hierarchy_rows())
+        if prints_snapshot is not None
+        else {"sfld": sfld_parents}.get(db, dict)()
+    )
+    titles = prints_titles(prints_data) if prints_data is not None else {}
     if parents:
         print(f"  {len(parents):,} parent links", file=sys.stderr)
     if titles:
@@ -470,8 +673,9 @@ def main() -> int:
     # identifier -> current path, so idempotency survives a signature being
     # renamed upstream (the filename embeds the label, the identifier does not).
     by_identifier: dict[str, Path] = {}
-    for sub in {(DB_OVERRIDE.get(db) or v)[2] for v in TYPE_MAP.values()} | \
-               {(DB_OVERRIDE[db][2] if db in DB_OVERRIDE else "")}:
+    for sub in {(DB_OVERRIDE.get(db) or v)[2] for v in TYPE_MAP.values()} | {
+        (DB_OVERRIDE[db][2] if db in DB_OVERRIDE else "")
+    }:
         d = TRAITS_DIR / sub / fallback if sub else None
         if d and d.exists():
             for f in d.glob("*.yaml"):
@@ -480,8 +684,7 @@ def main() -> int:
                         if ln.startswith("identifier:"):
                             by_identifier[ln.split(":", 1)[1].strip()] = f
                             break
-    print(f"  {len(by_identifier):,} {prefix} records already in the corpus",
-          file=sys.stderr)
+    print(f"  {len(by_identifier):,} {prefix} records already in the corpus", file=sys.stderr)
 
     stat: dict[str, int] = {}
 
@@ -501,7 +704,9 @@ def main() -> int:
         entry = entries.get(sig["integrated"]) if sig.get("integrated") else None
         if sig.get("integrated") and entry is None:
             bump("integrated into an InterPro entry absent from this release")
-        if is_curated_abstract(entry):
+        if db == "prints" and titles.get(acc, {}).get("description"):
+            bump("definition: source-native PRINTS gd description")
+        elif is_curated_abstract(entry):
             bump("definition: curated InterPro abstract")
         elif entry and entry.get("abstract"):
             bump("definition: composed (LLM abstract kept but not promoted)")
@@ -509,8 +714,11 @@ def main() -> int:
             bump("definition: composed (integrating entry has no abstract)")
         else:
             bump("definition: composed (not integrated into InterPro)")
-        bump("parent_traits: linked" if parents.get(acc)
-             else "parent_traits: none (top level or absent from the hierarchy)")
+        bump(
+            "parent_traits: linked"
+            if parents.get(acc)
+            else "parent_traits: none (top level or absent from the hierarchy)"
+        )
 
         text, subdir, ident = build_yaml(db, sig, entry, parents, titles)
         out_dir = TRAITS_DIR / subdir

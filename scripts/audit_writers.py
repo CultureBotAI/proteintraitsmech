@@ -19,13 +19,15 @@ because the detector could not see the `files += sorted(d.glob(...))` accumulato
 docstring disagreeing with its own tool is a finding, not a typo -- it was the visible
 symptom of two blind spots.)
 
-So there are three legitimate routes and one finding:
+So there are four legitimate routes and one finding:
 
   * SEEDER          calls `write_record` -- merge on, curation preserved.
   * EDITOR          in `tests/test_inplace_editor_guards.py::EDITORS` -- an in-place
                     definition editor, must bypass the merge through
                     `write_validated_record`, and that test proves it carries
                     `should_enrich`.
+  * VALIDATED       an explicitly registered transactional promoter that writes only
+                    through `write_validated_record` after its own review/semantic gates.
   * DECLARED        a repair, migration or builder listed in `BYPASS` below WITH A REASON.
   * anything else   FINDING. A script writing trait records by a route nobody has thought
                     about is exactly how #455 and #148 happened.
@@ -101,7 +103,6 @@ BYPASS = {
     "build_biolip_causal_graphs": "appends a causal graph to an existing record",
     "build_rhea_causal_graphs": "appends a causal graph to an existing record",
     "draft_aro_causal_graphs": "writes draft graphs in place",
-    "fetch_uniprot_examples": "in-place canonical_examples backfill; writes with path.open(\"w\")",
     # Found only after the detector learned `p.open("w")`, accumulators and
     # helper-returned paths. Every one was invisible to the first version, and
     # build_mcsa_causal_graphs is the tell: its four sibling graph builders were already
@@ -116,7 +117,6 @@ BYPASS = {
     "recompose_panther_definitions": "in-place PANTHER definition recomposition",
     "revert_rejected_subfamily_definitions": "in-place revert; the merge would restore the "
                                              "very text being reverted",
-    "suggest_canonical_examples": "in-place canonical_examples backfill",
     # Added from the audit's own findings, with each script's own description as the
     # reason -- not invented. Every one is a builder, enricher or repair that edits an
     # existing record, so routing it through `write_record` would revert its edit (#148).
@@ -134,6 +134,18 @@ BYPASS = {
 }
 
 
+# Transactional record promoters that intentionally do not use seed/merge semantics and
+# are not definition editors.  These must be named separately from BYPASS: their contract
+# is precisely that the final replacement goes through write_validated_record after an
+# explicit review gate.  The audit verifies the call structurally and rejects stale or
+# overlapping entries.
+VALIDATED_WRITERS = {
+    "ground_uniprot_examples": "review-bound UniProt grounding promotion; every applied "
+                               "record uses write_validated_record after closed LinkML and "
+                               "sequence-dependent semantic validation",
+}
+
+
 # Scripts this detector flags that do NOT write trait records. Declared rather than
 # chased, because each fix to the detector so far has traded one false clearance for a new
 # false positive, and an audit that is quietly wrong in the safe direction is still wrong.
@@ -146,6 +158,8 @@ NOT_RECORD_WRITERS = {
     "build_docs_index": "writes docs/data/*.json shards; `base` is tainted from TRAITS_DIR "
                         "by the one-hop rule but resolves under docs/",
     "build_sequence_structure_alignment": "writes data/equivalence/*.tsv",
+    "validate_uniprot_grounding": "reads trait records and writes only its validation TSV "
+                                  "under reports/; the detector taints that report path",
 }
 
 
@@ -368,6 +382,7 @@ def main() -> int:
     seeders: list[str] = []
     declared: list[str] = []
     registered: list[str] = []
+    validated: list[str] = []
     findings: list[tuple[str, str]] = []
     examined = 0
 
@@ -392,6 +407,15 @@ def main() -> int:
             for node in ast.walk(tree)
         )
         in_place = writes_trait_records(tree)
+        if stem in VALIDATED_WRITERS:
+            if uses_validated_write and not uses_choke_point and not in_place:
+                validated.append(stem)
+            else:
+                findings.append(
+                    (stem, "registered validated writer must use write_validated_record "
+                           "exclusively and must not contain a raw in-place record write")
+                )
+            continue
         if stem in editors:
             if uses_validated_write and not in_place:
                 registered.append(stem)
@@ -416,6 +440,7 @@ def main() -> int:
     print(f"scripts examined: {examined:,}")
     print(f"  seeders (route through record_io.write_record) : {len(seeders):,}")
     print(f"  registered in-place definition editors (EDITORS): {len(registered):,}")
+    print(f"  registered transactional promoters (VALIDATED): {len(validated):,}")
     print(f"  declared bypasses (repairs/migrations/builders) : {len(declared):,}")
     if not examined:
         # #418/#432/#469: an audit that examined nothing must not report a clean tree.
@@ -439,6 +464,21 @@ def main() -> int:
               f"route each, or the registry says nothing:")
         for name in overlap:
             print(f"  {name}")
+    registry_overlap = sorted(
+        (set(VALIDATED_WRITERS) & set(BYPASS))
+        | (set(VALIDATED_WRITERS) & editors)
+    )
+    if registry_overlap:
+        print(f"\nFAIL: {len(registry_overlap)} script(s) are in VALIDATED_WRITERS and "
+              "another writer registry. One route each:")
+        for name in registry_overlap:
+            print(f"  {name}")
+    missing_validated = sorted(set(VALIDATED_WRITERS) - set(validated))
+    if missing_validated:
+        print(f"\nFAIL: {len(missing_validated)} registered validated writer(s) do not "
+              "use the exclusive validated-write route:")
+        for name in missing_validated:
+            print(f"  {name}")
     missing_editors = sorted(editors - set(registered))
     if missing_editors:
         print(
@@ -452,10 +492,10 @@ def main() -> int:
               f"route. Each is a place a re-seed's protections do not reach:")
         for name, why in findings[:args.show]:
             print(f"  {name}: {why}")
-    if findings or stale or overlap or missing_editors:
+    if findings or stale or overlap or registry_overlap or missing_editors or missing_validated:
         return 1
-    print("\nOK: every writer of a trait record is a seeder, a registered editor, or a "
-          "declared bypass.")
+    print("\nOK: every writer of a trait record is a seeder, a registered editor, a "
+          "registered validated promoter, or a declared bypass.")
     return 0
 
 

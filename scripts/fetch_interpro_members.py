@@ -31,13 +31,28 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 
+from prints_snapshot import (
+    EXPECTED_PRINTS_SNAPSHOT_ID,
+    HIERARCHY_NAME,
+    MANIFEST_NAME,
+    PrintsSnapshotError,
+    build_prints_manifest,
+    dump_hierarchy_jsonl,
+    dump_manifest,
+    parse_hierarchy_source,
+    require_expected_manifest_id,
+    verify_prints_manifest,
+)
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
+INTERPRO_XML = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 API = "https://www.ebi.ac.uk/interpro/api/entry/{db}/?page_size={n}"
 
 # Files EBI hosts for a member database that the API does not expose. SFLD's
@@ -66,6 +81,67 @@ DATABASES = ("pirsf", "prints", "ssf", "sfld", "smart", "hamap")
 PAGE_SIZE = 200
 RETRIES = 4
 USER_AGENT = "ProteinTraitsMech/1.0 (+https://github.com/CultureBotAI/proteintraitsmech)"
+
+
+def _api_jsonl(rows: list[dict]) -> bytes:
+    return "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows).encode("utf-8")
+
+
+def _install_prints_snapshot(rows: list[dict], extras: dict[str, bytes]) -> dict:
+    """Stage, replay, and install a complete PRINTS snapshot; manifest last."""
+
+    kdat_name = "prints42_0.kdat"
+    raw_hierarchy_name = "FingerPRINTShierarchy21Feb2012"
+    missing = sorted({kdat_name, raw_hierarchy_name} - set(extras))
+    if missing:
+        raise PrintsSnapshotError(f"downloaded PRINTS snapshot lacks {missing!r}")
+    if not INTERPRO_XML.is_file():
+        raise PrintsSnapshotError(
+            f"local InterPro XML required by the PRINTS seeder is absent: {INTERPRO_XML}"
+        )
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix=".prints-snapshot-", dir=OUT_DIR) as tmp:
+        stage = Path(tmp)
+        api_path = stage / "prints.jsonl"
+        kdat_path = stage / kdat_name
+        raw_hierarchy_path = stage / raw_hierarchy_name
+        hierarchy_path = stage / HIERARCHY_NAME
+        manifest_path = stage / MANIFEST_NAME
+
+        api_path.write_bytes(_api_jsonl(rows))
+        kdat_path.write_bytes(extras[kdat_name])
+        raw_hierarchy_path.write_bytes(extras[raw_hierarchy_name])
+        hierarchy_rows = parse_hierarchy_source(extras[raw_hierarchy_name])
+        hierarchy_path.write_bytes(dump_hierarchy_jsonl(hierarchy_rows))
+        manifest = build_prints_manifest(
+            api_path=api_path,
+            kdat_path=kdat_path,
+            hierarchy_path=hierarchy_path,
+            interpro_xml_path=INTERPRO_XML,
+        )
+        # Do not install a newly fetched, self-consistent snapshot unless its
+        # full four-artifact identity is the reviewed production identity.
+        require_expected_manifest_id(
+            manifest.get("manifest_id"), EXPECTED_PRINTS_SNAPSHOT_ID
+        )
+        manifest_path.write_bytes(dump_manifest(manifest))
+        verify_prints_manifest(
+            manifest_path,
+            expected_manifest_id=EXPECTED_PRINTS_SNAPSHOT_ID,
+            api_path=api_path,
+            kdat_path=kdat_path,
+            hierarchy_path=hierarchy_path,
+            interpro_xml_path=INTERPRO_XML,
+        )
+
+        # A crash during replacement leaves either the old manifest or no new
+        # manifest matching the files, so the seeder fails closed. Install the
+        # new manifest only after every source artefact is in its final place.
+        for source in (api_path, kdat_path, raw_hierarchy_path, hierarchy_path):
+            source.replace(OUT_DIR / source.name)
+        manifest_path.replace(OUT_DIR / MANIFEST_NAME)
+    return manifest
 
 
 def get(url: str) -> dict:
@@ -111,17 +187,29 @@ def fetch_db(db: str, apply: bool) -> int:
                          f"-- refusing to write a partial release")
 
     if apply:
-        OUT_DIR.mkdir(parents=True, exist_ok=True)
+        extras: dict[str, bytes] = {}
         for extra in EXTRA_FILES.get(db, []):
             name = extra.rsplit("/", 1)[-1]
             req = urllib.request.Request(extra, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(req, timeout=90) as fh:
-                (OUT_DIR / name).write_bytes(fh.read())
+                extras[name] = fh.read()
             print(f"  {db}: fetched {name}")
-        out = OUT_DIR / f"{db}.jsonl"
-        out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows),
-                       encoding="utf-8")
-        print(f"  {db}: wrote {len(rows):,} → {out.relative_to(REPO_ROOT)}")
+        if db == "prints":
+            try:
+                manifest = _install_prints_snapshot(rows, extras)
+            except PrintsSnapshotError as error:
+                raise SystemExit(f"prints: refusing incomplete snapshot: {error}") from error
+            print(
+                f"  prints: installed verified {manifest['manifest_id']} → "
+                f"{(OUT_DIR / MANIFEST_NAME).relative_to(REPO_ROOT)}"
+            )
+        else:
+            OUT_DIR.mkdir(parents=True, exist_ok=True)
+            for name, payload in extras.items():
+                (OUT_DIR / name).write_bytes(payload)
+            out = OUT_DIR / f"{db}.jsonl"
+            out.write_bytes(_api_jsonl(rows))
+            print(f"  {db}: wrote {len(rows):,} → {out.relative_to(REPO_ROOT)}")
     else:
         print(f"  {db}: {len(rows):,} signatures (dry run)")
     return len(rows)

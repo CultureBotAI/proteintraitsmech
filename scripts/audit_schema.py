@@ -48,12 +48,18 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
 TRAITS = ROOT / "data" / "traits"
-# TWO roots, not one. `ProteinProfile` ("A Swiss-Prot protein and the corpus trait classes
-# it carries") is written to data/profiles by build_swissprot_profiles -- a second document
-# type, not dead weight. The first version of this audit assumed a single root and reported
-# it and `ProfileTrait` as unreachable classes, which is an audit reporting a design as a
-# defect. Neither carries `tree_root: true`, so the roots are named here.
-ROOT_CLASSES = ("ProteinTraitRecord", "ProteinProfile")
+# Three document roots, not one. `ProteinProfile` ("A Swiss-Prot protein and the corpus
+# trait classes it carries") is written to data/profiles, while `ProteinReference` is the
+# release-stamped UniProt registry document used by the grounding workflow. Treating either
+# as reachable only from ProteinTraitRecord would report an intentional document type as
+# dead weight. Keep the complete root set explicit so deleting or renaming one also fails
+# this audit.
+ROOT_CLASSES = (
+    "ProteinTraitRecord",
+    "ProteinProfile",
+    "ProteinReference",
+    "GroundingEvidence",
+)
 
 # Categories deliberately NOT bound to an axis. README: "`UPPER` / `OTHER` are
 # administrative and may appear on any axis." EXACT VALUES, not prefixes: the enum holds

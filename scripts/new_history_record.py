@@ -80,14 +80,15 @@ KINDS = ("record", "schema", "mapping", "report", "infrastructure", "other")
 def session_id(timestamp: str, tool: str, seed: str) -> str:
     """`<compact-timestamp>-<tool>-<6 hex>`, matching the existing records.
 
-    The suffix disambiguates two sessions that start in the same second; it is
-    derived from the content rather than random so a re-run with identical
-    arguments produces an identical id instead of a duplicate record.
+    The default timestamp includes microseconds so distinct invocations in the
+    same second remain append-only records.  The suffix is derived from content
+    rather than random, so an explicitly timestamped re-run with identical
+    arguments remains reproducible.
     """
     # Date hyphens kept, time colons stripped — matching the existing records
     # (`2026-08-03T230903Z-claude-code-90a277`) rather than inventing a variant.
     date, _, clock = timestamp.partition("T")
-    stamp = f"{date}T{clock.replace(':', '')}"
+    stamp = f"{date}T{clock.replace(':', '').replace('.', '')}"
     digest = hashlib.sha256(seed.encode()).hexdigest()[:6]
     return f"{stamp}-{tool}-{digest}"
 
@@ -172,8 +173,11 @@ def validate(path: Path) -> None:
     validate-history would fail on a file the author believed was generated
     correctly, in a directory that is append-only by policy.
     """
+    environment_validator = Path(sys.executable).with_name("linkml-validate")
+    validator_command = [str(environment_validator)] \
+        if environment_validator.is_file() else ["uv", "run", "linkml-validate"]
     result = subprocess.run(
-        ["uv", "run", "linkml-validate", "--schema", str(SCHEMA),
+        [*validator_command, "--schema", str(SCHEMA),
          "--target-class", "HistoryRecord", str(path)],
         cwd=REPO_ROOT, capture_output=True, text=True)
     if result.returncode != 0:
@@ -221,8 +225,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="ISO-8601 UTC; defaults to now. Set it for a reproducible id.")
     args = ap.parse_args(argv)
 
-    timestamp = args.timestamp or _dt.datetime.now(
-        _dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    timestamp = args.timestamp or _dt.datetime.now(_dt.timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%S.%fZ"
+    )
     record, out_path = build(args, timestamp)
 
     if out_path.exists() and not args.force:
