@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import pathlib
 import sys
 from typing import Any
@@ -573,3 +574,51 @@ def test_output_validation_works_when_reports_does_not_exist(tmp_path, monkeypat
     outside = runner.REPO_ROOT / "data" / "sfld-outside-both-roots"
     with pytest.raises(runner.SfldHmmsearchRunError, match="beneath reports/"):
         runner._validate_staging_output_path(outside)
+
+
+def test_identity_check_sees_through_inode_reuse(tmp_path):
+    """Pins #613 on a filesystem that does not exhibit the bug.
+
+    The check was (st_dev, st_ino). On Linux, unlink and recreate in the same
+    directory hands back the freed inode number, so the pair matches and a
+    substituted artifact passes -- which is why replace_domtbl_inode passed on
+    macOS/APFS and failed in CI. APFS will not reuse on demand, so reuse is
+    simulated here by asserting against the NEW file's identity: that makes the
+    pair agree exactly as it would on Linux, leaving the held descriptor as the
+    only thing that can notice.
+    """
+    directory = os.open(tmp_path, os.O_RDONLY)
+    try:
+        runner._create_file(directory, "artifact", raw=b"original")
+        witness = runner._open_identity_witness(directory, "artifact")
+        try:
+            os.unlink("artifact", dir_fd=directory)
+            reused = runner._create_file(directory, "artifact", raw=b"substituted")
+            # the pair now agrees with what is on disk, as it would under reuse
+            with pytest.raises(runner.SfldHmmsearchRunError, match="identity changed"):
+                runner._assert_file_identity(directory, "artifact", reused, witness)
+        finally:
+            os.close(witness)
+    finally:
+        os.close(directory)
+
+
+def test_identity_check_accepts_the_untouched_artifact(tmp_path):
+    """The converse: a file that was only written to must still pass.
+
+    hmmsearch legitimately writes into the empty outputs this runner creates, so
+    a check that fired on any change would fail every real run.
+    """
+    directory = os.open(tmp_path, os.O_RDONLY)
+    try:
+        identity = runner._create_file(directory, "artifact", raw=b"start")
+        witness = runner._open_identity_witness(directory, "artifact")
+        try:
+            appended = os.open("artifact", os.O_WRONLY | os.O_APPEND, dir_fd=directory)
+            os.write(appended, b"more output")
+            os.close(appended)
+            runner._assert_file_identity(directory, "artifact", identity, witness)
+        finally:
+            os.close(witness)
+    finally:
+        os.close(directory)

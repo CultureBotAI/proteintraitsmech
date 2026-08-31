@@ -599,16 +599,46 @@ def _validate_version_preflight(stdout_path: Path, stderr_path: Path) -> None:
         raise SfldHmmsearchRunError("successful hmmsearch -h wrote unexpected stderr")
 
 
+def _open_identity_witness(directory_descriptor: int, name: str) -> int:
+    """Hold the artifact we created open, so an unlink cannot go unnoticed.
+
+    (st_dev, st_ino) does not survive Linux's inode reuse: unlink and recreate in
+    the same directory hands back the freed inode number, so the pair still
+    matches and a substituted artifact passes the check. macOS/APFS does not
+    reuse as eagerly, which is why the replace_domtbl_inode case passed here and
+    failed in CI (#613). A descriptor held on the original file is immune --
+    if that file is unlinked, its link count drops to zero while we hold it,
+    whatever the directory entry now points at.
+    """
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_CLOEXEC", 0)
+    try:
+        return os.open(name, flags, dir_fd=directory_descriptor)
+    except OSError as error:
+        raise SfldHmmsearchRunError(
+            f"cannot hold run artifact {name!r} open: {error}"
+        ) from error
+
+
 def _assert_file_identity(
     directory_descriptor: int,
     name: str,
     expected: tuple[int, int],
+    witness: int,
 ) -> None:
     try:
         metadata = os.stat(name, dir_fd=directory_descriptor, follow_symlinks=False)
     except OSError as error:
         raise SfldHmmsearchRunError(f"run artifact disappeared: {name}: {error}") from error
     if not stat.S_ISREG(metadata.st_mode) or (metadata.st_dev, metadata.st_ino) != expected:
+        raise SfldHmmsearchRunError(f"run artifact identity changed: {name}")
+    # The pair above cannot see through inode reuse; the held descriptor can.
+    try:
+        held = os.fstat(witness)
+    except OSError as error:
+        raise SfldHmmsearchRunError(
+            f"run artifact witness unusable: {name}: {error}"
+        ) from error
+    if held.st_nlink == 0:
         raise SfldHmmsearchRunError(f"run artifact identity changed: {name}")
 
 
@@ -826,6 +856,15 @@ def execute_saved_plan(
             )
             os.fsync(generation_descriptor)
 
+            # Opened before any child process runs, and only after every artifact
+            # exists, so each descriptor witnesses the file this run created.
+            output_witnesses = {
+                role: _open_identity_witness(
+                    generation_descriptor, _FIXED_OUTPUT_NAMES[role]
+                )
+                for role in output_identities
+            }
+
             version_stdout = _open_capture_output(
                 generation_descriptor, _FIXED_OUTPUT_NAMES["version_stdout"]
             )
@@ -870,13 +909,18 @@ def execute_saved_plan(
             if search_exit != 0:
                 raise SfldHmmsearchRunError(f"hmmsearch exited {search_exit}; receipt absent")
 
-            for role, identity in output_identities.items():
-                _assert_file_identity(
-                    generation_descriptor,
-                    _FIXED_OUTPUT_NAMES[role],
-                    identity,
-                )
-                _fsync_existing_file(generation_descriptor, _FIXED_OUTPUT_NAMES[role])
+            try:
+                for role, identity in output_identities.items():
+                    _assert_file_identity(
+                        generation_descriptor,
+                        _FIXED_OUTPUT_NAMES[role],
+                        identity,
+                        output_witnesses[role],
+                    )
+                    _fsync_existing_file(generation_descriptor, _FIXED_OUTPUT_NAMES[role])
+            finally:
+                for descriptor in output_witnesses.values():
+                    os.close(descriptor)
             os.fsync(generation_descriptor)
 
             for role in _SOURCE_ROLES:
