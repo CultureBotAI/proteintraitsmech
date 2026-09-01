@@ -680,3 +680,31 @@ def test_the_dry_run_replays_from_a_pinned_ledger_without_git(tmp_path, monkeypa
     )
     assert bootstrap.main(_args(case)) == bootstrap.INCOMPLETE_EXIT
     assert "1 hard-blocked claim(s)" in capsys.readouterr().out
+
+
+@pytest.mark.parametrize("malformed", [{"oops": 1}, 42, None, [], True])
+def test_a_malformed_preimage_fails_rather_than_falling_back_to_git(malformed, monkeypatch):
+    """Absence and corruption are different, and only one may reach HEAD (#622).
+
+    A key that is present but not the reviewed text means a corrupted or
+    hand-edited ledger. Falling back there returns to the moving reference #607
+    exists to remove -- and passes in an uncommitted tree, where HEAD still
+    matches, so the operator is told the text was pinned when it was not. That is
+    a green check that looked at a fallback instead of what it claimed to.
+    """
+    text = "identifier: Pfam:PF00001\n"
+    row = _preimage_row(text, record_preimage=malformed)
+    # A HEAD that WOULD match, so only the presence rule can produce the failure.
+    monkeypatch.setattr(bootstrap, "_head_text", lambda *_: text)
+    with pytest.raises(bootstrap.BootstrapError, match="expected the reviewed record text"):
+        bootstrap._reviewed_preimage(row, "cand", {}, "ev")
+
+
+def test_an_absent_preimage_is_still_the_legacy_path(monkeypatch):
+    """The converse: absence must keep working, or every in-flight ledger breaks."""
+    text = "identifier: Pfam:PF00001\n"
+    row = _preimage_row(text)
+    del row["record_preimage"]
+    assert "record_preimage" not in row
+    monkeypatch.setattr(bootstrap, "_head_text", lambda *_: text)
+    assert bootstrap._reviewed_preimage(row, "cand", {}, "ev") == text

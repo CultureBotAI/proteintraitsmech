@@ -473,8 +473,20 @@ def _reviewed_preimage(
     batch apart from a record that drifted since review.
     """
     expected = row.get("record_sha256")
-    stored = row.get("record_preimage")
-    if isinstance(stored, str):
+    if "record_preimage" in row:
+        # Split on PRESENCE, not on type. An absent key means a ledger resolved
+        # before the field existed, and HEAD is the right fallback. A key that is
+        # present but malformed means a corrupted or hand-edited ledger, and
+        # falling back there would silently return to the moving reference this
+        # exists to remove -- and would pass in an uncommitted tree, where HEAD
+        # still matches, telling the operator the text was pinned when it was not
+        # (#622).
+        stored = row["record_preimage"]
+        if not isinstance(stored, str):
+            raise BootstrapError(
+                f"{candidate_id}: ledger record_preimage is "
+                f"{type(stored).__name__}, expected the reviewed record text"
+            )
         if _sha256_text(stored) != expected:
             raise BootstrapError(
                 f"{candidate_id}: ledger record_preimage does not hash to record_sha256"
