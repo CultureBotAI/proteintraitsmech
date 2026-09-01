@@ -66,6 +66,8 @@ from io import StringIO
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+import ground_uniprot_examples as ground
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 TRAITS_ROOT = REPO_ROOT / "data" / "traits"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding" / "review-batches"
@@ -858,11 +860,8 @@ def _read_reviewed_resolved(
                         f"{path}:{line_number}: resolved candidate {candidate_id!r} lacks "
                         "a valid resolution_digest"
                     )
-                expected_digest = hashlib.sha256(
-                    _canonical_json(
-                        {key: value for key, value in row.items() if key != "resolution_digest"}
-                    ).encode("utf-8")
-                ).hexdigest()
+                # The resolver's own implementation, not a copy of it (#620).
+                expected_digest = ground._resolution_digest(row)
                 if resolution_digest != expected_digest:
                     raise SelectionError(
                         f"{path}:{line_number}: resolved candidate {candidate_id!r} has "

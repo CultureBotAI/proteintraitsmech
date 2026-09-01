@@ -449,6 +449,67 @@ def _head_text(record_path: str) -> str:
         raise BootstrapError(f"historical record is not UTF-8: HEAD:{record_path}") from exc
 
 
+def _reviewed_preimage(
+    row: Mapping[str, Any],
+    candidate_id: str,
+    installed_record: object,
+    evidence_id: str,
+) -> str:
+    """The record text as it was when reviewed.
+
+    Preferably from the ledger, which pins it. Reading it from the current Git
+    HEAD -- the only source before #607 -- makes the check a function of working
+    tree state rather than of the reviewed data: it matches only while the
+    promotion is uncommitted, and once the batch lands HEAD returns the promoted
+    record instead.
+
+    The stored text needs no digest coverage of its own. ``record_sha256`` is
+    covered by the resolution digest that approvals are bound to, and a preimage
+    that does not hash to it is refused here, so a tampered ledger cannot smuggle
+    in a different "reviewed" record.
+
+    Ledgers resolved before the field existed have no preimage, so the HEAD path
+    remains for them, with the #607 diagnosis that tells an already-promoted
+    batch apart from a record that drifted since review.
+    """
+    expected = row.get("record_sha256")
+    if "record_preimage" in row:
+        # Split on PRESENCE, not on type. An absent key means a ledger resolved
+        # before the field existed, and HEAD is the right fallback. A key that is
+        # present but malformed means a corrupted or hand-edited ledger, and
+        # falling back there would silently return to the moving reference this
+        # exists to remove -- and would pass in an uncommitted tree, where HEAD
+        # still matches, telling the operator the text was pinned when it was not
+        # (#622).
+        stored = row["record_preimage"]
+        if not isinstance(stored, str):
+            raise BootstrapError(
+                f"{candidate_id}: ledger record_preimage is "
+                f"{type(stored).__name__}, expected the reviewed record text"
+            )
+        if _sha256_text(stored) != expected:
+            raise BootstrapError(
+                f"{candidate_id}: ledger record_preimage does not hash to record_sha256"
+            )
+        return stored
+
+    preimage = _head_text(str(row["record_path"]))
+    if _sha256_text(preimage) != expected:
+        # Two situations produce one hash mismatch. Ask the record on disk which
+        # it is: if it already carries this candidate's evidence id, the
+        # promotion happened and HEAD is simply showing its result. Anything else
+        # is a genuine drift since review.
+        if _carries_evidence(installed_record, evidence_id):
+            raise BootstrapAlreadyInstalled(
+                f"{candidate_id}: this batch is already promoted and committed; "
+                f"the pre-promotion dry run cannot be replayed against HEAD "
+                f"(evidence {evidence_id} is installed in {row['record_path']}). "
+                f"Ledgers resolved after #607 carry record_preimage and do not need HEAD."
+            )
+        raise BootstrapError(f"{candidate_id}: historical record preimage is stale")
+    return preimage
+
+
 def _carries_evidence(record: object, evidence_id: str) -> bool:
     """True when this record already declares that exact grounding evidence id.
 
@@ -492,19 +553,7 @@ def _load_installed_records(
         records[path] = record
         texts[path] = text
 
-        preimage = _head_text(str(row["record_path"]))
-        if _sha256_text(preimage) != row.get("record_sha256"):
-            # Two different situations produce one hash mismatch. Ask the record
-            # on disk which it is: if it already carries this candidate's
-            # evidence id, the promotion happened and HEAD is simply showing the
-            # result of it. Anything else is a genuine drift since review.
-            if _carries_evidence(record, evidence_id):
-                raise BootstrapAlreadyInstalled(
-                    f"{candidate_id}: this batch is already promoted and committed; "
-                    f"the pre-promotion dry run cannot be replayed against HEAD "
-                    f"(evidence {evidence_id} is installed in {row['record_path']})"
-                )
-            raise BootstrapError(f"{candidate_id}: historical record preimage is stale")
+        preimage = _reviewed_preimage(row, candidate_id, record, evidence_id)
         try:
             preimage_record = yaml.safe_load(preimage)
         except yaml.YAMLError as exc:
