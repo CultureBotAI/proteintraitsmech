@@ -27,6 +27,9 @@ on:
       - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
+      # the lockfile, not just the range: `uv sync` installs what uv.lock pins,
+      # so a dependency bump changes the validator without touching pyproject (#537)
+      - "uv.lock"
   push:
     branches: [main]
     paths:
@@ -45,6 +48,9 @@ on:
       - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
+      # the lockfile, not just the range: `uv sync` installs what uv.lock pins,
+      # so a dependency bump changes the validator without touching pyproject (#537)
+      - "uv.lock"
   workflow_dispatch:
 
 permissions:

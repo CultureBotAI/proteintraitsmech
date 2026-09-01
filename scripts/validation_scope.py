@@ -20,6 +20,11 @@ FULL_VALIDATION_PATHS = frozenset(
     {
         ".github/workflows/validate-strict.yaml",
         "pyproject.toml",
+        # pyproject pins a RANGE (linkml>=1.10.0); uv.lock pins the version that
+        # is actually installed, and the job runs `uv sync --extra dev`, which is
+        # lockfile-driven. Without this a `uv lock --upgrade` PR changes the
+        # validator and never runs it against the corpus (#537).
+        "uv.lock",
         "scripts/audit_causal_graphs.py",
         "scripts/uniprot_record_content_gate.py",
         "scripts/validate_strict.py",
