@@ -48,7 +48,7 @@ def _record() -> str:
     )
 
 
-def _case(tmp_path: pathlib.Path, monkeypatch) -> dict:
+def _case(tmp_path: pathlib.Path, monkeypatch, *, pin_preimage: bool = False) -> dict:
     repo = tmp_path / "repo"
     traits = repo / "data" / "traits"
     grounding = repo / "data" / "grounding"
@@ -133,6 +133,11 @@ def _case(tmp_path: pathlib.Path, monkeypatch) -> dict:
         "reasons": [],
     }
     row["candidate_id"] = ground.derive_candidate_id(row)
+    if pin_preimage:
+        # A ledger resolved after #607 carries the reviewed text. Set before the
+        # digest is computed on purpose: the digest must come out the same either
+        # way, which is what keeps existing approvals valid.
+        row["record_preimage"] = original
     row["resolution_digest"] = ground._resolution_digest(row)
     decision = {
         "candidate_id": row["candidate_id"],
@@ -573,9 +578,7 @@ def test_carries_evidence_is_structural_not_a_substring_search():
     """
     evidence_id = "ug-evidence:" + "a" * 64
     installed = {
-        "canonical_examples": [
-            {"trait_occurrences": [{"source_evidence_id": evidence_id}]}
-        ]
+        "canonical_examples": [{"trait_occurrences": [{"source_evidence_id": evidence_id}]}]
     }
     assert bootstrap._carries_evidence(installed, evidence_id)
 
@@ -600,3 +603,80 @@ def test_a_drifted_record_is_still_reported_as_stale_not_as_installed():
     assert issubclass(bootstrap.BootstrapAlreadyInstalled, bootstrap.BootstrapError)
     assert bootstrap.ALREADY_INSTALLED_EXIT != 2
     assert not bootstrap._carries_evidence({"canonical_examples": []}, "ug-evidence:x")
+
+
+def _preimage_row(text: str, **overrides) -> dict:
+    row = {
+        "record_path": "data/traits/fixture.yaml",
+        "record_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+        "record_preimage": text,
+    }
+    row.update(overrides)
+    return row
+
+
+def test_a_pinned_preimage_is_used_and_git_is_never_consulted(monkeypatch):
+    """The point of #607 option 1: the check stops being a function of Git state.
+
+    Reading the reviewed text from the current HEAD only matched while the
+    promotion was uncommitted. A ledger that carries the text answers the same
+    question from data that cannot move, so `_head_text` must not be reached at
+    all -- asserted by making it fail if it is.
+    """
+    text = "identifier: Pfam:PF00001\n"
+    monkeypatch.setattr(
+        bootstrap, "_head_text", lambda *_: pytest.fail("HEAD was read despite a pinned preimage")
+    )
+    assert bootstrap._reviewed_preimage(_preimage_row(text), "cand", {}, "ev") == text
+
+
+def test_a_preimage_that_does_not_hash_to_the_ledger_is_refused(monkeypatch):
+    """The stored text needs no digest of its own, but it does need this check.
+
+    `record_sha256` is covered by the resolution digest approvals are bound to;
+    `record_preimage` is deliberately excluded from that digest so adding it does
+    not invalidate existing approvals. Refusing a preimage that does not hash to
+    the covered field is what makes the exclusion safe -- without it a tampered
+    ledger could substitute a different "reviewed" record.
+    """
+    monkeypatch.setattr(bootstrap, "_head_text", lambda *_: pytest.fail("HEAD was read"))
+    row = _preimage_row("the reviewed text\n", record_preimage="a different text\n")
+    with pytest.raises(bootstrap.BootstrapError, match="does not hash to record_sha256"):
+        bootstrap._reviewed_preimage(row, "cand", {}, "ev")
+
+
+def test_a_ledger_without_a_preimage_still_falls_back_to_head(monkeypatch):
+    """Ledgers resolved before the field existed must keep working.
+
+    Batch-001 is one: its decisions are bound to the resolved file's own SHA-256,
+    so preimages cannot be retrofitted into it without re-binding every approval.
+    The HEAD path stays for those, with the #607 diagnosis intact.
+    """
+    text = "identifier: Pfam:PF00001\n"
+    row = _preimage_row(text)
+    del row["record_preimage"]
+    monkeypatch.setattr(bootstrap, "_head_text", lambda *_: text)
+    assert bootstrap._reviewed_preimage(row, "cand", {}, "ev") == text
+
+
+def test_pinning_a_preimage_does_not_move_the_resolution_digest():
+    """Adding the field must not invalidate a single existing approval.
+
+    Approvals are bound to `resolution_digest`. If the preimage were covered by
+    it, shipping this would silently mark every reviewed row stale and send
+    unchanged work back through review.
+    """
+    row = {"candidate_id": "c", "record_path": "p", "record_sha256": "s"}
+    bare = ground._resolution_digest(row)
+    assert ground._resolution_digest({**row, "record_preimage": "anything at all"}) == bare
+    assert ground._resolution_digest({**row, "record_preimage": "something else"}) == bare
+
+
+def test_the_dry_run_replays_from_a_pinned_ledger_without_git(tmp_path, monkeypatch, capsys):
+    """End to end: the same batch, resolved with a preimage, needs no HEAD."""
+    case = _case(tmp_path, monkeypatch, pin_preimage=True)
+    monkeypatch.setattr(
+        bootstrap, "_head_text", lambda *_: pytest.fail("HEAD was read despite a pinned preimage")
+    )
+    assert bootstrap.main(_args(case)) == bootstrap.INCOMPLETE_EXIT
+    assert "1 hard-blocked claim(s)" in capsys.readouterr().out

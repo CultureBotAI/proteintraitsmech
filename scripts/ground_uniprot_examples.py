@@ -502,8 +502,20 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
     return "ug-" + _value_digest(payload)
 
 
+# Excluded from the resolution digest, deliberately. `record_preimage` is the
+# reviewed record text carried so the promoter never has to ask Git what the
+# record used to look like (#607). Including it would move every row's digest and
+# invalidate every approval already bound to one, forcing a re-review of work that
+# has not changed. It needs no digest coverage of its own: `record_sha256` IS in
+# the digest, and the promoter refuses a preimage that does not hash to it, so a
+# tampered preimage is caught by the field that is covered.
+_DIGEST_EXCLUDED_FIELDS = frozenset({"resolution_digest", "record_preimage"})
+
+
 def _resolution_digest(row: dict[str, Any]) -> str:
-    return _value_digest({key: value for key, value in row.items() if key != "resolution_digest"})
+    return _value_digest(
+        {key: value for key, value in row.items() if key not in _DIGEST_EXCLUDED_FIELDS}
+    )
 
 
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -1948,13 +1960,14 @@ def _resolve_candidate(
     record: dict = {}
     record_path: Path | None = None
     record_sha: str | None = None
+    record_text: str | None = None
     if not trait_id or not _CURIE.fullmatch(trait_id):
         reasons.append("missing_or_invalid:trait_id")
     if not protein_id or not _UNIPROT.fullmatch(protein_id):
         reasons.append("missing_or_invalid:protein_id")
     try:
         record_path = _safe_record_path(row.get("record_path"), traits_root)
-        record, _, record_sha = _record_facts(record_path, context)
+        record, record_text, record_sha = _record_facts(record_path, context)
         authoritative_id = _clean_text(record.get("identifier"))
         if trait_id and authoritative_id != trait_id:
             reasons.append("mismatch:record_identifier")
@@ -2010,6 +2023,10 @@ def _resolve_candidate(
     row["protein_id"] = protein_id
     if record_sha:
         row["record_sha256"] = record_sha
+    if record_text is not None:
+        # The reviewed text itself, so the promoter can verify against what was
+        # reviewed without reading a moving Git reference (#607).
+        row["record_preimage"] = record_text
     if reference:
         for key in (
             "protein_label",

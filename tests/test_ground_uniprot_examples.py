@@ -3267,3 +3267,38 @@ def test_promoter_source_uses_the_validated_atomic_writer_only():
     assert "write_validated_record" in calls
     assert "write_record" not in calls
     assert all(".write_text(" not in ast.unparse(writer) for writer in writers)
+
+
+def test_the_resolution_digest_rule_has_exactly_one_implementation():
+    """Three copies of this rule existed and had to agree (#620).
+
+    `finalize_uniprot_review_batch` and `select_uniprot_review_batch` each carried
+    their own inline `hashlib.sha256(_canonical_json({... if key !=
+    "resolution_digest"}))`. Adding `record_preimage` to the resolver's exclusion
+    set changed one and left two behind, and the disagreement only surfaced where a
+    path crossed two of them.
+
+    Worse than an ordinary duplication, because the digest is what approvals are
+    bound to: two implementations disagreeing does not produce a wrong number in a
+    report, it makes reviewed work look stale and sends it back through review.
+    """
+    reimplementations = [
+        path.name
+        for path in sorted((REPO / "scripts").glob("*.py"))
+        if '!= "resolution_digest"' in path.read_text(encoding="utf-8")
+    ]
+    assert not reimplementations, (
+        "these re-derive the resolution digest instead of calling the resolver's "
+        f"_resolution_digest: {reimplementations}"
+    )
+
+
+def test_every_caller_of_the_digest_uses_the_shared_helper():
+    """The converse: the consumers must actually reach for it.
+
+    A file could stop re-implementing the rule and simply stop checking, which is
+    the quieter failure -- a gate removed rather than a gate disagreeing.
+    """
+    for name in ("finalize_uniprot_review_batch.py", "select_uniprot_review_batch.py"):
+        text = (REPO / "scripts" / name).read_text(encoding="utf-8")
+        assert "ground._resolution_digest(row)" in text, f"{name} no longer verifies the digest"

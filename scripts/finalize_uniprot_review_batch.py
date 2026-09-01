@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
 import json
 import os
 import re
@@ -29,6 +28,8 @@ from datetime import date
 from io import StringIO
 from pathlib import Path, PurePosixPath
 from typing import Any
+
+import ground_uniprot_examples as ground
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 TRAITS_ROOT = REPO_ROOT / "data" / "traits"
@@ -176,11 +177,11 @@ def _candidate_snapshot(path: Path) -> dict[str, Candidate]:
         digest = row.get("resolution_digest")
         if not isinstance(digest, str) or not _SHA256.fullmatch(digest):
             raise FinalizationError(f"{subject} lacks a valid resolution_digest")
-        expected_digest = hashlib.sha256(
-            _canonical_json(
-                {key: value for key, value in row.items() if key != "resolution_digest"}
-            ).encode("utf-8")
-        ).hexdigest()
+        # The resolver's own implementation, not a copy of it. Three copies of
+        # this rule existed and had to agree; adding record_preimage to the
+        # exclusion set changed one and left two behind, which made reviewed work
+        # look stale (#620).
+        expected_digest = ground._resolution_digest(row)
         if digest != expected_digest:
             raise FinalizationError(
                 f"{subject} has stale resolution_digest {digest}; expected {expected_digest}"
