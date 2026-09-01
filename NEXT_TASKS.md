@@ -6,16 +6,18 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: **2026-08-22**, against `main` at `4e6ab83cc62` + PRs #514–#555. The
-2026-08-10 reconcile fixed the ARO figures and left everything else alone; twelve days of
-work then landed in a **different thread entirely** and none of it was logged here. See
-"The infrastructure and gates thread" below — 32 merged PRs that this file did not know
-about. The ARO block immediately following was **re-measured today and still holds** (188
-drafts, 7,452 files); the source-coverage table further down did **not** and has been
-corrected._
+_Last reconciled: **2026-09-01**, against `main` at `51a54b00c30` + PRs #556–#621. The
+2026-08-22 reconcile (PR #559) covered #514–#555; **24 PRs have merged since** and are
+logged in "The grounding and gate-hardening thread" below. The prior reconcile's own
+lesson repeated once more: its "Still open from this thread" list named four open PRs and
+a table of open issues, and **ten of those issues are now closed** — #515, #516, #521,
+#532, #534, #536, #538, #540, #541, #543. A reconcile is current only on the day it is
+written._
 
-_**Corpus size: 429,271 records** (measured 2026-08-22). Every "424,467" below is a
-point-in-time figure from an older round; run `just corpus-stats` rather than trusting one._
+_**Corpus size: 429,271 records** (re-measured 2026-09-01 via `just corpus-stats`;
+unchanged since 2026-08-22 — the 2026-08-31 grounding thread added canonical examples to
+127 existing records rather than new records). Every "424,467" below is a point-in-time
+figure from an older round; run `just corpus-stats` rather than trusting one._
 
 _**`NEXT_TASKS_LOOP.md` is stale** — last reconciled 2026-08-04, 18 days ago, and its own
 header says the ranking "should be re-derived rather than trusted if much has merged
@@ -73,7 +75,7 @@ durable backlog: the long threads, the context, and what has shipped._
 
 ---
 
-## The infrastructure and gates thread (2026-08-13 → 2026-08-22) — **the active thread**
+## The infrastructure and gates thread (2026-08-13 → 2026-08-22) — _superseded 2026-09-01; see the grounding and gate-hardening thread below_
 
 **None of this was in this file until 2026-08-22.** **32 PRs merged in twelve days** — 33
 between 2026-08-13 and 2026-08-22, less #561, which landed after this reconcile was written
@@ -114,18 +116,24 @@ trait editors (PR #555).
 **Still open from this thread, and this is where the work is.** Four PRs from the batch
 were still open on 2026-08-22: **#523** (#515, mech_shared validation scope), **#524**
 (#516, single-record validation closed-mode), **#526** (#457, repeated full-corpus test
-scans), **#528** (#521, source/seeder registry roles).
+scans), **#528** (#521, source/seeder registry roles). _All four merged 2026-08-26; #515,
+#516, #457 and #521 are closed (2026-09-01)._
 
 The 2026-08-21 adversarial review of the seven-PR batch filed **#531–#545**; #546–#552 and
 #558 came from the reviews of #553/#555. Grouped by what they actually are:
 
 | group | issues | what they have in common |
 |---|---|---|
-| **A gate passes without reading anything** | **#534**, **#540** | `just audit-schema` reports "schema is internally coherent" having read **zero** records (`--traits /nonexistent` → exit 0); `just validate` exits 0 on a **mistyped path**, so the hardened closed-mode gate is *weaker* on that axis than the open-mode CLI it replaced. Both are on `main` today. |
+| **A gate passes without reading anything** | ~~#534~~, ~~#540~~ — **both closed 2026-08-26** | `just audit-schema` reported "schema is internally coherent" having read **zero** records; `just validate` exited 0 on a **mistyped path**. Fixed in PRs #526 and #524: reading zero records now fails unless `--allow-empty-corpus`, and wholly-missing paths exit 2 unless `--allow-missing`. The class recurred twice more since and was caught both times — #616 (the new grounding gate failed a deletion-only diff, where the strict step beside it passed) and #622. |
 | **Licensing / registry** | **#542**, #521, #517 | 353 ELM records from a source `download.yaml` marks `rejected`. See the ELM block above. |
-| **New rules with no test that would catch their recurrence** | #536, #543, #544, #545, #539 | measured by mutation: **12 of 12** mutations survive #528's registry rules; #529's cross-shard completeness is *provably* correct (400 random filter combinations, 0 under-fetch) but a `.some()`→`.every()` mutation leaves all 6 tests green; #523's parametrize iterates the constant it checks. |
+| **New rules with no test that would catch their recurrence** | ~~#536~~, ~~#543~~ (closed) · open: #544, #545, #539 | measured by mutation: **12 of 12** mutations survive #528's registry rules; #529's cross-shard completeness is *provably* correct (400 random filter combinations, 0 under-fetch) but a `.some()`→`.every()` mutation leaves all 6 tests green; #523's parametrize iterates the constant it checks. |
 | **CI reliability** | **#558**, #500, #537 | order-dependent test pollution (`write_validated_record` ImportError only under a full-suite run); tests share `reports/instance_validation_failures.tsv`; `uv.lock` is not a validation-scope input, so a linkml bump can skip corpus validation. |
-| **Residuals and stale claims** | open: #531, #532, #533, #535, #538, #541 · ~~#546–#552, all seven now closed~~ | including this file's own genre of defect: #531 was filed with the wrong counts (17/32) and corrected to **11 of 40 recipes migrated, 23 still on bare curl** — and its title still carries the wrong figures. The #546–#552 block closed between 2026-08-21 and 2026-08-26; listing issue numbers in a defect table reads as open work, so they are struck rather than deleted (#567). |
+| **Residuals and stale claims** | open: #531, #533, #535 · ~~#532, #538, #541~~ (closed 2026-08-26) · ~~#546–#552, all seven closed~~ | including this file's own genre of defect: #531 was filed with the wrong counts (17/32) and corrected to **11 of 40 recipes migrated, 23 still on bare curl** — and its title still carries the wrong figures. The #546–#552 block closed between 2026-08-21 and 2026-08-26; listing issue numbers in a defect table reads as open work, so they are struck rather than deleted (#567). |
+
+**Both skill PRs have since merged** (#557 on 2026-08-23, #556 on 2026-08-27), and
+`review-open-issues` was re-adapted twice more — from MicroGrowLink v1.1.0 (#572) and
+CultureMech v2.0.0 (#596). _The paragraph below is kept as written, dated, because it is
+the example the sentence after it is making._
 
 **One of the two skill PRs has merged.** Both add a row at the same anchor in `CLAUDE.md`'s
 task-to-skill router, so the second to merge takes a one-line conflict. **#557**
@@ -134,6 +142,86 @@ task-to-skill router, so the second to merge takes a one-line conflict. **#557**
 touches `NEXT_TASKS.md`. _State as of 2026-08-26 (#568): the original sentence here was false
 within 24 hours of being written, which is why live PR state carries a date in this file and
 historical claims ("were still open on 2026-08-22") do not need one._
+
+---
+
+## The grounding and gate-hardening thread (2026-08-23 → 2026-09-01) — **the active thread**
+
+**24 PRs merged since the 2026-08-22 reconcile** and none were logged here until now. Two
+subjects, and the second is the more transferable.
+
+### 1. The UniProt organism/protein grounding thread landed (#605, PR #608)
+
+**222 files that had lived only in a working tree since 2026-08-18** — 147 modified, 73
+untracked, no backup, on a branch (`docs/reconcile-next-tasks-2026-08-22`) whose own
+committed content had already merged as #559. Preserved verbatim first in three commits,
+then reconciled with `main` across 9 conflicts, then landed as **212 files / 79,123
+insertions**.
+
+What it adds: 31 scripts and 33 test modules for the candidate → resolve → semantic
+validate → reviewed promote workflow; **9 schema classes and 11 enums** (+804 lines), with
+`ProteinReference` and `GroundingEvidence` as new `tree_root`s; `data/grounding/`
+registries (126 proteins, 127 evidence rows, tracked); and `canonical_examples` on **127
+existing records**.
+
+**Why it could not be split**, contrary to the plan filed on #605: the three parts are
+validation-coupled. 127 records carry 127 examples over **126 distinct proteins**
+(`UniProtKB:P53248` legitimately serves two traits), matching 126 registry rows and 127
+evidence rows with **no orphan in either direction**. A records-only PR would land 127
+`QUALIFIED` records whose registry rows do not exist yet, which `data/grounding/README.md`
+defines as a validation failure.
+
+Follow-on work, all merged: **#606** (PR #614) gated the grounding validator in CI —
+`validate-all` had become two halves and only the first ran, while `checks.yml` said
+otherwise; `data/grounding/` is now a full-validation input, which needed prefix support in
+`validation_scope.py`. **#607** (PRs #615, #621) pinned the reviewed preimage in the
+resolver ledger, so the promoter no longer reads it from a moving Git HEAD.
+
+### 2. Five machine-local-green defects, and what caught them
+
+Every one was correct on the laptop that wrote it and wrong elsewhere. **CI on a clean
+Linux checkout caught three; two needed something else.**
+
+| issue | what was machine-local | caught by |
+|---|---|---|
+| **#610** | `reports/` is untracked so `strict=True` crashed (13 tests); `REPO / "Justfile"` resolves only on a case-insensitive filesystem; two tests assumed a gitignored 2 GB download | CI |
+| **#611** | non-strict `Path.resolve()` raises on a symlink loop in 3.12 and returns the path in 3.13; `requires-python` spans both | CI |
+| **#613** | the run-artifact identity check compared `(st_dev, st_ino)`, which **Linux defeats by reusing a freed inode** — the guard did not work on the deployment platform | CI |
+| **#607** | a test that passes only while the work is **uncommitted**; committing is what breaks it | local full suite |
+| **#616** | the new grounding gate failed a deletion-only diff, where the strict step beside it passed | adversarial review, after CI was green |
+
+**#618 gates the two shapes a static check can catch** — case-mismatched repository paths,
+and strict resolves of roots absent from a clean checkout. It deliberately does **not**
+claim to cover the class: CI remains the gate, and the module says so.
+
+### 3. Three defects in guards written the same day
+
+Filed and fixed within their own PRs, all one shape — **green because the check measured
+something other than what it named**:
+
+- **#619** — the constant finder was a single-line regex; five real constants written
+  across lines were skipped, including `DEFAULT_PANTHER_CLASSIFICATIONS`, one of four
+  pinned sources the content replay verifies. Now AST.
+- **#620** — the resolution-digest rule existed in **three** implementations (`ground`,
+  `finalize`, `select`). Changing one left two disagreeing; a unit test passed while the
+  end-to-end failed. Now one call, pinned both ways.
+- **#622** — a malformed `record_preimage` silently fell back to Git, and *passes* in an
+  uncommitted tree, telling the operator the text was pinned when it was not.
+
+**Each was found by mutation testing, not by the suite.** None would have failed on its own.
+
+### Also merged in this window
+
+`review-open-issues` re-adapted from MicroGrowLink v1.1.0 (#572) and CultureMech v2.0.0
+(#596) · the `next-tasks` skill that maintains this file (#556) · vendored governance
+migrated to claw (#564) · the trait-category vocabulary governed across the fleet (#581,
+PR #582) with the audit gated on what this repo can fix (#585, PR #588) and the TraitMech
+pin checked against the live repository (#584, PR #590) · one guarded ripgrep prefilter
+shared across nine call sites (#571, PR #586) and a gate for undeclared external binaries
+(PR #576) · scaffolder ids collision-free by construction (#593, PR #594) and offset
+timestamps normalised to UTC (#595, PR #612) · the corpus map's hover identifier tinted by
+its marker colour (PR #598) and the legend rebuilt from DOM nodes (#602, PR #609) ·
+canonical deep-research providers (PR #604).
 
 ---
 
