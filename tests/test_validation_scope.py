@@ -123,8 +123,6 @@ def _full_validation_triggers() -> set[str]:
     }
 
 
-
-
 @pytest.mark.parametrize("event", sorted(_triggers()))
 def test_every_trigger_other_than_records_forces_full_validation(event):
     """The #515 direction: a path may not start this workflow and then be ignored.
@@ -210,9 +208,7 @@ def test_the_workflow_runs_the_grounding_validator_in_both_modes():
     """
     steps = _steps()
     grounding = [
-        step
-        for step in steps
-        if "scripts/validate_uniprot_grounding.py" in step.get("run", "")
+        step for step in steps if "scripts/validate_uniprot_grounding.py" in step.get("run", "")
     ]
     assert len(grounding) == 2, "expected a changed-files and a full-corpus grounding step"
     conditions = sorted(step.get("if", "") for step in grounding)
@@ -243,3 +239,38 @@ def test_both_changed_file_steps_tolerate_a_deletion_only_list():
                 f"{step.get('name')!r} consumes the CI diff list without --allow-missing; "
                 "a deletion-only change would fail it"
             )
+
+
+def test_a_lockfile_bump_alone_forces_full_validation():
+    """`pyproject.toml` pins a range; `uv.lock` pins what is installed (#537).
+
+    The job runs `uv sync --extra dev`, which is lockfile-driven, so a
+    `uv lock --upgrade` PR changes the validator itself while touching neither
+    the schema nor a record. Without the lockfile in scope that PR never starts
+    this workflow at all.
+    """
+    mode, traits = SCOPE.choose_scope(["uv.lock"])
+    assert mode == "full"
+    assert traits == []
+
+
+def test_a_lockfile_bump_bundled_with_a_record_edit_still_forces_full():
+    """The worse case, and the reason `changed` mode is not good enough here.
+
+    Bundled with a record edit the workflow would otherwise select `changed` and
+    validate only the diff -- under a validator nobody checked against the rest
+    of the corpus, which is exactly the situation a full run exists for.
+    """
+    mode, traits = SCOPE.choose_scope(["uv.lock", "data/traits/sequence/a.yaml"])
+    assert mode == "full"
+    assert traits == []
+
+
+def test_both_dependency_declarations_are_in_scope():
+    """Neither file alone determines the installed validator.
+
+    `pyproject.toml` was already here for #515's "validation dependencies"
+    criterion; the lockfile is the half that says which version arrives. Listing
+    them together keeps the pair visible, so removing one is a deliberate act.
+    """
+    assert {"pyproject.toml", "uv.lock"} <= set(SCOPE.FULL_VALIDATION_PATHS)
