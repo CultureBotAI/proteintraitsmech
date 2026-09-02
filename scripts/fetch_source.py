@@ -203,7 +203,10 @@ def fetch(
                 break
             if attempt == retries:
                 detail = completed.stderr.strip() or f"curl exited {completed.returncode}"
-                raise FetchError(f"{detail} (after {retries + 1} truncated attempts)")
+                attempts = retries + 1
+                raise FetchError(
+                    f"{detail} (after {attempts} truncated attempt{'s' if attempts != 1 else ''})"
+                )
             # curl reopens --output in write mode, so a retry truncates rather
             # than appends; there is nothing to clean up between attempts. The
             # backoff is charged to the same deadline as the transfers.

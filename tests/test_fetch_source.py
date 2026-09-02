@@ -53,6 +53,14 @@ class ReleaseHandler(BaseHTTPRequestHandler):
                 self.connection.shutdown(socket.SHUT_RDWR)
                 self.connection.close()
                 return
+        if self.path == "/no-content-type":
+            # FTP sends no Content-Type, and four prosite recipes fetch over it.
+            # The content guard must treat an absent header as acceptable (#545).
+            self.send_response(200)
+            self.send_header("Content-Length", str(len(PAYLOAD)))
+            self.end_headers()
+            self.wfile.write(PAYLOAD)
+            return
         if self.path == "/html-error":
             # HTTP 200 carrying an error page: passes --min-bytes, and --sha256
             # has nothing to compare against on a first fetch.
@@ -353,3 +361,22 @@ def test_truncation_retries_share_one_deadline_rather_than_multiplying_it(monkey
     assert timeouts[0] <= 30
     assert all(later <= earlier for earlier, later in zip(timeouts, timeouts[1:])), timeouts
     assert timeouts[-1] < 30, "each attempt got a fresh budget instead of sharing one"
+
+
+def test_a_response_without_a_content_type_is_still_accepted(release_server, tmp_path):
+    """The content guard must not break the four ftp:// call sites (#545).
+
+    `fetch-prosite` fetches prosite.dat, prorule.dat, prosite.doc and
+    ps_reldt.txt over FTP, which carries no Content-Type at all. A guard that
+    treated "no header" as "not the expected type" would red four production
+    recipes, and this repository has no FTP server to catch that in CI -- so it
+    is asserted here against a response that simply omits the header.
+    """
+    destination = tmp_path / "release.txt"
+
+    result = run_fetch(f"{release_server}/no-content-type", destination, "--retries", "0")
+
+    assert result.returncode == 0, result.stderr
+    assert destination.read_bytes() == PAYLOAD
+    sidecar = json.loads(Path(f"{destination}.fetch.json").read_text(encoding="utf-8"))
+    assert "content_type" not in sidecar
