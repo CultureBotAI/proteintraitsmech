@@ -3,8 +3,11 @@ from __future__ import annotations
 import importlib.util
 import json
 import pathlib
+import shutil
 import subprocess
 import sys
+
+import pytest
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SCRIPT = REPO / "scripts" / "corpus_stats.py"
@@ -113,3 +116,82 @@ def test_streaming_rg_aggregation_matches_python_first_field_semantics(tmp_path)
     assert streamed["by_mapping_status"] == {"SEEDED": 1, "_MISSING": 1}
     assert streamed["records_with_causal_graphs"] == 1
     assert streamed["causal_graphs"] == 2
+
+
+def _adversarial_tree(root: pathlib.Path) -> pathlib.Path:
+    """A tree whose files the two backends could disagree about (#539).
+
+    One ordinary record, one carrying a NUL byte (binary to ripgrep, ordinary to
+    `os.walk`), and one under a dotted directory (skipped by ripgrep's defaults,
+    walked by `rglob`). The written test before this one fed ripgrep's output in
+    by hand, so it compared the two *aggregations* and could never see a
+    disagreement about which files exist.
+    """
+    traits = root / "traits"
+    _write(traits, "plain/ok.yaml", "trait_axis: SEQUENCE\nmapping_status: SEEDED\n")
+    _write(
+        traits,
+        ".hidden/h.yaml",
+        "trait_axis: FUNCTION\nmapping_status: PROPOSED\n"
+        "causal_graphs:\n  - graph_id: one\n  - graph_id: two\n",
+    )
+    (traits / "plain" / "nul.yaml").write_bytes(
+        b"trait_axis: STRUCTURE\nmapping_status: REVIEWED\n\x00binary\n"
+    )
+    return traits
+
+
+def test_both_backends_agree_on_a_tree_designed_to_split_them(tmp_path):
+    """Runs the REAL ripgrep, which is the half the existing test cannot reach.
+
+    Measured before the fix: ripgrep saw 2 of 4 records and filed the other two
+    as `_MISSING`, because a NUL byte makes a record binary to it and dotted
+    directories are skipped by default. `rglob` consults neither rule.
+    """
+    if shutil.which("rg") is None:
+        pytest.skip("ripgrep is absent here, so there is no second backend to compare")
+    traits = _adversarial_tree(tmp_path)
+
+    streamed = STATS._corpus_metrics_rg(traits)
+    fallback = STATS._corpus_metrics_python(traits, workers=1)
+
+    assert streamed == fallback, f"backends disagree\n  rg     {streamed}\n  python {fallback}"
+    assert "_MISSING" not in streamed["by_axis"]
+    assert streamed["by_axis"] == {"FUNCTION": 1, "SEQUENCE": 1, "STRUCTURE": 1}
+
+
+def test_the_python_backend_runs_when_ripgrep_is_absent(tmp_path, monkeypatch):
+    """`collect_stats` short-circuits on ripgrep, so the fallback never ran here.
+
+    Two mutations survived the suite as written -- `"records": len(paths)` to a
+    constant, and `graphs += graph_count` to `+= 0` -- because every test took the
+    ripgrep path. Forcing `shutil.which` to None is what makes the fallback
+    executable code as far as the suite is concerned.
+    """
+    traits = _adversarial_tree(tmp_path)
+    monkeypatch.setattr(STATS.shutil, "which", lambda _name: None)
+
+    assert STATS._corpus_metrics_rg(traits) is None
+    stats = STATS.collect_stats(traits, tmp_path / "no-docs", workers=1)["corpus"]
+
+    assert stats["records"] == 3
+    assert stats["by_axis"] == {"FUNCTION": 1, "SEQUENCE": 1, "STRUCTURE": 1}
+    assert stats["by_mapping_status"] == {"PROPOSED": 1, "REVIEWED": 1, "SEEDED": 1}
+    # Named explicitly in #539 as a mutation the suite could not kill, because no
+    # test ever reached this backend: `graphs += graph_count` to `+= 0` survived.
+    assert stats["causal_graphs"] == 2
+    assert stats["records_with_causal_graphs"] == 1
+
+
+def test_a_scan_attributing_more_records_than_exist_is_an_error():
+    """The `if missing > 0` guard dropped a negative silently (#539).
+
+    A negative means the scan and the file count disagree about which files
+    exist, which is the one thing a numbers tool must not round away.
+    """
+    lines = [
+        b"a.yaml\0trait_axis: SEQUENCE\n",
+        b"b.yaml\0trait_axis: STRUCTURE\n",
+    ]
+    with pytest.raises(ValueError, match="more axes than the 1 files counted"):
+        STATS._metrics_from_rg_lines(lines, records=1)

@@ -95,6 +95,16 @@ def _metrics_from_rg_lines(lines, records: int) -> dict:
 
     missing_axes = records - sum(axes.values())
     missing_statuses = records - sum(statuses.values())
+    # A negative means the scan attributed more records than the file count found,
+    # so the two disagree about which files exist. `if > 0` dropped that silently
+    # and reported a total nothing had produced (#539). This tool's entire output
+    # is numbers; a discrepancy it cannot explain is not something to round away.
+    for label, missing in (("axes", missing_axes), ("statuses", missing_statuses)):
+        if missing < 0:
+            raise ValueError(
+                f"corpus scan attributed {-missing} more {label} than the "
+                f"{records} files counted; the record scan and the file count disagree"
+            )
     if missing_axes > 0:
         axes["_MISSING"] = missing_axes
     if missing_statuses > 0:
@@ -125,6 +135,20 @@ def _corpus_metrics_rg(traits: Path) -> dict | None:
             "--no-line-number",
             "--color=never",
             "--null",
+            # Selection must match the Python fallback's rglob, or the two
+            # backends report different corpora (#539). Measured on a fixture
+            # tree: default rg saw 2 of 4 records, these flags see 4 of 4.
+            #   --text      a record containing a NUL byte is binary to rg, which
+            #               skips its lines; os.walk still counts the file, so it
+            #               landed in _MISSING instead of its real axis.
+            #   --hidden    rg skips dotted directories; rglob does not.
+            #   --no-ignore rglob consults no ignore rules at all. Tracked records
+            #               are unaffected -- git does not ignore tracked files --
+            #               so this is for an untracked stray, not a reproduced case.
+            "--text",
+            "--hidden",
+            "--no-ignore",
+            "--no-config",
             "-g",
             "*.yaml",
             RG_FIELDS,
