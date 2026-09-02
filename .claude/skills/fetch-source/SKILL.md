@@ -43,8 +43,15 @@ commit them.
 
 Defaults are four retries with curl's transient-error exponential backoff, a 15-second
 connect timeout, and a 300-second wall-clock deadline for the complete curl process,
-including retries and delays. Override `--max-time` for large releases; do not copy retry
-flags into the justfile. Use `--dry-run` to print the transport, destination, metadata,
+including retries and delays. A transfer that dies mid-body is retried too, which curl
+itself will not do -- an early close is exit 18 and a reset is 56, neither of which is in
+its transient set (#545) -- and those attempts are charged to the same deadline, so the
+number above remains the ceiling rather than becoming a per-attempt budget. Override
+`--max-time` for large releases; do not copy retry flags into the justfile.
+
+A 200 response carrying an HTML error page is refused rather than installed as the
+release. Pass `--allow-html` for a source that genuinely serves HTML; no current call site
+does. Use `--dry-run` to print the transport, destination, metadata,
 and validation contract without touching the network or filesystem.
 
 Existing destination permission bits are preserved during replacement. New public raw

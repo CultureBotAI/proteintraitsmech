@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import re
 import shutil
@@ -23,6 +24,7 @@ PAYLOAD = b"release-data\n"
 
 class ReleaseHandler(BaseHTTPRequestHandler):
     retry_requests = 0
+    truncated_requests = 0
 
     def do_GET(self):  # noqa: N802 - BaseHTTPRequestHandler API
         if self.path == "/redirect":
@@ -38,6 +40,29 @@ class ReleaseHandler(BaseHTTPRequestHandler):
             if type(self).retry_requests == 1:
                 self.send_error(503)
                 return
+        if self.path == "/truncated-once":
+            # Dies mid-body on the first attempt only, so a fetcher that retries
+            # a truncated transfer succeeds and one that does not fails (#545).
+            type(self).truncated_requests += 1
+            if type(self).truncated_requests == 1:
+                self.send_response(200)
+                self.send_header("Content-Length", str(len(PAYLOAD)))
+                self.end_headers()
+                self.wfile.write(PAYLOAD[:3])
+                self.wfile.flush()
+                self.connection.shutdown(socket.SHUT_RDWR)
+                self.connection.close()
+                return
+        if self.path == "/html-error":
+            # HTTP 200 carrying an error page: passes --min-bytes, and --sha256
+            # has nothing to compare against on a first fetch.
+            body = b"<html><body>Service temporarily unavailable</body></html>"
+            self.send_response(200)
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(body)
+            return
         if self.path == "/interrupted":
             self.send_response(200)
             self.send_header("Content-Length", "100")
@@ -84,6 +109,14 @@ def run_fetch(url: str, destination: Path, *args: str) -> subprocess.CompletedPr
         capture_output=True,
         text=True,
     )
+
+
+def _load_module():
+    """The fetcher imported in-process, for tests that inspect its internals."""
+    spec = importlib.util.spec_from_file_location("fetch_source", SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 pytestmark = pytest.mark.skipif(shutil.which("curl") is None, reason="curl is not installed")
@@ -208,3 +241,115 @@ def test_migration_checklist_accounts_for_every_fetch_recipe():
     )
     documented = set(re.findall(r"`(fetch-[A-Za-z0-9_-]+)`", MIGRATION.read_text()))
     assert documented == recipes
+
+
+def test_a_truncated_transfer_is_retried_and_succeeds(release_server, tmp_path):
+    """curl does not retry a transfer that dies mid-body (#545).
+
+    A server closing early gives exit 18 (CURLE_PARTIAL_FILE) and a reset gives
+    56; neither is in curl's transient set, so `--retry` never fires for the
+    failure mode that bites hardest on the largest files. Measured before the
+    fix: one attempt, immediate failure.
+
+    Asserts the fetch *succeeds*, not merely that it retried -- the destination
+    must hold the whole payload rather than the first attempt's three bytes,
+    which is also what proves curl truncates its output on retry, not appends.
+    """
+    ReleaseHandler.truncated_requests = 0
+    destination = tmp_path / "release.txt"
+
+    result = run_fetch(f"{release_server}/truncated-once", destination, "--retries", "2")
+
+    assert result.returncode == 0, result.stderr
+    assert destination.read_bytes() == PAYLOAD
+    assert ReleaseHandler.truncated_requests >= 2, "the truncated attempt was not retried"
+
+
+def test_a_200_carrying_an_html_error_page_is_refused(release_server, tmp_path):
+    """The #455 shape: a cached null that looked like an absent mapping (#545).
+
+    Distinct from --min-bytes and --sha256, which do fire: an error page is
+    comfortably over one byte, and a first fetch has no digest to compare
+    against. Eight migrated call sites have no other content check at all.
+    """
+    destination = tmp_path / "release.txt"
+    destination.write_bytes(b"previous release\n")
+
+    result = run_fetch(f"{release_server}/html-error", destination, "--retries", "0")
+
+    assert result.returncode != 0
+    assert "error page rather than a release" in result.stderr
+    assert destination.read_bytes() == b"previous release\n", "the error page was installed"
+    assert not list(destination.parent.glob(".*.part")), "a temp file leaked"
+
+
+def test_html_is_accepted_when_the_caller_says_the_source_serves_it(release_server, tmp_path):
+    """The guard is a default, not a prohibition.
+
+    No migrated call site fetches HTML today, which is what makes rejecting it a
+    safe default -- but a source that genuinely serves HTML must stay fetchable
+    without disabling every other check.
+    """
+    destination = tmp_path / "page.html"
+
+    result = run_fetch(
+        f"{release_server}/html-error", destination, "--retries", "0", "--allow-html"
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert destination.read_bytes().startswith(b"<html>")
+    sidecar = json.loads(Path(f"{destination}.fetch.json").read_text(encoding="utf-8"))
+    assert sidecar["content_type"].startswith("text/html")
+
+
+@pytest.mark.parametrize(
+    "value,rejected",
+    [
+        ("text/html", True),
+        ("text/html; charset=utf-8", True),
+        ("TEXT/HTML", True),
+        ("application/xhtml+xml", True),
+        ("text/plain", False),
+        ("application/gzip", False),
+        ("", False),
+    ],
+)
+def test_content_type_matching_ignores_parameters_and_case(value, rejected):
+    """A bare `== "text/html"` would miss the form servers actually send."""
+    assert _load_module()._is_rejected_content_type(value) is rejected
+
+
+def test_truncation_retries_share_one_deadline_rather_than_multiplying_it(monkeypatch, tmp_path):
+    """Retrying must not multiply the ceiling SKILL.md promises (#545).
+
+    That document states "a wall-clock deadline for the complete curl process,
+    including retries and delays". Giving each truncation attempt its own
+    --max-time would make it (retries + 1) x the stated number -- the defect
+    #545 raises against curl's own --retry-max-time, no better for being
+    reintroduced in Python.
+
+    Asserted on the timeout actually handed to each attempt, not on elapsed wall
+    clock. Two earlier wall-clock versions of this test passed against the
+    mutation: `/interrupted` fails instantly so it bounded only the backoff, and
+    a slow endpoint makes curl hit its OWN --max-time and exit 28, which is not
+    a truncation code, so the retry never fired at all.
+    """
+    module = _load_module()
+    timeouts: list[float] = []
+
+    def fake_run(_command, **kwargs):
+        timeouts.append(kwargs["timeout"])
+        return subprocess.CompletedProcess(args=_command, returncode=18, stdout="", stderr="")
+
+    monkeypatch.setattr(module.subprocess, "run", fake_run)
+    monkeypatch.setattr(module.time, "sleep", lambda _seconds: None)
+
+    with pytest.raises(module.FetchError, match="truncated attempts"):
+        module.fetch(
+            "http://example.invalid/release", tmp_path / "release.txt", max_time=30, retries=3
+        )
+
+    assert len(timeouts) == 4, "a truncated transfer was not retried to exhaustion"
+    assert timeouts[0] <= 30
+    assert all(later <= earlier for earlier, later in zip(timeouts, timeouts[1:])), timeouts
+    assert timeouts[-1] < 30, "each attempt got a fresh budget instead of sharing one"
