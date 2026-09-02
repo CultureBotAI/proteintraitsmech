@@ -138,6 +138,13 @@ def _adversarial_tree(root: pathlib.Path) -> pathlib.Path:
     (traits / "plain" / "nul.yaml").write_bytes(
         b"trait_axis: STRUCTURE\nmapping_status: REVIEWED\n\x00binary\n"
     )
+    # A symlinked record, which `is_file()` follows and ripgrep does not (#627).
+    outside = root / "outside"
+    outside.mkdir(parents=True, exist_ok=True)
+    (outside / "linked.yaml").write_text(
+        "trait_axis: EVOLUTION\nmapping_status: SEEDED\n", encoding="utf-8"
+    )
+    (traits / "plain" / "link.yaml").symlink_to(outside / "linked.yaml")
     return traits
 
 
@@ -195,3 +202,28 @@ def test_a_scan_attributing_more_records_than_exist_is_an_error():
     ]
     with pytest.raises(ValueError, match="more axes than the 1 files counted"):
         STATS._metrics_from_rg_lines(lines, records=1)
+
+
+def test_symlinked_records_are_excluded_by_every_selection_path(tmp_path):
+    """`--follow` would have been the obvious fix and is the wrong one (#627).
+
+    `is_file()` follows a symlinked record and reads it; ripgrep does not follow
+    symlinks at all, so it filed one as `_MISSING`. But `--follow` descends
+    symlinked *directories* too and matched 3 files against a count of 2 on a
+    fixture tree, which trips the negative-discrepancy check -- a loud overcount
+    traded for a silent undercount.
+
+    Excluding them instead matches what the repository already requires: several
+    stage scripts reject a symlink below the trait directory outright, and the
+    corpus holds none.
+    """
+    traits = _adversarial_tree(tmp_path)
+    assert (traits / "plain" / "link.yaml").is_symlink()
+
+    assert STATS._record_count(traits) == 3
+    fallback = STATS._corpus_metrics_python(traits, workers=1)
+    assert fallback["records"] == 3
+    assert "EVOLUTION" not in fallback["by_axis"], "a symlinked record was counted"
+
+    if shutil.which("rg") is not None:
+        assert STATS._corpus_metrics_rg(traits) == fallback

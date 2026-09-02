@@ -40,9 +40,18 @@ def _record_metrics(path: Path) -> tuple[str, str, bool, int]:
 
 
 def _record_count(traits: Path) -> int:
+    """Regular `.yaml` files below ``traits``, excluding symlinks.
+
+    Symlinks are excluded so that all three selection paths -- this walk, the
+    fallback's rglob, and ripgrep -- agree by construction (#627). ripgrep does
+    not follow symlinks and has no flag for "files but not directories", so
+    `--follow` would overshoot: on a fixture tree it matched 3 against a count of
+    2. Excluding them costs nothing here -- the corpus holds none, and several
+    stage scripts already reject a symlink below the trait directory outright.
+    """
     return sum(
-        name.endswith(".yaml")
-        for _directory, _subdirs, files in os.walk(traits)
+        name.endswith(".yaml") and not os.path.islink(os.path.join(directory, name))
+        for directory, _subdirs, files in os.walk(traits)
         for name in files
     )
 
@@ -167,7 +176,11 @@ def _corpus_metrics_rg(traits: Path) -> dict | None:
 
 def _corpus_metrics_python(traits: Path, workers: int | None) -> dict:
     """Portable fallback for environments without ripgrep."""
-    paths = [path for path in traits.rglob("*.yaml") if path.is_file()]
+    # `is_file()` follows a symlink and would read a record ripgrep never sees.
+    # Regular files only, matching _record_count and ripgrep (#627).
+    paths = [
+        path for path in traits.rglob("*.yaml") if path.is_file() and not path.is_symlink()
+    ]
     axes: collections.Counter[str] = collections.Counter()
     statuses: collections.Counter[str] = collections.Counter()
     records_with_graphs = 0
