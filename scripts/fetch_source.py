@@ -10,6 +10,7 @@ import os
 import stat
 import subprocess
 import tempfile
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
@@ -20,6 +21,32 @@ class FetchError(RuntimeError):
 
 
 DEFAULT_FILE_MODE = 0o644
+
+
+# curl retries transient HTTP itself, but a transfer that dies mid-body is not in
+# its retry set: a server closing early gives 18 (CURLE_PARTIAL_FILE) and a reset
+# gives 56 (CURLE_RECV_ERROR). Measured before this: a mid-body close failed on
+# the first attempt with --retries 2. `--retry-all-errors` is not the fix -- it
+# would also retry the 404 this code deliberately does not (#545).
+TRUNCATION_EXIT_CODES = frozenset({18, 56})
+
+# Recorded in the sidecar since #530 and never asserted on, so a server answering
+# 200 with an error page installed the page as the release. None of the migrated
+# call sites fetch HTML, and eight have no other content check at all (#545).
+REJECTED_CONTENT_TYPES = ("text/html", "application/xhtml+xml")
+
+
+def _is_rejected_content_type(value: str) -> bool:
+    """True for a Content-Type this fetcher will not install as a release.
+
+    Matched on the media type only, so `text/html; charset=utf-8` is caught. A
+    200 carrying an error page passes --min-bytes and --sha256 has nothing to
+    compare against on a first fetch, so without this the page is installed
+    atomically and correctly -- the #455 shape, where a cached null looked like
+    an absent mapping.
+    """
+    media_type = value.split(";", 1)[0].strip().lower()
+    return media_type in REJECTED_CONTENT_TYPES
 
 
 def _temporary_path(directory: Path, name: str, suffix: str) -> Path:
@@ -113,6 +140,7 @@ def fetch(
     prefix: bytes | None = None,
     headers: Sequence[str] = (),
     metadata_path: Path | None = None,
+    allow_html: bool = False,
 ) -> dict[str, object]:
     """Fetch URL into a sibling temp file, validate, then atomically replace destination."""
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -150,17 +178,39 @@ def fetch(
         command.extend(("--header", header))
     command.extend(("--", url))
 
+    # One deadline for the whole operation, retries and backoff included, so
+    # SKILL.md's "wall-clock deadline for the complete curl process" stays true.
+    # Giving each attempt its own --max-time would multiply the documented
+    # ceiling by retries+1 -- the defect #545 raises against curl's own
+    # --retry-max-time, which would be no better for being reintroduced here.
+    deadline = time.monotonic() + max_time
     try:
-        try:
-            completed = subprocess.run(
-                command,
-                check=False,
-                capture_output=True,
-                text=True,
-                timeout=max_time,
-            )
-        except subprocess.TimeoutExpired as exc:
-            raise FetchError(f"total download timeout after {max_time} seconds") from exc
+        for attempt in range(retries + 1):
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise FetchError(f"total download timeout after {max_time} seconds")
+            try:
+                completed = subprocess.run(
+                    command,
+                    check=False,
+                    capture_output=True,
+                    text=True,
+                    timeout=remaining,
+                )
+            except subprocess.TimeoutExpired as exc:
+                raise FetchError(f"total download timeout after {max_time} seconds") from exc
+            if completed.returncode not in TRUNCATION_EXIT_CODES:
+                break
+            if attempt == retries:
+                detail = completed.stderr.strip() or f"curl exited {completed.returncode}"
+                attempts = retries + 1
+                raise FetchError(
+                    f"{detail} (after {attempts} truncated attempt{'s' if attempts != 1 else ''})"
+                )
+            # curl reopens --output in write mode, so a retry truncates rather
+            # than appends; there is nothing to clean up between attempts. The
+            # backoff is charged to the same deadline as the transfers.
+            time.sleep(min(2**attempt, max(0.0, deadline - time.monotonic())))
         if completed.returncode:
             detail = completed.stderr.strip() or f"curl exited {completed.returncode}"
             raise FetchError(detail)
@@ -189,6 +239,13 @@ def fetch(
             value = _last_header(raw_headers, header_name)
             if value:
                 metadata[output_name] = value
+
+        content_type = str(metadata.get("content_type", ""))
+        if not allow_html and _is_rejected_content_type(content_type):
+            raise FetchError(
+                f"server answered 200 with {content_type!r}, which is an error page rather "
+                f"than a release; pass --allow-html if this source really serves HTML"
+            )
 
         metadata_temp = _write_json_temp(metadata_path, metadata, metadata_mode)
         with download_temp.open("rb") as stream:
@@ -231,6 +288,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--prefix-hex", help="required leading bytes, written as hexadecimal")
     parser.add_argument("--header", action="append", default=[])
     parser.add_argument("--metadata", type=Path, help="metadata sidecar path")
+    parser.add_argument(
+        "--allow-html",
+        action="store_true",
+        help="accept an HTML Content-Type; by default a 200 carrying an error page "
+        "is refused rather than installed as the release (#545)",
+    )
     parser.add_argument("--dry-run", action="store_true")
     return parser
 
@@ -295,6 +358,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             prefix=prefix,
             headers=args.header,
             metadata_path=metadata,
+            allow_html=args.allow_html,
         )
     except (FetchError, OSError) as exc:
         parser.exit(1, f"fetch failed: {exc}\n")
