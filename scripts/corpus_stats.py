@@ -40,9 +40,18 @@ def _record_metrics(path: Path) -> tuple[str, str, bool, int]:
 
 
 def _record_count(traits: Path) -> int:
+    """Regular `.yaml` files below ``traits``, excluding symlinks.
+
+    Symlinks are excluded so that all three selection paths -- this walk, the
+    fallback's rglob, and ripgrep -- agree by construction (#627). ripgrep does
+    not follow symlinks and has no flag for "files but not directories", so
+    `--follow` would overshoot: on a fixture tree it matched 3 against a count of
+    2. Excluding them costs nothing here -- the corpus holds none, and several
+    stage scripts already reject a symlink below the trait directory outright.
+    """
     return sum(
-        name.endswith(".yaml")
-        for _directory, _subdirs, files in os.walk(traits)
+        name.endswith(".yaml") and not os.path.islink(os.path.join(directory, name))
+        for directory, _subdirs, files in os.walk(traits)
         for name in files
     )
 
@@ -95,6 +104,16 @@ def _metrics_from_rg_lines(lines, records: int) -> dict:
 
     missing_axes = records - sum(axes.values())
     missing_statuses = records - sum(statuses.values())
+    # A negative means the scan attributed more records than the file count found,
+    # so the two disagree about which files exist. `if > 0` dropped that silently
+    # and reported a total nothing had produced (#539). This tool's entire output
+    # is numbers; a discrepancy it cannot explain is not something to round away.
+    for label, missing in (("axes", missing_axes), ("statuses", missing_statuses)):
+        if missing < 0:
+            raise ValueError(
+                f"corpus scan attributed {-missing} more {label} than the "
+                f"{records} files counted; the record scan and the file count disagree"
+            )
     if missing_axes > 0:
         axes["_MISSING"] = missing_axes
     if missing_statuses > 0:
@@ -125,6 +144,20 @@ def _corpus_metrics_rg(traits: Path) -> dict | None:
             "--no-line-number",
             "--color=never",
             "--null",
+            # Selection must match the Python fallback's rglob, or the two
+            # backends report different corpora (#539). Measured on a fixture
+            # tree: default rg saw 2 of 4 records, these flags see 4 of 4.
+            #   --text      a record containing a NUL byte is binary to rg, which
+            #               skips its lines; os.walk still counts the file, so it
+            #               landed in _MISSING instead of its real axis.
+            #   --hidden    rg skips dotted directories; rglob does not.
+            #   --no-ignore rglob consults no ignore rules at all. Tracked records
+            #               are unaffected -- git does not ignore tracked files --
+            #               so this is for an untracked stray, not a reproduced case.
+            "--text",
+            "--hidden",
+            "--no-ignore",
+            "--no-config",
             "-g",
             "*.yaml",
             RG_FIELDS,
@@ -143,7 +176,11 @@ def _corpus_metrics_rg(traits: Path) -> dict | None:
 
 def _corpus_metrics_python(traits: Path, workers: int | None) -> dict:
     """Portable fallback for environments without ripgrep."""
-    paths = [path for path in traits.rglob("*.yaml") if path.is_file()]
+    # `is_file()` follows a symlink and would read a record ripgrep never sees.
+    # Regular files only, matching _record_count and ripgrep (#627).
+    paths = [
+        path for path in traits.rglob("*.yaml") if path.is_file() and not path.is_symlink()
+    ]
     axes: collections.Counter[str] = collections.Counter()
     statuses: collections.Counter[str] = collections.Counter()
     records_with_graphs = 0

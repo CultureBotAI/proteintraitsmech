@@ -53,8 +53,12 @@ install:
 
 # Deterministic machine-readable corpus + generated-site metrics. Does not depend on a
 # current Pages build; missing docs/data artifacts are reported as zero.
-corpus-stats output="-" *args:
-    uv run python scripts/corpus_stats.py --output {{quote(output)}} {{args}}
+# Pass flags straight through. A leading positional bound the first flag to
+# --output, so `just corpus-stats --workers 4` became `--output '--workers' 4`
+# and argparse rejected it confusingly (#539). The script already defaults
+# --output to "-", so write `--output FILE` when a file is wanted.
+corpus-stats *args:
+    uv run python scripts/corpus_stats.py {{args}}
 
 # Audit a built Pages tree against conf/pages_budgets.json.
 audit-pages *args:
