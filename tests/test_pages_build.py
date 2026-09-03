@@ -146,6 +146,56 @@ def test_a_budgets_file_using_the_old_metric_name_fails_loudly(tmp_path):
     assert failures == ["unknown budget metric: generated_file_count"]
 
 
+def test_the_shipped_budgets_file_names_metrics_the_audit_measures(tmp_path):
+    """#634: the suite only ever fed audit() inline dicts, so conf/pages_budgets.json —
+    the file CI actually uses — was unvalidated. Reverting just that file to a stale
+    metric name left every test green while the deploy gate failed."""
+    budgets = json.loads((REPO / "conf" / "pages_budgets.json").read_text(encoding="utf-8"))
+    assert budgets and all(
+        isinstance(key, str) and isinstance(value, int) and value >= 0
+        for key, value in budgets.items()
+    ), "main() would reject this file as malformed"
+    measurable = set(AUDIT.measure(_site_with(tmp_path)))
+    assert set(budgets) <= measurable, (
+        f"budgeted but unmeasurable: {sorted(set(budgets) - measurable)}"
+    )
+
+
+def test_an_unmeasured_budget_metric_never_reads_as_ok(tmp_path):
+    """#635: the report loop defaulted a missing metric to 0, printing OK for the one
+    key that is broken. The run failed, but the line a person scans said otherwise."""
+    site = _site_with(tmp_path)
+    budgets = tmp_path / "budgets.json"
+    budgets.write_text(json.dumps({"generated_file_count": 2000}), encoding="utf-8")
+    done = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "audit_pages_size.py"),
+         "--site", str(site), "--budgets", str(budgets)],
+        capture_output=True, text=True,
+    )
+    assert done.returncode == 1
+    assert "FAIL  generated_file_count" in done.stdout
+    assert "OK    generated_file_count" not in done.stdout
+    assert "unknown budget metric: generated_file_count" in done.stdout
+
+
+def test_warnings_survive_a_failing_budget(tmp_path):
+    """#636: the warn summary is what the band exists to surface, and it used to vanish
+    exactly when the artifact was in the worst shape."""
+    site = _site_with(tmp_path)
+    measured = AUDIT.measure(site)
+    budgets = tmp_path / "budgets.json"
+    budgets.write_text(json.dumps({"site_total_bytes": measured["site_total_bytes"],
+                                   "largest_detail_bucket_bytes": 1}), encoding="utf-8")
+    done = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "audit_pages_size.py"),
+         "--site", str(site), "--budgets", str(budgets)],
+        capture_output=True, text=True,
+    )
+    assert done.returncode == 1
+    assert "WARN: within 80% of budget: site_total_bytes" in done.stdout
+    assert "FAIL: largest_detail_bucket_bytes" in done.stdout
+
+
 def test_warn_band_fires_below_the_limit_and_never_above_it():
     metrics = {"site_total_bytes": 800, "site_file_count": 1000}
     budgets = {"site_total_bytes": 1000, "site_file_count": 1000}

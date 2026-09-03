@@ -102,21 +102,26 @@ def main() -> int:
     near = near_budget(metrics, budgets, args.warn_fraction)
     print("Pages artifact budget report:")
     for name, limit in budgets.items():
-        actual = metrics.get(name, 0)
+        actual = metrics.get(name)
+        if actual is None:
+            # audit() already recorded this as a failure; the per-line report must
+            # not read OK for the one metric that is broken.
+            print(f"  FAIL  {name:36s} {'unmeasured':>15s} / {limit:,}")
+            continue
         state = "FAIL" if actual > limit else "WARN" if name in near else "OK"
         print(f"  {state:4s}  {name:36s} {actual:>15,} / {limit:,}")
     print(f"  INFO  {'browse_shards':36s} {metrics['browse_shards']:>15,}")
     print(f"  INFO  {'detail_buckets':36s} {metrics['detail_buckets']:>15,}")
-    if failures:
-        print("\nFAIL: " + "; ".join(failures))
-        return 1
     if near:
         print(
             f"\nWARN: within {args.warn_fraction:.0%} of budget: "
             + ", ".join(sorted(near))
         )
-        return 0
-    print("\nOK: Pages artifact is within all budgets.")
+    if failures:
+        print("\nFAIL: " + "; ".join(failures))
+        return 1
+    if not near:
+        print("\nOK: Pages artifact is within all budgets.")
     return 0
 
 
