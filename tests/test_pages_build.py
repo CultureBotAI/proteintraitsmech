@@ -6,6 +6,7 @@ import json
 import pathlib
 import shutil
 import subprocess
+import sys
 
 import pytest
 
@@ -89,7 +90,7 @@ def test_pages_audit_reports_each_budget_and_fails_closed(tmp_path):
     (site / "data" / "detail" / "000.json").write_text("{}", encoding="utf-8")
     generous = {
         "site_total_bytes": 100,
-        "generated_file_count": 10,
+        "site_file_count": 10,
         "browse_index_total_bytes": 10,
         "largest_browse_shard_bytes": 10,
         "detail_total_bytes": 10,
@@ -102,6 +103,85 @@ def test_pages_audit_reports_each_budget_and_fails_closed(tmp_path):
     strict = dict(generous, largest_detail_bucket_bytes=1)
     _metrics, failures = AUDIT.audit(site, strict)
     assert failures == ["largest_detail_bucket_bytes: 2 > 1"]
+
+
+def _site_with(tmp_path, extra: dict[str, str] | None = None) -> pathlib.Path:
+    """A minimal built site: one generated shard, one generated detail bucket, and
+    index.html standing in for everything Jekyll renders or the repo commits."""
+    site = tmp_path / "site"
+    (site / "data" / "detail").mkdir(parents=True)
+    (site / "index.html").write_text("home", encoding="utf-8")
+    (site / "data" / "records.FUNCTION.FUNC_PATHWAY.json").write_text("[]", encoding="utf-8")
+    (site / "data" / "detail" / "000.json").write_text("{}", encoding="utf-8")
+    for name, body in (extra or {}).items():
+        path = site / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(body, encoding="utf-8")
+    return site
+
+
+def test_site_file_count_counts_files_no_build_step_generated(tmp_path):
+    """The count is of what the site serves, not of builder output. #632: naming it
+    `generated_file_count` while measuring the whole site understated the consumed
+    budget by ~110 MB in #529's report. Committed sidecars from other steps
+    (corpus_map, neighbors, chebi) and Jekyll's HTML are hosted, so they count."""
+    bare = AUDIT.measure(_site_with(tmp_path / "bare"))
+    with_sidecars = AUDIT.measure(
+        _site_with(tmp_path / "full", {"data/corpus_map.json": "{}" * 40,
+                                       "data/neighbors/0.json": "[]"})
+    )
+    assert bare["site_file_count"] == 3          # index.html + shard + detail bucket
+    assert with_sidecars["site_file_count"] == 5
+    # ... and those bytes are charged too, though neither file is a shard or bucket.
+    assert with_sidecars["site_total_bytes"] > bare["site_total_bytes"]
+    assert with_sidecars["browse_index_total_bytes"] == bare["browse_index_total_bytes"]
+    assert with_sidecars["detail_total_bytes"] == bare["detail_total_bytes"]
+
+
+def test_a_budgets_file_using_the_old_metric_name_fails_loudly(tmp_path):
+    """The rename must not silently stop enforcing a limit: an unknown key is a
+    failure, so a stale conf/pages_budgets.json breaks the build instead of passing."""
+    site = _site_with(tmp_path)
+    _metrics, failures = AUDIT.audit(site, {"generated_file_count": 10})
+    assert failures == ["unknown budget metric: generated_file_count"]
+
+
+def test_warn_band_fires_below_the_limit_and_never_above_it():
+    metrics = {"site_total_bytes": 800, "site_file_count": 1000}
+    budgets = {"site_total_bytes": 1000, "site_file_count": 1000}
+    # Exactly at the fraction warns; a byte under does not.
+    assert AUDIT.near_budget(metrics, budgets, 0.8) == {"site_total_bytes", "site_file_count"}
+    assert AUDIT.near_budget({**metrics, "site_total_bytes": 799}, budgets, 0.8) == {
+        "site_file_count"
+    }
+    # Over the limit is a failure, not a warning — the two sets must not overlap.
+    over = AUDIT.near_budget({**metrics, "site_file_count": 1001}, budgets, 0.8)
+    assert "site_file_count" not in over
+    # A zero budget with zero usage is not "within 80% of budget".
+    assert AUDIT.near_budget({"x": 0}, {"x": 0}, 0.8) == set()
+    # An unmeasured budget key cannot warn.
+    assert AUDIT.near_budget({}, {"x": 100}, 0.8) == set()
+
+
+def test_cli_warns_without_failing_and_rejects_a_nonsense_fraction(tmp_path):
+    site = _site_with(tmp_path)
+    budgets = tmp_path / "budgets.json"
+    measured = AUDIT.measure(site)
+    budgets.write_text(json.dumps({"site_total_bytes": measured["site_total_bytes"],
+                                   "site_file_count": 100}), encoding="utf-8")
+    cmd = [sys.executable, str(REPO / "scripts" / "audit_pages_size.py"),
+           "--site", str(site), "--budgets", str(budgets)]
+    done = subprocess.run(cmd, capture_output=True, text=True)
+    assert done.returncode == 0, done.stderr
+    assert "WARN  site_total_bytes" in done.stdout          # at 100% of its budget
+    assert "OK    site_file_count" in done.stdout           # 3 of 100
+    assert "WARN: within 80% of budget: site_total_bytes" in done.stdout
+    assert "OK: Pages artifact is within all budgets." not in done.stdout
+
+    rejected = subprocess.run(cmd + ["--warn-fraction", "1.5"], capture_output=True, text=True)
+    assert rejected.returncode != 0 and "--warn-fraction" in rejected.stderr
+    zero = subprocess.run(cmd + ["--warn-fraction", "0"], capture_output=True, text=True)
+    assert zero.returncode != 0 and "--warn-fraction" in zero.stderr
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
