@@ -282,7 +282,9 @@ function setGroupExpanded(group, open) {
   const head = group.querySelector(".facet-head");
   const btn = group.querySelector(".facet-toggle");
   if (head) head.setAttribute("aria-expanded", open ? "true" : "false");
-  if (btn) btn.textContent = open ? "Show less" : `Show all (${group.querySelectorAll(".facet-item").length})`;
+  if (btn) btn.textContent = open
+    ? "Show less"
+    : `Show all (${group.querySelectorAll(".facet-item:not(.is-empty)").length})`;
 }
 
 function updateActiveCount() {
@@ -291,25 +293,50 @@ function updateActiveCount() {
   el.textContent = n ? `${n} active` : "";
 }
 
-// Always use pre-computed global counts. Counts derived from the partially loaded
-// RECORDS array would hide valid choices after a narrow query or after clearing a
-// filter. Result totals remain exact because all matching shards load before filtering.
+// Counts come from the build-time contingency cube in facets.json, which holds one
+// row per observed (axis, cat, src, sta) combination -- so a selection's counts are
+// an exact sum over 112-ish rows, independent of which shards happen to be loaded.
+// This is deliberately neither of the two things it replaced: counts derived from
+// the partially loaded RECORDS array hid valid choices after a narrow query (#544),
+// and always-global counts offered dozens of clickable dead ends (#638).
+//
+// Without a usable cube -- an older facets.json, a corpus past MAX_CUBE_ROWS -- the
+// global tallies still render, and the sidebar note says which of the two you are
+// reading. It must never claim subset-aware counts while painting global ones.
 function refreshFacetCounts() {
-  const gcounts = (FACETS.counts) || {};
+  const state = BrowseFacetCounts.sidebarState(
+    FACETS.cube, SELECTED, QUERY, FACETS.counts);
+
   document.querySelectorAll("#facet-scroll .facet-group").forEach(group => {
     const key = group.dataset.key;
-    const c = gcounts[key] || {};
+    const c = state.counts[key] || {};
+    let shown = 0;
     group.querySelectorAll(".facet-item").forEach(item => {
       const el = item.querySelector("input[type=checkbox]");
       if (!el) return;
       const n = c[el.value] || 0;
       const cnt = item.querySelector(".count");
       if (cnt) cnt.textContent = n.toLocaleString();
+      const empty = BrowseFacetCounts.isDeadEnd(n, state.subsetAware, el.checked);
+      item.classList.toggle("is-empty", empty);
+      if (!empty) shown++;
     });
     const btn = group.querySelector(".facet-toggle");
-    if (btn && !group.classList.contains("expanded"))
-      btn.textContent = `Show all (${group.querySelectorAll(".facet-item").length})`;
+    // Count what "Show all" would actually reveal, not what is in the DOM.
+    if (btn && !group.classList.contains("expanded")) btn.textContent = `Show all (${shown})`;
   });
+
+  describeFacetCounts(state.note);
+}
+
+// Paint the note that sidebarState derived alongside the counts, so the wording
+// and the numbers can never describe different modes.
+function describeFacetCounts(words) {
+  const text = document.getElementById("facet-info-text");
+  const icon = document.getElementById("facet-info-icon");
+  if (!text) return;
+  text.textContent = words.short;
+  if (icon) icon.title = words.long;
 }
 
 /* ------------------------------------------------------------------ */

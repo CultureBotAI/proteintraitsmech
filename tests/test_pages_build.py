@@ -4,6 +4,7 @@ import importlib.util
 import hashlib
 import json
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -307,8 +308,16 @@ const assert = require('assert');
 const shards = require({module});
 
 // Deterministic PRNG: a failure must be reproducible from the seed alone.
+// mulberry32, not an LCG -- `seed * 1103515245` loses low-order precision past
+// 2^53, leaving the low bits stuck, and `% n` reads exactly those bits. That made
+// rand(4) a constant and confined selections to two of four values (#639).
 let seed = 20260902;
-const rand = (n) => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) % n;
+const rand = (n) => {{
+  seed = (seed + 0x6D2B79F5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return (((t ^ (t >>> 14)) >>> 0) / 4294967296 * n) | 0;
+}};
 
 const AXES = ['SEQUENCE', 'FUNCTION', 'STRUCTURE'];
 const CATS = ['SEQ_DOMAIN', 'FUNC_PATHWAY', 'FUNC_RESISTANCE', 'STRUCT_FOLD'];
@@ -491,3 +500,402 @@ def test_size_accounting_charges_the_separator_between_entries(monkeypatch):
         f"the chosen {bucket_count} buckets write {largest} bytes against a {target}-byte "
         f"target; the size accounting under-counts the separators"
     )
+
+
+def _rec(axis, cat, src, sta, i=0):
+    return {"id": f"T:{axis}:{cat}:{src}:{sta}:{i}", "axis": axis, "cat": cat,
+            "src": src, "sta": sta}
+
+
+def test_cube_rows_reproduce_every_marginal_tally(tmp_path):
+    """The cube must agree with the marginal counts shipped beside it (#638).
+
+    facets.json carries both `counts` (per-group totals) and `cube` (the joint
+    distribution). If they disagree the sidebar's numbers change meaning the
+    moment the browser falls back to global mode, which is precisely the kind of
+    drift no one notices.
+    """
+    records = [_rec("SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED", i) for i in range(7)]
+    records += [_rec("FUNCTION", "FUNC_PATHWAY", "Rhea", "REVIEWED", i) for i in range(3)]
+    records += [_rec("FUNCTION", "FUNC_PATHWAY", "Pfam", "SEEDED", i) for i in range(2)]
+
+    cube = BUILD._cube(records)
+    assert cube is not None
+    for position, key in enumerate(["axis", "cat", "src", "sta"]):
+        marginal = {}
+        for row in cube:
+            marginal[row[position]] = marginal.get(row[position], 0) + row[4]
+        assert marginal == BUILD._tally(records, key), f"cube disagrees with counts.{key}"
+    assert sum(row[4] for row in cube) == len(records)
+
+
+def test_cube_drops_records_the_sidebar_can_never_reach():
+    """A record missing a faceted field cannot be selected through the sidebar.
+
+    Counting it would put a total on screen larger than any amount of clicking
+    can return -- the same "count promises something the UI cannot deliver"
+    defect the cube exists to remove, reintroduced from the other side.
+    """
+    records = [_rec("SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED")]
+    records.append({"id": "T:nosrc", "axis": "SEQUENCE", "cat": "SEQ_DOMAIN", "sta": "SEEDED"})
+    records.append({"id": "T:blank", "axis": "SEQUENCE", "cat": "SEQ_DOMAIN", "src": "",
+                    "sta": "SEEDED"})
+
+    cube = BUILD._cube(records)
+    assert sum(row[4] for row in cube) == 1
+    assert BUILD._tally(records, "axis") == {"SEQUENCE": 3}   # marginals still count them
+
+
+def test_cube_is_abandoned_rather_than_shipped_unbounded(monkeypatch):
+    """Past the ceiling the builder emits no cube instead of a huge facets.json.
+
+    Nothing about the corpus bounds the number of distinct facet combinations, so
+    the bound is explicit. Returning None (browser falls back to global counts)
+    rather than raising keeps a display concern from failing the whole docs build.
+    """
+    monkeypatch.setattr(BUILD, "MAX_CUBE_ROWS", 4)
+    under = [_rec("A", f"C{i}", "S", "SEEDED") for i in range(4)]
+    assert BUILD._cube(under) is not None and len(BUILD._cube(under)) == 4
+
+    over = [_rec("A", f"C{i}", "S", "SEEDED") for i in range(5)]
+    assert BUILD._cube(over) is None
+
+
+def test_the_built_facets_file_carries_a_cube(tmp_path, monkeypatch):
+    """End to end: main() must actually write the key the browser reads."""
+    monkeypatch.setattr(BUILD, "OUT_DIR", tmp_path)
+    records = [_rec("SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED", i) for i in range(3)]
+    cube = BUILD._cube(records)
+    (tmp_path / "facets.json").write_text(json.dumps(
+        {"total": len(records), "counts": {"axis": BUILD._tally(records, "axis")},
+         "cube": cube, "shards": [], "detailDir": "detail"}))
+
+    written = json.loads((tmp_path / "facets.json").read_text())
+    assert written["cube"] == [["SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED", 3]]
+    source = (REPO / "scripts" / "build_docs_index.py").read_text()
+    assert '"cube": cube,' in source, "main() no longer emits the cube into facets.json"
+
+
+def test_browser_loads_facet_counts_helper_before_main_script():
+    html = (REPO / "docs" / "browse.html").read_text()
+    assert html.index('src="facet-counts.js"') < html.index('src="browse.js"')
+
+
+def test_every_browser_script_is_published_by_jekyll():
+    """A script missing from `include:` fails totally and silently (#544).
+
+    Jekyll serves the site; a helper it never copies leaves BrowseFacetCounts (or
+    BrowseShards) undefined in a browser that reports no build error at all. Every
+    script browse.html loads must be listed.
+    """
+    config = (REPO / "docs" / "_config.yml").read_text()
+    html = (REPO / "docs" / "browse.html").read_text()
+    scripts = re.findall(r'<script src="([^"/:]+\.js)"></script>', html)
+    assert scripts, "no local scripts found in browse.html"
+    listed = set(re.findall(r"^  - (\S+)$", config, re.M))
+    assert set(scripts) <= listed, f"not in _config.yml include: {sorted(set(scripts) - listed)}"
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_cube_counts_equal_a_full_scan_for_every_selection():
+    """Subset-aware facet counts must equal what a full record scan would give (#638).
+
+    This is the acceptance bar for replacing global counts. Random multi-value
+    selections across all four groups are counted twice: once by summing the cube,
+    once by scanning the records the cube was built from.
+
+    The mutation to beat is dropping the `i === g` guard in countsFor -- letting a
+    group constrain its own counts. That is self-referential: the selected value
+    keeps its count, every sibling reads 0, and the group can never be widened.
+    The scan below models the correct semantics, so it fails on that mutation.
+    """
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert');
+const fc = require({module});
+
+// Deterministic PRNG: a failure must be reproducible from the seed alone.
+// mulberry32, not an LCG -- `seed * 1103515245` loses low-order precision past
+// 2^53, leaving the low bits stuck, and `% n` reads exactly those bits. That made
+// rand(4) a constant and confined selections to two of four values (#639).
+let seed = 20260904;
+const rand = (n) => {{
+  seed = (seed + 0x6D2B79F5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return (((t ^ (t >>> 14)) >>> 0) / 4294967296 * n) | 0;
+}};
+
+const KEYS = ['axis', 'cat', 'src', 'sta'];
+const AXES = ['SEQUENCE', 'FUNCTION', 'STRUCTURE', 'EVOLUTION'];
+const CATS = ['SEQ_DOMAIN', 'SEQ_MOTIF', 'FUNC_PATHWAY', 'FUNC_RESISTANCE',
+              'STRUCT_FOLD', 'EVOL_ORTHOLOGY'];
+const SRCS = ['Pfam', 'InterPro', 'PROSITE', 'Rhea', 'CARD', 'CATH', 'SCOP', 'OrthoDB'];
+const STAS = ['SEEDED', 'REVIEWED', 'PROPOSED'];
+const POOLS = [AXES, CATS, SRCS, STAS];
+
+// Model the corpus's real structure rather than drawing all four fields
+// independently: categories belong to an axis, sources to a category, and Pfam
+// deliberately spans two axes. That is what makes the cube sparse -- 27 of 576
+// cells -- and a sparse cube is what distinguishes a correct sum from a
+// cross-product. Uniform draws would fill nearly every cell and hide the bug.
+const CAT_OF = {{
+  SEQUENCE: ['SEQ_DOMAIN', 'SEQ_MOTIF'],
+  FUNCTION: ['FUNC_PATHWAY', 'FUNC_RESISTANCE'],
+  STRUCTURE: ['STRUCT_FOLD'],
+  EVOLUTION: ['EVOL_ORTHOLOGY'],
+}};
+const SRC_OF = {{
+  SEQ_DOMAIN: ['Pfam', 'InterPro'], SEQ_MOTIF: ['PROSITE'],
+  FUNC_PATHWAY: ['Rhea', 'Pfam'], FUNC_RESISTANCE: ['CARD'],
+  STRUCT_FOLD: ['CATH', 'SCOP'], EVOL_ORTHOLOGY: ['OrthoDB'],
+}};
+const records = [];
+for (let i = 0; i < 900; i++) {{
+  const axis = AXES[rand(AXES.length)];
+  const cat = CAT_OF[axis][rand(CAT_OF[axis].length)];
+  records.push({{axis, cat, src: SRC_OF[cat][rand(SRC_OF[cat].length)],
+                sta: STAS[rand(STAS.length)]}});
+}}
+
+const tally = new Map();
+for (const r of records) {{
+  const key = KEYS.map(k => r[k]).join('\\u0000');
+  tally.set(key, (tally.get(key) || 0) + 1);
+}}
+const cube = [...tally].map(([key, n]) => [...key.split('\\u0000'), n]).sort();
+const CELLS = AXES.length * CATS.length * SRCS.length * STAS.length;
+assert.ok(cube.length > 20 && cube.length < CELLS / 4,
+  `cube is degenerate at ${{cube.length}} of ${{CELLS}} cells`);
+
+const pick = (pool) => {{
+  const chosen = new Set();
+  const count = rand(pool.length) + 1;
+  for (let i = 0; i < count; i++) chosen.add(pool[rand(pool.length)]);
+  return chosen;
+}};
+
+let sawNarrowed = 0;
+for (let trial = 0; trial < 300; trial++) {{
+  const selected = {{}};
+  KEYS.forEach((k, i) => {{ selected[k] = rand(3) === 0 ? new Set() : pick(POOLS[i]); }});
+
+  const got = fc.countsFor(cube, selected);
+  assert.ok(got, 'countsFor returned null for a well-formed cube');
+
+  // Independent full scan: for group g, apply every selection EXCEPT g's own.
+  KEYS.forEach((g, gi) => {{
+    const expected = {{}};
+    for (const r of records) {{
+      let ok = true;
+      KEYS.forEach((k, i) => {{
+        if (i === gi) return;
+        if (selected[k].size && !selected[k].has(r[k])) ok = false;
+      }});
+      if (ok) expected[r[g]] = (expected[r[g]] || 0) + 1;
+    }}
+    assert.deepStrictEqual(got[g], expected,
+      `trial ${{trial}} group ${{g}}: cube counts differ from a full scan\\n` +
+      `  selected=${{JSON.stringify(KEYS.map(k => [...selected[k]]))}}\\n` +
+      `  cube=${{JSON.stringify(got[g])}}\\n  scan=${{JSON.stringify(expected)}}`);
+
+    // The guard under test: a selected group must still offer its unselected
+    // siblings. Self-constrained counts would zero them.
+    if (selected[g].size && selected[g].size < POOLS[gi].length) {{
+      const others = POOLS[gi].filter(v => !selected[g].has(v));
+      if (others.some(v => (expected[v] || 0) > 0)) sawNarrowed++;
+    }}
+  }});
+
+  // Whole-selection total: here every group does constrain itself.
+  const total = fc.matchingTotal(cube, selected);
+  const scanned = records.filter(r =>
+    KEYS.every(k => !selected[k].size || selected[k].has(r[k]))).length;
+  assert.strictEqual(total, scanned, `trial ${{trial}}: matchingTotal ${{total}} != ${{scanned}}`);
+}}
+assert.ok(sawNarrowed > 50,
+  `only ${{sawNarrowed}} trials could distinguish self-constrained counts`);
+
+// A cube that is absent, empty or malformed yields null so the caller can fall
+// back to global counts and relabel -- never a half-populated object.
+for (const bad of [undefined, null, [], 'cube', [['A', 'B', 'C']],
+                   [['A', 'B', 'C', 'D', 'E']], [['A', 'B', 'C', 'D', -1]],
+                   [['A', 'B', 'C', 'D', 5, 'extra']], [['A', 'B', 'C', 'D']]]) {{
+  assert.strictEqual(fc.countsFor(bad, {{}}), null, `accepted a bad cube: ${{JSON.stringify(bad)}}`);
+  assert.strictEqual(fc.matchingTotal(bad, {{}}), null);
+}}
+
+// Plain arrays must work as well as Sets: deep-link parsing hands over arrays.
+assert.deepStrictEqual(
+  fc.countsFor(cube, {{axis: [...new Set(['SEQUENCE'])]}}),
+  fc.countsFor(cube, {{axis: new Set(['SEQUENCE'])}}));
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_no_facet_value_on_screen_can_return_an_empty_result():
+    """The user-visible promise: nothing clickable is a dead end (#638).
+
+    Under `axis=EVOLUTION` the shipped sidebar offers 54 of 56 categories and 32 of
+    33 sources that return "No records match". A value is shown only when its
+    subset-aware count is above zero, so this holds for every selection.
+    """
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert');
+const fc = require({module});
+const KEYS = ['axis', 'cat', 'src', 'sta'];
+
+const cube = [
+  ['EVOLUTION', 'EVOL_ORTHOLOGY', 'OrthoDB', 'SEEDED', 9],
+  ['SEQUENCE', 'SEQ_DOMAIN', 'Pfam', 'SEEDED', 75931],
+  ['SEQUENCE', 'SEQ_MOTIF', 'PROSITE', 'REVIEWED', 120],
+  ['FUNCTION', 'FUNC_PATHWAY', 'Rhea', 'SEEDED', 400],
+];
+const selected = {{axis: new Set(['EVOLUTION']), cat: new Set(), src: new Set(), sta: new Set()}};
+const counts = fc.countsFor(cube, selected);
+
+// Every value the sidebar would still show (count > 0) must really be reachable.
+for (const g of KEYS) {{
+  for (const [value, n] of Object.entries(counts[g])) {{
+    if (n === 0) continue;
+    const probe = {{}};
+    for (const k of KEYS) probe[k] = new Set(selected[k]);
+    probe[g].add(value);
+    assert.ok(fc.matchingTotal(cube, probe) > 0,
+      `${{g}}=${{value}} shows ${{n}} but selecting it returns nothing`);
+  }}
+}}
+// And the dead ends really are zeroed, not merely reordered.
+assert.strictEqual(counts.cat['SEQ_DOMAIN'] || 0, 0, 'SEQ_DOMAIN is a dead end under EVOLUTION');
+assert.strictEqual(counts.src['Pfam'] || 0, 0, 'Pfam is a dead end under EVOLUTION');
+assert.strictEqual(counts.cat['EVOL_ORTHOLOGY'], 9);
+// The axis group is not constrained by itself, so other axes stay switchable.
+assert.strictEqual(counts.axis['SEQUENCE'], 76051);
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_only_dead_ends_are_hidden_and_never_a_selected_value():
+    """Hiding rules, kept out of browse.js's DOM loop so they can be tested.
+
+    Hiding a *selected* value would remove the control that produced the current
+    view, leaving no way to undo it. Hiding on a global count would hide values
+    that are perfectly reachable, since a global zero says nothing about the
+    current selection.
+    """
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert');
+const fc = require({module});
+
+assert.strictEqual(fc.isDeadEnd(0, true, false), true,  'an unselected zero is a dead end');
+assert.strictEqual(fc.isDeadEnd(0, true, true), false,  'a selected value must stay visible');
+assert.strictEqual(fc.isDeadEnd(5, true, false), false, 'a reachable value must stay visible');
+assert.strictEqual(fc.isDeadEnd(0, false, false), false, 'global mode hides nothing');
+// Missing counts read as zero, not as visible.
+assert.strictEqual(fc.isDeadEnd(undefined, true, false), true);
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_the_sidebar_note_never_claims_counts_it_is_not_showing():
+    """The disclosure must track the mode in force (#544's tradeoff, kept honest).
+
+    Global counts were disclosed in static markup. Now that the mode can change at
+    runtime -- an old facets.json, a corpus past MAX_CUBE_ROWS, a query typed --
+    static wording would be a lie in whichever mode it does not describe.
+    """
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert');
+const fc = require({module});
+
+const global_ = fc.note(false, false);
+const globalQ = fc.note(false, true);
+const subset = fc.note(true, false);
+const subsetQ = fc.note(true, true);
+
+for (const n of [global_, globalQ, subset, subsetQ]) {{
+  assert.ok(n.short && n.long, 'a mode has no wording');
+}}
+// Global mode must say global, and must not promise filter-aware counts.
+assert.ok(/global/i.test(global_.short) && /global/i.test(global_.long));
+assert.ok(!/reflect the active filters/i.test(global_.short));
+assert.deepStrictEqual(global_, globalQ, 'a query does not change what global counts are');
+
+// Subset mode must not describe itself as global...
+assert.ok(!/global/i.test(subset.short), 'subset-aware counts described as global');
+assert.ok(!/global/i.test(subsetQ.short));
+// ...and with a query active it must disclose that the search text is excluded.
+assert.ok(/search/i.test(subsetQ.short) || /search/i.test(subsetQ.long),
+  'the query/cube gap is undisclosed');
+assert.notDeepStrictEqual(subset, subsetQ, 'the query gap is not disclosed differently');
+assert.ok(/hidden/i.test(subset.short), 'hiding empty values is undisclosed');
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+
+
+def test_browse_js_delegates_the_count_rules_rather_than_restating_them():
+    """browse.js must call the tested helpers, not re-implement them inline.
+
+    An inline copy of the dead-end rule or the wording is invisible to every test
+    above -- the DOM loop is the one part node cannot exercise, so it has to stay
+    a loop and nothing more.
+    """
+    js = (REPO / "docs" / "browse.js").read_text()
+    assert "BrowseFacetCounts.sidebarState(" in js
+    assert "BrowseFacetCounts.isDeadEnd(" in js
+    assert "Counts are global corpus totals" not in js, "wording duplicated in browse.js"
+    # The mode flag must be the one sidebarState derived. Recomputing it in the
+    # page is how the note and the numbers come to describe different modes.
+    assert "state.subsetAware" in js
+    assert "describeFacetCounts(state.note)" in js
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_the_sidebar_state_cannot_describe_a_mode_it_is_not_in():
+    """Counts, hiding, and wording are one decision or they drift apart (#638).
+
+    The page reads all three from `sidebarState`, so a usable cube must yield
+    subset-aware counts *and* subset-aware wording, and an unusable one must yield
+    the global tallies *and* the global wording -- never a mix.
+    """
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert');
+const fc = require({module});
+
+const cube = [['A', 'C1', 'S1', 'SEEDED', 3], ['B', 'C2', 'S2', 'REVIEWED', 7]];
+const globals = {{axis: {{A: 3, B: 7}}, cat: {{C1: 3, C2: 7}}, src: {{}}, sta: {{}}}};
+
+const live = fc.sidebarState(cube, {{axis: new Set(['A'])}}, '', globals);
+assert.strictEqual(live.subsetAware, true);
+assert.deepStrictEqual(live.note, fc.note(true, false));
+assert.strictEqual(live.counts.cat['C2'], undefined, 'cat was not narrowed by axis=A');
+assert.strictEqual(live.counts.axis['B'], 7, 'axis was narrowed by its own selection');
+
+// Every way the cube can be unusable must land in global mode, wording included.
+for (const bad of [undefined, null, [], 'nope', [['A', 'B', 'C']]]) {{
+  const fallback = fc.sidebarState(bad, {{axis: new Set(['A'])}}, '', globals);
+  assert.strictEqual(fallback.subsetAware, false, `bad cube read as subset-aware`);
+  assert.deepStrictEqual(fallback.counts, globals, 'global tallies were not used');
+  assert.deepStrictEqual(fallback.note, fc.note(false, false), 'wording claims the wrong mode');
+}}
+
+// No cube and no global tallies either: empty, not a crash.
+assert.deepStrictEqual(fc.sidebarState(null, {{}}, '', undefined).counts, {{}});
+
+// The query flag reaches the wording.
+assert.deepStrictEqual(fc.sidebarState(cube, {{}}, 'kinase', globals).note, fc.note(true, true));
+assert.deepStrictEqual(fc.sidebarState(cube, {{}}, '', globals).note, fc.note(true, false));
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
