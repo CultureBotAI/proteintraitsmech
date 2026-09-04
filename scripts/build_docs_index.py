@@ -744,9 +744,15 @@ def _cube(records: list[dict]) -> list[list] | None:
     clickable dead ends (#638).
 
     Rows are [axis, cat, src, sta, count], positional, matching KEYS in
-    docs/facet-counts.js. Records missing any of the four fields are dropped: they
-    are unreachable through the sidebar, so counting them would inflate every
-    total above what clicking can ever return.
+    docs/facet-counts.js. A field the record does not have is null, not dropped
+    (#641): filterRecords() only tests groups that carry a selection, so a record
+    with a source but no category is still reachable by selecting that source, and
+    dropping it would under-count the source -- possibly to zero, which hides a
+    genuinely reachable value. null matches no selection, so the record is still
+    correctly excluded the moment its empty group is constrained. This is what
+    keeps each cube marginal equal to the _tally beside it.
+
+    A record with no faceted field at all is dropped: no selection can reach it.
 
     Returning None rather than raising keeps a cardinality explosion from blocking
     the whole docs build over a display concern -- the browser falls back to global
@@ -754,13 +760,15 @@ def _cube(records: list[dict]) -> list[list] | None:
     """
     counts: dict[tuple, int] = {}
     for r in records:
-        key = (r.get("axis"), r.get("cat"), r.get("src"), r.get("sta"))
-        if not all(key):
+        key = tuple(r.get(f) or None for f in ("axis", "cat", "src", "sta"))
+        if not any(key):
             continue
         counts[key] = counts.get(key, 0) + 1
         if len(counts) > MAX_CUBE_ROWS:
             return None
-    return [list(k) + [v] for k, v in sorted(counts.items())]
+    # None sorts before every string rather than raising on the comparison.
+    ordered = sorted(counts.items(), key=lambda kv: tuple("" if v is None else v for v in kv[0]))
+    return [list(k) + [v] for k, v in ordered]
 
 
 def _tally(records: list[dict], key: str) -> dict[str, int]:

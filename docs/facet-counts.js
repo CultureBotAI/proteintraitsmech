@@ -58,8 +58,12 @@
           if (chosen[i] && !chosen[i].has(row[i])) { ok = false; break; }
         }
         if (!ok) continue;
-        const bucket = out[KEYS[g]];
         const value = row[g];
+        // A null is "this record has no value in this group" (#641). It counts
+        // toward the groups it does have, but has no checkbox of its own, so it
+        // must not become a facet value. A selection never matches it either.
+        if (value === null || value === undefined) continue;
+        const bucket = out[KEYS[g]];
         bucket[value] = (bucket[value] || 0) + n;
       }
     }

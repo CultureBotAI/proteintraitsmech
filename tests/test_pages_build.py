@@ -529,21 +529,41 @@ def test_cube_rows_reproduce_every_marginal_tally(tmp_path):
     assert sum(row[4] for row in cube) == len(records)
 
 
-def test_cube_drops_records_the_sidebar_can_never_reach():
-    """A record missing a faceted field cannot be selected through the sidebar.
+def test_a_record_missing_one_facet_still_counts_toward_the_others():
+    """Dropping it would hide a value that is genuinely reachable (#641).
 
-    Counting it would put a total on screen larger than any amount of clicking
-    can return -- the same "count promises something the UI cannot deliver"
-    defect the cube exists to remove, reintroduced from the other side.
+    filterRecords() only tests groups that carry a selection, so a record with a
+    source but no category is reachable by selecting that source. Dropping it
+    under-counts the source -- to zero if it is the only one -- and a zero count
+    hides the value entirely. A dead end wastes a click; a hidden value cannot be
+    clicked at all.
     """
     records = [_rec("SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED")]
-    records.append({"id": "T:nosrc", "axis": "SEQUENCE", "cat": "SEQ_DOMAIN", "sta": "SEEDED"})
-    records.append({"id": "T:blank", "axis": "SEQUENCE", "cat": "SEQ_DOMAIN", "src": "",
+    records.append({"id": "T:nocat", "axis": "SEQUENCE", "src": "Rhea", "sta": "SEEDED"})
+    records.append({"id": "T:blank", "axis": "SEQUENCE", "cat": "", "src": "Rhea",
                     "sta": "SEEDED"})
 
     cube = BUILD._cube(records)
+    assert sum(row[4] for row in cube) == 3, "an incomplete record was dropped"
+    assert [r for r in cube if r[1] is None], "the missing category is not null"
+
+    # Rhea is reachable by selecting it, so it must carry a count.
+    for position, key in enumerate(["axis", "cat", "src", "sta"]):
+        marginal = {}
+        for row in cube:
+            if row[position] is None:
+                continue
+            marginal[row[position]] = marginal.get(row[position], 0) + row[4]
+        assert marginal == BUILD._tally(records, key), f"cube marginal != counts.{key}"
+    assert BUILD._tally(records, "src")["Rhea"] == 2
+
+
+def test_a_record_with_no_facets_at_all_is_dropped():
+    """No selection can reach it, so counting it would promise an unreachable total."""
+    records = [_rec("SEQUENCE", "SEQ_DOMAIN", "Pfam", "SEEDED"), {"id": "T:bare"}]
+    cube = BUILD._cube(records)
     assert sum(row[4] for row in cube) == 1
-    assert BUILD._tally(records, "axis") == {"SEQUENCE": 3}   # marginals still count them
+    assert len(cube) == 1
 
 
 def test_cube_is_abandoned_rather_than_shipped_unbounded(monkeypatch):
@@ -575,6 +595,11 @@ def test_the_built_facets_file_carries_a_cube(tmp_path, monkeypatch):
     source = (REPO / "scripts" / "build_docs_index.py").read_text()
     assert '"cube": cube,' in source, "main() no longer emits the cube into facets.json"
 
+    # Nulls and strings coexist in a row, so the row ordering must not compare them.
+    mixed = records + [{"id": "T:nosrc", "axis": "SEQUENCE", "cat": "SEQ_DOMAIN",
+                        "sta": "SEEDED"}]
+    assert json.dumps(BUILD._cube(mixed))  # sorts without raising, and serialises
+
 
 def test_browser_loads_facet_counts_helper_before_main_script():
     html = (REPO / "docs" / "browse.html").read_text()
@@ -587,13 +612,24 @@ def test_every_browser_script_is_published_by_jekyll():
     Jekyll serves the site; a helper it never copies leaves BrowseFacetCounts (or
     BrowseShards) undefined in a browser that reports no build error at all. Every
     script browse.html loads must be listed.
+
+    Every <script> tag is enumerated first and its src read second (#642). Matching
+    the whole tag shape instead would let a script drop out of the checked set the
+    moment it gained `defer` or `type=module` -- still green, quietly covering less.
     """
     config = (REPO / "docs" / "_config.yml").read_text()
     html = (REPO / "docs" / "browse.html").read_text()
-    scripts = re.findall(r'<script src="([^"/:]+\.js)"></script>', html)
-    assert scripts, "no local scripts found in browse.html"
+
+    tags = re.findall(r"<script\b[^>]*>", html)
+    assert tags, "no script tags found in browse.html"
+    srcs = [m.group(1) for m in (re.search(r'src="([^"]+)"', t) for t in tags) if m]
+    local = [s for s in srcs if not s.startswith(("http://", "https://", "//"))]
+    # If the tag pattern ever goes blind, this is what notices.
+    assert len(local) >= 4, f"only {len(local)} local scripts found: {local}"
+
     listed = set(re.findall(r"^  - (\S+)$", config, re.M))
-    assert set(scripts) <= listed, f"not in _config.yml include: {sorted(set(scripts) - listed)}"
+    missing = [s for s in local if s not in listed]
+    assert not missing, f"not in _config.yml include: {missing}"
 
 
 @pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
@@ -654,16 +690,28 @@ const records = [];
 for (let i = 0; i < 900; i++) {{
   const axis = AXES[rand(AXES.length)];
   const cat = CAT_OF[axis][rand(CAT_OF[axis].length)];
-  records.push({{axis, cat, src: SRC_OF[cat][rand(SRC_OF[cat].length)],
-                sta: STAS[rand(STAS.length)]}});
+  const rec = {{axis, cat, src: SRC_OF[cat][rand(SRC_OF[cat].length)],
+               sta: STAS[rand(STAS.length)]}};
+  // One record in twelve is missing a field (#641). It stays reachable through
+  // the groups it does have, and must vanish only once its empty group is
+  // constrained -- the case a hand-written cube would not cover.
+  if (rand(12) === 0) rec[KEYS[rand(KEYS.length)]] = null;
+  records.push(rec);
 }}
+let incomplete = 0;
+for (const r of records) if (KEYS.some(k => r[k] === null)) incomplete++;
+assert.ok(incomplete > 40, `only ${{incomplete}} incomplete records generated`);
 
 const tally = new Map();
 for (const r of records) {{
-  const key = KEYS.map(k => r[k]).join('\\u0000');
+  const key = JSON.stringify(KEYS.map(k => r[k]));
   tally.set(key, (tally.get(key) || 0) + 1);
 }}
-const cube = [...tally].map(([key, n]) => [...key.split('\\u0000'), n]).sort();
+// Key on JSON so a null stays a null instead of becoming the string "null" --
+// exactly the round-trip the builder must not do either.
+const cube = [...tally].map(([key, n]) => [...JSON.parse(key), n]);
+cube.sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+assert.ok(cube.some(row => row.slice(0, 4).includes(null)), 'no null row in the cube');
 const CELLS = AXES.length * CATS.length * SRCS.length * STAS.length;
 assert.ok(cube.length > 20 && cube.length < CELLS / 4,
   `cube is degenerate at ${{cube.length}} of ${{CELLS}} cells`);
@@ -692,8 +740,9 @@ for (let trial = 0; trial < 300; trial++) {{
         if (i === gi) return;
         if (selected[k].size && !selected[k].has(r[k])) ok = false;
       }});
-      if (ok) expected[r[g]] = (expected[r[g]] || 0) + 1;
+      if (ok && r[g] !== null) expected[r[g]] = (expected[r[g]] || 0) + 1;
     }}
+    assert.ok(!('null' in expected) && !(null in got[g]), 'null became a facet value');
     assert.deepStrictEqual(got[g], expected,
       `trial ${{trial}} group ${{g}}: cube counts differ from a full scan\\n` +
       `  selected=${{JSON.stringify(KEYS.map(k => [...selected[k]]))}}\\n` +
