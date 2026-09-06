@@ -27,10 +27,10 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: CpxR → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Curated resistance-causation graph for Cpx-controlled activation of antibiotic efflux.
+    The graph replaces the seeded AdeR archetype evidence with Cpx-specific CARD evidence, grounds the
+    named efflux pump and broad positive transcriptional regulation, and models pump expression as causally
+    upstream of antibiotic efflux.
   nodes:
   - node_id: determinant
     label: CpxR
@@ -40,16 +40,22 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant activates
+  - node_id: acrd_pump
+    label: AcrD aminoglycoside efflux pump
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
+    grounding: ARO:3000491
+    description: Grounded to CARD's AcrD aminoglycoside efflux pump class.
+  - node_id: mexab_pump
+    label: MexAB-OprM multidrug efflux pump
+    node_type: PROTEIN
+    grounding: ARO:3000386
+    description: Grounded to CARD's MexAB-OprM multidrug efflux pump class.
   - node_id: activation
-    label: activation of efflux pump expression
+    label: positive regulation of Cpx-controlled efflux-pump transcription
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0045893
+    description: Grounded to the broad GO DNA-templated transcriptional activation process because these
+      Cpx regulators promote expression of named efflux pumps.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,48 +68,165 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies CpxR under antibiotic efflux because it promotes acrD expression and
+      can activate MexAB-OprM expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by CpxAR.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM efflux pump activated by P. aeruginosa CpxR.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents CpxR-regulated AcrD and MexAB-OprM drug export.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by CpxAR.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM efflux pump activated by P. aeruginosa CpxR.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CpxR activates expression of AcrD or MexAB-OprM efflux pumps, which drive efflux-mediated
+      resistance.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by CpxAR.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM efflux pump activated by P. aeruginosa CpxR.
   - subject: determinant
-    predicate: enables (activates the pump operon)
+    predicate: enables (activates efflux pump expression)
     predicate_id: RO:0002327
     object: activation
+    description: CpxR participates in positive regulation of AcrD and MexAB-OprM expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
   - subject: activation
     predicate: positively regulates (raises pump expression)
     predicate_id: RO:0002213
-    object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
+    object: acrd_pump
+    description: CpxR-dependent activation increases AcrD expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by CpxAR.
+  - subject: activation
+    predicate: positively regulates (raises pump expression)
+    predicate_id: RO:0002213
+    object: mexab_pump
+    description: P. aeruginosa CpxR-dependent activation increases MexAB-OprM expression.
+    evidence:
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM efflux pump activated by P. aeruginosa CpxR.
+  - subject: acrd_pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: AcrD is one efflux pump promoted by CpxR.
+    evidence:
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by CpxAR.
+  - subject: mexab_pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MexAB-OprM is one efflux pump promoted by P. aeruginosa CpxR.
+    evidence:
+    - reference: ARO:3000831
+      snippet: CpxR is a regulator that promotes acrD expression when phosphorylated by a cascade involving
+        CpxA, a sensor kinase. CpxR is also directly involved in activation of expression of RND efflux
+        pump MexAB-OprM in P. aeruginosa. CpxR is required to enhance mexAB-oprM expression and drug resistance,
+        in the absence of repressor MexR.
+      notes: CARD definition for the CpxR response-regulator determinant.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM efflux pump activated by P. aeruginosa CpxR.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced AdeR archetype evidence in Cpx efflux activators, grounded pump/transcription nodes,
+    and linked pump expression to antibiotic efflux
   llm_assisted: true
 license: CC-BY 4.0
