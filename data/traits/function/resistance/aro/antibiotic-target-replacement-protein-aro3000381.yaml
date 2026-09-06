@@ -15,13 +15,10 @@ trait_relations:
     relation_source: "ARO participates_in (mechanism) via ARO:3000381 antibiotic target replacement protein"
 causal_graphs:
 - graph_id: resistance
-  title: antibiotic target replacement protein → mechanism → resistance (curated from ARO relations +
-    literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000381). Target replacement, stated abstractly. The determinant does the SAME JOB as the drug''s
-    target while being structurally unlike it. NOT asserted: which target it replaces -- CARD''s sentence
-    is deliberately general and the members do not name a specific one.'
+  title: antibiotic target replacement protein → target replacement → resistance
+  description: Conservative graph for the abstract antibiotic target-replacement parent. The shared function
+    and structural difference from the sensitive target stay as described local states because this parent
+    does not identify a concrete replaced target.
   nodes:
   - node_id: determinant
     label: antibiotic target replacement protein
@@ -32,13 +29,15 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001002
   - node_id: shared_function
-    label: the function shared with the drug's target
-    node_type: MOLECULAR_FUNCTION
-    description: 'Deliberately unnamed: CARD''s claim is that the function is the SAME, not what it is.'
+    label: functional equivalence to the sensitive target
+    node_type: STATE
+    description: Local state representing CARD's abstract claim that the replacement protein has the same
+      function as an antibiotic-sensitive target.
   - node_id: structural_difference
     label: structural difference from the sensitive target
     node_type: STATE
-    description: The causal core -- 'structurally different and THUS resistant'.
+    description: Local state representing CARD's abstract claim that the replacement protein is structurally
+      different from antibiotic-sensitive targets.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -51,60 +50,98 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this parent under antibiotic target replacement.
     evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: Family mechanism ARO:0001002.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The target-replacement mechanism provides an alternate protein that can substitute for
+      an antibiotic-sensitive target.
     evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: Mechanism ARO:0001002 → resistance.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The replacement protein combines the sensitive target's function with structural divergence
+      that resists antibiotic inhibition.
     evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: 'Both halves: ''the SAME FUNCTIONS as other antibiotic target proteins'' (why substitution
-        works) and ''STRUCTURALLY DIFFERENT and thus resistant'' (why the drug does not stop it). Round
-        52''s mecA config had to leave the second implicit.'
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
   - subject: determinant
-    predicate: enables (the same function as the drug's target)
-    predicate_id: RO:0002327
+    predicate: has quality (same function as the sensitive target)
+    predicate_id: RO:0000086
     object: shared_function
-    description: 'Why substitution restores the cell: the replacement does the job the inhibited protein
-      was doing.'
+    description: This local state captures the same-function half of CARD's abstract target-replacement
+      definition.
     evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: '''Alternate proteins that have the SAME FUNCTIONS as other antibiotic target proteins''.'
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
   - subject: determinant
     predicate: has quality (structurally unlike the sensitive target)
     predicate_id: RO:0000086
     object: structural_difference
+    description: This local state captures CARD's structurally-different claim for generic replacement
+      proteins.
     evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: '''but are STRUCTURALLY DIFFERENT and thus resistant to antibiotics'' -- CARD''s own ''thus''
-        is the causal link round 52 had to infer.'
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
+  - subject: structural_difference
+    predicate: causally upstream of (target replacement resists inhibition)
+    predicate_id: RO:0002411
+    object: resistance
+    description: CARD states that the replacement proteins are structurally different and therefore resistant
+      to antibiotics.
+    evidence:
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:0001002
+      snippet: antibiotic target replacement
+      notes: ARO mechanism term linked from ARO:3000381 by its participates_in resistance-mechanism relation.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Described abstract target-replacement graph
   llm_assisted: true
 license: CC-BY 4.0
