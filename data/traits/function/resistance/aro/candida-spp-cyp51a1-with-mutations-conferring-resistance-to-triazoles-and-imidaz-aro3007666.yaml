@@ -28,12 +28,11 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: Candida spp. cyp51A1 with mutations conferring resistance to triazoles and imidazole antibiotics
-    → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3007522). Mechanism deliberately NOT asserted. These are the azole target (lanosterol 14-alpha-demethylase)
-    in most fungi and the binding story is standard, but CARD''s sentence gives a function and a resistance
-    claim and nothing between. Round 66''s position, and #219''s lesson.'
+    → cytochrome P450 role → antifungal resistance
+  description: Conservative graph for antifungal-resistant fungal cytochrome P450 enzymes. The graph keeps
+    the ARO mutation resistance route, grounds the named cytochrome P450 monooxygenase role, and omits
+    azole-binding and lanosterol-demethylase target-alteration edges because ARO does not state them for
+    this branch.
   nodes:
   - node_id: determinant
     label: Candida spp. cyp51A1 with mutations conferring resistance to triazoles and imidazole antibiotics
@@ -54,8 +53,9 @@ causal_graphs:
   - node_id: p450_activity
     label: cytochrome P450 monooxygenase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'The one functional fact CARD''s naming supplies. Ungrounded: not looked up rather than
-      guessed (rounds 56-103).'
+    grounding: GO:0004497
+    description: Grounded to the generic GO monooxygenase activity because ARO names fungal cytochrome
+      P450 enzymes but does not assert a narrower reaction for the resistance mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,65 +68,185 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies resistant fungal cytochrome P450 variants under mutation conferring antibiotic
+      resistance.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007522
       snippet: Fungal cytochrome P450 enzymes which include mutations or other modifications to confer
         resistance to antifungal drug compounds.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antifungal-resistant cytochrome P450 enzyme parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad ARO mutation mechanism covers altered gene products that may result in antibiotic
+      resistance.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007522
       snippet: Fungal cytochrome P450 enzymes which include mutations or other modifications to confer
         resistance to antifungal drug compounds.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antifungal-resistant cytochrome P450 enzyme parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ARO reports antifungal resistance for altered fungal cytochrome P450 enzymes while leaving
+      the target-alteration route unresolved.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007522
       snippet: Fungal cytochrome P450 enzymes which include mutations or other modifications to confer
         resistance to antifungal drug compounds.
-      notes: 'A functional identity and a resistance claim, with no mechanism between them -- round 66''s
-        EF-Tu shape. NOTE the hedge: ''mutations OR OTHER MODIFICATIONS'' -- the determinant class is
-        not even resolved to mutation.'
+      notes: CARD definition for the antifungal-resistant cytochrome P450 enzyme parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to triazole antibiotic.
+    description: ARO maps this fungal cytochrome P450 determinant to triazole antibiotic.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007523
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007499 ! triazole antibiotic'
-      notes: Asserted on ARO:3007523 (triazole-resistant fungal cytochrome P450 enzyme), an is_a ancestor
-        of this record's ARO:3007666; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on ARO:3007523 and inherited by ARO:3007666.
+    - reference: ARO:3007499
+      snippet: triazole antibiotic
+      notes: ARO drug-class term for triazole antibiotic.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug1
-    description: CARD asserts that this determinant confers resistance to imidazole antibiotic.
+    description: ARO maps this fungal cytochrome P450 determinant to imidazole antibiotic.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007667
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007500 ! imidazole antibiotic'
-      notes: Asserted on ARO:3007667 (imidazole-resistant fungal cytochrome P450 enzyme), an is_a ancestor
-        of this record's ARO:3007666; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on ARO:3007667 and inherited by ARO:3007666.
+    - reference: ARO:3007500
+      snippet: imidazole antibiotic
+      notes: ARO drug-class term for imidazole antibiotic.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
   - subject: determinant
-    predicate: enables (cytochrome P450 activity)
+    predicate: enables
     predicate_id: RO:0002327
     object: p450_activity
-    description: What the determinant IS, which is all CARD's naming gives.
+    description: ARO names the determinant as a fungal cytochrome P450 enzyme without stating an azole-binding
+      mechanism.
     evidence:
+    - reference: ARO:3007666
+      snippet: Candida spp. cyp51A1 is a fungal cytochrome P450 enzyme with mutations in the gene causing
+        triazole and imidazole resistance.
+      notes: CARD definition for Candida spp. cyp51A1 with mutations conferring resistance to triazoles
+        and imidazole antibiotics.
     - reference: ARO:3007522
       snippet: Fungal cytochrome P450 enzymes which include mutations or other modifications to confer
         resistance to antifungal drug compounds.
-      notes: '''Fungal cytochrome P450 enzymes'' -- a functional name. NOT asserted: that the drug binds
-        this enzyme, or how the mutations resist antifungal compounds, neither of which CARD states.'
+      notes: CARD definition for the antifungal-resistant cytochrome P450 enzyme parent term.
+    - reference: ARO:3007523
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class
+        antibiotics.
+      notes: CARD definition for the triazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: ARO:3007667
+      snippet: Fungal cytochrome P450 enzymes which include mutations to confer resistance to imidazole-class
+        antibiotics.
+      notes: CARD definition for the imidazole-resistant fungal cytochrome P450 enzyme parent term.
+    - reference: DOI:10.1128/AAC.42.2.241
+      notes: PMID:9527767 (aro citation)
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded conservative fungal P450 monooxygenase graphs
   llm_assisted: true
 license: CC-BY 4.0
