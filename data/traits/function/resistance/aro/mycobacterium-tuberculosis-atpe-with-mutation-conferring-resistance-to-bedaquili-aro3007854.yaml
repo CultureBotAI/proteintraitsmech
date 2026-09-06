@@ -23,12 +23,12 @@ xrefs:
   - ISBN:978-92-4-008241-0
 causal_graphs:
 - graph_id: resistance
-  title: Mycobacterium tuberculosis atpE with mutation conferring resistance to bedaquiline → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3007477). Target alteration of ATP synthase subunit C; the drug's action is stated, unlike most
-    target-alteration records here.
+  title: Mycobacterium tuberculosis atpE with mutation conferring resistance to bedaquiline → blocked
+    ATP synthesis → resistance
+  description: Conservative graph for bedaquiline resistance caused by ATP synthase subunit-C variants.
+    The graph grounds proton motive force-driven ATP synthesis to GO:0015986, models bedaquiline binding
+    and blocking of ATP synthase as a local state, and links subunit-C variants to reduced blocking of
+    the ATP-synthesis process.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis atpE with mutation conferring resistance to bedaquiline
@@ -43,13 +43,15 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3004491
   - node_id: atp_synthesis
-    label: ATP synthase reactions
+    label: proton motive force-driven ATP synthesis
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0015986
+    description: ATP synthesis coupled to proton transport by the membrane ATP synthase.
   - node_id: blocking
-    label: Bedaquiline binding and blocking of ATP synthase
+    label: bedaquiline-bound blocked ATP synthase
     node_type: STATE
-    description: What the mutation disrupts.
+    description: Local state representing bedaquiline binding and blocking ATP synthase; subunit-C mutations
+      reduce this drug-bound blocked state.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,76 +64,176 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies these ATP synthase variants under mutation conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The altered ATP synthase target blocks bedaquiline action and therefore confers resistance.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Subunit-C ATP synthase mutations confer bedaquiline resistance by disrupting target binding
+      and blocking.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: 'Both halves: what Bedaquiline does (''binding and BLOCKING of ATP synthase reactions'')
-        and what the mutation does to it (''DISRUPTING'' that). SCOPE: subunit C specifically.'
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to diarylquinoline antibiotic.
+    description: The parent ARO term links antibiotic-resistant ATP synthase to diarylquinoline antibiotics.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004491 ! diarylquinoline antibiotic'
-      notes: Asserted on ARO:3007477 (antibiotic resistant ATP synthase), an is_a ancestor of this record's
-        ARO:3007854; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship on ARO:3007477; modeled here as a determinant-to-diarylquinoline-antibiotic
+        edge and inherited by the atpE leaf records.
   - subject: determinant
-    predicate: part of (ATP synthase)
-    predicate_id: BFO:0000050
+    predicate: participates in (proton motive force-driven ATP synthesis)
+    predicate_id: RO:0000056
     object: atp_synthesis
+    description: ATP synthase subunit C is a component of the membrane ATP synthase that performs proton
+      motive force-driven ATP synthesis.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: '''ATP synthase enzymes, specifically subunit C''.'
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: GO:0015986
+      snippet: The chemical reactions and pathways resulting in the formation of ATP driven by transport
+        of protons across a membrane to generate an electrochemical gradient (proton-motive force).
+      notes: GO definition for proton motive force-driven ATP synthesis.
   - subject: drug0
     predicate: causally upstream of (binds and blocks ATP synthase)
     predicate_id: RO:0002411
     object: blocking
+    description: Bedaquiline is modeled as producing the local state in which ATP synthase is bound and
+      blocked.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: '''binding and blocking of ATP synthase reactions by Bedaquiline''.'
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: GO:0015986
+      snippet: The chemical reactions and pathways resulting in the formation of ATP driven by transport
+        of protons across a membrane to generate an electrochemical gradient (proton-motive force).
+      notes: GO definition for proton motive force-driven ATP synthesis.
+  - subject: blocking
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: atp_synthesis
+    description: Bedaquiline binding and blocking of ATP synthase inhibits the grounded ATP-synthesis
+      process.
+    evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
+    - reference: ARO:3007477
+      snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
+        including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
+        and blocking of ATP synthase reactions by Bedaquiline.
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: GO:0015986
+      snippet: The chemical reactions and pathways resulting in the formation of ATP driven by transport
+        of protons across a membrane to generate an electrochemical gradient (proton-motive force).
+      notes: GO definition for proton motive force-driven ATP synthesis.
   - subject: determinant
-    predicate: negatively regulates (mutations disrupt the drug's binding)
+    predicate: negatively regulates (mutations disrupt drug binding)
     predicate_id: RO:0002212
     object: blocking
+    description: ATP synthase subunit-C mutations reduce the bedaquiline-bound blocked state.
     evidence:
+    - reference: ARO:3007854
+      snippet: Genetic variants of ATPase subunit C atpE with mutations associated with resistance to
+        bedaquiline antibiotics.
+      notes: CARD definition for Mycobacterium tuberculosis atpE with mutation conferring resistance to
+        bedaquiline.
     - reference: ARO:3007477
       snippet: ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics
         including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding
         and blocking of ATP synthase reactions by Bedaquiline.
-      notes: '''Mutations in ATP synthase confer antibiotic resistance by DISRUPTING binding''.'
+      notes: CARD definition for antibiotic resistant ATP synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded ATP synthase bedaquiline-resistance graphs
   llm_assisted: true
 license: CC-BY 4.0
