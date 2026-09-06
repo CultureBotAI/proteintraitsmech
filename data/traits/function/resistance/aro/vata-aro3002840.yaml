@@ -29,11 +29,10 @@ evidence:
   notes: PMID:8344533 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: vatA → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000453). Acetylation of streptogramin A. The vgb lyases in this family act on type B by a different
-    reaction.
+  title: vatA → streptogramin A acetylation → drug inactivation
+  description: Conservative graph for Vat-mediated streptogramin resistance. The graph routes the acetyl-CoA
+    and streptogramin inputs through the grounded ARO acylation mechanism and represents the acetylated,
+    inactive streptogramin A as a local state.
   nodes:
   - node_id: determinant
     label: vatA
@@ -51,18 +50,15 @@ causal_graphs:
     label: streptogramin antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000026
-  - node_id: acetylation
-    label: streptogramin A acetyltransferase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-63).'
   - node_id: acetyl_coa
-    label: acetyl-CoA (the acetyl donor)
+    label: acetyl-CoA
     node_type: CHEMICAL
     grounding: CHEBI:15351
   - node_id: modified
-    label: acetylated, inactive streptogramin A
+    label: acetylated inactive streptogramin A
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for the acetylated, inactive streptogramin A product of Vat-mediated acetyl-group
+      transfer.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -75,107 +71,194 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies Vat determinants under antibiotic inactivation.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad resistance mechanism for Vat streptogramin acetylation.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies Vat determinants under acylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: Family mechanism ARO:3000106.
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Vat enzymes transfer an acetyl group to streptogramin A compounds and thereby inactivate
+      them.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: Mechanism ARO:3000106 → resistance.
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Vat determinants confer resistance by acetylating and inactivating streptogramin A compounds.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: 'The full chain in one sentence: donor, acceptor, the exact position acylated, and the resistance.'
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to streptogramin antibiotic.
+    description: ARO maps Vat acetyltransferases to streptogramin antibiotics.
     evidence:
     - reference: ARO:3000453
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000026 ! streptogramin antibiotic'
-      notes: Asserted on ARO:3000453 (streptogramin vat acetyltransferase), an is_a ancestor of this record's
-        ARO:3002840; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (acetylates the drug)
-    predicate_id: RO:0002327
-    object: acetylation
-    evidence:
+      notes: ARO drug-class relationship asserted on ARO:3000453 and inherited by ARO:3002840.
+    - reference: ARO:0000026
+      snippet: streptogramin antibiotic
+      notes: ARO drug-class term inherited by Vat records.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: '''catalyze the transfer of an acetyl group''.'
-  - subject: acetylation
-    predicate: has input (the acetyl donor)
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
+  - subject: mech1
+    predicate: has input
     predicate_id: RO:0002233
     object: acetyl_coa
+    description: Vat-mediated acylation uses acetyl-CoA as the acetyl donor.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: '''from acetyl-CoA'' -- named outright, unlike the rifampin phosphotransferases whose donor
-        CARD hedges (round 63).'
-  - subject: acetylation
-    predicate: has input (the drug)
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: CHEBI:15351
+      snippet: acetyl-CoA
+      notes: Acetyl donor named by the Vat parent definition.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
+  - subject: mech1
+    predicate: has input
     predicate_id: RO:0002233
     object: drug0
+    description: Vat-mediated acylation modifies streptogramin A compounds.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: '''to the secondary alcohol of streptogramin A compounds'' -- CARD gives the position, which
-        is more than most families state.'
-  - subject: acetylation
-    predicate: causally upstream of (inactivates the drug)
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
+  - subject: mech1
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: modified
+    description: Vat-mediated acylation produces acetylated streptogramin A.
     evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
     - reference: ARO:3000453
       snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
         from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
         antibiotics and conferring resistance to these compounds.
-      notes: '''thus inactivating virginiamycin-like antibiotics''.'
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
+  - subject: modified
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: drug0
+    description: The acetylated streptogramin A state represents enzymatic inactivation of the drug.
+    evidence:
+    - reference: ARO:3002840
+      snippet: vatA is a plasmid-mediated acetyltransferase found in Staphylococcus aureus.
+      notes: CARD definition for vatA.
+    - reference: ARO:3000453
+      snippet: vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group
+        from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like
+        antibiotics and conferring resistance to these compounds.
+      notes: CARD definition for the streptogramin Vat acetyltransferase parent.
+    - reference: DOI:10.1016/0378-1119(93)90350-c
+      notes: PMID:8344533 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded Vat streptogramin-acetylation graphs
   llm_assisted: true
 license: CC-BY 4.0
