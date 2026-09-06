@@ -166,6 +166,94 @@ def test_described_state_nodes_do_not_need_grounding(tmp_path: Path) -> None:
     assert score.grounded_groundable_nodes == 1
 
 
+def test_documented_local_residue_nodes_do_not_need_grounding(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "source-local-residue.yaml",
+        _record(
+            body="""causal_graphs:
+- graph_id: ligand_binding
+  title: Binding-site graph
+  description: A graph with source-local residue coordinates.
+  nodes:
+  - node_id: ligand
+    label: ligand
+    node_type: LIGAND
+    grounding: pdb.ligand:ATP
+  - node_id: pdb_residue
+    label: binding residue E1534 (PDB 5ek0 chain A author numbering; no UniProt position asserted)
+    node_type: RESIDUE
+  - node_id: rhea_reactive_part
+    label: L-seryl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside a generic protein participant.
+  edges:
+  - subject: pdb_residue
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ligand
+    description: The PDB-author residue contacts the ligand.
+    evidence:
+    - reference: PDB:5ek0
+      snippet: E1534
+    - reference: PMID:1
+      snippet: independent evidence
+  - subject: rhea_reactive_part
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: ligand
+    description: The Rhea reactive part belongs to the generic participant.
+    evidence:
+    - reference: RHEA:1
+      snippet: L-seryl residue
+    - reference: PMID:2
+      snippet: independent evidence
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.groundable_nodes == 1
+    assert score.grounded_groundable_nodes == 1
+
+
+def test_undocumented_residue_nodes_still_need_grounding(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "undocumented-residue.yaml",
+        _record(
+            body="""causal_graphs:
+- graph_id: resistance
+  title: Resistance graph
+  description: A graph with an under-modeled residue.
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+    grounding: ARO:1
+  - node_id: mutation
+    label: mutation locus
+    node_type: RESIDUE
+  edges:
+  - subject: mutation
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: The mutation locus is part of the determinant.
+    evidence:
+    - reference: PMID:1
+      snippet: mutation evidence
+    - reference: PMID:2
+      snippet: independent evidence
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.groundable_nodes == 2
+    assert score.grounded_groundable_nodes == 1
+
+
 def test_include_missing_scores_no_graph_records_as_zero(tmp_path: Path) -> None:
     path = _write(
         tmp_path / "missing.yaml",
