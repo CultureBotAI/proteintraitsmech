@@ -26,13 +26,11 @@ evidence:
   notes: PMID:20837752 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: daptomycin-resistant beta-subunit of RNA polymerase (rpoB) → mechanism → resistance (curated
-    from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003276). Mechanism deliberately NOT asserted. The rifampicin-rpoB interaction is textbook and
-    this is the record it belongs to -- which makes it the most inviting uncited edge in the corpus, and
-    the reason the omission is pinned rather than trusted.
+  title: daptomycin-resistant beta-subunit of RNA polymerase (rpoB) → dlt expression → positive charge
+    → daptomycin resistance
+  description: Conservative graph for daptomycin-resistant rpoB. The graph models ARO's stated dlt-operon/cell-surface-charge
+    branch and removes the generic RNA-polymerase active-center side path because ARO does not connect
+    that structural role to daptomycin resistance here.
   nodes:
   - node_id: determinant
     label: daptomycin-resistant beta-subunit of RNA polymerase (rpoB)
@@ -50,14 +48,16 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
-  - node_id: transcription
-    label: transcription
-    node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-104).'
-  - node_id: active_center
-    label: RNA polymerase active center and template/transcript binding sites
-    node_type: PROTEIN
-    description: What the beta-subunit forms. Ungrounded.
+  - node_id: dlt_expression
+    label: altered dlt operon expression
+    node_type: STATE
+    description: Local state for altered expression of the dlt operon downstream of daptomycin-resistant
+      rpoB substitutions.
+  - node_id: surface_charge
+    label: increased cell-surface positive charge
+    node_type: STATE
+    description: Local state for the increased cell-surface positive charge that ARO places downstream
+      of altered dlt operon expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -70,79 +70,132 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies daptomycin-resistant rpoB under mutation conferring antibiotic resistance.
     evidence:
-    - reference: ARO:3003276
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
-        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
-        Mutations in rpoB gene confers antibiotic resistance.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The daptomycin-resistant rpoB mechanism is a resistance-conferring amino-acid-substitution
+      route.
     evidence:
-    - reference: ARO:3003276
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
-        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
-        Mutations in rpoB gene confers antibiotic resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Daptomycin-resistant rpoB substitutions alter dlt operon expression and increase cell-surface
+      positive charge.
     evidence:
-    - reference: ARO:3003276
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
-        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
-        Mutations in rpoB gene confers antibiotic resistance.
-      notes: Role, structural contribution, and a bare resistance claim. Rifampicin DOES bind rpoB --
-        and CARD does not say so here, so it is not asserted. Round 83 refused this mechanism for rpoC
-        because it belongs to rpoB; it turns out not to be citable for rpoB either.
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: ARO maps daptomycin-resistant rpoB to peptide antibiotics.
     evidence:
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
     - reference: ARO:3003090
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3003090 (daptomycin-resistant beta-subunit of RNA polymerase (rpoB))
-        in the CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on daptomycin-resistant rpoB.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug-class term inherited by daptomycin-resistant rpoB records.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug1
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+    description: ARO maps daptomycin-resistant rpoB to rifamycin antibiotics.
     evidence:
     - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: ARO:3003090
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted directly on ARO:3003090 (daptomycin-resistant beta-subunit of RNA polymerase (rpoB))
-        in the CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on daptomycin-resistant rpoB.
+    - reference: ARO:3000157
+      snippet: rifamycin antibiotic
+      notes: ARO drug-class term inherited by daptomycin-resistant rpoB records.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
   - subject: determinant
-    predicate: part of (the polymerase active center)
-    predicate_id: BFO:0000050
-    object: active_center
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: dlt_expression
+    description: Daptomycin-resistant rpoB substitutions alter expression of the dlt operon.
     evidence:
-    - reference: ARO:3003276
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
-        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
-        Mutations in rpoB gene confers antibiotic resistance.
-      notes: '''The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript
-        binding sites''.'
-  - subject: active_center
-    predicate: part of (transcription)
-    predicate_id: BFO:0000050
-    object: transcription
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
+  - subject: dlt_expression
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: surface_charge
+    description: Altered dlt operon expression increases the cell-surface positive charge.
     evidence:
-    - reference: ARO:3003276
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
-        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
-        Mutations in rpoB gene confers antibiotic resistance.
-      notes: '''RNA polymerase ... is necessary for transcription''. NOT asserted: that rifampicin binds
-        this centre, which CARD does not state even here.'
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
+  - subject: surface_charge
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The increased positive cell-surface charge is the daptomycin branch that ARO places downstream
+      of resistant rpoB substitutions.
+    evidence:
+    - reference: ARO:3003090
+      snippet: Daptomycin-resistant RNA polymerases include amino acids substitutions which alter expression
+        of the dlt operon, which increases the cell surface positive charge. Known from S. aureus.
+      notes: CARD definition for the daptomycin-resistant rpoB parent.
+    - reference: DOI:10.1128/AAC.00437-10
+      notes: PMID:20837752 (aro citation)
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Modeled daptomycin rpoB dlt-charge route
   llm_assisted: true
 license: CC-BY 4.0
