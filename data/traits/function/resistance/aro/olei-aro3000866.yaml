@@ -52,16 +52,19 @@ causal_graphs:
   - node_id: glycosyl
     label: macrolide glycosyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has glycosyltransferase terms but none specific to macrolide inactivation.'
+    grounding: GO:0016757
+    description: Grounded to the broad GO glycosyltransferase activity superclass because no macrolide-specific
+      glycosyltransferase class is available locally.
   - node_id: glyco_drug
-    label: glycosylated (inactive) macrolide
+    label: glycosylated inactive macrolide
     node_type: CHEMICAL
-    description: 'Ungrounded: the product differs per drug.'
+    description: Macrolide after enzymatic glycosyl-group transfer; left label-only because the exact
+      inactive product differs by drug substrate.
   - node_id: ribosome_site
     label: 23S rRNA macrolide binding site
     node_type: NUCLEIC_ACID
-    description: The target the drug can no longer occupy. Same site round 29's 16S work neighbours, and
-      ungrounded for the same reason.
+    description: Ribosomal RNA site normally occupied by macrolide antibiotics; left label-only because
+      the graph models a binding site rather than a complete 23S rRNA molecule.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -74,6 +77,8 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this determinant under antibiotic inactivation because macrolide glycosyltransferases
+      chemically modify and inactivate macrolides.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -83,6 +88,8 @@ causal_graphs:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Macrolide inactivation is the broad resistance mechanism produced by the glycosylation
+      branch represented below.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -92,6 +99,8 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies this determinant under glycosylation of antibiotic conferring resistance,
+      the specific inactivation chemistry.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -101,6 +110,8 @@ causal_graphs:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Glycosylation inactivates the macrolide substrate and thereby supports the resistance
+      phenotype.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -110,6 +121,8 @@ causal_graphs:
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant's glycosyltransferase activity is the record-level causal route to macrolide
+      resistance.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -125,7 +138,8 @@ causal_graphs:
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+    description: CARD asserts macrolide-antibiotic resistance for this glycosyltransferase family or an
+      ancestor of the determinant.
     evidence:
     - reference: ARO:3000465
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
@@ -135,15 +149,27 @@ causal_graphs:
     predicate: enables (macrolide glycosylation)
     predicate_id: RO:0002327
     object: glycosyl
+    description: The determinant enables macrolide glycosylation, the activity that modifies and inactivates
+      the drug substrate.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
         oleandomycin and diverse macrolides including erythromycin, respectively.
-      notes: OleI and OleD glycosylate and inactivate.
+      notes: OleI and OleD glycosylate and inactivate macrolides.
+    - reference: ARO:3000866
+      snippet: OleI is a glycosyltransferase found in Streptomyces antibioticus, specifically the oleandomycin
+        biosynthetic cluster. OleI glycosylates oleandomycin to confer self-resistance.
+      notes: Exact ARO definition of this determinant.
+    - reference: GO:0016757
+      snippet: Catalysis of the transfer of a glycosyl group from one compound (donor) to another (acceptor).
+      notes: GO definition for the broad glycosyltransferase activity superclass; no macrolide-specific
+        GO activity is available locally.
   - subject: glycosyl
     predicate: has output
     predicate_id: RO:0002234
     object: glyco_drug
+    description: Macrolide glycosyltransferase activity transfers a sugar onto the macrolide substrate,
+      yielding a glycosylated inactive product.
     evidence:
     - reference: PMID:17376874
       snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
@@ -154,8 +180,8 @@ causal_graphs:
     predicate: negatively regulates (the glycosylated drug cannot occupy the site)
     predicate_id: RO:0002212
     object: ribosome_site
-    description: 'The causal core, and the structures explain WHY: erythromycin binds OleD in the same
-      conformation it adopts on the 23S RNA, so the sugar is added exactly where the ribosome would bind.'
+    description: Glycosylation occurs on the macrolide surface used for 23S rRNA binding, which explains
+      why the modified drug can no longer act at that site.
     evidence:
     - reference: PMID:17376874
       snippet: Erythromycin binds to OleD and the 23S RNA of its target ribosome in the same conformation
@@ -164,6 +190,7 @@ causal_graphs:
     predicate: molecularly interacts with (binds the 23S site)
     predicate_id: RO:0002436
     object: ribosome_site
+    description: Unmodified erythromycin can bind the 23S rRNA target site that glycosylation blocks.
     evidence:
     - reference: PMID:17376874
       snippet: Erythromycin binds to OleD and the 23S RNA of its target ribosome in the same conformation
@@ -172,5 +199,10 @@ curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded the macrolide glycosyltransferase activity node and described the shared macrolide
+    glycosylation causal-graph edges
   llm_assisted: true
 license: CC-BY 4.0
