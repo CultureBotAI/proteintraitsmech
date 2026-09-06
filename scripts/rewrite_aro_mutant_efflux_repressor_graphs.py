@@ -34,7 +34,7 @@ HISTORY_EVENT = {
     "timestamp": "2026-09-06T00:00:00Z",
     "curator": HISTORY_CURATOR,
     "action": (
-        "Replaced stale archetype evidence on MexR/lmrA mutant repressor graphs, "
+        "Replaced stale archetype evidence on direct mutant repressor graphs, "
         "grounded their named efflux pumps and transcriptional-repression nodes, "
         "removed the obsolete wild-type repressor edge, and linked pump "
         "derepression to antibiotic efflux"
@@ -288,6 +288,27 @@ TARGETS = {
             "β-lactams and lastly over-expression is linked to colistin resistance."
         ),
         pump_notes="CARD definition for the MexAB-OprM efflux pump derepressed by MexR.",
+    ),
+    "ARO:3003479": Target(
+        identifier="ARO:3003479",
+        filename="tetr-aro3003479.yaml",
+        repressor_label="TetR",
+        pump_label="tet(A)",
+        pump_grounding="ARO:3000165",
+        repressed_process="tetA transcription",
+        target_snippet=(
+            "TetR is the repressor of the tetracycline resistance element; its "
+            "N-terminal region forms a helix-turn-helix structure and binds DNA. "
+            "Binding of tetracycline to TetR reduces the repressor affinity for "
+            "the tetracycline resistance gene (tetA) promoter operator sites. "
+            "Mutations arise within tetR results in lower affinity for tetracyclin."
+        ),
+        target_notes="CARD definition for the tetR repressor mutant determinant.",
+        pump_snippet=(
+            "TetA is a tetracycline efflux pump found in many species of "
+            "Gram-negative bacteria."
+        ),
+        pump_notes="CARD definition for the tet(A) efflux pump repressed by TetR.",
     ),
 }
 

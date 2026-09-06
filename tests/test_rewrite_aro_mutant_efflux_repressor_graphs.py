@@ -128,10 +128,11 @@ def _actual_edge_pairs(record: dict) -> set[tuple[str, str]]:
     }
 
 
-def test_target_filenames_are_exactly_the_expected_two():
+def test_target_filenames_are_exactly_the_expected_three():
     assert {target.filename for target in R.TARGETS.values()} == {
         "lmra-aro3003028.yaml",
         "mexr-aro3000506.yaml",
+        "tetr-aro3003479.yaml",
     }
 
 
@@ -140,6 +141,7 @@ def test_target_filenames_are_exactly_the_expected_two():
     [
         ("ARO:3003028", "ARO:3003027"),
         ("ARO:3000506", "ARO:3000386"),
+        ("ARO:3003479", "ARO:3000165"),
     ],
 )
 def test_enrichment_grounds_pump_and_repression_nodes_by_target(
