@@ -107,6 +107,65 @@ def _record(identifier: str = "ARO:3000825") -> dict:
     }
 
 
+def _legacy_repressor_record(identifier: str = "ARO:3003838") -> dict:
+    record = _record(identifier)
+    graph = record["causal_graphs"][0]
+    graph["nodes"] = [
+        {
+            "node_id": "determinant",
+            "label": "efflux regulator",
+            "node_type": "PROTEIN",
+            "grounding": identifier,
+        },
+        {
+            "node_id": "mech0",
+            "label": "antibiotic efflux",
+            "node_type": "MOLECULAR_FUNCTION",
+            "grounding": "ARO:0010000",
+        },
+        {
+            "node_id": "pump",
+            "label": "the efflux pump this determinant represses",
+            "node_type": "PROTEIN",
+        },
+        {
+            "node_id": "repression",
+            "label": "repression of efflux pump expression",
+            "node_type": "BIOLOGICAL_PROCESS",
+        },
+        {
+            "node_id": "resistance",
+            "label": "antibiotic resistance phenotype",
+            "node_type": "PHENOTYPE",
+            "grounding": "GO:0046677",
+        },
+    ]
+    graph["edges"] = [
+        _edge("determinant", "mech0", "participates in", "RO:0000056"),
+        _edge("mech0", "resistance"),
+        _edge("determinant", "resistance"),
+        _edge(
+            "determinant",
+            "repression",
+            "enables (represses the pump operon)",
+            "RO:0002327",
+        ),
+        _edge(
+            "repression",
+            "pump",
+            "negatively regulates (holds pump expression down)",
+            "RO:0002212",
+        ),
+        _edge(
+            "determinant",
+            "repression",
+            "negatively regulates (mutation lifts the repression)",
+            "RO:0002212",
+        ),
+    ]
+    return record
+
+
 def _actual_edge_pairs(record: dict) -> set[tuple[str, str]]:
     return {
         (edge["subject"], edge["object"])
@@ -114,10 +173,11 @@ def _actual_edge_pairs(record: dict) -> set[tuple[str, str]]:
     }
 
 
-def test_target_filenames_are_exactly_the_expected_nine():
+def test_target_filenames_are_exactly_the_expected_ten():
     assert {target.filename for target in R.TARGETS.values()} == {
         "enterobacter-cloacae-rob-aro3004108.yaml",
         "escherichia-coli-rob-aro3004109.yaml",
+        "gadw-aro3003838.yaml",
         "gadx-aro3000508.yaml",
         "gols-aro3000504.yaml",
         "leuo-aro3003843.yaml",
@@ -175,6 +235,24 @@ def test_activation_edges_get_go_evidence():
         }:
             references = {item["reference"] for item in edge["evidence"]}
             assert "GO:0045893" in references
+
+
+def test_gadw_legacy_repressor_seed_is_rebuilt_as_an_activation_graph():
+    target = R.TARGETS["ARO:3003838"]
+
+    out, changed = R.enrich_record(_legacy_repressor_record(), target)
+
+    assert changed
+    graph = out["causal_graphs"][0]
+    assert {node["node_id"] for node in graph["nodes"]} == {
+        "determinant",
+        "mech0",
+        "pump",
+        "activation",
+        "resistance",
+    }
+    assert _actual_edge_pairs(out) == target.expected_edges
+    assert "repression" not in _actual_edge_pairs(out)
 
 
 def test_enrich_record_is_idempotent():

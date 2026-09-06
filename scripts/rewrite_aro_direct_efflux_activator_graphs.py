@@ -75,6 +75,33 @@ PUMP_EFFLUX_EDGE = {
 }
 PUMP_EFFLUX_FULL_EDGE = ("pump", "RO:0002327", "mech0")
 
+DEFAULT_INFERRED_EDGES = frozenset({("pump", "mech0")})
+
+LEGACY_REPRESSOR_INPUT_FULL_EDGES = frozenset(
+    {
+        ("determinant", "RO:0002327", "repression"),
+        ("repression", "RO:0002212", "pump"),
+        ("determinant", "RO:0002212", "repression"),
+    }
+)
+
+LEGACY_REPRESSOR_INFERRED_EDGES = frozenset(
+    {
+        ("determinant", "activation"),
+        ("activation", "pump"),
+        ("pump", "mech0"),
+    }
+)
+
+EDGE_ORDER = (
+    ("determinant", "mech0"),
+    ("mech0", "resistance"),
+    ("determinant", "resistance"),
+    ("determinant", "activation"),
+    ("activation", "pump"),
+    ("pump", "mech0"),
+)
+
 
 @dataclass(frozen=True)
 class EdgeUpdate:
@@ -96,6 +123,8 @@ class Target:
     target_notes: str
     pump_snippet: str
     pump_notes: str
+    obsolete_input_full_edges: frozenset[tuple[str, str, str]] = frozenset()
+    inferred_edges: frozenset[tuple[str, str]] = DEFAULT_INFERRED_EDGES
 
     @property
     def target_evidence(self) -> dict[str, str]:
@@ -213,6 +242,12 @@ ACRAB_TOLC_DEFINITION = (
     "outer-membrane (TolC), and is linked together in the periplasm by AcrA."
 )
 
+MDTEF_TOLC_DEFINITION = (
+    "MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, "
+    "including E. coli. MdtE is the membrane fusion protein, MdtF is the inner "
+    "membrane transporter, while TolC is the outer membrane channel."
+)
+
 TARGETS = {
     "ARO:3004108": Target(
         identifier="ARO:3004108",
@@ -280,12 +315,27 @@ TARGETS = {
             "confer multidrug resistance."
         ),
         target_notes="CARD definition for the gadX activator.",
-        pump_snippet=(
-            "MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, "
-            "including E. coli. MdtE is the membrane fusion protein, MdtF is the "
-            "inner membrane transporter, while TolC is the outer membrane channel."
-        ),
+        pump_snippet=MDTEF_TOLC_DEFINITION,
         pump_notes="CARD definition for the MdtEF-TolC efflux pump activated by GadX.",
+    ),
+    "ARO:3003838": Target(
+        identifier="ARO:3003838",
+        filename="gadw-aro3003838.yaml",
+        activator_label="GadW",
+        pump_label="MdtEF-TolC",
+        pump_grounding="ARO:3000788",
+        activated_process="mdtEF transcription",
+        target_snippet=(
+            "GadW is an AraC-family regulator that promotes mdtEF expression to "
+            "confer multidrug resistance. GadW inhibits GadX-dependent activation. "
+            "GadW clearly represses gadX and, in situations where GadX is missing, "
+            "activates gadA and gadBC."
+        ),
+        target_notes="CARD definition for the gadW activator.",
+        pump_snippet=MDTEF_TOLC_DEFINITION,
+        pump_notes="CARD definition for the MdtEF-TolC efflux pump activated by GadW.",
+        obsolete_input_full_edges=LEGACY_REPRESSOR_INPUT_FULL_EDGES,
+        inferred_edges=LEGACY_REPRESSOR_INFERRED_EDGES,
     ),
     "ARO:3000504": Target(
         identifier="ARO:3000504",
@@ -455,13 +505,12 @@ def _enrich_nodes(graph: dict[str, Any], target: Target) -> None:
 
 def _enrich_edges(graph: dict[str, Any], target: Target) -> None:
     edges = graph.setdefault("edges", [])
-    if not any(_full_edge_key(edge) == PUMP_EFFLUX_FULL_EDGE for edge in edges):
-        edges.append(copy.deepcopy(PUMP_EFFLUX_EDGE))
 
     seen: set[tuple[str, str]] = set()
-    enriched_edges: list[dict[str, Any]] = []
     for edge in edges:
         full_key = _full_edge_key(edge)
+        if full_key in target.obsolete_input_full_edges:
+            continue
         if full_key not in EXPECTED_INPUT_FULL_EDGES:
             msg = f"{target.identifier}: unexpected edge {full_key[0]} -> {full_key[2]}"
             raise ValueError(msg)
@@ -470,28 +519,30 @@ def _enrich_edges(graph: dict[str, Any], target: Target) -> None:
         if key in seen:
             msg = f"{target.identifier}: duplicate edge {key[0]} -> {key[1]}"
             raise ValueError(msg)
-        update = target.edge_updates[key]
-        enriched_edges.append(
-            _ordered_edge(
-                {
-                    "subject": key[0],
-                    "predicate": update.predicate,
-                    "predicate_id": update.predicate_id,
-                    "object": key[1],
-                    "description": update.description,
-                    "evidence": [copy.deepcopy(item) for item in update.evidence],
-                }
-            )
-        )
         seen.add(key)
 
-    missing_edges = sorted(target.expected_edges - seen)
+    missing_edges = sorted(target.expected_edges - seen - target.inferred_edges)
     if missing_edges:
         missing = ", ".join(f"{subject} -> {object_}" for subject, object_ in missing_edges)
         msg = f"{target.identifier}: missing edge(s): {missing}"
         raise ValueError(msg)
 
-    graph["edges"] = enriched_edges
+    updates = target.edge_updates
+    graph["edges"] = [
+        _ordered_edge(
+            {
+                "subject": subject,
+                "predicate": updates[(subject, object_)].predicate,
+                "predicate_id": updates[(subject, object_)].predicate_id,
+                "object": object_,
+                "description": updates[(subject, object_)].description,
+                "evidence": [
+                    copy.deepcopy(item) for item in updates[(subject, object_)].evidence
+                ],
+            }
+        )
+        for subject, object_ in EDGE_ORDER
+    ]
 
 
 def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
