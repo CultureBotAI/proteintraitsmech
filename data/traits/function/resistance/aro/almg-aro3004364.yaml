@@ -23,11 +23,11 @@ evidence:
   notes: PMID:29101229 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: almG → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003588). Charge alteration by glycylation of lipid A; L-Ara4N and phosphoethanolamine routes
-    have their own configs on this family.
+  title: almG → Alm lipid A glycylation → resistance
+  description: Conservative graph for an AlmEFG polymyxin-resistance component. The graph keeps the ARO
+    charge-alteration and peptide-antibiotic routes, collapses the ungrounded Alm-specific glycyl relay
+    to a described glycylated-lipid-A state, and connects the reduced surface-charge state to the resistance
+    phenotype.
   nodes:
   - node_id: determinant
     label: almG
@@ -41,18 +41,15 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: glycyl_transfer
-    label: glycyl transfer to the carrier protein AlmF
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-73).'
-  - node_id: lipid_a
-    label: lipid A of the outer membrane
-    node_type: CHEMICAL
-    description: 'The modified surface. Ungrounded: no CHEBI id verified this round.'
+  - node_id: glycylated_lipid_a
+    label: glycylated lipid A
+    node_type: STATE
+    description: Local state representing lipid A after the AlmEFG relay adds glycine; left ungrounded
+      because this branch asserts no exact ontology class for Alm-glycylated lipid A.
   - node_id: charge
     label: reduced net negative surface charge
     node_type: STATE
-    description: The causal core, shared with the L-Ara4N and pEtN routes.
+    description: Local state representing the reduced negative envelope charge produced by lipid A glycylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,93 +62,162 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The Alm determinant participates in the charge-alteration resistance mechanism through
+      AlmEFG-dependent lipid A glycylation.
     evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
+    - reference: ARO:3007434
+      snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
+        followed by glycylation of lipid A by almG.
+      notes: 'CARD definition of the AlmEFG relay: AlmE charges AlmF with glycine before AlmG glycylates
+        lipid A.'
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: Family mechanism ARO:3003588.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Charge alteration is the broad resistance mechanism for this Alm route.
     evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: Mechanism ARO:3003588 → resistance.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The Alm component contributes to lipid A glycylation and colistin resistance.
     evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
+    - reference: ARO:3007434
+      snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
+        followed by glycylation of lipid A by almG.
+      notes: 'CARD definition of the AlmEFG relay: AlmE charges AlmF with glycine before AlmG glycylates
+        lipid A.'
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: 'The shared causal sentence: cationic antimicrobials depend on the negative charge, so neutralising
-        it is the resistance. Same for all three lipid A routes.'
-    - reference: ARO:3007434
-      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
-        resistance in Vibrio cholerae.
-      notes: The route, named for colistin in Vibrio cholerae. Cited FROM the operon record, which is
-        itself left as a draft -- it is the best mechanism source here and curating it would pre-empt
-        the open gene-cluster modelling question.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: ARO links this Alm determinant or its parent to peptide-antibiotic resistance.
     evidence:
+    - reference: ARO:3004364
+      snippet: A member of the AlmEFG operon, responsible for polymyxin resistance in Vibrio cholerae.
+        AlmG is a glycyltransferase closely related to lipid A acyltransferases. Described by Henderson
+        JC et al. 2017.
+      notes: CARD definition for almG.
     - reference: ARO:3004363
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted on ARO:3004363 (lipid A acyltransferase), an is_a ancestor of this record's ARO:3004364;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: Asserted on ancestor ARO:3004363; modeled here as an inherited determinant-to-peptide-antibiotic
+        drug-class edge.
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
   - subject: determinant
-    predicate: participates in (the glycyl relay)
-    predicate_id: RO:0000056
-    object: glycyl_transfer
-    description: 'A RELAY, not a single enzyme: almE charges the carrier almF, and almG then glycylates
-      lipid A. The predicate is ''participates in'' because these records are different steps of one route
-      and no single one performs it.'
-    evidence:
-    - reference: ARO:3007434
-      snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
-        followed by glycylation of lipid A by almG.
-      notes: CARD names all three roles and their order.
-  - subject: glycyl_transfer
-    predicate: causally upstream of (glycylates lipid A)
+    predicate: causally upstream of (Alm-mediated lipid A glycylation)
     predicate_id: RO:0002411
-    object: lipid_a
+    object: glycylated_lipid_a
+    description: AlmE, AlmF, and AlmG are modeled as operon components upstream of the glycylated-lipid-A
+      state instead of as exact single enzymes for an ungrounded relay.
     evidence:
+    - reference: ARO:3004364
+      snippet: A member of the AlmEFG operon, responsible for polymyxin resistance in Vibrio cholerae.
+        AlmG is a glycyltransferase closely related to lipid A acyltransferases. Described by Henderson
+        JC et al. 2017.
+      notes: CARD definition for almG.
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
     - reference: ARO:3007434
       snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
         followed by glycylation of lipid A by almG.
-      notes: '''followed by glycylation of lipid A by almG''.'
-  - subject: lipid_a
+      notes: 'CARD definition of the AlmEFG relay: AlmE charges AlmF with glycine before AlmG glycylates
+        lipid A.'
+  - subject: glycylated_lipid_a
     predicate: causally upstream of (reduces surface negative charge)
     predicate_id: RO:0002411
     object: charge
+    description: Lipid A glycylation is the modeled surface modification that lowers charge.
     evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
+    - reference: ARO:3007434
+      snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
+        followed by glycylation of lipid A by almG.
+      notes: 'CARD definition of the AlmEFG relay: AlmE charges AlmF with glycine before AlmG glycylates
+        lipid A.'
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: '''loss or reduction of the net negative charge within the cell wall''.'
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: charge
     predicate: negatively regulates (impedes drug binding)
     predicate_id: RO:0002212
     object: drug0
+    description: Lower net negative surface charge impedes binding by cationic peptide antibiotics such
+      as colistin.
     evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: '''cationic antimicrobials that depend on the negative charge for binding''.'
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+  - subject: charge
+    predicate: causally upstream of (reduced peptide-antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The charge reduction caused by Alm-mediated lipid A glycylation is modeled as the terminal
+      causal state for resistance.
+    evidence:
+    - reference: ARO:3007434
+      snippet: The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin
+        resistance in Vibrio cholerae.
+      notes: CARD definition for the AlmEFG operon.
+    - reference: ARO:3007434
+      snippet: Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE
+        followed by glycylation of lipid A by almG.
+      notes: 'CARD definition of the AlmEFG relay: AlmE charges AlmF with glycine before AlmG glycylates
+        lipid A.'
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Collapsed and described Alm lipid A glycylation graphs
   llm_assisted: true
 license: CC-BY 4.0
