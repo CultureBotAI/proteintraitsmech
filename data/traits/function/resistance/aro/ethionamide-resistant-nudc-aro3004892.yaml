@@ -18,12 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004892 ethionamide resistant nudC"
 causal_graphs:
 - graph_id: resistance
-  title: ethionamide resistant nudC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004892). Enzyme and pathway only. The word is 'FUNCTION', not 'activate' -- round 95's mshA/mshC
-    distinction -- so no prodrug-activation edge is written, even though ethionamide is a prodrug and
-    ndh (round 57) curates that story for a neighbouring enzyme.
+  title: ethionamide resistant nudC → NADH pyrophosphatase → resistance
+  description: Conservative graph for the ethionamide-resistant nudC parent. The graph grounds nudC's
+    NADH pyrophosphatase activity and nicotinamide-nucleotide metabolism side path while leaving the resistance
+    effect at ARO's mutation claim.
   nodes:
   - node_id: determinant
     label: ethionamide resistant nudC
@@ -37,14 +35,14 @@ causal_graphs:
     label: thioamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007156
-  - node_id: nadh_pp
+  - node_id: nadh_pyrophosphatase
     label: NADH pyrophosphatase activity
     node_type: MOLECULAR_FUNCTION
-    description: Ungrounded.
-  - node_id: nad_metabolism
-    label: nicotinate and nicotinamide metabolism
+    grounding: GO:0035529
+  - node_id: nicotinamide_nucleotide_metabolism
+    label: nicotinamide nucleotide metabolic process
     node_type: BIOLOGICAL_PROCESS
-    description: Ungrounded.
+    grounding: GO:0046496
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,63 +55,108 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies ethionamide-resistant nudC under point mutations.
     evidence:
     - reference: ARO:3004892
       snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
         Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited point-mutation mechanism links nudC determinants to ethionamide resistance.
     evidence:
     - reference: ARO:3004892
       snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
         Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The local ARO definition states that nudC mutations confer ethionamide resistance.
     evidence:
     - reference: ARO:3004892
       snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
         Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
-      notes: 'Names an enzyme and a pathway -- unlike the bare nudC family term left in round 84 -- but
-        says ''inability for ethionamide to FUNCTION'', not ''to ACTIVATE''. Round 95 drew that line between
-        mshA and mshC and it holds here: no activation claim, so no prodrug edge.'
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to thioamide antibiotic.
+    description: The ARO hierarchy links ethionamide-resistant nudC to the thioamide antibiotic class.
     evidence:
     - reference: ARO:3004892
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic'
-      notes: Asserted directly on ARO:3004892 (ethionamide resistant nudC) in the CARD/ARO release in
-        data/raw/aro/aro.obo.
+      snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
+        Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: ARO:3004892
+      snippet: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic
+      notes: ARO drug-class relationship on ARO:3004892; modeled here as a determinant-to-thioamide-antibiotic
+        edge.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: enables (NADH pyrophosphatase activity)
+    predicate: enables
     predicate_id: RO:0002327
-    object: nadh_pp
+    object: nadh_pyrophosphatase
+    description: ARO identifies nudC as an NADH pyrophosphatase.
     evidence:
     - reference: ARO:3004892
       snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
         Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
-      notes: '''nudC is a NADH pyrophosphatase''.'
-  - subject: nadh_pp
-    predicate: part of (nicotinate and nicotinamide metabolism)
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: GO:0035529
+      snippet: 'Catalysis of the reaction: NADH + H2O = AMP + NMNH + 2 H+.'
+      notes: GO definition for NADH pyrophosphatase activity.
+  - subject: nadh_pyrophosphatase
+    predicate: part of (nicotinamide nucleotide metabolism)
     predicate_id: BFO:0000050
-    object: nad_metabolism
+    object: nicotinamide_nucleotide_metabolism
+    description: NADH pyrophosphatase activity lies in the GO nicotinamide nucleotide metabolic-process
+      branch.
     evidence:
     - reference: ARO:3004892
       snippet: nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism.
         Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.
-      notes: '''involved in nicotinate and nicotinamide metabolism''. NOT asserted: how that relates to
-        ethionamide, which CARD does not say.'
+      notes: CARD definition for ethionamide resistant nudC.
+    - reference: GO:0035529
+      snippet: 'Catalysis of the reaction: NADH + H2O = AMP + NMNH + 2 H+.'
+      notes: GO definition for NADH pyrophosphatase activity.
+    - reference: GO:0046496
+      snippet: The chemical reactions and pathways involving nicotinamide nucleotides, any nucleotide
+        that contains combined nicotinamide.
+      notes: GO definition for nicotinamide nucleotide metabolic process.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded ethionamide-resistant nudC NADH-pyrophosphatase graphs
   llm_assisted: true
 license: CC-BY 4.0
