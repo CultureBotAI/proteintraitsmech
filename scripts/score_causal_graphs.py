@@ -191,13 +191,32 @@ def _has_snippet(edge: dict[str, Any]) -> bool:
 def _needs_grounding(node: dict[str, Any]) -> bool:
     """Return True when an ungrounded node should reduce the grounding score.
 
-    M-CSA catalytic graphs carry one local STATE node per curator-authored
-    arrow-pushing step. Those states are described, but they do not have stable
-    ontology/database CURIEs. Treating them like ungrounded protein, chemical, or
-    molecular-function nodes pushes already-complete M-CSA records to the bottom
-    of the queue.
+    Some graphs legitimately need source-local nodes that do not have stable
+    ontology/database CURIEs:
+
+    * M-CSA catalytic graphs carry one described STATE node per curator-authored
+      arrow-pushing step.
+    * BioLiP and MetalPDB binding-site graphs carry RESIDUE nodes in PDB author
+      numbering when SIFTS/UniProt residue coordinates are not asserted.
+    * Rhea protein-substrate graphs can carry described RESIDUE nodes for
+      reactive groups inside generic protein participants.
+
+    Treating those local coordinates like an ungrounded protein, chemical, or
+    molecular-function node pushes already-complete generated graphs to the
+    bottom of the queue.
     """
-    return node.get("node_type") != "STATE" or not node.get("description")
+    node_type = node.get("node_type")
+    if node_type == "STATE" and node.get("description"):
+        return False
+    if node_type == "RESIDUE":
+        label = str(node.get("label") or "")
+        if node.get("description"):
+            return False
+        if "no UniProt position asserted" in label:
+            return False
+        if "UniProt position not established" in label:
+            return False
+    return True
 
 
 def _ratio(points: float, numerator: int, denominator: int) -> float:
