@@ -18,11 +18,10 @@ synonyms:
     synonym_type: EXACT_SYNONYM
 causal_graphs:
 - graph_id: resistance
-  title: antibiotic resistant rpoC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003289). Mechanism deliberately NOT asserted. CARD gives the subunit's structural role and a
-    bare resistance claim; nothing connects them. Round 66's EF-Tu and round 81's ppsA-E position.
+  title: antibiotic resistant rpoC → rpoC mutation → resistance
+  description: Conservative graph for the antibiotic-resistant rpoC parent. The graph keeps ARO's point-mutation
+    resistance claim and removes the RNA-polymerase active-center side path because ARO does not link
+    that structural role to a drug interaction or resistance mechanism.
   nodes:
   - node_id: determinant
     label: antibiotic resistant rpoC
@@ -32,18 +31,6 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
-  - node_id: transcription
-    label: DNA-templated transcription
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0006351
-    description: Grounded to the GO DNA-templated transcription process named generically in the ARO RNA-polymerase
-      parent definition.
-  - node_id: active_center
-    label: RNA polymerase active center and template/transcript binding sites
-    node_type: PROTEIN
-    description: Structural RNA-polymerase region formed by the beta prime subunit in this ARO parent
-      record; left label-only because the local corpus lacks a precise class for the active center plus
-      template/transcript-binding sites.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,65 +43,54 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
-    description: The ARO hierarchy classifies antibiotic resistant rpoC under mutation conferring antibiotic
-      resistance, while this parent record does not name a specific mutation or drug.
+    description: The ARO hierarchy classifies resistant rpoC variants under point mutations.
     evidence:
     - reference: ARO:3003289
       snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime
         subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding
         sites. Mutations in rpoC gene confers antibiotic resistance.
-      notes: Exact ARO definition of this role-only parent determinant.
+      notes: CARD definition for antibiotic resistant rpoC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
-    description: The inherited mutation mechanism links the parent rpoC determinant class to the resistance
-      phenotype without specifying a drug-binding or transcriptional failure route.
+    description: The inherited mutation mechanism links this rpoC determinant class to the resistance
+      phenotype.
     evidence:
     - reference: ARO:3003289
       snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime
         subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding
         sites. Mutations in rpoC gene confers antibiotic resistance.
-      notes: Exact ARO definition of this role-only parent determinant.
+      notes: CARD definition for antibiotic resistant rpoC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
-    description: The ARO definition states that mutations in rpoC can confer antibiotic resistance, but
-      does not resolve the resistant drug class or molecular change.
+    description: The local ARO definition states that rpoC mutations confer resistance.
     evidence:
     - reference: ARO:3003289
       snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime
         subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding
         sites. Mutations in rpoC gene confers antibiotic resistance.
-      notes: Exact ARO definition of this role-only parent determinant.
-  - subject: determinant
-    predicate: part of (the polymerase active center)
-    predicate_id: BFO:0000050
-    object: active_center
-    description: The ARO definition describes the RNA-polymerase beta prime subunit as forming the enzyme
-      active center and template/transcript-binding sites.
-    evidence:
-    - reference: ARO:3003289
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime
-        subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding
-        sites. Mutations in rpoC gene confers antibiotic resistance.
-      notes: Exact ARO definition of this role-only parent determinant.
-  - subject: active_center
-    predicate: part of (transcription)
-    predicate_id: BFO:0000050
-    object: transcription
-    description: The active-center role remains label-only and is linked only to the GO-grounded transcription
-      process that the ARO definition names.
-    evidence:
-    - reference: ARO:3003289
-      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime
-        subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding
-        sites. Mutations in rpoC gene confers antibiotic resistance.
-      notes: Exact ARO definition of this role-only parent determinant.
-    - reference: GO:0006351
-      snippet: The synthesis of an RNA transcript from a DNA template.
-      notes: GO process definition for the grounded transcription node.
+      notes: CARD definition for antibiotic resistant rpoC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
@@ -124,5 +100,9 @@ curation_history:
   curator: codex-causal-graph-quality
   action: Grounded role-only pgsA/rpoB/rpoC ARO causal-graph nodes to local GO terms and added conservative
     edge descriptions
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Collapsed rpoC graphs to grounded mutation and drug-class edges
   llm_assisted: true
 license: CC-BY 4.0
