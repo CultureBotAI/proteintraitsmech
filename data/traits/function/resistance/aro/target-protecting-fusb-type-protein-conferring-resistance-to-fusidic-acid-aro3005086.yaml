@@ -29,11 +29,11 @@ evidence:
   notes: PMID:21968364 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Target protecting FusB-type protein conferring resistance to Fusidic acid → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:22308410). Target protection by rescuing a stalled complex rather than by displacing the drug.
+  title: Target protecting FusB-type protein conferring resistance to Fusidic acid → FusB-type stalled
+    EF-G-ribosome rescue
+  description: Conservative graph for FusB-type fusidic-acid resistance. The graph keeps the target-protection
+    route in which fusidic acid forms stalled ribosome-EF-G-GDP complexes and FusB-type proteins promote
+    dissociation of those stalled complexes.
   nodes:
   - node_id: determinant
     label: Target protecting FusB-type protein conferring resistance to Fusidic acid
@@ -47,20 +47,11 @@ causal_graphs:
     label: fusidane antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007153
-  - node_id: efg
-    label: elongation factor G (EF-G), the drug's target
-    node_type: PROTEIN
-    description: 'Ungrounded: the specific EF-G differs per organism and the corpus holds no EF-G trait
-      record.'
   - node_id: stalled
     label: stalled ribosome-EF-G-GDP complex
     node_type: STATE
-    description: What fusidic acid produces, and what FusB dissociates. Ungrounded.
-  - node_id: zinc_finger
-    label: four-cysteine zinc finger domain of FusB-type proteins
-    node_type: DOMAIN
-    description: 'The high-affinity EF-G interaction module. Ungrounded: a unique fold with no KB trait
-      record.'
+    description: Local state for the stalled ribosome-EF-G-GDP complex that fusidic acid forms and FusB-type
+      target-protection proteins dissociate.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -73,91 +64,147 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies FusB-type fusidic-acid resistance proteins under antibiotic target protection.
     evidence:
-    - reference: PMID:22308410
-      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
-        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
-        resume translation.
-      notes: Family mechanism ARO:0001003.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The FusB-type target-protection route counteracts fusidic acid by dissociating EF-G from
+      the ribosome.
     evidence:
-    - reference: PMID:22308410
-      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
-        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
-        resume translation.
-      notes: Mechanism ARO:0001003 → resistance.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: FusB-type determinants promote EF-G dissociation from the ribosome to counteract fusidic
+      acid and confer resistance.
     evidence:
-    - reference: PMID:22308410
-      snippet: These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation
-        from FA-mediated inhibition by an unknown mechanism.
-      notes: Cox et al. 2012. FusB-type proteins bind EF-G, which is fusidic acid's target.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
     - reference: PMID:22308410
       snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
         ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
         resume translation.
-      notes: 'And the mechanism, which is NOT TetM''s: the drug is not dislodged. The stalled complex
-        the drug creates is dissociated, and translation resumes.'
+      notes: Cox et al. 2012; FusB-type proteins dissociate the stalled complex rather than displacing
+        fusidic acid from EF-G.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to fusidane antibiotic.
+    description: ARO maps FusB-type target-protection proteins to fusidane antibiotics.
     evidence:
     - reference: ARO:3005086
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
-      notes: Asserted directly on ARO:3005086 (Target protecting FusB-type protein conferring resistance
-        to Fusidic acid) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: zinc_finger
-    predicate: part of (the EF-G-binding domain)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: PMID:22308410
-      snippet: Here we show that the FusB family are two-domain metalloproteins, the C-terminal domain
-        of which contains a four-cysteine zinc finger with a unique structural fold.
-      notes: Cox et al. 2012; this C-terminal domain mediates the high-affinity interaction with EF-G.
+      notes: ARO drug-class relationship asserted directly on the FusB-type fusidic-acid target-protection
+        parent.
+    - reference: ARO:3007153
+      snippet: fusidane antibiotic
+      notes: ARO drug-class term inherited by FusB-type fusidic-acid resistance records.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
   - subject: drug0
-    predicate: causally upstream of (stalls the ribosome)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: stalled
-    description: 'Drug action: fusidic acid traps EF-G on the ribosome after GTP hydrolysis.'
+    description: Fusidic acid forms stalled ribosome-EF-G-GDP complexes.
     evidence:
     - reference: PMID:22308410
       snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
         ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
         resume translation.
-      notes: The complexes 'form in the presence of FA'.
+      notes: Cox et al. 2012; FusB-type proteins dissociate the stalled complex rather than displacing
+        fusidic acid from EF-G.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
   - subject: determinant
-    predicate: negatively regulates (dissociates the stalled complex)
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: stalled
-    description: 'The causal core, and it differs from TetM (round 31): the drug is not displaced. The
-      complex it creates is taken apart, so translation resumes with the drug still present.'
+    description: FusB-type target-protection proteins promote dissociation of the stalled ribosome-EF-G-GDP
+      complexes that form in the presence of fusidic acid.
     evidence:
     - reference: PMID:22308410
       snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
         ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
         resume translation.
-      notes: Cox et al. 2012.
-  - subject: determinant
-    predicate: molecularly interacts with (binds the target)
-    predicate_id: RO:0002436
-    object: efg
-    evidence:
-    - reference: PMID:22308410
-      snippet: These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation
-        from FA-mediated inhibition by an unknown mechanism.
-      notes: The protection is by binding the TARGET, not the drug.
+      notes: Cox et al. 2012; FusB-type proteins dissociate the stalled complex rather than displacing
+        fusidic acid from EF-G.
+    - reference: ARO:3005086
+      snippet: Fusidic acid resistance determinants through the mediation of target protection. These
+        protein drive the dissociation of EF-G from the ribosome thus counteracting the action of Fusidic
+        acid.
+      notes: CARD definition for the FusB-type fusidic-acid target-protection parent.
+    - reference: DOI:10.1073/pnas.1117275109
+      notes: PMID:22308410 (aro citation)
+    - reference: DOI:10.1038/srep19524
+      notes: PMID:26781961 (aro citation)
+    - reference: DOI:10.1128/AAC.00592-11
+      notes: PMID:21968364 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded FusB-type fusidic-acid target-protection graphs
   llm_assisted: true
 license: CC-BY 4.0
