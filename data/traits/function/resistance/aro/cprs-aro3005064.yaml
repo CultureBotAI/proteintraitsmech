@@ -21,29 +21,29 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: cprS → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Curated resistance-causation graph for cprRS-mediated Arn induction. The graph replaces
+    the seeded AdeR efflux-activation scaffold with cationic peptide sensing, induction of the Arn operon,
+    and downstream Ara4N lipid-A charge alteration.
   nodes:
   - node_id: determinant
     label: cprS
     node_type: PROTEIN
     grounding: ARO:3005064
   - node_id: mech0
-    label: antibiotic efflux
+    label: charge alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
-    grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant activates
-    node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
-  - node_id: activation
-    label: activation of efflux pump expression
-    node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: ARO:3003588
+    description: Grounded to CARD's charge-alteration resistance mechanism; cprRS induces the Ara4N route
+      that reduces the negative charge of lipid A.
+  - node_id: sensing
+    label: sensing of cationic peptides
+    node_type: STATE
+    description: Local state for the cationic-peptide exposure that induces cprRS.
+  - node_id: arn_operon
+    label: Arn operon (Ara4N synthesis and transfer)
+    node_type: NUCLEIC_ACID
+    grounding: ARO:3003578
+    description: Grounded to PmrF, the CARD record for the Arn/PmrF Ara4N synthesis and transfer route.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,52 +52,113 @@ causal_graphs:
       superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
       itself.'
   edges:
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
+  - subject: sensing
+    predicate: causally upstream of (activates the two-component system)
+    predicate_id: RO:0002411
+    object: determinant
+    description: Cationic peptides are the inducing signal for cprRS.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3005064
+      snippet: cprS is part of a two-component regulatory system that, with its counterpart cprR, induces
+        the Arn operon in the presence of cationic peptides to confer resistance.
+      notes: CARD definition for the cprS regulator.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: 'CARD definition for the cprRS system: induction of the Arn operon, not direct drug efflux.'
+  - subject: determinant
+    predicate: positively regulates (induces the Arn operon)
+    predicate_id: RO:0002213
+    object: arn_operon
+    description: The cpr regulator induces the Arn operon; Ara4N synthesis and transfer are modeled by
+      the downstream Arn/PmrF records.
+    evidence:
+    - reference: ARO:3005064
+      snippet: cprS is part of a two-component regulatory system that, with its counterpart cprR, induces
+        the Arn operon in the presence of cationic peptides to confer resistance.
+      notes: CARD definition for the cprS regulator.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: 'CARD definition for the cprRS system: induction of the Arn operon, not direct drug efflux.'
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: CARD definition for the Arn/PmrF Ara4N synthesis and transfer route.
+  - subject: arn_operon
+    predicate: causally upstream of (drives Ara4N charge alteration)
+    predicate_id: RO:0002411
+    object: mech0
+    description: Arn/PmrF-mediated Ara4N synthesis and transfer modifies lipid A and reduces the negative
+      envelope charge.
+    evidence:
+    - reference: ARO:3005064
+      snippet: cprS is part of a two-component regulatory system that, with its counterpart cprR, induces
+        the Arn operon in the presence of cationic peptides to confer resistance.
+      notes: CARD definition for the cprS regulator.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: 'CARD definition for the cprRS system: induction of the Arn operon, not direct drug efflux.'
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: CARD definition for the Arn/PmrF Ara4N synthesis and transfer route.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for charge alteration, the downstream resistance mechanism driven by Ara4N
+        lipid-A modification.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Charge alteration is the downstream resistance mechanism induced through the Arn operon.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3005064
+      snippet: cprS is part of a two-component regulatory system that, with its counterpart cprR, induces
+        the Arn operon in the presence of cationic peptides to confer resistance.
+      notes: CARD definition for the cprS regulator.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: 'CARD definition for the cprRS system: induction of the Arn operon, not direct drug efflux.'
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for charge alteration, the downstream resistance mechanism driven by Ara4N
+        lipid-A modification.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The cpr regulator induces the Arn operon to confer resistance to cationic peptide antibiotics.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: enables (activates the pump operon)
-    predicate_id: RO:0002327
-    object: activation
-    evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
-  - subject: activation
-    predicate: positively regulates (raises pump expression)
-    predicate_id: RO:0002213
-    object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
-    evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3005064
+      snippet: cprS is part of a two-component regulatory system that, with its counterpart cprR, induces
+        the Arn operon in the presence of cationic peptides to confer resistance.
+      notes: CARD definition for the cprS regulator.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: 'CARD definition for the cprRS system: induction of the Arn operon, not direct drug efflux.'
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: CARD definition for the Arn/PmrF Ara4N synthesis and transfer route.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Rewrote cprR/cprS from stale efflux activation to cationic peptide sensing, Arn induction, and
+    charge-alteration resistance
   llm_assisted: true
 license: CC-BY 4.0
