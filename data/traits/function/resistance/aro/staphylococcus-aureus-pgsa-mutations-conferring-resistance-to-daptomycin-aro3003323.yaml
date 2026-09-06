@@ -28,11 +28,9 @@ causal_graphs:
 - graph_id: resistance
   title: Staphylococcus aureus pgsA mutations conferring resistance to daptomycin → mechanism → resistance
     (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003420). Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD''s sentences
-    name an enzyme and a pathway and never mention a drug. Round 95''s aftA position, applied consistently
-    this time.'
+  description: Curated resistance-causation graph for daptomycin-resistant pgsA. The graph grounds phosphatidylglycerophosphate
+    synthase and the broad phospholipid-biosynthesis process while retaining the peptide-antibiotic resistance-class
+    edge.
   nodes:
   - node_id: determinant
     label: Staphylococcus aureus pgsA mutations conferring resistance to daptomycin
@@ -49,11 +47,15 @@ causal_graphs:
   - node_id: pgp_synthase
     label: CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'CARD names the reaction precisely. Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0008444
+    description: Grounded to the GO molecular-function class whose synonyms include phosphatidylglycerophosphate
+      synthase activity.
   - node_id: phospholipid
-    label: phospholipid biosynthesis
+    label: phospholipid biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: 'The pathway. Ungrounded: no term verified this round.'
+    grounding: GO:0008654
+    description: Grounded to the broad GO pathway class for formation of phospholipids; the pgsA evidence
+      narrows this local node to the phosphatidylglycerol pathway.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,63 +68,126 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies daptomycin-resistant pgsA variants under mutation conferring antibiotic
+      resistance.
     evidence:
-    - reference: ARO:3003420
-      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
-        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003323
+      snippet: Point mutations that occur within Staphylococcus aureus pgsA gene resulting in resistance
+        to daptomycin.
+      notes: CARD definition for the Staphylococcus aureus pgsA mutant term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad mutation mechanism covers pgsA variants associated with daptomycin resistance.
     evidence:
-    - reference: ARO:3003420
-      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
-        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003323
+      snippet: Point mutations that occur within Staphylococcus aureus pgsA gene resulting in resistance
+        to daptomycin.
+      notes: CARD definition for the Staphylococcus aureus pgsA mutant term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mutations in pgsA alter a phospholipid-biosynthesis enzyme and confer daptomycin resistance.
     evidence:
+    - reference: ARO:3003323
+      snippet: Point mutations that occur within Staphylococcus aureus pgsA gene resulting in resistance
+        to daptomycin.
+      notes: CARD definition for the Staphylococcus aureus pgsA mutant term.
+    - reference: ARO:3003080
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+        Laboratory experiments have detected mutations conferring daptomycin resistance in Entercoccus.
+      notes: CARD definition for the daptomycin-resistant pgsA parent term.
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: 'Enzyme identity and pathway, twice over: the protein class and the exact transferase (EC-style)
-        name. CARD says nothing about mutations, a drug, or resistance -- as with aftA (round 95).'
+      notes: CARD definition for the antibiotic-resistant pgsA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: CARD maps these pgsA variants to daptomycin resistance in the peptide-antibiotic class.
     evidence:
+    - reference: ARO:3003323
+      snippet: Point mutations that occur within Staphylococcus aureus pgsA gene resulting in resistance
+        to daptomycin.
+      notes: CARD definition for the Staphylococcus aureus pgsA mutant term.
     - reference: ARO:3003080
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted on ARO:3003080 (daptomycin resistant pgsA), an is_a ancestor of this record's ARO:3003323;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+        Laboratory experiments have detected mutations conferring daptomycin resistance in Entercoccus.
+      notes: CARD definition for the daptomycin-resistant pgsA parent term.
   - subject: determinant
-    predicate: enables (phosphatidylglycerophosphate synthesis)
+    predicate: enables
     predicate_id: RO:0002327
     object: pgp_synthase
+    description: pgsA encodes phosphatidylglycerophosphate synthase, a CDP-diacylglycerol-glycerol-3-phosphate
+      3-phosphatidyltransferase.
     evidence:
+    - reference: ARO:3003323
+      snippet: Point mutations that occur within Staphylococcus aureus pgsA gene resulting in resistance
+        to daptomycin.
+      notes: CARD definition for the Staphylococcus aureus pgsA mutant term.
+    - reference: ARO:3003080
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+        Laboratory experiments have detected mutations conferring daptomycin resistance in Entercoccus.
+      notes: CARD definition for the daptomycin-resistant pgsA parent term.
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: '''It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase'' -- CARD names
-        the reaction, not just the pathway.'
+      notes: CARD definition for the antibiotic-resistant pgsA parent term.
+    - reference: GO:0008444
+      snippet: 'Catalysis of the reaction: sn-glycerol 3-phosphate + CDP-diacylglycerol = 3-(3-sn-phosphatidyl)-sn-glycerol
+        1-phosphate + CMP + H+.'
+      notes: GO reaction definition for phosphatidylglycerophosphate synthase activity.
   - subject: pgp_synthase
     predicate: part of (phospholipid biosynthesis)
     predicate_id: BFO:0000050
     object: phospholipid
+    description: Phosphatidylglycerophosphate synthase activity is part of the phospholipid-biosynthesis
+      pathway.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: '''involved in phospholipid biosynthesis''. NOT asserted: any link to a drug, which CARD''s
-        sentences do not contain.'
+      notes: CARD definition for the antibiotic-resistant pgsA parent term.
+    - reference: GO:0008444
+      snippet: 'Catalysis of the reaction: sn-glycerol 3-phosphate + CDP-diacylglycerol = 3-(3-sn-phosphatidyl)-sn-glycerol
+        1-phosphate + CMP + H+.'
+      notes: GO reaction definition for phosphatidylglycerophosphate synthase activity.
+    - reference: GO:0008654
+      snippet: The chemical reactions and pathways resulting in the formation of a phospholipid, a lipid
+        containing phosphoric acid as a mono- or diester.
+      notes: GO definition for the broad phospholipid biosynthetic process.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded daptomycin-resistant pgsA descendant graphs to GO PGP synthase and phospholipid-biosynthesis
+    terms and added exact pgsA, daptomycin, mutation-mechanism, and ontology evidence
   llm_assisted: true
 license: CC-BY 4.0
