@@ -239,6 +239,10 @@ sources-check:
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
 
+# Score and rank graph-bearing records by causal-graph completeness and evidence quality
+score-graphs *args:
+    uv run python scripts/score_causal_graphs.py {{args}}
+
 # Reports encoding damage by source and kind. Separates REVERSIBLE damage (mojibake, C1
 # controls — repair_mojibake undoes these, and a non-zero count exits 1) from U+FFFD,
 # which is lossy: the original bytes are gone, so it is reported as a fact rather than a
