@@ -114,6 +114,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Ingest a new source | [ingest-source](.claude/skills/ingest-source/SKILL.md) |
 | Review source/category routing | [review-source-categories](.claude/skills/review-source-categories/SKILL.md) |
 | Sample record quality | [review-record-samples](.claude/skills/review-record-samples/SKILL.md) |
+| Curate one named record | [curate-yaml-record](.claude/skills/curate-yaml-record/SKILL.md) |
 | Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
 | Curate definitions | [edison-trait-definitions](.claude/skills/edison-trait-definitions/SKILL.md) |
 | Curate mechanism graphs | [edison-causal-graphs](.claude/skills/edison-causal-graphs/SKILL.md) |
