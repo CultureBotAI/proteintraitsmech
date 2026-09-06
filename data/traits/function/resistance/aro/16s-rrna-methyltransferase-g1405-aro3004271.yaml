@@ -51,17 +51,18 @@ causal_graphs:
   - node_id: methyltransferase
     label: 16S rRNA methyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has rRNA methyltransferase terms but the resistance-associated positions
-      differ per enzyme (G1405, A1408).'
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity superclass because the ARO/PubMed
+      evidence narrows this node to methylation of 16S rRNA.
   - node_id: decoding_site
     label: 16S rRNA decoding site (aminoglycoside binding site)
     node_type: NUCLEIC_ACID
-    description: 'The SAME site round 29''s records mutate. Ungrounded there and here, for the same reason:
-      no ontology term denotes it.'
+    description: Local rRNA target-site node for the aminoglycoside binding site in the 16S decoding center.
   - node_id: methylated
-    label: methylated decoding site
+    label: methylated 16S rRNA decoding site
     node_type: STATE
-    description: 'Ungrounded: a modified nucleotide state rather than a compound.'
+    description: Local state representing methylation of the aminoglycoside-binding 16S rRNA decoding
+      site.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -74,6 +75,8 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this determinant under antibiotic target alteration because the methyltransferase
+      modifies the 16S rRNA aminoglycoside target site.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
@@ -84,6 +87,8 @@ causal_graphs:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Target alteration is the broad resistance mechanism represented by 16S decoding-site
+      methylation.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
@@ -94,6 +99,8 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies this determinant under ribosomal alteration conferring antibiotic
+      resistance, the ribosome-specific branch.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
@@ -104,6 +111,8 @@ causal_graphs:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Methylation of the 16S decoding center is the ribosomal alteration that supports aminoglycoside
+      resistance.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
@@ -114,6 +123,8 @@ causal_graphs:
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant enables 16S rRNA methylation, producing a modified decoding site that
+      no longer binds aminoglycosides effectively.
     evidence:
     - reference: PMID:40643688
       snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
@@ -131,7 +142,7 @@ causal_graphs:
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    description: CARD asserts aminoglycoside resistance for this 16S rRNA methyltransferase subfamily.
     evidence:
     - reference: ARO:3004271
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
@@ -141,28 +152,42 @@ causal_graphs:
     predicate: enables (16S rRNA methylation)
     predicate_id: RO:0002327
     object: methyltransferase
+    description: The determinant enables methyl transfer onto 16S rRNA nucleotides in the decoding center.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
         in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
         resistance and poses a major threat to their future clinical utility.
       notes: The acquired enzymes modify 16S rRNA nucleotides in the decoding centre.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the ARO/PubMed evidence
+        constrains the substrate to 16S rRNA.
   - subject: methyltransferase
     predicate: causally upstream of (methylates the site)
     predicate_id: RO:0002411
     object: methylated
+    description: rRNA methyltransferase activity yields a methylated 16S decoding-site state.
     evidence:
     - reference: PMID:40643688
       snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
         form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
         binding sites.
       notes: Methylation of the drug's rRNA binding site is the mechanism class.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the ARO/PubMed evidence
+        constrains the substrate to 16S rRNA.
   - subject: methylated
     predicate: negatively regulates (the modified site no longer binds the drug)
     predicate_id: RO:0002212
     object: decoding_site
-    description: 'The causal core, and the same endpoint round 29 reaches by substitution instead: the
-      decoding site stops binding aminoglycosides.'
+    description: Methylation changes the 16S rRNA aminoglycoside binding site and prevents normal drug
+      binding.
     evidence:
     - reference: PMID:40643688
       snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
@@ -173,15 +198,40 @@ causal_graphs:
     predicate: molecularly interacts with (binds the decoding site)
     predicate_id: RO:0002436
     object: decoding_site
+    description: Aminoglycosides normally target the 16S rRNA decoding site modified by these methyltransferases.
     evidence:
     - reference: PMID:40643688
       snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
         form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
         binding sites.
       notes: 'Drug action: the rRNA binding site methylation denies it.'
+  - subject: methylated
+    predicate: causally upstream of (blocks aminoglycoside binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated 16S decoding-site state is the terminal modeled cause of the aminoglycoside-resistance
+      phenotype.
+    evidence:
+    - reference: PMID:40643688
+      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
+        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
+        binding sites.
+      notes: 'The mechanism class: modify the drug''s binding site on the rRNA rather than the drug or
+        the protein.'
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: And its clinical weight -- 'exceptionally high-level' resistance, because a methylated site
+        resists the whole aminoglycoside class at once.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded 16S rRNA methyltransferase activity, described the shared 16S decoding-site methylation
+    edges, and linked methylated-site state to resistance
   llm_assisted: true
 license: CC-BY 4.0
