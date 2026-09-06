@@ -34,10 +34,9 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: MexS → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Curated resistance-causation graph for MexS loss derepressing MexT and activating MexEF-OprN
+    efflux. The graph replaces the stale AdeR direct-activation scaffold with exact MexS, MexT, and MexEF-OprN
+    evidence.
   nodes:
   - node_id: determinant
     label: MexS
@@ -47,16 +46,33 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant activates
+  - node_id: mech1
+    label: mutation conferring antibiotic resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000212
+  - node_id: activator
+    label: MexT
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
-  - node_id: activation
-    label: activation of efflux pump expression
+    grounding: ARO:3000814
+    description: Grounded to CARD's MexT activator, the MexEF-OprN positive regulator normally suppressed
+      by MexS.
+  - node_id: suppression
+    label: negative regulation of MexT molecular function
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0044092
+    description: Grounded to broad negative regulation of molecular function because MexS suppresses the
+      MexT activator.
+  - node_id: activation
+    label: positive regulation of MexEF-OprN expression
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+    description: Grounded to the broad GO DNA-templated transcriptional activation process because MexT
+      activates MexEF-OprN expression.
+  - node_id: pump
+    label: MexEF-OprN
+    node_type: PROTEIN
+    grounding: ARO:3000798
+    description: Grounded to CARD's MexEF-OprN efflux pump.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,48 +85,186 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies MexS under antibiotic efflux because MexS normally suppresses the MexT
+      activator of the MexEF-OprN pump.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump activated by MexT.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents elevated MexEF-OprN activity.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump activated by MexT.
+  - subject: determinant
+    predicate: participates in (mutation mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    description: CARD explicitly describes MexS mutations as causing multidrug resistance.
+    evidence:
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The inherited mutation mechanism links MexS variants to resistance.
+    evidence:
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: MexS mutations derepress MexT, increasing MexEF-OprN pump expression and driving efflux-mediated
+      resistance.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump activated by MexT.
   - subject: determinant
-    predicate: enables (activates the pump operon)
+    predicate: negatively regulates (loss lifts suppression)
+    predicate_id: RO:0002212
+    object: suppression
+    description: Resistance-associated MexS mutations are represented as loss of normal MexT suppression.
+    evidence:
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: GO:0044092
+      snippet: Any process that stops or reduces the rate or extent of a molecular function, an elemental
+        biological activity occurring at the molecular level.
+      notes: GO definition for the broad negative regulation of molecular function.
+  - subject: suppression
+    predicate: negatively regulates (suppresses MexT)
+    predicate_id: RO:0002212
+    object: activator
+    description: Normal MexS-dependent suppression keeps MexT activity low.
+    evidence:
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: GO:0044092
+      snippet: Any process that stops or reduces the rate or extent of a molecular function, an elemental
+        biological activity occurring at the molecular level.
+      notes: GO definition for the broad negative regulation of molecular function.
+  - subject: activator
+    predicate: enables (activates MexEF-OprN expression)
     predicate_id: RO:0002327
     object: activation
+    description: MexT participates in positive regulation of MexEF-OprN expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for the broad transcriptional activation process.
   - subject: activation
-    predicate: positively regulates (raises pump expression)
+    predicate: positively regulates (raises MexEF-OprN expression)
     predicate_id: RO:0002213
     object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
+    description: MexT-mediated transcriptional activation raises MexEF-OprN expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for the broad transcriptional activation process.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump activated by MexT.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MexEF-OprN is the efflux pump whose activated expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000813
+      snippet: MexS is a suppressor of MexT, which is an activator of the multidrug pump MexEF-OprN. Mutations
+        in MexS lead to multidrug resistance.
+      notes: CARD definition for the MexS suppressor determinant.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump activated by MexT.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced the stale MexS direct-activation scaffold with MexS loss, MexT derepression, MexEF-OprN
+    activation, and exact target/activator/pump evidence
   llm_assisted: true
 license: CC-BY 4.0
