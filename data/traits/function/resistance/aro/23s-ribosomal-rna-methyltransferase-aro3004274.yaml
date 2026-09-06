@@ -29,11 +29,10 @@ evidence:
   notes: PMID:20144045 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: 23S ribosomal RNA methyltransferase → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:20007606). 23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503
-    in the peptidyl-transferase centre.'
+  title: 23S ribosomal RNA methyltransferase → methylated 23S rRNA binding site → resistance
+  description: Curated resistance-causation graph for generic 23S rRNA methyltransferases. The graph models
+    methylation of a 23S rRNA antibiotic-binding site without assuming a single nucleotide target or catalytic-domain
+    architecture.
   nodes:
   - node_id: determinant
     label: 23S ribosomal RNA methyltransferase
@@ -47,16 +46,30 @@ causal_graphs:
     label: ribosomal alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000211
-  - node_id: domain
-    label: radical-SAM methyltransferase domain
-    node_type: DOMAIN
-    grounding: Pfam:PF04055
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: radical-SAM (partial TIM-barrel) fold
-    node_type: DOMAIN
-    grounding: CATH:3.20.20
-    description: KB protein-trait record carrying the mechanism.
+  - node_id: methyltransferase
+    label: 23S rRNA methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term because the ARO evidence
+      scopes this local activity to 23S rRNA.
+  - node_id: target_site
+    label: 23S rRNA antibiotic-binding site
+    node_type: NUCLEIC_ACID
+    grounding: SO:0000252
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrow term is available
+      for a generic 23S rRNA antibiotic-binding site.
+  - node_id: methylated
+    label: methylated 23S rRNA antibiotic-binding site
+    node_type: STATE
+    grounding: SO:0000252
+    description: Local state representing methylation of an antibiotic-binding site in 23S rRNA. Grounded
+      to broad rRNA because no stable narrow term is available for a generic methylated 23S rRNA antibiotic-binding
+      site.
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: The 50S subunit that contains bacterial 23S rRNA.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,81 +82,193 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies 23S rRNA methyltransferases under antibiotic target alteration because
+      they enzymatically modify the rRNA target.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Target alteration is the broad resistance mechanism represented by 23S rRNA methylation.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies 23S rRNA methyltransferases under the ribosome-specific target-alteration
+      mechanism.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:3000211.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Chemical alteration of the ribosome is the ribosome-specific route represented by 23S
+      rRNA methylation.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:3000211 → resistance.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: 23S rRNA methyltransferases methylate the 23S rRNA target of ribosome-binding antibiotics.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Determinant → resistance phenotype.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF04055
-      snippet: Radical SAM superfamily
-      notes: 'KB trait: the radical-SAM methyltransferase domain.'
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.20.20
-      snippet: TIM Barrel
-      notes: 'KB trait: the radical-SAM fold.'
-  - subject: domain
-    predicate: enables (23S rRNA A2503 methylation)
+    predicate: enables
     predicate_id: RO:0002327
-    object: mech1
+    object: methyltransferase
+    description: The determinant enables methyl transfer onto nucleoside residues in 23S rRNA.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: The methyltransferase domain methylates 23S rRNA A2503, altering the drug target.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
+  - subject: methyltransferase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: methylated
+    description: 23S rRNA methyltransferase activity yields a methylated 23S rRNA antibiotic-binding site.
+    evidence:
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
+  - subject: methylated
+    predicate: negatively regulates (blocks antibiotic binding)
+    predicate_id: RO:0002212
+    object: target_site
+    description: Methylation changes the 23S rRNA antibiotic-binding site and prevents normal drug binding.
+    evidence:
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for local 16S/23S rRNA antibiotic-binding sites.
+  - subject: methylated
+    predicate: causally upstream of (blocks antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated 23S rRNA antibiotic-binding site is the terminal modeled cause of the
+      resistance phenotype.
+    evidence:
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+  - subject: target_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: subunit
+    description: The methylated antibiotic target is a site in 23S rRNA in the 50S ribosomal subunit.
+    evidence:
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for local 16S/23S rRNA antibiotic-binding sites.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Rewrote specific 16S/23S rRNA mutation and methyltransferase graphs
     llm_assisted: true
 license: CC-BY 4.0
