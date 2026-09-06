@@ -29,7 +29,22 @@ classifiers = [
 dependencies = [
     "linkml>=1.10.0",
     "linkml-runtime>=1.7.0",
-    "oaklib>=0.5.0",
+    # Below 0.7.2, `sqlite:obo:` resolves against https://s3.amazonaws.com/bbop-sqlite,
+    # which is retired and answers 403. The id↔label gate builds eight such adapters
+    # (conf/id_label_targets.yaml) and ground_categories.py one per ontology, so a
+    # cold cache put every one of them on a dead bucket. 0.7.2 moved the default to
+    # https://semanticsql.berkeleybop.io (oaklib#897, semantic-sql#110).
+    #
+    # >=0.7.3, not 0.7.2: 0.7.2 declares requires_python <3.14 while this project
+    # declares an unbounded >=3.10, so 0.7.2 names a floor that is not installable
+    # across the range we claim. 0.7.3 widened it to <3.15. Matches
+    # MediaIngredientMech, CultureMech, TraitMech and culturebotai-claw (#646).
+    "oaklib>=0.7.3",
+    # oaklib imports eutils, which still imports pkg_resources; setuptools 82
+    # removed it. Nothing else bounds setuptools here, so without this a relock
+    # can take it to 82 and every `import oaklib` dies. <82 not <81: 81 still
+    # ships pkg_resources and is what resolves today. Matches AntibioticMech.
+    "setuptools<82",
     "pyyaml>=6.0",
     "click>=8.1.0",
     "jinja2>=3.1.0",
