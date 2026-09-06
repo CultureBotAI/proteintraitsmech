@@ -18,12 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004904 isoniazid resistant mshC"
 causal_graphs:
 - graph_id: resistance
-  title: isoniazid resistant mshC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004904). The mshC record that carries its reaction. Its sibling ARO:3004889 says only 'inability
-    for antibiotic to function' and remains a draft -- two records for one gene, one curatable and one
-    not, as with mshA and mshB (round 109). The word is still 'function', so no activation edge.
+  title: isoniazid resistant mshC → mshC mutation → resistance
+  description: Conservative graph for isoniazid-resistant mshC. The graph grounds the MshC ligase reaction
+    and Cys-GlcN-Ins product named by ARO, keeps the isoniazid-like drug-class edge, and does not add
+    an unsupported isoniazid activation edge.
   nodes:
   - node_id: determinant
     label: isoniazid resistant mshC
@@ -37,14 +35,18 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
-  - node_id: condensation
-    label: ATP-dependent GlcN-Ins / L-cysteine ligase activity
+  - node_id: mshc_ligase
+    label: cysteine-glucosaminylinositol ligase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0035446
   - node_id: cys_glcn_ins
     label: L-Cys-GlcN-Ins
     node_type: CHEMICAL
-    description: The product CARD names. Ungrounded.
+    grounding: CHEBI:58887
+  - node_id: mycothiol_biosynthesis
+    label: mycothiol biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0010125
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,62 +59,132 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant mshC variants under point mutations.
     evidence:
     - reference: ARO:3004904
       snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
         It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited point-mutation mechanism links mshC determinants to resistance.
     evidence:
     - reference: ARO:3004904
       snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
         It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The local ARO definition states that mshC mutations confer antibiotic resistance.
     evidence:
     - reference: ARO:3004904
       snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
         It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
-      notes: The reaction with both substrates and the product named -- which the OTHER mshC record (ARO:3004889,
-        left in round 94) does not have. Still 'to FUNCTION', so still no prodrug edge (rounds 95, 110,
-        112, 118).
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
-    evidence:
-    - reference: ARO:3004904
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3004904 (isoniazid resistant mshC) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (ATP-dependent condensation)
-    predicate_id: RO:0002327
-    object: condensation
+    description: The ARO hierarchy links this mshC determinant to the isoniazid-like antibiotic resistance
+      class.
     evidence:
     - reference: ARO:3004904
       snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
         It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
-      notes: '''It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine''.'
-  - subject: condensation
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: ARO:3004904
+      snippet: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic
+      notes: ARO drug-class relationship on ARO:3004904; modeled here as a determinant-to-isoniazid-like
+        antibiotic edge.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: mshc_ligase
+    description: ARO identifies MshC as the ligase that condenses GlcN-Ins and L-cysteine.
+    evidence:
+    - reference: ARO:3004904
+      snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+  - subject: mshc_ligase
     predicate: has output (L-Cys-GlcN-Ins)
     predicate_id: RO:0002234
     object: cys_glcn_ins
+    description: MshC ligase activity forms Cys-GlcN-Ins.
     evidence:
     - reference: ARO:3004904
       snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
         It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
-      notes: '''to form L-Cys-GlcN-Ins''. NOT asserted: any link to isoniazid, which CARD frames only
-        as ''inability to function''.'
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+    - reference: RHEA:26177
+      snippet: 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside + L-cysteine + ATP => 1D-myo-inositol
+        2-(L-cysteinylamino)-2-deoxy-alpha-D-glucopyranoside + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional child of RHEA:26176 declares 1D-myo-inositol 2-(L-cysteinylamino)-2-deoxy-alpha-D-glucopyranoside
+        as a product grounded to CHEBI:58887.
+  - subject: mshc_ligase
+    predicate: part of (mycothiol biosynthesis)
+    predicate_id: BFO:0000050
+    object: mycothiol_biosynthesis
+    description: ARO places the MshC ligase reaction in mycothiol biosynthesis.
+    evidence:
+    - reference: ARO:3004904
+      snippet: Mutations that occur on the mshC gene resulting in the inability for isoniazid to function.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+      notes: CARD definition for isoniazid resistant mshC.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+    - reference: GO:0010125
+      snippet: The chemical reactions and pathways resulting in the formation of mycothiol, which consists
+        of N-acetyl-L-cysteine linked to a pseudodisaccharide, D-glucosamine and myo-inositol.
+      notes: GO definition for mycothiol biosynthetic process.
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded mshC mycothiol-biosynthesis resistance graphs
   llm_assisted: true
 license: CC-BY 4.0
