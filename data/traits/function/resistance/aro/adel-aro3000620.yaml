@@ -35,16 +35,14 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: pump
-    label: the efflux pump this determinant represses
+    label: AdeFGH RND multidrug efflux pump
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AcrAB-TolC
-      for AcrR, AdeIJK for AdeN, CmeABC for CmeR. The pump mechanisms themselves are curated records (rounds
-      33-36).
-  - node_id: repression
-    label: repression of efflux pump expression
-    node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: negative regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: ARO:3000771
+    description: Grounded to CARD's AdeFGH RND multidrug efflux pump class.
+  - node_id: overexpression
+    label: AdeFGH overexpression
+    node_type: STATE
+    description: Local state representing AdeFGH overexpression associated with adeL mutations.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,63 +55,96 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies adeL under antibiotic efflux because adeL mutations are associated with
+      overexpression of the AdeFGH efflux pump.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+    - reference: ARO:3000771
+      snippet: AdeFGH is a RND multidrug efflux pump expressed in Acinetobacter baumannii. It confers
+        resistance to fluoroquinolone, tetracycline, tigecycline, chloramphenicol, clindamycin, trimethoprim,
+        and sulfamethoxazole.
+      notes: CARD definition for the AdeFGH efflux pump controlled by AdeL.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents overexpressed AdeFGH exporting antibiotics.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+    - reference: ARO:3000771
+      snippet: AdeFGH is a RND multidrug efflux pump expressed in Acinetobacter baumannii. It confers
+        resistance to fluoroquinolone, tetracycline, tigecycline, chloramphenicol, clindamycin, trimethoprim,
+        and sulfamethoxazole.
+      notes: CARD definition for the AdeFGH efflux pump controlled by AdeL.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The adeL mutation class is associated with AdeFGH overexpression and multidrug resistance.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: enables (represses the pump operon)
-    predicate_id: RO:0002327
-    object: repression
-    evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: CARD's definition of AcrR, the archetype. Each record's own definition names the pump IT
-        represses; this config asserts only the shared direction.
-  - subject: repression
-    predicate: negatively regulates (holds pump expression down)
-    predicate_id: RO:0002212
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+    - reference: ARO:3000771
+      snippet: AdeFGH is a RND multidrug efflux pump expressed in Acinetobacter baumannii. It confers
+        resistance to fluoroquinolone, tetracycline, tigecycline, chloramphenicol, clindamycin, trimethoprim,
+        and sulfamethoxazole.
+      notes: CARD definition for the AdeFGH efflux pump controlled by AdeL.
+  - subject: overexpression
+    predicate: positively regulates (raises pump expression)
+    predicate_id: RO:0002213
     object: pump
+    description: AdeFGH overexpression increases abundance of the AdeFGH pump.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: The wild-type function. Resistance is the loss of it.
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+    - reference: ARO:3000771
+      snippet: AdeFGH is a RND multidrug efflux pump expressed in Acinetobacter baumannii. It confers
+        resistance to fluoroquinolone, tetracycline, tigecycline, chloramphenicol, clindamycin, trimethoprim,
+        and sulfamethoxazole.
+      notes: CARD definition for the AdeFGH efflux pump controlled by AdeL.
   - subject: determinant
-    predicate: negatively regulates (mutation lifts the repression)
-    predicate_id: RO:0002212
-    object: repression
-    description: 'The causal core, and it runs backwards as katG''s does (round 27): resistance is the
-      ABSENCE of a function. A mutated repressor stops holding the pump down, so more pump is made.'
+    predicate: causally upstream of (raises AdeFGH expression)
+    predicate_id: RO:0002411
+    object: overexpression
+    description: The local overexpression state is the regulatory change linked to adeL mutations.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: '''AcrR mutations result in high level antibiotic resistance'' -- CARD states the direction
-        outright.'
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: AdeFGH is the RND pump whose overexpression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000620
+      snippet: AdeL is a regulator of AdeFGH in Acinetobacter baumannii. AdeL mutations are associated
+        with AdeFGH overexpression and multidrug resistance.
+      notes: CARD definition for the adeL regulatory resistance determinant.
+    - reference: ARO:3000771
+      snippet: AdeFGH is a RND multidrug efflux pump expressed in Acinetobacter baumannii. It confers
+        resistance to fluoroquinolone, tetracycline, tigecycline, chloramphenicol, clindamycin, trimethoprim,
+        and sulfamethoxazole.
+      notes: CARD definition for the AdeFGH efflux pump controlled by AdeL.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced archetype Ade regulator evidence with exact ARO evidence, grounded Ade pump/transcription
+    nodes, and linked pump expression to antibiotic efflux
   llm_assisted: true
 license: CC-BY 4.0
