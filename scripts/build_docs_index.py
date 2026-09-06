@@ -85,6 +85,14 @@ import yaml
 DETAIL_BUCKET_TARGET_BYTES = 900_000
 MIN_DETAIL_BUCKETS = 256
 
+# Ceiling on the facet contingency cube (docs/data/facets.json "cube"), which is
+# what makes subset-aware facet counts exact without a record scan. One row per
+# observed (axis, cat, src, sta) combination: 112 rows / 6,200 B raw / 1,261 B
+# gzipped over 429,271 records, because the corpus occupies a tiny corner of the
+# 5x56x33x3 cross-product. Nothing bounds that sparsity, so it is bounded here
+# rather than discovered as a quietly enormous facets.json. See issue #638.
+MAX_CUBE_ROWS = 50_000
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 OUT_DIR = REPO_ROOT / "docs" / "data"
@@ -663,6 +671,7 @@ def main() -> int:
         "src": _tally(records, "src"),
         "sta": _tally(records, "sta"),
     }
+    cube = _cube(records)
 
     write_labels(records)
 
@@ -676,6 +685,7 @@ def main() -> int:
             {
                 "total": len(records),
                 "counts": facets,
+                "cube": cube,
                 "shards": shards,
                 "detailDir": "detail",
             },
@@ -689,6 +699,11 @@ def main() -> int:
     print(f"Wrote {det_count:,} detail sidecars into {det_files} bucket file(s) → "
           f"docs/data/detail/ ({det_mb:.2f} MB total; largest {det_max / 1024:.1f} KiB)")
     print(f"Wrote facet index → {display_path(facets_path)}")
+    if cube is None:
+        print(f"  facet cube omitted: over {MAX_CUBE_ROWS:,} rows; counts fall back to "
+              "global corpus totals")
+    else:
+        print(f"  facet cube: {len(cube):,} of {MAX_CUBE_ROWS:,} rows")
     if skipped:
         print(f"Skipped {skipped} unparseable files")
     return 0
@@ -716,6 +731,44 @@ def write_labels(records: list[dict]) -> Path:
     print(f"Wrote {len(labels):,} id→label entries → "
           f"{display_path(path)} ({path.stat().st_size/(1024*1024):.2f} MB)")
     return path
+
+
+def _cube(records: list[dict]) -> list[list] | None:
+    """Joint distribution of the four faceted fields, or None if it is too large.
+
+    With AND-across-groups / OR-within-group facet semantics, exact counts for any
+    selection are a sum over this cube -- no record scan, and nothing that depends
+    on which shards the browser happens to have loaded. That is the whole reason
+    it exists: counts computed from the partially loaded record array hid valid
+    choices after a narrow query (#544), and global-always counts offer dozens of
+    clickable dead ends (#638).
+
+    Rows are [axis, cat, src, sta, count], positional, matching KEYS in
+    docs/facet-counts.js. A field the record does not have is null, not dropped
+    (#641): filterRecords() only tests groups that carry a selection, so a record
+    with a source but no category is still reachable by selecting that source, and
+    dropping it would under-count the source -- possibly to zero, which hides a
+    genuinely reachable value. null matches no selection, so the record is still
+    correctly excluded the moment its empty group is constrained. This is what
+    keeps each cube marginal equal to the _tally beside it.
+
+    A record with no faceted field at all is dropped: no selection can reach it.
+
+    Returning None rather than raising keeps a cardinality explosion from blocking
+    the whole docs build over a display concern -- the browser falls back to global
+    counts and relabels itself. The builder says so on stdout either way.
+    """
+    counts: dict[tuple, int] = {}
+    for r in records:
+        key = tuple(r.get(f) or None for f in ("axis", "cat", "src", "sta"))
+        if not any(key):
+            continue
+        counts[key] = counts.get(key, 0) + 1
+        if len(counts) > MAX_CUBE_ROWS:
+            return None
+    # None sorts before every string rather than raising on the comparison.
+    ordered = sorted(counts.items(), key=lambda kv: tuple("" if v is None else v for v in kv[0]))
+    return [list(k) + [v] for k, v in ordered]
 
 
 def _tally(records: list[dict], key: str) -> dict[str, int]:
