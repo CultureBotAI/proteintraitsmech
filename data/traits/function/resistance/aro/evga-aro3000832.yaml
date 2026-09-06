@@ -21,10 +21,9 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: evgA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Curated resistance-causation graph for evgA efflux-pump activation. The graph replaces
+    stale archetype evidence, grounds the EmrKY-TolC and MdtEF-TolC efflux pumps, and links both pump
+    complexes to antibiotic efflux.
   nodes:
   - node_id: determinant
     label: evgA
@@ -34,16 +33,22 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant activates
+  - node_id: emrky_tolc
+    label: EmrKY-TolC
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
+    grounding: ARO:3000373
+    description: Grounded to CARD's EmrKY-TolC, a pump activated by EvgA.
+  - node_id: mdtef_tolc
+    label: MdtEF-TolC
+    node_type: PROTEIN
+    grounding: ARO:3000788
+    description: Grounded to CARD's MdtEF-TolC, a pump activated by EvgA.
   - node_id: activation
-    label: activation of efflux pump expression
+    label: positive regulation of emrKY and mdtEF transcription
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0045893
+    description: Grounded to the broad GO DNA-templated transcriptional activation process because EvgA
+      promotes emrKY and mdtEF pump-complex expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,48 +61,159 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies evgA under antibiotic efflux because phosphorylated EvgA positively regulates
+      the emrKY and mdtEF efflux complexes.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: ARO:3000373
+      snippet: EmrKY is a homolog of EmrAB found in E. coli. Together with TolC, it is a tripartite multidrug
+        transporter.
+      notes: CARD definition for the EmrKY-TolC pump activated by EvgA.
+    - reference: ARO:3000788
+      snippet: MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, including E. coli.
+        MdtE is the membrane fusion protein, MdtF is the inner membrane transporter, while TolC is the
+        outer membrane channel.
+      notes: CARD definition for the MdtEF-TolC pump activated by EvgA.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents elevated activity of the EvgA-regulated EmrKY-TolC
+      and MdtEF-TolC multidrug pumps.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: ARO:3000373
+      snippet: EmrKY is a homolog of EmrAB found in E. coli. Together with TolC, it is a tripartite multidrug
+        transporter.
+      notes: CARD definition for the EmrKY-TolC pump activated by EvgA.
+    - reference: ARO:3000788
+      snippet: MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, including E. coli.
+        MdtE is the membrane fusion protein, MdtF is the inner membrane transporter, while TolC is the
+        outer membrane channel.
+      notes: CARD definition for the MdtEF-TolC pump activated by EvgA.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Phosphorylated or overexpressed EvgA activates EmrKY-TolC and MdtEF-TolC expression,
+      increasing antibiotic efflux.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: ARO:3000373
+      snippet: EmrKY is a homolog of EmrAB found in E. coli. Together with TolC, it is a tripartite multidrug
+        transporter.
+      notes: CARD definition for the EmrKY-TolC pump activated by EvgA.
+    - reference: ARO:3000788
+      snippet: MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, including E. coli.
+        MdtE is the membrane fusion protein, MdtF is the inner membrane transporter, while TolC is the
+        outer membrane channel.
+      notes: CARD definition for the MdtEF-TolC pump activated by EvgA.
   - subject: determinant
-    predicate: enables (activates the pump operon)
+    predicate: enables (activates pump transcription)
     predicate_id: RO:0002327
     object: activation
+    description: EvgA participates in positive regulation of emrKY and mdtEF transcription.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for the broad transcriptional activation process.
   - subject: activation
     predicate: positively regulates (raises pump expression)
     predicate_id: RO:0002213
-    object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
+    object: emrky_tolc
+    description: Transcriptional activation raises emrKY transcription and increases expression of EmrKY-TolC.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for the broad transcriptional activation process.
+    - reference: ARO:3000373
+      snippet: EmrKY is a homolog of EmrAB found in E. coli. Together with TolC, it is a tripartite multidrug
+        transporter.
+      notes: CARD definition for the EmrKY-TolC pump activated by EvgA.
+  - subject: activation
+    predicate: positively regulates (raises pump expression)
+    predicate_id: RO:0002213
+    object: mdtef_tolc
+    description: Transcriptional activation raises mdtEF transcription and increases expression of MdtEF-TolC.
+    evidence:
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for the broad transcriptional activation process.
+    - reference: ARO:3000788
+      snippet: MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, including E. coli.
+        MdtE is the membrane fusion protein, MdtF is the inner membrane transporter, while TolC is the
+        outer membrane channel.
+      notes: CARD definition for the MdtEF-TolC pump activated by EvgA.
+  - subject: emrky_tolc
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: EmrKY-TolC is a multidrug pump whose EvgA-activated expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: ARO:3000373
+      snippet: EmrKY is a homolog of EmrAB found in E. coli. Together with TolC, it is a tripartite multidrug
+        transporter.
+      notes: CARD definition for the EmrKY-TolC pump activated by EvgA.
+  - subject: mdtef_tolc
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MdtEF-TolC is a multidrug pump whose EvgA-activated expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000832
+      snippet: EvgA, when phosphorylated, is a positive regulator for efflux protein complexes emrKY and
+        mdtEF. While usually phosphorylated in a EvgS dependent manner, it can be phosphorylated in the
+        absence of EvgS when overexpressed.
+      notes: CARD definition for the evgA efflux-pump activator.
+    - reference: ARO:3000788
+      snippet: MdtEF-TolC is a multidrug efflux complex in Gram-negative bacteria, including E. coli.
+        MdtE is the membrane fusion protein, MdtF is the inner membrane transporter, while TolC is the
+        outer membrane channel.
+      notes: CARD definition for the MdtEF-TolC pump activated by EvgA.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced stale archetype evidence on the evgA efflux-activator graph, grounded its EmrKY-TolC
+    and MdtEF-TolC pump nodes and transcriptional-activation node, and linked both pump complexes to antibiotic
+    efflux
   llm_assisted: true
 license: CC-BY 4.0
