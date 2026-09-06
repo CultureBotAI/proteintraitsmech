@@ -29,11 +29,10 @@ evidence:
   notes: PMID:22509370 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: mphH → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:28416110). Drug inactivation by phosphorylation, distinct from the esterases' ring hydrolysis
-    under the same family term.
+  title: mphH → macrolide phosphorylation → drug inactivation
+  description: Conservative graph for MPH-mediated macrolide resistance. The graph routes macrolide inactivation
+    through the grounded ARO phosphorylation mechanism and represents the phosphorylated, inactive macrolide
+    as a local state because the exact product depends on the macrolide substrate.
   nodes:
   - node_id: determinant
     label: mphH
@@ -51,18 +50,11 @@ causal_graphs:
     label: macrolide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000000
-  - node_id: kinase
-    label: macrolide phosphotransferase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has kinase terms but none specific to macrolide 2''-OH phosphorylation.'
-  - node_id: pocket
-    label: expanded hydrophobic antibiotic binding pocket
-    node_type: STATE
-    description: What lets one enzyme handle six chemically different macrolides. Ungrounded.
   - node_id: phospho_drug
-    label: phosphorylated (inactive) macrolide
-    node_type: CHEMICAL
-    description: 'Ungrounded: the product differs per drug.'
+    label: phosphorylated inactive macrolide
+    node_type: STATE
+    description: Local state for the phosphorylated, inactive macrolide produced by MPH enzymes; the exact
+      chemical product differs by macrolide.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -75,108 +67,215 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies MPH determinants under antibiotic inactivation.
     evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: Family mechanism ARO:0001004.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad resistance mechanism for MPH macrolide phosphorylation.
     evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies MPH determinants under phosphorylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: Family mechanism ARO:3000105.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: MPH enzymes phosphorylate macrolides and thereby inactivate them.
     evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: Mechanism ARO:3000105 → resistance.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: MPH determinants confer macrolide resistance by GTP-dependent phosphorylation and inactivation
+      of macrolides.
     evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: 'Fong et al. 2017. The second of three chemistries under this family term: the ring is PHOSPHORYLATED
-        rather than hydrolysed (round 46).'
-    - reference: PMID:28416110
-      snippet: We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with
-        GTP analogs and six different macrolides.
-      notes: Structures of both main classes, with nucleotide and six different macrolides bound -- which
-        is what establishes the reaction rather than inferring it.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+    description: ARO maps macrolide phosphotransferases to macrolide antibiotics.
     evidence:
     - reference: ARO:3000333
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted on ARO:3000333 (macrolide phosphotransferase (MPH)), an is_a ancestor of this record's
-        ARO:3004539; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (macrolide phosphorylation)
-    predicate_id: RO:0002327
-    object: kinase
-    evidence:
-    - reference: PMID:28416110
-      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
-        ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: Fong et al. 2017.
-  - subject: pocket
-    predicate: part of (the substrate-binding site)
-    predicate_id: BFO:0000050
-    object: determinant
-    description: An expanded, largely hydrophobic pocket -- the structural reason one enzyme inactivates
-      chemically unrelated macrolides.
-    evidence:
-    - reference: PMID:28416110
-      snippet: The structures show that the enzymes are related to the aminoglycoside phosphotransferases,
-        but are distinguished from them by the presence of a large interdomain linker that contributes
-        to an expanded antibiotic binding pocket.
-      notes: The interdomain linker distinguishing these from the aminoglycoside phosphotransferases they
-        are related to.
-  - subject: kinase
+      notes: ARO drug-class relationship asserted on ARO:3000333 and inherited by ARO:3004539.
+    - reference: ARO:0000000
+      snippet: macrolide antibiotic
+      notes: ARO drug-class term inherited by MPH records.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
+  - subject: mech1
     predicate: has output
     predicate_id: RO:0002234
     object: phospho_drug
+    description: MPH antibiotic phosphorylation produces a phosphorylated macrolide.
     evidence:
-    - reference: PMID:28416110
-      snippet: We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with
-        GTP analogs and six different macrolides.
-      notes: Nucleotide and macrolide captured together in the structures.
-  - subject: phospho_drug
-    predicate: negatively regulates (the phosphorylated drug is inactive)
-    predicate_id: RO:0002212
-    object: drug0
-    description: 'The causal core: the drug is chemically modified rather than displaced, excluded or
-      pumped out.'
-    evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: PMID:28416110
       snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
         ring that can be inactivated by macrolide phosphotransferase enzymes.
-      notes: '''can be inactivated by macrolide phosphotransferase enzymes''.'
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
+  - subject: phospho_drug
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: drug0
+    description: The phosphorylated macrolide state represents enzymatic drug inactivation by MPH proteins.
+    evidence:
+    - reference: ARO:3004539
+      snippet: A chromosomal macrolide 2'-phosphotransferase and resistance gene identified from a Brachybacterium
+        faecium cave isolate.
+      notes: CARD definition for mphH.
+    - reference: ARO:3000333
+      snippet: Macrolide phosphotransferases (MPH) are enzymes encoded by macrolide phosphotransferase
+        genes (mph genes). These enzymes phosphorylate macrolides in GTP dependent manner at 2'-OH of
+        desosamine sugar thereby inactivating them. Characterized MPH's are differentiated based on their
+        substrate specificity.
+      notes: CARD definition for the macrolide phosphotransferase parent.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Fong et al. 2017; MPH enzymes inactivate macrolides.
+    - reference: DOI:10.1038/s41467-017-02680-0
+      notes: PMID:29317655 (aro citation)
+    - reference: DOI:10.1371/journal.pone.0034953
+      notes: PMID:22509370 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded macrolide phosphotransferase graphs
   llm_assisted: true
 license: CC-BY 4.0
