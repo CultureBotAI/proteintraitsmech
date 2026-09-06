@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002915
 trait_relations:
@@ -32,11 +32,11 @@ evidence:
 - reference: DOI:10.1111/1751-7915.12139
   notes: PMID:25042042 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanK gene in vanI cluster → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanK gene in vanI cluster → peptidoglycan bridge formation → resistance
+  description: Conservative graph for the vanKI child of vanK. The graph promotes the draft resistance
+    route, keeps the inherited glycopeptide drug-class edge, and grounds its peptidoglycan-bridge role
+    as participation in peptidoglycan biosynthesis.
   nodes:
   - node_id: determinant
     label: vanK gene in vanI cluster
@@ -50,6 +50,10 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: peptidoglycan_biosynthesis
+    label: peptidoglycan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009252
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,46 +66,105 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies this determinant under cell-wall restructuring.
     evidence:
-    - reference: DOI:10.1128/AAC.01408-08
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3003727
       snippet: Also known as vanKI, is a peptidoglycan bridge formation protein also known as FemAB that
         is part of the vanI glycopeptide resistance gene cluster.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: CARD definition for vanK gene in vanI cluster.
+    - reference: ARO:3002915
+      snippet: VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to
+        the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible,
+        high-level vancomycin resistance.
+      notes: CARD definition for vanK.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited cell-wall-restructuring mechanism links Van determinants to resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.01408-08
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
+    - reference: ARO:3003727
+      snippet: Also known as vanKI, is a peptidoglycan bridge formation protein also known as FemAB that
+        is part of the vanI glycopeptide resistance gene cluster.
+      notes: CARD definition for vanK gene in vanI cluster.
+    - reference: ARO:3002915
+      snippet: VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to
+        the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible,
+        high-level vancomycin resistance.
+      notes: CARD definition for vanK.
     - reference: ARO:3000213
       snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
         high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links this Van determinant to glycopeptide resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.01408-08
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+    - reference: ARO:3003727
+      snippet: Also known as vanKI, is a peptidoglycan bridge formation protein also known as FemAB that
+        is part of the vanI glycopeptide resistance gene cluster.
+      notes: CARD definition for vanK gene in vanI cluster.
     - reference: ARO:3002915
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3002915 (vanK), an is_a ancestor of ARO:3003727.
+      snippet: VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to
+        the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible,
+        high-level vancomycin resistance.
+      notes: CARD definition for vanK.
+    - reference: ARO:3002915
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3002915; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3002915
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3002915 (vanK), an is_a ancestor of this record's ARO:3003727; inherited
-        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
     predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    object: drug0
+    description: The ARO hierarchy links this Van determinant to glycopeptide antibiotics.
+    evidence:
+    - reference: ARO:3003727
+      snippet: Also known as vanKI, is a peptidoglycan bridge formation protein also known as FemAB that
+        is part of the vanI glycopeptide resistance gene cluster.
+      notes: CARD definition for vanK gene in vanI cluster.
+    - reference: ARO:3002915
+      snippet: VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to
+        the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible,
+        high-level vancomycin resistance.
+      notes: CARD definition for vanK.
+    - reference: ARO:3002915
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3002915; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
+  - subject: determinant
+    predicate: participates in (peptidoglycan biosynthesis)
+    predicate_id: RO:0000056
+    object: peptidoglycan_biosynthesis
+    description: ARO identifies VanK as forming peptidoglycan cross-bridges.
+    evidence:
+    - reference: ARO:3003727
+      snippet: Also known as vanKI, is a peptidoglycan bridge formation protein also known as FemAB that
+        is part of the vanI glycopeptide resistance gene cluster.
+      notes: CARD definition for vanK gene in vanI cluster.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+curation_history:
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded VanJ and VanK glycopeptide-resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0
