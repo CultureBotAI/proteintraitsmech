@@ -29,11 +29,10 @@ evidence:
   notes: PMID:15215079 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: class B (metallo-) beta-lactamase → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:33199283). class B metallo-β-lactamase — Zn(II)-dependent hydrolysis of β-lactams (incl. carbapenems);
-    no covalent acyl-enzyme.
+  title: class B (metallo-) beta-lactamase → catalytic antibiotic inactivation → resistance
+  description: Curated resistance-causation graph for catalytic antibiotic inactivation. The determinant
+    participates in broad antibiotic inactivation and in the narrower hydrolysis of beta-lactam antibiotic
+    by metallo-beta-lactamase mechanism through a grounded catalytic feature and fold.
   nodes:
   - node_id: determinant
     label: class B (metallo-) beta-lactamase
@@ -51,12 +50,12 @@ causal_graphs:
     label: metallo-beta-lactamase superfamily domain
     node_type: DOMAIN
     grounding: Pfam:PF00753
-    description: KB protein-trait record carrying the mechanism.
+    description: Metallo-beta-lactamase domain that binds catalytic zinc.
   - node_id: fold
     label: metallo-beta-lactamase domain fold
     node_type: DOMAIN
     grounding: CATH:3.60.15.30
-    description: KB protein-trait record carrying the mechanism.
+    description: Metallo-beta-lactamase structural fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,75 +68,195 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this enzyme under antibiotic inactivation.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: Family mechanism ARO:0001004.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Enzymatic antibiotic inactivation removes active antibiotic and thereby causes resistance.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies this enzyme under a narrower catalytic antibiotic-modification mechanism.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000203
+      snippet: Mechanism of enzymatic degradation common to Ambler Class B beta-lactamases. One or two
+        zinc atoms are used to orient a hydroxide nucleophile for attack of the beta-lactam ring.
+      notes: CARD definition for metallo-beta-lactamase hydrolysis.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: Family mechanism ARO:3000203.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The narrower catalytic mechanism produces an inactive antibiotic species.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000203
+      snippet: Mechanism of enzymatic degradation common to Ambler Class B beta-lactamases. One or two
+        zinc atoms are used to orient a hydroxide nucleophile for attack of the beta-lactam ring.
+      notes: CARD definition for metallo-beta-lactamase hydrolysis.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: Mechanism ARO:3000203 → resistance.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant modifies and inactivates antibiotic molecules.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
   - subject: domain
-    predicate: part of (catalytic domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The grounded catalytic feature is part of the inactivation enzyme represented by the
+      determinant.
     evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
     - reference: Pfam:PF00753
       snippet: Metallo-beta-lactamase superfamily
-      notes: 'KB trait: the metallo-beta-lactamase domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.60.15.30
-      snippet: Metallo-beta-lactamase domain
-      notes: 'KB trait: the MBL structural fold.'
-  - subject: domain
-    predicate: enables (Zn-dependent beta-lactam hydrolysis)
-    predicate_id: RO:0002327
-    object: mech1
-    evidence:
+      notes: Pfam family for metallo-beta-lactamases.
     - reference: PMID:33199283
       snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
         β-lactamase activity.
-      notes: The di-zinc metallo-beta-lactamase domain hydrolyses the beta-lactam ring.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the grounded fold associated with this catalytic family.
+    evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: CATH:3.60.15.30
+      snippet: Metallo-beta-lactamase domain
+      notes: CATH fold for metallo-beta-lactamases.
+    - reference: PMID:33199283
+      snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
+        β-lactamase activity.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
+  - subject: domain
+    predicate: enables (zinc-dependent beta-lactam hydrolysis)
+    predicate_id: RO:0002327
+    object: mech1
+    description: The catalytic feature enables the narrower antibiotic modification mechanism.
+    evidence:
+    - reference: ARO:3000004
+      snippet: Ambler Class B beta-lactamases are the metallo-beta-lactamases. These enzymes possess one
+        or two zinc ions in the active site, which are used to orient a hydroxide nucleophile to attack
+        the carbonyl on a beta-lactam ring. There are currently no inhibitors in late-stage development
+        for these relatively new beta-lactamases.
+      notes: CARD definition for class B (metallo-) beta-lactamase.
+    - reference: ARO:3000203
+      snippet: Mechanism of enzymatic degradation common to Ambler Class B beta-lactamases. One or two
+        zinc atoms are used to orient a hydroxide nucleophile for attack of the beta-lactam ring.
+      notes: CARD definition for metallo-beta-lactamase hydrolysis.
+    - reference: Pfam:PF00753
+      snippet: Metallo-beta-lactamase superfamily
+      notes: Pfam family for metallo-beta-lactamases.
+    - reference: PMID:33199283
+      snippet: MBLs are one class of β-lactamases (Ambler class B), requiring divalent zinc ions for their
+        β-lactamase activity.
+      notes: Evidence for zinc-dependent metallo-beta-lactamase activity.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed catalytic antibiotic-inactivation causal graphs
     llm_assisted: true
 license: CC-BY 4.0

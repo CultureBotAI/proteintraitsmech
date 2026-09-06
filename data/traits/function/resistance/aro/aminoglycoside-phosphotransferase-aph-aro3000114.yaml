@@ -29,12 +29,10 @@ evidence:
   notes: PMID:20833577 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: aminoglycoside phosphotransferase (APH) → mechanism → resistance (curated from ARO relations
-    + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:9200607). APH — aminoglycoside O-phosphotransferase; inactivates aminoglycosides by ATP-dependent
-    phosphorylation (protein-kinase-like fold).
+  title: aminoglycoside phosphotransferase (APH) → catalytic antibiotic inactivation → resistance
+  description: Curated resistance-causation graph for catalytic antibiotic inactivation. The determinant
+    participates in broad antibiotic inactivation and in the narrower phosphorylation of antibiotic conferring
+    resistance mechanism through a grounded catalytic feature and fold.
   nodes:
   - node_id: determinant
     label: aminoglycoside phosphotransferase (APH)
@@ -52,12 +50,12 @@ causal_graphs:
     label: aminoglycoside phosphotransferase domain
     node_type: DOMAIN
     grounding: Pfam:PF01636
-    description: KB protein-trait record carrying the mechanism.
+    description: Phosphotransferase domain that modifies aminoglycosides.
   - node_id: fold
     label: aminoglycoside phosphotransferase (protein-kinase-like) fold
     node_type: DOMAIN
     grounding: CATH:3.90.1200
-    description: KB protein-trait record carrying the mechanism.
+    description: Protein-kinase-like aminoglycoside phosphotransferase fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -70,75 +68,173 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this enzyme under antibiotic inactivation.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: Family mechanism ARO:0001004.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Enzymatic antibiotic inactivation removes active antibiotic and thereby causes resistance.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies this enzyme under a narrower catalytic antibiotic-modification mechanism.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: Family mechanism ARO:3000105.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The narrower catalytic mechanism produces an inactive antibiotic species.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: Mechanism ARO:3000105 → resistance.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant modifies and inactivates antibiotic molecules.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: domain
-    predicate: part of (catalytic domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The grounded catalytic feature is part of the inactivation enzyme represented by the
+      determinant.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
     - reference: Pfam:PF01636
       snippet: Phosphotransferase enzyme family
-      notes: 'KB trait: the aminoglycoside-phosphotransferase domain.'
+      notes: Pfam family for aminoglycoside phosphotransferases.
+    - reference: PMID:9200607
+      snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
+        to eukaryotic protein kinases.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: determinant
-    predicate: member of (adopts fold)
+    predicate: member of
     predicate_id: RO:0002350
     object: fold
+    description: The determinant adopts the grounded fold associated with this catalytic family.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
     - reference: CATH:3.90.1200
       snippet: 'Aminoglycoside 3''-phosphotransferase; Chain: A, domain 2'
-      notes: 'KB trait: the protein-kinase-like fold.'
+      notes: CATH fold for aminoglycoside phosphotransferases.
+    - reference: PMID:9200607
+      snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
+        to eukaryotic protein kinases.
+      notes: Evidence for the protein-kinase-like APH fold.
   - subject: domain
     predicate: enables (antibiotic phosphorylation)
     predicate_id: RO:0002327
     object: mech1
+    description: The catalytic feature enables the narrower antibiotic modification mechanism.
     evidence:
+    - reference: ARO:3000114
+      snippet: Kinases that modify aminoglycoside antibiotics by phosphorylation using NTPs as cofactor.
+      notes: CARD definition for aminoglycoside phosphotransferase (APH).
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: Pfam:PF01636
+      snippet: Phosphotransferase enzyme family
+      notes: Pfam family for aminoglycoside phosphotransferases.
     - reference: PMID:9200607
       snippet: Structure of an enzyme required for aminoglycoside antibiotic resistance reveals homology
         to eukaryotic protein kinases.
-      notes: The phosphotransferase domain transfers the ATP γ-phosphate onto the aminoglycoside.
+      notes: Evidence for the protein-kinase-like APH fold.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed catalytic antibiotic-inactivation causal graphs
     llm_assisted: true
 license: CC-BY 4.0
