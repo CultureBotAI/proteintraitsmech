@@ -18,12 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004155 aminosalicylate resistant dihydrofolate synthase"
 causal_graphs:
 - graph_id: resistance
-  title: aminosalicylate resistant dihydrofolate synthase → mechanism → resistance (curated from ARO relations
-    + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004155). Prodrug-activation loss, stated end to end. Rounds 56, 57, 95 and 108 curated this
-    mechanism from sentences that stopped earlier; this one names the analog whose absence is the resistance.
+  title: aminosalicylate resistant dihydrofolate synthase → loss of PAS bioactivation → resistance
+  description: Conservative graph for PAS resistance caused by folC mutation. The graph grounds dihydrofolate
+    synthase to GO:0008841 and keeps the hydroxyl-dihydrofolate intermediate in edge evidence rather than
+    as a separate ungrounded chemical node.
   nodes:
   - node_id: determinant
     label: aminosalicylate resistant dihydrofolate synthase
@@ -40,15 +38,12 @@ causal_graphs:
   - node_id: dhfs
     label: dihydrofolate synthase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-111).'
-  - node_id: analog
-    label: hydroxyl-dihydrofolate, the activated drug analog
-    node_type: CHEMICAL
-    description: 'The intermediate CARD names -- rare here. Ungrounded: no CHEBI id verified this round.'
+    grounding: GO:0008841
   - node_id: activation
     label: bioactivation of p-aminosalicylic acid
     node_type: STATE
-    description: What the mutation prevents. Ungrounded.
+    description: Local state for PAS bioactivation. CARD names hydroxyl-dihydrofolate as the activated
+      drug analog but no stable CHEBI grounding has been verified for that PAS-derived intermediate.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -61,97 +56,127 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies these PAS-resistant folC records under mutation conferring antibiotic
+      resistance.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The PAS-resistant folC mechanism is a resistance-conferring gene variant caused by mutation.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mutations in the dihydrofolate synthase folC gene inhibit PAS bioactivation and thereby
+      confer aminosalicylate resistance.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: 'The complete chain, and the only one in this corpus to name the intermediate: ''required
-        for BIOACTIVATION'', mutation ''inhibits production of the dihydrofolate analog HYDROXYL-DIHYDROFOLATE'',
-        ''THUS preventing activation and conferring resistance''.'
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to salicylic acid antibiotic.
+    description: ARO maps the aminosalicylate-resistant dihydrofolate synthase parent to salicylic acid
+      antibiotics.
     evidence:
+    - reference: ARO:3004155
+      snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
+        acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
+        acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
+        thus preventing activation and conferring resistance.
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
     - reference: ARO:3004155
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007159 ! salicylic acid antibiotic'
-      notes: Asserted directly on ARO:3004155 (aminosalicylate resistant dihydrofolate synthase) in the
-        CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on the aminosalicylate-resistant dihydrofolate
+        synthase parent.
+    - reference: ARO:3007159
+      snippet: salicylic acid antibiotic
+      notes: ARO drug-class term inherited by PAS-resistant folC records.
   - subject: determinant
-    predicate: enables (dihydrofolate synthase activity)
+    predicate: enables
     predicate_id: RO:0002327
     object: dhfs
+    description: The folC determinant enables the dihydrofolate synthase activity required for p-aminosalicylic
+      acid bioactivation.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: The enzyme the record is named for.
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: GO:0008841
+      snippet: 'Catalysis of the reaction: ATP + dihydropterate + L-glutamate = ADP + phosphate + dihydrofolate.'
+      notes: GO definition for dihydrofolate synthase activity.
   - subject: dhfs
-    predicate: has output (hydroxyl-dihydrofolate)
-    predicate_id: RO:0002234
-    object: analog
-    description: The step the mutation breaks, with the product named -- which is what makes this the
-      fullest statement of the mechanism in the corpus.
-    evidence:
-    - reference: ARO:3004155
-      snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
-        acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
-        acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
-        thus preventing activation and conferring resistance.
-      notes: '''mutation ... inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate''.'
-  - subject: analog
-    predicate: causally upstream of (the drug is activated)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: activation
+    description: Dihydrofolate synthase is required to produce the hydroxyl-dihydrofolate analog that
+      constitutes PAS bioactivation.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: '''Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid''.'
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: GO:0008841
+      snippet: 'Catalysis of the reaction: ATP + dihydropterate + L-glutamate = ADP + phosphate + dihydrofolate.'
+      notes: GO definition for dihydrofolate synthase activity.
   - subject: determinant
-    predicate: negatively regulates (prevents activation)
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: activation
-    description: The causal core, with CARD's own 'thus'.
+    description: The resistance-conferring folC mutations prevent p-aminosalicylic acid activation by
+      inhibiting production of hydroxyl-dihydrofolate.
     evidence:
     - reference: ARO:3004155
       snippet: Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic
         acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic
         acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate,
         thus preventing activation and conferring resistance.
-      notes: '''thus preventing activation and conferring resistance''.'
+      notes: CARD definition for the aminosalicylate-resistant dihydrofolate synthase parent.
+    - reference: GO:0008841
+      snippet: 'Catalysis of the reaction: ATP + dihydropterate + L-glutamate = ADP + phosphate + dihydrofolate.'
+      notes: GO definition for dihydrofolate synthase activity.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded folC/PAS bioactivation-loss graphs
   llm_assisted: true
 license: CC-BY 4.0
