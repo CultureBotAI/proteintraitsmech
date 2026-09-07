@@ -20,11 +20,9 @@ evidence:
   notes: PMID:10735877 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: ykkC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:22178925). Secondary-transporter efflux, distinct from RND's periplasmic capture and ABC's ATP-driven
-    mechanotransmission.
+  title: ykkC → ykkCD SMR efflux pump → resistance
+  description: Curated resistance-causation graph for ykkCD SMR efflux-pump subunits. The determinant
+    is modeled as part of a local ykkCD SMR transporter state that exports antibiotic out of the cell.
   nodes:
   - node_id: determinant
     label: ykkC
@@ -35,9 +33,10 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: transporter
-    label: antiparallel EmrE-type homodimer
+    label: ykkCD SMR efflux pump
     node_type: STATE
-    description: 'Ungrounded: a dimer state rather than a compound.'
+    description: Local state for the ykkCD small-multidrug-resistance efflux pump assembled from its SMR-type
+      subunits.
   - node_id: export
     label: xenobiotic detoxification by transmembrane export across the plasma membrane
     node_type: BIOLOGICAL_PROCESS
@@ -54,58 +53,146 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this SMR subunit under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3003063
+      snippet: ykkC is an SMR-type protein that is a subunit of the ykkCD efflux pump.
+      notes: CARD definition for ykkC.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: PMID:22178925
       snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
         cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: Family mechanism ARO:0010000.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3003063
+      snippet: ykkC is an SMR-type protein that is a subunit of the ykkCD efflux pump.
+      notes: CARD definition for ykkC.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: PMID:22178925
       snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
         cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The SMR subunit contributes to the ykkCD pump that exports antibiotic from the cell.
     evidence:
+    - reference: ARO:3003063
+      snippet: ykkC is an SMR-type protein that is a subunit of the ykkCD efflux pump.
+      notes: CARD definition for ykkC.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: PMID:22178925
       snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
         cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: The transporter and what it expels.
-    - reference: PMID:22178925
-      snippet: Here we show that asymmetric antiparallel EmrE exchanges between inward- and outward-facing
-        states that are identical except that they have opposite orientation in the membrane.
-      notes: 'Morrison et al. 2011. The minimal transporter: an ANTIPARALLEL HOMODIMER whose two states
-        are the same structure in opposite membrane orientations, so alternating access is achieved by
-        exchange rather than by a large conformational cycle.'
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: determinant
-    predicate: part of (the transporter)
+    predicate: part of
     predicate_id: BFO:0000050
     object: transporter
+    description: The determinant is a subunit of the ykkCD SMR efflux pump.
     evidence:
+    - reference: ARO:3003063
+      snippet: ykkC is an SMR-type protein that is a subunit of the ykkCD efflux pump.
+      notes: CARD definition for ykkC.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+  - subject: transporter
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: export
+    description: The assembled SMR transporter exports antibiotic out of the cell.
+    evidence:
+    - reference: ARO:3003063
+      snippet: ykkC is an SMR-type protein that is a subunit of the ykkCD efflux pump.
+      notes: CARD definition for ykkC.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: PMID:22178925
       snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
         cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: The determinant is a component of this transporter.
-  - subject: transporter
-    predicate: causally upstream of (alternates orientation to export the substrate)
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
+  - subject: export
+    predicate: causally upstream of
     predicate_id: RO:0002411
-    object: export
+    object: resistance
+    description: Antibiotic export lowers intracellular drug exposure and causes the modeled resistance
+      phenotype.
     evidence:
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:22178925
-      snippet: Here we show that asymmetric antiparallel EmrE exchanges between inward- and outward-facing
-        states that are identical except that they have opposite orientation in the membrane.
-      notes: 'Morrison et al. 2011. The minimal transporter: an ANTIPARALLEL HOMODIMER whose two states
-        are the same structure in opposite membrane orientations, so alternating access is achieved by
-        exchange rather than by a large conformational cycle.'
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed ykkCD SMR efflux-subunit causal graphs
   llm_assisted: true
 license: CC-BY 4.0
