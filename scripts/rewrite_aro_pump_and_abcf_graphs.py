@@ -394,6 +394,171 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=ABC_EFFLUX_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3007566",
+        filename="cryptococcus-spp-afr1-aro3007566.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007566",
+            "snippet": (
+                "Cryptococcus spp. AFR1 gene is an ABC transporter gene that "
+                "contributes to antifungal resistance through antibiotic efflux."
+            ),
+            "notes": "CARD definition for Cryptococcus spp. AFR1.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003801",
+        filename="bcr-1-aro3003801.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003801",
+            "snippet": (
+                "Transmembrane protein which expels bicyclomycin from the "
+                "cell, leading to bicyclomycin resistance."
+            ),
+            "notes": "CARD definition for bcr-1.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002693",
+        filename="cmla1-aro3002693.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002693",
+            "snippet": (
+                "cmlA1 is a plasmid or transposon-encoded chloramphenicol "
+                "exporter that is found in Pseudomonas aeruginosa and "
+                "Klebsiella pneumoniae."
+            ),
+            "notes": "CARD definition for cmlA1.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002695",
+        filename="cmla5-aro3002695.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002695",
+            "snippet": (
+                "cmlA5 is a plasmid or transposon-encoded chloramphenicol "
+                "exporter that is found in Escherichia coli."
+            ),
+            "notes": "CARD definition for cmlA5.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002696",
+        filename="cmla6-aro3002696.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002696",
+            "snippet": (
+                "cmlA6 is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Pseudomonas aeruginosa."
+            ),
+            "notes": "CARD definition for cmlA6.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004665",
+        filename="cmla8-aro3004665.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004665",
+            "snippet": "cmlA8 is a plasmid that confers resistance to chloramphenicol.",
+            "notes": "CARD definition for cmlA8.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3005043",
+        filename="cmla9-aro3005043.yaml",
+        determinant_evidence={
+            "reference": "ARO:3005043",
+            "snippet": (
+                "cmlA9 is a Major Facilitator Superfamily efflux gene that is "
+                "found in Salmonella enterica."
+            ),
+            "notes": "CARD definition for cmlA9.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002698",
+        filename="cmlb-aro3002698.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002698",
+            "snippet": (
+                "cmlB is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Klebsiella aerogenes."
+            ),
+            "notes": "CARD definition for cmlB.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002699",
+        filename="cmlb1-aro3002699.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002699",
+            "snippet": (
+                "cmlB1 is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Bordetella bronchiseptica."
+            ),
+            "notes": "CARD definition for cmlB1.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002702",
+        filename="cmra-aro3002702.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002702",
+            "snippet": (
+                "cmrA is a transposon-encoded chloramphenicol exporter that is "
+                "found in Rhodococcus rhodochrous."
+            ),
+            "notes": "CARD definition for cmrA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002703",
+        filename="cmx-aro3002703.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002703",
+            "snippet": (
+                "cmx is a plasmid or transposon-encoded chloramphenicol "
+                "exporter that is found in Corynebacterium striatum and "
+                "Pseudomonas aeruginosa."
+            ),
+            "notes": "CARD definition for cmx.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002704",
+        filename="fexa-aro3002704.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002704",
+            "snippet": (
+                "fexA is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Mammaliicoccus lentus."
+            ),
+            "notes": "CARD definition for fexA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003955",
+        filename="efpa-aro3003955.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003955",
+            "snippet": "efpA is an MFS transporter found in Mycobacterium tuberculosis.",
+            "notes": "CARD definition for efpA.",
+        },
+        family=MFS_FAMILY,
+    ),
 )
 
 ABC_F_TARGET = AbcFTarget(
