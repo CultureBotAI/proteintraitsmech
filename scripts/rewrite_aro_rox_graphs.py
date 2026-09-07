@@ -129,9 +129,21 @@ MODIFIED_NODE = {
 class Target:
     identifier: str
     filename: str
+    evidence: tuple[dict[str, str], ...] = ()
+
+
+IRI_EVIDENCE = {
+    "reference": "DOI:10.1128/AAC.41.1.218",
+    "snippet": (
+        "The CARD-cited Rhodococcus hoagii report identified iri as a "
+        "monooxygenase that confers rifampin resistance."
+    ),
+    "notes": "CARD-cited evidence for Iri-mediated rifampin resistance.",
+}
 
 
 TARGETS: tuple[Target, ...] = (
+    Target("ARO:3002884", "iri-aro3002884.yaml", (IRI_EVIDENCE,)),
     Target("ARO:3000445", "rifampin-monooxygenase-aro3000445.yaml"),
     Target("ARO:3007209", "streptomyces-venezuelae-rox-aro3007209.yaml"),
     Target("ARO:3007210", "nocardia-farcinica-rox-aro3007210.yaml"),
@@ -202,12 +214,13 @@ def _determinant_node(record: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def _graph(record: dict[str, Any]) -> dict[str, Any]:
+def _graph(record: dict[str, Any], target: Target) -> dict[str, Any]:
     record_evidence = _record_evidence(record)
     common_evidence = (
         record_evidence,
         ROX_PARENT_EVIDENCE,
         HYDROXYLATION_EVIDENCE,
+        *target.evidence,
         NOCARDIA_ROX_EVIDENCE,
         SVEN_ROX_EVIDENCE,
     )
@@ -376,7 +389,7 @@ def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any
     _validate_record(record, target)
 
     out = copy.deepcopy(record)
-    out["causal_graphs"] = [_graph(record)]
+    out["causal_graphs"] = [_graph(record, target)]
     return out, out != record
 
 
