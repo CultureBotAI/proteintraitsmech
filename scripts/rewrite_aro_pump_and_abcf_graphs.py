@@ -743,6 +743,29 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=MFS_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3004101",
+        filename="mdtnop-aro3004101.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004101",
+            "snippet": "MdtNOP is a MFS efflux pump protein found in E. coli.",
+            "notes": "CARD definition for MdtNOP.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003950",
+        filename="msba-aro3003950.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003950",
+            "snippet": (
+                "MsbA is a multidrug resistance transporter homolog from E. coli "
+                "and belongs to a superfamily of ABC transporters."
+            ),
+            "notes": "CARD definition for msbA.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
 )
 
 ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
@@ -827,6 +850,31 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "lactis."
             ),
             "notes": "CARD definition for lmrC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007068",
+        filename="miscellaneous-abc-f-subfamily-atp-binding-cassette-ribosomal-protection-proteins-aro3007068.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007068",
+            "snippet": (
+                "Miscellaneous ABC-F subfamily ATP-binding cassette ribosomal "
+                "protection proteins confer antibiotic resistance through "
+                "ribosomal protection and not through antibiotic efflux."
+            ),
+            "notes": "CARD definition for miscellaneous ABC-F ribosomal protection proteins.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007646",
+        filename="neobacillus-vireti-vmlr2-aro3007646.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007646",
+            "snippet": (
+                "vmlR2 is an ABC-F ATPase ribosomal protection protein from "
+                "Neobacillus vireti."
+            ),
+            "notes": "CARD definition for Neobacillus vireti vmlR2.",
         },
     ),
 )
