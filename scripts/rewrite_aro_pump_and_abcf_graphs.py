@@ -559,6 +559,190 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=MFS_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3000344",
+        filename="emrab-tolc-aro3000344.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000344",
+            "snippet": (
+                "EmrAB-TolC is a multidrug efflux system found in E. coli. "
+                "EmrB is the electrochemical-gradient powered transporter; "
+                "EmrA is the linker; and TolC is the outer membrane channel."
+            ),
+            "notes": "CARD definition for EmrAB-TolC.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000373",
+        filename="emrky-tolc-aro3000373.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000373",
+            "snippet": (
+                "EmrKY is a homolog of EmrAB found in E. coli. Together with "
+                "TolC, it is a tripartite multidrug transporter."
+            ),
+            "notes": "CARD definition for EmrKY-TolC.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3001313",
+        filename="fact-aro3001313.yaml",
+        determinant_evidence={
+            "reference": "ARO:3001313",
+            "snippet": "Efflux protein facT confers resistance to factumycin.",
+            "notes": "CARD definition for facT.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003960",
+        filename="farab-aro3003960.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003960",
+            "snippet": (
+                "farAB is an MFS efflux pump found in gonococci that is "
+                "involved in antibacterial fatty acid resistance."
+            ),
+            "notes": "CARD definition for farAB.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007019",
+        filename="fexb-aro3007019.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007019",
+            "snippet": "FexB is a plasmid-encoded exporter gene which confers resistance to florfenicol.",
+            "notes": "CARD definition for fexB.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003963",
+        filename="flo-aro3003963.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003963",
+            "snippet": (
+                "The Flo transporters can be plasmid- or chromosome-encoded "
+                "and are important determinants of florfenicol resistance."
+            ),
+            "notes": "CARD definition for flo.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002705",
+        filename="flor-aro3002705.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002705",
+            "snippet": (
+                "floR is a plasmid or chromosome-encoded chloramphenicol "
+                "exporter."
+            ),
+            "notes": "CARD definition for floR.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007061",
+        filename="hp1165-aro3007061.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007061",
+            "snippet": (
+                "Hp1165 is a homolog of the Clostridium perfringes tetP gene "
+                "and is part of the MFS efflux family."
+            ),
+            "notes": "CARD definition for hp1165.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003964",
+        filename="hp1181-aro3003964.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003964",
+            "snippet": (
+                "hp1181 is a translocase that is part of the MFS efflux pump "
+                "family and has a role in active antibiotic efflux."
+            ),
+            "notes": "CARD definition for hp1181.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002813",
+        filename="lmrb-aro3002813.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002813",
+            "snippet": (
+                "lmrB is a chromosomally-encoded efflux pump that confers "
+                "resistance to lincosamides in Bacillus subtilis."
+            ),
+            "notes": "CARD definition for lmrB.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000545",
+        filename="macab-tolc-aro3000545.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000545",
+            "snippet": (
+                "MacAB-TolC is an ABC efflux pump complex expressed in E. coli "
+                "and Salmonella enterica."
+            ),
+            "notes": "CARD definition for MacAB-TolC.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007011",
+        filename="mdea-aro3007011.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007011",
+            "snippet": (
+                "mdeA is a multidrug efflux pump that confers resistance in "
+                "varying degrees to several unrelated antibiotics."
+            ),
+            "notes": "CARD definition for mdeA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3001329",
+        filename="mdtg-aro3001329.yaml",
+        determinant_evidence={
+            "reference": "ARO:3001329",
+            "snippet": (
+                "The MdtG protein, also named YceE, appears to be a member of "
+                "the major facilitator superfamily of transporters."
+            ),
+            "notes": "CARD definition for mdtG.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3001216",
+        filename="mdth-aro3001216.yaml",
+        determinant_evidence={
+            "reference": "ARO:3001216",
+            "snippet": "Multidrug resistance protein MdtH.",
+            "notes": "CARD definition for mdtH.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3001214",
+        filename="mdtm-aro3001214.yaml",
+        determinant_evidence={
+            "reference": "ARO:3001214",
+            "snippet": "Multidrug resistance protein MdtM.",
+            "notes": "CARD definition for mdtM.",
+        },
+        family=MFS_FAMILY,
+    ),
 )
 
 ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
@@ -630,6 +814,19 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "pleuromutilins and lincosamides."
             ),
             "notes": "CARD definition for Clostridium sporogenes cplR.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002881",
+        filename="lmrc-aro3002881.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002881",
+            "snippet": (
+                "lmrC is an ABC-F subfamily protein that confers resistance to "
+                "lincosamides in Streptomyces lincolnensis and Lactococcus "
+                "lactis."
+            ),
+            "notes": "CARD definition for lmrC.",
         },
     ),
 )
