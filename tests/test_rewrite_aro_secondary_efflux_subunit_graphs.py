@@ -79,6 +79,8 @@ def test_targets_are_exact_current_secondary_efflux_subunit_records() -> None:
         "ARO:3000074",
         "ARO:3000206",
         "ARO:3000254",
+        "ARO:3003048",
+        "ARO:3003049",
         "ARO:3003548",
         "ARO:3003549",
         "ARO:3003550",

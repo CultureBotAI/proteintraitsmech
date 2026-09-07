@@ -117,6 +117,8 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3003548", "mdtn-aro3003548.yaml"),
     Target("ARO:3003549", "mdto-aro3003549.yaml"),
     Target("ARO:3003550", "mdtp-aro3003550.yaml"),
+    Target("ARO:3003048", "rosa-aro3003048.yaml"),
+    Target("ARO:3003049", "rosb-aro3003049.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 

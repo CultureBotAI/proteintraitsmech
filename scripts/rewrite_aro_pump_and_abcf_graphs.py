@@ -1038,6 +1038,275 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=MFS_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3000822",
+        filename="pmra-aro3000822.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000822",
+            "snippet": (
+                "PmrA is a MFS-type efflux pump expressed in Streptococcus "
+                "pneumoniae that confers low-level resistance to norfloxacin, "
+                "ciprofloxacin, and acriflavine."
+            ),
+            "notes": "CARD definition for pmrA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004030",
+        filename="rosab-aro3004030.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004030",
+            "snippet": (
+                "An efflux pump/potassium antiporter system (RosAB) formed by "
+                "the RosA and RosB proteins found in Yersinia."
+            ),
+            "notes": "CARD definition for RosAB.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003986",
+        filename="taea-aro3003986.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003986",
+            "snippet": (
+                "Pleuromutilin (Tiamulin) ABC efflux pump found in "
+                "Paenibacillus sp. LC231, a strain of Paenibacillus isolated "
+                "from Lechuguilla Cave, NM, USA."
+            ),
+            "notes": "CARD definition for TaeA.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003554",
+        filename="tcma-aro3003554.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003554",
+            "snippet": (
+                "Major facilitator superfamily transporter. Resistance to "
+                "tetracenomycin C by an active tetracenomycin C efflux system "
+                "which is probably energized by transmembrane electrochemical "
+                "gradients."
+            ),
+            "notes": "CARD definition for tcmA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002893",
+        filename="tcr3-aro3002893.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002893",
+            "snippet": (
+                "tcr3 is a tetracycline efflux pump that confers "
+                "self-resistance to Kitasatospora aureofaciens."
+            ),
+            "notes": "CARD definition for tcr3.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000476",
+        filename="tet-31-aro3000476.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000476",
+            "snippet": (
+                "Tet31 is a tetracycline efflux pump found in Aeromonas "
+                "salmonicida, a Gram-negative bacteria."
+            ),
+            "notes": "CARD definition for tet(31).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000478",
+        filename="tet-33-aro3000478.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000478",
+            "snippet": (
+                "Tet33 is a tetracycline efflux pump found in Gram-positive "
+                "bacteria, including Arthrobacter and Corynebacterium."
+            ),
+            "notes": "CARD definition for tet(33).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000481",
+        filename="tet-35-aro3000481.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000481",
+            "snippet": (
+                "Tet35 is a tetracycline efflux pump found in the Gram-negative "
+                "Vibrio and Stenotrophomonas."
+            ),
+            "notes": "CARD definition for tet(35).",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000565",
+        filename="tet-38-aro3000565.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000565",
+            "snippet": (
+                "Tet38 is a tetracycline efflux pump found in the Gram-positive "
+                "Staphylococcus aureus."
+            ),
+            "notes": "CARD definition for tet(38).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000566",
+        filename="tet-39-aro3000566.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000566",
+            "snippet": (
+                "Tet39 is a tetracycline efflux pump found in Gram-negative "
+                "bacteria, including Brevundimonas, Stenotrophomonas, "
+                "Enterobacter, Alcaligenes, Acinetobacter, and Providencia."
+            ),
+            "notes": "CARD definition for tet(39).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000567",
+        filename="tet-40-aro3000567.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000567",
+            "snippet": (
+                "Tet40 is a tetracycline efflux pump found in the Gram-positive "
+                "Clostridium."
+            ),
+            "notes": "CARD definition for tet(40).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000569",
+        filename="tet-41-aro3000569.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000569",
+            "snippet": (
+                "Tet41 is a tetracycline efflux pump found in Serratia, a "
+                "Gram-negative bacterium."
+            ),
+            "notes": "CARD definition for tet(41).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000572",
+        filename="tet-42-aro3000572.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000572",
+            "snippet": (
+                "Tet42 is a tetracycline efflux pump found in both "
+                "Gram-negative (Pseudomonas) and Gram-positive "
+                "(Microbacterium, Bacillus, Staphylococcus, Paenibacillus) "
+                "bacteria."
+            ),
+            "notes": "CARD definition for tet(42).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000573",
+        filename="tet-43-aro3000573.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000573",
+            "snippet": (
+                "Tet(43) is a tetracycline resistance gene with unknown "
+                "origins, isolated from metagenomic DNA."
+            ),
+            "notes": "CARD definition for tet(43).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003196",
+        filename="tet-45-aro3003196.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003196",
+            "snippet": (
+                "Tet45 is a tetracycline efflux pump found in Bhargavaea "
+                "cecembensis strain previously isolated from a "
+                "poultry-litter-impacted soil."
+            ),
+            "notes": "CARD definition for tet(45).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3005006",
+        filename="tet-57-aro3005006.yaml",
+        determinant_evidence={
+            "reference": "ARO:3005006",
+            "snippet": "A tetracycline efflux MFS Transporter from Providencia sp. Y14.",
+            "notes": "CARD definition for tet(57).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004441",
+        filename="tet-59-aro3004441.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004441",
+            "snippet": (
+                "Tet(59) is a chromosome-encoded tetracycline efflux pump "
+                "described from a Chinese pig manure sample."
+            ),
+            "notes": "CARD definition for tet(59).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007492",
+        filename="tet-62-aro3007492.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007492",
+            "snippet": "A novel tetA-type efflux pump.",
+            "notes": "CARD definition for tet(62).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007493",
+        filename="tet-63-aro3007493.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007493",
+            "snippet": "A tetracycline efflux MFS Transporter from Staphylococcus aureus.",
+            "notes": "CARD definition for tet(63).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007494",
+        filename="tet-64-aro3007494.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007494",
+            "snippet": "A tetracycline efflux MFS Transporter from Burkholderia ubonensis.",
+            "notes": "CARD definition for tet(64).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007838",
+        filename="tet-65-aro3007838.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007838",
+            "snippet": (
+                "tet(65) is a tetracycline efflux gene identified from a "
+                "Corynebacterium oculi plasmid."
+            ),
+            "notes": "CARD definition for tet(65).",
+        },
+        family=MFS_FAMILY,
+    ),
 )
 
 ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
@@ -1184,6 +1453,18 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "oxazolidone via modification of the bacterial ribosome."
             ),
             "notes": "CARD definition for poxtA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002828",
+        filename="srmb-aro3002828.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002828",
+            "snippet": (
+                "srmB is an ABC-F subfamily protein found in Streptomyces "
+                "ambofaciens that confers resistance to spiramycin."
+            ),
+            "notes": "CARD definition for srmB.",
         },
     ),
 )
