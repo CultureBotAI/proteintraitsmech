@@ -81,7 +81,11 @@ def test_targets_are_exact_catalytic_parent_records() -> None:
         "ARO:3000218",
         "ARO:3000114",
         "ARO:3000078",
+        "ARO:3000096",
         "ARO:3000004",
+        "ARO:3000568",
+        "ARO:3000570",
+        "ARO:3000571",
         "ARO:3000076",
     }
 
