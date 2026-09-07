@@ -182,6 +182,7 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
     Target("ARO:3003697", "mexpq-opme-aro3003697.yaml", False),
     Target("ARO:3000369", "mtrcde-aro3000369.yaml", False),
     Target("ARO:3004076", "muxabc-opmb-aro3004076.yaml", False),
+    Target("ARO:3003678", "triabc-opmh-aro3003678.yaml", False),
 )
 
 SUBUNIT_TARGETS: tuple[Target, ...] = (

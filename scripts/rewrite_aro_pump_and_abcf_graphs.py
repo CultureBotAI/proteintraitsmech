@@ -1307,6 +1307,254 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=MFS_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3000165",
+        filename="tet-a-aro3000165.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000165",
+            "snippet": (
+                "TetA is a tetracycline efflux pump found in many species of "
+                "Gram-negative bacteria."
+            ),
+            "notes": "CARD definition for tet(A).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000166",
+        filename="tet-b-aro3000166.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000166",
+            "snippet": (
+                "Tet(B) is a tetracycline efflux protein expressed in many "
+                "Gram-negative bacteria."
+            ),
+            "notes": "CARD definition for tet(B).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000167",
+        filename="tet-c-aro3000167.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000167",
+            "snippet": (
+                "Tet(C) is a tetracycline efflux pump found in many species of "
+                "Gram-negative bacteria."
+            ),
+            "notes": "CARD definition for tet(C).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000168",
+        filename="tet-d-aro3000168.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000168",
+            "snippet": (
+                "TetD is a tetracycline efflux pump found exclusively in "
+                "Gram-negative bacteria."
+            ),
+            "notes": "CARD definition for tet(D).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000173",
+        filename="tet-e-aro3000173.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000173",
+            "snippet": (
+                "TetE is a tetracycline efflux pump found in many Gram-negative "
+                "bacteria, especially those in water environments."
+            ),
+            "notes": "CARD definition for tet(E).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000174",
+        filename="tet-g-aro3000174.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000174",
+            "snippet": "TetG is a tetracycline efflux protein found in Gram-negative bacteria.",
+            "notes": "CARD definition for tet(G).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000175",
+        filename="tet-h-aro3000175.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000175",
+            "snippet": "TetH is a tetracycline efflux protein expressed in Gram-negative bacteria.",
+            "notes": "CARD definition for tet(H).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000177",
+        filename="tet-j-aro3000177.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000177",
+            "snippet": "TetJ is a tetracycline efflux protein expressed in Gram-negative bacteria.",
+            "notes": "CARD definition for tet(J).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000178",
+        filename="tet-k-aro3000178.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000178",
+            "snippet": (
+                "TetK is a tetracycline efflux protein found in both "
+                "Gram-negative and Gram-positive bacteria."
+            ),
+            "notes": "CARD definition for tet(K).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000179",
+        filename="tet-l-aro3000179.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000179",
+            "snippet": (
+                "TetL is a tetracycline efflux protein found in many species of "
+                "Gram-negative and Gram-positive bacteria."
+            ),
+            "notes": "CARD definition for tet(L).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000180",
+        filename="teta-p-aro3000180.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000180",
+            "snippet": (
+                "TetA(P) is a inner membrane tetracycline efflux protein found "
+                "on the same operon as the ribosomal protection protein TetB(P)."
+            ),
+            "notes": "CARD definition for tetA(P).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000181",
+        filename="tet-v-aro3000181.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000181",
+            "snippet": (
+                "TetV is a tetracycline efflux protein that has been found in "
+                "Mycolicibacterium smegmatis and Mycolicibacterium fortuitum."
+            ),
+            "notes": "CARD definition for tet(V).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000182",
+        filename="tet-y-aro3000182.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000182",
+            "snippet": (
+                "TetY is a tetracycline efflux pump found in Gram-negative "
+                "bacteria."
+            ),
+            "notes": "CARD definition for tet(Y).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000183",
+        filename="tet-z-aro3000183.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000183",
+            "snippet": (
+                "TetZ is a tetracycline efflux protein found in Gram-positive "
+                "bacteria."
+            ),
+            "notes": "CARD definition for tet(Z).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003980",
+        filename="teta-58-aro3003980.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003980",
+            "snippet": (
+                "TetA(58) is a tetracycline efflux pump described in "
+                "Paenibacillus sp. LC231."
+            ),
+            "notes": "CARD definition for tetA(58).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003981",
+        filename="tetb-58-aro3003981.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003981",
+            "snippet": (
+                "Tetracycline resistant TetB(58) efflux pump found in "
+                "Paenibacillus sp. LC231."
+            ),
+            "notes": "CARD definition for tetB(58).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004031",
+        filename="tetab-46-aro3004031.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004031",
+            "snippet": (
+                "tetAB(46) is a heterodimeric ABC transporter conferring "
+                "tetracycline resistance in Streptococcus australis."
+            ),
+            "notes": "CARD definition for tetAB(46).",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004034",
+        filename="tetab-60-aro3004034.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004034",
+            "snippet": (
+                "tetAB(60) is an ABC transporter that confers resistance to "
+                "tetracycline and tigercycline."
+            ),
+            "notes": "CARD definition for tetAB(60).",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007843",
+        filename="vra-f-aro3007843.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007843",
+            "snippet": "VRA-F is an ABC transporter ATP-binding protein, or ATP-binding cassette.",
+            "notes": "CARD definition for VRA-F.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003952",
+        filename="yoji-aro3003952.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003952",
+            "snippet": (
+                "YojI is capable of pumping out microcin molecules, and TolC in "
+                "addition to YojI is required for microcin J25 export."
+            ),
+            "notes": "CARD definition for YojI.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
 )
 
 ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
@@ -1465,6 +1713,40 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "ambofaciens that confers resistance to spiramycin."
             ),
             "notes": "CARD definition for srmB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002827",
+        filename="tlrc-aro3002827.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002827",
+            "snippet": (
+                "tlrC is an ABC-F subfamily protein found in Streptomyces "
+                "fradiae and confers resistance to mycinamicin, tylosin and "
+                "lincosamides."
+            ),
+            "notes": "CARD definition for tlrC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3004730",
+        filename="tva-a-aro3004730.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004730",
+            "snippet": "A pleuromutilin resistance gene encoding a predicted ABC-F transporter.",
+            "notes": "CARD definition for tva(A).",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3004476",
+        filename="vmlr-aro3004476.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004476",
+            "snippet": (
+                "vmlR is an ABC-F ATPase ribosomal protection protein identified "
+                "in Bacillus subtilus."
+            ),
+            "notes": "CARD definition for vmlR.",
         },
     ),
 )
