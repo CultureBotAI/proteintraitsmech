@@ -86,7 +86,7 @@ def _node_ids(record: dict) -> set[str]:
 
 
 def test_targets_are_exact_current_rnd_records() -> None:
-    assert len(R.TARGETS) == 70
+    assert len(R.TARGETS) == 93
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:0010004",
         "ARO:3000207",
@@ -156,8 +156,31 @@ def test_targets_are_exact_current_rnd_records() -> None:
         "ARO:3000804",
         "ARO:3000807",
         "ARO:3000808",
+        "ARO:3000809",
+        "ARO:3000802",
+        "ARO:3000805",
         "ARO:3009148",
         "ARO:3009153",
+        "ARO:3003037",
+        "ARO:3000379",
+        "ARO:3003039",
+        "ARO:3003051",
+        "ARO:3003052",
+        "ARO:3003053",
+        "ARO:3003055",
+        "ARO:3003056",
+        "ARO:3003057",
+        "ARO:3003679",
+        "ARO:3003680",
+        "ARO:3003681",
+        "ARO:3003682",
+        "ARO:3003700",
+        "ARO:3003922",
+        "ARO:3003923",
+        "ARO:3004072",
+        "ARO:3004142",
+        "ARO:3005004",
+        "ARO:3007509",
     }
 
 
