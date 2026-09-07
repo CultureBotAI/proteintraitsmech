@@ -18,13 +18,11 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3005001 50S rRNA with mutation conferring resistance to macrolide antibiotics"
 causal_graphs:
 - graph_id: resistance
-  title: 50S rRNA with mutation conferring resistance to macrolide antibiotics → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000328). The rRNA parent term. NOT asserted: the binding-site partonomy that makes rounds 54-55''s
-    graphs distinctive -- that comes from the 16S and 23S definitions, not from this one, which says only
-    that the drugs target the ribosome.'
+  title: 50S rRNA with mutation conferring resistance to macrolide antibiotics → bacterial ribosome →
+    macrolide resistance
+  description: Curated resistance-causation graph for macrolide resistance caused by mutations in 50S
+    rRNA. The graph uses the broad ribosome target node supported by this parent record and avoids naming
+    a narrower 23S binding-site node from descendant records.
   nodes:
   - node_id: determinant
     label: 50S rRNA with mutation conferring resistance to macrolide antibiotics
@@ -39,10 +37,11 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:0000000
   - node_id: ribosome
-    label: the bacterial ribosome
+    label: bacterial ribosome
     node_type: CELLULAR_LOCALIZATION
-    description: 'What the drugs target. Ungrounded: CARD says ''the bacterial ribosome'' without a subunit,
-      and rounds 54-55 grounded the specific subunits from the specific terms.'
+    grounding: GO:0005840
+    description: Grounded to the broad GO ribosome class because the ARO evidence scopes this local node
+      to the bacterial ribosome.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -55,64 +54,130 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies macrolide-resistance 50S rRNA mutations under mutation conferring antibiotic
+      resistance.
     evidence:
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
     - reference: ARO:3000328
       snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
         that target the bacterial ribosome.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3005003
+      snippet: Mutations in the prokaryotic 50S ribosomal RNA subunit disrupt binding sites and thereby
+        reduce antibiotic efficacy.
+      notes: CARD definition for the 50S rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism represents rRNA sequence changes that reduce efficacy
+      of ribosome-targeting antibiotics.
     evidence:
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
     - reference: ARO:3000328
       snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
         that target the bacterial ribosome.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3005003
+      snippet: Mutations in the prokaryotic 50S ribosomal RNA subunit disrupt binding sites and thereby
+        reduce antibiotic efficacy.
+      notes: CARD definition for the 50S rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Nucleotide point mutations in 50S rRNA confer resistance to macrolides that target the
+      bacterial ribosome.
     evidence:
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
     - reference: ARO:3000328
       snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
         that target the bacterial ribosome.
-      notes: 'The general claim over both subunits: SNPs in rRNA confer resistance to drugs that TARGET
-        THE RIBOSOME. Rounds 54-55 curated the 16S and 23S children with their own mechanism sentences;
-        this term is the shared statement above them.'
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3005003
+      snippet: Mutations in the prokaryotic 50S ribosomal RNA subunit disrupt binding sites and thereby
+        reduce antibiotic efficacy.
+      notes: CARD definition for the 50S rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+    description: CARD asserts that this 50S rRNA mutation class confers resistance to macrolide antibiotics.
     evidence:
     - reference: ARO:3005001
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted directly on ARO:3005001 (50S rRNA with mutation conferring resistance to macrolide
-        antibiotics) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: part of (the bacterial ribosome)
-    predicate_id: BFO:0000050
-    object: ribosome
-    evidence:
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
     - reference: ARO:3000328
       snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
         that target the bacterial ribosome.
-      notes: rRNA is a ribosomal component; CARD frames the drugs as targeting the ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+  - subject: determinant
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: ribosome
+    description: The mutated 50S rRNA is modeled as part of the bacterial ribosome to identify the cellular
+      target of these resistance-conferring changes.
+    evidence:
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
+    - reference: ARO:3005003
+      snippet: Mutations in the prokaryotic 50S ribosomal RNA subunit disrupt binding sites and thereby
+        reduce antibiotic efficacy.
+      notes: CARD definition for the 50S rRNA mutation parent term.
+    - reference: GO:0005840
+      snippet: It consists of two subunits, one large and one small, each containing only protein and
+        RNA.
+      notes: GO definition supporting rRNA as a component of the broad ribosome node.
   - subject: drug0
     predicate: molecularly interacts with (targets the ribosome)
     predicate_id: RO:0002436
     object: ribosome
-    description: The general form of what rounds 54-55 stated per-subunit with a named binding site.
+    description: This parent record supports a broad macrolide-ribosome target edge but does not identify
+      a narrower 23S binding site.
     evidence:
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit (not in the 23s rRNA range) may confer
+        resistance to macrolide antibiotics.
+      notes: CARD definition for 50S rRNA with mutation conferring resistance to macrolide antibiotics.
     - reference: ARO:3000328
       snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
         that target the bacterial ribosome.
-      notes: '''drugs that target the bacterial ribosome''. NOT asserted: which site, which this term
-        does not give.'
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: GO:0005840
+      snippet: It consists of two subunits, one large and one small, each containing only protein and
+        RNA.
+      notes: GO definition supporting rRNA as a component of the broad ribosome node.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed 50S macrolide rRNA mutation causal graph
   llm_assisted: true
 license: CC-BY 4.0
