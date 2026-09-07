@@ -766,6 +766,278 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         },
         family=ABC_EFFLUX_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3000391",
+        filename="nora-aro3000391.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000391",
+            "snippet": (
+                "NorA is a multidrug efflux pump in Staphylococcus aureus that "
+                "confers resistance to fluoroquinolones and other structurally "
+                "unrelated antibiotics like acriflavine."
+            ),
+            "notes": "CARD definition for norA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000421",
+        filename="norb-aro3000421.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000421",
+            "snippet": (
+                "NorB is a multidrug efflux pump in Staphylococcus aureus that "
+                "confers resistance to fluoroquinolones and other structurally "
+                "unrelated antibiotics like tetracycline."
+            ),
+            "notes": "CARD definition for norB.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007010",
+        filename="norc-aro3007010.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007010",
+            "snippet": (
+                "NorC is a multidrug efflux pump in Staphylococcus aureus that "
+                "confers resistance to fluoroquinolones and other structurally "
+                "unrelated antibiotics like tetracycline."
+            ),
+            "notes": "CARD definition for norC.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002522",
+        filename="nova-aro3002522.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002522",
+            "snippet": (
+                "A type III ABC transporter, identified on the novobiocin "
+                "biosynthetic gene cluster, involved in the transport and "
+                "resistance of novobiocin."
+            ),
+            "notes": "CARD definition for novA.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003748",
+        filename="olec-aro3003748.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003748",
+            "snippet": (
+                "oleC is an ABC transporter isolated from Streptomyces "
+                "antibioticus and is involved in oleandomycin secretion."
+            ),
+            "notes": "CARD definition for oleC.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002892",
+        filename="otr-b-aro3002892.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002892",
+            "snippet": (
+                "otr(B) is a tetracycline resistance efflux pump found in "
+                "Streptomyces rimosus."
+            ),
+            "notes": "CARD definition for otr(B).",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002894",
+        filename="otr-c-aro3002894.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002894",
+            "snippet": (
+                "otr(C) is a tetracycline resistance efflux pump found in "
+                "Streptomyces rimosus."
+            ),
+            "notes": "CARD definition for otr(C).",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000769",
+        filename="pata-patb-aro3000769.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000769",
+            "snippet": (
+                "PatA-PatB is an efflux protein complex that is associated with "
+                "fluoroquinolone resistance in Streptococcus pneumoniae."
+            ),
+            "notes": "CARD definition for PatA-PatB.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004666",
+        filename="pexa-aro3004666.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004666",
+            "snippet": (
+                "pexA is a florfenicol and chloramphenicol resistance gene "
+                "discovered in Alaskan soil."
+            ),
+            "notes": "CARD definition for pexA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002812",
+        filename="pp-flo-aro3002812.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002812",
+            "snippet": (
+                "pp-flo is a plasmid chloramphenicol exporter that is found in "
+                "Photobacterium damselae subsp. piscicida."
+            ),
+            "notes": "CARD definition for pp-flo.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000448",
+        filename="qepa1-aro3000448.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000448",
+            "snippet": (
+                "QepA1 is a plasmid-mediated efflux pump in E. coli, shown to "
+                "contribute to fluoroquinolone resistance."
+            ),
+            "notes": "CARD definition for QepA1.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004103",
+        filename="qepa2-aro3004103.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004103",
+            "snippet": (
+                "QepA2 is a plasmid-mediated quinolone resistance pump found "
+                "in an Escherichia coli isolate from France."
+            ),
+            "notes": "CARD definition for QepA2.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002701",
+        filename="rhodococcus-fascians-cmr-aro3002701.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002701",
+            "snippet": (
+                "cmr is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Rhodococcus fascians and Corynebacterium glutamicum."
+            ),
+            "notes": "CARD definition for Rhodococcus fascians cmr.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007662",
+        filename="rv1877-aro3007662.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007662",
+            "snippet": (
+                "Rv1877, a putative Major Facilitator Superfamily efflux pump "
+                "from M. tuberculosis actively effluxes fluoroquinolones "
+                "ofloxacin and levofloxacin."
+            ),
+            "notes": "CARD definition for Rv1877.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002691",
+        filename="salmonella-enterica-cmla-aro3002691.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002691",
+            "snippet": (
+                "cmlA is a plasmid-encoded chloramphenicol exporter that is "
+                "found in Salmonella typhimurium."
+            ),
+            "notes": "CARD definition for Salmonella enterica cmlA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004572",
+        filename="staphylococcus-aureus-lmrs-aro3004572.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004572",
+            "snippet": (
+                "LmrS has 14 transmembrane helices and, when expressed in "
+                "E. coli, is capable of extruding a variety of antibiotics "
+                "inclinding linezolid, trimethoprim, florfenicol, "
+                "chlorampheniocol, erythromycin, streptomycin, kanamycin, and "
+                "fusidic acid."
+            ),
+            "notes": "CARD definition for Staphylococcus aureus LmrS.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3004667",
+        filename="staphylococcus-aureus-nora-aro3004667.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004667",
+            "snippet": (
+                "NorA gene cloned from Staphylococcus aureus conferred "
+                "relatively high resistance to hydrophilic quinolones such as "
+                "norfloxacin, enoxacin, ofloxacin, and ciprofloxacin in S. "
+                "aureus and Escherichia coli."
+            ),
+            "notes": "CARD definition for Staphylococcus aureus norA.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002690",
+        filename="streptomyces-lividans-cmlr-aro3002690.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002690",
+            "snippet": (
+                "cmlR is a plasmid or chromosome-encoded chloramphenicol "
+                "resistance determinant (putative transmembrane protein) that "
+                "is found in Escherichia coli and Streptomyces lividans."
+            ),
+            "notes": "CARD definition for Streptomyces lividans cmlR.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000343",
+        filename="tap-aro3000343.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000343",
+            "snippet": (
+                "Efflux pump proteins contained within Mycobacterial genomes "
+                "which confer resistance to a number of different antibiotics "
+                "including aminoglycosides, and tetracyclines."
+            ),
+            "notes": "CARD definition for tap.",
+        },
+        family=MFS_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3000561",
+        filename="tet-30-aro3000561.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000561",
+            "snippet": (
+                "Tet30 is a tetracycline efflux pump found in agrobacterium, a "
+                "Gram-negative bacterium."
+            ),
+            "notes": "CARD definition for tet(30).",
+        },
+        family=MFS_FAMILY,
+    ),
 )
 
 ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
@@ -875,6 +1147,43 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "Neobacillus vireti."
             ),
             "notes": "CARD definition for Neobacillus vireti vmlR2.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003036",
+        filename="oleb-aro3003036.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003036",
+            "snippet": (
+                "oleB is an ABC-F subfamily protein in Streptomyces "
+                "antibioticus and is involved in oleandomycin secretion."
+            ),
+            "notes": "CARD definition for oleB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003746",
+        filename="optra-aro3003746.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003746",
+            "snippet": (
+                "OptrA is a member of the ABC-F protein subfamily that confers "
+                "resistance to oxazolidinones."
+            ),
+            "notes": "CARD definition for optrA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3004470",
+        filename="poxta-aro3004470.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004470",
+            "snippet": (
+                "PoxtA is an ABC-F subfamily ATP-binding cassette protein that "
+                "confers resistance to tetracycline, -phenicol, and "
+                "oxazolidone via modification of the bacterial ribosome."
+            ),
+            "notes": "CARD definition for poxtA.",
         },
     ),
 )
