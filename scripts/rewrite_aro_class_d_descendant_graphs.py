@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Enrich class D beta-lactamase descendant graphs.
 
-The BAT/BPU/BSU/CDD/LRA class D beta-lactamase records already carry curated
-ARO drug-class edges. Their mechanism skeletons still contain the pre-parent
-ungrounded beta-lactam amide node and single-reference edge evidence. This
-updater reuses the simplified class D parent graph, preserves the drug-class
-edges, and attaches class D / serine-hydrolysis / PROSITE evidence.
+The BAT/BPU/BSU/CDD/LRA/MSI-OXA class D beta-lactamase records already carry
+curated ARO drug-class edges. Their mechanism skeletons still contain the
+pre-parent ungrounded beta-lactam amide node and single-reference edge
+evidence. This updater reuses the simplified class D parent graph, preserves
+the drug-class edges, and attaches class D / serine-hydrolysis / PROSITE
+evidence.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -182,6 +183,8 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3005394", "bsu-beta-lactamase-aro3005394.yaml"),
     Target("ARO:3005396", "cdd-beta-lactamase-aro3005396.yaml"),
     Target("ARO:3004241", "class-d-lra-beta-lactamase-aro3004241.yaml"),
+    Target("ARO:3004242", "msi-oxa-family-beta-lactamase-aro3004242.yaml"),
+    Target("ARO:3003719", "msi-oxa-aro3003719.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
