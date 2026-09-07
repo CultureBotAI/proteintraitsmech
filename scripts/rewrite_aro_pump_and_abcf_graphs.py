@@ -325,6 +325,75 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
         determinant_evidence=MFS_EVIDENCE,
         family=MFS_FAMILY,
     ),
+    EffluxTarget(
+        identifier="ARO:3002987",
+        filename="bcra-aro3002987.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002987",
+            "snippet": (
+                "bcrA is an ABC transporter found in Bacillus licheniformis "
+                "that confers bacitracin resistance."
+            ),
+            "notes": "CARD definition for bcrA.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3002988",
+        filename="bcrb-aro3002988.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002988",
+            "snippet": (
+                "bcrB is an ABC transporter found in Bacillus licheniformis "
+                "that confers bacitracin resistance."
+            ),
+            "notes": "CARD definition for bcrB.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3003947",
+        filename="efrab-aro3003947.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003947",
+            "snippet": (
+                "EfrAB is a heterodimeric ABC transporter efflux pump found in "
+                "Enterococcus faecalis and Enterococcus faecium that confers "
+                "resistance to ciprofloxacin, erythromycin, rifampicin, "
+                "quinupristine."
+            ),
+            "notes": "CARD definition for EfrAB.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007553",
+        filename="candida-spp-cdr1-aro3007553.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007553",
+            "snippet": (
+                "CDR1 is a pleiotropic drug resistance gene encoding ABC "
+                "transporters that contributes to multidrug antifungal "
+                "resistance in Candida spp."
+            ),
+            "notes": "CARD definition for Candida spp. CDR1.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
+    EffluxTarget(
+        identifier="ARO:3007554",
+        filename="candida-spp-cdr2-aro3007554.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007554",
+            "snippet": (
+                "CDR2 is a Pleiotropic drug resistance gene encoding ABC "
+                "transporters that contributes to multidrug antifungal "
+                "resistance in Candida spp."
+            ),
+            "notes": "CARD definition for Candida spp. CDR2.",
+        },
+        family=ABC_EFFLUX_FAMILY,
+    ),
 )
 
 ABC_F_TARGET = AbcFTarget(
