@@ -26,11 +26,10 @@ evidence:
   notes: PMID:7492106 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: FosC → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000105). Inactivation by phosphorylation. The group donor is deliberately NOT a node: CARD hedges
-    it, and every big chemistry under ARO:3000557 hedges it the same way.'
+  title: FosC → fosfomycin phosphorylation → resistance
+  description: Curated resistance graph for fosfomycin phosphotransferases. The grounded ARO:3000105 phosphorylation
+    mechanism is represented as the modifying activity, producing a described local state for inactive
+    phosphorylated fosfomycin.
   nodes:
   - node_id: determinant
     label: FosC
@@ -48,14 +47,11 @@ causal_graphs:
     label: phosphonic acid antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007149
-  - node_id: transfer
-    label: antibiotic phosphotransferase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
   - node_id: modified
-    label: chemically modified, inactive antibiotic
+    label: phosphorylated inactive fosfomycin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local product state for fosfomycin after phosphotransferase-mediated phosphorylation
+      inactivates the antibiotic.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,92 +61,223 @@ causal_graphs:
       itself.'
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (inactivation mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies fosfomycin phosphotransferases under antibiotic inactivation.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3000557
       snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
         includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic-inactivation resistance mechanism.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Fosfomycin inactivation is causally upstream of the resistance phenotype.
     evidence:
-    - reference: ARO:3000105
-      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Mechanism ARO:0001004 → resistance.
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic-inactivation resistance mechanism.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (phosphorylation mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies this branch under phosphorylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Family mechanism ARO:3000105.
+      notes: CARD definition for phosphorylation of antibiotics.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Phosphorylation of fosfomycin inactivates the antibiotic and confers resistance.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Mechanism ARO:3000105 → resistance.
+      notes: CARD definition for phosphorylation of antibiotics.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The phosphotransferase determinant phosphorylates fosfomycin upstream of antibiotic inactivation
+      and resistance.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: CARD's definition of phosphorylation. NOTE the hedge -- the donor is given as 'usually'/'often',
-        so it is not modelled as a node.
+      notes: CARD definition for phosphorylation of antibiotics.
     - reference: ARO:3000557
       snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
         includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the phosphorylation
-        members are curated by this config.'
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to phosphonic acid antibiotic.
+    description: ARO maps this phosphotransferase branch to phosphonic acid antibiotics.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3004245
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007149 ! phosphonic acid antibiotic'
-      notes: Asserted on ARO:3004245 (fosC phosphotransferase family), an is_a ancestor of this record's
-        ARO:3000380; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (modifies the drug)
-    predicate_id: RO:0002327
-    object: transfer
-    evidence:
-    - reference: ARO:3000105
-      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: The reaction CARD names for this mechanism id.
-  - subject: transfer
+      notes: ARO drug-class relationship asserted on ARO:3004245 and inherited by ARO:3000380.
+    - reference: ARO:3007149
+      snippet: phosphonic acid antibiotic
+      notes: ARO phosphonic-acid antibiotic drug class inherited by FosC and Fom records.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
+  - subject: mech1
     predicate: has input (the drug)
     predicate_id: RO:0002233
     object: drug0
+    description: Fosfomycin is the phosphonic-acid antibiotic input to the phosphorylation reaction.
     evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
-  - subject: transfer
-    predicate: causally upstream of (inactivates the drug)
-    predicate_id: RO:0002411
-    object: modified
-    description: The causal core.
-    evidence:
+      notes: CARD definition for phosphorylation of antibiotics.
     - reference: ARO:3000557
       snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
         includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
+    - reference: ARO:3007149
+      snippet: phosphonic acid antibiotic
+      notes: ARO phosphonic-acid antibiotic drug class inherited by FosC and Fom records.
+  - subject: mech1
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: modified
+    description: The phosphorylation mechanism produces the inactive phosphorylated fosfomycin state.
+    evidence:
+    - reference: ARO:3000380
+      snippet: FosC is an enzyme that phosphorylates fosfomycin to confer resistance.
+      notes: CARD definition for FosC.
+    - reference: ARO:3004245
+      snippet: The fosC family of phosphotransferases phosphorylate fosfomycin to confer resistance and
+        have been found in various bacterial isolates.
+      notes: CARD definition for the fosC phosphotransferase family.
+    - reference: ARO:3000359
+      snippet: In the presence of ATP and magnesium (II), fosfomycin gets phosphorylated at the phosphate
+        group resulting in a diphosphate group which inactivates the antibiotic.
+      notes: CARD definition for fosfomycin phosphotransferases.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotics.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic-inactivation enzymes.
+    - reference: DOI:10.1128/AAC.39.7.1569
+      notes: PMID:7492106 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded fosfomycin phosphotransferase causal graphs
   llm_assisted: true
 license: CC-BY 4.0
