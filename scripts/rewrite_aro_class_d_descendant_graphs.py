@@ -185,6 +185,8 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3004241", "class-d-lra-beta-lactamase-aro3004241.yaml"),
     Target("ARO:3004242", "msi-oxa-family-beta-lactamase-aro3004242.yaml"),
     Target("ARO:3003719", "msi-oxa-aro3003719.yaml"),
+    Target("ARO:3007879", "rsd1-aro3007879.yaml"),
+    Target("ARO:3009042", "rsd1-1-aro3009042.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
