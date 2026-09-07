@@ -23,11 +23,10 @@ evidence:
   notes: PMID:36951104 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Clostridium sporogenes cplR → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:27006457). ABC-F ribosomal protection protein — an ABC-family ATPase that binds the ribosome
-    and displaces the antibiotic (target protection).
+  title: Clostridium sporogenes cplR → ribosomal protection → resistance
+  description: Curated resistance-causation graph for ABC-F ribosomal protection proteins. The graph models
+    the ABC ATPase determinant binding the ribosome and displacing bound antibiotic instead of modeling
+    ABC-F as an efflux transporter.
   nodes:
   - node_id: determinant
     label: Clostridium sporogenes cplR
@@ -41,12 +40,20 @@ causal_graphs:
     label: ABC transporter ATP-binding domain
     node_type: DOMAIN
     grounding: Pfam:PF00005
-    description: KB protein-trait record carrying the mechanism.
+    description: ATP-binding domain carried by ABC-F ribosomal protection proteins.
   - node_id: fold
     label: P-loop NTPase fold (ABC ATPase nucleotide-binding domain)
     node_type: DOMAIN
     grounding: CATH:3.40.50.300
-    description: KB protein-trait record carrying the mechanism.
+    description: P-loop NTPase fold adopted by ABC-F ATPase domains.
+  - node_id: ribosome
+    label: ribosome
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0005840
+  - node_id: displaced_antibiotic
+    label: antibiotic displaced from the ribosome
+    node_type: STATE
+    description: Local state for antibiotic removal from the ribosome by an ABC-F target-protection protein.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -59,53 +66,211 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies ABC-F proteins under antibiotic target protection, not efflux.
     evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
     - reference: PMID:27006457
       snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
-      notes: Family mechanism ARO:0001003.
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic target protection prevents antibiotics from binding or remaining bound to
+      their target.
     evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
     - reference: PMID:27006457
       snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
-      notes: Mechanism ARO:0001003 → resistance.
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ABC-F proteins confer resistance through ribosomal target protection.
     evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
     - reference: PMID:27006457
       snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
-      notes: Determinant → resistance phenotype.
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
   - subject: domain
-    predicate: part of (catalytic domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The ABC ATP-binding domain is part of the ABC-F determinant.
     evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
     - reference: Pfam:PF00005
       snippet: ABC transporter
-      notes: 'KB trait: the ABC transporter ATP-binding domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
+      notes: Pfam family for the ABC transporter ATP-binding domain.
     - reference: CATH:3.40.50.300
       snippet: P-loop containing nucleotide triphosphate hydrolases
-      notes: 'KB trait: the ABC ATPase fold.'
+      notes: CATH fold for ABC ATPase domains.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The ABC-F determinant adopts the P-loop NTPase fold used by ABC ATPase domains.
+    evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: Pfam:PF00005
+      snippet: ABC transporter
+      notes: Pfam family for the ABC transporter ATP-binding domain.
+    - reference: CATH:3.40.50.300
+      snippet: P-loop containing nucleotide triphosphate hydrolases
+      notes: CATH fold for ABC ATPase domains.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
   - subject: domain
     predicate: enables (ribosomal protection)
     predicate_id: RO:0002327
     object: mech0
+    description: The ABC ATPase domain powers ribosomal target protection.
     evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: Pfam:PF00005
+      snippet: ABC transporter
+      notes: Pfam family for the ABC transporter ATP-binding domain.
+    - reference: CATH:3.40.50.300
+      snippet: P-loop containing nucleotide triphosphate hydrolases
+      notes: CATH fold for ABC ATPase domains.
     - reference: PMID:27006457
       snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
-      notes: The ABC-F ATPase binds the ribosome and displaces the bound antibiotic.
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
+  - subject: determinant
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: ribosome
+    description: ABC-F proteins protect the ribosome by binding it.
+    evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
+    - reference: GO:0005840
+      snippet: It consists of two subunits, one large and one small, each containing only protein and
+        RNA.
+      notes: GO definition for the ribosome.
+  - subject: determinant
+    predicate: causally upstream of (displaces antibiotic)
+    predicate_id: RO:0002411
+    object: displaced_antibiotic
+    description: ABC-F proteins displace antibiotic from the ribosome.
+    evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
+  - subject: displaced_antibiotic
+    predicate: negatively regulates (antibiotic occupancy)
+    predicate_id: RO:0002212
+    object: ribosome
+    description: Displacement reduces antibiotic occupancy on the ribosome.
+    evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
+    - reference: GO:0005840
+      snippet: It consists of two subunits, one large and one small, each containing only protein and
+        RNA.
+      notes: GO definition for the ribosome.
+  - subject: displaced_antibiotic
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Removing antibiotic from the ribosome is the terminal modeled cause of ABC-F target-protection
+      resistance.
+    evidence:
+    - reference: ARO:3007645
+      snippet: CplR is an ABC-F ATPase ribosomal protection protein from Clostridium sporogenes which
+        confers resistance to pleuromutilins and lincosamides.
+      notes: CARD definition for Clostridium sporogenes cplR.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: PMID:27006457
+      snippet: such proteins are capable of displacing antibiotic from the ribosome in vitro
+      notes: Experimental evidence for ABC-F antibiotic displacement from the ribosome.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Described ABC/MFS efflux and ABC-F target-protection causal graphs
     llm_assisted: true
 license: CC-BY 4.0
