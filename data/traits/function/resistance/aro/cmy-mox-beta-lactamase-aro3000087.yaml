@@ -18,11 +18,10 @@ trait_relations:
     relation_source: "ARO participates_in (mechanism) via ARO:3000076 class C beta-lactamase"
 causal_graphs:
 - graph_id: resistance
-  title: CMY-MOX beta-lactamase → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:19136439). class C beta-lactamase is a class C serine β-lactamase (AmpC cephalosporinase); Ser64
-    acyl-enzyme mechanism.
+  title: CMY-MOX beta-lactamase → class C serine beta-lactam hydrolysis → resistance
+  description: Curated class C beta-lactamase resistance graph. The determinant participates in broad
+    antibiotic inactivation and the narrower class C serine beta-lactamase hydrolysis mechanism through
+    the Ser64 active-site motif and DD-peptidase/beta-lactamase fold.
   nodes:
   - node_id: determinant
     label: CMY-MOX beta-lactamase
@@ -40,12 +39,12 @@ causal_graphs:
     label: class C beta-lactamase active-site signature (Ser64 S-x-x-K)
     node_type: MOTIF
     grounding: PROSITE:PRU10102
-    description: KB protein-trait record carrying the mechanism.
+    description: Class C beta-lactamase catalytic serine active-site signature.
   - node_id: fold
     label: DD-peptidase/beta-lactamase superfamily fold
     node_type: DOMAIN
     grounding: CATH:3.40.710.10
-    description: KB protein-trait record carrying the mechanism.
+    description: DD-peptidase/beta-lactamase superfamily fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -58,81 +57,218 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this class C beta-lactamase family under antibiotic inactivation.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Family mechanism ARO:0001004.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Class C beta-lactamases hydrolyze beta-lactams and thereby inactivate antibiotic.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Mechanism ARO:0001004 → resistance.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies this class C beta-lactamase family under serine beta-lactamase hydrolysis.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Family mechanism ARO:3000187.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Class C serine beta-lactam hydrolysis renders beta-lactam antibiotics inactive.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Mechanism ARO:3000187 → resistance.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The class C beta-lactamase family hydrolyzes beta-lactam antibiotics to confer resistance.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Determinant → resistance phenotype.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: active_site
-    predicate: part of (active site of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The grounded class C active-site signature is part of the beta-lactamase determinant.
     evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
     - reference: PROSITE:PRU10102
       snippet: Beta-lactamase class-C active site
-      notes: 'KB trait: the class-C active-site signature carried by this determinant.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.40.710.10
-      snippet: DD-peptidase/beta-lactamase superfamily
-      notes: 'KB trait: the DD-peptidase/beta-lactamase superfamily fold.'
-  - subject: active_site
-    predicate: enables (catalysis)
-    predicate_id: RO:0002327
-    object: mech1
-    evidence:
+      notes: PROSITE active-site signature for class C beta-lactamases.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: The active site carries out the serine beta-lactam hydrolysis mechanism.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the grounded DD-peptidase/beta-lactamase fold.
+    evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: CATH:3.40.710.10
+      snippet: DD-peptidase/beta-lactamase superfamily
+      notes: CATH fold for serine beta-lactamases.
+    - reference: PMID:19136439
+      snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+  - subject: active_site
+    predicate: enables (serine beta-lactam hydrolysis)
+    predicate_id: RO:0002327
+    object: mech1
+    description: The class C active-site signature enables serine beta-lactam hydrolysis.
+    evidence:
+    - reference: ARO:3000087
+      snippet: A grouping of the related CMY and MOX beta-lactamases.
+      notes: CARD definition for CMY-MOX beta-lactamase.
+    - reference: ARO:3000076
+      snippet: AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and extended-spectrum cephalosporins
+        (cephamycins as well as to oxyimino-beta-lactams) but are not inhibited by beta-lactamase inhibitors
+        such as clavulanic acid.
+      notes: CARD definition for the class C beta-lactamase parent.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PRU10102
+      snippet: Beta-lactamase class-C active site
+      notes: PROSITE active-site signature for class C beta-lactamases.
+    - reference: PMID:19136439
+      snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed CMY/LAT/MOX class C beta-lactamase causal graphs
     llm_assisted: true
 license: CC-BY 4.0
