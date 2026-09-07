@@ -180,6 +180,8 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
     Target("ARO:3003694", "mexjk-oprm-aro3003694.yaml", False),
     Target("ARO:3003703", "mexmn-oprm-aro3003703.yaml", False),
     Target("ARO:3003697", "mexpq-opme-aro3003697.yaml", False),
+    Target("ARO:3000369", "mtrcde-aro3000369.yaml", False),
+    Target("ARO:3004076", "muxabc-opmb-aro3004076.yaml", False),
 )
 
 SUBUNIT_TARGETS: tuple[Target, ...] = (
@@ -234,6 +236,12 @@ SUBUNIT_TARGETS: tuple[Target, ...] = (
     Target("ARO:3003031", "mexw-aro3003031.yaml", True),
     Target("ARO:3003034", "mexx-aro3003034.yaml", True),
     Target("ARO:3003033", "mexy-aro3003033.yaml", True),
+    Target("ARO:3000810", "mtrc-aro3000810.yaml", True),
+    Target("ARO:3000811", "mtrd-aro3000811.yaml", True),
+    Target("ARO:3000812", "mtre-aro3000812.yaml", True),
+    Target("ARO:3004073", "muxa-aro3004073.yaml", True),
+    Target("ARO:3004074", "muxb-aro3004074.yaml", True),
+    Target("ARO:3004075", "muxc-aro3004075.yaml", True),
 )
 
 TARGETS: tuple[Target, ...] = (
