@@ -27,12 +27,12 @@ evidence:
   notes: PMID:18761689 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Neisseria gonorrhoeae mtrR with mutation conferring resistance → mechanism → resistance (curated
-    from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:19166984). RND efflux pump (AcrB/MexB-type); proton-motive-force-driven drug efflux via a tripartite
-    system.
+  title: Neisseria gonorrhoeae mtrR with mutation conferring resistance → MtrCDE derepression → antibiotic
+    efflux
+  description: 'Curated graph for Neisseria gonorrhoeae mtrR resistance mutations. The graph replaces
+    the stale RND-pump domain seed with the local MtrR repressor biology: point mutations in mtrR reduce
+    repression of MtrCDE expression, derepressed MtrCDE supplies antibiotic efflux, and increased efflux
+    confers resistance.'
   nodes:
   - node_id: determinant
     label: Neisseria gonorrhoeae mtrR with mutation conferring resistance
@@ -42,16 +42,17 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: domain
-    label: RND transporter domain (AcrB/AcrD/AcrF family)
-    node_type: DOMAIN
-    grounding: Pfam:PF00873
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: AcrB pore-domain fold
-    node_type: DOMAIN
-    grounding: CATH:3.30.70.1430
-    description: KB protein-trait record carrying the mechanism.
+  - node_id: pump
+    label: MtrCDE
+    node_type: PROTEIN
+    grounding: ARO:3000369
+    description: Grounded to CARD's MtrCDE, the pump derepressed by mtrR mutations.
+  - node_id: repression
+    label: negative regulation of mtrCDE expression
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045892
+    description: Grounded to the broad GO DNA-templated transcriptional repression process because MtrR
+      represses mtrCDE expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -64,61 +65,157 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this mtrR mutant under antibiotic efflux because mtrR mutations derepress
+      the MtrCDE efflux pump.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: ARO:3000369
+      snippet: The mtr (multiple transferable resistance) system of Neisseria gonorrhoeae confers resistance
+        to many hydrophobic agents including antibiotics, fatty-acids and detergents. MtrCDE is homologous
+        to AcrAB-TolC, where MtrC is the membrane fusion protein, MtrD is the inner membrane transporter,
+        and MtrE is the outer membrane channel protein.
+      notes: CARD definition for the MtrCDE efflux pump repressed by MtrR.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux is the broad resistance mechanism supplied by derepressed MtrCDE.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: ARO:3000369
+      snippet: The mtr (multiple transferable resistance) system of Neisseria gonorrhoeae confers resistance
+        to many hydrophobic agents including antibiotics, fatty-acids and detergents. MtrCDE is homologous
+        to AcrAB-TolC, where MtrC is the membrane fusion protein, MtrD is the inner membrane transporter,
+        and MtrE is the outer membrane channel protein.
+      notes: CARD definition for the MtrCDE efflux pump repressed by MtrR.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Point mutations in mtrR derepress MtrCDE and confer resistance to azithromycin and other
+      drugs.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Determinant → resistance phenotype.
-  - subject: domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: ARO:3000369
+      snippet: The mtr (multiple transferable resistance) system of Neisseria gonorrhoeae confers resistance
+        to many hydrophobic agents including antibiotics, fatty-acids and detergents. MtrCDE is homologous
+        to AcrAB-TolC, where MtrC is the membrane fusion protein, MtrD is the inner membrane transporter,
+        and MtrE is the outer membrane channel protein.
+      notes: CARD definition for the MtrCDE efflux pump repressed by MtrR.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
+  - subject: repression
+    predicate: negatively regulates (holds pump expression down)
+    predicate_id: RO:0002212
+    object: pump
+    description: Normal MtrR-mediated transcriptional repression keeps MtrCDE expression low.
     evidence:
-    - reference: Pfam:PF00873
-      snippet: AcrB/AcrD/AcrF family
-      notes: 'KB trait: the RND (AcrB/AcrD/AcrF) transporter domain.'
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
+    predicate: negatively regulates (loss lifts the repression)
+    predicate_id: RO:0002212
+    object: repression
+    description: Resistance-associated mtrR point mutations reduce normal repression of mtrCDE expression.
     evidence:
-    - reference: CATH:3.30.70.1430
-      snippet: Multidrug efflux transporter AcrB pore domain
-      notes: 'KB trait: the AcrB pore-domain fold.'
-  - subject: domain
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
+  - subject: pump
     predicate: enables (drug efflux)
     predicate_id: RO:0002327
     object: mech0
+    description: MtrCDE is the multidrug pump whose derepressed expression supplies antibiotic efflux.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: The RND transporter domain carries out proton-motive-force-driven drug efflux.
+    - reference: ARO:3004851
+      snippet: MtrR is a repressor of mtrCDE efflux pump expression, point mutations in mtrR confer resistance
+        to azithromycin and other drugs.
+      notes: CARD definition for Neisseria gonorrhoeae mtrR mutations that confer azithromycin resistance.
+    - reference: ARO:3000817
+      snippet: MtrR is a repressor of mtrCDE expression. Mutations in mtrR increase multidrug resistance.
+      notes: CARD definition for the mtrR repressor determinant.
+    - reference: ARO:3000369
+      snippet: The mtr (multiple transferable resistance) system of Neisseria gonorrhoeae confers resistance
+        to many hydrophobic agents including antibiotics, fatty-acids and detergents. MtrCDE is homologous
+        to AcrAB-TolC, where MtrC is the membrane fusion protein, MtrD is the inner membrane transporter,
+        and MtrE is the outer membrane channel protein.
+      notes: CARD definition for the MtrCDE efflux pump repressed by MtrR.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.43.10.2468
+      notes: PMID:10508026 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06424.x
+      notes: PMID:18761689 (aro citation)
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Grounded Neisseria gonorrhoeae mtrR mutant efflux graph
     llm_assisted: true
 license: CC-BY 4.0
