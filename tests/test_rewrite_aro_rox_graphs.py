@@ -22,6 +22,7 @@ def _load():
 
 
 R = _load()
+PARENT_TARGET = R.TARGET_BY_ID["ARO:3000445"]
 
 
 def _node(node_id: str, node_type: str, grounding: str | None = None) -> dict:
@@ -67,6 +68,7 @@ def _edge_pairs(record: dict) -> set[tuple[str, str]]:
 
 def test_targets_are_exact_current_rox_records() -> None:
     assert {target.identifier for target in R.TARGETS} == {
+        "ARO:3002884",
         "ARO:3000445",
         "ARO:3007209",
         "ARO:3007210",
@@ -74,7 +76,7 @@ def test_targets_are_exact_current_rox_records() -> None:
 
 
 def test_rewrite_links_oxygenated_rifamycin_to_resistance() -> None:
-    out, changed = R.enrich_record(_record(), R.TARGETS[0])
+    out, changed = R.enrich_record(_record(), PARENT_TARGET)
     graph = out["causal_graphs"][0]
 
     assert changed
@@ -95,6 +97,19 @@ def test_rewrite_links_oxygenated_rifamycin_to_resistance() -> None:
     assert by_node["modified"] == R.MODIFIED_NODE
 
 
+def test_iri_gets_specific_published_evidence() -> None:
+    target = R.TARGET_BY_ID["ARO:3002884"]
+
+    out, changed = R.enrich_record(_record("ARO:3002884"), target)
+
+    assert changed
+    assert any(
+        evidence["reference"] == "DOI:10.1128/AAC.41.1.218"
+        for edge in out["causal_graphs"][0]["edges"]
+        for evidence in edge["evidence"]
+    )
+
+
 def test_all_non_state_nodes_are_grounded_and_all_edges_are_complete() -> None:
     for target in R.TARGETS:
         out, changed = R.enrich_record(_record(target.identifier), target)
@@ -113,8 +128,8 @@ def test_all_non_state_nodes_are_grounded_and_all_edges_are_complete() -> None:
 
 
 def test_enrich_record_is_idempotent() -> None:
-    once, changed = R.enrich_record(_record(), R.TARGETS[0])
-    twice, changed_again = R.enrich_record(once, R.TARGETS[0])
+    once, changed = R.enrich_record(_record(), PARENT_TARGET)
+    twice, changed_again = R.enrich_record(once, PARENT_TARGET)
 
     assert changed
     assert not changed_again
@@ -123,7 +138,7 @@ def test_enrich_record_is_idempotent() -> None:
 
 def test_enrich_text_adds_history_once() -> None:
     text = yaml.safe_dump(_record(), sort_keys=False)
-    path = ARO_DIR / R.TARGETS[0].filename
+    path = ARO_DIR / PARENT_TARGET.filename
 
     once, changed = R.enrich_text(text, path)
     twice, changed_again = R.enrich_text(once, path)
@@ -138,7 +153,7 @@ def test_enrich_text_adds_history_once() -> None:
 
 def test_wrong_identifier_is_refused() -> None:
     with pytest.raises(ValueError, match="expected ARO:3000445, found ARO:3007210"):
-        R.enrich_record(_record("ARO:3007210"), R.TARGETS[0])
+        R.enrich_record(_record("ARO:3007210"), PARENT_TARGET)
 
 
 def test_missing_required_node_is_refused() -> None:
@@ -148,7 +163,7 @@ def test_missing_required_node_is_refused() -> None:
     ]
 
     with pytest.raises(ValueError, match="missing node\\(s\\): mech1"):
-        R.enrich_record(record, R.TARGETS[0])
+        R.enrich_record(record, PARENT_TARGET)
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")
