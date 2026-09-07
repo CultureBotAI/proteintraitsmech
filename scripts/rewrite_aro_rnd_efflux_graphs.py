@@ -175,6 +175,8 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
 
 SUBUNIT_TARGETS: tuple[Target, ...] = (
     Target("ARO:3000207", "acra-aro3000207.yaml", True),
+    Target("ARO:3004042", "enterobacter-cloacae-acra-aro3004042.yaml", True),
+    Target("ARO:3004043", "escherichia-coli-acra-aro3004043.yaml", True),
     Target("ARO:3000216", "acrb-aro3000216.yaml", True),
     Target("ARO:3000499", "acre-aro3000499.yaml", True),
     Target("ARO:3000502", "acrf-aro3000502.yaml", True),
@@ -192,6 +194,10 @@ SUBUNIT_TARGETS: tuple[Target, ...] = (
     Target("ARO:3004143", "axyx-aro3004143.yaml", True),
     Target("ARO:3004144", "axyy-aro3004144.yaml", True),
     Target("ARO:3003009", "ceoa-aro3003009.yaml", True),
+    Target("ARO:3003010", "ceob-aro3003010.yaml", True),
+    Target("ARO:3000783", "cmea-aro3000783.yaml", True),
+    Target("ARO:3000784", "cmeb-aro3000784.yaml", True),
+    Target("ARO:3000785", "cmec-aro3000785.yaml", True),
 )
 
 TARGETS: tuple[Target, ...] = (
