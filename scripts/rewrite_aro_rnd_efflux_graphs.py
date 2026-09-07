@@ -173,6 +173,13 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
     ),
     Target("ARO:3000787", "mdtabc-tolc-aro3000787.yaml", False),
     Target("ARO:3000788", "mdtef-tolc-aro3000788.yaml", False),
+    Target("ARO:3000799", "mexghi-opmd-aro3000799.yaml", False),
+    Target("ARO:3009153", "mexhi-opmd-aro3009153.yaml", False),
+    Target("ARO:3009148", "mexjk-aro3009148.yaml", False),
+    Target("ARO:3003691", "mexjk-opmh-aro3003691.yaml", False),
+    Target("ARO:3003694", "mexjk-oprm-aro3003694.yaml", False),
+    Target("ARO:3003703", "mexmn-oprm-aro3003703.yaml", False),
+    Target("ARO:3003697", "mexpq-opme-aro3003697.yaml", False),
 )
 
 SUBUNIT_TARGETS: tuple[Target, ...] = (
@@ -211,6 +218,22 @@ SUBUNIT_TARGETS: tuple[Target, ...] = (
     Target("ARO:3000794", "mdtc-aro3000794.yaml", True),
     Target("ARO:3000795", "mdte-aro3000795.yaml", True),
     Target("ARO:3000796", "mdtf-aro3000796.yaml", True),
+    Target("ARO:3000800", "mexc-aro3000800.yaml", True),
+    Target("ARO:3000801", "mexd-aro3000801.yaml", True),
+    Target("ARO:3000803", "mexe-aro3000803.yaml", True),
+    Target("ARO:3000804", "mexf-aro3000804.yaml", True),
+    Target("ARO:3000807", "mexh-aro3000807.yaml", True),
+    Target("ARO:3000808", "mexi-aro3000808.yaml", True),
+    Target("ARO:3003692", "mexj-aro3003692.yaml", True),
+    Target("ARO:3003693", "mexk-aro3003693.yaml", True),
+    Target("ARO:3003704", "mexm-aro3003704.yaml", True),
+    Target("ARO:3003705", "mexn-aro3003705.yaml", True),
+    Target("ARO:3003698", "mexp-aro3003698.yaml", True),
+    Target("ARO:3003699", "mexq-aro3003699.yaml", True),
+    Target("ARO:3003030", "mexv-aro3003030.yaml", True),
+    Target("ARO:3003031", "mexw-aro3003031.yaml", True),
+    Target("ARO:3003034", "mexx-aro3003034.yaml", True),
+    Target("ARO:3003033", "mexy-aro3003033.yaml", True),
 )
 
 TARGETS: tuple[Target, ...] = (
