@@ -561,15 +561,84 @@ EFFLUX_TARGETS: tuple[EffluxTarget, ...] = (
     ),
 )
 
-ABC_F_TARGET = AbcFTarget(
-    identifier="ARO:3004469",
-    filename="abc-f-atp-binding-cassette-ribosomal-protection-protein-aro3004469.yaml",
-    determinant_evidence=ABC_F_EVIDENCE,
+ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
+    AbcFTarget(
+        identifier="ARO:3004469",
+        filename="abc-f-atp-binding-cassette-ribosomal-protection-protein-aro3004469.yaml",
+        determinant_evidence=ABC_F_EVIDENCE,
+    ),
+    AbcFTarget(
+        identifier="ARO:3002817",
+        filename="cara-aro3002817.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002817",
+            "snippet": (
+                "carA is an ABC-F subfamily protein involved in macrolide "
+                "resistance."
+            ),
+            "notes": "CARD definition for carA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003761",
+        filename="eatav-aro3003761.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003761",
+            "snippet": (
+                "eatAv is a mutated form of the wildtype eatA ABC-F subfamily "
+                "protein isolated from Enterococcus faecium conferring "
+                "resistance to lincosamides, streptogramin A's and "
+                "pleuromutilins."
+            ),
+            "notes": "CARD definition for eatAv.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007637",
+        filename="clostridioides-difficile-cplr-aro3007637.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007637",
+            "snippet": (
+                "CplR is an ABC-F ATPase ribosomal protection protein from "
+                "Clostridioides difficile which confers resistance to "
+                "pleuromutilins and lincosamides."
+            ),
+            "notes": "CARD definition for Clostridioides difficile cplR.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007644",
+        filename="clostridium-perfringes-cplr-aro3007644.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007644",
+            "snippet": (
+                "CplR is an ABC-F ATPase ribosomal protection protein from "
+                "Clostridium perfringes which confers resistance to "
+                "pleuromutilins and lincosamides."
+            ),
+            "notes": "CARD definition for Clostridium perfringes cplR.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007645",
+        filename="clostridium-sporogenes-cplr-aro3007645.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007645",
+            "snippet": (
+                "CplR is an ABC-F ATPase ribosomal protection protein from "
+                "Clostridium sporogenes which confers resistance to "
+                "pleuromutilins and lincosamides."
+            ),
+            "notes": "CARD definition for Clostridium sporogenes cplR.",
+        },
+    ),
 )
+ABC_F_TARGET = ABC_F_TARGETS[0]
 
 TARGETS: tuple[Target, ...] = (
     EFFLUX_TARGETS[0],
     ABC_F_TARGET,
+    *ABC_F_TARGETS[1:],
     *EFFLUX_TARGETS[1:],
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
