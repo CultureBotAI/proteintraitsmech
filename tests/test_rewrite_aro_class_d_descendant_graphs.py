@@ -130,7 +130,10 @@ def test_targets_are_exact_class_d_descendant_records() -> None:
         "ARO:3004758",
         "ARO:3004759",
         "ARO:3005394",
+        "ARO:3006902",
         "ARO:3005396",
+        "ARO:3006904",
+        "ARO:3006905",
         "ARO:3004241",
         "ARO:3004242",
         "ARO:3003719",
@@ -154,6 +157,51 @@ def test_enrich_record_removes_only_local_amide_node() -> None:
         "resistance",
     }
     assert ("mech0", "amide") not in _edge_pairs(out)
+
+
+def test_enrich_record_removes_leaf_transfer_and_modified_nodes() -> None:
+    record = _record("ARO:3006902")
+    graph = record["causal_graphs"][0]
+    graph["nodes"] = [
+        node
+        for node in graph["nodes"]
+        if node["node_id"] not in {"active_site", "amide"}
+    ]
+    graph["nodes"].extend(
+        [
+            _node("transfer", "MOLECULAR_FUNCTION"),
+            _node("modified", "STATE"),
+        ],
+    )
+    graph["edges"] = [
+        edge
+        for edge in graph["edges"]
+        if edge["subject"] != "active_site" and edge["object"] != "amide"
+    ]
+    graph["edges"].extend(
+        [
+            _edge("determinant", "RO:0002327", "transfer"),
+            _edge("transfer", "RO:0002233", "drug0"),
+            _edge("transfer", "RO:0002411", "modified"),
+        ],
+    )
+    target = R.TARGET_BY_ID["ARO:3006902"]
+
+    out, changed = R.enrich_record(record, target)
+
+    assert changed
+    assert _node_ids(out) == {
+        "determinant",
+        "mech0",
+        "mech1",
+        "drug0",
+        "active_site",
+        "resistance",
+    }
+    assert ("active_site", "determinant") in _edge_pairs(out)
+    assert ("active_site", "mech1") in _edge_pairs(out)
+    assert "transfer" not in _node_ids(out)
+    assert "modified" not in _node_ids(out)
 
 
 def test_two_drug_class_edges_are_preserved() -> None:
@@ -241,10 +289,10 @@ def test_missing_required_node_is_refused() -> None:
     record["causal_graphs"][0]["nodes"] = [
         node
         for node in record["causal_graphs"][0]["nodes"]
-        if node["node_id"] != "active_site"
+        if node["node_id"] != "mech1"
     ]
 
-    with pytest.raises(ValueError, match="missing node\\(s\\): active_site"):
+    with pytest.raises(ValueError, match="missing node\\(s\\): mech1"):
         R.enrich_record(record, R.TARGET_BY_ID["ARO:3004746"])
 
 

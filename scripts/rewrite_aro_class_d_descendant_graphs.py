@@ -32,7 +32,7 @@ ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 HISTORY_ACTION = "Completed class D beta-lactamase descendant causal graphs"
 HISTORY_CURATOR = "codex-causal-graph-quality"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-06T00:00:00Z",
+    "timestamp": "2026-09-07T00:00:00Z",
     "curator": HISTORY_CURATOR,
     "action": HISTORY_ACTION,
     "llm_assisted": True,
@@ -166,7 +166,18 @@ EDGE_DESCRIPTIONS = {
 
 EXPECTED_CORE_KEYS = set(EDGE_DESCRIPTIONS)
 DRUG_CLASS_PREDICATE_ID = "ARO:2000001"
+ACTIVE_SITE_EDGE_KEYS = {
+    ("active_site", "BFO:0000050", "determinant"),
+    ("active_site", "RO:0002327", "mech1"),
+}
+REQUIRED_INPUT_CORE_KEYS = EXPECTED_CORE_KEYS - ACTIVE_SITE_EDGE_KEYS
 OLD_AMIDE_EDGE = ("mech0", "RO:0002233", "amide")
+OLD_LOCAL_EDGE_KEYS = {
+    OLD_AMIDE_EDGE,
+    ("determinant", "RO:0002327", "transfer"),
+    ("transfer", "RO:0002233", "drug0"),
+    ("transfer", "RO:0002411", "modified"),
+}
 
 
 @dataclass(frozen=True)
@@ -181,7 +192,10 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3004758", "bpu-beta-lactamase-aro3004758.yaml"),
     Target("ARO:3004759", "bpu-1-aro3004759.yaml"),
     Target("ARO:3005394", "bsu-beta-lactamase-aro3005394.yaml"),
+    Target("ARO:3006902", "bsu-1-aro3006902.yaml"),
     Target("ARO:3005396", "cdd-beta-lactamase-aro3005396.yaml"),
+    Target("ARO:3006904", "cdd-1-aro3006904.yaml"),
+    Target("ARO:3006905", "cdd-2-aro3006905.yaml"),
     Target("ARO:3004241", "class-d-lra-beta-lactamase-aro3004241.yaml"),
     Target("ARO:3004242", "msi-oxa-family-beta-lactamase-aro3004242.yaml"),
     Target("ARO:3003719", "msi-oxa-aro3003719.yaml"),
@@ -276,13 +290,7 @@ def _record_evidence(record: dict[str, Any]) -> dict[str, str]:
 
 def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     nodes = _nodes_by_id(graph)
-    required_nodes = {
-        "determinant",
-        "mech0",
-        "mech1",
-        "active_site",
-        "resistance",
-    }
+    required_nodes = {"determinant", "mech0", "mech1", "resistance"}
     missing_nodes = sorted(required_nodes - set(nodes))
     if missing_nodes:
         missing = ", ".join(missing_nodes)
@@ -302,16 +310,19 @@ def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     found_core_edges: set[tuple[str, str, str]] = set()
     for edge in _dicts(graph.get("edges")):
         key = _edge_key(edge)
-        if key == OLD_AMIDE_EDGE:
-            continue
-        if key not in EXPECTED_CORE_KEYS and edge.get("predicate_id") != DRUG_CLASS_PREDICATE_ID:
+        if (
+            key not in EXPECTED_CORE_KEYS
+            and key not in OLD_LOCAL_EDGE_KEYS
+            and edge.get("predicate_id") != DRUG_CLASS_PREDICATE_ID
+        ):
             raise ValueError(f"{target.identifier}: unexpected edge {key[0]} -> {key[2]}")
         if key in seen:
             raise ValueError(f"{target.identifier}: duplicate edge {key[0]} -> {key[2]}")
         seen.add(key)
-        found_core_edges.add(key)
+        if key in EXPECTED_CORE_KEYS:
+            found_core_edges.add(key)
 
-    missing_core_edges = sorted(EXPECTED_CORE_KEYS - found_core_edges)
+    missing_core_edges = sorted(REQUIRED_INPUT_CORE_KEYS - found_core_edges)
     if missing_core_edges:
         missing = ", ".join(f"{subject} -> {object_}" for subject, _, object_ in missing_core_edges)
         raise ValueError(f"{target.identifier}: missing edge(s): {missing}")
