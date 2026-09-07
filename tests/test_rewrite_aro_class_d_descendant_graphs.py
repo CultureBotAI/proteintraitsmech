@@ -134,6 +134,8 @@ def test_targets_are_exact_class_d_descendant_records() -> None:
         "ARO:3004241",
         "ARO:3004242",
         "ARO:3003719",
+        "ARO:3007879",
+        "ARO:3009042",
     }
 
 
