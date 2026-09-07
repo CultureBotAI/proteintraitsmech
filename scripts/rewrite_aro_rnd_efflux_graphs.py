@@ -171,6 +171,8 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
         filename="adeabc-aro3000770.yaml",
         is_subunit=False,
     ),
+    Target("ARO:3000787", "mdtabc-tolc-aro3000787.yaml", False),
+    Target("ARO:3000788", "mdtef-tolc-aro3000788.yaml", False),
 )
 
 SUBUNIT_TARGETS: tuple[Target, ...] = (
@@ -198,6 +200,17 @@ SUBUNIT_TARGETS: tuple[Target, ...] = (
     Target("ARO:3000783", "cmea-aro3000783.yaml", True),
     Target("ARO:3000784", "cmeb-aro3000784.yaml", True),
     Target("ARO:3000785", "cmec-aro3000785.yaml", True),
+    Target("ARO:3004041", "klebsiella-pneumoniae-acra-aro3004041.yaml", True),
+    Target("ARO:3004099", "lpea-aro3004099.yaml", True),
+    Target("ARO:3004100", "lpeb-aro3004100.yaml", True),
+    Target("ARO:3000789", "mdsa-aro3000789.yaml", True),
+    Target("ARO:3000790", "mdsb-aro3000790.yaml", True),
+    Target("ARO:3000791", "mdsc-aro3000791.yaml", True),
+    Target("ARO:3000792", "mdta-aro3000792.yaml", True),
+    Target("ARO:3000793", "mdtb-aro3000793.yaml", True),
+    Target("ARO:3000794", "mdtc-aro3000794.yaml", True),
+    Target("ARO:3000795", "mdte-aro3000795.yaml", True),
+    Target("ARO:3000796", "mdtf-aro3000796.yaml", True),
 )
 
 TARGETS: tuple[Target, ...] = (
@@ -207,6 +220,7 @@ TARGETS: tuple[Target, ...] = (
     SUBUNIT_TARGETS[3],
     COMPLEX_TARGETS[1],
     *SUBUNIT_TARGETS[4:],
+    *COMPLEX_TARGETS[2:],
     COMPLEX_TARGETS[0],
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
