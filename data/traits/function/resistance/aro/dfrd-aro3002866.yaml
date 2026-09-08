@@ -23,11 +23,11 @@ evidence:
   notes: PMID:9145882 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: dfrD → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:35562546). dfr — trimethoprim-resistant dihydrofolate reductase; a drug-insensitive DHFR that
-    replaces the trimethoprim target enzyme.
+  title: dfrD → DHFR target replacement → trimethoprim resistance
+  description: Curated resistance-causation graph for a trimethoprim-resistant dihydrofolate reductase.
+    The graph preserves the DHFR domain and fold annotations, grounds dihydrofolate reductase activity
+    to GO:0004146, and models resistance as target replacement by a DHFR enzyme that is structurally less
+    sensitive to trimethoprim.
   nodes:
   - node_id: determinant
     label: dfrD
@@ -45,12 +45,21 @@ causal_graphs:
     label: dihydrofolate reductase domain
     node_type: DOMAIN
     grounding: Pfam:PF00186
-    description: KB protein-trait record carrying the mechanism.
+    description: KB protein-trait record carrying the trimethoprim-resistant DHFR mechanism.
   - node_id: fold
     label: dihydrofolate reductase fold
     node_type: DOMAIN
     grounding: CATH:3.40.430
-    description: KB protein-trait record carrying the mechanism.
+    description: KB protein-trait record carrying the DHFR fold.
+  - node_id: shared_function
+    label: dihydrofolate reductase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004146
+  - node_id: structural_difference
+    label: structural difference from the sensitive target
+    node_type: STATE
+    description: Local state representing the target-replacement protein's structural difference from
+      antibiotic-sensitive target proteins.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,67 +72,312 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies trimethoprim-resistant DFR under antibiotic target replacement.
     evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:35562546
       snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
         of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-      notes: Family mechanism ARO:0001002.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: A trimethoprim-insensitive replacement DHFR maintains folate metabolism.
     evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:35562546
       snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
         of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-      notes: Mechanism ARO:0001002 → resistance.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+    - reference: GO:0004146
+      snippet: 'Catalysis of the reaction: 5,6,7,8-tetrahydrofolate + NADP+ = 7,8-dihydrofolate + NADPH
+        + H+.'
+      notes: GO definition for dihydrofolate reductase activity.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The DFR determinant encodes a DHFR enzyme that is less sensitive to trimethoprim and
+      can replace the inhibited drug-sensitive target.
     evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:35562546
       snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
         of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
     - reference: ARO:3001218
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
-      notes: Asserted on ARO:3001218 (trimethoprim resistant dihydrofolate reductase dfr), an is_a ancestor
-        of this record's ARO:3002866; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to diaminopyrimidine antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF00186
-      snippet: Dihydrofolate reductase
-      notes: 'KB trait: the dihydrofolate-reductase domain.'
+      notes: Diaminopyrimidine drug-class relation asserted on ARO:3001218 and inherited by its DFR child
+        records.
+    - reference: ARO:3000171
+      snippet: diaminopyrimidine antibiotic
+      notes: ARO drug-class term for diaminopyrimidine antibiotics.
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: ARO maps trimethoprim-resistant DFR to diaminopyrimidine antibiotics.
     evidence:
-    - reference: CATH:3.40.430
-      snippet: Dihydrofolate Reductase, subunit A
-      notes: 'KB trait: the DHFR fold.'
-  - subject: domain
-    predicate: enables (drug-insensitive target enzyme)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
+      notes: Diaminopyrimidine drug-class relation asserted on ARO:3001218 and inherited by its DFR child
+        records.
+    - reference: ARO:3000171
+      snippet: diaminopyrimidine antibiotic
+      notes: ARO drug-class term for diaminopyrimidine antibiotics.
     - reference: PMID:35562546
       snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
         of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
-      notes: The trimethoprim-insensitive DHFR replaces the drug-sensitive enzyme.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+  - subject: domain
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: The Pfam DHFR domain is modeled as part of the DFR protein determinant.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: Pfam:PF00186
+      snippet: Dihydrofolate reductase
+      notes: Pfam family for the DHFR domain in these KB protein-trait records.
+    - reference: GO:0004146
+      snippet: 'Catalysis of the reaction: 5,6,7,8-tetrahydrofolate + NADP+ = 7,8-dihydrofolate + NADPH
+        + H+.'
+      notes: GO definition for dihydrofolate reductase activity.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts a DHFR fold used by these KB protein-trait records.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: CATH:3.40.430
+      snippet: Dihydrofolate Reductase, subunit A
+      notes: CATH DHFR fold used by these KB protein-trait records.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+  - subject: domain
+    predicate: enables
+    predicate_id: RO:0002327
+    object: shared_function
+    description: The DHFR domain enables dihydrofolate reductase activity.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+    - reference: GO:0004146
+      snippet: 'Catalysis of the reaction: 5,6,7,8-tetrahydrofolate + NADP+ = 7,8-dihydrofolate + NADPH
+        + H+.'
+      notes: GO definition for dihydrofolate reductase activity.
+    - reference: Pfam:PF00186
+      snippet: Dihydrofolate reductase
+      notes: Pfam family for the DHFR domain in these KB protein-trait records.
+  - subject: determinant
+    predicate: has quality (structurally unlike the sensitive target)
+    predicate_id: RO:0000086
+    object: structural_difference
+    description: The target-replacement determinant is structurally different from trimethoprim-sensitive
+      DHFR.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+    - reference: ARO:3001218
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
+      notes: Diaminopyrimidine drug-class relation asserted on ARO:3001218 and inherited by its DFR child
+        records.
+    - reference: ARO:3000171
+      snippet: diaminopyrimidine antibiotic
+      notes: ARO drug-class term for diaminopyrimidine antibiotics.
+  - subject: structural_difference
+    predicate: negatively regulates (less sensitive to trimethoprim)
+    predicate_id: RO:0002212
+    object: drug0
+    description: Structural difference from trimethoprim-sensitive DHFR reduces drug sensitivity.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+    - reference: ARO:3001218
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
+      notes: Diaminopyrimidine drug-class relation asserted on ARO:3001218 and inherited by its DFR child
+        records.
+    - reference: ARO:3000171
+      snippet: diaminopyrimidine antibiotic
+      notes: ARO drug-class term for diaminopyrimidine antibiotics.
+  - subject: structural_difference
+    predicate: causally upstream of (target replacement resists inhibition)
+    predicate_id: RO:0002411
+    object: resistance
+    description: A less trimethoprim-sensitive replacement DHFR keeps the same folate-metabolism activity
+      and thereby confers resistance.
+    evidence:
+    - reference: ARO:3002866
+      snippet: dfrD is a plasmid-encoded dihydrofolate reductase found in Listeria monocytogenes.
+      notes: CARD definition for dfrD.
+    - reference: DOI:10.1128/AAC.41.5.1134
+      notes: PMID:9145882 (aro citation)
+    - reference: ARO:3001218
+      snippet: Alternative dihydropteroate synthase dfr present on plasmids produces alternate proteins
+        that are less sensitive to trimethoprim from inhibiting its role in folate synthesis, thus conferring
+        trimethoprim resistance.
+      notes: CARD definition for trimethoprim resistant dihydrofolate reductase dfr.
+    - reference: ARO:3003425
+      snippet: Key enzyme in folate metabolism. Catalyzes an essential reaction for de novo glycine and
+        purine synthesis, and for DNA precursor synthesis.
+      notes: CARD definition for antibiotic resistant dihydrofolate reductase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: PMID:35562546
+      snippet: Trimethoprim resistance in Enterobacteriaceae occurs almost exclusively through the acquisition
+        of plasmid-associated dfr genes that encode intrinsically insensitive DHFR enzymes.
+      notes: DFR-family mechanism evidence already used by the ARO:3001218 draft graph.
+    - reference: ARO:3001218
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000171 ! diaminopyrimidine antibiotic'
+      notes: Diaminopyrimidine drug-class relation asserted on ARO:3001218 and inherited by its DFR child
+        records.
+    - reference: ARO:3000171
+      snippet: diaminopyrimidine antibiotic
+      notes: ARO drug-class term for diaminopyrimidine antibiotics.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-08T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed trimethoprim-resistant DFR target-replacement graphs
     llm_assisted: true
 license: CC-BY 4.0
