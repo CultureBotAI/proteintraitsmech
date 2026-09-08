@@ -35,7 +35,47 @@ def _node(node_id: str, node_type: str, grounding: str | None = None) -> dict:
     return node
 
 
-def _record(identifier: str = "ARO:3000112") -> dict:
+def _edge(
+    subject: str,
+    object_: str,
+    predicate: str = "causally upstream of",
+    predicate_id: str = "RO:0002411",
+) -> dict:
+    return {
+        "subject": subject,
+        "predicate": predicate,
+        "predicate_id": predicate_id,
+        "object": object_,
+        "evidence": [
+            {
+                "reference": "ARO:test",
+                "snippet": "relationship: confers_resistance_to_drug_class ARO:test ! test drug",
+            }
+        ],
+    }
+
+
+def _record(identifier: str = "ARO:3000112", has_drug: bool = False) -> dict:
+    nodes = [
+        _node("determinant", "PROTEIN", identifier),
+        _node("mech0", "MOLECULAR_FUNCTION", "ARO:0010000"),
+        _node("extrusion", "MOLECULAR_FUNCTION"),
+        _node("cation_gradient", "STATE"),
+        _node("extruded", "STATE"),
+        _node("resistance", "PHENOTYPE", "GO:0046677"),
+    ]
+    edges = []
+    if has_drug:
+        nodes.append(_node("drug0", "CHEMICAL", "ARO:0000001"))
+        edges.append(
+            _edge(
+                "determinant",
+                "drug0",
+                "confers resistance to (drug class)",
+                "ARO:2000001",
+            )
+        )
+
     return {
         "identifier": identifier,
         "label": "test label",
@@ -43,15 +83,8 @@ def _record(identifier: str = "ARO:3000112") -> dict:
         "causal_graphs": [
             {
                 "graph_id": "resistance",
-                "nodes": [
-                    _node("determinant", "PROTEIN", identifier),
-                    _node("mech0", "MOLECULAR_FUNCTION", "ARO:0010000"),
-                    _node("extrusion", "MOLECULAR_FUNCTION"),
-                    _node("cation_gradient", "STATE"),
-                    _node("extruded", "STATE"),
-                    _node("resistance", "PHENOTYPE", "GO:0046677"),
-                ],
-                "edges": [],
+                "nodes": nodes,
+                "edges": edges,
             }
         ],
     }
@@ -75,6 +108,7 @@ def test_targets_are_exact_current_mate_records() -> None:
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:3000112",
         "ARO:3003551",
+        "ARO:3003835",
         "ARO:3003953",
         "ARO:3003965",
     }
@@ -99,9 +133,21 @@ def test_mate_graph_replaces_ungrounded_extrusion_function() -> None:
     }
 
 
+def test_mate_graph_preserves_direct_drug_edges() -> None:
+    out, changed = R.enrich_record(_record("ARO:3003835", has_drug=True), R.TARGETS[-1])
+    nodes = _node_ids(out)
+
+    assert changed
+    assert "drug0" in nodes
+    assert ("determinant", "drug0") in _edge_pairs(out)
+
+
 def test_all_non_state_nodes_are_grounded_and_all_edges_are_complete() -> None:
     for target in R.TARGETS:
-        out, changed = R.enrich_record(_record(target.identifier), target)
+        out, changed = R.enrich_record(
+            _record(target.identifier, has_drug=target.identifier == "ARO:3003835"),
+            target,
+        )
         graph = out["causal_graphs"][0]
 
         assert changed
@@ -138,6 +184,14 @@ def test_missing_required_node_is_refused() -> None:
 
     with pytest.raises(ValueError, match="missing node\\(s\\): extrusion"):
         R.enrich_record(record, R.TARGETS[0])
+
+
+def test_missing_direct_drug_edge_is_refused() -> None:
+    record = _record("ARO:3003835", has_drug=True)
+    record["causal_graphs"][0]["edges"] = []
+
+    with pytest.raises(ValueError, match="missing drug edge\\(s\\): drug0"):
+        R.enrich_record(record, R.TARGETS[-1])
 
 
 def test_enrich_text_adds_history_once() -> None:

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -109,6 +110,8 @@ RESISTANCE_NODE = {
     ),
 }
 
+DRUG_ID = re.compile(r"^drug\d+$")
+
 
 @dataclass(frozen=True)
 class Target:
@@ -124,6 +127,7 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3003551", "emea-aro3003551.yaml"),
     Target("ARO:3003953", "hmrm-aro3003953.yaml"),
     Target("ARO:3003965", "hp1184-aro3003965.yaml"),
+    Target("ARO:3003835", "cdea-aro3003835.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
@@ -144,11 +148,22 @@ def _dicts(value: Any) -> list[dict[str, Any]]:
     return [item for item in value if isinstance(item, dict)]
 
 
-def _unique_evidence(*items: dict[str, str]) -> list[dict[str, str]]:
-    evidence: list[dict[str, str]] = []
+def _is_drug_node_id(node_id: str) -> bool:
+    return DRUG_ID.fullmatch(node_id) is not None
+
+
+def _drug_sort_key(node: dict[str, Any]) -> int:
+    match = DRUG_ID.fullmatch(str(node["node_id"]))
+    if match is None:
+        raise ValueError(f"unexpected drug node_id: {node['node_id']}")
+    return int(str(node["node_id"])[len("drug") :])
+
+
+def _unique_evidence(*items: dict[str, Any]) -> list[dict[str, Any]]:
+    evidence: list[dict[str, Any]] = []
     seen: set[str] = set()
     for item in items:
-        reference = item["reference"]
+        reference = str(item["reference"])
         if reference in seen:
             continue
         seen.add(reference)
@@ -174,6 +189,14 @@ def _edge(
     }
 
 
+def _edge_key(edge: dict[str, Any]) -> tuple[str, str, str]:
+    return (
+        str(edge.get("subject", "")),
+        str(edge.get("predicate_id", "")),
+        str(edge.get("object", "")),
+    )
+
+
 def _record_evidence(record: dict[str, Any]) -> dict[str, str]:
     return {
         "reference": str(record["identifier"]),
@@ -191,7 +214,75 @@ def _determinant_node(record: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def _graph(record: dict[str, Any]) -> dict[str, Any]:
+def _nodes_by_id(graph: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    return {
+        str(node["node_id"]): node
+        for node in _dicts(graph.get("nodes"))
+        if "node_id" in node
+    }
+
+
+def _drug_nodes(graph: dict[str, Any]) -> list[dict[str, Any]]:
+    return [
+        copy.deepcopy(node)
+        for node in sorted(
+            (
+                node
+                for node in _dicts(graph.get("nodes"))
+                if _is_drug_node_id(str(node.get("node_id", "")))
+            ),
+            key=_drug_sort_key,
+        )
+    ]
+
+
+def _drug_relation_evidence(
+    graph: dict[str, Any],
+    drug_node_ids: set[str],
+) -> dict[str, list[dict[str, Any]]]:
+    by_object: dict[str, list[dict[str, Any]]] = {node_id: [] for node_id in drug_node_ids}
+    for edge in _dicts(graph.get("edges")):
+        if (
+            edge.get("subject") == "determinant"
+            and edge.get("predicate_id") == "ARO:2000001"
+        ):
+            object_ = str(edge.get("object", ""))
+            if object_ in by_object:
+                by_object[object_].extend(
+                    item
+                    for item in _dicts(edge.get("evidence"))
+                    if str(item.get("snippet", "")).startswith(
+                        "relationship: confers_resistance_to_drug_class "
+                    )
+                )
+    return by_object
+
+
+def _canonical_drug_edges(
+    record: dict[str, Any],
+    old_graph: dict[str, Any],
+    *evidence: dict[str, Any],
+) -> list[dict[str, Any]]:
+    drug_nodes = _drug_nodes(old_graph)
+    drug_node_ids = {str(node["node_id"]) for node in drug_nodes}
+    relation_evidence = _drug_relation_evidence(old_graph, drug_node_ids)
+
+    return [
+        _edge(
+            "determinant",
+            "confers resistance to (drug class)",
+            "ARO:2000001",
+            str(drug_node["node_id"]),
+            f"CARD asserts that this determinant confers resistance to {drug_node['label']}.",
+            *relation_evidence[str(drug_node["node_id"])],
+            _record_evidence(record),
+            *evidence,
+        )
+        for drug_node in drug_nodes
+    ]
+
+
+def _graph(record: dict[str, Any], old_graph: dict[str, Any]) -> dict[str, Any]:
     record_evidence = _record_evidence(record)
     efflux_evidence = (
         record_evidence,
@@ -211,6 +302,7 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
         "nodes": [
             _determinant_node(record),
             copy.deepcopy(MECHANISM_NODE),
+            *_drug_nodes(old_graph),
             copy.deepcopy(CATION_GRADIENT_NODE),
             copy.deepcopy(EXPORT_NODE),
             copy.deepcopy(EXTRUDED_NODE),
@@ -243,6 +335,14 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
                 "MATE transporters confer resistance by cation-gradient-driven "
                 "antibiotic efflux.",
                 *efflux_evidence,
+            ),
+            *_canonical_drug_edges(
+                record,
+                old_graph,
+                MATE_EVIDENCE,
+                MATE_SUBSTRATE_EVIDENCE,
+                EFFLUX_PUMP_EVIDENCE,
+                ANTIBIOTIC_EFFLUX_EVIDENCE,
             ),
             _edge(
                 "cation_gradient",
@@ -284,6 +384,33 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
             ),
         ],
     }
+
+
+def _validate_direct_drug_edges(graph: dict[str, Any], target: Target) -> None:
+    nodes = _nodes_by_id(graph)
+    drug_node_ids = {node_id for node_id in nodes if _is_drug_node_id(node_id)}
+
+    seen: set[tuple[str, str, str]] = set()
+    direct_drug_edges: set[str] = set()
+    for edge in _dicts(graph.get("edges")):
+        key = _edge_key(edge)
+        if key in seen:
+            subject, _, object_ = key
+            raise ValueError(f"{target.identifier}: duplicate edge {subject} -> {object_}")
+        seen.add(key)
+
+        subject, predicate_id, object_ = key
+        if (
+            subject == "determinant"
+            and predicate_id == "ARO:2000001"
+            and object_ in drug_node_ids
+        ):
+            direct_drug_edges.add(object_)
+
+    missing_drug_edges = sorted(drug_node_ids - direct_drug_edges)
+    if missing_drug_edges:
+        missing = ", ".join(missing_drug_edges)
+        raise ValueError(f"{target.identifier}: missing drug edge(s): {missing}")
 
 
 REQUIRED_NODE_SETS = (
@@ -331,13 +458,14 @@ def _validate_record(record: dict[str, Any], target: Target) -> None:
         missing_nodes = min(missing_by_shape, key=len)
         missing = ", ".join(missing_nodes)
         raise ValueError(f"{target.identifier}: missing node(s): {missing}")
+    _validate_direct_drug_edges(graphs[0], target)
 
 
 def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
     _validate_record(record, target)
 
     out = copy.deepcopy(record)
-    out["causal_graphs"] = [_graph(record)]
+    out["causal_graphs"] = [_graph(record, record["causal_graphs"][0])]
     return out, out != record
 
 
