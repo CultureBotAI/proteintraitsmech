@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Rewrite BIL/BJP/BKC/Bla/BMHC/BOR/BRO beta-lactamase graphs.
+"""Rewrite BUT/CAR/CARB beta-lactamase graphs.
 
-This exact alphabetic score-77 slice contains class A serine beta-lactamases,
-class C serine beta-lactamases, and class B metallo-beta-lactamases. It reuses
-the canonical class A/metallo graph builder from the earlier beta-lactamase
-pass and supplies a generic, non-ADC class C graph for BIL.
+This exact score-77 slice contains BUT class C serine beta-lactamases, CAR
+class B metallo-beta-lactamases, and the large CARB class A serine
+beta-lactamase family. It reuses the canonical beta-lactamase graph builder
+for all three enzyme classes.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -26,7 +26,7 @@ from record_io import append_to_section, replace_block  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
-HISTORY_ACTION = "Completed BIL-BRO beta-lactamase graphs"
+HISTORY_ACTION = "Completed BUT-CARB beta-lactamase graphs"
 HISTORY_EVENT = {
     "timestamp": "2026-09-08T00:00:00Z",
     "curator": "codex-causal-graph-quality",
@@ -34,29 +34,71 @@ HISTORY_EVENT = {
     "llm_assisted": True,
 }
 
-_TARGET_ROWS = """
-CLASS_C ARO:3004754 bil-beta-lactamase-aro3004754.yaml
-CLASS_C ARO:3004755 bil-1-aro3004755.yaml
-METALLO ARO:3004219 bjp-beta-lactamase-aro3004219.yaml
-METALLO ARO:3000856 bjp-1-aro3000856.yaml
-CLASS_A ARO:3004756 bkc-beta-lactamase-aro3004756.yaml
-CLASS_A ARO:3004757 bkc-1-aro3004757.yaml
-CLASS_A ARO:3006223 bkc-2-aro3006223.yaml
-CLASS_A ARO:3000090 bla1-aro3000090.yaml
-CLASS_A ARO:3004233 blaf-family-beta-lactamase-aro3004233.yaml
-CLASS_A ARO:3003562 blaf-aro3003562.yaml
-CLASS_A ARO:3004197 blaz-beta-lactamase-aro3004197.yaml
-METALLO ARO:3007866 bmhc-beta-lactamase-aro3007866.yaml
-METALLO ARO:3008081 bmhc-1-aro3008081.yaml
-CLASS_A ARO:3007867 bor-beta-lactamase-aro3007867.yaml
-CLASS_A ARO:3008082 bor-1-aro3008082.yaml
-CLASS_A ARO:3004760 bro-beta-lactamase-aro3004760.yaml
-CLASS_A ARO:3004761 bro-1-aro3004761.yaml
-CLASS_A ARO:3004762 bro-2-aro3004762.yaml
-"""
 
-GraphKind = beta.GraphKind
-Target = beta.Target
+_TARGET_ROWS = """
+CLASS_C ARO:3004293 but-beta-lactamase-aro3004293.yaml
+CLASS_C ARO:3004294 but-1-aro3004294.yaml
+CLASS_C ARO:3005558 but-2-aro3005558.yaml
+METALLO ARO:3005395 car-beta-lactamase-aro3005395.yaml
+METALLO ARO:3006903 car-1-aro3006903.yaml
+CLASS_A ARO:3000091 carb-beta-lactamase-aro3000091.yaml
+CLASS_A ARO:3002240 carb-1-aro3002240.yaml
+CLASS_A ARO:3002241 carb-2-aro3002241.yaml
+CLASS_A ARO:3002242 carb-3-aro3002242.yaml
+CLASS_A ARO:3002243 carb-4-aro3002243.yaml
+CLASS_A ARO:3002244 carb-5-aro3002244.yaml
+CLASS_A ARO:3002245 carb-6-aro3002245.yaml
+CLASS_A ARO:3002246 carb-7-aro3002246.yaml
+CLASS_A ARO:3002247 carb-8-aro3002247.yaml
+CLASS_A ARO:3002248 carb-9-aro3002248.yaml
+CLASS_A ARO:3002249 carb-10-aro3002249.yaml
+CLASS_A ARO:3005559 carb-11-aro3005559.yaml
+CLASS_A ARO:3002250 carb-12-aro3002250.yaml
+CLASS_A ARO:3002251 carb-13-aro3002251.yaml
+CLASS_A ARO:3002252 carb-14-aro3002252.yaml
+CLASS_A ARO:3002253 carb-15-aro3002253.yaml
+CLASS_A ARO:3002255 carb-16-aro3002255.yaml
+CLASS_A ARO:3002254 carb-17-aro3002254.yaml
+CLASS_A ARO:3003174 carb-18-aro3003174.yaml
+CLASS_A ARO:3003175 carb-19-aro3003175.yaml
+CLASS_A ARO:3003150 carb-20-aro3003150.yaml
+CLASS_A ARO:3003176 carb-21-aro3003176.yaml
+CLASS_A ARO:3003151 carb-22-aro3003151.yaml
+CLASS_A ARO:3003186 carb-23-aro3003186.yaml
+CLASS_A ARO:3005560 carb-24-aro3005560.yaml
+CLASS_A ARO:3005561 carb-25-aro3005561.yaml
+CLASS_A ARO:3005562 carb-26-aro3005562.yaml
+CLASS_A ARO:3005563 carb-27-aro3005563.yaml
+CLASS_A ARO:3005564 carb-28-aro3005564.yaml
+CLASS_A ARO:3005565 carb-29-aro3005565.yaml
+CLASS_A ARO:3005566 carb-30-aro3005566.yaml
+CLASS_A ARO:3005567 carb-31-aro3005567.yaml
+CLASS_A ARO:3005568 carb-32-aro3005568.yaml
+CLASS_A ARO:3005569 carb-33-aro3005569.yaml
+CLASS_A ARO:3005570 carb-34-aro3005570.yaml
+CLASS_A ARO:3005571 carb-35-aro3005571.yaml
+CLASS_A ARO:3005572 carb-36-aro3005572.yaml
+CLASS_A ARO:3005573 carb-38-aro3005573.yaml
+CLASS_A ARO:3005574 carb-40-aro3005574.yaml
+CLASS_A ARO:3005575 carb-41-aro3005575.yaml
+CLASS_A ARO:3005576 carb-42-aro3005576.yaml
+CLASS_A ARO:3005577 carb-43-aro3005577.yaml
+CLASS_A ARO:3005578 carb-44-aro3005578.yaml
+CLASS_A ARO:3005579 carb-45-aro3005579.yaml
+CLASS_A ARO:3005580 carb-46-aro3005580.yaml
+CLASS_A ARO:3005581 carb-47-aro3005581.yaml
+CLASS_A ARO:3005582 carb-48-aro3005582.yaml
+CLASS_A ARO:3005583 carb-49-aro3005583.yaml
+CLASS_A ARO:3005584 carb-50-aro3005584.yaml
+CLASS_A ARO:3005585 carb-51-aro3005585.yaml
+CLASS_A ARO:3005586 carb-52-aro3005586.yaml
+CLASS_A ARO:3005587 carb-53-aro3005587.yaml
+CLASS_A ARO:3005588 carb-54-aro3005588.yaml
+CLASS_A ARO:3005589 carb-55-aro3005589.yaml
+CLASS_A ARO:3007803 carb-56-aro3007803.yaml
+CLASS_A ARO:3007836 carb-57-aro3007836.yaml
+CLASS_A ARO:3007837 carb-58-aro3007837.yaml
+"""
 
 TARGETS: tuple[beta.Target, ...] = tuple(
     beta.Target(identifier, filename, beta.GraphKind(kind))
@@ -93,7 +135,7 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     identifier = record.get("identifier")
     target = TARGET_BY_ID.get(identifier)
     if target is None:
-        raise ValueError(f"{path}: not a BIL-BRO beta-lactamase target: {identifier}")
+        raise ValueError(f"{path}: not a BUT-CARB beta-lactamase target: {identifier}")
     if path.name != target.filename:
         raise ValueError(f"{path}: target {identifier} must be in {target.filename}")
 
@@ -123,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
         "--path",
         type=Path,
         default=ARO_DIR,
-        help="ARO directory or one of the 18 BIL-BRO beta-lactamase YAML files",
+        help="ARO directory or one of the 62 BUT-CARB beta-lactamase YAML files",
     )
     args = parser.parse_args(argv)
 
