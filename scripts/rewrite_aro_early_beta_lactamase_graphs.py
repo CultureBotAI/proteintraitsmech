@@ -73,6 +73,25 @@ CLASS_A_EVIDENCE = {
     "notes": "CARD definition for class A beta-lactamases.",
 }
 
+CLASS_C_EVIDENCE = {
+    "reference": "ARO:3000076",
+    "snippet": (
+        "AmpC type beta-lactamases are commonly isolated from "
+        "extended-spectrum cephalosporin-resistant Gram-negative bacteria. "
+        "AmpC beta-lactamases (also termed class C or group 1) are typically "
+        "encoded on the chromosome of many Gram-negative bacteria including "
+        "Citrobacter, Serratia, Enterobacter species, and P. aeruginosa where "
+        "its expression is usually inducible; it may also occur on Escherichia "
+        "coli but is not usually inducible, although it can be hyperexpressed. "
+        "AmpC type beta-lactamases may also be carried on plasmids. AmpC "
+        "beta-lactamases, in contrast to ESBLs, hydrolyse broad and "
+        "extended-spectrum cephalosporins (cephamycins as well as to "
+        "oxyimino-beta-lactams) but are not inhibited by beta-lactamase "
+        "inhibitors such as clavulanic acid."
+    ),
+    "notes": "CARD definition for class C beta-lactamase.",
+}
+
 SERINE_BETA_LACTAMASE_EVIDENCE = {
     "reference": "ARO:3000187",
     "snippet": (
@@ -93,10 +112,26 @@ SERINE_REACTION_EVIDENCE = {
     "notes": "Evidence for the serine beta-lactamase acyl-enzyme mechanism.",
 }
 
+CLASS_C_REACTION_EVIDENCE = {
+    "reference": "PMID:19136439",
+    "snippet": (
+        "AmpC β-lactamases are clinically important cephalosporinases encoded "
+        "on the chromosomes of many of the Enterobacteriaceae and a few other "
+        "organisms."
+    ),
+    "notes": "Evidence for AmpC/class C beta-lactamases.",
+}
+
 PROSITE_CLASS_A_EVIDENCE = {
     "reference": "PROSITE:PS00146",
     "snippet": "Beta-lactamase class-A active site",
     "notes": "PROSITE active-site signature for class A beta-lactamases.",
+}
+
+PROSITE_CLASS_C_EVIDENCE = {
+    "reference": "PROSITE:PRU10102",
+    "snippet": "Beta-lactamase class-C active site",
+    "notes": "PROSITE active-site signature for class C beta-lactamases.",
 }
 
 CATH_SERINE_BETA_LACTAMASE_EVIDENCE = {
@@ -165,6 +200,14 @@ CLASS_A_ACTIVE_SITE_NODE = {
     "description": "Class A beta-lactamase catalytic serine active-site signature.",
 }
 
+CLASS_C_ACTIVE_SITE_NODE = {
+    "node_id": "active_site",
+    "label": "class C beta-lactamase active-site signature (Ser64 S-x-x-K)",
+    "node_type": "MOTIF",
+    "grounding": "PROSITE:PRU10102",
+    "description": "Class C beta-lactamase catalytic serine active-site signature.",
+}
+
 SERINE_FOLD_NODE = {
     "node_id": "fold",
     "label": "DD-peptidase/beta-lactamase superfamily fold",
@@ -206,6 +249,7 @@ DRUG_ID = re.compile(r"^drug\d+$")
 
 class GraphKind(Enum):
     CLASS_A = "CLASS_A"
+    CLASS_C = "CLASS_C"
     METALLO = "METALLO"
 
 
@@ -295,6 +339,24 @@ CLASS_A_PARTS = GraphParts(
     catalytic_description=(
         "The class A S-x-x-K active site provides the catalytic serine used for "
         "beta-lactam acylation and hydrolysis."
+    ),
+)
+
+CLASS_C_PARTS = GraphParts(
+    title="class C serine beta-lactam hydrolysis",
+    mech1_node=SERINE_MECH1_NODE,
+    catalytic_node_id="active_site",
+    catalytic_node=CLASS_C_ACTIVE_SITE_NODE,
+    fold_node=SERINE_FOLD_NODE,
+    family_evidence=CLASS_C_EVIDENCE,
+    mechanism_evidence=SERINE_BETA_LACTAMASE_EVIDENCE,
+    reaction_evidence=CLASS_C_REACTION_EVIDENCE,
+    catalytic_evidence=PROSITE_CLASS_C_EVIDENCE,
+    fold_evidence=CATH_SERINE_BETA_LACTAMASE_EVIDENCE,
+    catalytic_predicate="enables (serine beta-lactam hydrolysis)",
+    catalytic_description=(
+        "The class C S-x-x-K active site provides the catalytic serine used "
+        "for beta-lactam acylation and hydrolysis."
     ),
 )
 
@@ -673,6 +735,8 @@ def _graph(record: dict[str, Any], old_graph: dict[str, Any], parts: GraphParts)
 def _parts(target: Target) -> GraphParts:
     if target.kind == GraphKind.CLASS_A:
         return CLASS_A_PARTS
+    if target.kind == GraphKind.CLASS_C:
+        return CLASS_C_PARTS
     if target.kind == GraphKind.METALLO:
         return METALLO_PARTS
     raise ValueError(f"{target.identifier}: unhandled graph kind {target.kind}")
