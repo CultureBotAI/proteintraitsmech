@@ -26,11 +26,9 @@ evidence:
   notes: PMID:10188279 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: AAC(6')-It → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:26818562). AAC — aminoglycoside N-acetyltransferase; inactivates aminoglycosides by acetyl-CoA-dependent
-    acetylation.
+  title: AAC(6')-It → acetyl-CoA-dependent antibiotic acetylation
+  description: Curated resistance-causation graph for AAC-mediated acetyl-CoA-dependent antibiotic N-acetylation
+    and inactivation.
   nodes:
   - node_id: determinant
     label: AAC(6')-It
@@ -48,16 +46,30 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: transfer
+    label: acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016407
+    description: Grounded to the broad GO acetyltransferase activity term and scoped here to acetyl-CoA-dependent
+      antibiotic N-acetylation by AAC enzymes.
+  - node_id: acetyl_coa
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15351
+  - node_id: acetylated
+    label: acetylated inactive antibiotic
+    node_type: STATE
+    description: Local state for an antibiotic after AAC-mediated acetyl transfer from acetyl-CoA.
   - node_id: domain
     label: GNAT acetyltransferase domain
     node_type: DOMAIN
     grounding: InterPro:IPR000182
-    description: KB protein-trait record carrying the mechanism.
+    description: GNAT acetyltransferase catalytic domain found in AAC enzymes.
   - node_id: fold
     label: acyl-CoA N-acyltransferase (GNAT) fold
     node_type: DOMAIN
     grounding: CATH:3.40.630
-    description: KB protein-trait record carrying the mechanism.
+    description: GNAT acyltransferase structural fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -70,85 +82,386 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies AAC enzymes under the broad antibiotic inactivation resistance mechanism.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:26818562
       snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
         from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: Family mechanism ARO:0001004.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: AAC antibiotic inactivation results from acetyl-CoA-dependent acetylation of the antibiotic
+      substrate.
     evidence:
-    - reference: PMID:26818562
-      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
-        from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: Mechanism ARO:0001004 → resistance.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies AAC enzymes under acylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:26818562
       snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
         from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: Family mechanism ARO:3000106.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The AAC acylation resistance mechanism modifies antibiotics by acetylation and inactivates
+      them.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:26818562
       snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
         from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: Mechanism ARO:3000106 → resistance.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: enables (acetylates the antibiotic)
+    predicate_id: RO:0002327
+    object: transfer
+    description: AAC enzymes catalyze acetyl-CoA-dependent antibiotic N-acetylation.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
+  - subject: transfer
+    predicate: has input (the acetyl donor)
+    predicate_id: RO:0002233
+    object: acetyl_coa
+    description: Acetyl-CoA is the acetyl donor used during AAC-mediated antibiotic N-acetylation.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
+  - subject: transfer
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    description: The AAC acetyltransferase activity acts on this CARD-linked aminoglycoside antibiotic
+      class.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
+    - reference: ARO:3000345
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3000345 (AAC(6')), an is_a ancestor of this record's ARO:3002564; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: transfer
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: acetylated
+    description: AAC activity transfers an acetyl group to the antibiotic and produces an acetylated inactive
+      drug state.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: acetylated
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The acetylated antibiotic is inactive, lowering effective drug exposure and causing the
+      resistance phenotype.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: AAC enzymes confer resistance through acetyl-CoA-dependent antibiotic acetylation and
+      drug inactivation.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:26818562
       snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
         from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: Determinant → resistance phenotype.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this AAC determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3000345
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3000345 (AAC(6')), an is_a ancestor of this record's ARO:3002564; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
   - subject: domain
     predicate: part of (catalytic domain of the protein)
     predicate_id: BFO:0000050
     object: determinant
+    description: The GNAT acetyltransferase domain is part of the AAC determinant.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
     - reference: InterPro:IPR000182
       snippet: GNAT domain
-      notes: 'KB trait: the GNAT acetyltransferase domain.'
+      notes: InterPro grounding for the GNAT acetyltransferase domain.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
   - subject: determinant
     predicate: member of (adopts fold)
     predicate_id: RO:0002350
     object: fold
+    description: The determinant adopts the acyl-CoA N-acyltransferase fold associated with GNAT acetyltransferases.
     evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
     - reference: CATH:3.40.630
       snippet: Aminopeptidase
-      notes: 'KB trait: the GNAT structural fold.'
-  - subject: domain
-    predicate: enables (antibiotic acetylation)
-    predicate_id: RO:0002327
-    object: mech1
-    evidence:
+      notes: CATH grounding for the acyl-CoA N-acyltransferase fold.
     - reference: PMID:26818562
       snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
         from small molecules such as aminoglycoside antibiotics to macromolecules.
-      notes: The GNAT domain transfers an acetyl group onto the aminoglycoside, inactivating it.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
+  - subject: domain
+    predicate: enables (antibiotic acetylation)
+    predicate_id: RO:0002327
+    object: transfer
+    description: The GNAT acetyltransferase domain enables the acetyl-CoA-dependent antibiotic N-acetylation
+      activity.
+    evidence:
+    - reference: ARO:3002564
+      snippet: AAC(6')-It is a chromosomal-encoded aminoglycoside acetyltransferase in Acinetobacter genomosp.
+        16.
+      notes: CARD definition for AAC(6')-It.
+    - reference: ARO:3000121
+      snippet: Aminoglycoside acetyltransferase enzymes modify aminoglycoside antibiotics by catalyzing
+        the transfer of an acetyl group to one of the amino groups present in aminoglycosides, using acetyl
+        coenzyme A as a donor substrate.
+      notes: CARD definition for aminoglycoside acetyltransferase (AAC).
+    - reference: InterPro:IPR000182
+      snippet: GNAT domain
+      notes: InterPro grounding for the GNAT acetyltransferase domain.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: PMID:26818562
+      snippet: N-Acetyltransferases transfer an acetyl group from acetyl-CoA to a large array of substrates,
+        from small molecules such as aminoglycoside antibiotics to macromolecules.
+      notes: Literature support for GNAT-mediated acetyl transfer to aminoglycosides.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-07T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed AAC aminoglycoside acetyltransferase causal graphs
     llm_assisted: true
 license: CC-BY 4.0
