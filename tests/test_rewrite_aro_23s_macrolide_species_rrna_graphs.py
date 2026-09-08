@@ -80,6 +80,8 @@ def test_target_set_is_the_exact_low_score_species_slice() -> None:
         "ARO:3004174",
         "ARO:3004132",
         "ARO:3004654",
+        "ARO:3004160",
+        "ARO:3004131",
     ]
     assert R.iter_target_paths(ARO_DIR) == [
         ARO_DIR / target.filename for target in R.TARGETS
