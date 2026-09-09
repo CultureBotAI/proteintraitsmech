@@ -114,6 +114,11 @@ TARGETS: tuple[Target, ...] = (
         "escherichia-coli-23s-rrna-with-mutation-conferring-resistance-to-erythromycin-an-"
         "aro3004131.yaml",
     ),
+    Target(
+        "ARO:3004134",
+        "helicobacter-pylori-23s-rrna-with-mutation-conferring-resistance-to-clarithromyc-"
+        "aro3004134.yaml",
+    ),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
