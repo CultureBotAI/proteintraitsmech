@@ -26,34 +26,31 @@ evidence:
   notes: PMID:18535657 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: mfd → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:21227918). qnr is a pentapeptide-repeat protein; target protection of DNA gyrase/topoisomerase
-    IV from fluoroquinolones.
+  title: mfd → transcription-coupled DNA repair → fluoroquinolone resistance emergence
+  description: Curated Mfd graph that replaces the stale inherited Qnr pentapeptide-repeat target-protection
+    scaffold. Mfd is a transcription-repair coupling factor whose ATP-dependent handling of stalled transcription
+    complexes promotes the mutation supply from which fluoroquinolone-resistant Campylobacter emerges.
   nodes:
   - node_id: determinant
     label: mfd
     node_type: PROTEIN
     grounding: ARO:3003844
-  - node_id: mech0
-    label: antibiotic target protection
+  - node_id: damaged_dna_binding
+    label: damaged DNA binding
     node_type: MOLECULAR_FUNCTION
-    grounding: ARO:0001003
+    grounding: GO:0003684
+  - node_id: atp_binding
+    label: ATP binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0005524
+  - node_id: dna_repair
+    label: transcription-coupled DNA repair
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006283
   - node_id: drug0
     label: fluoroquinolone antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000001
-  - node_id: domain
-    label: pentapeptide-repeat domain
-    node_type: DOMAIN
-    grounding: Pfam:PF00805
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: pentapeptide-repeat (right-handed β-helix) fold
-    node_type: DOMAIN
-    grounding: ECOD:T.207.9.1
-    description: KB protein-trait record carrying the mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,70 +60,168 @@ causal_graphs:
       itself.'
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: damaged_dna_binding
+    description: Mfd is the damaged-DNA-recognizing transcription-repair coupling factor.
     evidence:
-    - reference: PMID:21227918
-      snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
-        repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Family mechanism ARO:0001003.
-  - subject: mech0
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Most importantly, ciprofloxacin induced the expression of mfd, which encodes a transcription-repair
+        coupling factor involved in strand-specific DNA repair.
+      notes: Han et al. identify mfd as the fluoroquinolone-inducible transcription-repair coupling factor
+        in C. jejuni.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: atp_binding
+    description: Mfd uses ATP to displace RNA polymerase from DNA lesions.
+    evidence:
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Most importantly, ciprofloxacin induced the expression of mfd, which encodes a transcription-repair
+        coupling factor involved in strand-specific DNA repair.
+      notes: Han et al. identify mfd as the fluoroquinolone-inducible transcription-repair coupling factor
+        in C. jejuni.
+  - subject: determinant
+    predicate: participates in
+    predicate_id: RO:0000056
+    object: dna_repair
+    description: Mfd participates in transcription-coupled, strand-specific DNA repair.
+    evidence:
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Most importantly, ciprofloxacin induced the expression of mfd, which encodes a transcription-repair
+        coupling factor involved in strand-specific DNA repair.
+      notes: Han et al. identify mfd as the fluoroquinolone-inducible transcription-repair coupling factor
+        in C. jejuni.
+  - subject: damaged_dna_binding
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: dna_repair
+    description: Damage recognition is part of Mfd-mediated transcription-coupled repair.
+    evidence:
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Most importantly, ciprofloxacin induced the expression of mfd, which encodes a transcription-repair
+        coupling factor involved in strand-specific DNA repair.
+      notes: Han et al. identify mfd as the fluoroquinolone-inducible transcription-repair coupling factor
+        in C. jejuni.
+  - subject: atp_binding
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: dna_repair
+    description: ATP-dependent RNA-polymerase displacement supports Mfd-mediated repair.
+    evidence:
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Most importantly, ciprofloxacin induced the expression of mfd, which encodes a transcription-repair
+        coupling factor involved in strand-specific DNA repair.
+      notes: Han et al. identify mfd as the fluoroquinolone-inducible transcription-repair coupling factor
+        in C. jejuni.
+  - subject: dna_repair
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Mfd-coupled repair promotes the mutation frequency that allows fluoroquinolone resistance
+      to develop.
     evidence:
-    - reference: PMID:21227918
-      snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
-        repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Mechanism ARO:0001003 → resistance.
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Mutation of the mfd gene resulted in an approximately 100-fold reduction in the rate of
+        spontaneous mutation to ciprofloxacin resistance, while overexpression of mfd elevated the mutation
+        frequency.
+      notes: Mfd activity increased the mutation frequency leading to ciprofloxacin resistance.
+    - reference: PMID:18535657
+      snippet: In addition, loss of mfd in C. jejuni significantly reduced the development of fluoroquinolone-resistant
+        Campylobacter in culture media or chickens treated with fluoroquinolones.
+      notes: Loss of mfd reduced fluoroquinolone-resistance development both in culture and in fluoroquinolone-treated
+        chickens.
   - subject: determinant
-    predicate: causally upstream of (confers resistance)
+    predicate: causally upstream of (promotes emergence of resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mfd is required for efficient fluoroquinolone-resistance emergence.
     evidence:
-    - reference: PMID:21227918
-      snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
-        repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: Mutation of the mfd gene resulted in an approximately 100-fold reduction in the rate of
+        spontaneous mutation to ciprofloxacin resistance, while overexpression of mfd elevated the mutation
+        frequency.
+      notes: Mfd activity increased the mutation frequency leading to ciprofloxacin resistance.
+    - reference: PMID:18535657
+      snippet: In addition, loss of mfd in C. jejuni significantly reduced the development of fluoroquinolone-resistant
+        Campylobacter in culture media or chickens treated with fluoroquinolones.
+      notes: Loss of mfd reduced fluoroquinolone-resistance development both in culture and in fluoroquinolone-treated
+        chickens.
   - subject: determinant
     predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3000419
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: Asserted on ARO:3000419 (quinolone resistance protein (qnr)), an is_a ancestor of this record's
-        ARO:3003844; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
     predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
-  - subject: domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
+    object: drug0
+    description: Mfd promotes emergence of fluoroquinolone resistance; the graph uses the drug class from
+      the ARO record but not the inherited Qnr target-protection mechanism.
     evidence:
-    - reference: Pfam:PF00805
-      snippet: Pentapeptide repeats (8 copies)
-      notes: 'KB trait: the pentapeptide-repeat domain that mediates gyrase protection.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: ECOD:T.207.9.1
-      snippet: Pentapeptide repeats
-      notes: 'KB trait: the pentapeptide-repeat (Qnr/MfpA right-handed β-helix, Rfr) fold.'
-  - subject: domain
-    predicate: enables (target protection)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
-    - reference: PMID:21227918
-      snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
-        repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: The pentapeptide-repeat domain protects DNA gyrase/topoisomerase IV from quinolones.
+    - reference: ARO:3003844
+      snippet: mfd dissociates transcription elongation complexes blocked at nonpairing lesions and mediates
+        recruitment of DNA repair proteins. The Mfd (mutation frequency decline) protein, also known as
+        transcription-repair coupling factor, is responsible for ATP-dependent removal of stalled RNA
+        polymerase from DNA lesions by inducing forward movement of the RNA polymerase and subsequent
+        recruitment of nucleotide excision repair machinery to the sites of the lesions.
+      notes: CARD definition for mfd.
+    - reference: PMID:18535657
+      snippet: In addition, loss of mfd in C. jejuni significantly reduced the development of fluoroquinolone-resistant
+        Campylobacter in culture media or chickens treated with fluoroquinolones.
+      notes: Loss of mfd reduced fluoroquinolone-resistance development both in culture and in fluoroquinolone-treated
+        chickens.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-09T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Replaced stale mfd, mfpA, and mlaFEDB scaffolds
     llm_assisted: true
 license: CC-BY 4.0
