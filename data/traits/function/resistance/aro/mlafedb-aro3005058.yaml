@@ -29,34 +29,48 @@ evidence:
   notes: PMID:27529189 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: mlaFEDB → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:29892271). ABC antibiotic efflux pump — ATP-hydrolysis-driven vectorial export of drugs across
-    the membrane.
+  title: mlaFEDB → phospholipid transport → oxazolidinone resistance
+  description: Curated MlaFEDB graph that treats the determinant as an inner-membrane ABC complex for
+    Mla-pathway retrograde phospholipid transport. The graph keeps CARD's oxazolidinone resistance assertion
+    while replacing the stale direct antibiotic-efflux scaffold with MlaFEDB phospholipid trafficking
+    and MlaF insertion evidence.
   nodes:
   - node_id: determinant
     label: mlaFEDB
     node_type: PROTEIN
     grounding: ARO:3005058
-  - node_id: mech0
-    label: antibiotic efflux
+  - node_id: mlaf
+    label: MlaF ATP-binding subunit
+    node_type: PROTEIN
+    grounding: NCBIfam:NF008809
+  - node_id: mlae
+    label: MlaE permease subunit
+    node_type: PROTEIN
+    grounding: NCBIfam:NF033619
+  - node_id: mlab
+    label: MlaB auxiliary subunit
+    node_type: PROTEIN
+    grounding: NCBIfam:NF033618
+  - node_id: mlad
+    label: MlaD substrate-binding subunit
+    node_type: PROTEIN
+    grounding: NCBIfam:TIGR04430
+  - node_id: abc_complex
+    label: ATP-binding cassette (ABC) transporter complex
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0043190
+  - node_id: atp_binding
+    label: ATP binding
     node_type: MOLECULAR_FUNCTION
-    grounding: ARO:0010000
+    grounding: GO:0005524
+  - node_id: phospholipid_transport
+    label: phospholipid transport
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0015914
   - node_id: drug0
     label: oxazolidinone antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000079
-  - node_id: domain
-    label: ABC transporter ATP-binding domain
-    node_type: DOMAIN
-    grounding: Pfam:PF00005
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: P-loop NTPase fold (ABC ATPase nucleotide-binding domain)
-    node_type: DOMAIN
-    grounding: CATH:3.40.50.300
-    description: KB protein-trait record carrying the mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,74 +79,232 @@ causal_graphs:
       superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
       itself.'
   edges:
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
+  - subject: mlaf
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: MlaFEDB contains two MlaF ATP-binding subunits.
     evidence:
-    - reference: PMID:29892271
-      snippet: Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane
-        protein machineries that perform vectorial export of drugs and virulence factors from Gram negative
-        bacteria, using ATP-hydrolysis as energy source.
-      notes: Family mechanism ARO:0010000.
-  - subject: mech0
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+  - subject: mlae
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: MlaFEDB contains two MlaE transmembrane subunits.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+  - subject: mlab
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: MlaFEDB contains MlaB auxiliary subunits.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+    - reference: PMID:27529189
+      snippet: MlaB plays critical roles in both the assembly and activity of the transporter.
+      notes: MlaB is required for MlaFEDB assembly and activity.
+  - subject: mlad
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: MlaFEDB contains an MlaD phospholipid-binding subunit.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+    - reference: PMID:27529189
+      snippet: Our work provides mechanistic insights into how the MlaFEDB complex participates in ensuring
+        active retrograde PL transport to maintain OM lipid asymmetry.
+      notes: MlaFEDB drives retrograde phospholipid transport that maintains outer-membrane lipid asymmetry.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: abc_complex
+    description: MlaFEDB is an ATP-binding cassette transporter complex.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+  - subject: mlaf
+    predicate: enables
+    predicate_id: RO:0002327
+    object: atp_binding
+    description: MlaF is the ATP-binding subunit of the MlaFEDB ABC transporter.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: Pfam:PF02470
+      snippet: MlaFEDB complex is composed of two ATP-binding proteins (MlaF), two transmembrane proteins
+        (MlaE), two cytoplasmic solute-binding proteins (MlaB) and a probable periplamic solute-binding
+        protein (MlaD).
+      notes: Pfam MlaD entry quoting the InterPro IPR003399 MlaD abstract.
+  - subject: atp_binding
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: phospholipid_transport
+    description: ATP binding by MlaF powers the active MlaFEDB phospholipid transporter.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: We establish that the transporter comprises canonical components, MlaF and MlaE, and auxiliary
+        proteins, MlaD and MlaB, of previously unknown functions.
+      notes: Thong et al. define the MlaFEDB inner-membrane ABC transporter complex.
+    - reference: PMID:27529189
+      snippet: Our work provides mechanistic insights into how the MlaFEDB complex participates in ensuring
+        active retrograde PL transport to maintain OM lipid asymmetry.
+      notes: MlaFEDB drives retrograde phospholipid transport that maintains outer-membrane lipid asymmetry.
+  - subject: determinant
+    predicate: participates in
+    predicate_id: RO:0000056
+    object: phospholipid_transport
+    description: MlaFEDB participates in active retrograde phospholipid transport.
+    evidence:
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: Our work provides mechanistic insights into how the MlaFEDB complex participates in ensuring
+        active retrograde PL transport to maintain OM lipid asymmetry.
+      notes: MlaFEDB drives retrograde phospholipid transport that maintains outer-membrane lipid asymmetry.
+    - reference: PMID:19383799
+      snippet: We have identified an ABC transport system in Escherichia coli with predicted import function
+        that serves to prevent PL accumulation in the outer leaflet of the OM.
+      notes: Malinverni and Silhavy identify the Mla ABC system that maintains outer-membrane lipid asymmetry.
+  - subject: phospholipid_transport
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Disruption of the Mla phospholipid-transport complex is the Mla-system route to oxazolidinone
+      resistance.
     evidence:
-    - reference: PMID:29892271
-      snippet: Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane
-        protein machineries that perform vectorial export of drugs and virulence factors from Gram negative
-        bacteria, using ATP-hydrolysis as energy source.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: Our work provides mechanistic insights into how the MlaFEDB complex participates in ensuring
+        active retrograde PL transport to maintain OM lipid asymmetry.
+      notes: MlaFEDB drives retrograde phospholipid transport that maintains outer-membrane lipid asymmetry.
+    - reference: ARO:3005041
+      snippet: mlaF from the mla system is a gene proposed to play a part in the transport of phospholipids
+        to the outer membrane. Insertions in mlaF are shown to confer resistance to linezolid.
+      notes: CARD definition for the MlaF subunit; linezolid is an oxazolidinone-class antibiotic.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The MlaFEDB determinant is associated with oxazolidinone resistance through Mla-system
+      phospholipid-transport perturbation.
     evidence:
-    - reference: PMID:29892271
-      snippet: Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane
-        protein machineries that perform vectorial export of drugs and virulence factors from Gram negative
-        bacteria, using ATP-hydrolysis as energy source.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3005058
+      snippet: ABC transporter complex which is involved in a phospholipid transport pathway that maintains
+        lipid asymmetry in the outer membrane by retrograde trafficking of phospholipids from the outer
+        membrane to the inner membrane.
+      notes: CARD definition for mlaFEDB.
+    - reference: PMID:27529189
+      snippet: Our work provides mechanistic insights into how the MlaFEDB complex participates in ensuring
+        active retrograde PL transport to maintain OM lipid asymmetry.
+      notes: MlaFEDB drives retrograde phospholipid transport that maintains outer-membrane lipid asymmetry.
+    - reference: ARO:3005041
+      snippet: mlaF from the mla system is a gene proposed to play a part in the transport of phospholipids
+        to the outer membrane. Insertions in mlaF are shown to confer resistance to linezolid.
+      notes: CARD definition for the MlaF subunit; linezolid is an oxazolidinone-class antibiotic.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that mlaFEDB confers resistance to the oxazolidinone class.
     evidence:
     - reference: ARO:3005058
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000079 ! oxazolidinone antibiotic'
-      notes: Asserted directly on ARO:3005058 (mlaFEDB) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to oxazolidinone antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF00005
-      snippet: ABC transporter
-      notes: 'KB trait: the ABC transporter ATP-binding domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.40.50.300
-      snippet: P-loop containing nucleotide triphosphate hydrolases
-      notes: 'KB trait: the ABC ATPase fold.'
-  - subject: domain
-    predicate: enables (ATP-driven drug efflux)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
-    - reference: PMID:29892271
-      snippet: Tripartite efflux pumps built around ATP-binding cassette (ABC) transporters are membrane
-        protein machineries that perform vectorial export of drugs and virulence factors from Gram negative
-        bacteria, using ATP-hydrolysis as energy source.
-      notes: The ABC transporter exports the drug using ATP hydrolysis.
+      notes: Asserted directly on ARO:3005058 (mlaFEDB) in the CARD/ARO release represented by this YAML
+        record.
+    - reference: ARO:3005041
+      snippet: mlaF from the mla system is a gene proposed to play a part in the transport of phospholipids
+        to the outer membrane. Insertions in mlaF are shown to confer resistance to linezolid.
+      notes: CARD definition for the MlaF subunit; linezolid is an oxazolidinone-class antibiotic.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-09T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Replaced stale mfd, mfpA, and mlaFEDB scaffolds
     llm_assisted: true
 license: CC-BY 4.0
