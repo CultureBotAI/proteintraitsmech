@@ -47,7 +47,7 @@ ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 HISTORY_ACTION = "Completed species-specific 23S rRNA macrolide-resistance mutation graph"
 HISTORY_CURATOR = "codex-causal-graph-quality"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-08T00:00:00Z",
+    "timestamp": "2026-09-09T00:00:00Z",
     "curator": HISTORY_CURATOR,
     "action": HISTORY_ACTION,
     "llm_assisted": True,
@@ -118,6 +118,11 @@ TARGETS: tuple[Target, ...] = (
         "ARO:3004134",
         "helicobacter-pylori-23s-rrna-with-mutation-conferring-resistance-to-clarithromyc-"
         "aro3004134.yaml",
+    ),
+    Target(
+        "ARO:3004138",
+        "moraxella-catarrhalis-23s-rrna-with-mutation-conferring-resistance-to-macrolide--"
+        "aro3004138.yaml",
     ),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
