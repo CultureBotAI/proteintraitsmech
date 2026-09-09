@@ -49,6 +49,28 @@ EFFLUX_PUMP_EVIDENCE = {
     "notes": "CARD definition for efflux pump complexes and subunits.",
 }
 
+ABC_EVIDENCE = {
+    "reference": "ARO:0010001",
+    "snippet": (
+        "Directed pumping of antibiotic out of a cell to confer resistance. ATP-binding "
+        "cassette (ABC) transporters are present in all cells of all organisms and use the "
+        "energy of ATP binding/hydrolysis to transport substrates across cell membranes."
+    ),
+    "notes": "CARD definition for ABC antibiotic efflux pumps.",
+}
+
+ABC_DOMAIN_EVIDENCE = {
+    "reference": "Pfam:PF00005",
+    "snippet": "ABC transporter",
+    "notes": "Pfam family for the ABC transporter ATP-binding domain.",
+}
+
+ABC_FOLD_EVIDENCE = {
+    "reference": "CATH:3.40.50.300",
+    "snippet": "P-loop containing nucleotide triphosphate hydrolases",
+    "notes": "CATH fold for ABC ATPase domains.",
+}
+
 MFS_EVIDENCE = {
     "reference": "ARO:0010002",
     "snippet": (
@@ -139,6 +161,22 @@ MECHANISM_NODE = {
     "grounding": "ARO:0010000",
 }
 
+ABC_DOMAIN_NODE = {
+    "node_id": "domain",
+    "label": "ABC transporter ATP-binding domain",
+    "node_type": "DOMAIN",
+    "grounding": "Pfam:PF00005",
+    "description": "ATP-binding domain shared by ABC antibiotic efflux pumps.",
+}
+
+ABC_FOLD_NODE = {
+    "node_id": "fold",
+    "label": "P-loop NTPase fold (ABC ATPase nucleotide-binding domain)",
+    "node_type": "DOMAIN",
+    "grounding": "CATH:3.40.50.300",
+    "description": "P-loop NTPase fold adopted by ABC ATPase domains.",
+}
+
 MFS_DOMAIN_NODE = {
     "node_id": "domain",
     "label": "major facilitator superfamily (MFS) transporter domain",
@@ -175,6 +213,7 @@ DRUG_ID = re.compile(r"^drug\d+$")
 
 
 class GraphKind(Enum):
+    ABC = "ABC"
     MFS = "MFS"
     RND = "RND"
 
@@ -207,6 +246,22 @@ class Family:
     efflux_predicate: str
     description: str
 
+
+ABC_FAMILY = Family(
+    title="ABC antibiotic efflux",
+    family_evidence=ABC_EVIDENCE,
+    transport_evidence=ABC_EVIDENCE,
+    domain_node=ABC_DOMAIN_NODE,
+    fold_node=ABC_FOLD_NODE,
+    domain_evidence=ABC_DOMAIN_EVIDENCE,
+    fold_evidence=ABC_FOLD_EVIDENCE,
+    efflux_predicate="enables (ATP-driven drug efflux)",
+    description=(
+        "Curated resistance-causation graph for ABC antibiotic efflux pumps. "
+        "The determinant enables ATP-driven export of antibiotics across the "
+        "cell membrane, lowering intracellular drug exposure."
+    ),
+)
 
 MFS_FAMILY = Family(
     title="MFS antibiotic efflux",
@@ -537,6 +592,8 @@ def _graph(
 
 
 def _family(target: Target) -> Family:
+    if target.kind == GraphKind.ABC:
+        return ABC_FAMILY
     if target.kind == GraphKind.MFS:
         return MFS_FAMILY
     if target.kind == GraphKind.RND:
