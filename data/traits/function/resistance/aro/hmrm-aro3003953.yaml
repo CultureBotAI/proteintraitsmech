@@ -35,19 +35,10 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: cation_gradient
-    label: transmembrane cationic gradient
-    node_type: STATE
-    description: Local state for the cationic gradient that powers MATE-family drug antiport. The ion
-      is kept generic because CARD does not specialize the family to proton or sodium coupling.
   - node_id: export
     label: xenobiotic detoxification by transmembrane export across the plasma membrane
     node_type: BIOLOGICAL_PROCESS
     grounding: GO:1990961
-  - node_id: extruded_drug
-    label: drug outside the cell
-    node_type: STATE
-    description: Local state for drug exported from the cytoplasm by a MATE transporter.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -116,31 +107,11 @@ causal_graphs:
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: CARD definition for the antibiotic efflux resistance mechanism.
-  - subject: cation_gradient
-    predicate: causally upstream of (drives efflux)
-    predicate_id: RO:0002411
-    object: export
-    description: A transmembrane cationic gradient powers MATE-family drug antiport across the membrane.
-    evidence:
-    - reference: ARO:3003953
-      snippet: hmrM is a multidrug efflux pump belonging to the MATE family and functions as a Na+/drug
-        antiporter.
-      notes: CARD definition for hmrM.
-    - reference: ARO:3000112
-      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
-        across the membrane as an energy source.
-      notes: CARD definition for MATE transporters.
-    - reference: ARO:3000159
-      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
-      notes: CARD definition for efflux pump complexes and subunits.
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: export
-    description: The MATE transporter exports drug from the cell.
+    description: The MATE transporter uses a cationic gradient to export drug from the cell.
     evidence:
     - reference: ARO:3003953
       snippet: hmrM is a multidrug efflux pump belonging to the MATE family and functions as a Na+/drug
@@ -157,31 +128,11 @@ causal_graphs:
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: export
-    predicate: causally upstream of (moves drug out of the cell)
+    predicate: causally upstream of (antibiotic efflux)
     predicate_id: RO:0002411
-    object: extruded_drug
-    description: Antibiotic export moves intracellular drug outside the cell.
-    evidence:
-    - reference: ARO:3003953
-      snippet: hmrM is a multidrug efflux pump belonging to the MATE family and functions as a Na+/drug
-        antiporter.
-      notes: CARD definition for hmrM.
-    - reference: ARO:3000112
-      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
-        across the membrane as an energy source.
-      notes: CARD definition for MATE transporters.
-    - reference: ARO:3000159
-      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
-      notes: CARD definition for efflux pump complexes and subunits.
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: CARD definition for the antibiotic efflux resistance mechanism.
-  - subject: extruded_drug
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    description: Moving drug outside the cell lowers intracellular drug exposure and causes the modeled
-      resistance phenotype.
+    object: mech0
+    description: GO-grounded transmembrane export captures the antibiotic transport event in the broader
+      CARD antibiotic-efflux mechanism.
     evidence:
     - reference: ARO:3003953
       snippet: hmrM is a multidrug efflux pump belonging to the MATE family and functions as a Na+/drug
