@@ -30,7 +30,7 @@ ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 HISTORY_ACTION = "Completed MATE cation-gradient efflux causal graphs"
 HISTORY_CURATOR = "codex-causal-graph-quality"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-06T00:00:00Z",
+    "timestamp": "2026-09-09T00:00:00Z",
     "curator": HISTORY_CURATOR,
     "action": HISTORY_ACTION,
     "llm_assisted": True,
@@ -73,29 +73,11 @@ MECHANISM_NODE = {
     "grounding": "ARO:0010000",
 }
 
-CATION_GRADIENT_NODE = {
-    "node_id": "cation_gradient",
-    "label": "transmembrane cationic gradient",
-    "node_type": "STATE",
-    "description": (
-        "Local state for the cationic gradient that powers MATE-family drug "
-        "antiport. The ion is kept generic because CARD does not specialize "
-        "the family to proton or sodium coupling."
-    ),
-}
-
 EXPORT_NODE = {
     "node_id": "export",
     "label": "xenobiotic detoxification by transmembrane export across the plasma membrane",
     "node_type": "BIOLOGICAL_PROCESS",
     "grounding": "GO:1990961",
-}
-
-EXTRUDED_NODE = {
-    "node_id": "extruded_drug",
-    "label": "drug outside the cell",
-    "node_type": "STATE",
-    "description": "Local state for drug exported from the cytoplasm by a MATE transporter.",
 }
 
 RESISTANCE_NODE = {
@@ -128,6 +110,9 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3003953", "hmrm-aro3003953.yaml"),
     Target("ARO:3003965", "hp1184-aro3003965.yaml"),
     Target("ARO:3003835", "cdea-aro3003835.yaml"),
+    Target("ARO:3001327", "mdtk-aro3001327.yaml"),
+    Target("ARO:3000026", "mepa-aro3000026.yaml"),
+    Target("ARO:3004077", "pmpm-aro3004077.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
@@ -282,6 +267,30 @@ def _canonical_drug_edges(
     ]
 
 
+def _canonical_export_input_edges(
+    record: dict[str, Any],
+    old_graph: dict[str, Any],
+    *evidence: dict[str, Any],
+) -> list[dict[str, Any]]:
+    drug_nodes = _drug_nodes(old_graph)
+    drug_node_ids = {str(node["node_id"]) for node in drug_nodes}
+    relation_evidence = _drug_relation_evidence(old_graph, drug_node_ids)
+
+    return [
+        _edge(
+            "export",
+            "has input (exported drug)",
+            "RO:0002233",
+            str(drug_node["node_id"]),
+            f"{drug_node['label']} is the modeled substrate exported by this MATE determinant.",
+            *relation_evidence[str(drug_node["node_id"])],
+            _record_evidence(record),
+            *evidence,
+        )
+        for drug_node in drug_nodes
+    ]
+
+
 def _graph(record: dict[str, Any], old_graph: dict[str, Any]) -> dict[str, Any]:
     record_evidence = _record_evidence(record)
     efflux_evidence = (
@@ -303,9 +312,7 @@ def _graph(record: dict[str, Any], old_graph: dict[str, Any]) -> dict[str, Any]:
             _determinant_node(record),
             copy.deepcopy(MECHANISM_NODE),
             *_drug_nodes(old_graph),
-            copy.deepcopy(CATION_GRADIENT_NODE),
             copy.deepcopy(EXPORT_NODE),
-            copy.deepcopy(EXTRUDED_NODE),
             copy.deepcopy(RESISTANCE_NODE),
         ],
         "edges": [
@@ -344,42 +351,30 @@ def _graph(record: dict[str, Any], old_graph: dict[str, Any]) -> dict[str, Any]:
                 EFFLUX_PUMP_EVIDENCE,
                 ANTIBIOTIC_EFFLUX_EVIDENCE,
             ),
-            _edge(
-                "cation_gradient",
-                "causally upstream of (drives efflux)",
-                "RO:0002411",
-                "export",
-                "A transmembrane cationic gradient powers MATE-family drug "
-                "antiport across the membrane.",
-                record_evidence,
+            *_canonical_export_input_edges(
+                record,
+                old_graph,
                 MATE_EVIDENCE,
                 EFFLUX_PUMP_EVIDENCE,
                 ANTIBIOTIC_EFFLUX_EVIDENCE,
-                MATE_SUBSTRATE_EVIDENCE,
             ),
             _edge(
                 "determinant",
                 "causally upstream of",
                 "RO:0002411",
                 "export",
-                "The MATE transporter exports drug from the cell.",
+                "The MATE transporter uses a cationic gradient to export "
+                "drug from the cell.",
                 *efflux_evidence,
             ),
             _edge(
                 "export",
-                "causally upstream of (moves drug out of the cell)",
+                "causally upstream of (antibiotic efflux)",
                 "RO:0002411",
-                "extruded_drug",
-                "Antibiotic export moves intracellular drug outside the cell.",
-                *efflux_evidence,
-            ),
-            _edge(
-                "extruded_drug",
-                "causally upstream of",
-                "RO:0002411",
-                "resistance",
-                "Moving drug outside the cell lowers intracellular drug exposure "
-                "and causes the modeled resistance phenotype.",
+                "mech0",
+                "GO-grounded transmembrane export captures the antibiotic "
+                "transport event in the broader CARD antibiotic-efflux "
+                "mechanism.",
                 *efflux_evidence,
             ),
         ],
@@ -420,6 +415,12 @@ REQUIRED_NODE_SETS = (
         "extrusion",
         "cation_gradient",
         "extruded",
+        "resistance",
+    },
+    {
+        "determinant",
+        "mech0",
+        "export",
         "resistance",
     },
     {
