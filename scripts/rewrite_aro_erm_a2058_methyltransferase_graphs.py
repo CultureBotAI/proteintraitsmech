@@ -76,6 +76,7 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3004643", "erm-k-aro3004643.yaml"),
     Target("ARO:3004652", "erm-o-lrm-aro3004652.yaml"),
     Target("ARO:3000347", "erma-aro3000347.yaml"),
+    Target("ARO:3000375", "ermb-aro3000375.yaml"),
     Target("ARO:3000250", "ermc-aro3000250.yaml"),
     Target("ARO:3000495", "ermd-aro3000495.yaml"),
     Target("ARO:3000326", "erme-aro3000326.yaml"),
