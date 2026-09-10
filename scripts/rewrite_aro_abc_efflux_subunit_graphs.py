@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Rewrite ABC antibiotic-efflux subunit ARO graphs.
 
-The score-80 efrA/B, macA/B, patA/B, and RanA/B records already describe
-subunits of ABC efflux pumps, but their inherited graph cites MacB-specific
-mechanotransmission evidence for every target and models every ABC pump as
-tripartite. This pass keeps the subunit-to-complex topology and replaces the
-MacB-specific state with a local record-specific ABC efflux pump complex.
+The score-80 efrA/B, macA/B, patA/B, RanA/B, and TetAB records already
+describe subunits of ABC efflux pumps, but their inherited graph cites
+MacB-specific mechanotransmission evidence for every target and models every
+ABC pump as tripartite. This pass keeps the subunit-to-complex topology and
+replaces the MacB-specific state with a local record-specific ABC efflux pump
+complex.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -117,6 +118,10 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3000025", "patb-aro3000025.yaml"),
     Target("ARO:3005091", "rana-aro3005091.yaml"),
     Target("ARO:3005090", "ranb-aro3005090.yaml"),
+    Target("ARO:3004032", "teta-46-aro3004032.yaml"),
+    Target("ARO:3004035", "teta-60-aro3004035.yaml"),
+    Target("ARO:3004033", "tetb-46-aro3004033.yaml"),
+    Target("ARO:3004036", "tetb-60-aro3004036.yaml"),
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
