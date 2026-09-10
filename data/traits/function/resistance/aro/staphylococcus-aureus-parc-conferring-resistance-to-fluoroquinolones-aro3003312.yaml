@@ -26,12 +26,11 @@ evidence:
   notes: PMID:21996946 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Staphylococcus aureus parC conferring resistance to fluoroquinolones → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:24576155). Target alteration. ParC is the topoisomerase IV subunit homologous to GyrA and carries
-    the equivalent QRDR.
+  title: Staphylococcus aureus parC conferring resistance to fluoroquinolones → fluoroquinolone topoisomerase
+    QRDR alteration
+  description: Curated resistance-causation graph for fluoroquinolone-resistant ParC QRDR determinants.
+    The determinant is a mutated type-II-topoisomerase subunit whose QRDR substitution reduces fluoroquinolone
+    trapping of the cleaved enzyme-DNA complex.
   nodes:
   - node_id: determinant
     label: Staphylococcus aureus parC conferring resistance to fluoroquinolones
@@ -55,8 +54,9 @@ causal_graphs:
     node_type: MOTIF
     description: 'The topoisomerase IV counterpart of the GyrA QRDR: Ser80 and the acidic residue four
       positions downstream in the E. coli ParC frame (Ser84/Glu88 in A. baumannii topoisomerase IV). Positions
-      differ per organism, so no per-record residue node is asserted. Ungrounded: no ontology term denotes
-      the QRDR.'
+      differ per organism, so no per-record residue node is asserted. Grounded to Sequence Ontology''s
+      generic polypeptide_region superclass because no ontology term denotes the QRDR itself.'
+    grounding: SO:0000839
   - node_id: gyrase_activity
     label: DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity
     node_type: MOLECULAR_FUNCTION
@@ -64,8 +64,8 @@ causal_graphs:
   - node_id: cleavage_complex
     label: enzyme-DNA cleavage complex
     node_type: STATE
-    description: The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded,
-      as with the M-CSA reaction-intermediate STATE nodes.
+    description: The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. This
+      is a source-local topoisomerase reaction state.
   - node_id: cell_death
     label: bacterial cell death
     node_type: PHENOTYPE
@@ -88,6 +88,21 @@ causal_graphs:
         or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically
         relevant quinolones to stabilize cleavage complexes.
       notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:24576155
+      snippet: In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.
+      notes: Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit.
+    - reference: PMID:15388468
+      snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
+      notes: Eaves et al. 2004, Salmonella enterica ParC QRDR substitutions.
+    description: CARD classifies this fluoroquinolone-resistant ParC determinant under mutation conferring
+      antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -98,6 +113,21 @@ causal_graphs:
         or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically
         relevant quinolones to stabilize cleavage complexes.
       notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:24576155
+      snippet: In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.
+      notes: Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit.
+    - reference: PMID:15388468
+      snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
+      notes: Eaves et al. 2004, Salmonella enterica ParC QRDR substitutions.
+    description: QRDR substitution is a mutation-driven target alteration that reduces fluoroquinolone
+      trapping of a type-II-topoisomerase cleavage complex.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -106,16 +136,56 @@ causal_graphs:
     - reference: PMID:24576155
       snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
       notes: Determinant → resistance phenotype.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:24576155
+      snippet: Furthermore, mutation of either residue significantly decreases the affinity of gyrase
+        or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically
+        relevant quinolones to stabilize cleavage complexes.
+      notes: Aldred 2014, the GyrA/ParC water-metal ion bridge that QRDR substitutions disrupt.
+    - reference: PMID:24576155
+      snippet: In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.
+      notes: Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit.
+    - reference: PMID:15388468
+      snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
+      notes: Eaves et al. 2004, Salmonella enterica ParC QRDR substitutions.
+    description: The determinant carries a ParC QRDR substitution that lowers fluoroquinolone action on
+      topoisomerase IV.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+    description: CARD asserts that fluoroquinolone-resistant ParC determinants confer resistance to fluoroquinolone
+      antibiotics.
     evidence:
     - reference: ARO:3000619
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
       notes: Asserted on ARO:3000619 (fluoroquinolone resistant parC), an is_a ancestor of this record's
         ARO:3003312; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: DOI:10.3390/molecules25235662
+      snippet: Quinolones stabilise the topoisomerase-DNA cleavage complex in which there is a double-strand
+        break.
+      notes: Bush et al. 2020, review of quinolone trapping of DNA gyrase and topoisomerase IV cleavage
+        complexes.
+    - reference: PMID:24576155
+      snippet: Furthermore, mutation of either residue significantly decreases the affinity of gyrase
+        or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically
+        relevant quinolones to stabilize cleavage complexes.
+      notes: Aldred 2014, the GyrA/ParC water-metal ion bridge that QRDR substitutions disrupt.
+    - reference: PMID:24576155
+      snippet: In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.
+      notes: Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit.
+    - reference: PMID:15388468
+      snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
+      notes: Eaves et al. 2004, Salmonella enterica ParC QRDR substitutions.
   - subject: domain
     predicate: part of (the subunit-A domain of this determinant)
     predicate_id: BFO:0000050
@@ -127,6 +197,21 @@ causal_graphs:
         toposiomerases II.
       notes: KB trait record Pfam:PF00521; its InterPro:IPR002205 abstract names ParC explicitly as a
         member.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: InterPro:IPR002205
+      snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through
+        its capacity to form protein-DNA bridges
+      notes: InterPro abstract behind Pfam:PF00521, the shared GyrA/ParC subunit-A domain in this KB.
+    - reference: PMID:24576155
+      snippet: The subunits in gyrase are GyrA and GyrB. The homologous subunits in topoisomerase IV are
+        ParC and ParE in Gram-negative species and GrlA and GrlB in Gram-positive species. GyrA (and the
+        equivalent topoisomerase IV subunit) contains the active site tyrosine residue. GyrB (and the
+        equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain,
+        which binds the divalent metal ions involved in DNA cleavage and ligation.
+      notes: Aldred 2014, the subunit architecture of gyrase and topoisomerase IV.
+    description: The grounded GyrA/ParC N-terminal subunit-A domain contains the QRDR.
   - subject: qrdr
     predicate: part of (the QRDR lies in the subunit-A domain)
     predicate_id: BFO:0000050
@@ -144,6 +229,10 @@ causal_graphs:
     - reference: PMID:15388468
       snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
       notes: 'Eaves et al. 2004, Salmonella enterica: the parC QRDR substitutions themselves.'
+    - reference: SO:0000839
+      snippet: polypeptide_region
+      notes: Sequence Ontology superclass used for this protein-local QRDR; no ontology term denotes a
+        quinolone resistance-determining region itself.
   - subject: domain
     predicate: enables (type II topoisomerase activity)
     predicate_id: RO:0002327
@@ -156,6 +245,12 @@ causal_graphs:
         equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain,
         which binds the divalent metal ions involved in DNA cleavage and ligation.
       notes: Aldred 2014, the subunit/domain architecture of gyrase and topoisomerase IV.
+    - reference: InterPro:IPR002205
+      snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through
+        its capacity to form protein-DNA bridges
+      notes: InterPro abstract behind Pfam:PF00521, the shared GyrA/ParC subunit-A domain in this KB.
+    description: The subunit-A domain belongs to the bacterial type IIA topoisomerases that catalyze ATP-dependent
+      DNA strand passage.
   - subject: gyrase_activity
     predicate: causally upstream of (forms the covalent intermediate)
     predicate_id: RO:0002411
@@ -166,23 +261,34 @@ causal_graphs:
         active site tyrosine residues and the newly generated 5′-DNA termini.
       notes: Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with
         or without drug.
+    - reference: PMID:15659402
+      snippet: Topoisomerase (topo) IV and gyrase are bacterial type IIA DNA topoisomerases essential
+        for DNA replication and chromosome segregation that act via a transient double-stranded DNA break
+        involving a covalent enzyme-DNA "cleavage complex."
+      notes: Leo et al. 2005, supporting the type-II-topoisomerase cleavage-complex intermediate.
+    description: Type IIA topoisomerase activity transiently forms a covalent enzyme-cleaved-DNA intermediate.
   - subject: drug0
     predicate: molecularly interacts with (intercalates and blocks ligation)
     predicate_id: RO:0002436
     object: cleavage_complex
-    description: 'Quinolone action: the drug binds the cleaved complex and blocks religation, raising
-      the steady-state level of DNA breaks.'
+    description: Fluoroquinolones bind and stabilize the cleaved gyrase or topoisomerase IV complex, increasing
+      the level of broken DNA.
     evidence:
     - reference: PMID:24576155
       snippet: As a result of their intercalation, quinolones increase the steady-state concentration
         of cleavage complexes by acting as physical blocks to ligation.
       notes: Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it.
+    - reference: DOI:10.3390/molecules25235662
+      snippet: Quinolones stabilise the topoisomerase-DNA cleavage complex in which there is a double-strand
+        break.
+      notes: Bush et al. 2020, review of quinolone trapping of DNA gyrase and topoisomerase IV cleavage
+        complexes.
   - subject: qrdr
     predicate: negatively regulates (substitution lowers drug action)
     predicate_id: RO:0002212
     object: cleavage_complex
-    description: 'The causal core: a QRDR substitution reduces the drug''s ability to trap this enzyme,
-      so fewer drug-stabilised cleavage complexes form at a given drug concentration.'
+    description: ParC QRDR substitutions reduce fluoroquinolone trapping of the topoisomerase IV-DNA cleavage
+      complex.
     evidence:
     - reference: PMID:24576155
       snippet: Furthermore, mutation of either residue significantly decreases the affinity of gyrase
@@ -193,19 +299,35 @@ causal_graphs:
     - reference: PMID:24576155
       snippet: In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.
       notes: Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit.
+    - reference: ARO:3003312
+      snippet: Point mutation in Staphylococcus aureus parC resulting in fluoroquinolone resistance.
+      notes: CARD definition for Staphylococcus aureus parC conferring resistance to fluoroquinolones.
+    - reference: PMID:15388468
+      snippet: Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.
+      notes: Eaves et al. 2004, Salmonella enterica ParC QRDR substitutions.
   - subject: cleavage_complex
     predicate: causally upstream of (drug-stabilised breaks kill the cell)
     predicate_id: RO:0002411
     object: cell_death
-    description: 'Why fewer stabilised complexes means survival: the complexes are what kill the cell.'
+    description: Unresolved topoisomerase-DNA cleavage complexes block replication and transcription and
+      can become lethal DNA lesions.
     evidence:
     - reference: PMID:24576155
       snippet: If the strand breaks overwhelm these processes, they can lead to cell death. This is the
         primary mechanism that quinolones use to kill bacterial cells
       notes: Aldred 2014.
+    - reference: DOI:10.3390/molecules25235662
+      snippet: 'If the cleavage complex is not processed, DNA replication and transcription are blocked,
+        eventually leading to cell death: slow death.'
+      notes: Bush et al. 2020, linking unresolved topoisomerase-DNA cleavage complexes to blocked replication/transcription
+        and death.
 curation_history:
 - timestamp: '2026-08-05T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed fluoroquinolone topoisomerase QRDR causal graphs
   llm_assisted: true
 license: CC-BY 4.0
