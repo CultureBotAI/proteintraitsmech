@@ -30,14 +30,27 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_CURATOR = "codex-causal-graph-quality"
+HISTORY_ACTION = "Supplemented AcrR mutation and efflux evidence"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-05T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": HISTORY_CURATOR,
-    "action": (
-        "Grounded AcrR derepression graphs, removed the obsolete wild-type repressor "
-        "edge, and linked AcrAB-TolC to antibiotic efflux"
-    ),
+    "action": HISTORY_ACTION,
     "llm_assisted": True,
+}
+
+ANTIBIOTIC_EFFLUX_EVIDENCE = {
+    "reference": "ARO:0010000",
+    "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+    "notes": "CARD definition for the antibiotic efflux resistance mechanism.",
+}
+
+MUTATION_MECHANISM_EVIDENCE = {
+    "reference": "ARO:3000212",
+    "snippet": (
+        "Point mutations in the DNA may lead to an altered gene product that "
+        "may result in antibiotic resistance."
+    ),
+    "notes": "CARD definition for mutation conferring antibiotic resistance.",
 }
 
 GO_NEGATIVE_TRANSCRIPTION_EVIDENCE = {
@@ -245,6 +258,17 @@ def _extra_evidence(target: Target, edge_key: tuple[str, str]) -> list[dict[str,
     }:
         evidence.append(ACRAB_TOLC_EVIDENCE)
     if edge_key in {
+        ("determinant", "mech0"),
+        ("mech0", "resistance"),
+        ("pump", "mech0"),
+    }:
+        evidence.append(ANTIBIOTIC_EFFLUX_EVIDENCE)
+    if edge_key in {
+        ("determinant", "mech1"),
+        ("mech1", "resistance"),
+    }:
+        evidence.append(MUTATION_MECHANISM_EVIDENCE)
+    if edge_key in {
         ("determinant", "repression"),
         ("repression", "pump"),
     }:
@@ -341,7 +365,8 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
         return text, False
 
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_CURATOR not in out:
+    history = record.get("curation_history") or []
+    if not any(item.get("action") == HISTORY_ACTION for item in history):
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
     return out, True
 
