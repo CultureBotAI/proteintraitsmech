@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rewrite final GES and first GOB beta-lactamase causal-graph records.
 
-These score-79 class A and metallo-beta-lactamase records still have old
+These low-scoring class A and metallo-beta-lactamase records still have old
 canonical beta-lactamase graphs with sparse edge descriptions and
 single-reference evidence. This batch finishes GES and starts GOB.
 
@@ -59,6 +59,7 @@ TARGET_FILENAMES: tuple[str, ...] = (
     "ges-9-aro3002338.yaml",
     "ges-beta-lactamase-aro3000066.yaml",
     "gob-1-aro3000850.yaml",
+    "gob-10-aro3004802.yaml",
     "gob-11-aro3004803.yaml",
     "gob-12-aro3004804.yaml",
     "gob-13-aro3004805.yaml",
@@ -120,6 +121,77 @@ TARGETS: tuple[beta.Target, ...] = tuple(
 )
 TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
+GOB10_DRUG_NODES: tuple[dict[str, str], ...] = (
+    {
+        "node_id": "drug0",
+        "label": "carbapenem",
+        "node_type": "CHEMICAL",
+        "grounding": "ARO:0000020",
+    },
+    {
+        "node_id": "drug1",
+        "label": "cephalosporin",
+        "node_type": "CHEMICAL",
+        "grounding": "ARO:0000032",
+    },
+    {
+        "node_id": "drug2",
+        "label": "penicillin beta-lactam",
+        "node_type": "CHEMICAL",
+        "grounding": "ARO:3000008",
+    },
+)
+
+GOB10_DRUG_RELATIONS: tuple[tuple[str, str, str], ...] = (
+    ("drug0", "ARO:0000020", "carbapenem"),
+    ("drug1", "ARO:0000032", "cephalosporin"),
+    ("drug2", "ARO:3000008", "penicillin beta-lactam"),
+)
+
+
+def _gob10_old_graph() -> dict[str, Any]:
+    return {
+        "nodes": [dict(node) for node in GOB10_DRUG_NODES],
+        "edges": [
+            {
+                "subject": "determinant",
+                "predicate": "confers resistance to (drug class)",
+                "predicate_id": "ARO:2000001",
+                "object": drug_node_id,
+                "evidence": [
+                    {
+                        "reference": "ARO:3004212",
+                        "snippet": (
+                            "relationship: confers_resistance_to_drug_class "
+                            f"{aro_id} ! {label}"
+                        ),
+                        "notes": (
+                            "Asserted on ARO:3004212 (GOB beta-lactamase), an "
+                            "is_a ancestor of this record's ARO:3004802; "
+                            "inherited by this variant. CARD/ARO release in "
+                            "data/raw/aro/aro.obo."
+                        ),
+                    }
+                ],
+            }
+            for drug_node_id, aro_id, label in GOB10_DRUG_RELATIONS
+        ],
+    }
+
+
+def enrich_record(
+    record: dict[str, Any],
+    target: beta.Target,
+) -> tuple[dict[str, Any], bool]:
+    if target.identifier == "ARO:3004802":
+        out = dict(record)
+        out["causal_graphs"] = [
+            beta._graph(record, _gob10_old_graph(), beta.METALLO_PARTS)
+        ]
+        return out, out != record
+
+    return beta.enrich_record(record, target)
+
 
 def _dump(obj: Any) -> str:
     return yaml.safe_dump(
@@ -143,7 +215,7 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     if path.name != target.filename:
         raise ValueError(f"{path}: target {identifier} must be in {target.filename}")
 
-    enriched, changed = beta.enrich_record(record, target)
+    enriched, changed = enrich_record(record, target)
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
     if HISTORY_CURATOR not in out:
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
