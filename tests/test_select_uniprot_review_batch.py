@@ -1616,3 +1616,173 @@ def test_named_review_batch_recipes_do_not_forward_batch_id_twice():
         assert marker in source
         block = source.split(marker, 1)[1].split("\n\n", 1)[0]
         assert "\n    shift\n" in block
+
+
+# ---------------------------------------------------------------------------
+# Taxon preference (#656) — reordering within a record, never a filter
+# ---------------------------------------------------------------------------
+
+ECOLI = "NCBITaxon:83333"
+HUMAN = "NCBITaxon:9606"
+ARCHAEON = "NCBITaxon:243232"
+
+
+def _taxon_queue(tmp_path: pathlib.Path) -> pathlib.Path:
+    """A queue whose records differ in whether a prokaryotic alternative exists.
+
+    `Alpha:00001` carries all three organisms with the human accession sorting
+    first on the pre-existing (protein_id, candidate_id) key, so a preference has
+    something to actually move. `Alpha:00002` is eukaryote-only: it is the record
+    that proves a preference is not a filter.
+    """
+    queue = tmp_path / "candidates.jsonl"
+    rows = [
+        _candidate("Alpha", 1, suffix="-human", protein_id="UniProtKB:A00001", taxon_id=HUMAN),
+        _candidate("Alpha", 1, suffix="-ecoli", protein_id="UniProtKB:P00001", taxon_id=ECOLI),
+        _candidate(
+            "Alpha", 1, suffix="-archaeon", protein_id="UniProtKB:Q00001", taxon_id=ARCHAEON
+        ),
+        _candidate("Alpha", 2, suffix="-human", protein_id="UniProtKB:A00002", taxon_id=HUMAN),
+        _candidate("Alpha", 2, suffix="-mouse", protein_id="UniProtKB:B00002",
+                   taxon_id="NCBITaxon:10090"),
+    ]
+    _jsonl(queue, rows)
+    return queue
+
+
+def _selected_by_record(out: pathlib.Path) -> dict[str, list[dict]]:
+    grouped: dict[str, list[dict]] = {}
+    for row in _rows(out):
+        grouped.setdefault(row["record_path"], []).append(row)
+    return grouped
+
+
+def test_preferring_a_taxon_reorders_alternatives_and_drops_none(tmp_path):
+    """The whole point of #656: a prokaryotic alternative leads, nothing is lost."""
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths, "--prefer-taxon", ECOLI)) == 0
+
+    by_record = _selected_by_record(paths[0])
+    first = by_record["fixtures/Alpha/00001.yaml"]
+    assert first[0]["taxon_id"] == ECOLI, "the preferred organism must lead the record"
+    assert [row["taxon_id"] for row in first] == [ECOLI, HUMAN, ARCHAEON], (
+        "behind the preferred rank the pre-existing protein_id order must still decide"
+    )
+    assert len(first) == 3, "preference must not drop an alternative"
+
+
+def test_a_record_with_no_preferred_alternative_keeps_every_candidate(tmp_path):
+    """A preference must never empty a record — that is what a filter would do.
+
+    Measured on the real queue when #656 was filed: 39,423 of 62,696 records have
+    no prokaryotic candidate at all, so a filter would strip 63% of the corpus's
+    reviewable records rather than reorder them.
+    """
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths, "--prefer-taxon", ECOLI)) == 0
+
+    eukaryote_only = _selected_by_record(paths[0])["fixtures/Alpha/00002.yaml"]
+    assert len(eukaryote_only) == 2
+    assert {row["taxon_id"] for row in eukaryote_only} == {HUMAN, "NCBITaxon:10090"}
+
+
+def test_preference_changes_order_only_never_which_records_are_selected(tmp_path):
+    """Record selection shards on (trait_id, record_path), so it must be untouched.
+
+    If a preference could change *which* records land in a batch, two reviewers
+    asking for different organisms would review disjoint corpora while both
+    believing they had drawn the same deterministic shard.
+    """
+    queue = _taxon_queue(tmp_path)
+    plain_paths = _paths(tmp_path / "plain")
+    (tmp_path / "plain").mkdir()
+    preferred_paths = _paths(tmp_path / "preferred")
+    (tmp_path / "preferred").mkdir()
+
+    assert selector.main(_args(queue, plain_paths)) == 0
+    assert selector.main(_args(queue, preferred_paths, "--prefer-taxon", ECOLI)) == 0
+
+    plain, preferred = _rows(plain_paths[0]), _rows(preferred_paths[0])
+    assert {row["record_path"] for row in plain} == {row["record_path"] for row in preferred}
+    assert {row["candidate_id"] for row in plain} == {row["candidate_id"] for row in preferred}
+    assert len(plain) == len(preferred)
+    assert [row["candidate_id"] for row in plain] != [
+        row["candidate_id"] for row in preferred
+    ], "the fixture must actually exercise a reordering, or this test proves nothing"
+
+
+def test_omitting_the_flag_leaves_the_pre_existing_order_untouched(tmp_path):
+    """Default behaviour is unchanged, so already-staged batches stay reproducible."""
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths)) == 0
+
+    first = _selected_by_record(paths[0])["fixtures/Alpha/00001.yaml"]
+    assert [row["protein_id"] for row in first] == [
+        "UniProtKB:A00001",
+        "UniProtKB:P00001",
+        "UniProtKB:Q00001",
+    ]
+    manifest = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert manifest["preferred_taxon_ids"] == []
+    assert manifest["shard_selected_records_led_by_preferred_taxon"] == 0
+
+
+def test_the_manifest_records_the_preference_deduplicated_and_sorted(tmp_path):
+    """The manifest is what makes a batch id reproducible.
+
+    Without the preference recorded there, the same batch id and the same queue
+    digest would describe two different candidate orderings and two different
+    candidate_jsonl_sha256 values, with nothing on file to say why.
+    """
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    args = _args(queue, paths, "--prefer-taxon", ARCHAEON, "--prefer-taxon", ECOLI,
+                 "--prefer-taxon", ECOLI)
+    assert selector.main(args) == 0
+
+    manifest = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert manifest["preferred_taxon_ids"] == [ARCHAEON, ECOLI]
+    assert manifest["shard_selected_records_led_by_preferred_taxon"] == 1
+    assert manifest["candidate_jsonl_sha256"] == hashlib.sha256(paths[0].read_bytes()).hexdigest()
+
+
+@pytest.mark.parametrize("value", ["83333", "NCBITaxon:", "taxid:83333", "NCBITaxon:83333x", " "])
+def test_a_malformed_prefer_taxon_fails_loudly_rather_than_being_ignored(tmp_path, value):
+    """A silently dropped typo is the worst outcome: the batch would look
+    preference-honouring and be ordered exactly as if none had been asked for."""
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths, "--prefer-taxon", value)) == 2
+    assert not paths[0].exists()
+
+
+def test_preferring_an_absent_taxon_is_a_no_op_not_an_error(tmp_path):
+    """Asking for an organism the queue lacks is a legitimate request whose honest
+    answer is "nothing moved" — distinct from asking with a malformed CURIE."""
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths, "--prefer-taxon", "NCBITaxon:999999")) == 0
+
+    manifest = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert manifest["preferred_taxon_ids"] == ["NCBITaxon:999999"]
+    assert manifest["shard_selected_records_led_by_preferred_taxon"] == 0
+    assert [row["protein_id"] for row in _selected_by_record(paths[0])["fixtures/Alpha/00001.yaml"]] == [
+        "UniProtKB:A00001",
+        "UniProtKB:P00001",
+        "UniProtKB:Q00001",
+    ]
+
+
+def test_the_preferred_rank_is_deterministic_across_repeated_runs(tmp_path):
+    queue = _taxon_queue(tmp_path)
+    digests = []
+    for run in range(2):
+        run_dir = tmp_path / f"run{run}"
+        run_dir.mkdir()
+        paths = _paths(run_dir)
+        assert selector.main(_args(queue, paths, "--prefer-taxon", ECOLI)) == 0
+        digests.append(hashlib.sha256(paths[0].read_bytes()).hexdigest())
+    assert digests[0] == digests[1]

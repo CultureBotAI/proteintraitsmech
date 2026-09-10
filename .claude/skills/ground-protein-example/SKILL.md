@@ -127,10 +127,22 @@ for line in open("reports/uniprot-grounding/candidates.jsonl"):
 PY
 ```
 
-**Bacterial or archaeal preference is a manual step today.** The selector ignores
-taxon entirely (#656), so if a prokaryotic exemplar is wanted, filter these rows
-yourself on `taxon_id` and carry the chosen accession forward. Two things to be
-honest about when reporting:
+**To prefer a bacterial or archaeal exemplar, ask the selector for it** (#656).
+`--prefer-taxon` is repeatable and ranks matching alternatives first *within* each
+record; it never drops one, so a record with no candidate from a preferred
+organism keeps everything it had:
+
+```bash
+just select-uniprot-review-batch <BATCH_ID> --source <NAMESPACE> \
+  --prefer-taxon NCBITaxon:83333 \
+  --prefer-taxon NCBITaxon:224308 \
+  --prefer-taxon NCBITaxon:243232   # E. coli K-12, B. subtilis 168, M. jannaschii
+```
+
+The manifest records `preferred_taxon_ids` and
+`shard_selected_records_led_by_preferred_taxon`, so the batch reproduces and the
+reach is on file rather than asserted. Two things to be honest about when
+reporting:
 
 - the queue is drawn from a fixed organism panel, so "no prokaryotic candidate"
   means none *in the panel*, not none in UniProt. The panel enters the corpus
