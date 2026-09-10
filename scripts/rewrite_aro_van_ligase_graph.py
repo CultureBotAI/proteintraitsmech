@@ -125,6 +125,13 @@ OLD_DOMAIN_EDGE_KEYS = {
     ("determinant", "RO:0002350", "fold"),
     ("domain", "RO:0002327", "mech0"),
 }
+OLD_DALA_DSER_EDGE_KEYS = {
+    ("precursor_ser", "RO:0002212", "precursor_dala"),
+    ("drug0", "RO:0002436", "precursor_dala"),
+    ("determinant", "RO:0002327", "ligase_activity"),
+    ("ligase_activity", "RO:0002234", "dala_dser"),
+    ("dala_dser", "RO:0002411", "precursor_ser"),
+}
 
 EDGE_DESCRIPTIONS = {
     ("determinant", "RO:0000056", "mech0"): (
@@ -172,6 +179,11 @@ TARGETS: tuple[Target, ...] = (
     Target(identifier="ARO:3002911", filename="vanm-aro3002911.yaml"),
     Target(identifier="ARO:3002913", filename="vano-aro3002913.yaml"),
     Target(identifier="ARO:3007189", filename="vanp-aro3007189.yaml"),
+    Target(identifier="ARO:3000368", filename="vanc-aro3000368.yaml"),
+    Target(identifier="ARO:3002907", filename="vane-aro3002907.yaml"),
+    Target(identifier="ARO:3002909", filename="vang-aro3002909.yaml"),
+    Target(identifier="ARO:3002910", filename="vanl-aro3002910.yaml"),
+    Target(identifier="ARO:3002912", filename="vann-aro3002912.yaml"),
 )
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
@@ -272,7 +284,7 @@ def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     old_edge_keys = {_edge_key(edge) for edge in _dicts(graph.get("edges"))}
     for edge in _dicts(graph.get("edges")):
         key = _edge_key(edge)
-        if key == OLD_PRECURSOR_EDGE or key in OLD_DOMAIN_EDGE_KEYS:
+        if key == OLD_PRECURSOR_EDGE or key in OLD_DOMAIN_EDGE_KEYS or key in OLD_DALA_DSER_EDGE_KEYS:
             continue
         if key not in EXPECTED_EDGE_KEYS:
             raise ValueError(f"{target.identifier}: unexpected edge {key[0]} -> {key[2]}")
@@ -469,7 +481,7 @@ def main(argv: list[str] | None = None) -> int:
         "--path",
         type=Path,
         default=ARO_DIR,
-        help="ARO directory or one of the nine D-Ala-D-Lac Van-ligase YAML files",
+        help="ARO directory or one of the fourteen D-Ala-D-Lac/D-Ala-D-Ser Van-ligase YAML files",
     )
     args = parser.parse_args(argv)
 
