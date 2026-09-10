@@ -71,6 +71,12 @@ RIFAMYCIN_EVIDENCE = {
     "notes": "ARO drug-class term inherited by rifampicin-resistant rpoA records.",
 }
 
+GO_TRANSCRIPTION_EVIDENCE = {
+    "reference": "GO:0006351",
+    "snippet": "The synthesis of an RNA transcript from a DNA template.",
+    "notes": "GO process definition for the grounded transcription node.",
+}
+
 TRANSCRIPTION_NODE = {
     "node_id": "transcription",
     "label": "DNA-templated transcription",
@@ -319,6 +325,7 @@ def _canonical_edges(
     )
     transcription_evidence = (
         PARENT_EVIDENCE,
+        GO_TRANSCRIPTION_EVIDENCE,
         *target.inherited_resistance_evidence,
         *source_evidence,
     )
