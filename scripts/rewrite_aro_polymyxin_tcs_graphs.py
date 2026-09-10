@@ -28,14 +28,12 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_CURATOR = "codex-causal-graph-quality"
+HISTORY_ACTION = "Typed polymyxin surface-charge node as a local state"
 
 HISTORY_EVENT = {
-    "timestamp": "2026-09-05T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": HISTORY_CURATOR,
-    "action": (
-        "Added PubMed evidence, edge descriptions, and the surface-charge-to-resistance "
-        "edge to the polymyxin two-component-system causal graph"
-    ),
+    "action": HISTORY_ACTION,
     "llm_assisted": True,
 }
 
@@ -72,6 +70,16 @@ LIPID_A_MOD_NODE = {
     "description": (
         "GO term for the aminoarabinose Lipid A modification branch controlled by "
         "pmrHFIJKLM/arn genes."
+    ),
+}
+
+SURFACE_CHARGE_NODE = {
+    "node_id": "surface_charge",
+    "label": "reduced net negative charge of the envelope",
+    "node_type": "STATE",
+    "description": (
+        "Local state representing the lower negative cell-envelope charge produced by "
+        "regulator-induced lipid A modification."
     ),
 }
 
@@ -288,12 +296,22 @@ def _ordered_edge(edge: dict[str, Any]) -> dict[str, Any]:
 
 def _enrich_nodes(graph: dict[str, Any], target: Target) -> None:
     nodes = graph.get("nodes") or []
+    found: set[str] = set()
     for index, node in enumerate(nodes):
-        if node.get("node_id") != "lipid_a_mod":
-            continue
-        nodes[index] = copy.deepcopy(LIPID_A_MOD_NODE)
+        node_id = node.get("node_id")
+        if node_id == "lipid_a_mod":
+            nodes[index] = copy.deepcopy(LIPID_A_MOD_NODE)
+            found.add(node_id)
+        elif node_id == "surface_charge":
+            nodes[index] = copy.deepcopy(SURFACE_CHARGE_NODE)
+            found.add(node_id)
+
+    missing = sorted({"lipid_a_mod", "surface_charge"} - found)
+    if not missing:
         return
-    msg = f"{target.identifier}: missing lipid_a_mod node"
+
+    missing_ids = ", ".join(missing)
+    msg = f"{target.identifier}: missing node(s): {missing_ids}"
     raise ValueError(msg)
 
 
@@ -352,7 +370,8 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
         return text, False
 
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_CURATOR not in out:
+    history = record.get("curation_history") or []
+    if not any(item.get("action") == HISTORY_ACTION for item in history):
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
     return out, True
 
