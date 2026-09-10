@@ -35,11 +35,10 @@ evidence:
   notes: PMID:21641281 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: mecC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000617). Target replacement. The native PBPs remain fully inhibited; a bypass enzyme carries
-    the load.
+  title: mecC → methicillin-resistant PBP target replacement
+  description: Curated resistance-causation graph for mec/methicillin-resistant PBP2 target-replacement
+    determinants. The determinant encodes an acquired low-affinity PBP that replaces beta-lactam-sensitive
+    native PBPs and sustains peptidoglycan biosynthesis under drug exposure.
   nodes:
   - node_id: determinant
     label: mecC
@@ -57,11 +56,13 @@ causal_graphs:
     label: peptidoglycan cross-linking by the acquired PBP
     node_type: MOLECULAR_FUNCTION
     grounding: GO:0008658
-    description: Grounded to penicillin binding -- the activity assayed by the PBP gels these papers report.
+    description: Grounded to penicillin binding, the low-affinity acquired-PBP activity assayed by these
+      papers.
   - node_id: low_affinity
     label: low affinity of the acquired PBP for beta-lactams
     node_type: STATE
-    description: 'The causal core. Ungrounded: an affinity property has no ontology term here.'
+    description: 'The causal core: the acquired PBP has low affinity for beta-lactams and therefore keeps
+      functioning when the drug inhibits native PBPs.'
   - node_id: pg_synth
     label: peptidoglycan biosynthetic process
     node_type: BIOLOGICAL_PROCESS
@@ -83,6 +84,26 @@ causal_graphs:
       snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
         synthesis in the presence of beta-lactams.
       notes: Family mechanism ARO:0001002.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    description: CARD classifies this acquired PBP under antibiotic target replacement.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -92,6 +113,27 @@ causal_graphs:
       snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
         synthesis in the presence of beta-lactams.
       notes: Mechanism ARO:0001002 → resistance.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    description: Target replacement provides an alternate low-affinity PBP that sustains cell-wall synthesis
+      when beta-lactams inhibit native PBPs.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -105,16 +147,70 @@ causal_graphs:
       snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
         with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
       notes: The affinity measurement that makes it work -- 'very low affinity for beta-lactam antibiotics'.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: PMID:6563036
+      snippet: We detected a high-molecular-weight PBP (PBP-2a; approximate size, 78,000 daltons) that
+        was only present in the resistant bacteria but not in the isogenic susceptible strains.
+      notes: Hartman and Tomasz 1984, associating PBP2a with otherwise isogenic methicillin-resistant
+        bacteria.
+    description: The determinant encodes an acquired PBP that performs peptidoglycan synthesis in the
+      presence of beta-lactams.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+    description: CARD asserts that methicillin-resistant PBP2 determinants confer resistance to penicillin
+      beta-lactams.
     evidence:
     - reference: ARO:3001208
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
       notes: Asserted on ARO:3001208 (methicillin resistant PBP2), an is_a ancestor of this record's ARO:3001209;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: CARD definition for mecA/PBP2a.
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: Ueda et al. 1987, showing very low beta-lactam affinity of PBP 2'.
   - subject: determinant
     predicate: enables (wall synthesis under drug)
     predicate_id: RO:0002327
@@ -124,16 +220,64 @@ causal_graphs:
       snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
         synthesis in the presence of beta-lactams.
       notes: '''able to perform peptidoglycan synthesis in the presence of beta-lactams''.'
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: Ueda et al. 1987, showing very low beta-lactam affinity of PBP 2'.
+    description: The acquired PBP performs peptidoglycan cross-linking under beta-lactam exposure.
   - subject: low_affinity
     predicate: causally upstream of (leaves the enzyme uninhibited)
     predicate_id: RO:0002411
     object: pbp2a_activity
-    description: 'Why the acquired enzyme keeps working: the drug binds it poorly.'
+    description: Low beta-lactam affinity leaves the acquired PBP enzymatically active when native PBPs
+      are inhibited.
     evidence:
     - reference: PMID:3499861
       snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
         with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
       notes: Ueda et al. 1987, across 137 clinical strains.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: CARD definition for mecA/PBP2a.
   - subject: determinant
     predicate: has quality (very low beta-lactam affinity)
     predicate_id: RO:0000086
@@ -144,6 +288,34 @@ causal_graphs:
         was only present in the resistant bacteria but not in the isogenic susceptible strains.
       notes: Hartman & Tomasz 1984 -- present in the resistant strains and NOT in the isogenic susceptible
         ones, which is what makes the association causal rather than incidental.
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: Ueda et al. 1987, showing very low beta-lactam affinity of PBP 2'.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: CARD definition for mecA/PBP2a.
+    description: The determinant encodes an acquired PBP with low affinity for beta-lactam antibiotics.
   - subject: pbp2a_activity
     predicate: part of (peptidoglycan biosynthesis)
     predicate_id: BFO:0000050
@@ -153,9 +325,37 @@ causal_graphs:
       snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
         synthesis in the presence of beta-lactams.
       notes: The process the acquired PBP sustains.
+    - reference: ARO:3001209
+      snippet: A foreign PBP2a acquired by lateral gene transfer that able to perform peptidoglycan synthesis
+        in the presence of beta-lactams.
+      notes: CARD definition for mecC.
+    - reference: ARO:0001002
+      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target replacement.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: ARO:3001208
+      snippet: In methicillin sensitive S. aureus (MSSA), beta-lactams bind to native penicillin-binding
+        proteins (PBPs) and disrupt synthesis of the cell membrane's peptidoglycan layer. In methicillin
+        resistant S. aureus (MRSA), foreign PBP2a acquired by lateral gene transfer is able to perform
+        peptidoglycan synthesis in the presence of beta-lactams.
+      notes: CARD definition for methicillin resistant PBP2.
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: Ueda et al. 1987, showing very low beta-lactam affinity of PBP 2'.
+    description: The acquired PBP activity directly supports peptidoglycan synthesis.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed methicillin-resistant PBP2 target-replacement graphs
   llm_assisted: true
 license: CC-BY 4.0
