@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Rewrite low-score Mycobacterium tuberculosis mutation leaf graphs.
 
-This targets four score-77 ARO records that sit under already curated
-Mycobacterium mutation parents.  The graphs stay conservative when CARD only
-asserts broad mutation-mediated resistance, but keep local causal routes where
-the leaf definition itself asserts overexpression or MmpL5/MmpS5 efflux.
+This targets six score-77 ARO records that sit under already curated
+Mycobacterium mutation parents.  The pyrazinamide graphs stay conservative
+when CARD only asserts broad mutation-mediated resistance, but the nudC and
+Rv2535c leaves keep local causal routes where the leaf definition itself
+asserts overexpression or MmpL5/MmpS5 efflux.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -153,6 +154,18 @@ class PzaTarget:
 
 
 PZA_TARGETS = {
+    "ARO:3004878": PzaTarget(
+        identifier="ARO:3004878",
+        filename="pyrazinamide-resistant-clpc1-aro3004878.yaml",
+        label="clpC1",
+        drug_ancestor="ARO:3004878",
+    ),
+    "ARO:3004882": PzaTarget(
+        identifier="ARO:3004882",
+        filename="pyrazinamide-resistant-mas-aro3004882.yaml",
+        label="mas",
+        drug_ancestor="ARO:3004882",
+    ),
     "ARO:3004957": PzaTarget(
         identifier="ARO:3004957",
         filename=(
