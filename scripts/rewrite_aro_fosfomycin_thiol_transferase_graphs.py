@@ -176,6 +176,7 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3004672", "fosb5-aro3004672.yaml"),
     Target("ARO:3004673", "fosb6-aro3004673.yaml"),
     Target("ARO:3007372", "fosbx1-aro3007372.yaml"),
+    Target("ARO:3004661", "staphylococcus-aureus-fosb-aro3004661.yaml"),
     Target("ARO:3004674", "fosd-aro3004674.yaml"),
     Target("ARO:3000133", "fosfomycin-thiol-transferase-aro3000133.yaml"),
     Target("ARO:3007368", "fosg-aro3007368.yaml"),
@@ -487,7 +488,7 @@ def main(argv: list[str] | None = None) -> int:
         "--path",
         type=Path,
         default=ARO_DIR,
-        help="ARO directory or one of the 30 low-score fosfomycin thiol-transferase YAML files",
+        help="ARO directory or one of the 31 low-score fosfomycin thiol-transferase YAML files",
     )
     args = parser.parse_args(argv)
 
