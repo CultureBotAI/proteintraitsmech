@@ -4,9 +4,9 @@
 The seven records handled here share the ARO:3003580 phosphoethanolamine route:
 PEtN transfer to lipid A reduces the negative cell-surface charge used by
 cationic polymyxins for binding. This updater grounds the transferase activity
-to the exact local GO term, describes every edge, and adds the missing
-charge-to-resistance edge while leaving the lipid-A molecule and local charge
-state ungrounded.
+to the exact local GO term, grounds the Kdo2-lipid A substrate, describes every
+edge, adds the missing charge-to-resistance edge, and supplements every edge
+with multiple references.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -30,13 +30,13 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_CURATOR = "codex-causal-graph-quality"
+HISTORY_ACTION = (
+    "Grounded lipid A and supplemented phosphoethanolamine-transferase evidence"
+)
 HISTORY_EVENT = {
-    "timestamp": "2026-09-05T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": HISTORY_CURATOR,
-    "action": (
-        "Grounded phosphoethanolamine-transferase activity, described the PEtN lipid A "
-        "charge-alteration edges, and linked reduced charge to resistance"
-    ),
+    "action": HISTORY_ACTION,
     "llm_assisted": True,
 }
 
@@ -105,11 +105,12 @@ SHARED_NODE_UPDATES = {
     },
     "lipid_a": {
         "node_id": "lipid_a",
-        "label": "lipid A of the outer membrane",
+        "label": "Kdo2-lipid A phosphoethanolamine acceptor",
         "node_type": "CHEMICAL",
+        "grounding": "CHEBI:58540",
         "description": (
-            "Modified lipid A surface substrate; left label-only because no exact "
-            "lipid A chemical class was verified in the local trait corpus."
+            "Kdo2-lipid A substrate modified by PEtN transfer; grounded to "
+            "the ChEBI participant for α-Kdo-(2→4)-α-Kdo-(2→6)-lipid A."
         ),
     },
     "charge": {
@@ -275,6 +276,43 @@ def _charge_resistance_evidence() -> list[dict[str, str]]:
     ]
 
 
+def _charge_alteration_evidence() -> list[dict[str, str]]:
+    return [
+        copy.deepcopy(CHARGE_ALTERATION_EVIDENCE),
+        copy.deepcopy(PMR_PETN_EVIDENCE),
+        copy.deepcopy(PETN_GROUP_EVIDENCE),
+    ]
+
+
+def _unique_evidence(evidence: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    unique = []
+    seen: set[tuple[str, str]] = set()
+    for item in evidence:
+        key = (str(item.get("reference", "")), str(item.get("snippet", "")))
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(item)
+    return unique
+
+
+def _drug_resistance_evidence(edge: dict[str, Any]) -> list[dict[str, Any]]:
+    return _unique_evidence([
+        *copy.deepcopy(edge.get("evidence") or []),
+        copy.deepcopy(CHARGE_ALTERATION_EVIDENCE),
+        copy.deepcopy(PETN_GROUP_EVIDENCE),
+    ])
+
+
+def _lipid_charge_evidence() -> list[dict[str, str]]:
+    return [
+        copy.deepcopy(CHARGE_ALTERATION_EVIDENCE),
+        copy.deepcopy(PMR_PETN_EVIDENCE),
+        copy.deepcopy(PETN_GROUP_EVIDENCE),
+        copy.deepcopy(GO_PETN_TRANSFER_EVIDENCE),
+    ]
+
+
 def _enrich_nodes(graph: dict[str, Any], target: Target) -> None:
     nodes = graph.get("nodes") or []
     found: set[str] = set()
@@ -322,10 +360,19 @@ def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any
             msg = f"{target.identifier}: unexpected edge {key[0]} -> {key[1]}"
             raise ValueError(msg)
         edge["description"] = ALL_EDGE_DESCRIPTIONS[key]
-        if key == ("determinant", "petn_transfer"):
+        if key in {
+            ("determinant", "mech0"),
+            ("mech0", "resistance"),
+        }:
+            edge["evidence"] = _charge_alteration_evidence()
+        elif key == ("determinant", "drug0"):
+            edge["evidence"] = _drug_resistance_evidence(edge)
+        elif key == ("determinant", "petn_transfer"):
             edge["evidence"] = _petn_transfer_evidence()
         elif key == ("petn_transfer", "lipid_a"):
             edge["evidence"] = [copy.deepcopy(PMR_PETN_EVIDENCE), copy.deepcopy(GO_PETN_TRANSFER_EVIDENCE)]
+        elif key == ("lipid_a", "charge"):
+            edge["evidence"] = _lipid_charge_evidence()
         elif key == ("charge", "resistance"):
             edge["evidence"] = _charge_resistance_evidence()
         enriched_edges.append(_ordered_edge(edge))
@@ -358,7 +405,8 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
         return text, False
 
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_CURATOR not in out:
+    history = record.get("curation_history") or []
+    if not any(item.get("action") == HISTORY_ACTION for item in history):
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
     return out, True
 
