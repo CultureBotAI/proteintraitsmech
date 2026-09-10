@@ -4,8 +4,9 @@
 The existing Rv0678 family graphs were intentionally conservative: CARD states
 that Rv0678 negatively regulates expression of the mmpS5/L5 efflux pump, but
 the broad family term does not say that resistant mutants relieve that
-repression. This updater preserves that shape, keeps the named pump-expression
-node local, and fills the graph-evidence quality gaps.
+repression. This updater preserves that shape, grounds the named
+pump-expression node to broad GO gene expression, and fills the graph-evidence
+quality gaps.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -28,9 +29,9 @@ from record_io import append_to_section, replace_block  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
-HISTORY_ACTION = "Improved Rv0678 efflux-regulator graph evidence"
+HISTORY_ACTION = "Grounded Rv0678 MmpS5/L5 pump-expression nodes"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-06T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": "codex-causal-graph-quality",
     "action": HISTORY_ACTION,
     "llm_assisted": True,
@@ -67,6 +68,18 @@ MUTATION_MECHANISM_EVIDENCE = {
     ),
 }
 
+GO_GENE_EXPRESSION_EVIDENCE = {
+    "reference": "GO:0010467",
+    "snippet": (
+        "The process in which a gene's sequence is converted into a mature gene "
+        "product or products."
+    ),
+    "notes": (
+        "GO definition for the broad gene-expression process used to ground the "
+        "local MmpS5/L5 pump-expression node."
+    ),
+}
+
 DRUG_CLASS_EVIDENCE = {
     "ARO:3004491": {
         "reference": "ARO:3004491",
@@ -84,9 +97,11 @@ PUMP_EXPRESSION_NODE = {
     "node_id": "pump_expression",
     "label": "expression of the mmpS5/L5 efflux pump",
     "node_type": "BIOLOGICAL_PROCESS",
+    "grounding": "GO:0010467",
     "description": (
         "Local process for expression of the named MmpS5/L5 efflux pump that "
-        "Rv0678 represses; no GO term specifies this pump set."
+        "Rv0678 represses; grounded to broad GO gene expression because no GO "
+        "term specifies this pump set."
     ),
 }
 
@@ -357,6 +372,7 @@ def _canonical_edges(
     )
     repression_evidence = (
         PARENT_EVIDENCE,
+        GO_GENE_EXPRESSION_EVIDENCE,
         PARENT_ARO_CITATION,
         *source_evidence,
     )
