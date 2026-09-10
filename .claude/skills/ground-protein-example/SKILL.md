@@ -34,20 +34,32 @@ which durable claims are hard debt, and what is blocked.
 - **`seed_uniprot.py` is retired**, and `fetch_uniprot_examples.py` /
   `suggest_canonical_examples.py` write candidate ledgers only. A new canonical
   example enters the corpus solely through the workflow below.
-- **Dry-run by default at every stage.** `--apply` on the fetch, finalize, and
-  promote stages requires explicit human authorization *in the current
-  conversation* — general approval of the grounding task is not authorization to
-  promote. Say plainly which stage you are about to make durable.
+- **Dry-run by default at every stage, and the stages are not equally
+  consequential.** `--apply` on select, fetch, and finalize writes only
+  gitignored staging under `reports/uniprot-grounding/` (`.gitignore:38`) plus
+  its receipt. Only `promote --apply` mutates `data/traits/` and the durable
+  registries under `data/grounding/`. Promotion requires explicit human
+  authorization *in the current conversation* — general approval of the
+  grounding task is not authorization to promote. Say plainly which stage you
+  are about to make durable.
 - **A batch is not a record.** The selector emits at most 1,000 unique trait
-  records with at least 25 per available source (`MINIMUM_PER_SOURCE` /
-  `MAX_REVIEW_BATCH` at `scripts/select_uniprot_review_batch.py:75`). Grounding
-  "one named record" means finding it inside a bounded batch, not carving it out.
+  records with at least 25 per available source (`MINIMUM_PER_SOURCE` at
+  `scripts/select_uniprot_review_batch.py:75`, `MAX_REVIEW_BATCH` at `:76`).
+  Grounding "one named record" means finding it inside a bounded batch, not
+  carving it out.
 - **Never edit `resolved.jsonl`, the evidence ledger, or the registries by hand.**
   They are content-addressed; an edited row breaks its `resolution_digest` and the
-  promotion gate will reject it — correctly. Only the `.approved.tsv` copy of the
-  review file is curator-editable.
+  promotion gate will reject it — correctly. What *is* curator-editable depends on
+  the adjudication path (step 7): `.approved.tsv` on the direct path, the
+  `--decisions` JSONL partitions on the finalize path. Never both for one batch.
 - Record writes go through an audited route (`just audit-writers`). The promoter
   is a registered validated writer; nothing else may touch `canonical_examples`.
+- **This skill stops at the review artifact.** Its toolset is deliberately
+  read-only, so it carries the workflow through step 6 and hands back a
+  `.review.tsv` plus a plain statement of what it found. Steps 7 and 8 document
+  what happens next; performing them takes a human, or a follow-up run
+  explicitly authorized to write. Say this at the hand-off rather than letting
+  the reader discover it mid-batch, after the expensive fetch has run.
 
 ## Read before starting
 
@@ -73,13 +85,28 @@ first). Absence of `qualification_status` means `LEGACY_UNVERIFIED`.
 
 ### 2. Refresh the candidate queue
 
+Check the three provider artifacts first — all are gitignored and regenerable, so
+a fresh checkout has none of them:
+
+```bash
+ls -l data/raw/align_cache/residue_frame.json \
+      data/raw/align_cache/interpro_frame.json \
+      data/profiles/profiles.jsonl
+```
+
+Any that are missing must be produced before the audit can run, and *that* is the
+network-bound part of this workflow — `fetch_interpro_frame.py`'s own docstring
+puts its crawl at 15,120 protein calls. Regenerating them is a batch: canary one
+before fanning out, and get authorization first.
+
 ```bash
 just audit-uniprot-grounding
 ```
 
-Read-only. Writes `reports/uniprot-grounding/candidates.jsonl` (gitignored) from
-the three local provider artifacts and their release stamps. Candidacy is derived
-from what the providers assert about the protein, not from sequence similarity.
+Read-only once its inputs exist. Writes
+`reports/uniprot-grounding/candidates.jsonl` (gitignored) from the three provider
+artifacts and their release stamps. Candidacy is derived from what the providers
+assert about the protein, not from sequence similarity.
 
 ### 3. Find the record's alternatives, and choose the organism
 
@@ -105,9 +132,12 @@ taxon entirely (#656), so if a prokaryotic exemplar is wanted, filter these rows
 yourself on `taxon_id` and carry the chosen accession forward. Two things to be
 honest about when reporting:
 
-- the queue is drawn from a fixed organism panel
-  (`scripts/fetch_residue_frame.py:107`), so "no prokaryotic candidate" means
-  none *in the panel*, not none in UniProt;
+- the queue is drawn from a fixed organism panel, so "no prokaryotic candidate"
+  means none *in the panel*, not none in UniProt. The panel enters the corpus
+  through `build_swissprot_profiles.py:67-76`, whose `SWISSPROT_PROFILE`
+  exemplars are what `fetch_interpro_frame.py` then crawls;
+  `fetch_residue_frame.py:107` mirrors the same tuple. Widening the panel means
+  changing it there and re-fetching, not filtering harder here;
 - not every record has one. Measure it for the target rather than assuming, and
   say so if the only alternatives are eukaryotic.
 
@@ -130,8 +160,9 @@ just fetch-uniprot-review-batch <BATCH_ID> > reports/uniprot-grounding/review-ba
 just fetch-uniprot-review-batch <BATCH_ID> --request-plan <that file> --apply
 ```
 
-This is the first stage that touches the network and the only one that can fail
-on credentials or sandbox permissions. **Canary it**: run the plan-only form
+On a warm checkout this is the first stage that touches the network (step 2's
+artifacts are the other), and it is the one that fails on credentials or sandbox
+permissions. **Canary it**: run the plan-only form
 first, and after `--apply` verify the registry JSONL exists, is non-empty, and
 contains the target accession — an exit code of 0 is not evidence that anything
 was written. The pinned release is fixed by the recipe (`--expect-release`); a
@@ -147,20 +178,28 @@ Writes `.resolved.jsonl`, `.review.tsv`, `.protein_registry.jsonl`, and
 `.occurrence_evidence.jsonl`. Never modifies `data/traits/` or the durable
 registries. Every resolved row binds a `resolution_digest`.
 
-### 7. Review, decide, finalize
+### 7. Adjudicate — pick one path
 
-Copy `.review.tsv` to `.approved.tsv` and adjudicate. Reviewing means checking
-that the source assertion is about *this record's* trait: an `inheritance_path`
-that reaches the record through a parent family, a `scope` of `LOCALIZED` with
-intervals that do not span the whole protein, and a definition that actually
-matches. Rejecting is a normal outcome, not a failed batch.
+Reviewing, on either path, means checking that the source assertion is about
+*this record's* trait: an `inheritance_path` that reaches the record through a
+parent family, a `scope` of `LOCALIZED` with intervals that do not span the whole
+protein, and a definition that actually matches. Rejecting is a normal outcome,
+not a failed batch.
+
+**Direct** — a batch adjudicated in one sitting. Copy `.review.tsv` to
+`.approved.tsv` and edit *that copy*; `promote-uniprot-review-batch` reads it.
+
+**Partitioned** — a batch split across reviewers or sessions. Write explicit
+decision ledgers, each row copying its resolved row's `resolution_digest`
+verbatim, then reconcile them:
 
 ```bash
 just finalize-uniprot-review-batch <BATCH_ID> --decisions <partition>.jsonl
 ```
 
-Dry-run unless `--apply`. Every decision row must copy the exact resolved-row
-`resolution_digest`.
+Dry-run unless `--apply`. Note the direction: finalize *emits* `.approved.tsv`
+(its `--approved-out`), so on this path do not hand-edit that file — your
+decisions are the `--decisions` rows, and finalize would overwrite the edit.
 
 ### 8. Promote, then prove it
 
