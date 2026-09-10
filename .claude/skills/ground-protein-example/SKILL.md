@@ -212,15 +212,20 @@ Then gate it:
 
 ```bash
 just validate data/traits/<axis>/<category>/<slug>.yaml
-just validate-uniprot-grounding data/traits/<axis>/<category>/<slug>.yaml \
-  --hierarchy-traits data/traits --require-qualified
+just validate-uniprot-grounding data/traits/<axis>/<category>/<slug>.yaml --require-qualified
 just audit-writers
 ```
 
-`--hierarchy-traits data/traits` is not optional when scoping to one file: the
-validator defaults its inheritance edges to the *input* paths, so a single-file
-run cannot see the parent that an occurrence's `inheritance_path` climbs to, and
-a correct occurrence fails.
+**Add `--hierarchy-traits data/traits` only if the occurrence carries an
+`inheritance_path`** — that is, if its `source_trait_id` differs from its
+`trait_id`, meaning the source asserted a descendant and the claim climbs to
+this record. The validator defaults its inheritance edges to the *input* paths,
+so in that case a single-file run cannot see the parent and a correct occurrence
+fails.
+
+When `source_trait_id` equals `trait_id` there is nothing to climb, and the flag
+only costs: it walks the entire corpus, turning a seconds-long check into a
+tens-of-minutes one. Do not pay that by default.
 
 `--require-qualified` is the completion gate: it dereferences the example's
 `sequence_sha256` against the registry and every occurrence fact against the
