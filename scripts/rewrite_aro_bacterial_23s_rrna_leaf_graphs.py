@@ -44,6 +44,7 @@ TARGET_FILENAMES: tuple[str, ...] = (
     "escherichia-coli-23s-rrna-with-mutation-conferring-resistance-to-oxazolidinone-a-aro3004173.yaml",
     "mycobacterium-tuberculosis-23s-rrna-mutation-conferring-resistance-to-capreomyci-aro3004937.yaml",
     "mycoplasma-gallisepticum-23s-rrna-mutation-conferring-resistance-to-pleuromutili-aro3004159.yaml",
+    "thermus-thermophilus-23s-rrna-conferring-resistance-to-pleuromutilin-antibiotics-aro3005083.yaml",
 )
 
 
