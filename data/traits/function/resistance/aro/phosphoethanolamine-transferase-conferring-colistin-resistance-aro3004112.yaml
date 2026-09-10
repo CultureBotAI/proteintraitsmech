@@ -48,10 +48,11 @@ causal_graphs:
     description: Grounded to the GO molecular-function class for transfer of phosphoethanolamine from
       phosphatidylethanolamine to Kdo2-lipid A.
   - node_id: lipid_a
-    label: lipid A of the outer membrane
+    label: Kdo2-lipid A phosphoethanolamine acceptor
     node_type: CHEMICAL
-    description: Modified lipid A surface substrate; left label-only because no exact lipid A chemical
-      class was verified in the local trait corpus.
+    grounding: CHEBI:58540
+    description: Kdo2-lipid A substrate modified by PEtN transfer; grounded to the ChEBI participant for
+      α-Kdo-(2→4)-α-Kdo-(2→6)-lipid A.
   - node_id: charge
     label: reduced net negative surface charge
     node_type: STATE
@@ -75,7 +76,20 @@ causal_graphs:
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: Family mechanism ARO:3003588.
+      notes: CARD's charge-alteration mechanism term connects reduced negative surface charge to resistance
+        against cationic antimicrobials.
+    - reference: ARO:3004269
+      snippet: This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose
+        (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell
+        membrane.
+      notes: CARD's pmr phosphoethanolamine-transferase family term connects phosphoethanolamine transfer
+        to lipid A with impaired colistin binding.
+    - reference: ARO:3004112
+      snippet: This group of enzymes catalyzes the addition of a phosphoethanolamine group to another
+        molecule. The addition of this moiety to lipid A in bacterial species is often associated with
+        polymyxin (otherwise known as colistin) resistance.
+      notes: CARD's parent PEtN-transferase definition is used for the transfer chemistry; the hedged
+        resistance wording is not used as the sole causal resistance claim.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -87,7 +101,20 @@ causal_graphs:
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: Mechanism ARO:3003588 → resistance.
+      notes: CARD's charge-alteration mechanism term connects reduced negative surface charge to resistance
+        against cationic antimicrobials.
+    - reference: ARO:3004269
+      snippet: This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose
+        (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell
+        membrane.
+      notes: CARD's pmr phosphoethanolamine-transferase family term connects phosphoethanolamine transfer
+        to lipid A with impaired colistin binding.
+    - reference: ARO:3004112
+      snippet: This group of enzymes catalyzes the addition of a phosphoethanolamine group to another
+        molecule. The addition of this moiety to lipid A in bacterial species is often associated with
+        polymyxin (otherwise known as colistin) resistance.
+      notes: CARD's parent PEtN-transferase definition is used for the transfer chemistry; the hedged
+        resistance wording is not used as the sole causal resistance claim.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -158,7 +185,25 @@ causal_graphs:
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: '''loss or reduction of the net negative charge within the cell wall''.'
+      notes: CARD's charge-alteration mechanism term connects reduced negative surface charge to resistance
+        against cationic antimicrobials.
+    - reference: ARO:3004269
+      snippet: This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose
+        (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell
+        membrane.
+      notes: CARD's pmr phosphoethanolamine-transferase family term connects phosphoethanolamine transfer
+        to lipid A with impaired colistin binding.
+    - reference: ARO:3004112
+      snippet: This group of enzymes catalyzes the addition of a phosphoethanolamine group to another
+        molecule. The addition of this moiety to lipid A in bacterial species is often associated with
+        polymyxin (otherwise known as colistin) resistance.
+      notes: CARD's parent PEtN-transferase definition is used for the transfer chemistry; the hedged
+        resistance wording is not used as the sole causal resistance claim.
+    - reference: GO:0043838
+      snippet: 'Catalysis of the reaction: Kdo2-lipid A + phosphatidylethanolamine = phosphoethanolamine-Kdo2-lipid
+        A + diacylglycerol.'
+      notes: GO reaction definition for the exact phosphatidylethanolamine:Kdo2-lipid A phosphoethanolamine
+        transferase activity.
   - subject: charge
     predicate: causally upstream of (reduces polymyxin binding)
     predicate_id: RO:0002411
@@ -187,5 +232,9 @@ curation_history:
   curator: codex-causal-graph-quality
   action: Grounded phosphoethanolamine-transferase activity, described the PEtN lipid A charge-alteration
     edges, and linked reduced charge to resistance
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded lipid A and supplemented phosphoethanolamine-transferase evidence
   llm_assisted: true
 license: CC-BY 4.0
