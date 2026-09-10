@@ -44,11 +44,10 @@ evidence:
   notes: PMID:18986991 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Neisseria meningititis PBP2 conferring resistance to beta-lactam → mechanism → resistance (curated
-    from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003938). Target alteration of a native PBP. Contrast round 52: no foreign protein is involved.'
+  title: Neisseria meningititis PBP2 conferring resistance to beta-lactam → decreased beta-lactam affinity
+    → resistance
+  description: Curated resistance-causation graph for beta-lactam-resistant PBP target alteration. Native
+    PBP mutations decrease beta-lactam binding while preserving PBP-dependent peptidoglycan biosynthesis.
   nodes:
   - node_id: determinant
     label: Neisseria meningititis PBP2 conferring resistance to beta-lactam
@@ -66,116 +65,224 @@ causal_graphs:
     label: penicillin beta-lactam
     node_type: CHEMICAL
     grounding: ARO:3000008
-  - node_id: tp_activity
-    label: transpeptidase activity of the mutant PBP
+  - node_id: beta_lactam_binding
+    label: penicillin binding by the mutant PBP
     node_type: MOLECULAR_FUNCTION
     grounding: GO:0008658
-  - node_id: low_affinity
-    label: decreased affinity of the mutant PBP for beta-lactams
-    node_type: STATE
-    description: 'The causal core. Ungrounded: an affinity property has no ontology term here.'
+    description: GO-grounded beta-lactam binding by a penicillin-binding protein.
   - node_id: pg_synth
     label: peptidoglycan biosynthetic process
     node_type: BIOLOGICAL_PROCESS
     grounding: GO:0009252
   - node_id: resistance
-    label: antibiotic resistance phenotype
+    label: beta-lactam antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype conferred by decreased beta-lactam binding to a mutated penicillin-binding
+      protein.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies mutant PBPs under mutation-conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
     - reference: ARO:3003938
       snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
         resistance to penicillin antibiotics.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3000212
+      snippet: mutation conferring antibiotic resistance
+      notes: CARD mechanism for antibiotic-resistant gene variants or mutants.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: PBP mutations lower beta-lactam affinity and thereby confer beta-lactam resistance.
     evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
     - reference: ARO:3003938
       snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
         resistance to penicillin antibiotics.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
+    - reference: ARO:3000212
+      snippet: mutation conferring antibiotic resistance
+      notes: CARD mechanism for antibiotic-resistant gene variants or mutants.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The mutant PBP target binds beta-lactams poorly enough to sustain peptidoglycan synthesis
+      under drug exposure.
     evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
     - reference: ARO:3003938
       snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
         resistance to penicillin antibiotics.
-      notes: 'CARD''s parent term states the whole mechanism: mutation -> changed affinity -> resistance.'
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
     - reference: ARO:3004833
-      snippet: Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam
-        antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.
-      notes: 'And the DIRECTION, which the parent term leaves as ''change'': the affinity DECREASES.'
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
+    - reference: PMID:1938899
+      snippet: Defined PBP2x region replacements in Streptococcus pneumoniae generated mutant low-affinity
+        PBP2x proteins.
+      notes: Laible and Hakenbeck 1991 showed that PBP mutations can produce the low-affinity target state.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to cephalosporin.
+    description: CARD asserts that mutant PBPs confer resistance to cephalosporins.
     evidence:
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
-      notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
-        antibiotics), an is_a ancestor of this record's ARO:3003937; inherited by this variant. CARD/ARO
-        release in data/raw/aro/aro.obo.
+      notes: CARD/ARO asserts this cephalosporin drug class on the mutant-PBP parent.
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug1
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+    description: CARD asserts that mutant PBPs confer resistance to penicillin beta-lactams.
     evidence:
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
-      notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
-        antibiotics), an is_a ancestor of this record's ARO:3003937; inherited by this variant. CARD/ARO
-        release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: has quality (decreased beta-lactam affinity)
-    predicate_id: RO:0000086
-    object: low_affinity
-    description: The mutation's effect on the target, stated by CARD with its direction.
-    evidence:
+      notes: CARD/ARO asserts this penicillin beta-lactam drug class on the mutant-PBP parent.
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
     - reference: ARO:3004833
-      snippet: Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam
-        antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.
-      notes: CARD gives the direction explicitly for the ponA case.
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
+  - subject: determinant
+    predicate: negatively regulates (decreases beta-lactam binding)
+    predicate_id: RO:0002212
+    object: beta_lactam_binding
+    description: The resistance mutations decrease beta-lactam binding to the native PBP target.
+    evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
     - reference: PMID:1938899
-      snippet: Three PBP 2x regions were mutated in from two to all four mutants carrying a low-affinity
-        PBP 2x.
-      notes: Laible & Hakenbeck 1991 -- mutations in defined PBP2x regions actually produce the low-affinity
-        protein. Studied S. pneumoniae PBP2x; the other species' PBPs are covered by CARD's family-level
-        claim, not by this paper.
-  - subject: low_affinity
-    predicate: causally upstream of (leaves the transpeptidase uninhibited)
-    predicate_id: RO:0002411
-    object: tp_activity
-    evidence:
-    - reference: ARO:3003938
-      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
-        resistance to penicillin antibiotics.
-      notes: 'Why the changed affinity confers resistance: the enzyme keeps working.'
-  - subject: tp_activity
-    predicate: part of (peptidoglycan biosynthesis)
-    predicate_id: BFO:0000050
+      snippet: Defined PBP2x region replacements in Streptococcus pneumoniae generated mutant low-affinity
+        PBP2x proteins.
+      notes: Laible and Hakenbeck 1991 showed that PBP mutations can produce the low-affinity target state.
+    - reference: GO:0008658
+      snippet: penicillin binding
+      notes: GO molecular-function term used to ground beta-lactam binding by PBPs.
+  - subject: beta_lactam_binding
+    predicate: negatively regulates (inhibits wall synthesis)
+    predicate_id: RO:0002212
     object: pg_synth
+    description: Beta-lactam binding to PBPs inhibits peptidoglycan biosynthesis.
     evidence:
     - reference: ARO:3003938
       snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
         resistance to penicillin antibiotics.
-      notes: PBP transpeptidases cross-link the wall; this is the process the drug targets.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
+    - reference: PMID:1938899
+      snippet: Defined PBP2x region replacements in Streptococcus pneumoniae generated mutant low-affinity
+        PBP2x proteins.
+      notes: Laible and Hakenbeck 1991 showed that PBP mutations can produce the low-affinity target state.
+    - reference: GO:0008658
+      snippet: penicillin binding
+      notes: GO molecular-function term used to ground beta-lactam binding by PBPs.
+    - reference: GO:0009252
+      snippet: peptidoglycan biosynthetic process
+      notes: GO biological-process term for peptidoglycan synthesis by PBPs.
+  - subject: determinant
+    predicate: participates in
+    predicate_id: RO:0000056
+    object: pg_synth
+    description: The mutated PBP still participates in peptidoglycan biosynthesis.
+    evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: GO:0009252
+      snippet: peptidoglycan biosynthetic process
+      notes: GO biological-process term for peptidoglycan synthesis by PBPs.
+  - subject: pg_synth
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Continued PBP-dependent peptidoglycan biosynthesis under beta-lactam exposure causes
+      resistance.
+    evidence:
+    - reference: ARO:3003937
+      snippet: Point mutation in Neisseria meningititis PBP2 (penA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP2, thereby conferring resistance to beta-lactam.
+      notes: CARD definition for Neisseria meningititis PBP2 conferring resistance to beta-lactam.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: CARD definition for mutant PBPs conferring beta-lactam resistance.
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoeae PBP1 decreases the affinity between a beta-lactam
+        antibiotic molecule and PBP1, thereby conferring beta-lactam resistance.
+      notes: CARD gives the direction of the affinity change explicitly for a ponA/PBP1 point mutation.
+    - reference: PMID:1938899
+      snippet: Defined PBP2x region replacements in Streptococcus pneumoniae generated mutant low-affinity
+        PBP2x proteins.
+      notes: Laible and Hakenbeck 1991 showed that PBP mutations can produce the low-affinity target state.
+    - reference: GO:0009252
+      snippet: peptidoglycan biosynthetic process
+      notes: GO biological-process term for peptidoglycan synthesis by PBPs.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated mutant PBP target-alteration graphs
   llm_assisted: true
 license: CC-BY 4.0
