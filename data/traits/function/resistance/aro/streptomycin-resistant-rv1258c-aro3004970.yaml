@@ -18,12 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004970 streptomycin resistant Rv1258c"
 causal_graphs:
 - graph_id: resistance
-  title: streptomycin resistant Rv1258c → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3007183). An efflux pump named by its own record. NOT asserted: the coupling ion or energy source
-    -- unlike SMR (round 67, protons) and MATE (round 69, a cationic gradient), CARD says nothing here
-    about what drives Tap.'
+  title: streptomycin resistant Rv1258c → Tap-mediated antibiotic efflux → resistance
+  description: Curated resistance-causation graph for streptomycin-linked Rv1258c variants. The graph
+    records the Tap efflux-pump claim and the inherited aminoglycoside-antibiotic resistance assertion
+    without inventing a specific coupling ion or energy source.
   nodes:
   - node_id: determinant
     label: streptomycin resistant Rv1258c
@@ -58,6 +56,18 @@ causal_graphs:
     - reference: ARO:3007183
       snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
       notes: Family mechanism ARO:3000212.
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    description: CARD classifies streptomycin-resistant Rv1258c under mutation-conferring resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -66,6 +76,18 @@ causal_graphs:
     - reference: ARO:3007183
       snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
       notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    description: Tap efflux-pump mutations are the asserted cause of streptomycin resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -79,26 +101,48 @@ causal_graphs:
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: What efflux achieves. Cited so the graph can end at the process rather than invent a transport
         mechanism CARD does not describe.
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    description: Rv1258c mutations contribute to aminoglycoside resistance through Tap efflux.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    description: CARD asserts aminoglycoside-antibiotic resistance on streptomycin-resistant Rv1258c.
     evidence:
     - reference: ARO:3004970
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted directly on ARO:3004970 (streptomycin resistant Rv1258c) in the CARD/ARO release
         in data/raw/aro/aro.obo.
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:3007183
+      snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
+      notes: CARD definition for antibiotic-resistant Rv1258c.
   - subject: determinant
     predicate: participates in (antibiotic efflux)
     predicate_id: RO:0000056
     object: efflux_process
-    description: '''Participates in'' rather than ''enables'': these records are MUTANTS of the pump,
-      and CARD says they contribute to resistance without saying the mutation increases transport.'
+    description: The Rv1258c determinant is a mutant of the Tap efflux pump.
     evidence:
     - reference: ARO:3007183
       snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
       notes: '''the Rv1258c (Tap) efflux pump''.'
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: efflux_process
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -107,9 +151,21 @@ causal_graphs:
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: '''via the transport of antibiotics out of the cell''.'
+    - reference: ARO:3004970
+      snippet: An efflux pump in mycobacterium that contributes to intrinsic antibiotic resistance. The
+        pump uses the electrochemical gradient as a source of energy.
+      notes: CARD definition for streptomycin resistant Rv1258c.
+    - reference: ARO:3007183
+      snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
+      notes: CARD definition for antibiotic-resistant Rv1258c.
+    description: Antibiotic efflux lowers intracellular antibiotic exposure and can produce resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed streptomycin-specific Rv1258c graphs
   llm_assisted: true
 license: CC-BY 4.0
