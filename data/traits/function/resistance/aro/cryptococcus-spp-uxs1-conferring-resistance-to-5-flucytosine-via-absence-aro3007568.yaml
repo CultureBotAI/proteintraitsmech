@@ -26,14 +26,11 @@ evidence:
   notes: PMID:31913284 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003764). Resistance by absence. Neither the identity of the deleted gene nor the downstream
-    consequence is asserted: CARD hedges the first and the second differs per record (chitin exposure,
-    metabolite accumulation, blocked entry). Both are good per-record additions and neither is a family
-    claim.'
+  title: Cryptococcus UXS1 loss → UDP-glucuronic acid accumulation → 5-flucytosine resistance
+  description: Conservative resistance-causation graph for the UDP-glucuronic-acid-decarboxylase branch
+    of resistance by absence. The graph grounds the missing wild-type activity that normally consumes
+    UDP-glucuronic acid and connects loss of that activity to the UDP-glucuronic-acid accumulation that
+    mediates 5-flucytosine resistance.
   nodes:
   - node_id: determinant
     label: Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence
@@ -43,86 +40,235 @@ causal_graphs:
     label: resistance by absence
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3003764
+  - node_id: activity
+    label: UDP-glucuronate decarboxylase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0048040
+    xrefs:
+    - EC:4.1.1.35
+    - RHEA:23916
+  - node_id: udp_glucuronate
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+  - node_id: udp_xylose
+    label: UDP-alpha-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:57632
   - node_id: drug0
     label: pyrimidine antifungal drug
     node_type: CHEMICAL
     grounding: ARO:3007560
-  - node_id: absence
-    label: absence of the gene product
-    node_type: STATE
-    description: 'The determinant state, and the whole mechanism. Ungrounded: an absence is not an entity.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: 5-flucytosine resistance phenotype mediated by UDP-glucuronic acid accumulation.
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (resistance by absence)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this determinant in the resistance-by-absence mechanism.
     evidence:
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Family mechanism ARO:3003764.
+      notes: CARD definition for the resistance-by-absence mechanism.
+  - subject: determinant
+    predicate: enables (wild-type UDP-glucuronate decarboxylation)
+    predicate_id: RO:0002327
+    object: activity
+    description: The encoded wild-type UXS1 enzyme consumes UDP-glucuronic acid by catalyzing UDP-glucuronate
+      decarboxylation.
+    evidence:
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
+    - reference: GO:0048040
+      snippet: 'Catalysis of the reaction: H+ + UDP-alpha-D-glucuronate = CO2 + UDP-alpha-D-xylose.'
+      notes: GO definition for UDP-glucuronate decarboxylase activity.
+    - reference: RHEA:23917
+      snippet: UDP-alpha-D-glucuronate + H(+) => UDP-alpha-D-xylose + CO2
+      notes: Rhea's left-to-right child of RHEA:23916 declares UDP-alpha-D-glucuronate as a substrate
+        and UDP-alpha-D-xylose as a product of UDP-glucuronate decarboxylation.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: udp_glucuronate
+    description: UDP-alpha-D-glucuronate is the sugar-nucleotide substrate consumed by UDP-glucuronate
+      decarboxylase activity.
+    evidence:
+    - reference: GO:0048040
+      snippet: 'Catalysis of the reaction: H+ + UDP-alpha-D-glucuronate = CO2 + UDP-alpha-D-xylose.'
+      notes: GO definition for UDP-glucuronate decarboxylase activity.
+    - reference: RHEA:23917
+      snippet: UDP-alpha-D-glucuronate + H(+) => UDP-alpha-D-xylose + CO2
+      notes: Rhea's left-to-right child of RHEA:23916 declares UDP-alpha-D-glucuronate as a substrate
+        and UDP-alpha-D-xylose as a product of UDP-glucuronate decarboxylation.
+    - reference: CHEBI:58052
+      snippet: UDP-alpha-D-glucuronate
+      notes: Rhea substrate in the EC 4.1.1.35 reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: udp_xylose
+    description: UDP-alpha-D-xylose is the sugar-nucleotide product of UDP-glucuronate decarboxylation.
+    evidence:
+    - reference: GO:0048040
+      snippet: 'Catalysis of the reaction: H+ + UDP-alpha-D-glucuronate = CO2 + UDP-alpha-D-xylose.'
+      notes: GO definition for UDP-glucuronate decarboxylase activity.
+    - reference: RHEA:23917
+      snippet: UDP-alpha-D-glucuronate + H(+) => UDP-alpha-D-xylose + CO2
+      notes: Rhea's left-to-right child of RHEA:23916 declares UDP-alpha-D-glucuronate as a substrate
+        and UDP-alpha-D-xylose as a product of UDP-glucuronate decarboxylation.
+    - reference: CHEBI:57632
+      snippet: UDP-alpha-D-xylose
+      notes: Rhea product in the EC 4.1.1.35 reaction.
+  - subject: activity
+    predicate: negatively regulates (substrate-accumulation resistance)
+    predicate_id: RO:0002212
+    object: resistance
+    description: The wild-type decarboxylase consumes UDP-glucuronic acid, so loss of this activity removes
+      a check on the substrate accumulation that mediates 5-flucytosine resistance.
+    evidence:
+    - reference: GO:0048040
+      snippet: 'Catalysis of the reaction: H+ + UDP-alpha-D-glucuronate = CO2 + UDP-alpha-D-xylose.'
+      notes: GO definition for UDP-glucuronate decarboxylase activity.
+    - reference: RHEA:23917
+      snippet: UDP-alpha-D-glucuronate + H(+) => UDP-alpha-D-xylose + CO2
+      notes: Rhea's left-to-right child of RHEA:23916 declares UDP-alpha-D-glucuronate as a substrate
+        and UDP-alpha-D-xylose as a product of UDP-glucuronate decarboxylation.
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
+    - reference: PMID:31913284
+      notes: Billmyre et al. identified UXS1 among Cryptococcus 5-flucytosine resistance genes; this is
+        a CARD citation for ARO:3007567 and ARO:3007568.
+    - reference: PMID:34103502
+      notes: Chang et al. connected UXS1, UDP-glucuronic acid accumulation, and 5-fluorocytosine resistance
+        in cryptococci; this is a CARD citation for ARO:3007567 and ARO:3007568.
+  - subject: udp_glucuronate
+    predicate: causally upstream of (accumulation mediates resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The ARO resistance claim is mediated by accumulation of UDP-glucuronic acid, represented
+      here by the accumulating UDP-alpha-D-glucuronate substrate.
+    evidence:
+    - reference: CHEBI:58052
+      snippet: UDP-alpha-D-glucuronate
+      notes: Rhea substrate in the EC 4.1.1.35 reaction.
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
+    - reference: PMID:31913284
+      notes: Billmyre et al. identified UXS1 among Cryptococcus 5-flucytosine resistance genes; this is
+        a CARD citation for ARO:3007567 and ARO:3007568.
+    - reference: PMID:34103502
+      notes: Chang et al. connected UXS1, UDP-glucuronic acid accumulation, and 5-fluorocytosine resistance
+        in cryptococci; this is a CARD citation for ARO:3007567 and ARO:3007568.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Deletion of the UDP-glucuronate decarboxylase gene or gene product causes 5-flucytosine
+      resistance by allowing UDP-glucuronic acid to accumulate.
     evidence:
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Mechanism ARO:3003764 → resistance.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
+    - reference: PMID:31913284
+      notes: Billmyre et al. identified UXS1 among Cryptococcus 5-flucytosine resistance genes; this is
+        a CARD citation for ARO:3007567 and ARO:3007568.
+    - reference: PMID:34103502
+      notes: Chang et al. connected UXS1, UDP-glucuronic acid accumulation, and 5-fluorocytosine resistance
+        in cryptococci; this is a CARD citation for ARO:3007567 and ARO:3007568.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This ARO determinant denotes loss of UDP-glucuronate decarboxylase and links that loss
+      to a 5-flucytosine resistance phenotype.
     evidence:
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: 'The mechanism, with its hedge intact: ''usually a porin'' -- so porin-ness is NOT asserted
-        for these records, which include a kinase, a decarboxylase and a regulator.'
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: The general statement. Its porin example is quoted as an EXAMPLE, which is what CARD calls
-        it, not as this family's route.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: PMID:31913284
+      notes: Billmyre et al. identified UXS1 among Cryptococcus 5-flucytosine resistance genes; this is
+        a CARD citation for ARO:3007567 and ARO:3007568.
+    - reference: PMID:34103502
+      notes: Chang et al. connected UXS1, UDP-glucuronic acid accumulation, and 5-fluorocytosine resistance
+        in cryptococci; this is a CARD citation for ARO:3007567 and ARO:3007568.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to pyrimidine antifungal drug.
+    description: ARO asserts that UDP-glucuronic acid decarboxylase loss confers resistance to pyrimidine
+      antifungal drugs.
     evidence:
     - reference: ARO:3007567
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug'
-      notes: Asserted on ARO:3007567 (UDP-glucuronic acid decarboxylase), an is_a ancestor of this record's
-        ARO:3007568; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: has quality (deleted or inactivated)
-    predicate_id: RO:0000086
-    object: absence
-    description: The determinant here IS a loss -- what the record names is a gene whose deletion confers
-      resistance, not a gene product that acts.
-    evidence:
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: '''Deletion of gene or gene product results in resistance''.'
-  - subject: absence
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    description: The causal core, and deliberately the ONLY downstream edge -- what the absence leads
-      to differs across these records and no source covers all of them.
-    evidence:
-    - reference: ARO:3003764
-      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: '''antibiotic resistance conferred by deletion of gene''.'
+      notes: ARO drug-class relationship on UDP-glucuronic acid decarboxylase, materialized into trait_relations
+        and inherited by the UXS1 child.
+    - reference: ARO:3007568
+      snippet: UXS1 is a UDP-glucuronic acid decarboxylase. Deletion of UXS1 confers resistance to 5-flucytosine
+        by accumulation of UDP-glucoronic acid, thereby suppressing the cellular toxicity of 5-flucytosine.
+      notes: CARD definition for Cryptococcus spp. UXS1 conferring resistance to 5-flucytosine via absence.
+    - reference: ARO:3007567
+      snippet: UDP-glucuronic acid decarboxylase catalyzes the decarboxylation of UDP-glucuronic acid.
+        Accumulation of UDP-glucuronic acid mediates resistance to 5-flucytosine.
+      notes: CARD definition for UDP-glucuronic acid decarboxylase.
+    - reference: PMID:31913284
+      notes: Billmyre et al. identified UXS1 among Cryptococcus 5-flucytosine resistance genes; this is
+        a CARD citation for ARO:3007567 and ARO:3007568.
+    - reference: PMID:34103502
+      notes: Chang et al. connected UXS1, UDP-glucuronic acid accumulation, and 5-fluorocytosine resistance
+        in cryptococci; this is a CARD citation for ARO:3007567 and ARO:3007568.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated UXS1 UDP-glucuronate 5-flucytosine graph
   llm_assisted: true
 license: CC-BY 4.0
