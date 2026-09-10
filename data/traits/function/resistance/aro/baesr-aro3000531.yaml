@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1128/JB.187.5.1763-1772.2005
   notes: PMID:15716448 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] baeSR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: BaeSR → MdtABC/AcrD expression → antibiotic efflux
+  description: Curated resistance-causation graph for the BaeSR two-component system. The graph grounds
+    the BaeSR branch through BaeR-promoted MdtABC-TolC and AcrD expression and follows both efflux systems
+    to the antibiotic-efflux mechanism.
   nodes:
   - node_id: determinant
     label: baeSR
@@ -36,47 +36,200 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: mdtabc_pump
+    label: MdtABC-TolC multidrug efflux system
+    node_type: PROTEIN
+    grounding: ARO:3000787
+    description: Grounded to CARD's MdtABC-TolC multidrug efflux system class.
+  - node_id: acrd_pump
+    label: AcrD aminoglycoside efflux pump
+    node_type: PROTEIN
+    grounding: ARO:3000491
+    description: Grounded to CARD's AcrD aminoglycoside efflux pump class.
+  - node_id: activation
+    label: positive regulation of MdtABC/AcrD transcription
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+    description: Grounded to broad GO DNA-templated transcriptional activation because BaeR promotes MdtABC
+      and AcrD expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype mediated by regulatory activation of efflux.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this regulator under antibiotic efflux because it promotes expression
+      of a named efflux pump or pump system.
     evidence:
-    - reference: DOI:10.1128/JB.184.15.4168-4176.2002
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3000531
       snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
         BaeR is a response regulator, while BaeS is a sensor kinase.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+  - subject: determinant
+    predicate: enables (activates efflux pump expression)
+    predicate_id: RO:0002327
+    object: activation
+    description: The BaeSR two-component system includes the BaeR response regulator that promotes MdtABC
+      and AcrD expression.
+    evidence:
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+  - subject: activation
+    predicate: positively regulates (raises MdtABC expression)
+    predicate_id: RO:0002213
+    object: mdtabc_pump
+    description: BaeR-dependent activation increases MdtABC expression.
+    evidence:
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3000787
+      snippet: MdtABC-TolC is a multidrug efflux system in Gram-negative bacteria, including E. coli and
+        Salmonella. MdtA is a membrane fusion protein; TolC is the outer membrane channel; MdtBC form
+        a drug transporter.
+      notes: CARD definition for an efflux system promoted by BaeR.
+  - subject: activation
+    predicate: positively regulates (raises AcrD expression)
+    predicate_id: RO:0002213
+    object: acrd_pump
+    description: BaeR-dependent activation increases AcrD expression.
+    evidence:
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by BaeSR.
+  - subject: mdtabc_pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MdtABC-TolC is one multidrug efflux system promoted by BaeR.
+    evidence:
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:3000787
+      snippet: MdtABC-TolC is a multidrug efflux system in Gram-negative bacteria, including E. coli and
+        Salmonella. MdtA is a membrane fusion protein; TolC is the outer membrane channel; MdtBC form
+        a drug transporter.
+      notes: CARD definition for an efflux system promoted by BaeR.
+  - subject: acrd_pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: AcrD is one efflux pump regulated by BaeSR.
+    evidence:
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by BaeSR.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Drug export through the named pump supplies antibiotic efflux.
     evidence:
-    - reference: DOI:10.1128/JB.184.15.4168-4176.2002
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
+    - reference: ARO:3000531
+      snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
+        BaeR is a response regulator, while BaeS is a sensor kinase.
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:3000787
+      snippet: MdtABC-TolC is a multidrug efflux system in Gram-negative bacteria, including E. coli and
+        Salmonella. MdtA is a membrane fusion protein; TolC is the outer membrane channel; MdtBC form
+        a drug transporter.
+      notes: CARD definition for an efflux system promoted by BaeR.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by BaeSR.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The regulator increases efflux-pump expression, which drives efflux-mediated resistance.
     evidence:
-    - reference: DOI:10.1128/JB.184.15.4168-4176.2002
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000531
       snippet: BaeSR is a two component regulatory system for efflux proteins in Gram-negative bacteria.
         BaeR is a response regulator, while BaeS is a sensor kinase.
-      notes: ARO definition of this determinant (baeSR).
+      notes: CARD definition for the BaeSR two-component regulatory system.
+    - reference: ARO:3000828
+      snippet: BaeR is a response regulator that promotes the expression of MdtABC and AcrD efflux complexes.
+      notes: CARD definition for the BaeR response-regulator determinant.
+    - reference: ARO:3000787
+      snippet: MdtABC-TolC is a multidrug efflux system in Gram-negative bacteria, including E. coli and
+        Salmonella. MdtA is a membrane fusion protein; TolC is the outer membrane channel; MdtBC form
+        a drug transporter.
+      notes: CARD definition for an efflux system promoted by BaeR.
+    - reference: ARO:3000491
+      snippet: AcrD is an aminoglycoside efflux pump expressed in E. coli. Its expression can be induced
+        by indole, and is regulated by baeRS and cpxAR.
+      notes: CARD definition for an efflux pump regulated by BaeSR.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+curation_history:
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated ArlS/BaeSR efflux-regulator graph
+  llm_assisted: true
 license: CC-BY 4.0
