@@ -171,6 +171,12 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
         filename="adeabc-aro3000770.yaml",
         is_subunit=False,
     ),
+    Target("ARO:3000503", "acref-tolc-aro3000503.yaml", False),
+    Target(
+        "ARO:3004083",
+        "acref-tolc-confers-resistance-to-ciprofloxacin-aro3004083.yaml",
+        False,
+    ),
     Target("ARO:3000787", "mdtabc-tolc-aro3000787.yaml", False),
     Target("ARO:3000788", "mdtef-tolc-aro3000788.yaml", False),
     Target("ARO:3000799", "mexghi-opmd-aro3000799.yaml", False),
