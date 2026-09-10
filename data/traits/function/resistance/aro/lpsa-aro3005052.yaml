@@ -29,10 +29,10 @@ evidence:
   notes: PMID:23980106 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: LpsA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:14665678). The mirror of efflux: the drug never gets in, rather than being pumped out.'
+  title: LpsA → LPS/LOS biosynthesis → peptide-antibiotic resistance
+  description: Conservative resistance-causation graph for intrinsic Lps peptide-antibiotic resistance.
+    The graph replaces the stale porin influx model with the LPS/LOS-biosynthesis process named by the
+    record itself.
   nodes:
   - node_id: determinant
     label: LpsA
@@ -46,114 +46,198 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: influx
-    label: xenobiotic transport (drug influx across the outer membrane)
+  - node_id: surface_biosynthesis
+    label: lipooligosaccharide biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0042908
-    description: GO:0042908 is the transport process; which channel carries it differs per record and
-      is named in that record's own definition.
-  - node_id: barrier
-    label: outer membrane permeability barrier
-    node_type: STATE
-    description: 'Ungrounded: a property of the envelope rather than a compound.'
+    grounding: GO:1901271
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype conferred by Lps-supported intrinsic peptide-antibiotic tolerance.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this LPS/LOS-biosynthesis determinant in the reduced-permeability resistance
+      mechanism.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Family mechanism ARO:3000244.
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
+        antibiotics.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: LPS/LOS biosynthesis contributes to the Gram-negative surface barrier that underlies
+      intrinsic peptide-antibiotic resistance.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Mechanism ARO:3000244 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what
-        let a drug across it, so losing a channel raises the barrier.
-    - reference: ARO:3000270
-      snippet: Enzymes or other proteins either directly or indirectly reducing overall permeability to
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
         antibiotics.
-      notes: CARD's definition of the family term these records sit under -- the claim at exactly the
-        level this config makes it. Each record's own definition names the channel and the drug class
-        IT admits.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: GO:1901271
+      snippet: The chemical reactions and pathways resulting in the formation of lipooligosaccharide.
+      notes: GO definition for lipooligosaccharide biosynthetic process.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: ARO asserts that the intrinsic Lps branch confers resistance to peptide antibiotics.
     evidence:
     - reference: ARO:3005050
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted on ARO:3005050 (Intrinsic peptide antibiotic resistant Lps), an is_a ancestor of
-        this record's ARO:3005052; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic
+      notes: ARO drug-class relationship on Intrinsic peptide antibiotic resistant Lps, materialized into
+        trait_relations and inherited by LpsA and LpsB.
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
+        antibiotics.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
   - subject: determinant
-    predicate: enables (admits the drug across the membrane)
-    predicate_id: RO:0002327
-    object: influx
-    description: The wild-type function. Resistance is its loss or down-regulation, which is why these
-      records are channels rather than resistance enzymes.
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: This determinant supports LPS/LOS biosynthesis, preserving a cell-envelope state that
+      contributes to intrinsic polymyxin resistance.
     evidence:
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
+        antibiotics.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: GO:1901271
+      snippet: The chemical reactions and pathways resulting in the formation of lipooligosaccharide.
+      notes: GO definition for lipooligosaccharide biosynthetic process.
     - reference: ARO:3000244
       snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
         can provide resistance.
-      notes: 'CARD''s mechanism term, stated as the loss: permeability falls when the channel does, which
-        is this edge read backwards. General to every record here; each names its own channel and drug.'
-  - subject: barrier
-    predicate: negatively regulates (the membrane excludes what has no channel)
-    predicate_id: RO:0002212
-    object: influx
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
+  - subject: determinant
+    predicate: participates in (LPS/LOS biosynthesis)
+    predicate_id: RO:0000056
+    object: surface_biosynthesis
+    description: The encoded Lps protein participates in biosynthesis of the lipopolysaccharide or lipooligosaccharide
+      surface.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: 'Nikaido 2003: exclusion is the outer membrane''s default, and channels are the exception
-        to it.'
-  - subject: influx
-    predicate: causally upstream of (the drug reaches its target)
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
+        antibiotics.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: GO:1901271
+      snippet: The chemical reactions and pathways resulting in the formation of lipooligosaccharide.
+      notes: GO definition for lipooligosaccharide biosynthetic process.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
+  - subject: surface_biosynthesis
+    predicate: causally upstream of
     predicate_id: RO:0002411
-    object: drug0
-    description: 'The causal core inverted: with the channel lost or down-regulated, this step does not
-      happen and the drug never reaches its target.'
+    object: resistance
+    description: LPS/LOS biosynthesis maintains the Gram-negative surface that supports intrinsic polymyxin
+      tolerance.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: A drug that cannot cross the barrier cannot act, whatever its target.
+    - reference: ARO:3005052
+      snippet: LpsA plays a role in Lipooligosaccharide biosynthesis. LpsA confers resistance to polymyxin
+        antibiotics.
+      notes: CARD definition for LpsA.
+    - reference: ARO:3005050
+      snippet: LpsB is involved in lipopolysaccharide synthesis. It provides intrinsic resistance to colistin
+        and other peptide antibiotics such as polymyxins.
+      notes: CARD definition for the Intrinsic peptide antibiotic resistant Lps parent.
+    - reference: GO:1901271
+      snippet: The chemical reactions and pathways resulting in the formation of lipooligosaccharide.
+      notes: GO definition for lipooligosaccharide biosynthetic process.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: PMID:32284036
+      notes: El-Sayed Ahmed et al. reviewed intrinsic and acquired colistin resistance, including LOS-biosynthesis
+        genes.
+    - reference: PMID:16847057
+      notes: Fox et al. characterized Haemophilus influenzae LpsA as a glycosyltransferase acting on the
+        terminal inner-core heptose.
+    - reference: PMID:23980106
+      notes: Morey et al. assayed Haemophilus influenzae lipooligosaccharide inner- and outer-core mutants,
+        including lpsA.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated intrinsic Lps peptide-antibiotic graph
   llm_assisted: true
 license: CC-BY 4.0
