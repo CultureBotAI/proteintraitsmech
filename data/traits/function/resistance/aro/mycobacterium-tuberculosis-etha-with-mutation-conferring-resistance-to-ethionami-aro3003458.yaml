@@ -38,12 +38,11 @@ evidence:
   notes: PMID:30337678 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:10944230). Prodrug activation loss, as katG is for isoniazid: a defective EthA leaves ethionamide
-    inert.'
+  title: Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide → ethionamide
+    prodrug-activation loss → resistance
+  description: Curated resistance-causation graph for ethionamide-resistant EthA mutations. The determinant
+    impairs the EthA/EtaA monooxygenase activity that activates ethionamide, reducing formation of the
+    active InhA inhibitor and causing thioamide resistance.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide
@@ -93,6 +92,26 @@ causal_graphs:
         from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
         (Rv3854c, EtaA) confers ETA hypersensitivity.
       notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: DeBarber et al. 2000, showing S-oxidation of ethionamide before target engagement.
+    description: CARD classifies EthA resistance mutations under mutation-conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -103,6 +122,26 @@ causal_graphs:
         from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
         (Rv3854c, EtaA) confers ETA hypersensitivity.
       notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: DeBarber et al. 2000, showing S-oxidation of ethionamide before target engagement.
+    description: Loss of EthA prodrug activation causes ethionamide resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -121,16 +160,50 @@ causal_graphs:
         before interacting with its cellular target.
       notes: 'And what the activation is: S-oxidation, shown with radiolabelled drug and metabolite analysis
         in whole cells.'
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:10944230
+      snippet: ETA is metabolized by MTb to a 4-pyridylmethanol product remarkably similar in structure
+        to that formed by the activation of isoniazid by the catalase-peroxidase KatG.
+      notes: DeBarber et al. 2000, identifying the activated ethionamide product class.
+    description: The mutant determinant blocks activation of the ethionamide prodrug, leaving less active
+      inhibitor for the InhA target.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to thioamide antibiotic.
+    description: CARD asserts ethA-mediated resistance to thioamide antibiotics.
     evidence:
     - reference: ARO:3003457
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic'
       notes: Asserted on ARO:3003457 (ethionamide resistant ethA), an is_a ancestor of this record's ARO:3003458;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: enables (S-oxidation of the prodrug)
     predicate_id: RO:0002327
@@ -142,6 +215,18 @@ causal_graphs:
         (Rv3854c, EtaA) confers ETA hypersensitivity.
       notes: EtaA (Rv3854c) is identified in this paper as the clustered monooxygenase whose level sets
         ethionamide sensitivity.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    description: Wild-type EthA/EtaA is the monooxygenase activity whose disruption prevents ethionamide
+      activation.
   - subject: eta
     predicate: causally upstream of (is S-oxidised)
     predicate_id: RO:0002411
@@ -152,6 +237,21 @@ causal_graphs:
         of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
         before interacting with its cellular target.
       notes: Activation precedes target engagement -- the drug as given does nothing.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: PMID:10944230
+      snippet: ETA is metabolized by MTb to a 4-pyridylmethanol product remarkably similar in structure
+        to that formed by the activation of isoniazid by the catalase-peroxidase KatG.
+      notes: DeBarber et al. 2000, identifying the activated ethionamide product class.
+    description: Ethionamide is activated by S-oxidation before target engagement.
   - subject: monooxygenase
     predicate: causally upstream of (activates the prodrug)
     predicate_id: RO:0002411
@@ -167,12 +267,27 @@ causal_graphs:
         to that formed by the activation of isoniazid by the catalase-peroxidase KatG.
       notes: And the product is 'remarkably similar in structure' to isoniazid's KatG-activated product,
         which is why the two drugs share a target and a resistance logic (round 27).
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: DeBarber et al. 2000, showing S-oxidation of ethionamide before target engagement.
+    description: EthA/EtaA monooxygenase activity activates the ethionamide prodrug.
   - subject: activated_eta
     predicate: negatively regulates (inhibits the shared target)
     predicate_id: RO:0002212
     object: inha_gene
-    description: Ethionamide and isoniazid converge on InhA, whose own record carries both resistance
-      routes (round 28).
+    description: The activated ethionamide product inhibits the downstream InhA target.
     evidence:
     - reference: PMID:10944230
       snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
@@ -181,12 +296,21 @@ causal_graphs:
       notes: The paper says activation happens 'before interacting with its cellular target'; that the
         target is InhA is curated on ARO:3003417 from PMID:8284673, which showed inhA mutations confer
         resistance to BOTH drugs.
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: PMID:10944230
+      snippet: ETA is metabolized by MTb to a 4-pyridylmethanol product remarkably similar in structure
+        to that formed by the activation of isoniazid by the catalase-peroxidase KatG.
+      notes: DeBarber et al. 2000, identifying the activated ethionamide product class.
   - subject: determinant
     predicate: negatively regulates (the defective EthA cannot activate the prodrug)
     predicate_id: RO:0002212
     object: monooxygenase
-    description: 'The causal core, and it runs backwards as katG''s does: resistance is the ABSENCE of
-      an activity.'
+    description: Resistance mutations impair the EthA/EtaA activity required for ethionamide activation.
     evidence:
     - reference: PMID:10944230
       snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
@@ -194,9 +318,27 @@ causal_graphs:
         (Rv3854c, EtaA) confers ETA hypersensitivity.
       notes: 'Shown by the converse rather than by knockout: overproduction gives hypersensitivity, so
         loss gives resistance.'
+    - reference: ARO:3003458
+      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
+        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
+        the activation and activity of the ethionamide prodrug.
+      notes: CARD definition for Mycobacterium tuberculosis ethA with mutation conferring resistance to
+        ethionamide.
+    - reference: ARO:3003457
+      snippet: Mutations that occurs on the ethA genes resulting in the inability to catalyzes the oxidation
+        of ethionamide (ETH) to the corresponding sulfoxide (the active drug).
+      notes: CARD definition for ethionamide resistant ethA.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed ethionamide EthA prodrug-activation graphs
   llm_assisted: true
 license: CC-BY 4.0
