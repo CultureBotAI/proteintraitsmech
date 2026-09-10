@@ -33,29 +33,15 @@ evidence:
   notes: PMID:11959596 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: tet(34) → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3002870). Target protection, not inactivation. This record carries three chemistry mechanism
-    ids and describes none of them; the same sentence is cited for all three because it is the only mechanism
-    CARD gives. NOT asserted: how purine nucleotide synthesis protects translation, which CARD omits.'
+  title: tet(34) → purine nucleotide synthesis → protein-synthesis protection
+  description: Curated resistance-causation graph for the Mg2+-dependent purine nucleotide synthesis route
+    named in the tet(34) CARD definition. The graph deliberately avoids asserting unsupported tetracycline
+    hydroxylation chemistry.
   nodes:
   - node_id: determinant
     label: tet(34)
     node_type: PROTEIN
     grounding: ARO:3002870
-  - node_id: mech0
-    label: antibiotic inactivation
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:0001004
-  - node_id: mech1
-    label: restructuring of bacterial cell wall conferring antibiotic resistance
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3000213
-  - node_id: mech2
-    label: hydroxylation of antibiotic conferring resistance
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3000450
   - node_id: drug0
     label: tetracycline antibiotic
     node_type: CHEMICAL
@@ -63,12 +49,15 @@ causal_graphs:
   - node_id: purine_synthesis
     label: Mg2+-dependent purine nucleotide synthesis
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-96).'
-  - node_id: protection
-    label: protection of the protein synthesis pathway
+    grounding: GO:0006164
+    description: Grounded to the broad purine nucleotide biosynthetic process because CARD does not provide
+      a narrower Mg2+-dependent term.
+  - node_id: protected_translation
+    label: protected protein synthesis pathway
     node_type: STATE
-    description: The causal core. Ungrounded, and deliberately unelaborated -- CARD says protection happens,
-      not how.
+    grounding: GO:0006412
+    description: Local state representing protection of the protein synthesis pathway; grounded to the
+      broad GO translation term.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -78,106 +67,105 @@ causal_graphs:
       itself.'
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: purine_synthesis
+    description: CARD states that tet(34) activates Mg2+-dependent purine nucleotide synthesis.
     evidence:
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Family mechanism ARO:0001004.
-  - subject: mech0
+      notes: CARD definition for tet(34).
+    - reference: GO:0006164
+      snippet: The chemical reactions and pathways resulting in the formation of a purine nucleotide.
+      notes: GO definition for purine nucleotide biosynthetic process.
+    - reference: GO:0006412
+      snippet: The cellular metabolic process in which a protein is formed.
+      notes: GO definition for translation, used as the grounded protein-synthesis process.
+    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
+      notes: PMID:11959596 (aro citation)
+  - subject: purine_synthesis
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: protected_translation
+    description: CARD links Mg2+-dependent purine nucleotide synthesis to protection of the protein synthesis
+      pathway.
+    evidence:
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: CARD definition for tet(34).
+    - reference: GO:0006164
+      snippet: The chemical reactions and pathways resulting in the formation of a purine nucleotide.
+      notes: GO definition for purine nucleotide biosynthetic process.
+    - reference: GO:0006412
+      snippet: The cellular metabolic process in which a protein is formed.
+      notes: GO definition for translation, used as the grounded protein-synthesis process.
+    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
+      notes: PMID:11959596 (aro citation)
+  - subject: protected_translation
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The protected protein synthesis pathway is the asserted causal route to resistance.
     evidence:
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Mechanism ARO:0001004 → resistance.
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech1
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Family mechanism ARO:3000213.
-  - subject: mech1
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Mechanism ARO:3000213 → resistance.
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech2
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Family mechanism ARO:3000450.
-  - subject: mech2
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: Mechanism ARO:3000450 → resistance.
+      notes: CARD definition for tet(34).
+    - reference: GO:0006164
+      snippet: The chemical reactions and pathways resulting in the formation of a purine nucleotide.
+      notes: GO definition for purine nucleotide biosynthetic process.
+    - reference: GO:0006412
+      snippet: The cellular metabolic process in which a protein is formed.
+      notes: GO definition for translation, used as the grounded protein-synthesis process.
+    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
+      notes: PMID:11959596 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: tet(34) confers resistance through activation of purine nucleotide synthesis and downstream
+      protection of protein synthesis.
     evidence:
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: 'The mechanism CARD does state, after three it does not: activation of Mg2+-dependent purine
-        nucleotide synthesis PROTECTS the protein synthesis pathway. All three of this record''s mechanism
-        ids are covered by this one sentence because none of them is what it describes -- the sentence
-        is the honest evidence for each.'
+      notes: CARD definition for tet(34).
+    - reference: GO:0006164
+      snippet: The chemical reactions and pathways resulting in the formation of a purine nucleotide.
+      notes: GO definition for purine nucleotide biosynthetic process.
+    - reference: GO:0006412
+      snippet: The cellular metabolic process in which a protein is formed.
+      notes: GO definition for translation, used as the grounded protein-synthesis process.
+    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
+      notes: PMID:11959596 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
+    description: ARO maps the tet(34) record to tetracycline antibiotic resistance through an inherited
+      drug-class relation.
     evidence:
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: CARD definition for tet(34).
     - reference: ARO:3000036
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000050 ! tetracycline antibiotic'
-      notes: Asserted on ARO:3000036 (tetracycline inactivation enzyme), an is_a ancestor of this record's
-        ARO:3002870; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: positively regulates (activates purine nucleotide synthesis)
-    predicate_id: RO:0002213
-    object: purine_synthesis
-    description: The POSITIVE form, licensed by CARD's own 'causes the ACTIVATION of'.
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: '''tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis''.'
-  - subject: purine_synthesis
-    predicate: causally upstream of (protects protein synthesis)
-    predicate_id: RO:0002411
-    object: protection
-    description: The causal core, and where CARD stops -- it says the pathway is protected, not by what
-      route.
-    evidence:
-    - reference: ARO:3002870
-      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
-        the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: '''which protects the protein synthesis pathway''. NOT asserted: the mechanism of that protection,
-        nor any interaction with tetracycline, neither of which CARD gives.'
+      notes: Tetracycline drug-class relation asserted on ARO:3000036 and inherited by the tet(34) record.
+    - reference: ARO:3000050
+      snippet: tetracycline antibiotic
+      notes: CARD drug-class term inherited by tet(34).
+    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
+      notes: PMID:11959596 (aro citation)
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-09T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed tet(34) purine-synthesis protection graph
   llm_assisted: true
 license: CC-BY 4.0
