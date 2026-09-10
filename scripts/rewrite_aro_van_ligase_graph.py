@@ -120,6 +120,11 @@ EXPECTED_EDGE_KEYS = {
 }
 
 OLD_PRECURSOR_EDGE = ("determinant", "RO:0002327", "alt_precursor")
+OLD_DOMAIN_EDGE_KEYS = {
+    ("domain", "BFO:0000050", "determinant"),
+    ("determinant", "RO:0002350", "fold"),
+    ("domain", "RO:0002327", "mech0"),
+}
 
 EDGE_DESCRIPTIONS = {
     ("determinant", "RO:0000056", "mech0"): (
@@ -157,7 +162,18 @@ class Target:
     filename: str
 
 
-TARGET = Target(identifier=TARGET_IDENTIFIER, filename=TARGET_FILENAME)
+TARGETS: tuple[Target, ...] = (
+    Target(identifier=TARGET_IDENTIFIER, filename=TARGET_FILENAME),
+    Target(identifier="ARO:3000010", filename="vana-aro3000010.yaml"),
+    Target(identifier="ARO:3000013", filename="vanb-aro3000013.yaml"),
+    Target(identifier="ARO:3000005", filename="vand-aro3000005.yaml"),
+    Target(identifier="ARO:3002908", filename="vanf-aro3002908.yaml"),
+    Target(identifier="ARO:3003723", filename="vani-aro3003723.yaml"),
+    Target(identifier="ARO:3002911", filename="vanm-aro3002911.yaml"),
+    Target(identifier="ARO:3002913", filename="vano-aro3002913.yaml"),
+    Target(identifier="ARO:3007189", filename="vanp-aro3007189.yaml"),
+)
+TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
 
 def _dump(obj: Any) -> str:
@@ -203,6 +219,14 @@ def _source_evidence(record: dict[str, Any]) -> tuple[dict[str, str], ...]:
     )
 
 
+def _target_evidence(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "reference": str(record["identifier"]),
+        "snippet": str(record["definition"]),
+        "notes": f"CARD definition for {record['label']}.",
+    }
+
+
 def _unique_evidence(evidence: tuple[dict[str, str], ...]) -> list[dict[str, str]]:
     unique: list[dict[str, str]] = []
     seen: set[tuple[str, str, str]] = set()
@@ -238,7 +262,7 @@ def _edge(
 
 def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     nodes = _nodes_by_id(graph)
-    missing_nodes = sorted({"determinant", "mech0", "drug0", "alt_precursor"} - set(nodes))
+    missing_nodes = sorted({"determinant", "mech0", "drug0", "resistance"} - set(nodes))
     if missing_nodes:
         missing = ", ".join(missing_nodes)
         raise ValueError(f"{target.identifier}: missing node(s): {missing}")
@@ -248,7 +272,7 @@ def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     old_edge_keys = {_edge_key(edge) for edge in _dicts(graph.get("edges"))}
     for edge in _dicts(graph.get("edges")):
         key = _edge_key(edge)
-        if key == OLD_PRECURSOR_EDGE:
+        if key == OLD_PRECURSOR_EDGE or key in OLD_DOMAIN_EDGE_KEYS:
             continue
         if key not in EXPECTED_EDGE_KEYS:
             raise ValueError(f"{target.identifier}: unexpected edge {key[0]} -> {key[2]}")
@@ -265,10 +289,35 @@ def _validate_graph(graph: dict[str, Any], target: Target) -> None:
     else:
         required_edges = EXPECTED_EDGE_KEYS
 
-    missing_edges = sorted(required_edges - found_edges)
+    minimal_edges = {
+        ("determinant", "RO:0000056", "mech0"),
+        ("mech0", "RO:0002411", "resistance"),
+        ("determinant", "RO:0002411", "resistance"),
+        ("determinant", "ARO:2000001", "drug0"),
+    }
+    missing_edges = sorted((required_edges & old_edge_keys | minimal_edges) - found_edges)
     if missing_edges:
         missing = ", ".join(f"{subject} -> {object_}" for subject, _, object_ in missing_edges)
         raise ValueError(f"{target.identifier}: missing edge(s): {missing}")
+
+    if not _drug_relation_evidence(graph):
+        raise ValueError(f"{target.identifier}: missing Van-ligase ARO drug relation evidence")
+
+
+def _drug_relation_evidence(graph: dict[str, Any]) -> tuple[dict[str, str], ...]:
+    evidence: list[dict[str, str]] = []
+    for edge in _dicts(graph.get("edges")):
+        if (
+            edge.get("subject") == "determinant"
+            and edge.get("predicate_id") == "ARO:2000001"
+            and edge.get("object") == "drug0"
+        ):
+            for item in _dicts(edge.get("evidence")):
+                if item.get("reference") and str(item.get("snippet", "")).startswith(
+                    "relationship: confers_resistance_to_drug_class ARO:3000081"
+                ):
+                    evidence.append(copy.deepcopy(item))
+    return tuple(evidence)
 
 
 def _canonical_graph(record: dict[str, Any], target: Target) -> dict[str, Any]:
@@ -276,25 +325,22 @@ def _canonical_graph(record: dict[str, Any], target: Target) -> dict[str, Any]:
     _validate_graph(graph, target)
     nodes = _nodes_by_id(graph)
     source_evidence = _source_evidence(record)
+    target_evidence = _target_evidence(record)
     mechanism_evidence = (
+        target_evidence,
         VAN_LIGASE_EVIDENCE,
         CELL_WALL_RESTRUCTURING_EVIDENCE,
         *source_evidence,
     )
     drug_evidence = (
-        {
-            "reference": TARGET_IDENTIFIER,
-            "snippet": (
-                "relationship: confers_resistance_to_drug_class ARO:3000081 ! "
-                "glycopeptide antibiotic"
-            ),
-            "notes": "ARO drug-class relationship asserted directly on Van ligase.",
-        },
+        *_drug_relation_evidence(graph),
         GLYCOPEPTIDE_EVIDENCE,
+        target_evidence,
         VAN_LIGASE_EVIDENCE,
         *source_evidence,
     )
     precursor_evidence = (
+        target_evidence,
         VAN_LIGASE_EVIDENCE,
         CELL_WALL_RESTRUCTURING_EVIDENCE,
         *source_evidence,
@@ -372,7 +418,7 @@ def _canonical_graph(record: dict[str, Any], target: Target) -> dict[str, Any]:
     }
 
 
-def enrich_record(record: dict[str, Any], target: Target = TARGET) -> tuple[dict[str, Any], bool]:
+def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
     if record.get("identifier") != target.identifier:
         raise ValueError(
             f"{target.filename}: expected {target.identifier}, "
@@ -388,13 +434,14 @@ def enrich_record(record: dict[str, Any], target: Target = TARGET) -> tuple[dict
 
 
 def enrich_text(text: str, path: Path) -> tuple[str, bool]:
-    if path.name != TARGET.filename:
+    target = TARGET_BY_FILENAME.get(path.name)
+    if target is None:
         raise ValueError(f"not the Van ligase target: {path}")
 
     record = yaml.safe_load(text)
     if not isinstance(record, dict):
         raise ValueError(f"{path}: expected a YAML mapping")
-    enriched, changed = enrich_record(record)
+    enriched, changed = enrich_record(record, target)
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
 
     history = list(_dicts(enriched.get("curation_history")))
@@ -407,31 +454,54 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     return out, changed
 
 
+def iter_target_paths(path: Path) -> list[Path]:
+    if path.is_file():
+        return [path]
+    if not path.is_dir():
+        raise ValueError(f"{path} is neither a file nor a directory")
+    return [path / target.filename for target in TARGETS]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--apply", action="store_true")
-    parser.add_argument("--path", type=Path, default=ARO_DIR)
+    parser.add_argument(
+        "--path",
+        type=Path,
+        default=ARO_DIR,
+        help="ARO directory or one of the nine D-Ala-D-Lac Van-ligase YAML files",
+    )
     args = parser.parse_args(argv)
 
-    path = args.path / TARGET.filename
-    before = path.read_text(encoding="utf-8")
-    after, changed = enrich_text(before, path)
-    if changed:
+    changed = unchanged = 0
+    problems: list[str] = []
+    for path in iter_target_paths(args.path):
+        if not path.exists():
+            problems.append(f"{path}: missing")
+            continue
+        try:
+            before = path.read_text(encoding="utf-8")
+            after, did_change = enrich_text(before, path)
+        except (OSError, ValueError, yaml.YAMLError) as exc:
+            problems.append(str(exc))
+            continue
+
+        if not did_change:
+            unchanged += 1
+            continue
+
+        changed += 1
+        print(f"  {'wrote' if args.apply else 'would write'} {path.name}")
         if args.apply:
             path.write_text(after, encoding="utf-8")
-            print(f"  wrote {TARGET.filename}")
-            print("changed: 1")
-        else:
-            print(f"  would write {TARGET.filename}")
-            print("would change: 1")
-            print("dry run -- pass --apply to write")
-        return 0
 
-    print("changed: 0" if args.apply else "would change: 0")
-    print("already enriched: 1")
+    print(f"{'changed' if args.apply else 'would change'}: {changed}")
+    print(f"already enriched: {unchanged}")
+    for problem in problems:
+        print(f"PROBLEM: {problem}", file=sys.stderr)
     if not args.apply:
         print("dry run -- pass --apply to write")
-    return 0
+    return 1 if problems else 0
 
 
 if __name__ == "__main__":
