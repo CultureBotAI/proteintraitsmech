@@ -1786,3 +1786,40 @@ def test_the_preferred_rank_is_deterministic_across_repeated_runs(tmp_path):
         assert selector.main(_args(queue, paths, "--prefer-taxon", ECOLI)) == 0
         digests.append(hashlib.sha256(paths[0].read_bytes()).hexdigest())
     assert digests[0] == digests[1]
+
+
+def test_an_unmatched_preference_says_so_on_stdout(tmp_path, capsys):
+    """#665: a well-formed CURIE the queue lacks is a legitimate request, but its
+    feedback must not be identical to an honoured preference's.
+
+    The shape check already rejects a malformed value precisely because a silent
+    no-op would leave the batch "looking preference-honouring and ordered exactly
+    as if no preference had been asked for". A typo in the digits produces a valid
+    CURIE and lands in that same state, so the summary has to distinguish them.
+    """
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert selector.main(_args(queue, paths, "--prefer-taxon", "NCBITaxon:999999")) == 0
+    unmatched = capsys.readouterr().out
+    assert "taxon preference NCBITaxon:999999" in unmatched
+    assert "no selected record has a candidate from any of them" in unmatched
+
+    matched_paths = _paths(tmp_path / "matched")
+    (tmp_path / "matched").mkdir()
+    assert selector.main(_args(queue, matched_paths, "--prefer-taxon", ECOLI)) == 0
+    matched = capsys.readouterr().out
+    assert f"taxon preference {ECOLI}: 1/2 selected records led" in matched
+    assert "no selected record has a candidate" not in matched
+
+
+def test_no_preference_prints_no_preference_line(tmp_path, capsys):
+    queue = _taxon_queue(tmp_path)
+    assert selector.main(_args(queue, _paths(tmp_path))) == 0
+    assert "taxon preference" not in capsys.readouterr().out
+
+
+def test_candidate_order_requires_an_explicit_preference(tmp_path):
+    """#666: the argument has no default, so forgetting it cannot pass silently."""
+    with pytest.raises(TypeError):
+        selector._candidate_order({"_queue_line": 1})
+    assert selector._candidate_order({"_queue_line": 1}, frozenset()) == (1, "", "", 1)

@@ -585,7 +585,7 @@ def review_flags(row: dict[str, Any]) -> tuple[str, ...]:
 
 
 def _candidate_order(
-    row: dict[str, Any], preferred_taxon_ids: frozenset[str] = frozenset()
+    row: dict[str, Any], preferred_taxon_ids: frozenset[str]
 ) -> tuple[int, str, str, int]:
     """Give retained alternatives a stable order independent of queue ordering.
 
@@ -594,6 +594,13 @@ def _candidate_order(
     existing (protein, candidate, queue line) key still decides. Preference is a
     *reordering*, never a filter — every alternative is retained, so no record
     can be emptied by asking for an organism it does not have (#656).
+
+    It has deliberately no default (#666): forgetting it would order the batch as
+    though no preference had been asked for, and every count and invariant would
+    still pass. Pass an empty frozenset to mean "no preference".
+
+    All preferred taxa share rank 0; the set is unordered, so repeating the flag
+    does not express a priority between organisms (#667).
     """
 
     taxon_id = _clean(row.get("taxon_id")) or ""
@@ -608,7 +615,7 @@ def _candidate_order(
 def _trait_records(
     rows: Iterable[dict[str, Any]],
     *,
-    preferred_taxon_ids: Iterable[str] = (),
+    preferred_taxon_ids: Iterable[str],
 ) -> list[TraitRecord]:
     by_path: dict[str, list[dict[str, Any]]] = defaultdict(list)
     seen_candidate_ids: dict[str, int] = {}
@@ -1018,7 +1025,9 @@ def _verify_reviewed_batch(
                 f"{candidates_path}:{line_number}: candidate source_batch does not match "
                 f"manifest source_batch={source_batch!r}"
             )
-    records = _trait_records(candidate_snapshot.batch_rows)
+    # Reconstructing a prior batch for exclusion, which compares candidate-id sets:
+    # ordering is irrelevant here, so state no preference rather than inherit one.
+    records = _trait_records(candidate_snapshot.batch_rows, preferred_taxon_ids=())
     expected_rows = _manifest_count(
         manifest, "selected_candidate_rows", "shard_selected_candidate_rows"
     )
@@ -2405,7 +2414,7 @@ def run(args: argparse.Namespace) -> int:
     reviewed_artifacts = _reviewed_artifact_quadruples(args)
 
     snapshot = _read_queue(args.queue, source_batch)
-    exact_batch_records = _trait_records(snapshot.batch_rows)
+    exact_batch_records = _trait_records(snapshot.batch_rows, preferred_taxon_ids=())
     sliced_rows, normalized_sources = _source_slice(snapshot.batch_rows, requested_sources)
     pre_exclusion_global = _trait_records(sliced_rows, preferred_taxon_ids=preferred_taxon_ids)
     exclusions = _review_exclusions(
@@ -2519,6 +2528,15 @@ def run(args: argparse.Namespace) -> int:
         f"({len(output_rows):,} candidate alternatives); "
         f"queue_sha256={snapshot.sha256}"
     )
+    if preferred_taxon_ids:
+        led = manifest["shard_selected_records_led_by_preferred_taxon"]
+        # An unmatched preference is a legitimate answer, but it must not look
+        # identical to an honoured one at the moment of the --apply decision (#665).
+        note = "" if led else " — no selected record has a candidate from any of them"
+        print(
+            f"taxon preference {', '.join(preferred_taxon_ids)}: "
+            f"{led:,}/{len(selected):,} selected records led by a preferred organism{note}"
+        )
     if not args.apply:
         print("dry run: no output files written; pass --apply to install the batch")
         return 0
@@ -2551,9 +2569,10 @@ def _parser() -> argparse.ArgumentParser:
         metavar="NCBITAXON_CURIE",
         help=(
             "rank alternatives from this organism first within each trait record; "
-            "repeat for several (e.g. --prefer-taxon NCBITaxon:83333). This never "
-            "drops an alternative, so a record with no candidate from a preferred "
-            "organism keeps every candidate it had"
+            "repeat for several (e.g. --prefer-taxon NCBITaxon:83333). Repeats form "
+            "an unordered set, not a priority list: every preferred organism shares "
+            "the same rank. This never drops an alternative, so a record with no "
+            "candidate from a preferred organism keeps every candidate it had"
         ),
     )
     parser.add_argument(

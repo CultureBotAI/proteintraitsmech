@@ -139,10 +139,13 @@ just select-uniprot-review-batch <BATCH_ID> --source <NAMESPACE> \
   --prefer-taxon NCBITaxon:243232   # E. coli K-12, B. subtilis 168, M. jannaschii
 ```
 
-The manifest records `preferred_taxon_ids` and
-`shard_selected_records_led_by_preferred_taxon`, so the batch reproduces and the
-reach is on file rather than asserted. Two things to be honest about when
-reporting:
+Repeats form an unordered *set*, not a priority list — every preferred organism
+shares one rank, so this cannot express "E. coli first, archaeon second". The
+manifest records `preferred_taxon_ids` and
+`shard_selected_records_led_by_preferred_taxon`, and the run prints the same
+count, so a preference that matched nothing is visible before you `--apply`
+rather than only to whoever opens the manifest later. Two things to be honest
+about when reporting:
 
 - the queue is drawn from a fixed organism panel, so "no prokaryotic candidate"
   means none *in the panel*, not none in UniProt. The panel enters the corpus
