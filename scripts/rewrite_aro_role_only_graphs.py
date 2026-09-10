@@ -29,14 +29,21 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_CURATOR = "codex-causal-graph-quality"
+HISTORY_ACTION = "Supplemented role-only pgsA mutation evidence"
 HISTORY_EVENT = {
-    "timestamp": "2026-09-05T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": HISTORY_CURATOR,
-    "action": (
-        "Grounded role-only pgsA/rpoB/rpoC ARO causal-graph nodes to local GO terms "
-        "and added conservative edge descriptions"
-    ),
+    "action": HISTORY_ACTION,
     "llm_assisted": True,
+}
+
+MUTATION_MECHANISM_EVIDENCE = {
+    "reference": "ARO:3000212",
+    "snippet": (
+        "Point mutations in the DNA may lead to an altered gene product that may "
+        "result in antibiotic resistance."
+    ),
+    "notes": "CARD definition for mutation conferring antibiotic resistance.",
 }
 
 GO_PGP_SYNTHASE_EVIDENCE = {
@@ -211,6 +218,9 @@ TARGETS = {
         node_updates=PGSA_NODES,
         edge_descriptions=PGSA_EDGE_DESCRIPTIONS,
         extra_evidence={
+            ("determinant", "mech0"): [MUTATION_MECHANISM_EVIDENCE],
+            ("mech0", "resistance"): [MUTATION_MECHANISM_EVIDENCE],
+            ("determinant", "resistance"): [MUTATION_MECHANISM_EVIDENCE],
             ("determinant", "pgp_synthase"): [GO_PGP_SYNTHASE_EVIDENCE],
             ("pgp_synthase", "phospholipid"): [GO_PHOSPHOLIPID_EVIDENCE],
         },
@@ -363,7 +373,8 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
         return text, False
 
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_CURATOR not in out:
+    history = record.get("curation_history") or []
+    if not any(item.get("action") == HISTORY_ACTION for item in history):
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
     return out, True
 
