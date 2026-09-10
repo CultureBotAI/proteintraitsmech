@@ -437,6 +437,7 @@ def _edge_evidence(target: Target, key: tuple[str, str]) -> list[dict[str, str]]
         ("determinant", "mech0"),
         ("mech0", "resistance"),
         ("determinant", "resistance"),
+        ("determinant", "overexpression"),
         ("repression", "pump"),
         ("overexpression", "pump"),
         ("activation", "pump"),
