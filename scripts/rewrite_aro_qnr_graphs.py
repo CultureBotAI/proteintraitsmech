@@ -160,6 +160,7 @@ class Target:
 
 
 _TARGET_ROWS = """
+ARO:3000419 quinolone-resistance-protein-qnr-aro3000419.yaml
 ARO:3002707 qnra1-aro3002707.yaml
 ARO:3002708 qnra2-aro3002708.yaml
 ARO:3002709 qnra3-aro3002709.yaml
