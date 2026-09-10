@@ -74,6 +74,12 @@ THIOAMIDE_EVIDENCE = {
     "notes": "ARO drug-class term inherited by ethionamide-resistant Rv0565c records.",
 }
 
+GO_MONOOXYGENASE_EVIDENCE = {
+    "reference": "GO:0004497",
+    "snippet": "Catalysis of the incorporation of one atom from molecular oxygen into a substrate.",
+    "notes": "GO grounding for the broad monooxygenase activity node.",
+}
+
 ACTIVITY_NODE = {
     "node_id": "activity",
     "label": "monooxygenase activity",
@@ -327,6 +333,7 @@ def _canonical_edges(
     activity_evidence = (
         own_evidence,
         PARENT_EVIDENCE,
+        GO_MONOOXYGENASE_EVIDENCE,
         *target.inherited_resistance_evidence,
         *source_evidence,
     )

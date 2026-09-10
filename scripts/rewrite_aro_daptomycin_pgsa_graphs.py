@@ -95,6 +95,12 @@ PHOSPHOLIPID_BIOSYNTHESIS_EVIDENCE = {
     "notes": "GO definition for the broad phospholipid biosynthetic process.",
 }
 
+PEPTIDE_ANTIBIOTIC_EVIDENCE = {
+    "reference": "ARO:3000053",
+    "snippet": "peptide antibiotic",
+    "notes": "ARO drug-class term inherited by daptomycin-resistant pgsA records.",
+}
+
 SHARED_NODE_UPDATES = {
     "pgp_synthase": {
         "node_id": "pgp_synthase",
@@ -205,7 +211,11 @@ class Target:
                     "CARD maps these pgsA variants to daptomycin resistance in the "
                     "peptide-antibiotic class."
                 ),
-                evidence=(self.target_evidence, DAPTOMYCIN_PGSA_EVIDENCE),
+                evidence=(
+                    self.target_evidence,
+                    DAPTOMYCIN_PGSA_EVIDENCE,
+                    PEPTIDE_ANTIBIOTIC_EVIDENCE,
+                ),
             ),
             ("determinant", "pgp_synthase"): EdgeUpdate(
                 predicate="enables",
