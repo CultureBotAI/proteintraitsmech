@@ -26,12 +26,10 @@ evidence:
   notes: PMID:16269538 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:10357824). Target alteration in RNA: a substitution in the 16S decoding site lowers aminoglycoside
-    affinity. The same position is what makes these drugs prokaryote-selective.'
+  title: Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin → rRNA antibiotic-binding-site
+    alteration
+  description: Curated resistance-causation graph for point mutations in a bacterial rRNA that alter a
+    drug-class-linked ribosomal antibiotic-binding site.
   nodes:
   - node_id: determinant
     label: Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin
@@ -45,16 +43,17 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
-  - node_id: decoding_site
-    label: 16S rRNA decoding site (A site), around residues A1408, A1492 and A1493
+  - node_id: binding_site
+    label: 16S rRNA antibiotic-binding site
     node_type: NUCLEIC_ACID
-    description: 'The aminoglycoside binding site. Ungrounded: no ontology term denotes this site, the
-      same gap as the QRDR and RRDR in earlier rounds.'
-  - node_id: decoding
-    label: translation
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0006412
-    description: Decoding and translocation are the steps these drugs interfere with.
+    grounding: SO:0000252
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrow term is available
+      for a generic rRNA antibiotic-binding site.
+  - node_id: subunit
+    label: small ribosomal subunit (30S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015935
+    description: The 30S subunit that contains bacterial 16S rRNA.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -67,108 +66,240 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this rRNA variant under mutation conferring antibiotic resistance.
     evidence:
-    - reference: PMID:10357824
-      snippet: Expression in E.coli of plasmid-encoded 16S rRNA containing an A1408 to G substitution
-        confers resistance to a subclass of the aminoglycoside antibiotics that contain a 6' amino group
-        on ring I.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: CARD definition for the 16S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism captures rRNA sequence changes that alter ribosomal
+      antibiotic-binding sites.
     evidence:
-    - reference: PMID:10357824
-      snippet: Chemical footprinting experiments indicate that resistance arises from the lower affinity
-        of the drug for the eukaryotic rRNA sequence.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: CARD definition for the 16S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The mutated rRNA determinant alters a ribosomal antibiotic-binding site and thereby confers
+      resistance.
     evidence:
-    - reference: PMID:10357824
-      snippet: Expression in E.coli of plasmid-encoded 16S rRNA containing an A1408 to G substitution
-        confers resistance to a subclass of the aminoglycoside antibiotics that contain a 6' amino group
-        on ring I.
-      notes: 'Recht et al. 1999 built the substitution into plasmid-encoded 16S rRNA and measured resistance
-        -- construction, not association. Note the scope: a SUBCLASS of aminoglycosides, those with a
-        6'' amino group on ring I.'
-    - reference: PMID:10357824
-      snippet: Chemical footprinting experiments indicate that resistance arises from the lower affinity
-        of the drug for the eukaryotic rRNA sequence.
-      notes: 'And the mechanism, by chemical footprinting: lower affinity of the drug for the substituted
-        sequence.'
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: CARD definition for the 16S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: ARO:3003666
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3003666 (16s rRNA with mutation conferring resistance to aminoglycoside antibiotics),
+        an is_a ancestor of this record's ARO:3003377; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    description: CARD asserts that this rRNA mutation class confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3003666
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3003666 (16s rRNA with mutation conferring resistance to aminoglycoside antibiotics),
         an is_a ancestor of this record's ARO:3003377; inherited by this variant. CARD/ARO release in
         data/raw/aro/aro.obo.
-  - subject: decoding_site
-    predicate: part of (the decoding site of this rRNA)
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: CARD support for 16S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+  - subject: binding_site
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The antibiotic-binding site is modeled inside the mutated rRNA.
     evidence:
-    - reference: PMID:11014183
-      snippet: This work reveals the structural basis for the action of these antibiotics, and leads to
-        a model for the role of the universally conserved 16S RNA residues A1492 and A1493 in the decoding
-        process.
-      notes: Carter et al. 2000 place A1492 and A1493 in the decoding process; Recht et al. 1999 place
-        1408 in the same drug-binding site.
-  - subject: decoding_site
-    predicate: causally upstream of (decoding and translocation)
-    predicate_id: RO:0002411
-    object: decoding
-    evidence:
-    - reference: PMID:11014183
-      snippet: This work reveals the structural basis for the action of these antibiotics, and leads to
-        a model for the role of the universally conserved 16S RNA residues A1492 and A1493 in the decoding
-        process.
-      notes: The universally conserved residues of this site are what read the codon-anticodon match.
-  - subject: drug0
-    predicate: molecularly interacts with (binds the decoding site)
-    predicate_id: RO:0002436
-    object: decoding_site
-    description: Drug action, from the 30S crystal structures with paromomycin, streptomycin and spectinomycin.
-    evidence:
-    - reference: PMID:11014183
-      snippet: We also describe the crystal structure of the 30S subunit complexed with the antibiotics
-        paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation.
-      notes: Carter et al. 2000. The drugs interfere with decoding and translocation, which is why they
-        are bactericidal.
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: CARD support for 16S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
   - subject: determinant
-    predicate: negatively regulates (substitution lowers drug affinity)
-    predicate_id: RO:0002212
-    object: drug0
-    description: 'The causal core, measured rather than inferred: chemical footprinting shows the drug
-      binds the substituted sequence less well.'
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: subunit
+    description: The mutated rRNA is part of its bacterial ribosomal subunit.
     evidence:
-    - reference: PMID:10357824
-      snippet: Chemical footprinting experiments indicate that resistance arises from the lower affinity
-        of the drug for the eukaryotic rRNA sequence.
-      notes: Recht et al. 1999.
-  - subject: decoding_site
-    predicate: molecularly interacts with (its identity at 1408 sets drug selectivity)
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: CARD definition for the 16S rRNA mutation term.
+    - reference: GO:0015935
+      snippet: small ribosomal subunit
+      notes: GO grounding for the small ribosomal subunit.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+  - subject: determinant
+    predicate: causally upstream of (alters antibiotic-binding site)
+    predicate_id: RO:0002411
+    object: binding_site
+    description: Point mutations in the rRNA alter the local antibiotic-binding site that is linked to
+      this drug class.
+    evidence:
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: CARD support for 16S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+    - reference: ARO:3003666
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3003666 (16s rRNA with mutation conferring resistance to aminoglycoside antibiotics),
+        an is_a ancestor of this record's ARO:3003377; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
+  - subject: drug0
+    predicate: molecularly interacts with
     predicate_id: RO:0002436
-    object: drug0
-    description: Why these drugs are prokaryote-selective at all -- and why the resistant ribosome is
-      the eukaryotic sequence.
+    object: binding_site
+    description: CARD links this drug class to resistance-conferring rRNA binding-site mutations.
     evidence:
-    - reference: PMID:10357824
-      snippet: A major difference in the binding site for these antibiotics between prokaryotic and eukaryotic
-        ribosomes is the identity of the nucleotide at position 1408 (Escherichia coli numbering), which
-        is an adenosine in prokaryotic ribosomes and a guanosine in eukaryotic ribosomes.
-      notes: Recht et al. 1999. The resistance substitution makes the bacterial site look eukaryotic,
-        which is the same fact that makes aminoglycosides selective in the first place.
+    - reference: ARO:3003666
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3003666 (16s rRNA with mutation conferring resistance to aminoglycoside antibiotics),
+        an is_a ancestor of this record's ARO:3003377; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: CARD support for 16S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+  - subject: binding_site
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Alteration of the rRNA antibiotic-binding site lowers effective drug binding and causes
+      resistance.
+    evidence:
+    - reference: ARO:3003377
+      snippet: Point mutations in the 3' major domain of helix 35, in the rrnB gene operon for 16S rRNA
+        of Escherichia coli can confer resistance to spectinomycin.
+      notes: CARD definition for Escherichia coli 16S rRNA (rrnB) mutation conferring resistance to spectinomycin.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: CARD support for 16S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+    - reference: ARO:3003666
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3003666 (16s rRNA with mutation conferring resistance to aminoglycoside antibiotics),
+        an is_a ancestor of this record's ARO:3003377; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed bacterial 16S rRNA leaf mutation causal graphs
   llm_assisted: true
 license: CC-BY 4.0
