@@ -28,13 +28,13 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_CURATOR = "codex-causal-graph-quality"
+HISTORY_ACTION = (
+    "Grounded 16S rRNA decoding-site nodes and supplemented methyltransferase evidence"
+)
 HISTORY_EVENT = {
-    "timestamp": "2026-09-05T00:00:00Z",
+    "timestamp": "2026-09-10T00:00:00Z",
     "curator": HISTORY_CURATOR,
-    "action": (
-        "Grounded 16S rRNA methyltransferase activity, described the shared 16S "
-        "decoding-site methylation edges, and linked methylated-site state to resistance"
-    ),
+    "action": HISTORY_ACTION,
     "llm_assisted": True,
 }
 
@@ -48,6 +48,51 @@ RRNA_METHYLTRANSFERASE_EVIDENCE = {
     "notes": (
         "GO definition for the broad rRNA methyltransferase activity superclass; the "
         "ARO/PubMed evidence constrains the substrate to 16S rRNA."
+    ),
+}
+
+PARENT_EVIDENCE = {
+    "reference": "ARO:3000857",
+    "snippet": (
+        "Methyltransferases that modify the 16S rRNA of the 30S subunit of "
+        "bacterial ribosomes, conferring resistance to drugs that target 16S rRNA."
+    ),
+    "notes": "CARD definition for 16S ribosomal RNA methyltransferase.",
+}
+
+TARGET_ALTERATION_EVIDENCE = {
+    "reference": "ARO:0001001",
+    "snippet": (
+        "Mutational alteration or enzymatic modification of antibiotic target "
+        "which results in antibiotic resistance."
+    ),
+    "notes": "CARD definition for antibiotic target alteration.",
+}
+
+RIBOSOMAL_ALTERATION_EVIDENCE = {
+    "reference": "ARO:3000211",
+    "snippet": (
+        "Chemical alteration of the ribosome results in modification of an "
+        "antibiotic's target leading to resistance."
+    ),
+    "notes": "CARD definition for ribosomal alteration conferring antibiotic resistance.",
+}
+
+AMINOGLYCOSIDE_EVIDENCE = {
+    "reference": "ARO:0000016",
+    "snippet": "aminoglycoside antibiotic",
+    "notes": "ARO drug-class term targeted by A1408 and G1405 methyltransferases.",
+}
+
+SO_RRNA_EVIDENCE = {
+    "reference": "SO:0000252",
+    "snippet": (
+        "rRNA is an RNA component of a ribosome that can provide both "
+        "structural scaffolding and catalytic activity."
+    ),
+    "notes": (
+        "Sequence Ontology definition for the broad rRNA superclass used as a "
+        "conservative grounding for the local 16S rRNA decoding-site nodes."
     ),
 }
 
@@ -66,18 +111,22 @@ SHARED_NODE_UPDATES = {
         "node_id": "decoding_site",
         "label": "16S rRNA decoding site (aminoglycoside binding site)",
         "node_type": "NUCLEIC_ACID",
+        "grounding": "SO:0000252",
         "description": (
             "Local rRNA target-site node for the aminoglycoside binding site in the "
-            "16S decoding center."
+            "16S decoding center. Grounded to broad rRNA because no stable narrow "
+            "term is available for this local methylated target site."
         ),
     },
     "methylated": {
         "node_id": "methylated",
         "label": "methylated 16S rRNA decoding site",
         "node_type": "STATE",
+        "grounding": "SO:0000252",
         "description": (
             "Local state representing methylation of the aminoglycoside-binding 16S "
-            "rRNA decoding site."
+            "rRNA decoding site. Grounded to broad rRNA because no stable narrow "
+            "term is available for this methylated local state."
         ),
     },
 }
@@ -208,14 +257,101 @@ def _ordered_edge(edge: dict[str, Any]) -> dict[str, Any]:
     return ordered
 
 
-def _with_rrna_methyltransferase_evidence(edge: dict[str, Any]) -> list[dict[str, Any]]:
-    evidence = [
-        copy.deepcopy(item)
-        for item in edge["evidence"]
-        if item.get("reference") != RRNA_METHYLTRANSFERASE_EVIDENCE["reference"]
-    ]
-    evidence.append(copy.deepcopy(RRNA_METHYLTRANSFERASE_EVIDENCE))
+def _dicts(value: Any) -> list[dict[str, Any]]:
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, dict)]
+
+
+def _source_evidence(record: dict[str, Any]) -> tuple[dict[str, str], ...]:
+    return tuple(
+        {
+            "reference": str(item["reference"]),
+            "notes": str(item.get("notes") or "ARO citation for this record."),
+        }
+        for item in _dicts(record.get("evidence"))
+        if item.get("reference")
+    )
+
+
+def _definition_evidence(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "reference": str(record["identifier"]),
+        "snippet": " ".join(str(record["definition"]).split()),
+        "notes": f"CARD definition for {record['label']}.",
+    }
+
+
+def _unique_evidence(*items: dict[str, Any]) -> list[dict[str, Any]]:
+    evidence: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, str]] = set()
+    for item in items:
+        key = (
+            str(item["reference"]),
+            str(item.get("snippet", "")),
+            str(item.get("notes", "")),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        evidence.append(copy.deepcopy(item))
     return evidence
+
+
+def _relation_evidence(edge: dict[str, Any]) -> tuple[dict[str, Any], ...]:
+    return tuple(
+        item
+        for item in _dicts(edge.get("evidence"))
+        if str(item.get("snippet", "")).startswith("relationship:")
+    )
+
+
+def _base_evidence(record: dict[str, Any]) -> tuple[dict[str, Any], ...]:
+    evidence: tuple[dict[str, Any], ...] = (_definition_evidence(record),)
+    if record["identifier"] != "ARO:3000857":
+        evidence = (*evidence, PARENT_EVIDENCE)
+    return (*evidence, *_source_evidence(record))
+
+
+def _supplemental_evidence(
+    record: dict[str, Any],
+    edge: dict[str, Any],
+) -> list[dict[str, Any]]:
+    key = _edge_key(edge)
+    base = _base_evidence(record)
+    by_edge: tuple[dict[str, Any], ...] = ()
+
+    if key in {
+        ("determinant", "mech0"),
+        ("mech0", "resistance"),
+        ("determinant", "resistance"),
+    }:
+        by_edge = (TARGET_ALTERATION_EVIDENCE,)
+    elif key in {
+        ("determinant", "mech1"),
+        ("mech1", "resistance"),
+    }:
+        by_edge = (RIBOSOMAL_ALTERATION_EVIDENCE,)
+    elif key in {
+        ("determinant", "methyltransferase"),
+        ("methyltransferase", "methylated"),
+    }:
+        by_edge = (RRNA_METHYLTRANSFERASE_EVIDENCE, SO_RRNA_EVIDENCE)
+    elif key in {
+        ("methylated", "decoding_site"),
+        ("methylated", "resistance"),
+    }:
+        by_edge = (
+            RRNA_METHYLTRANSFERASE_EVIDENCE,
+            RIBOSOMAL_ALTERATION_EVIDENCE,
+            SO_RRNA_EVIDENCE,
+        )
+    elif key == ("determinant", "drug0"):
+        by_edge = (*_relation_evidence(edge), AMINOGLYCOSIDE_EVIDENCE)
+    elif key == ("drug0", "decoding_site"):
+        by_edge = (*_relation_evidence(edge), AMINOGLYCOSIDE_EVIDENCE, SO_RRNA_EVIDENCE)
+
+    return _unique_evidence(*_dicts(edge.get("evidence")), *base, *by_edge)
 
 
 def _methylated_resistance_evidence(graph: dict[str, Any]) -> list[dict[str, Any]]:
@@ -276,11 +412,7 @@ def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any
             msg = f"{target.identifier}: unexpected edge {key[0]} -> {key[1]}"
             raise ValueError(msg)
         edge["description"] = ALL_EDGE_DESCRIPTIONS[key]
-        if key in {
-            ("determinant", "methyltransferase"),
-            ("methyltransferase", "methylated"),
-        }:
-            edge["evidence"] = _with_rrna_methyltransferase_evidence(edge)
+        edge["evidence"] = _supplemental_evidence(record, edge)
         enriched_edges.append(_ordered_edge(edge))
         seen.add(key)
 
@@ -311,7 +443,7 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
         return text, False
 
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_CURATOR not in out:
+    if HISTORY_ACTION not in out:
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
     return out, True
 
