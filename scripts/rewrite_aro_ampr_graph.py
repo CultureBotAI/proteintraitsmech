@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import copy
 import sys
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -26,8 +27,7 @@ from record_io import append_to_section, replace_block  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
-IDENTIFIER = "ARO:3007797"
-FILENAME = "ampr-transcriptional-regulator-with-mutation-conferring-resistance-to-monobactam-aro3007797.yaml"
+PARENT_IDENTIFIER = "ARO:3007797"
 
 HISTORY_ACTION = "Completed ampR beta-lactamase-overexpression causal graph"
 HISTORY_EVENT = {
@@ -38,7 +38,7 @@ HISTORY_EVENT = {
 }
 
 CARD_DEFINITION_EVIDENCE = {
-    "reference": IDENTIFIER,
+    "reference": PARENT_IDENTIFIER,
     "snippet": (
         "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding "
         "gene expression. Mutations in ampR of certain organisms have been shown to "
@@ -48,13 +48,34 @@ CARD_DEFINITION_EVIDENCE = {
 }
 
 MONOBACTAM_RELATION_EVIDENCE = {
-    "reference": IDENTIFIER,
+    "reference": PARENT_IDENTIFIER,
     "snippet": "relationship: confers_resistance_to_drug_class ARO:0000004 ! monobactam",
     "notes": (
         "CARD/ARO drug-class relationship asserted on the ampR record in "
         "data/raw/aro/aro.obo."
     ),
 }
+
+
+@dataclass(frozen=True)
+class Target:
+    identifier: str
+    filename: str
+
+
+TARGETS: tuple[Target, ...] = (
+    Target(
+        PARENT_IDENTIFIER,
+        "ampr-transcriptional-regulator-with-mutation-conferring-resistance-to-monobactam-"
+        "aro3007797.yaml",
+    ),
+    Target(
+        "ARO:3007491",
+        "pseudomonas-aeruginosa-ampr-with-mutation-conferring-resistance-to-aztreonam-"
+        "aro3007491.yaml",
+    ),
+)
+TARGET_BY_ID = {target.identifier: target for target in TARGETS}
 
 DING_AMPR_MUTATION_EVIDENCE = {
     "reference": "DOI:10.1128/spectrum.03080-22",
@@ -100,8 +121,8 @@ def _dicts(value: Any) -> list[dict[str, Any]]:
     return [item for item in value if isinstance(item, dict)]
 
 
-def _unique_evidence(*items: dict[str, str]) -> list[dict[str, str]]:
-    evidence: list[dict[str, str]] = []
+def _unique_evidence(*items: dict[str, Any]) -> list[dict[str, Any]]:
+    evidence: list[dict[str, Any]] = []
     seen: set[tuple[str, str]] = set()
     for item in items:
         key = (item["reference"], item.get("snippet", ""))
@@ -141,14 +162,53 @@ def _source_evidence(record: dict[str, Any]) -> tuple[dict[str, str], ...]:
     )
 
 
-def _graph(record: dict[str, Any]) -> dict[str, Any]:
+def _record_evidence(record: dict[str, Any]) -> dict[str, str]:
+    return {
+        "reference": str(record["identifier"]),
+        "snippet": str(record["definition"]),
+        "notes": f"CARD definition for {record['label']}.",
+    }
+
+
+def _record_specific_evidence(record: dict[str, Any]) -> tuple[dict[str, str], ...]:
+    if record.get("identifier") == PARENT_IDENTIFIER:
+        return ()
+    return (_record_evidence(record),)
+
+
+def _drug_relation_evidence(graph: dict[str, Any]) -> tuple[dict[str, Any], ...]:
+    evidence: list[dict[str, Any]] = []
+    for edge in _dicts(graph.get("edges")):
+        if (
+            edge.get("subject") == "determinant"
+            and edge.get("predicate_id") == "ARO:2000001"
+            and edge.get("object") == "drug0"
+        ):
+            evidence.extend(
+                item
+                for item in _dicts(edge.get("evidence"))
+                if str(item.get("snippet", "")).startswith(
+                    "relationship: confers_resistance_to_drug_class "
+                )
+            )
+
+    if evidence:
+        return tuple(evidence)
+    return (MONOBACTAM_RELATION_EVIDENCE,)
+
+
+def _graph(record: dict[str, Any], old_graph: dict[str, Any]) -> dict[str, Any]:
+    record_specific_evidence = _record_specific_evidence(record)
+    relation_evidence = _drug_relation_evidence(old_graph)
     source_evidence = _source_evidence(record)
     card_and_literature = (
+        *record_specific_evidence,
         CARD_DEFINITION_EVIDENCE,
         DING_AMPR_MUTATION_EVIDENCE,
         *source_evidence,
     )
     overexpression_evidence = (
+        *record_specific_evidence,
         CARD_DEFINITION_EVIDENCE,
         DING_OVEREXPRESSION_EVIDENCE,
         *source_evidence,
@@ -245,7 +305,7 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
                 "ARO:2000001",
                 "drug0",
                 "ARO directly maps this ampR class to monobactam resistance, and the cited case demonstrates aztreonam resistance.",
-                MONOBACTAM_RELATION_EVIDENCE,
+                *relation_evidence,
                 DING_OVEREXPRESSION_EVIDENCE,
                 *source_evidence,
             ),
@@ -262,20 +322,20 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def enrich_record(record: dict[str, Any]) -> tuple[dict[str, Any], bool]:
-    if record.get("identifier") != IDENTIFIER:
-        raise ValueError(f"expected {IDENTIFIER}, found {record.get('identifier')}")
+def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
+    if record.get("identifier") != target.identifier:
+        raise ValueError(f"expected {target.identifier}, found {record.get('identifier')}")
     if not record.get("label"):
-        raise ValueError(f"{IDENTIFIER}: missing label")
+        raise ValueError(f"{target.identifier}: missing label")
     if not record.get("definition"):
-        raise ValueError(f"{IDENTIFIER}: missing definition")
+        raise ValueError(f"{target.identifier}: missing definition")
 
     graphs = _dicts(record.get("causal_graphs"))
     if len(graphs) != 1 or graphs[0].get("graph_id") != "resistance":
-        raise ValueError(f"{IDENTIFIER}: expected exactly one resistance graph")
+        raise ValueError(f"{target.identifier}: expected exactly one resistance graph")
 
     out = copy.deepcopy(record)
-    out["causal_graphs"] = [_graph(record)]
+    out["causal_graphs"] = [_graph(record, graphs[0])]
     return out, out != record
 
 
@@ -283,12 +343,14 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     record = yaml.safe_load(text)
     if not isinstance(record, dict):
         raise ValueError(f"{path}: expected a YAML mapping")
-    if record.get("identifier") != IDENTIFIER:
-        raise ValueError(f"{path}: not ampR: {record.get('identifier')}")
-    if path.name != FILENAME:
-        raise ValueError(f"{path}: {IDENTIFIER} must be in {FILENAME}")
+    identifier = record.get("identifier")
+    target = TARGET_BY_ID.get(identifier)
+    if target is None:
+        raise ValueError(f"{path}: not an ampR monobactam target: {identifier}")
+    if path.name != target.filename:
+        raise ValueError(f"{path}: {target.identifier} must be in {target.filename}")
 
-    enriched, changed = enrich_record(record)
+    enriched, changed = enrich_record(record, target)
     out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
     if HISTORY_ACTION not in out:
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
@@ -304,7 +366,7 @@ def iter_target_paths(path: Path) -> list[Path]:
         return [path]
     if not path.is_dir():
         raise ValueError(f"{path} is neither a file nor a directory")
-    return [path / FILENAME]
+    return [path / target.filename for target in TARGETS]
 
 
 def main(argv: list[str] | None = None) -> int:
