@@ -30,13 +30,12 @@ evidence:
   notes: PMID:27185800 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Mycobacterium tuberculosis Rv2535c with mutation conferring resistance to bedaquiline → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3007690). A putative aminopeptidase conferring low-level cross-resistance. The function itself
-    is hedged -- 'encodes a PUTATIVE Xaa-Pro aminopeptidase' -- which is a step further than round 111's
-    drmA, where the protein was 'uncharacterized' but its identity was not in doubt.
+  title: Mycobacterium tuberculosis Rv2535c with mutation conferring resistance to bedaquiline → increased
+    MmpL5/MmpS5 efflux
+  description: Conservative graph for the Rv2535c bedaquiline-resistance leaf. The leaf definition states
+    that pepQ/Rv2535c mutations increase efflux through the MmpL5/MmpS5 transporter; the graph keeps the
+    putative aminopeptidase role as a grounded side path and uses the MmpL5/MmpS5 efflux statement as
+    the resistance route.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis Rv2535c with mutation conferring resistance to bedaquiline
@@ -53,8 +52,9 @@ causal_graphs:
   - node_id: aminopeptidase
     label: putative Xaa-Pro aminopeptidase activity
     node_type: MOLECULAR_FUNCTION
-    description: The word 'putative' is CARD's and is kept in the label -- the assignment itself is uncertain,
-      not merely uncharacterised.
+    grounding: GO:0004177
+    description: Grounded to the generic GO aminopeptidase activity. ARO calls the Rv2535c Xaa-Pro aminopeptidase
+      assignment putative, and the graph keeps that uncertainty in the label.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -67,54 +67,128 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies resistant Rv2535c variants under mutation conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3007692
+      snippet: These pepQ/Rv2535c mutations increase efflux through the mmpL5-mmpS5 (Rv0676c-Rv0677c)
+        transporter, such as preventing degradation of MmpL5, which leads to reduced susceptibility to
+        bedaquiline and clofazimine.
+      notes: CARD definition for Mycobacterium tuberculosis Rv2535c with mutation conferring resistance
+        to bedaquiline.
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic-resistant Rv2535c parent.
+    - reference: ARO:3007691
+      snippet: Loss-of-function mutations in Rv2535c are a common mechanism of resistance.
+      notes: CARD definition for the bedaquiline-resistant Rv2535c parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad ARO point-mutation mechanism covers Rv2535c mutations that increase MmpL5/MmpS5
+      efflux.
     evidence:
+    - reference: ARO:3007692
+      snippet: These pepQ/Rv2535c mutations increase efflux through the mmpL5-mmpS5 (Rv0676c-Rv0677c)
+        transporter, such as preventing degradation of MmpL5, which leads to reduced susceptibility to
+        bedaquiline and clofazimine.
+      notes: CARD definition for Mycobacterium tuberculosis Rv2535c with mutation conferring resistance
+        to bedaquiline.
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic-resistant Rv2535c parent.
+    - reference: ARO:3007691
+      snippet: Loss-of-function mutations in Rv2535c are a common mechanism of resistance.
+      notes: CARD definition for the bedaquiline-resistant Rv2535c parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: determinant
-    predicate: causally upstream of (confers resistance)
+    predicate: causally upstream of (via increased MmpL5/MmpS5 efflux)
     predicate_id: RO:0002411
     object: resistance
+    description: The Rv2535c leaf definition states that pepQ/Rv2535c mutations increase efflux and reduce
+      bedaquiline susceptibility.
     evidence:
+    - reference: ARO:3007692
+      snippet: These pepQ/Rv2535c mutations increase efflux through the mmpL5-mmpS5 (Rv0676c-Rv0677c)
+        transporter, such as preventing degradation of MmpL5, which leads to reduced susceptibility to
+        bedaquiline and clofazimine.
+      notes: CARD definition for Mycobacterium tuberculosis Rv2535c with mutation conferring resistance
+        to bedaquiline.
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: 'Four qualifiers in one sentence: the function is ''PUTATIVE'', the determinant is ''NEW'',
-        the resistance is ''LOW-LEVEL'', and it is ''CROSS-RESISTANCE'' to two drugs. All four are kept.'
+      notes: CARD definition for the antibiotic-resistant Rv2535c parent.
+    - reference: ARO:3007691
+      snippet: Loss-of-function mutations in Rv2535c are a common mechanism of resistance.
+      notes: CARD definition for the bedaquiline-resistant Rv2535c parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to diarylquinoline antibiotic.
+    description: The bedaquiline-resistant Rv2535c branch inherits an ARO confers-resistance-to relationship
+      to diarylquinoline antibiotic.
     evidence:
+    - reference: ARO:3007692
+      snippet: These pepQ/Rv2535c mutations increase efflux through the mmpL5-mmpS5 (Rv0676c-Rv0677c)
+        transporter, such as preventing degradation of MmpL5, which leads to reduced susceptibility to
+        bedaquiline and clofazimine.
+      notes: CARD definition for Mycobacterium tuberculosis Rv2535c with mutation conferring resistance
+        to bedaquiline.
+    - reference: ARO:3007691
+      snippet: Loss-of-function mutations in Rv2535c are a common mechanism of resistance.
+      notes: CARD definition for the bedaquiline-resistant Rv2535c parent.
     - reference: ARO:3007691
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004491 ! diarylquinoline antibiotic'
-      notes: Asserted on ARO:3007691 (bedaquiline resistant Rv2535c), an is_a ancestor of this record's
-        ARO:3007692; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on ARO:3007691 and inherited by ARO:3007692.
+    - reference: ARO:3004491
+      snippet: diarylquinoline antibiotic
+      notes: ARO drug-class term inherited by bedaquiline-resistance records.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: determinant
-    predicate: enables (putative Xaa-Pro aminopeptidase activity)
+    predicate: enables
     predicate_id: RO:0002327
     object: aminopeptidase
-    description: 'Hedged at the level CARD hedges it. NOT asserted: any route from peptidase activity
-      to bedaquiline or clofazimine, which CARD does not describe.'
+    description: The parent ARO definition states that Rv2535c/pepQ encodes a putative Xaa-Pro aminopeptidase.
     evidence:
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: '''encodes a putative Xaa-Pro aminopeptidase''.'
+      notes: CARD definition for the antibiotic-resistant Rv2535c parent.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-09T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated Mycobacterium tuberculosis mutation leaf graphs
   llm_assisted: true
 license: CC-BY 4.0
