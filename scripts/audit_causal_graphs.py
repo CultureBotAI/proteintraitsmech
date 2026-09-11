@@ -19,7 +19,7 @@ Checks per CausalGraph (see the schema's CausalGraph/CausalNode/CausalEdge):
     • edge predicate present; ≥1 evidence; each EvidenceItem has a `reference`;
     • any `grounding` / `xrefs` / `predicate_id` present matches the CURIE pattern.
   WARNINGS (surfaced; fail only under --strict)
-    • a node with no `grounding` (label-only draft node — allowed in v1);
+    • a groundable node with no `grounding` (label-only draft node — allowed in v1);
     • an edge whose evidence carries no verbatim `snippet`;
     • an edge with no `predicate_id` (RO CURIE).
 
@@ -39,6 +39,35 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 SCHEMA = REPO_ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
 CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
+
+
+def needs_grounding(node: dict) -> bool:
+    """Return True when an ungrounded node is probably still a draft.
+
+    Several complete, curated graph families need source-local nodes that do not
+    have stable ontology or database CURIEs:
+
+    * hand-curated reaction intermediates represented as described STATE nodes;
+    * BioLiP and MetalPDB RESIDUE nodes in PDB author numbering when SIFTS or
+      UniProt residue coordinates are not asserted;
+    * Rhea reactive-group RESIDUE nodes inside generic protein participants.
+
+    The audit should still warn on under-modeled local nodes, so every STATE or
+    RESIDUE that lacks both a grounding and one of those locality signals keeps
+    getting reported.
+    """
+    node_type = node.get("node_type")
+    if node_type == "STATE" and node.get("description"):
+        return False
+    if node_type == "RESIDUE":
+        label = str(node.get("label") or "")
+        if node.get("description"):
+            return False
+        if "no UniProt position asserted" in label:
+            return False
+        if "UniProt position not established" in label:
+            return False
+    return True
 
 
 def node_type_enum() -> set[str]:
@@ -106,7 +135,7 @@ def audit_record(rec: dict, rel: str, valid_types: set[str],
                 errors.append(f"{where}: node {nid!r} grounding {gr!r} not a CURIE")
             elif gr:
                 stats["grounded"] += 1
-            else:
+            elif needs_grounding(n):
                 warns.append(f"{where}: node {nid!r} has no grounding (label-only)")
             for x in (n.get("xrefs") or []):
                 if not CURIE.match(str(x)):

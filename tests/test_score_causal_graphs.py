@@ -204,6 +204,7 @@ def test_described_state_nodes_do_not_need_grounding(tmp_path: Path) -> None:
 
     assert score.groundable_nodes == 1
     assert score.grounded_groundable_nodes == 1
+    assert score.quality_warnings == 0
 
 
 def test_documented_local_residue_nodes_do_not_need_grounding(tmp_path: Path) -> None:
@@ -255,6 +256,7 @@ def test_documented_local_residue_nodes_do_not_need_grounding(tmp_path: Path) ->
 
     assert score.groundable_nodes == 1
     assert score.grounded_groundable_nodes == 1
+    assert score.quality_warnings == 0
 
 
 def test_undocumented_residue_nodes_still_need_grounding(tmp_path: Path) -> None:
@@ -292,6 +294,7 @@ def test_undocumented_residue_nodes_still_need_grounding(tmp_path: Path) -> None
 
     assert score.groundable_nodes == 2
     assert score.grounded_groundable_nodes == 1
+    assert score.quality_warnings == 1
 
 
 def test_include_missing_scores_no_graph_records_as_zero(tmp_path: Path) -> None:
