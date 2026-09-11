@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1128/AAC.00871-08
   notes: PMID:19289529 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant fusE → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant fusE → FusE rplF/L6 mutation → fusidane resistance
+  description: Conservative graph for FusE/rplF-mediated fusidic-acid resistance. The graph keeps ribosomal
+    protein L6 as the potential secondary site of action named by CARD and does not conflate this mutation
+    route with EF-G target protection or FusH inactivation.
   nodes:
   - node_id: determinant
     label: antibiotic resistant fusE
@@ -40,6 +40,11 @@ causal_graphs:
     label: fusidane antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007153
+  - node_id: blocked_action
+    label: fusidic acid action through the rplF/L6 secondary site
+    node_type: STATE
+    description: Local state for fusidic-acid action through ribosomal protein L6, which CARD describes
+      as a potential secondary site of action blocked by FusE mutations.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,47 +57,109 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies FusE/rplF resistance as mutation-based resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.00871-08
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3003736
       snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
         riboprotein L6, and confers resistance to fusidic acid.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for antibiotic-resistant FusE.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00871-08
+      notes: PMID:19289529 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: rplF point, frameshift, or stop-codon mutations cause fusidic-acid resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.00871-08
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+    - reference: ARO:3003736
+      snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
+        riboprotein L6, and confers resistance to fusidic acid.
+      notes: CARD definition for antibiotic-resistant FusE.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00871-08
+      notes: PMID:19289529 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mutations in the rplF gene encoding ribosomal protein L6 confer resistance to fusidic
+      acid.
     evidence:
+    - reference: ARO:3003736
+      snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
+        riboprotein L6, and confers resistance to fusidic acid.
+      notes: CARD definition for antibiotic-resistant FusE.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
     - reference: DOI:10.1128/AAC.00871-08
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003736
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      notes: PMID:19289529 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps FusE/rplF mutations to the fusidane antibiotic drug class.
     evidence:
     - reference: ARO:3003736
+      snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
+        riboprotein L6, and confers resistance to fusidic acid.
+      notes: CARD definition for antibiotic-resistant FusE.
+    - reference: ARO:3003736
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
-      notes: Asserted directly on ARO:3003736 (antibiotic resistant fusE) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fusidane antibiotic.
+      notes: ARO drug-class relationship asserted on antibiotic resistant fusE.
+    - reference: ARO:3007153
+      snippet: fusidane antibiotic
+      notes: ARO drug-class term inherited by FusE records.
+    - reference: DOI:10.1128/AAC.00871-08
+      notes: PMID:19289529 (aro citation)
+  - subject: drug0
+    predicate: causally upstream of (acts through rplF/L6 secondary site)
+    predicate_id: RO:0002411
+    object: blocked_action
+    description: The S. aureus child definition describes ribosomal protein L6 as a potential secondary
+      site of fusidic-acid action.
+    evidence:
+    - reference: ARO:3003736
+      snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
+        riboprotein L6, and confers resistance to fusidic acid.
+      notes: CARD definition for antibiotic-resistant FusE.
+    - reference: ARO:3003736
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
+      notes: ARO drug-class relationship asserted on antibiotic resistant fusE.
+    - reference: ARO:3007153
+      snippet: fusidane antibiotic
+      notes: ARO drug-class term inherited by FusE records.
+    - reference: DOI:10.1128/AAC.00871-08
+      notes: PMID:19289529 (aro citation)
+  - subject: determinant
+    predicate: negatively regulates (blocks secondary site of action)
+    predicate_id: RO:0002212
+    object: blocked_action
+    description: FusE/rplF mutations block fusidic-acid action through ribosomal protein L6.
+    evidence:
+    - reference: ARO:3003736
+      snippet: Antibiotic resistant fusE is caused by mutations in a region of the rplF gene encoding
+        riboprotein L6, and confers resistance to fusidic acid.
+      notes: CARD definition for antibiotic-resistant FusE.
+    - reference: ARO:3003736
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
+      notes: ARO drug-class relationship asserted on antibiotic resistant fusE.
+    - reference: ARO:3007153
+      snippet: fusidane antibiotic
+      notes: ARO drug-class term inherited by FusE records.
+    - reference: DOI:10.1128/AAC.00871-08
+      notes: PMID:19289529 (aro citation)
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated FusE rplF fusidic-acid resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0
