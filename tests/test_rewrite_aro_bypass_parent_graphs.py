@@ -67,6 +67,16 @@ def test_targets_are_exact_broad_parent_records() -> None:
         "ARO:3002917",
         "ARO:3002918",
         "ARO:3007187",
+        "ARO:3004253",
+        "ARO:3002916",
+        "ARO:3004254",
+        "ARO:3000002",
+        "ARO:3002964",
+        "ARO:3002965",
+        "ARO:3003724",
+        "ARO:3002959",
+        "ARO:3002962",
+        "ARO:3002963",
     }
 
 
@@ -97,6 +107,12 @@ def test_enrich_text_is_idempotent() -> None:
 def test_glycopeptide_gene_cluster_targets_have_a_specific_action() -> None:
     assert {target.action for target in R.GLYCOPEPTIDE_GENE_CLUSTERS} == {
         R.GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    }
+
+
+def test_glycopeptide_stub_targets_have_a_specific_action() -> None:
+    assert {target.action for target in R.GLYCOPEPTIDE_STUBS} == {
+        R.GLYCOPEPTIDE_STUB_ACTION,
     }
 
 
