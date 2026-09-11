@@ -23,14 +23,20 @@ Checks per CausalGraph (see the schema's CausalGraph/CausalNode/CausalEdge):
     • an edge whose evidence carries no verbatim `snippet`;
     • an edge with no `predicate_id` (RO CURIE).
 
+`--warning-baseline` pins known warning identities so NEW warnings fail even if another
+warning was fixed and the total count did not change.
+
 Read-only. Stdlib + PyYAML. Exit 1 on any ERROR (or WARNING under --strict), else 0.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
+from collections import Counter
+from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
@@ -39,6 +45,49 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 SCHEMA = REPO_ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
 CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
+
+
+@dataclass(frozen=True)
+class AuditWarning:
+    """A warning message plus its stable identity for warning baselines."""
+
+    key: str
+    message: str
+
+    def __str__(self) -> str:
+        return self.message
+
+
+def warning_key(rel_path: str, graph_id, kind: str, target: str) -> str:
+    """Return the identity key for a warning.
+
+    The key intentionally omits the human-readable warning text so the baseline
+    follows the graph element, not the exact phrasing of a diagnostic.
+    """
+    return f"{rel_path}|{graph_id}|{kind}|{target}"
+
+
+def count_warnings(warnings: list[AuditWarning]) -> dict[str, int]:
+    """Return sorted key -> count warning identities.
+
+    Counts, rather than a set, keep duplicate edge-level warnings visible if a
+    graph ever grows parallel edges with the same subject and object.
+    """
+    return dict(sorted(Counter(warning.key for warning in warnings).items()))
+
+
+def diff_baseline(current: dict[str, int], known: dict[str, int]) -> tuple[list[str], list[str]]:
+    """Return (fixed, new) warning keys by count."""
+    fixed: list[str] = []
+    new: list[str] = []
+    for key in sorted(set(current) | set(known)):
+        current_count = current.get(key, 0)
+        known_count = known.get(key, 0)
+        if known_count > current_count:
+            fixed.extend([key] * (known_count - current_count))
+        elif current_count > known_count:
+            new.extend([key] * (current_count - known_count))
+    return fixed, new
 
 
 def needs_grounding(node: dict) -> bool:
@@ -82,7 +131,7 @@ def node_type_enum() -> set[str]:
 
 
 def audit_record(rec: dict, rel: str, valid_types: set[str],
-                 errors: list, warns: list, stats: dict) -> None:
+                 errors: list, warns: list[AuditWarning], stats: dict) -> None:
     graphs = rec.get("causal_graphs") or []
     if not isinstance(graphs, list):
         errors.append(f"{rel}: causal_graphs is not a list")
@@ -136,7 +185,10 @@ def audit_record(rec: dict, rel: str, valid_types: set[str],
             elif gr:
                 stats["grounded"] += 1
             elif needs_grounding(n):
-                warns.append(f"{where}: node {nid!r} has no grounding (label-only)")
+                warns.append(AuditWarning(
+                    warning_key(rel, gid or gi, "ungrounded-node", str(nid)),
+                    f"{where}: node {nid!r} has no grounding (label-only)",
+                ))
             for x in (n.get("xrefs") or []):
                 if not CURIE.match(str(x)):
                     errors.append(f"{where}: node {nid!r} xref {x!r} not a CURIE")
@@ -159,7 +211,10 @@ def audit_record(rec: dict, rel: str, valid_types: set[str],
             if pid and not CURIE.match(str(pid)):
                 errors.append(f"{where}: edge[{ei}] predicate_id {pid!r} not a CURIE")
             elif not pid:
-                warns.append(f"{where}: edge[{ei}] ({subj}->{obj}) has no predicate_id (RO)")
+                warns.append(AuditWarning(
+                    warning_key(rel, gid or gi, "missing-predicate-id", f"{subj}->{obj}"),
+                    f"{where}: edge[{ei}] ({subj}->{obj}) has no predicate_id (RO)",
+                ))
             ev = e.get("evidence") or []
             if not ev:
                 errors.append(f"{where}: edge[{ei}] ({subj}->{obj}) has NO evidence")
@@ -171,7 +226,10 @@ def audit_record(rec: dict, rel: str, valid_types: set[str],
                     break
             else:
                 if ev:
-                    warns.append(f"{where}: edge[{ei}] ({subj}->{obj}) has no verbatim snippet")
+                    warns.append(AuditWarning(
+                        warning_key(rel, gid or gi, "missing-snippet", f"{subj}->{obj}"),
+                        f"{where}: edge[{ei}] ({subj}->{obj}) has no verbatim snippet",
+                    ))
 
 
 def main() -> int:
@@ -181,6 +239,11 @@ def main() -> int:
     ap.add_argument("--file", help="[deprecated, use positional args] audit a single YAML file")
     ap.add_argument("--strict", action="store_true",
                     help="treat warnings (ungrounded node, no snippet/predicate_id) as failures")
+    ap.add_argument("--warning-baseline", default="",
+                    help="JSON pinning known warning identities, so a warning swap fails "
+                         "even when the total count is unchanged")
+    ap.add_argument("--update-warning-baseline", action="store_true",
+                    help="rewrite --warning-baseline from the current warnings")
     ap.add_argument("--quiet", action="store_true", help="summary only")
     args = ap.parse_args()
 
@@ -205,7 +268,7 @@ def main() -> int:
     else:
         paths = sorted(p for p in TRAITS.rglob("*.yaml"))
     errors: list = []
-    warns: list = []
+    warns: list[AuditWarning] = []
     stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0,
              "grounded": 0, "snippet_edges": 0}
     for p in paths:
@@ -237,9 +300,48 @@ def main() -> int:
           f"grounded nodes {stats['grounded']}/{stats['nodes']}, "
           f"snippet-cited edges {stats['snippet_edges']}/{stats['edges']} | "
           f"{len(errors)} errors, {len(warns)} warnings")
-    if errors or (args.strict and warns):
+    rc = 1 if errors else 0
+    if args.update_warning_baseline and not args.warning_baseline:
+        print("\nFAIL: --update-warning-baseline needs --warning-baseline; on its own "
+              "it writes nothing and would exit 0 as though it had.")
         return 1
-    return 0
+
+    if args.warning_baseline:
+        bpath = Path(args.warning_baseline)
+        current = count_warnings(warns)
+        if args.update_warning_baseline:
+            known = json.loads(bpath.read_text(encoding="utf-8")) if bpath.exists() else {}
+            fixed, new = diff_baseline(current, known)
+            print(f"\nwarning baseline: {sum(known.values()):,} -> "
+                  f"{sum(current.values()):,}  "
+                  f"({len(fixed):,} FIXED, {len(new):,} NEW)")
+            for key in new[:12]:
+                print(f"  NEW    {key}")
+            bpath.parent.mkdir(parents=True, exist_ok=True)
+            bpath.write_text(json.dumps(current, indent=1, sort_keys=True) + "\n",
+                             encoding="utf-8")
+            print(f"warning baseline written -> {bpath}")
+            if new:
+                print("NOTE: newly-blessed warnings above. `git diff` the baseline before "
+                      "committing -- this command can launder a regression.")
+            return rc
+        if not bpath.exists():
+            print(f"\nFAIL: --warning-baseline {bpath} does not exist; run "
+                  "--update-warning-baseline")
+            return 1
+        known = json.loads(bpath.read_text(encoding="utf-8"))
+        fixed, new = diff_baseline(current, known)
+        print(f"\nwarning baseline: {sum(known.values()):,} known · "
+              f"{len(fixed):,} FIXED · {len(new):,} NEW")
+        for key in new[:12]:
+            print(f"  NEW    {key}")
+        if new:
+            print(f"\nFAIL: {len(new)} new causal-graph warning(s). Fix them, or bless "
+                  "them with --update-warning-baseline and say why in the commit.")
+            rc = 1
+    elif args.strict and warns:
+        rc = 1
+    return rc
 
 
 if __name__ == "__main__":
