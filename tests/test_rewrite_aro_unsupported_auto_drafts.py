@@ -49,7 +49,9 @@ def _history_actions(text: str) -> list[str]:
 def test_targets_are_exact_unsupported_drafts() -> None:
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:3007434",
+        "ARO:3007657",
         "ARO:3003920",
+        "ARO:3007659",
         "ARO:3005040",
     }
 
