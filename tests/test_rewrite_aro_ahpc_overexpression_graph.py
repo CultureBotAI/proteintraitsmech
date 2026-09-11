@@ -79,8 +79,44 @@ def _edge_keys(record: dict) -> set[tuple[str, str, str]]:
     }
 
 
-def test_targets_are_exact_ahpc_leaf() -> None:
-    assert {target.identifier for target in R.TARGETS} == {"ARO:3004921"}
+def _parent_text(identifier: str) -> str:
+    return f"""identifier: {identifier}
+label: ahpC parent
+definition: parent definition
+mapping_status: SEEDED
+causal_graphs:
+- graph_id: resistance-draft
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+  edges: []
+license: CC-BY 4.0
+"""
+
+
+def _history_actions(text: str) -> list[str]:
+    return [
+        event["action"]
+        for event in yaml.safe_load(text)["curation_history"]
+    ]
+
+
+def test_targets_are_exact_ahpc_family() -> None:
+    assert {target.identifier for target in R.TARGETS} == {
+        "ARO:3004893",
+        "ARO:3004894",
+        "ARO:3004921",
+    }
+
+
+@pytest.mark.parametrize("target", R.PARENTS)
+def test_parent_draft_graphs_are_removed(target: R.Target) -> None:
+    out, changed = R.enrich_text(_parent_text(target.identifier), ARO_DIR / target.filename)
+
+    assert changed
+    assert "causal_graphs:" not in out
+    assert target.action in _history_actions(out)
 
 
 def test_enrich_record_adds_overexpression_route() -> None:
@@ -133,7 +169,7 @@ def test_enrich_text_adds_history_once() -> None:
     assert changed
     assert not changed_again
     assert once == twice
-    assert once.count(R.HISTORY_ACTION) == 1
+    assert _history_actions(once).count(R.HISTORY_ACTION) == 1
     assert "&id" not in once
     assert "*id" not in once
 
@@ -141,6 +177,11 @@ def test_enrich_text_adds_history_once() -> None:
 def test_identifier_mismatch_is_refused() -> None:
     with pytest.raises(ValueError, match="expected ARO:3004921, found ARO:3004893"):
         R.enrich_record(_record("ARO:3004893"), R.TARGET)
+    with pytest.raises(ValueError, match="expected ARO:3004893, found ARO:3004894"):
+        R.enrich_text(
+            _parent_text("ARO:3004894"),
+            ARO_DIR / R.BROAD_PARENT.filename,
+        )
 
 
 def test_missing_drug_edge_is_refused() -> None:
@@ -153,9 +194,14 @@ def test_missing_drug_edge_is_refused() -> None:
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")
 def test_shipped_target_is_rewritten_in_memory() -> None:
+    for target in R.PARENTS:
+        path = ARO_DIR / target.filename
+        out, changed = R.enrich_text(path.read_text(encoding="utf-8"), path)
+        assert changed or out == path.read_text(encoding="utf-8")
+        assert target.action in _history_actions(out)
+
     path = ARO_DIR / R.TARGET.filename
     record = yaml.safe_load(path.read_text(encoding="utf-8"))
-
     out, changed = R.enrich_record(copy.deepcopy(record), R.TARGET)
 
     assert changed or out == record

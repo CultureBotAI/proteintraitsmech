@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -29,12 +30,13 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_ACTION = "Curated AhpC overexpression isoniazid graph"
-HISTORY_EVENT = {
-    "timestamp": "2026-09-11T00:00:00Z",
-    "curator": "codex-causal-graph-quality",
-    "action": HISTORY_ACTION,
-    "llm_assisted": True,
-}
+BROAD_PARENT_ACTION = "Removed contradictory antibiotic-resistant ahpC parent draft"
+ISONIAZID_PARENT_ACTION = (
+    "Removed underspecified isoniazid-resistant ahpC parent draft after curating the "
+    "M. tuberculosis overexpression leaf"
+)
+HISTORY_TIMESTAMP = "2026-09-11T00:00:00Z"
+HISTORY_CURATOR = "codex-causal-graph-quality"
 
 MUTATION_EVIDENCE = {
     "reference": "ARO:3000212",
@@ -97,14 +99,30 @@ GRAPH_NODES = [
 class Target:
     identifier: str
     filename: str
+    action: str
 
 
 TARGET = Target(
     "ARO:3004921",
     "mycobacterium-tuberculosis-ahpc-mutations-confer-resistance-to-isoniazid-aro3004921.yaml",
+    HISTORY_ACTION,
 )
-TARGETS = (TARGET,)
-TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
+BROAD_PARENT = Target(
+    "ARO:3004893",
+    "antibiotic-resistant-ahpc-aro3004893.yaml",
+    BROAD_PARENT_ACTION,
+)
+ISONIAZID_PARENT = Target(
+    "ARO:3004894",
+    "isoniazid-resistant-ahpc-aro3004894.yaml",
+    ISONIAZID_PARENT_ACTION,
+)
+PARENTS = (BROAD_PARENT, ISONIAZID_PARENT)
+TARGETS = (*PARENTS, TARGET)
+PARENT_BY_FILENAME = {target.filename: target for target in PARENTS}
+LEAF_BY_FILENAME = {TARGET.filename: TARGET}
+
+_TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
 
 
 def _dump(obj: Any) -> str:
@@ -121,6 +139,54 @@ def _dicts(value: Any) -> list[dict[str, Any]]:
     if not isinstance(value, list):
         return []
     return [item for item in value if isinstance(item, dict)]
+
+
+def _remove_block(text: str, key: str) -> str:
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, line in enumerate(lines) if line.startswith(f"{key}:")), None)
+    if start is None:
+        return text
+
+    end = start + 1
+    while end < len(lines) and not (lines[end].strip() and _TOP_KEY.match(lines[end])):
+        end += 1
+    return "".join(lines[:start]) + "".join(lines[end:])
+
+
+def _history_event(action: str) -> dict[str, Any]:
+    return {
+        "timestamp": HISTORY_TIMESTAMP,
+        "curator": HISTORY_CURATOR,
+        "action": action,
+        "llm_assisted": True,
+    }
+
+
+def _has_history_action(text: str, action: str) -> bool:
+    record = yaml.safe_load(text)
+    if not isinstance(record, dict):
+        return False
+    history = record.get("curation_history")
+    if not isinstance(history, list):
+        return False
+    return any(isinstance(event, dict) and event.get("action") == action for event in history)
+
+
+def _append_history_once(text: str, target: Target) -> str:
+    if _has_history_action(text, target.action):
+        return text
+    return append_to_section(
+        text,
+        "curation_history",
+        _dump({"curation_history": [_history_event(target.action)]}),
+    )
+
+
+def _require_identifier(text: str, target: Target, path: Path) -> None:
+    record = yaml.safe_load(text)
+    found = record.get("identifier") if isinstance(record, dict) else None
+    if found != target.identifier:
+        raise ValueError(f"{path}: expected {target.identifier}, found {found}")
 
 
 def _edge_key(edge: dict[str, Any]) -> tuple[str, str, str]:
@@ -355,19 +421,30 @@ def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any
 
 
 def enrich_text(text: str, path: Path) -> tuple[str, bool]:
+    parent = PARENT_BY_FILENAME.get(path.name)
+    if parent is not None:
+        _require_identifier(text, parent, path)
+        out = _remove_block(text, "causal_graphs")
+        out = _append_history_once(out, parent)
+        return out, out != text
+
     record = yaml.safe_load(text)
     if not isinstance(record, dict):
         raise ValueError(f"{path}: expected a YAML mapping")
 
-    target = TARGET_BY_FILENAME.get(path.name)
+    target = LEAF_BY_FILENAME.get(path.name)
     if target is None:
         raise ValueError(f"{path}: not an AhpC overexpression target")
 
     enriched, changed = enrich_record(record, target)
     out = text.replace("mapping_status: SEEDED", "mapping_status: REVIEWED", 1)
     out = replace_block(out, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_ACTION not in out:
-        out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
+    if not _has_history_action(out, HISTORY_ACTION):
+        out = append_to_section(
+            out,
+            "curation_history",
+            _dump({"curation_history": [_history_event(HISTORY_ACTION)]}),
+        )
         changed = True
 
     if "&id" in out or "*id" in out:
