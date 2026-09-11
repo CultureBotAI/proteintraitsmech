@@ -53,6 +53,20 @@ def test_targets_are_exact_broad_parent_records() -> None:
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:3000012",
         "ARO:3002976",
+        "ARO:3000234",
+        "ARO:3000236",
+        "ARO:3000238",
+        "ARO:3000246",
+        "ARO:3000253",
+        "ARO:3000259",
+        "ARO:3000255",
+        "ARO:3000257",
+        "ARO:3003722",
+        "ARO:3000260",
+        "ARO:3000256",
+        "ARO:3002917",
+        "ARO:3002918",
+        "ARO:3007187",
     }
 
 
@@ -78,6 +92,12 @@ def test_enrich_text_is_idempotent() -> None:
     assert not changed_again
     assert once == twice
     assert _history_actions(once).count(R.BYPASS_ACTION) == 1
+
+
+def test_glycopeptide_gene_cluster_targets_have_a_specific_action() -> None:
+    assert {target.action for target in R.GLYCOPEPTIDE_GENE_CLUSTERS} == {
+        R.GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    }
 
 
 def test_identifier_mismatch_is_refused() -> None:
