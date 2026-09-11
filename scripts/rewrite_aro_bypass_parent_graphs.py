@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Remove unsupported molecular-bypass/glycopeptide-cluster parent drafts.
+"""Remove unsupported broad molecular-bypass and Van stub drafts.
 
 The molecular-bypass parent spans several unrelated mechanisms, and the
 glycopeptide-cluster parent says only that Van genes confer glycopeptide
-resistance.  Prior curation split their concrete descendants into specific Van,
-Lpx, BacA/BcrC, and ddl models; these two abstract parents should not retain a
-single auto-scaffolded causal graph.
+resistance.  Some glycopeptide-cluster and Van-stub records also only localize a
+gene or cluster without stating a supported causal role.  Prior curation split
+the concrete descendants into specific Van, Lpx, BacA/BcrC, and ddl models;
+these abstract or unsupported records should not retain a single auto-scaffolded
+causal graph.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -41,6 +43,9 @@ GLYCOPEPTIDE_ACTION = (
 )
 GLYCOPEPTIDE_GENE_CLUSTER_ACTION = (
     "Removed glycopeptide gene-cluster drafts for operon-level Van cluster records"
+)
+GLYCOPEPTIDE_STUB_ACTION = (
+    "Removed unsupported glycopeptide Van stub draft with no record-specific causal role"
 )
 
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
@@ -135,7 +140,64 @@ GLYCOPEPTIDE_GENE_CLUSTERS = (
         GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
     ),
 )
-TARGETS = (BYPASS_PARENT, GLYCOPEPTIDE_PARENT, *GLYCOPEPTIDE_GENE_CLUSTERS)
+GLYCOPEPTIDE_STUBS = (
+    Target(
+        "ARO:3004253",
+        "vanu-gene-in-vang-cluster-aro3004253.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002916",
+        "vanv-aro3002916.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3004254",
+        "vanv-gene-in-vanb-cluster-aro3004254.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3000002",
+        "vanw-aro3000002.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002964",
+        "vanw-gene-in-vanb-cluster-aro3002964.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002965",
+        "vanw-gene-in-vang-cluster-aro3002965.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3003724",
+        "vanw-gene-in-vani-cluster-aro3003724.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002959",
+        "vany-gene-in-vang-cluster-aro3002959.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002962",
+        "vanz-gene-in-vana-cluster-aro3002962.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+    Target(
+        "ARO:3002963",
+        "vanz-gene-in-vanf-cluster-aro3002963.yaml",
+        GLYCOPEPTIDE_STUB_ACTION,
+    ),
+)
+TARGETS = (
+    BYPASS_PARENT,
+    GLYCOPEPTIDE_PARENT,
+    *GLYCOPEPTIDE_GENE_CLUSTERS,
+    *GLYCOPEPTIDE_STUBS,
+)
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
 
@@ -200,7 +262,7 @@ def _require_identifier(text: str, target: Target, path: Path) -> None:
 def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     target = TARGET_BY_FILENAME.get(path.name)
     if target is None:
-        raise ValueError(f"{path}: not a broad bypass/glycopeptide target")
+        raise ValueError(f"{path}: not a broad bypass/glycopeptide/Van-stub target")
 
     _require_identifier(text, target, path)
     out = _remove_block(text, "causal_graphs")
