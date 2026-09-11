@@ -1642,6 +1642,83 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
         },
     ),
     AbcFTarget(
+        identifier="ARO:3004472",
+        filename="lsa-type-abc-f-protein-aro3004472.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004472",
+            "snippet": (
+                "A subgroup of the ABC-F protein subfamily of ATP-binding "
+                "cassette proteins. lsa-type ABC-F proteins confer resistance "
+                "to streptogramin, lincosamide and pleuromutilin antibiotics "
+                "through antibiotic target protection of the ribosome."
+            ),
+            "notes": "CARD definition for lsa-type ABC-F protein.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3000300",
+        filename="lsaa-aro3000300.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000300",
+            "snippet": (
+                "LsaA is an ABC-F subfamily protein expressed in Enterococcus "
+                "faecalis. It confers resistance to clindamycin, "
+                "quinupristin-dalfopristin, and dalfopristin."
+            ),
+            "notes": "CARD definition for lsaA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003111",
+        filename="lsab-aro3003111.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003111",
+            "snippet": (
+                "LsaB is an ABC-F subfamily protein expressed in "
+                "Mammaliicoccus sciuri. It confers resistance to clindamycin."
+            ),
+            "notes": "CARD definition for lsaB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003112",
+        filename="lsac-aro3003112.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003112",
+            "snippet": (
+                "LsaC is an ABC-F subfamily protein expressed in Streptococcus "
+                "agalactiae. It confers resistance to lincomycin, clindamycin, "
+                "dalfopristin, and tiamulin."
+            ),
+            "notes": "CARD definition for lsaC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3005121",
+        filename="lsad-aro3005121.yaml",
+        determinant_evidence={
+            "reference": "ARO:3005121",
+            "snippet": (
+                "The lsa(D) gene represents an ABC-F subfamily protein "
+                "expressed in Lactococcus garvieae."
+            ),
+            "notes": "CARD definition for lsaD.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003206",
+        filename="lsae-aro3003206.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003206",
+            "snippet": (
+                "lsaE is an ABC-F subfamily protein found in porcine MRSA "
+                "isolates. It confers resistance to pleuromutilin, "
+                "lincosamide, and streptogramin A."
+            ),
+            "notes": "CARD definition for lsaE.",
+        },
+    ),
+    AbcFTarget(
         identifier="ARO:3007068",
         filename="miscellaneous-abc-f-subfamily-atp-binding-cassette-ribosomal-protection-proteins-aro3007068.yaml",
         determinant_evidence={
@@ -1838,6 +1915,81 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
                 "ambofaciens that confers resistance to spiramycin."
             ),
             "notes": "CARD definition for srmB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007030",
+        filename="sal-type-abc-f-protein-aro3007030.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007030",
+            "snippet": (
+                "Sal proteins are a part of the ABC-F proteins, expressed in "
+                "staphylococci that confer resistance to group A "
+                "streptogramin, lincosamide, and pleuromutilin antibiotics "
+                "through ribosomal protection."
+            ),
+            "notes": "CARD definition for sal-type ABC-F protein.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003749",
+        filename="sala-aro3003749.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003749",
+            "snippet": (
+                "salA is an ABC-F subfamily protein gene isolated from the "
+                "chromosome of Mammaliicoccus sciuri conferring resistance to "
+                "lincosamides and streptogramins."
+            ),
+            "notes": "CARD definition for salA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007026",
+        filename="salb-aro3007026.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007026",
+            "snippet": (
+                "salB is a ABC-F subfamily protein gene that confers resistance "
+                "to lincosamides and class A streptogramins."
+            ),
+            "notes": "CARD definition for salB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007027",
+        filename="salc-aro3007027.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007027",
+            "snippet": (
+                "salC is a ABC-F subfamily protein gene that confers resistance "
+                "to lincosamides and class A streptogramins."
+            ),
+            "notes": "CARD definition for salC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007028",
+        filename="sald-aro3007028.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007028",
+            "snippet": (
+                "salD is a ABC-F subfamily protein gene that confers resistance "
+                "to lincosamides and class A streptogramins."
+            ),
+            "notes": "CARD definition for salD.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007029",
+        filename="sale-aro3007029.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007029",
+            "snippet": (
+                "salE is a ABC-F subfamily protein gene that confers resistance "
+                "to lincosamides and class A streptogramins."
+            ),
+            "notes": "CARD definition for salE.",
         },
     ),
     AbcFTarget(
