@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -25,12 +25,11 @@ evidence:
 - reference: DOI:10.1038/nsmb.1892
   notes: PMID:20802486 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] fluoroquinolone resistant DNA topoisomerase → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: fluoroquinolone-resistant DNA topoisomerase → reduced drug inhibition → resistance
+  description: Curated generic graph for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    The graph records mutation-based resistance and the drug-inhibition state that covers both DNA gyrase
+    and topoisomerase IV instead of a single subunit-specific QRDR route.
   nodes:
   - node_id: determinant
     label: fluoroquinolone resistant DNA topoisomerase
@@ -40,6 +39,15 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: drug0
+    label: fluoroquinolone antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000001
+  - node_id: inhibition
+    label: fluoroquinolone inhibition of bacterial DNA gyrase and topoisomerase IV
+    node_type: STATE
+    description: Local state for fluoroquinolone inhibition of bacterial type-II and type-IV topoisomerases;
+      the parent is broader than a single GyrA, GyrB, ParC or ParE QRDR route.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,41 +60,111 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies resistant topoisomerase mutations as mutation-based resistance.
     evidence:
-    - reference: DOI:10.1093/jac/dkr566
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3000452
       snippet: Fluoroquinolones inhibit type II and type IV topoisomerases (2 strand breaking enzymes)
         such as GyrA/GyrB and ParC/ParE. Point mutations in the associated gyrA and parC genes, in particular
         in the 'quinolone resistance determining region' (QRDR), give rise to resistance to the class.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1093/jac/dkr566
+      notes: PMID:22279180 (aro citation)
+    - reference: DOI:10.1054/drup.1998.0068
+      notes: PMID:11504468 (aro citation)
+    - reference: DOI:10.1038/nsmb.1892
+      notes: PMID:20802486 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: QRDR point mutations in bacterial DNA gyrase or topoisomerase IV subunits are upstream
+      of fluoroquinolone resistance.
     evidence:
-    - reference: DOI:10.1093/jac/dkr566
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1093/jac/dkr566
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000452
       snippet: Fluoroquinolones inhibit type II and type IV topoisomerases (2 strand breaking enzymes)
         such as GyrA/GyrB and ParC/ParE. Point mutations in the associated gyrA and parC genes, in particular
         in the 'quinolone resistance determining region' (QRDR), give rise to resistance to the class.
-      notes: ARO definition of this determinant (fluoroquinolone resistant DNA topoisomerase).
+      notes: CARD definition for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1093/jac/dkr566
+      notes: PMID:22279180 (aro citation)
+    - reference: DOI:10.1054/drup.1998.0068
+      notes: PMID:11504468 (aro citation)
+    - reference: DOI:10.1038/nsmb.1892
+      notes: PMID:20802486 (aro citation)
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The mutated topoisomerase determinant counters fluoroquinolone inhibition and gives rise
+      to resistance.
+    evidence:
+    - reference: ARO:3000452
+      snippet: Fluoroquinolones inhibit type II and type IV topoisomerases (2 strand breaking enzymes)
+        such as GyrA/GyrB and ParC/ParE. Point mutations in the associated gyrA and parC genes, in particular
+        in the 'quinolone resistance determining region' (QRDR), give rise to resistance to the class.
+      notes: CARD definition for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1093/jac/dkr566
+      notes: PMID:22279180 (aro citation)
+    - reference: DOI:10.1054/drup.1998.0068
+      notes: PMID:11504468 (aro citation)
+    - reference: DOI:10.1038/nsmb.1892
+      notes: PMID:20802486 (aro citation)
+  - subject: drug0
+    predicate: causally upstream of (inhibits target topoisomerases)
+    predicate_id: RO:0002411
+    object: inhibition
+    description: Fluoroquinolones inhibit bacterial type-II and type-IV DNA topoisomerases.
+    evidence:
+    - reference: ARO:3000452
+      snippet: Fluoroquinolones inhibit type II and type IV topoisomerases (2 strand breaking enzymes)
+        such as GyrA/GyrB and ParC/ParE. Point mutations in the associated gyrA and parC genes, in particular
+        in the 'quinolone resistance determining region' (QRDR), give rise to resistance to the class.
+      notes: CARD definition for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    - reference: ARO:0000001
+      snippet: fluoroquinolone antibiotic
+      notes: ARO drug-class term named by the fluoroquinolone topoisomerase parent.
+    - reference: DOI:10.1093/jac/dkr566
+      notes: PMID:22279180 (aro citation)
+    - reference: DOI:10.1054/drup.1998.0068
+      notes: PMID:11504468 (aro citation)
+    - reference: DOI:10.1038/nsmb.1892
+      notes: PMID:20802486 (aro citation)
+  - subject: determinant
+    predicate: negatively regulates (reduces fluoroquinolone inhibition)
+    predicate_id: RO:0002212
+    object: inhibition
+    description: Resistance-conferring QRDR point mutations reduce fluoroquinolone inhibition of the target
+      topoisomerases.
+    evidence:
+    - reference: ARO:3000452
+      snippet: Fluoroquinolones inhibit type II and type IV topoisomerases (2 strand breaking enzymes)
+        such as GyrA/GyrB and ParC/ParE. Point mutations in the associated gyrA and parC genes, in particular
+        in the 'quinolone resistance determining region' (QRDR), give rise to resistance to the class.
+      notes: CARD definition for the broad fluoroquinolone-resistant DNA topoisomerase parent.
+    - reference: ARO:0000001
+      snippet: fluoroquinolone antibiotic
+      notes: ARO drug-class term named by the fluoroquinolone topoisomerase parent.
+    - reference: DOI:10.1093/jac/dkr566
+      notes: PMID:22279180 (aro citation)
+    - reference: DOI:10.1054/drup.1998.0068
+      notes: PMID:11504468 (aro citation)
+    - reference: DOI:10.1038/nsmb.1892
+      notes: PMID:20802486 (aro citation)
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated generic fluoroquinolone topoisomerase graph
+  llm_assisted: true
 license: CC-BY 4.0
