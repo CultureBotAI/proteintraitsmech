@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003449
 trait_relations:
@@ -20,21 +20,16 @@ trait_relations:
     object: ARO:3000527
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3003450 Ethambutol resistant iniC"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Ethambutol resistant iniC → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Ethambutol resistant iniC → ethambutol resistance mutation core
+  description: Conservative graph for a drug-specific iniA/iniC determinant. The graph keeps CARD's broad
+    mutation mechanism and prunes the weak inherited antibiotic-efflux side path.
   nodes:
   - node_id: determinant
     label: Ethambutol resistant iniC
     node_type: PROTEIN
     grounding: ARO:3003450
   - node_id: mech0
-    label: antibiotic efflux
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:0010000
-  - node_id: mech1
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
@@ -54,69 +49,73 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this drug-specific iniA/iniC determinant under mutation-conferring antibiotic
+      resistance.
     evidence:
-    - reference: ARO:3003450
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3003450
       snippet: Mutations that occurs on the iniC genes resulting in the resistance to ethambutol.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3003450
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech1
-    evidence:
-    - reference: ARO:3003450
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003450
-      snippet: Mutations that occurs on the iniC genes resulting in the resistance to ethambutol.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech1
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3003450
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      notes: CARD definition for the ethambutol-resistant iniC parent.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The inherited mutation mechanism is upstream of ethambutol resistance.
+    evidence:
+    - reference: ARO:3003450
+      snippet: Mutations that occurs on the iniC genes resulting in the resistance to ethambutol.
+      notes: CARD definition for the ethambutol-resistant iniC parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3003450
+      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000497 ! ethambutol'
+      notes: CARD asserts a resistance relation on this record's own ARO term.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that mutations in this determinant confer ethambutol resistance.
     evidence:
     - reference: ARO:3003450
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: Mutations that occurs on the iniC genes resulting in the resistance to ethambutol.
+      notes: CARD definition for the ethambutol-resistant iniC parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
     - reference: ARO:3003450
       snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000497 ! ethambutol'
       notes: CARD asserts a resistance relation on this record's own ARO term.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps this determinant or its drug-specific parent to the polyamine antibiotic drug
+      class.
     evidence:
     - reference: ARO:3003450
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000527 ! polyamine antibiotic'
       notes: Asserted directly on ARO:3003450 (Ethambutol resistant iniC) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
+    - reference: ARO:3003450
+      snippet: Mutations that occurs on the iniC genes resulting in the resistance to ethambutol.
+      notes: CARD definition for the ethambutol-resistant iniC parent.
+    - reference: ARO:3000527
+      snippet: polyamine antibiotic
+      notes: ARO drug-class term for the grounded polyamine antibiotic node.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Pruned iniA/iniC drug-specific graphs to a mutation core
+  llm_assisted: true
 license: CC-BY 4.0
