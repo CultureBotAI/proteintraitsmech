@@ -137,6 +137,54 @@ def test_under_modeled_residue_nodes_still_warn_about_grounding() -> None:
     assert warns[0].key == "record.yaml|resistance|ungrounded-node|mutation"
 
 
+def test_described_local_molecular_function_nodes_do_not_warn_about_grounding() -> None:
+    errors, warns = _audit(
+        [
+            {
+                "node_id": "determinant",
+                "label": "determinant",
+                "node_type": "PROTEIN",
+                "grounding": "ARO:1",
+            },
+            {
+                "node_id": "modification",
+                "label": "enzymatic modification of the antibiotic",
+                "node_type": "MOLECULAR_FUNCTION",
+                "local": True,
+                "description": "Local broad modification node with no stable external CURIE.",
+            },
+        ],
+        [_edge("determinant", "modification")],
+    )
+
+    assert errors == []
+    assert warns == []
+
+
+def test_undocumented_local_nodes_still_warn_about_grounding() -> None:
+    errors, warns = _audit(
+        [
+            {
+                "node_id": "determinant",
+                "label": "determinant",
+                "node_type": "PROTEIN",
+                "grounding": "ARO:1",
+            },
+            {
+                "node_id": "modification",
+                "label": "enzymatic modification of the antibiotic",
+                "node_type": "MOLECULAR_FUNCTION",
+                "local": True,
+            },
+        ],
+        [_edge("determinant", "modification")],
+    )
+
+    assert errors == []
+    assert len(warns) == 1
+    assert "node 'modification' has no grounding" in str(warns[0])
+
+
 def test_warning_keys_pin_warning_identity() -> None:
     edge = _edge("determinant", "activity")
     edge.pop("predicate_id")

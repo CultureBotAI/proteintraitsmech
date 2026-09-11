@@ -60,6 +60,7 @@ class Target:
             "node_id": "modification",
             "label": f"enzymatic modification of {self.drug_name}",
             "node_type": "MOLECULAR_FUNCTION",
+            "local": True,
             "description": (
                 "Local broad modification node; left label-only because this ARO parent "
                 "does not specify which chemical group is added or which bond is broken."
