@@ -32,7 +32,11 @@ jobs:
             src
             tests
             prompts
+            .github
           sparse-checkout-cone-mode: true
+      # `.github` is in the sparse list because claw now governs a workflow
+      # (.github/workflows/pr-shepherd.yml); a target the checkout omits is
+      # reported MISSING, not skipped (culturebotai-claw#391).
       # Keep retry policy in the workflow rather than forking the byte-governed launcher.
       # Exit 1 is the checker's retryable class; exit 2 is a local governance precondition
       # failure, so another network attempt cannot change its outcome.
