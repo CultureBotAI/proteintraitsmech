@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
@@ -28,12 +29,12 @@ ROOT = Path(__file__).resolve().parent.parent
 ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 HISTORY_ACTION = "Pruned iniA/iniC drug-specific graphs to a mutation core"
-HISTORY_EVENT = {
-    "timestamp": "2026-09-11T00:00:00Z",
-    "curator": "codex-causal-graph-quality",
-    "action": HISTORY_ACTION,
-    "llm_assisted": True,
-}
+BROAD_PARENT_ACTION = (
+    "Removed weak antibiotic-resistant iniA/iniC parent drafts after curating drug-specific "
+    "mutation records"
+)
+HISTORY_TIMESTAMP = "2026-09-11T00:00:00Z"
+HISTORY_CURATOR = "codex-causal-graph-quality"
 
 EFFLUX_EDGE_KEYS = {
     ("determinant", "RO:0000056", "mech0"),
@@ -87,6 +88,8 @@ RESISTANCE_NODE = {
     ),
 }
 
+_TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
+
 
 @dataclass(frozen=True)
 class Target:
@@ -97,6 +100,8 @@ class Target:
     family_definition: str
     drug_name: str
     has_drug_node: bool
+    action: str = HISTORY_ACTION
+    remove_graph: bool = False
 
     @property
     def is_family(self) -> bool:
@@ -173,6 +178,28 @@ TARGETS = (
         "isoniazid",
         False,
     ),
+    Target(
+        "ARO:3003446",
+        "antibiotic-resistant-inia-aro3003446.yaml",
+        "",
+        "",
+        "",
+        "",
+        False,
+        BROAD_PARENT_ACTION,
+        True,
+    ),
+    Target(
+        "ARO:3003449",
+        "antibiotic-resistant-inic-aro3003449.yaml",
+        "",
+        "",
+        "",
+        "",
+        False,
+        BROAD_PARENT_ACTION,
+        True,
+    ),
 )
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
@@ -191,6 +218,47 @@ def _dicts(value: Any) -> list[dict[str, Any]]:
     if not isinstance(value, list):
         return []
     return [item for item in value if isinstance(item, dict)]
+
+
+def _remove_block(text: str, key: str) -> str:
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, line in enumerate(lines) if line.startswith(f"{key}:")), None)
+    if start is None:
+        return text
+
+    end = start + 1
+    while end < len(lines) and not (lines[end].strip() and _TOP_KEY.match(lines[end])):
+        end += 1
+    return "".join(lines[:start]) + "".join(lines[end:])
+
+
+def _history_event(action: str) -> dict[str, Any]:
+    return {
+        "timestamp": HISTORY_TIMESTAMP,
+        "curator": HISTORY_CURATOR,
+        "action": action,
+        "llm_assisted": True,
+    }
+
+
+def _has_history_action(text: str, action: str) -> bool:
+    record = yaml.safe_load(text)
+    if not isinstance(record, dict):
+        return False
+    history = record.get("curation_history")
+    if not isinstance(history, list):
+        return False
+    return any(isinstance(event, dict) and event.get("action") == action for event in history)
+
+
+def _append_history_once(text: str, target: Target) -> str:
+    if _has_history_action(text, target.action):
+        return text
+    return append_to_section(
+        text,
+        "curation_history",
+        _dump({"curation_history": [_history_event(target.action)]}),
+    )
 
 
 def _edge_key(edge: dict[str, Any]) -> tuple[str, str, str]:
@@ -387,6 +455,8 @@ def _mutation_node(nodes: dict[str, dict[str, Any]]) -> dict[str, Any]:
 
 
 def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
+    if target.remove_graph:
+        raise ValueError(f"{target.identifier}: no canonical graph for broad parent")
     if record.get("identifier") != target.identifier:
         raise ValueError(f"expected {target.identifier}, found {record.get('identifier')}")
 
@@ -434,12 +504,19 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     if target is None:
         raise ValueError(f"{path}: not an iniA/iniC target")
 
+    found = record.get("identifier")
+    if found != target.identifier:
+        raise ValueError(f"{path}: expected {target.identifier}, found {found}")
+
+    if target.remove_graph:
+        out = _remove_block(text, "causal_graphs")
+        out = _append_history_once(out, target)
+        return out, out != text
+
     enriched, changed = enrich_record(record, target)
     out = text.replace("mapping_status: SEEDED", "mapping_status: REVIEWED", 1)
     out = replace_block(out, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
-    if HISTORY_ACTION not in out:
-        out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
-        changed = True
+    out = _append_history_once(out, target)
 
     if "&id" in out or "*id" in out:
         raise ValueError(f"{path}: YAML anchors leaked into output")
