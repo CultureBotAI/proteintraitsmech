@@ -27,6 +27,7 @@ LABELS = {
     "ARO:3004890": "ethionamide resistant mshC",
     "ARO:3004904": "isoniazid resistant mshC",
     "ARO:3004927": "Mycobacterium tuberculosis mshC mutations conferring resistance to isoniazid",
+    "ARO:3004934": "Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide",
 }
 
 
@@ -150,6 +151,7 @@ def test_target_set_matches_exact_hidden_no_ignore_mshc_branch() -> None:
         "ARO:3004890",
         "ARO:3004904",
         "ARO:3004927",
+        "ARO:3004934",
     }
 
 
@@ -192,6 +194,29 @@ def test_isoniazid_records_replace_legacy_reaction_nodes() -> None:
     assert "object: condensation" not in text
     assert "cys_glcn_ins" in text
     assert ("mshc_ligase", "RO:0002234", "cys_glcn_ins") in _edge_keys(out)
+
+
+def test_ethionamide_child_inherits_parent_reaction() -> None:
+    target = R.TARGETS["ARO:3004934"]
+
+    out, changed = R.enrich_record(_record(target.identifier), target)
+
+    assert changed
+    assert _node_ids(out) == [
+        "determinant",
+        "mech0",
+        "drug0",
+        "mshc_ligase",
+        "cys_glcn_ins",
+        "mycothiol_biosynthesis",
+        "resistance",
+    ]
+    references = {
+        item["reference"]
+        for edge in out["causal_graphs"][0]["edges"]
+        for item in edge["evidence"]
+    }
+    assert "ARO:3004890" in references
 
 
 def test_all_output_nodes_are_grounded() -> None:

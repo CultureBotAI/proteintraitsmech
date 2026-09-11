@@ -60,6 +60,17 @@ ISONIAZID_MSHC_EVIDENCE = {
     "notes": "CARD definition for the isoniazid-resistant mshC parent.",
 }
 
+ETHIONAMIDE_MSHC_EVIDENCE = {
+    "reference": "ARO:3004890",
+    "snippet": (
+        "Mutations that occur in mshC which is involved in the third step of "
+        "mycothiol biosynthesis. It catalyzes the ATP-dependent condensation "
+        "of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins. The gene exhibits "
+        "resistance to ethionamide."
+    ),
+    "notes": "CARD definition for the ethionamide-resistant mshC parent.",
+}
+
 MSHC_LIGASE_EVIDENCE = {
     "reference": "GO:0035446",
     "snippet": (
@@ -209,6 +220,20 @@ TARGETS = {
         drug_relation_object="ARO:3007152",
         drug_relation_label="isoniazid-like antibiotic",
         inherited_reaction_evidence=(ISONIAZID_MSHC_EVIDENCE,),
+    ),
+    "ARO:3004934": Target(
+        identifier="ARO:3004934",
+        filename="mycobacterium-tuberculosis-mshc-mutations-conferring-resistance-to-ethionamide-aro3004934.yaml",
+        graph_description=(
+            "Conservative graph for Mycobacterium tuberculosis mshC mutations "
+            "conferring ethionamide resistance. The graph grounds the "
+            "inherited MshC ligase reaction and Cys-GlcN-Ins product, and "
+            "keeps the inherited thioamide drug-class edge."
+        ),
+        drug_relation_reference="ARO:3004890",
+        drug_relation_object="ARO:3007156",
+        drug_relation_label="thioamide antibiotic",
+        inherited_reaction_evidence=(ETHIONAMIDE_MSHC_EVIDENCE,),
     ),
 }
 
@@ -429,7 +454,7 @@ def _reaction_evidence(
 def _canonical_edges(record: dict[str, Any], target: Target) -> list[dict[str, Any]]:
     target_evidence = _target_evidence(record)
     mutation_evidence = (target_evidence, MUTATION_EVIDENCE)
-    if target.identifier == "ARO:3004927":
+    if target.inherited_reaction_evidence:
         mutation_evidence = (
             target_evidence,
             *target.inherited_reaction_evidence,
