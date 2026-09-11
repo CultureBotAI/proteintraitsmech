@@ -400,6 +400,11 @@ Reports are written below `research/traits/`, preserving the record's directory
 layout. They are evidence proposals only: verify accessions, residue numbering,
 protein/taxon scope, chemical participants, and every proposed causal edge.
 
+## Merge queue
+
+See [the native merge-queue guide](docs/MERGE_QUEUE.md) for the reviewed merge workflow
+when queue enforcement is enabled on `main`.
+
 ## License
 
 CC0-1.0 — Public Domain Dedication.
