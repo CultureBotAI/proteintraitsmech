@@ -190,37 +190,6 @@ def _has_snippet(edge: dict[str, Any]) -> bool:
     return any(bool(evidence.get("snippet")) for evidence in _dicts(edge.get("evidence")))
 
 
-def _needs_grounding(node: dict[str, Any]) -> bool:
-    """Return True when an ungrounded node should reduce the grounding score.
-
-    Some graphs legitimately need source-local nodes that do not have stable
-    ontology/database CURIEs:
-
-    * M-CSA catalytic graphs carry one described STATE node per curator-authored
-      arrow-pushing step.
-    * BioLiP and MetalPDB binding-site graphs carry RESIDUE nodes in PDB author
-      numbering when SIFTS/UniProt residue coordinates are not asserted.
-    * Rhea protein-substrate graphs can carry described RESIDUE nodes for
-      reactive groups inside generic protein participants.
-
-    Treating those local coordinates like an ungrounded protein, chemical, or
-    molecular-function node pushes already-complete generated graphs to the
-    bottom of the queue.
-    """
-    node_type = node.get("node_type")
-    if node_type == "STATE" and node.get("description"):
-        return False
-    if node_type == "RESIDUE":
-        label = str(node.get("label") or "")
-        if node.get("description"):
-            return False
-        if "no UniProt position asserted" in label:
-            return False
-        if "UniProt position not established" in label:
-            return False
-    return True
-
-
 def _ratio(points: float, numerator: int, denominator: int) -> float:
     if denominator == 0:
         return 0.0
@@ -277,7 +246,7 @@ def score_path(path: Path) -> CausalGraphScore:
     mapping_status = _record_value(record, "mapping_status")
     edges = _edges(graphs)
     nodes = _nodes(graphs)
-    groundable_nodes = [node for node in nodes if _needs_grounding(node)]
+    groundable_nodes = [node for node in nodes if graph_audit.needs_grounding(node)]
     grounded_groundable_nodes = sum(1 for node in groundable_nodes if node.get("grounding"))
     predicate_id_edges = sum(1 for edge in edges if edge.get("predicate_id"))
     evidenced_edges = sum(1 for edge in edges if _dicts(edge.get("evidence")))
