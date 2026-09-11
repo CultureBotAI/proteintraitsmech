@@ -17,11 +17,11 @@ trait_relations:
     object: ARO:3007154
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004946 cycloserine resistant alr"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] cycloserine resistant alr → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: cycloserine resistant alr → alanine racemase activity → cycloserine resistance
+  description: Conservative graph for cycloserine-resistant Alr. The graph grounds Alr's L-alanine-to-D-alanine
+    racemase activity and its connection to peptidoglycan biosynthesis, while keeping the broad ARO mutation
+    mechanism as the causal resistance route.
   nodes:
   - node_id: determinant
     label: cycloserine resistant alr
@@ -35,6 +35,28 @@ causal_graphs:
     label: cycloserine-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007154
+  - node_id: alr_activity
+    label: alanine racemase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008784
+    description: Grounded to GO alanine racemase activity, matching CARD's statement that Alr transforms
+      L-alanine to D-alanine.
+  - node_id: l_alanine
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16977
+    description: ChEBI-grounded L-alanine, the substrate that Alr racemizes.
+  - node_id: d_alanine
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:15570
+    description: ChEBI-grounded D-alanine, the Alr product used for cell-wall biosynthesis.
+  - node_id: wall_synthesis
+    label: peptidoglycan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009252
+    description: Grounded to peptidoglycan biosynthesis, matching CARD's statement that Alr supplies D-alanine
+      for cell-wall biosynthesis.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -47,47 +69,190 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies cycloserine-resistant Alr under mutation conferring resistance.
     evidence:
-    - reference: ARO:3004946
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004946
       snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
         Can confer resistance to cycloserine.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3004946
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      notes: CARD definition for cycloserine resistant alr.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: PMID:28971867
+      snippet: these mutations likely confer resistance to d-cycloserine.
+      notes: Nakatani et al. combined molecular modeling, MIC testing, and enzyme activity measurements
+        on Mycobacterium tuberculosis Alr mutants.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The Alr variants are modeled under the broad mutation mechanism.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: PMID:28971867
+      snippet: these mutations likely confer resistance to d-cycloserine.
+      notes: Nakatani et al. combined molecular modeling, MIC testing, and enzyme activity measurements
+        on Mycobacterium tuberculosis Alr mutants.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Alr mutations can confer cycloserine resistance while Alr continues to supply D-alanine
+      for peptidoglycan biosynthesis.
     evidence:
     - reference: ARO:3004946
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004946
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: PMID:28971867
+      snippet: these mutations likely confer resistance to d-cycloserine.
+      notes: Nakatani et al. combined molecular modeling, MIC testing, and enzyme activity measurements
+        on Mycobacterium tuberculosis Alr mutants.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps cycloserine-resistant Alr to the cycloserine-like antibiotic class.
     evidence:
     - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: ARO:3004946
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: Asserted directly on ARO:3004946 (cycloserine resistant alr) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
+      notes: ARO drug-class relationship asserted on the cycloserine-resistant Alr parent and inherited
+        by the Mycobacterium tuberculosis Alr child.
+    - reference: ARO:3007154
+      snippet: cycloserine-like antibiotic
+      notes: ARO drug-class term targeted by cycloserine-resistant Alr records.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: alr_activity
+    description: Alr enables alanine racemase activity.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: GO:0008784
+      snippet: alanine racemase activity
+      notes: GO activity term matching CARD's L-alanine to D-alanine transformation.
+    - reference: PMID:28971867
+      snippet: DCS inhibits Alr irreversibly by covalently bonding to PLP.
+      notes: Nakatani et al. summarize D-cycloserine inhibition of alanine racemase.
+  - subject: alr_activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: l_alanine
+    description: Alanine racemase activity transforms L-alanine as a substrate.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: GO:0008784
+      snippet: alanine racemase activity
+      notes: GO activity term matching CARD's L-alanine to D-alanine transformation.
+    - reference: CHEBI:16977
+      snippet: The L-enantiomer of alanine.
+      notes: ChEBI definition for L-alanine.
+    - reference: CHEBI:15570
+      snippet: The D-enantiomer of alanine.
+      notes: ChEBI definition for D-alanine.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+  - subject: alr_activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: d_alanine
+    description: Alanine racemase activity produces D-alanine.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: GO:0008784
+      snippet: alanine racemase activity
+      notes: GO activity term matching CARD's L-alanine to D-alanine transformation.
+    - reference: CHEBI:16977
+      snippet: The L-enantiomer of alanine.
+      notes: ChEBI definition for L-alanine.
+    - reference: CHEBI:15570
+      snippet: The D-enantiomer of alanine.
+      notes: ChEBI definition for D-alanine.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+  - subject: alr_activity
+    predicate: part of (peptidoglycan biosynthesis)
+    predicate_id: BFO:0000050
+    object: wall_synthesis
+    description: Alr-supplied D-alanine is required for cell-wall peptidoglycan biosynthesis.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: GO:0008784
+      snippet: alanine racemase activity
+      notes: GO activity term matching CARD's L-alanine to D-alanine transformation.
+    - reference: CHEBI:16977
+      snippet: The L-enantiomer of alanine.
+      notes: ChEBI definition for L-alanine.
+    - reference: CHEBI:15570
+      snippet: The D-enantiomer of alanine.
+      notes: ChEBI definition for D-alanine.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+  - subject: drug0
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: alr_activity
+    description: D-cycloserine inhibits Alr alanine racemase activity.
+    evidence:
+    - reference: ARO:3004946
+      snippet: Provides the D-alanine required for cell wall biosynthesis. Transforms L-alanine to D-alanine.
+        Can confer resistance to cycloserine.
+      notes: CARD definition for cycloserine resistant alr.
+    - reference: ARO:3007154
+      snippet: cycloserine-like antibiotic
+      notes: ARO drug-class term targeted by cycloserine-resistant Alr records.
+    - reference: PMID:28971867
+      snippet: DCS inhibits Alr irreversibly by covalently bonding to PLP.
+      notes: Nakatani et al. summarize D-cycloserine inhibition of alanine racemase.
+curation_history:
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded cycloserine-resistant Alr graphs
+  llm_assisted: true
 license: CC-BY 4.0
