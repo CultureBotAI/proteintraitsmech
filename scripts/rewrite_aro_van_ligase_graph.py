@@ -185,6 +185,7 @@ TARGETS: tuple[Target, ...] = (
     Target(identifier="ARO:3002910", filename="vanl-aro3002910.yaml"),
     Target(identifier="ARO:3002912", filename="vann-aro3002912.yaml"),
 )
+TARGET = TARGETS[0]
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
 
@@ -430,7 +431,10 @@ def _canonical_graph(record: dict[str, Any], target: Target) -> dict[str, Any]:
     }
 
 
-def enrich_record(record: dict[str, Any], target: Target) -> tuple[dict[str, Any], bool]:
+def enrich_record(
+    record: dict[str, Any],
+    target: Target = TARGET,
+) -> tuple[dict[str, Any], bool]:
     if record.get("identifier") != target.identifier:
         raise ValueError(
             f"{target.filename}: expected {target.identifier}, "

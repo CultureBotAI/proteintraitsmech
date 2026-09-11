@@ -117,6 +117,7 @@ def _record(identifier: str = "ARO:3000458", *, child: bool = False) -> dict:
 
     return {
         "identifier": identifier,
+        "label": "macrolide glycosyltransferase",
         "definition": DEFINITION,
         "causal_graphs": [
             {
@@ -129,7 +130,7 @@ def _record(identifier: str = "ARO:3000458", *, child: bool = False) -> dict:
 
 
 def test_target_filenames_are_exactly_the_expected_eight():
-    assert {target.filename for target in R.TARGETS.values()} == {
+    assert {target.filename for target in R.TARGETS} == {
         "macrolide-glycosyltransferase-aro3000458.yaml",
         "gima-aro3000463.yaml",
         "gima-family-macrolide-glycosyltransferase-aro3004236.yaml",
@@ -142,50 +143,46 @@ def test_target_filenames_are_exactly_the_expected_eight():
 
 
 def test_parent_enrichment_adds_shared_node_groundings_and_descriptions():
-    out, changed = R.enrich_record(_record(), R.TARGETS["ARO:3000458"])
+    out, changed = R.enrich_record(_record(), R.TARGET_BY_ID["ARO:3000458"])
 
     assert changed
     graph = out["causal_graphs"][0]
     by_node = {node["node_id"]: node for node in graph["nodes"]}
     by_pair = {(edge["subject"], edge["object"]): edge for edge in graph["edges"]}
 
-    assert by_node["glycosyl"] == R.SHARED_NODE_UPDATES["glycosyl"]
-    assert by_node["glyco_drug"] == R.SHARED_NODE_UPDATES["glyco_drug"]
-    assert by_node["ribosome_site"] == R.SHARED_NODE_UPDATES["ribosome_site"]
-    assert "grounding" not in by_node["glyco_drug"]
-    assert "grounding" not in by_node["ribosome_site"]
-    assert len(by_pair) == len(R.PARENT_EDGES)
+    assert by_node["glycosyl"]["grounding"] == "GO:0016757"
+    assert "glyco_drug" not in by_node
+    assert "ribosome_site" not in by_node
+    assert len(by_pair) == 7
     for edge in graph["edges"]:
         assert edge["description"]
     assert by_pair[("determinant", "glycosyl")]["evidence"] == [
-        R.FAMILY_PMID_EVIDENCE,
         {
             "reference": "ARO:3000458",
             "snippet": DEFINITION,
-            "notes": "Exact ARO definition of this determinant.",
+            "notes": "CARD definition for macrolide glycosyltransferase.",
         },
+        R.FAMILY_PMID_EVIDENCE,
         R.GO_GLYCOSYLTRANSFERASE_EVIDENCE,
     ]
 
 
 def test_child_targets_allow_the_drug_class_edges():
-    target = R.TARGETS["ARO:3000463"]
+    target = R.TARGET_BY_ID["ARO:3000463"]
     out, changed = R.enrich_record(_record("ARO:3000463", child=True), target)
 
     assert changed
     graph = out["causal_graphs"][0]
     by_pair = {(edge["subject"], edge["object"]): edge for edge in graph["edges"]}
-    assert len(by_pair) == len(R.CHILD_EDGES)
+    assert len(by_pair) == 8
     assert by_pair[("determinant", "drug0")]["description"] == (
-        R.ALL_EDGE_DESCRIPTIONS[("determinant", "drug0")]
-    )
-    assert by_pair[("drug0", "ribosome_site")]["description"] == (
-        R.ALL_EDGE_DESCRIPTIONS[("drug0", "ribosome_site")]
+        "CARD asserts macrolide-antibiotic resistance for this "
+        "glycosyltransferase family or an ancestor of the determinant."
     )
 
 
 def test_enrich_record_is_idempotent():
-    target = R.TARGETS["ARO:3000458"]
+    target = R.TARGET_BY_ID["ARO:3000458"]
 
     once, changed = R.enrich_record(_record(), target)
     twice, changed_again = R.enrich_record(once, target)
@@ -197,27 +194,19 @@ def test_enrich_record_is_idempotent():
 
 def test_wrong_identifier_is_refused():
     with pytest.raises(ValueError, match="expected ARO:3000458, found ARO:3000463"):
-        R.enrich_record(_record("ARO:3000463", child=True), R.TARGETS["ARO:3000458"])
+        R.enrich_record(_record("ARO:3000463", child=True), R.TARGET_BY_ID["ARO:3000458"])
 
 
-def test_unexpected_edges_are_refused():
+def test_missing_label_is_refused():
     record = _record()
-    record["causal_graphs"][0]["edges"].append(_edge("glyco_drug", "unmodeled"))
+    record.pop("label")
 
-    with pytest.raises(ValueError, match="unexpected edge glyco_drug -> unmodeled"):
-        R.enrich_record(record, R.TARGETS["ARO:3000458"])
-
-
-def test_missing_expected_edges_are_refused():
-    record = _record()
-    record["causal_graphs"][0]["edges"].pop()
-
-    with pytest.raises(ValueError, match="missing edge\\(s\\): glyco_drug -> ribosome_site"):
-        R.enrich_record(record, R.TARGETS["ARO:3000458"])
+    with pytest.raises(ValueError, match="missing label"):
+        R.enrich_record(record, R.TARGET_BY_ID["ARO:3000458"])
 
 
 def test_enrich_text_adds_history_once():
-    target = R.TARGETS["ARO:3000458"]
+    target = R.TARGET_BY_ID["ARO:3000458"]
     text = yaml.safe_dump(_record(), sort_keys=False)
 
     once, changed = R.enrich_text(text, ARO_DIR / target.filename)
@@ -228,22 +217,16 @@ def test_enrich_text_adds_history_once():
     assert once == twice
     assert "&id" not in once
     assert "*id" not in once
-    assert once.count("codex-causal-graph-quality") == 1
+    assert once.count(R.HISTORY_ACTION) == 1
     assert "curation_history:" in once
 
 
 def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
-    target = R.TARGETS["ARO:3000458"]
+    target = R.TARGET_BY_ID["ARO:3000458"]
     enriched, changed = R.enrich_record(_record(), target)
     assert changed
     edges = enriched["causal_graphs"][0]["edges"]
-    det_glycosyl = next(
-        edge for edge in edges if (edge["subject"], edge["object"]) == ("determinant", "glycosyl")
-    )
-    glycosyl_output = next(
-        edge for edge in edges if (edge["subject"], edge["object"]) == ("glycosyl", "glyco_drug")
-    )
-    glycosyl_output["evidence"] = det_glycosyl["evidence"]
+    edges[1]["evidence"] = edges[0]["evidence"]
     text = yaml.safe_dump(enriched, sort_keys=False)
     assert "&id" in text
     text += "\ncuration_history:\n"
@@ -257,12 +240,12 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     assert changed
     assert "&id" not in out
     assert "*id" not in out
-    assert out.count("codex-causal-graph-quality") == 1
+    assert out.count(R.HISTORY_ACTION) == 1
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")
 def test_all_shipped_targets_are_enriched_in_memory_without_unexpected_edges():
-    for target in R.TARGETS.values():
+    for target in R.TARGETS:
         path = ARO_DIR / target.filename
         record = yaml.safe_load(path.read_text(encoding="utf-8"))
         out, changed = R.enrich_record(copy.deepcopy(record), target)

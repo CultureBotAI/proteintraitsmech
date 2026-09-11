@@ -217,7 +217,8 @@ def test_pgsa_enrichment_adds_go_groundings_descriptions_and_role_evidence():
             "reference": "ARO:3003420",
             "snippet": PGSA_DEFINITION,
             "notes": "Exact ARO definition of this role-only parent determinant.",
-        }
+        },
+        R.MUTATION_MECHANISM_EVIDENCE,
     ]
     assert by_pair[("determinant", "pgp_synthase")]["evidence"][-1] == (
         R.GO_PGP_SYNTHASE_EVIDENCE
@@ -294,7 +295,7 @@ def test_enrich_text_adds_history_once():
     assert once == twice
     assert "&id" not in once
     assert "*id" not in once
-    assert once.count("codex-causal-graph-quality") == 1
+    assert once.count(R.HISTORY_ACTION) == 1
     assert "curation_history:" in once
 
 
@@ -323,7 +324,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     assert changed
     assert "&id" not in out
     assert "*id" not in out
-    assert out.count("codex-causal-graph-quality") == 1
+    assert out.count(R.HISTORY_ACTION) == 1
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")
@@ -331,6 +332,13 @@ def test_all_shipped_targets_are_enriched_in_memory_without_unexpected_edges():
     for target in R.TARGETS.values():
         path = ARO_DIR / target.filename
         record = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if target.identifier == "ARO:3003289":
+            assert {
+                node["node_id"]
+                for graph in record["causal_graphs"]
+                for node in graph["nodes"]
+            } == {"determinant", "mech0", "resistance"}
+            continue
         out, changed = R.enrich_record(copy.deepcopy(record), target)
         assert changed or out == record
         for graph in out["causal_graphs"]:

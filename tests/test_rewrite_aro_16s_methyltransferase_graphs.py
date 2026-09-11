@@ -108,6 +108,7 @@ def _record(identifier: str = "ARO:3000857", *, child: bool = False) -> dict:
 
     return {
         "identifier": identifier,
+        "label": "16S ribosomal RNA methyltransferase",
         "definition": "definition",
         "causal_graphs": [
             {
@@ -138,18 +139,20 @@ def test_parent_enrichment_grounds_nodes_describes_edges_and_adds_terminal_edge(
     assert by_node["methyltransferase"] == R.SHARED_NODE_UPDATES["methyltransferase"]
     assert by_node["decoding_site"] == R.SHARED_NODE_UPDATES["decoding_site"]
     assert by_node["methylated"] == R.SHARED_NODE_UPDATES["methylated"]
-    assert "grounding" not in by_node["decoding_site"]
-    assert "grounding" not in by_node["methylated"]
+    assert by_node["decoding_site"]["grounding"] == "SO:0000252"
+    assert by_node["methylated"]["grounding"] == "SO:0000252"
     assert len(by_pair) == len(R.PARENT_EDGES)
     assert ("methylated", "resistance") in by_pair
     for edge in graph["edges"]:
         assert edge["description"]
-    assert by_pair[("determinant", "methyltransferase")]["evidence"][-1] == (
-        R.RRNA_METHYLTRANSFERASE_EVIDENCE
-    )
-    assert by_pair[("methyltransferase", "methylated")]["evidence"][-1] == (
-        R.RRNA_METHYLTRANSFERASE_EVIDENCE
-    )
+    assert by_pair[("determinant", "methyltransferase")]["evidence"][-2:] == [
+        R.RRNA_METHYLTRANSFERASE_EVIDENCE,
+        R.SO_RRNA_EVIDENCE,
+    ]
+    assert by_pair[("methyltransferase", "methylated")]["evidence"][-2:] == [
+        R.RRNA_METHYLTRANSFERASE_EVIDENCE,
+        R.SO_RRNA_EVIDENCE,
+    ]
 
 
 def test_child_targets_allow_the_drug_class_edges():
@@ -215,7 +218,7 @@ def test_enrich_text_adds_history_once():
     assert once == twice
     assert "&id" not in once
     assert "*id" not in once
-    assert once.count("codex-causal-graph-quality") == 1
+    assert once.count(R.HISTORY_ACTION) == 1
     assert "curation_history:" in once
 
 
@@ -248,7 +251,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     assert changed
     assert "&id" not in out
     assert "*id" not in out
-    assert out.count("codex-causal-graph-quality") == 1
+    assert out.count(R.HISTORY_ACTION) == 1
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")

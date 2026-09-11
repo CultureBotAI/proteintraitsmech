@@ -107,10 +107,13 @@ def _node_ids(record: dict) -> set[str]:
 def test_targets_are_exact_current_mate_records() -> None:
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:3000112",
+        "ARO:3000026",
+        "ARO:3001327",
         "ARO:3003551",
         "ARO:3003835",
         "ARO:3003953",
         "ARO:3003965",
+        "ARO:3004077",
     }
 
 
@@ -121,20 +124,20 @@ def test_mate_graph_replaces_ungrounded_extrusion_function() -> None:
     assert changed
     assert "extrusion" not in nodes
     assert "export" in nodes
-    assert "extruded_drug" in nodes
     assert _edge_pairs(out) == {
         ("determinant", "mech0"),
         ("mech0", "resistance"),
         ("determinant", "resistance"),
-        ("cation_gradient", "export"),
         ("determinant", "export"),
-        ("export", "extruded_drug"),
-        ("extruded_drug", "resistance"),
+        ("export", "mech0"),
     }
 
 
 def test_mate_graph_preserves_direct_drug_edges() -> None:
-    out, changed = R.enrich_record(_record("ARO:3003835", has_drug=True), R.TARGETS[-1])
+    out, changed = R.enrich_record(
+        _record("ARO:3003835", has_drug=True),
+        R.TARGET_BY_ID["ARO:3003835"],
+    )
     nodes = _node_ids(out)
 
     assert changed
@@ -191,7 +194,7 @@ def test_missing_direct_drug_edge_is_refused() -> None:
     record["causal_graphs"][0]["edges"] = []
 
     with pytest.raises(ValueError, match="missing drug edge\\(s\\): drug0"):
-        R.enrich_record(record, R.TARGETS[-1])
+        R.enrich_record(record, R.TARGET_BY_ID["ARO:3003835"])
 
 
 def test_enrich_text_adds_history_once() -> None:
