@@ -23,11 +23,10 @@ evidence:
   notes: PMID:29091182 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: triclosan resistant gyrA → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000370). Target alteration by loss of drug binding. Distinct from rounds 18-19, where the fluoroquinolone
-    traps the cleavage complex.
+  title: triclosan resistant gyrA → conservative triclosan resistance core
+  description: Conservative graph for a triclosan-resistant gyrA record. CARD states that the mechanism
+    is unclear and probably indirect through altered stress-response pathways, so this graph keeps only
+    the mutation mechanism and disinfectant-class assertion.
   nodes:
   - node_id: determinant
     label: triclosan resistant gyrA
@@ -41,14 +40,6 @@ causal_graphs:
     label: disinfecting agents and antiseptics
     node_type: CHEMICAL
     grounding: ARO:3005386
-  - node_id: binding_loss
-    label: loss of antibiotic binding to the mutated subunit
-    node_type: STATE
-    description: The causal core, in CARD's own words. Ungrounded.
-  - node_id: dna_synth
-    label: DNA biosynthetic process
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0071897
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -61,76 +52,96 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies triclosan-resistant gyrA determinants under mutation-conferring antibiotic
+      resistance.
     evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3004333
+      snippet: DNA gyrase is responsible for DNA supercoiling and consists of two alpha and two beta subunits.
+        Point mutations in gyrA have been shown to decrease susceptibility to the antibiotic triclosan.
+        Although the mechanism is unclear, it is hypothesized that changes in supercoiling activity of
+        mutant DNA gyrase proteins alters expression of stress response pathways thereby indirectly decreasing
+        triclosan susceptibility. It has been shown that triclosan does not interact directly with gyrA.
+      notes: CARD definition for the triclosan-resistant gyrA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1093/jac/dkx201
+      notes: PMID:29091182 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism is upstream of decreased triclosan susceptibility.
     evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3004333
+      snippet: DNA gyrase is responsible for DNA supercoiling and consists of two alpha and two beta subunits.
+        Point mutations in gyrA have been shown to decrease susceptibility to the antibiotic triclosan.
+        Although the mechanism is unclear, it is hypothesized that changes in supercoiling activity of
+        mutant DNA gyrase proteins alters expression of stress response pathways thereby indirectly decreasing
+        triclosan susceptibility. It has been shown that triclosan does not interact directly with gyrA.
+      notes: CARD definition for the triclosan-resistant gyrA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1093/jac/dkx201
+      notes: PMID:29091182 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that these gyrA point mutations decrease triclosan susceptibility through
+      an unclear, probably indirect route.
     evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: 'Both halves in one sentence: drugs target topoisomerases, and a resistant subunit prevents
-        binding.'
-    - reference: ARO:3000479
-      snippet: Point mutations in DNA gyrase subunit B (gyrB) can result in resistance to aminocoumarins.
-        These mutations usually involve arginine residues in organisms.
-      notes: 'The worked case. SCOPE: gyrB and aminocoumarins specifically -- the family also covers parE
-        and parY, which this sentence does not name.'
+    - reference: ARO:3004333
+      snippet: DNA gyrase is responsible for DNA supercoiling and consists of two alpha and two beta subunits.
+        Point mutations in gyrA have been shown to decrease susceptibility to the antibiotic triclosan.
+        Although the mechanism is unclear, it is hypothesized that changes in supercoiling activity of
+        mutant DNA gyrase proteins alters expression of stress response pathways thereby indirectly decreasing
+        triclosan susceptibility. It has been shown that triclosan does not interact directly with gyrA.
+      notes: CARD definition for the triclosan-resistant gyrA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1093/jac/dkx201
+      notes: PMID:29091182 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
+    description: ARO maps this determinant or its triclosan-resistant gyrA parent to disinfecting agents
+      and antiseptics.
     evidence:
     - reference: ARO:3004333
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
       notes: Asserted directly on ARO:3004333 (triclosan resistant gyrA) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: has quality (prevents antibiotic binding)
-    predicate_id: RO:0000086
-    object: binding_loss
-    evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: '''Resistant DNA topoisomerase subunits prevent antibiotic binding''.'
-  - subject: drug0
-    predicate: negatively regulates (inhibits DNA synthesis)
-    predicate_id: RO:0002212
-    object: dna_synth
-    description: What the drug does when it CAN bind, and therefore what resistance restores.
-    evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: '''Many drugs target topoisomerases to inhibit DNA synthesis''.'
-  - subject: binding_loss
-    predicate: causally upstream of (DNA synthesis continues)
-    predicate_id: RO:0002411
-    object: dna_synth
-    description: 'Why the loss of binding is the resistance: synthesis is no longer inhibited.'
-    evidence:
-    - reference: ARO:3000370
-      snippet: Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase
-        subunits prevent antibiotic binding and thus confer resistance.
-      notes: '''and thus confer resistance'' -- CARD''s own ''thus'' is the causal link.'
+    - reference: ARO:3004333
+      snippet: DNA gyrase is responsible for DNA supercoiling and consists of two alpha and two beta subunits.
+        Point mutations in gyrA have been shown to decrease susceptibility to the antibiotic triclosan.
+        Although the mechanism is unclear, it is hypothesized that changes in supercoiling activity of
+        mutant DNA gyrase proteins alters expression of stress response pathways thereby indirectly decreasing
+        triclosan susceptibility. It has been shown that triclosan does not interact directly with gyrA.
+      notes: CARD definition for the triclosan-resistant gyrA parent term.
+    - reference: ARO:3005386
+      snippet: disinfecting agents and antiseptics
+      notes: ARO drug-class term for the grounded disinfecting-agent node.
+    - reference: DOI:10.1093/jac/dkx201
+      notes: PMID:29091182 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Pruned triclosan gyrA graphs to conservative mutation core
   llm_assisted: true
 license: CC-BY 4.0
