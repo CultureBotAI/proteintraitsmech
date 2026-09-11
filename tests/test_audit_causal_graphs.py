@@ -20,7 +20,7 @@ def _load():
 
 
 A = _load()
-VALID_TYPES = {"LIGAND", "PROTEIN", "RESIDUE", "STATE"}
+VALID_TYPES = {"LIGAND", "MOLECULAR_FUNCTION", "PROTEIN", "RESIDUE", "STATE"}
 
 
 def _edge(subject: str, object_: str) -> dict:
@@ -33,9 +33,9 @@ def _edge(subject: str, object_: str) -> dict:
     }
 
 
-def _audit(nodes: list[dict], edges: list[dict]) -> tuple[list[str], list[str]]:
+def _audit(nodes: list[dict], edges: list[dict]):
     errors: list[str] = []
-    warns: list[str] = []
+    warns: list[A.AuditWarning] = []
     stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
     A.audit_record(
         {
@@ -133,4 +133,63 @@ def test_under_modeled_residue_nodes_still_warn_about_grounding() -> None:
 
     assert errors == []
     assert len(warns) == 1
-    assert "node 'mutation' has no grounding" in warns[0]
+    assert "node 'mutation' has no grounding" in str(warns[0])
+    assert warns[0].key == "record.yaml|resistance|ungrounded-node|mutation"
+
+
+def test_warning_keys_pin_warning_identity() -> None:
+    edge = _edge("determinant", "activity")
+    edge.pop("predicate_id")
+    edge["evidence"] = [{"reference": "PMID:1"}]
+
+    errors, warns = _audit(
+        [
+            {
+                "node_id": "determinant",
+                "label": "determinant",
+                "node_type": "PROTEIN",
+                "grounding": "ARO:1",
+            },
+            {
+                "node_id": "activity",
+                "label": "local activity",
+                "node_type": "MOLECULAR_FUNCTION",
+            },
+        ],
+        [edge],
+    )
+
+    assert errors == []
+    assert [warning.key for warning in warns] == [
+        "record.yaml|resistance|ungrounded-node|activity",
+        "record.yaml|resistance|missing-predicate-id|determinant->activity",
+        "record.yaml|resistance|missing-snippet|determinant->activity",
+    ]
+
+
+def test_diff_baseline_sees_warning_swaps_at_unchanged_counts() -> None:
+    current = {
+        "record.yaml|resistance|ungrounded-node|new_node": 1,
+    }
+    known = {
+        "record.yaml|resistance|ungrounded-node|old_node": 1,
+    }
+
+    fixed, new = A.diff_baseline(current, known)
+
+    assert fixed == ["record.yaml|resistance|ungrounded-node|old_node"]
+    assert new == ["record.yaml|resistance|ungrounded-node|new_node"]
+
+
+def test_diff_baseline_preserves_duplicate_warning_counts() -> None:
+    current = {
+        "record.yaml|resistance|missing-snippet|determinant->activity": 2,
+    }
+    known = {
+        "record.yaml|resistance|missing-snippet|determinant->activity": 1,
+    }
+
+    fixed, new = A.diff_baseline(current, known)
+
+    assert fixed == []
+    assert new == ["record.yaml|resistance|missing-snippet|determinant->activity"]
