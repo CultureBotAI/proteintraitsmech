@@ -1683,6 +1683,18 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
         },
     ),
     AbcFTarget(
+        identifier="ARO:3000616",
+        filename="mel-aro3000616.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000616",
+            "snippet": (
+                "Mel, a homolog of MsrA, is an ABC-F subfamily protein "
+                "associated with macrolide resistance."
+            ),
+            "notes": "CARD definition for mel.",
+        },
+    ),
+    AbcFTarget(
         identifier="ARO:3002818",
         filename="msrb-aro3002818.yaml",
         determinant_evidence={
