@@ -77,6 +77,7 @@ def test_targets_are_exact_broad_parent_records() -> None:
         "ARO:3002959",
         "ARO:3002962",
         "ARO:3002963",
+        "ARO:3003398",
     }
 
 
@@ -114,6 +115,10 @@ def test_glycopeptide_stub_targets_have_a_specific_action() -> None:
     assert {target.action for target in R.GLYCOPEPTIDE_STUBS} == {
         R.GLYCOPEPTIDE_STUB_ACTION,
     }
+
+
+def test_upp_parent_has_a_specific_action() -> None:
+    assert R.UPP_PARENT.action == R.UPP_PARENT_ACTION
 
 
 def test_identifier_mismatch_is_refused() -> None:
