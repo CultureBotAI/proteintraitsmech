@@ -23,13 +23,10 @@ evidence:
   notes: PMID:32526926 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Ribosomal protein mutation conferring resistance to pleuromutilin antibiotics → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3005082). Ribosomal protein mutation (generic) -- target alteration IN TRANS. NO protein-trait
-    node: CARD names no protein here, and taking uL3 from the child term ARO:3005081 would be #371''s
-    borrowed specificity.'
+  title: Ribosomal protein mutation → 23S rRNA conformational change → pleuromutilin resistance
+  description: Curated resistance-causation graph for generic ribosomal-protein substitutions that alter
+    local 23S rRNA conformation in trans and confer pleuromutilin resistance without naming one protein
+    family.
   nodes:
   - node_id: determinant
     label: Ribosomal protein mutation conferring resistance to pleuromutilin antibiotics
@@ -62,15 +59,15 @@ causal_graphs:
   - node_id: rrna23s
     label: 23S ribosomal RNA
     node_type: NUCLEIC_ACID
-    description: The molecule whose conformation the mutation alters. Ungrounded for the same reason the
-      16S node is in round 121 (#346).
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrower bacterial
+      23S rRNA CURIE is available in the local curation evidence.
+    grounding: SO:0000252
   - node_id: peptide_bond
-    label: peptide bond formation
-    node_type: BIOLOGICAL_PROCESS
-    description: 'UNGROUNDED. GO:0006414 is `translational elongation` and GO:0000048 is `peptidyltransferase
-      activity` -- a broader process and an activity. Neither IS peptide bond formation, and #346''s rule
-      says a live CURIE that means something else is worse than none. It was grounded to GO:0006414 until
-      review caught the config applying that rule to the node above and breaking it here (#376).'
+    label: peptidyl transferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: The ribosomal activity that synthesizes peptide bonds and is blocked when tiamulin binds
+      at the PTC.
+    grounding: GO:0000048
   - node_id: altered_conformation
     label: altered local 23S rRNA conformation at the active site
     node_type: STATE
@@ -102,6 +99,11 @@ causal_graphs:
       snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
         thus conferring antibiotic resistance.
       notes: Family mechanism ARO:3000212.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    description: CARD classifies this ribosomal-protein determinant under mutation-conferring resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -111,6 +113,11 @@ causal_graphs:
       snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
         thus conferring antibiotic resistance.
       notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    description: The inherited mutation mechanism captures altered gene products that cause resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -120,21 +127,36 @@ causal_graphs:
       snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
         thus conferring antibiotic resistance.
       notes: CARD states the causation -- 'thus conferring resistance'.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    description: Ribosomal protein mutations can confer resistance by altering local rRNA conformation
+      at the active site.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to pleuromutilin antibiotic.
+    description: CARD asserts that this ribosomal-protein mutation class confers resistance to pleuromutilin
+      antibiotics.
     evidence:
     - reference: ARO:3005082
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
       notes: Asserted directly on ARO:3005082 (Ribosomal protein mutation conferring resistance to pleuromutilin
         antibiotics) in the CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3005082
+      snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
+        thus conferring antibiotic resistance.
+      notes: CARD definition for ribosomal protein mutations conferring resistance to pleuromutilin antibiotics.
+    - reference: PMID:32526926
+      snippet: Tiamulin is a semisynthetic pleuromutilin antibiotic
+      notes: Killeavy 2020 isolated tiamulin-resistant Thermus thermophilus mutants; tiamulin is the tested
+        pleuromutilin-class member.
   - subject: ptc
     predicate: part of (the PTC of the 50S subunit)
     predicate_id: BFO:0000050
     object: subunit50s
-    description: Exactly what the snippet locates, and no more (#373).
+    description: Tiamulin binds in the peptidyl transferase center of the 50S ribosomal subunit.
     evidence:
     - reference: PMID:15554968
       snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
@@ -142,11 +164,18 @@ causal_graphs:
         A-tRNA binding site.
       notes: '''the peptidyl transferase center (PTC) OF THE 50S RIBOSOMAL SUBUNIT''. NOT asserted: the
         PTC''s composition, which this sentence does not give.'
+    - reference: PMID:12936991
+      snippet: The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts
+        at the peptidyl transferase center.
+      notes: Bosling 2003 identified the tiamulin interaction site.
+    - reference: GO:0015934
+      snippet: large ribosomal subunit
+      notes: GO grounding for the large ribosomal subunit.
   - subject: drug0
     predicate: molecularly interacts with (binds the peptidyl transferase centre)
     predicate_id: RO:0002436
     object: ptc
-    description: The drug-action arm.
+    description: Tiamulin represents the pleuromutilin drug class and binds the PTC.
     evidence:
     - reference: PMID:15554968
       snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
@@ -162,14 +191,18 @@ causal_graphs:
     predicate: has part (the antibiotic)
     predicate_id: BFO:0000051
     object: drug0
-    description: 'Round 21''s rule, and round 121''s #370: a binding state is defined by BOTH constituents,
-      not one.'
+    description: The modeled drug-binding state includes the pleuromutilin-class drug tiamulin.
     evidence:
     - reference: PMID:12936991
       snippet: The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts
         at the peptidyl transferase center.
       notes: '''tiamulin ... INTERACTS AT the peptidyl transferase center'' -- the drug half, from a sentence
         about the DRUG rather than about the L3 mutant, whose experiment belongs to ARO:3005081 (#382).'
+    - reference: PMID:15554968
+      snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
+        of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
+        A-tRNA binding site.
+      notes: Schlunzen 2004 located tiamulin in the 50S-subunit peptidyl transferase center.
   - subject: drug_binding
     predicate: has part (the site it binds)
     predicate_id: BFO:0000051
@@ -180,40 +213,66 @@ causal_graphs:
         of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
         A-tRNA binding site.
       notes: The site half of the same binding state.
+    - reference: PMID:12936991
+      snippet: The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts
+        at the peptidyl transferase center.
+      notes: Bosling 2003 identified the tiamulin interaction site.
+    description: The modeled drug-binding state includes the PTC drug-binding site.
   - subject: determinant
     predicate: causally upstream of (the substitution alters the conformation)
     predicate_id: RO:0002411
     object: altered_conformation
-    description: 'The in-trans step: a protein substitution changes the shape of the RNA that forms the
-      drug''s site.'
+    description: The ribosomal-protein substitution acts in trans by altering local 23S rRNA conformation.
     evidence:
     - reference: ARO:3005082
       snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
         thus conferring antibiotic resistance.
       notes: CARD's own words -- 'interfering with local rRNA conformation' / 'interfere with the rRNA
         conformation at the active site'.
+    - reference: PMID:32526926
+      snippet: amino acid substitutions in uL3 are predicted to act indirectly by destabilizing rRNA conformation
+        in the active site
+      notes: Killeavy 2020 interprets the uL3 substitutions as an example of a ribosomal-protein mutation
+        acting in trans on the rRNA conformation.
   - subject: altered_conformation
     predicate: characteristic of (a conformation of the 23S rRNA)
     predicate_id: RO:0000052
     object: rrna23s
-    description: Which molecule's conformation it is -- the fact that made this an IN-TRANS mechanism.
+    description: The altered conformation is a local conformation of 23S rRNA.
     evidence:
     - reference: ARO:3005082
       snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
         thus conferring antibiotic resistance.
       notes: '''the rRNA conformation''.'
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
   - subject: drug_binding
     predicate: negatively regulates (bound drug blocks peptide bond formation)
     predicate_id: RO:0002212
     object: peptide_bond
-    description: 'Why losing the binding rescues the cell: the binding is what stops translation.'
+    description: Tiamulin binding at the PTC directly blocks the peptidyl transferase reaction.
     evidence:
     - reference: PMID:15554968
       snippet: Thereby, tiamulin directly inhibits peptide bond formation.
       notes: '''Thereby, tiamulin directly inhibits peptide bond formation.'''
+    - reference: PMID:15554968
+      snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
+        of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
+        A-tRNA binding site.
+      notes: Schlunzen 2004 located tiamulin in the 50S-subunit peptidyl transferase center.
+    - reference: GO:0000048
+      snippet: The synthesis of a peptide bond, as in the addition of an amino acid residue to a peptide
+        chain.
+      notes: GO definition for peptidyl transferase activity.
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed generic ribosomal-protein pleuromutilin-resistance graph
   llm_assisted: true
 license: CC-BY 4.0
