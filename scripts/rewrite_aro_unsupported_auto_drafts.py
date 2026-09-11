@@ -7,7 +7,9 @@ resistance mechanism, and CARD states that YajC has an uncharacterized
 AcrAB-TolC interaction rather than a curatable efflux role.  The metal-
 transporter terms also lack a record-specific antibiotic-efflux role: one
 describes environmental metal co-selection, and the other describes nickel
-uptake rather than antibiotic export.
+uptake rather than antibiotic export.  The remaining broad efflux-modulator
+parent and two-component pair records need pair-level graph modeling instead of
+their inherited antibiotic-efflux auto-scaffolds.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -39,6 +41,12 @@ METAL_TRANSPORTER_ACTION = (
 )
 PGPB_ACTION = "Removed pgpB draft with no record-specific resistance mechanism"
 YAJC_ACTION = "Removed YajC draft with uncharacterized efflux-pump interaction"
+BROAD_EFFLUX_MODULATOR_ACTION = (
+    "Removed broad efflux-modulator parent draft without a record-specific regulator"
+)
+TWO_COMPONENT_PAIR_ACTION = (
+    "Removed two-component pair draft pending pair-level regulatory graph modeling"
+)
 
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
 
@@ -64,6 +72,18 @@ TARGETS = (
         METAL_TRANSPORTER_ACTION,
     ),
     Target("ARO:3005040", "yajc-aro3005040.yaml", YAJC_ACTION),
+    Target(
+        "ARO:3000451",
+        "protein-s-and-two-component-regulatory-system-modulating-antibiotic-efflux-"
+        "aro3000451.yaml",
+        BROAD_EFFLUX_MODULATOR_ACTION,
+    ),
+    Target("ARO:3003579", "basrs-aro3003579.yaml", TWO_COMPONENT_PAIR_ACTION),
+    Target(
+        "ARO:3003076",
+        "daptomycin-resistant-liafsr-aro3003076.yaml",
+        TWO_COMPONENT_PAIR_ACTION,
+    ),
 )
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
