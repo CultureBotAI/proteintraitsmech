@@ -29,12 +29,12 @@ def _write(path: Path, text: str) -> Path:
     return path
 
 
-def _record(*, body: str) -> str:
+def _record(*, body: str, mapping_status: str = "REVIEWED") -> str:
     return f"""identifier: X:1
 label: test
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
-mapping_status: REVIEWED
+mapping_status: {mapping_status}
 {body}
 license: CC0
 """
@@ -81,6 +81,46 @@ def test_score_path_reports_a_complete_graph(tmp_path: Path) -> None:
     assert score.grounded_groundable_nodes == 2
     assert score.multi_reference_edges == 1
     assert score.reasons == ()
+
+
+def test_seeded_complete_graphs_keep_review_priority(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "seeded-complete.yaml",
+        _record(
+            mapping_status="SEEDED",
+            body="""causal_graphs:
+- graph_id: resistance
+  title: Resistance mechanism
+  description: Complete but unreviewed test graph.
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+    grounding: ARO:1
+  - node_id: activity
+    label: activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:1
+  edges:
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The determinant enables the activity.
+    evidence:
+    - reference: PMID:1
+      snippet: activity evidence
+    - reference: PMID:2
+      snippet: independent evidence
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.score == 100 - S.SEEDED_REVIEW_PENALTY
+    assert score.mapping_status == "SEEDED"
+    assert score.reasons == ("mapping_status=SEEDED",)
 
 
 def test_score_path_prioritizes_incomplete_graphs(tmp_path: Path) -> None:

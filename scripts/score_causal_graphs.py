@@ -4,7 +4,8 @@
 The structural ``audit_causal_graphs.py`` gate answers "is this graph internally
 consistent?" This report answers "which graph-bearing YAML records need curation
 first?" by assigning each record a 0-100 score and sorting the lowest scores
-first.
+first. Unreviewed seeded drafts are slightly penalized so complete-looking
+auto-scaffolds remain visible until a curator promotes them to REVIEWED.
 """
 
 from __future__ import annotations
@@ -58,6 +59,7 @@ FIELDS = (
     "quality_warnings",
     "reasons",
 )
+SEEDED_REVIEW_PENALTY = 5
 _ROOT_META = re.compile(
     r"^(identifier|label|trait_axis|trait_category|mapping_status):[ \t]*(.+)[ \t]*$",
     re.M,
@@ -272,6 +274,7 @@ def score_path(path: Path) -> CausalGraphScore:
         return CausalGraphScore(score=0, file=rel, structural_errors=1, reasons=(str(exc),))
 
     graphs = _dicts(record.get("causal_graphs"))
+    mapping_status = _record_value(record, "mapping_status")
     edges = _edges(graphs)
     nodes = _nodes(graphs)
     groundable_nodes = [node for node in nodes if _needs_grounding(node)]
@@ -298,6 +301,10 @@ def score_path(path: Path) -> CausalGraphScore:
             stats,
         )
 
+    seeded_review_penalty = (
+        SEEDED_REVIEW_PENALTY if graphs and mapping_status == "SEEDED" else 0
+    )
+
     if not graphs:
         score = 0
     else:
@@ -310,7 +317,10 @@ def score_path(path: Path) -> CausalGraphScore:
             + _ratio(10, multi_reference_edges, len(edges))
             + _ratio(10, documented_graphs, len(graphs))
         )
-        score = max(0, round(raw_score) - min(40, 10 * len(errors)))
+        score = max(
+            0,
+            round(raw_score) - min(40, 10 * len(errors)) - seeded_review_penalty,
+        )
 
     reasons = [
         reason
@@ -324,6 +334,7 @@ def score_path(path: Path) -> CausalGraphScore:
             _reason_count("snippet_edges", snippet_edges, len(edges)),
             _reason_count("described_edges", described_edges, len(edges)),
             _reason_count("documented_graphs", documented_graphs, len(graphs)),
+            "mapping_status=SEEDED" if seeded_review_penalty else None,
             "no causal_graphs" if not graphs else None,
         )
         if reason is not None
@@ -336,7 +347,7 @@ def score_path(path: Path) -> CausalGraphScore:
         label=_record_value(record, "label"),
         trait_axis=_record_value(record, "trait_axis"),
         trait_category=_record_value(record, "trait_category"),
-        mapping_status=_record_value(record, "mapping_status"),
+        mapping_status=mapping_status,
         graphs=len(graphs),
         nodes=len(nodes),
         edges=len(edges),
