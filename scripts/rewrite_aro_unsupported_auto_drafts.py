@@ -4,7 +4,10 @@
 These records were held back by evidence preconditions in earlier family rounds:
 the almEFG term is an operon-level record, pgpB states no record-specific
 resistance mechanism, and CARD states that YajC has an uncharacterized
-AcrAB-TolC interaction rather than a curatable efflux role.
+AcrAB-TolC interaction rather than a curatable efflux role.  The metal-
+transporter terms also lack a record-specific antibiotic-efflux role: one
+describes environmental metal co-selection, and the other describes nickel
+uptake rather than antibiotic export.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -31,6 +34,9 @@ HISTORY_TIMESTAMP = "2026-09-11T00:00:00Z"
 HISTORY_CURATOR = "codex-causal-graph-quality"
 
 ALMEFG_ACTION = "Removed almEFG operon draft pending operon-level graph modelling"
+METAL_TRANSPORTER_ACTION = (
+    "Removed metal-transporter draft without a record-specific antibiotic-efflux role"
+)
 PGPB_ACTION = "Removed pgpB draft with no record-specific resistance mechanism"
 YAJC_ACTION = "Removed YajC draft with uncharacterized efflux-pump interaction"
 
@@ -46,7 +52,17 @@ class Target:
 
 TARGETS = (
     Target("ARO:3007434", "almefg-aro3007434.yaml", ALMEFG_ACTION),
+    Target(
+        "ARO:3007657",
+        "metal-transporters-with-antibiotic-efflux-aro3007657.yaml",
+        METAL_TRANSPORTER_ACTION,
+    ),
     Target("ARO:3003920", "pgpb-aro3003920.yaml", PGPB_ACTION),
+    Target(
+        "ARO:3007659",
+        "putative-nickel-cobalt-transporter-aro3007659.yaml",
+        METAL_TRANSPORTER_ACTION,
+    ),
     Target("ARO:3005040", "yajc-aro3005040.yaml", YAJC_ACTION),
 )
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
