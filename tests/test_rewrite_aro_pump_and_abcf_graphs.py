@@ -109,6 +109,7 @@ def test_targets_are_exact_current_efflux_and_abcf_records() -> None:
         "ARO:3000113",
         "ARO:3000118",
         "ARO:3000251",
+        "ARO:3000616",
         "ARO:3000344",
         "ARO:3000343",
         "ARO:3000373",
