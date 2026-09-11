@@ -269,8 +269,9 @@ def enrich_record(record: dict[str, Any]) -> tuple[dict[str, Any], bool]:
 
     out = copy.deepcopy(record)
     before = copy.deepcopy(out["causal_graphs"])
+    out["mapping_status"] = "REVIEWED"
     out["causal_graphs"] = [_graph()]
-    return out, out["causal_graphs"] != before
+    return out, out["causal_graphs"] != before or out != record
 
 
 def enrich_text(text: str) -> tuple[str, bool]:
@@ -279,14 +280,15 @@ def enrich_text(text: str) -> tuple[str, bool]:
         raise ValueError("expected a YAML mapping")
 
     enriched, changed = enrich_record(record)
-    out = replace_block(text, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
+    out = text.replace("mapping_status: SEEDED", "mapping_status: REVIEWED", 1)
+    out = replace_block(out, "causal_graphs", _dump({"causal_graphs": enriched["causal_graphs"]}))
     if HISTORY_ACTION not in out:
         out = append_to_section(out, "curation_history", _dump({"curation_history": [HISTORY_EVENT]}))
         changed = True
 
     if "&id" in out or "*id" in out:
         raise ValueError("YAML anchors leaked into output")
-    return out, changed
+    return out, changed or out != text
 
 
 def run(apply: bool) -> bool:
