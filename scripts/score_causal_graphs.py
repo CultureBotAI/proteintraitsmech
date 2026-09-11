@@ -141,6 +141,8 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
                 "--no-config",
                 "-g",
                 "*.yaml",
+                "-g",
+                "*.yml",
                 "causal_graphs:",
                 str(path),
             ],
@@ -157,11 +159,22 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
     return sorted(path for path in files if not path.is_symlink())
 
 
+def _graph_bearing_yaml_files_by_content(paths: Iterable[Path]) -> list[Path]:
+    files: list[Path] = []
+    for path in _yaml_files(paths):
+        if "causal_graphs:" in path.read_text(encoding="utf-8", errors="replace"):
+            files.append(path)
+    return files
+
+
 def candidate_files(paths: Iterable[Path], *, include_missing: bool = False) -> list[Path]:
     paths = list(paths)
     if include_missing:
         return _yaml_files(paths)
-    return _graph_bearing_yaml_files(paths) or _yaml_files(paths)
+    graph_bearing = _graph_bearing_yaml_files(paths)
+    if graph_bearing is not None:
+        return graph_bearing
+    return _graph_bearing_yaml_files_by_content(paths)
 
 
 def _dicts(value: Any) -> list[dict[str, Any]]:

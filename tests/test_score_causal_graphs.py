@@ -446,6 +446,43 @@ def test_graph_discovery_includes_hidden_and_gitignored_files(tmp_path: Path) ->
     assert S.candidate_files([tmp_path]) == [ignored, visible]
 
 
+def test_graph_discovery_with_no_matches_does_not_fall_back_to_all_yaml(
+    tmp_path: Path,
+) -> None:
+    _write(
+        tmp_path / "missing.yaml",
+        _record(body="definition: no graph\n"),
+    )
+
+    assert S.candidate_files([tmp_path]) == []
+
+
+def test_graph_discovery_includes_yml_files(tmp_path: Path) -> None:
+    yml = _write(
+        tmp_path / "graph.yml",
+        _record(body="causal_graphs: []\n"),
+    )
+
+    assert S.candidate_files([tmp_path]) == [yml]
+
+
+def test_graph_discovery_without_rg_still_filters_to_graph_bearing_yaml(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    graph = _write(
+        tmp_path / "graph.yaml",
+        _record(body="causal_graphs: []\n"),
+    )
+    _write(
+        tmp_path / "missing.yaml",
+        _record(body="definition: no graph\n"),
+    )
+    monkeypatch.setattr(S.shutil, "which", lambda _: None)
+
+    assert S.candidate_files([tmp_path]) == [graph]
+
+
 def test_write_scores_sorts_by_score_then_file(tmp_path: Path) -> None:
     first = S.CausalGraphScore(score=10, file="b.yaml")
     second = S.CausalGraphScore(score=10, file="a.yaml")
