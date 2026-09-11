@@ -29,11 +29,10 @@ evidence:
   notes: PMID:11580839 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: emtA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:20007606). 23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503
-    in the peptidyl-transferase centre.'
+  title: emtA → 23S rRNA G2470 methylation → evernimicin resistance
+  description: Curated resistance-causation graph for EmtA. The graph models EmtA methylation of a local
+    23S rRNA G2470 site as the target alteration that blocks evernimicin binding at the large ribosomal
+    subunit.
   nodes:
   - node_id: determinant
     label: emtA
@@ -47,24 +46,29 @@ causal_graphs:
     label: ribosomal alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000211
-  - node_id: drug0
-    label: macrolide antibiotic
-    node_type: CHEMICAL
-    grounding: ARO:0000000
-  - node_id: drug1
-    label: lincosamide antibiotic
-    node_type: CHEMICAL
-    grounding: ARO:0000017
-  - node_id: domain
-    label: radical-SAM methyltransferase domain
-    node_type: DOMAIN
-    grounding: Pfam:PF04055
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: radical-SAM (partial TIM-barrel) fold
-    node_type: DOMAIN
-    grounding: CATH:3.20.20
-    description: KB protein-trait record carrying the mechanism.
+  - node_id: methyltransferase
+    label: 23S rRNA G2470 methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term because no stable narrow
+      GO term is available for EmtA methylation of 23S rRNA G2470.
+  - node_id: target_site
+    label: 23S rRNA G2470 evernimicin-binding site
+    node_type: NUCLEIC_ACID
+    grounding: SO:0000252
+    description: Local node for guanosine 2470 of 23S rRNA. Grounded to broad rRNA because no stable narrow
+      term is available for this local evernimicin-binding site.
+  - node_id: methylated
+    label: methylated 23S rRNA G2470 site
+    node_type: STATE
+    grounding: SO:0000252
+    description: Local state representing EmtA methylation of 23S rRNA G2470. Grounded to broad rRNA because
+      no stable narrow term is available for this methylated local state.
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: The 50S subunit that contains bacterial 23S rRNA.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -77,101 +81,182 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: EmtA is an rRNA methyltransferase that enzymatically modifies a 23S rRNA target site.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Target alteration is the broad resistance mechanism represented by EmtA methylation of
+      the 23S rRNA G2470 site.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: EmtA modifies bacterial 23S rRNA, so its target alteration is modeled as a ribosomal
+      alteration.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:3000211.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Methylation of 23S rRNA G2470 is a ribosomal alteration that supports evernimicin resistance.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:3000211 → resistance.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: EmtA methylates 23S rRNA G2470, producing a modified evernimicin-binding region.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
   - subject: determinant
-    predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3001298
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted on ARO:3001298 (non-erm 23S ribosomal RNA methyltransferase (G748)), an is_a ancestor
-        of this record's ARO:3004669; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    object: drug1
-    evidence:
-    - reference: ARO:3001298
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
-      notes: Asserted on ARO:3001298 (non-erm 23S ribosomal RNA methyltransferase (G748)), an is_a ancestor
-        of this record's ARO:3004669; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF04055
-      snippet: Radical SAM superfamily
-      notes: 'KB trait: the radical-SAM methyltransferase domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.20.20
-      snippet: TIM Barrel
-      notes: 'KB trait: the radical-SAM fold.'
-  - subject: domain
-    predicate: enables (23S rRNA A2503 methylation)
+    predicate: enables
     predicate_id: RO:0002327
-    object: mech1
+    object: methyltransferase
+    description: The EmtA determinant enables methylation of 23S rRNA G2470.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: The methyltransferase domain methylates 23S rRNA A2503, altering the drug target.
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: GO:0008649
+      snippet: Catalysis of methyl-group transfer from S-adenosyl-L-methionine to an rRNA nucleoside residue.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the CARD/PubMed evidence
+        constrains the substrate to 23S rRNA G2470.
+  - subject: methyltransferase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: methylated
+    description: EmtA methyltransferase activity yields a methylated 23S rRNA G2470 state.
+    evidence:
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: GO:0008649
+      snippet: Catalysis of methyl-group transfer from S-adenosyl-L-methionine to an rRNA nucleoside residue.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the CARD/PubMed evidence
+        constrains the substrate to 23S rRNA G2470.
+  - subject: methylated
+    predicate: negatively regulates (blocks evernimicin binding)
+    predicate_id: RO:0002212
+    object: target_site
+    description: Methylation of G2470 changes the evernimicin-binding site in 23S rRNA and reduces drug
+      binding.
+    evidence:
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G2470 site.
+  - subject: methylated
+    predicate: causally upstream of (blocks evernimicin binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated 23S rRNA G2470 state is the terminal modeled target alteration supporting
+      resistance.
+    evidence:
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G2470 site.
+  - subject: target_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: subunit
+    description: The G2470 target site is in 23S rRNA in the 50S ribosomal subunit.
+    evidence:
+    - reference: ARO:3004669
+      snippet: A rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: CARD definition for emtA.
+    - reference: PMID:11580839
+      snippet: EmtA is a rRNA methyltransferase conferring high-level evernimicin resistance.
+      notes: Mann et al. characterized EmtA in Enterococcus faecium and mapped its 23S rRNA methylation
+        to G2470 by reverse transcription.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G2470 site.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-11T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Curated emtA 23S rRNA G2470 methyltransferase graph
     llm_assisted: true
 license: CC-BY 4.0
