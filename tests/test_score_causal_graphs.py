@@ -339,6 +339,46 @@ def test_documented_local_residue_nodes_do_not_need_grounding(tmp_path: Path) ->
     assert score.quality_warnings == 0
 
 
+def test_described_explicit_local_nodes_do_not_need_grounding(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "local-mf.yaml",
+        _record(
+            body="""causal_graphs:
+- graph_id: resistance
+  title: Resistance mechanism
+  description: A graph with a local molecular function.
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+    grounding: ARO:1
+  - node_id: modification
+    label: enzymatic modification of the antibiotic
+    node_type: MOLECULAR_FUNCTION
+    local: true
+    description: Local broad modification node with no stable external CURIE.
+  edges:
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: modification
+    description: The determinant enables a local broad chemical modification.
+    evidence:
+    - reference: PMID:1
+      snippet: modification evidence
+    - reference: PMID:2
+      snippet: independent evidence
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.groundable_nodes == 1
+    assert score.grounded_groundable_nodes == 1
+    assert score.quality_warnings == 0
+
+
 def test_undocumented_residue_nodes_still_need_grounding(tmp_path: Path) -> None:
     path = _write(
         tmp_path / "undocumented-residue.yaml",

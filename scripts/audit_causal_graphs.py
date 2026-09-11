@@ -19,7 +19,7 @@ Checks per CausalGraph (see the schema's CausalGraph/CausalNode/CausalEdge):
     • edge predicate present; ≥1 evidence; each EvidenceItem has a `reference`;
     • any `grounding` / `xrefs` / `predicate_id` present matches the CURIE pattern.
   WARNINGS (surfaced; fail only under --strict)
-    • a groundable node with no `grounding` (label-only draft node — allowed in v1);
+    • a groundable non-local node with no `grounding` (label-only draft node — allowed in v1);
     • an edge whose evidence carries no verbatim `snippet`;
     • an edge with no `predicate_id` (RO CURIE).
 
@@ -96,6 +96,7 @@ def needs_grounding(node: dict) -> bool:
     Several complete, curated graph families need source-local nodes that do not
     have stable ontology or database CURIEs:
 
+    * explicitly described local mechanism nodes with no stable external term;
     * hand-curated reaction intermediates represented as described STATE nodes;
     * BioLiP and MetalPDB RESIDUE nodes in PDB author numbering when SIFTS or
       UniProt residue coordinates are not asserted;
@@ -105,6 +106,9 @@ def needs_grounding(node: dict) -> bool:
     RESIDUE that lacks both a grounding and one of those locality signals keeps
     getting reported.
     """
+    if node.get("local") is True and node.get("description"):
+        return False
+
     node_type = node.get("node_type")
     if node_type == "STATE" and node.get("description"):
         return False
