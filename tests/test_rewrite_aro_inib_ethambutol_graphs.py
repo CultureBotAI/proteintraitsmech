@@ -85,8 +85,45 @@ def _edge_keys(record: dict) -> set[tuple[str, str, str]]:
     }
 
 
+def _broad_parent_text(identifier: str = "ARO:3004137") -> str:
+    return f"""identifier: {identifier}
+label: Antibiotic resistant iniB
+definition: parent definition
+mapping_status: SEEDED
+causal_graphs:
+- graph_id: resistance-draft
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+  edges: []
+license: CC-BY 4.0
+"""
+
+
+def _history_actions(text: str) -> list[str]:
+    return [
+        event["action"]
+        for event in yaml.safe_load(text)["curation_history"]
+    ]
+
+
 def test_targets_are_exact_current_iniB_records() -> None:
-    assert {target.identifier for target in R.TARGETS} == {"ARO:3004135", "ARO:3004136"}
+    assert {target.identifier for target in R.TARGETS} == {
+        "ARO:3004135",
+        "ARO:3004136",
+        "ARO:3004137",
+    }
+
+
+def test_broad_parent_draft_graph_is_removed() -> None:
+    path = ARO_DIR / "antibiotic-resistant-inib-aro3004137.yaml"
+
+    out, changed = R.enrich_text(_broad_parent_text(), path)
+
+    assert changed
+    assert "causal_graphs:" not in out
+    assert R.BROAD_PARENT_ACTION in _history_actions(out)
 
 
 def test_enrich_record_prunes_efflux_side_path() -> None:
@@ -147,6 +184,11 @@ def test_enrich_text_adds_history_once() -> None:
 def test_identifier_mismatch_is_refused() -> None:
     with pytest.raises(ValueError, match="expected ARO:3004136, found ARO:3004135"):
         R.enrich_record(_record("ARO:3004135"), R.TARGETS[0])
+    with pytest.raises(ValueError, match="expected ARO:3004137, found ARO:3004136"):
+        R.enrich_text(
+            _broad_parent_text("ARO:3004136"),
+            ARO_DIR / "antibiotic-resistant-inib-aro3004137.yaml",
+        )
 
 
 def test_missing_edge_is_refused() -> None:
@@ -161,9 +203,15 @@ def test_missing_edge_is_refused() -> None:
 def test_all_shipped_targets_are_rewritten_in_memory() -> None:
     for target in R.TARGETS:
         path = ARO_DIR / target.filename
-        record = yaml.safe_load(path.read_text(encoding="utf-8"))
+        text = path.read_text(encoding="utf-8")
+        if target.remove_graph:
+            out, changed = R.enrich_text(text, path)
+            assert changed or out == text
+            assert "causal_graphs:" not in out
+            assert R.BROAD_PARENT_ACTION in _history_actions(out)
+            continue
 
+        record = yaml.safe_load(text)
         out, changed = R.enrich_record(copy.deepcopy(record), target)
-
         assert changed or out == record
         assert _edge_keys(out) == R.FINAL_EDGE_KEYS
