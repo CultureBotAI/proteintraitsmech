@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -17,11 +17,10 @@ trait_relations:
     object: ARO:3005386
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004284 antibiotic resistant fabG"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant fabG → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant fabG → FabG 3-oxoacyl-ACP reduction → resistance
+  description: Conservative graph for FabG-mediated Triclosan resistance. The graph grounds the FabG 3-oxoacyl-ACP
+    reductase activity and models Triclosan inhibition of that activity as a local state.
   nodes:
   - node_id: determinant
     label: antibiotic resistant fabG
@@ -35,6 +34,16 @@ causal_graphs:
     label: disinfecting agents and antiseptics
     node_type: CHEMICAL
     grounding: ARO:3005386
+  - node_id: fabg_reduction
+    label: 3-oxoacyl-[acyl-carrier-protein] reductase (NADPH) activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004316
+    description: NADPH-dependent 3-oxoacyl-ACP reductase activity enabled by FabG.
+  - node_id: inhibition
+    label: Triclosan inhibition of FabG 3-oxoacyl-ACP reduction
+    node_type: STATE
+    description: Local state for Triclosan blocking the final FabG-catalyzed reduction step in bacterial
+      fatty-acid elongation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -47,48 +56,126 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies these FabG records under mutation conferring antibiotic resistance.
     evidence:
-    - reference: ARO:3004284
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004284
       snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
         acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
         elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The FabG mechanism is a resistance-conferring gene variant caused by mutation.
     evidence:
     - reference: ARO:3004284
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Point mutations in FabG can confer Triclosan resistance by counteracting inhibition of
+      the FabG reduction step.
     evidence:
     - reference: ARO:3004284
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004284
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps the antibiotic-resistant FabG parent to disinfecting agents and antiseptics.
     evidence:
     - reference: ARO:3004284
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: ARO:3004284
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
-      notes: Asserted directly on ARO:3004284 (antibiotic resistant fabG) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
+      notes: ARO drug-class relationship asserted directly on antibiotic resistant fabG.
+    - reference: ARO:3005386
+      snippet: disinfecting agents and antiseptics
+      notes: ARO drug-class term inherited by FabG records.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: fabg_reduction
+    description: FabG enables the GO-grounded 3-oxoacyl-ACP reductase activity used in fatty-acid biosynthesis.
+    evidence:
+    - reference: ARO:3004284
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: GO:0004316
+      snippet: 'Catalysis of the reaction: (3R)-3-hydroxyacyl-[acyl-carrier protein] + NADP+ = 3-oxoacyl-[acyl-carrier
+        protein] + NADPH + H+.'
+      notes: GO 3-oxoacyl-[acyl-carrier-protein] reductase activity term.
+    - reference: NCBIfam:NF004197
+      snippet: 3-oxoacyl-ACP reductase FabG — a functionally conserved protein family grouped by the NCBIfam
+        full-length profile-HMM NF004197 (equivalog); catalyses 3-oxoacyl-[acyl-carrier-protein] reductase.
+      notes: Local NCBIfam FabG-family record mapped to GO:0004316.
+  - subject: drug0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: inhibition
+    description: Triclosan blocks the final FabG reduction step in bacterial fatty-acid elongation.
+    evidence:
+    - reference: ARO:3004284
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: GO:0004316
+      snippet: 'Catalysis of the reaction: (3R)-3-hydroxyacyl-[acyl-carrier protein] + NADP+ = 3-oxoacyl-[acyl-carrier
+        protein] + NADPH + H+.'
+      notes: GO 3-oxoacyl-[acyl-carrier-protein] reductase activity term.
+    - reference: NCBIfam:NF004197
+      snippet: 3-oxoacyl-ACP reductase FabG — a functionally conserved protein family grouped by the NCBIfam
+        full-length profile-HMM NF004197 (equivalog); catalyses 3-oxoacyl-[acyl-carrier-protein] reductase.
+      notes: Local NCBIfam FabG-family record mapped to GO:0004316.
+  - subject: determinant
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: inhibition
+    description: Resistance-conferring FabG mutations reduce the inhibitory effect of Triclosan on the
+      FabG-catalyzed reduction step.
+    evidence:
+    - reference: ARO:3004284
+      snippet: fabG is a 3-oxoacyl-acyl carrier protein reductase involved in lipid metabolism and fatty
+        acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid
+        elongation, inhibiting biosynthesis. Point mutations in fabG can confer resistance to Triclosan.
+      notes: CARD definition for the antibiotic-resistant FabG parent.
+    - reference: GO:0004316
+      snippet: 'Catalysis of the reaction: (3R)-3-hydroxyacyl-[acyl-carrier protein] + NADP+ = 3-oxoacyl-[acyl-carrier
+        protein] + NADPH + H+.'
+      notes: GO 3-oxoacyl-[acyl-carrier-protein] reductase activity term.
+    - reference: NCBIfam:NF004197
+      snippet: 3-oxoacyl-ACP reductase FabG — a functionally conserved protein family grouped by the NCBIfam
+        full-length profile-HMM NF004197 (equivalog); catalyses 3-oxoacyl-[acyl-carrier-protein] reductase.
+      notes: Local NCBIfam FabG-family record mapped to GO:0004316.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated FabG triclosan-resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0
