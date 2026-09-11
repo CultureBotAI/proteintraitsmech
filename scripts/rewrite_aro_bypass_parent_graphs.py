@@ -39,6 +39,9 @@ GLYCOPEPTIDE_ACTION = (
     "Removed broad glycopeptide resistance-cluster parent draft that abstracts over "
     "multiple Van gene roles"
 )
+GLYCOPEPTIDE_GENE_CLUSTER_ACTION = (
+    "Removed glycopeptide gene-cluster drafts for operon-level Van cluster records"
+)
 
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
 
@@ -60,7 +63,79 @@ GLYCOPEPTIDE_PARENT = Target(
     "gene-s-or-protein-s-associated-with-a-glycopeptide-resistance-cluster-aro3002976.yaml",
     GLYCOPEPTIDE_ACTION,
 )
-TARGETS = (BYPASS_PARENT, GLYCOPEPTIDE_PARENT)
+GLYCOPEPTIDE_GENE_CLUSTERS = (
+    Target(
+        "ARO:3000234",
+        "glycopeptide-resistance-gene-cluster-aro3000234.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000236",
+        "glycopeptide-resistance-gene-cluster-vana-aro3000236.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000238",
+        "glycopeptide-resistance-gene-cluster-vanb-aro3000238.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000246",
+        "glycopeptide-resistance-gene-cluster-vanc-aro3000246.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000253",
+        "glycopeptide-resistance-gene-cluster-vand-aro3000253.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000259",
+        "glycopeptide-resistance-gene-cluster-vane-aro3000259.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000255",
+        "glycopeptide-resistance-gene-cluster-vanf-aro3000255.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000257",
+        "glycopeptide-resistance-gene-cluster-vang-aro3000257.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3003722",
+        "glycopeptide-resistance-gene-cluster-vani-aro3003722.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000260",
+        "glycopeptide-resistance-gene-cluster-vanl-aro3000260.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3000256",
+        "glycopeptide-resistance-gene-cluster-vanm-aro3000256.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3002917",
+        "glycopeptide-resistance-gene-cluster-vann-aro3002917.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3002918",
+        "glycopeptide-resistance-gene-cluster-vano-aro3002918.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+    Target(
+        "ARO:3007187",
+        "glycopeptide-resistance-gene-cluster-vanp-aro3007187.yaml",
+        GLYCOPEPTIDE_GENE_CLUSTER_ACTION,
+    ),
+)
+TARGETS = (BYPASS_PARENT, GLYCOPEPTIDE_PARENT, *GLYCOPEPTIDE_GENE_CLUSTERS)
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 
 
