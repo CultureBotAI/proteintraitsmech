@@ -6,9 +6,10 @@ glycopeptide-cluster parent says only that Van genes confer glycopeptide
 resistance.  Some glycopeptide-cluster and Van-stub records also only localize a
 gene or cluster without stating a supported causal role.  The undecaprenyl
 pyrophosphate related-proteins parent only describes the antibiotic target
-rather than a resistance determinant. Prior curation split the concrete
-descendants into specific Van, Lpx, BacA/BcrC, and ddl models; these abstract
-or unsupported records should not retain a single auto-scaffolded causal graph.
+rather than a resistance determinant. The generic VanS-VanR pair does not name
+cluster-specific downstream genes. Prior curation split the concrete descendants
+into specific Van, Lpx, BacA/BcrC, and ddl models; these abstract or unsupported
+records should not retain a single auto-scaffolded causal graph.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -51,6 +52,9 @@ GLYCOPEPTIDE_STUB_ACTION = (
 UPP_PARENT_ACTION = (
     "Removed broad undecaprenyl-pyrophosphate parent draft with no record-specific "
     "resistance determinant"
+)
+VANRS_PAIR_ACTION = (
+    "Removed generic VanS-VanR pair draft without cluster-specific downstream genes"
 )
 
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
@@ -202,12 +206,18 @@ UPP_PARENT = Target(
     "undecaprenyl-pyrophosphate-related-proteins-aro3003398.yaml",
     UPP_PARENT_ACTION,
 )
+VANRS_PAIR = Target(
+    "ARO:3002905",
+    "vans-vanr-two-component-regulatory-system-aro3002905.yaml",
+    VANRS_PAIR_ACTION,
+)
 TARGETS = (
     BYPASS_PARENT,
     GLYCOPEPTIDE_PARENT,
     *GLYCOPEPTIDE_GENE_CLUSTERS,
     *GLYCOPEPTIDE_STUBS,
     UPP_PARENT,
+    VANRS_PAIR,
 )
 TARGET_BY_FILENAME = {target.filename: target for target in TARGETS}
 

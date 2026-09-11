@@ -53,6 +53,9 @@ def test_targets_are_exact_unsupported_drafts() -> None:
         "ARO:3003920",
         "ARO:3007659",
         "ARO:3005040",
+        "ARO:3000451",
+        "ARO:3003579",
+        "ARO:3003076",
     }
 
 
