@@ -55,6 +55,22 @@ license: CC-BY 4.0
 """
 
 
+def _mtub_child_text(identifier: str = "ARO:3004981") -> str:
+    return f"""identifier: {identifier}
+label: Mycobacterium tuberculosis Rv0191 mutations confer resistance to pyrazinamide
+definition: Mutations in the Rv0191 gene contribute to or confer resistance to pyrazinamide.
+mapping_status: SEEDED
+causal_graphs:
+- graph_id: resistance-draft
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+  edges: []
+license: CC-BY 4.0
+"""
+
+
 def _edge_pairs(record: dict) -> set[tuple[str, str]]:
     return {
         (edge["subject"], edge["object"])
@@ -62,10 +78,18 @@ def _edge_pairs(record: dict) -> set[tuple[str, str]]:
     }
 
 
+def _history_actions(text: str) -> list[str]:
+    return [
+        event["action"]
+        for event in yaml.safe_load(text)["curation_history"]
+    ]
+
+
 def test_targets_are_exact_rv0191_parent_and_pyrazinamide_child() -> None:
     assert {target.identifier for target in R.TARGETS} == {
         "ARO:3004979",
         "ARO:3004980",
+        "ARO:3004981",
     }
 
 
@@ -75,7 +99,7 @@ def test_parent_draft_graph_is_removed() -> None:
     assert changed
     assert "causal_graphs:" not in out
     assert "mapping_status: SEEDED" in out
-    assert R.PARENT_ACTION in out
+    assert R.PARENT_ACTION in _history_actions(out)
 
 
 def test_pyrazinamide_child_gets_efflux_graph() -> None:
@@ -103,7 +127,33 @@ def test_pyrazinamide_child_gets_efflux_graph() -> None:
     for edge in graph["edges"]:
         assert edge["description"]
         assert len({item["reference"] for item in edge["evidence"]}) > 1
-    assert R.CHILD_ACTION in out
+    assert R.CHILD_ACTION in _history_actions(out)
+
+
+def test_mtb_child_gets_mutation_pyrazinamide_graph() -> None:
+    out, changed = R.curate_mtub_child_text(_mtub_child_text())
+    record = yaml.safe_load(out)
+    graph = record["causal_graphs"][0]
+
+    assert changed
+    assert record["mapping_status"] == "REVIEWED"
+    assert graph["graph_id"] == "resistance"
+    assert {node["node_id"] for node in graph["nodes"]} == {
+        "determinant",
+        "mutation",
+        "drug0",
+        "resistance",
+    }
+    assert _edge_pairs(record) == {
+        ("determinant", "mutation"),
+        ("mutation", "resistance"),
+        ("determinant", "resistance"),
+        ("determinant", "drug0"),
+    }
+    for edge in graph["edges"]:
+        assert edge["description"]
+        assert len({item["reference"] for item in edge["evidence"]}) > 1
+    assert R.MTUB_CHILD_ACTION in _history_actions(out)
 
 
 def test_rewrites_are_idempotent() -> None:
@@ -111,15 +161,21 @@ def test_rewrites_are_idempotent() -> None:
     parent_twice, parent_changed_again = R.repair_parent_text(parent_once)
     child_once, child_changed = R.curate_child_text(_child_text())
     child_twice, child_changed_again = R.curate_child_text(child_once)
+    mtub_child_once, mtub_child_changed = R.curate_mtub_child_text(_mtub_child_text())
+    mtub_child_twice, mtub_child_changed_again = R.curate_mtub_child_text(mtub_child_once)
 
     assert parent_changed
     assert child_changed
+    assert mtub_child_changed
     assert not parent_changed_again
     assert not child_changed_again
+    assert not mtub_child_changed_again
     assert parent_twice == parent_once
     assert child_twice == child_once
-    assert parent_once.count(R.PARENT_ACTION) == 1
-    assert child_once.count(R.CHILD_ACTION) == 1
+    assert mtub_child_twice == mtub_child_once
+    assert _history_actions(parent_once).count(R.PARENT_ACTION) == 1
+    assert _history_actions(child_once).count(R.CHILD_ACTION) == 1
+    assert _history_actions(mtub_child_once).count(R.MTUB_CHILD_ACTION) == 1
 
 
 def test_wrong_identifier_is_refused() -> None:
@@ -127,6 +183,8 @@ def test_wrong_identifier_is_refused() -> None:
         R.repair_parent_text(_child_text())
     with pytest.raises(ValueError, match="expected ARO:3004980, found ARO:3004979"):
         R.curate_child_text(_parent_text())
+    with pytest.raises(ValueError, match="expected ARO:3004981, found ARO:3004980"):
+        R.curate_mtub_child_text(_child_text())
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")
@@ -136,4 +194,4 @@ def test_shipped_records_are_rewritten_in_memory() -> None:
         out, changed = R.enrich_text(text, target.path)
 
         assert changed or out == text
-        assert target.action in out
+        assert target.action in _history_actions(out)

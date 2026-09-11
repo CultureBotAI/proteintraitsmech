@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Rewrite the CARD Rv0191 pyrazinamide-resistance causal graph.
+"""Rewrite the CARD Rv0191 pyrazinamide-resistance causal graphs.
 
 The broad ``antibiotic resistant Rv0191`` parent only says that Rv0191 mutations
 can contribute to antibiotic resistance, with no drug or Rv0191-specific
-mechanism.  The pyrazinamide-specific child is more concrete: CARD describes
+mechanism.  The pyrazinamide-specific record is more concrete: CARD describes
 Rv0191 as an active efflux pump whose overexpression causes pyrazinamide
 resistance, and cites Zhang et al. 2017 for Rv0191 involvement in PZA resistance.
+The M. tuberculosis child carries the direct mutation-to-pyrazinamide-resistance
+definition and inherits the pyrazine-antibiotic class from that parent.
 
 Dry-run by default; pass ``--apply`` to write.
 """
@@ -35,6 +37,9 @@ PARENT_ACTION = (
     "Removed generic Rv0191 parent mutation draft after curating the pyrazinamide-specific graph"
 )
 CHILD_ACTION = "Completed Rv0191 pyrazinamide efflux causal graph; SEEDED -> REVIEWED"
+MTUB_CHILD_ACTION = (
+    "Completed M. tuberculosis Rv0191 pyrazinamide mutation causal graph; SEEDED -> REVIEWED"
+)
 
 MUTATION_EVIDENCE = {
     "reference": "ARO:3000212",
@@ -111,7 +116,12 @@ CHILD = Target(
     filename="pyrazinamide-resistant-rv0191-aro3004980.yaml",
     action=CHILD_ACTION,
 )
-TARGETS = (PARENT, CHILD)
+MTUB_CHILD = Target(
+    identifier="ARO:3004981",
+    filename="mycobacterium-tuberculosis-rv0191-mutations-confer-resistance-to-pyrazinamide-aro3004981.yaml",
+    action=MTUB_CHILD_ACTION,
+)
+TARGETS = (PARENT, CHILD, MTUB_CHILD)
 
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
 _MAPPING_STATUS = re.compile(r"^mapping_status:[ \t]*(.+?)[ \t]*$", re.M)
@@ -155,8 +165,18 @@ def _history_event(target: Target) -> dict[str, Any]:
     }
 
 
+def _has_history_action(text: str, action: str) -> bool:
+    record = yaml.safe_load(text)
+    if not isinstance(record, dict):
+        return False
+    history = record.get("curation_history")
+    if not isinstance(history, list):
+        return False
+    return any(isinstance(event, dict) and event.get("action") == action for event in history)
+
+
 def _append_history_once(text: str, target: Target) -> str:
-    if target.action in text:
+    if _has_history_action(text, target.action):
         return text
     return append_to_section(
         text,
@@ -293,6 +313,85 @@ def _graph(record: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _mtub_child_graph(record: dict[str, Any]) -> dict[str, Any]:
+    record_evidence = _record_evidence(record)
+    return {
+        "graph_id": "resistance",
+        "title": "M. tuberculosis Rv0191 mutations → pyrazinamide resistance",
+        "description": (
+            "Curated M. tuberculosis Rv0191 pyrazinamide-resistance graph. CARD assigns this "
+            "determinant to the broad mutation-conferring mechanism and links it to the "
+            "pyrazine-antibiotic class through its pyrazinamide-resistant Rv0191 parent. The "
+            "parent Rv0191 record carries the active-efflux function; this child graph keeps "
+            "the causal model at the directly asserted mutation and phenotype levels."
+        ),
+        "nodes": [
+            {
+                "node_id": "determinant",
+                "label": str(record["label"]),
+                "node_type": "PROTEIN",
+                "grounding": str(record["identifier"]),
+            },
+            {
+                "node_id": "mutation",
+                "label": "mutation conferring antibiotic resistance",
+                "node_type": "MOLECULAR_FUNCTION",
+                "grounding": "ARO:3000212",
+            },
+            {
+                "node_id": "drug0",
+                "label": "pyrazine antibiotic",
+                "node_type": "CHEMICAL",
+                "grounding": "ARO:3007155",
+            },
+            dict(RESISTANCE_NODE),
+        ],
+        "edges": [
+            _edge(
+                "determinant",
+                "participates in (resistance mechanism)",
+                "RO:0000056",
+                "mutation",
+                "CARD classifies Rv0191 pyrazinamide-resistance variants under the broad "
+                "mutation-conferring antibiotic-resistance mechanism.",
+                record_evidence,
+                MUTATION_EVIDENCE,
+            ),
+            _edge(
+                "mutation",
+                "causally upstream of",
+                "RO:0002411",
+                "resistance",
+                "CARD's mutation-conferring mechanism links point mutations to altered gene "
+                "products that can cause antibiotic resistance, and the M. tuberculosis Rv0191 "
+                "record states that these mutations contribute to or confer pyrazinamide "
+                "resistance.",
+                MUTATION_EVIDENCE,
+                record_evidence,
+            ),
+            _edge(
+                "determinant",
+                "causally upstream of (confers resistance)",
+                "RO:0002411",
+                "resistance",
+                "CARD states that Rv0191 mutations contribute to or confer pyrazinamide resistance.",
+                record_evidence,
+                ZHANG_EVIDENCE,
+            ),
+            _edge(
+                "determinant",
+                "confers resistance to (drug class)",
+                "ARO:2000001",
+                "drug0",
+                "CARD asserts a pyrazine-antibiotic resistance relation on pyrazinamide resistant "
+                "Rv0191 and this M. tuberculosis variant inherits that relation.",
+                DRUG_RELATION_EVIDENCE,
+                PYRAZINE_EVIDENCE,
+            ),
+        ],
+    }
+
+
 def _require_identifier(text: str, target: Target, path: Path) -> dict[str, Any]:
     record = yaml.safe_load(text)
     found = record.get("identifier") if isinstance(record, dict) else None
@@ -318,11 +417,26 @@ def curate_child_text(text: str, target: Target = CHILD, path: Path | None = Non
     return out, out != text
 
 
+def curate_mtub_child_text(
+    text: str,
+    target: Target = MTUB_CHILD,
+    path: Path | None = None,
+) -> tuple[str, bool]:
+    record = _require_identifier(text, target, path or target.path)
+
+    out = _set_mapping_status(text, "REVIEWED")
+    out = replace_block(out, "causal_graphs", _dump({"causal_graphs": [_mtub_child_graph(record)]}))
+    out = _append_history_once(out, target)
+    return out, out != text
+
+
 def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     if path.name == PARENT.filename:
         return repair_parent_text(text, PARENT, path)
     if path.name == CHILD.filename:
         return curate_child_text(text, CHILD, path)
+    if path.name == MTUB_CHILD.filename:
+        return curate_mtub_child_text(text, MTUB_CHILD, path)
     return text, False
 
 
