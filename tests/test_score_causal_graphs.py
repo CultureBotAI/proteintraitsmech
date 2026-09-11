@@ -29,11 +29,16 @@ def _write(path: Path, text: str) -> Path:
     return path
 
 
-def _record(*, body: str, mapping_status: str = "REVIEWED") -> str:
+def _record(
+    *,
+    body: str,
+    mapping_status: str = "REVIEWED",
+    trait_category: str = "FUNC_RESISTANCE",
+) -> str:
     return f"""identifier: X:1
 label: test
 trait_axis: FUNCTION
-trait_category: FUNC_RESISTANCE
+trait_category: {trait_category}
 mapping_status: {mapping_status}
 {body}
 license: CC0
@@ -121,6 +126,81 @@ def test_seeded_complete_graphs_keep_review_priority(tmp_path: Path) -> None:
     assert score.score == 100 - S.SEEDED_REVIEW_PENALTY
     assert score.mapping_status == "SEEDED"
     assert score.reasons == ("mapping_status=SEEDED",)
+
+
+def test_single_reference_edges_are_enough_for_non_resistance_sources(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "single-source-ec.yaml",
+        _record(
+            trait_category="FUNC_ENZYMATIC_ACTIVITY",
+            body="""causal_graphs:
+- graph_id: reaction
+  title: Reaction chemistry
+  description: Complete reaction graph.
+  nodes:
+  - node_id: activity
+    label: activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: EC:1.1.1.1
+  - node_id: substrate
+    label: substrate
+    node_type: CHEMICAL
+    grounding: CHEBI:1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: substrate
+    description: The activity consumes the substrate.
+    evidence:
+    - reference: RHEA:1
+      snippet: substrate => product
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.score == 100
+    assert score.multi_reference_edges == 0
+    assert score.reasons == ()
+
+
+def test_resistance_graphs_still_prioritize_multi_reference_edges(tmp_path: Path) -> None:
+    path = _write(
+        tmp_path / "single-source-resistance.yaml",
+        _record(
+            body="""causal_graphs:
+- graph_id: resistance
+  title: Resistance mechanism
+  description: Complete but single-source resistance graph.
+  nodes:
+  - node_id: determinant
+    label: determinant
+    node_type: PROTEIN
+    grounding: ARO:1
+  - node_id: activity
+    label: activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:1
+  edges:
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: The determinant enables the activity.
+    evidence:
+    - reference: PMID:1
+      snippet: activity evidence
+""",
+        ),
+    )
+
+    score = S.score_path(path)
+
+    assert score.score == 90
+    assert score.multi_reference_edges == 0
+    assert score.reasons == ("multi_reference_edges=0/1",)
 
 
 def test_score_path_prioritizes_incomplete_graphs(tmp_path: Path) -> None:

@@ -207,6 +207,10 @@ def _record_value(record: dict[str, Any], key: str) -> str:
     return "" if value is None else str(value)
 
 
+def _expects_multi_reference_edges(record: dict[str, Any]) -> bool:
+    return _record_value(record, "trait_category") == "FUNC_RESISTANCE"
+
+
 def _record_stub(text: str, graph_block: str | None) -> dict[str, Any]:
     metadata = "\n".join(match.group(0) for match in _ROOT_META.finditer(text))
     record = yaml.load(metadata, Loader=Loader) if metadata else {}
@@ -256,6 +260,7 @@ def score_path(path: Path) -> CausalGraphScore:
     documented_graphs = sum(
         1 for graph in graphs if graph.get("title") and graph.get("description")
     )
+    expects_multi_reference_edges = _expects_multi_reference_edges(record)
 
     errors: list[str] = []
     warnings: list[str] = []
@@ -283,7 +288,11 @@ def score_path(path: Path) -> CausalGraphScore:
             + _ratio(15, evidenced_edges, len(edges))
             + _ratio(15, snippet_edges, len(edges))
             + _ratio(15, described_edges, len(edges))
-            + _ratio(10, multi_reference_edges, len(edges))
+            + (
+                _ratio(10, multi_reference_edges, len(edges))
+                if expects_multi_reference_edges
+                else 10
+            )
             + _ratio(10, documented_graphs, len(graphs))
         )
         score = max(
@@ -299,7 +308,11 @@ def score_path(path: Path) -> CausalGraphScore:
             _reason_count("grounded_groundable_nodes", grounded_groundable_nodes, len(groundable_nodes)),
             _reason_count("predicate_id_edges", predicate_id_edges, len(edges)),
             _reason_count("evidenced_edges", evidenced_edges, len(edges)),
-            _reason_count("multi_reference_edges", multi_reference_edges, len(edges)),
+            (
+                _reason_count("multi_reference_edges", multi_reference_edges, len(edges))
+                if expects_multi_reference_edges
+                else None
+            ),
             _reason_count("snippet_edges", snippet_edges, len(edges)),
             _reason_count("described_edges", described_edges, len(edges)),
             _reason_count("documented_graphs", documented_graphs, len(graphs)),
