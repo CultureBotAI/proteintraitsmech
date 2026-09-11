@@ -45,6 +45,7 @@ def _record(identifier: str = "ARO:3004946") -> dict:
         "identifier": identifier,
         "label": "test Alr",
         "definition": "Provides D-alanine and can confer resistance to cycloserine.",
+        "mapping_status": "SEEDED",
         "causal_graphs": [
             {
                 "graph_id": "resistance-draft",
@@ -77,6 +78,7 @@ def test_enrich_record_adds_grounded_alr_route() -> None:
 
     assert changed
     graph = out["causal_graphs"][0]
+    assert out["mapping_status"] == "REVIEWED"
     node_groundings = {node["grounding"] for node in graph["nodes"] if "grounding" in node}
     assert {
         "GO:0008784",
