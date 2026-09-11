@@ -31,12 +31,10 @@ evidence:
   notes: PMID:30337678 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3004900). Prodrug-activation loss. NOT asserted: what mshA does, which drug it activates, or
-    how -- CARD gives none of it. The graph carries the activation failure and nothing else.'
+  title: Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid → conservative activation-loss
+    resistance core
+  description: Conservative graph for a drug-specific mshA record. The graph keeps CARD's activation-loss
+    mechanism and record-specific drug class and does not add an unsupported mycothiol or prodrug reaction.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid
@@ -67,51 +65,127 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies mshA activation-loss determinants under mutation-conferring antibiotic
+      resistance.
     evidence:
     - reference: ARO:3004900
       snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic-resistant mshA parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004925
+      snippet: Mutations that occur in Mycobacterium tuberculosis mshA that result in or contribute to
+        antibiotic resistance to isoniazid.
+      notes: CARD definition for Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid.
+    - reference: DOI:10.1016/j.cmi.2018.12.008
+      notes: PMID:30583053 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism covers loss of antibiotic activation by mshA.
     evidence:
     - reference: ARO:3004900
       snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic-resistant mshA parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004925
+      snippet: Mutations that occur in Mycobacterium tuberculosis mshA that result in or contribute to
+        antibiotic resistance to isoniazid.
+      notes: CARD definition for Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid.
+    - reference: DOI:10.1016/j.cmi.2018.12.008
+      notes: PMID:30583053 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that mshA mutations leave the antibiotic unable to activate.
     evidence:
     - reference: ARO:3004900
       snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
-      notes: 'The whole claim, and the word that carries it: mutations leave the antibiotic unable to
-        ACTIVATE -- not merely to function. That makes it prodrug-activation loss (rounds 56, 57), which
-        is more than the neighbouring mshC record says.'
+      notes: CARD definition for the antibiotic-resistant mshA parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004925
+      snippet: Mutations that occur in Mycobacterium tuberculosis mshA that result in or contribute to
+        antibiotic resistance to isoniazid.
+      notes: CARD definition for Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid.
+    - reference: DOI:10.1016/j.cmi.2018.12.008
+      notes: PMID:30583053 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+    description: ARO maps this mshA determinant to the record-specific drug class.
     evidence:
     - reference: ARO:3004901
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
       notes: Asserted on ARO:3004901 (isoniazid resistant mshA), an is_a ancestor of this record's ARO:3004925;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3004900
+      snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
+      notes: CARD definition for the antibiotic-resistant mshA parent.
+    - reference: ARO:3004925
+      snippet: Mutations that occur in Mycobacterium tuberculosis mshA that result in or contribute to
+        antibiotic resistance to isoniazid.
+      notes: CARD definition for Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid.
+    - reference: ARO:3007152
+      snippet: isoniazid-like antibiotic
+      notes: ARO drug-class term for the grounded isoniazid-like antibiotic node.
+    - reference: DOI:10.1016/j.cmi.2018.12.008
+      notes: PMID:30583053 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: determinant
     predicate: negatively regulates (prevents the antibiotic activating)
     predicate_id: RO:0002212
     object: activation
-    description: The one mechanistic claim CARD makes here, and the word that distinguishes this family
-      from mshC's 'inability to function'.
+    description: mshA mutation prevents antibiotic activation; the exact activation reaction is not asserted
+      by these CARD records.
     evidence:
     - reference: ARO:3004900
       snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
-      notes: '''resulting in the inability for antibiotic to ACTIVATE''.'
+      notes: CARD definition for the antibiotic-resistant mshA parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004925
+      snippet: Mutations that occur in Mycobacterium tuberculosis mshA that result in or contribute to
+        antibiotic resistance to isoniazid.
+      notes: CARD definition for Mycobacterium tuberculosis mshA mutations conferring resistance to isoniazid.
+    - reference: DOI:10.1016/j.cmi.2018.12.008
+      notes: PMID:30583053 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed conservative mshA activation-loss graphs
   llm_assisted: true
 license: CC-BY 4.0
