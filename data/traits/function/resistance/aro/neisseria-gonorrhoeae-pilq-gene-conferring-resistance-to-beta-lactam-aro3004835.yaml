@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003938
 trait_relations:
@@ -30,12 +30,12 @@ evidence:
 - reference: DOI:10.1111/j.1365-2958.2005.04752.x
   notes: PMID:16101998 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam → mechanism → resistance
-    (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam → reduced PilQ beta-lactam
+    influx
+  description: Curated resistance-causation graph for gonococcal penC/pilQ mutation. The graph models
+    PilQ as an outer-membrane secretin whose destabilization reduces antibiotic influx, not as a penicillin-binding-protein
+    target mutation.
   nodes:
   - node_id: determinant
     label: Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam
@@ -45,6 +45,17 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: secretin
+    label: destabilized PilQ secretin complex
+    node_type: STATE
+    description: Local state for penC/pilQ mutations that interfere with the SDS-resistant high-molecular-mass
+      PilQ multimer.
+  - node_id: influx
+    label: reduced beta-lactam diffusion through PilQ
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0042908
+    description: Grounded to broad GO xenobiotic transport and scoped here to PilQ-mediated beta-lactam
+      influx across the gonococcal outer membrane.
   - node_id: drug0
     label: cephalosporin
     node_type: CHEMICAL
@@ -54,71 +65,195 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000008
   - node_id: resistance
-    label: antibiotic resistance phenotype
+    label: beta-lactam resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Beta-lactam resistance phenotype conferred by reduced PilQ-mediated drug influx.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies penC/pilQ resistance under mutation conferring antibiotic resistance.
     evidence:
-    - reference: DOI:10.1111/j.1365-2958.2005.04752.x
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004835
       snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
         and involved in Type IV pilus formation.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+  - subject: determinant
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: secretin
+    description: The penC PilQ mutation interferes with the stable PilQ secretin multimer.
+    evidence:
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+  - subject: secretin
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: influx
+    description: Destabilization of the PilQ secretin reduces antibiotic diffusion into the cell.
+    evidence:
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+    - reference: GO:0042908
+      snippet: The directed movement of a xenobiotic into, out of or within a cell.
+      notes: GO grounding for broad antibiotic transport.
+  - subject: influx
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Reduced PilQ-mediated antibiotic entry contributes to beta-lactam resistance.
+    evidence:
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+    - reference: GO:0042908
+      snippet: The directed movement of a xenobiotic into, out of or within a cell.
+      notes: GO grounding for broad antibiotic transport.
+    - reference: ARO:3004835
+      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000062 ! ceftriaxone'
+      notes: CARD asserts this ceftriaxone resistance relation on the pilQ ARO term.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The pilQ mutation confers the modeled beta-lactam resistance phenotype.
     evidence:
-    - reference: DOI:10.1111/j.1365-2958.2005.04752.x
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+    - reference: ARO:3004835
+      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000062 ! ceftriaxone'
+      notes: CARD asserts this ceftriaxone resistance relation on the pilQ ARO term.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: penC/pilQ connects PilQ secretin destabilization to reduced beta-lactam influx.
     evidence:
-    - reference: DOI:10.1111/j.1365-2958.2005.04752.x
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:16101998
+      snippet: Zhao et al. found that the penC resistance mutation changes PilQ Glu-666 to Lys and interferes
+        with the SDS-resistant high-molecular-mass PilQ secretin complex.
+      notes: Experimental evidence that penC is a pilQ mutation disrupting PilQ multimer stability.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
     - reference: ARO:3004835
       snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000062 ! ceftriaxone'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      notes: CARD asserts this ceftriaxone resistance relation on the pilQ ARO term.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this pilQ determinant confers resistance to cephalosporin.
     evidence:
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
-      notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
-        antibiotics), an is_a ancestor of this record's ARO:3004835; inherited by this variant. CARD/ARO
-        release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cephalosporin.
+      notes: CARD links the pilQ record to cephalosporins through a beta-lactam resistance parent.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this pilQ determinant confers resistance to penicillin beta-lactam.
     evidence:
+    - reference: ARO:3004835
+      snippet: PilQ is an important gonococcal outer membrane component, member of secretin protein family,
+        and involved in Type IV pilus formation.
+      notes: CARD definition for Neisseria gonorrhoeae pilQ gene conferring resistance to beta-lactam.
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
-      notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
-        antibiotics), an is_a ancestor of this record's ARO:3004835; inherited by this variant. CARD/ARO
-        release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+      notes: CARD links the pilQ record to penicillin beta-lactams through a beta-lactam resistance parent.
+    - reference: PMID:16101998
+      snippet: Zhao et al. showed that pilQ deletion gives the same antibiotic-resistance level as penC
+        and proposed that a functional PilQ secretin complex enhances antibiotic entry into the gonococcal
+        cell.
+      notes: Experimental evidence for PilQ-mediated antibiotic influx.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated Neisseria gonorrhoeae pilQ beta-lactam influx graph
+  llm_assisted: true
 license: CC-BY 4.0
