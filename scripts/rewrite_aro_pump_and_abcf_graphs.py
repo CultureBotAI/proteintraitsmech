@@ -1655,6 +1655,119 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
         },
     ),
     AbcFTarget(
+        identifier="ARO:3004471",
+        filename="msr-type-abc-f-protein-aro3004471.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004471",
+            "snippet": (
+                "msr-type ABC-F subfamily ribosomal protection proteins "
+                "expression in Staphylococci species and confer resistance to "
+                "erythromycin and streptogramin B antibiotics through "
+                "antibiotic target protection mechanisms."
+            ),
+            "notes": "CARD definition for msr-type ABC-F protein.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3000251",
+        filename="msra-aro3000251.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000251",
+            "snippet": (
+                "MsrA is an ABC-F subfamily ribosomal protection protein "
+                "expressed in Staphylococcus species which confers resistance "
+                "to erythromycin and streptogramin B antibiotics through "
+                "antibiotic target protection mechanisms."
+            ),
+            "notes": "CARD definition for msrA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002818",
+        filename="msrb-aro3002818.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002818",
+            "snippet": (
+                "MsrB is an ABC-F subfamily protein expressed to "
+                "Staphylococcus species that confers resistance to "
+                "erythromycin and streptogramin B antibiotics."
+            ),
+            "notes": "CARD definition for msrB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002819",
+        filename="msrc-aro3002819.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002819",
+            "snippet": (
+                "msrC is a chromosomal-encoded ABC-F subfamily protein "
+                "expressed in Enterococcus faecium that confers resistance to "
+                "erythromycin and other macrolide and streptogramin B "
+                "antibiotics."
+            ),
+            "notes": "CARD definition for msrC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3003109",
+        filename="msre-aro3003109.yaml",
+        determinant_evidence={
+            "reference": "ARO:3003109",
+            "snippet": (
+                "MsrE is an ABC-F subfamily protein expressed to Klebsiella "
+                "pneumoniae that confers resistance to erythromycin and "
+                "streptogramin B antibiotics."
+            ),
+            "notes": "CARD definition for msrE.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3005087",
+        filename="msrf-aro3005087.yaml",
+        determinant_evidence={
+            "reference": "ARO:3005087",
+            "snippet": (
+                "msrF is an ABC-F binding cassette ribosomal protection "
+                "protein. It confers resistance to macrolide antibiotics."
+            ),
+            "notes": "CARD definition for msrF.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007042",
+        filename="msr-g-aro3007042.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007042",
+            "snippet": (
+                "msr(G) is a part of the msr subfamily of ABC-F ribosomal "
+                "protection proteins."
+            ),
+            "notes": "CARD definition for msr(G).",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3007043",
+        filename="msr-i-aro3007043.yaml",
+        determinant_evidence={
+            "reference": "ARO:3007043",
+            "snippet": "msr(I) is part of the msr subfamily of ABC-F ribosomal protection proteins.",
+            "notes": "CARD definition for msr(I).",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3005088",
+        filename="msrh-aro3005088.yaml",
+        determinant_evidence={
+            "reference": "ARO:3005088",
+            "snippet": (
+                "msrH is a ABC-F binding cassette ribosomal protection "
+                "protein. It confers resistance to macrolide antibiotics."
+            ),
+            "notes": "CARD definition for msrH.",
+        },
+    ),
+    AbcFTarget(
         identifier="ARO:3007646",
         filename="neobacillus-vireti-vmlr2-aro3007646.yaml",
         determinant_evidence={
@@ -1735,6 +1848,110 @@ ABC_F_TARGETS: tuple[AbcFTarget, ...] = (
             "reference": "ARO:3004730",
             "snippet": "A pleuromutilin resistance gene encoding a predicted ABC-F transporter.",
             "notes": "CARD definition for tva(A).",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3000113",
+        filename="vga-type-abc-f-protein-aro3000113.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000113",
+            "snippet": (
+                "Vga-type plasmid-borne ABC-F proteins, expressed in "
+                "staphylococci that confer resistance to streptogramin A "
+                "antibiotics through ribosomal protection."
+            ),
+            "notes": "CARD definition for vga-type ABC-F protein.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002829",
+        filename="vgaa-aro3002829.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002829",
+            "snippet": (
+                "vgaA is an ABC-F subfamily protein expressed in staphylococci "
+                "that confers resistance to streptogramin A antibiotics and "
+                "related compounds."
+            ),
+            "notes": "CARD definition for vgaA.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002830",
+        filename="vgaalc-aro3002830.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002830",
+            "snippet": (
+                "vgaALC is an ABC-F subfamily protein expressed in "
+                "staphylococci that confers resistance to streptogramin A "
+                "antibiotics and related compounds."
+            ),
+            "notes": "CARD definition for vgaALC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3000118",
+        filename="vgab-aro3000118.yaml",
+        determinant_evidence={
+            "reference": "ARO:3000118",
+            "snippet": (
+                "Vga(B) is an ABC-F protein expressed in staphylococci that "
+                "confers resistance to streptogramin A antibiotics and related "
+                "compounds."
+            ),
+            "notes": "CARD definition for vgaB.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002831",
+        filename="vgac-aro3002831.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002831",
+            "snippet": (
+                "vgaC is an ABC-F subfamily protein expressed in staphylococci "
+                "that confers resistance to streptogramin A antibiotics and "
+                "related compounds."
+            ),
+            "notes": "CARD definition for vgaC.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002832",
+        filename="vgad-aro3002832.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002832",
+            "snippet": (
+                "vgaD is an ABC-F subfamily protein expressed in Enterococcus "
+                "faecium that confers resistance to streptogramin A "
+                "antibiotics and related compounds."
+            ),
+            "notes": "CARD definition for vgaD.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3002833",
+        filename="vgae-aro3002833.yaml",
+        determinant_evidence={
+            "reference": "ARO:3002833",
+            "snippet": (
+                "vgaE is an ABC-F subfamily protein expressed in staphylococci "
+                "that confers resistance to streptogramin A antibiotics and "
+                "related compounds."
+            ),
+            "notes": "CARD definition for vgaE.",
+        },
+    ),
+    AbcFTarget(
+        identifier="ARO:3004715",
+        filename="vga-e-staphylococcus-cohnii-aro3004715.yaml",
+        determinant_evidence={
+            "reference": "ARO:3004715",
+            "snippet": (
+                "vga(E) gene variant that confers resistance to "
+                "pleuromutilins, lincosamides and streptogramin A antibiotics "
+                "in staphylococci."
+            ),
+            "notes": "CARD definition for vga(E) Staphylococcus cohnii.",
         },
     ),
     AbcFTarget(
