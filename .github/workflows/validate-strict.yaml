@@ -35,6 +35,7 @@ on:
       # the lockfile, not just the range: `uv sync` installs what uv.lock pins,
       # so a dependency bump changes the validator without touching pyproject (#537)
       - "uv.lock"
+      - ".python-version"
   workflow_dispatch:
 
 permissions:
@@ -55,6 +56,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
+          python-version: "3.13"
           enable-cache: true
 
       - name: Install just
