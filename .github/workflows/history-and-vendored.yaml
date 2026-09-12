@@ -7,13 +7,20 @@
 name: history-and-vendored
 
 on:
+  # Required checks report on every PR and on the combined queue commit.
   pull_request:
+  merge_group:
+    types: [checks_requested]
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Standard-library Python only: no uv or dependency resolution. The checker fetches
