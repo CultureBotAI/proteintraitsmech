@@ -11,6 +11,32 @@ set positional-arguments := true
 
 # ============== Deep Research ==============
 
+# eLife 109154: immutable, CC-BY-4.0 article and supplementary release.
+fetch-elife-metallophores:
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949 data/raw/elife_metallophores/zenodo-18866949.json --min-bytes 1000 --contains 'files'
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/nrp-metallophore-SI.zip/content data/raw/elife_metallophores/nrp-metallophore-SI.zip --min-bytes 270000000 --prefix-hex 504b --max-time 600
+    python3 scripts/fetch_source.py https://cdn.elifesciences.org/articles/109154/elife-109154-v2.pdf data/raw/elife_metallophores/elife-109154-v2.pdf --min-bytes 3000000 --prefix-hex 25504446
+    python3 scripts/fetch_source.py https://cdn.elifesciences.org/articles/109154/elife-109154-supp1-v2.xlsx data/raw/elife_metallophores/elife-109154-supp1-v2.xlsx --min-bytes 2800000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/enterobactin-NZ_LXER01000006.1285930..305256.zip/content data/raw/elife_metallophores/enterobactin-NZ_LXER01000006.1285930..305256.zip --min-bytes 700000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip/content data/raw/elife_metallophores/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip --min-bytes 700000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/ornicorrugatin-NZ_CP034725.12703749..2753526.zip/content data/raw/elife_metallophores/ornicorrugatin-NZ_CP034725.12703749..2753526.zip --min-bytes 1000000 --prefix-hex 504b
+
+seed-elife-metallophores *args:
+    uv run python scripts/seed_elife_metallophores.py {{args}}
+
+acquire-elife-metallophore-examples *args:
+    uv run python scripts/acquire_elife_metallophore_examples.py --expect-release 2026_03 {{args}}
+
+resolve-elife-metallophore-examples *args:
+    uv run python scripts/ground_uniprot_examples.py elife-resolve {{args}}
+
+promote-elife-metallophore-examples *args:
+    uv run python scripts/ground_uniprot_examples.py elife-promote {{args}}
+
+analyze-elife-metallophores *args:
+    uv run python scripts/analyze_elife_metallophores.py {{args}}
+
+
 research_dir := "research"
 templates_dir := "templates"
 

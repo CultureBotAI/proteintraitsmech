@@ -681,6 +681,18 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
     pending_locks = _matching_pending_provider_locks(evidence)
     errors: list[tuple[str, str]] = []
 
+    # This source has a narrow, replayable whole-protein seed-membership contract.
+    # Every other SOURCE_DATABASE provider retains its existing fail-closed gate.
+    elife_source = source == "eLife 109154 metallophore protein annotations" or any(
+        isinstance(evidence.get(key), str)
+        and evidence[key].startswith("proteintraitsmech:ELIFE109154_")
+        for key in ("trait_id", "source_trait_id")
+    )
+    if elife_source:
+        from elife_metallophore_grounding import contract_errors
+
+        errors.extend(contract_errors(dict(evidence)))
+
     allowed_kinds = {
         "UNIPROT_FEATURE": {"UNIPROT"},
         "INTERPRO_MATCH": {"INTERPRO"},
@@ -1190,7 +1202,7 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "boundary",
                 )
             )
-        elif kind == "SOURCE_DATABASE":
+        elif kind == "SOURCE_DATABASE" and not elife_source:
             errors.append(
                 (
                     "source_database_contract_required",
@@ -2659,6 +2671,12 @@ def _validate_occurrence(
 
     if reference is None:
         return findings
+    if isinstance(trait_id, str) and trait_id.startswith("proteintraitsmech:ELIFE109154_"):
+        from elife_metallophore_grounding import record_errors
+
+        evidence = (evidence_registry or {}).get(occurrence.get("source_evidence_id"), {})
+        findings.extend(_finding(code, message, **context) for code, message in
+                        record_errors(dict(record), dict(reference), dict(evidence)))
     sequence = reference.get("sequence")
     if not isinstance(sequence, str) or SEQUENCE_RE.fullmatch(sequence) is None:
         return findings  # the registry-level error is more useful; avoid follow-on crashes

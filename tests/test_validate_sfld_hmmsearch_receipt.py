@@ -623,13 +623,30 @@ def test_same_path_mutation_after_semantic_replay_fails_final_recheck(tmp_path, 
         _verify(paths, expected_hashes)
 
 
-def test_current_protein_registry_has_stable_canonical_fasta_projection():
+def test_original_registry_release_has_stable_canonical_fasta_projection(tmp_path):
     registry_path = REPO / "data/grounding/protein_registry.jsonl"
     if not registry_path.is_file():
         pytest.skip("production ProteinReference registry is not installed")
     capture = receipt._capture_regular_file(  # noqa: SLF001
         registry_path,
         label="production registry",
+        max_bytes=receipt._MAX_BYTES["registry"],  # noqa: SLF001
+    )
+    # Later ingests may add a different pinned release to the durable registry.
+    # SFLD still requires a single-release execution batch: preserve its original
+    # byte/hash canary and explicitly test rejection of a mixed-release batch.
+    source_rows = [json.loads(line) for line in capture.raw.splitlines()]
+    if len({row["uniprot_release"] for row in source_rows}) > 1:
+        with pytest.raises(receipt.SfldHmmsearchReceiptError, match="exactly one UniProt release"):
+            receipt._load_registry(capture)  # noqa: SLF001
+    original_release = tmp_path / "registry-2026_02.jsonl"
+    original_release.write_bytes(b"".join(
+        line + b"\n" for line in capture.raw.splitlines()
+        if json.loads(line)["uniprot_release"] == "2026_02"
+    ))
+    capture = receipt._capture_regular_file(  # noqa: SLF001
+        original_release,
+        label="original registry release",
         max_bytes=receipt._MAX_BYTES["registry"],  # noqa: SLF001
     )
     rows = receipt._load_registry(capture)  # noqa: SLF001

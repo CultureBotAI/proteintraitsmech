@@ -249,6 +249,7 @@ supports them, and can also be added by curators:
 
 | Source | Records | Bucket |
 | --- | ---: | --- |
+| [eLife metallophores](https://doi.org/10.7554/eLife.109154.3) ([Zenodo 18866949](https://doi.org/10.5281/zenodo.18866949), CC-BY-4.0) | 20 | `data/traits/sequence/{family,domain}/elife_metallophores/`; [analysis and example provenance](research/elife-109154-metallophores.md) |
 | [LinkML `LocalStructuralFeature`](https://linkml.io/valuesets/elements/LocalStructuralFeature/) | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
 | [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` (1279 generic) + `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` (32 PTM subtypes) |
 | [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |

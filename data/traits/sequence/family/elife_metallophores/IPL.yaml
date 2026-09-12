@@ -1,0 +1,63 @@
+identifier: proteintraitsmech:ELIFE109154_IPL
+label: Metallophore-associated isochorismate pyruvate-lyase family
+definition: Protein sequence family recognized by the IPL profile of the bacterial NRP metallophore
+  detection system. Members include isochorismate pyruvate-lyases that generate salicylate from isochorismate
+  as one route to phenolic metallophore precursors. This corrects the abbreviated isopyruvate lyase
+  label in the source model table using the article's pathway description.
+definition_source: DOI:10.7554/eLife.109154.3; DOI:10.5281/zenodo.18866949
+trait_axis: SEQUENCE
+trait_category: SEQ_FAMILY
+term_kind: CLASS
+mapping_status: PROPOSED
+synonyms:
+- synonym_text: IPL
+  synonym_type: EXACT_SYNONYM
+evidence:
+- reference: DOI:10.7554/eLife.109154.3
+  notes: Figure 1 and Methods; agent-curated sequence-class definition. A sequence-family assignment
+    does not establish metabolite production.
+- reference: DOI:10.5281/zenodo.18866949
+  notes: 'nrp-metallophore-SI-main/1_rule_development/HMMs_final/hmmdetails.txt: IPL; source bitscore
+    cutoff 110. BGC rule combinations and negative constraints remain necessary.'
+datasets:
+- accession: Zenodo:18866949
+  title: NRP metallophore supplemental dataset
+  url: https://zenodo.org/records/18866949
+  publication: DOI:10.7554/eLife.109154.3
+  description: 'Source model IPL; chelator context: salicylate.'
+  notes: CC BY 4.0; Reitz (2026). Archive SHA-256 638f968c12034b197ddf2b66c7450b3c76bb993faf7cf118d5972ee38228c8cc.
+    Model member nrp-metallophore-SI-main/1_rule_development/HMMs_final/IPL.hmm; SHA-256 28b2bc2721182a52d24cef792aa16fe289b1cbc2a9b658a6a99845344b620a3b.
+canonical_examples:
+- protein_id: UniProtKB:A0A418T7G6
+  protein_label: chorismate mutase
+  taxon_id: NCBITaxon:1675788
+  taxon_label: Paracoccus onubensis
+  sequence_length: 128
+  sequence_sha256: 708a5eebeae834d5b9e2286dc8883766870ac4bc38719fd2df207fcc8f050b3e
+  reviewed: false
+  uniprot_release: '2026_03'
+  sequence_version: 1
+  source: UNIPROT_GROUNDING
+  qualification_status: QUALIFIED
+  reference: DOI:10.5281/zenodo.18866949
+  trait_occurrences:
+  - trait_id: proteintraitsmech:ELIFE109154_IPL
+    protein_id: UniProtKB:A0A418T7G6
+    source_trait_id: proteintraitsmech:ELIFE109154_IPL
+    mapping_method: SOURCE_MEMBERSHIP
+    scope: WHOLE_PROTEIN
+    evidence_source: eLife 109154 metallophore protein annotations
+    source_release: Zenodo:18866949
+    sequence_sha256: 708a5eebeae834d5b9e2286dc8883766870ac4bc38719fd2df207fcc8f050b3e
+    qualification_status: QUALIFIED
+    source_evidence_id: ug-evidence:b82d66253ccc73981e6cf2a009cb5a2fc2ae53f1ee6cf340c0c3b15519f401e6
+  note: Source membership in the deposited seed alignment; full sequence verified against UniProt. QUALIFIED
+    describes sequence classification, not experimentally proven activity.
+license: CC-BY-4.0
+detection_methods:
+- name: Published IPL profile; source bitscore cutoff 110
+  method_type: HMM_PROFILE
+  tool: https://hmmer.org/
+  reference: DOI:10.5281/zenodo.18866949
+  recipe: hmmsearch -T 110 data/raw/elife_metallophores/nrp-metallophore-SI-main/1_rule_development/HMMs_final/IPL.hmm
+    {input} > {output}
