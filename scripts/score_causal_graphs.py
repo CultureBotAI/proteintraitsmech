@@ -106,11 +106,12 @@ def _yaml_files(paths: Iterable[Path]) -> list[Path]:
                 files.append(path)
             continue
         if path.is_dir():
-            files.extend(
-                candidate
-                for candidate in path.rglob("*.yaml")
-                if candidate.is_file() and not candidate.is_symlink()
-            )
+            for pattern in ("*.yaml", "*.yml"):
+                files.extend(
+                    candidate
+                    for candidate in path.rglob(pattern)
+                    if candidate.is_file() and not candidate.is_symlink()
+                )
             continue
         print(f"Skipping missing path: {path}", file=sys.stderr)
     return sorted(files)
