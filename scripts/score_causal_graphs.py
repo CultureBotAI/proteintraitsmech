@@ -139,8 +139,6 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
                 "--hidden",
                 "--no-ignore",
                 "--no-config",
-                "-g",
-                "*.{yaml,yml}",
                 "causal_graphs:",
                 str(path),
             ],
@@ -153,7 +151,10 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
         if proc.returncode != 0:
             print(proc.stderr, file=sys.stderr)
             return None
-        files.update(Path(line) for line in proc.stdout.splitlines())
+        for line in proc.stdout.splitlines():
+            candidate = Path(line)
+            if candidate.suffix.lower() in {".yaml", ".yml"}:
+                files.add(candidate)
     return sorted(path for path in files if not path.is_symlink())
 
 
