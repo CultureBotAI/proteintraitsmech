@@ -322,9 +322,19 @@ def test_validate_strict_fires_when_the_SHARED_module_changes():
     """The schema now IMPORTS mech_shared, so a change there changes what validate-strict
     validates. Its trigger listed only the main schema path, so the gate would not have
     fired on the import -- a gate that stops covering its own inputs."""
-    wf = (REPO / ".github" / "workflows" / "validate-strict.yaml").read_text()
-    assert wf.count("src/proteintraitsmech/schema/mech_shared.yaml") == 2, (
-        "mech_shared must be in BOTH the pull_request and push path filters")
+    workflow = yaml.safe_load(
+        (REPO / ".github" / "workflows" / "validate-strict.yaml").read_text()
+    )
+    events = workflow.get("on", workflow.get(True, {}))
+    # PR and queue validation is unconditional; the retained main-push filter
+    # must still name the imported schema. Counting text occurrences rejects
+    # unfiltered PR coverage and cannot prove which event owns a path (#687).
+    assert "pull_request" in events, "shared-schema PRs do not trigger validation"
+    assert events["pull_request"] in (None, {}), "required PR validation must be unfiltered"
+    assert events.get("merge_group") == {"types": ["checks_requested"]}
+    assert "main" in events["push"]["branches"]
+    assert "paths-ignore" not in events["push"]
+    assert "src/proteintraitsmech/schema/mech_shared.yaml" in events["push"]["paths"]
 
 
 def _vendored_sync_workflow():
