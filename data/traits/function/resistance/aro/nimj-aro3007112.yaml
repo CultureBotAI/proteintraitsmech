@@ -23,12 +23,10 @@ evidence:
   notes: PMID:23716049 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: nimJ → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3007103). Inactivation by reduction. The determinant->resistance evidence is deliberately mixed-strength:
-    CARD states the chemistry causally and the resistance only as an association, and one member says
-    expression alone is insufficient.'
+  title: nimJ → nitroimidazole reduction → antibiotic resistance
+  description: Conservative graph for nitroimidazole reductase-mediated antibiotic inactivation. The graph
+    grounds the local nitro-group reduction step to GO:0016491 oxidoreductase activity and represents
+    reduction of the drug nitro functional group to an amino group as one local inactive-drug state.
   nodes:
   - node_id: determinant
     label: nimJ
@@ -43,17 +41,16 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3004115
   - node_id: reduction
-    label: nitroimidazole reductase activity
+    label: nitroimidazole nitro-group reduction
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-64).'
-  - node_id: nitro
-    label: nitro functional group of the drug
-    node_type: CHEMICAL
-    description: 'The group reduced. Ungrounded: a substructure, not a compound.'
-  - node_id: amine
-    label: amino group -- the reduced, inactive drug
+    grounding: GO:0016491
+    description: Local nitroimidazole-specific reduction activity, grounded to oxidoreductase activity
+      as the nearest stable GO molecular-function superclass.
+  - node_id: inactive
+    label: inactive nitroimidazole amine product
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for nitroimidazole antibiotics after enzymatic reduction of the nitro functional
+      group to an amino group.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,94 +63,206 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies nitroimidazole reductases under antibiotic inactivation.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Nitroimidazole reductase-mediated drug inactivation is the broad mechanism leading to
+      resistance.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Nitroimidazole reductases deactivate nitroimidazole antibiotics by reducing the drug
+      nitro group to an amine.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: 'The chemistry, stated causally: reduction of the nitro group to an amine deactivates the
-        drug.'
-    - reference: ARO:3007103
-      snippet: These enzymes are associated with resistance to nitroimidazole derivatives in Bacteroides
-        fragilis but have also been reported in a variety of anaerobic Gram-negative and Gram-positive
-        genera.
-      notes: The resistance claim, stated WEAKLY. CARD says 'associated with', not 'confers' -- recorded
-        as association rather than upgraded to causation.
-    - reference: ARO:3007671
-      snippet: NimB expression alone is not sufficient for nitroimidazole resistance.
-      notes: 'And the family''s own negative result: for C. difficile nimB, the enzyme is necessary but
-        NOT sufficient -- constitutive transcription from a promoter mutation is also required. Quoted
-        because it bounds the claim the other two snippets make.'
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to nitroimidazole antibiotic.
+    description: ARO maps the nitroimidazole reductase family to nitroimidazole antibiotics.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: CARD definition for the nitroimidazole reductase parent term.
     - reference: ARO:3007103
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004115 ! nitroimidazole antibiotic'
-      notes: Asserted on ARO:3007103 (nitroimidazole reductase), an is_a ancestor of this record's ARO:3007112;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on the nitroimidazole reductase parent and inherited
+        by Nim child records.
+    - reference: ARO:3004115
+      snippet: nitroimidazole antibiotic
+      notes: ARO drug-class term targeted by nitroimidazole reductases.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: determinant
-    predicate: enables (reduces the drug)
+    predicate: enables
     predicate_id: RO:0002327
     object: reduction
+    description: The determinant enables nitroimidazole nitro-group reduction.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: '''a group of enzymes that deactivate nitroimidazole antibiotics by reducing...''.'
-  - subject: nitro
-    predicate: part of (the intact drug)
-    predicate_id: BFO:0000050
-    object: drug0
-    description: 'Why reducing this group destroys the antibiotic: the nitro group is what makes a nitroimidazole
-      one.'
-    evidence:
-    - reference: ARO:3007103
-      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
-        by reducing their nitro functional group to an amino group.
-      notes: '''their nitro functional group'' -- the drug''s own substructure, as with the streptogramin
-        lactone ring in round 64.'
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: GO:0016491
+      snippet: Catalysis of an oxidation-reduction (redox) reaction, a reversible chemical reaction in
+        which the oxidation state of an atom or atoms within a molecule is altered.
+      notes: GO oxidoreductase activity is the nearest stable superclass for nitroimidazole nitro-group
+        reduction.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: reduction
-    predicate: has input (the nitro group)
+    predicate: has input
     predicate_id: RO:0002233
-    object: nitro
+    object: drug0
+    description: The nitroimidazole antibiotic is the input to the nitro-group reduction step.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: The substrate is a group on the drug, not the whole molecule.
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: GO:0016491
+      snippet: Catalysis of an oxidation-reduction (redox) reaction, a reversible chemical reaction in
+        which the oxidation state of an atom or atoms within a molecule is altered.
+      notes: GO oxidoreductase activity is the nearest stable superclass for nitroimidazole nitro-group
+        reduction.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
   - subject: reduction
-    predicate: has output (the reduced amine)
-    predicate_id: RO:0002234
-    object: amine
-    description: 'The causal core: reduction to the amine is the deactivation.'
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: inactive
+    description: The reaction reduces the drug nitro functional group to an amino group.
     evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
     - reference: ARO:3007103
       snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
         by reducing their nitro functional group to an amino group.
-      notes: '''reducing their nitro functional group to an amino group''.'
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: GO:0016491
+      snippet: Catalysis of an oxidation-reduction (redox) reaction, a reversible chemical reaction in
+        which the oxidation state of an atom or atoms within a molecule is altered.
+      notes: GO oxidoreductase activity is the nearest stable superclass for nitroimidazole nitro-group
+        reduction.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
+  - subject: inactive
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Reduction to the inactive amine-containing product is the modeled terminal inactivation
+      event.
+    evidence:
+    - reference: ARO:3007112
+      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
+        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
+        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
+        treatment.
+      notes: CARD definition for nimJ.
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: CARD definition for the nitroimidazole reductase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: DOI:10.1128/AAC.00386-13
+      notes: PMID:23716049 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded nitroimidazole reductase graphs
   llm_assisted: true
 license: CC-BY 4.0

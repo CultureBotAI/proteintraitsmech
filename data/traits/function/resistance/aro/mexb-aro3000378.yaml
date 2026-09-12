@@ -30,31 +30,27 @@ evidence:
   notes: PMID:19361527 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: MexB → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000748). A named subunit of a named efflux complex. The graph routes through the COMPLEX because
-    no subunit effluxes anything alone -- and stops at the efflux process, since the pump's energetics
-    live on the pump records (rounds 67, 69).
+  title: MexB → MexAB-OprM RND efflux → resistance
+  description: Curated resistance-causation graph for a Mex RND efflux-pump subunit. The determinant is
+    modeled as part of the exact grounded Mex pump that carries out RND antibiotic efflux.
   nodes:
   - node_id: determinant
     label: MexB
     node_type: PROTEIN
     grounding: ARO:3000378
+  - node_id: pump_complex
+    label: MexAB-OprM efflux pump
+    node_type: PROTEIN
+    grounding: ARO:3000386
+    description: Grounded CARD record for the MexAB-OprM RND efflux pump.
   - node_id: mech0
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: complex
-    label: the efflux pump complex this subunit belongs to
-    node_type: PROTEIN
-    description: 'Ungrounded: the complex records exist but are themselves #229''s open categorisation
-      question, so this does not point at one.'
-  - node_id: efflux_process
-    label: antibiotic efflux
+  - node_id: export
+    label: xenobiotic detoxification by transmembrane export across the plasma membrane
     node_type: BIOLOGICAL_PROCESS
-    grounding: ARO:0010000
-    description: Where this graph stops.
+    grounding: GO:1990961
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -67,67 +63,201 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this Mex efflux-pump subunit under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: Family mechanism ARO:0010000.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The subunit contributes to a Mex RND efflux pump that exports antibiotics from the cell.
     evidence:
-    - reference: ARO:3000377
-      snippet: MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.
-      notes: A subunit describes its place in something larger -- 'the membrane fusion protein OF the
-        MexAB-OprM complex'. That phrasing is what distinguishes these from the complexes filed alongside
-        them (#229).
     - reference: ARO:3000378
       snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
-      notes: 'And the transporting subunit: ''the inner membrane multidrug exporter''. SCOPE: MexA and
-        MexB are the only two records in this family whose definitions take this form.'
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: What the complex they belong to achieves.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
-    predicate: part of (the efflux complex)
+    predicate: part of
     predicate_id: BFO:0000050
-    object: complex
-    description: 'The defining claim: a subunit is PART OF the transporter, not the transporter. Writing
-      determinant --> efflux directly would make each subunit a pump.'
+    object: pump_complex
+    description: MexB is modeled as part of the MexAB-OprM efflux pump.
     evidence:
-    - reference: ARO:3000377
-      snippet: MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.
-      notes: '''the membrane fusion protein OF the MexAB-OprM multidrug efflux complex''.'
     - reference: ARO:3000378
       snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
-      notes: '''the inner membrane multidrug exporter OF the efflux complex MexAB-OprM''.'
-  - subject: complex
-    predicate: participates in (antibiotic efflux)
+      notes: CARD definition for MexB.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+  - subject: pump_complex
+    predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
-    object: efflux_process
+    object: mech0
+    description: MexAB-OprM is an RND efflux pump that participates in antibiotic efflux.
     evidence:
     - reference: ARO:3000378
       snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
-      notes: '''multidrug exporter'' -- the complex is what transports.'
-  - subject: efflux_process
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: '''via the transport of antibiotics out of the cell''.'
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
+  - subject: pump_complex
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: export
+    description: The complete Mex RND pump exports antibiotic from the cell.
+    evidence:
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
+  - subject: export
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Antibiotic export lowers intracellular drug exposure and causes the modeled resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: CARD definition for MexB.
+    - reference: ARO:3000386
+      snippet: MexAB-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexA is the membrane fusion protein; MexB is the inner membrane transporter; and OprM is the outer
+        membrane channel.
+      notes: CARD definition for the MexAB-OprM pump.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-09T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed Mex RND efflux-subunit graphs
   llm_assisted: true
 license: CC-BY 4.0

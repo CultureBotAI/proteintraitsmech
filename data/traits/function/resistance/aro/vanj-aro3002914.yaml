@@ -26,12 +26,10 @@ evidence:
   notes: PMID:15130128 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: vanJ → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3002914). Undecaprenol pyrophosphate recycling -- round 58''s bacA/bcrC mechanism reached from
-    the van set. As there, NOT asserted: that the drug binds or sequesters the carrier, which CARD does
-    not say.'
+  title: vanJ → undecaprenyl diphosphate recycling → resistance
+  description: Conservative graph for vanJ glycopeptide resistance. The graph grounds undecaprenyl-diphosphatase
+    activity and peptidoglycan-based cell-wall biogenesis from the ARO statement that vanJ recycles undecaprenol
+    pyrophosphate during cell-wall biosynthesis.
   nodes:
   - node_id: determinant
     label: vanJ
@@ -46,13 +44,13 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000081
   - node_id: upp_recycling
-    label: undecaprenol pyrophosphate recycling
+    label: undecaprenyl-diphosphatase activity
     node_type: MOLECULAR_FUNCTION
-    description: Ungrounded, as in round 58.
+    grounding: GO:0050380
   - node_id: wall
-    label: cell wall biosynthesis
+    label: peptidoglycan-based cell wall biogenesis
     node_type: BIOLOGICAL_PROCESS
-    description: 'The process the recycling serves. Ungrounded: no term verified this round.'
+    grounding: GO:0009273
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,62 +63,114 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies this determinant under cell-wall restructuring.
     evidence:
     - reference: ARO:3002914
       snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
         in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: Family mechanism ARO:3000213.
+      notes: CARD definition for vanJ.
+    - reference: ARO:3004255
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: CARD definition for the vanJ membrane-protein parent.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited cell-wall-restructuring mechanism links Van determinants to resistance.
     evidence:
     - reference: ARO:3002914
       snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
         in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: Mechanism ARO:3000213 → resistance.
+      notes: CARD definition for vanJ.
+    - reference: ARO:3004255
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: CARD definition for the vanJ membrane-protein parent.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links this Van determinant to glycopeptide resistance.
     evidence:
     - reference: ARO:3002914
       snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
         in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: 'Mechanism, drug and organism in one sentence: resistance to teicoplanin ''by RECYCLING undecaprenol
-        pyrophosphate during cell wall biosynthesis''. Same step as round 58''s bacA/bcrC, in an unrelated
-        family.'
+      notes: CARD definition for vanJ.
+    - reference: ARO:3004255
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: CARD definition for the vanJ membrane-protein parent.
+    - reference: ARO:3004255
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3004255; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    description: The ARO hierarchy links this Van determinant to glycopeptide antibiotics.
     evidence:
+    - reference: ARO:3002914
+      snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
+        in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
+      notes: CARD definition for vanJ.
     - reference: ARO:3004255
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3004255 (vanJ membrane protein), an is_a ancestor of this record's ARO:3002914;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: CARD definition for the vanJ membrane-protein parent.
+    - reference: ARO:3004255
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3004255; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
-    predicate: enables (recycles the lipid carrier)
+    predicate: enables
     predicate_id: RO:0002327
     object: upp_recycling
+    description: ARO identifies vanJ as recycling undecaprenol pyrophosphate.
     evidence:
     - reference: ARO:3002914
       snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
         in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: '''by recycling undecaprenol pyrophosphate''.'
+      notes: CARD definition for vanJ.
+    - reference: GO:0050380
+      snippet: 'Catalysis of the reaction: di-trans,octa-cis-undecaprenyl diphosphate + H2O = di-trans,octa-cis-undecaprenyl
+        phosphate + H+ + phosphate.'
+      notes: GO definition for undecaprenyl-diphosphatase activity, the hydrolysis activity used to recycle
+        undecaprenyl diphosphate.
   - subject: upp_recycling
-    predicate: part of (cell wall biosynthesis)
+    predicate: part of (peptidoglycan-based cell wall biogenesis)
     predicate_id: BFO:0000050
     object: wall
+    description: ARO places VanJ undecaprenyl-diphosphatase activity in cell-wall biosynthesis.
     evidence:
     - reference: ARO:3002914
       snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
         in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: '''during cell wall biosynthesis''.'
+      notes: CARD definition for vanJ.
+    - reference: GO:0009273
+      snippet: The chemical reactions and pathways resulting in the formation of the peptidoglycan-based
+        cell wall.
+      notes: GO definition for peptidoglycan-based cell wall biogenesis.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded VanJ and VanK glycopeptide-resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000451
 trait_relations:
@@ -22,11 +22,10 @@ evidence:
 - reference: DOI:10.1371/journal.ppat.1003201
   notes: PMID:23555240 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] kdpDE → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: kdpDE → mechanism → resistance
+  description: Conservative graph promoted from the ARO scaffold. The graph keeps the ARO mechanism and
+    drug-class assertions and stops before any unstated determinant-specific downstream route.
   nodes:
   - node_id: determinant
     label: kdpDE
@@ -52,44 +51,72 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this determinant under antibiotic efflux.
     evidence:
-    - reference: DOI:10.1371/journal.ppat.1003201
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3004046
       snippet: kdpDE is a two-component regulatory system in Escherichia coli, well studied for its role
         in potassium transport and homeostasis. kdpE is also implicated in virulence loci regulation and
         overexpression of kdpE is shown to confer resistance to aminoglycoside antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: CARD definition for kdpDE.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for antibiotic efflux.
+    - reference: DOI:10.1371/journal.ppat.1003201
+      notes: PMID:23555240 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO antibiotic efflux mechanism contributes to antibiotic resistance.
     evidence:
-    - reference: DOI:10.1371/journal.ppat.1003201
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
+    - reference: ARO:3004046
+      snippet: kdpDE is a two-component regulatory system in Escherichia coli, well studied for its role
+        in potassium transport and homeostasis. kdpE is also implicated in virulence loci regulation and
+        overexpression of kdpE is shown to confer resistance to aminoglycoside antibiotics.
+      notes: CARD definition for kdpDE.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: CARD definition for antibiotic efflux.
+    - reference: DOI:10.1371/journal.ppat.1003201
+      notes: PMID:23555240 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The local ARO definition states that this determinant confers resistance.
     evidence:
-    - reference: DOI:10.1371/journal.ppat.1003201
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004046
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000049 ! kanamycin A'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: kdpDE is a two-component regulatory system in Escherichia coli, well studied for its role
+        in potassium transport and homeostasis. kdpE is also implicated in virulence loci regulation and
+        overexpression of kdpE is shown to confer resistance to aminoglycoside antibiotics.
+      notes: CARD definition for kdpDE.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for antibiotic efflux.
+    - reference: DOI:10.1371/journal.ppat.1003201
+      notes: PMID:23555240 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps this determinant to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3004046
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted directly on ARO:3004046 (kdpDE) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    - reference: ARO:3004046
+      snippet: kdpDE is a two-component regulatory system in Escherichia coli, well studied for its role
+        in potassium transport and homeostasis. kdpE is also implicated in virulence loci regulation and
+        overexpression of kdpE is shown to confer resistance to aminoglycoside antibiotics.
+      notes: CARD definition for kdpDE.
+    - reference: ARO:0000016
+      snippet: aminoglycoside antibiotic
+      notes: ARO drug-class term for the grounded drug-class node.
+    - reference: DOI:10.1371/journal.ppat.1003201
+      notes: PMID:23555240 (aro citation)
+curation_history:
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Promoted minimal exact-definition resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0

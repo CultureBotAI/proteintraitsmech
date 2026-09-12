@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004898
 trait_relations:
@@ -20,11 +20,11 @@ synonyms:
   - synonym_text: Rv0275c
     synonym_type: EXACT_SYNONYM
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] isoniazid resistant inbR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: isoniazid resistant inbR → isoniazid-like resistance core
+  description: Conservative graph for an inbR isoniazid-related determinant. The graph keeps CARD's broad
+    mutation mechanism and isoniazid-like drug-class assertion and does not add an unsupported exact efflux-regulation
+    or antibiotic-activation reaction.
   nodes:
   - node_id: determinant
     label: isoniazid resistant inbR
@@ -50,47 +50,82 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this inbR determinant under mutation-conferring antibiotic resistance.
     evidence:
-    - reference: ARO:3004899
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004899
-      snippet: inbR is part of the transcriptional factor family TetR. It acts as a repressor to regulate
-        efflux pumps involved in antibiotic resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3004899
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+    - reference: ARO:3004898
+      snippet: Mutations in inbR that contribute to antibiotic resistance by preventing antibiotic activation.
+      notes: CARD definition for the antibiotic-resistant inbR parent.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004899
+      snippet: inbR is part of the transcriptional factor family TetR. It acts as a repressor to regulate
+        efflux pumps involved in antibiotic resistance.
+      notes: CARD definition for isoniazid resistant inbR.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The inherited mutation mechanism is upstream of antibiotic resistance.
+    evidence:
+    - reference: ARO:3004898
+      snippet: Mutations in inbR that contribute to antibiotic resistance by preventing antibiotic activation.
+      notes: CARD definition for the antibiotic-resistant inbR parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004899
+      snippet: inbR is part of the transcriptional factor family TetR. It acts as a repressor to regulate
+        efflux pumps involved in antibiotic resistance.
+      notes: CARD definition for isoniazid resistant inbR.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that mutations in this inbR determinant contribute to antibiotic resistance.
     evidence:
+    - reference: ARO:3004898
+      snippet: Mutations in inbR that contribute to antibiotic resistance by preventing antibiotic activation.
+      notes: CARD definition for the antibiotic-resistant inbR parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
     - reference: ARO:3004899
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004899
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: inbR is part of the transcriptional factor family TetR. It acts as a repressor to regulate
+        efflux pumps involved in antibiotic resistance.
+      notes: CARD definition for isoniazid resistant inbR.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps this determinant or its isoniazid-resistant inbR parent to the isoniazid-like
+      antibiotic drug class.
     evidence:
     - reference: ARO:3004899
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
       notes: Asserted directly on ARO:3004899 (isoniazid resistant inbR) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+    - reference: ARO:3004898
+      snippet: Mutations in inbR that contribute to antibiotic resistance by preventing antibiotic activation.
+      notes: CARD definition for the antibiotic-resistant inbR parent.
+    - reference: ARO:3007152
+      snippet: isoniazid-like antibiotic
+      notes: ARO drug-class term for the grounded isoniazid-like antibiotic node.
+    - reference: ARO:3004899
+      snippet: inbR is part of the transcriptional factor family TetR. It acts as a repressor to regulate
+        efflux pumps involved in antibiotic resistance.
+      notes: CARD definition for isoniazid resistant inbR.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Promoted inbR isoniazid-related graphs
+  llm_assisted: true
 license: CC-BY 4.0

@@ -40,14 +40,16 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: lipid_a_mod
-    label: lipid A modification gene expression
+    label: beta-L-Ara4N-lipid A biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: 'The pmrHFIJKLM / arn operon and relatives. Ungrounded: which operon differs per organism.'
+    grounding: GO:1901760
+    description: GO term for the aminoarabinose Lipid A modification branch controlled by pmrHFIJKLM/arn
+      genes.
   - node_id: surface_charge
     label: reduced net negative charge of the envelope
-    node_type: QUALITY
-    description: 'The same property mprF produces by lysinylating phosphatidylglycerol (round 32). Ungrounded:
-      no ontology term for envelope net charge.'
+    node_type: STATE
+    description: Local state representing the lower negative cell-envelope charge produced by regulator-induced
+      lipid A modification.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,53 +62,109 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this determinant under the broad ARO:0010000 resistance mechanism; the
+      record-specific causal path is Lipid A remodeling rather than direct drug efflux.
     evidence:
-    - reference: ARO:3003583
-      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
-        involved in polymyxin resistance
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3003896
+      snippet: Mutations in Pseudomonas aeruginosa PhoQ of the two-component PhoPQ regulatory system.
+        Presence of mutation confers resistance to colistin.
+      notes: Exact ARO definition of this determinant.
+    - reference: PMID:21968359
+      snippet: Probable loss-of-function phoQ alleles found in these cystic fibrosis strains conferred
+        resistance to polymyxin
+      notes: Miller et al. show that Pseudomonas phoQ loss-of-function alleles promote Lipid A modification
+        and polymyxin resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad inherited CARD mechanism category is associated with resistance, while the
+      concrete route is captured by the Lipid A-modification branch below.
     evidence:
-    - reference: ARO:3003583
-      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
-        involved in polymyxin resistance
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3003896
+      snippet: Mutations in Pseudomonas aeruginosa PhoQ of the two-component PhoPQ regulatory system.
+        Presence of mutation confers resistance to colistin.
+      notes: Exact ARO definition of this determinant.
+    - reference: PMID:21968359
+      snippet: Probable loss-of-function phoQ alleles found in these cystic fibrosis strains conferred
+        resistance to polymyxin
+      notes: Miller et al. show that Pseudomonas phoQ loss-of-function alleles promote Lipid A modification
+        and polymyxin resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The mutant two-component-system member is the determinant associated with the polymyxin
+      or colistin resistance phenotype.
     evidence:
-    - reference: ARO:3003583
-      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
-        involved in polymyxin resistance
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3003896
+      snippet: Mutations in Pseudomonas aeruginosa PhoQ of the two-component PhoPQ regulatory system.
+        Presence of mutation confers resistance to colistin.
+      notes: Exact ARO definition of this determinant.
+    - reference: PMID:21968359
+      snippet: Probable loss-of-function phoQ alleles found in these cystic fibrosis strains conferred
+        resistance to polymyxin
+      notes: Miller et al. show that Pseudomonas phoQ loss-of-function alleles promote Lipid A modification
+        and polymyxin resistance.
   - subject: determinant
     predicate: positively regulates (induces the modification genes)
     predicate_id: RO:0002213
     object: lipid_a_mod
+    description: The altered two-component-system member induces the Ara4N Lipid A modification pathway.
     evidence:
-    - reference: ARO:3003583
-      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
-        involved in polymyxin resistance
-      notes: CARD's definition of BasS, the archetype for the sensor kinase, which phosphorylates the
-        response regulator. Each record's own definition names the operon IT induces.
+    - reference: ARO:3003896
+      snippet: Mutations in Pseudomonas aeruginosa PhoQ of the two-component PhoPQ regulatory system.
+        Presence of mutation confers resistance to colistin.
+      notes: Exact ARO definition of this determinant.
+    - reference: PMID:21968359
+      snippet: Probable loss-of-function phoQ alleles found in these cystic fibrosis strains conferred
+        resistance to polymyxin
+      notes: Miller et al. show that Pseudomonas phoQ loss-of-function alleles promote Lipid A modification
+        and polymyxin resistance.
   - subject: lipid_a_mod
     predicate: causally upstream of (adds positive charge to the envelope)
     predicate_id: RO:0002411
     object: surface_charge
+    description: The induced Lipid A-modification enzymes add aminoarabinose to Lipid A, lowering the
+      net negative cell-envelope charge.
     evidence:
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: CARD's charge-alteration mechanism term, which is what the induced genes bring about. Lipid
-        A modification is the route; the reduced net negative charge is the result.
+      notes: CARD's charge-alteration mechanism term; aminoarabinose-modified Lipid A lowers the negative
+        envelope charge available for polymyxin binding.
+    - reference: PMID:9570402
+      snippet: lipid A aminoarabinose modification promotes resistance to cationic antimicrobial peptides
+      notes: Gunn et al. connect PmrAB-regulated aminoarabinose Lipid A modification to polymyxin resistance.
+  - subject: surface_charge
+    predicate: causally upstream of (reduces polymyxin binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The lower negative charge reduces binding by cationic polymyxins, yielding the resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD's charge-alteration mechanism term; aminoarabinose-modified Lipid A lowers the negative
+        envelope charge available for polymyxin binding.
+    - reference: PMID:9570402
+      snippet: lipid A aminoarabinose modification promotes resistance to cationic antimicrobial peptides
+      notes: Gunn et al. connect PmrAB-regulated aminoarabinose Lipid A modification to polymyxin resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Added PubMed evidence, edge descriptions, and the surface-charge-to-resistance edge to the polymyxin
+    two-component-system causal graph
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Typed polymyxin surface-charge node as a local state
   llm_assisted: true
 license: CC-BY 4.0

@@ -36,11 +36,15 @@ causal_graphs:
   - node_id: pgp_synthase
     label: CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'CARD names the reaction precisely. Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0008444
+    description: Grounded to the GO molecular-function class whose synonyms include phosphatidylglycerophosphate
+      synthase activity.
   - node_id: phospholipid
-    label: phospholipid biosynthesis
+    label: phospholipid biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: 'The pathway. Ungrounded: no term verified this round.'
+    grounding: GO:0008654
+    description: Grounded to the GO pathway class for formation of phospholipids; phospholipid biosynthesis
+      is an exact GO synonym.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,53 +57,88 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies antibiotic resistant pgsA under mutation conferring antibiotic
+      resistance, while this parent record only identifies the enzyme and pathway roles.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: Family mechanism ARO:3000212.
+      notes: Exact ARO definition of this role-only parent determinant.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism links the parent determinant class to the resistance
+      phenotype without specifying a drug-specific biochemical route.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: Exact ARO definition of this role-only parent determinant.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO parent class records pgsA as antibiotic resistant; no drug-specific edge is asserted
+      from its enzyme annotation alone.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: 'Enzyme identity and pathway, twice over: the protein class and the exact transferase (EC-style)
-        name. CARD says nothing about mutations, a drug, or resistance -- as with aftA (round 95).'
+      notes: Exact ARO definition of this role-only parent determinant.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: enables (phosphatidylglycerophosphate synthesis)
     predicate_id: RO:0002327
     object: pgp_synthase
+    description: The ARO definition identifies pgsA as a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: '''It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase'' -- CARD names
-        the reaction, not just the pathway.'
+      notes: Exact ARO definition of this role-only parent determinant.
+    - reference: GO:0008444
+      snippet: 'Catalysis of the reaction: sn-glycerol 3-phosphate + CDP-diacylglycerol = 3-(3-sn-phosphatidyl)-sn-glycerol
+        1-phosphate + CMP + H+.'
+      notes: GO reaction definition for the grounded pgsA transferase activity node.
   - subject: pgp_synthase
     predicate: part of (phospholipid biosynthesis)
     predicate_id: BFO:0000050
     object: phospholipid
+    description: The transferase activity is represented as part of the phospholipid biosynthesis role
+      named in the ARO definition.
     evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: '''involved in phospholipid biosynthesis''. NOT asserted: any link to a drug, which CARD''s
-        sentences do not contain.'
+      notes: Exact ARO definition of this role-only parent determinant.
+    - reference: GO:0008654
+      snippet: The chemical reactions and pathways resulting in the formation of a phospholipid, a lipid
+        containing phosphoric acid as a mono- or diester.
+      notes: GO process definition for the grounded phospholipid biosynthetic process node.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded role-only pgsA/rpoB/rpoC ARO causal-graph nodes to local GO terms and added conservative
+    edge descriptions
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Supplemented role-only pgsA mutation evidence
   llm_assisted: true
 license: CC-BY 4.0

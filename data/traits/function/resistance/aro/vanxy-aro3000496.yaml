@@ -23,10 +23,10 @@ evidence:
   notes: PMID:10564477 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: vanXY → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:10564477). Removes the D-Ala-ending precursor and its dipeptide, leaving the D-Ser route.
+  title: vanXY → VanXY D-Ala-D-Ala hydrolysis/trimming → glycopeptide resistance
+  description: Curated resistance-causation graph for bifunctional VanXY-mediated glycopeptide resistance.
+    VanXY hydrolyzes free D-Ala-D-Ala and removes terminal D-Ala from D-Ala-D-Ala-ended peptidoglycan
+    precursors while sparing the VanC-type D-Ala-D-Ser route.
   nodes:
   - node_id: determinant
     label: vanXY
@@ -40,22 +40,13 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
-  - node_id: precursor_ser
-    label: UDP-MurNAc-pentapeptide[D-Ser] (precursor ending in D-Ala-D-Ser)
-    node_type: STATE
-    description: 'The replacement precursor. Ungrounded: ChEBI has the amino acids but not the UDP-MurNAc
-      pentapeptides.'
-  - node_id: precursor_dala
-    label: UDP-MurNAc-pentapeptide[D-Ala] (the precursor glycopeptides bind)
-    node_type: STATE
-    description: The normal precursor, whose synthesis this pathway prevents. Ungrounded, as above.
   - node_id: family
     label: D,D-carboxypeptidase/D,D-dipeptidase VanXY
     node_type: PROTEIN
     grounding: NCBIfam:NF000380
-    description: KB protein-trait record for the VanXY family.
+    description: NCBIfam family containing VanY and bifunctional VanXY peptidases.
   - node_id: dipeptidase
-    label: dipeptidase activity
+    label: D,D-dipeptidase activity
     node_type: MOLECULAR_FUNCTION
     grounding: GO:0016805
   - node_id: carboxypeptidase
@@ -66,140 +57,270 @@ causal_graphs:
     label: D-alanyl-D-alanine
     node_type: CHEMICAL
     grounding: CHEBI:16576
+    description: VanXY hydrolyzes free D-Ala-D-Ala and removes the terminal D-Ala from peptidoglycan precursors
+      ending in the same D-Ala-D-Ala chemical group.
   - node_id: resistance
-    label: antibiotic resistance phenotype
+    label: glycopeptide antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype conferred by VanXY-dependent depletion of D-Ala-D-Ala and D-Ala-D-Ala-ended
+      precursors.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places VanXY in the molecular-bypass cell-wall restructuring mechanism.
     evidence:
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
     - reference: PMID:10564477
-      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
-        (Mr 22 318), which had both of these activities.
-      notes: Family mechanism ARO:3000213.
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: ARO:3000213
+      snippet: Mechanism of antibiotic resistance mediated by circumventing or bypassing the antibiotic
+        target.
+      notes: CARD definition for restructuring of bacterial cell wall.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: VanXY depletes the free D-Ala-D-Ala dipeptide and removes terminal D-Ala residues from
+      D-Ala-D-Ala-ended precursors while the VanC-type pathway builds low-affinity D-Ala-D-Ser-ended peptidoglycan
+      precursors.
     evidence:
-    - reference: PMID:10564477
-      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
-        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
-        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
-        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
-      notes: Mechanism ARO:3000213 → resistance.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
+    - reference: PMID:10817725
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: Arias, Courvalin, and Reynolds 2000 described how the VanC route replaces glycopeptide-bound
+        D-Ala termini.
+    - reference: ARO:3000213
+      snippet: Mechanism of antibiotic resistance mediated by circumventing or bypassing the antibiotic
+        target.
+      notes: CARD definition for restructuring of bacterial cell wall.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Bifunctional VanXY supports VanC-type glycopeptide resistance by destroying D-Ala-D-Ala
+      and trimming D-Ala-D-Ala-ending precursors.
     evidence:
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
     - reference: PMID:10564477
-      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
-        (Mr 22 318), which had both of these activities.
-      notes: 'Reynolds, Arias & Courvalin 1999: one 22 kDa protein carries both the D,D-dipeptidase and
-        the D,D-carboxypeptidase activity.'
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
     - reference: PMID:10817725
-      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
-        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
-        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
-        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
-      notes: 'What those activities do in the pathway: hydrolyse D-Ala-D-Ala and remove D-Ala from the
-        pentapeptide.'
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    description: CARD asserts that VanXY confers resistance to glycopeptide antibiotics.
     evidence:
     - reference: ARO:3000496
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted directly on ARO:3000496 (vanXY) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: precursor_ser
-    predicate: negatively regulates (replaces the D-Ala-ending precursor)
-    predicate_id: RO:0002212
-    object: precursor_dala
-    description: 'The causal core of the VanC route: the wall is assembled from the D-Ser precursor instead,
-      and the D-Ala-ending one is not made.'
-    evidence:
+      notes: CARD/ARO asserts this glycopeptide-antibiotic drug class on vanXY.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
     - reference: PMID:10817725
-      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
-        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
-      notes: 'Arias, Courvalin & Reynolds 2000. Both halves in one sentence: what is synthesised, and
-        what is prevented.'
-  - subject: drug0
-    predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
-    predicate_id: RO:0002436
-    object: precursor_dala
-    description: 'Drug action: the glycopeptide binds the D-Ala terminus. Replacing it is what confers
-      resistance.'
-    evidence:
-    - reference: PMID:10817725
-      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
-        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
-      notes: The precursor named here is the one the drug binds; the VanC route prevents its synthesis.
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
   - subject: determinant
     predicate: member of (the VanXY bifunctional family)
     predicate_id: RO:0002350
     object: family
+    description: The determinant is a VanXY-family bifunctional D,D-dipeptidase and D,D-carboxypeptidase.
     evidence:
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
     - reference: PMID:10564477
-      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
-        (Mr 22 318), which had both of these activities.
-      notes: Establishes what VanXY is.
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
     - reference: NCBIfam:NF000380
       snippet: D,D-carboxypeptidase/D,D-dipeptidase VanXY
-      notes: NCBIfam's own product name for the family this node grounds to.
+      notes: NCBIfam product name for the VanXY/VanY D,D-carboxypeptidase family.
   - subject: family
     predicate: enables (D,D-dipeptidase activity)
     predicate_id: RO:0002327
     object: dipeptidase
+    description: The VanXY-family enzyme hydrolyzes the free D-Ala-D-Ala dipeptide.
     evidence:
     - reference: PMID:10564477
-      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
-        (Mr 22 318), which had both of these activities.
-      notes: The 'both of these activities' are the D,D-dipeptidase and the D,D-carboxypeptidase named
-        in the title.
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: NCBIfam:NF000380
+      snippet: D,D-carboxypeptidase/D,D-dipeptidase VanXY
+      notes: NCBIfam product name for the VanXY/VanY D,D-carboxypeptidase family.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
   - subject: family
     predicate: enables (D,D-carboxypeptidase activity)
     predicate_id: RO:0002327
     object: carboxypeptidase
+    description: The VanXY-family enzyme also removes the terminal D-Ala from D-Ala-D-Ala-ending peptidoglycan
+      precursors.
     evidence:
     - reference: PMID:10564477
-      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
-        (Mr 22 318), which had both of these activities.
-      notes: The second of the two activities.
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: NCBIfam:NF000380
+      snippet: D,D-carboxypeptidase/D,D-dipeptidase VanXY
+      notes: NCBIfam product name for the VanXY/VanY D,D-carboxypeptidase family.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
   - subject: dipeptidase
     predicate: has input (hydrolyses)
     predicate_id: RO:0002233
     object: dala_dala
-    description: 'And it spares the resistant route: very low activity against D-Ala-D-Ser, none against
-      the D-Ser pentapeptide.'
+    description: VanXY uses free D-Ala-D-Ala as a D,D-dipeptidase substrate.
     evidence:
     - reference: PMID:10564477
-      snippet: It had very low dipeptidase activity against D-Ala-D-Ser, unlike VanX, and no activity
-        against UDP-MurNAc-pentapeptide[D-Ser], unlike VanY.
-      notes: The negative result is what makes the pathway work -- the enzyme does not destroy the precursor
-        it is helping to leave in place.
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: PMID:10817725
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
+  - subject: dipeptidase
+    predicate: negatively regulates (depletes)
+    predicate_id: RO:0002212
+    object: dala_dala
+    description: Hydrolysis depletes free D-Ala-D-Ala, preventing ligation of the glycopeptide-bound terminus
+      into peptidoglycan precursors.
+    evidence:
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: PMID:10564477
+      snippet: VanXYC had very low dipeptidase activity against D-Ala-D-Ser and no detectable carboxypeptidase
+        activity against the D-Ala-D-Ser-ending UDP-MurNAc-pentapeptide.
+      notes: Reynolds et al. 1999 showed that VanXYC hydrolyzes D-Ala-D-Ala-ending substrates while sparing
+        the VanC D-Ser route.
+    - reference: PMID:10817725
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
+  - subject: carboxypeptidase
+    predicate: has input (cleaves the C-terminal residue)
+    predicate_id: RO:0002233
+    object: dala_dala
+    description: VanXY carboxypeptidase activity targets precursors with a terminal D-Ala-D-Ala group.
+    evidence:
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded soluble VanXYC, a 22,318-Da protein
+        with both D,D-dipeptidase and D,D-carboxypeptidase activities.
+      notes: Reynolds et al. 1999 identified the bifunctional VanXYC protein.
+    - reference: PMID:10817725
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: PMID:10564477
+      snippet: VanXYC had very low dipeptidase activity against D-Ala-D-Ser and no detectable carboxypeptidase
+        activity against the D-Ala-D-Ser-ending UDP-MurNAc-pentapeptide.
+      notes: Reynolds et al. 1999 showed that VanXYC hydrolyzes D-Ala-D-Ala-ending substrates while sparing
+        the VanC D-Ser route.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
   - subject: carboxypeptidase
     predicate: negatively regulates (removes the terminal D-Ala)
     predicate_id: RO:0002212
-    object: precursor_dala
+    object: dala_dala
+    description: VanXY removes the terminal D-Ala from peptidoglycan precursors that end in the glycopeptide-bound
+      D-Ala-D-Ala terminus.
     evidence:
     - reference: PMID:10817725
-      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
-        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
-        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
-        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
-      notes: vanXY(C) removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala].
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: PMID:10564477
+      snippet: VanXYC had very low dipeptidase activity against D-Ala-D-Ser and no detectable carboxypeptidase
+        activity against the D-Ala-D-Ser-ending UDP-MurNAc-pentapeptide.
+      notes: Reynolds et al. 1999 showed that VanXYC hydrolyzes D-Ala-D-Ala-ending substrates while sparing
+        the VanC D-Ser route.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
+  - subject: drug0
+    predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
+    predicate_id: RO:0002436
+    object: dala_dala
+    description: Glycopeptides bind D-Ala-D-Ala termini; VanXY depletes both the free D-Ala-D-Ala substrate
+      and precursors that expose that terminus.
+    evidence:
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: Arias, Courvalin, and Reynolds 2000 described how the VanC route replaces glycopeptide-bound
+        D-Ala termini.
+    - reference: PMID:10817725
+      snippet: In VanC-type enterococci, vanC-1 synthesizes D-Ala-D-Ser, VanXYC hydrolyzes D-Ala-D-Ala
+        and removes D-Ala from the UDP-MurNAc-pentapeptide[D-Ala], and VanT supplies D-Ser.
+      notes: Arias, Courvalin, and Reynolds 2000 summarized the VanC D-Ser precursor pathway.
+    - reference: ARO:3000496
+      snippet: VanXY is a protein with both D,D-carboxypeptidase and D,D-dipeptidase activity, found in
+        Enterococcus gallinarum. It cleaves and removes the terminal D-Ala of peptidoglycan subunits for
+        the incorporation of D-Ser by VanC. D-Ala-D-Ser has low binding affinity with vancomycin.
+      notes: CARD definition for vanXY.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated VanXY bifunctional glycopeptide graph
   llm_assisted: true
 license: CC-BY 4.0

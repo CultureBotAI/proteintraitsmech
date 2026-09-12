@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000451
 trait_relations:
@@ -25,12 +25,11 @@ evidence:
 - reference: DOI:10.1099/00221287-143-2-405
   notes: PMID:9043118 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] pleiotropic drug resistance transcription factors → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: fungal PDR transcription factors → efflux-pump genes → multidrug resistance
+  description: Curated generic graph for fungal PDR transcription factors. CARD states that PDR factors
+    regulate the expression of genes encoding efflux pumps, but does not name exact genes or a direction
+    of regulation at this parent.
   nodes:
   - node_id: determinant
     label: pleiotropic drug resistance transcription factors
@@ -40,6 +39,12 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: transporter_genes
+    label: genes encoding fungal efflux pumps
+    node_type: NUCLEIC_ACID
+    local: true
+    description: Local node for the efflux-pump genes regulated by PDR transcription factors; CARD names
+      no exact gene at this generic parent.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,35 +57,85 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies fungal PDR transcription factors under antibiotic efflux because they
+      regulate efflux-pump genes.
     evidence:
-    - reference: DOI:10.1007/BF00352101
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3007552
       snippet: Pleiotropic Drug Resistance factors (PDR) are transcription factors in fungi that regulate
         the expression of genes encoding for efflux pumps causing multidrug resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: CARD definition for the PDR transcription-factor parent; CARD does not specify whether the
+        parent activates or represses the efflux-pump genes.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for antibiotic efflux.
+    - reference: DOI:10.1007/BF00352101
+      notes: PMID:7614555 (aro citation)
+    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
+      notes: PMID:15388433 (aro citation)
+    - reference: DOI:10.1099/00221287-143-2-405
+      notes: PMID:9043118 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux is the broad mechanism downstream of PDR regulation.
     evidence:
-    - reference: DOI:10.1007/BF00352101
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
+    - reference: ARO:3007552
+      snippet: Pleiotropic Drug Resistance factors (PDR) are transcription factors in fungi that regulate
+        the expression of genes encoding for efflux pumps causing multidrug resistance.
+      notes: CARD definition for the PDR transcription-factor parent; CARD does not specify whether the
+        parent activates or represses the efflux-pump genes.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: CARD definition for antibiotic efflux.
+    - reference: DOI:10.1007/BF00352101
+      notes: PMID:7614555 (aro citation)
+    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
+      notes: PMID:15388433 (aro citation)
+    - reference: DOI:10.1099/00221287-143-2-405
+      notes: PMID:9043118 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Regulation of efflux-pump genes by fungal PDR transcription factors causes multidrug
+      resistance.
     evidence:
-    - reference: DOI:10.1007/BF00352101
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3007552
       snippet: Pleiotropic Drug Resistance factors (PDR) are transcription factors in fungi that regulate
         the expression of genes encoding for efflux pumps causing multidrug resistance.
-      notes: ARO definition of this determinant (pleiotropic drug resistance transcription factors).
+      notes: CARD definition for the PDR transcription-factor parent; CARD does not specify whether the
+        parent activates or represses the efflux-pump genes.
+    - reference: DOI:10.1007/BF00352101
+      notes: PMID:7614555 (aro citation)
+    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
+      notes: PMID:15388433 (aro citation)
+    - reference: DOI:10.1099/00221287-143-2-405
+      notes: PMID:9043118 (aro citation)
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for antibiotic efflux.
+  - subject: determinant
+    predicate: regulates (efflux-pump gene expression)
+    predicate_id: RO:0002211
+    object: transporter_genes
+    description: Neutral RO:0002211 is used because CARD says PDR transcription factors regulate genes
+      encoding efflux pumps but does not assert a direction at this generic parent.
+    evidence:
+    - reference: ARO:3007552
+      snippet: Pleiotropic Drug Resistance factors (PDR) are transcription factors in fungi that regulate
+        the expression of genes encoding for efflux pumps causing multidrug resistance.
+      notes: CARD definition for the PDR transcription-factor parent; CARD does not specify whether the
+        parent activates or represses the efflux-pump genes.
+    - reference: DOI:10.1007/BF00352101
+      notes: PMID:7614555 (aro citation)
+    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
+      notes: PMID:15388433 (aro citation)
+    - reference: DOI:10.1099/00221287-143-2-405
+      notes: PMID:9043118 (aro citation)
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated generic PDR transcription-factor efflux graph
+  llm_assisted: true
 license: CC-BY 4.0

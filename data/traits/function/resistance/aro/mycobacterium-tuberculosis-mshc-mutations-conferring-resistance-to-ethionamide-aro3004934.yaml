@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004890
 trait_relations:
@@ -30,12 +30,12 @@ evidence:
 - reference: DOI:10.1038/s41598-018-33731-1
   notes: PMID:30337678 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide → mshC mutation
+    → resistance
+  description: Conservative graph for Mycobacterium tuberculosis mshC mutations conferring ethionamide
+    resistance. The graph grounds the inherited MshC ligase reaction and Cys-GlcN-Ins product, and keeps
+    the inherited thioamide drug-class edge.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide
@@ -49,6 +49,18 @@ causal_graphs:
     label: thioamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007156
+  - node_id: mshc_ligase
+    label: cysteine-glucosaminylinositol ligase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0035446
+  - node_id: cys_glcn_ins
+    label: L-Cys-GlcN-Ins
+    node_type: CHEMICAL
+    grounding: CHEBI:58887
+  - node_id: mycothiol_biosynthesis
+    label: mycothiol biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0010125
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -61,47 +73,156 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant mshC variants under point mutations.
     evidence:
-    - reference: DOI:10.1128/microbiolspec.MGM2-0014-2013
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004934
       snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1128/microbiolspec.MGM2-0014-2013
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The inherited point-mutation mechanism links mshC determinants to resistance.
+    evidence:
+    - reference: ARO:3004934
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The local ARO definition states that mshC mutations confer antibiotic resistance.
     evidence:
-    - reference: DOI:10.1128/microbiolspec.MGM2-0014-2013
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004934
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3003474 ! ethionamide'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3004890
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic'
-      notes: Asserted on ARO:3004890 (ethionamide resistant mshC), an is_a ancestor of this record's ARO:3004934;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
     predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to thioamide antibiotic.
+    object: drug0
+    description: The ARO hierarchy links this mshC determinant to the thioamide antibiotic resistance
+      class.
+    evidence:
+    - reference: ARO:3004934
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: ARO:3004890
+      snippet: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic
+      notes: ARO drug-class relationship on ARO:3004890; modeled here as a determinant-to-thioamide antibiotic
+        edge.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: mshc_ligase
+    description: ARO identifies MshC as the ligase that condenses GlcN-Ins and L-cysteine.
+    evidence:
+    - reference: ARO:3004934
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+  - subject: mshc_ligase
+    predicate: has output (L-Cys-GlcN-Ins)
+    predicate_id: RO:0002234
+    object: cys_glcn_ins
+    description: MshC ligase activity forms Cys-GlcN-Ins.
+    evidence:
+    - reference: ARO:3004934
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+    - reference: RHEA:26177
+      snippet: 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside + L-cysteine + ATP => 1D-myo-inositol
+        2-(L-cysteinylamino)-2-deoxy-alpha-D-glucopyranoside + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional child of RHEA:26176 declares 1D-myo-inositol 2-(L-cysteinylamino)-2-deoxy-alpha-D-glucopyranoside
+        as a product grounded to CHEBI:58887.
+  - subject: mshc_ligase
+    predicate: part of (mycothiol biosynthesis)
+    predicate_id: BFO:0000050
+    object: mycothiol_biosynthesis
+    description: ARO places the MshC ligase reaction in mycothiol biosynthesis.
+    evidence:
+    - reference: ARO:3004934
+      snippet: Mutations that occur in mshC resulting in or contributing to conferring resistance to ethionamide.
+      notes: CARD definition for Mycobacterium tuberculosis mshC mutations conferring resistance to ethionamide.
+    - reference: ARO:3004890
+      snippet: Mutations that occur in mshC which is involved in the third step of mycothiol biosynthesis.
+        It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.
+        The gene exhibits resistance to ethionamide.
+      notes: CARD definition for the ethionamide-resistant mshC parent.
+    - reference: GO:0035446
+      snippet: 'Catalysis of the reaction: 1-(2-amino-2-deoxy-alpha-D-glucopyranoside)-1D-myo-inositol
+        + L-cysteine + ATP = 1-D-myo-inosityl-2-L-cysteinylamido-2-deoxy-alpha-D-glucopyranoside + AMP
+        + diphosphate + 2 H+.'
+      notes: GO definition for cysteine-glucosaminylinositol ligase activity.
+    - reference: GO:0010125
+      snippet: The chemical reactions and pathways resulting in the formation of mycothiol, which consists
+        of N-acetyl-L-cysteine linked to a pseudodisaccharide, D-glucosamine and myo-inositol.
+      notes: GO definition for mycothiol biosynthetic process.
+curation_history:
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded mshC mycothiol-biosynthesis resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0

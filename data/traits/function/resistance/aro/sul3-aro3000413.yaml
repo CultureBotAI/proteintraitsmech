@@ -23,11 +23,10 @@ evidence:
   notes: PMID:12604565 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: sul3 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:37419898). sul — sulfonamide-resistant dihydropteroate synthase; a drug-insensitive DHPS that
-    replaces the sulfonamide target enzyme.
+  title: sul3 → DHPS target replacement → sulfonamide resistance
+  description: Curated resistance-causation graph for a sulfonamide-resistant Sul dihydropteroate synthase.
+    The graph models resistance as target replacement by a sulfonamide-insensitive DHPS enzyme that preserves
+    folate-pathway activity.
   nodes:
   - node_id: determinant
     label: sul3
@@ -42,15 +41,23 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000282
   - node_id: domain
-    label: pterin-binding (DHPS) domain
+    label: pterin-binding dihydropteroate synthase domain
     node_type: DOMAIN
     grounding: Pfam:PF00809
-    description: KB protein-trait record carrying the mechanism.
+    description: Pterin-binding DHPS catalytic domain.
   - node_id: fold
     label: TIM-barrel fold
     node_type: DOMAIN
     grounding: CATH:3.20.20
-    description: KB protein-trait record carrying the mechanism.
+    description: TIM-barrel structural fold.
+  - node_id: dhps_activity
+    label: dihydropteroate synthase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004156
+  - node_id: folate_biosynthesis
+    label: folic acid-containing compound biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009396
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,71 +70,196 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies sulfonamide-resistant Sul under antibiotic target replacement.
     evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:37419898
-      snippet: We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3)
-        in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction
-        region relative to the corresponding region of DHPS.
-      notes: Family mechanism ARO:0001002.
+      snippet: Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial
+        reorganization of their pABA-interaction region relative to the corresponding region of DHPS.
+      notes: Evidence for sulfonamide-resistant Sul DHPS target replacement.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Sulfonamide-resistant replacement DHPS maintains folate biosynthesis.
     evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:37419898
-      snippet: We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3)
-        in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction
-        region relative to the corresponding region of DHPS.
-      notes: Mechanism ARO:0001002 → resistance.
+      snippet: Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial
+        reorganization of their pABA-interaction region relative to the corresponding region of DHPS.
+      notes: Evidence for sulfonamide-resistant Sul DHPS target replacement.
+    - reference: GO:0009396
+      snippet: The chemical reactions and pathways resulting in the formation of folic acid and its derivatives.
+      notes: GO definition for folic acid-containing compound biosynthetic process.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The sul determinant encodes a DHPS that replaces the sulfonamide-sensitive target.
     evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
     - reference: PMID:37419898
-      snippet: We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3)
-        in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction
-        region relative to the corresponding region of DHPS.
-      notes: Determinant → resistance phenotype.
+      snippet: Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial
+        reorganization of their pABA-interaction region relative to the corresponding region of DHPS.
+      notes: Evidence for sulfonamide-resistant Sul DHPS target replacement.
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps the sul branch to sulfonamide antibiotics.
     evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
     - reference: ARO:3004238
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000282 ! sulfonamide antibiotic'
-      notes: Asserted on ARO:3004238 (sulfonamide resistant sul), an is_a ancestor of this record's ARO:3000413;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to sulfonamide antibiotic.
+      notes: Asserted on ARO:3004238 and inherited by this record's ARO:3000413. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3000282
+      snippet: sulfonamide antibiotic
+      notes: ARO drug-class term for sulfonamide antibiotics.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
   - subject: domain
-    predicate: part of (catalytic domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The pterin-binding DHPS domain is part of the Sul protein determinant.
+    evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: Pfam:PF00809
+      snippet: Pterin binding enzyme
+      notes: Pfam family for the pterin-binding DHPS domain.
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the TIM-barrel fold used by DHPS enzymes.
+    evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: CATH:3.20.20
+      snippet: TIM Barrel
+      notes: CATH fold used by these sulfonamide-resistant DHPS records.
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
+  - subject: domain
+    predicate: enables
+    predicate_id: RO:0002327
+    object: dhps_activity
+    description: The pterin-binding domain enables dihydropteroate synthase activity.
     evidence:
     - reference: Pfam:PF00809
       snippet: Pterin binding enzyme
-      notes: 'KB trait: the pterin-binding DHPS domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.20.20
-      snippet: TIM Barrel
-      notes: 'KB trait: the TIM-barrel fold.'
-  - subject: domain
-    predicate: enables (drug-insensitive target enzyme)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+      notes: Pfam family for the pterin-binding DHPS domain.
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
     - reference: PMID:37419898
-      snippet: We determine crystal structures of the most common Sul enzyme types (Sul1, Sul2 and Sul3)
-        in multiple ligand-bound states, revealing a substantial reorganization of their pABA-interaction
-        region relative to the corresponding region of DHPS.
-      notes: The sulfonamide-insensitive DHPS replaces the drug-sensitive folate-pathway enzyme.
+      snippet: Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial
+        reorganization of their pABA-interaction region relative to the corresponding region of DHPS.
+      notes: Evidence for sulfonamide-resistant Sul DHPS target replacement.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: dhps_activity
+    description: The Sul determinant encodes a dihydropteroate synthase enzyme.
+    evidence:
+    - reference: ARO:3000413
+      snippet: Sul3 is a sulfonamide resistant dihydropteroate synthase similar to Sul1 and Sul2. Its
+        resistance gene was found encoded in E. coli plasmid DNA of sulfonamide resistant isolates.
+      notes: CARD definition for sul3.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
+    - reference: PMID:37419898
+      snippet: Sul enzyme types (Sul1, Sul2 and Sul3) in multiple ligand-bound states, revealing a substantial
+        reorganization of their pABA-interaction region relative to the corresponding region of DHPS.
+      notes: Evidence for sulfonamide-resistant Sul DHPS target replacement.
+  - subject: dhps_activity
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: folate_biosynthesis
+    description: Dihydropteroate synthase activity is part of folate biosynthesis.
+    evidence:
+    - reference: GO:0004156
+      snippet: 'Catalysis of the reaction: 2-amino-4-hydroxy-6-hydroxymethyl-7,8-dihydropteridine diphosphate
+        + 4-aminobenzoate = diphosphate + dihydropteroate.'
+      notes: GO definition for dihydropteroate synthase activity.
+    - reference: GO:0009396
+      snippet: The chemical reactions and pathways resulting in the formation of folic acid and its derivatives.
+      notes: GO definition for folic acid-containing compound biosynthetic process.
+    - reference: ARO:3004238
+      snippet: The sul genes encode forms of dihydropteroate synthase that confer resistance to sulfonamide.
+      notes: CARD definition for sulfonamide resistant sul.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-10T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed sul DHPS target-replacement graphs
     llm_assisted: true
 license: CC-BY 4.0

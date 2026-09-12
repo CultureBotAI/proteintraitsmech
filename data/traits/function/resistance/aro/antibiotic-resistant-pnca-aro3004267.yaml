@@ -20,11 +20,10 @@ evidence:
   notes: PMID:9055989 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: antibiotic resistant pncA → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004267). Prodrug-activation loss. Resistance is the ABSENCE of an activity, not the presence
-    of one.
+  title: pncA mutation → loss of pyrazinamidase activity → pyrazinamide resistance
+  description: Curated resistance-causation graph for pyrazinamide resistance caused by loss of pncA pyrazinamidase
+    activity. The graph models resistance as the absence of prodrug activation rather than as a new catalytic
+    activity.
   nodes:
   - node_id: determinant
     label: antibiotic resistant pncA
@@ -38,18 +37,18 @@ causal_graphs:
     label: pyrazinamidase / nicotinamidase activity
     node_type: MOLECULAR_FUNCTION
     grounding: GO:0008936
-    description: Grounded to nicotinamidase activity, the EC 3.5.1.19 function CARD names for pncA; checked
-      non-obsolete against OLS.
+    description: Grounded to the nicotinamidase activity term that matches the EC 3.5.1.19 function CARD
+      names for pncA.
   - node_id: loss
     label: loss of pyrazinamidase activity
     node_type: STATE
-    description: The causal core, and the reason this graph runs backwards relative to the other mechanisms
-      here. Ungrounded.
+    grounding: GO:0008936
+    description: Local absence state for the grounded pyrazinamidase activity.
   - node_id: poa
-    label: pyrazinoic acid (the active drug)
+    label: pyrazinoic acid
     node_type: CHEMICAL
-    description: 'Ungrounded deliberately: the active metabolite is not the drug class node, and guessing
-      a CHEBI id for it would be a grounding this round did not verify.'
+    grounding: CHEBI:71311
+    description: The active pyrazinamide metabolite produced by pncA pyrazinamidase activity.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,66 +61,138 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies antibiotic resistant pncA under mutation conferring antibiotic resistance.
     evidence:
     - reference: ARO:3004267
       snippet: Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic resistant pncA parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: pncA point mutations confer resistance by eliminating pyrazinamide activation.
     evidence:
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
     - reference: ARO:3004267
       snippet: Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic resistant pncA parent.
+    - reference: ARO:3003394
+      snippet: Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide
+        resistance.
+      notes: CARD child record tying pncA mutation to pyrazinamidase-activity loss.
+    - reference: ARO:3003418
+      snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
+        pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
+        is the major mechanism of antibiotic resistance.
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: pncA mutation confers pyrazinamide resistance by causing pyrazinamidase-activity loss.
     evidence:
     - reference: ARO:3004267
       snippet: Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.
-      notes: 'The mechanism in one sentence: the mutation PREVENTS activation.'
+      notes: CARD definition for the antibiotic resistant pncA parent.
+    - reference: ARO:3003394
+      snippet: Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide
+        resistance.
+      notes: CARD child record tying pncA mutation to pyrazinamidase-activity loss.
     - reference: ARO:3003418
       snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
         pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
         is the major mechanism of antibiotic resistance.
-      notes: And the chemistry it prevents -- pyrazinamide to pyrazinoic acid -- plus CARD calling loss
-        of pyrazinamidase activity 'the major mechanism'.
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
   - subject: determinant
     predicate: has quality (loss of pyrazinamidase activity)
     predicate_id: RO:0000086
     object: loss
+    description: The resistant pncA variant carries the loss of pyrazinamidase activity.
     evidence:
+    - reference: ARO:3004267
+      snippet: Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.
+      notes: CARD definition for the antibiotic resistant pncA parent.
     - reference: ARO:3003394
       snippet: Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide
         resistance.
-      notes: CARD ties the mutation to loss of enzyme activity explicitly.
+      notes: CARD child record tying pncA mutation to pyrazinamidase-activity loss.
+    - reference: ARO:3003418
+      snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
+        pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
+        is the major mechanism of antibiotic resistance.
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
   - subject: loss
     predicate: negatively regulates (abolishes the activating activity)
     predicate_id: RO:0002212
     object: pzase
-    description: 'The inverted core: resistance follows from the activity being ABSENT.'
+    description: Loss of pyrazinamidase activity removes the enzymatic activity that activates pyrazinamide.
     evidence:
+    - reference: ARO:3003394
+      snippet: Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide
+        resistance.
+      notes: CARD child record tying pncA mutation to pyrazinamidase-activity loss.
     - reference: ARO:3003418
       snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
         pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
         is the major mechanism of antibiotic resistance.
-      notes: '''loss of pyrazinamidase activity is the major mechanism of antibiotic resistance''.'
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
   - subject: pzase
     predicate: has output (the active form)
     predicate_id: RO:0002234
     object: poa
-    description: What resistance prevents from ever being made.
+    description: pncA pyrazinamidase activity catalyzes pyrazinamide activation to pyrazinoic acid.
     evidence:
     - reference: ARO:3003418
       snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
         pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
         is the major mechanism of antibiotic resistance.
-      notes: '''the activation of pyrazinamide to pyrazinoic acid''.'
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: CHEBI:71311
+      snippet: pyrazine-2-carboxylic acid
+      notes: ChEBI preferred name for pyrazinoic acid.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
+  - subject: loss
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Loss of the activating pyrazinamidase activity is the immediate modeled cause of resistance.
+    evidence:
+    - reference: ARO:3003394
+      snippet: Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide
+        resistance.
+      notes: CARD child record tying pncA mutation to pyrazinamidase-activity loss.
+    - reference: ARO:3003418
+      snippet: pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to
+        pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity
+        is the major mechanism of antibiotic resistance.
+      notes: CARD child record naming the blocked pyrazinamide-to-pyrazinoic-acid activation step.
+    - reference: DOI:10.1128/AAC.41.3.540
+      notes: PMID:9055989 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed pncA prodrug-activation-loss causal graph
   llm_assisted: true
 license: CC-BY 4.0

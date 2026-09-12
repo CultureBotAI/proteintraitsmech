@@ -36,11 +36,10 @@ evidence:
   notes: PMID:17563376 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: vgbA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000376). Ring-opening of type B streptogramin. Not a transfer reaction: nothing is added to
-    the drug.'
+  title: vgbA → streptogramin B linearization → antibiotic resistance
+  description: Conservative graph for Vgb-mediated type-B streptogramin inactivation. The graph uses grounded
+    ARO:3000338 linearization of antibiotic conferring resistance for the ring-opening reaction and keeps
+    the lactone-ring ester linkage in descriptions rather than as an ungrounded substructure node.
   nodes:
   - node_id: determinant
     label: vgbA
@@ -58,18 +57,11 @@ causal_graphs:
     label: streptogramin antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000026
-  - node_id: lyase
-    label: streptogramin B lyase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed.'
-  - node_id: lactone
-    label: streptogramin lactone ring (ester linkage)
-    node_type: CHEMICAL
-    description: 'The bond broken. Ungrounded: a substructure, not a compound.'
   - node_id: linearized
     label: linearized, inactive streptogramin B
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for type-B streptogramin after the lactone ring is linearized at the ester
+      linkage.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -82,112 +74,288 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies streptogramin Vgb lyases under antibiotic inactivation.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad mechanism reached by type-B streptogramin linearization.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies streptogramin Vgb lyases under antibiotic linearization.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: Family mechanism ARO:3000338.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Linearization of the streptogramin B lactone ring inactivates the antibiotic and confers
+      resistance.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: Mechanism ARO:3000338 → resistance.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Vgb lyases confer resistance by linearizing type-B streptogramin antibiotics through
+      an elimination mechanism.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: 'Reaction, bond, and mechanism type all named: the lactone ring is opened at the ester linkage
-        by elimination.'
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
     - reference: ARO:3000233
-      snippet: There are two known mechanisms of streptogramin inactivation shown clinically to confer
-        resistance
-      notes: CARD's parent term stating that this family holds two distinct mechanisms -- the reason it
-        takes two configs.
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to streptogramin antibiotic.
+    description: ARO maps the streptogramin Vgb lyase family to streptogramin antibiotics.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
+    - reference: ARO:3000376
+      snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
+        the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
+        resistance to these compounds.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
     - reference: ARO:3000376
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000026 ! streptogramin antibiotic'
-      notes: Asserted on ARO:3000376 (streptogramin vgb lyase), an is_a ancestor of this record's ARO:3001307;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (linearizes the drug)
-    predicate_id: RO:0002327
-    object: lyase
-    evidence:
-    - reference: ARO:3000376
-      snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
-        the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
-        resistance to these compounds.
-      notes: '''vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics''.'
-  - subject: lactone
-    predicate: part of (the intact drug)
-    predicate_id: BFO:0000050
-    object: drug0
-    description: 'Why breaking this bond destroys the antibiotic: the ring IS the drug''s structure.'
-    evidence:
-    - reference: ARO:3000376
-      snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
-        the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
-        resistance to these compounds.
-      notes: '''the streptogramin lactone ring at the ester linkage''.'
-  - subject: lyase
-    predicate: has input (the ester linkage)
+      notes: ARO drug-class relationship asserted on the streptogramin vgb lyase parent and inherited
+        by vgbA, vgbB, and vgbC.
+    - reference: ARO:0000026
+      snippet: streptogramin antibiotic
+      notes: ARO drug-class term targeted by streptogramin Vgb lyases.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
+  - subject: mech1
+    predicate: has input
     predicate_id: RO:0002233
-    object: lactone
+    object: drug0
+    description: The type-B streptogramin antibiotic is the input to the linearization reaction.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: '''through an elimination mechanism'' -- CARD names the reaction type, not just the outcome.'
-  - subject: lyase
-    predicate: causally upstream of (inactivates the drug)
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
+  - subject: mech1
+    predicate: causally upstream of (linearizes the drug)
     predicate_id: RO:0002411
     object: linearized
+    description: The linearization mechanism opens the lactone ring at the ester linkage.
     evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
     - reference: ARO:3000376
       snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
         the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
         resistance to these compounds.
-      notes: '''thus conferring resistance to these compounds''.'
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
+  - subject: linearized
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The linearized, inactive streptogramin B state is the modeled terminal cause of resistance.
+    evidence:
+    - reference: ARO:3001307
+      snippet: vgbA inactivates streptogramin B-type antibiotics by linearizing the lactone ring on the
+        ester bond using an elimination mechanism, thus conferring resistance to these compounds.
+      notes: CARD definition for vgbA.
+    - reference: ARO:3000376
+      snippet: vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing
+        the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring
+        resistance to these compounds.
+      notes: CARD definition for the streptogramin vgb lyase parent term.
+    - reference: ARO:3000233
+      snippet: 'Resistance to streptogramin antibiotics may be conferred through enzymatic inactivation.
+        There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance:
+        1) vgB lyase enzymes linearize type B streptogramin antibiotics by breaking the ester linkage;
+        2) vat acetyltransferase enzymes modify type A streptogramin antibiotics by transferring an acetyl
+        group from acetyl-CoA to the secondary streptogramin hydroxyl. Both mechanisms result in antibiotic
+        inactivation thus conferring resistance.'
+      notes: CARD definition for the streptogramin inactivation enzyme parent, separating Vgb type-B linearization
+        from Vat type-A acetylation.
+    - reference: DOI:10.1021/bi0106787
+      notes: PMID:11467949 (aro citation)
+    - reference: DOI:10.1016/j.chembiol.2004.12.009
+      notes: PMID:15734650 (aro citation)
+    - reference: DOI:10.1073/pnas.0701809104
+      notes: PMID:17563376 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded streptogramin Vgb lyase graphs
   llm_assisted: true
 license: CC-BY 4.0

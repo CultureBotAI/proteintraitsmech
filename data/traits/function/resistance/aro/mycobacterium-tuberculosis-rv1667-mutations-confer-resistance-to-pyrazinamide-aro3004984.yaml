@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004983
 trait_relations:
@@ -30,21 +30,24 @@ evidence:
 - reference: DOI:10.1128/AAC.00940-17
   notes: PMID:28584158 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: M. tuberculosis Rv1667 mutations → pyrazinamide resistance
+  description: Curated Rv1667 pyrazinamide-resistance graph. CARD assigns this determinant to the broad
+    mutation-conferring mechanism, links it to the pyrazine-antibiotic class through its pyrazinamide-resistant
+    Rv1667 parent, and cites Zhang et al. evidence for Rv1667c involvement in pyrazinamide efflux.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide
     node_type: PROTEIN
     grounding: ARO:3004984
-  - node_id: mech0
+  - node_id: mutation
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: efflux
+    label: antibiotic efflux
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:0010000
   - node_id: drug0
     label: pyrazine antibiotic
     node_type: CHEMICAL
@@ -60,49 +63,89 @@ causal_graphs:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
-    object: mech0
+    object: mutation
+    description: CARD classifies Rv1667 pyrazinamide-resistance variants under the broad mutation-conferring
+      antibiotic-resistance mechanism.
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004984
       snippet: Mutations in the Rv1667 gene that can contribute to or confer resistance to pyrazinamide.
         Resistance may be due to an antibiotic export mechanism.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      notes: CARD definition for Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+  - subject: determinant
+    predicate: causally upstream of (putative antibiotic export)
+    predicate_id: RO:0002411
+    object: efflux
+    description: The M. tuberculosis Rv1667 record notes that resistance may be due to antibiotic export,
+      consistent with the Zhang et al. efflux-protein evidence.
+    evidence:
+    - reference: ARO:3004984
+      snippet: Mutations in the Rv1667 gene that can contribute to or confer resistance to pyrazinamide.
+        Resistance may be due to an antibiotic export mechanism.
+      notes: CARD definition for Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.00940-17
+      snippet: Identification of Novel Efflux Proteins Rv0191, Rv3756c, Rv3008, and Rv1667c Involved in
+        Pyrazinamide Resistance in Mycobacterium tuberculosis
+      notes: CARD-cited Zhang et al. 2017 title supporting Rv1667c as an efflux protein involved in pyrazinamide
+        resistance.
+  - subject: efflux
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Antibiotic export lowers pyrazinamide exposure and causes the resistance phenotype.
+    evidence:
+    - reference: ARO:3004984
+      snippet: Mutations in the Rv1667 gene that can contribute to or confer resistance to pyrazinamide.
+        Resistance may be due to an antibiotic export mechanism.
+      notes: CARD definition for Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: DOI:10.1128/AAC.00940-17
+      snippet: Identification of Novel Efflux Proteins Rv0191, Rv3756c, Rv3008, and Rv1667c Involved in
+        Pyrazinamide Resistance in Mycobacterium tuberculosis
+      notes: CARD-cited Zhang et al. 2017 title supporting Rv1667c as an efflux protein involved in pyrazinamide
+        resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that Rv1667 mutations can contribute to or confer pyrazinamide resistance.
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004984
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3003413 ! pyrazinamide'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Mutations in the Rv1667 gene that can contribute to or confer resistance to pyrazinamide.
+        Resistance may be due to an antibiotic export mechanism.
+      notes: CARD definition for Mycobacterium tuberculosis Rv1667 mutations confer resistance to pyrazinamide.
+    - reference: DOI:10.1128/AAC.00940-17
+      snippet: Identification of Novel Efflux Proteins Rv0191, Rv3756c, Rv3008, and Rv1667c Involved in
+        Pyrazinamide Resistance in Mycobacterium tuberculosis
+      notes: CARD-cited Zhang et al. 2017 title supporting Rv1667c as an efflux protein involved in pyrazinamide
+        resistance.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts a pyrazine-antibiotic resistance relation on the pyrazinamide resistant
+      Rv1667 parent and this M. tuberculosis variant inherits that relation.
     evidence:
     - reference: ARO:3004983
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007155 ! pyrazine antibiotic'
-      notes: Asserted on ARO:3004983 (pyrazinamide resistant Rv1667), an is_a ancestor of this record's
-        ARO:3004984; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to pyrazine antibiotic.
+      notes: CARD asserts a pyrazine-antibiotic resistance relation on the pyrazinamide resistant Rv1667
+        parent.
+    - reference: ARO:3007155
+      snippet: pyrazine antibiotic
+      notes: CARD drug-class grounding for pyrazinamide.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed M. tuberculosis Rv1667 pyrazinamide efflux causal graph; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

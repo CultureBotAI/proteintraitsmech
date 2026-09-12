@@ -1,0 +1,295 @@
+from __future__ import annotations
+
+import importlib.util
+import pathlib
+import sys
+
+import pytest
+import yaml
+
+REPO = pathlib.Path(__file__).resolve().parent.parent
+SCRIPT = REPO / "scripts" / "rewrite_aro_aminoglycoside_bifunctional_graphs.py"
+ARO_DIR = REPO / "data" / "traits" / "function" / "resistance" / "aro"
+
+
+def _load():
+    spec = importlib.util.spec_from_file_location(
+        "rewrite_aro_aminoglycoside_bifunctional_graphs",
+        SCRIPT,
+    )
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+R = _load()
+
+LABELS = {
+    "ARO:3007419": "aminoglycoside bifunctional resistance protein",
+    "ARO:3002597": "AAC(6')-Ie-APH(2'')-Ia bifunctional protein",
+    "ARO:3002598": "ANT(3'')-II-AAC(6')-IId bifunctional protein",
+    "ARO:3002599": "AAC(6')-30/AAC(6')-Ib' bifunctional protein",
+    "ARO:3002600": "AAC(3)-Ib/AAC(6')-Ib3 bifunctional protein",
+}
+
+
+def _edge(
+    subject: str,
+    object_: str,
+    predicate: str = "causally upstream of",
+    predicate_id: str = "RO:0002411",
+) -> dict:
+    return {
+        "subject": subject,
+        "predicate": predicate,
+        "predicate_id": predicate_id,
+        "object": object_,
+        "evidence": [
+            {
+                "reference": "ARO:3007380",
+                "snippet": R.AMINOGLYCOSIDE_MODIFYING_EVIDENCE["snippet"],
+            }
+        ],
+    }
+
+
+def _record(identifier: str = "ARO:3007419") -> dict:
+    return {
+        "identifier": identifier,
+        "label": LABELS[identifier],
+        "definition": f"{LABELS[identifier]} inactivates aminoglycosides.",
+        "mapping_status": "REVIEWED",
+        "causal_graphs": [
+            {
+                "graph_id": "resistance",
+                "title": "old",
+                "description": "old",
+                "nodes": [
+                    {
+                        "node_id": "determinant",
+                        "label": LABELS[identifier],
+                        "node_type": "PROTEIN",
+                        "grounding": identifier,
+                    },
+                    {
+                        "node_id": "mech0",
+                        "label": "antibiotic inactivation",
+                        "node_type": "MOLECULAR_FUNCTION",
+                        "grounding": "ARO:0001004",
+                    },
+                    {
+                        "node_id": "drug0",
+                        "label": "aminoglycoside antibiotic",
+                        "node_type": "CHEMICAL",
+                        "grounding": "ARO:0000016",
+                    },
+                    {
+                        "node_id": "modification",
+                        "label": "enzymatic modification of the aminoglycoside",
+                        "node_type": "MOLECULAR_FUNCTION",
+                    },
+                    {
+                        "node_id": "inactivated",
+                        "label": "chemically modified, inactive aminoglycoside",
+                        "node_type": "STATE",
+                    },
+                    {
+                        "node_id": "resistance",
+                        "label": "antibiotic resistance phenotype",
+                        "node_type": "PHENOTYPE",
+                        "grounding": "GO:0046677",
+                    },
+                ],
+                "edges": [
+                    _edge(
+                        "determinant",
+                        "mech0",
+                        "participates in (resistance mechanism)",
+                        "RO:0000056",
+                    ),
+                    _edge("mech0", "resistance"),
+                    _edge("determinant", "resistance"),
+                    _edge(
+                        "determinant",
+                        "drug0",
+                        "confers resistance to (drug class)",
+                        "ARO:2000001",
+                    ),
+                    _edge(
+                        "determinant",
+                        "modification",
+                        "enables (modifies the drug)",
+                        "RO:0002327",
+                    ),
+                    _edge(
+                        "modification",
+                        "drug0",
+                        "has input (the drug)",
+                        "RO:0002233",
+                    ),
+                    _edge(
+                        "modification",
+                        "inactivated",
+                        "causally upstream of (inactivates the drug)",
+                        "RO:0002411",
+                    ),
+                ],
+            }
+        ],
+    }
+
+
+def _edge_keys(record: dict) -> set[tuple[str, str, str]]:
+    return {
+        (edge["subject"], edge["predicate_id"], edge["object"])
+        for edge in record["causal_graphs"][0]["edges"]
+    }
+
+
+def _node_ids(record: dict) -> list[str]:
+    return [node["node_id"] for node in record["causal_graphs"][0]["nodes"]]
+
+
+def test_target_set_matches_exact_hidden_no_ignore_bifunctional_branch() -> None:
+    assert {target.identifier for target in R.TARGETS.values()} == set(LABELS)
+    assert {target.filename for target in R.TARGETS.values()} == {
+        "aminoglycoside-bifunctional-resistance-protein-aro3007419.yaml",
+        "aac-6-ie-aph-2-ia-bifunctional-protein-aro3002597.yaml",
+        "ant-3-ii-aac-6-iid-bifunctional-protein-aro3002598.yaml",
+        "aac-6-30-aac-6-ib-bifunctional-protein-aro3002599.yaml",
+        "aac-3-ib-aac-6-ib3-bifunctional-protein-aro3002600.yaml",
+    }
+
+
+@pytest.mark.parametrize("identifier", sorted(LABELS))
+def test_bifunctional_records_drop_duplicate_modification_activity(
+    identifier: str,
+) -> None:
+    out, changed = R.enrich_record(_record(identifier), R.TARGETS[identifier])
+
+    assert changed
+    assert _node_ids(out) == [
+        "determinant",
+        "mech0",
+        "drug0",
+        "inactivated",
+        "resistance",
+    ]
+    assert _edge_keys(out) == R._canonical_edge_keys()
+
+
+def test_legacy_modification_node_is_removed() -> None:
+    out, changed = R.enrich_record(_record("ARO:3002597"), R.TARGETS["ARO:3002597"])
+    text = yaml.safe_dump(out)
+
+    assert changed
+    assert "node_id: modification" not in text
+    assert "object: modification" not in text
+    assert "subject: modification" not in text
+
+
+def test_all_output_groundable_nodes_are_grounded() -> None:
+    for target in R.TARGETS.values():
+        out, changed = R.enrich_record(_record(target.identifier), target)
+
+        assert changed
+        for node in out["causal_graphs"][0]["nodes"]:
+            if node["node_type"] != "STATE":
+                assert node.get("grounding")
+
+
+def test_all_output_edges_are_described_and_multi_evidenced() -> None:
+    for target in R.TARGETS.values():
+        out, changed = R.enrich_record(_record(target.identifier), target)
+
+        assert changed
+        graph = out["causal_graphs"][0]
+        for edge in graph["edges"]:
+            assert edge["description"]
+            assert len({item["reference"] for item in edge["evidence"]}) > 1
+            assert all(item.get("snippet") for item in edge["evidence"])
+            assert len(
+                {(item["reference"], item["snippet"]) for item in edge["evidence"]}
+            ) == len(edge["evidence"])
+
+
+def test_enrich_record_is_idempotent() -> None:
+    target = R.TARGETS["ARO:3002597"]
+
+    once, changed = R.enrich_record(_record(target.identifier), target)
+    twice, changed_again = R.enrich_record(once, target)
+
+    assert changed
+    assert not changed_again
+    assert twice == once
+
+
+def test_wrong_identifier_is_refused() -> None:
+    with pytest.raises(ValueError, match="expected ARO:3002597, found ARO:3007419"):
+        R.enrich_record(_record("ARO:3007419"), R.TARGETS["ARO:3002597"])
+
+
+def test_unexpected_edges_are_refused() -> None:
+    target = R.TARGETS["ARO:3002597"]
+    record = _record(target.identifier)
+    record["causal_graphs"][0]["edges"].append(_edge("drug0", "resistance"))
+
+    with pytest.raises(ValueError, match="unexpected edge drug0 -> resistance"):
+        R.enrich_record(record, target)
+
+
+def test_duplicate_edges_are_refused() -> None:
+    target = R.TARGETS["ARO:3002597"]
+    record = _record(target.identifier)
+    record["causal_graphs"][0]["edges"].append(_edge("determinant", "resistance"))
+
+    with pytest.raises(ValueError, match="duplicate edge determinant -> resistance"):
+        R.enrich_record(record, target)
+
+
+def test_missing_core_edge_is_refused() -> None:
+    target = R.TARGETS["ARO:3002597"]
+    record = _record(target.identifier)
+    record["causal_graphs"][0]["edges"] = [
+        edge
+        for edge in record["causal_graphs"][0]["edges"]
+        if edge["object"] != "mech0"
+    ]
+
+    with pytest.raises(ValueError, match="missing edge"):
+        R.enrich_record(record, target)
+
+
+def test_missing_legacy_and_canonical_inactivation_edges_are_refused() -> None:
+    target = R.TARGETS["ARO:3002597"]
+    record = _record(target.identifier)
+    record["causal_graphs"][0]["edges"] = [
+        edge
+        for edge in record["causal_graphs"][0]["edges"]
+        if edge["object"] not in {"modification", "inactivated"}
+        and edge["subject"] != "modification"
+    ]
+
+    with pytest.raises(ValueError, match="missing both canonical and legacy"):
+        R.enrich_record(record, target)
+
+
+def test_enrich_text_rewrites_yaml_aliases_and_adds_history_once() -> None:
+    target = R.TARGETS["ARO:3002597"]
+    enriched, changed = R.enrich_record(_record(target.identifier), target)
+    assert changed
+    edges = enriched["causal_graphs"][0]["edges"]
+    edges[1]["evidence"] = edges[0]["evidence"]
+    text = yaml.safe_dump(enriched, sort_keys=False)
+    assert "&id" in text
+
+    out, changed = R.enrich_text(text, ARO_DIR / target.filename)
+    again, changed_again = R.enrich_text(out, ARO_DIR / target.filename)
+
+    assert changed
+    assert not changed_again
+    assert "&id" not in out
+    assert "mapping_status: REVIEWED" in out
+    assert out.count(R.HISTORY_ACTION) == 1
+    assert again == out

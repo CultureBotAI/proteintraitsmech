@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -19,12 +19,11 @@ evidence:
 - reference: DOI:10.1128/AAC.00443-09
   notes: PMID:19546367 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antifungal-resistant beta-1,3-D-glucan synthase → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antifungal-resistant beta-1,3-D-glucan synthase → beta-1,3-D-glucan synthase → resistance
+  description: Conservative graph for the antifungal-resistant beta-1,3-D-glucan synthase parent. The
+    graph grounds the named enzymatic activity and beta-glucan biosynthesis path, and keeps the resistance
+    effect at ARO's broad mutation level.
   nodes:
   - node_id: determinant
     label: antifungal-resistant beta-1,3-D-glucan synthase
@@ -34,6 +33,14 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: glucan_synthase_activity
+    label: 1,3-beta-D-glucan synthase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0003843
+  - node_id: beta_glucan_biosynthesis
+    label: (1->3)-beta-D-glucan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006075
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -46,39 +53,85 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant beta-glucan synthases under point mutations.
     evidence:
-    - reference: DOI:10.1128/AAC.00443-09
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3007545
       snippet: Fungal beta-1,3-D-glucan synthase enzymes which include mutations to confer resistance
         to antifungal drug compounds.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1128/AAC.00443-09
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      notes: CARD definition for antifungal-resistant beta-1,3-D-glucan synthase.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: ARO links this point-mutation mechanism to resistance in the beta-1,3-D-glucan synthase
+      target enzyme.
+    evidence:
+    - reference: ARO:3007545
+      snippet: Fungal beta-1,3-D-glucan synthase enzymes which include mutations to confer resistance
+        to antifungal drug compounds.
+      notes: CARD definition for antifungal-resistant beta-1,3-D-glucan synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The local ARO definition states that beta-1,3-D-glucan synthase mutations confer antifungal
+      resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.00443-09
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3007545
       snippet: Fungal beta-1,3-D-glucan synthase enzymes which include mutations to confer resistance
         to antifungal drug compounds.
-      notes: ARO definition of this determinant (antifungal-resistant beta-1,3-D-glucan synthase).
+      notes: CARD definition for antifungal-resistant beta-1,3-D-glucan synthase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: glucan_synthase_activity
+    description: ARO identifies this determinant as a beta-1,3-D-glucan synthase.
+    evidence:
+    - reference: ARO:3007545
+      snippet: Fungal beta-1,3-D-glucan synthase enzymes which include mutations to confer resistance
+        to antifungal drug compounds.
+      notes: CARD definition for antifungal-resistant beta-1,3-D-glucan synthase.
+    - reference: GO:0003843
+      snippet: 'Catalysis of the reaction: UDP-glucose + [(1->3)-beta-D-glucosyl](n) = UDP + [(1->3)-beta-D-glucosyl](n+1).'
+      notes: GO definition for 1,3-beta-D-glucan synthase activity.
+  - subject: glucan_synthase_activity
+    predicate: part of (beta-glucan biosynthesis)
+    predicate_id: BFO:0000050
+    object: beta_glucan_biosynthesis
+    description: The beta-glucan synthase activity produces 1,3-beta-D-glucan.
+    evidence:
+    - reference: ARO:3007545
+      snippet: Fungal beta-1,3-D-glucan synthase enzymes which include mutations to confer resistance
+        to antifungal drug compounds.
+      notes: CARD definition for antifungal-resistant beta-1,3-D-glucan synthase.
+    - reference: GO:0003843
+      snippet: 'Catalysis of the reaction: UDP-glucose + [(1->3)-beta-D-glucosyl](n) = UDP + [(1->3)-beta-D-glucosyl](n+1).'
+      notes: GO definition for 1,3-beta-D-glucan synthase activity.
+    - reference: GO:0006075
+      snippet: The chemical reactions and pathways resulting in the formation of (1->3)-beta-D-glucans,
+        compounds composed of glucose residues linked by (1->3)-beta-D-glucosidic bonds.
+      notes: GO definition for (1->3)-beta-D-glucan biosynthetic process.
+curation_history:
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded beta-1,3-D-glucan synthase resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0

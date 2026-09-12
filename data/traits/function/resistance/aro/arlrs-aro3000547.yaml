@@ -21,10 +21,10 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: arlRS → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Curated resistance-causation graph for target-specific activation of antibiotic efflux.
+    The graph replaces the seeded AdeR archetype evidence with this record's own CARD evidence, grounds
+    the named efflux pump and broad positive transcriptional regulation, and models pump expression as
+    causally upstream of antibiotic efflux.
   nodes:
   - node_id: determinant
     label: arlRS
@@ -35,15 +35,16 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: pump
-    label: the efflux pump this determinant activates
+    label: NorA multidrug efflux pump
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
+    grounding: ARO:3000391
+    description: Grounded to CARD's NorA multidrug efflux pump class.
   - node_id: activation
-    label: activation of efflux pump expression
+    label: positive regulation of NorA transcription
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0045893
+    description: Grounded to the broad GO DNA-templated transcriptional activation process because ArlRS
+      promotes NorA expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,48 +57,100 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this ArlRS regulator under antibiotic efflux because it promotes NorA
+      expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: ARO:3000391
+      snippet: NorA is a multidrug efflux pump in Staphylococcus aureus that confers resistance to fluoroquinolones
+        and other structurally unrelated antibiotics like acriflavine.
+      notes: CARD definition for the NorA efflux pump controlled by ArlRS.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents NorA-driven drug export.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: ARO:3000391
+      snippet: NorA is a multidrug efflux pump in Staphylococcus aureus that confers resistance to fluoroquinolones
+        and other structurally unrelated antibiotics like acriflavine.
+      notes: CARD definition for the NorA efflux pump controlled by ArlRS.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ArlRS regulator promotes expression of the NorA pump, which confers fluoroquinolone
+      resistance.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: ARO:3000391
+      snippet: NorA is a multidrug efflux pump in Staphylococcus aureus that confers resistance to fluoroquinolones
+        and other structurally unrelated antibiotics like acriflavine.
+      notes: CARD definition for the NorA efflux pump controlled by ArlRS.
   - subject: determinant
-    predicate: enables (activates the pump operon)
+    predicate: enables (activates efflux pump expression)
     predicate_id: RO:0002327
     object: activation
+    description: The ArlRS regulator participates in positive regulation of NorA expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
   - subject: activation
     predicate: positively regulates (raises pump expression)
     predicate_id: RO:0002213
     object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
+    description: ArlRS-dependent activation increases NorA expression.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3000391
+      snippet: NorA is a multidrug efflux pump in Staphylococcus aureus that confers resistance to fluoroquinolones
+        and other structurally unrelated antibiotics like acriflavine.
+      notes: CARD definition for the NorA efflux pump controlled by ArlRS.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: NorA is the multidrug pump whose expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000547
+      snippet: ArlRS is a two-component regulatory system for NorA. ArlS phosphorylates ArlR to promote
+        NorA expression.
+      notes: CARD definition for the ArlRS two-component determinant.
+    - reference: ARO:3000391
+      snippet: NorA is a multidrug efflux pump in Staphylococcus aureus that confers resistance to fluoroquinolones
+        and other structurally unrelated antibiotics like acriflavine.
+      notes: CARD definition for the NorA efflux pump controlled by ArlRS.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced AdeR archetype evidence in Arl/Bae efflux activators, grounded pump/transcription nodes,
+    and linked pump expression to antibiotic efflux
   llm_assisted: true
 license: CC-BY 4.0

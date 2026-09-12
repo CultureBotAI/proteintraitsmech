@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004965
 trait_relations:
@@ -32,12 +32,12 @@ evidence:
 - reference: DOI:10.1038/s41598-018-33731-1
   notes: PMID:30337678 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin → aminoglycoside
+    resistance mutation core
+  description: Conservative graph for a WhiB7 aminoglycoside determinant. The graph keeps CARD's mutation
+    mechanism and aminoglycoside drug-class assertion, but it does not assert which WhiB7 regulon genes
+    mediate resistance in this class-level record.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin
@@ -63,47 +63,106 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this WhiB7 determinant under mutation-conferring antibiotic resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.02191-12
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004968
-      snippet: Mutations in whib7 that can contribute to or confer resistance to streptomycin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1128/AAC.02191-12
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+    - reference: ARO:3004965
+      snippet: A protein involved in transcriptional mechanisms. Mutations in the gene can cause resistance
+        to streptomycin.
+      notes: CARD definition for the streptomycin-resistant whib7 parent.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004968
+      snippet: Mutations in whib7 that can contribute to or confer resistance to streptomycin.
+      notes: CARD definition for Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin.
+    - reference: DOI:10.1128/AAC.02191-12
+      notes: PMID:23380727 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The inherited mutation mechanism links WhiB7 variants to aminoglycoside resistance without
+      asserting a complete regulon route.
+    evidence:
+    - reference: ARO:3004965
+      snippet: A protein involved in transcriptional mechanisms. Mutations in the gene can cause resistance
+        to streptomycin.
+      notes: CARD definition for the streptomycin-resistant whib7 parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004968
+      snippet: Mutations in whib7 that can contribute to or confer resistance to streptomycin.
+      notes: CARD definition for Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin.
+    - reference: ARO:3004968
+      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000040 ! streptomycin'
+      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: DOI:10.1128/AAC.02191-12
+      notes: PMID:23380727 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CARD states that mutations in this WhiB7 determinant confer or contribute to aminoglycoside
+      resistance.
     evidence:
-    - reference: DOI:10.1128/AAC.02191-12
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+    - reference: ARO:3004965
+      snippet: A protein involved in transcriptional mechanisms. Mutations in the gene can cause resistance
+        to streptomycin.
+      notes: CARD definition for the streptomycin-resistant whib7 parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: ARO:3004968
+      snippet: Mutations in whib7 that can contribute to or confer resistance to streptomycin.
+      notes: CARD definition for Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin.
     - reference: ARO:3004968
       snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000040 ! streptomycin'
       notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: DOI:10.1128/AAC.02191-12
+      notes: PMID:23380727 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps this WhiB7 determinant to the aminoglycoside antibiotic drug class.
     evidence:
     - reference: ARO:3004965
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3004965 (streptomycin resistant whib7), an is_a ancestor of this record's
         ARO:3004968; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    - reference: ARO:3004965
+      snippet: A protein involved in transcriptional mechanisms. Mutations in the gene can cause resistance
+        to streptomycin.
+      notes: CARD definition for the streptomycin-resistant whib7 parent.
+    - reference: ARO:0000016
+      snippet: aminoglycoside antibiotic
+      notes: ARO drug-class term for the grounded aminoglycoside antibiotic node.
+    - reference: ARO:3004968
+      snippet: Mutations in whib7 that can contribute to or confer resistance to streptomycin.
+      notes: CARD definition for Mycobacterium tuberculosis whib7 mutation conferring resistance to streptomycin.
+    - reference: DOI:10.1128/AAC.02191-12
+      notes: PMID:23380727 (aro citation)
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated WhiB7 aminoglycoside mutation-resistance graph
+  llm_assisted: true
 license: CC-BY 4.0

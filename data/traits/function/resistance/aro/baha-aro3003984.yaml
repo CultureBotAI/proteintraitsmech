@@ -26,11 +26,9 @@ evidence:
   notes: PMID:27929110 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: BahA → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003985). Inactivation by bacitracin amidohydrolysis. No donor node, because no group is donated
-    -- the reaction cleaves the drug or adds to it directly.
+  title: BahA → bacitracin amidohydrolysis → antibiotic resistance
+  description: BahA confers peptide-antibiotic resistance by inactivating bacitracin through amidohydrolysis,
+    using the bacitracin-specific ARO:3003985 mechanism.
   nodes:
   - node_id: determinant
     label: BahA
@@ -40,22 +38,20 @@ causal_graphs:
     label: antibiotic inactivation
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001004
-  - node_id: mech1
-    label: amidohydrolysis of bacitracin undecaprenyl pyrophosphate
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3003985
   - node_id: drug0
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: transfer
-    label: bacitracin amidohydrolase activity
+  - node_id: modification
+    label: amidohydrolysis of bacitracin undecaprenyl pyrophosphate
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
-  - node_id: modified
-    label: chemically modified, inactive antibiotic
+    grounding: ARO:3003985
+    description: Grounded to the bacitracin-specific ARO amidohydrolysis mechanism asserted on the BahA
+      record.
+  - node_id: inactivated
+    label: amidohydrolyzed, inactive bacitracin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state representing bacitracin after BahA-mediated amidohydrolysis makes it inactive.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,95 +64,178 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies BahA under antibiotic inactivation through the Bah amidohydrolase family.
     evidence:
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad resistance mechanism reached by BahA-mediated bacitracin
+      amidohydrolysis.
     evidence:
-    - reference: ARO:3003985
-      snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
-        pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: Mechanism ARO:0001004 → resistance.
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech1
-    evidence:
-    - reference: ARO:3003985
-      snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
-        pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: Family mechanism ARO:3003985.
-  - subject: mech1
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3003985
-      snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
-        pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: Mechanism ARO:3003985 → resistance.
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: BahA confers resistance by inactivating bacitracin through amidohydrolysis.
     evidence:
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
     - reference: ARO:3003985
       snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
         pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: 'CARD''s definition of bacitracin amidohydrolysis. No group donor is involved: this reaction
-        cleaves or adds to the drug rather than transferring a group onto it.'
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the bacitracin
-        amidohydrolysis members are curated by this config.'
+      notes: CARD definition for amidohydrolysis of bacitracin undecaprenyl pyrophosphate.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: BahA inherits the Bah amidohydrolase peptide-antibiotic drug class.
     evidence:
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
     - reference: ARO:3004260
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted on ARO:3004260 (Bah amidohydrolase), an is_a ancestor of this record's ARO:3003984;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on the Bah amidohydrolase parent term and inherited
+        by BahA.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug-class term targeted by Bah amidohydrolase.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
   - subject: determinant
-    predicate: enables (modifies the drug)
+    predicate: enables (amidohydrolyzes bacitracin)
     predicate_id: RO:0002327
-    object: transfer
+    object: modification
+    description: BahA enables the bacitracin amidohydrolysis mechanism.
     evidence:
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
     - reference: ARO:3003985
       snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
         pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: The reaction CARD names for this mechanism id.
-  - subject: transfer
-    predicate: has input (the drug)
+      notes: CARD definition for amidohydrolysis of bacitracin undecaprenyl pyrophosphate.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
+  - subject: modification
+    predicate: has input (the bacitracin peptide antibiotic)
     predicate_id: RO:0002233
     object: drug0
+    description: Bacitracin is the peptide-antibiotic substrate of the amidohydrolysis mechanism.
     evidence:
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
     - reference: ARO:3003985
       snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
         pyrophosphate in bacitracin leading to antibiotic inactivation.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
-  - subject: transfer
+      notes: CARD definition for amidohydrolysis of bacitracin undecaprenyl pyrophosphate.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
+  - subject: modification
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
-    object: modified
-    description: The causal core.
+    object: inactivated
+    description: Amidohydrolysis converts bacitracin to an inactive form.
     evidence:
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
+    - reference: ARO:3003985
+      snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
+        pyrophosphate in bacitracin leading to antibiotic inactivation.
+      notes: CARD definition for amidohydrolysis of bacitracin undecaprenyl pyrophosphate.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
+  - subject: inactivated
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Inactive amidohydrolyzed bacitracin reduces effective drug exposure and produces the
+      resistance phenotype.
+    evidence:
+    - reference: ARO:3003984
+      snippet: Bacitracin amidohydrolase found in Paenibacillus sp. LC231, an isolated strain of Paenibacillus
+        from Lechuguilla Cave, NM, USA. Confers resistance by bacitracin inactivation through amidohydrolysis.
+        Described by Pawlowski et al. 2016.
+      notes: CARD definition for BahA.
+    - reference: ARO:3004260
+      snippet: Bah amidohydrolases are membrane proteins that inactivate bacitracin.
+      notes: CARD definition for the Bah amidohydrolase family term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3003985
+      snippet: Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with undecaprenyl
+        pyrophosphate in bacitracin leading to antibiotic inactivation.
+      notes: CARD definition for amidohydrolysis of bacitracin undecaprenyl pyrophosphate.
+    - reference: DOI:10.1038/ncomms13803
+      notes: CARD-cited report describing BahA in Paenibacillus sp. LC231.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed the BahA bacitracin amidohydrolysis graph
   llm_assisted: true
 license: CC-BY 4.0

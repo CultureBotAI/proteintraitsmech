@@ -16,10 +16,9 @@ trait_relations:
 causal_graphs:
 - graph_id: resistance
   title: antibiotic target modifying enzyme → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:40643688). Target modification by methylation: the enzyme counterpart of round 29''s decoding-site
-    mutations.'
+  description: Conservative graph for the broad antibiotic target modifying enzyme parent. The graph keeps
+    ARO's enzymatic target-alteration mechanism but removes the inherited 16S rRNA methyltransferase path
+    because ARO:3000519 also has non-rRNA descendants.
   nodes:
   - node_id: determinant
     label: antibiotic target modifying enzyme
@@ -29,20 +28,6 @@ causal_graphs:
     label: antibiotic target alteration
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001001
-  - node_id: methyltransferase
-    label: 16S rRNA methyltransferase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has rRNA methyltransferase terms but the resistance-associated positions
-      differ per enzyme (G1405, A1408).'
-  - node_id: decoding_site
-    label: 16S rRNA decoding site (aminoglycoside binding site)
-    node_type: NUCLEIC_ACID
-    description: 'The SAME site round 29''s records mutate. Ungrounded there and here, for the same reason:
-      no ontology term denotes it.'
-  - node_id: methylated
-    label: methylated decoding site
-    node_type: STATE
-    description: 'Ungrounded: a modified nucleotide state rather than a compound.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -55,74 +40,50 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies these enzymes under antibiotic target alteration.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3000519
+      snippet: Enzymes that confer resistance by modifying antibiotic targets.
+      notes: CARD definition for the antibiotic target modifying enzyme parent.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic target alteration is the broad resistance mechanism represented by target-modifying
+      enzymes.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3000519
+      snippet: Enzymes that confer resistance by modifying antibiotic targets.
+      notes: CARD definition for the antibiotic target modifying enzyme parent.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant is modeled at ARO's broad antibiotic-target enzymatic-modification level.
     evidence:
-    - reference: PMID:40643688
-      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
-        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
-        binding sites.
-      notes: 'The mechanism class: modify the drug''s binding site on the rRNA rather than the drug or
-        the protein.'
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: And its clinical weight -- 'exceptionally high-level' resistance, because a methylated site
-        resists the whole aminoglycoside class at once.
-  - subject: determinant
-    predicate: enables (16S rRNA methylation)
-    predicate_id: RO:0002327
-    object: methyltransferase
-    evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: The acquired enzymes modify 16S rRNA nucleotides in the decoding centre.
-  - subject: methyltransferase
-    predicate: causally upstream of (methylates the site)
-    predicate_id: RO:0002411
-    object: methylated
-    evidence:
-    - reference: PMID:40643688
-      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
-        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
-        binding sites.
-      notes: Methylation of the drug's rRNA binding site is the mechanism class.
-  - subject: methylated
-    predicate: negatively regulates (the modified site no longer binds the drug)
-    predicate_id: RO:0002212
-    object: decoding_site
-    description: 'The causal core, and the same endpoint round 29 reaches by substitution instead: the
-      decoding site stops binding aminoglycosides.'
-    evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: '''exceptionally high-level aminoglycoside resistance'' -- one modification covers the class.'
+    - reference: ARO:3000519
+      snippet: Enzymes that confer resistance by modifying antibiotic targets.
+      notes: CARD definition for the antibiotic target modifying enzyme parent.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Collapsed the broad antibiotic target modifying enzyme graph from a 16S rRNA methyltransferase-specific
+    route to its grounded ARO target alteration mechanism
   llm_assisted: true
 license: CC-BY 4.0

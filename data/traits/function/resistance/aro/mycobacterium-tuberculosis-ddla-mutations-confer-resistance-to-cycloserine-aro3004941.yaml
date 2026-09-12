@@ -31,11 +31,9 @@ causal_graphs:
 - graph_id: resistance
   title: Mycobacterium tuberculosis ddlA mutations confer resistance to cycloserine → mechanism → resistance
     (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3004939). Substrate-analog inhibition, with the structural basis given -- the only record here
-    that says WHY a drug competes. Round 82''s folP said the inhibition was competitive; this says the
-    drug resembles the substrate. NOT asserted: the mutation''s effect, which CARD does not describe.'
+  description: Curated resistance-causation graph for DdlA-mediated cycloserine resistance. The graph
+    grounds D-Ala-D-Ala ligase, D-alanine, and peptidoglycan-biosynthesis nodes and connects DdlA ligase
+    activity to bacterial cell-wall biosynthesis.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ddlA mutations confer resistance to cycloserine
@@ -50,17 +48,22 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3007154
   - node_id: ligation
-    label: D-Ala-D-Ala ligase activity (ATP-driven)
+    label: D-Ala-D-Ala ligase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-114).'
+    grounding: GO:0008716
+    description: Grounded to GO D-alanine-D-alanine ligase activity, matching CARD's ATP-driven ligation
+      of two D-alanine molecules by DdlA.
   - node_id: dala
-    label: D-alanine, the substrate cycloserine resembles
+    label: D-alanine
     node_type: CHEMICAL
-    description: 'Ungrounded: rounds 20-23 recorded the same CHEBI gap for the wall precursors.'
+    grounding: CHEBI:15570
+    description: ChEBI-grounded D-alanine, the substrate that cycloserine resembles.
   - node_id: wall_growth
-    label: cell wall growth
+    label: peptidoglycan biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: What the drug inhibits. Ungrounded.
+    grounding: GO:0009252
+    description: Grounded to peptidoglycan biosynthesis, the bacterial cell-wall formation process that
+      depends on DdlA-produced D-Ala-D-Ala.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -73,90 +76,193 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies cycloserine-resistant ddlA variants under mutation conferring antibiotic
+      resistance.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad mutation mechanism covers altered DdlA variants associated with cycloserine
+      resistance.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Resistant ddlA variants retain D-Ala-D-Ala ligase function in the cycloserine-targeted
+      cell-wall pathway.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: 'The reaction with its cosubstrate (''ATP-driven ligation of TWO D-alanine molecules''),
-        and the drug''s structural basis: ''Cycloserine has a SIMILAR STRUCTURE to d-alanine''. NOT stated:
-        what mutations in ddlA do -- CARD describes the enzyme and the mimicry and stops.'
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
+    description: CARD maps resistant ddlA variants to the cycloserine-like antibiotic class.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: Asserted on ARO:3004939 (cycloserine resistant ddlA), an is_a ancestor of this record's ARO:3004941;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: enables (D-Ala-D-Ala ligation)
+    predicate: enables
     predicate_id: RO:0002327
     object: ligation
+    description: DdlA catalyzes ATP-driven ligation of two D-alanine molecules to form D-Ala-D-Ala.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: '''ddlA catalyzes the ATP-driven ligation of two D-alanine molecules''.'
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: GO:0008716
+      snippet: 'Catalysis of the reaction: 2 D-alanine + ATP = D-alanyl-D-alanine + ADP + 2 H+ + phosphate.'
+      notes: GO definition for D-alanine-D-alanine ligase activity.
   - subject: ligation
-    predicate: has input (D-alanine)
+    predicate: has input
     predicate_id: RO:0002233
     object: dala
+    description: D-alanine is the substrate used by D-Ala-D-Ala ligase activity.
     evidence:
-    - reference: ARO:3004939
-      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
-        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
-        inhibits the growth of the cell wall.
-      notes: Two molecules of it, per the same clause.
+    - reference: GO:0008716
+      snippet: 'Catalysis of the reaction: 2 D-alanine + ATP = D-alanyl-D-alanine + ADP + 2 H+ + phosphate.'
+      notes: GO definition for D-alanine-D-alanine ligase activity.
+    - reference: CHEBI:15570
+      snippet: The D-enantiomer of alanine.
+      notes: ChEBI definition for D-alanine.
   - subject: drug0
-    predicate: similar to (cycloserine resembles D-alanine)
+    predicate: molecularly similar to
     predicate_id: RO:0002158
     object: dala
-    description: The structural basis of the inhibition, and the reason this is substrate-analog rather
-      than allosteric. RO:0002158 'shares ancestor with' is the closest verified predicate -- checked
-      in round 89, where RO:0002159 turned out to be the developmental sense.
+    description: The modeled drug class is related to D-alanine by cycloserine's structural similarity
+      to that substrate.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: '''Cycloserine has a similar structure to d-alanine''.'
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: CHEBI:15570
+      snippet: The D-enantiomer of alanine.
+      notes: ChEBI definition for D-alanine.
   - subject: drug0
-    predicate: negatively regulates (inhibits cell wall growth)
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: wall_growth
+    description: Cycloserine-like antibiotics inhibit peptidoglycan biosynthesis in the bacterial cell-wall
+      pathway.
     evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
     - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: '''and inhibits the growth of the cell wall''.'
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for the peptidoglycan biosynthetic process.
+  - subject: ligation
+    predicate: part of (peptidoglycan biosynthesis)
+    predicate_id: BFO:0000050
+    object: wall_growth
+    description: D-Ala-D-Ala ligase activity contributes to peptidoglycan biosynthesis by producing the
+      D-Ala-D-Ala dipeptide.
+    evidence:
+    - reference: ARO:3004941
+      snippet: Point mutations that occur within Mycobacterium tuberculosis ddlA gene resulting in resistance
+        to cycloserine.
+      notes: CARD definition for the Mycobacterium tuberculosis ddlA mutant term.
+    - reference: ARO:3004939
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: CARD definition for the cycloserine-resistant ddlA parent term.
+    - reference: GO:0008716
+      snippet: 'Catalysis of the reaction: 2 D-alanine + ATP = D-alanyl-D-alanine + ADP + 2 H+ + phosphate.'
+      notes: GO definition for D-alanine-D-alanine ligase activity.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for the peptidoglycan biosynthetic process.
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded DdlA ligase, D-alanine, and peptidoglycan-biosynthesis nodes; linked D-Ala-D-Ala ligase
+    activity to peptidoglycan biosynthesis; and added exact DdlA, mutation-mechanism, GO, and ChEBI evidence
   llm_assisted: true
 license: CC-BY 4.0

@@ -21,11 +21,11 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3005394 BSU beta-lactamase"
 causal_graphs:
 - graph_id: resistance
-  title: BSU-1 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000187). Inactivation by beta-lactam hydrolysis. No donor node, because no group is donated
-    -- the reaction cleaves the drug or adds to it directly.
+  title: BSU-1 → class D beta-lactam hydrolysis → resistance
+  description: Conservative class D beta-lactamase graph. The graph reuses ARO:3000187 for the inherited
+    serine beta-lactam hydrolysis mechanism, grounds the shared class A/C/D Ser-x-x-Lys active-site signature
+    to PROSITE:PS00337, omits the former local amide-bond input node because ARO:3000187 already captures
+    beta-lactam hydrolysis, and preserves curated CARD/ARO drug-class edges.
   nodes:
   - node_id: determinant
     label: BSU-1
@@ -43,14 +43,12 @@ causal_graphs:
     label: carbapenem
     node_type: CHEMICAL
     grounding: ARO:0000020
-  - node_id: transfer
-    label: beta-lactam hydrolase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
-  - node_id: modified
-    label: chemically modified, inactive antibiotic
-    node_type: STATE
-    description: The product state. Ungrounded.
+  - node_id: active_site
+    label: beta-lactamase class A/C/D active-site signature (S-x-x-K)
+    node_type: MOTIF
+    grounding: PROSITE:PS00337
+    description: Grounded to the PROSITE class A/C/D beta-lactamase active-site signature, which carries
+      the shared Ser-x-x-Lys catalytic motif.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,57 +61,135 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this class D beta-lactamase family under antibiotic inactivation.
     evidence:
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the inherited antibiotic inactivation mechanism.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Serine beta-lactam hydrolysis enzymatically inactivates beta-lactam antibiotics, reaching
+      the inherited antibiotic inactivation mechanism.
     evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the inherited antibiotic inactivation mechanism.
     - reference: ARO:3000187
       snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
         serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
         hydrolysis renders the beta-lactam inactive.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies this class D beta-lactamase family under serine beta-lactam hydrolysis.
     evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
     - reference: ARO:3000187
       snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
         serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
         hydrolysis renders the beta-lactam inactive.
-      notes: Family mechanism ARO:3000187.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE assigns Ambler class D beta-lactamases to the serine hydrolase classes.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Hydrolysis renders the beta-lactam inactive and produces the resistance phenotype.
     evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
     - reference: ARO:3000187
       snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
         serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
         hydrolysis renders the beta-lactam inactive.
-      notes: Mechanism ARO:3000187 → resistance.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE assigns Ambler class D beta-lactamases to the serine hydrolase classes.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This class D beta-lactamase family inherits the class D serine beta-lactamase mechanism
+      that inactivates beta-lactam antibiotics.
     evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the inherited antibiotic inactivation mechanism.
     - reference: ARO:3000187
       snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
         serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
         hydrolysis renders the beta-lactam inactive.
-      notes: 'CARD''s definition of beta-lactam hydrolysis. No group donor is involved: this reaction
-        cleaves or adds to the drug rather than transferring a group onto it.'
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the beta-lactam
-        hydrolysis members are curated by this config.'
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE assigns Ambler class D beta-lactamases to the serine hydrolase classes.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
@@ -124,40 +200,81 @@ causal_graphs:
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000020 ! carbapenem'
       notes: Asserted on ARO:3005394 (BSU beta-lactamase), an is_a ancestor of this record's ARO:3006902;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (modifies the drug)
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: PROSITE description of the beta-lactamase reaction.
+  - subject: active_site
+    predicate: part of (active site of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    description: The PROSITE PS00337 motif is the beta-lactamase class A/C/D active-site signature for
+      the class D serine-hydrolase mechanism.
+    evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE assigns Ambler class D beta-lactamases to the serine hydrolase classes.
+    - reference: PROSITE:PS00337
+      snippet: All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.
+      notes: PROSITE description of the class A/C/D active-site signature.
+  - subject: active_site
+    predicate: enables (catalysis)
     predicate_id: RO:0002327
-    object: transfer
+    object: mech1
+    description: The class D Ser-x-x-Lys active-site motif supplies the catalytic serine used in the serine
+      beta-lactam hydrolysis mechanism.
     evidence:
+    - reference: ARO:3006902
+      snippet: BSU-1 is a BSU beta-lactamase.
+      notes: CARD definition for BSU-1.
+    - reference: ARO:3000075
+      snippet: Class D beta-lactamases are one of the subgroups of beta-lactamases that are classified
+        as serine enzymes.
+      notes: CARD definition for the class D beta-lactamase parent term.
     - reference: ARO:3000187
       snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
         serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
         hydrolysis renders the beta-lactam inactive.
-      notes: The reaction CARD names for this mechanism id.
-  - subject: transfer
-    predicate: has input (the drug)
-    predicate_id: RO:0002233
-    object: drug0
-    evidence:
-    - reference: ARO:3000187
-      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
-        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
-        hydrolysis renders the beta-lactam inactive.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
-  - subject: transfer
-    predicate: causally upstream of (inactivates the drug)
-    predicate_id: RO:0002411
-    object: modified
-    description: The causal core.
-    evidence:
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      notes: CARD definition for serine beta-lactamase hydrolysis.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE assigns Ambler class D beta-lactamases to the serine hydrolase classes.
+    - reference: PROSITE:PS00337
+      snippet: All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.
+      notes: PROSITE description of the class A/C/D active-site signature.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed class D beta-lactamase descendant causal graphs
   llm_assisted: true
 license: CC-BY 4.0

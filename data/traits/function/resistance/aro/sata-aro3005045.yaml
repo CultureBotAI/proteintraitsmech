@@ -26,11 +26,9 @@ evidence:
   notes: PMID:12721629 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: SatA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000106). Inactivation by acylation. The group donor is deliberately NOT a node: CARD hedges
-    it, and every big chemistry under ARO:3000557 hedges it the same way.'
+  title: SatA → streptothricin acetylation
+  description: Curated resistance-causation graph for SAT-mediated acetyl-CoA-dependent streptothricin
+    acetylation and inactivation.
   nodes:
   - node_id: determinant
     label: SatA
@@ -49,13 +47,19 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000034
   - node_id: transfer
-    label: antibiotic acyltransferase activity
+    label: acetyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
+    grounding: GO:0016407
+    description: Grounded to the broad GO acetyltransferase activity term and scoped here to acetyl-CoA-dependent
+      streptothricin acetylation.
+  - node_id: acetyl_coa
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15351
   - node_id: modified
-    label: chemically modified, inactive antibiotic
+    label: acetylated inactive streptothricin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for a streptothricin antibiotic after SAT-mediated acetylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,89 +72,216 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies SAT enzymes under the broad antibiotic inactivation resistance mechanism.
     evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: SAT antibiotic inactivation results from acetyl-CoA-dependent acetylation of the streptothricin
+      drug.
     evidence:
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies SAT enzymes under acylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Family mechanism ARO:3000106.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The acylation resistance mechanism inactivates streptothricins by acetylation.
     evidence:
-    - reference: ARO:3000106
-      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Mechanism ARO:3000106 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3000106
-      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: CARD's definition of acylation. NOTE the hedge -- the donor is given as 'usually'/'often',
-        so it is not modelled as a node.
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the acylation
-        members are curated by this config.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to nucleoside antibiotic.
-    evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
     - reference: ARO:3000869
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000034 ! nucleoside antibiotic'
-      notes: Asserted on ARO:3000869 (streptothricin acetyltransferase (SAT)), an is_a ancestor of this
-        record's ARO:3005045; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: enables (modifies the drug)
     predicate_id: RO:0002327
     object: transfer
+    description: SAT enzymes catalyze acetyl-CoA-dependent streptothricin acetylation.
     evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: The reaction CARD names for this mechanism id.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+  - subject: transfer
+    predicate: has input (the acetyl donor)
+    predicate_id: RO:0002233
+    object: acetyl_coa
+    description: Acetyl-CoA is the acetyl donor used for SAT-mediated streptothricin acetylation.
+    evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
   - subject: transfer
     predicate: has input (the drug)
     predicate_id: RO:0002233
     object: drug0
+    description: Nucleoside antibiotics in the streptothricin family are substrates for SAT acetyltransferase
+      activity.
     evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
   - subject: transfer
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
     object: modified
-    description: The causal core.
+    description: SAT activity transfers an acetyl group to streptothricin and produces an inactive acetylated
+      drug state.
     evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+    - reference: CHEBI:15351
+      snippet: Acetyl-CoA is an acyl-CoA having acetyl as its S-acetyl component.
+      notes: ChEBI grounding for the acetyl-CoA input.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Acetylated streptothricin is inactive, lowering effective drug exposure and causing the
+      resistance phenotype.
+    evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: SAT enzymes confer streptothricin resistance through acetyl-CoA-dependent acetylation
+      and drug inactivation.
+    evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts a nucleoside antibiotic drug-class relation on the SAT family.
+    evidence:
+    - reference: ARO:3005045
+      snippet: SatA is part of the Streptothricin acetyltransferase gene family. It confers resistance
+        to nucleoside antibiotics.
+      notes: CARD definition for SatA.
+    - reference: ARO:3000869
+      snippet: SAT enzymes acetylate streptothricins such as nourseothricin at the 16 position using acetyl-CoA.
+      notes: CARD definition for streptothricin acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed SAT streptothricin acetylation causal graphs
   llm_assisted: true
 license: CC-BY 4.0

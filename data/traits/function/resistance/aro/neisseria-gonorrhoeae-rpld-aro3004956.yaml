@@ -29,12 +29,10 @@ evidence:
   notes: PMID:27638945 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Neisseria gonorrhoeae rpld → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000328). The rRNA parent term. NOT asserted: the binding-site partonomy that makes rounds 54-55''s
-    graphs distinctive -- that comes from the 16S and 23S definitions, not from this one, which says only
-    that the drugs target the ribosome.'
+  title: Neisseria gonorrhoeae rpld → L4 mutation → macrolide resistance
+  description: Curated resistance-causation graph for Neisseria gonorrhoeae rplD macrolide resistance.
+    The graph preserves the broad macrolide-ribosome target context without asserting a specific altered
+    binding site.
   nodes:
   - node_id: determinant
     label: Neisseria gonorrhoeae rpld
@@ -49,10 +47,11 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:0000000
   - node_id: ribosome
-    label: the bacterial ribosome
+    label: bacterial ribosome
     node_type: CELLULAR_LOCALIZATION
-    description: 'What the drugs target. Ungrounded: CARD says ''the bacterial ribosome'' without a subunit,
-      and rounds 54-55 grounded the specific subunits from the specific terms.'
+    grounding: GO:0005840
+    description: Grounded to the broad GO ribosome class because the record supports a broad macrolide-ribosome
+      target node, not a narrower binding site.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,65 +64,109 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies Neisseria gonorrhoeae rplD under mutation conferring antibiotic resistance.
     evidence:
-    - reference: ARO:3000328
-      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
-        that target the bacterial ribosome.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3004956
+      snippet: rpld encodes for the 50S L4 ribosomal protein, is a macrolide resistance protein identified
+        in Neisseria gonorrhoeae.
+      notes: CARD definition for Neisseria gonorrhoeae rpld.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/JCM.03195-15
+      notes: PMID:26935729 (aro citation)
+    - reference: DOI:10.1093/infdis/jiw420
+      notes: PMID:27638945 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: rplD mutations cause an altered gene product associated with macrolide resistance.
     evidence:
-    - reference: ARO:3000328
-      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
-        that target the bacterial ribosome.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3004956
+      snippet: rpld encodes for the 50S L4 ribosomal protein, is a macrolide resistance protein identified
+        in Neisseria gonorrhoeae.
+      notes: CARD definition for Neisseria gonorrhoeae rpld.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/JCM.03195-15
+      notes: PMID:26935729 (aro citation)
+    - reference: DOI:10.1093/infdis/jiw420
+      notes: PMID:27638945 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Neisseria gonorrhoeae rplD variants confer macrolide resistance through the antibiotic-resistance
+      mutation mechanism.
     evidence:
-    - reference: ARO:3000328
-      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
-        that target the bacterial ribosome.
-      notes: 'The general claim over both subunits: SNPs in rRNA confer resistance to drugs that TARGET
-        THE RIBOSOME. Rounds 54-55 curated the 16S and 23S children with their own mechanism sentences;
-        this term is the shared statement above them.'
+    - reference: ARO:3004956
+      snippet: rpld encodes for the 50S L4 ribosomal protein, is a macrolide resistance protein identified
+        in Neisseria gonorrhoeae.
+      notes: CARD definition for Neisseria gonorrhoeae rpld.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/JCM.03195-15
+      notes: PMID:26935729 (aro citation)
+    - reference: DOI:10.1093/infdis/jiw420
+      notes: PMID:27638945 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+    description: CARD asserts an inherited macrolide-antibiotic drug-class relation for Neisseria gonorrhoeae
+      rplD.
     evidence:
+    - reference: ARO:3004956
+      snippet: rpld encodes for the 50S L4 ribosomal protein, is a macrolide resistance protein identified
+        in Neisseria gonorrhoeae.
+      notes: CARD definition for Neisseria gonorrhoeae rpld.
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit may confer resistance to macrolide antibiotics.
+      notes: ARO parent carrying the inherited macrolide drug-class relation.
     - reference: ARO:3005001
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted on ARO:3005001 (50S rRNA with mutation conferring resistance to macrolide antibiotics),
-        an is_a ancestor of this record's ARO:3004956; inherited by this variant. CARD/ARO release in
-        data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: part of (the bacterial ribosome)
-    predicate_id: BFO:0000050
-    object: ribosome
-    evidence:
-    - reference: ARO:3000328
-      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
-        that target the bacterial ribosome.
-      notes: rRNA is a ribosomal component; CARD frames the drugs as targeting the ribosome.
+      notes: Macrolide drug-class relation inherited from ARO:3005001.
+    - reference: DOI:10.1128/JCM.03195-15
+      notes: PMID:26935729 (aro citation)
+    - reference: DOI:10.1093/infdis/jiw420
+      notes: PMID:27638945 (aro citation)
   - subject: drug0
     predicate: molecularly interacts with (targets the ribosome)
     predicate_id: RO:0002436
     object: ribosome
-    description: The general form of what rounds 54-55 stated per-subunit with a named binding site.
+    description: Macrolides target the bacterial ribosome; this rplD record does not support a narrower
+      binding-site assertion.
     evidence:
-    - reference: ARO:3000328
-      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
-        that target the bacterial ribosome.
-      notes: '''drugs that target the bacterial ribosome''. NOT asserted: which site, which this term
-        does not give.'
+    - reference: ARO:3004956
+      snippet: rpld encodes for the 50S L4 ribosomal protein, is a macrolide resistance protein identified
+        in Neisseria gonorrhoeae.
+      notes: CARD definition for Neisseria gonorrhoeae rpld.
+    - reference: ARO:3005001
+      snippet: Nucleotide point mutations in the 50S rRNA subunit may confer resistance to macrolide antibiotics.
+      notes: ARO parent carrying the inherited macrolide drug-class relation.
+    - reference: ARO:3005001
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
+      notes: Macrolide drug-class relation inherited from ARO:3005001.
+    - reference: DOI:10.1128/JCM.03195-15
+      notes: PMID:26935729 (aro citation)
+    - reference: DOI:10.1093/infdis/jiw420
+      notes: PMID:27638945 (aro citation)
+    - reference: GO:0005840
+      snippet: A ribonucleoprotein complex which is the site of protein synthesis during translation.
+      notes: GO definition for the broad ribosome node.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed Neisseria gonorrhoeae rplD macrolide-resistance graph
   llm_assisted: true
 license: CC-BY 4.0

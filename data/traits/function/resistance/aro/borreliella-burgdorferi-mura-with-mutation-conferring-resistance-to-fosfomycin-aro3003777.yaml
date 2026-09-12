@@ -26,12 +26,11 @@ evidence:
   notes: PMID:21294548 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin → mechanism →
-    resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3002811). Target overexpression. The enzyme itself is not changed; there is more of it than fosfomycin
-    can inhibit. No affinity node, deliberately.
+  title: Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin → MurA mutation
+    → fosfomycin resistance
+  description: Conservative graph for Borreliella burgdorferi MurA mutations. The graph grounds MurA 1-carboxyvinyltransferase
+    activity and peptidoglycan biosynthesis, keeps the inherited phosphonic-acid drug-class edge, and
+    drops the unsupported inherited overexpression branch.
   nodes:
   - node_id: determinant
     label: Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin
@@ -46,18 +45,13 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3007149
   - node_id: enolpyruvyl_transfer
-    label: UDP-N-acetylglucosamine enolpyruvyl transferase activity
+    label: UDP-N-acetylglucosamine 1-carboxyvinyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-83).'
+    grounding: GO:0008760
   - node_id: pg_synthesis
-    label: peptidoglycan biosynthesis (initial step)
+    label: peptidoglycan biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: 'The pathway the drug blocks. Ungrounded: the general process has a GO term, this specific
-      first step was not verified.'
-  - node_id: overexpression
-    label: elevated murA levels
-    node_type: STATE
-    description: The causal core. NOT an affinity change -- see the config note.
+    grounding: GO:0009252
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -70,99 +64,184 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant MurA variants under point mutations.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited point-mutation mechanism links MurA determinants to resistance.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links MurA variants to fosfomycin resistance.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: Enzyme, pathway step, drug action and mechanism in two sentences -- and the mechanism is
-        OVEREXPRESSION, not altered binding.
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: ARO:3002811
+      snippet: confers_resistance_to_drug_class ARO:3007149 ! phosphonic acid antibiotic
+      notes: ARO drug-class relationship on ARO:3002811; modeled here as a determinant-to-phosphonic-acid-antibiotic
+        edge and inherited by the species-specific MurA children.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to phosphonic acid antibiotic.
+    description: The ARO hierarchy links this MurA determinant to phosphonic acid antibiotics.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007149 ! phosphonic acid antibiotic'
-      notes: Asserted on ARO:3002811 (antibiotic-resistant murA transferase), an is_a ancestor of this
-        record's ARO:3003777; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
+        fosfomycin resistance.
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: ARO:3002811
+      snippet: confers_resistance_to_drug_class ARO:3007149 ! phosphonic acid antibiotic
+      notes: ARO drug-class relationship on ARO:3002811; modeled here as a determinant-to-phosphonic-acid-antibiotic
+        edge and inherited by the species-specific MurA children.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: enables (enolpyruvyl transfer)
+    predicate: enables
     predicate_id: RO:0002327
     object: enolpyruvyl_transfer
+    description: ARO identifies MurA as a UDP-N-acetylglucosamine enolpyruvyl transferase.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: '''murA or UDP-N-acetylglucosamine enolpyruvyl transferase''.'
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: GO:0008760
+      snippet: 'Catalysis of the reaction: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = phosphate
+        + UDP-N-acetyl-3-O-(1-carboxyvinyl)-D-glucosamine.'
+      notes: GO definition for UDP-N-acetylglucosamine 1-carboxyvinyltransferase activity.
+    - reference: RHEA:18681
+      snippet: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-3-O-(1-carboxyvinyl)-alpha-D-glucosamine
+        + phosphate
+      notes: Rhea reaction cross-referenced from GO:0008760 for MurA 1-carboxyvinyltransferase activity.
   - subject: enolpyruvyl_transfer
-    predicate: part of (the initial step of peptidoglycan biosynthesis)
+    predicate: part of (peptidoglycan biosynthesis)
     predicate_id: BFO:0000050
     object: pg_synthesis
+    description: ARO places the MurA transferase reaction at the initial step of peptidoglycan biosynthesis.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: '''catalyses the initial step in peptidoglycan biosynthesis''.'
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: GO:0008760
+      snippet: 'Catalysis of the reaction: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = phosphate
+        + UDP-N-acetyl-3-O-(1-carboxyvinyl)-D-glucosamine.'
+      notes: GO definition for UDP-N-acetylglucosamine 1-carboxyvinyltransferase activity.
+    - reference: RHEA:18681
+      snippet: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-3-O-(1-carboxyvinyl)-alpha-D-glucosamine
+        + phosphate
+      notes: Rhea reaction cross-referenced from GO:0008760 for MurA 1-carboxyvinyltransferase activity.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process; the same GO record lists peptidoglycan
+        biosynthesis as an exact synonym.
   - subject: drug0
-    predicate: negatively regulates (inhibits the transferase)
+    predicate: negatively regulates (inhibits MurA activity)
     predicate_id: RO:0002212
     object: enolpyruvyl_transfer
+    description: ARO states that fosfomycin inhibits the MurA transferase activity.
     evidence:
+    - reference: ARO:3003777
+      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
+        biosynthesis and is inhibited by fosfomycin. Mutations to the murA enzyme confers resistance to
+        the antibiotic.
+      notes: CARD definition for Borreliella burgdorferi murA with mutation conferring resistance to fosfomycin.
     - reference: ARO:3002811
       snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
         biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
         fosfomycin resistance.
-      notes: '''is inhibited by fosfomycin''.'
-  - subject: determinant
-    predicate: has quality (elevated expression)
-    predicate_id: RO:0000086
-    object: overexpression
-    evidence:
-    - reference: ARO:3002811
-      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
-        biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
-        fosfomycin resistance.
-      notes: '''OVEREXPRESSION of murA through mutations'' -- the mutation raises the amount, it does
-        not change the enzyme''s affinity.'
-  - subject: overexpression
-    predicate: causally upstream of (wall synthesis continues under drug)
-    predicate_id: RO:0002411
-    object: pg_synthesis
-    description: 'Why more enzyme is resistance: enough escapes inhibition to keep the pathway running.'
-    evidence:
-    - reference: ARO:3002811
-      snippet: murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan
-        biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers
-        fosfomycin resistance.
-      notes: '''confers fosfomycin resistance''. NOTE: that enough escapes inhibition is the reading CARD
-        implies, not a sentence it writes.'
+      notes: CARD definition for the antibiotic-resistant murA transferase parent.
+    - reference: GO:0008760
+      snippet: 'Catalysis of the reaction: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = phosphate
+        + UDP-N-acetyl-3-O-(1-carboxyvinyl)-D-glucosamine.'
+      notes: GO definition for UDP-N-acetylglucosamine 1-carboxyvinyltransferase activity.
+    - reference: RHEA:18681
+      snippet: phosphoenolpyruvate + UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-3-O-(1-carboxyvinyl)-alpha-D-glucosamine
+        + phosphate
+      notes: Rhea reaction cross-referenced from GO:0008760 for MurA 1-carboxyvinyltransferase activity.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded MurA fosfomycin-resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

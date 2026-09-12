@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000557
 trait_relations:
@@ -28,11 +28,11 @@ evidence:
 - reference: DOI:10.1503/cmaj.101487
   notes: PMID:21220461 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] beta-lactamase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: beta-lactamase → beta-lactam antibiotic resistance
+  description: Conservative graph for the broad beta-lactamase parent. The graph models beta-lactam ring
+    opening as a local mechanism because this parent term spans both serine and metallo-beta-lactamase
+    chemistries.
   nodes:
   - node_id: determinant
     label: beta-lactamase
@@ -42,6 +42,18 @@ causal_graphs:
     label: antibiotic inactivation
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001004
+  - node_id: ring_opening
+    label: beta-lactam ring opening
+    node_type: MOLECULAR_FUNCTION
+    local: true
+    description: Record-local broad beta-lactamase activity; no single external term covers both serine
+      and metallo-beta-lactamase ring-opening chemistries at this parent level.
+  - node_id: inactive
+    label: opened, inactive beta-lactam antibiotic
+    node_type: STATE
+    local: true
+    description: Record-local state representing a beta-lactam antibiotic whose four-membered beta-lactam
+      ring has been opened.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -54,45 +66,135 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies beta-lactamases under broad antibiotic inactivation.
     evidence:
-    - reference: DOI:10.1098/rstb.1980.0049
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
     - reference: ARO:3000001
-      snippet: 'Beta-lactamases are enzymes (EC 3.5.2.6) produced by some bacteria and are responsible
-        for their resistance to beta-lactam antibiotics like penicillins, cephalosporins (are relatively
-        resistant to beta-lactamase), cephamycins, and carbapenems (ertapenem). These antibiotics have
-        a common element in their molecular structure: a four-atom ring known as a beta-lactam. The lactamase
-        enzyme breaks that ring open, deactivating the molecule''s antibacterial properties. Beta-lactam
-        antibiotics are typically used to treat a broad spectrum of gram-positive and gram-negative bacteria.
-        Beta-lactamases produced by gram-negative organisms are usually secreted.'
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
+  - subject: determinant
+    predicate: enables (opens the beta-lactam ring)
+    predicate_id: RO:0002327
+    object: ring_opening
+    description: Beta-lactamases catalyze opening of the beta-lactam ring.
+    evidence:
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
+  - subject: ring_opening
+    predicate: causally upstream of (deactivates the antibiotic)
+    predicate_id: RO:0002411
+    object: inactive
+    description: Opening the beta-lactam ring deactivates the antibiotic molecule.
+    evidence:
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
+  - subject: inactive
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: mech0
+    description: The opened and inactive beta-lactam antibiotic state realizes antibiotic inactivation.
+    evidence:
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Enzymatic antibiotic inactivation is upstream of the resistant phenotype.
     evidence:
-    - reference: DOI:10.1098/rstb.1980.0049
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
     - reference: ARO:0001004
       snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Beta-lactamases confer resistance by breaking open and deactivating beta-lactam antibiotics.
     evidence:
-    - reference: DOI:10.1098/rstb.1980.0049
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000001
-      snippet: 'Beta-lactamases are enzymes (EC 3.5.2.6) produced by some bacteria and are responsible
-        for their resistance to beta-lactam antibiotics like penicillins, cephalosporins (are relatively
-        resistant to beta-lactamase), cephamycins, and carbapenems (ertapenem). These antibiotics have
-        a common element in their molecular structure: a four-atom ring known as a beta-lactam. The lactamase
-        enzyme breaks that ring open, deactivating the molecule''s antibacterial properties. Beta-lactam
-        antibiotics are typically used to treat a broad spectrum of gram-positive and gram-negative bacteria.
-        Beta-lactamases produced by gram-negative organisms are usually secreted.'
-      notes: ARO definition of this determinant (beta-lactamase).
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: DOI:10.1098/rstb.1980.0049
+      notes: PMID:6109327 (aro citation)
+    - reference: DOI:10.1128/AAC.39.6.1211
+      notes: PMID:7574506 (aro citation)
+    - reference: DOI:10.1128/AAC.01009-09
+      notes: PMID:19995920 (aro citation)
+    - reference: DOI:10.1503/cmaj.101487
+      notes: PMID:21220461 (aro citation)
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed broad beta-lactamase parent causal graph
+  llm_assisted: true
 license: CC-BY 4.0

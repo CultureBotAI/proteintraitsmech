@@ -29,11 +29,11 @@ evidence:
   notes: PMID:10908116 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: EreB → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:22303981). Drug inactivation by hydrolysing the macrolactone ring -- the macrolide's defining
-    chemical feature.
+  title: EreB → macrolide ring hydrolysis → antibiotic resistance
+  description: Conservative graph for macrolide esterase-mediated antibiotic inactivation. The graph removes
+    duplicate local esterase and macrolactone-ring nodes, routes the reaction through ARO:3000321 hydrolysis
+    of macrolide macrocycle lactone ring, and treats the macrolide antibiotic as that hydrolysis reaction's
+    input.
   nodes:
   - node_id: determinant
     label: EreB
@@ -51,14 +51,6 @@ causal_graphs:
     label: macrolide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000000
-  - node_id: esterase
-    label: erythromycin esterase activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has esterase terms but none specific to the macrolactone ring.'
-  - node_id: ring
-    label: intact macrolactone ring
-    node_type: STATE
-    description: The macrolide's defining feature, and what the enzyme opens. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -71,89 +63,168 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies macrolide esterases under antibiotic inactivation.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Family mechanism ARO:0001004.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad resistance mechanism reached by macrolactone-ring
+      hydrolysis.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: ARO classifies macrolide esterases under hydrolysis of the macrolide macrocycle lactone
+      ring.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Family mechanism ARO:3000321.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Hydrolysis of the macrolactone ring inactivates macrolide antibiotics.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Mechanism ARO:3000321 → resistance.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Macrolide esterases confer resistance by cleaving the macrocycle lactone ring of macrolide
+      antibiotics.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Determinant → resistance phenotype.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+    description: ARO maps the macrolide esterase family to macrolide antibiotics.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
     - reference: ARO:3000320
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted on ARO:3000320 (macrolide esterase), an is_a ancestor of this record's ARO:3000363;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (macrolactone ring hydrolysis)
-    predicate_id: RO:0002327
-    object: esterase
-    evidence:
-    - reference: PMID:22303981
-      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
-        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Morar et al. 2012 name the reaction and the enzymes that catalyse it.
-  - subject: esterase
-    predicate: negatively regulates (hydrolyses the ring)
-    predicate_id: RO:0002212
-    object: ring
-    description: 'The causal core: opening the macrolactone destroys the scaffold the drug needs to bind
-      the ribosome.'
-    evidence:
-    - reference: PMID:22303981
-      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
-        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: Hydrolysis of the ring IS the inactivation.
-  - subject: ring
-    predicate: part of (the intact drug)
-    predicate_id: BFO:0000050
+      notes: ARO drug-class relationship asserted on the macrolide esterase parent and inherited by Ere/EstT
+        child records.
+    - reference: ARO:0000000
+      snippet: macrolide antibiotic
+      notes: ARO drug-class term targeted by macrolide esterases.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
+  - subject: mech1
+    predicate: has input
+    predicate_id: RO:0002233
     object: drug0
+    description: The macrolide antibiotic is the input to macrolactone-ring hydrolysis.
     evidence:
+    - reference: ARO:3000363
+      snippet: EreB is an erythromycin esterase-like protein that hydrolyses the drug's lactone ring.
+      notes: CARD definition for EreB.
+    - reference: ARO:3000320
+      snippet: Hydrolytic enzymes that cleave the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for the macrolide esterase parent term.
+    - reference: ARO:3000321
+      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
+      notes: CARD definition for hydrolysis of macrolide macrocycle lactone ring.
     - reference: PMID:22303981
       snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
         the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
-      notes: The macrolactone is what makes a macrolide one; without it there is no drug to bind a target.
+      notes: Morar et al. 2012; erythromycin esterases hydrolyze the macrolactone ring.
+    - reference: DOI:10.7164/antibiotics.53.516
+      notes: PMID:10908116 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded macrolide esterase graphs
   llm_assisted: true
 license: CC-BY 4.0

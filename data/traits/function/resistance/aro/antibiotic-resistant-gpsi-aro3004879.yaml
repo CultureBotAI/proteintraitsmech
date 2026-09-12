@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -14,11 +14,11 @@ trait_relations:
     object: ARO:3000212
     relation_source: "ARO participates_in (mechanism) via ARO:0000031 antibiotic resistant gene variant or mutant"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant gpsI → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant gpsI → POA-insensitive Rv2783 PNPase activity
+  description: Curated gpsI/Rv2783c resistance-causation graph. The graph models pyrazinamide resistance
+    as mutation-driven loss of pyrazinoic-acid binding to Rv2783, leaving the mutant polyribonucleotide
+    nucleotidyltransferase activity tolerant of the active drug metabolite.
   nodes:
   - node_id: determinant
     label: antibiotic resistant gpsI
@@ -28,49 +28,176 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: poa_binding
+    label: reduced pyrazinoic acid binding to Rv2783
+    node_type: STATE
+    description: Local state for gpsI/Rv2783c resistance mutations that reduce binding of the active pyrazinamide
+      metabolite pyrazinoic acid.
+  - node_id: pnpase
+    label: POA-insensitive polyribonucleotide nucleotidyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004654
+    description: Grounded to Rv2783 polyribonucleotide nucleotidyltransferase activity and scoped here
+      to the mutant activity that withstands pyrazinoic acid.
   - node_id: resistance
-    label: antibiotic resistance phenotype
+    label: pyrazinamide resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Pyrazinamide resistance phenotype conferred by an Rv2783/gpsI mutation that reduces pyrazinoic-acid
+      binding.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies gpsI resistance under mutation conferring antibiotic resistance.
     evidence:
     - reference: ARO:3004879
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
+      snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
+      notes: CARD definition for antibiotic resistant gpsI.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Njire et al. found two PZA-resistant clinical isolates with the same Rv2783c G199A/Asp67Asn
+        substitution and showed that expressing Rv2783c-Asp67Asn increased the pyrazinamide MIC in M.
+        tuberculosis.
+      notes: Experimental evidence that an Rv2783c/gpsI missense mutation confers PZA resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
+  - subject: determinant
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: poa_binding
+    description: The Rv2783c Asp67Asn mutation reduces binding of pyrazinoic acid to Rv2783.
+    evidence:
     - reference: ARO:3004879
       snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for antibiotic resistant gpsI.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Njire et al. found two PZA-resistant clinical isolates with the same Rv2783c G199A/Asp67Asn
+        substitution and showed that expressing Rv2783c-Asp67Asn increased the pyrazinamide MIC in M.
+        tuberculosis.
+      notes: Experimental evidence that an Rv2783c/gpsI missense mutation confers PZA resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
+  - subject: poa_binding
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: pnpase
+    description: Reduced pyrazinoic-acid binding lets the mutant Rv2783 PNPase remain active.
+    evidence:
+    - reference: ARO:3004879
+      snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
+      notes: CARD definition for antibiotic resistant gpsI.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
+    - reference: GO:0004654
+      snippet: 'Catalysis of the reaction: RNA(n+1) + phosphate = RNA(n) + a nucleoside diphosphate.'
+      notes: Gene Ontology definition for polyribonucleotide nucleotidyltransferase activity.
+  - subject: pnpase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Retention of Rv2783 PNPase activity despite pyrazinoic acid contributes to PZA resistance.
+    evidence:
+    - reference: ARO:3004879
+      snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
+      notes: CARD definition for antibiotic resistant gpsI.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
+    - reference: GO:0004654
+      snippet: 'Catalysis of the reaction: RNA(n+1) + phosphate = RNA(n) + a nucleoside diphosphate.'
+      notes: Gene Ontology definition for polyribonucleotide nucleotidyltransferase activity.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Njire et al. found two PZA-resistant clinical isolates with the same Rv2783c G199A/Asp67Asn
+        substitution and showed that expressing Rv2783c-Asp67Asn increased the pyrazinamide MIC in M.
+        tuberculosis.
+      notes: Experimental evidence that an Rv2783c/gpsI missense mutation confers PZA resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The gpsI/Rv2783c mutation confers the modeled pyrazinamide-resistance phenotype.
     evidence:
     - reference: ARO:3004879
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
+      snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
+      notes: CARD definition for antibiotic resistant gpsI.
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Njire et al. found two PZA-resistant clinical isolates with the same Rv2783c G199A/Asp67Asn
+        substitution and showed that expressing Rv2783c-Asp67Asn increased the pyrazinamide MIC in M.
+        tuberculosis.
+      notes: Experimental evidence that an Rv2783c/gpsI missense mutation confers PZA resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: gpsI/Rv2783c mutation reduces active-drug binding to support pyrazinamide resistance.
     evidence:
     - reference: ARO:3004879
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004879
       snippet: Mutations that occur in gpsI that increases resistance to antibiotics.
-      notes: ARO definition of this determinant (antibiotic resistant gpsI).
+      notes: CARD definition for antibiotic resistant gpsI.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Njire et al. found two PZA-resistant clinical isolates with the same Rv2783c G199A/Asp67Asn
+        substitution and showed that expressing Rv2783c-Asp67Asn increased the pyrazinamide MIC in M.
+        tuberculosis.
+      notes: Experimental evidence that an Rv2783c/gpsI missense mutation confers PZA resistance.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Wild-type Rv2783 bound pyrazinoic acid, whereas Rv2783-Asp67Asn did not bind pyrazinoic
+        acid detectably in the titration assay.
+      notes: Experimental evidence that the gpsI resistance mutation reduces active-drug binding.
+    - reference: DOI:10.1128/AAC.00070-17
+      snippet: Pyrazinoic acid significantly inhibited wild-type Rv2783 RNA polymerization and phosphorolysis
+        activities but not those of the Rv2783-Asp67Asn mutant protein.
+      notes: Experimental evidence that the mutant gpsI activity withstands POA inhibition.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated gpsI/Rv2783c pyrazinamide-resistance graphs
+  llm_assisted: true
 license: CC-BY 4.0

@@ -23,11 +23,10 @@ evidence:
   notes: PMID:29610197 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced permeability → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:14665678). The mirror of efflux: the drug never gets in, rather than being pumped out.'
+  title: Aspergillus fcyB loss → reduced 5-flucytosine uptake → resistance
+  description: Conservative resistance-causation graph for fungal nucleobase-transporter loss or down-regulation.
+    The graph grounds the wild-type cytosine/pyrimidine nucleobase transport activity that imports 5-flucytosine
+    and represents resistance as loss of that import route.
   nodes:
   - node_id: determinant
     label: Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced permeability
@@ -41,114 +40,218 @@ causal_graphs:
     label: pyrimidine antifungal drug
     node_type: CHEMICAL
     grounding: ARO:3007560
-  - node_id: influx
-    label: xenobiotic transport (drug influx across the outer membrane)
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0042908
-    description: GO:0042908 is the transport process; which channel carries it differs per record and
-      is named in that record's own definition.
-  - node_id: barrier
-    label: outer membrane permeability barrier
-    node_type: STATE
-    description: 'Ungrounded: a property of the envelope rather than a compound.'
+  - node_id: transport
+    label: cytosine transmembrane transporter activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0015209
+  - node_id: flucytosine
+    label: flucytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:5100
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype conferred by reduced 5-flucytosine entry into fungal cells.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places the fungal nucleobase-transporter branch in the reduced-permeability resistance
+      mechanism.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Family mechanism ARO:3000244.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Loss or down-regulation of a fungal nucleobase importer reduces 5-flucytosine entry into
+      the cell, producing permeability-mediated resistance.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Mechanism ARO:3000244 → resistance.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: GO:0015209
+      snippet: Enables the transfer of cytosine, 4-amino-2-hydroxypyrimidine from one side of a membrane
+        to the other.
+      notes: GO definition for cytosine transmembrane transporter activity.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This ARO determinant represents absence or down-regulation of the nucleobase transporter
+      that normally imports 5-flucytosine.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what
-        let a drug across it, so losing a channel raises the barrier.
-    - reference: ARO:3000270
-      snippet: Enzymes or other proteins either directly or indirectly reducing overall permeability to
-        antibiotics.
-      notes: CARD's definition of the family term these records sit under -- the claim at exactly the
-        level this config makes it. Each record's own definition names the channel and the drug class
-        IT admits.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: CHEBI:5100
+      snippet: flucytosine
+      notes: ChEBI name for CHEBI:5100.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to pyrimidine antifungal drug.
+    description: ARO asserts that fungal nucleobase transporter loss confers resistance to pyrimidine
+      antifungal drugs.
     evidence:
     - reference: ARO:3007641
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug'
-      notes: Asserted on ARO:3007641 (fungal nucleobase transporters), an is_a ancestor of this record's
-        ARO:3007642; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug
+      notes: ARO drug-class relationship on fungal nucleobase transporters, materialized into trait_relations
+        and inherited by the child FCY records.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+    - reference: CHEBI:5100
+      snippet: flucytosine
+      notes: ChEBI name for CHEBI:5100.
   - subject: determinant
-    predicate: enables (admits the drug across the membrane)
+    predicate: enables (5-flucytosine uptake)
     predicate_id: RO:0002327
-    object: influx
-    description: The wild-type function. Resistance is its loss or down-regulation, which is why these
-      records are channels rather than resistance enzymes.
+    object: transport
+    description: Wild-type FCY-family transporters import cytosine analogs across the fungal plasma membrane;
+      reduced transporter activity lowers 5-flucytosine uptake.
     evidence:
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+    - reference: GO:0015209
+      snippet: Enables the transfer of cytosine, 4-amino-2-hydroxypyrimidine from one side of a membrane
+        to the other.
+      notes: GO definition for cytosine transmembrane transporter activity.
+    - reference: CHEBI:5100
+      snippet: flucytosine
+      notes: ChEBI name for CHEBI:5100.
+  - subject: transport
+    predicate: has input
+    predicate_id: RO:0002233
+    object: flucytosine
+    description: 5-Flucytosine uptake uses the cytosine/pyrimidine nucleobase transport activity of the
+      encoded fungal permease.
+    evidence:
+    - reference: GO:0015209
+      snippet: Enables the transfer of cytosine, 4-amino-2-hydroxypyrimidine from one side of a membrane
+        to the other.
+      notes: GO definition for cytosine transmembrane transporter activity.
+    - reference: CHEBI:5100
+      snippet: flucytosine
+      notes: ChEBI name for CHEBI:5100.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
+  - subject: transport
+    predicate: negatively regulates (drug uptake counteracts resistance)
+    predicate_id: RO:0002212
+    object: resistance
+    description: Cytosine permease activity counteracts this reduced-permeability phenotype by admitting
+      5-flucytosine into the fungal cell.
+    evidence:
+    - reference: GO:0015209
+      snippet: Enables the transfer of cytosine, 4-amino-2-hydroxypyrimidine from one side of a membrane
+        to the other.
+      notes: GO definition for cytosine transmembrane transporter activity.
+    - reference: CHEBI:5100
+      snippet: flucytosine
+      notes: ChEBI name for CHEBI:5100.
     - reference: ARO:3000244
       snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
         can provide resistance.
-      notes: 'CARD''s mechanism term, stated as the loss: permeability falls when the channel does, which
-        is this edge read backwards. General to every record here; each names its own channel and drug.'
-  - subject: barrier
-    predicate: negatively regulates (the membrane excludes what has no channel)
-    predicate_id: RO:0002212
-    object: influx
-    evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: 'Nikaido 2003: exclusion is the outer membrane''s default, and channels are the exception
-        to it.'
-  - subject: influx
-    predicate: causally upstream of (the drug reaches its target)
-    predicate_id: RO:0002411
-    object: drug0
-    description: 'The causal core inverted: with the channel lost or down-regulated, this step does not
-      happen and the drug never reaches its target.'
-    evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: A drug that cannot cross the barrier cannot act, whatever its target.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: ARO:3007642
+      snippet: FcyB encodes for purine-cytosine permease in fungal cells. Downregulation or absence of
+        fcyB confers resistance to antibiotics by preventing entry into the cell.
+      notes: CARD definition for Aspergillus spp. fcyB conferring resistance to 5-flucytosine via reduced
+        permeability.
+    - reference: ARO:3007641
+      snippet: Fungal nucleobase transporters facilitate the movement of nucleobases across the fungal
+        cell membrane. The absence confers resistance to antibiotics by preventing antibiotic entry into
+        the cell.
+      notes: CARD definition for fungal nucleobase transporters.
+    - reference: PMID:29610197
+      snippet: fcyB, a gene that encodes a purine-cytosine permease
+      notes: Gsaller et al. identified Aspergillus fumigatus fcyB as the pH-regulated 5-flucytosine importer.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated fungal nucleobase-transporter 5-flucytosine graph
   llm_assisted: true
 license: CC-BY 4.0

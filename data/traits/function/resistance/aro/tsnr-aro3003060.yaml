@@ -26,11 +26,10 @@ evidence:
   notes: PMID:7590303 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: tsnR → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:20007606). 23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503
-    in the peptidyl-transferase centre.'
+  title: tsnR → methylated 23S rRNA A1067
+  description: Curated resistance-causation graph for A1067-specific 23S rRNA methyltransferases. The
+    determinant methylates adenosine 1067 in 23S rRNA, chemically altering a peptide-antibiotic target
+    site in the 50S ribosomal subunit.
   nodes:
   - node_id: determinant
     label: tsnR
@@ -44,20 +43,34 @@ causal_graphs:
     label: ribosomal alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000211
+  - node_id: methyltransferase
+    label: 23S rRNA A1067 methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term and scoped here to 23S
+      rRNA A1067 methylation.
+  - node_id: target_site
+    label: 23S rRNA A1067 peptide-antibiotic-binding site
+    node_type: NUCLEIC_ACID
+    grounding: SO:0000252
+    description: Conservative local 23S rRNA site centered on A1067; grounded to broad rRNA because no
+      stable narrow term is available for this local peptide-antibiotic target site.
+  - node_id: methylated
+    label: methylated 23S rRNA A1067 peptide-antibiotic-binding site
+    node_type: STATE
+    grounding: SO:0000252
+    description: Local state representing methylation of the 23S rRNA A1067 peptide-antibiotic target
+      site. Grounded to broad rRNA because no stable narrow term is available for this methylated local
+      state.
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: The 50S subunit that contains bacterial 23S rRNA.
   - node_id: drug0
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: domain
-    label: radical-SAM methyltransferase domain
-    node_type: DOMAIN
-    grounding: Pfam:PF04055
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: radical-SAM (partial TIM-barrel) fold
-    node_type: DOMAIN
-    grounding: CATH:3.20.20
-    description: KB protein-trait record carrying the mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -70,91 +83,350 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies A1067-specific 23S rRNA methyltransferases under antibiotic target alteration
+      because they enzymatically modify 23S rRNA.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic target alteration is the broad resistance mechanism represented by A1067-specific
+      23S rRNA methylation.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies A1067-specific 23S rRNA methyltransferases under ribosomal alteration.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:3000211.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Chemical alteration of the ribosome is the ribosome-specific route represented by A1067-specific
+      23S rRNA methylation.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:3000211 → resistance.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant confers peptide-antibiotic resistance through methylation of 23S rRNA
+      A1067.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps A1067-specific 23S rRNA methyltransferases to peptide antibiotic resistance.
     evidence:
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
     - reference: ARO:3003065
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted on ARO:3003065 (non-erm 23S ribosomal RNA methyltransferase (A1067)), an is_a ancestor
-        of this record's ARO:3003060; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF04055
-      snippet: Radical SAM superfamily
-      notes: 'KB trait: the radical-SAM methyltransferase domain.'
+      notes: Peptide-antibiotic drug-class relation asserted on ARO:3003065 and inherited by its child
+        records.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug-class term targeted by A1067-specific 23S rRNA methyltransferases.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.20.20
-      snippet: TIM Barrel
-      notes: 'KB trait: the radical-SAM fold.'
-  - subject: domain
-    predicate: enables (23S rRNA A2503 methylation)
+    predicate: enables
     predicate_id: RO:0002327
-    object: mech1
+    object: methyltransferase
+    description: The determinant enables methyl transfer onto adenosine 1067 in 23S rRNA.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: The methyltransferase domain methylates 23S rRNA A2503, altering the drug target.
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A1067 site.
+  - subject: methyltransferase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: methylated
+    description: A1067 methyltransferase activity yields a methylated 23S rRNA peptide-antibiotic target
+      site.
+    evidence:
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A1067 site.
+  - subject: methylated
+    predicate: negatively regulates (blocks peptide-antibiotic binding)
+    predicate_id: RO:0002212
+    object: target_site
+    description: Methylation changes the local 23S rRNA A1067 site and prevents normal peptide-antibiotic
+      binding.
+    evidence:
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A1067 site.
+  - subject: methylated
+    predicate: causally upstream of (blocks peptide-antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated A1067-containing 23S rRNA site is the terminal modeled cause of peptide-antibiotic
+      resistance.
+    evidence:
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A1067 site.
+  - subject: target_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: subunit
+    description: The A1067 site is part of the 23S rRNA in the 50S ribosomal subunit.
+    evidence:
+    - reference: ARO:3003060
+      snippet: tsnR is a 23S ribosomal RNA methyltransferase that methylates adenosine-1067 to confer
+        resistance to thiostrepton.
+      notes: CARD definition for tsnR.
+    - reference: ARO:3003065
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify adenosine 1067 to confer resistance
+        to peptide antibiotics.
+      notes: CARD definition for non-erm 23S ribosomal RNA methyltransferase (A1067).
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1016/0378-1119(95)00442-9
+      notes: PMID:7590303 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A1067 site.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-09T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Replaced A1067 23S rRNA methyltransferase graph
     llm_assisted: true
 license: CC-BY 4.0

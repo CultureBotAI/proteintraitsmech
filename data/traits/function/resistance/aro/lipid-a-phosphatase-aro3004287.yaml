@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003580
 trait_relations:
@@ -17,11 +17,11 @@ trait_relations:
     object: ARO:3000053
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004287 lipid A phosphatase"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] lipid A phosphatase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: lipid A phosphatase → lipid A charge alteration → peptide-antibiotic resistance
+  description: Conservative graph for the generic CARD lipid A phosphatase parent. It records phosphatase-mediated
+    covalent modification of lipid A and the proposed downstream peptide-antibiotic binding route without
+    inventing a specific 1- or 4′-phosphatase reaction for the whole parent.
   nodes:
   - node_id: determinant
     label: lipid A phosphatase
@@ -35,6 +35,17 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: lipid_a
+    label: lipid A
+    node_type: CHEMICAL
+    grounding: CHEBI:47040
+    description: Grounded to the ChEBI class for the glycolipid moiety of bacterial lipopolysaccharide
+      that CARD says is covalently modified by lipid A phosphatases.
+  - node_id: charge
+    label: reduced net negative surface charge
+    node_type: STATE
+    description: Local state representing the reduced negative surface charge modeled for Gram-negative
+      lipid A modified by phosphatases.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -47,48 +58,161 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies lipid A phosphatase under charge alteration.
     evidence:
-    - reference: ARO:3004287
-      notes: 'Auto-drafted: mechanism class ARO:3003588 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3003588); verbatim snippet pending curation.'
     - reference: ARO:3004287
       snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
         to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
         of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
         of the bacteria to antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3004287
-      notes: 'Auto-drafted: mechanism ARO:3003588 → resistance; snippet pending curation.'
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: ARO definition of the resistance mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance), which states the causal link to resistance.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Charge alteration is the broad mechanism by which covalent lipid-A modification reduces
+      peptide-antibiotic susceptibility.
+    evidence:
+    - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: CHEBI:47040
+      snippet: The glycolipid moiety of bacterial lipopolysaccharide.
+      notes: ChEBI definition for lipid A.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Phosphatase-mediated lipid-A modification is modeled as reducing the susceptibility of
+      Gram-negative bacteria to peptide antibiotics.
     evidence:
     - reference: ARO:3004287
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004287
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000625 ! polymyxin B1'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps lipid A phosphatase to peptide antibiotics.
     evidence:
     - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: ARO:3004287
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3004287 (lipid A phosphatase) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+      notes: ARO drug-class relationship asserted directly on lipid A phosphatase.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug class asserted on the lipid A phosphatase parent.
+  - subject: determinant
+    predicate: causally upstream of (modifies lipid A)
+    predicate_id: RO:0002411
+    object: lipid_a
+    description: Lipid A phosphatases covalently modify the lipid A moiety of Gram-negative lipopolysaccharides.
+    evidence:
+    - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: CHEBI:47040
+      snippet: The glycolipid moiety of bacterial lipopolysaccharide.
+      notes: ChEBI definition for lipid A.
+  - subject: lipid_a
+    predicate: causally upstream of (reduces surface negative charge)
+    predicate_id: RO:0002411
+    object: charge
+    description: The lipid-A modification is modeled as reducing the net negative surface charge used
+      by cationic antimicrobial binding.
+    evidence:
+    - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: CHEBI:47040
+      snippet: The glycolipid moiety of bacterial lipopolysaccharide.
+      notes: ChEBI definition for lipid A.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+  - subject: charge
+    predicate: negatively regulates (impedes drug binding)
+    predicate_id: RO:0002212
+    object: drug0
+    description: Reduced net negative surface charge impedes binding by cationic peptide antibiotics.
+    evidence:
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug class asserted on the lipid A phosphatase parent.
+  - subject: charge
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The same charge-reduced envelope state is the terminal modeled state causally upstream
+      of peptide-antibiotic resistance.
+    evidence:
+    - reference: ARO:3004287
+      snippet: The antimicrobial activity of certain antibiotics, such as peptide antibiotics, is proposed
+        to be initiated through binding to the lipid A moiety of lipopolysaccharides. Thus, covalent modification
+        of Gram-negative bacterial lipid A by phosphatases is a mechanism to reduce the susceptibility
+        of the bacteria to antibiotics.
+      notes: CARD definition for lipid A phosphatase; this generic record frames peptide-antibiotic binding
+        to lipid A as proposed.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated generic lipid A phosphatase charge-alteration graph
+  llm_assisted: true
 license: CC-BY 4.0

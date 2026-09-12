@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000000
 trait_relations:
@@ -14,11 +14,11 @@ trait_relations:
     object: ARO:0001004
     relation_source: "ARO participates_in (mechanism) via ARO:3000557 antibiotic inactivation enzyme"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic inactivation enzyme → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic inactivation enzyme → antibiotic inactivation → resistance
+  description: Curated broad resistance-causation graph for enzymatic antibiotic inactivation. The graph
+    intentionally stops at the ARO antibiotic inactivation mechanism because this parent record does not
+    identify a specific drug class or inactivation chemistry.
   nodes:
   - node_id: determinant
     label: antibiotic inactivation enzyme
@@ -40,34 +40,51 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO directly classifies this enzyme parent under antibiotic inactivation.
     evidence:
     - reference: ARO:3000557
-      notes: Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation.
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.  Inactivation
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
         includes chemical modification, destruction, etc.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: CARD definition for the broad antibiotic-inactivation enzyme parent; no child reaction chemistry
+        is selected at this level.
+    - reference: ARO:3000557
+      snippet: 'relationship: participates_in ARO:0001004 ! antibiotic inactivation'
+      notes: ARO mechanism relationship asserted on ARO:3000557 in data/raw/aro/aro.obo.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the broad antibiotic-inactivation mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO antibiotic-inactivation mechanism is defined as enzymatic inactivation of antibiotic
+      to confer drug resistance.
     evidence:
     - reference: ARO:3000557
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
+        includes chemical modification, destruction, etc.
+      notes: CARD definition for the broad antibiotic-inactivation enzyme parent; no child reaction chemistry
+        is selected at this level.
     - reference: ARO:0001004
       snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+      notes: CARD definition for the broad antibiotic-inactivation mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This broad enzyme parent confers resistance by catalyzing antibiotic inactivation.
     evidence:
     - reference: ARO:3000557
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.  Inactivation
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
         includes chemical modification, destruction, etc.
-      notes: ARO definition of this determinant (antibiotic inactivation enzyme).
+      notes: CARD definition for the broad antibiotic-inactivation enzyme parent; no child reaction chemistry
+        is selected at this level.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the broad antibiotic-inactivation mechanism.
+curation_history:
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Promoted broad antibiotic-inactivation parent graph to reviewed
+  llm_assisted: true
 license: CC-BY 4.0

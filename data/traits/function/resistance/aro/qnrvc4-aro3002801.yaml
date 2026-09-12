@@ -23,11 +23,10 @@ evidence:
   notes: PMID:23098826 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: QnrVC4 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:21227918). qnr is a pentapeptide-repeat protein; target protection of DNA gyrase/topoisomerase
-    IV from fluoroquinolones.
+  title: QnrVC4 → Qnr target protection → fluoroquinolone resistance
+  description: Curated resistance-causation graph for a Qnr pentapeptide-repeat protein. Qnr determinants
+    protect DNA gyrase and topoisomerase IV from fluoroquinolone inhibition through the shared pentapeptide-repeat
+    fold.
   nodes:
   - node_id: determinant
     label: QnrVC4
@@ -45,12 +44,12 @@ causal_graphs:
     label: pentapeptide-repeat domain
     node_type: DOMAIN
     grounding: Pfam:PF00805
-    description: KB protein-trait record carrying the mechanism.
+    description: Pentapeptide-repeat domain shared by Qnr target-protection proteins.
   - node_id: fold
-    label: pentapeptide-repeat (right-handed β-helix) fold
+    label: pentapeptide-repeat right-handed beta-helix fold
     node_type: DOMAIN
     grounding: ECOD:T.207.9.1
-    description: KB protein-trait record carrying the mechanism.
+    description: Right-handed beta-helix fold formed by pentapeptide-repeat proteins.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,70 +59,167 @@ causal_graphs:
       itself.'
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (Qnr target-protection mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies Qnr proteins under antibiotic target protection.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
     - reference: PMID:21227918
       snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
         repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Family mechanism ARO:0001003.
+      notes: Evidence for Qnr pentapeptide-repeat fluoroquinolone target protection.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Qnr-mediated target protection prevents fluoroquinolones from inhibiting DNA gyrase and
+      topoisomerase IV.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
     - reference: PMID:21227918
       snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
         repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Mechanism ARO:0001003 → resistance.
+      notes: Evidence for Qnr pentapeptide-repeat fluoroquinolone target protection.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Qnr proteins confer fluoroquinolone resistance through pentapeptide-repeat target protection.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for the antibiotic target protection mechanism.
     - reference: PMID:21227918
       snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
         repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for Qnr pentapeptide-repeat fluoroquinolone target protection.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
     object: drug0
+    description: Qnr variants inherit the Qnr parent confers-resistance-to relationship to fluoroquinolone
+      antibiotics.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
     - reference: ARO:3000419
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: Asserted on ARO:3000419 (quinolone resistance protein (qnr)), an is_a ancestor of this record's
-        ARO:3002801; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+      notes: ARO drug-class relationship asserted on the quinolone resistance protein (qnr) parent and
+        inherited by Qnr variants.
+    - reference: ARO:0000001
+      snippet: fluoroquinolone antibiotic
+      notes: ARO drug-class term inherited by Qnr records.
   - subject: domain
-    predicate: part of (domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The pentapeptide-repeat domain is part of the Qnr determinant.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
     - reference: Pfam:PF00805
       snippet: Pentapeptide repeats (8 copies)
-      notes: 'KB trait: the pentapeptide-repeat domain that mediates gyrase protection.'
+      notes: Pfam family for the Qnr pentapeptide-repeat domain.
   - subject: determinant
-    predicate: member of (adopts fold)
+    predicate: member of
     predicate_id: RO:0002350
     object: fold
+    description: Qnr determinants adopt the pentapeptide-repeat right-handed beta-helix fold.
     evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
+    - reference: Pfam:PF00805
+      snippet: Pentapeptide repeats (8 copies)
+      notes: Pfam family for the Qnr pentapeptide-repeat domain.
     - reference: ECOD:T.207.9.1
       snippet: Pentapeptide repeats
-      notes: 'KB trait: the pentapeptide-repeat (Qnr/MfpA right-handed β-helix, Rfr) fold.'
-  - subject: domain
-    predicate: enables (target protection)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+      notes: ECOD fold for Qnr/MfpA right-handed beta-helix pentapeptide repeats.
     - reference: PMID:21227918
       snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
         repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
-      notes: The pentapeptide-repeat domain protects DNA gyrase/topoisomerase IV from quinolones.
+      notes: Evidence for Qnr pentapeptide-repeat fluoroquinolone target protection.
+  - subject: domain
+    predicate: enables (Qnr target protection)
+    predicate_id: RO:0002327
+    object: mech0
+    description: The pentapeptide-repeat domain enables Qnr target protection through DNA mimicry.
+    evidence:
+    - reference: ARO:3002801
+      snippet: QnrVC4 is an integron-mediated quinolone resistance protein found in Aeromonas punctata.
+      notes: CARD definition for QnrVC4.
+    - reference: ARO:3000419
+      snippet: Qnr proteins are pentapeptide repeat proteins that mimic DNA and protect the cell from
+        the activity of fluoroquinolone antibiotics.
+      notes: CARD definition for quinolone resistance protein (qnr).
+    - reference: Pfam:PF00805
+      snippet: Pentapeptide repeats (8 copies)
+      notes: Pfam family for the Qnr pentapeptide-repeat domain.
+    - reference: ECOD:T.207.9.1
+      snippet: Pentapeptide repeats
+      notes: ECOD fold for Qnr/MfpA right-handed beta-helix pentapeptide repeats.
+    - reference: PMID:21227918
+      snippet: Plasmid genes qnrA, qnrB, qnrC, qnrD, qnrS, and qnrVC code for proteins of the pentapeptide
+        repeat family that protects DNA gyrase and topoisomerase IV from quinolone inhibition.
+      notes: Evidence for Qnr pentapeptide-repeat fluoroquinolone target protection.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-10T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed Qnr pentapeptide-repeat target-protection graphs
     llm_assisted: true
 license: CC-BY 4.0

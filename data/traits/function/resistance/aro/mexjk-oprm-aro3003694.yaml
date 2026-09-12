@@ -20,11 +20,9 @@ evidence:
   notes: PMID:15855547 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: MexJK-OprM → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:19166984). RND efflux pump (AcrB/MexB-type); proton-motive-force-driven drug efflux via a tripartite
-    system.
+  title: MexJK-OprM → RND antibiotic efflux → resistance
+  description: Curated resistance-causation graph for complete RND antibiotic efflux pumps. The graph
+    links the RND transporter domain and AcrB pore-domain fold to the antibiotic efflux mechanism.
   nodes:
   - node_id: determinant
     label: MexJK-OprM
@@ -38,12 +36,12 @@ causal_graphs:
     label: RND transporter domain (AcrB/AcrD/AcrF family)
     node_type: DOMAIN
     grounding: Pfam:PF00873
-    description: KB protein-trait record carrying the mechanism.
+    description: Transporter domain used by RND antibiotic efflux pumps.
   - node_id: fold
     label: AcrB pore-domain fold
     node_type: DOMAIN
     grounding: CATH:3.30.70.1430
-    description: KB protein-trait record carrying the mechanism.
+    description: Pore-domain fold used by RND antibiotic efflux pumps.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,61 +54,152 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this RND pump under the antibiotic efflux resistance mechanism.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The RND pump confers resistance by exporting antibiotics from the cell.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: domain
-    predicate: part of (domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The RND transporter domain is part of the modeled RND pump.
     evidence:
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
     - reference: Pfam:PF00873
       snippet: AcrB/AcrD/AcrF family
-      notes: 'KB trait: the RND (AcrB/AcrD/AcrF) transporter domain.'
+      notes: Pfam family for RND transporter domains.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
-    predicate: member of (adopts fold)
+    predicate: member of
     predicate_id: RO:0002350
     object: fold
+    description: The RND determinant includes a transporter that adopts the AcrB pore-domain fold.
     evidence:
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
     - reference: CATH:3.30.70.1430
       snippet: Multidrug efflux transporter AcrB pore domain
-      notes: 'KB trait: the AcrB pore-domain fold.'
+      notes: CATH fold for the AcrB pore domain.
   - subject: domain
-    predicate: enables (drug efflux)
+    predicate: enables (proton-motive-force-driven drug efflux)
     predicate_id: RO:0002327
     object: mech0
+    description: The RND transporter domain enables proton-motive-force-driven antibiotic efflux.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: The RND transporter domain carries out proton-motive-force-driven drug efflux.
+    - reference: ARO:3003694
+      snippet: MexJK-OprM is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexJ is the membrane fusion protein, MexK is the inner membrane resistance-nodulation-cell division
+        (RND) transporter, and OprM is the outer membrane factor protein.
+      notes: CARD definition for MexJK-OprM.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: Pfam:PF00873
+      snippet: AcrB/AcrD/AcrF family
+      notes: Pfam family for RND transporter domains.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-06T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed RND efflux complex and subunit causal graphs
     llm_assisted: true
 license: CC-BY 4.0
