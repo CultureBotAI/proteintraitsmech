@@ -24,7 +24,7 @@ folded into trait-onto-map.
 
 | # | Source | Fit (category) | Hier | Download / format | Licence | Rec |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | **microTrait rule tables** (`ukaraoz/microtrait` `data-raw/*.txt`) — 326 traits, 1,445 Boolean rules, 2,298 HMM rows with KEGG/EC/TCDB xrefs | FUNC_PATHWAY (composite guild traits), FUNC_TRANSPORT (substrate-uptake traits), FUNC_ENZYMATIC_ACTIVITY (single-enzyme rules), FUNC_ENVIRONMENTAL_RESPONSE (stress-tolerance traits) | ✅ 3 explicit granularity levels + colon-path names; 37 / 100 / 189 traits | pinned tag `v1.0.0` tarball; per-file raw TSV | **MIT** (`DESCRIPTION: License: MIT + file LICENSE`, © 2020 Ulas Karaoz) | ✅ **seed** |
+| 1 | **microTrait rule tables** (`ukaraoz/microtrait` `data-raw/*.txt`) — 271 distinct traits, 1,445 Boolean rules (947 mapped to traits), 2,298 HMM rows with KEGG/EC/TCDB xrefs | FUNC_PATHWAY (composite guild traits), FUNC_TRANSPORT (substrate-uptake traits), FUNC_ENZYMATIC_ACTIVITY (single-enzyme rules), FUNC_ENVIRONMENTAL_RESPONSE (stress-tolerance traits) | ✅ colon-path names give 222/271 an ancestor trait; 3 reporting levels (37 / 100 / 189 traits shown at granularity 1/2/3) | seven per-file raw TSVs at the pinned `v1.0.0` ref | **MIT** (`DESCRIPTION: License: MIT + file LICENSE`, © 2020 Ulas Karaoz) | ✅ **seed** |
 | 2 | **microtrait-hmm** profile HMMs (`ukaraoz/microtrait-hmm`) — 1,864 `.hmm`, 1,595 seed `.faa`, 1,259 MSAs; `microtrait.hmmdb.gz` 63.9 MB | grounding only — the HMM is the sequence-level *definition* of each protein-family variable in a rule | n/a | `releases/download/latest/microtrait.hmmdb.gz` (the URL `prep.hmmmodels()` itself uses); per-family files in tree | ⚠️ **no LICENSE file in the repo** (GitHub reports `NONE`) | ⚠️ reference by name + `microtraithmm2dbxref.txt`; do not redistribute profiles until licence is stated |
 | 3 | dbCAN subset used by microTrait (41 GH families, `inst/extdata/dbcan.selectids.txt`) | already covered — all 41 exist in `sequence/family/cazy/` | — | via dbCAN2 `download_file.php?file=dbCAN-HMMdb-V14.txt` | dbCAN (not needed; we have CAZy) | ↔ xref only |
 | 4 | trait-onto-map's microTrait slice (`data/raw/traitontomap/trait_catalog.tsv`) | superseded by #1 | none | already local | MIT | ⛔ do not use — no ontology ids; 431,758 of 432,945 ids are per-gene instances |
@@ -51,21 +51,33 @@ traits in three layers, each of which is a table in the package's `data-raw/`:
    quoted token resolves: 1,831 are HMM names, 755 are other rules (nesting), 0
    are unresolved. 936 `&`, 788 `|`, 3 `!`. Example:
    `arsenate->arsenite  ('arrA' & 'arrB')`; `iron reduction ('mtrA' | … | 'omcA')`.
-3. **Traits as targets of rules.** `microtrait_traits.txt` — 326 traits with
-   colon-path names (`Resource Acquisition:Substrate uptake:aromatic acid
-   transport`), an explicit `granularity` 1/2/3 (37 / 100 / 189), a `type`
-   (168 `count`, 158 `binary`), and a `strategy` (161 Resource Acquisition, 107
-   Resource Use, 58 Stress Tolerance). `microtrait_rule2trait.txt` (975 rows:
-   628 `count_by_substrate`, 235 `count`, 112 `binary`) maps rule → trait at
-   each granularity; the 628 substrate rows resolve through
-   `microtrait_substrate2rule.txt` (173 substrates → trait at 3 granularities).
+3. **Traits as targets of rules.** `microtrait_traits.txt` — 326 rows, **271
+   distinct traits** (#684). A trait has a colon-path name (`Resource
+   Acquisition:Substrate uptake:aromatic acid transport`), a `type` (121
+   `count`, 150 `binary`) and a `strategy` (110 Resource Acquisition, 103
+   Resource Use, 58 Stress Tolerance). The `granularity` column is a
+   *reporting level*, not a partition: the same trait is listed once per level
+   it is shown at — 224 traits at one level, 39 at two, 8 at all three — so
+   37 / 100 / 189 traits appear at granularity 1 / 2 / 3, and the finest level a
+   trait reaches is 1 for 26, 2 for 56, 3 for 189. `microtrait_rule2trait.txt`
+   (975 rows: 628 `count_by_substrate`, 235 `count`, 112 `binary`) maps 947
+   distinct rules → trait at each level; the 628 substrate rows resolve through
+   `microtrait_substrate2rule.txt` (173 substrates → trait at 3 levels).
 
 Join integrity, measured on the tables: 975/975 rule2trait rules exist in
-rules.txt; 271/271 trait names referenced exist in traits.txt; 0 traits are
-orphaned. 498 of the 1,445 rules are intermediate (never mapped directly to a
-trait) — they exist to be nested. 215 of the 628 substrate rows name a compound
-list (`arginine;lysine;histidine`) with no substrate2rule entry, so those need a
-split-and-lookup, not a straight join.
+rules.txt; 271/271 trait names referenced exist in traits.txt; every one of the
+271 traits is reachable from at least one rule (directly, or via a split of the
+`;`-joined substrate list). 498 of the 1,445 rules are intermediate (never
+mapped directly to a trait) — they exist to be nested; the other 947 are mapped.
+215 of the 628 substrate rows name a compound list (`arginine;lysine;histidine`)
+with no substrate2rule entry, so those need a split-and-lookup, not a straight
+join.
+
+Hierarchy, measured over the 271 distinct names using the colon path alone:
+222 have an ancestor among the traits and 204 have their immediate parent
+present; the 49 roots (30 at depth 3, 18 at depth 4, 1 at depth 2 — e.g.
+`Resource Acquisition:Substrate assimilation:N compounds`) attach to their
+strategy.
 
 ### Why this is a fit — and where the axis line falls
 
@@ -117,15 +129,20 @@ a capability) and a three-level guild hierarchy that no current source gives us.
 
 ### Download route
 
-The package pins a release: tag `v1.0.0` (2022-10-06),
-`https://api.github.com/repos/ukaraoz/microtrait/tarball/v1.0.0`. A second tag
-`kb` (2023-04-24) is the KBase-app branch. The default branch was last pushed
-2026-05-29, so **fetch the pinned tag, not `master`**. Nine files under
-`data-raw/` are the ingest inputs; raw URLs are
-`https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/<file>`.
-All nine were fetched at `master` for this round and parsed cleanly as
-tab-separated with a header row (`microtrait_ruleunwrapped.txt` has no header —
-it is a debug expansion of `rules.txt` and is not needed).
+The package has two release tags: `v1.0.0` (2022-10-06) and `kb` (2023-04-24,
+the KBase-app variant). The default branch was last pushed 2026-05-29 and is 28
+commits ahead of `v1.0.0`, so **fetch at the pinned tag, not `master`**. The
+ingest inputs are seven per-file raw URLs (#685 — one block per file, matching
+every other GitHub-hosted block in `download.yaml`, and a stable byte artefact
+for `fetch_source.py --sha256`, which a GitHub-generated archive is not):
+`https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_{traits,rules,rule2trait,substrate2rule,hmm,hmmsfromrules,hmm-performance}.txt`.
+Verified for this round: all seven, plus `LICENSE`, fetched at `refs/tags/v1.0.0`
+are **byte-identical** to the `master` copies the measurements above were made
+on (the 28 newer commits touch other `data-raw/` files), and `DESCRIPTION` at
+the tag carries the same `License: MIT + file LICENSE`. Each parses as
+tab-separated with a header row. `microtrait_ruleunwrapped.txt` has no header —
+it is a debug expansion of `rules.txt` — and `microtrait_hmm_names_fromrules.txt`
+duplicates `hmmsfromrules.txt`; neither is needed.
 
 The HMM database URL that `prep.hmmmodels()` hardcodes (`R/prep_hmmpackage.R:48`)
 is `https://github.com/ukaraoz/microtrait-hmm/releases/download/latest/microtrait.hmmdb.gz`
@@ -135,17 +152,19 @@ and a checksum in the `.fetch.json` sidecar if it is ever fetched.
 
 ### What a seeder would do (scope for the ingest issue)
 
-- One `ProteinTraitRecord` per **rule that maps to a trait** (975 rule→trait
-  rows over ~477 distinct mapped rules; the 498 intermediate rules become
-  `parent_traits`/composition nodes only if a child needs them), identifier
+- One `ProteinTraitRecord` per **rule that maps to a trait** — **947** distinct
+  mapped rules, measured as the distinct `microtrait_rule-name` values in
+  `rule2trait.txt` (#686); the 498 intermediate rules become
+  `parent_traits`/composition nodes only if a child needs them. Identifier
   `microtrait:<rule-name>`, definition from the trait display name + the Boolean
   expression rendered in words, `xrefs` = the EC/TCDB/KEGG of every leaf family,
-  `parent_traits` = the granularity-1/2 trait above it.
-- One record per **trait** at granularities 1–3 (326), identifier
-  `microtrait:trait/<slug>`, `parent_traits` from the colon path (measured: 49/56
-  granularity-2 and 107/189 granularity-3 names have a colon-prefix ancestor at
-  the level above; the rest attach to the nearest existing prefix — 172/189 do —
-  or to the strategy root).
+  `parent_traits` = the trait(s) the rule maps to.
+- One record per **distinct trait** (271, not one per reporting level),
+  identifier `microtrait:trait/<slug>`, `parent_traits` from the colon path:
+  204 have their immediate parent among the traits, 18 more have a higher
+  ancestor, and the 49 roots attach to their strategy (Resource Acquisition /
+  Resource Use / Stress Tolerance). The granularity levels a trait is reported
+  at are recorded as metadata, not as separate records.
 - The **HMM layer is not seeded**: each family name is recorded on the rule as a
   `representations` entry pointing at `microtrait-hmm/<name>.hmm` with the KEGG /
   EC / TCDB dbxrefs, and where an EC or TCDB family record already exists, that
@@ -154,10 +173,12 @@ and a checksum in the `.fetch.json` sidecar if it is ever fetched.
 
 ## Recommended next seeds (priority order)
 
-1. **microTrait rule tables** — file a `candidate` block now (done in this PR),
-   then an ingest issue scoped as above. Expected yield ≈ 326 trait records +
-   ≈ 480 rule records, almost all `FUNC_PATHWAY` / `FUNC_TRANSPORT`, with EC/TCDB
-   anchors for 596 + 99 of them and a hierarchy the corpus currently lacks.
+1. **microTrait rule tables** — file the `candidate` blocks now (done in this
+   PR), then an ingest issue scoped as above. Expected yield, from the measured
+   tables: **271 trait records + 947 rule records**, almost all `FUNC_PATHWAY` /
+   `FUNC_TRANSPORT`, with EC anchors already in the corpus for 596 of the 618 EC
+   numbers the families carry, family-level TCDB anchors for all 99 TCDB
+   families, and a hierarchy the corpus currently lacks.
 2. **TCDB subfamily/system level** — microTrait's 809 TCDB ids land at
    subfamily/system depth where we hold only 12 exact records; if #1 is seeded,
    the family-level mapping loses specificity, which argues for re-seeding TCDB
@@ -167,8 +188,9 @@ and a checksum in the `.fetch.json` sidecar if it is ever fetched.
 ## Sources
 
 - microTrait package — https://github.com/ukaraoz/microtrait ·
-  https://api.github.com/repos/ukaraoz/microtrait/tarball/v1.0.0 ·
-  `data-raw/microtrait_{traits,rules,rule2trait,substrate2rule,hmm,hmmsfromrules,hmm-performance}.txt`
+  https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/ ·
+  `microtrait_{traits,rules,rule2trait,substrate2rule,hmm,hmmsfromrules,hmm-performance}.txt` ·
+  https://github.com/ukaraoz/microtrait/blob/v1.0.0/DESCRIPTION
 - microtrait-hmm — https://github.com/ukaraoz/microtrait-hmm ·
   https://github.com/ukaraoz/microtrait-hmm/releases/download/latest/microtrait.hmmdb.gz ·
   `data/microtraithmm2dbxref.txt`

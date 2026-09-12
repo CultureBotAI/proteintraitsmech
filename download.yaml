@@ -930,35 +930,91 @@
 # directly; it reached the corpus only as a grounding-free slice of trait-onto-
 # map above (433,608 rows, zero ontology ids, none EC-anchored, all superseded).
 # The package itself ships the model as tab-separated tables under data-raw/:
-# 326 traits (granularity 1/2/3 = 37/100/189; type count|binary; strategy
+# 271 distinct traits (326 rows: a trait is listed once per reporting level it
+# is shown at, granularity 1/2/3 = 37/100/189; type count|binary; strategy
 # Resource Acquisition|Resource Use|Stress Tolerance), 1,445 Boolean rules over
-# named protein families and other rules, 2,298 family rows with KEGG (2,232),
-# EC (1,091) and TCDB (818) dbxrefs. Every rule token resolves; 596 of its 618
-# EC numbers and all 41 dbCAN GH families are already records here. Ingest the
-# rule->trait layer (FUNC_PATHWAY / FUNC_TRANSPORT / FUNC_ENZYMATIC_ACTIVITY /
+# named protein families and other rules (947 mapped to a trait, 498
+# intermediate), 2,298 family rows with KEGG (2,232), EC (1,091) and TCDB (818)
+# dbxrefs. Every rule token resolves; 596 of its 618 EC numbers and all 41 dbCAN
+# GH families are already records here. Ingest the rule->trait layer
+# (FUNC_PATHWAY / FUNC_TRANSPORT / FUNC_ENZYMATIC_ACTIVITY /
 # FUNC_ENVIRONMENTAL_RESPONSE); never the per-genome Present/Absent values.
-# See research/microtrait-direct-ingest-round1.md.
+# One block per file at the pinned v1.0.0 ref (master is 28 commits ahead; these
+# seven files are byte-identical at both). See
+# research/microtrait-direct-ingest-round1.md.
 -
-  url: https://api.github.com/repos/ukaraoz/microtrait/tarball/v1.0.0
-  local_name: microtrait/microtrait-v1.0.0.tar.gz
-  name: microTrait rule tables (data-raw/, pinned package release v1.0.0)
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_traits.txt
+  local_name: microtrait/microtrait_traits.txt
+  name: microTrait rule tables (data-raw/, package release v1.0.0)
   source: microtrait
   license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
   license_url: https://github.com/ukaraoz/microtrait/blob/v1.0.0/DESCRIPTION
   status: candidate
-  hierarchy: true (strategy -> granularity 1 -> 2 -> 3 traits; rules nest rules)
+  hierarchy: true (colon-path trait names - 222/271 have an ancestor trait, 49 roots attach to their strategy; rules nest rules)
   trait_categories: [FUNC_PATHWAY, FUNC_TRANSPORT, FUNC_ENZYMATIC_ACTIVITY, FUNC_ENVIRONMENTAL_RESPONSE]
   note: >-
-    Pin the v1.0.0 tag (2022-10-06); master was last pushed 2026-05 and the `kb`
-    tag is the KBase-app branch. Inputs are data-raw/microtrait_{traits,rules,
-    rule2trait,substrate2rule,hmm,hmmsfromrules,hmm-performance}.txt (headered
-    TSV; ruleunwrapped.txt is a headerless debug expansion, not needed). 975
-    rule->trait rows; 628 are count_by_substrate and 215 of those carry a
-    ';'-joined compound list absent from substrate2rule, so the join needs a
-    split-and-lookup. The HMM layer is recorded as representations naming the
-    family, not seeded, and existing EC/TCDB/CAZy records are cross-linked rather
-    than duplicated. Organism-level phenotype semantics of these traits belong to
-    TraitMech/METPO; seed the protein-family-defined capability and cross-link.
+    Trait table: name, short/long display name, strategy, type (count|binary),
+    granularity (reporting level, NOT a partition - the same trait recurs at up
+    to three levels), version, display order. One record per distinct trait.
+    The HMM layer is recorded as representations naming the family, not seeded,
+    and existing EC/TCDB/CAZy records are cross-linked rather than duplicated.
+    Organism-level phenotype semantics of these traits belong to TraitMech/METPO;
+    seed the protein-family-defined capability and cross-link.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_rules.txt
+  local_name: microtrait/microtrait_rules.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    1,445 rules: name + Boolean expression over quoted family names and other
+    rule names ('arrA' & 'arrB'; 936 &, 788 |, 3 !). Every quoted token resolves
+    to a family in microtrait_hmm.txt or to another rule.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_rule2trait.txt
+  local_name: microtrait/microtrait_rule2trait.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    975 rows mapping 947 distinct rules to a trait at each of three levels;
+    rule-type count_by_substrate (628) | count (235) | binary (112). Substrate
+    rows carry no trait name and resolve through substrate2rule; 215 of them
+    hold a ';'-joined compound list, so the join needs a split-and-lookup.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_substrate2rule.txt
+  local_name: microtrait/microtrait_substrate2rule.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: 173 substrates -> subclass1..3 -> trait name at each of three levels.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmm.txt
+  local_name: microtrait/microtrait_hmm.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    2,298 family rows (2,295 distinct names): KEGG KO, EC, TCDB dbxrefs and a
+    description. The grounding table for every family a rule names; MIT-covered,
+    so preferred over microtraithmm2dbxref.txt below.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmmsfromrules.txt
+  local_name: microtrait/microtrait_hmmsfromrules.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    The 1,831 families a rule actually references, with the KEGG-benchmark
+    trusted-cutoff score, F-score, TPR/TNR/FPR/FNR and accuracy per family
+    (1,637 have F >= 0.8). Use for evidence quality on representations.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmm-performance.txt
+  local_name: microtrait/microtrait_hmm-performance.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: Per-KO benchmark metrics (1,930 rows) keyed by KEGG id; optional.
 -
   url: https://raw.githubusercontent.com/ukaraoz/microtrait-hmm/master/data/microtraithmm2dbxref.txt
   local_name: microtrait/microtraithmm2dbxref.txt
