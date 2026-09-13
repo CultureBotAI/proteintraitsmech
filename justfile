@@ -973,6 +973,9 @@ audit-uniprot-grounding *args:
 # Select a deterministic source-stratified review batch (<=1,000 unique trait
 # records, >=25 per available source, and every recognized special case). Dry-run
 # by default; --apply writes only ignored staging artifacts and their manifests.
+# --prefer-taxon NCBITaxon:<id> (repeatable) ranks that organism's alternatives
+# first WITHIN each record without dropping any, so asking for an organism a
+# record lacks costs no coverage (#656). The manifest records the preference.
 # Prior exclusions are positional quadruples, repeated per batch:
 #   --exclude-reviewed-candidates B.candidates.jsonl --exclude-reviewed-manifest B.manifest.json
 #   --exclude-reviewed-resolved B.resolved.jsonl --exclude-decisions B.review-decisions.jsonl
