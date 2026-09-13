@@ -21,7 +21,13 @@ canonical example:
 - `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
   explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.
   `elife109154_acquisition_receipt.json` binds those assertions to source archive and
-  exact-accession UniProt response hashes. The source-specific contract accepts only
+  exact-accession UniProt response hashes. Its version 2 receipt also hashes the durable
+  `data/curation/elife109154_example_decisions.jsonl` ledger and binds every assertion
+  to an approved resolution with matching model, protein, and organism. Promotion
+  installs that ledger transactionally and retains prior review coverage across batches.
+  A version 1 receipt requires replay and approval of the complete existing panel to
+  upgrade; ordinary validation does not accept an unbound legacy receipt.
+  The source-specific contract accepts only
   whole-protein sequence families with exact source/UniProt sequence agreement; it
   does not qualify cropped domains without coordinates. `QUALIFIED` here describes
   sequence classification, not experimentally demonstrated activity. See the

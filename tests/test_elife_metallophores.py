@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import argparse
 import json
 import sys
 import zipfile
@@ -148,6 +149,104 @@ def test_corrupt_source_assertion_is_rejected():
     row["assertion"]["source_fact"]["source_header"] = "sp|P39071|DHBA_BACSU"
     with grounding.assertion_context([row["assertion"]]):
         assert grounding.contract_errors(row["evidence"])
+
+
+DECISIONS_PATH = "data/curation/elife109154_example_decisions.jsonl"
+
+
+def approved_decision(row):
+    return {"resolution_digest": row["resolution_digest"], "model": row["model"],
+            "protein_id": row["reference"]["protein_id"],
+            "taxon": row["reference"]["taxon_label"], "decision": "APPROVE",
+            "reason": "Exact source accession and full sequence reviewed.", "reviewer": "test"}
+
+
+def install_receipt_fixture(root, row):
+    assertions = grounding.jsonl_text([row["assertion"]])
+    reviews = grounding.jsonl_text([approved_decision(row)])
+    receipt = {"schema_version": 2, "archive_url": source.ARCHIVE_URL,
+               "archive_sha256": source.ARCHIVE_SHA256, "archive_md5": source.ARCHIVE_MD5,
+               "uniprot_release": grounding.UNIPROT_RELEASE,
+               "source_assertions_sha256": source.sha256(assertions.encode()),
+               "review_decisions_sha256": source.sha256(reviews.encode()),
+               "reviewed_resolutions": {row["assertion"]["assertion_digest"]: row["resolution_digest"]},
+               "uniprot_response_sha256": {row["reference"]["protein_id"]:
+                                            row["assertion"]["uniprot_response_sha256"]}}
+    for relative, text in [(source.ASSERTIONS_PATH, assertions), (DECISIONS_PATH, reviews),
+                           (grounding.RECEIPT_PATH, json.dumps(receipt))]:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+    return receipt
+
+
+@pytest.mark.parametrize("mutation", [
+    "missing", "checksum", "rejected", "identity", "unbound", "stale", "malformed", "version",
+])
+def test_durable_qualification_requires_bound_approval(monkeypatch, tmp_path, mutation):
+    row, _, _, _ = example_fixture()
+    receipt = install_receipt_fixture(tmp_path, row)
+    monkeypatch.setattr(grounding, "ROOT", tmp_path)
+    assert not grounding.contract_errors(row["evidence"])
+    path = tmp_path / DECISIONS_PATH
+    if mutation == "missing":
+        path.unlink()
+    elif mutation == "checksum":
+        path.write_text(path.read_text() + "\n")
+    elif mutation in {"rejected", "identity", "stale"}:
+        decision = approved_decision(row)
+        key, value = {"rejected": ("decision", "REJECT"), "identity": ("taxon", "Wrong organism"),
+                      "stale": ("resolution_digest", "0" * 64)}[mutation]
+        decision[key] = value
+        path.write_text(grounding.jsonl_text([decision]))
+        receipt["review_decisions_sha256"] = source.sha256(path.read_bytes())
+    elif mutation == "unbound":
+        receipt["reviewed_resolutions"] = {}
+    elif mutation == "malformed":
+        receipt["uniprot_response_sha256"] = []
+    else:
+        receipt["schema_version"] = 99
+    (tmp_path / grounding.RECEIPT_PATH).write_text(json.dumps(receipt))
+    assert grounding.contract_errors(row["evidence"])
+
+
+def test_partial_promotion_persists_external_reviews_and_replays_without_changes(monkeypatch, tmp_path):
+    """Temporary decision inputs must become durable, retaining earlier coverage (#691)."""
+    import yaml
+
+    _, _, response, fact = example_fixture()
+    rows = []
+    for model in ["EntA", "EntC"]:
+        record = yaml.safe_load(source.trait_path(model).read_text())
+        record.pop("canonical_examples", None)
+        member = dict(fact, model=model, trait_id=source.PREFIX + model)
+        member["candidate_id"] = "elife109154:" + source.digest(
+            {k: v for k, v in member.items() if k != "candidate_id"})
+        row = grounding.resolve_response(member, response, record)
+        rows.append(row)
+        target = tmp_path / row["record_path"]
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(yaml.safe_dump(record, sort_keys=False))
+    monkeypatch.setattr(grounding, "ROOT", tmp_path)
+    monkeypatch.setattr(grounding, "trait_path", lambda model: tmp_path / next(
+        r["record_path"] for r in rows if r["model"] == model))
+    monkeypatch.setattr(grounding, "resolve_current", lambda: (rows, []))
+    destination = tmp_path / "data/grounding"
+    destination.mkdir(parents=True)
+    for name in ["protein_registry.jsonl", "occurrence_evidence.jsonl"]:
+        (destination / name).write_text("")
+    review_input = tmp_path / "external-review.jsonl"
+    for index, row in enumerate(rows, 1):
+        review_input.write_text(grounding.jsonl_text([approved_decision(row)]))
+        assert grounding.promote(argparse.Namespace(decisions=review_input, apply=True)) == 0
+        review_input.unlink()
+        assert len(grounding.load_assertions()) == index
+        assert len(source.read_jsonl(tmp_path / DECISIONS_PATH)) == index
+        assert not grounding.contract_errors(row["evidence"])
+    before = {p: p.read_bytes() for p in (tmp_path / "data").rglob("*") if p.is_file()}
+    args = argparse.Namespace(decisions=tmp_path / DECISIONS_PATH, apply=True)
+    assert grounding.promote(args) == 0
+    assert {p: p.read_bytes() for p in before} == before
 
 
 def test_xlsx_cached_formulas_preserve_false_booleans_and_text(tmp_path):

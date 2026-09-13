@@ -26,6 +26,7 @@ from elife_metallophores import (
 
 UNIPROT_RELEASE = "2026_03"
 RECEIPT_PATH = "data/grounding/elife109154_acquisition_receipt.json"
+DECISIONS_PATH = "data/curation/elife109154_example_decisions.jsonl"
 STAGING = ROOT / "reports/uniprot-grounding/elife109154"
 _STAGED: ContextVar[dict | None] = ContextVar("elife109154_staged", default=None)
 
@@ -49,20 +50,64 @@ def load_assertions() -> dict:
         return staged
     raw = (ROOT / ASSERTIONS_PATH).read_bytes()
     receipt = json.loads((ROOT / RECEIPT_PATH).read_text())
-    if (receipt.get("source_assertions_sha256") != sha256(raw)
+    reviews = (ROOT / DECISIONS_PATH).read_bytes()
+    return verified_assertions(raw, receipt, reviews)
+
+
+def decisions_by_digest(rows: list[dict]) -> dict[str, dict]:
+    result = {}
+    for row in rows:
+        if (not isinstance(row, dict)
+                or not isinstance(row.get("resolution_digest"), str)
+                or not re.fullmatch(r"[0-9a-f]{64}", row["resolution_digest"])
+                or row.get("decision") not in {"APPROVE", "REJECT"}
+                or not isinstance(row.get("reason"), str) or not row["reason"].strip()):
+            raise ValueError("every reviewed row needs a resolution digest, decision, and rationale")
+        key = row["resolution_digest"]
+        if key in result:
+            raise ValueError("duplicate review decision")
+        result[key] = row
+    return result
+
+
+def verified_assertions(raw: bytes, receipt: dict, reviews: bytes) -> dict:
+    """Check the same complete artifact set during promotion and offline validation."""
+    keys = {"schema_version", "archive_url", "archive_sha256", "archive_md5", "uniprot_release",
+            "source_assertions_sha256", "uniprot_response_sha256", "review_decisions_sha256",
+            "reviewed_resolutions"}
+    if (not isinstance(receipt, dict) or set(receipt) != keys
+            or receipt.get("schema_version") != 2
+            or receipt.get("source_assertions_sha256") != sha256(raw)
+            or receipt.get("review_decisions_sha256") != sha256(reviews)
             or receipt.get("archive_sha256") != ARCHIVE_SHA256
             or receipt.get("archive_md5") != ARCHIVE_MD5
             or receipt.get("archive_url") != ARCHIVE_URL
             or receipt.get("uniprot_release") != UNIPROT_RELEASE):
         raise ValueError("invalid eLife source/acquisition receipt")
+    if any(not isinstance(receipt[key], dict) for key in
+           ("uniprot_response_sha256", "reviewed_resolutions")):
+        raise ValueError("invalid acquisition receipt mapping")
+    decisions = decisions_by_digest([json.loads(line) for line in reviews.decode().splitlines()])
     rows = [json.loads(line) for line in raw.decode().splitlines()]
+    for row in rows:
+        validate_assertion(row)
     result = {r["assertion_digest"]: r for r in rows}
     if len(result) != len(rows):
         raise ValueError("duplicate source assertion")
+    if set(receipt["reviewed_resolutions"]) != set(result):
+        raise ValueError("review coverage differs from durable source assertions")
+    if set(receipt["uniprot_response_sha256"]) != {r["protein_reference"]["protein_id"] for r in rows}:
+        raise ValueError("response coverage differs from durable source assertions")
     for row in rows:
         response_key = row["protein_reference"]["protein_id"]
         if receipt["uniprot_response_sha256"].get(response_key) != row["uniprot_response_sha256"]:
             raise ValueError("UniProt response is absent from the acquisition receipt")
+        decision = decisions[receipt["reviewed_resolutions"][row["assertion_digest"]]]
+        if decision["decision"] != "APPROVE" or any(decision.get(key) != expected for key, expected in (
+                ("model", row["source_fact"]["model"]),
+                ("protein_id", response_key),
+                ("taxon", row["protein_reference"]["taxon_label"]))):
+            raise ValueError("source assertion has no matching approved review")
     return result
 
 
@@ -70,12 +115,14 @@ def validate_assertion(row: dict) -> None:
     allowed = {"schema_version", "source_fact", "protein_reference", "uniprot_request_url",
                "uniprot_response_sha256", "trait_definition_sha256", "source_cross_reference",
                "assertion_digest"}
-    if set(row) - allowed or row.get("schema_version") != 1:
+    if not isinstance(row, dict) or set(row) - allowed or row.get("schema_version") != 1:
         raise ValueError("invalid assertion schema")
     payload = {k: v for k, v in row.items() if k != "assertion_digest"}
     if row.get("assertion_digest") != digest(payload):
         raise ValueError("source assertion digest mismatch")
     fact = row["source_fact"]
+    if not isinstance(fact, dict) or not isinstance(row["protein_reference"], dict):
+        raise ValueError("invalid source fact or protein reference")
     if fact.get("candidate_id") != "elife109154:" + digest(
             {k: v for k, v in fact.items() if k != "candidate_id"}):
         raise ValueError("source member digest mismatch")
@@ -104,6 +151,8 @@ def validate_assertion(row: dict) -> None:
     if sequence != reference["sequence"] or sha256(sequence.encode()) != reference["sequence_sha256"]:
         raise ValueError("source full sequence differs from UniProt")
     namespace, source_id = source_accession(fact["source_header"]) or (None, None)
+    if namespace not in {"UniProtKB", "RefSeq", "EMBL"} or not source_id:
+        raise ValueError("source header has no supported exact accession")
     if (namespace, source_id) != (fact["source_namespace"], fact["source_accession"]):
         raise ValueError("source identifier was not derived from the source header")
     accession = reference["protein_id"].removeprefix("UniProtKB:")
@@ -137,7 +186,7 @@ def contract_errors(evidence: dict) -> list[tuple[str, str]]:
         if any(k in evidence for k in ("intervals", "residue_positions", "coordinate_frame",
                                       "inheritance_path", "expected_residues")):
             raise ValueError("whole-protein membership must not carry coordinates or inheritance")
-    except (KeyError, TypeError, ValueError, OSError) as error:
+    except (KeyError, TypeError, ValueError, AttributeError, OSError) as error:
         return [("elife_metallophore_source_contract", str(error))]
     return []
 
@@ -151,7 +200,7 @@ def record_errors(record: dict, reference: dict, evidence: dict) -> list[tuple[s
             raise ValueError("source membership applies only to a whole-protein sequence family")
         if sha256(record.get("definition", "").encode()) != row["trait_definition_sha256"]:
             raise ValueError("trait definition changed after source-membership review")
-    except (KeyError, TypeError, ValueError, OSError) as error:
+    except (KeyError, TypeError, ValueError, AttributeError, OSError) as error:
         return [("elife_metallophore_record_binding", str(error))]
     return []
 
@@ -256,8 +305,7 @@ def promote(args: argparse.Namespace) -> int:
     resolved, _ = resolve_current()  # Replays pinned source bytes and exact API responses.
     current = {r["resolution_digest"]: r for r in resolved}
     decisions = read_jsonl(args.decisions)
-    if len({r["resolution_digest"] for r in decisions}) != len(decisions):
-        raise ValueError("duplicate review decision")
+    reviewed_decisions = decisions_by_digest(decisions)
     selected = []
     for decision in decisions:
         if decision["resolution_digest"] not in current:
@@ -276,12 +324,34 @@ def promote(args: argparse.Namespace) -> int:
         raise ValueError("no approved examples")
     registry_path = ROOT / "data/grounding/protein_registry.jsonl"
     evidence_path = ROOT / "data/grounding/occurrence_evidence.jsonl"
-    registry, errors = load_registry(registry_path)
-    evidence_registry, evidence_errors = load_evidence_registry(evidence_path)
-    if errors or evidence_errors:
-        raise ValueError("durable registry validation failed before promotion")
     existing_assertions = read_jsonl(ROOT / ASSERTIONS_PATH) if (ROOT / ASSERTIONS_PATH).exists() else []
     assertions = {r["assertion_digest"]: r for r in existing_assertions}
+    bindings = {r["assertion"]["assertion_digest"]: r["resolution_digest"] for r in selected}
+    if set(assertions) - set(bindings):
+        # An incremental batch must retain verified review coverage for every old
+        # assertion. A legacy receipt can only be upgraded by replaying and
+        # approving the entire existing panel against its pinned source bytes.
+        load_assertions()
+        prior_receipt = json.loads((ROOT / RECEIPT_PATH).read_text())
+        bindings = {**prior_receipt["reviewed_resolutions"], **bindings}
+        reviewed_decisions = {
+            **decisions_by_digest(read_jsonl(ROOT / DECISIONS_PATH)), **reviewed_decisions}
+    assertions.update({r["assertion"]["assertion_digest"]: r["assertion"] for r in selected})
+    assertion_rows = sorted(assertions.values(), key=lambda r: r["assertion_digest"])
+    assertion_text = jsonl_text(assertion_rows)
+    review_text = jsonl_text(sorted(reviewed_decisions.values(), key=lambda r: r["resolution_digest"]))
+    receipt = {"schema_version": 2, "archive_url": ARCHIVE_URL, "archive_sha256": ARCHIVE_SHA256,
+               "archive_md5": ARCHIVE_MD5, "uniprot_release": UNIPROT_RELEASE,
+               "source_assertions_sha256": sha256(assertion_text.encode()),
+               "uniprot_response_sha256": {r["protein_reference"]["protein_id"]:
+                                            r["uniprot_response_sha256"] for r in assertion_rows},
+               "review_decisions_sha256": sha256(review_text.encode()), "reviewed_resolutions": bindings}
+    verified_assertions(assertion_text.encode(), receipt, review_text.encode())
+    with assertion_context(assertion_rows):
+        registry, errors = load_registry(registry_path)
+        evidence_registry, evidence_errors = load_evidence_registry(evidence_path)
+    if errors or evidence_errors:
+        raise ValueError("durable registry validation failed before promotion")
     updates = {}
     for row in selected:
         pid = row["reference"]["protein_id"]
@@ -300,7 +370,6 @@ def promote(args: argparse.Namespace) -> int:
         if previous is None:
             examples.append(copy.deepcopy(row["example"]))
         updates[path] = _replace_examples_block(text, record)
-    assertion_rows = sorted(assertions.values(), key=lambda r: r["assertion_digest"])
     with assertion_context(assertion_rows):
         for path, text in updates.items():
             if _strict_errors_for_text(text):
@@ -309,17 +378,11 @@ def promote(args: argparse.Namespace) -> int:
                                        evidence_registry=evidence_registry, require_qualified=True)
             if findings:
                 raise ValueError(f"semantic validation failed: {path}: {findings}")
-    assertion_text = jsonl_text(assertion_rows)
-    receipt = {"schema_version": 1, "archive_url": ARCHIVE_URL, "archive_sha256": ARCHIVE_SHA256,
-               "archive_md5": ARCHIVE_MD5, "uniprot_release": UNIPROT_RELEASE,
-               "source_assertions_sha256": sha256(assertion_text.encode()),
-               "uniprot_response_sha256": {r["protein_reference"]["protein_id"]:
-                                            r["uniprot_response_sha256"] for r in assertion_rows},
-               "review_decisions_sha256": sha256(args.decisions.read_bytes())}
     updates = {path: text for path, text in updates.items() if path.read_text() != text}
     artifacts = [
         (ROOT / ASSERTIONS_PATH, assertion_text),
         (ROOT / RECEIPT_PATH, json.dumps(receipt, sort_keys=True, indent=2) + "\n"),
+        (ROOT / DECISIONS_PATH, review_text),
         (registry_path, _registry_text(registry)),
         (evidence_path, _registry_text(evidence_registry)),
     ]

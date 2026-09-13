@@ -205,7 +205,22 @@ panel changes no trait records. Regression checks cover duplicate source rows,
 identity/release/sequence mismatches, altered trait meaning, false-positive profile
 filtering, missing receipts, and cached spreadsheet values.
 
-Validation of the completed ingestion scanned 429,291 corpus records with zero
+Adversarial review in PR #690 reproduced two implementation defects, tracked as
+[#691](https://github.com/CultureBotAI/proteintraitsmech/issues/691) and
+[#692](https://github.com/CultureBotAI/proteintraitsmech/issues/692). The version 2
+acquisition receipt now verifies the durable decision ledger and binds each source
+assertion to its approved resolution and reviewed identity. Partial promotions retain
+earlier approval coverage, including when the new decisions came from a temporary
+file. Missing, altered, rejected, stale, or incomplete approvals and malformed receipt
+maps fail semantic validation. CI now selects full corpus validation for changes to
+the source-specific grounding helpers, catalog, or review ledger. All 13 regression
+cases failed against the original implementation and passed after these corrections.
+The initial CI run also exposed the corpus-size baseline missed by the ingestion
+([#693](https://github.com/CultureBotAI/proteintraitsmech/issues/693)). Its record count
+was refreshed to 429,291; the existing checked-pair count, mismatch count, and mismatch
+identity hash remain unchanged.
+
+Validation before adversarial review scanned 429,291 corpus records with zero
 closed-schema errors and zero grounding findings. All 16 new family records also
 passed `--require-qualified`. The full test suite passed with 2,867 tests passed and
 51 skipped; the focused integration run passed 630 tests with five skipped. Lint,
