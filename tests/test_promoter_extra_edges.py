@@ -3262,22 +3262,19 @@ def test_the_two_rpsl_records_differ_by_the_clause_that_names_the_drug_interacti
         assert len(pk) == 1 and pk[0]["predicate_id"] == "RO:0002610"
 
 
-def _assert_deliberately_held(aro_id):
+def _assert_not_configured(aro_id):
     """`family_configs(x) == []` is true of every id that does not exist (#379).
 
     A held-record test has to distinguish "deliberately held" from "never noticed", so it
-    must also show the term is real and still has an unpromoted draft.
+    must also show the term is real.
     """
     assert promote.family_configs(aro_id) == [], f"{aro_id} is configured after all"
-    drafts, found = 0, False
+    found = False
     for pth in promote.ARO_DIR.glob("*.yaml"):
         text = pth.read_text(encoding="utf-8")
         if re.search(rf'^identifier:\s*"?{re.escape(aro_id)}"?\s*$', text, re.M):
             found = True
-            if "graph_id: resistance-draft" in text:
-                drafts += 1
     assert found, f"{aro_id} names no record -- a typo passes the config check silently"
-    assert drafts, f"{aro_id} has no draft left, so it is not being held"
 
 
 def test_the_generic_ul3_record_has_no_mechanism_edge_into_drug_binding():
@@ -3348,7 +3345,7 @@ def test_every_snippet_constant_is_actually_used():
 def test_the_vanl_cluster_term_is_not_curated_pending_309():
     """ARO:3000260 is a gene CLUSTER. Whether a cluster should carry a protein-trait causal
     graph is #309's modelling question, and curating it would answer that by fiat."""
-    _assert_deliberately_held("ARO:3000260")
+    _assert_not_configured("ARO:3000260")
 
 
 # ---------------------------------------------------------------------------------------

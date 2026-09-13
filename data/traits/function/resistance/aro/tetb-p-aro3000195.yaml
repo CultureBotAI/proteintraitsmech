@@ -26,10 +26,9 @@ evidence:
   notes: PMID:15837373 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: tetB(P) → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:23027944). Target protection: the drug is displaced from a target that is not itself altered.'
+  title: tetB(P) → ribosomal target protection → tetracycline resistance
+  description: Curated resistance-causation graph for tetracycline ribosomal protection proteins, which
+    bind the ribosome and displace tetracycline from its ribosomal binding site.
   nodes:
   - node_id: determinant
     label: tetB(P)
@@ -69,6 +68,23 @@ causal_graphs:
       snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
         and chasing the drug from its binding site.
       notes: Family mechanism ARO:0001003.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    description: CARD classifies this determinant under antibiotic target protection.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -78,6 +94,23 @@ causal_graphs:
       snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
         and chasing the drug from its binding site.
       notes: Mechanism ARO:0001003 → resistance.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    description: Tetracycline target protection dislodges the drug from the ribosome and restores growth.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -93,16 +126,45 @@ causal_graphs:
         binding site and identify residues critical for conferring tetracycline resistance.
       notes: And the cryo-EM structure that made it direct rather than inferred, plus the residues that
         matter.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    description: Tetracycline RPP determinants confer resistance by protecting the ribosomal target.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
+    description: CARD asserts tetracycline-antibiotic resistance on the Tet RPP parent.
     evidence:
     - reference: ARO:0000002
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000050 ! tetracycline antibiotic'
       notes: Asserted on ARO:0000002 (tetracycline-resistant ribosomal protection protein), an is_a ancestor
         of this record's ARO:3000195; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: Dönhöfer et al. summarized tetracycline RPP target protection.
   - subject: determinant
     predicate: enables (binds the ribosome)
     predicate_id: RO:0002327
@@ -112,6 +174,15 @@ causal_graphs:
       snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
         and chasing the drug from its binding site.
       notes: Binding the ribosome is the first half of the mechanism.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    description: RPP binding to the ribosome is the first step in tetracycline target protection.
   - subject: drug0
     predicate: molecularly interacts with (occupies its binding site)
     predicate_id: RO:0002436
@@ -121,12 +192,24 @@ causal_graphs:
       snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
         and chasing the drug from its binding site.
       notes: 'Drug action: the site the RPP exists to clear.'
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: PMID:23027944
+      snippet: Moreover, we observe direct interaction between domain IV of TetM and the tetracycline
+        binding site and identify residues critical for conferring tetracycline resistance.
+      notes: TetM cryo-EM support for direct contact with the tetracycline binding site.
+    - reference: ARO:3000195
+      snippet: TetB(P) is a tetracycline ribosomal protection protein found on the same operon as tetA(P),
+        a tetracycline efflux protein.
+      notes: CARD definition for tetB(P).
+    description: Tetracycline occupies a ribosomal drug-binding site that RPPs clear.
   - subject: ribosome_binding
     predicate: negatively regulates (chases the drug from the site)
     predicate_id: RO:0002212
     object: tet_site
-    description: 'The causal core, and the seventh kind of mechanism in this corpus: the drug is displaced
-      from a target that is not itself altered.'
+    description: RPP binding displaces tetracycline from its ribosomal binding site.
     evidence:
     - reference: PMID:23027944
       snippet: Moreover, we observe direct interaction between domain IV of TetM and the tetracycline
@@ -140,9 +223,25 @@ causal_graphs:
       notes: The prior model had release happening INDIRECTLY via conformational change. The paper's own
         framing is that its structure supports direct dislodgement instead, so both readings are recorded
         rather than only the newer one.
+    - reference: ARO:0000002
+      snippet: A family of proteins known to bind to the 30S ribosomal subunit. This interaction prevents
+        tetracycline and tetracycline derivatives from inhibiting ribosomal function.
+      notes: CARD definition for tetracycline-resistant ribosomal protection proteins.
+    - reference: ARO:3000185
+      snippet: These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic
+        binding.
+      notes: CARD definition for antibiotic target protection proteins.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed tetracycline RPP ribosome-displacement graphs
   llm_assisted: true
 license: CC-BY 4.0

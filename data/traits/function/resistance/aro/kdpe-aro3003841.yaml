@@ -24,10 +24,9 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: kdpE → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
-    rather than a repressor whose loss lifts it.'
+  description: Conservative role-level graph for kdpE. ARO inherits an antibiotic efflux mechanism for
+    this response regulator, but the local definition describes virulence and potassium-transport regulation
+    without naming a resistance-causing efflux pump.
   nodes:
   - node_id: determinant
     label: kdpE
@@ -37,16 +36,6 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant activates
-    node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
-  - node_id: activation
-    label: activation of efflux pump expression
-    node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -59,48 +48,63 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this regulatory determinant under antibiotic efflux.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3003841
+      snippet: kdpE is a transcriptional activator that is part of the two-component system KdpD/KdpE
+        that is studied for its regulatory role in potassium transport and has been identified as an adaptive
+        regulator involved in the virulence and intracellular survival of pathogenic bacteria. kdpE regulates
+        a range of virulence loci through direct promoter binding.
+      notes: CARD definition for kdpE.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for the broad protein(s) and two-component regulatory system modulating antibiotic
+        efflux parent.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux exports antibiotics from the cell to produce resistance.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3003841
+      snippet: kdpE is a transcriptional activator that is part of the two-component system KdpD/KdpE
+        that is studied for its regulatory role in potassium transport and has been identified as an adaptive
+        regulator involved in the virulence and intracellular survival of pathogenic bacteria. kdpE regulates
+        a range of virulence loci through direct promoter binding.
+      notes: CARD definition for kdpE.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant is modeled at ARO's broad antibiotic-efflux regulatory level rather than
+      as a specific pump-expression route.
     evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: enables (activates the pump operon)
-    predicate_id: RO:0002327
-    object: activation
-    evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
-  - subject: activation
-    predicate: positively regulates (raises pump expression)
-    predicate_id: RO:0002213
-    object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
-    evidence:
-    - reference: ARO:3000553
-      snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+    - reference: ARO:3003841
+      snippet: kdpE is a transcriptional activator that is part of the two-component system KdpD/KdpE
+        that is studied for its regulatory role in potassium transport and has been identified as an adaptive
+        regulator involved in the virulence and intracellular survival of pathogenic bacteria. kdpE regulates
+        a range of virulence loci through direct promoter binding.
+      notes: CARD definition for kdpE.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for the broad protein(s) and two-component regulatory system modulating antibiotic
+        efflux parent.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Removed stale AcrR/AdeR archetype pump-expression paths from leftover efflux-regulator graphs
+    and kept the grounded ARO:3000451 antibiotic-efflux role
   llm_assisted: true
 license: CC-BY 4.0

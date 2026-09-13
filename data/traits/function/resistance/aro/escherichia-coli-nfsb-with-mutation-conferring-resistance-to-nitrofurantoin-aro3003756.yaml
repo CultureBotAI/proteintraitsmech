@@ -32,13 +32,11 @@ evidence:
   notes: PMID:9791100 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003755). Prodrug-activation loss, CONDITIONAL on an nfsA mutant background. That condition is
-    stated by CARD and kept -- it is the difference between 'mutations confer resistance' and 'mutations
-    confer resistance when another gene is already broken'.
+  title: Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin → decreased nitrofuran
+    reduction → resistance
+  description: Conservative graph for nfsB-mediated nitrofuran resistance. The graph grounds the nitrofurazone/nitrofurantoin
+    reduction activity to a broad NAD(P)H oxidoreductase GO parent, keeps the nfsA-mutant genetic background
+    explicit, and models diminished NfsB activity as a described local loss-of-function state.
   nodes:
   - node_id: determinant
     label: Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin
@@ -53,13 +51,21 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3004116
   - node_id: nitroreduction
-    label: oxygen-insensitive nitroreductase activity
+    label: oxygen-insensitive nitrofuran nitroreductase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0016651
+    description: Local NfsB nitrofuran-reduction activity, grounded to oxidoreductase activity acting
+      on NAD(P)H as the nearest stable GO molecular-function parent.
+  - node_id: loss
+    label: diminished NfsB nitroreductase activity
+    node_type: STATE
+    description: Local loss-of-function state for nfsB mutations that reduce nitrofuran nitroreduction.
   - node_id: nfsa_background
     label: nfsA mutant background
-    node_type: EXPERIMENTAL_FACTOR
-    description: The condition under which the resistance is observed. Ungrounded.
+    node_type: TRAIT
+    grounding: ARO:3003754
+    description: 'Genetic precondition: the nfsA loss-of-function background required before nfsB mutations
+      raise nitrofuran resistance.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -72,94 +78,308 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies nfsB records under mutation conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Loss-of-function point mutations in nfsB are a mutation-mediated nitrofuran-resistance
+      mechanism.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: nfsB mutations increase nitrofuran resistance after nfsA has already been inactivated.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: 'The enzyme reduces the nitroaromatic antibiotics themselves, so losing it is prodrug-activation
-        loss (rounds 56, 57, 95). NOTE the condition: resistance rises ''IN AN nfsA MUTANT BACKGROUND''
-        -- a genetic precondition CARD states and this graph does not drop.'
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to nitrofuran antibiotic.
+    description: ARO maps the antibiotic resistant nfsB family to nitrofuran antibiotics.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
+    - reference: ARO:3003755
+      snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
+        of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
+        a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
+        equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
+        in an nfsA mutant background.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
     - reference: ARO:3003755
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004116 ! nitrofuran antibiotic'
-      notes: Asserted on ARO:3003755 (Antibiotic resistant nfsB), an is_a ancestor of this record's ARO:3003756;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on ARO:3003755 and inherited by ARO:3003756.
+    - reference: ARO:3004116
+      snippet: nitrofuran antibiotic
+      notes: ARO drug-class term inherited by nfsB records.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
   - subject: determinant
-    predicate: enables (nitroreduction)
+    predicate: enables
     predicate_id: RO:0002327
     object: nitroreduction
+    description: NfsB normally enables oxygen-insensitive reduction of nitroaromatic nitrofuran antibiotics.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: '''The nsfB gene encodes a minor oxygen-insensitive nitroreductase''.'
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: GO:0016651
+      snippet: Catalysis of an oxidation-reduction (redox) reaction in which NADH or NADPH acts as a hydrogen
+        or electron donor and reduces a hydrogen or electron acceptor.
+      notes: GO oxidoreductase activity acting on NAD(P)H covers the reducing equivalents used by NfsB
+        without guessing the nitrofuran-specific acceptor.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
+  - subject: determinant
+    predicate: has quality
+    predicate_id: RO:0000086
+    object: loss
+    description: Resistance-conferring nfsB mutations diminish the minor NfsB nitroreductase activity.
+    evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
+    - reference: ARO:3003755
+      snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
+        of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
+        a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
+        equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
+        in an nfsA mutant background.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: GO:0016651
+      snippet: Catalysis of an oxidation-reduction (redox) reaction in which NADH or NADPH acts as a hydrogen
+        or electron donor and reduces a hydrogen or electron acceptor.
+      notes: GO oxidoreductase activity acting on NAD(P)H covers the reducing equivalents used by NfsB
+        without guessing the nitrofuran-specific acceptor.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
+  - subject: loss
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: nitroreduction
+    description: Loss of NfsB function inhibits oxygen-insensitive nitrofuran nitroreduction.
+    evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
+    - reference: ARO:3003755
+      snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
+        of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
+        a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
+        equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
+        in an nfsA mutant background.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: GO:0016651
+      snippet: Catalysis of an oxidation-reduction (redox) reaction in which NADH or NADPH acts as a hydrogen
+        or electron donor and reduces a hydrogen or electron acceptor.
+      notes: GO oxidoreductase activity acting on NAD(P)H covers the reducing equivalents used by NfsB
+        without guessing the nitrofuran-specific acceptor.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
   - subject: nitroreduction
-    predicate: has input (the nitroaromatic antibiotic)
+    predicate: has input
     predicate_id: RO:0002233
     object: drug0
-    description: The enzyme acts ON the drug -- which is what makes losing it prodrug-activation loss
-      rather than target alteration.
+    description: NfsB nitroreduction consumes nitrofuran antibiotics as substrates.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: '''NfsB reduces a broad range of nitroaromatic compounds INCLUDING THE ANTIBIOTICS nitrofurazone
-        and nitrofurantoin''.'
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: GO:0016651
+      snippet: Catalysis of an oxidation-reduction (redox) reaction in which NADH or NADPH acts as a hydrogen
+        or electron donor and reduces a hydrogen or electron acceptor.
+      notes: GO oxidoreductase activity acting on NAD(P)H covers the reducing equivalents used by NfsB
+        without guessing the nitrofuran-specific acceptor.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
+    - reference: ARO:3003755
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3004116 ! nitrofuran antibiotic'
+      notes: ARO drug-class relationship asserted on ARO:3003755 and inherited by ARO:3003756.
+    - reference: ARO:3004116
+      snippet: nitrofuran antibiotic
+      notes: ARO drug-class term inherited by nfsB records.
   - subject: nfsa_background
-    predicate: causally upstream of (the background in which resistance is seen)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: determinant
-    description: A genetic PRECONDITION, not a mechanism step. Kept because dropping it would turn a conditional
-      observation into an unconditional claim.
+    description: Loss of the major NfsA nitroreductase is the genetic precondition under which nfsB mutations
+      are reported to raise resistance.
     evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
     - reference: ARO:3003755
       snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
         of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
         a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
         equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
         in an nfsA mutant background.
-      notes: '''Mutations in nfsB lead to increased resistance ... IN AN nfsA MUTANT BACKGROUND''.'
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: ARO:3003754
+      snippet: The nfsA-encoded nitroreductase is the major oxygen-insensitive nitroreductase present
+        in E. coli. NfsA uses only NADPH and has broad electron acceptor specificity. Mutations in nfsA
+        cause resistance to nitrofurazone and furazolidone.
+      notes: CARD definition for antibiotic resistant nfsA, the genetic background required for the nfsB
+        second-step phenotype.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
+  - subject: loss
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Diminished NfsB nitroreductase activity is the second-step change that increases nitrofuran
+      resistance in an nfsA mutant background.
+    evidence:
+    - reference: ARO:3003756
+      snippet: nfsB encodes the minor oxygen-insesitive nitroreductase in E. coli. The first step of resistance
+        to nitrofurazone is mutation of nfsA, while the increased resistance associated with second step
+        mutants is a consequence of nfsB mutation.
+      notes: CARD definition for Escherichia coli nfsB with mutation conferring resistance to nitrofurantoin.
+    - reference: ARO:3003755
+      snippet: The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range
+        of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is
+        a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing
+        equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone
+        in an nfsA mutant background.
+      notes: CARD definition for the antibiotic resistant nfsB parent.
+    - reference: ARO:3003754
+      snippet: The nfsA-encoded nitroreductase is the major oxygen-insensitive nitroreductase present
+        in E. coli. NfsA uses only NADPH and has broad electron acceptor specificity. Mutations in nfsA
+        cause resistance to nitrofurazone and furazolidone.
+      notes: CARD definition for antibiotic resistant nfsA, the genetic background required for the nfsB
+        second-step phenotype.
+    - reference: DOI:10.1128/AAC.02156-15
+      notes: PMID:26552976 (aro citation)
+    - reference: DOI:10.1093/jac/dkn222
+      notes: PMID:18544599 (aro citation)
+    - reference: DOI:10.1128/JB.180.21.5529-5539.1998
+      notes: PMID:9791100 (aro citation)
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded nfsB nitrofuran resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

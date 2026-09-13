@@ -34,34 +34,32 @@ evidence:
   notes: PMID:8067768 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Staphylococcus aureus mupA conferring resistance to mupirocin → mechanism → resistance (curated
-    from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000446). Target alteration of the aminoacyl-tRNA synthetase mupirocin inhibits. The resistance
-    is qualified as LOW-LEVEL and conditional ('can confer'); NOT asserted is HOW the mutations reduce
-    the drug's effect, which CARD does not say.
+  title: Staphylococcus aureus mupA conferring resistance to mupirocin → isoleucyl-tRNA ligase → mupirocin
+    resistance
+  description: Conservative graph for mupirocin resistance through altered or alternative isoleucyl-tRNA
+    synthetase activity. The graph grounds the synthetase activity to GO:0004822, grounds downstream translation
+    to GO:0006412, and models aminoacylation as causally upstream of translation rather than part of translation.
   nodes:
   - node_id: determinant
     label: Staphylococcus aureus mupA conferring resistance to mupirocin
     node_type: PROTEIN
     grounding: ARO:3000521
   - node_id: mech0
-    label: mutation conferring antibiotic resistance
+    label: antibiotic target replacement
     node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3000212
+    grounding: ARO:0001002
   - node_id: drug0
     label: mupirocin-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007151
   - node_id: aminoacylation
-    label: isoleucyl-tRNA synthetase activity
+    label: isoleucine-tRNA ligase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-91).'
+    grounding: GO:0004822
   - node_id: protein_synthesis
-    label: protein synthesis
+    label: translation
     node_type: BIOLOGICAL_PROCESS
-    description: 'What the drug blocks. Ungrounded: no term verified this round.'
+    grounding: GO:0006412
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -74,72 +72,177 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: 'The determinant is modeled with the resistance mechanism supported by its ARO definition:
+      mutation for ileS variants and target replacement for alternate Mup enzymes.'
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The modeled mechanism keeps isoleucyl-tRNA synthetase function available under mupirocin
+      pressure.
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mupirocin resistance is caused by an isoleucyl-tRNA synthetase that remains active when
+      mupirocin targets this activity.
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: 'Drug action and resistance in two sentences. NOTE both hedges in the second: mutations ''CAN
-        confer LOW-LEVEL'' resistance -- neither the certainty nor the magnitude is asserted beyond that.'
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: CARD definition for antibiotic target replacement proteins.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to mupirocin-like antibiotic.
+    description: ARO links the antibiotic-resistant isoleucyl-tRNA synthetase parent to mupirocin-like
+      antibiotics.
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
     - reference: ARO:3000446
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007151 ! mupirocin-like antibiotic'
-      notes: Asserted on ARO:3000446 (antibiotic-resistant isoleucyl-tRNA synthetase (ileS)), an is_a
-        ancestor of this record's ARO:3000521; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship on ARO:3000446; modeled here as a determinant-to-mupirocin-like-antibiotic
+        edge and inherited by the ileS/mupA/mupB leaf records.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: determinant
-    predicate: enables (isoleucyl-tRNA charging)
+    predicate: enables
     predicate_id: RO:0002327
     object: aminoacylation
+    description: The determinant is an isoleucyl-tRNA synthetase and catalyzes isoleucine charging of
+      tRNA(Ile).
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: ileS IS the isoleucyl-tRNA synthetase.
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: GO:0004822
+      snippet: 'Catalysis of the reaction: ATP + L-isoleucine + tRNA(Ile) = AMP + diphosphate + L-isoleucyl-tRNA(Ile).'
+      notes: GO definition for isoleucine-tRNA ligase activity.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: drug0
-    predicate: negatively regulates (interferes with the synthetase)
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: aminoacylation
+    description: Mupirocin-like antibiotics inhibit protein synthesis by interfering with isoleucyl-tRNA
+      synthetase activity.
     evidence:
+    - reference: ARO:3000521
+      snippet: An alternative isoleucyl-tRNA synthetase conferring resistance to mupirocin.
+      notes: CARD definition for Staphylococcus aureus mupA conferring resistance to mupirocin.
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: '''Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase''.'
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: GO:0004822
+      snippet: 'Catalysis of the reaction: ATP + L-isoleucine + tRNA(Ile) = AMP + diphosphate + L-isoleucyl-tRNA(Ile).'
+      notes: GO definition for isoleucine-tRNA ligase activity.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
   - subject: aminoacylation
-    predicate: part of (protein synthesis)
-    predicate_id: BFO:0000050
+    predicate: causally upstream of (charges tRNA for translation)
+    predicate_id: RO:0002411
     object: protein_synthesis
-    description: 'Why inhibiting one synthetase stops translation: charged tRNA is required for it.'
+    description: Isoleucine-tRNA ligase activity supplies charged tRNA(Ile) needed by translation.
     evidence:
     - reference: ARO:3000446
       snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
         Mutations in ileS can confer low-level mupirocin resistance.
-      notes: '''Mupirocin inhibits protein synthesis BY interfering with'' the synthetase -- CARD makes
-        the synthetase the route to the process.'
+      notes: CARD definition for antibiotic-resistant isoleucyl-tRNA synthetase.
+    - reference: GO:0004822
+      snippet: 'Catalysis of the reaction: ATP + L-isoleucine + tRNA(Ile) = AMP + diphosphate + L-isoleucyl-tRNA(Ile).'
+      notes: GO definition for isoleucine-tRNA ligase activity.
+    - reference: GO:0006412
+      snippet: The cellular metabolic process in which a protein is formed, using the sequence of a mature
+        mRNA molecule to specify the sequence of amino acids in a polypeptide chain.
+      notes: GO definition for translation.
+    - reference: DOI:10.1128/AEM.02540-10
+      notes: PMID:21421794 (aro citation)
+    - reference: DOI:10.1099/0022-1317-50-10-909
+      notes: PMID:11599741 (aro citation)
+    - reference: DOI:10.1128/AAC.38.5.1205
+      notes: PMID:8067768 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded mupirocin-resistance IleRS graphs
   llm_assisted: true
 license: CC-BY 4.0

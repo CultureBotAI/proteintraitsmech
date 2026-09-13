@@ -23,11 +23,9 @@ evidence:
   notes: PMID:24393536 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: amrA → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:16915237). Efflux: the drug is captured and exported, so it never reaches its target at a useful
-    concentration.'
+  title: amrA → tripartite RND efflux complex → resistance
+  description: Curated resistance-causation graph for RND efflux-pump subunits. The determinant is modeled
+    as part of a local tripartite RND pump complex that exports antibiotics from the cell.
   nodes:
   - node_id: determinant
     label: amrA
@@ -40,12 +38,8 @@ causal_graphs:
   - node_id: pump_complex
     label: tripartite RND efflux complex
     node_type: STATE
-    description: 'Transporter + membrane-fusion protein + outer-membrane channel. Ungrounded here: the
-      specific complex differs per record and is named in that record''s own ARO relations.'
-  - node_id: binding_pocket
-    label: periplasmic multi-site drug binding pocket
-    node_type: STATE
-    description: 'Where the substrate is captured. Ungrounded: no ontology term denotes it.'
+    description: Local state for a complete RND efflux pump containing an inner-membrane RND transporter,
+      a membrane-fusion protein or periplasmic adaptor, and an outer-membrane channel.
   - node_id: export
     label: xenobiotic detoxification by transmembrane export across the plasma membrane
     node_type: BIOLOGICAL_PROCESS
@@ -62,57 +56,143 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this RND efflux-pump subunit under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3002982
+      snippet: amrA is the efflux pump subunit of the AmrAB-OprM multidrug efflux complex. amrA corresponds
+        to 1 locus in Pseudomonas aeruginosa PAO1 and 1 locus in Pseudomonas aeruginosa LESB58.
+      notes: CARD definition for amrA.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:16915237
       snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
         in which substrates undergo ordered binding change.
-      notes: Family mechanism ARO:0010000.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3002982
+      snippet: amrA is the efflux pump subunit of the AmrAB-OprM multidrug efflux complex. amrA corresponds
+        to 1 locus in Pseudomonas aeruginosa PAO1 and 1 locus in Pseudomonas aeruginosa LESB58.
+      notes: CARD definition for amrA.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:16915237
       snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
         in which substrates undergo ordered binding change.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The subunit contributes to an RND efflux complex that pumps antibiotic out of the cell.
     evidence:
-    - reference: PMID:16915237
-      snippet: AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with
-        an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.
-      notes: 'Murakami et al. 2006. RND resistance is a property of a THREE-part machine: the transporter,
-        a membrane-fusion protein and an outer-membrane channel. A subunit record is a component of that,
-        which is why the graph says `part of` a complex rather than making the subunit the whole pump.'
+    - reference: ARO:3002982
+      snippet: amrA is the efflux pump subunit of the AmrAB-OprM multidrug efflux complex. amrA corresponds
+        to 1 locus in Pseudomonas aeruginosa PAO1 and 1 locus in Pseudomonas aeruginosa LESB58.
+      notes: CARD definition for amrA.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:16915237
       snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
         in which substrates undergo ordered binding change.
-      notes: And the mechanism, from crystal structures of all three conformational states.
+      notes: Evidence for RND pump-mediated drug export.
   - subject: determinant
-    predicate: part of (a subunit of the tripartite pump)
+    predicate: part of
     predicate_id: BFO:0000050
     object: pump_complex
+    description: The determinant is a subunit of the modeled tripartite RND efflux pump.
     evidence:
+    - reference: ARO:3002982
+      snippet: amrA is the efflux pump subunit of the AmrAB-OprM multidrug efflux complex. amrA corresponds
+        to 1 locus in Pseudomonas aeruginosa PAO1 and 1 locus in Pseudomonas aeruginosa LESB58.
+      notes: CARD definition for amrA.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
     - reference: PMID:16915237
       snippet: AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with
         an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.
-      notes: The three parts named. Which complex this particular subunit belongs to is on the record's
-        own ARO part_of relation.
+      notes: Evidence for a tripartite RND pump architecture.
   - subject: pump_complex
-    predicate: causally upstream of (exports the drug)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: export
+    description: The complete tripartite RND pump exports antibiotics from the cell.
     evidence:
+    - reference: ARO:3002982
+      snippet: amrA is the efflux pump subunit of the AmrAB-OprM multidrug efflux complex. amrA corresponds
+        to 1 locus in Pseudomonas aeruginosa PAO1 and 1 locus in Pseudomonas aeruginosa LESB58.
+      notes: CARD definition for amrA.
+    - reference: ARO:0010004
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Resistance-nodulation-division
+        (RND) proteins are found in both prokaryotic and eukaryotic cells and have diverse substrate specificities
+        and physiological roles.
+      notes: CARD definition for RND antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:16915237
       snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
         in which substrates undergo ordered binding change.
-      notes: Three protomers, three functional states, one ordered cycle.
+      notes: Evidence for RND pump-mediated drug export.
+  - subject: export
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Antibiotic export lowers intracellular drug exposure and causes the modeled resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Evidence for RND pump-mediated drug export.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed RND efflux complex and subunit causal graphs
   llm_assisted: true
 license: CC-BY 4.0

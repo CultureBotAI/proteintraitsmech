@@ -18,13 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004903 isoniazid resistant mshB"
 causal_graphs:
 - graph_id: resistance
-  title: isoniazid resistant mshB → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004903). Reaction only. CARD gives substrate, product and pathway step, and never mentions a
-    drug, a mutation or resistance -- less than round 95's aftA, which at least called its product essential.
-    The neighbouring mshA record (round 95) says 'inability for antibiotic to ACTIVATE'; this one says
-    nothing of the kind.
+  title: isoniazid resistant mshB → mshB mutation → resistance
+  description: Conservative graph for isoniazid-resistant mshB. The graph grounds the MshB deacetylase
+    reaction and GlcN-Ins product named by ARO, keeps the isoniazid-like drug-class edge, and does not
+    add an unsupported isoniazid activation edge.
   nodes:
   - node_id: determinant
     label: isoniazid resistant mshB
@@ -38,14 +35,18 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
-  - node_id: deacetylation
-    label: GlcNAc-Ins deacetylase activity
+  - node_id: mshb_deacetylase
+    label: N-acetylglucosaminylinositol deacetylase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed.'
-  - node_id: mycothiol
-    label: mycothiol synthesis
+    grounding: GO:0035595
+  - node_id: glcn_ins
+    label: GlcN-Ins
+    node_type: CHEMICAL
+    grounding: CHEBI:58886
+  - node_id: mycothiol_biosynthesis
+    label: mycothiol biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: The pathway. Ungrounded.
+    grounding: GO:0010125
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -58,62 +59,140 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant mshB variants under point mutations.
     evidence:
     - reference: ARO:3004903
       snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
         is deacetylated by MshB to produce GlcN-Ins.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: ARO:3004902
+      snippet: Mutations that occur in the mshB gene that results in antibiotic resistance.
+      notes: CARD definition for the antibiotic-resistant mshB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited point-mutation mechanism links mshB determinants to resistance.
     evidence:
     - reference: ARO:3004903
       snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
         is deacetylated by MshB to produce GlcN-Ins.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: ARO:3004902
+      snippet: Mutations that occur in the mshB gene that results in antibiotic resistance.
+      notes: CARD definition for the antibiotic-resistant mshB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links mshB mutation records to antibiotic resistance.
     evidence:
     - reference: ARO:3004903
       snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
         is deacetylated by MshB to produce GlcN-Ins.
-      notes: A named reaction with named substrate and product -- more chemistry than most records here
-        -- and NO resistance claim whatsoever. CARD does not say mutations do anything.
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: ARO:3004902
+      snippet: Mutations that occur in the mshB gene that results in antibiotic resistance.
+      notes: CARD definition for the antibiotic-resistant mshB parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+    description: The ARO hierarchy links this mshB determinant to isoniazid-like antibiotics.
     evidence:
     - reference: ARO:3004903
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3004903 (isoniazid resistant mshB) in the CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
+        is deacetylated by MshB to produce GlcN-Ins.
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: ARO:3004902
+      snippet: Mutations that occur in the mshB gene that results in antibiotic resistance.
+      notes: CARD definition for the antibiotic-resistant mshB parent.
+    - reference: ARO:3004903
+      snippet: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic
+      notes: ARO drug-class relationship on ARO:3004903; modeled here as a determinant-to-isoniazid-like-antibiotic
+        edge.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: enables (deacetylation of GlcNAc-Ins)
+    predicate: enables
     predicate_id: RO:0002327
-    object: deacetylation
+    object: mshb_deacetylase
+    description: ARO identifies MshB as the deacetylase that converts GlcNAc-Ins to GlcN-Ins.
     evidence:
     - reference: ARO:3004903
       snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
         is deacetylated by MshB to produce GlcN-Ins.
-      notes: '''GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins'' -- substrate and product both
-        named.'
-  - subject: deacetylation
-    predicate: part of (the second step of mycothiol synthesis)
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: GO:0035595
+      snippet: 'Catalysis of the reaction: 1D-myo-inositol 2-acetamido-2-deoxy-alpha-D-glucopyranoside
+        + H2O = 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside + acetate.'
+      notes: GO definition for N-acetylglucosaminylinositol deacetylase activity.
+  - subject: mshb_deacetylase
+    predicate: has output (GlcN-Ins)
+    predicate_id: RO:0002234
+    object: glcn_ins
+    description: MshB deacetylase activity forms GlcN-Ins.
+    evidence:
+    - reference: ARO:3004903
+      snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
+        is deacetylated by MshB to produce GlcN-Ins.
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: GO:0035595
+      snippet: 'Catalysis of the reaction: 1D-myo-inositol 2-acetamido-2-deoxy-alpha-D-glucopyranoside
+        + H2O = 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside + acetate.'
+      notes: GO definition for N-acetylglucosaminylinositol deacetylase activity.
+    - reference: RHEA:26181
+      snippet: 1D-myo-inositol 2-acetamido-2-deoxy-alpha-D-glucopyranoside + H2O => 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside
+        + acetate
+      notes: Rhea's left-to-right directional child of RHEA:26180 declares 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside
+        as a product grounded to CHEBI:58886.
+  - subject: mshb_deacetylase
+    predicate: part of (mycothiol biosynthesis)
     predicate_id: BFO:0000050
-    object: mycothiol
+    object: mycothiol_biosynthesis
+    description: ARO places the MshB deacetylase reaction in mycothiol biosynthesis.
     evidence:
     - reference: ARO:3004903
       snippet: mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins
         is deacetylated by MshB to produce GlcN-Ins.
-      notes: '''involved in the second step of mycothiol synthesis''. NOT asserted: any link to a drug
-        or to resistance, which this definition never mentions.'
+      notes: CARD definition for isoniazid resistant mshB.
+    - reference: GO:0035595
+      snippet: 'Catalysis of the reaction: 1D-myo-inositol 2-acetamido-2-deoxy-alpha-D-glucopyranoside
+        + H2O = 1D-myo-inositol 2-amino-2-deoxy-alpha-D-glucopyranoside + acetate.'
+      notes: GO definition for N-acetylglucosaminylinositol deacetylase activity.
+    - reference: GO:0010125
+      snippet: The chemical reactions and pathways resulting in the formation of mycothiol, which consists
+        of N-acetyl-L-cysteine linked to a pseudodisaccharide, D-glucosamine and myo-inositol.
+      notes: GO definition for mycothiol biosynthetic process.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded mshB mycothiol-biosynthesis resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

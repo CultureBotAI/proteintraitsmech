@@ -26,10 +26,8 @@ evidence:
   notes: PMID:9371349 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: arr-1 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000266). Inactivation by chemical modification. Only the arr/ADP-ribosylating subset of ARO:3000576.
+  title: arr-1 → rifamycin ADP-ribosylation
+  description: Curated resistance-causation graph for ARR-mediated rifamycin ADP-ribosylation and inactivation.
   nodes:
   - node_id: determinant
     label: arr-1
@@ -48,18 +46,18 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000157
   - node_id: adp_ribosylation
-    label: ADP-ribosyltransferase activity on rifampin
+    label: NAD+ ADP-ribosyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: a rifampin-specific ADP-ribosyltransferase, not looked up rather than guessed
-      (rounds 56-60).'
+    grounding: GO:0003950
+    description: Grounded to the broad GO NAD+ ADP-ribosyltransferase activity term.
   - node_id: nad
-    label: NAD+ (the ADP-ribose donor)
+    label: NAD+
     node_type: CHEMICAL
     grounding: CHEBI:15846
   - node_id: modified
-    label: ADP-ribosylated, inactive rifampin
+    label: ADP-ribosylated inactive rifampin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for rifampin after ARR-mediated transfer of ADP-ribose from NAD+ to the drug.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -72,94 +70,251 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies ARR enzymes under the broad antibiotic inactivation resistance mechanism.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
     - reference: ARO:3000576
       snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: ARR antibiotic inactivation results from enzymatic rifamycin ADP-ribosylation.
     evidence:
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies ARR enzymes under ADP-ribosylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: Family mechanism ARO:3000266.
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The ADP-ribosylation resistance mechanism inactivates rifamycins by chemical modification.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: Mechanism ARO:3000266 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3000266
-      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: 'The reaction: ADP-ribose is transferred from NAD+ onto the drug.'
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
     - reference: ARO:3000576
       snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
-      notes: 'And what it achieves. SCOPE: this family sentence covers hydroxylation, glycosylation and
-        phosphorylation too -- only the ADP-ribosylating members are curated by this config.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
-    evidence:
-    - reference: ARO:3000390
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted on ARO:3000390 (rifampin ADP-ribosyltransferase (Arr)), an is_a ancestor of this
-        record's ARO:3002846; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
   - subject: determinant
     predicate: enables (ADP-ribosylates the drug)
     predicate_id: RO:0002327
     object: adp_ribosylation
+    description: ARR enzymes catalyze NAD+-dependent rifamycin ADP-ribosylation.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: '''the enzymatic addition of ADP-ribose''.'
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
+    - reference: GO:0003950
+      snippet: Catalysis of NAD+-dependent ADP-ribosyl transferase activity.
+      notes: GO grounding for the ARR transferase activity node.
   - subject: adp_ribosylation
     predicate: has input (the ADP-ribose donor)
     predicate_id: RO:0002233
     object: nad
+    description: NAD+ is the ADP-ribose donor consumed by the ARR transferase reaction.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: '''from NAD+'' -- the cosubstrate, which is what makes this a transferase rather than a hydrolase.'
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
   - subject: adp_ribosylation
     predicate: has input (the drug)
     predicate_id: RO:0002233
     object: drug0
+    description: Rifamycin antibiotics are substrates for the ARR ADP-ribosyltransferase reaction.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
   - subject: adp_ribosylation
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
     object: modified
-    description: The causal core.
+    description: ARR transfers ADP-ribose to rifampin, producing an ADP-ribosylated inactive drug state.
     evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: '''The inactivation of antibiotics by...'' -- CARD names the outcome in the same sentence
-        as the chemistry.'
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: ADP-ribosylated rifampin is inactive, lowering effective rifamycin exposure and causing
+      the resistance phenotype.
+    evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.43.1.181
+      snippet: Quan et al. determined that the rifampin inactivation intermediate RIP-TAs is 23-(O-ADP-ribosyl)rifampin.
+      notes: CARD-cited chemical evidence for 23-OH ADP-ribosylation of rifampin.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: ARR enzymes confer rifamycin resistance through NAD+-dependent ADP-ribosylation and drug
+      inactivation.
+    evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: Rifampin ADP-ribosyltransferases inactivate rifampin at the 23-OH position using NAD+.
+      notes: CARD definition for rifampin ADP-ribosyltransferase ARR enzymes.
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: CARD definition for ADP-ribosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
+    - reference: DOI:10.1128/AAC.41.11.2456
+      snippet: Quan et al. cloned the M. smegmatis rifampin-ribosylating gene and showed that disruption
+        increased rifampin susceptibility.
+      notes: CARD-cited arr-1 evidence linking ribosylation activity to resistance.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts a rifamycin antibiotic drug-class relation on the ARR family.
+    evidence:
+    - reference: ARO:3002846
+      snippet: arr-1 is a chromosome-encoded ribosyltransferase found in Mycolicibacterium smegmatis.
+      notes: CARD definition for arr-1.
+    - reference: ARO:3000390
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
+      notes: Rifamycin drug-class relation asserted on the ARR parent.
+    - reference: DOI:10.1073/pnas.0711939105
+      snippet: Baysarowich et al. biochemically characterized ARR-mediated rifamycin ADP-ribosylation
+        and resistance capacity.
+      notes: CARD-cited structural and biochemical evidence for ARR enzymes.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed ARR rifamycin ADP-ribosylation causal graphs
   llm_assisted: true
 license: CC-BY 4.0

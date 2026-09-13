@@ -20,12 +20,9 @@ evidence:
   notes: PMID:11796339 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: smeR → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000750). Regulation of efflux, not efflux. The graph stops at the efflux process; pump chemistry
-    lives on the pump records (rounds 67, 69). The edge says 'modulates' because CARD says 'directly or
-    indirectly'.
+  title: smeR → two-component regulation of antibiotic efflux → resistance
+  description: Curated resistance-causation graph for a two-component system that regulates antibiotic
+    efflux. The graph stops at the efflux process; pump chemistry lives on the pump records.
   nodes:
   - node_id: determinant
     label: smeR
@@ -35,6 +32,8 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+    description: Inherited ARO mechanism class. The graph expands this role through regulatory signal
+      transduction rather than treating SmeRS as a pump.
   - node_id: signalling
     label: two-component signal transduction
     node_type: BIOLOGICAL_PROCESS
@@ -44,8 +43,8 @@ causal_graphs:
     label: antibiotic efflux
     node_type: BIOLOGICAL_PROCESS
     grounding: ARO:0010000
-    description: Where this graph stops. The pumps' own mechanisms are curated on their records (SMR round
-      67, MATE round 69).
+    description: Downstream efflux process whose pump chemistry is curated on pump records, not on the
+      regulatory-system record.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -58,69 +57,108 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this determinant in the antibiotic-efflux resistance mechanism via efflux
+      regulation.
     evidence:
     - reference: ARO:3000750
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
-      notes: Family mechanism ARO:0010000.
+      notes: CARD definition for response regulators and sensor kinases in two-component systems that
+        modulate antibiotic efflux.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for proteins and two-component systems that modulate antibiotic efflux; this
+        licenses regulation of efflux without asserting that the regulator is itself a pump.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited ARO mechanism is antibiotic efflux; the downstream efflux process confers
+      resistance by transporting antibiotics out of the cell.
     evidence:
-    - reference: ARO:3000750
-      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
-        regulatory system that directly or indirectly change rates of antibiotic efflux.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for proteins and two-component systems that modulate antibiotic efflux; this
+        licenses regulation of efflux without asserting that the regulator is itself a pump.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant participates in a two-component regulatory route that changes efflux
+      rates and thereby contributes to antibiotic resistance.
     evidence:
-    - reference: ARO:3000750
-      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
-        regulatory system that directly or indirectly change rates of antibiotic efflux.
-      notes: 'The family claim, with its hedge: these proteins ''directly or INDIRECTLY change rates of
-        antibiotic efflux''. They do not efflux anything themselves.'
+    - reference: ARO:3003066
+      snippet: smeR is the responder component of a two component signal transduction system that includes
+        smeS.
+      notes: CARD definition identifying SmeR as the responder of the SmeRS pair.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for proteins and two-component systems that modulate antibiotic efflux; this
+        licenses regulation of efflux without asserting that the regulator is itself a pump.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: And what the efflux they modulate achieves -- cited so the graph can END here rather than
-        restate any pump's chemistry.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: participates in (two-component signal transduction)
     predicate_id: RO:0000056
     object: signalling
-    description: '''Participates in'', not ''enables'': each record is ONE half of a pair -- a sensor
-      kinase or a response regulator -- and neither performs the transduction alone.'
+    description: SmeR is the response-regulator component of the SmeR/SmeS two-component system, so the
+      graph uses participates-in rather than enables.
     evidence:
+    - reference: ARO:3003066
+      snippet: smeR is the responder component of a two component signal transduction system that includes
+        smeS.
+      notes: CARD definition identifying SmeR as the responder of the SmeRS pair.
     - reference: ARO:3000750
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
-      notes: '''either a histidine kinase or a response regulator, that is PART OF a two-component regulatory
-        system''.'
+      notes: CARD definition for response regulators and sensor kinases in two-component systems that
+        modulate antibiotic efflux.
   - subject: signalling
     predicate: regulates (changes efflux rates, directly or indirectly)
     predicate_id: RO:0002211
     object: efflux_process
-    description: 'RO:0002211 ''regulates'', not the positive form: CARD says ''change rates'', not ''increase''
-      them, and ''directly or indirectly''. kdpD''s own definition is about potassium homeostasis, so
-      for at least one member the link really is indirect.'
+    description: The parent evidence says two-component systems directly or indirectly change efflux rates,
+      so this graph uses broad regulation rather than positive or direct regulation.
     evidence:
     - reference: ARO:3000750
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
-      notes: '''directly or indirectly change rates of antibiotic efflux''.'
+      notes: CARD definition for response regulators and sensor kinases in two-component systems that
+        modulate antibiotic efflux.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for proteins and two-component systems that modulate antibiotic efflux; this
+        licenses regulation of efflux without asserting that the regulator is itself a pump.
   - subject: efflux_process
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Transporting antibiotics out of the cell is the terminal modeled cause of resistance
+      in this regulatory graph.
     evidence:
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: '''via the transport of antibiotics out of the cell''.'
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for proteins and two-component systems that modulate antibiotic efflux; this
+        licenses regulation of efflux without asserting that the regulator is itself a pump.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-09T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed SmeR/S efflux-regulatory graphs
   llm_assisted: true
 license: CC-BY 4.0

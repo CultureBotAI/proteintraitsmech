@@ -20,13 +20,10 @@ evidence:
   notes: PMID:27020939 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: antifungal resistance-associated MSH2 → mechanism → resistance (curated from ARO relations +
-    literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3009134). Mismatch repair, and resistance to three unrelated drug classes. The obvious reading
-    is that losing repair raises the mutation rate and resistance follows by any route -- hypermutation.
-    CARD does not say it, so it is not written. The graph carries the gene's function and stops.
+  title: antifungal resistance-associated MSH2 → DNA mismatch repair → antifungal resistance
+  description: Conservative graph for antifungal resistance-associated MSH2. The graph keeps the ARO point-mutation
+    resistance route, grounds the named DNA mismatch-repair process, and omits a hypermutation route because
+    ARO does not state it.
   nodes:
   - node_id: determinant
     label: antifungal resistance-associated MSH2
@@ -39,7 +36,8 @@ causal_graphs:
   - node_id: mismatch_repair
     label: DNA mismatch repair
     node_type: BIOLOGICAL_PROCESS
-    description: 'The one functional fact CARD gives. Ungrounded: not looked up rather than guessed.'
+    grounding: GO:0006298
+    description: Grounded to the GO DNA mismatch repair process named by ARO for MSH2.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,50 +50,81 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies altered MSH2 under mutation conferring antibiotic resistance.
     evidence:
     - reference: ARO:3009134
       snippet: MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit
         the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles
         (Fluconazole, Voriconazole).
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for antifungal resistance-associated MSH2.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/ncomms11128
+      notes: PMID:27020939 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad ARO mutation mechanism covers altered gene products that may result in antibiotic
+      resistance.
     evidence:
     - reference: ARO:3009134
       snippet: MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit
         the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles
         (Fluconazole, Voriconazole).
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for antifungal resistance-associated MSH2.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/ncomms11128
+      notes: PMID:27020939 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ARO reports that fungal strains with alterations in MSH2 exhibit antifungal resistance
+      while leaving the causal route unresolved.
     evidence:
     - reference: ARO:3009134
       snippet: MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit
         the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles
         (Fluconazole, Voriconazole).
-      notes: 'Three drug classes with three different targets, from one altered gene. CARD names the gene''s
-        function (mismatch repair) and lists the classes, and joins them by nothing. NOTE the phrasing:
-        ''STRAINS WITH ALTERATIONS ... EXHIBIT'' -- an observation about strains, not a claim about the
-        protein.'
+      notes: CARD definition for antifungal resistance-associated MSH2.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/ncomms11128
+      notes: PMID:27020939 (aro citation)
   - subject: determinant
     predicate: participates in (DNA mismatch repair)
     predicate_id: RO:0000056
     object: mismatch_repair
-    description: 'What the gene IS. NOT asserted: that losing repair causes hypermutation, or that hypermutation
-      is how three drug classes are resisted at once -- neither is in CARD''s two sentences.'
+    description: ARO names MSH2 as a fungal mismatch-repair gene.
     evidence:
     - reference: ARO:3009134
       snippet: MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit
         the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles
         (Fluconazole, Voriconazole).
-      notes: '''MSH2 is a mismatch repair gene in fungi''.'
+      notes: CARD definition for antifungal resistance-associated MSH2.
+    - reference: DOI:10.1038/ncomms11128
+      notes: PMID:27020939 (aro citation)
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded conservative MSH2 mismatch-repair graph
   llm_assisted: true
 license: CC-BY 4.0

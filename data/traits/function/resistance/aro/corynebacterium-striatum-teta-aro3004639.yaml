@@ -23,10 +23,10 @@ evidence:
   notes: PMID:10732668 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Corynebacterium striatum tetA → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:38974671). MFS antibiotic efflux pump; ion-motive-force-driven drug antiport across the membrane.
+  title: Corynebacterium striatum tetA → ABC efflux → tetracycline resistance
+  description: Curated resistance graph for Corynebacterium striatum tetA. The prior generic domain/fold
+    seed was removed because the CARD definition describes the tetAB genes as encoding an ABC transporter
+    but does not ground a specific tetA subunit domain.
   nodes:
   - node_id: determinant
     label: Corynebacterium striatum tetA
@@ -36,16 +36,6 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: domain
-    label: major facilitator superfamily (MFS) transporter domain
-    node_type: DOMAIN
-    grounding: Pfam:PF07690
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: MFS general substrate transporter fold
-    node_type: DOMAIN
-    grounding: CATH:1.20.1250.20
-    description: KB protein-trait record carrying the mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -58,61 +48,79 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies Corynebacterium striatum tetA under the antibiotic-efflux resistance mechanism.
     evidence:
-    - reference: PMID:38974671
-      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
-        an energy mode associated with changes in transporter conformations and gating during efflux across
-        the membrane.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3004639
+      snippet: The tetAB genes of the Corynebacterium striatum R-plasmid encode an ABC transporter and
+        confer tetracycline, oxytetracycline, and oxalic resistance.
+      notes: CARD definition for Corynebacterium striatum tetA.
+    - reference: ARO:0010001
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. ATP-binding cassette
+        (ABC) transporters are present in all cells of all organisms and use the energy of ATP binding/hydrolysis
+        to transport substrates across cell membranes.
+      notes: CARD definition for ABC antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1007/pl00008668
+      notes: PMID:10732668 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: TetAB-associated antibiotic efflux lowers intracellular antibiotic exposure.
     evidence:
-    - reference: PMID:38974671
-      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
-        an energy mode associated with changes in transporter conformations and gating during efflux across
-        the membrane.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3004639
+      snippet: The tetAB genes of the Corynebacterium striatum R-plasmid encode an ABC transporter and
+        confer tetracycline, oxytetracycline, and oxalic resistance.
+      notes: CARD definition for Corynebacterium striatum tetA.
+    - reference: ARO:0010001
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. ATP-binding cassette
+        (ABC) transporters are present in all cells of all organisms and use the energy of ATP binding/hydrolysis
+        to transport substrates across cell membranes.
+      notes: CARD definition for ABC antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1007/pl00008668
+      notes: PMID:10732668 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The Corynebacterium striatum R-plasmid tetAB genes encode an ABC efflux transporter that
+      confers resistance.
     evidence:
-    - reference: PMID:38974671
-      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
-        an energy mode associated with changes in transporter conformations and gating during efflux across
-        the membrane.
-      notes: Determinant → resistance phenotype.
-  - subject: domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF07690
-      snippet: Major Facilitator Superfamily
-      notes: 'KB trait: the MFS transporter domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:1.20.1250.20
-      snippet: MFS general substrate transporter like domains
-      notes: 'KB trait: the MFS general substrate transporter fold.'
-  - subject: domain
-    predicate: enables (drug efflux)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
-    - reference: PMID:38974671
-      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
-        an energy mode associated with changes in transporter conformations and gating during efflux across
-        the membrane.
-      notes: The MFS domain carries out ion-motive-force-driven drug efflux.
+    - reference: ARO:3004639
+      snippet: The tetAB genes of the Corynebacterium striatum R-plasmid encode an ABC transporter and
+        confer tetracycline, oxytetracycline, and oxalic resistance.
+      notes: CARD definition for Corynebacterium striatum tetA.
+    - reference: ARO:0010001
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. ATP-binding cassette
+        (ABC) transporters are present in all cells of all organisms and use the energy of ATP binding/hydrolysis
+        to transport substrates across cell membranes.
+      notes: CARD definition for ABC antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic-efflux resistance mechanism.
+    - reference: DOI:10.1007/pl00008668
+      notes: PMID:10732668 (aro citation)
 curation_history:
-  - timestamp: "2026-07-21T00:00:00Z"
-    curator: edison-causal-graphs
-    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
-    llm_assisted: true
+- timestamp: '2026-07-21T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Removed stale domain/fold evidence from the Corynebacterium striatum tetA graph
+  llm_assisted: true
 license: CC-BY 4.0

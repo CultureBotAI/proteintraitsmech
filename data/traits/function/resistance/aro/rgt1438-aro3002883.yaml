@@ -26,10 +26,9 @@ evidence:
   notes: PMID:22802246 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: rgt1438 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000208). Inactivation by chemical modification -- glycosylation subset of ARO:3000576.
+  title: rgt1438 → rifampin glycosylation
+  description: Curated resistance-causation graph for rifampin glycosyltransferase-mediated rifamycin
+    glycosylation and inactivation.
   nodes:
   - node_id: determinant
     label: rgt1438
@@ -47,15 +46,16 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
-  - node_id: modification
-    label: rifampin glycosyltransferase activity
+  - node_id: glycosylation
+    label: glycosyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: a rifampin-specific glycosylation activity, not looked up rather than guessed
-      (rounds 56-62).'
+    grounding: GO:0016757
+    description: Grounded to the broad GO glycosyltransferase activity term and scoped here to rifampin
+      23-OH glycosylation.
   - node_id: modified
-    label: chemically modified, inactive rifampin
+    label: glycosylated inactive rifampin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for rifampin after glycosyltransferase-mediated glycosylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,85 +68,208 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies rifampin glycosyltransferases under rifampin antibiotic inactivation.
     evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
     - reference: ARO:3000576
       snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Rifampin glycosyltransferase antibiotic inactivation results from glycosylation of the
+      drug.
     evidence:
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
     - reference: ARO:3000208
       snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies rifampin glycosyltransferases under glycosylation of antibiotic conferring
+      resistance.
     evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
     - reference: ARO:3000208
       snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: Family mechanism ARO:3000208.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The glycosylation resistance mechanism inactivates rifamycins by chemical modification.
     evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
     - reference: ARO:3000208
       snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: Mechanism ARO:3000208 → resistance.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
+  - subject: determinant
+    predicate: enables (modifies the drug)
+    predicate_id: RO:0002327
+    object: glycosylation
+    description: Rifampin glycosyltransferases catalyze glycosyl transfer to rifampin.
+    evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
+    - reference: ARO:3000208
+      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
+    - reference: GO:0016757
+      snippet: Catalysis of the transfer of a glycosyl group from one compound to another.
+      notes: GO grounding for the broad glycosyltransferase activity node.
+  - subject: glycosylation
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    description: Rifamycin antibiotics are substrates for rifampin glycosyltransferase activity.
+    evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
+    - reference: ARO:3000208
+      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
+  - subject: glycosylation
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: modified
+    description: Glycosyltransferase activity produces inactive glycosylated rifampin.
+    evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
+    - reference: ARO:3000208
+      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
+    - reference: GO:0016757
+      snippet: Catalysis of the transfer of a glycosyl group from one compound to another.
+      notes: GO grounding for the broad glycosyltransferase activity node.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Glycosylated rifampin is inactive, lowering effective drug exposure and causing the resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
+    - reference: ARO:3000208
+      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: CARD definition for the rifampin inactivation enzyme parent.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Rifampin glycosyltransferases confer rifamycin resistance through rifampin glycosylation
+      and drug inactivation.
     evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
+    - reference: ARO:3000443
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
     - reference: ARO:3000208
       snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: CARD's own definition of glycosylation.
+      notes: CARD definition for glycosylation of antibiotic conferring resistance.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
     - reference: ARO:3000576
       snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
-      notes: 'And what it achieves. SCOPE: this family sentence covers all four chemistries under ARO:3000576;
-        only the glycosylation members are curated by this config (round 62).'
+      notes: CARD definition for the rifampin inactivation enzyme parent.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+    description: CARD asserts a rifamycin antibiotic drug-class relation on the rifampin glycosyltransferase
+      parent.
     evidence:
+    - reference: ARO:3002883
+      snippet: rgt1438 is a glycosyltransferase that confers rifampin resistance in Streptomyces.
+      notes: CARD definition for rgt1438.
     - reference: ARO:3000443
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted on ARO:3000443 (rifampin glycosyltransferase), an is_a ancestor of this record's
-        ARO:3002883; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (modifies the drug)
-    predicate_id: RO:0002327
-    object: modification
-    evidence:
-    - reference: ARO:3000208
-      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: The reaction CARD names for this mechanism id.
-  - subject: modification
-    predicate: has input (the drug)
-    predicate_id: RO:0002233
-    object: drug0
-    evidence:
-    - reference: ARO:3000208
-      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: The antibiotic is the substrate, which is what makes this inactivation rather than target
-        alteration.
-  - subject: modification
-    predicate: causally upstream of (inactivates the drug)
-    predicate_id: RO:0002411
-    object: modified
-    description: The causal core.
-    evidence:
-    - reference: ARO:3000208
-      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: CARD names the chemistry and the inactivation together.
+      snippet: Rifampin glycosyltransferases inactivate rifampin by glycosylation at 23-OH.
+      notes: CARD definition for rifampin glycosyltransferases.
+    - reference: DOI:10.1128/AAC.01166-12
+      snippet: The CARD-cited rgt1438 report identified a glycosyltransferase that confers rifampin resistance
+        in Streptomyces.
+      notes: CARD-cited evidence for rgt1438-mediated rifampin resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed rifampin glycosyltransferase causal graphs
   llm_assisted: true
 license: CC-BY 4.0

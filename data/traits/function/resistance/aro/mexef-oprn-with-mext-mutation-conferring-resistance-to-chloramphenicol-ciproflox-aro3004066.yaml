@@ -27,17 +27,17 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: MexEF-OprN with MexT mutation conferring resistance to chloramphenicol, ciprofloxacin, and trimethoprim
-    → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:19166984). RND efflux pump (AcrB/MexB-type); proton-motive-force-driven drug efflux via a tripartite
-    system.
+    → regulated MexEF-OprN efflux → resistance
+  description: Curated resistance-causation graph for a MexEF-OprN regulatory variant. The graph grounds
+    the named MexEF-OprN pump and routes the determinant through the specific regulatory branch that increases
+    efflux.
   nodes:
   - node_id: determinant
     label: MexEF-OprN with MexT mutation conferring resistance to chloramphenicol, ciprofloxacin, and
       trimethoprim
-    node_type: PROTEIN
+    node_type: TRAIT
     grounding: ARO:3004066
+    description: Grounded composite CARD determinant for a MexEF-OprN regulatory variant.
   - node_id: mech0
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
@@ -46,16 +46,21 @@ causal_graphs:
     label: fluoroquinolone antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000001
-  - node_id: domain
-    label: RND transporter domain (AcrB/AcrD/AcrF family)
-    node_type: DOMAIN
-    grounding: Pfam:PF00873
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: AcrB pore-domain fold
-    node_type: DOMAIN
-    grounding: CATH:3.30.70.1430
-    description: KB protein-trait record carrying the mechanism.
+  - node_id: pump
+    label: MexEF-OprN
+    node_type: PROTEIN
+    grounding: ARO:3000798
+    description: Grounded to CARD's MexEF-OprN RND efflux pump.
+  - node_id: activator
+    label: MexT
+    node_type: PROTEIN
+    grounding: ARO:3000814
+    description: Grounded to CARD's MexT activator of MexEF-OprN expression.
+  - node_id: activation
+    label: positive regulation of MexEF-OprN expression
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+    description: Broad transcriptional activation process for MexEF-OprN expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,71 +73,183 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this composite determinant under antibiotic efflux.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump.
+    - reference: ARO:3000451
+      snippet: This resistance mechanism occurs as a result of modulating the expression of proteins involved
+        in antibiotic efflux.
+      notes: CARD definition for proteins modulating antibiotic efflux.
+    - reference: DOI:10.1128/AAC.02622-15
+      notes: PMID:26833155 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: MexEF-OprN antibiotic efflux causes the modeled resistance phenotype.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump.
+    - reference: ARO:3000451
+      snippet: This resistance mechanism occurs as a result of modulating the expression of proteins involved
+        in antibiotic efflux.
+      notes: CARD definition for proteins modulating antibiotic efflux.
+    - reference: DOI:10.1128/AAC.02622-15
+      notes: PMID:26833155 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The regulatory variant increases MexEF-OprN efflux and thereby confers antibiotic resistance.
     evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump.
+    - reference: ARO:3000451
+      snippet: This resistance mechanism occurs as a result of modulating the expression of proteins involved
+        in antibiotic efflux.
+      notes: CARD definition for proteins modulating antibiotic efflux.
+    - reference: DOI:10.1128/AAC.02622-15
+      notes: PMID:26833155 (aro citation)
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MexEF-OprN is the multidrug pump that supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+  - subject: determinant
+    predicate: causally upstream of (activates MexEF-OprN expression)
+    predicate_id: RO:0002411
+    object: activation
+    description: The MexT mutation is modeled as raising MexEF-OprN expression.
+    evidence:
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for transcriptional activation.
+  - subject: activator
+    predicate: enables (activates MexEF-OprN expression)
+    predicate_id: RO:0002327
+    object: activation
+    description: MexT participates in positive regulation of MexEF-OprN expression.
+    evidence:
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for transcriptional activation.
+  - subject: activation
+    predicate: positively regulates (raises MexEF-OprN expression)
+    predicate_id: RO:0002213
+    object: pump
+    description: Transcriptional activation raises MexEF-OprN expression.
+    evidence:
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
+    - reference: ARO:3000814
+      snippet: MexT is a LysR-type transcriptional activator that positively regulates the expression
+        of MexEF-OprN, OprD, and MexS.
+      notes: CARD definition for the MexT activator.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for transcriptional activation.
+    - reference: ARO:3000798
+      snippet: MexEF-OprN is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexE is the membrane fusion protein; MexF is the inner membrane transporter; and OprN is the outer
+        membrane channel. MexEF-OprN is associated with resistance to fluoroquinolones, chloramphenicol,
+        and trimethoprim.
+      notes: CARD definition for the MexEF-OprN pump.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
     evidence:
     - reference: ARO:3000798
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
       notes: Asserted on ARO:3000798 (MexEF-OprN), an is_a ancestor of this record's ARO:3004066; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
-  - subject: domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF00873
-      snippet: AcrB/AcrD/AcrF family
-      notes: 'KB trait: the RND (AcrB/AcrD/AcrF) transporter domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.30.70.1430
-      snippet: Multidrug efflux transporter AcrB pore domain
-      notes: 'KB trait: the AcrB pore-domain fold.'
-  - subject: domain
-    predicate: enables (drug efflux)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
-    - reference: PMID:19166984
-      snippet: The inner membrane component AcrB, a member of the Resistance Nodulation cell Division
-        (RND) family, is the major site for substrate recognition and energy transduction of the entire
-        tripartite system.
-      notes: The RND transporter domain carries out proton-motive-force-driven drug efflux.
+    - reference: ARO:3004066
+      snippet: The MexEF–OprN efflux pump in P. aeruginosa is overexpressed with MexT mutation conferring
+        resistance to chloramphenicol and ciprofloxacin.
+      notes: CARD definition for MexEF-OprN with MexT mutation conferring resistance to chloramphenicol,
+        ciprofloxacin, and trimethoprim.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-09T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed MexEF-OprN regulator-mutation graphs
     llm_assisted: true
 license: CC-BY 4.0

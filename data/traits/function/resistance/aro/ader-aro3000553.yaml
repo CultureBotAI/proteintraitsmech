@@ -35,15 +35,16 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: pump
-    label: the efflux pump this determinant activates
+    label: AdeABC RND multidrug efflux pump
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AdeABC
-      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
+    grounding: ARO:3000770
+    description: Grounded to CARD's AdeABC RND multidrug efflux pump class.
   - node_id: activation
-    label: activation of efflux pump expression
+    label: positive regulation of AdeABC transcription
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0045893
+    description: Grounded to the broad GO DNA-templated transcriptional activation process because AdeRS
+      is essential for AdeABC expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,48 +57,99 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this AdeRS component under antibiotic efflux because the system activates
+      AdeABC expression.
     evidence:
     - reference: ARO:3000553
       snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Family mechanism ARO:0010000.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: ARO:3000770
+      snippet: AdeABC is an RND multidrug efflux system in Acinetobacter species, notably A. baunmannii.
+        AdeA is a membrane fusion protein, AdeB is the inner membrane transporter, and AdeC is the outer
+        membrane factor. It confers resistance to tigecycline.
+      notes: CARD definition for the AdeABC efflux pump controlled by AdeRS.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents AdeABC expression driving drug export.
     evidence:
     - reference: ARO:3000553
       snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: ARO:3000770
+      snippet: AdeABC is an RND multidrug efflux system in Acinetobacter species, notably A. baunmannii.
+        AdeA is a membrane fusion protein, AdeB is the inner membrane transporter, and AdeC is the outer
+        membrane factor. It confers resistance to tigecycline.
+      notes: CARD definition for the AdeABC efflux pump controlled by AdeRS.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The AdeRS regulatory component supports AdeABC expression, which drives efflux-mediated
+      resistance.
     evidence:
     - reference: ARO:3000553
       snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: Determinant → resistance phenotype.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: ARO:3000770
+      snippet: AdeABC is an RND multidrug efflux system in Acinetobacter species, notably A. baunmannii.
+        AdeA is a membrane fusion protein, AdeB is the inner membrane transporter, and AdeC is the outer
+        membrane factor. It confers resistance to tigecycline.
+      notes: CARD definition for the AdeABC efflux pump controlled by AdeRS.
   - subject: determinant
     predicate: enables (activates the pump operon)
     predicate_id: RO:0002327
     object: activation
+    description: This AdeRS determinant participates in positive regulation of AdeABC expression.
     evidence:
     - reference: ARO:3000553
       snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
-        activates; this config asserts only the shared direction.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
   - subject: activation
     predicate: positively regulates (raises pump expression)
     predicate_id: RO:0002213
     object: pump
-    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
-      from the regulator DOING something, not from its loss.'
+    description: AdeRS-dependent activation increases AdeABC expression.
     evidence:
     - reference: ARO:3000553
       snippet: AdeR is a positive regulator of AdeABC efflux system.
-      notes: A positive regulator raises expression of the system it controls.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: ARO:3000770
+      snippet: AdeABC is an RND multidrug efflux system in Acinetobacter species, notably A. baunmannii.
+        AdeA is a membrane fusion protein, AdeB is the inner membrane transporter, and AdeC is the outer
+        membrane factor. It confers resistance to tigecycline.
+      notes: CARD definition for the AdeABC efflux pump controlled by AdeRS.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: AdeABC is the RND pump whose expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: CARD definition for the adeR response-regulator determinant.
+    - reference: ARO:3000770
+      snippet: AdeABC is an RND multidrug efflux system in Acinetobacter species, notably A. baunmannii.
+        AdeA is a membrane fusion protein, AdeB is the inner membrane transporter, and AdeC is the outer
+        membrane factor. It confers resistance to tigecycline.
+      notes: CARD definition for the AdeABC efflux pump controlled by AdeRS.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced archetype Ade regulator evidence with exact ARO evidence, grounded Ade pump/transcription
+    nodes, and linked pump expression to antibiotic efflux
   llm_assisted: true
 license: CC-BY 4.0

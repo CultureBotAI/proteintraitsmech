@@ -23,14 +23,10 @@ evidence:
   notes: PMID:30355673 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin via absence → mechanism
-    → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003764). Resistance by absence. Neither the identity of the deleted gene nor the downstream
-    consequence is asserted: CARD hedges the first and the second differs per record (chitin exposure,
-    metabolite accumulation, blocked entry). Both are good per-record additions and neither is a family
-    claim.'
+  title: HOG1 loss → exposed cell-wall chitin → caspofungin resistance
+  description: HOG1-specific resistance-causation graph. The graph represents wild-type HOG1 as a MAP
+    kinase whose absence increases exposed cell-wall chitin and uses that exposed-chitin state as the
+    curated route from loss of HOG1 to caspofungin resistance.
   nodes:
   - node_id: determinant
     label: Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin via absence
@@ -40,86 +36,193 @@ causal_graphs:
     label: resistance by absence
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3003764
+  - node_id: mapk_activity
+    label: MAP kinase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004707
+  - node_id: cell_wall_organization
+    label: cell wall organization
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0071555
+    description: Nearest GO process for the resistance-mediating HOG1-deletion state; CARD specifies increased
+      exposed chitin in the cell wall.
   - node_id: drug0
     label: echinocandin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007496
-  - node_id: absence
-    label: absence of the gene product
-    node_type: STATE
-    description: 'The determinant state, and the whole mechanism. Ungrounded: an absence is not an entity.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Echinocandin-resistance phenotype mediated by SAPK/HOG1 loss.
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (resistance by absence)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this determinant in the resistance-by-absence mechanism.
     evidence:
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Family mechanism ARO:3003764.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
+  - subject: determinant
+    predicate: enables (wild-type MAP kinase activity)
+    predicate_id: RO:0002327
+    object: mapk_activity
+    description: The encoded wild-type stress-activated protein kinase enables MAP kinase activity.
+    evidence:
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
+    - reference: GO:0004707
+      snippet: 'Catalysis of the reaction: protein + ATP = protein phosphate + ADP.'
+      notes: GO definition for MAP kinase activity; stress-activated protein kinase activity is a narrow
+        synonym of this term.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
+  - subject: mapk_activity
+    predicate: negatively regulates (exposed-chitin cell-wall organization)
+    predicate_id: RO:0002212
+    object: cell_wall_organization
+    description: CARD states that Hog1 deletion confers resistance through increased exposed chitin in
+      the cell wall; the graph represents this loss statement as wild-type HOG1 activity limiting the
+      cell-wall organization state that exposes more chitin.
+    evidence:
+    - reference: GO:0004707
+      snippet: 'Catalysis of the reaction: protein + ATP = protein phosphate + ADP.'
+      notes: GO definition for MAP kinase activity; stress-activated protein kinase activity is a narrow
+        synonym of this term.
+    - reference: GO:0071555
+      snippet: A process that results in the assembly, arrangement of constituent parts, or disassembly
+        of the cell wall
+      notes: Nearest broad GO process for a HOG1-dependent change in how chitin is arranged or exposed
+        in the fungal cell wall.
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
+  - subject: cell_wall_organization
+    predicate: causally upstream of (caspofungin resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The HOG1 child term links cell-wall chitin exposure to the caspofungin-resistance phenotype.
+    evidence:
+    - reference: GO:0071555
+      snippet: A process that results in the assembly, arrangement of constituent parts, or disassembly
+        of the cell wall
+      notes: Nearest broad GO process for a HOG1-dependent change in how chitin is arranged or exposed
+        in the fungal cell wall.
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Deletion of the SAPK gene or gene product confers antifungal resistance.
     evidence:
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Mechanism ARO:3003764 → resistance.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This ARO determinant denotes SAPK/HOG1 loss and links that loss to an echinocandin-resistance
+      phenotype.
     evidence:
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: 'The mechanism, with its hedge intact: ''usually a porin'' -- so porin-ness is NOT asserted
-        for these records, which include a kinase, a decarboxylase and a regulator.'
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: The general statement. Its porin example is quoted as an EXAMPLE, which is what CARD calls
-        it, not as this family's route.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to echinocandin antibiotic.
+    description: ARO asserts that absence of this SAPK branch confers resistance to echinocandin antibiotics.
     evidence:
     - reference: ARO:3007663
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007496 ! echinocandin antibiotic'
-      notes: Asserted on ARO:3007663 (stress-activated protein kinases), an is_a ancestor of this record's
-        ARO:3007664; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: has quality (deleted or inactivated)
-    predicate_id: RO:0000086
-    object: absence
-    description: The determinant here IS a loss -- what the record names is a gene whose deletion confers
-      resistance, not a gene product that acts.
-    evidence:
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: '''Deletion of gene or gene product results in resistance''.'
-  - subject: absence
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    description: The causal core, and deliberately the ONLY downstream edge -- what the absence leads
-      to differs across these records and no source covers all of them.
-    evidence:
-    - reference: ARO:3003764
-      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: '''antibiotic resistance conferred by deletion of gene''.'
+      notes: ARO drug-class relationship on stress-activated protein kinases, materialized into trait_relations
+        and inherited by HOG1.
+    - reference: ARO:3007664
+      snippet: Hog1 is a stress-activated protein kinase. Deletion of Hog1 confers resistance to caspofungin
+        through increase in exposed chitin levels in the cell wall.
+      notes: CARD definition for Candida spp. High Osmolarity Glycerol 1 conferring resistance to caspofungin
+        via absence.
+    - reference: ARO:3007663
+      snippet: Stress-activated protein kinases (SAPK) are kinases involved in cellular response to stress
+        whose absence confers resistance to antifungal drug compounds.
+      notes: CARD definition for stress-activated protein kinases.
+    - reference: PMID:30355673
+      notes: Day et al. studied HOG1 deletion and cell-wall-drug resistance in Candida auris; this is
+        CARD's citation for the HOG1/SAPK ARO branch.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated HOG1/SAPK echinocandin-resistance graph
   llm_assisted: true
 license: CC-BY 4.0

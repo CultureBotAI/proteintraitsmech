@@ -7,13 +7,20 @@
 name: history-and-vendored
 
 on:
+  # Required checks report on every PR and on the combined queue commit.
   pull_request:
+  merge_group:
+    types: [checks_requested]
   push:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # Standard-library Python only: no uv or dependency resolution. The checker fetches
@@ -32,10 +39,17 @@ jobs:
             src
             tests
             prompts
+            .github
           sparse-checkout-cone-mode: true
+      # `.github` is in the sparse list because claw now governs a workflow
+      # (.github/workflows/pr-shepherd.yml); a target the checkout omits is
+      # reported MISSING, not skipped (culturebotai-claw#391).
       # Keep retry policy in the workflow rather than forking the byte-governed launcher.
       # Exit 1 is the checker's retryable class; exit 2 is a local governance precondition
       # failure, so another network attempt cannot change its outcome.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: Verify vendored files match canonical claw
         run: |
           set -uo pipefail
@@ -91,10 +105,12 @@ jobs:
             justfile
             pyproject.toml
             uv.lock
+            .python-version
             README.md
           sparse-checkout-cone-mode: false
       - uses: astral-sh/setup-uv@v5
         with:
+          python-version: "3.13"
           enable-cache: true
       - uses: extractions/setup-just@v2
       - run: uv sync --extra dev

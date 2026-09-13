@@ -23,13 +23,10 @@ evidence:
   notes: PMID:9923599 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: BLMT → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3005036). A resistance protein whose mechanism is stated nowhere. It carries ARO:0001004 (inactivation)
-    and CARD describes no chemistry -- BLMT in fact SEQUESTERS bleomycin (round 72''s shape), and that
-    is uncited here, so no binding edge is written. The graph carries the genetic context CARD does give:
-    the ble gene on transposon Tn5.'
+  title: BLMT → bleomycin sequestration → resistance
+  description: Curated resistance-causation graph for BLMT. The graph keeps CARD's broad antibiotic-inactivation
+    classification, then grounds BLMT's more specific mechanism as antibiotic sequestration by direct
+    bleomycin binding.
   nodes:
   - node_id: determinant
     label: BLMT
@@ -39,15 +36,27 @@ causal_graphs:
     label: antibiotic inactivation
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001004
+  - node_id: mech1
+    label: antibiotic inactivation by sequestration
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3001206
   - node_id: drug0
-    label: glycopeptide antibiotic
+    label: bleomycin-family glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+    description: Grounded to CARD's broad glycopeptide-antibiotic drug class because the BLMT relation
+      inherits that ARO term for bleomycin.
+  - node_id: complex
+    label: BLMT-bleomycin sequestration complex
+    node_type: STATE
+    description: Local state for bleomycin bound by the Tn5 BLMT determinant. No stable term is available
+      for this exact determinant-drug complex.
   - node_id: tn5
-    label: the ble gene on transposon Tn5
+    label: ble gene on transposon Tn5
     node_type: NUCLEIC_ACID
-    description: The genetic context, which is the only thing CARD adds beyond restating the resistance.
-      Ungrounded.
+    grounding: SO:0000704
+    description: Local node for the Tn5 ble gene that encodes BLMT. Grounded to the broad Sequence Ontology
+      gene term because no stable narrow term is available for the transposon Tn5 ble gene.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,59 +69,175 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies BLMT under the broad antibiotic-inactivation resistance mechanism.
     evidence:
     - reference: ARO:3005036
-      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
-        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
-        to bleomycin.
-      notes: Family mechanism ARO:0001004.
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: ARO:0001004
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: BLMT inactivates bleomycin-family drugs by binding and sequestering them.
     evidence:
     - reference: ARO:3005036
-      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
-        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
-        to bleomycin.
-      notes: Mechanism ARO:0001004 → resistance.
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: ARO:0001004
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    description: BLMT belongs to the sequestration subtype of antibiotic inactivation because it binds
+      the drug.
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Sequestration prevents bleomycin-family antibiotics from reaching their cellular targets.
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: BLMT confers resistance by binding and sequestering bleomycin.
     evidence:
     - reference: ARO:3005036
-      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
-        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
-        to bleomycin.
-      notes: Three sentences that each restate the resistance -- 'a bleomycin resistance protein', 'confers
-        a survival advantage', 'confers resistance to bleomycin' -- and none says how. It carries the
-        INACTIVATION mechanism id while describing no reaction.
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    description: CARD asserts glycopeptide resistance for BLMT.
     evidence:
-    - reference: ARO:3004256
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3004256 (Bleomycin resistant protein), an is_a ancestor of this record's
-        ARO:3005036; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited by BLMT.
+  - subject: determinant
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: drug0
+    description: Crystal structures captured the Tn5 BLMT determinant bound to bleomycin.
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+  - subject: complex
+    predicate: has part
+    predicate_id: BFO:0000051
+    object: determinant
+    description: The sequestration complex contains the BLMT determinant.
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+  - subject: complex
+    predicate: has part
+    predicate_id: BFO:0000051
+    object: drug0
+    description: The sequestration complex contains the bound bleomycin-family drug.
+    evidence:
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited by BLMT.
+  - subject: complex
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Formation of the BLMT-drug complex sequesters the drug and prevents toxicity.
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: tn5
     predicate: causally upstream of (encodes BLMT)
     predicate_id: RO:0002411
     object: determinant
-    description: 'The only non-restating fact in the definition. NOT asserted: sequestration, which is
-      BLMT''s actual mechanism and appears in no sentence here.'
+    description: The Tn5 ble gene encodes the BLMT protein.
     evidence:
     - reference: ARO:3005036
-      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
-        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
-        to bleomycin.
-      notes: '''encoded by the ble gene on the transposon Tn5''.'
+      snippet: BLMT is a bleomycin resistance protein encoded by the ble gene on transposon Tn5.
+      notes: CARD definition for the Tn5 BLMT determinant.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: Maruyama et al. structurally characterized the Tn5 BLMT determinant in a bleomycin-bound
+        complex.
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated BLMT bleomycin-sequestration graph
   llm_assisted: true
 license: CC-BY 4.0

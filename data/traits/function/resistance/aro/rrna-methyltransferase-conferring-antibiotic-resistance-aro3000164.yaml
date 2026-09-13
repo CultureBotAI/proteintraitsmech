@@ -25,10 +25,9 @@ causal_graphs:
 - graph_id: resistance
   title: rRNA methyltransferase conferring antibiotic resistance → mechanism → resistance (curated from
     ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:40643688). Target modification by methylation: the enzyme counterpart of round 29''s decoding-site
-    mutations.'
+  description: Curated resistance-causation graph for generic rRNA methyltransferases. The graph covers
+    methylation of 16S or 23S rRNA antibiotic-binding sites by using broad rRNA methyltransferase and
+    rRNA groundings.
   nodes:
   - node_id: determinant
     label: rRNA methyltransferase conferring antibiotic resistance
@@ -43,19 +42,24 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000211
   - node_id: methyltransferase
-    label: 16S rRNA methyltransferase activity
+    label: rRNA methyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: GO has rRNA methyltransferase terms but the resistance-associated positions
-      differ per enzyme (G1405, A1408).'
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term because this parent covers
+      both 16S and 23S rRNA methyltransferases.
   - node_id: decoding_site
-    label: 16S rRNA decoding site (aminoglycoside binding site)
+    label: rRNA antibiotic-binding site
     node_type: NUCLEIC_ACID
-    description: 'The SAME site round 29''s records mutate. Ungrounded there and here, for the same reason:
-      no ontology term denotes it.'
+    grounding: SO:0000252
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrow term is available
+      for the generic rRNA antibiotic-binding site covered by this parent.
   - node_id: methylated
-    label: methylated decoding site
+    label: methylated rRNA antibiotic-binding site
     node_type: STATE
-    description: 'Ungrounded: a modified nucleotide state rather than a compound.'
+    grounding: SO:0000252
+    description: Local state representing methylation of an antibiotic-binding site in 16S or 23S rRNA.
+      Grounded to broad rRNA because no stable narrow term is available for a generic methylated rRNA
+      antibiotic-binding site.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,94 +72,143 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies rRNA methyltransferases under antibiotic target alteration because they
+      enzymatically methylate rRNA target sites.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic target alteration is the broad resistance mechanism represented by rRNA methylation.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies rRNA methyltransferases under the ribosome-specific target-alteration
+      branch.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Family mechanism ARO:3000211.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Chemical alteration of ribosomal rRNA is the modeled ribosome-specific cause of resistance.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: Mechanism ARO:3000211 → resistance.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: rRNA methyltransferases methylate rRNA target sites, chemically altering antibiotic binding
+      sites in the ribosome.
     evidence:
-    - reference: PMID:40643688
-      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
-        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
-        binding sites.
-      notes: 'The mechanism class: modify the drug''s binding site on the rRNA rather than the drug or
-        the protein.'
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: And its clinical weight -- 'exceptionally high-level' resistance, because a methylated site
-        resists the whole aminoglycoside class at once.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
-    predicate: enables (16S rRNA methylation)
+    predicate: enables
     predicate_id: RO:0002327
     object: methyltransferase
+    description: The determinant enables methyl transfer onto nucleoside residues in rRNA.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: The acquired enzymes modify 16S rRNA nucleotides in the decoding centre.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
   - subject: methyltransferase
-    predicate: causally upstream of (methylates the site)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: methylated
+    description: rRNA methyltransferase activity yields a methylated rRNA antibiotic-binding site.
     evidence:
-    - reference: PMID:40643688
-      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
-        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
-        binding sites.
-      notes: Methylation of the drug's rRNA binding site is the mechanism class.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
   - subject: methylated
-    predicate: negatively regulates (the modified site no longer binds the drug)
+    predicate: negatively regulates (blocks antibiotic binding)
     predicate_id: RO:0002212
     object: decoding_site
-    description: 'The causal core, and the same endpoint round 29 reaches by substitution instead: the
-      decoding site stops binding aminoglycosides.'
+    description: Methylation changes the rRNA antibiotic-binding site and prevents normal drug binding.
     evidence:
-    - reference: PMID:40643688
-      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
-        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
-        resistance and poses a major threat to their future clinical utility.
-      notes: '''exceptionally high-level aminoglycoside resistance'' -- one modification covers the class.'
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule. The methyl group can be transfered to the nucleobase or to the ribose
+        group of the nucleoside.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass; the graph uses it as a conservative
+        grounding for a generic rRNA antibiotic-binding site.
+  - subject: methylated
+    predicate: causally upstream of (blocks antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated rRNA antibiotic-binding site is the terminal modeled cause of the resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Generalized the rRNA methyltransferase parent graph from a 16S decoding site to an rRNA antibiotic-binding
+    site, grounded the activity and rRNA nodes, described every edge, and linked methylated rRNA to resistance
   llm_assisted: true
 license: CC-BY 4.0

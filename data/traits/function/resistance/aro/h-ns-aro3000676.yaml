@@ -24,10 +24,9 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: H-NS → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000702). Loss of repression: the determinant represses an efflux pump, and mutations in it raise
-    pump expression.'
+  description: Conservative role-level graph for H-NS. ARO classifies H-NS under protein regulators that
+    modulate antibiotic efflux, but the local definition names several RND-type exporter genes rather
+    than a single resistance-causing pump-expression route.
   nodes:
   - node_id: determinant
     label: H-NS
@@ -37,17 +36,6 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
-  - node_id: pump
-    label: the efflux pump this determinant represses
-    node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AcrAB-TolC
-      for AcrR, AdeIJK for AdeN, CmeABC for CmeR. The pump mechanisms themselves are curated records (rounds
-      33-36).
-  - node_id: repression
-    label: repression of efflux pump expression
-    node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: negative regulation of transcription exists in GO, but which promoter differs
-      per record.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,63 +48,60 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies this regulatory determinant under antibiotic efflux.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000676
+      snippet: H-NS is a histone-like protein involved in global gene regulation in Gram-negative bacteria.
+        It is a repressor of the membrane fusion protein genes acrE, mdtE, and emrK as well as nearby
+        genes of many RND-type multidrug exporters.
+      notes: CARD definition for H-NS.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for the broad protein(s) and two-component regulatory system modulating antibiotic
+        efflux parent.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux exports antibiotics from the cell to produce resistance.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000676
+      snippet: H-NS is a histone-like protein involved in global gene regulation in Gram-negative bacteria.
+        It is a repressor of the membrane fusion protein genes acrE, mdtE, and emrK as well as nearby
+        genes of many RND-type multidrug exporters.
+      notes: CARD definition for H-NS.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant is modeled at ARO's broad antibiotic-efflux regulatory level rather than
+      as a specific pump-expression route.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: enables (represses the pump operon)
-    predicate_id: RO:0002327
-    object: repression
-    evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: CARD's definition of AcrR, the archetype. Each record's own definition names the pump IT
-        represses; this config asserts only the shared direction.
-  - subject: repression
-    predicate: negatively regulates (holds pump expression down)
-    predicate_id: RO:0002212
-    object: pump
-    evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: The wild-type function. Resistance is the loss of it.
-  - subject: determinant
-    predicate: negatively regulates (mutation lifts the repression)
-    predicate_id: RO:0002212
-    object: repression
-    description: 'The causal core, and it runs backwards as katG''s does (round 27): resistance is the
-      ABSENCE of a function. A mutated repressor stops holding the pump down, so more pump is made.'
-    evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: '''AcrR mutations result in high level antibiotic resistance'' -- CARD states the direction
-        outright.'
+    - reference: ARO:3000676
+      snippet: H-NS is a histone-like protein involved in global gene regulation in Gram-negative bacteria.
+        It is a repressor of the membrane fusion protein genes acrE, mdtE, and emrK as well as nearby
+        genes of many RND-type multidrug exporters.
+      notes: CARD definition for H-NS.
+    - reference: ARO:3000451
+      snippet: Protein(s) and two component regulatory systems that directly or indirectly change rates
+        of antibiotic efflux.
+      notes: CARD definition for the broad protein(s) and two-component regulatory system modulating antibiotic
+        efflux parent.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Removed stale AcrR/AdeR archetype pump-expression paths from leftover efflux-regulator graphs
+    and kept the grounded ARO:3000451 antibiotic-efflux role
   llm_assisted: true
 license: CC-BY 4.0

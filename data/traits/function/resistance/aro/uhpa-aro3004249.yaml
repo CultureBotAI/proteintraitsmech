@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1016/j.ijantimicag.2009.11.011
   notes: PMID:20071153 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] UhpA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: UhpA mutation → reduced UhpT expression → reduced fosfomycin uptake
+  description: Curated graph for UhpA-mediated fosfomycin resistance. The graph grounds wild-type UhpA
+    as a positive transcriptional regulator of the UhpT fosfomycin importer and represents resistance
+    mutations as variants that reduce UhpT expression.
   nodes:
   - node_id: determinant
     label: UhpA
@@ -36,53 +36,156 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: activation
+    label: positive regulation of UhpT transcription
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+    description: Grounded to broad GO DNA-templated transcriptional activation because UhpA activates
+      uhpT expression.
+  - node_id: uhpt
+    label: UhpT fosfomycin importer
+    node_type: PROTEIN
+    grounding: ARO:3004248
+    description: Grounded to CARD's antibiotic-resistant UhpT class.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Fosfomycin resistance mediated by reduced UhpT expression.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies UhpA under mutation conferring antibiotic resistance.
     evidence:
-    - reference: DOI:10.1093/jac/dkp288
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004249
       snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
         into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
         resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+  - subject: determinant
+    predicate: enables (activates UhpT transcription)
+    predicate_id: RO:0002327
+    object: activation
+    description: Wild-type UhpA positively regulates UhpT expression; resistance-conferring UhpA mutations
+      reduce that expression.
+    evidence:
+    - reference: ARO:3004249
+      snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
+        into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
+        resistance.
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3004248
+      snippet: UhpT encodes a transporter that can import fosfomycin-type drugs into bacterial cells.
+        Mutations to UhpT confer resistance.
+      notes: CARD definition for antibiotic-resistant UhpT.
+  - subject: activation
+    predicate: positively regulates (raises UhpT expression)
+    predicate_id: RO:0002213
+    object: uhpt
+    description: UhpA-dependent transcriptional activation increases expression of the UhpT fosfomycin
+      importer.
+    evidence:
+    - reference: ARO:3004249
+      snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
+        into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
+        resistance.
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: GO:0045893
+      snippet: Any process that activates or increases the frequency, rate or extent of cellular DNA-templated
+        transcription.
+      notes: GO definition for broad transcriptional activation.
+    - reference: ARO:3004248
+      snippet: UhpT encodes a transporter that can import fosfomycin-type drugs into bacterial cells.
+        Mutations to UhpT confer resistance.
+      notes: CARD definition for antibiotic-resistant UhpT.
+  - subject: uhpt
+    predicate: negatively regulates (fosfomycin resistance)
+    predicate_id: RO:0002212
+    object: resistance
+    description: UhpT importer expression counteracts the reduced-fosfomycin-uptake state that confers
+      resistance.
+    evidence:
+    - reference: ARO:3004249
+      snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
+        into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
+        resistance.
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: ARO:3004248
+      snippet: UhpT encodes a transporter that can import fosfomycin-type drugs into bacterial cells.
+        Mutations to UhpT confer resistance.
+      notes: CARD definition for antibiotic-resistant UhpT.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: UhpA mutations negatively impact UhpT expression and can confer fosfomycin resistance.
     evidence:
-    - reference: DOI:10.1093/jac/dkp288
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1093/jac/dkp288
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004249
       snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
         into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
         resistance.
-      notes: ARO definition of this determinant (UhpA).
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The UhpA determinant links resistance-conferring mutations to decreased UhpT expression
+      and reduced fosfomycin import.
+    evidence:
+    - reference: ARO:3004249
+      snippet: UhpA acts as a positive regulator of UhpT, which is a transporter to bring fosfomycin drugs
+        into bacterial cells. Mutations in UhpA that negatively impact the expression of UhpT can confer
+        resistance.
+      notes: CARD definition for UhpA.
+    - reference: ARO:3003893
+      snippet: uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer
+        fosfomycin resistance by reducing uhpT expression.
+      notes: CARD definition for Escherichia coli uhpA with mutation.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: ARO:3004248
+      snippet: UhpT encodes a transporter that can import fosfomycin-type drugs into bacterial cells.
+        Mutations to UhpT confer resistance.
+      notes: CARD definition for antibiotic-resistant UhpT.
+curation_history:
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated UhpA fosfomycin-import regulator graph
+  llm_assisted: true
 license: CC-BY 4.0

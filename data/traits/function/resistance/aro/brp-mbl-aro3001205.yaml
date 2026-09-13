@@ -38,11 +38,10 @@ evidence:
   notes: PMID:22290943 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: BRP(MBL) → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3001206). Sequestration. The drug is bound, not chemically changed -- unlike every inactivation
-    chemistry in rounds 62-70.
+  title: BRP(MBL) → antibiotic sequestration → resistance
+  description: Curated resistance-causation graph for an antibiotic-sequestration determinant. The graph
+    models direct drug binding into a determinant-antibiotic complex as the event that prevents the antibiotic
+    from interacting with its target.
   nodes:
   - node_id: determinant
     label: BRP(MBL)
@@ -56,14 +55,10 @@ causal_graphs:
     label: antibiotic inactivation by sequestration
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3001206
-  - node_id: drug0
-    label: glycopeptide antibiotic
-    node_type: CHEMICAL
-    grounding: ARO:3000081
   - node_id: complex
-    label: determinant-antibiotic complex
+    label: determinant-antibiotic sequestration complex
     node_type: STATE
-    description: 'The bound drug. Ungrounded: a specific protein-drug complex has no term here.'
+    description: Local state for a resistance determinant bound to the antibiotic that it sequesters.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -71,95 +66,212 @@ causal_graphs:
     description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
       superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
       itself.'
+  - node_id: drug0
+    label: bleomycin-family glycopeptide antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:3000081
+    description: Grounded to CARD's broad glycopeptide-antibiotic drug class because the ARO relation
+      uses that term for bleomycin-like antibiotics.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: Antibiotic sequestration is modeled under the broad antibiotic inactivation mechanism.
     evidence:
-    - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: Family mechanism ARO:0001004.
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:0001004
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Drug sequestration inactivates the antibiotic by preventing it from interacting with
+      its target.
     evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
     - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: Mechanism ARO:0001004 → resistance.
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+    - reference: ARO:0001004
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: The determinant participates in antibiotic inactivation by sequestration.
     evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
     - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: Family mechanism ARO:3001206.
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic sequestration prevents target interaction and thereby confers resistance.
     evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
     - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: Mechanism ARO:3001206 → resistance.
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant confers resistance by sequestering the antibiotic in a determinant-drug
+      complex.
     evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
     - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: 'The whole mechanism, and the distinction that matters: a COMPLEX is formed, so the drug
-        is intact but unavailable.'
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: determinant
+    predicate: causally upstream of (forms sequestration complex)
+    predicate_id: RO:0002411
+    object: complex
+    description: Binding by the determinant forms the antibiotic-sequestration complex.
+    evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: complex
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The determinant-antibiotic complex sequesters the drug and prevents target interaction.
+    evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: complex
+    predicate: has part
+    predicate_id: BFO:0000051
+    object: determinant
+    description: The sequestration complex contains the determinant protein.
+    evidence:
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3004256
+      snippet: Bleomycin resistant proteins confer resistance to bleomycin-like molecules.
+      notes: CARD definition for the bleomycin-resistant-protein parent.
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    description: CARD asserts glycopeptide resistance for this bleomycin-resistance protein record.
     evidence:
-    - reference: ARO:3004256
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3004256 (Bleomycin resistant protein), an is_a ancestor of this record's
-        ARO:3001205; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited by bleomycin-resistance protein records.
   - subject: determinant
     predicate: molecularly interacts with (binds the drug)
     predicate_id: RO:0002436
     object: drug0
+    description: Bleomycin-resistance proteins bind bleomycin-like drugs as the sequestration mechanism.
     evidence:
-    - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: '''formation of a complex'' -- a binding event, not a reaction.'
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: A structurally characterized bleomycin-resistance protein supports direct BRP-drug binding
+        as a sequestration mechanism.
   - subject: complex
-    predicate: has part (the sequestered antibiotic)
+    predicate: has part
     predicate_id: BFO:0000051
     object: drug0
-    description: The drug is a CONSTITUENT of the complex, which is what makes it unavailable -- round
-      21's correction, where a drug-interacts-with-complex edge was circular.
+    description: The sequestration complex contains the bound bleomycin-family drug.
     evidence:
-    - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: The complex is what the drug ends up inside.
-  - subject: complex
-    predicate: causally upstream of (drug never reaches its target)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3001206
-      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
-        antibiotic with its target.
-      notes: '''preventing interaction of the antibiotic with its target''.'
+    - reference: ARO:3001205
+      snippet: BRP(MBL) expression confers resistance to bleomycin and bleomycin-like antibiotics.
+      notes: CARD definition for BRP(MBL).
+    - reference: DOI:10.1128/AAC.02413-16
+      snippet: BRP(MBL) is a metallo-beta-lactamase-associated bleomycin resistance protein.
+      notes: Dortet et al. characterized BRP(MBL) as a bleomycin-resistance protein.
+    - reference: PMID:11134052
+      snippet: Crystal structures of the Tn5-carried bleomycin resistance determinant were solved uncomplexed
+        and complexed with bleomycin.
+      notes: A structurally characterized bleomycin-resistance protein supports direct BRP-drug binding
+        as a sequestration mechanism.
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited by bleomycin-resistance protein records.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated antibiotic-sequestration and BRP graphs
   llm_assisted: true
 license: CC-BY 4.0

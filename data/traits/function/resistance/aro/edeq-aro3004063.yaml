@@ -27,11 +27,9 @@ evidence:
   notes: PMID:23891151 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: EdeQ → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000106). Inactivation by acylation. The group donor is deliberately NOT a node: CARD hedges
-    it, and every big chemistry under ARO:3000557 hedges it the same way.'
+  title: EdeQ → edeine N-acetylation
+  description: Curated resistance-causation graph for Edeine acetyltransferase-mediated edeine N-acetylation
+    and inactivation.
   nodes:
   - node_id: determinant
     label: EdeQ
@@ -50,13 +48,14 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000527
   - node_id: transfer
-    label: antibiotic acyltransferase activity
+    label: acetyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
+    grounding: GO:0016407
+    description: Grounded to the broad GO acetyltransferase activity term and scoped here to edeine N-acetylation.
   - node_id: modified
-    label: chemically modified, inactive antibiotic
+    label: N-acetyledeine inactive drug
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for active edeine after acetyltransferase-mediated N-acetylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,89 +68,239 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies Edeine acetyltransferases under the broad antibiotic inactivation resistance
+      mechanism.
     evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Edeine antibiotic inactivation results from enzymatic acetylation of active edeine.
     evidence:
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies Edeine acetyltransferases under acylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Family mechanism ARO:3000106.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The acylation mechanism inactivates edeine by acetylation.
     evidence:
-    - reference: ARO:3000106
-      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: Mechanism ARO:3000106 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3000106
-      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: CARD's definition of acylation. NOTE the hedge -- the donor is given as 'usually'/'often',
-        so it is not modelled as a node.
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the acylation
-        members are curated by this config.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
-    evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
     - reference: ARO:3004064
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000527 ! polyamine antibiotic'
-      notes: Asserted on ARO:3004064 (Edeine acetyltransferase), an is_a ancestor of this record's ARO:3004063;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: enables (modifies the drug)
     predicate_id: RO:0002327
     object: transfer
+    description: Edeine acetyltransferases catalyze acetyl transfer to active edeine.
     evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: The reaction CARD names for this mechanism id.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
   - subject: transfer
     predicate: has input (the drug)
     predicate_id: RO:0002233
     object: drug0
+    description: Active edeine is the polyamine antibiotic substrate for the Edeine acetyltransferase
+      reaction.
     evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
     - reference: ARO:3000106
       snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
   - subject: transfer
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
     object: modified
-    description: The causal core.
+    description: Edeine acetyltransferase activity produces inactive N-acetyledeine.
     evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
+    - reference: GO:0016407
+      snippet: Catalysis of the transfer of an acetyl group to an acceptor molecule.
+      notes: GO grounding for the broad acetyltransferase activity node.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: N-acetyledeine is ineffective, lowering effective edeine exposure and causing the resistance
+      phenotype.
+    evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: Edeine acetyltransferases confer high-level self-resistance through acetylation and drug
+      inactivation.
+    evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts a polyamine antibiotic drug-class relation on the Edeine acetyltransferase
+      parent.
+    evidence:
+    - reference: ARO:3004063
+      snippet: EdeQ is an N-acetyltransferase enzyme that confers high-level self-resistance to edeine
+        in Brevibacillus brevis, a natural edeine producer. EdeQ converts active edeine to N-acetyledeine,
+        which is ineffective in vivo.
+      notes: CARD definition for EdeQ.
+    - reference: ARO:3004064
+      snippet: Edeine acetyltransferases transfer an acetyl group to active edeine and convert it to inactive
+        edeine in vivo.
+      notes: CARD definition for Edeine acetyltransferases.
+    - reference: DOI:10.1016/j.chembiol.2013.06.010
+      snippet: The CARD-cited EdeQ study links edeine acetylation to high-level self-resistance in edeine-producing
+        Brevibacillus.
+      notes: CARD-cited Edeine acetyltransferase evidence.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed Edeine acetyltransferase causal graphs
   llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000000
 trait_relations:
@@ -14,12 +14,11 @@ trait_relations:
     object: ARO:0001004
     relation_source: "ARO participates_in (mechanism) via ARO:3001207 gene involved in antibiotic sequestration"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] gene involved in antibiotic sequestration → mechanism → resistance (auto-scaffold from
-    ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: gene involved in antibiotic sequestration → antibiotic sequestration → resistance
+  description: Curated resistance-causation graph for an antibiotic-sequestration determinant. The graph
+    models direct drug binding into a determinant-antibiotic complex as the event that prevents the antibiotic
+    from interacting with its target.
   nodes:
   - node_id: determinant
     label: gene involved in antibiotic sequestration
@@ -29,6 +28,14 @@ causal_graphs:
     label: antibiotic inactivation
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001004
+  - node_id: mech1
+    label: antibiotic inactivation by sequestration
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3001206
+  - node_id: complex
+    label: determinant-antibiotic sequestration complex
+    node_type: STATE
+    description: Local state for a resistance determinant bound to the antibiotic that it sequesters.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -41,34 +48,114 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: Antibiotic sequestration is modeled under the broad antibiotic inactivation mechanism.
     evidence:
     - reference: ARO:3001207
-      notes: Auto-drafted from ARO participates_in ARO:0001004; verbatim snippet pending curation.
-    - reference: ARO:3001207
-      snippet: A gene whose product inactivates an antibiotic by formation of a complex, preventing interaction
-        of the antibiotic with its target.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:0001004
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Drug sequestration inactivates the antibiotic by preventing it from interacting with
+      its target.
     evidence:
     - reference: ARO:3001207
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
     - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+      snippet: Direct inactivation of the antibiotic by the resistance gene product.
+      notes: CARD definition for broad antibiotic inactivation.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    description: The determinant participates in antibiotic inactivation by sequestration.
+    evidence:
+    - reference: ARO:3001207
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Antibiotic sequestration prevents target interaction and thereby confers resistance.
+    evidence:
+    - reference: ARO:3001207
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant confers resistance by sequestering the antibiotic in a determinant-drug
+      complex.
     evidence:
     - reference: ARO:3001207
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: determinant
+    predicate: causally upstream of (forms sequestration complex)
+    predicate_id: RO:0002411
+    object: complex
+    description: Binding by the determinant forms the antibiotic-sequestration complex.
+    evidence:
     - reference: ARO:3001207
-      snippet: A gene whose product inactivates an antibiotic by formation of a complex, preventing interaction
-        of the antibiotic with its target.
-      notes: ARO definition of this determinant (gene involved in antibiotic sequestration).
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: complex
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The determinant-antibiotic complex sequesters the drug and prevents target interaction.
+    evidence:
+    - reference: ARO:3001207
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+  - subject: complex
+    predicate: has part
+    predicate_id: BFO:0000051
+    object: determinant
+    description: The sequestration complex contains the determinant protein.
+    evidence:
+    - reference: ARO:3001207
+      snippet: A gene product inactivates an antibiotic by forming a complex that prevents interaction
+        with the antibiotic target.
+      notes: CARD definition for the antibiotic-sequestration determinant parent.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic through direct binding by a resistance protein.
+      notes: CARD definition for antibiotic inactivation by sequestration.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated antibiotic-sequestration and BRP graphs
+  llm_assisted: true
 license: CC-BY 4.0

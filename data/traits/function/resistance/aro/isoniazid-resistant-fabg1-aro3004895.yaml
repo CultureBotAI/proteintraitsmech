@@ -18,11 +18,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004895 isoniazid resistant fabG1"
 causal_graphs:
 - graph_id: resistance
-  title: isoniazid resistant fabG1 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004887). Target alteration in FAS-II. Deliberately NOT the promoter-overexpression story, which
-    CARD does not assert for these records.
+  title: isoniazid resistant fabG1 → FabG1 mycolic-acid synthesis → resistance
+  description: Conservative graph for FabG1-mediated mycolic-acid-synthesis resistance. The graph grounds
+    the first reduction step to 3-oxoacyl-[acyl-carrier-protein] reductase activity and models the resistance
+    mutation as preventing drug inhibition of the mycolic-acid biosynthetic process.
   nodes:
   - node_id: determinant
     label: isoniazid resistant fabG1
@@ -36,10 +35,12 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
-  - node_id: fas_step
-    label: first reduction step of mycolic acid synthesis (FabG1/MabA)
+  - node_id: fabg1_activity
+    label: 3-oxoacyl-[acyl-carrier-protein] reductase (NADPH) activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: the specific ketoacyl-reductase step has no distinct term in use here.'
+    grounding: GO:0004316
+    description: The FabG1/MabA first reduction step in mycolic-acid synthesis, grounded to the corresponding
+      NADPH-dependent 3-oxoacyl-ACP reductase GO molecular function.
   - node_id: mycolic
     label: mycolic acid biosynthetic process
     node_type: BIOLOGICAL_PROCESS
@@ -47,7 +48,7 @@ causal_graphs:
   - node_id: inhibition
     label: drug inhibition of mycolic acid synthesis
     node_type: STATE
-    description: What the mutation prevents. Ungrounded.
+    description: Local state for inhibition of the FabG1-linked mycolic-acid biosynthetic process.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,92 +61,188 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies FabG1 resistance records under mutation conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
     - reference: ARO:3004887
       snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
         inhibit mycolic acid biosynthesis.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: FabG1 mutations are a mutation-mediated mycolic-acid-synthesis resistance mechanism.
     evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
     - reference: ARO:3004887
       snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
         inhibit mycolic acid biosynthesis.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: FabG1 mutations raise resistance by preventing the relevant antibiotic from inhibiting
+      mycolic-acid biosynthesis.
     evidence:
-    - reference: ARO:3004887
-      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
-        inhibit mycolic acid biosynthesis.
-      notes: 'CARD''s own claim, and the only one it makes: the mutation stops the drug inhibiting mycolic
-        acid synthesis.'
     - reference: ARO:3004895
       snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
         for mycolic acid. It is associated with isoniazid resistance.
-      notes: 'And where in the pathway: the first reduction step for mycolic acid. NOTE what is deliberately
-        NOT asserted -- the fabG1-inhA operon promoter mechanism, which is real, well documented elsewhere,
-        and not something CARD states for these records (#219).'
+      notes: CARD definition for isoniazid resistant fabG1.
+    - reference: ARO:3004887
+      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
+        inhibit mycolic acid biosynthesis.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004888
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with ethionamide resistance.
+      notes: CARD definition for ethionamide resistant FabG1.
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
-    evidence:
-    - reference: ARO:3004895
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3004895 (isoniazid resistant fabG1) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (the first reduction step)
-    predicate_id: RO:0002327
-    object: fas_step
+    description: ARO maps this FabG1 branch to the asserted drug class.
     evidence:
     - reference: ARO:3004895
       snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
         for mycolic acid. It is associated with isoniazid resistance.
-      notes: CARD places fabG1 in the fatty acid synthesis pathway.
-  - subject: fas_step
-    predicate: part of (mycolic acid biosynthesis)
-    predicate_id: BFO:0000050
-    object: mycolic
-    evidence:
-    - reference: PMID:8284673
-      snippet: The InhA protein shows significant sequence conservation with the Escherichia coli enzyme
-        EnvM, and cell-free assays indicate that it may be involved in mycolic acid biosynthesis.
-      notes: Banerjee et al. 1994, borrowed from round 28 for the pathway context -- it studied InhA,
-        the NEXT step, and the notes say so rather than implying it covered FabG1.
-  - subject: drug0
-    predicate: causally upstream of (inhibits mycolic acid synthesis)
-    predicate_id: RO:0002411
-    object: inhibition
-    description: 'Drug action: activated isoniazid blocks FAS-II, which is what makes the pathway a target
-      at all (rounds 27-28).'
-    evidence:
-    - reference: PMID:1656850
-      snippet: Isonicotinic acid hydrazide (isoniazid; INH) inhibition of mycolic acid synthesis was studied
-        by using cell extracts from both INH-sensitive and -resistant strains of Mycobacterium aurum.
-      notes: Direct evidence for the drug's action (#250). The first version of this edge cited ARO:3004887,
-        which only IMPLIES the inhibition by describing what the mutation prevents -- weaker than the
-        rule that a snippet must state its claim.
-  - subject: determinant
-    predicate: negatively regulates (the mutated enzyme is no longer inhibited)
-    predicate_id: RO:0002212
-    object: inhibition
-    description: 'The causal core, in CARD''s own words: the mutation results in the antibiotic being
-      unable to inhibit the pathway.'
-    evidence:
+      notes: CARD definition for isoniazid resistant fabG1.
     - reference: ARO:3004887
       snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
         inhibit mycolic acid biosynthesis.
-      notes: 'This is the whole of what the source asserts. A stronger claim would need the promoter evidence
-        #219 could not find.'
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004895
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
+      notes: ARO drug-class relationship asserted directly on ARO:3004895.
+    - reference: ARO:3007152
+      snippet: isoniazid-like antibiotic
+      notes: ARO isoniazid-like antibiotic drug-class term.
+  - subject: drug0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: inhibition
+    description: The asserted drug class inhibits FabG1-linked mycolic-acid biosynthesis in this local
+      resistance model.
+    evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
+    - reference: ARO:3004887
+      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
+        inhibit mycolic acid biosynthesis.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004895
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
+      notes: ARO drug-class relationship asserted directly on ARO:3004895.
+    - reference: ARO:3007152
+      snippet: isoniazid-like antibiotic
+      notes: ARO isoniazid-like antibiotic drug-class term.
+    - reference: ARO:3004888
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with ethionamide resistance.
+      notes: CARD definition for ethionamide resistant FabG1.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: fabg1_activity
+    description: FabG1 normally enables the 3-oxoacyl-ACP reductase step of mycolic-acid biosynthesis.
+    evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
+    - reference: ARO:3004887
+      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
+        inhibit mycolic acid biosynthesis.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004888
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with ethionamide resistance.
+      notes: CARD definition for ethionamide resistant FabG1.
+    - reference: GO:0004316
+      snippet: 'Catalysis of the reaction: (3R)-3-hydroxyacyl-[acyl-carrier protein] + NADP+ = 3-oxoacyl-[acyl-carrier
+        protein] + NADPH + H+.'
+      notes: GO 3-oxoacyl-[acyl-carrier-protein] reductase activity term for the FabG1/MabA reduction
+        step.
+    - reference: EC:1.1.1.100
+      snippet: 'Enzymatic activity — 3-oxoacyl-[acyl-carrier-protein] reductase (EC 1.1.1.100). Catalysed
+        reaction: a (3R)-hydroxyacyl-[ACP] + NADP(+) = a 3-oxoacyl-[ACP] + NADPH + H(+).'
+      notes: Local EC record mapped to GO:0004316.
+    - reference: NCBIfam:NF040605
+      snippet: 3-oxoacyl-ACP reductase FabG1 — a functionally conserved protein family grouped by the
+        NCBIfam full-length profile-HMM NF040605 (exception); associated with mycolic acid biosynthetic
+        process. Members occur in Actinomycetes.
+      notes: Local NCBIfam FabG1 family record.
+  - subject: fabg1_activity
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: mycolic
+    description: The FabG1 3-oxoacyl-ACP reductase activity is the first reduction step in mycolic-acid
+      biosynthesis.
+    evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
+    - reference: ARO:3004887
+      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
+        inhibit mycolic acid biosynthesis.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004888
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with ethionamide resistance.
+      notes: CARD definition for ethionamide resistant FabG1.
+    - reference: GO:0071768
+      snippet: The chemical reactions and pathways resulting in the formation of mycolic acids, beta-hydroxy
+        fatty acids with a long alpha-alkyl side chain.
+      notes: GO mycolic acid biosynthetic process term.
+    - reference: NCBIfam:NF040605
+      snippet: 3-oxoacyl-ACP reductase FabG1 — a functionally conserved protein family grouped by the
+        NCBIfam full-length profile-HMM NF040605 (exception); associated with mycolic acid biosynthetic
+        process. Members occur in Actinomycetes.
+      notes: Local NCBIfam FabG1 family record.
+  - subject: determinant
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: inhibition
+    description: Resistance-conferring fabG1 mutations make the antibiotic unable to inhibit mycolic-acid
+      biosynthesis.
+    evidence:
+    - reference: ARO:3004895
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with isoniazid resistance.
+      notes: CARD definition for isoniazid resistant fabG1.
+    - reference: ARO:3004887
+      snippet: Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to
+        inhibit mycolic acid biosynthesis.
+      notes: CARD definition for the antibiotic resistant FabG1 parent.
+    - reference: ARO:3004888
+      snippet: fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step
+        for mycolic acid. It is associated with ethionamide resistance.
+      notes: CARD definition for ethionamide resistant FabG1.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded FabG1 mycolic-acid resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

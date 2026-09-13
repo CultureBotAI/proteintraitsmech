@@ -26,10 +26,9 @@ evidence:
   notes: PMID:28152054 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: ANT(3'')-IIb → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:25564464). ANT — aminoglycoside nucleotidyltransferase; inactivates aminoglycosides by adenylylation.
+  title: ANT(3'')-IIb → ATP-dependent aminoglycoside adenylylation
+  description: Curated resistance-causation graph for ANT-mediated ATP-dependent aminoglycoside O-adenylylation
+    and inactivation.
   nodes:
   - node_id: determinant
     label: ANT(3'')-IIb
@@ -47,16 +46,30 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: transfer
+    label: nucleotidyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016779
+    description: Grounded to the broad GO nucleotidyltransferase activity term and scoped here to ATP-dependent
+      aminoglycoside adenylylation by ANT enzymes.
+  - node_id: atp
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:15422
+  - node_id: adenylylated
+    label: adenylylated inactive aminoglycoside antibiotic
+    node_type: STATE
+    description: Local state for an aminoglycoside antibiotic after ANT-mediated AMP transfer from ATP.
   - node_id: domain
     label: nucleotidyltransferase domain
     node_type: DOMAIN
     grounding: Pfam:PF01909
-    description: KB protein-trait record carrying the mechanism.
+    description: Nucleotidyltransferase catalytic domain found in ANT enzymes.
   - node_id: fold
     label: DNA-polymerase-β-like nucleotidyltransferase fold
     node_type: DOMAIN
     grounding: CATH:3.30.460
-    description: KB protein-trait record carrying the mechanism.
+    description: Beta-polymerase-like nucleotidyltransferase fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,85 +82,360 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies ANT enzymes under the broad antibiotic inactivation resistance mechanism.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:25564464
       snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
         (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: Family mechanism ARO:0001004.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: ANT antibiotic inactivation results from ATP-dependent adenylylation of the aminoglycoside
+      substrate.
     evidence:
-    - reference: PMID:25564464
-      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
-        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: Mechanism ARO:0001004 → resistance.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies ANT enzymes under nucleotidylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:25564464
       snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
         (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: Family mechanism ARO:3000107.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The ANT nucleotidylation resistance mechanism modifies aminoglycosides by adenylylation
+      and inactivates them.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:25564464
       snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
         (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: Mechanism ARO:3000107 → resistance.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: enables (adenylylates the aminoglycoside)
+    predicate_id: RO:0002327
+    object: transfer
+    description: ANT enzymes catalyze ATP-dependent aminoglycoside O-adenylylation.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group from one compound (donor) to another (acceptor).
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+  - subject: transfer
+    predicate: has input (ATP)
+    predicate_id: RO:0002233
+    object: atp
+    description: ATP is the AMP donor used during ANT-mediated aminoglycoside O-adenylylation.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group from one compound (donor) to another (acceptor).
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+  - subject: transfer
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    description: The ANT nucleotidyltransferase activity acts on this CARD-linked aminoglycoside antibiotic
+      class.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group from one compound (donor) to another (acceptor).
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3004275
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted on ARO:3004275 (ANT(3'')), an is_a ancestor of this record's ARO:3004090; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: transfer
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: adenylylated
+    description: ANT activity transfers AMP from ATP to the aminoglycoside and produces an adenylylated
+      inactive drug state.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group from one compound (donor) to another (acceptor).
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: adenylylated
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The adenylylated aminoglycoside is inactive, lowering effective drug exposure and causing
+      the resistance phenotype.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ANT enzymes confer resistance through ATP-dependent aminoglycoside adenylylation and
+      drug inactivation.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
     - reference: PMID:25564464
       snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
         (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: Determinant → resistance phenotype.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this ANT determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3004275
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3004275 (ANT(3'')), an is_a ancestor of this record's ARO:3004090; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
   - subject: domain
     predicate: part of (catalytic domain of the protein)
     predicate_id: BFO:0000050
     object: determinant
+    description: The nucleotidyltransferase domain is part of the ANT determinant.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
     - reference: Pfam:PF01909
       snippet: Nucleotidyltransferase domain
-      notes: 'KB trait: the nucleotidyltransferase domain.'
+      notes: Pfam family for aminoglycoside nucleotidyltransferases.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
   - subject: determinant
     predicate: member of (adopts fold)
     predicate_id: RO:0002350
     object: fold
+    description: The determinant adopts the beta-polymerase-like fold associated with aminoglycoside nucleotidyltransferases.
     evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
     - reference: CATH:3.30.460
       snippet: Beta Polymerase; domain 2
-      notes: 'KB trait: the nucleotidyltransferase fold.'
-  - subject: domain
-    predicate: enables (antibiotic nucleotidylation)
-    predicate_id: RO:0002327
-    object: mech1
-    evidence:
+      notes: CATH grounding for the nucleotidyltransferase fold.
     - reference: PMID:25564464
       snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
         (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
-      notes: The nucleotidyltransferase domain adenylylates the aminoglycoside.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
+  - subject: domain
+    predicate: enables (aminoglycoside adenylylation)
+    predicate_id: RO:0002327
+    object: transfer
+    description: The nucleotidyltransferase domain enables the ATP-dependent aminoglycoside O-adenylylation
+      activity.
+    evidence:
+    - reference: ARO:3004090
+      snippet: ANT(3'')-IIb is a aminoglycoside nucleotidyltransferase identified in Acinetobacter spp.
+        via horizontal gene transfer mechanisms.
+      notes: CARD definition for ANT(3'')-IIb.
+    - reference: ARO:3000218
+      snippet: Covalent modification of aminoglycoside antibiotic hydroxyl group by ATP-dependent transfer
+        of AMP.
+      notes: CARD definition for aminoglycoside nucleotidyltransferase (ANT).
+    - reference: Pfam:PF01909
+      snippet: Nucleotidyltransferase domain
+      notes: Pfam family for aminoglycoside nucleotidyltransferases.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group from one compound (donor) to another (acceptor).
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: PMID:25564464
+      snippet: ANT(2″)-Ia confers resistance by magnesium-dependent transfer of a nucleoside monophosphate
+        (AMP) to the 2″-hydroxyl of aminoglycoside substrates containing a 2-deoxystreptamine core.
+      notes: Literature support for aminoglycoside nucleotidyltransferase activity.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-08T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed ANT aminoglycoside nucleotidyltransferase causal graphs
     llm_assisted: true
 license: CC-BY 4.0

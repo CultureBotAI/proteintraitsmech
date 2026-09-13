@@ -26,11 +26,9 @@ evidence:
   notes: PMID:2987648 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: viomycin phosphotransferase → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000105). Inactivation by phosphorylation. The group donor is deliberately NOT a node: CARD hedges
-    it, and every big chemistry under ARO:3000557 hedges it the same way.'
+  title: viomycin phosphotransferase → antibiotic phosphorylation
+  description: Curated resistance-causation graph for phosphotransferase-mediated antibiotic phosphorylation
+    and inactivation.
   nodes:
   - node_id: determinant
     label: viomycin phosphotransferase
@@ -48,14 +46,16 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: transfer
-    label: antibiotic phosphotransferase activity
+  - node_id: phosphorylation
+    label: phosphotransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
+    grounding: GO:0016773
+    description: Grounded to the broad GO alcohol-acceptor phosphotransferase activity term and scoped
+      here to antibiotic phosphorylation.
   - node_id: modified
-    label: chemically modified, inactive antibiotic
+    label: phosphorylated inactive viomycin
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for the antibiotic after phosphotransferase-mediated phosphorylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,89 +68,154 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies these phosphotransferases under the broad antibiotic inactivation resistance
+      mechanism.
     evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Phosphotransferase antibiotic inactivation results from enzymatic phosphorylation of
+      the drug.
     evidence:
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: ARO:3004261
+      snippet: Viomycin phosphotransferases confer resistance to viomycin antibiotics through antibiotic
+        phosphorylation.
+      notes: CARD definition for viomycin phosphotransferase.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies this determinant under phosphorylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Family mechanism ARO:3000105.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The phosphorylation resistance mechanism inactivates antibiotics by chemical modification.
     evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: Mechanism ARO:3000105 → resistance.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: enables (phosphorylates the drug)
+    predicate_id: RO:0002327
+    object: phosphorylation
+    description: The determinant catalyzes phosphotransfer to its antibiotic substrate.
+    evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: GO:0016773
+      snippet: Catalysis of the transfer of a phosphorus-containing group from one compound to an alcohol
+        group acceptor.
+      notes: GO grounding for broad phosphotransferase activity on hydroxyl acceptors.
+  - subject: phosphorylation
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    description: peptide antibiotic is the antibiotic substrate for this phosphotransferase reaction.
+    evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+  - subject: phosphorylation
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: modified
+    description: Antibiotic phosphorylation produces an inactive phosphorylated drug state.
+    evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: GO:0016773
+      snippet: Catalysis of the transfer of a phosphorus-containing group from one compound to an alcohol
+        group acceptor.
+      notes: GO grounding for broad phosphotransferase activity on hydroxyl acceptors.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The phosphorylated antibiotic is inactive, lowering effective drug exposure and causing
+      the resistance phenotype.
+    evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
+    - reference: ARO:3000105
+      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant confers antibiotic resistance by phosphorylating and inactivating the
+      drug.
     evidence:
+    - reference: ARO:3004261
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: CARD's definition of phosphorylation. NOTE the hedge -- the donor is given as 'usually'/'often',
-        so it is not modelled as a node.
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the phosphorylation
-        members are curated by this config.'
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: CARD asserts a peptide antibiotic drug-class relation for viomycin phosphotransferase.
     evidence:
     - reference: ARO:3004261
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3004261 (viomycin phosphotransferase) in the CARD/ARO release in
-        data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (modifies the drug)
-    predicate_id: RO:0002327
-    object: transfer
-    evidence:
+      snippet: Viomycin family of phosphotransferases confer resistance to viomycin antibiotics.
+      notes: CARD definition for viomycin phosphotransferase.
     - reference: ARO:3000105
       snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: The reaction CARD names for this mechanism id.
-  - subject: transfer
-    predicate: has input (the drug)
-    predicate_id: RO:0002233
-    object: drug0
-    evidence:
-    - reference: ARO:3000105
-      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
-  - subject: transfer
-    predicate: causally upstream of (inactivates the drug)
-    predicate_id: RO:0002411
-    object: modified
-    description: The causal core.
-    evidence:
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      notes: CARD definition for phosphorylation of antibiotic conferring resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed antibiotic phosphotransferase causal graphs
   llm_assisted: true
 license: CC-BY 4.0

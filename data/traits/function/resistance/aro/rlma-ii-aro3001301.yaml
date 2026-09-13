@@ -33,11 +33,10 @@ evidence:
   notes: PMID:18406425 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: RlmA(II) → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:20007606). 23S rRNA methyltransferase (Cfr-type) — target alteration: methylates 23S rRNA A2503
-    in the peptidyl-transferase centre.'
+  title: RlmA(II) → 23S rRNA G748 methylation → resistance
+  description: Curated resistance-causation graph for non-erm 23S rRNA methyltransferases that methylate
+    guanosine 748. The graph models N1 methylation of a local 23S rRNA G748 site as the target alteration
+    that blocks binding of G748-proximal ribosome-targeting antibiotics.
   nodes:
   - node_id: determinant
     label: RlmA(II)
@@ -51,6 +50,29 @@ causal_graphs:
     label: ribosomal alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000211
+  - node_id: methyltransferase
+    label: 23S rRNA G748 N1-methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term because no stable narrow
+      GO term is available for N1 methylation of 23S rRNA G748.
+  - node_id: target_site
+    label: 23S rRNA G748 macrolide-binding site
+    node_type: NUCLEIC_ACID
+    grounding: SO:0000252
+    description: Local node for guanosine 748 in hairpin 35 of 23S rRNA. Grounded to broad rRNA because
+      no stable narrow term is available for this local 23S rRNA nucleotide target.
+  - node_id: methylated
+    label: N1-methyl-G748 23S rRNA site
+    node_type: STATE
+    grounding: SO:0000252
+    description: Local state representing N1 methylation of guanosine 748 in 23S rRNA. Grounded to broad
+      rRNA because no stable narrow term is available for this methylated local state.
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: The 50S subunit that contains bacterial 23S rRNA.
   - node_id: drug0
     label: macrolide antibiotic
     node_type: CHEMICAL
@@ -59,16 +81,6 @@ causal_graphs:
     label: lincosamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000017
-  - node_id: domain
-    label: radical-SAM methyltransferase domain
-    node_type: DOMAIN
-    grounding: Pfam:PF04055
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: radical-SAM (partial TIM-barrel) fold
-    node_type: DOMAIN
-    grounding: CATH:3.20.20
-    description: KB protein-trait record carrying the mechanism.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -81,101 +93,301 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies G748 23S rRNA methyltransferases under antibiotic target alteration.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:0001001.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Target alteration is the broad resistance mechanism represented by methylation of the
+      23S rRNA G748 site.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:0001001 → resistance.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD also classifies G748 23S rRNA methyltransferases under the ribosome-specific target-alteration
+      mechanism.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Family mechanism ARO:3000211.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Methylation of 23S rRNA G748 is a ribosomal alteration that supports macrolide and lincosamide
+      resistance.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Mechanism ARO:3000211 → resistance.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant methylates 23S rRNA G748, producing a modified target site that changes
+      drug binding.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: Determinant → resistance phenotype.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts macrolide resistance for the non-erm G748 23S rRNA methyltransferase family.
     evidence:
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
     - reference: ARO:3001298
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
-      notes: Asserted on ARO:3001298 (non-erm 23S ribosomal RNA methyltransferase (G748)), an is_a ancestor
-        of this record's ARO:3001301; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:0000000
+      snippet: macrolide antibiotic
+      notes: ARO drug-class term inherited by the G748 methyltransferase records.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts lincosamide resistance for the non-erm G748 23S rRNA methyltransferase family.
+    evidence:
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:0000017
+      snippet: lincosamide antibiotic
+      notes: ARO drug-class term inherited by the G748 methyltransferase records.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: methyltransferase
+    description: The determinant enables methyl transfer to the N1 position of 23S rRNA guanosine 748.
+    evidence:
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: GO:0008649
+      snippet: Catalysis of methyl-group transfer from S-adenosyl-L-methionine to an rRNA nucleoside residue.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the ARO/PubMed evidence
+        constrains the substrate to 23S rRNA G748.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+  - subject: methyltransferase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: methylated
+    description: G748-directed 23S rRNA methyltransferase activity yields an N1-methyl-G748 state.
+    evidence:
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: GO:0008649
+      snippet: Catalysis of methyl-group transfer from S-adenosyl-L-methionine to an rRNA nucleoside residue.
+      notes: GO definition for the broad rRNA methyltransferase activity superclass; the ARO/PubMed evidence
+        constrains the substrate to 23S rRNA G748.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+  - subject: methylated
+    predicate: negatively regulates (blocks antibiotic binding)
+    predicate_id: RO:0002212
+    object: target_site
+    description: N1 methylation of G748 changes the 23S rRNA site contacted by tylosin and other macrolides
+      at the large ribosomal subunit.
     evidence:
     - reference: ARO:3001298
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
-      notes: Asserted on ARO:3001298 (non-erm 23S ribosomal RNA methyltransferase (G748)), an is_a ancestor
-        of this record's ARO:3001301; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+    - reference: PMID:12417742
+      snippet: TlrB and TlrD methylate 23S rRNA nucleotides G748 and A2058.
+      notes: The Streptomyces fradiae tylosin producer uses G748 and A2058 methylations together for high
+        tylosin resistance.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G748 site.
+  - subject: methylated
+    predicate: causally upstream of (blocks antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The N1-methyl-G748 23S rRNA state is the terminal modeled target alteration supporting
+      resistance.
+    evidence:
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+    - reference: PMID:12417742
+      snippet: TlrB and TlrD methylate 23S rRNA nucleotides G748 and A2058.
+      notes: The Streptomyces fradiae tylosin producer uses G748 and A2058 methylations together for high
+        tylosin resistance.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G748 site.
+  - subject: target_site
+    predicate: part of
     predicate_id: BFO:0000050
-    object: determinant
+    object: subunit
+    description: The G748 target site is in 23S rRNA in the 50S ribosomal subunit.
     evidence:
-    - reference: Pfam:PF04055
-      snippet: Radical SAM superfamily
-      notes: 'KB trait: the radical-SAM methyltransferase domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+    - reference: PMID:12417742
+      snippet: TlrB and TlrD methylate 23S rRNA nucleotides G748 and A2058.
+      notes: The Streptomyces fradiae tylosin producer uses G748 and A2058 methylations together for high
+        tylosin resistance.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G748 site.
+  - subject: drug0
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: target_site
+    description: Macrolides act at a 23S rRNA target that includes the G748 site modified by TlrB-family
+      methyltransferases.
     evidence:
-    - reference: CATH:3.20.20
-      snippet: TIM Barrel
-      notes: 'KB trait: the radical-SAM fold.'
-  - subject: domain
-    predicate: enables (23S rRNA A2503 methylation)
-    predicate_id: RO:0002327
-    object: mech1
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: DOI:10.1046/j.1365-2958.2000.02046.x
+      snippet: TlrB of Streptomyces fradiae targets G748 in 23S rRNA.
+      notes: Primary characterization of TlrB as a G748-directed methyltransferase.
+    - reference: PMID:15046978
+      snippet: RlmA(II) (TlrB) modifies the N-1 position of 23S rRNA nucleotide G748.
+      notes: Douthwaite et al. identified the TlrB methylation site as N1 of G748 by mass spectrometry.
+    - reference: PMID:12417742
+      snippet: TlrB and TlrD methylate 23S rRNA nucleotides G748 and A2058.
+      notes: The Streptomyces fradiae tylosin producer uses G748 and A2058 methylations together for high
+        tylosin resistance.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide structural scaffolding and catalytic
+        activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA G748 site.
+    - reference: ARO:0000000
+      snippet: macrolide antibiotic
+      notes: ARO drug-class term inherited by the G748 methyltransferase records.
+  - subject: drug1
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: target_site
+    description: Lincosamide resistance is inherited from the G748 methyltransferase parent; the graph
+      keeps the same 23S rRNA target-site branch.
     evidence:
-    - reference: PMID:20007606
-      snippet: The Cfr methyltransferase confers combined resistance to five classes of antibiotics that
-        bind to the peptidyl tranferase center of bacterial ribosomes by catalyzing methylation of the
-        C-8 position of 23S rRNA nucleotide A2503.
-      notes: The methyltransferase domain methylates 23S rRNA A2503, altering the drug target.
+    - reference: ARO:3001301
+      snippet: RlmA(II) adds a methyl group to guanosine 748 of 23S rRNA.
+      notes: CARD definition for the RlmA(II) methyltransferase.
+    - reference: ARO:3001298
+      snippet: Non-erm 23S ribosomal RNA methyltransferases modify guanosine 748 to confer resistance
+        to some macrolides and lincosamides.
+      notes: CARD definition for the G748 non-erm 23S rRNA methyltransferase family.
+    - reference: ARO:0000017
+      snippet: lincosamide antibiotic
+      notes: ARO drug-class term inherited by the G748 methyltransferase records.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-11T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Curated non-erm 23S rRNA G748 methyltransferase graphs
     llm_assisted: true
 license: CC-BY 4.0

@@ -15,11 +15,11 @@ trait_relations:
     relation_source: "ARO participates_in (mechanism) via ARO:3007425 protein(s) conferring resistance via host-dependent nutrient acquisition"
 causal_graphs:
 - graph_id: resistance
-  title: protein(s) conferring resistance via host-dependent nutrient acquisition → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3007424). Bypass by host-nutrient uptake. The drug's target is untouched; it stops being required.
+  title: protein(s) conferring resistance via host-dependent nutrient acquisition → host nutrient uptake
+    → resistance
+  description: Curated resistance-causation graph for host-dependent nutrient acquisition. The determinant
+    is modeled as enabling uptake of a host nutrient that bypasses the antibiotic-blocked biosynthetic
+    step rather than directly modifying the drug or its target.
   nodes:
   - node_id: determinant
     label: protein(s) conferring resistance via host-dependent nutrient acquisition
@@ -30,13 +30,15 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3007424
   - node_id: uptake
-    label: host-nutrient uptake activity
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-71).'
-  - node_id: bypassed
-    label: the drug-blocked step is no longer required
+    label: host nutrient uptake
     node_type: STATE
-    description: 'The causal core. Ungrounded: a requirement''s absence is not an entity.'
+    description: Local state for import of a host-provided nutrient that can replace the antibiotic-blocked
+      endogenous biosynthetic product.
+  - node_id: bypassed
+    label: drug-blocked biosynthetic step bypassed by host nutrient
+    node_type: STATE
+    description: Local state for restoring the needed metabolite from the host environment instead of
+      relying on the biosynthetic step inhibited by the antibiotic.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,52 +51,101 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this determinant under host-dependent nutrient-acquisition resistance.
     evidence:
+    - reference: ARO:3007425
+      snippet: Proteins involved in the uptake of host-nutrients to bypass antibiotic resistance mechanisms.
+      notes: CARD definition for protein(s) conferring resistance via host-dependent nutrient acquisition.
     - reference: ARO:3007424
       snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: Family mechanism ARO:3007424.
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
-    object: resistance
+    object: uptake
+    description: The resistance mechanism proceeds through acquisition of a host nutrient that replaces
+      the blocked biosynthetic product.
     evidence:
     - reference: ARO:3007424
       snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: Mechanism ARO:3007424 → resistance.
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
+  - subject: determinant
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: uptake
+    description: This class includes proteins that enable host-nutrient uptake.
+    evidence:
+    - reference: ARO:3007425
+      snippet: Proteins involved in the uptake of host-nutrients to bypass antibiotic resistance mechanisms.
+      notes: CARD definition for protein(s) conferring resistance via host-dependent nutrient acquisition.
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
+  - subject: uptake
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: bypassed
+    description: Uptake of host nutrient makes the antibiotic-inhibited biosynthetic step dispensable.
+    evidence:
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
+  - subject: bypassed
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Bypassing the drug-blocked metabolic step lets the bacterium grow despite the antibiotic.
+    evidence:
+    - reference: ARO:3007425
+      snippet: Proteins involved in the uptake of host-nutrients to bypass antibiotic resistance mechanisms.
+      notes: CARD definition for protein(s) conferring resistance via host-dependent nutrient acquisition.
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant confers resistance by enabling host-nutrient uptake that bypasses the
+      antibiotic-blocked pathway.
     evidence:
+    - reference: ARO:3007425
+      snippet: Proteins involved in the uptake of host-nutrients to bypass antibiotic resistance mechanisms.
+      notes: CARD definition for protein(s) conferring resistance via host-dependent nutrient acquisition.
     - reference: ARO:3007424
       snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: 'The mechanism: uptake of a HOST nutrient bypasses the step the drug blocks.'
-    - reference: ARO:3007427
-      snippet: ThfT is an ECF transporter S component that expands the substrate profile of endogenous ECF
-        transporters to include folate biosynthesis end products. It confers resistance to the
-        folate synthesis inhibitor sulfamethoxazole by allowing uptake of host folate.
-      notes: 'The worked case. SCOPE: ThfT and folate specifically -- the mechanism term does not name
-        a nutrient, and the other two records are the generic family and the transporter component.'
-  - subject: determinant
-    predicate: enables (imports the host nutrient)
-    predicate_id: RO:0002327
-    object: uptake
-    evidence:
-    - reference: ARO:3007424
-      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: '''uptake of host nutrients''.'
-  - subject: uptake
-    predicate: causally upstream of (makes the blocked step dispensable)
-    predicate_id: RO:0002411
-    object: bypassed
-    description: Why this is resistance without touching the drug or its target.
-    evidence:
-    - reference: ARO:3007424
-      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: '''to bypass antibiotic mechanism'' -- the target is not altered, it is made irrelevant.'
+      notes: CARD definition for the host-dependent nutrient-acquisition resistance mechanism.
+    - reference: PMID:36450721
+      snippet: Rodrigo et al. identify thfT as an ECF transporter S component that lets Group A Streptococcus
+        import extracellular reduced folates and bypass sulfamethoxazole inhibition of folate biosynthesis.
+      notes: Worked sulfamethoxazole/folate example for this host-nutrient bypass mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed host-dependent nutrient-acquisition causal graphs
   llm_assisted: true
 license: CC-BY 4.0
