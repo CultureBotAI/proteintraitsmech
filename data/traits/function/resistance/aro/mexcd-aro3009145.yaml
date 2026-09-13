@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000748
 trait_relations:
@@ -14,11 +14,10 @@ trait_relations:
     object: ARO:0010000
     relation_source: "ARO participates_in (mechanism) via ARO:3000159 efflux pump complex or subunit conferring antibiotic resistance"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] MexCD → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: MexCD → antibiotic efflux → resistance
+  description: Curated resistance-causation graph for a paired Mex multidrug efflux core complex. The
+    determinant is the grounded core complex that carries out antibiotic efflux with outer-membrane partners.
   nodes:
   - node_id: determinant
     label: MexCD
@@ -40,39 +39,59 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies MexCD under the antibiotic efflux resistance mechanism.
     evidence:
-    - reference: ARO:3009145
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3009145
       snippet: MexCD is a multidrug efflux pump complex composed of Mex C and Mex D as its primary components.
         This system forms the central transport mechanism, capable of interacting with diverse outer membrane
         proteins to eject antibiotics and toxic substances, thus playing a significant role in multidrug
         resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: CARD definition for MexCD.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The MexCD core complex expels antibiotic through the antibiotic-efflux mechanism.
     evidence:
-    - reference: ARO:3009145
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3009145
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3009145
       snippet: MexCD is a multidrug efflux pump complex composed of Mex C and Mex D as its primary components.
         This system forms the central transport mechanism, capable of interacting with diverse outer membrane
         proteins to eject antibiotics and toxic substances, thus playing a significant role in multidrug
         resistance.
-      notes: ARO definition of this determinant (MexCD).
+      notes: CARD definition for MexCD.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: MexCD contributes to multidrug resistance by mediating antibiotic efflux.
+    evidence:
+    - reference: ARO:3009145
+      snippet: MexCD is a multidrug efflux pump complex composed of Mex C and Mex D as its primary components.
+        This system forms the central transport mechanism, capable of interacting with diverse outer membrane
+        proteins to eject antibiotics and toxic substances, thus playing a significant role in multidrug
+        resistance.
+      notes: CARD definition for MexCD.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed paired Mex core-complex graphs
+  llm_assisted: true
 license: CC-BY 4.0

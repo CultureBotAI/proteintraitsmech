@@ -23,14 +23,10 @@ evidence:
   notes: PMID:25190723 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: transmembrane protein conferring colistin resistance → mechanism → resistance (curated from ARO
-    relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003764). Resistance by absence. Neither the identity of the deleted gene nor the downstream
-    consequence is asserted: CARD hedges the first and the second differs per record (chitin exposure,
-    metabolite accumulation, blocked entry). Both are good per-record additions and neither is a family
-    claim.'
+  title: MgrB loss → PhoPQ derepression → Lipid A remodeling → colistin resistance
+  description: Conservative resistance-causation graph for mgrB inactivation or down-regulation. The graph
+    grounds wild-type MgrB as a negative regulator of PhoPQ and follows the derepressed PhoPQ branch toward
+    Ara4N-Lipid A remodeling and colistin resistance.
   nodes:
   - node_id: determinant
     label: transmembrane protein conferring colistin resistance
@@ -40,86 +36,207 @@ causal_graphs:
     label: resistance by absence
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3003764
+  - node_id: family
+    label: PhoP/PhoQ regulatory lipoprotein MgrB
+    node_type: PROTEIN
+    grounding: NCBIfam:NF007635
+  - node_id: phopq
+    label: phoPQ
+    node_type: PROTEIN
+    grounding: ARO:3000821
+  - node_id: lipid_a_mod
+    label: beta-L-Ara4N-lipid A biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:1901760
   - node_id: drug0
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: absence
-    label: absence of the gene product
-    node_type: STATE
-    description: 'The determinant state, and the whole mechanism. Ungrounded: an absence is not an entity.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Colistin resistance phenotype mediated by MgrB/PhoPQ signaling.
   edges:
   - subject: determinant
-    predicate: participates in (resistance mechanism)
+    predicate: participates in (resistance by absence)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this determinant in the resistance-by-absence mechanism.
     evidence:
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Family mechanism ARO:3003764.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
+  - subject: determinant
+    predicate: member of (MgrB family)
+    predicate_id: biolink:member_of
+    object: family
+    description: The determinant is an MgrB-family PhoP/PhoQ regulatory lipoprotein.
+    evidence:
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
+    - reference: NCBIfam:NF007635
+      snippet: PhoP/PhoQ regulatory lipoprotein MgrB
+      notes: NCBIfam product name for the conserved MgrB protein family.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
+  - subject: family
+    predicate: negatively regulates (PhoPQ signaling)
+    predicate_id: RO:0002212
+    object: phopq
+    description: MgrB-family proteins provide negative feedback to the PhoPQ two-component system.
+    evidence:
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
+    - reference: NCBIfam:NF007635
+      snippet: PhoP/PhoQ regulatory lipoprotein MgrB
+      notes: NCBIfam product name for the conserved MgrB protein family.
+    - reference: ARO:3000821
+      snippet: PhoPQ is a two-component regulatory system. phoP is phosphorylated by phoQ at a low [mg2+],
+        activating the repressor. Its part of a two component regulating system that activates the PmrA/B
+        system which has downstream effects, leading to Antimicrobial resistance in many pathogens. In
+        Salmonella, phoP bind to macAB ABC transporter and represses it. In Escherichia coli, phoPQ regulates
+        arnA expression. In Pseudomonas aeruginosa, phoPQ regulates OprH expression. phoPQ have other
+        roles in other species.
+      notes: CARD definition for phoPQ.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
+  - subject: phopq
+    predicate: positively regulates (PmrAB/arn Lipid A remodeling)
+    predicate_id: RO:0002213
+    object: lipid_a_mod
+    description: PhoPQ signaling is upstream of PmrAB/arn-dependent 4-amino-4-deoxy-L-arabinose modification
+      of Lipid A.
+    evidence:
+    - reference: ARO:3000821
+      snippet: PhoPQ is a two-component regulatory system. phoP is phosphorylated by phoQ at a low [mg2+],
+        activating the repressor. Its part of a two component regulating system that activates the PmrA/B
+        system which has downstream effects, leading to Antimicrobial resistance in many pathogens. In
+        Salmonella, phoP bind to macAB ABC transporter and represses it. In Escherichia coli, phoPQ regulates
+        arnA expression. In Pseudomonas aeruginosa, phoPQ regulates OprH expression. phoPQ have other
+        roles in other species.
+      notes: CARD definition for phoPQ.
+    - reference: GO:1901760
+      snippet: beta-L-Ara4N-lipid A biosynthetic process
+      notes: GO pathway term for 4-amino-4-deoxy-L-arabinose modification of Lipid A.
+    - reference: PMID:9570402
+      snippet: lipid A aminoarabinose modification promotes resistance to cationic antimicrobial peptides
+      notes: Gunn et al. connect PmrAB-regulated aminoarabinose Lipid A modification to polymyxin resistance.
+  - subject: lipid_a_mod
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Ara4N-Lipid A remodeling lowers the net negative charge that cationic polymyxins require
+      for Gram-negative surface binding.
+    evidence:
+    - reference: GO:1901760
+      snippet: beta-L-Ara4N-lipid A biosynthetic process
+      notes: GO pathway term for 4-amino-4-deoxy-L-arabinose modification of Lipid A.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD's charge-alteration mechanism term; aminoarabinose-modified Lipid A lowers the negative
+        envelope charge available for colistin binding.
+    - reference: PMID:9570402
+      snippet: lipid A aminoarabinose modification promotes resistance to cationic antimicrobial peptides
+      notes: Gunn et al. connect PmrAB-regulated aminoarabinose Lipid A modification to polymyxin resistance.
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Inactivation or down-regulation of the MgrB negative regulator confers colistin resistance
+      through resistance by absence.
     evidence:
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: Mechanism ARO:3003764 → resistance.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
+    - reference: ARO:3000821
+      snippet: PhoPQ is a two-component regulatory system. phoP is phosphorylated by phoQ at a low [mg2+],
+        activating the repressor. Its part of a two component regulating system that activates the PmrA/B
+        system which has downstream effects, leading to Antimicrobial resistance in many pathogens. In
+        Salmonella, phoP bind to macAB ABC transporter and represses it. In Escherichia coli, phoPQ regulates
+        arnA expression. In Pseudomonas aeruginosa, phoPQ regulates OprH expression. phoPQ have other
+        roles in other species.
+      notes: CARD definition for phoPQ.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO determinant denotes MgrB loss or mutation that derepresses PhoPQ and confers
+      colistin resistance.
     evidence:
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: 'The mechanism, with its hedge intact: ''usually a porin'' -- so porin-ness is NOT asserted
-        for these records, which include a kinase, a decarboxylase and a regulator.'
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: The general statement. Its porin example is quoted as an EXAMPLE, which is what CARD calls
-        it, not as this family's route.
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3000821
+      snippet: PhoPQ is a two-component regulatory system. phoP is phosphorylated by phoQ at a low [mg2+],
+        activating the repressor. Its part of a two component regulating system that activates the PmrA/B
+        system which has downstream effects, leading to Antimicrobial resistance in many pathogens. In
+        Salmonella, phoP bind to macAB ABC transporter and represses it. In Escherichia coli, phoPQ regulates
+        arnA expression. In Pseudomonas aeruginosa, phoPQ regulates OprH expression. phoPQ have other
+        roles in other species.
+      notes: CARD definition for phoPQ.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: ARO asserts that MgrB transmembrane-protein changes confer resistance to peptide antibiotics.
     evidence:
     - reference: ARO:3007684
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3007684 (transmembrane protein conferring colistin resistance) in
-        the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: has quality (deleted or inactivated)
-    predicate_id: RO:0000086
-    object: absence
-    description: The determinant here IS a loss -- what the record names is a gene whose deletion confers
-      resistance, not a gene product that acts.
-    evidence:
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: '''Deletion of gene or gene product results in resistance''.'
-  - subject: absence
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    description: The causal core, and deliberately the ONLY downstream edge -- what the absence leads
-      to differs across these records and no source covers all of them.
-    evidence:
-    - reference: ARO:3003764
-      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: '''antibiotic resistance conferred by deletion of gene''.'
+      notes: ARO drug-class relationship on transmembrane protein conferring colistin resistance, materialized
+        into trait_relations and inherited by mgrB.
+    - reference: ARO:3007684
+      snippet: Mutations in mgrB transmembrane proteins can confer resistance to the antibiotic colistin.
+      notes: CARD definition for transmembrane protein conferring colistin resistance.
+    - reference: PMID:25190723
+      snippet: The inactivation or down-regulation of the mgrB gene was shown to be a source of colistin
+        resistance in K. pneumoniae
+      notes: Poirel et al. identified mgrB inactivation or down-regulation as a source of acquired colistin
+        resistance in Klebsiella pneumoniae.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated MgrB/PhoPQ colistin-resistance graph
   llm_assisted: true
 license: CC-BY 4.0

@@ -29,11 +29,10 @@ evidence:
   notes: PMID:10952301 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: catB9 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:1364583). Chloramphenicol acetyltransferase (CAT) — inactivates chloramphenicol by acetyl-CoA-dependent
-    O-acetylation.
+  title: catB9 → chloramphenicol O-acetylation → resistance
+  description: Curated resistance-causation graph for chloramphenicol acetyltransferase antibiotic inactivation.
+    The determinant participates in broad antibiotic inactivation and in the narrower acetyl-CoA-dependent
+    O-acetylation of chloramphenicol.
   nodes:
   - node_id: determinant
     label: catB9
@@ -55,12 +54,21 @@ causal_graphs:
     label: chloramphenicol acetyltransferase domain
     node_type: DOMAIN
     grounding: Pfam:PF00302
-    description: KB protein-trait record carrying the mechanism.
+    description: Chloramphenicol acetyltransferase domain that catalyzes acetyl-CoA-dependent chloramphenicol
+      acetylation.
   - node_id: fold
     label: chloramphenicol acetyltransferase fold
     node_type: DOMAIN
     grounding: CATH:3.30.559
-    description: KB protein-trait record carrying the mechanism.
+    description: Structural fold adopted by chloramphenicol acetyltransferases.
+  - node_id: acetyl_coa
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15351
+  - node_id: modified
+    label: acetylated inactive chloramphenicol
+    node_type: STATE
+    description: Local state for chloramphenicol after CAT-mediated acetyl-CoA-dependent O-acetylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -73,79 +81,303 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies CAT determinants under antibiotic inactivation.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: Family mechanism ARO:0001004.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: CAT-mediated antibiotic inactivation acetylates chloramphenicol.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies CAT determinants under antibiotic acylation.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: Family mechanism ARO:3000106.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: O-acetylation inactivates chloramphenicol and thereby causes resistance.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: Mechanism ARO:3000106 → resistance.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: CAT determinants confer resistance by acetylating chloramphenicol.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: Determinant → resistance phenotype.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that CAT determinants confer resistance to phenicol antibiotic.
     evidence:
     - reference: ARO:3000122
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000387 ! phenicol antibiotic'
       notes: Asserted on ARO:3000122 (chloramphenicol acetyltransferase (CAT)), an is_a ancestor of this
         record's ARO:3002681; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to phenicol antibiotic.
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
   - subject: domain
-    predicate: part of (catalytic domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The CAT Pfam domain is part of the chloramphenicol acetyltransferase.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
     - reference: Pfam:PF00302
       snippet: Chloramphenicol acetyltransferase
-      notes: 'KB trait: the CAT domain.'
+      notes: Pfam family for chloramphenicol acetyltransferase domains.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
   - subject: determinant
-    predicate: member of (adopts fold)
+    predicate: member of
     predicate_id: RO:0002350
     object: fold
+    description: CAT determinants adopt the chloramphenicol acetyltransferase fold.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
     - reference: CATH:3.30.559
       snippet: Chloramphenicol Acetyltransferase
-      notes: 'KB trait: the CAT fold.'
+      notes: CATH fold for chloramphenicol acetyltransferases.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
   - subject: domain
     predicate: enables (chloramphenicol acetylation)
     predicate_id: RO:0002327
     object: mech1
+    description: The CAT domain enables acetyl-CoA-dependent O-acetylation of chloramphenicol.
     evidence:
+    - reference: ARO:3002681
+      snippet: catB9 is a chromosome-encoded variant of the cat gene found in Vibrio cholerae.
+      notes: CARD definition for catB9.
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: Pfam:PF00302
+      snippet: Chloramphenicol acetyltransferase
+      notes: Pfam family for chloramphenicol acetyltransferase domains.
     - reference: PMID:1364583
       snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
-      notes: The CAT domain O-acetylates chloramphenicol, inactivating it.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+  - subject: mech1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: acetyl_coa
+    description: CAT-mediated O-acetylation uses acetyl-CoA as the acyl donor.
+    evidence:
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+    - reference: CHEBI:15351
+      snippet: acetyl-CoA
+      notes: Acetyl donor named by the CAT family mechanism.
+  - subject: mech1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: drug0
+    description: CAT-mediated O-acetylation modifies chloramphenicol phenicol antibiotics.
+    evidence:
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: modified
+    description: CAT-mediated O-acetylation produces acetylated chloramphenicol.
+    evidence:
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
+    - reference: ARO:3000106
+      snippet: Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.
+      notes: CARD definition for acylation of antibiotic conferring resistance.
+  - subject: modified
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: drug0
+    description: The acetylated chloramphenicol state represents enzymatic inactivation of the drug.
+    evidence:
+    - reference: ARO:3000122
+      snippet: Inactivates chloramphenicol by addition of an acyl group.
+      notes: CARD definition for chloramphenicol acetyltransferases.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: PMID:1364583
+      snippet: CAT, which catalyses O-acetylation of the antibiotic, using acetyl-CoA as the acyl donor.
+      notes: Shaw review of chloramphenicol acetyltransferase enzymology.
+    - reference: PMID:8527461
+      snippet: Chloramphenicol acetyltransferase (CAT) catalyzes the acetyl-CoA-dependent acetylation
+        of chloramphenicol (Cm) by a ternary complex mechanism.
+      notes: Kinetic evidence for CAT acetyl-CoA-dependent chloramphenicol acetylation.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-08T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed chloramphenicol acetyltransferase causal graphs
     llm_assisted: true
 license: CC-BY 4.0

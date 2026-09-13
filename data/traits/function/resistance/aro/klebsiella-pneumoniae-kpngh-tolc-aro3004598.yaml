@@ -23,10 +23,10 @@ evidence:
   notes: PMID:24823362 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Klebsiella pneumoniae KpnGH-TolC → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:38974671). MFS antibiotic efflux pump; ion-motive-force-driven drug antiport across the membrane.
+  title: Klebsiella pneumoniae KpnGH-TolC → MFS antibiotic efflux → resistance
+  description: Curated resistance-causation graph for the KpnGH-TolC efflux complex. The determinant is
+    modeled as a complete Kpn secondary-transporter efflux system without projecting a single MFS domain
+    or fold onto the whole complex.
   nodes:
   - node_id: determinant
     label: Klebsiella pneumoniae KpnGH-TolC
@@ -40,16 +40,14 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
-  - node_id: domain
-    label: major facilitator superfamily (MFS) transporter domain
-    node_type: DOMAIN
-    grounding: Pfam:PF07690
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: MFS general substrate transporter fold
-    node_type: DOMAIN
-    grounding: CATH:1.20.1250.20
-    description: KB protein-trait record carrying the mechanism.
+  - node_id: export
+    label: xenobiotic detoxification by transmembrane export across the plasma membrane
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:1990961
+  - node_id: extruded_drug
+    label: drug outside the cell
+    node_type: STATE
+    description: Local state for antibiotic exported from the cell by a Kpn efflux complex.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,71 +60,243 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies KpnGH-TolC under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Family mechanism ARO:0010000.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The KpnGH-TolC efflux complex exports antibiotic from the cell.
     evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3004598
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted directly on ARO:3004598 (Klebsiella pneumoniae KpnGH-TolC) in the CARD/ARO release
         in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
-  - subject: domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF07690
-      snippet: Major Facilitator Superfamily
-      notes: 'KB trait: the MFS transporter domain.'
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: export
+    description: KpnGH-TolC is modeled as a complete efflux system that exports antibiotics from the cell.
     evidence:
-    - reference: CATH:1.20.1250.20
-      snippet: MFS general substrate transporter like domains
-      notes: 'KB trait: the MFS general substrate transporter fold.'
-  - subject: domain
-    predicate: enables (drug efflux)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: The MFS domain carries out ion-motive-force-driven drug efflux.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
+  - subject: export
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    description: The efflux process exports this CARD-linked aminoglycoside antibiotic class.
+    evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:38974671
+      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
+        an energy mode associated with changes in transporter conformations and gating during efflux across
+        the membrane.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
+    - reference: ARO:3004598
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
+      notes: Asserted directly on ARO:3004598 (Klebsiella pneumoniae KpnGH-TolC) in the CARD/ARO release
+        in data/raw/aro/aro.obo.
+  - subject: export
+    predicate: causally upstream of (moves drug out of the cell)
+    predicate_id: RO:0002411
+    object: extruded_drug
+    description: Antibiotic export moves intracellular drug outside the cell.
+    evidence:
+    - reference: ARO:3004598
+      snippet: Disruption of the pump components KpnGH signficantly decrease resistance to azithromycin,
+        ceftazidime, ciprofloxacin, ertapenem, erythromycin, gentamicin, imipenem, ticarcillin, norfloxacin,
+        polymyxin-B, piperacillin, spectinomycin, tobramycin, and streptomycin.
+      notes: CARD definition for Klebsiella pneumoniae KpnGH-TolC.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: PMID:38974671
+      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
+        an energy mode associated with changes in transporter conformations and gating during efflux across
+        the membrane.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
+  - subject: extruded_drug
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Moving drug outside the cell lowers intracellular drug exposure and causes the modeled
+      resistance phenotype.
+    evidence:
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-09T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed Klebsiella Kpn efflux causal graphs
     llm_assisted: true
 license: CC-BY 4.0

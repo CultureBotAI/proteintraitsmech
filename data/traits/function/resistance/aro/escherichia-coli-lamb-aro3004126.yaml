@@ -39,10 +39,10 @@ evidence:
   notes: PMID:24412198 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Escherichia coli LamB → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:14665678). The mirror of efflux: the drug never gets in, rather than being pumped out.'
+  title: E. coli LamB down-regulation → reduced antibiotic influx → resistance
+  description: Curated resistance-causation graph for LamB-mediated antibiotic permeability. LamB is a
+    wild-type maltoporin; its down-regulation or loss reduces outer-membrane antibiotic entry, producing
+    the resistance-by-absence phenotype represented by this ARO term.
   nodes:
   - node_id: determinant
     label: Escherichia coli LamB
@@ -65,145 +65,231 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000050
   - node_id: influx
-    label: xenobiotic transport (drug influx across the outer membrane)
+    label: xenobiotic transport
     node_type: BIOLOGICAL_PROCESS
     grounding: GO:0042908
-    description: GO:0042908 is the transport process; which channel carries it differs per record and
-      is named in that record's own definition.
-  - node_id: barrier
-    label: outer membrane permeability barrier
-    node_type: STATE
-    description: 'Ungrounded: a property of the envelope rather than a compound.'
+    description: Wild-type drug influx across the Gram-negative outer membrane; reduced influx produces
+      the resistance phenotype.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
+    description: Resistance phenotype conferred by reduced outer-membrane drug entry.
   edges:
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD places this outer-membrane protein in the reduced-permeability resistance mechanism.
     evidence:
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: PMID:24412198
+      notes: Lin et al. showed that LamB functions as an antibiotic-influx porin and that its abundance
+        decreases across resistant E. coli strains.
     - reference: PMID:14665678
       snippet: Although outer membrane components often play important roles in the interaction of symbiotic
         or pathogenic bacteria with their host organisms, the major role of this membrane must usually
         be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
         time to allow the influx of nutrient molecules.
-      notes: Family mechanism ARO:3000244.
+      notes: Nikaido 2003. The Gram-negative outer membrane is a permeability barrier by default, and
+        channels admit otherwise excluded compounds.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Reduced outer-membrane permeability decreases antibiotic entry and supports the resistant
+      phenotype.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Mechanism ARO:3000244 → resistance.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: ARO:3003768
+      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
+        gene blocks drug from entering the cell.
+      notes: CARD definition for the broader gene-conferring-resistance-via-absence branch.
+    - reference: PMID:24412198
+      notes: Lin et al. showed that LamB functions as an antibiotic-influx porin and that its abundance
+        decreases across resistant E. coli strains.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD places the missing or down-regulated porin gene product in its resistance-by-absence
+      mechanism.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Family mechanism ARO:3003764.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3003764
+      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3003768
+      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
+        gene blocks drug from entering the cell.
+      notes: CARD definition for the broader gene-conferring-resistance-via-absence branch.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Loss of an antibiotic-entry route reduces permeability and produces resistance.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Mechanism ARO:3003764 → resistance.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3003764
+      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
+      notes: CARD definition for the resistance-by-absence mechanism.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Down-regulation or deletion of this outer-membrane protein is the record-level resistance
+      determinant.
     evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what
-        let a drug across it, so losing a channel raises the barrier.
-    - reference: ARO:3000270
-      snippet: Enzymes or other proteins either directly or indirectly reducing overall permeability to
-        antibiotics.
-      notes: CARD's definition of the family term these records sit under -- the claim at exactly the
-        level this config makes it. Each record's own definition names the channel and the drug class
-        IT admits.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3004279
+      snippet: Members of the Sugar Porin family tend to facilitate the transport of maltodextrins and
+        other sugars across the outer membrane of Gram-negative bacteria.
+      notes: CARD definition for the Sugar Porin parent of E. coli LamB.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: PMID:24412198
+      notes: Lin et al. showed that LamB functions as an antibiotic-influx porin and that its abundance
+        decreases across resistant E. coli strains.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+    description: CARD asserts inherited fluoroquinolone resistance from the Sugar Porin parent; the E.
+      coli LamB definition also names ciprofloxacin and balofloxacin.
     evidence:
     - reference: ARO:3004279
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: Asserted on ARO:3004279 (Sugar Porin (SP)), an is_a ancestor of this record's ARO:3004126;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: Asserted on ARO:3004279 (Sugar Porin), an is_a ancestor of ARO:3004126, in CARD/ARO.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3004279
+      snippet: Members of the Sugar Porin family tend to facilitate the transport of maltodextrins and
+        other sugars across the outer membrane of Gram-negative bacteria.
+      notes: CARD definition for the Sugar Porin parent of E. coli LamB.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug1
-    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
+    description: CARD asserts inherited tetracycline resistance from the Sugar Porin parent; the E. coli
+      LamB definition also names chlortetracycline.
     evidence:
     - reference: ARO:3004279
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000050 ! tetracycline antibiotic'
-      notes: Asserted on ARO:3004279 (Sugar Porin (SP)), an is_a ancestor of this record's ARO:3004126;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: Asserted on ARO:3004279 (Sugar Porin), an is_a ancestor of ARO:3004126, in CARD/ARO.
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3004279
+      snippet: Members of the Sugar Porin family tend to facilitate the transport of maltodextrins and
+        other sugars across the outer membrane of Gram-negative bacteria.
+      notes: CARD definition for the Sugar Porin parent of E. coli LamB.
+    - reference: ARO:3000244
+      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
+        can provide resistance.
+      notes: CARD definition for the reduced-permeability resistance mechanism.
   - subject: determinant
     predicate: enables (admits the drug across the membrane)
     predicate_id: RO:0002327
     object: influx
-    description: The wild-type function. Resistance is its loss or down-regulation, which is why these
-      records are channels rather than resistance enzymes.
+    description: The wild-type outer-membrane protein contributes to antibiotic entry; resistance is caused
+      by reducing that entry route.
     evidence:
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
+    - reference: ARO:3004279
+      snippet: Members of the Sugar Porin family tend to facilitate the transport of maltodextrins and
+        other sugars across the outer membrane of Gram-negative bacteria.
+      notes: CARD definition for the Sugar Porin parent of E. coli LamB.
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: Nikaido 2003. The Gram-negative outer membrane is a permeability barrier by default, and
+        channels admit otherwise excluded compounds.
+    - reference: PMID:24412198
+      notes: Lin et al. showed that LamB functions as an antibiotic-influx porin and that its abundance
+        decreases across resistant E. coli strains.
+  - subject: influx
+    predicate: negatively regulates (drug entry counteracts resistance)
+    predicate_id: RO:0002212
+    object: resistance
+    description: Antibiotic influx counteracts permeability-mediated resistance; reduced influx is therefore
+      upstream of the resistant phenotype.
+    evidence:
+    - reference: ARO:3004126
+      snippet: LamB is a negative regulator for antibiotic resistance, it serves as a porin to influx
+        antibiotic. When down-regulated, it increases resistance to chlortetracycline, ciprofloxacin,
+        balofloxacin and nalidixic acid.
+      notes: CARD definition for Escherichia coli LamB.
     - reference: ARO:3000244
       snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
         can provide resistance.
-      notes: 'CARD''s mechanism term, stated as the loss: permeability falls when the channel does, which
-        is this edge read backwards. General to every record here; each names its own channel and drug.'
-  - subject: barrier
-    predicate: negatively regulates (the membrane excludes what has no channel)
-    predicate_id: RO:0002212
-    object: influx
-    evidence:
+      notes: CARD definition for the reduced-permeability resistance mechanism.
+    - reference: ARO:3003768
+      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
+        gene blocks drug from entering the cell.
+      notes: CARD definition for the broader gene-conferring-resistance-via-absence branch.
     - reference: PMID:14665678
       snippet: Although outer membrane components often play important roles in the interaction of symbiotic
         or pathogenic bacteria with their host organisms, the major role of this membrane must usually
         be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
         time to allow the influx of nutrient molecules.
-      notes: 'Nikaido 2003: exclusion is the outer membrane''s default, and channels are the exception
-        to it.'
-  - subject: influx
-    predicate: causally upstream of (the drug reaches its target)
-    predicate_id: RO:0002411
-    object: drug0
-    description: 'The causal core inverted: with the channel lost or down-regulated, this step does not
-      happen and the drug never reaches its target.'
-    evidence:
-    - reference: PMID:14665678
-      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
-        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
-        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
-        time to allow the influx of nutrient molecules.
-      notes: A drug that cannot cross the barrier cannot act, whatever its target.
+      notes: Nikaido 2003. The Gram-negative outer membrane is a permeability barrier by default, and
+        channels admit otherwise excluded compounds.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated E. coli LamB/mipA permeability-loss graph
   llm_assisted: true
 license: CC-BY 4.0

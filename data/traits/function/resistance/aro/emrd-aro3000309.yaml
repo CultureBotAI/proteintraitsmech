@@ -33,10 +33,9 @@ evidence:
   notes: PMID:16675700 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: emrD → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:38974671). MFS antibiotic efflux pump; ion-motive-force-driven drug antiport across the membrane.
+  title: emrD → MFS antibiotic efflux → resistance
+  description: Curated resistance-causation graph for MFS antibiotic efflux pumps. The determinant enables
+    ion-motive-force-driven export of antibiotics out of the cell, lowering intracellular drug exposure.
   nodes:
   - node_id: determinant
     label: emrD
@@ -54,12 +53,12 @@ causal_graphs:
     label: major facilitator superfamily (MFS) transporter domain
     node_type: DOMAIN
     grounding: Pfam:PF07690
-    description: KB protein-trait record carrying the mechanism.
+    description: Transporter domain shared by MFS antibiotic efflux pumps.
   - node_id: fold
     label: MFS general substrate transporter fold
     node_type: DOMAIN
     grounding: CATH:1.20.1250.20
-    description: KB protein-trait record carrying the mechanism.
+    description: Fold adopted by MFS general substrate transporter-like domains.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -72,70 +71,209 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this transporter under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Family mechanism ARO:0010000.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant exports antibiotic from the cell through its family-specific transport
+      mechanism.
     evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
     evidence:
     - reference: ARO:3000309
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
       notes: Asserted directly on ARO:3000309 (emrD) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: domain
-    predicate: part of (domain of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The transporter domain is part of the resistance determinant.
     evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
     - reference: Pfam:PF07690
       snippet: Major Facilitator Superfamily
-      notes: 'KB trait: the MFS transporter domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:1.20.1250.20
-      snippet: MFS general substrate transporter like domains
-      notes: 'KB trait: the MFS general substrate transporter fold.'
-  - subject: domain
-    predicate: enables (drug efflux)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+      notes: Pfam family for the MFS transporter domain.
     - reference: PMID:38974671
       snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
         an energy mode associated with changes in transporter conformations and gating during efflux across
         the membrane.
-      notes: The MFS domain carries out ion-motive-force-driven drug efflux.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the transporter fold associated with this efflux-pump family.
+    evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: CATH:1.20.1250.20
+      snippet: MFS general substrate transporter like domains
+      notes: CATH fold for MFS general substrate transporter-like domains.
+    - reference: PMID:38974671
+      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
+        an energy mode associated with changes in transporter conformations and gating during efflux across
+        the membrane.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
+  - subject: domain
+    predicate: enables (ion-motive-force-driven drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: The transporter domain enables family-specific antibiotic export.
+    evidence:
+    - reference: ARO:3000309
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily (MFS) primarily
+        found in Escherichia coli. EmrD couples efflux of amphipathic compounds with proton import across
+        the plasma membrane.
+      notes: CARD definition for emrD.
+    - reference: ARO:0010002
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Major facilitator superfamily
+        (MFS) transporters and ABC transporters comprise the two largest and most functionally diverse
+        of the transporter superfamilies. However, MFS transporters are distinct from ABC transporters
+        in both their primary sequence and structure and in the mechanism of energy coupling. As secondary
+        transporters they are, like RND and SMR transporters, energized by the electrochemical proton
+        gradient.
+      notes: CARD definition for MFS antibiotic efflux pumps.
+    - reference: Pfam:PF07690
+      snippet: Major Facilitator Superfamily
+      notes: Pfam family for the MFS transporter domain.
+    - reference: PMID:38974671
+      snippet: The antimicrobial antiport transport cycle in bacteria is driven by the ion-motive force,
+        an energy mode associated with changes in transporter conformations and gating during efflux across
+        the membrane.
+      notes: Evidence for ion-motive-force-driven MFS efflux.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-08T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed efmA and emrD MFS efflux graphs
     llm_assisted: true
 license: CC-BY 4.0

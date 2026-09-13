@@ -25,11 +25,10 @@ causal_graphs:
 - graph_id: resistance
   title: rifamycin-resistant arabinosyltransferase → mechanism → resistance (curated from ARO relations
     + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003422). Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD''s sentence
-    never mentions a drug, mutations, or resistance, so the graph carries what the enzyme does and stops.
-    Thinner than round 81''s ppsA-E, which at least paired a role with a hedged resistance claim.'
+  description: Conservative graph for rifamycin-resistant arabinosyltransferase. The ARO class says mutations
+    in these genes can confer rifampicin resistance, but does not identify a specific AftA reaction or
+    a rifamycin target-modification route, so the arabinosyltransferase role is grounded only to broad
+    EC:2.4.2.- pentosyltransferase activity.
   nodes:
   - node_id: determinant
     label: rifamycin-resistant arabinosyltransferase
@@ -43,14 +42,18 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
-  - node_id: arabinofuranosyl_transfer
-    label: arabinofuranosyltransferase activity
+  - node_id: pentosyltransferase_activity
+    label: pentosyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-93).'
-  - node_id: magp
-    label: arabinogalactan region of the mAGP complex
-    node_type: CHEMICAL
-    description: The product, which CARD calls essential to the mycobacterial cell wall. Ungrounded.
+    grounding: EC:2.4.2.-
+    description: Grounded to the broad EC pentosyltransferase class because this ARO rifamycin branch
+      covers arabinosyltransferases rather than a single AftA-specific reaction.
+  - node_id: cell_wall_biogenesis
+    label: Actinobacterium-type cell wall biogenesis
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0071766
+    description: Grounded to the GO process for biosynthesis and assembly of Actinobacterium-type cell-wall
+      macromolecules.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,63 +66,119 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies this determinant under mutation conferring antibiotic resistance,
+      while this graph leaves the mutation-to-cell-wall effect unresolved.
     evidence:
-    - reference: ARO:3003422
-      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
-        of the mAGP complex, an essential component of the mycobacterial cell wall.
-      notes: Family mechanism ARO:3000212.
+    - reference: ARO:3003464
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism links this determinant class to the resistance phenotype
+      without specifying the altered arabinogalactan chemistry.
     evidence:
-    - reference: ARO:3003422
-      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
-        of the mAGP complex, an essential component of the mycobacterial cell wall.
-      notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3003464
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This ARO resistance determinant is kept at the class-level mutation claim; no direct
+      drug-binding or target-modification edge is asserted.
     evidence:
-    - reference: ARO:3003422
-      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
-        of the mAGP complex, an essential component of the mycobacterial cell wall.
-      notes: The enzyme's role and the product's importance ('an ESSENTIAL component of the mycobacterial
-        cell wall'). CARD says nothing about what mutations do, nor which drug is involved.
+    - reference: ARO:3003464
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+    description: The ARO hierarchy links this determinant to the inherited rifamycin antibiotic resistance
+      class.
     evidence:
     - reference: ARO:3003464
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted directly on ARO:3003464 (rifamycin-resistant arabinosyltransferase) in the CARD/ARO
-        release in data/raw/aro/aro.obo.
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: ARO:3003464
+      snippet: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic
+      notes: ARO drug-class relationship on ARO:3003464; modeled here as a determinant-to-rifamycin antibiotic
+        edge.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
-    predicate: participates in (arabinogalactan biosynthesis)
-    predicate_id: RO:0000056
-    object: arabinofuranosyl_transfer
-    description: '''Participates in'', matching CARD''s own ''is INVOLVED IN'' rather than upgrading it.'
+    predicate: enables
+    predicate_id: RO:0002327
+    object: pentosyltransferase_activity
+    description: The determinant is represented by the arabinosyltransferase role named in ARO; the edge
+      does not assert how resistance mutations alter this activity.
     evidence:
-    - reference: ARO:3003422
-      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
-        of the mAGP complex, an essential component of the mycobacterial cell wall.
-      notes: '''Arabinofuranosyltransferase is INVOLVED IN the biosynthesis''.'
-  - subject: arabinofuranosyl_transfer
-    predicate: has output (the arabinogalactan region)
-    predicate_id: RO:0002234
-    object: magp
+    - reference: ARO:3003464
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: EC:2.4.2.-
+      snippet: A transferase; glycosyltransferases; pentosyltransferases.
+      notes: EC nomenclature grounding for the broad pentosyltransferase class used where the ARO term
+        is broader than AftA.
+  - subject: pentosyltransferase_activity
+    predicate: part of (Actinobacterium-type cell-wall biogenesis)
+    predicate_id: BFO:0000050
+    object: cell_wall_biogenesis
+    description: The arabinosyltransferase role is kept as cell-wall biosynthesis context, not as a complete
+      resistance route.
     evidence:
-    - reference: ARO:3003422
-      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
-        of the mAGP complex, an essential component of the mycobacterial cell wall.
-      notes: '''the arabinogalactan region of the mAGP complex, an essential component''. NOT asserted:
-        any link to a drug, which CARD''s sentence does not contain.'
+    - reference: ARO:3003464
+      snippet: Arabinosyl transferases allow for the polymerization of arabinose to form arabinan. Arabanan
+        is required for formation of mycobacterial cell walls and arabinosyltransferases are targets of
+        the drug ethambutol. Mutations in these genes can confer resistance to rifampicin.
+      notes: CARD definition for rifamycin-resistant arabinosyltransferase.
+    - reference: GO:0071766
+      snippet: A cellular process that results in the biosynthesis of constituent macromolecules, assembly,
+        and arrangement of constituent parts of a cell wall of the type found in Actinobacteria.
+      notes: GO definition for Actinobacterium-type cell-wall biogenesis, matching the mycobacterial cell-wall
+        context named by ARO.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded AftA/arabinofuranosyltransferase graphs to EC and GO cell-wall-biosynthesis terms and
+    removed the ungrounded mAGP endpoint
   llm_assisted: true
 license: CC-BY 4.0

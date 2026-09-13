@@ -26,12 +26,11 @@ evidence:
   notes: PMID:16629670 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: RbpA bacterial RNA polymerase-binding protein → mechanism → resistance (curated from ARO relations
-    + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:35907401). Target protection of RNA polymerase by displacing the drug -- the same mode as TetM,
-    on a different target.
+  title: RbpA bacterial RNA polymerase-binding protein → RNA polymerase target protection → rifamycin
+    resistance
+  description: Curated resistance graph for RNA-polymerase target-protection determinants. The graph preserves
+    CARD's antibiotic target-protection mechanism and rifamycin drug-class assertion while replacing the
+    ungrounded RNAP protein side node with a described local state for rifamycin-inhibited RNA polymerase.
   nodes:
   - node_id: determinant
     label: RbpA bacterial RNA polymerase-binding protein
@@ -45,15 +44,11 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
-  - node_id: rnap
-    label: bacterial RNA polymerase, the drug's target
-    node_type: PROTEIN
-    description: 'The same target rpoB records alter (round 26). Ungrounded: the corpus holds no RNAP
-      complex trait record.'
   - node_id: inhibited
     label: rifamycin-inhibited RNA polymerase
     node_type: STATE
-    description: Transcription blocked by bound drug. Ungrounded.
+    description: Local state for rifamycin-inhibited bacterial RNA polymerase that RbpA-family RNA-polymerase
+      binding proteins counter through target-protection activity.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,77 +61,131 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this determinant under antibiotic target protection.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Family mechanism ARO:0001003.
+    - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Protection of RNA polymerase from rifamycin action is causally upstream of rifamycin
+      resistance.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Mechanism ARO:0001003 → resistance.
+    - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
-    evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Surette et al. 2022. The paper names the mechanism class outright -- 'resistance by target
-        protection' -- and the mode is DISPLACEMENT, as TetM's is (round 31), not FusB's rescue of a stalled
-        complex (round 44).
-    - reference: PMID:35907401
-      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
-        (RNAP) used to treat tuberculosis and other bacterial infections.
-      notes: 'And what is being protected: RNAP, the target rounds 26''s rpoB records alter instead.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+    description: The determinant protects RNA polymerase from rifamycin action to confer rifamycin resistance.
     evidence:
     - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
+  - subject: determinant
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
+    object: drug0
+    description: ARO maps this RNA-polymerase target-protection determinant to rifamycin antibiotics.
+    evidence:
+    - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
+    - reference: ARO:3004243
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted directly on ARO:3004243 (RbpA bacterial RNA polymerase-binding protein) in the CARD/ARO
-        release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on this record.
+    - reference: ARO:3000157
+      snippet: rifamycin antibiotic
+      notes: ARO drug class inherited by the RNA-polymerase target-protection records.
   - subject: drug0
-    predicate: causally upstream of (inhibits transcription)
+    predicate: causally upstream of (inhibits RNA polymerase)
     predicate_id: RO:0002411
     object: inhibited
+    description: Rifamycin antibiotics inhibit bacterial RNA polymerase.
     evidence:
-    - reference: PMID:35907401
-      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
-        (RNAP) used to treat tuberculosis and other bacterial infections.
-      notes: 'Drug action: rifamycins are potent RNAP inhibitors.'
+    - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
+    - reference: ARO:3004243
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
+      notes: ARO drug-class relationship asserted directly on this record.
+    - reference: ARO:3000157
+      snippet: rifamycin antibiotic
+      notes: ARO drug class inherited by the RNA-polymerase target-protection records.
   - subject: determinant
-    predicate: molecularly interacts with (forms a complex with RNAP)
-    predicate_id: RO:0002436
-    object: rnap
-    evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Protection works by binding the TARGET, as FusB does with EF-G.
-  - subject: determinant
-    predicate: negatively regulates (displaces the drug from RNAP)
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: inhibited
-    description: The causal core. TetM's mode -- the drug is removed from the target -- applied to RNA
-      polymerase rather than the ribosome.
+    description: The target-protection determinant counters the local rifamycin-inhibited RNA polymerase
+      state.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Surette et al. 2022.
+    - reference: ARO:3004243
+      snippet: RbpA is a family of bacterial RNA polymerase-binding proteins, which acts as a transcription
+        factor and binds to the sigma subunit of RNA polymerase.
+      notes: CARD definition for RbpA bacterial RNA polymerase-binding protein.
+    - reference: ARO:0001003
+      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
+        in antibiotic resistance.
+      notes: CARD definition for antibiotic target protection.
+    - reference: DOI:10.1093/nar/gks346
+      notes: PMID:22570422 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2006.05116.x
+      notes: PMID:16629670 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded RNA polymerase target-protection causal graphs
   llm_assisted: true
 license: CC-BY 4.0

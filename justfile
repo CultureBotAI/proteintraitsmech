@@ -239,6 +239,16 @@ sources-check:
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
 
+# Identity gate for known strict causal-graph warnings. Lets curated, deliberately
+# local label-only nodes remain while failing on warning swaps or new warning sites.
+audit-graphs-warnings *args:
+    uv run python scripts/audit_causal_graphs.py \
+        --warning-baseline audit/causal-graph-warning-baseline.json {{args}}
+
+# Score and rank graph-bearing records by causal-graph completeness and evidence quality
+score-graphs *args:
+    uv run python scripts/score_causal_graphs.py {{args}}
+
 # Reports encoding damage by source and kind. Separates REVERSIBLE damage (mojibake, C1
 # controls — repair_mojibake undoes these, and a non-zero count exits 1) from U+FFFD,
 # which is lossy: the original bytes are gone, so it is reported as a fact rather than a

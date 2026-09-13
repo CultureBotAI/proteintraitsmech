@@ -24,10 +24,9 @@ evidence:
   notes: PMID:1936950 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Escherichia coli emrE → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:0010003). Efflux, with the proton-antiport coupling stated rather than assumed.
+  title: Escherichia coli emrE → SMR proton antiport → resistance
+  description: Curated resistance-causation graph for SMR antibiotic efflux pumps. The determinant enables
+    proton-coupled antiport that exports antibiotic from the cell and lowers intracellular drug exposure.
   nodes:
   - node_id: determinant
     label: Escherichia coli emrE
@@ -41,15 +40,14 @@ causal_graphs:
     label: drug/proton antiporter activity
     node_type: MOLECULAR_FUNCTION
     grounding: GO:0015297
-    description: Checked non-obsolete against OLS (#157).
-  - node_id: proton_gradient
-    label: inward proton electrochemical gradient
-    node_type: STATE
-    description: 'The energy source. Ungrounded: a gradient is not a compound.'
-  - node_id: extruded
+  - node_id: export
+    label: xenobiotic detoxification by transmembrane export across the plasma membrane
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:1990961
+  - node_id: extruded_drug
     label: drug outside the cell
     node_type: STATE
-    description: The outcome. Ungrounded.
+    description: Local state for antibiotic exported from the cell by an SMR efflux pump.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,69 +60,200 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies SMR pumps under the antibiotic efflux resistance mechanism.
     evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: Family mechanism ARO:0010000.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: CARD definition for EmrE proton/drug antiport.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: Mechanism ARO:0010000 → resistance.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: CARD definition for EmrE proton/drug antiport.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The SMR determinant exports antibiotic from the cell by proton-coupled antiport.
     evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
     - reference: ARO:0010003
       snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
         (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
-      notes: 'The family claim: directed pumping of antibiotic out of the cell, by a distinct small transporter
-        family.'
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: ARO:3000264
       snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
         efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
         gradient.
-      notes: 'And the energetics. SCOPE: this is EmrE''s sentence; the other members are named as SMR-family
-        transporters without their own coupling data.'
+      notes: CARD definition for EmrE proton/drug antiport.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: determinant
     predicate: enables (drug/proton antiport)
     predicate_id: RO:0002327
     object: antiport
+    description: The SMR determinant enables proton-coupled export of drug substrates.
     evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
     - reference: ARO:3000264
       snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
         efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
         gradient.
-      notes: '''couples the efflux ... with the import of protons'' -- an antiport by definition.'
-  - subject: proton_gradient
-    predicate: causally upstream of (drives the transport)
-    predicate_id: RO:0002411
-    object: antiport
-    description: What powers the pump. Efflux is not spontaneous, and this is the one family here that
-      says what pays for it.
-    evidence:
-    - reference: ARO:3000264
-      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
-        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
-        gradient.
-      notes: '''down an electrochemical gradient'' -- the protons move downhill, which is what drives
-        the drug uphill.'
+      notes: CARD definition for EmrE proton/drug antiport.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
   - subject: antiport
-    predicate: causally upstream of (removes the drug from the cell)
+    predicate: causally upstream of
     predicate_id: RO:0002411
-    object: extruded
-    description: 'The causal core: resistance because the drug is no longer inside.'
+    object: export
+    description: Proton-coupled antiport exports antibiotic across the plasma membrane.
     evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: '''via the transport of antibiotics out of the cell''.'
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: CARD definition for EmrE proton/drug antiport.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
+  - subject: export
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: extruded_drug
+    description: Transmembrane export moves antibiotic outside the cell.
+    evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: PMID:22178925
+      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
+        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
+      notes: Evidence for SMR multidrug export by an EmrE-family transporter.
+  - subject: extruded_drug
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Moving antibiotic outside the cell lowers intracellular drug exposure.
+    evidence:
+    - reference: ARO:3004039
+      snippet: Member of the small MDR (multidrug resistance) family of transporters; in Escherichia coli
+        this protein provides resistance against a number of positively charged compounds including ethidium
+        bromide and erythromycin; proton-dependent secondary transporter which exchanges protons for compound
+        translocation.
+      notes: CARD definition for Escherichia coli emrE.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed SMR proton-antiport efflux causal graphs
   llm_assisted: true
 license: CC-BY 4.0

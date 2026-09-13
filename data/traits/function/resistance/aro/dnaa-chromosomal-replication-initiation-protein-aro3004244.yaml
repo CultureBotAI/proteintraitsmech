@@ -26,12 +26,11 @@ evidence:
   notes: PMID:19170875 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: DnaA chromosomal replication initiation protein → mechanism → resistance (curated from ARO relations
-    + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:35907401). Target protection of RNA polymerase by displacing the drug -- the same mode as TetM,
-    on a different target.
+  title: DnaA chromosomal replication initiation protein → RNA polymerase protection → rifamycin resistance
+  description: Conservative graph for DnaA-mediated rifamycin resistance. The graph replaces the prior
+    HelR-specific target-protection seed with DnaA RNA-polymerase binding, DnaA's native DNA-replication
+    initiation process, and a described local state for surplus DnaA countering rifamycin inhibition of
+    RNA polymerase.
   nodes:
   - node_id: determinant
     label: DnaA chromosomal replication initiation protein
@@ -45,15 +44,23 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
-  - node_id: rnap
-    label: bacterial RNA polymerase, the drug's target
-    node_type: PROTEIN
-    description: 'The same target rpoB records alter (round 26). Ungrounded: the corpus holds no RNAP
-      complex trait record.'
+  - node_id: dna_replication
+    label: DNA replication initiation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006270
+  - node_id: rnap_binding
+    label: RNA polymerase core enzyme binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0043175
+  - node_id: surplus
+    label: surplus DnaA at the origin
+    node_type: STATE
+    description: Local state for the excess DnaA available at the origin that disrupts rifampicin activity.
   - node_id: inhibited
     label: rifamycin-inhibited RNA polymerase
     node_type: STATE
-    description: Transcription blocked by bound drug. Ungrounded.
+    description: Local state for rifamycin-mediated inhibition of bacterial RNA polymerase during transcription
+      initiation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,77 +73,251 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies DnaA as an antibiotic target-protection determinant.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Family mechanism ARO:0001003.
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:0001003
+      snippet: antibiotic target protection
+      notes: ARO mechanism term asserted on DnaA records.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: DnaA-mediated target protection is the rifamycin-resistance mechanism.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Mechanism ARO:0001003 → resistance.
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:0001003
+      snippet: antibiotic target protection
+      notes: ARO mechanism term asserted on DnaA records.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
-    evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Surette et al. 2022. The paper names the mechanism class outright -- 'resistance by target
-        protection' -- and the mode is DISPLACEMENT, as TetM's is (round 31), not FusB's rescue of a stalled
-        complex (round 44).
-    - reference: PMID:35907401
-      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
-        (RNAP) used to treat tuberculosis and other bacterial infections.
-      notes: 'And what is being protected: RNAP, the target rounds 26''s rpoB records alter instead.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+    description: DnaA surplus at the origin counters rifamycin activity and confers rifamycin resistance.
     evidence:
     - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: determinant
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
+    object: drug0
+    description: ARO maps the DnaA family to rifamycin antibiotics.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: ARO:3004244
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted directly on ARO:3004244 (DnaA chromosomal replication initiation protein) in the
-        CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on the DnaA parent.
+    - reference: ARO:3000157
+      snippet: rifamycin antibiotic
+      notes: ARO drug-class term inherited by DnaA records.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: dna_replication
+    description: DnaA normally enables DNA replication initiation.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: GO:0006270
+      snippet: The process in which DNA-dependent DNA replication is started; it begins when specific
+        sequences, known as origins of replication, are recognized and bound by the origin recognition
+        complex, followed by DNA unwinding.
+      notes: GO DNA replication initiation term for DnaA's native process.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: rnap_binding
+    description: DnaA binds and interacts with RNA polymerase.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: GO:0043175
+      snippet: Binding to an RNA polymerase core enzyme, containing a specific subunit composition defined
+        as the core enzyme.
+      notes: GO RNA polymerase core enzyme binding term.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: determinant
+    predicate: has quality
+    predicate_id: RO:0000086
+    object: surplus
+    description: The rifamycin-resistance state is excess DnaA available at the origin.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
   - subject: drug0
-    predicate: causally upstream of (inhibits transcription)
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: inhibited
+    description: Rifamycin antibiotics inhibit bacterial RNA polymerase.
     evidence:
-    - reference: PMID:35907401
-      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
-        (RNAP) used to treat tuberculosis and other bacterial infections.
-      notes: 'Drug action: rifamycins are potent RNAP inhibitors.'
-  - subject: determinant
-    predicate: molecularly interacts with (forms a complex with RNAP)
-    predicate_id: RO:0002436
-    object: rnap
-    evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Protection works by binding the TARGET, as FusB does with EF-G.
-  - subject: determinant
-    predicate: negatively regulates (displaces the drug from RNAP)
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: ARO:3004244
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
+      notes: ARO drug-class relationship asserted directly on the DnaA parent.
+    - reference: ARO:3000157
+      snippet: rifamycin antibiotic
+      notes: ARO drug-class term inherited by DnaA records.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: surplus
+    predicate: negatively regulates
     predicate_id: RO:0002212
     object: inhibited
-    description: The causal core. TetM's mode -- the drug is removed from the target -- applied to RNA
-      polymerase rather than the ribosome.
+    description: Surplus DnaA disrupts rifamycin-mediated RNA polymerase inhibition.
     evidence:
-    - reference: PMID:35907401
-      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
-        from RNAP, thereby providing resistance by target protection.
-      notes: Surette et al. 2022.
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+  - subject: rnap_binding
+    predicate: negatively regulates
+    predicate_id: RO:0002212
+    object: inhibited
+    description: DnaA/RNA-polymerase interaction is the physical target-protection activity that counters
+      rifamycin inhibition.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: GO:0043175
+      snippet: Binding to an RNA polymerase core enzyme, containing a specific subunit composition defined
+        as the core enzyme.
+      notes: GO RNA polymerase core enzyme binding term.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+  - subject: surplus
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Excess DnaA at the origin is the local state associated with rifamycin resistance.
+    evidence:
+    - reference: ARO:3004244
+      snippet: The DnaA family of replication initiation proteins interact with RNA polymerase to confer
+        resistance against rifampicin anitibiotics.
+      notes: CARD definition for the DnaA chromosomal replication initiation protein family.
+    - reference: ARO:3000248
+      snippet: DnaA is a chromosomal replication initiation protein which binds and interacts with RNA
+        polymerase in Escherichia coli. A surplus of DnaA present in a cell has been shown to confer resistance
+        to the antibiotic Rifampicin. Normally, rifampicin inhibits initiation of transcription by RNA
+        polymerase, but a surplus of DnaA available at the origin has been shown to disrupt Rifampicin
+        activity and confer resistance.
+      notes: CARD definition for DnaA, the family child that records the surplus-at-origin rifampicin-resistance
+        mechanism.
+    - reference: DOI:10.1099/mic.0.047316-0
+      notes: PMID:21527473 (aro citation)
+    - reference: DOI:10.1111/j.1365-2958.2008.06585.x
+      notes: PMID:19170875 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded DnaA rifamycin target-protection graphs
   llm_assisted: true
 license: CC-BY 4.0

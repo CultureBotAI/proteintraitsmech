@@ -29,12 +29,11 @@ evidence:
   notes: PMID:27064254 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Mycobacterium tuberculosis ald mutations confer resistance to cycloserine → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3004943). L-alanine supply to the peptidoglycan layer. NOT asserted: any relation to cycloserine''s
-    D-alanine mimicry, which ddlA''s record (round 116) states for its own step and this one does not.'
+  title: Mycobacterium tuberculosis ald mutations confer resistance to cycloserine → L-alanine cell-wall
+    synthesis → cycloserine resistance
+  description: Conservative graph for cycloserine-resistant ald. The graph grounds L-alanine to CHEBI:16977
+    and cell-wall synthesis to GO:0009252 peptidoglycan biosynthesis, but stops before any unasserted
+    cycloserine-to-D-alanine mimicry edge.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ald mutations confer resistance to cycloserine
@@ -49,13 +48,17 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3007154
   - node_id: l_alanine
-    label: L-alanine, a constituent of the peptidoglycan layer
+    label: L-alanine
     node_type: CHEMICAL
-    description: 'Ungrounded: not looked up rather than guessed.'
+    grounding: CHEBI:16977
+    description: Grounded to ChEBI L-alanine, the alanine enantiomer named by CARD as an important constituent
+      of the peptidoglycan layer.
   - node_id: wall_synthesis
-    label: cell wall synthesis
+    label: peptidoglycan biosynthetic process
     node_type: BIOLOGICAL_PROCESS
-    description: Ungrounded.
+    grounding: GO:0009252
+    description: Grounded to peptidoglycan biosynthesis, matching CARD's statement that ald plays a role
+      in cell-wall synthesis through L-alanine.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,65 +71,157 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies cycloserine-resistant ald under mutation conferring resistance.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
     - reference: ARO:3004943
       snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
         peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for the cycloserine-resistant ald parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The ald variants are modeled under the broad mutation mechanism.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
     - reference: ARO:3004943
       snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
         peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for the cycloserine-resistant ald parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Mutations in ald can cause cycloserine to not function while ald participates in peptidoglycan
+      biosynthesis through L-alanine.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
     - reference: ARO:3004943
       snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
         peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
-      notes: 'Pathway role, and ''can cause cycloserine to NOT FUNCTION'' -- the same verb as mshC, nudC
-        and mshA''s counterpart. Round 95''s line applies: ''function'' does not license an activation
-        or mimicry edge, even though ddlA (round 116) supplies exactly that story for the neighbouring
-        step.'
+      notes: CARD definition for the cycloserine-resistant ald parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
+    description: ARO maps cycloserine-resistant ald to the cycloserine-like antibiotic class.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: CARD definition for the cycloserine-resistant ald parent term.
     - reference: ARO:3004943
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: Asserted on ARO:3004943 (cycloserine resistant ald), an is_a ancestor of this record's ARO:3004945;
-        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted on the cycloserine-resistant ald parent and inherited
+        by the Mycobacterium tuberculosis ald child.
+    - reference: ARO:3007154
+      snippet: cycloserine-like antibiotic
+      notes: ARO drug-class term targeted by cycloserine-resistant ald records.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
   - subject: determinant
-    predicate: participates in (cell wall synthesis)
+    predicate: participates in (peptidoglycan biosynthesis)
     predicate_id: RO:0000056
     object: wall_synthesis
-    description: '''Participates in'', matching CARD''s ''plays a role in''.'
+    description: The determinant participates in the peptidoglycan biosynthetic process through L-alanine
+      supply to the peptidoglycan layer.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
     - reference: ARO:3004943
       snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
         peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
-      notes: '''ald plays a role in cell wall synthesis''.'
-  - subject: l_alanine
-    predicate: part of (the peptidoglycan layer)
-    predicate_id: BFO:0000050
-    object: wall_synthesis
+      notes: CARD definition for the cycloserine-resistant ald parent term.
+    - reference: CHEBI:16977
+      snippet: The L-enantiomer of alanine.
+      notes: ChEBI definition for L-alanine.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
+  - subject: wall_synthesis
+    predicate: has input
+    predicate_id: RO:0002233
+    object: l_alanine
+    description: L-alanine is modeled as an input into peptidoglycan biosynthesis rather than as part
+      of the biosynthetic process itself.
     evidence:
+    - reference: ARO:3004945
+      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
+      notes: CARD definition for Mycobacterium tuberculosis ald mutations confer resistance to cycloserine.
     - reference: ARO:3004943
       snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
         peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
-      notes: '''L-alanine is an important constituent of the peptidoglycan layer''. NOT asserted: the
-        link to cycloserine, whose mimicry ddlA''s record describes.'
+      notes: CARD definition for the cycloserine-resistant ald parent term.
+    - reference: CHEBI:16977
+      snippet: The L-enantiomer of alanine.
+      notes: ChEBI definition for L-alanine.
+    - reference: GO:0009252
+      snippet: The chemical reactions and pathways resulting in the formation of peptidoglycans, any of
+        a class of glycoconjugates found in bacterial cell walls and consisting of long glycan strands
+        of alternating residues of beta-(1,4) linked N-acetylglucosamine and N-acetylmuramic acid, cross-linked
+        by short peptides.
+      notes: GO definition for peptidoglycan biosynthetic process.
+    - reference: DOI:10.1038/s41598-018-33731-1
+      notes: PMID:30337678 (aro citation)
+    - reference: DOI:10.1038/ng.3548
+      notes: PMID:27064254 (aro citation)
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded cycloserine-resistant ald graphs
   llm_assisted: true
 license: CC-BY 4.0

@@ -24,10 +24,10 @@ evidence:
   notes: PMID:29101229 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: lipid A acyltransferase → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3003588). Charge alteration by aminoacylation of LPS; the fifth route on this family.
+  title: lipid A acyltransferase → lipid A aminoacylation → peptide-antibiotic resistance
+  description: Curated lipid A acyltransferase resistance graph. The graph keeps the CARD charge-alteration
+    mechanism and peptide-antibiotic route, collapses ungrounded aminoacylation to a described aminoacylated-LPS
+    state, and connects the reduced surface-charge state to resistance.
   nodes:
   - node_id: determinant
     label: lipid A acyltransferase
@@ -41,14 +41,16 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
-  - node_id: aminoacylation
-    label: aminoacylation of lipopolysaccharide
-    node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-75).'
+  - node_id: aminoacylated_lps
+    label: aminoacylated lipopolysaccharide
+    node_type: STATE
+    description: Local state representing LPS after lipid A acyltransferases aminoacylate lipopolysaccharide
+      in the outer membrane.
   - node_id: charge
     label: reduced net negative surface charge
     node_type: STATE
-    description: The causal core, shared across this family's routes.
+    description: Local state representing the reduced negative outer-membrane surface charge produced
+      by lipid A aminoacylation.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -61,80 +63,163 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies lipid A acyltransferase under charge-alteration antibiotic resistance.
     evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane surface.
+      notes: CARD definition for lipid A acyltransferase.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: Family mechanism ARO:3003588.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Lipid A aminoacylation decreases net negative outer-membrane charge, the charge-alteration
+      mechanism for peptide-antibiotic resistance.
     evidence:
     - reference: ARO:3004363
       snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
         such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
         charge of the outer membrane surface.
-      notes: Mechanism ARO:3003588 → resistance.
+      notes: CARD definition for lipid A acyltransferase.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Lipid A acyltransferases confer peptide-antibiotic resistance through aminoacylation
+      of LPS and reduced outer-membrane negative charge.
     evidence:
     - reference: ARO:3004363
       snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
         such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
         charge of the outer membrane surface.
-      notes: Route, consequence and drug class in one sentence, stated causally ('confer resistance ...
-        thereby decreasing the negative charge').
+      notes: CARD definition for lipid A acyltransferase.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: The shared causal sentence for every route on this family.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
   - subject: determinant
-    predicate: confers resistance to (drug class)
+    predicate: confers resistance to
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: ARO maps lipid A acyltransferase to peptide antibiotics.
     evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane surface.
+      notes: CARD definition for lipid A acyltransferase.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
     - reference: ARO:3004363
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3004363 (lipid A acyltransferase) in the CARD/ARO release in data/raw/aro/aro.obo.
+      notes: ARO drug-class relationship asserted directly on lipid A acyltransferase.
+    - reference: ARO:3000053
+      snippet: peptide antibiotic
+      notes: ARO drug class asserted on the lipid A acyltransferase parent.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
   - subject: determinant
-    predicate: enables (aminoacylates LPS)
-    predicate_id: RO:0002327
-    object: aminoacylation
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: aminoacylated_lps
+    description: The acyltransferase determinant is upstream of aminoacylated LPS.
     evidence:
     - reference: ARO:3004363
       snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
         such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
         charge of the outer membrane surface.
-      notes: '''through the aminoacylation of lipopolysaccharide''.'
-  - subject: aminoacylation
-    predicate: causally upstream of (decreases negative charge)
+      notes: CARD definition for lipid A acyltransferase.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
+  - subject: aminoacylated_lps
+    predicate: causally upstream of (reduces surface negative charge)
     predicate_id: RO:0002411
     object: charge
+    description: Aminoacylation of LPS decreases the negative charge of the outer-membrane surface.
     evidence:
     - reference: ARO:3004363
       snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
         such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
         charge of the outer membrane surface.
-      notes: '''thereby decreasing the negative charge of the outer membrane''.'
+      notes: CARD definition for lipid A acyltransferase.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
   - subject: charge
     predicate: negatively regulates (impedes drug binding)
     predicate_id: RO:0002212
     object: drug0
+    description: Lower net negative surface charge impedes binding by cationic peptide antibiotics such
+      as polymyxins.
     evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane surface.
+      notes: CARD definition for lipid A acyltransferase.
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: '''cationic antimicrobials that depend on the negative charge for binding''.'
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
+  - subject: charge
+    predicate: causally upstream of (reduced peptide-antibiotic binding)
+    predicate_id: RO:0002411
+    object: resistance
+    description: Reduced negative outer-membrane charge is the terminal modeled state causally upstream
+      of peptide-antibiotic resistance.
+    evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane surface.
+      notes: CARD definition for lipid A acyltransferase.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD definition for the shared charge-alteration resistance mechanism.
+    - reference: DOI:10.1074/jbc.RA117.000131
+      notes: PMID:29101229 (aro citation)
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Collapsed lipid A acyltransferase aminoacylation graph
   llm_assisted: true
 license: CC-BY 4.0

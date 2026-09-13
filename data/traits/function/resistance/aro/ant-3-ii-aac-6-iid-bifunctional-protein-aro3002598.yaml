@@ -26,13 +26,11 @@ evidence:
   notes: PMID:11959575 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: ANT(3'')-II-AAC(6')-IId bifunctional protein → mechanism → resistance (curated from ARO relations
-    + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3007380). Inactivation by unspecified chemical modification. Deliberately no reaction node: CARD
-    names none here, and guessing one would import round 68''s chemistries onto records that do not claim
-    them.'
+  title: ANT(3'')-II-AAC(6')-IId bifunctional protein → aminoglycoside inactivation → resistance
+  description: Conservative graph for a bifunctional aminoglycoside-inactivating enzyme. The graph keeps
+    the ARO antibiotic-inactivation and aminoglycoside drug-class routes and drops the ungrounded generic
+    modification activity because the exact acetylation, phosphorylation, or nucleotidylation reaction
+    is not specified by this ARO record.
   nodes:
   - node_id: determinant
     label: ANT(3'')-II-AAC(6')-IId bifunctional protein
@@ -46,14 +44,11 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
-  - node_id: modification
-    label: enzymatic modification of the aminoglycoside
-    node_type: MOLECULAR_FUNCTION
-    description: Deliberately unspecific -- see the config note.
   - node_id: inactivated
-    label: chemically modified, inactive aminoglycoside
+    label: chemically modified, inactive aminoglycoside antibiotic
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state representing the aminoglycoside antibiotic after broad enzymatic inactivation
+      by a bifunctional resistance protein.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,70 +61,171 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies this bifunctional enzyme under antibiotic inactivation.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: Family mechanism ARO:0001004.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic inactivation is the broad mechanism produced by these bifunctional enzymes.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ARO links these bifunctional aminoglycoside-inactivating enzymes to resistance.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: 'The claim at the level CARD makes it: ''enzymatic inactivation … through chemical modification'',
-        with no reaction named. Round 68''s three chemistries are curated separately under ARO:3000557.'
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:3007419
+      snippet: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic
+      notes: ARO drug-class relationship on ARO:3007419; modeled here as a determinant-to-aminoglycoside-antibiotic
+        edge and inherited by the bifunctional leaf records.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    description: The ARO hierarchy links this bifunctional enzyme to aminoglycoside antibiotics.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
     - reference: ARO:3007419
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
-      notes: Asserted on ARO:3007419 (aminoglycoside bifunctional resistance protein), an is_a ancestor
-        of this record's ARO:3002598; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (modifies the drug)
-    predicate_id: RO:0002327
-    object: modification
-    evidence:
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: '''proteins involved in the enzymatic inactivation … through chemical modification''.'
-  - subject: modification
-    predicate: has input (the drug)
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:3007419
+      snippet: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic
+      notes: ARO drug-class relationship on ARO:3007419; modeled here as a determinant-to-aminoglycoside-antibiotic
+        edge and inherited by the bifunctional leaf records.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+  - subject: mech0
+    predicate: has input (drug)
     predicate_id: RO:0002233
     object: drug0
+    description: The antibiotic-inactivation activity acts on aminoglycoside antibiotics.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: The antibiotic is the substrate -- inactivation, not target alteration.
-  - subject: modification
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+  - subject: mech0
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
     object: inactivated
+    description: The broad ARO mechanism chemically modifies and inactivates the aminoglycoside.
     evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
     - reference: ARO:3007380
       snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
         of aminoglycoside antibiotics through chemical modification.
-      notes: '''enzymatic inactivation of aminoglycoside antibiotics''.'
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
+  - subject: inactivated
+    predicate: causally upstream of (drug is inactive)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The chemically inactivated aminoglycoside is the terminal modeled cause of resistance.
+    evidence:
+    - reference: ARO:3002598
+      snippet: ANT(3'')-II-AAC(6')-IId is an integron-encoded aminoglycoside acetyltransferase in S. marcescens.
+      notes: CARD definition for ANT(3'')-II-AAC(6')-IId bifunctional protein.
+    - reference: ARO:3007419
+      snippet: Bifunctional aminoglycoside-inactivating enzymes composed of two separate functional domains.
+        These proteins possess activity from both enzyme components, thereby conferring resistance to
+        the combination of antibiotics from both domains, and may include acetylation, phosphorylation
+        or nucleotidylation activity.
+      notes: CARD definition for aminoglycoside bifunctional resistance proteins.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: CARD definition for aminoglycoside-modifying enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for the antibiotic inactivation mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded aminoglycoside bifunctional resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

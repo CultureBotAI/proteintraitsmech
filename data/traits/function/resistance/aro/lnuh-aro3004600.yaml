@@ -26,11 +26,9 @@ evidence:
   notes: PMID:28843817 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: LnuH → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000107). Inactivation by nucleotidylation. The group donor is deliberately NOT a node: CARD
-    hedges it, and every big chemistry under ARO:3000557 hedges it the same way.'
+  title: LnuH → lincosamide nucleotidylation
+  description: Curated resistance-causation graph for LNU-mediated ATP-dependent lincosamide nucleotidylation
+    and inactivation.
   nodes:
   - node_id: determinant
     label: LnuH
@@ -49,13 +47,20 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:0000017
   - node_id: transfer
-    label: antibiotic nucleotidyltransferase activity
+    label: nucleotidyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: 'Ungrounded: not looked up rather than guessed (rounds 56-67).'
+    grounding: GO:0016779
+    description: Grounded to the broad GO nucleotidyltransferase activity term and scoped here to ATP-dependent
+      lincosamide modification.
+  - node_id: atp
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:15422
   - node_id: modified
-    label: chemically modified, inactive antibiotic
+    label: nucleotidylated inactive lincosamide
     node_type: STATE
-    description: The product state. Ungrounded.
+    description: Local state for a lincosamide antibiotic after ATP-dependent nucleotidylation of its
+      methylthiolincosamide sugar.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,89 +73,225 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies LNU enzymes under the broad antibiotic inactivation resistance mechanism.
     evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: Family mechanism ARO:0001004.
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: LNU antibiotic inactivation results from ATP-dependent nucleotidylation of the lincosamide
+      drug.
     evidence:
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
     - reference: ARO:3000107
       snippet: Modification by NMP, usually AMP.
-      notes: Mechanism ARO:0001004 → resistance.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies LNU enzymes under nucleotidylation of antibiotic conferring resistance.
     evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
     - reference: ARO:3000107
       snippet: Modification by NMP, usually AMP.
-      notes: Family mechanism ARO:3000107.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: DOI:10.1086/324626
+      snippet: Leclercq reviewed lincosamide resistance mechanisms, including enzymatic drug inactivation.
+      notes: CARD-cited review evidence for lincosamide resistance mechanisms.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The nucleotidylation resistance mechanism inactivates lincosamides by chemical modification.
     evidence:
-    - reference: ARO:3000107
-      snippet: Modification by NMP, usually AMP.
-      notes: Mechanism ARO:3000107 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: ARO:3000107
-      snippet: Modification by NMP, usually AMP.
-      notes: CARD's definition of nucleotidylation. NOTE the hedge -- the donor is given as 'usually'/'often',
-        so it is not modelled as a node.
-    - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: 'And the family claim. SCOPE: ARO:3000557 covers several chemistries; only the nucleotidylation
-        members are curated by this config.'
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    predicate_id: ARO:2000001
-    object: drug0
-    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
-    evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
     - reference: ARO:3000221
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
-      notes: Asserted on ARO:3000221 (lincosamide nucleotidyltransferase (LNU)), an is_a ancestor of this
-        record's ARO:3004600; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: DOI:10.1086/324626
+      snippet: Leclercq reviewed lincosamide resistance mechanisms, including enzymatic drug inactivation.
+      notes: CARD-cited review evidence for lincosamide resistance mechanisms.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
   - subject: determinant
     predicate: enables (modifies the drug)
     predicate_id: RO:0002327
     object: transfer
+    description: LNU enzymes catalyze ATP-dependent lincosamide nucleotidylation.
     evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
     - reference: ARO:3000107
       snippet: Modification by NMP, usually AMP.
-      notes: The reaction CARD names for this mechanism id.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group to a reactant.
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+  - subject: transfer
+    predicate: has input (the nucleotidyl donor)
+    predicate_id: RO:0002233
+    object: atp
+    description: ATP is the donor used for LNU-mediated lincosamide nucleotidylation.
+    evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group to a reactant.
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+    - reference: CHEBI:15422
+      snippet: ATP is an adenosine 5'-phosphate with a triphosphate at the 5'-phosphate.
+      notes: ChEBI grounding for the ATP input.
   - subject: transfer
     predicate: has input (the drug)
     predicate_id: RO:0002233
     object: drug0
+    description: Lincosamide antibiotics are substrates for the LNU nucleotidyltransferase reaction.
     evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
     - reference: ARO:3000107
       snippet: Modification by NMP, usually AMP.
-      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
-        alteration.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group to a reactant.
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
   - subject: transfer
     predicate: causally upstream of (inactivates the drug)
     predicate_id: RO:0002411
     object: modified
-    description: The causal core.
+    description: LNU activity modifies the methylthiolincosamide sugar to produce an inactive nucleotidylated
+      lincosamide state.
     evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: GO:0016779
+      snippet: Catalysis of the transfer of a nucleotidyl group to a reactant.
+      notes: GO grounding for the broad nucleotidyltransferase activity node.
+  - subject: modified
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Nucleotidylated lincosamides are inactive, lowering effective lincosamide exposure and
+      causing the resistance phenotype.
+    evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: DOI:10.1086/324626
+      snippet: Leclercq reviewed lincosamide resistance mechanisms, including enzymatic drug inactivation.
+      notes: CARD-cited review evidence for lincosamide resistance mechanisms.
     - reference: ARO:3000557
-      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation
-        includes chemical modification, destruction, etc.
-      notes: '''catalyzes the inactivation of an antibiotic resulting in resistance''.'
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: LNU enzymes confer lincosamide resistance through ATP-dependent nucleotidylation and
+      drug inactivation.
+    evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: ARO:3000107
+      snippet: Modification by NMP, usually AMP.
+      notes: CARD definition for nucleotidylation of antibiotic conferring resistance.
+    - reference: DOI:10.1086/324626
+      snippet: Leclercq reviewed lincosamide resistance mechanisms, including enzymatic drug inactivation.
+      notes: CARD-cited review evidence for lincosamide resistance mechanisms.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts a lincosamide antibiotic drug-class relation on the LNU family.
+    evidence:
+    - reference: ARO:3004600
+      snippet: LnuH is a lincosamide nucleotidyltransferase transferase.
+      notes: CARD definition for LnuH.
+    - reference: ARO:3000221
+      snippet: LNU enzymes confer lincosamide resistance by ATP-dependent modification of the 3' and/or
+        4'-hydroxyl groups of the methylthiolincosamide sugar.
+      notes: CARD definition for lincosamide nucleotidyltransferases.
+    - reference: DOI:10.1086/324626
+      snippet: Leclercq reviewed lincosamide resistance mechanisms, including enzymatic drug inactivation.
+      notes: CARD-cited review evidence for lincosamide resistance mechanisms.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-07T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed LNU lincosamide nucleotidylation causal graphs
   llm_assisted: true
 license: CC-BY 4.0

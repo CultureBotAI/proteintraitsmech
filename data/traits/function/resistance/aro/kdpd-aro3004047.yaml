@@ -20,12 +20,10 @@ evidence:
   notes: PMID:23555240 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: kdpD → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000750). Regulation of efflux, not efflux. The graph stops at the efflux process; pump chemistry
-    lives on the pump records (rounds 67, 69). The edge says 'modulates' because CARD says 'directly or
-    indirectly'.
+  title: kdpD → two-component efflux regulation → resistance
+  description: Curated resistance-causation graph for proteins in two-component regulatory systems that
+    directly or indirectly change antibiotic efflux rates. The graph stops at the regulated efflux process
+    rather than duplicating efflux-pump chemistry from pump records.
   nodes:
   - node_id: determinant
     label: kdpD
@@ -63,6 +61,15 @@ causal_graphs:
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
       notes: Family mechanism ARO:0010000.
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    description: CARD classifies two-component efflux regulators under antibiotic efflux.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -72,6 +79,16 @@ causal_graphs:
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
       notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    description: The inherited efflux mechanism represents the pump activity modulated by this regulator
+      family.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -86,30 +103,49 @@ causal_graphs:
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: And what the efflux they modulate achieves -- cited so the graph can END here rather than
         restate any pump's chemistry.
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    description: Two-component regulatory proteins confer resistance by altering antibiotic efflux rates.
   - subject: determinant
     predicate: participates in (two-component signal transduction)
     predicate_id: RO:0000056
     object: signalling
-    description: '''Participates in'', not ''enables'': each record is ONE half of a pair -- a sensor
-      kinase or a response regulator -- and neither performs the transduction alone.'
+    description: The determinant is part of a two-component regulatory system.
     evidence:
     - reference: ARO:3000750
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
       notes: '''either a histidine kinase or a response regulator, that is PART OF a two-component regulatory
         system''.'
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    - reference: GO:0000160
+      snippet: two-component signal transduction system (phosphorelay)
+      notes: GO biological-process term for two-component signaling.
   - subject: signalling
     predicate: regulates (changes efflux rates, directly or indirectly)
     predicate_id: RO:0002211
     object: efflux_process
-    description: 'RO:0002211 ''regulates'', not the positive form: CARD says ''change rates'', not ''increase''
-      them, and ''directly or indirectly''. kdpD''s own definition is about potassium homeostasis, so
-      for at least one member the link really is indirect.'
+    description: Two-component signaling directly or indirectly changes the rate of antibiotic efflux.
     evidence:
     - reference: ARO:3000750
       snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
         regulatory system that directly or indirectly change rates of antibiotic efflux.
       notes: '''directly or indirectly change rates of antibiotic efflux''.'
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: efflux_process
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -118,9 +154,23 @@ causal_graphs:
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
       notes: '''via the transport of antibiotics out of the cell''.'
+    - reference: ARO:3004047
+      snippet: kdpD is a component of the two-component regulatory system, kdpDE. This system is involved
+        in potassium transport and homeostasis, and has been implicated in virulence factor regulation
+        along with kdpE.
+      notes: CARD definition for kdpD.
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: CARD definition for two-component regulatory-system proteins modulating efflux.
+    description: Antibiotic efflux lowers intracellular antibiotic exposure and can produce resistance.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed two-component efflux-regulator graphs
   llm_assisted: true
 license: CC-BY 4.0

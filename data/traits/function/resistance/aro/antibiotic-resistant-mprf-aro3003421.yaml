@@ -19,10 +19,9 @@ synonyms:
 causal_graphs:
 - graph_id: resistance
   title: antibiotic resistant mprF → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:11342591). Electrostatic repulsion: lysinylating phosphatidylglycerol lowers the membrane''s
-    net negative charge, so cationic peptides are repelled.'
+  description: Curated resistance-causation graph for MprF-mediated electrostatic repulsion. The graph
+    grounds MprF phosphatidylglycerol lysyltransferase activity to GO and the cationic lysyl-PG product
+    to ChEBI, while retaining the local reduced-membrane-charge state that repels cationic peptide antibiotics.
   nodes:
   - node_id: determinant
     label: antibiotic resistant mprF
@@ -32,16 +31,24 @@ causal_graphs:
     label: charge alteration conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3003588
+  - node_id: mprf_activity
+    label: phosphatidylglycerol lysyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0050071
+    description: Grounded to the GO molecular-function term for transfer of lysine from L-lysyl-tRNA to
+      phosphatidylglycerol.
   - node_id: lysyl_pg
-    label: lysyl-phosphatidylglycerol
+    label: 1,2-diacyl-sn-glycero-3-phospho-1'-(3'-O-L-lysyl)-sn-glycerol(1+)
     node_type: CHEMICAL
-    description: 'The modified lipid. Ungrounded: recorded as a modification of phosphatidylglycerol with
-      L-lysine rather than by a CURIE this corpus can cite.'
+    grounding: CHEBI:75792
+    description: Grounded to ChEBI's protonated generic 1,2-diacyl lysyl-PG term, the cationic product
+      of phosphatidylglycerol lysyltransferase activity.
   - node_id: surface_charge
     label: reduced net negative charge of the membrane surface
     node_type: QUALITY
-    description: 'The property that does the work. Ungrounded: no ontology term for the envelope''s net
-      charge.'
+    grounding: PATO:0002193
+    description: Grounded to broad PATO electric charge; this local node narrows it to the less-anionic
+      envelope state produced by cationic lysyl-PG.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -54,58 +61,165 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this MprF determinant under this resistance mechanism.
     evidence:
-    - reference: PMID:11342591
-      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
-        MprF-mediated peptide resistance
-      notes: Family mechanism ARO:3003588.
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for antibiotic resistant mprF.
+    - reference: PMID:14769468
+      snippet: Staphylococcus aureus achieves CAM resistance by modifying anionic phosphatidylglycerol
+        with positively charged L-lysine, resulting in repulsion of the peptides.
+      notes: Staubitz et al. 2004 connected anionic PG modification to cationic antimicrobial molecule
+        repulsion.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: MprF-mediated phosphatidylglycerol lysinylation lowers the membrane's net negative charge
+      and supports electrostatic peptide resistance.
     evidence:
-    - reference: PMID:11342591
-      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
-        MprF-mediated peptide resistance
-      notes: Mechanism ARO:3003588 → resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for antibiotic resistant mprF.
+    - reference: PMID:14769468
+      snippet: Staphylococcus aureus achieves CAM resistance by modifying anionic phosphatidylglycerol
+        with positively charged L-lysine, resulting in repulsion of the peptides.
+      notes: Staubitz et al. 2004 connected anionic PG modification to cationic antimicrobial molecule
+        repulsion.
     - reference: PMID:11342591
       snippet: We describe a novel staphylococcal gene, mprF, which determines resistance to several host
         defense peptides such as defensins and protegrins.
       notes: Peschel et al. 2001 identified the gene by the resistance it confers to defensins and protegrins.
-    - reference: PMID:11342591
-      snippet: An mprF mutant strain was killed considerably faster by human neutrophils and exhibited
-        attenuated virulence in mice, indicating a key role for defensin resistance in the pathogenicity
-        of S. aureus.
-      notes: 'And showed the loss-of-function phenotype in the relevant setting: the mutant is killed
-        faster by human neutrophils and is attenuated in mice.'
   - subject: determinant
-    predicate: causally upstream of (lysinylates phosphatidylglycerol)
+    predicate: causally upstream of (confers electrostatic peptide resistance)
     predicate_id: RO:0002411
-    object: lysyl_pg
-    description: 'Shown by absence: the mutant no longer makes the modified lipid.'
+    object: resistance
+    description: MprF produces cationic lysyl-PG, reducing envelope anionic charge and conferring resistance
+      by cationic peptide repulsion.
     evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for antibiotic resistant mprF.
     - reference: PMID:11342591
-      snippet: Analysis of membrane lipids demonstrated that the mprF mutant no longer modifies phosphatidylglycerol
-        with l-lysine.
-      notes: Peschel et al. 2001, membrane lipid analysis of the mutant.
+      snippet: We describe a novel staphylococcal gene, mprF, which determines resistance to several host
+        defense peptides such as defensins and protegrins.
+      notes: Peschel et al. 2001 identified the gene by the resistance it confers to defensins and protegrins.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: mprf_activity
+    description: MprF is the phosphatidylglycerol lysyltransferase that transfers L-lysine from L-lysyl-tRNA
+      to phosphatidylglycerol.
+    evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for antibiotic resistant mprF.
+    - reference: PMID:14769468
+      snippet: We demonstrate here that expression of mprF is sufficient to confer L-PG production in
+        Escherichia coli, which indicates that MprF represents the L-PG synthase.
+      notes: Staubitz et al. 2004 showed that MprF is sufficient for lysyl-PG synthesis.
+    - reference: GO:0050071
+      snippet: 'Catalysis of the reaction: L-lysyl-tRNA + phosphatidylglycerol = tRNA + 3-phosphatidyl-1''-(3''-O-L-lysyl)glycerol.'
+      notes: GO definition for phosphatidylglycerol lysyltransferase activity.
+  - subject: mprf_activity
+    predicate: has output (lysyl-PG)
+    predicate_id: RO:0002234
+    object: lysyl_pg
+    description: Phosphatidylglycerol lysyltransferase activity produces the generic lysyl-phosphatidylglycerol
+      product.
+    evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for the antibiotic-resistant mprF parent term.
+    - reference: GO:0050071
+      snippet: 'Catalysis of the reaction: L-lysyl-tRNA + phosphatidylglycerol = tRNA + 3-phosphatidyl-1''-(3''-O-L-lysyl)glycerol.'
+      notes: GO definition for phosphatidylglycerol lysyltransferase activity.
+    - reference: RHEA:10668
+      snippet: L-lysyl-tRNA(Lys) + a 1,2-diacyl-sn-glycero-3-phospho-(1'-sn-glycerol) = a 1,2-diacyl-sn-glycero-3-phospho-1'-(3'-O-L-lysyl)-sn-glycerol
+        + tRNA(Lys)
+      notes: Rhea reaction cross-referenced to GO:0050071 phosphatidylglycerol lysyltransferase activity.
+    - reference: CHEBI:75792
+      snippet: An organic cation obtained by protonation of the amino groups and deprotonation of the
+        phosphate group of any 1,2-diacyl-sn-glycero-3-phospho-1ʼ-(3ʼ-O-L-lysyl)-sn-glycerol.
+      notes: ChEBI definition for the protonated generic lysyl-PG product.
   - subject: lysyl_pg
     predicate: causally upstream of (lowers the net negative charge)
     predicate_id: RO:0002411
     object: surface_charge
+    description: Lysinylation of anionic phosphatidylglycerol adds a positively charged headgroup and
+      reduces the membrane's net negative charge.
     evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for the antibiotic-resistant mprF parent term.
     - reference: PMID:11342591
-      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
-        MprF-mediated peptide resistance
-      notes: Adding a positively charged lysine to an anionic lipid is what reduces the surface's net
-        negative charge.
+      snippet: Analysis of membrane lipids demonstrated that the mprF mutant no longer modifies phosphatidylglycerol
+        with l-lysine.
+      notes: Peschel et al. 2001 showed that mprF loss prevents lysyl-PG production.
+    - reference: PMID:14769468
+      snippet: Staphylococcus aureus achieves CAM resistance by modifying anionic phosphatidylglycerol
+        with positively charged L-lysine, resulting in repulsion of the peptides.
+      notes: Staubitz et al. 2004 connected anionic PG modification to cationic antimicrobial molecule
+        repulsion.
+    - reference: CHEBI:75792
+      snippet: An organic cation obtained by protonation of the amino groups and deprotonation of the
+        phosphate group of any 1,2-diacyl-sn-glycero-3-phospho-1ʼ-(3ʼ-O-L-lysyl)-sn-glycerol.
+      notes: ChEBI definition for the protonated generic lysyl-PG product.
+  - subject: surface_charge
+    predicate: causally upstream of (enables peptide resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The less-anionic membrane state provides MprF-mediated resistance to cationic antimicrobial
+      peptides.
+    evidence:
+    - reference: ARO:3003421
+      snippet: Catalyzes the transfer of a lysyl group from L-lysyl-tRNA(Lys) to membrane-bound phosphatidylglycerol
+        (PG), which produces lysylphosphatidylglycerol (LPG), a major component of the bacterial membrane
+        with a positive net charge. LPG synthesis contributes to bacterial virulence as it is involved
+        in the resistance mechanism against cationic antimicrobial peptides (CAMP) produces by the host's
+        immune system (defensins, cathelicidins) and by the competing microorganisms (bacteriocins).
+      notes: CARD definition for antibiotic resistant mprF.
+    - reference: PMID:11342591
+      snippet: We describe a novel staphylococcal gene, mprF, which determines resistance to several host
+        defense peptides such as defensins and protegrins.
+      notes: Peschel et al. 2001 identified the gene by the resistance it confers to defensins and protegrins.
+    - reference: PMID:14769468
+      snippet: Staphylococcus aureus achieves CAM resistance by modifying anionic phosphatidylglycerol
+        with positively charged L-lysine, resulting in repulsion of the peptides.
+      notes: Staubitz et al. 2004 connected anionic PG modification to cationic antimicrobial molecule
+        repulsion.
 curation_history:
 - timestamp: '2026-08-06T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded MprF electrostatic-repulsion graphs with GO phosphatidylglycerol lysyltransferase and
+    ChEBI lysyl-PG terms and added exact CARD, Rhea/GO/ChEBI, and literature evidence
   llm_assisted: true
 license: CC-BY 4.0

@@ -27,10 +27,10 @@ trait_relations:
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3000098 PDC beta-lactamase"
 causal_graphs:
 - graph_id: resistance
-  title: PDC-447 → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:19136439). PDC is a class C serine β-lactamase (AmpC cephalosporinase); Ser64 acyl-enzyme mechanism.
+  title: PDC-447 → class C serine beta-lactam hydrolysis
+  description: Curated resistance-causation graph for beta-lactamase antibiotic inactivation. The determinant
+    participates in broad antibiotic inactivation and in a narrower beta-lactam hydrolysis mechanism through
+    a grounded catalytic feature and fold.
   nodes:
   - node_id: determinant
     label: PDC-447
@@ -60,12 +60,12 @@ causal_graphs:
     label: class C beta-lactamase active-site signature (Ser64 S-x-x-K)
     node_type: MOTIF
     grounding: PROSITE:PRU10102
-    description: KB protein-trait record carrying the mechanism.
+    description: Class C beta-lactamase catalytic serine active-site signature.
   - node_id: fold
     label: DD-peptidase/beta-lactamase superfamily fold
     node_type: DOMAIN
     grounding: CATH:3.40.710.10
-    description: KB protein-trait record carrying the mechanism.
+    description: DD-peptidase/beta-lactamase superfamily fold.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -78,111 +78,348 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this enzyme under antibiotic inactivation.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Family mechanism ARO:0001004.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Beta-lactamase antibiotic inactivation opens the beta-lactam ring and thereby causes
+      resistance.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Mechanism ARO:0001004 → resistance.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
+    description: CARD classifies this enzyme under a narrower beta-lactam hydrolysis mechanism.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Family mechanism ARO:3000187.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The narrower beta-lactamase hydrolysis mechanism opens the beta-lactam ring and renders
+      the antibiotic inactive.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Mechanism ARO:3000187 → resistance.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The determinant hydrolyzes and inactivates beta-lactam antibiotics.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000557
+      snippet: Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance.
+      notes: CARD definition for antibiotic inactivation enzymes.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: Determinant → resistance phenotype.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to monobactam.
     evidence:
     - reference: ARO:3000098
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000004 ! monobactam'
       notes: Asserted on ARO:3000098 (PDC beta-lactamase), an is_a ancestor of this record's ARO:3006815;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to monobactam.
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to carbapenem.
     evidence:
     - reference: ARO:3000098
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000020 ! carbapenem'
       notes: Asserted on ARO:3000098 (PDC beta-lactamase), an is_a ancestor of this record's ARO:3006815;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to carbapenem.
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug2
+    description: CARD asserts that this determinant confers resistance to cephalosporin.
     evidence:
     - reference: ARO:3000098
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
       notes: Asserted on ARO:3000098 (PDC beta-lactamase), an is_a ancestor of this record's ARO:3006815;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cephalosporin.
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: ARO:3000001
+      snippet: The lactamase enzyme breaks that ring open, deactivating the molecule's antibacterial properties.
+      notes: CARD definition for beta-lactamases.
+    - reference: ARO:0001004
+      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
+      notes: CARD definition for antibiotic inactivation.
   - subject: active_site
-    predicate: part of (active site of the protein)
+    predicate: part of
     predicate_id: BFO:0000050
     object: determinant
+    description: The grounded catalytic feature is part of the beta-lactamase determinant.
     evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
     - reference: PROSITE:PRU10102
       snippet: Beta-lactamase class-C active site
-      notes: 'KB trait: the class-C active-site signature carried by this determinant.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.40.710.10
-      snippet: DD-peptidase/beta-lactamase superfamily
-      notes: 'KB trait: the DD-peptidase/beta-lactamase superfamily fold.'
-  - subject: active_site
-    predicate: enables (catalysis)
-    predicate_id: RO:0002327
-    object: mech1
-    evidence:
+      notes: PROSITE active-site signature for class C beta-lactamases.
     - reference: PMID:19136439
       snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
-        of many of the Enterobacteriaceae and a few other organisms, where they mediate resistance to
-        cephalothin, cefazolin, cefoxitin, most penicillins, and β-lactamase inhibitor-β-lactam combinations.
-      notes: The active site carries out the serine beta-lactam hydrolysis mechanism.
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the grounded fold associated with this beta-lactamase family.
+    evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: CATH:3.40.710.10
+      snippet: DD-peptidase/beta-lactamase superfamily
+      notes: CATH fold for serine beta-lactamases.
+    - reference: PMID:19136439
+      snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+  - subject: active_site
+    predicate: enables (serine beta-lactam hydrolysis)
+    predicate_id: RO:0002327
+    object: mech1
+    description: The class C S-x-x-K active site provides the catalytic serine used for beta-lactam acylation
+      and hydrolysis.
+    evidence:
+    - reference: ARO:3006815
+      snippet: PDC-447 is a PDC beta-lactamase.
+      notes: CARD definition for PDC-447.
+    - reference: ARO:3000076
+      snippet: AmpC type beta-lactamases are commonly isolated from extended-spectrum cephalosporin-resistant
+        Gram-negative bacteria. AmpC beta-lactamases (also termed class C or group 1) are typically encoded
+        on the chromosome of many Gram-negative bacteria including Citrobacter, Serratia, Enterobacter
+        species, and P. aeruginosa where its expression is usually inducible; it may also occur on Escherichia
+        coli but is not usually inducible, although it can be hyperexpressed. AmpC type beta-lactamases
+        may also be carried on plasmids. AmpC beta-lactamases, in contrast to ESBLs, hydrolyse broad and
+        extended-spectrum cephalosporins (cephamycins as well as to oxyimino-beta-lactams) but are not
+        inhibited by beta-lactamase inhibitors such as clavulanic acid.
+      notes: CARD definition for class C beta-lactamase.
+    - reference: PROSITE:PRU10102
+      snippet: Beta-lactamase class-C active site
+      notes: PROSITE active-site signature for class C beta-lactamases.
+    - reference: PMID:19136439
+      snippet: AmpC β-lactamases are clinically important cephalosporinases encoded on the chromosomes
+        of many of the Enterobacteriaceae and a few other organisms.
+      notes: Evidence for AmpC/class C beta-lactamases.
+    - reference: ARO:3000187
+      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A
+        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
+        hydrolysis renders the beta-lactam inactive.
+      notes: CARD definition for serine beta-lactamase hydrolysis.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-10T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed eighth PDC beta-lactamase causal graphs
     llm_assisted: true
 license: CC-BY 4.0

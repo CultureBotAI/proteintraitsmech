@@ -32,12 +32,9 @@ evidence:
   notes: PMID:18978025 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: cprRS → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3005065). Regulation, not charge alteration. The downstream is the Ara4N route curated in round
-    75; this graph points at it rather than restating its chemistry, so it inherits whatever those records
-    say today.
+  title: cprRS → cationic-peptide-induced Arn regulation → resistance
+  description: Curated resistance-causation graph for the CprRS two-component system. CprRS senses cationic
+    peptides and induces the Arn operon, whose lipid A modification route reduces peptide-antibiotic susceptibility.
   nodes:
   - node_id: determinant
     label: cprRS
@@ -78,6 +75,16 @@ causal_graphs:
       snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
         the Arn operon to confer resistance.
       notes: Family mechanism ARO:3003588.
+    - reference: ARO:3003588
+      snippet: Modification of the cell wall to be less susceptible to antibiotic binding will confer
+        resistance.
+      notes: CARD definition for charge alteration conferring antibiotic resistance.
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
+    description: CARD classifies cprRS under cell-wall charge alteration.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -87,6 +94,16 @@ causal_graphs:
       snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
         the Arn operon to confer resistance.
       notes: Mechanism ARO:3003588 → resistance.
+    - reference: ARO:3003588
+      snippet: Modification of the cell wall to be less susceptible to antibiotic binding will confer
+        resistance.
+      notes: CARD definition for charge alteration conferring antibiotic resistance.
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
+    description: Cell-wall charge alteration lowers cationic-peptide binding and causes resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -97,16 +114,35 @@ causal_graphs:
         the Arn operon to confer resistance.
       notes: 'cprRS confers resistance by INDUCING the Arn operon, not by altering charge itself. Round
         22''s rule: a regulator''s graph ends at the records that do the work.'
+    - reference: ARO:3003588
+      snippet: Modification of the cell wall to be less susceptible to antibiotic binding will confer
+        resistance.
+      notes: CARD definition for charge alteration conferring antibiotic resistance.
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
+    description: CprRS confers resistance indirectly by inducing the Arn operon.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+    description: CARD asserts peptide-antibiotic resistance through the inherited pmr/Arn lineage.
     evidence:
     - reference: ARO:3004269
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
       notes: Asserted on ARO:3004269 (pmr phosphoethanolamine transferase), an is_a ancestor of this record's
         ARO:3005065; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3005065
+      snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
+        the Arn operon to confer resistance.
+      notes: CARD definition for cprRS.
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
   - subject: sensing
     predicate: causally upstream of (activates the two-component system)
     predicate_id: RO:0002411
@@ -116,20 +152,37 @@ causal_graphs:
       snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
         the Arn operon to confer resistance.
       notes: '''In the presence of cationic peptides'' -- the drug itself is the inducing signal.'
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
+    description: Cationic peptides are the inducing signal sensed by CprRS.
   - subject: determinant
     predicate: positively regulates (induces the Arn operon)
     predicate_id: RO:0002213
     object: arn_operon
-    description: Where this graph STOPS. The Ara4N chemistry lives on those records (round 75), not restated
-      here.
+    description: CprRS induces the Arn operon rather than directly modifying lipid A.
     evidence:
     - reference: ARO:3005065
       snippet: cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces
         the Arn operon to confer resistance.
       notes: '''it induces the Arn operon to confer resistance''.'
+    - reference: ARO:3003578
+      snippet: pmrF is a glycosyl transferase found in the Arn operon.
+      notes: CARD definition for PmrF, the KB proxy used here for the Arn operon.
+    - reference: PMID:23006746
+      snippet: The two-component system CprRS senses cationic peptides and triggers adaptive resistance
+        in Pseudomonas aeruginosa
+      notes: Fernández et al. 2012; the title states the direct CprRS sensing and adaptive-resistance
+        result.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed cprRS cationic-peptide response graph
   llm_assisted: true
 license: CC-BY 4.0

@@ -23,12 +23,10 @@ evidence:
   notes: PMID:22232274 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: vanJ membrane protein → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3004255). A homologue group whose mechanism lives on ARO:3002914 (round 88). The graph points
-    at that record rather than copying its chemistry, so it inherits whatever vanJ's record says today
-    -- round 22's rule.
+  title: vanJ membrane protein → cell-wall restructuring → resistance
+  description: Conservative graph for the vanJ membrane-protein parent. The graph keeps the homologue
+    group's glycopeptide resistance claim and inherited cell-wall-restructuring mechanism but omits the
+    undecaprenyl-diphosphatase path, which only the child vanJ record names.
   nodes:
   - node_id: determinant
     label: vanJ membrane protein
@@ -42,12 +40,6 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
-  - node_id: vanj_record
-    label: vanJ (undecaprenol pyrophosphate recycling)
-    node_type: PROTEIN
-    grounding: ARO:3002914
-    description: A KB record curated in round 88. Pointing at it rather than restating it is the whole
-      point of this config.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,55 +52,69 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies this determinant under cell-wall restructuring.
     evidence:
     - reference: ARO:3004255
       snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
-      notes: Family mechanism ARO:3000213.
+      notes: CARD definition for vanJ membrane protein.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited cell-wall-restructuring mechanism links Van determinants to resistance.
     evidence:
     - reference: ARO:3004255
       snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
-      notes: Mechanism ARO:3000213 → resistance.
+      notes: CARD definition for vanJ membrane protein.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links this Van determinant to glycopeptide resistance.
     evidence:
     - reference: ARO:3004255
       snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
-      notes: 'The whole claim: vanJ AND its homologues confer teicoplanin resistance. No mechanism of
-        its own.'
-    - reference: ARO:3002914
-      snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
-        in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
-      notes: 'The mechanism, cited FROM vanJ''s record because this definition names vanJ. NOT asserted:
-        that every homologue recycles undecaprenol pyrophosphate -- CARD groups them by resistance phenotype,
-        not by demonstrated mechanism.'
+      notes: CARD definition for vanJ membrane protein.
+    - reference: ARO:3004255
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3004255; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
-    evidence:
-    - reference: ARO:3004255
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted directly on ARO:3004255 (vanJ membrane protein) in the CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: shares ancestor with (vanJ homologue)
-    predicate_id: RO:0002158
-    object: vanj_record
-    description: Homology, NOT mechanism. CARD groups these by shared resistance phenotype and does not
-      say every homologue performs vanJ's reaction.
+    description: The ARO hierarchy links this Van determinant to glycopeptide antibiotics.
     evidence:
     - reference: ARO:3004255
       snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
-      notes: '''vanJ and vanJ HOMOLOGUE proteins'' -- the relationship CARD asserts is homology.'
+      notes: CARD definition for vanJ membrane protein.
+    - reference: ARO:3004255
+      snippet: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic
+      notes: ARO drug-class relationship on ARO:3004255; modeled here as a determinant-to-glycopeptide-antibiotic
+        edge and inherited by its child records.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for the inherited cell-wall-restructuring resistance mechanism.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded VanJ and VanK glycopeptide-resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

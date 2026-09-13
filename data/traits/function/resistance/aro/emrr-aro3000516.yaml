@@ -24,10 +24,8 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: emrR → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3000702). Loss of repression: the determinant represses an efflux pump, and mutations in it raise
-    pump expression.'
+  description: Curated resistance-causation graph for loss of efflux-pump repression. The graph replaces
+    the seeded archetype evidence and grounds the named efflux pump and transcriptional repression nodes.
   nodes:
   - node_id: determinant
     label: emrR
@@ -38,16 +36,16 @@ causal_graphs:
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
   - node_id: pump
-    label: the efflux pump this determinant represses
+    label: EmrAB-TolC multidrug efflux pump
     node_type: PROTEIN
-    description: Which pump differs per record and is named in that record's own definition -- AcrAB-TolC
-      for AcrR, AdeIJK for AdeN, CmeABC for CmeR. The pump mechanisms themselves are curated records (rounds
-      33-36).
+    grounding: ARO:3000344
+    description: Grounded to CARD's EmrAB-TolC multidrug efflux system, the pump derepressed by emrR mutations.
   - node_id: repression
-    label: repression of efflux pump expression
+    label: negative regulation of EmrAB-TolC transcription
     node_type: BIOLOGICAL_PROCESS
-    description: 'Ungrounded: negative regulation of transcription exists in GO, but which promoter differs
-      per record.'
+    grounding: GO:0045892
+    description: Grounded to the broad GO DNA-templated transcriptional repression process because EmrR
+      represses EmrAB-TolC expression.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,63 +58,103 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this repressor under antibiotic efflux because it regulates EmrAB-TolC
+      multidrug efflux pump expression.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: ARO:3000344
+      snippet: EmrAB-TolC is a multidrug efflux system found in E. coli. EmrB is the electrochemical-gradient
+        powered transporter; EmrA is the linker; and TolC is the outer membrane channel. It confers resistance
+        to nalidixic acid and thiolactomycin.
+      notes: CARD definition for the EmrAB-TolC pump derepressed by emrR mutations.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad efflux mechanism represents elevated activity of the regulated multidrug pump.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: ARO:3000344
+      snippet: EmrAB-TolC is a multidrug efflux system found in E. coli. EmrB is the electrochemical-gradient
+        powered transporter; EmrA is the linker; and TolC is the outer membrane channel. It confers resistance
+        to nalidixic acid and thiolactomycin.
+      notes: CARD definition for the EmrAB-TolC pump derepressed by emrR mutations.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: Loss of normal repressor activity is represented as raising EmrAB-TolC multidrug efflux
+      pump expression and increasing efflux.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: Determinant → resistance phenotype.
-  - subject: determinant
-    predicate: enables (represses the pump operon)
-    predicate_id: RO:0002327
-    object: repression
-    evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: CARD's definition of AcrR, the archetype. Each record's own definition names the pump IT
-        represses; this config asserts only the shared direction.
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: ARO:3000344
+      snippet: EmrAB-TolC is a multidrug efflux system found in E. coli. EmrB is the electrochemical-gradient
+        powered transporter; EmrA is the linker; and TolC is the outer membrane channel. It confers resistance
+        to nalidixic acid and thiolactomycin.
+      notes: CARD definition for the EmrAB-TolC pump derepressed by emrR mutations.
   - subject: repression
     predicate: negatively regulates (holds pump expression down)
     predicate_id: RO:0002212
     object: pump
+    description: Normal repressor-dependent transcriptional repression keeps EmrAB-TolC multidrug efflux
+      pump expression low.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: The wild-type function. Resistance is the loss of it.
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
   - subject: determinant
     predicate: negatively regulates (mutation lifts the repression)
     predicate_id: RO:0002212
     object: repression
-    description: 'The causal core, and it runs backwards as katG''s does (round 27): resistance is the
-      ABSENCE of a function. A mutated repressor stops holding the pump down, so more pump is made.'
+    description: Resistance-associated repressor loss is represented as loss of normal EmrAB-TolC multidrug
+      efflux pump repression.
     evidence:
-    - reference: ARO:3000702
-      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
-        high level antibiotic resistance.
-      notes: '''AcrR mutations result in high level antibiotic resistance'' -- CARD states the direction
-        outright.'
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: EmrAB-TolC multidrug efflux pump is the multidrug pump whose derepressed expression supplies
+      antibiotic efflux.
+    evidence:
+    - reference: ARO:3000516
+      snippet: EmrR is a negative regulator for the EmrAB-TolC multidrug efflux pump in E. coli. Mutations
+        lead to EmrAB-TolC overexpression.
+      notes: CARD definition for the emrR repressor determinant.
+    - reference: ARO:3000344
+      snippet: EmrAB-TolC is a multidrug efflux system found in E. coli. EmrB is the electrochemical-gradient
+        powered transporter; EmrA is the linker; and TolC is the outer membrane channel. It confers resistance
+        to nalidixic acid and thiolactomycin.
+      notes: CARD definition for the EmrAB-TolC pump derepressed by emrR mutations.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-05T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Replaced stale archetype evidence on CmeR/CRP/EmrR graphs, grounded the named efflux pumps and transcriptional-repression
+    nodes, removed the obsolete wild-type repressor edge, and linked pump expression to antibiotic efflux
   llm_assisted: true
 license: CC-BY 4.0

@@ -21,7 +21,7 @@ synonyms:
     synonym_type: EXACT_SYNONYM
 causal_graphs:
 - graph_id: resistance
-  title: antibiotic-resistant rpsL → mechanism → resistance (curated from ARO relations + literature)
+  title: antibiotic-resistant rpsL → 16S rRNA structural alteration → resistance
   description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
     mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
     (ARO:3003419). rpsL, drug-agnostic. Its definition ends at 'confer antibiotic resistance' where ARO:3003395
@@ -48,7 +48,9 @@ causal_graphs:
   - node_id: rrna16s
     label: 16S ribosomal RNA
     node_type: NUCLEIC_ACID
-    description: 'Ungrounded: SO:0000407, recalled as 16S rRNA, is `cytosolic_18S_rRNA` (#346).'
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrower bacterial
+      16S rRNA CURIE is available in the local curation evidence.
+    grounding: SO:0000252
   - node_id: pseudoknot
     label: 16S rRNA pseudoknot structure
     node_type: STATE
@@ -75,6 +77,15 @@ causal_graphs:
         rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
         antibiotic resistance.
       notes: Family mechanism ARO:3000212.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: PMID:7934937
+      snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
+        the primary structure of the 16S rRNA.
+      notes: Finken 1993 reports rpsL amino-acid changes among ribosomal mutations.
+    description: CARD classifies rpsL sequence variants under mutation-conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
@@ -85,6 +96,11 @@ causal_graphs:
         rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
         antibiotic resistance.
       notes: Mechanism ARO:3000212 → resistance.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    description: The inherited mutation mechanism captures rpsL substitutions that alter ribosomal S12.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
@@ -99,15 +115,41 @@ causal_graphs:
       snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
         the primary structure of the 16S rRNA.
       notes: Finken 1993, what the substitutions ARE.
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
+      notes: CARD definition for the streptomycin-specific rpsL child; its first two sentences repeat
+        the generic rpsL structural mechanism.
+    - reference: PMID:8665467
+      snippet: Streptomycin resistance in about one-half of M. tuberculosis isolates is associated with
+        missense mutations in the rpsL gene coding for ribosomal protein S12 or nucleotide substitutions
+        in the 16S rRNA gene (rrs).
+      notes: Musser 1995 explicitly ties rpsL missense mutations to streptomycin, the aminoglycoside instance
+        that CARD's rpsL parent generalizes.
+    description: CARD asserts that RpsL substitutions affect 16S rRNA higher-order structure and confer
+      resistance.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+    description: CARD directly assigns aminoglycoside resistance to the rpsL parent.
     evidence:
     - reference: ARO:3003419
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted directly on ARO:3003419 (antibiotic-resistant rpsL) in the CARD/ARO release in data/raw/aro/aro.obo.
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
+      notes: CARD definition for the streptomycin-specific rpsL child; its first two sentences repeat
+        the generic rpsL structural mechanism.
+    - reference: PMID:8665467
+      snippet: Streptomycin resistance in about one-half of M. tuberculosis isolates is associated with
+        missense mutations in the rpsL gene coding for ribosomal protein S12 or nucleotide substitutions
+        in the 16S rRNA gene (rrs).
+      notes: Musser 1995 explicitly ties rpsL missense mutations to streptomycin, the aminoglycoside instance
+        that CARD's rpsL parent generalizes.
   - subject: domain
     predicate: part of (the S12 domain of this determinant)
     predicate_id: BFO:0000050
@@ -117,6 +159,16 @@ causal_graphs:
       snippet: Ribosomal protein uS12 is one of the proteins from the small ribosomal subunit. In Escherichia
         coli, uS12 is known to be involved in the translation initiation step.
       notes: 'KB trait: the S12 domain, as on ARO:3003395.'
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: CARD definition for antibiotic-resistant rpsL.
+    - reference: PMID:7934937
+      snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
+        the primary structure of the 16S rRNA.
+      notes: Finken 1993 reports rpsL amino-acid changes among ribosomal mutations.
+    description: RpsL encodes ribosomal protein S12, whose Pfam S12/S23 domain is modeled here.
   - subject: pseudoknot
     predicate: part of (a structure of the 16S rRNA)
     predicate_id: BFO:0000050
@@ -126,25 +178,36 @@ causal_graphs:
       snippet: The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been
         linked to ribosomal S12 protein.
       notes: '''a pseudoknot structure in a region'' of the 16S rRNA.'
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: CARD definition for antibiotic-resistant rpsL.
+    description: The pseudoknot region is modeled as a local structure in the 16S rRNA.
   - subject: altered_structure
     predicate: characteristic of (a structure of the 16S rRNA)
     predicate_id: RO:0000052
     object: rrna16s
-    description: A conformation INHERES IN a molecule; it is not a mereological part of one. BFO:0000050
-      was used here until review noted the snippet's genitive -- 'the higher-order structure OF 16S rRNA'
-      -- is the inherence reading (#384).
+    description: A conformation inheres in a molecule rather than being a mereological part of one; CARD
+      states that substitutions affect the higher-order structure OF 16S rRNA.
     evidence:
     - reference: ARO:3003419
       snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
         rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
         antibiotic resistance.
       notes: '''the higher-order structure OF 16S rRNA''.'
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
+      notes: CARD definition for the streptomycin-specific rpsL child; its first two sentences repeat
+        the generic rpsL structural mechanism.
   - subject: determinant
     predicate: correlated with (linked to the pseudoknot region)
     predicate_id: RO:0002610
     object: pseudoknot
-    description: 'Same treatment as ARO:3003395: CARD says S12 ''stabilizes'', its source says the region
-      ''has been linked to'' S12, and the edge follows the source on the one claim they disagree about.'
+    description: Finken reports linkage between S12 and the pseudoknot region; the edge stays below CARD's
+      stronger stabilizes wording.
     evidence:
     - reference: PMID:7934937
       snippet: The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been
@@ -159,12 +222,8 @@ causal_graphs:
     predicate: causally upstream of (substitution alters the higher-order structure)
     predicate_id: RO:0002411
     object: altered_structure
-    description: 'The furthest this record''s own definition goes. ARO:3003395 continues to the drug interaction;
-      this one does not, and no drug-binding node is written. The object is the CONFORMATION, not the
-      molecule: ''affects the higher-order structure'' does not say the rRNA''s function is decreased
-      (#377). A STATE object is fine -- round 121''s ARO:3003395 uses one. That is a CORPUS convention,
-      not something RO licenses: RO:0002212 reads ''decreases the rate or magnitude of EXECUTION of q''
-      (#385, #388).'
+    description: The parent asserts altered 16S rRNA structure, and deliberately stops before the child
+      term's streptomycin-specific drug-interaction arm.
     evidence:
     - reference: ARO:3003419
       snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
@@ -173,9 +232,19 @@ causal_graphs:
       notes: '''substitutions in RpsL AFFECT THE HIGHER-ORDER STRUCTURE of 16S rRNA and confer antibiotic
         resistance''. NOT asserted: any disruption of a drug-rRNA interaction, which this definition --
         unlike ARO:3003395''s -- does not mention.'
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
+      notes: CARD definition for the streptomycin-specific rpsL child; its first two sentences repeat
+        the generic rpsL structural mechanism.
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed antibiotic-resistant rpsL parent graph
   llm_assisted: true
 license: CC-BY 4.0

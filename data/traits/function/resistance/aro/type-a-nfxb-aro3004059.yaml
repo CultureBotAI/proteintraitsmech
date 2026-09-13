@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000820
 trait_relations:
@@ -30,11 +30,11 @@ evidence:
 - reference: DOI:10.1046/j.1365-2958.1996.281397.x
   notes: PMID:8878035 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Type A NfxB → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Type A NfxB → MexCD-OprJ antibiotic efflux → resistance
+  description: Curated resistance-causation graph for Type A/B NfxB repressor subclasses. The graph models
+    NfxB mutation as loss of mexCD-oprJ transcriptional repression, derepressing the MexCD-OprJ efflux
+    pump.
   nodes:
   - node_id: determinant
     label: Type A NfxB
@@ -44,6 +44,17 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: pump
+    label: MexCD-OprJ
+    node_type: PROTEIN
+    grounding: ARO:3000797
+    description: Grounded to CARD's MexCD-OprJ, the pump repressed by NfxB.
+  - node_id: repression
+    label: negative regulation of mexCD-oprJ transcription
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045892
+    description: Grounded to the broad GO DNA-templated transcriptional repression process because NfxB
+      represses mexCD-oprJ transcription.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,39 +67,155 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies these NfxB repressor subclasses under antibiotic efflux.
     evidence:
-    - reference: DOI:10.1016/0378-1097(92)90386-3
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3004059
       snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
         and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
         parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
         and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1016/0378-1097(92)90386-3
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: ARO:3000797
+      snippet: MexCD-OprJ is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexC is the membrane fusion protein; MexD is the inner membrane transporter; and OprJ is the outer
+        membrane channel. MexCD-OprJ is typically quiescent in wild-type cells, with expression following
+        mutation of the nfxB gene that is divergently transcribed from the mexCD-oprJ operon and encodes
+        a repressor of mexCD-oprJ expression.
+      notes: CARD definition for the MexCD-OprJ efflux pump repressed by NfxB.
     - reference: ARO:0010000
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: NfxB mutation derepresses MexCD-OprJ to increase antibiotic efflux.
     evidence:
-    - reference: DOI:10.1016/0378-1097(92)90386-3
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004059
       snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
         and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
         parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
         and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
-      notes: ARO definition of this determinant (Type A NfxB).
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: ARO:3000797
+      snippet: MexCD-OprJ is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexC is the membrane fusion protein; MexD is the inner membrane transporter; and OprJ is the outer
+        membrane channel. MexCD-OprJ is typically quiescent in wild-type cells, with expression following
+        mutation of the nfxB gene that is divergently transcribed from the mexCD-oprJ operon and encodes
+        a repressor of mexCD-oprJ expression.
+      notes: CARD definition for the MexCD-OprJ efflux pump repressed by NfxB.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+  - subject: determinant
+    predicate: negatively regulates (loss lifts the repression)
+    predicate_id: RO:0002212
+    object: repression
+    description: Resistance-associated NfxB mutation is represented as loss of normal MexCD-OprJ repression.
+    evidence:
+    - reference: ARO:3004059
+      snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
+        and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
+        parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
+        and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
+  - subject: repression
+    predicate: negatively regulates (holds pump expression down)
+    predicate_id: RO:0002212
+    object: pump
+    description: Normal NfxB-dependent transcriptional repression keeps MexCD-OprJ expression low.
+    evidence:
+    - reference: ARO:3004059
+      snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
+        and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
+        parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
+        and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: GO:0045892
+      snippet: Any process that stops, prevents, or reduces the frequency, rate or extent of cellular
+        DNA-templated transcription.
+      notes: GO definition for the broad transcriptional repression process.
+  - subject: pump
+    predicate: enables (drug efflux)
+    predicate_id: RO:0002327
+    object: mech0
+    description: MexCD-OprJ is the multidrug pump whose derepressed expression supplies antibiotic efflux.
+    evidence:
+    - reference: ARO:3004059
+      snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
+        and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
+        parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
+        and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: ARO:3000797
+      snippet: MexCD-OprJ is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexC is the membrane fusion protein; MexD is the inner membrane transporter; and OprJ is the outer
+        membrane channel. MexCD-OprJ is typically quiescent in wild-type cells, with expression following
+        mutation of the nfxB gene that is divergently transcribed from the mexCD-oprJ operon and encodes
+        a repressor of mexCD-oprJ expression.
+      notes: CARD definition for the MexCD-OprJ efflux pump repressed by NfxB.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Derepressed MexCD-OprJ efflux confers the modeled antibiotic resistance phenotype.
+    evidence:
+    - reference: ARO:3004059
+      snippet: 'Type A NfxB mutants are four to eight times more resistant to ofloxacin, erythromycin,
+        and new zwitterionic cephems, i.e., cefpirome, cefclidin, cefozopran, and cefoselis, than the
+        parent strain, PAO1. nfxB corresponds to 2 loci in Pseudomonas aeruginosa PAO1 (gene name: esrC/nfxB)
+        and 2 loci in Pseudomonas aeruginosa LESB58 (gene name: nfxB).'
+      notes: CARD definition for Type A NfxB.
+    - reference: ARO:3000820
+      snippet: NfxB is a repressor of the efflux pump mexCD-oprJ and itself (NfxB binds upstream of the
+        nfxB gene and negatively regulates its own expression). Increased expression of MexCD–OprJ brought
+        about by mutations in NfxB.
+      notes: CARD definition for the NfxB repressor parent.
+    - reference: ARO:3000797
+      snippet: MexCD-OprJ is a multidrug efflux protein expressed in the Gram-negative Pseudomonas aeruginosa.
+        MexC is the membrane fusion protein; MexD is the inner membrane transporter; and OprJ is the outer
+        membrane channel. MexCD-OprJ is typically quiescent in wild-type cells, with expression following
+        mutation of the nfxB gene that is divergently transcribed from the mexCD-oprJ operon and encodes
+        a repressor of mexCD-oprJ expression.
+      notes: CARD definition for the MexCD-OprJ efflux pump repressed by NfxB.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+curation_history:
+- timestamp: '2026-09-11T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Curated Type A/B NfxB efflux-repressor graphs
+  llm_assisted: true
 license: CC-BY 4.0

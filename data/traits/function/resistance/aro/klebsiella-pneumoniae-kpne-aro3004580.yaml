@@ -28,11 +28,10 @@ evidence:
   notes: PMID:23836167 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Klebsiella pneumoniae KpnE → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (PMID:22178925). Secondary-transporter efflux, distinct from RND's periplasmic capture and ABC's ATP-driven
-    mechanotransmission.
+  title: Klebsiella pneumoniae KpnE → Klebsiella pneumoniae KpnEF → resistance
+  description: Curated resistance-causation graph for Klebsiella secondary-transporter efflux-pump subunits.
+    The determinant is modeled as part of its Kpn efflux complex rather than as a complete single-protein
+    transporter.
   nodes:
   - node_id: determinant
     label: Klebsiella pneumoniae KpnE
@@ -46,14 +45,19 @@ causal_graphs:
     label: cephalosporin
     node_type: CHEMICAL
     grounding: ARO:0000032
-  - node_id: transporter
-    label: antiparallel EmrE-type homodimer
-    node_type: STATE
-    description: 'Ungrounded: a dimer state rather than a compound.'
+  - node_id: pump_complex
+    label: Klebsiella pneumoniae KpnEF
+    node_type: PROTEIN
+    grounding: ARO:3004585
+    description: ARO determinant for the complete KpnEF efflux complex.
   - node_id: export
     label: xenobiotic detoxification by transmembrane export across the plasma membrane
     node_type: BIOLOGICAL_PROCESS
     grounding: GO:1990961
+  - node_id: extruded_drug
+    label: drug outside the cell
+    node_type: STATE
+    description: Local state for antibiotic exported from the cell by a Kpn efflux complex.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,35 +70,77 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this efflux-pump subunit under the antibiotic efflux resistance mechanism.
     evidence:
-    - reference: PMID:22178925
-      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
-        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: Family mechanism ARO:0010000.
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Antibiotic efflux confers resistance by transporting antibiotics out of the cell.
     evidence:
-    - reference: PMID:22178925
-      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
-        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: Mechanism ARO:0010000 → resistance.
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: This Kpn subunit contributes to an efflux complex that pumps antibiotic out of the cell.
     evidence:
-    - reference: PMID:22178925
-      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
-        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: The transporter and what it expels.
-    - reference: PMID:22178925
-      snippet: Here we show that asymmetric antiparallel EmrE exchanges between inward- and outward-facing
-        states that are identical except that they have opposite orientation in the membrane.
-      notes: 'Morrison et al. 2011. The minimal transporter: an ANTIPARALLEL HOMODIMER whose two states
-        are the same structure in opposite membrane orientations, so alternating access is achieved by
-        exchange rather than by a large conformational cycle.'
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
@@ -105,38 +151,147 @@ causal_graphs:
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
       notes: Asserted directly on ARO:3004580 (Klebsiella pneumoniae KpnE) in the CARD/ARO release in
         data/raw/aro/aro.obo.
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
   - subject: determinant
-    predicate: part of (the transporter)
+    predicate: part of
     predicate_id: BFO:0000050
-    object: transporter
+    object: pump_complex
+    description: The determinant is a subunit of the modeled Kpn efflux complex.
     evidence:
-    - reference: PMID:22178925
-      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
-        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: The determinant is a component of this transporter.
-  - subject: transporter
-    predicate: causally upstream of (alternates orientation to export the substrate)
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+  - subject: pump_complex
+    predicate: causally upstream of
     predicate_id: RO:0002411
     object: export
+    description: The complete Kpn efflux complex exports antibiotics from the cell.
     evidence:
-    - reference: PMID:22178925
-      snippet: Here we show that asymmetric antiparallel EmrE exchanges between inward- and outward-facing
-        states that are identical except that they have opposite orientation in the membrane.
-      notes: 'Morrison et al. 2011. The minimal transporter: an ANTIPARALLEL HOMODIMER whose two states
-        are the same structure in opposite membrane orientations, so alternating access is achieved by
-        exchange rather than by a large conformational cycle.'
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
   - subject: export
-    predicate: negatively regulates (lowers the intracellular drug concentration)
-    predicate_id: RO:0002212
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
     object: drug0
+    description: The efflux process exports this CARD-linked cephalosporin class.
     evidence:
-    - reference: PMID:22178925
-      snippet: EmrE is one such transporter in Escherichia coli. It exports a broad class of polyaromatic
-        cation substrates, thus conferring resistance to drug compounds matching this chemical description.
-      notes: The drug is expelled before it reaches a useful concentration.
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+    - reference: ARO:3004580
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
+      notes: Asserted directly on ARO:3004580 (Klebsiella pneumoniae KpnE) in the CARD/ARO release in
+        data/raw/aro/aro.obo.
+  - subject: export
+    predicate: causally upstream of (moves drug out of the cell)
+    predicate_id: RO:0002411
+    object: extruded_drug
+    description: Antibiotic export moves intracellular drug outside the cell.
+    evidence:
+    - reference: ARO:3004580
+      snippet: KpnE subunit of KpnEF resembles EbrAB from E. coli. Mutation in KpnEF resulted in increased
+        susceptibility to cefepime, ceftriaxon, colistin, erythromycin, rifampin, tetracycline, and streptomycin
+        as well as enhanced sensitivity toward sodium dodecyl sulfate, deoxycholate, dyes, benzalkonium
+        chloride, chlorhexidine, and triclosan.
+      notes: CARD definition for Klebsiella pneumoniae KpnE.
+    - reference: ARO:3000748
+      snippet: Subunits of efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump subunits.
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
+  - subject: extruded_drug
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Moving drug outside the cell lowers intracellular drug exposure and causes the modeled
+      resistance phenotype.
+    evidence:
+    - reference: ARO:3000159
+      snippet: Efflux proteins that pump antibiotic out of a cell to confer resistance.
+      notes: CARD definition for efflux pump complexes and subunits.
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: CARD definition for the antibiotic efflux resistance mechanism.
+    - reference: ARO:0010003
+      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
+        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
+      notes: CARD definition for SMR antibiotic efflux pumps.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-09T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed Klebsiella Kpn efflux causal graphs
   llm_assisted: true
 license: CC-BY 4.0

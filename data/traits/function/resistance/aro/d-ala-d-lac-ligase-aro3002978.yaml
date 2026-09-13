@@ -32,11 +32,9 @@ evidence:
   notes: PMID:24342631 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: D-Ala-D-Lac ligase → mechanism → resistance (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:10908650). van (D-Ala-D-Lac ligase) — target alteration: remodels the peptidoglycan D-Ala-D-Ala
-    terminus to D-Ala-D-Lac so vancomycin can no longer bind.'
+  title: D-Ala-D-Lac ligase → D-Ala-D-Lac peptidoglycan precursor synthesis
+  description: Curated resistance-causation graph for D-Ala-D-Lac Van ligases. The determinant synthesizes
+    an alternative peptidoglycan precursor that lowers glycopeptide binding affinity.
   nodes:
   - node_id: determinant
     label: D-Ala-D-Lac ligase
@@ -50,16 +48,26 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: alt_precursor
+    label: peptidoglycan precursor ending in D-Ala-D-Lac
+    node_type: STATE
+    description: Local state for the alternative peptidoglycan precursor synthesized by this Van ligase
+      branch.
+  - node_id: low_affinity
+    label: reduced vancomycin binding affinity
+    node_type: STATE
+    description: Local state for the reduced vancomycin binding caused by peptidoglycan precursor ending
+      in D-Ala-D-Lac.
   - node_id: domain
-    label: D-Ala-D-Ala/D-Lac ligase domain (C-terminus)
+    label: D-Ala-D-Ala/D-Lac ligase domain
     node_type: DOMAIN
     grounding: Pfam:PF07478
-    description: KB protein-trait record carrying the mechanism.
+    description: ATP-grasp catalytic domain carried by D-Ala-D-Lac ligases.
   - node_id: fold
     label: ATP-grasp fold
     node_type: DOMAIN
     grounding: CATH:3.30.470
-    description: KB protein-trait record carrying the mechanism.
+    description: Fold associated with D-Ala-D-Lac ligase ATP-grasp catalysis.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -72,67 +80,210 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this Van ligase under cell-wall restructuring.
     evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
     - reference: PMID:10908650
       snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
         precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
-      notes: Family mechanism ARO:3000213.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: Alternative peptidoglycan precursor synthesis causes glycopeptide resistance.
     evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
     - reference: PMID:10908650
       snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
         precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
-      notes: Mechanism ARO:3000213 → resistance.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ligase synthesizes an alternative peptidoglycan precursor that reduces vancomycin
+      binding.
     evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
     - reference: PMID:10908650
       snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
         precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
-      notes: Determinant → resistance phenotype.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: ARO maps Van ligases to glycopeptide antibiotics.
     evidence:
     - reference: ARO:3002906
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3002906 (Van ligase), an is_a ancestor of this record's ARO:3002978; inherited
-        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
-  - subject: domain
-    predicate: part of (catalytic domain of the protein)
-    predicate_id: BFO:0000050
-    object: determinant
-    evidence:
-    - reference: Pfam:PF07478
-      snippet: D-ala D-ala ligase C-terminus
-      notes: 'KB trait: the D-Ala-D-Lac ligase domain.'
-  - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: CATH:3.30.470
-      snippet: D-amino Acid Aminotransferase; Chain A, domain 1
-      notes: 'KB trait: the ATP-grasp fold.'
-  - subject: domain
-    predicate: enables (cell-wall precursor remodelling)
-    predicate_id: RO:0002327
-    object: mech0
-    evidence:
+      notes: ARO drug-class relationship inherited from the Van ligase parent.
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited from the Van ligase branch.
     - reference: PMID:10908650
       snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
         precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
-      notes: The ligase synthesises D-Ala-D-Lac, altering the vancomycin target.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+  - subject: alt_precursor
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: low_affinity
+    description: peptidoglycan precursor ending in D-Ala-D-Lac has reduced vancomycin binding affinity.
+    evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
+    - reference: PMID:10908650
+      snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
+        precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+  - subject: low_affinity
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Reduced vancomycin binding affinity causes glycopeptide resistance.
+    evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
+    - reference: PMID:10908650
+      snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
+        precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+    - reference: ARO:3000081
+      snippet: glycopeptide antibiotic
+      notes: ARO drug-class term inherited from the Van ligase branch.
+  - subject: domain
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: The D-Ala-D-Ala/D-Lac ligase domain is part of the determinant.
+    evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: PMID:10908650
+      snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
+        precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+    - reference: Pfam:PF07478
+      snippet: D-ala D-ala ligase C-terminus
+      notes: Pfam family for the D-Ala-D-Lac ligase domain.
+  - subject: determinant
+    predicate: member of
+    predicate_id: RO:0002350
+    object: fold
+    description: The determinant adopts the ATP-grasp fold used for D-Ala-D-Lac ligase activity.
+    evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: PMID:10908650
+      snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
+        precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+    - reference: CATH:3.30.470
+      snippet: D-amino Acid Aminotransferase; Chain A, domain 1
+      notes: CATH fold carried by D-Ala-D-Lac ligases in the current graph set.
+  - subject: domain
+    predicate: enables (D-Ala-D-Lac precursor synthesis)
+    predicate_id: RO:0002327
+    object: alt_precursor
+    description: The D-Ala-D-Ala/D-Lac ligase domain synthesizes the D-Ala-D-Lac precursor.
+    evidence:
+    - reference: ARO:3002978
+      snippet: A van ligase that synthesizes D-Ala-D-Lac, an alternative peptidoglycan substrate that
+        confers resistance to vancomycin.
+      notes: CARD definition for D-Ala-D-Lac ligase.
+    - reference: ARO:3002906
+      snippet: Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin
+        binding affinity.
+      notes: CARD definition for Van ligase.
+    - reference: PMID:10908650
+      snippet: D-alanine-D-lactate ligase is directly responsible for the biosynthesis of alternate cell-wall
+        precursors in bacteria that are resistant to the glycopeptide antibiotic vancomycin.
+      notes: Evidence for D-Ala-D-Lac ligase-mediated precursor replacement.
+    - reference: Pfam:PF07478
+      snippet: D-ala D-ala ligase C-terminus
+      notes: Pfam family for the D-Ala-D-Lac ligase domain.
+    - reference: ARO:3000213
+      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
+        high level glycopeptide resistance.
+      notes: CARD definition for restructuring of bacterial cell wall.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-08T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Completed D-Ala-D-Lac/D-Ala-D-Ser ligase graphs
     llm_assisted: true
 license: CC-BY 4.0

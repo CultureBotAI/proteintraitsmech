@@ -23,12 +23,11 @@ evidence:
   notes: PMID:2189783 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine → mechanism → resistance
-    (curated from ARO relations + literature)
-  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3007559). The Saccharomyces FUR1 record, identical in wording to the Candida one (round 108)
-    and curated identically. NOT asserted: that 5-FC is activated by pyrimidine salvage.'
+  title: Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine → FUR1 mutation
+    → resistance
+  description: Conservative graph for Saccharomyces FUR1 mutations conferring 5-flucytosine resistance.
+    The graph grounds the FUR1 UPRT activity and pyrimidine-salvage pathway named by ARO, keeps the inherited
+    pyrimidine-antifungal drug-class edge, and does not add an unsupported 5-flucytosine activation edge.
   nodes:
   - node_id: determinant
     label: Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine
@@ -45,11 +44,11 @@ causal_graphs:
   - node_id: uprt
     label: uracil phosphoribosyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    description: Ungrounded.
+    grounding: GO:0004845
   - node_id: salvage
-    label: pyrimidine salvage
+    label: pyrimidine-containing compound salvage
     node_type: BIOLOGICAL_PROCESS
-    description: Ungrounded.
+    grounding: GO:0008655
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,64 +61,133 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: The ARO hierarchy classifies resistant FUR1 variants under point mutations.
     evidence:
     - reference: ARO:3007559
       snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
         UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
         salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: ARO:3007556
+      snippet: Fungal uracil phosphoribosyltransferases which include mutations to confer resistance to
+        5-flucytosine antibiotic.
+      notes: CARD definition for the fungal uracil phosphoribosyltransferase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited point-mutation mechanism links FUR1 determinants to resistance.
     evidence:
     - reference: ARO:3007559
       snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
         UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
         salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: ARO:3007556
+      snippet: Fungal uracil phosphoribosyltransferases which include mutations to confer resistance to
+        5-flucytosine antibiotic.
+      notes: CARD definition for the fungal uracil phosphoribosyltransferase parent.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The ARO hierarchy links FUR1 mutation records to antifungal resistance.
     evidence:
     - reference: ARO:3007559
       snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
         UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
         salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
-      notes: Word for word the Candida FUR1 sentence (round 108) with the genus changed. Curated identically
-        -- the 5-FC activation story is standard and CARD tells it for neither species.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: ARO:3007556
+      snippet: Fungal uracil phosphoribosyltransferases which include mutations to confer resistance to
+        5-flucytosine antibiotic.
+      notes: CARD definition for the fungal uracil phosphoribosyltransferase parent.
+    - reference: ARO:3007556
+      snippet: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug
+      notes: ARO drug-class relationship on ARO:3007556; modeled here as a determinant-to-pyrimidine-antifungal
+        edge and inherited by its child FUR1 records.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to pyrimidine antifungal drug.
-    evidence:
-    - reference: ARO:3007556
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug'
-      notes: Asserted on ARO:3007556 (fungal uracil phosphoribosyltransferase), an is_a ancestor of this
-        record's ARO:3007559; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-  - subject: determinant
-    predicate: enables (uracil phosphoribosyltransferase activity)
-    predicate_id: RO:0002327
-    object: uprt
+    description: The ARO hierarchy links this FUR1 determinant to pyrimidine antifungal drugs.
     evidence:
     - reference: ARO:3007559
-      snippet: It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating
-        enzyme in pyrimidine salvage.
-      notes: Same sentence as the Candida record.
+      snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
+        UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
+        salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: ARO:3007556
+      snippet: Fungal uracil phosphoribosyltransferases which include mutations to confer resistance to
+        5-flucytosine antibiotic.
+      notes: CARD definition for the fungal uracil phosphoribosyltransferase parent.
+    - reference: ARO:3007556
+      snippet: confers_resistance_to_drug_class ARO:3007560 ! pyrimidine antifungal drug
+      notes: ARO drug-class relationship on ARO:3007556; modeled here as a determinant-to-pyrimidine-antifungal
+        edge and inherited by its child FUR1 records.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+  - subject: determinant
+    predicate: enables
+    predicate_id: RO:0002327
+    object: uprt
+    description: ARO identifies FUR1 as a fungal UPRT enzyme.
+    evidence:
+    - reference: ARO:3007559
+      snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
+        UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
+        salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: GO:0004845
+      snippet: 'Catalysis of the reaction: diphosphate + UMP = 5-phospho-alpha-D-ribose 1-diphosphate
+        + uracil.'
+      notes: GO definition for uracil phosphoribosyltransferase activity.
   - subject: uprt
     predicate: part of (pyrimidine salvage)
     predicate_id: BFO:0000050
     object: salvage
+    description: ARO places FUR1 UPRT in pyrimidine salvage.
     evidence:
     - reference: ARO:3007559
-      snippet: It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating
-        enzyme in pyrimidine salvage.
-      notes: '''a key regulating enzyme in pyrimidine salvage''. NOT asserted: the 5-FC activation step.'
+      snippet: FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the
+        UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine
+        salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.
+      notes: CARD definition for Saccharomyces spp. FUR1 with mutations conferring resistance to 5-flucytosine.
+    - reference: GO:0008655
+      snippet: Any process that generates a pyrimidine-containing compound, a nucleobase, nucleoside,
+        nucleotide or nucleic acid that contains a pyrimidine base, from derivatives of them without de
+        novo synthesis.
+      notes: GO definition for pyrimidine-containing compound salvage; the same GO record lists pyrimidine
+        salvage as a related synonym.
 curation_history:
 - timestamp: '2026-08-08T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded FUR1 pyrimidine-salvage resistance graphs
   llm_assisted: true
 license: CC-BY 4.0

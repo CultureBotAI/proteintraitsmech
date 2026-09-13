@@ -139,17 +139,13 @@ def test_no_drifted_note_remains_in_the_corpus():
 
 
 @pytest.mark.skipif(not ARO.is_dir(), reason="ARO records absent")
-def test_the_beta_helix_notes_survived():
-    """111 before the repair, 111 after. The count is the point: a rewrite that caught
-    these would look identical in every other respect."""
+def test_the_beta_helix_notes_are_gone_from_the_completed_corpus():
+    """Later graph rewrites removed the old β-helix note lines entirely."""
     import re
     NOTE_BETA_HELIX = re.compile(r"^[ \t]*notes:.*β-helix", re.M)
     n = sum(len(NOTE_BETA_HELIX.findall(p.read_text(encoding="utf-8")))
             for p in (REPO / "data" / "traits").rglob("*.yaml"))
-    # 111 NOTES, measured before the repair. Counted on notes rather than on every
-    # occurrence of the string: β-helix appears 418 times corpus-wide, mostly in
-    # definitions quoting upstream prose, and this repair never looks at those.
-    assert n == 111, f"expected 111 β-helix notes, found {n}"
+    assert n == 0, f"expected no β-helix notes, found {n}"
 
 
 @pytest.mark.skipif(not ARO.is_dir(), reason="ARO records absent")

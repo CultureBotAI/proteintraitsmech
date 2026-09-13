@@ -30,10 +30,9 @@ evidence:
 causal_graphs:
 - graph_id: resistance
   title: Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics
-    → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3000336). Target alteration of an RNA target; the counterpart to round 54's 16S config.
+    → rRNA antibiotic-binding-site alteration
+  description: Curated resistance-causation graph for point mutations in a bacterial rRNA that alter a
+    drug-class-linked ribosomal antibiotic-binding site.
   nodes:
   - node_id: determinant
     label: Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics
@@ -48,23 +47,16 @@ causal_graphs:
     node_type: CHEMICAL
     grounding: ARO:3000670
   - node_id: binding_site
-    label: antibiotic-binding site within the 23S rRNA
+    label: 23S rRNA antibiotic-binding site
     node_type: NUCLEIC_ACID
-    description: 'Ungrounded: the per-drug site (domain V, the peptidyl transferase centre) has no single
-      term.'
-  - node_id: low_affinity
-    label: reduced antibiotic binding affinity at the mutated site
-    node_type: STATE
-    description: 'The causal core, in CARD''s own words. Ungrounded: an affinity property has no term
-      here.'
+    grounding: SO:0000252
+    description: Grounded to the broad Sequence Ontology rRNA term because no stable narrow term is available
+      for a generic rRNA antibiotic-binding site.
   - node_id: subunit
     label: large ribosomal subunit (50S)
     node_type: CELLULAR_LOCALIZATION
     grounding: GO:0015934
-  - node_id: pt_activity
-    label: peptidyl transferase activity
-    node_type: MOLECULAR_FUNCTION
-    grounding: GO:0000048
+    description: The 50S subunit that contains bacterial 23S rRNA.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -77,101 +69,253 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: CARD classifies this rRNA variant under mutation conferring antibiotic resistance.
     evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
-      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
-        conferring resistance.
-      notes: Family mechanism ARO:3000212.
+      snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
+        to antibiotics.
+      notes: CARD definition for the 23S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The inherited mutation mechanism captures rRNA sequence changes that alter ribosomal
+      antibiotic-binding sites.
     evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
-      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
-        conferring resistance.
-      notes: Mechanism ARO:3000212 → resistance.
+      snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
+        to antibiotics.
+      notes: CARD definition for the 23S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: The mutated rRNA determinant alters a ribosomal antibiotic-binding site and thereby confers
+      resistance.
     evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
       snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
         to antibiotics.
-      notes: CARD's parent term, stating the resistance claim for the family.
-    - reference: ARO:3000336
-      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
-        conferring resistance.
-      notes: 'And the mechanism, with its direction: binding affinity is REDUCED, at specific sites.'
+      notes: CARD definition for the 23S rRNA mutation term.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance.
+      notes: CARD definition for mutation conferring antibiotic resistance.
+    - reference: ARO:3004178
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
+      notes: Asserted on ARO:3004178 (23S rRNA with mutation conferring resistance to pleuromutilin antibiotics),
+        an is_a ancestor of this record's ARO:3004159; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
     object: drug0
-    description: CARD asserts that this determinant confers resistance to pleuromutilin antibiotic.
+    description: CARD asserts that this rRNA mutation class confers resistance to pleuromutilin antibiotic.
     evidence:
     - reference: ARO:3004178
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
       notes: Asserted on ARO:3004178 (23S rRNA with mutation conferring resistance to pleuromutilin antibiotics),
         an is_a ancestor of this record's ARO:3004159; inherited by this variant. CARD/ARO release in
         data/raw/aro/aro.obo.
-  - subject: binding_site
-    predicate: part of (the 23S rRNA)
-    predicate_id: BFO:0000050
-    object: determinant
-    description: Why a mutation in the rRNA IS a mutation in the drug's target -- the same shape as round
-      54's 16S config.
-    evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
       snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
         conferring resistance.
-      notes: '''at specific sites'' -- the sites are in the rRNA itself.'
+      notes: CARD support for 23S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+  - subject: binding_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: determinant
+    description: The antibiotic-binding site is modeled inside the mutated rRNA.
+    evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: CARD support for 23S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
   - subject: determinant
-    predicate: part of (the 50S subunit)
+    predicate: part of
     predicate_id: BFO:0000050
     object: subunit
+    description: The mutated rRNA is part of its bacterial ribosomal subunit.
     evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
       snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
         to antibiotics.
-      notes: CARD places the 23S rRNA in the large ribosomal subunit.
+      notes: CARD definition for the 23S rRNA mutation term.
+    - reference: GO:0015934
+      snippet: large ribosomal subunit
+      notes: GO grounding for the large ribosomal subunit.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
   - subject: determinant
-    predicate: has quality (reduced antibiotic binding affinity)
-    predicate_id: RO:0000086
-    object: low_affinity
-    evidence:
-    - reference: ARO:3000336
-      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
-        conferring resistance.
-      notes: The family-level claim.
-    - reference: ARO:3004187
-      snippet: Point mutations in the 23S rRNA subunit may confer resistance to lincosamide antibiotics
-        by reducing antibiotic binding-site affinity.
-      notes: Restated for lincosamides -- 'by reducing antibiotic binding-site affinity' -- which shows
-        the family claim is not linezolid-only.
-  - subject: low_affinity
-    predicate: negatively regulates (drug occupancy of the site)
-    predicate_id: RO:0002212
+    predicate: causally upstream of (alters antibiotic-binding site)
+    predicate_id: RO:0002411
     object: binding_site
+    description: Point mutations in the rRNA alter the local antibiotic-binding site that is linked to
+      this drug class.
     evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
       snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
         conferring resistance.
-      notes: Reduced affinity means the drug occupies its site less.
+      notes: CARD support for 23S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+    - reference: ARO:3004178
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
+      notes: Asserted on ARO:3004178 (23S rRNA with mutation conferring resistance to pleuromutilin antibiotics),
+        an is_a ancestor of this record's ARO:3004159; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
   - subject: drug0
-    predicate: negatively regulates (blocks peptide synthesis)
-    predicate_id: RO:0002212
-    object: pt_activity
-    description: What the drug does when it IS bound, and therefore what resistance restores.
+    predicate: molecularly interacts with
+    predicate_id: RO:0002436
+    object: binding_site
+    description: CARD links this drug class to resistance-conferring rRNA binding-site mutations.
     evidence:
+    - reference: ARO:3004178
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
+      notes: Asserted on ARO:3004178 (23S rRNA with mutation conferring resistance to pleuromutilin antibiotics),
+        an is_a ancestor of this record's ARO:3004159; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
     - reference: ARO:3000336
-      snippet: Antibiotics such as linezolid block peptide synthesis through peptidyl transferase activity.
-      notes: 'Stated for linezolid. SCOPE: this family also spans lincosamides, phenicols, pleuromutilins,
-        streptogramins, aminoglycosides and capreomycin, which act at the same centre but are not named
-        by this sentence.'
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: CARD support for 23S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+  - subject: binding_site
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Alteration of the rRNA antibiotic-binding site lowers effective drug binding and causes
+      resistance.
+    evidence:
+    - reference: ARO:3004159
+      snippet: Point mutations in the 23S rRNA (domain V) of Mycoplasma gallisepticum can confer resistance
+        to pleuromutilin antibiotics (tiamulin and valnemulin). The mutants also show cross-resistance
+        to lincomycin, chloramphenicol and florfenicol.
+      notes: CARD definition for Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin
+        antibiotics.
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: CARD support for 23S rRNA binding-site alteration.
+    - reference: ARO:3000328
+      snippet: Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs
+        that target the bacterial ribosome.
+      notes: CARD definition for the rRNA mutation parent term.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass.
+    - reference: ARO:3004178
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
+      notes: Asserted on ARO:3004178 (23S rRNA with mutation conferring resistance to pleuromutilin antibiotics),
+        an is_a ancestor of this record's ARO:3004159; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-10T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Completed bacterial 23S rRNA leaf mutation causal graphs
   llm_assisted: true
 license: CC-BY 4.0

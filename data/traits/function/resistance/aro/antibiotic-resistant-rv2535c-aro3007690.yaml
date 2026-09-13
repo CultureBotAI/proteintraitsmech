@@ -20,12 +20,10 @@ evidence:
   notes: PMID:27185800 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: antibiotic resistant Rv2535c → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
-    (ARO:3007690). A putative aminopeptidase conferring low-level cross-resistance. The function itself
-    is hedged -- 'encodes a PUTATIVE Xaa-Pro aminopeptidase' -- which is a step further than round 111's
-    drmA, where the protein was 'uncharacterized' but its identity was not in doubt.
+  title: antibiotic resistant Rv2535c → putative aminopeptidase role → antibiotic resistance
+  description: Conservative graph for antibiotic-resistant Rv2535c. The graph keeps the ARO point-mutation
+    resistance route, grounds the named putative Xaa-Pro aminopeptidase role, and omits a route from that
+    activity to resistance because the parent-shaped records do not describe it.
   nodes:
   - node_id: determinant
     label: antibiotic resistant Rv2535c
@@ -38,8 +36,9 @@ causal_graphs:
   - node_id: aminopeptidase
     label: putative Xaa-Pro aminopeptidase activity
     node_type: MOLECULAR_FUNCTION
-    description: The word 'putative' is CARD's and is kept in the label -- the assignment itself is uncertain,
-      not merely uncharacterised.
+    grounding: GO:0004177
+    description: Grounded to the generic GO aminopeptidase activity. ARO calls the Rv2535c Xaa-Pro aminopeptidase
+      assignment putative, and the graph keeps that uncertainty in the label.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,44 +51,92 @@ causal_graphs:
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech0
+    description: ARO classifies resistant Rv2535c variants under mutation conferring antibiotic resistance.
     evidence:
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: Family mechanism ARO:3000212.
+      notes: CARD definition for antibiotic resistant Rv2535c.
+    - reference: ARO:3007690
+      snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
+        of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
+      notes: CARD definition for the antibiotic resistant Rv2535c parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
+    description: The broad ARO mutation mechanism covers altered gene products that may result in antibiotic
+      resistance.
     evidence:
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: Mechanism ARO:3000212 → resistance.
+      notes: CARD definition for antibiotic resistant Rv2535c.
+    - reference: ARO:3007690
+      snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
+        of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
+      notes: CARD definition for the antibiotic resistant Rv2535c parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
+    description: ARO associates Rv2535c mutations with low-level bedaquiline and clofazimine cross-resistance.
     evidence:
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: 'Four qualifiers in one sentence: the function is ''PUTATIVE'', the determinant is ''NEW'',
-        the resistance is ''LOW-LEVEL'', and it is ''CROSS-RESISTANCE'' to two drugs. All four are kept.'
+      notes: CARD definition for antibiotic resistant Rv2535c.
+    - reference: ARO:3007690
+      snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
+        of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
+      notes: CARD definition for the antibiotic resistant Rv2535c parent term.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: CARD definition for the broad mutation-conferring resistance mechanism.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
   - subject: determinant
-    predicate: enables (putative Xaa-Pro aminopeptidase activity)
+    predicate: enables
     predicate_id: RO:0002327
     object: aminopeptidase
-    description: 'Hedged at the level CARD hedges it. NOT asserted: any route from peptidase activity
-      to bedaquiline or clofazimine, which CARD does not describe.'
+    description: ARO states that Rv2535c/pepQ encodes a putative Xaa-Pro aminopeptidase.
     evidence:
     - reference: ARO:3007690
       snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
         of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
-      notes: '''encodes a putative Xaa-Pro aminopeptidase''.'
+      notes: CARD definition for antibiotic resistant Rv2535c.
+    - reference: ARO:3007690
+      snippet: Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant
+        of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.
+      notes: CARD definition for the antibiotic resistant Rv2535c parent term.
+    - reference: DOI:10.1128/AAC.00753-16
+      notes: PMID:27185800 (aro citation)
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs
   action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-09-06T00:00:00Z'
+  curator: codex-causal-graph-quality
+  action: Grounded conservative Rv2535c aminopeptidase graphs
   llm_assisted: true
 license: CC-BY 4.0

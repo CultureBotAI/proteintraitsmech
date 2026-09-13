@@ -60,154 +60,548 @@ evidence:
   notes: PMID:9187657 (aro citation)
 causal_graphs:
 - graph_id: resistance
-  title: How ErmB confers MLSB resistance by target alteration (determinant → mechanism → phenotype)
-  description: 'Resistance-causation graph for the ErmB determinant — a THIRD mechanism type: antibiotic
-    **target alteration**. ErmB is a 23S rRNA methyltransferase that dimethylates adenine A2058 in the
-    23S rRNA of the large ribosomal subunit (using S-adenosyl-L-methionine as methyl donor); the methylated
-    ribosome no longer binds macrolide/lincosamide/streptogramin-B antibiotics, giving the MLSB phenotype.
-    Unlike inactivation (GOB-10 destroys the drug) or efflux (MdfA expels it), here the drug''s **target**
-    is chemically modified.'
+  title: ErmB → methylated 23S rRNA A2058 → MLSB resistance
+  description: Curated resistance-causation graph for Erm-family 23S rRNA methyltransferases. The determinant
+    methylates adenosine 2058 in 23S rRNA, chemically altering a macrolide/lincosamide/streptogramin target
+    site in the 50S ribosomal subunit.
   nodes:
-  - node_id: ermb
-    label: ErmB (23S rRNA methyltransferase determinant)
+  - node_id: determinant
+    label: ErmB
     node_type: PROTEIN
     grounding: ARO:3000375
-  - node_id: erm_family
-    label: Erm 23S ribosomal RNA methyltransferase family
-    node_type: PROTEIN
-    grounding: ARO:3000560
-  - node_id: methylation
-    label: 23S rRNA A2058 dimethylation (antibiotic target alteration)
+  - node_id: mech0
+    label: antibiotic target alteration
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001001
-    xrefs:
-    - ARO:3000211
-  - node_id: sam
-    label: S-adenosyl-L-methionine (methyl donor)
-    node_type: CHEMICAL
-    grounding: CHEBI:15414
-  - node_id: rrna
-    label: 23S rRNA nucleotide A2058 (macrolide-binding site)
+  - node_id: mech1
+    label: ribosomal alteration conferring antibiotic resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000211
+  - node_id: methyltransferase
+    label: 23S rRNA A2058 methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008649
+    description: Grounded to the broad GO rRNA methyltransferase activity term and scoped here to Erm-family
+      A2058 methylation in 23S rRNA.
+  - node_id: target_site
+    label: 23S rRNA A2058 MLSB antibiotic-binding site
     node_type: NUCLEIC_ACID
-  - node_id: mls
-    label: macrolide / lincosamide / streptogramin B (MLSB) antibiotics
+    grounding: SO:0000252
+    description: Local 23S rRNA site centered on A2058; grounded to broad rRNA because no stable narrow
+      term is available for this local MLSB antibiotic target site.
+  - node_id: methylated
+    label: methylated 23S rRNA A2058 MLSB antibiotic-binding site
+    node_type: STATE
+    grounding: SO:0000252
+    description: Local state representing methylation of the 23S rRNA A2058 MLSB antibiotic target site.
+      Grounded to broad rRNA because no stable narrow term is available for this methylated local state.
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: The 50S subunit that contains bacterial 23S rRNA.
+  - node_id: drug0
+    label: macrolide antibiotic
     node_type: CHEMICAL
-    grounding: CHEBI:25105
+    grounding: ARO:0000000
+  - node_id: drug1
+    label: lincosamide antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000017
+  - node_id: drug2
+    label: streptogramin antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000026
   - node_id: resistance
-    label: MLSB resistance phenotype
+    label: MLSB antibiotic resistance phenotype
     node_type: PHENOTYPE
     grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
-  - node_id: mtase_domain
-    label: rRNA adenine dimethyltransferase domain (RrnaAD)
-    node_type: DOMAIN
-    grounding: Pfam:PF00398
-    description: KB trait (SEQ_DOMAIN).
-  - node_id: mtase_sig
-    label: rRNA adenine N6-methyltransferase family signature
-    node_type: MOTIF
-    grounding: PROSITE:PRU01026
-    description: KB trait (SEQ_DOMAIN, ProRule).
+    description: 'Macrolide, lincosamide, and streptogramin resistance phenotype conferred by this determinant.
+      Grounded to the nearest available superclass: ARO models determinants and mechanisms but has no
+      term for the resistance phenotype itself.'
   edges:
-  - subject: ermb
-    predicate: member of
-    predicate_id: RO:0002350
-    object: erm_family
-    description: ErmB is an Erm-family 23S rRNA methyltransferase.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    description: CARD classifies Erm-family 23S rRNA methyltransferases under antibiotic target alteration
+      because they enzymatically modify a 23S rRNA drug target.
     evidence:
-    - reference: PMID:31601908
-      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
-        A2058 in 23S rRNA
-      notes: Erm family; is_a parent ARO:3000560 (Erm 23S rRNA methyltransferase).
-  - subject: ermb
-    predicate: enables
-    predicate_id: RO:0002327
-    object: methylation
-    description: The ErmB gene product carries out 23S rRNA A2058 dimethylation.
-    evidence:
-    - reference: PMID:31601908
-      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
-        A2058 in 23S rRNA
-      notes: ARO mechanism antibiotic target alteration (ARO:0001001) / ribosomal alteration (ARO:3000211).
-  - subject: sam
-    predicate: has input (methyl donor)
-    predicate_id: RO:0002233
-    object: methylation
-    description: S-adenosyl-L-methionine donates the methyl groups.
-    evidence:
-    - reference: PMID:31601908
-      snippet: dimethylates A2058 in 23S rRNA using SAM as methyl donor
-      notes: SAM-dependent methyltransferase (adds two methyl groups to the A2058 exocyclic amine).
-  - subject: methylation
-    predicate: has output (modifies)
-    predicate_id: RO:0002234
-    object: rrna
-    description: The reaction dimethylates adenine A2058 of the 23S rRNA.
-    evidence:
-    - reference: PMID:31601908
-      snippet: ErmE is a methyltransferase (MTase) from Saccharopolyspora erythraea that dimethylates
-        A2058 in 23S rRNA
-      notes: A2058 is the macrolide-binding nucleotide in the 50S large subunit.
-  - subject: rrna
-    predicate: reduces binding of (altered target)
-    predicate_id: RO:0002212
-    object: mls
-    description: The methylated A2058 no longer accommodates MLSB antibiotics.
-    evidence:
-    - reference: PMID:31601908
-      snippet: protecting the ribosomes from macrolide binding
-      notes: Cross-resistance to macrolide, lincosamide and streptogramin B (MLSB).
-  - subject: methylation
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+  - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
-    description: Target alteration is the mechanism producing the MLSB phenotype.
+    description: Antibiotic target alteration is the broad resistance mechanism represented by A2058 methylation
+      in 23S rRNA.
     evidence:
-    - reference: PMID:31601908
-      snippet: protecting the ribosomes from macrolide binding
-      notes: ARO antibiotic target alteration → resistance.
-  - subject: ermb
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech1
+    description: CARD also classifies Erm-family 23S rRNA methyltransferases under the ribosome-specific
+      target-alteration mechanism.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+  - subject: mech1
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: Chemical alteration of the ribosome is the ribosome-specific route represented by Erm-family
+      23S rRNA methylation.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+  - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
-    description: Carrying ErmB confers the MLSB resistance phenotype.
+    description: The Erm-family determinant confers MLSB antibiotic resistance through methylation of
+      the 23S rRNA target.
     evidence:
-    - reference: PMID:9187657
-      snippet: ErmB confers the MLSb phenotype.
-      notes: ARO record definition (DOI:10.1038/nsb0697-483).
-  - subject: mtase_domain
-    predicate: part of (domain of the protein)
-    predicate_id: BFO:0000050
-    object: ermb
-    description: The RrnaAD methyltransferase domain constitutes ErmB.
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:0001001
+      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
+        resistance.
+      notes: CARD definition for antibiotic target alteration.
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+  - subject: determinant
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
+    object: drug0
+    description: ARO maps the Erm family to macrolide antibiotic resistance.
     evidence:
-    - reference: Pfam:PF00398
-      snippet: Ribosomal RNA adenine dimethylase
-      notes: KB trait Pfam:PF00398 (SEQ_DOMAIN).
-  - subject: mtase_sig
-    predicate: part of (located in)
-    predicate_id: BFO:0000050
-    object: mtase_domain
-    description: The methyltransferase signature lies within the domain.
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
+      notes: ARO drug-class relationship asserted on the Erm family term.
+    - reference: ARO:0000000
+      snippet: macrolide antibiotic
+      notes: ARO drug-class term targeted by Erm-family methyltransferases.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+  - subject: determinant
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
+    object: drug1
+    description: ARO maps the Erm family to lincosamide antibiotic resistance.
     evidence:
-    - reference: PROSITE:PRU01026
-      snippet: rRNA adenine N(6)-methyltransferase family
-      notes: KB trait PROSITE:PRU01026.
-  - subject: mtase_domain
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
+      notes: ARO drug-class relationship asserted on the Erm family term.
+    - reference: ARO:0000017
+      snippet: lincosamide antibiotic
+      notes: ARO drug-class term targeted by Erm-family methyltransferases.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+  - subject: determinant
+    predicate: confers resistance to
+    predicate_id: ARO:2000001
+    object: drug2
+    description: ARO maps the Erm family to streptogramin antibiotic resistance.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3000560
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000026 ! streptogramin antibiotic'
+      notes: ARO drug-class relationship asserted on the Erm family term.
+    - reference: ARO:0000026
+      snippet: streptogramin antibiotic
+      notes: ARO drug-class term targeted by Erm-family methyltransferases.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+  - subject: determinant
     predicate: enables
     predicate_id: RO:0002327
-    object: methylation
-    description: The Rossmann-fold methyltransferase domain carries out 23S rRNA A2058 dimethylation.
+    object: methyltransferase
+    description: The determinant enables methyl transfer onto adenosine 2058 in 23S rRNA.
     evidence:
-    - reference: PMID:33453992
-      snippet: Erythromycin-resistance methyltransferases are SAM dependent Rossmann fold methyltransferases
-        that convert A2058 of 23S rRNA to m62A2058
-      notes: SAM-dependent.
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A2058 MLSB-binding site.
+  - subject: methyltransferase
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: methylated
+    description: Erm-family methyltransferase activity yields a methylated A2058 site in 23S rRNA.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A2058 MLSB-binding site.
+  - subject: methylated
+    predicate: negatively regulates (blocks MLSB antibiotic binding)
+    predicate_id: RO:0002212
+    object: target_site
+    description: Methylation changes the local 23S rRNA A2058 site and prevents normal MLSB antibiotic
+      binding.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A2058 MLSB-binding site.
+  - subject: methylated
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    description: The methylated A2058-containing 23S rRNA site is the terminal modeled cause of MLSB antibiotic
+      resistance.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A2058 MLSB-binding site.
+  - subject: target_site
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: subunit
+    description: The A2058 site is part of the 23S rRNA in the 50S ribosomal subunit.
+    evidence:
+    - reference: ARO:3000375
+      snippet: ErmB confers the MLSb phenotype. Similar to ErmC, expression of ErmB is inducible by erythromycin.
+        The leader peptide causes attenuation of the mRNA and stabilizes the structure preventing further
+        translation. When erythromycin is present, it binds the leader peptide causing a change in conformation
+        allowing for the expression of ErmB.
+      notes: CARD definition for ErmB.
+    - reference: ARO:3000560
+      snippet: Erm proteins are part of the RNA methyltransferase family and methylate A2058 (E. coli
+        nomenclature) of the 23S ribosomal RNA conferring degrees of resistance to Macrolides, Lincosamides
+        and Streptogramin b.
+      notes: CARD definition for the Erm 23S ribosomal RNA methyltransferase family.
+    - reference: ARO:3004274
+      snippet: Methyltransferases that modify the 23S rRNA of the 50S subunit of bacterial ribosomes,
+        conferring resistance to drugs that target 23S rRNA.
+      notes: CARD definition for the 23S ribosomal RNA methyltransferase parent term.
+    - reference: ARO:3000164
+      snippet: Catalyzes methylation of rRNA.
+      notes: CARD definition for the rRNA methyltransferase parent term.
+    - reference: DOI:10.1128/AAC.01376-07
+      notes: PMID:18299414 (aro citation)
+    - reference: DOI:10.1021/jm990293a
+      notes: PMID:10508434 (aro citation)
+    - reference: DOI:10.1038/nsb0697-483
+      notes: PMID:9187657 (aro citation)
+    - reference: ARO:3000211
+      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
+        to resistance.
+      notes: CARD definition for ribosomal alteration conferring antibiotic resistance.
+    - reference: GO:0008649
+      snippet: Catalysis of the transfer of a methyl group from S-adenosyl-L-methionine to a nucleoside
+        residue in an rRNA molecule.
+      notes: GO definition for broad rRNA methyltransferase activity.
+    - reference: SO:0000252
+      snippet: rRNA is an RNA component of a ribosome that can provide both structural scaffolding and
+        catalytic activity.
+      notes: Sequence Ontology definition for the broad rRNA superclass used as a conservative grounding
+        for the local 23S rRNA A2058 MLSB-binding site.
 curation_history:
   - timestamp: "2026-07-21T00:00:00Z"
     curator: edison-causal-graphs
     action: "Added causal_graphs 'resistance' (7 edges, target-alteration mechanism) from ARO + PMID:31601908; SEEDED -> REVIEWED"
+    llm_assisted: true
+  - timestamp: '2026-09-10T00:00:00Z'
+    curator: codex-causal-graph-quality
+    action: Replaced Erm A2058 23S rRNA methyltransferase graph
     llm_assisted: true
 license: CC-BY 4.0
