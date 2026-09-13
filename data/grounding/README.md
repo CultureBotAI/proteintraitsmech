@@ -18,11 +18,32 @@ canonical example:
   the same exact-accession response as its `ProteinReference` and is bound to that release
   and sequence checksum; a discovery query or generic search hit is never membership
   evidence.
+- `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
+  explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.
+  `elife109154_acquisition_receipt.json` binds those assertions to source archive and
+  exact-accession UniProt response hashes. Its version 2 receipt also hashes the durable
+  `data/curation/elife109154_example_decisions.jsonl` ledger and binds every assertion
+  to an approved resolution with matching model, protein, and organism. Promotion
+  installs that ledger transactionally and retains prior review coverage across batches.
+  A version 1 receipt requires replay and approval of the complete existing panel to
+  upgrade; ordinary validation does not accept an unbound legacy receipt.
+  The source-specific contract accepts only
+  whole-protein sequence families with exact source/UniProt sequence agreement; it
+  does not qualify cropped domains without coordinates. `QUALIFIED` here describes
+  sequence classification, not experimentally demonstrated activity. See the
+  [publication analysis](../../research/elife-109154-metallophores.md) and use the
+  registered `ground_uniprot_examples.py elife-promote` route for reviewed changes.
 
 Do not hand-edit these registries. Build staging outputs from pinned providers, review the
 source-stratified ledger, install the approved rows with the grounding promoter, and run
 `just validate-all` before committing the registry and trait changes together. A
 `QUALIFIED` record whose registry row is absent or inconsistent fails semantic validation.
+
+The durable protein registry can contain proteins pinned to different UniProt releases.
+Execution contracts that require one release, including SFLD HMMER receipts, must receive
+a release-specific staging registry through `--registry`. The eLife ingest preserves the
+126 existing `2026_02` protein rows and adds 33 `2026_03` rows; it does not upgrade the
+older references or relax the SFLD single-release check.
 
 See [`research/uniprot-organism-protein-grounding-plan.md`](../../research/uniprot-organism-protein-grounding-plan.md)
 for the state machine, evidence tiers, review protocol, and completion criteria.

@@ -1702,8 +1702,8 @@ def test_current_durable_interpro_evidence_remains_clean_when_present():
         pytest.skip("durable grounding evidence is not installed")
 
     registry, findings = V.load_evidence_registry(path)
-    assert len(registry) == 127
-    assert {row["provider_kind"] for row in registry.values()} == {"INTERPRO"}
+    interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
+    assert len(interpro) == 127
     assert findings == []
 
 
