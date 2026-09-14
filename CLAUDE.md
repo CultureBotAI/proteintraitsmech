@@ -119,6 +119,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
 | Curate definitions | [edison-trait-definitions](.claude/skills/edison-trait-definitions/SKILL.md) |
 | Curate mechanism graphs | [edison-causal-graphs](.claude/skills/edison-causal-graphs/SKILL.md) |
+| Create residue-level molecular causal graphs | [molecular-causal-graphs](.claude/skills/molecular-causal-graphs/SKILL.md) |
 | Merge duplicates | [merge-traits](.claude/skills/merge-traits/SKILL.md) |
 | Select within-axis equivalence | [merge-within-axis](.claude/skills/merge-within-axis/SKILL.md) |
 | Review schema/hierarchy | [codex-schema-hierarchy-review](.claude/skills/codex-schema-hierarchy-review/SKILL.md) |
