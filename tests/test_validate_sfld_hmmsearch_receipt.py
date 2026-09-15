@@ -652,10 +652,10 @@ def test_original_registry_release_has_stable_canonical_fasta_projection(tmp_pat
     rows = receipt._load_registry(capture)  # noqa: SLF001
     fasta = receipt.canonical_registry_fasta(rows)
 
-    assert len(rows) == 126
-    assert capture.sha256 == "d587fad177207ca4f00d1dfb8649f4f9d2d21d01953d483f44a3a6e81acc729c"
-    assert len(fasta) == 79906
-    assert _sha(fasta) == "0aa2b6f9d1ce74ebc132184284475de53f55ccc62d0ecd7498d79d522ef18e9f"
+    assert len(rows) == 123
+    assert capture.sha256 == "9de8d420529ecfcb2da9edb7fc37b46daac7bc8316623a476c7f67186a9058ab"
+    assert len(fasta) == 74871
+    assert _sha(fasta) == "59ecbee65eca77f381e4ff875cefb61f29f40d586f394c67f1ac5f1042784a36"
 
 
 def test_current_sfld_release_replays_exact_pinned_manifest_when_artifacts_exist():

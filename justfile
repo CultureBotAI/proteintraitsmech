@@ -9,6 +9,8 @@ set dotenv-load := true
 # only `$3` in this file is inside a single-quoted awk program).
 set positional-arguments := true
 
+uniprot_grounding_release := "2026_03"
+
 # ============== Deep Research ==============
 
 # eLife 109154: immutable, CC-BY-4.0 article and supplementary release.
@@ -1054,13 +1056,13 @@ fetch-uniprot-registry queue selector_manifest batch_id *args:
         --queue {{quote(queue)}} \
         --selector-manifest {{quote(selector_manifest)}} \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 --request-plan "$request_plan" --apply
+        --expect-release {{uniprot_grounding_release}} --request-plan "$request_plan" --apply
     else
       uv run python scripts/fetch_uniprot_registry.py \
         --queue {{quote(queue)}} \
         --selector-manifest {{quote(selector_manifest)}} \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02
+        --expect-release {{uniprot_grounding_release}}
     fi
 
 # Plan the exact accessions selected for one bounded review batch. Example:
@@ -1101,7 +1103,7 @@ fetch-uniprot-review-batch batch_id *args:
         --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
         --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 \
+        --expect-release {{uniprot_grounding_release}} \
         --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
         --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
         --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
@@ -1112,7 +1114,7 @@ fetch-uniprot-review-batch batch_id *args:
         --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
         --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 \
+        --expect-release {{uniprot_grounding_release}} \
         --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
         --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
         --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
@@ -1155,7 +1157,7 @@ resolve-uniprot-review-batch batch_id *args:
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
       --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
-      --expect-uniprot-release 2026_02 \
+      --expect-uniprot-release {{uniprot_grounding_release}} \
       --batch {{quote(batch_id)}} \
       --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
       --review reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \
