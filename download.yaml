@@ -978,8 +978,9 @@
 # 271 distinct traits (326 rows: a trait is listed once per reporting level it
 # is shown at, granularity 1/2/3 = 37/100/189; type count|binary; strategy
 # Resource Acquisition|Resource Use|Stress Tolerance), 1,445 Boolean rules over
-# named protein families and other rules (947 mapped to a trait, 498
-# intermediate), 2,298 family rows with KEGG (2,232), EC (1,091) and TCDB (818)
+# named protein families and other rules (947 listed in rule2trait, of which
+# 841 reach at least one trait; 498 absent from rule2trait), 2,298 family rows
+# with KEGG (2,232), EC (1,091) and TCDB (818)
 # dbxrefs. Every rule token resolves; 596 of its 618 EC numbers and all 41 dbCAN
 # GH families are already records here. Ingest the rule->trait layer
 # (FUNC_PATHWAY / FUNC_TRANSPORT / FUNC_ENZYMATIC_ACTIVITY /
@@ -1022,10 +1023,15 @@
   license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
   status: candidate
   note: >-
-    975 rows mapping 947 distinct rules to a trait at each of three levels;
-    rule-type count_by_substrate (628) | count (235) | binary (112). Substrate
-    rows carry no trait name and resolve through substrate2rule; 215 of them
-    hold a ';'-joined compound list, so the join needs a split-and-lookup.
+    975 rows list 947 distinct rules; 841 reach at least one trait after the
+    substrate join, while 106 development rules reach none. Production has
+    697 rows / 669 rules, all resolved; development has 278 rows / 278 rules,
+    with 172 reaching a trait (8 only partially resolved). Rule types are
+    count_by_substrate (628) | count (235) | binary (112). Substrate rows carry
+    no trait name. The 215 exact substrate misses comprise 110 ';'-joined
+    lists and 105 singletons. Splitting still leaves 26 unknown substrate names
+    across 114 development rows. Retain the version and quarantine unresolved
+    rows for review; 841 measures reachability, not an accepted ingest yield.
 -
   url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_substrate2rule.txt
   local_name: microtrait/microtrait_substrate2rule.txt
