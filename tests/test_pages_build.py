@@ -948,3 +948,52 @@ assert.deepStrictEqual(fc.sidebarState(cube, {{}}, '', globals).note, fc.note(tr
 """
     out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
     assert out.returncode == 0, out.stdout + out.stderr
+
+
+@pytest.mark.parametrize("detail_buckets", [256, 710, 1024])
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_neighbors_follow_their_own_bucket_after_loading_detail(tmp_path, monkeypatch, detail_buckets):
+    """Run actual browser loaders against generated detail and retained neighbors."""
+    monkeypatch.setattr(BUILD, "OUT_DIR", tmp_path)
+    monkeypatch.setattr(BUILD, "MIN_DETAIL_BUCKETS", detail_buckets)
+    producer = _load("embed_neighbors", REPO / "scripts" / "embed_neighbors.py")
+    identifier = "NCBIfam:NF017572"
+    expected = [["NCBIfam:NF017578", 0.884]]
+    neighbor_file = f"neighbors/{producer.bucket(identifier):03d}.json"
+    path = tmp_path / neighbor_file
+    path.parent.mkdir()
+    path.write_text(json.dumps({identifier: expected}))
+    record = {"id": identifier}
+    pairs = [(record, {"def": "NinG"})]
+    BUILD.write_detail(pairs)
+    assert "nf" not in record, "neighbor routing belongs in the lazy payload"
+    if detail_buckets != 256:
+        assert record["df"].replace("detail/", "neighbors/") != neighbor_file
+    detail = json.loads((tmp_path / record["df"]).read_text())
+    assert detail[identifier]["nf"] == neighbor_file
+    js = (REPO / "docs" / "browse.js").read_text()
+    loaders = js[js.index("const DETAIL_CACHE ="):js.index("function renderNotFound(")]
+    program = (
+        "const assert=require('node:assert/strict');const fs=require('node:fs');"
+        f"const root={json.dumps(str(tmp_path))};const record={json.dumps(record)};"
+        "const calls=[];async function fetch(url){calls.push(url);"
+        "const data=JSON.parse(fs.readFileSync(root+'/'+url.slice(5),'utf8'));"
+        "return {ok:true,json:async()=>data};}\n" + loaders + "\n"
+        "(async()=>{await loadDetail(record);await loadNeighbors(record);"
+        f"assert.deepEqual(record._nb,{json.dumps(expected)});"
+        f"assert.deepEqual(calls,{json.dumps(['data/'+record['df'], 'data/'+neighbor_file])});"
+        "await loadNeighbors(record);assert.equal(calls.length,2);"
+        "await loadNeighbors({id:'Absent:1',df:'detail/999.json'});"
+        "assert.equal(calls.length,2);})().catch(e=>{console.error(e);process.exitCode=1;});"
+    )
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stderr
+    assert path.read_text() == json.dumps({identifier: expected})
+
+
+def test_missing_neighbor_artifacts_do_not_publish_a_route(tmp_path, monkeypatch):
+    monkeypatch.setattr(BUILD, "OUT_DIR", tmp_path)
+    record = {"id": "NCBIfam:NF017572"}
+    BUILD.write_detail([(record, {"def": "NinG", "nf": "neighbors/stale.json"})])
+    detail = json.loads((tmp_path / record["df"]).read_text())
+    assert "nf" not in detail[record["id"]]
