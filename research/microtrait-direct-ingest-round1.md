@@ -24,7 +24,7 @@ folded into trait-onto-map.
 
 | # | Source | Fit (category) | Hier | Download / format | Licence | Rec |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | **microTrait rule tables** (`ukaraoz/microtrait` `data-raw/*.txt`) — 271 distinct traits, 1,445 Boolean rules (947 mapped to traits), 2,298 HMM rows with KEGG/EC/TCDB xrefs | FUNC_PATHWAY (composite guild traits), FUNC_TRANSPORT (substrate-uptake traits), FUNC_ENZYMATIC_ACTIVITY (single-enzyme rules), FUNC_ENVIRONMENTAL_RESPONSE (stress-tolerance traits) | ✅ colon-path names give 222/271 an ancestor trait; 3 reporting levels (37 / 100 / 189 traits shown at granularity 1/2/3) | seven per-file raw TSVs at the pinned `v1.0.0` ref | **MIT** (`DESCRIPTION: License: MIT + file LICENSE`, © 2020 Ulas Karaoz) | ✅ **seed** |
+| 1 | **microTrait rule tables** (`ukaraoz/microtrait` `data-raw/*.txt`) — 271 distinct traits, 1,445 Boolean rules (947 listed in rule2trait; 841 reach a trait), 2,298 HMM rows with KEGG/EC/TCDB xrefs | FUNC_PATHWAY (composite guild traits), FUNC_TRANSPORT (substrate-uptake traits), FUNC_ENZYMATIC_ACTIVITY (single-enzyme rules), FUNC_ENVIRONMENTAL_RESPONSE (stress-tolerance traits) | ✅ colon-path names give 222/271 an ancestor trait; 3 reporting levels (37 / 100 / 189 traits shown at granularity 1/2/3) | seven per-file raw TSVs at the pinned `v1.0.0` ref | **MIT** (`DESCRIPTION: License: MIT + file LICENSE`, © 2020 Ulas Karaoz) | ✅ **seed** |
 | 2 | **microtrait-hmm** profile HMMs (`ukaraoz/microtrait-hmm`) — 1,864 `.hmm`, 1,595 seed `.faa`, 1,259 MSAs; `microtrait.hmmdb.gz` 63.9 MB | grounding only — the HMM is the sequence-level *definition* of each protein-family variable in a rule | n/a | `releases/download/latest/microtrait.hmmdb.gz` (the URL `prep.hmmmodels()` itself uses); per-family files in tree | ⚠️ **no LICENSE file in the repo** (GitHub reports `NONE`) | ⚠️ reference by name + `microtraithmm2dbxref.txt`; do not redistribute profiles until licence is stated |
 | 3 | dbCAN subset used by microTrait (41 GH families, `inst/extdata/dbcan.selectids.txt`) | already covered — all 41 exist in `sequence/family/cazy/` | — | via dbCAN2 `download_file.php?file=dbCAN-HMMdb-V14.txt` | dbCAN (not needed; we have CAZy) | ↔ xref only |
 | 4 | trait-onto-map's microTrait slice (`data/raw/traitontomap/trait_catalog.tsv`) | superseded by #1 | none | already local | MIT | ⛔ do not use — no ontology ids; 431,758 of 432,945 ids are per-gene instances |
@@ -60,18 +60,68 @@ traits in three layers, each of which is a table in the package's `data-raw/`:
    it is shown at — 224 traits at one level, 39 at two, 8 at all three — so
    37 / 100 / 189 traits appear at granularity 1 / 2 / 3, and the finest level a
    trait reaches is 1 for 26, 2 for 56, 3 for 189. `microtrait_rule2trait.txt`
-   (975 rows: 628 `count_by_substrate`, 235 `count`, 112 `binary`) maps 947
-   distinct rules → trait at each level; the 628 substrate rows resolve through
-   `microtrait_substrate2rule.txt` (173 substrates → trait at 3 levels).
+   (975 rows: 628 `count_by_substrate`, 235 `count`, 112 `binary`) lists 947
+   distinct rules. Direct rows name traits at each level; the 628 substrate
+   rows instead require a join through `microtrait_substrate2rule.txt` (173
+   substrates → trait at 3 levels). A listed rule need not have a successful
+   trait mapping.
 
 Join integrity, measured on the tables: 975/975 rule2trait rules exist in
 rules.txt; 271/271 trait names referenced exist in traits.txt; every one of the
 271 traits is reachable from at least one rule (directly, or via a split of the
-`;`-joined substrate list). 498 of the 1,445 rules are intermediate (never
-mapped directly to a trait) — they exist to be nested; the other 947 are mapped.
-215 of the 628 substrate rows name a compound list (`arginine;lysine;histidine`)
-with no substrate2rule entry, so those need a split-and-lookup, not a straight
-join.
+`;`-joined substrate list). Of the 1,445 rules, 498 are absent from
+rule2trait; the other 947 are listed there, but only **841 reach at least one
+trait** after the join. The remaining **106 rules have no resolved trait**.
+
+The 215 exact substrate misses comprise **110 compound-list rows** (such as
+`arginine;lysine;histidine`) and **105 singleton rows**. Splitting each list
+still leaves 26 unknown substrate names across 114 rows, all marked
+`development`: 106 rows resolve to no trait and 8 resolve only partially.
+For example, line 3 of the pinned `microtrait_rule2trait.txt` names rule `aaeB`,
+substrate `hydroxybenzoate`, three empty trait columns, and version
+`development`; `hydroxybenzoate` has no substrate-table entry. All production
+rows resolve fully. The audit by `microtrait_trait-version` is:
+
+| Version | Rows | Distinct listed rules | Rules reaching a trait | Rules reaching no trait | Rows with unknown substrates |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| production | 697 | 669 | 669 | 0 | 0 |
+| development | 278 | 278 | 172 | 106 | 114 |
+| all | 975 | 947 | 841 | 106 | 114 |
+
+Reproduce the join using Python's standard-library `csv.DictReader` on the
+pinned TSVs: collect each row's nonempty `microtrait_trait-name1..3`, split
+`microtrait_rule-substrate` on `;` for `count_by_substrate` rows, and union the
+trait names of matching substrate keys. Retain missing tokens separately and
+group by rule name and version. This minimal audit, run with the files under
+`data/raw/microtrait/`, prints `947 841 106 26`:
+
+```python
+import csv
+from pathlib import Path
+
+root = Path("data/raw/microtrait")
+def read(name):
+    with (root / f"microtrait_{name}.txt").open(newline="") as stream:
+        return list(csv.DictReader(stream, delimiter="\t"))
+def targets(row):
+    return {row[f"microtrait_trait-name{i}"] for i in (1, 2, 3)
+            if row[f"microtrait_trait-name{i}"]}
+
+substrates = {row["microtrait_substrate-name"]: row
+              for row in read("substrate2rule")}
+mapped, unknown = {}, set()
+for row in read("rule2trait"):
+    found = targets(row)
+    if row["microtrait_rule-type"] == "count_by_substrate":
+        for token in row["microtrait_rule-substrate"].split(";"):
+            if token in substrates:
+                found.update(targets(substrates[token]))
+            else:
+                unknown.add(token)
+    mapped.setdefault(row["microtrait_rule-name"], set()).update(found)
+print(len(mapped), sum(bool(v) for v in mapped.values()),
+      sum(not v for v in mapped.values()), len(unknown))
+```
 
 Hierarchy, measured over the 271 distinct names using the colon path alone:
 222 have an ancestor among the traits and 204 have their immediate parent
@@ -152,10 +202,14 @@ and a checksum in the `.fetch.json` sidecar if it is ever fetched.
 
 ### What a seeder would do (scope for the ingest issue)
 
-- One `ProteinTraitRecord` per **rule that maps to a trait** — **947** distinct
-  mapped rules, measured as the distinct `microtrait_rule-name` values in
-  `rule2trait.txt` (#686); the 498 intermediate rules become
-  `parent_traits`/composition nodes only if a child needs them. Identifier
+- One `ProteinTraitRecord` per **accepted rule with a verified trait mapping**.
+  The 947 distinct names in `rule2trait.txt` (#686) are listed rules; 841 have
+  at least one resolved mapping, including 8 with unresolved substrate tokens.
+  Preserve the version, select an explicit production/development policy, and
+  quarantine all 114 rows with unknown substrates for review. The 106 rules
+  with no resolved trait must not be counted as mapped-rule candidates. The
+  498 rules absent from rule2trait become composition nodes only if a child
+  needs them. Identifier
   `microtrait:<rule-name>`, definition from the trait display name + the Boolean
   expression rendered in words, `xrefs` = the EC/TCDB/KEGG of every leaf family,
   `parent_traits` = the trait(s) the rule maps to.
@@ -174,11 +228,15 @@ and a checksum in the `.fetch.json` sidecar if it is ever fetched.
 ## Recommended next seeds (priority order)
 
 1. **microTrait rule tables** — file the `candidate` blocks now (done in this
-   PR), then an ingest issue scoped as above. Expected yield, from the measured
-   tables: **271 trait records + 947 rule records**, almost all `FUNC_PATHWAY` /
-   `FUNC_TRANSPORT`, with EC anchors already in the corpus for 596 of the 618 EC
-   numbers the families carry, family-level TCDB anchors for all 99 TCDB
-   families, and a hierarchy the corpus currently lacks.
+   PR), then an ingest issue scoped as above. The tables contain **271 distinct
+   traits** and **841 rules reaching at least one trait**, of which 669 are
+   production and 172 development (including 8 only partially resolved).
+   These are reachability counts; accepted record yield depends on the version
+   policy, review of unresolved rows, and any needed composition nodes. The
+   candidates are almost all `FUNC_PATHWAY` / `FUNC_TRANSPORT`, with EC anchors
+   already in the corpus for 596 of the 618 EC numbers the families carry,
+   family-level TCDB anchors for all 99 TCDB families, and a hierarchy the
+   corpus currently lacks.
 2. **TCDB subfamily/system level** — microTrait's 809 TCDB ids land at
    subfamily/system depth where we hold only 12 exact records; if #1 is seeded,
    the family-level mapping loses specificity, which argues for re-seeding TCDB
