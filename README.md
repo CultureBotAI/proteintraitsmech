@@ -241,9 +241,10 @@ supports them, and can also be added by curators:
   [`research/uniprot-organism-protein-grounding-plan.md`](research/uniprot-organism-protein-grounding-plan.md)
   for source tiers, long-tail queues, review rules, and completion criteria.
 
-  The checked command recipes currently pin UniProt release `2026_02`, matching the
-  local residue frame. If the live API advances, registry fetch intentionally stops;
-  rebuild and re-audit the local frames before updating that pin.
+  The checked command recipes pin the UniProt release through the justfile's
+  `uniprot_grounding_release`, which must match the local residue frame. If the
+  live API advances, registry fetch intentionally stops; rebuild and re-audit the
+  local frames before updating that pin.
 
 ## Seeds
 
