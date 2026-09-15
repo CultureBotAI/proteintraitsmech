@@ -8,13 +8,11 @@ to 768. It could not reach domain and family records — 34,781 `SEQ_DOMAIN` alo
 *which* signature matched. That needs InterPro.
 
 The aligner's existing `interpro` provider queries one URL per (signature,
-protein) pair. Over the exemplar set phases 5-9 produced that is 104,176 calls,
-and its 18,108 cached URLs cover only the old set. This crawls **per protein**
-instead — `entry/all/protein/uniprot/{acc}/?page_size=200` returns every member-DB
-match with coordinates in one request — and only for proteins that could actually
-produce an edge (those hosting records of two or more distinct trait categories):
-
-    104,176 pair-calls  →  63,718 for the useful subset  →  15,120 protein-calls
+protein) pair. Crawling **per protein** instead through
+`entry/all/protein/uniprot/{acc}/?page_size=200` returns every member-DB match
+with coordinates in one request. The target set is further bounded to proteins
+that could actually produce an edge: those hosting records of two or more
+distinct trait categories.
 
 Output: `data/raw/align_cache/interpro_frame.json` (gitignored, regenerable)
   {"<ACC>": {"<PREFIX>:<SIG>": [[start, end], …], …}, …}
@@ -177,9 +175,9 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0, help="cap proteins fetched (debug)")
     ap.add_argument("--sleep", type=float, default=0.15, help="delay between calls")
     ap.add_argument("--workers", type=int, default=6,
-                    help="concurrent requests. Serial is ~1.04s per protein, so "
-                         "15,120 proteins is ~5h; 6 workers brings it under an "
-                         "hour while staying near 5 req/s at EBI.")
+                    help="concurrent requests. One InterPro crawl costs one or "
+                         "more calls per target protein; the default stays near "
+                         "5 req/s at EBI.")
     ap.add_argument("--allow-stale", action="store_true",
                     help="resume from a sidecar built against a different release")
     ap.add_argument("--allow-partial", action="store_true",

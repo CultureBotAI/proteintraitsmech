@@ -145,6 +145,10 @@ VALIDATED_WRITERS = {
     "ground_uniprot_examples": "review-bound UniProt grounding promotion; every applied "
                                "record uses write_validated_record after closed LinkML and "
                                "sequence-dependent semantic validation",
+    "repair_uniprot_durable_receipts": "one-off UniProt grounding receipt repair; prunes "
+                                       "historical hard debt and writes repaired records "
+                                       "through write_validated_record in one rollback-capable "
+                                       "durable-registry transaction",
 }
 
 
