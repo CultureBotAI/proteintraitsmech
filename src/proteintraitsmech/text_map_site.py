@@ -24,9 +24,15 @@ class PreparedTextMap:
     pipeline: ModuleType
     source: Path
     inputs: Path
+    expected_bundle: str
 
     def stage(self, site: Path) -> None:
-        self.pipeline.stage_map(self.source, site / "text-map", input_path=self.inputs)
+        self.pipeline.stage_map(
+            self.source,
+            site / "text-map",
+            input_path=self.inputs,
+            expected_bundle=self.expected_bundle,
+        )
 
 
 def load_pipeline(root: Path) -> ModuleType:
@@ -71,7 +77,8 @@ def prepare_text_map(root: Path) -> Iterator[PreparedTextMap | None]:
         receipt = export_inputs(root, inputs)
         if receipt["scope"] != "full":
             raise ValueError("site publication requires fresh full-corpus inputs")
-        manifest = pipeline.validate_bundle(pipeline.current_bundle(source), input_path=inputs)
+        bundle = pipeline.current_bundle(source)
+        manifest = pipeline.validate_bundle(bundle, input_path=inputs)
         if manifest["projection"]["implementation"] != "pacmap.PaCMAP":
             raise ValueError("site publication requires the actual PaCMAP implementation")
         profile = manifest["encoder"]
@@ -79,6 +86,7 @@ def prepare_text_map(root: Path) -> Iterator[PreparedTextMap | None]:
             profile["model"] != pipeline.MODEL
             or profile["revision"] != pipeline.MODEL_REVISION
             or profile["dimension"] != pipeline.MODEL_DIMENSION
+            or profile["max_seq_length"] != pipeline.MAX_SEQ_LENGTH
         ):
             raise ValueError("common semantic map requires the pinned fleet BGE encoder profile")
-        yield PreparedTextMap(pipeline, source, inputs)
+        yield PreparedTextMap(pipeline, source, inputs, bundle.name)
