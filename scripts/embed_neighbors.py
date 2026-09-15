@@ -5,11 +5,11 @@ Consumes the record embeddings (scripts/embed_records.py) and computes, for
 every record, its top-k most similar records by cosine similarity (vectors are
 L2-normalized, so cosine = dot product). Two products:
 
-1. Browser "Related traits (semantic)". Neighbors are written sharded the SAME
-   way build_docs shards detail sidecars — md5(id) % 256 → docs/data/neighbors/
-   NNN.json, keyed by id → [[neighbor_id, score], …]. These files are COMMITTED
-   (the docs deploy has no embedding stack to recompute them); browse.js lazily
-   loads the shard for the record on view, mirroring detail-sidecar loading.
+1. Browser "Related traits (semantic)". Neighbors use stable md5(id) % 256
+   shards at docs/data/neighbors/NNN.json, keyed by id → [[neighbor_id, score], …].
+   These files are COMMITTED (the docs deploy has no embedding stack to recompute
+   them). build_docs_index publishes their separate `nf` route in each detail
+   sidecar; browse.js uses that route even when detail bucket counts change.
 
 2. Tier-5 semantic merge candidates (research/entry-merge-methods-round1.md).
    A record's high-similarity neighbor in a DIFFERENT source but the SAME

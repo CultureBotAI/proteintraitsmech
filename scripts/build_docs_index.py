@@ -573,7 +573,18 @@ def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float, int]:
     `rec["df"]` and each bucket is `{record_id: detail}`. Heavy
     example sequences ride along inside each detail's `ex`, so a detail view is
     a single lazy fetch. Returns (record_count, file_count, total_MB, max_bytes)."""
-    # Validate and size the new layout before touching the previous usable build.
+    # Neighbors retain the committed embed_neighbors.py layout (MD5 % 256).
+    # Carry that separate route in the lazy detail, so growing these detail
+    # buckets never changes neighbor lookup or inflates the upfront list data.
+    neighbor_files = {p.name for p in (OUT_DIR / "neighbors").glob("*.json") if p.is_file()}
+    for rec, detail in pairs:
+        digest = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
+        neighbor_file = f"{digest % 256:03d}.json"
+        detail.pop("nf", None)
+        if neighbor_file in neighbor_files:
+            detail["nf"] = f"neighbors/{neighbor_file}"
+
+    # Include routing bytes when sizing before touching the previous usable build.
     bucket_count = detail_bucket_count(pairs)
     det_dir = OUT_DIR / "detail"
     if det_dir.exists():

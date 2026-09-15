@@ -805,15 +805,15 @@ async function loadDetail(r) {
 }
 
 // Semantic "related traits" — precomputed nearest neighbors (scripts/
-// embed_neighbors.py) live in neighbors/NNN.json, sharded by the SAME bucket
-// number as the detail sidecar (r.df = "detail/NNN.json"). Lazy-loaded per
-// record; absent (feature not built) → the row simply doesn't render.
+// embed_neighbors.py) retain their own stable buckets. The loaded detail's nf
+// field gives the neighbor path independently of its dynamically sized df bucket.
+// Absent (feature not built) → the row simply doesn't render.
 async function loadNeighbors(r) {
   if (r._nb !== undefined) return;
   r._nb = null;
-  if (!r.df) return;
+  if (!r.nf) return;
   try {
-    const bucket = await fetchDetailBucket(r.df.replace("detail/", "neighbors/"));
+    const bucket = await fetchDetailBucket(r.nf);
     if (bucket[r.id]) r._nb = bucket[r.id];   // [[neighbor_id, cosine], …]
   } catch (_) { /* no neighbors */ }
 }
