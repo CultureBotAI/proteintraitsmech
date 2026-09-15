@@ -1310,6 +1310,7 @@ suggest-examples *args:
 # Regenerate docs/data/records.json + facets.json used by the browse
 # page. Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
+    python3 scripts/stage_text_map.py
     python3 scripts/build_docs_index.py
 
 # Compose all layered definitions (GENERAL / STRUCTURAL / MECHANISTIC) across the
@@ -1499,3 +1500,7 @@ audit-snippets *args:
         --config-baseline audit/config-literal-baseline.json \
         --archetypes --max-archetypes 323 \
         --archetype-baseline audit/archetype-baseline.json {{args}}
+
+# Preview/export the streaming full-corpus semantic text inputs (no model inference).
+text-map-inputs *args:
+    uv run python scripts/text_map_inputs.py {{args}}

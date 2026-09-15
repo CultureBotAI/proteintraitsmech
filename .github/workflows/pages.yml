@@ -18,6 +18,12 @@ on:
       - "data/mappings/**"
       - "docs/**"
       - "scripts/build_docs_index.py"
+      - "scripts/stage_text_map.py"
+      - "scripts/embedding_pipeline.py"
+      - "scripts/embedding_documents.py"
+      - "src/proteintraitsmech/text_map_*.py"
+      - "conf/text_map.yaml"
+      - "data/text_map/**"
       - "scripts/audit_pages_size.py"
       - "conf/pages_budgets.json"
       - ".github/workflows/pages.yml"
@@ -44,6 +50,7 @@ jobs:
       - name: Generate docs/data index (shards + facets + detail buckets)
         run: |
           python -m pip install --quiet pyyaml
+          python scripts/stage_text_map.py
           python scripts/build_docs_index.py
       - uses: actions/configure-pages@v5
       - name: Build Jekyll site
