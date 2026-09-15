@@ -29,8 +29,8 @@ inherit a stale generated record-shard inventory. The definition-only and protei
 signature maps remain separate existing views. Links use the supported
 `browse.html#record=<encoded identifier>` route.
 
-The shared runtime is installed. Site publication remains explicitly disabled
-in `conf/text_map.yaml` pending a verified full-corpus bundle. `just build-docs` and
+The shared runtime is installed and site publication is enabled in
+`conf/text_map.yaml` with a verified full-corpus bundle. `just build-docs` and
 the Pages workflow first call `scripts/stage_text_map.py`: enabled maps are checked
 against fresh full YAML inputs, the pinned BGE profile and actual PaCMAP before
 any published-site files change. The canonical runtime stages `docs/text-map/`;
