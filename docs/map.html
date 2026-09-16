@@ -82,6 +82,7 @@
         <button class="seg-btn active" data-map="corpus_map.json" title="definition + structure/source identifiers">Full record</button>
         <button class="seg-btn" data-map="corpus_map_definitions.json" title="pure definition semantics only">Definition only</button>
         <button class="seg-btn" data-map="protein_map.json" title="one point per Swiss-Prot protein, positioned by the corpus traits it carries">Proteins</button>
+        <button class="seg-btn" data-map="sequence_map.json" title="one point per canonical-example protein, positioned by its ESM-2 sequence embedding — no annotation in the input">Sequences</button>
       </div>
     </div>
     <div class="legend" id="legend"></div>
@@ -130,8 +131,9 @@
   const fmt=n=>n.toLocaleString();
   function px(p){return [PAD + p[0]*(W-2*PAD), PAD + (1-p[1])*(H-2*PAD)];}
 
-  // Load (or reload) a corpus map file — "corpus_map.json" (full-record embedding)
-  // or "corpus_map_definitions.json" (definition-only embedding).
+  // Load (or reload) a map file — "corpus_map.json" (full-record embedding),
+  // "corpus_map_definitions.json" (definition-only), "protein_map.json"
+  // (proteins by trait) or "sequence_map.json" (proteins by ESM-2 sequence).
   function loadMap(file){
     document.getElementById("hint").textContent="Loading corpus map…";
     CURRENT_MAP=file;
@@ -180,7 +182,9 @@
         + ` · hover to identify, click to open · toggle ${esc(d.group_label||"axes")} in the legend.`;
       update(); buildCsv();
     }).catch(()=>{document.getElementById("hint").textContent=
-      file.includes("protein")
+      file.includes("sequence")
+        ? "Sequence map not built yet (run `just embed-sequences`, then `just sequence-map`)."
+        : file.includes("protein")
         ? "Protein map not built yet (run `just protein-map`)."
         : file.includes("definition")
         ? "Definition-only map not built yet (embed_records --text-mode definition → embed-map --emb-dir data/embeddings/definition --out corpus_map_definitions.json)."
@@ -211,6 +215,7 @@
   // Deep-link a tab: the landing links straight to #proteins, and a shared URL
   // should reopen the same view rather than always the full-record corpus map.
   const MAP_BY_HASH = {"#proteins": "protein_map.json",
+                       "#sequences": "sequence_map.json",
                        "#definitions": "corpus_map_definitions.json",
                        "#corpus": "corpus_map.json"};
   function selectMap(file){

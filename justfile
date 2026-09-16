@@ -666,6 +666,25 @@ embed-neighbors *args:
 embed-map *args:
     python3 scripts/embed_map.py {{args}}
 
+# ESM-2 (650M, pinned revision) sequence embeddings of every canonical-example
+# protein → data/embeddings/esm2/ (gitignored). Issue #508. FP32 on MPS; long
+# sequences are windowed, never truncated. Cached by sequence SHA-256, so a
+# re-run only embeds new sequences. ~1 h for the full corpus on Apple-Silicon.
+#   just embed-sequences --limit 5 --verify-cpu 5    # canary first
+embed-sequences *args:
+    python3 scripts/embed_sequences.py {{args}}
+
+# PaCMAP 2-D sequence-similarity map of the canonical-example proteins from the
+# ESM-2 embeddings → docs/data/sequence_map.json. Run `just embed-sequences` first.
+sequence-map *args:
+    python3 scripts/build_sequence_map.py {{args}}
+
+# Does the sequence map recover CATH structure better than the trait-based
+# protein map? Neighbour-purity lifts (organism / CATH class / CATH superfamily)
+# on the proteins both maps share. Read-only.
+measure-sequence-map *args:
+    python3 scripts/measure_sequence_map.py {{args}}
+
 fetch-repeatsdb:
     mkdir -p data/raw/repeatsdb
     curl -sSLf --max-time 60 -o data/raw/repeatsdb/classification.json https://repeatsdb.org/api/production/classification
