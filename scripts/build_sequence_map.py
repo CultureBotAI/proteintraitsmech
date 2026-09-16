@@ -103,6 +103,8 @@ def main() -> int:
     ap.add_argument("--neighbors", type=int, default=15)
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--sample", type=int, default=0, help="plot a random subset")
+    ap.add_argument("--allow-partial", action="store_true",
+                    help="build from an embedding made with --limit/--accession")
     args = ap.parse_args()
 
     try:
@@ -129,6 +131,11 @@ def main() -> int:
         print("ids.json, proteins.jsonl and vectors.f16.npy disagree — rebuild the "
               "embedding.", file=sys.stderr)
         return 1
+    if meta.get("partial") and not args.allow_partial:
+        print(f"{rel(emb / 'meta.json')} is marked partial ({meta.get('filter')}) — a "
+              f"canary, not the corpus. Run `just embed-sequences` without --limit/"
+              f"--accession, or pass --allow-partial to plot it anyway.", file=sys.stderr)
+        return 2
     n_total = len(ids)
 
     rng = np.random.default_rng(args.seed)

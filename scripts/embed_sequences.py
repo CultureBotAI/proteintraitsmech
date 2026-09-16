@@ -254,20 +254,33 @@ def sha(seq: str) -> str:
     return hashlib.sha256(seq.encode("ascii")).hexdigest()
 
 
-def load_cache(out: Path):
+def load_cache(out: Path, model: str, revision: str):
+    """Cached vectors, only if they were made by this model at this revision.
+
+    The key is the sequence hash, so without this check a run with the 150M
+    fallback model would take every sequence as a hit and assemble the 650M
+    model's vectors under the wrong name (or mix dimensions).
+    """
     import numpy as np
 
-    h, v = out / "cache_hashes.json", out / "cache_vectors.f32.npy"
-    if h.exists() and v.exists():
-        hashes = json.loads(h.read_text(encoding="utf-8"))
-        vecs = np.load(v)
-        if len(hashes) == vecs.shape[0]:
-            return {k: vecs[i] for i, k in enumerate(hashes)}
-        print(f"warning: cache in {rel(out)} is inconsistent; ignoring it", file=sys.stderr)
+    h, v, m = out / "cache_hashes.json", out / "cache_vectors.f32.npy", out / "cache_meta.json"
+    if not (h.exists() and v.exists()):
+        return {}
+    meta = json.loads(m.read_text(encoding="utf-8")) if m.exists() else {}
+    if meta.get("model") != model or meta.get("revision") != revision:
+        print(f"cache in {rel(out)} was made by {meta.get('model')}@"
+              f"{str(meta.get('revision'))[:8]}, not {model}@{revision[:8]} — ignoring it",
+              file=sys.stderr)
+        return {}
+    hashes = json.loads(h.read_text(encoding="utf-8"))
+    vecs = np.load(v)
+    if len(hashes) == vecs.shape[0]:
+        return {k: vecs[i] for i, k in enumerate(hashes)}
+    print(f"warning: cache in {rel(out)} is inconsistent; ignoring it", file=sys.stderr)
     return {}
 
 
-def save_cache(out: Path, cache: dict) -> None:
+def save_cache(out: Path, cache: dict, model: str, revision: str) -> None:
     import numpy as np
 
     if not cache:
@@ -283,6 +296,9 @@ def save_cache(out: Path, cache: dict) -> None:
     # inconsistent, which load_cache treats as no cache rather than a wrong one
     os.replace(tmp_v, out / "cache_vectors.f32.npy")
     os.replace(tmp_h, out / "cache_hashes.json")
+    (out / "cache_meta.json").write_text(json.dumps(
+        {"model": model, "revision": revision, "dim": int(vecs.shape[1])}),
+        encoding="utf-8")
 
 
 # ---------------------------------------------------------------------------- main
@@ -347,7 +363,7 @@ def main() -> int:
           f"{time.time() - t0:.0f}s; {len(uniq):,} unique sequences, {n_long:,} over "
           f"{MAX_RESIDUES} aa → {n_win:,} windows", file=sys.stderr)
 
-    cache = load_cache(out)
+    cache = load_cache(out, args.model, args.revision)
     todo = [h for h in uniq if h not in cache]
     print(f"cache: {len(uniq) - len(todo):,} hit, {len(todo):,} to embed", file=sys.stderr)
 
@@ -370,14 +386,14 @@ def main() -> int:
             cache[todo[i]] = vec.astype(np.float32)
             done += 1
             if done - last_save >= args.checkpoint_every:
-                save_cache(out, cache)
+                save_cache(out, cache, args.model, args.revision)
                 last_save = done
                 el = time.time() - t1
                 print(f"  {done:,}/{len(todo):,} embedded · {emb.residues / el:,.0f} "
                       f"residues/s · {el / 60:.1f} min", file=sys.stderr)
 
         emb.run(seqs, on_done)
-        save_cache(out, cache)
+        save_cache(out, cache, args.model, args.revision)
         el = time.time() - t1
         mem = ""
         if device.type == "mps":
@@ -435,8 +451,16 @@ def main() -> int:
                 "families": sorted(r["families"]), "records": r["records"],
                 "axes": dict(r["axes"].most_common()),
             }) + "\n")
+    partial = bool(args.limit or args.accession)
+    if partial:
+        print(f"note: this is a partial run ({len(rows):,} of the corpus's proteins); "
+              f"meta.json is marked partial and build_sequence_map.py will refuse it "
+              f"without --allow-partial. Re-run without --limit/--accession for the "
+              f"full set (cached sequences are not re-embedded).", file=sys.stderr)
     (out / "meta.json").write_text(json.dumps({
         "model": args.model, "revision": args.revision, "dim": int(dim),
+        "partial": partial,
+        "filter": {"limit": args.limit, "accession": args.accession} if partial else None,
         "count": len(ids), "unique_sequences": len(uniq), "normalized": True,
         "dtype": "float16", "compute_dtype": args.dtype, "device": str(device),
         "pooling": "final-layer residue mean, excluding CLS/EOS/padding",
