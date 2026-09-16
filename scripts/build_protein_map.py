@@ -141,6 +141,10 @@ def main() -> int:
                          "by organism so the smaller proteomes keep their share")
     ap.add_argument("--neighbors", type=int, default=15)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--exclude-prefix", action="append", default=[], metavar="PREFIX",
+                    help="drop this signature namespace from the features "
+                         "(repeatable) — a control map for measuring a label the "
+                         "default map takes as input, e.g. --exclude-prefix CATH")
     ap.add_argument("--out", default=str(OUT))
     args = ap.parse_args()
 
@@ -161,10 +165,15 @@ def main() -> int:
 
     idx = json.loads(INDEX.read_text(encoding="utf-8"))
     rows = [json.loads(ln) for ln in JSONL.open(encoding="utf-8")]
+    excluded = set(args.exclude_prefix)
     for r in rows:
         # signature traits only — see SIG_PREFIXES for why GO/EC are excluded
         r["_ts"] = {t for t in r["traits"]
-                    if t.split(":")[0] in SIG_PREFIXES and t in idx}
+                    if t.split(":")[0] in SIG_PREFIXES
+                    and t.split(":")[0] not in excluded and t in idx}
+    if excluded:
+        print(f"control map: {', '.join(sorted(excluded))} features excluded",
+              file=sys.stderr)
     rows = [r for r in rows if r["_ts"]]
 
     # The vocabulary is built over the whole corpus, before sampling, for two
