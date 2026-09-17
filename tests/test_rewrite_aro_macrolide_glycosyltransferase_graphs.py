@@ -175,7 +175,10 @@ def test_child_targets_allow_the_drug_class_edges():
     graph = out["causal_graphs"][0]
     by_pair = {(edge["subject"], edge["object"]): edge for edge in graph["edges"]}
     assert len(by_pair) == 8
-    assert by_pair[("determinant", "drug0")]["description"]
+    assert by_pair[("determinant", "drug0")]["description"] == (
+        "CARD asserts macrolide-antibiotic resistance for this "
+        "glycosyltransferase family or an ancestor of the determinant."
+    )
     assert by_pair[("determinant", "drug0")]["evidence"]
 
 
@@ -223,7 +226,7 @@ def test_enrich_text_adds_history_once():
     assert once == twice
     assert "&id" not in once
     assert "*id" not in once
-    assert once.count("codex-causal-graph-quality") == 1
+    assert once.count(R.HISTORY_ACTION) == 1
     assert "curation_history:" in once
 
 

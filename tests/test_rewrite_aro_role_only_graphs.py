@@ -295,7 +295,7 @@ def test_enrich_text_adds_history_once():
     assert once == twice
     assert "&id" not in once
     assert "*id" not in once
-    assert once.count("codex-causal-graph-quality") == 1
+    assert once.count(R.HISTORY_ACTION) == 1
     assert "curation_history:" in once
 
 
