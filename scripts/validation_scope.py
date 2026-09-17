@@ -20,6 +20,7 @@ FULL_VALIDATION_PATHS = frozenset(
     {
         ".github/workflows/validate-strict.yaml",
         "pyproject.toml",
+        ".python-version",
         # pyproject pins a RANGE (linkml>=1.10.0); uv.lock pins the version that
         # is actually installed, and the job runs `uv sync --extra dev`, which is
         # lockfile-driven. Without this a `uv lock --upgrade` PR changes the
@@ -29,6 +30,10 @@ FULL_VALIDATION_PATHS = frozenset(
         "scripts/uniprot_record_content_gate.py",
         "scripts/validate_strict.py",
         "scripts/validate_uniprot_grounding.py",
+        "scripts/elife_metallophore_grounding.py",
+        "scripts/elife_metallophores.py",
+        "data/curation/elife109154_traits.yaml",
+        "data/curation/elife109154_example_decisions.jsonl",
         "scripts/validation_scope.py",
         "src/proteintraitsmech/schema/mech_shared.yaml",
         "src/proteintraitsmech/schema/proteintraitsmech.yaml",

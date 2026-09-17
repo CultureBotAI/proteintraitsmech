@@ -171,17 +171,6 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
         filename="adeabc-aro3000770.yaml",
         is_subunit=False,
     ),
-    Target("ARO:3000772", "adeijk-aro3000772.yaml", False),
-    Target("ARO:3000786", "mdsabc-aro3000786.yaml", False),
-    Target("ARO:3000386", "mexab-oprm-aro3000386.yaml", False),
-    Target("ARO:3000797", "mexcd-oprj-aro3000797.yaml", False),
-    Target("ARO:3003032", "mexxy-oprm-aro3003032.yaml", False),
-    Target("ARO:3000503", "acref-tolc-aro3000503.yaml", False),
-    Target(
-        "ARO:3004083",
-        "acref-tolc-confers-resistance-to-ciprofloxacin-aro3004083.yaml",
-        False,
-    ),
     Target("ARO:3000787", "mdtabc-tolc-aro3000787.yaml", False),
     Target("ARO:3000788", "mdtef-tolc-aro3000788.yaml", False),
     Target("ARO:3000799", "mexghi-opmd-aro3000799.yaml", False),
@@ -193,7 +182,6 @@ COMPLEX_TARGETS: tuple[Target, ...] = (
     Target("ARO:3003697", "mexpq-opme-aro3003697.yaml", False),
     Target("ARO:3000369", "mtrcde-aro3000369.yaml", False),
     Target("ARO:3004076", "muxabc-opmb-aro3004076.yaml", False),
-    Target("ARO:3003050", "smeabc-aro3003050.yaml", False),
     Target("ARO:3003678", "triabc-opmh-aro3003678.yaml", False),
 )
 

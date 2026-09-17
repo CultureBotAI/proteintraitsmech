@@ -240,13 +240,19 @@ TARGETS = {
     "ARO:3003289": Target(
         identifier="ARO:3003289",
         filename="antibiotic-resistant-rpoc-aro3003289.yaml",
-        node_updates={
-            "transcription": RNA_TRANSCRIPTION_NODE,
-            "active_center": ACTIVE_CENTER_NODES["ARO:3003289"],
+        node_updates={},
+        edge_descriptions={
+            key: RPOC_EDGE_DESCRIPTIONS[key]
+            for key in (
+                ("determinant", "mech0"),
+                ("mech0", "resistance"),
+                ("determinant", "resistance"),
+            )
         },
-        edge_descriptions=RPOC_EDGE_DESCRIPTIONS,
         extra_evidence={
-            ("active_center", "transcription"): [GO_TRANSCRIPTION_EVIDENCE],
+            ("determinant", "mech0"): [MUTATION_MECHANISM_EVIDENCE],
+            ("mech0", "resistance"): [MUTATION_MECHANISM_EVIDENCE],
+            ("determinant", "resistance"): [MUTATION_MECHANISM_EVIDENCE],
         },
     ),
 }

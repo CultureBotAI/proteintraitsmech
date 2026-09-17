@@ -16,6 +16,51 @@
 
 # ============================================================ SEEDED =========
 
+# Publication-scoped signature definitions; source membership is distinct from activity.
+- url: https://zenodo.org/api/records/18866949/files/nrp-metallophore-SI.zip/content
+  local_name: elife_metallophores/nrp-metallophore-SI.zip
+  name: eLife metallophores
+  source: elife_metallophores
+  license: CC-BY-4.0
+  license_url: https://creativecommons.org/licenses/by/4.0/
+  status: seeded
+  hierarchy: false
+  trait_categories: [SEQ_FAMILY, SEQ_DOMAIN]
+  seeder: seed_elife_metallophores.py
+  note: >-
+    Reitz, Pourmohsenin et al., DOI 10.7554/eLife.109154.3; immutable dataset
+    DOI 10.5281/zenodo.18866949. Twenty positive protein signatures; no chemical
+    compound or BGC is represented as a protein. Three negative constraints and
+    exploratory FbnE are excluded. Lys_monoox HMM and VbsL alignment are missing
+    from this deposit. Published alignments mix known and predicted proteins.
+- url: https://zenodo.org/api/records/18866949
+  local_name: elife_metallophores/zenodo-18866949.json
+  source: elife_metallophores
+  license: CC-BY-4.0
+  tag: api
+- url: https://cdn.elifesciences.org/articles/109154/elife-109154-v2.pdf
+  local_name: elife_metallophores/elife-109154-v2.pdf
+  source: elife_metallophores
+  license: CC-BY-4.0
+- url: https://cdn.elifesciences.org/articles/109154/elife-109154-supp1-v2.xlsx
+  local_name: elife_metallophores/elife-109154-supp1-v2.xlsx
+  source: elife_metallophores
+  license: CC-BY-4.0
+- url: https://zenodo.org/api/records/18866949/files/enterobactin-NZ_LXER01000006.1285930..305256.zip/content
+  local_name: elife_metallophores/enterobactin-NZ_LXER01000006.1285930..305256.zip
+  source: elife_metallophores
+  license: CC-BY-4.0
+  note: Study antiSMASH v8 output; associated MIBiG submission BGC0003172.
+- url: https://zenodo.org/api/records/18866949/files/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip/content
+  local_name: elife_metallophores/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip
+  source: elife_metallophores
+  license: CC-BY-4.0
+  note: Study antiSMASH v8 output; associated MIBiG submission BGC0003173.
+- url: https://zenodo.org/api/records/18866949/files/ornicorrugatin-NZ_CP034725.12703749..2753526.zip/content
+  local_name: elife_metallophores/ornicorrugatin-NZ_CP034725.12703749..2753526.zip
+  source: elife_metallophores
+  license: CC-BY-4.0
+  note: Study antiSMASH v8 output; associated MIBiG submission BGC0003174.
 # LinkML LocalStructuralFeature valueset — STRUCT_* local features
 -
   url: https://raw.githubusercontent.com/linkml/valuesets/main/src/valuesets/schema/valuesets.yaml
@@ -739,7 +784,9 @@
 # MicroTraits and mapped to GO/KEGG/NCBITaxon/ARO. Mostly FUNCTION-axis
 # (metabolic/enzymatic/resistance/secondary-metabolite) and gene-level; ingest
 # the protein-relevant subset (enzyme activities → FUNC_ENZYMATIC_ACTIVITY,
-# Pfam/DRAM domains → STRUCT_DOMAIN, resistance/BGC as FUNC_*).
+# Pfam/DRAM domains → STRUCT_DOMAIN, resistance/BGC as FUNC_*). The MicroTraits
+# slice (58% of rows) carries no ontology ids and is superseded by the direct
+# `microtrait` candidate below.
 -
   url: https://github.com/enigma-org/trait-onto-map
   local_name: traitontomap/trait_catalog.tsv
@@ -922,6 +969,133 @@
     class. InterPro flags LLM-written abstracts - 2,746 unreviewed ones are kept
     in definitions[] with method GENERATED but never promoted to `definition`.
     GO and panther.pathway ids -> mapped_xrefs; InterPro entry -> mapped_xrefs.
+
+# --- microTrait: HMM -> Boolean rule -> ecological-trait model (direct) --------
+# microTrait (Karaoz & Brodie, Front Bioinform 2022, CC BY) was never ingested
+# directly; it reached the corpus only as a grounding-free slice of trait-onto-
+# map above (433,608 rows, zero ontology ids, none EC-anchored, all superseded).
+# The package itself ships the model as tab-separated tables under data-raw/:
+# 271 distinct traits (326 rows: a trait is listed once per reporting level it
+# is shown at, granularity 1/2/3 = 37/100/189; type count|binary; strategy
+# Resource Acquisition|Resource Use|Stress Tolerance), 1,445 Boolean rules over
+# named protein families and other rules (947 listed in rule2trait, of which
+# 841 reach at least one trait; 498 absent from rule2trait), 2,298 family rows
+# with KEGG (2,232), EC (1,091) and TCDB (818)
+# dbxrefs. Every rule token resolves; 596 of its 618 EC numbers and all 41 dbCAN
+# GH families are already records here. Ingest the rule->trait layer
+# (FUNC_PATHWAY / FUNC_TRANSPORT / FUNC_ENZYMATIC_ACTIVITY /
+# FUNC_ENVIRONMENTAL_RESPONSE); never the per-genome Present/Absent values.
+# One block per file at the pinned v1.0.0 ref (master is 28 commits ahead; these
+# seven files are byte-identical at both). See
+# research/microtrait-direct-ingest-round1.md.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_traits.txt
+  local_name: microtrait/microtrait_traits.txt
+  name: microTrait rule tables (data-raw/, package release v1.0.0)
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  license_url: https://github.com/ukaraoz/microtrait/blob/v1.0.0/DESCRIPTION
+  status: candidate
+  hierarchy: true (colon-path trait names - 222/271 have an ancestor trait, 49 roots attach to their strategy; rules nest rules)
+  trait_categories: [FUNC_PATHWAY, FUNC_TRANSPORT, FUNC_ENZYMATIC_ACTIVITY, FUNC_ENVIRONMENTAL_RESPONSE]
+  note: >-
+    Trait table: name, short/long display name, strategy, type (count|binary),
+    granularity (reporting level, NOT a partition - the same trait recurs at up
+    to three levels), version, display order. One record per distinct trait.
+    The HMM layer is recorded as representations naming the family, not seeded,
+    and existing EC/TCDB/CAZy records are cross-linked rather than duplicated.
+    Organism-level phenotype semantics of these traits belong to TraitMech/METPO;
+    seed the protein-family-defined capability and cross-link.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_rules.txt
+  local_name: microtrait/microtrait_rules.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    1,445 rules: name + Boolean expression over quoted family names and other
+    rule names ('arrA' & 'arrB'; 936 &, 788 |, 3 !). Every quoted token resolves
+    to a family in microtrait_hmm.txt or to another rule.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_rule2trait.txt
+  local_name: microtrait/microtrait_rule2trait.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    975 rows list 947 distinct rules; 841 reach at least one trait after the
+    substrate join, while 106 development rules reach none. Production has
+    697 rows / 669 rules, all resolved; development has 278 rows / 278 rules,
+    with 172 reaching a trait (8 only partially resolved). Rule types are
+    count_by_substrate (628) | count (235) | binary (112). Substrate rows carry
+    no trait name. The 215 exact substrate misses comprise 110 ';'-joined
+    lists and 105 singletons. Splitting still leaves 26 unknown substrate names
+    across 114 development rows. Retain the version and quarantine unresolved
+    rows for review; 841 measures reachability, not an accepted ingest yield.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_substrate2rule.txt
+  local_name: microtrait/microtrait_substrate2rule.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: 173 substrates -> subclass1..3 -> trait name at each of three levels.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmm.txt
+  local_name: microtrait/microtrait_hmm.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    2,298 family rows (2,295 distinct names): KEGG KO, EC, TCDB dbxrefs and a
+    description. The grounding table for every family a rule names; MIT-covered,
+    so preferred over microtraithmm2dbxref.txt below.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmmsfromrules.txt
+  local_name: microtrait/microtrait_hmmsfromrules.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: >-
+    The 1,831 families a rule actually references, with the KEGG-benchmark
+    trusted-cutoff score, F-score, TPR/TNR/FPR/FNR and accuracy per family
+    (1,637 have F >= 0.8). Use for evidence quality on representations.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait/v1.0.0/data-raw/microtrait_hmm-performance.txt
+  local_name: microtrait/microtrait_hmm-performance.txt
+  source: microtrait
+  license: MIT (DESCRIPTION "MIT + file LICENSE", (c) 2020 Ulas Karaoz)
+  status: candidate
+  note: Per-KO benchmark metrics (1,930 rows) keyed by KEGG id; optional.
+-
+  url: https://raw.githubusercontent.com/ukaraoz/microtrait-hmm/master/data/microtraithmm2dbxref.txt
+  local_name: microtrait/microtraithmm2dbxref.txt
+  source: microtrait
+  license: none stated (no LICENSE file in ukaraoz/microtrait-hmm) — FLAGGED
+  license_review: pending
+  status: candidate
+  role: metadata
+  note: >-
+    1,595-row family -> EC/TC, KEGG, description table for the microtrait-hmm
+    families. Used only to ground family names in the rules to public
+    identifiers; it duplicates the dbxref columns of data-raw/microtrait_hmm.txt
+    (which is MIT-covered) for all but the description text, so the MIT table is
+    preferred and this is a fallback. The repository has no commit-tagged
+    release; `master` is the only ref, so record the fetched blob's SHA-256.
+-
+  url: https://github.com/ukaraoz/microtrait-hmm/releases/download/latest/microtrait.hmmdb.gz
+  local_name: microtrait/microtrait.hmmdb.gz
+  source: microtrait
+  license: none stated (no LICENSE file in ukaraoz/microtrait-hmm) — FLAGGED
+  license_review: pending
+  status: candidate
+  role: metadata
+  note: >-
+    The 63,937,067-byte profile-HMM database that microTrait's prep.hmmmodels()
+    hardcodes (R/prep_hmmpackage.R:48). NOT needed for the rule->trait ingest and
+    NOT redistributable until the upstream repository states a licence; listed so
+    the exact artefact is on record. `latest` is a floating release name
+    (published 2021-11-15), so a fetch must pin size + checksum in the sidecar.
+    Both microtrait-hmm blocks are unresolved source dispositions under #517.
 
 # ========================================================== DEFERRED =========
 

@@ -74,7 +74,7 @@ DEFAULT_OUTPUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding" / "review-batch
 
 MINIMUM_PER_SOURCE = 25
 MAX_REVIEW_BATCH = 1000
-MANIFEST_SCHEMA_VERSION = 6
+MANIFEST_SCHEMA_VERSION = 7
 SELECTION_ALGORITHM = "reviewed-exclusion-record-group-sha256-shard-special-first-minimum-rr-v6"
 SHARD_ALGORITHM = "sha256-canonical-json-trait-id-record-path-modulo-v1"
 DECISION_EXCLUSION_ALGORITHM = (
@@ -84,6 +84,7 @@ DECISION_EXCLUSION_ALGORITHM = (
 _BATCH_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 _ISOFORM = re.compile(r"^UniProtKB:[A-Za-z0-9]+-([1-9][0-9]*)$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_TAXON_ID = re.compile(r"^NCBITaxon:[0-9]+$")
 _DEFERRED_UNCHANGED = "DEFERRED_UNCHANGED"
 _REOPENED_CHANGED = "REOPENED_CHANGED"
 
@@ -409,6 +410,27 @@ def _safe_record_path(value: Any, line_number: int, *, subject: str = "candidate
     return record_path
 
 
+def _preferred_taxon_ids(values: Iterable[str]) -> tuple[str, ...]:
+    """Normalize `--prefer-taxon` into a sorted, deduplicated, validated tuple.
+
+    Sorted and deduplicated because the value is recorded in the manifest and must
+    reproduce the same batch from the same request however the flags were typed.
+    Validated because a silently ignored typo is the worst outcome here: the batch
+    would look preference-honouring and be ordered exactly as if no preference had
+    been asked for.
+    """
+
+    cleaned = []
+    for value in values:
+        taxon_id = _clean(value)
+        if taxon_id is None or not _TAXON_ID.fullmatch(taxon_id):
+            raise SelectionError(
+                f"--prefer-taxon must be an NCBITaxon CURIE such as NCBITaxon:83333, got {value!r}"
+            )
+        cleaned.append(taxon_id)
+    return tuple(sorted(set(cleaned)))
+
+
 def _validate_shard_pair(shard_count: int, shard_index: int) -> None:
     if not isinstance(shard_count, int) or isinstance(shard_count, bool) or shard_count < 1:
         raise SelectionError("--shard-count must be an integer greater than or equal to 1")
@@ -562,17 +584,39 @@ def review_flags(row: dict[str, Any]) -> tuple[str, ...]:
     return tuple(sorted(flags))
 
 
-def _candidate_order(row: dict[str, Any]) -> tuple[str, str, int]:
-    """Give retained alternatives a stable order independent of queue ordering."""
+def _candidate_order(
+    row: dict[str, Any], preferred_taxon_ids: frozenset[str]
+) -> tuple[int, str, str, int]:
+    """Give retained alternatives a stable order independent of queue ordering.
 
+    `preferred_taxon_ids` adds a leading rank rather than re-sorting: a preferred
+    alternative sorts ahead of an unpreferred one, and within each rank the
+    existing (protein, candidate, queue line) key still decides. Preference is a
+    *reordering*, never a filter — every alternative is retained, so no record
+    can be emptied by asking for an organism it does not have (#656).
+
+    It has deliberately no default (#666): forgetting it would order the batch as
+    though no preference had been asked for, and every count and invariant would
+    still pass. Pass an empty frozenset to mean "no preference".
+
+    All preferred taxa share rank 0; the set is unordered, so repeating the flag
+    does not express a priority between organisms (#667).
+    """
+
+    taxon_id = _clean(row.get("taxon_id")) or ""
     return (
+        0 if taxon_id in preferred_taxon_ids else 1,
         _clean(row.get("protein_id")) or "",
         _clean(row.get("candidate_id")) or "",
         int(row["_queue_line"]),
     )
 
 
-def _trait_records(rows: Iterable[dict[str, Any]]) -> list[TraitRecord]:
+def _trait_records(
+    rows: Iterable[dict[str, Any]],
+    *,
+    preferred_taxon_ids: Iterable[str],
+) -> list[TraitRecord]:
     by_path: dict[str, list[dict[str, Any]]] = defaultdict(list)
     seen_candidate_ids: dict[str, int] = {}
     trait_paths: dict[str, str] = {}
@@ -613,6 +657,7 @@ def _trait_records(rows: Iterable[dict[str, Any]]) -> list[TraitRecord]:
             )
         by_path[record_path].append(row)
 
+    preferred = frozenset(preferred_taxon_ids)
     records: list[TraitRecord] = []
     for record_path in sorted(by_path):
         candidates = by_path[record_path]
@@ -622,7 +667,9 @@ def _trait_records(rows: Iterable[dict[str, Any]]) -> list[TraitRecord]:
             raise SelectionError(
                 f"record {record_path!r} has candidates with conflicting trait/source identity"
             )
-        ordered_candidates = sorted(candidates, key=_candidate_order)
+        ordered_candidates = sorted(
+            candidates, key=lambda row: _candidate_order(row, preferred)
+        )
         all_flags = set().union(*(set(review_flags(row)) for row in candidates))
         clean_candidates = tuple(
             {key: value for key, value in candidate.items() if key != "_queue_line"}
@@ -978,7 +1025,9 @@ def _verify_reviewed_batch(
                 f"{candidates_path}:{line_number}: candidate source_batch does not match "
                 f"manifest source_batch={source_batch!r}"
             )
-    records = _trait_records(candidate_snapshot.batch_rows)
+    # Reconstructing a prior batch for exclusion, which compares candidate-id sets:
+    # ordering is irrelevant here, so state no preference rather than inherit one.
+    records = _trait_records(candidate_snapshot.batch_rows, preferred_taxon_ids=())
     expected_rows = _manifest_count(
         manifest, "selected_candidate_rows", "shard_selected_candidate_rows"
     )
@@ -1959,6 +2008,7 @@ def _manifest_json(
     shard_count: int,
     shard_index: int,
     requested_sources: tuple[str, ...],
+    preferred_taxon_ids: tuple[str, ...],
     pre_exclusion_global: list[TraitRecord],
     global_available: list[TraitRecord],
     exact_batch_excluded: list[TraitRecord],
@@ -1992,6 +2042,13 @@ def _manifest_json(
         "source_batch": source_batch,
         "defer_unchanged_all_rejected": exclusions.defer_unchanged_all_rejected,
         "requested_source_namespaces": list(requested_sources),
+        "preferred_taxon_ids": list(preferred_taxon_ids),
+        "shard_selected_records_led_by_preferred_taxon": sum(
+            1
+            for record in selected
+            if record.candidates
+            and (_clean(record.candidates[0].get("taxon_id")) or "") in set(preferred_taxon_ids)
+        ),
         "queue": queue.as_posix(),
         "queue_sha256": snapshot.sha256,
         "queue_total_rows": snapshot.total_rows,
@@ -2352,13 +2409,14 @@ def run(args: argparse.Namespace) -> int:
     requested_sources = tuple(_clean(source) or "" for source in args.sources)
     if any(not source for source in requested_sources):
         raise SelectionError("--source values must be non-empty")
+    preferred_taxon_ids = _preferred_taxon_ids(args.preferred_taxon_ids)
     _validate_shard_pair(args.shard_count, args.shard_index)
     reviewed_artifacts = _reviewed_artifact_quadruples(args)
 
     snapshot = _read_queue(args.queue, source_batch)
-    exact_batch_records = _trait_records(snapshot.batch_rows)
+    exact_batch_records = _trait_records(snapshot.batch_rows, preferred_taxon_ids=())
     sliced_rows, normalized_sources = _source_slice(snapshot.batch_rows, requested_sources)
-    pre_exclusion_global = _trait_records(sliced_rows)
+    pre_exclusion_global = _trait_records(sliced_rows, preferred_taxon_ids=preferred_taxon_ids)
     exclusions = _review_exclusions(
         exact_batch_records,
         reviewed_artifacts,
@@ -2424,6 +2482,7 @@ def run(args: argparse.Namespace) -> int:
         shard_count=args.shard_count,
         shard_index=args.shard_index,
         requested_sources=normalized_sources,
+        preferred_taxon_ids=preferred_taxon_ids,
         pre_exclusion_global=pre_exclusion_global,
         global_available=global_available,
         exact_batch_excluded=exact_batch_excluded,
@@ -2469,6 +2528,15 @@ def run(args: argparse.Namespace) -> int:
         f"({len(output_rows):,} candidate alternatives); "
         f"queue_sha256={snapshot.sha256}"
     )
+    if preferred_taxon_ids:
+        led = manifest["shard_selected_records_led_by_preferred_taxon"]
+        # An unmatched preference is a legitimate answer, but it must not look
+        # identical to an honoured one at the moment of the --apply decision (#665).
+        note = "" if led else " — no selected record has a candidate from any of them"
+        print(
+            f"taxon preference {', '.join(preferred_taxon_ids)}: "
+            f"{led:,}/{len(selected):,} selected records led by a preferred organism{note}"
+        )
     if not args.apply:
         print("dry run: no output files written; pass --apply to install the batch")
         return 0
@@ -2492,6 +2560,20 @@ def _parser() -> argparse.ArgumentParser:
         action="append",
         default=[],
         help="exact source_namespace slice; repeat as needed (default: every source)",
+    )
+    parser.add_argument(
+        "--prefer-taxon",
+        dest="preferred_taxon_ids",
+        action="append",
+        default=[],
+        metavar="NCBITAXON_CURIE",
+        help=(
+            "rank alternatives from this organism first within each trait record; "
+            "repeat for several (e.g. --prefer-taxon NCBITaxon:83333). Repeats form "
+            "an unordered set, not a priority list: every preferred organism shares "
+            "the same rank. This never drops an alternative, so a record with no "
+            "candidate from a preferred organism keeps every candidate it had"
+        ),
     )
     parser.add_argument(
         "--max-records",

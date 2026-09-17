@@ -134,7 +134,7 @@ def test_parent_enrichment_grounds_nodes_describes_edges_and_adds_terminal_edge(
     assert by_node["petn_transfer"] == R.SHARED_NODE_UPDATES["petn_transfer"]
     assert by_node["lipid_a"] == R.SHARED_NODE_UPDATES["lipid_a"]
     assert by_node["charge"] == R.SHARED_NODE_UPDATES["charge"]
-    assert "grounding" not in by_node["lipid_a"]
+    assert by_node["lipid_a"]["grounding"] == "CHEBI:58540"
     assert "grounding" not in by_node["charge"]
     assert len(by_pair) == len(R.PARENT_EDGES)
     assert ("charge", "resistance") in by_pair
@@ -238,7 +238,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     text += "\ncuration_history:\n"
     text += "- timestamp: '2026-09-05T00:00:00Z'\n"
     text += "  curator: codex-causal-graph-quality\n"
-    text += "  action: already enriched\n"
+    text += f"  action: {R.HISTORY_ACTION}\n"
     text += "  llm_assisted: true\n"
 
     out, changed = R.enrich_text(text, ARO_DIR / target.filename)
@@ -246,7 +246,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     assert changed
     assert "&id" not in out
     assert "*id" not in out
-    assert out.count("codex-causal-graph-quality") == 1
+    assert out.count(R.HISTORY_ACTION) == 1
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")

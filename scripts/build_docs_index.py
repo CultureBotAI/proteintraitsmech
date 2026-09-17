@@ -108,6 +108,8 @@ def display_path(path: Path) -> str:
 
 
 def infer_source(identifier: str, path: Path) -> str:
+    if identifier.startswith("proteintraitsmech:ELIFE109154_"):
+        return "eLife metallophores"
     if identifier.startswith("PROSITE:"):
         return "PROSITE"
     if identifier.startswith("TED:"):

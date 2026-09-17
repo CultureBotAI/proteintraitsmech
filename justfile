@@ -9,7 +9,35 @@ set dotenv-load := true
 # only `$3` in this file is inside a single-quoted awk program).
 set positional-arguments := true
 
+uniprot_grounding_release := "2026_03"
+
 # ============== Deep Research ==============
+
+# eLife 109154: immutable, CC-BY-4.0 article and supplementary release.
+fetch-elife-metallophores:
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949 data/raw/elife_metallophores/zenodo-18866949.json --min-bytes 1000 --contains 'files'
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/nrp-metallophore-SI.zip/content data/raw/elife_metallophores/nrp-metallophore-SI.zip --min-bytes 270000000 --prefix-hex 504b --max-time 600
+    python3 scripts/fetch_source.py https://cdn.elifesciences.org/articles/109154/elife-109154-v2.pdf data/raw/elife_metallophores/elife-109154-v2.pdf --min-bytes 3000000 --prefix-hex 25504446
+    python3 scripts/fetch_source.py https://cdn.elifesciences.org/articles/109154/elife-109154-supp1-v2.xlsx data/raw/elife_metallophores/elife-109154-supp1-v2.xlsx --min-bytes 2800000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/enterobactin-NZ_LXER01000006.1285930..305256.zip/content data/raw/elife_metallophores/enterobactin-NZ_LXER01000006.1285930..305256.zip --min-bytes 700000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip/content data/raw/elife_metallophores/marinobactin-NZ_MDTQ01000001.12281029..2315030.zip --min-bytes 700000 --prefix-hex 504b
+    python3 scripts/fetch_source.py https://zenodo.org/api/records/18866949/files/ornicorrugatin-NZ_CP034725.12703749..2753526.zip/content data/raw/elife_metallophores/ornicorrugatin-NZ_CP034725.12703749..2753526.zip --min-bytes 1000000 --prefix-hex 504b
+
+seed-elife-metallophores *args:
+    uv run python scripts/seed_elife_metallophores.py {{args}}
+
+acquire-elife-metallophore-examples *args:
+    uv run python scripts/acquire_elife_metallophore_examples.py --expect-release 2026_03 {{args}}
+
+resolve-elife-metallophore-examples *args:
+    uv run python scripts/ground_uniprot_examples.py elife-resolve {{args}}
+
+promote-elife-metallophore-examples *args:
+    uv run python scripts/ground_uniprot_examples.py elife-promote {{args}}
+
+analyze-elife-metallophores *args:
+    uv run python scripts/analyze_elife_metallophores.py {{args}}
+
 
 research_dir := "research"
 templates_dir := "templates"
@@ -973,6 +1001,9 @@ audit-uniprot-grounding *args:
 # Select a deterministic source-stratified review batch (<=1,000 unique trait
 # records, >=25 per available source, and every recognized special case). Dry-run
 # by default; --apply writes only ignored staging artifacts and their manifests.
+# --prefer-taxon NCBITaxon:<id> (repeatable) ranks that organism's alternatives
+# first WITHIN each record without dropping any, so asking for an organism a
+# record lacks costs no coverage (#656). The manifest records the preference.
 # Prior exclusions are positional quadruples, repeated per batch:
 #   --exclude-reviewed-candidates B.candidates.jsonl --exclude-reviewed-manifest B.manifest.json
 #   --exclude-reviewed-resolved B.resolved.jsonl --exclude-decisions B.review-decisions.jsonl
@@ -1025,13 +1056,13 @@ fetch-uniprot-registry queue selector_manifest batch_id *args:
         --queue {{quote(queue)}} \
         --selector-manifest {{quote(selector_manifest)}} \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 --request-plan "$request_plan" --apply
+        --expect-release {{uniprot_grounding_release}} --request-plan "$request_plan" --apply
     else
       uv run python scripts/fetch_uniprot_registry.py \
         --queue {{quote(queue)}} \
         --selector-manifest {{quote(selector_manifest)}} \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02
+        --expect-release {{uniprot_grounding_release}}
     fi
 
 # Plan the exact accessions selected for one bounded review batch. Example:
@@ -1072,7 +1103,7 @@ fetch-uniprot-review-batch batch_id *args:
         --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
         --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 \
+        --expect-release {{uniprot_grounding_release}} \
         --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
         --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
         --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
@@ -1083,7 +1114,7 @@ fetch-uniprot-review-batch batch_id *args:
         --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
         --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
         --batch {{quote(batch_id)}} \
-        --expect-release 2026_02 \
+        --expect-release {{uniprot_grounding_release}} \
         --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
         --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
         --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
@@ -1126,7 +1157,7 @@ resolve-uniprot-review-batch batch_id *args:
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
       --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
-      --expect-uniprot-release 2026_02 \
+      --expect-uniprot-release {{uniprot_grounding_release}} \
       --batch {{quote(batch_id)}} \
       --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
       --review reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \

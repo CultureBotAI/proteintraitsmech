@@ -95,6 +95,17 @@ def test_docs_only_change_runs_no_record_validation():
     assert SCOPE.choose_scope(["README.md", "docs/x.md"]) == ("changed", [])
 
 
+@pytest.mark.parametrize("path", [
+    "scripts/elife_metallophore_grounding.py",
+    "scripts/elife_metallophores.py",
+    "data/curation/elife109154_traits.yaml",
+    "data/curation/elife109154_example_decisions.jsonl",
+])
+def test_elife_contract_inputs_validate_unchanged_qualified_records(path):
+    """These inputs are read by the semantic validator outside the trait diff (#692)."""
+    assert SCOPE.choose_scope([path]) == ("full", [])
+
+
 def test_outputs_are_complete_and_replace_the_changed_file(tmp_path):
     output = tmp_path / "out"
     output.write_text("pre=existing\n", encoding="utf-8")

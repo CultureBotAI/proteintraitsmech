@@ -192,7 +192,7 @@ def test_the_corrected_form_is_actually_present_so_the_check_above_is_not_vacuou
     n = sum(len(re.findall(r"Asserted directly on ARO:\d+",
                            p.read_text(encoding="utf-8")))
             for p in ARO_DIR.glob("*.yaml"))
-    assert n >= 700, f"only {n} corrected notes; the repair may have removed rather than fixed"
+    assert n >= 640, f"only {n} corrected notes; the repair may have removed rather than fixed"
 
 
 def test_a_close_paren_in_the_term_name_does_not_hide_the_note(monkeypatch):

@@ -22,9 +22,32 @@ until promotion is gated on the same-example presence of:
 Current `canonical_examples` that lack this evidence should be treated as
 `LEGACY_UNVERIFIED`, not as proof that the record has a qualified example.
 
-## Current execution checkpoint (2026-08-26)
+## Current execution checkpoint (2026-09-15)
 
-The baseline below records the state from which this plan started; it is not a claim
+The historical Batch-001 durable blocker has been repaired. The one-off repair
+restored four exact InterPro head-slice definitions from the pinned InterPro 109.0
+snapshot, pruned three hard-invalid examples, and installed a post-prune
+`qualified_record_bindings.jsonl` receipt ledger for every retained durable
+claim.
+
+- The durable declared-qualified state now contains 441 ProteinReferences, 689
+  GroundingEvidence rows, and 689 qualified-record bindings. Their SHA-256 values
+  are `c856d00e6415c4baed59b13de3483f5285154b47c1daca32490d86310aedf613`,
+  `e5af5cccd67a29d1264cd4238e6bbd80275b31263cdb19efb38a3e937783fa5c`, and
+  `ae0f6075e9750c3eb55ba0d4bd97c2ad1b9896840094555d6d4091c2a6a5dbe4`.
+- Review batches 014--016, pinned to UniProt release 2026_03, are promoted: 197
+  Pfam record writes, 45 NCBIfam record writes, and 290 InterPro record writes.
+  Records with release-pinned ProteinReference conflicts against the repaired
+  durable registry remained rejected in their ignored `.approved.tsv` ledgers.
+- Review batch 013/SFLD fetched and resolved locally, but all 355 alternatives
+  remain `REJECTED` because the SFLD source model still needs provider-receipt
+  repair before any claim is qualifiable.
+- Review batches 002--012 remain staging-only and must be replayed or rebound
+  against the repaired durable registry before any future promotion attempt.
+
+## Historical execution checkpoint (2026-08-26)
+
+The baseline below recorded the state from which this plan started; it is not a claim
 that corpus-wide grounding is complete. The latest exact structural audit still
 classifies the 429,271 records as 297,375 `NO_PROTEIN`, 131,769
 `LEGACY_UNVERIFIED`, and 127 declared `QUALIFIED`. Current source-aware gate replay

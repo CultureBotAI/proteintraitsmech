@@ -114,11 +114,13 @@ claims; do not upgrade status merely because a machine generated content.
 | Ingest a new source | [ingest-source](.claude/skills/ingest-source/SKILL.md) |
 | Review source/category routing | [review-source-categories](.claude/skills/review-source-categories/SKILL.md) |
 | Sample record quality | [review-record-samples](.claude/skills/review-record-samples/SKILL.md) |
+| Review one named record | [review-yaml-record](.claude/skills/review-yaml-record/SKILL.md) |
 | Curate one named record | [curate-yaml-record](.claude/skills/curate-yaml-record/SKILL.md) |
 | Ground a protein example onto a record | [ground-protein-example](.claude/skills/ground-protein-example/SKILL.md) |
 | Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
 | Curate definitions | [edison-trait-definitions](.claude/skills/edison-trait-definitions/SKILL.md) |
 | Curate mechanism graphs | [edison-causal-graphs](.claude/skills/edison-causal-graphs/SKILL.md) |
+| Create residue-level molecular causal graphs | [molecular-causal-graphs](.claude/skills/molecular-causal-graphs/SKILL.md) |
 | Merge duplicates | [merge-traits](.claude/skills/merge-traits/SKILL.md) |
 | Select within-axis equivalence | [merge-within-axis](.claude/skills/merge-within-axis/SKILL.md) |
 | Review schema/hierarchy | [codex-schema-hierarchy-review](.claude/skills/codex-schema-hierarchy-review/SKILL.md) |

@@ -217,7 +217,8 @@ def test_pgsa_enrichment_adds_go_groundings_descriptions_and_role_evidence():
             "reference": "ARO:3003420",
             "snippet": PGSA_DEFINITION,
             "notes": "Exact ARO definition of this role-only parent determinant.",
-        }
+        },
+        R.MUTATION_MECHANISM_EVIDENCE,
     ]
     assert by_pair[("determinant", "pgp_synthase")]["evidence"][-1] == (
         R.GO_PGP_SYNTHASE_EVIDENCE
@@ -315,7 +316,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     text += "\ncuration_history:\n"
     text += "- timestamp: '2026-09-05T00:00:00Z'\n"
     text += "  curator: codex-causal-graph-quality\n"
-    text += "  action: already enriched\n"
+    text += f"  action: {R.HISTORY_ACTION}\n"
     text += "  llm_assisted: true\n"
 
     out, changed = R.enrich_text(text, ARO_DIR / target.filename)
@@ -323,7 +324,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     assert changed
     assert "&id" not in out
     assert "*id" not in out
-    assert out.count("codex-causal-graph-quality") == 1
+    assert out.count(R.HISTORY_ACTION) == 1
 
 
 @pytest.mark.skipif(not ARO_DIR.is_dir(), reason="ARO records absent")

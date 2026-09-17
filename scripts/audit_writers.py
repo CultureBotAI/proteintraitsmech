@@ -103,6 +103,8 @@ BYPASS = {
     "build_biolip_causal_graphs": "appends a causal graph to an existing record",
     "build_rhea_causal_graphs": "appends a causal graph to an existing record",
     "draft_aro_causal_graphs": "writes draft graphs in place",
+    "rewrite_aro_dfr_graphs": "rewrites trimethoprim-resistant DFR target-replacement "
+                              "ARO graphs in place",
     # Found only after the detector learned `p.open("w")`, accumulators and
     # helper-returned paths. Every one was invisible to the first version, and
     # build_mcsa_causal_graphs is the tell: its four sibling graph builders were already
@@ -143,6 +145,10 @@ VALIDATED_WRITERS = {
     "ground_uniprot_examples": "review-bound UniProt grounding promotion; every applied "
                                "record uses write_validated_record after closed LinkML and "
                                "sequence-dependent semantic validation",
+    "repair_uniprot_durable_receipts": "one-off UniProt grounding receipt repair; prunes "
+                                       "historical hard debt and writes repaired records "
+                                       "through write_validated_record in one rollback-capable "
+                                       "durable-registry transaction",
 }
 
 

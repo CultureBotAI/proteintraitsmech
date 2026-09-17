@@ -106,11 +106,12 @@ def _yaml_files(paths: Iterable[Path]) -> list[Path]:
                 files.append(path)
             continue
         if path.is_dir():
-            files.extend(
-                candidate
-                for candidate in path.rglob("*.yaml")
-                if candidate.is_file() and not candidate.is_symlink()
-            )
+            for pattern in ("*.yaml", "*.yml"):
+                files.extend(
+                    candidate
+                    for candidate in path.rglob(pattern)
+                    if candidate.is_file() and not candidate.is_symlink()
+                )
             continue
         print(f"Skipping missing path: {path}", file=sys.stderr)
     return sorted(files)
@@ -139,8 +140,6 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
                 "--hidden",
                 "--no-ignore",
                 "--no-config",
-                "-g",
-                "*.yaml",
                 "causal_graphs:",
                 str(path),
             ],
@@ -153,15 +152,29 @@ def _graph_bearing_yaml_files(paths: Iterable[Path]) -> list[Path] | None:
         if proc.returncode != 0:
             print(proc.stderr, file=sys.stderr)
             return None
-        files.update(Path(line) for line in proc.stdout.splitlines())
+        for line in proc.stdout.splitlines():
+            candidate = Path(line)
+            if candidate.suffix.lower() in {".yaml", ".yml"}:
+                files.add(candidate)
     return sorted(path for path in files if not path.is_symlink())
+
+
+def _graph_bearing_yaml_files_by_content(paths: Iterable[Path]) -> list[Path]:
+    files: list[Path] = []
+    for path in _yaml_files(paths):
+        if "causal_graphs:" in path.read_text(encoding="utf-8", errors="replace"):
+            files.append(path)
+    return files
 
 
 def candidate_files(paths: Iterable[Path], *, include_missing: bool = False) -> list[Path]:
     paths = list(paths)
     if include_missing:
         return _yaml_files(paths)
-    return _graph_bearing_yaml_files(paths) or _yaml_files(paths)
+    graph_bearing = _graph_bearing_yaml_files(paths)
+    if graph_bearing is not None:
+        return graph_bearing
+    return _graph_bearing_yaml_files_by_content(paths)
 
 
 def _dicts(value: Any) -> list[dict[str, Any]]:

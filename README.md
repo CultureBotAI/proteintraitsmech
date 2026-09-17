@@ -18,6 +18,10 @@ Records anchor to authoritative resources: Pfam, InterPro, PROSITE, SMART, MEROP
 
 ## Quick start
 
+Use Python 3.13, pinned in `.python-version`, for development and GitHub CI.
+CI runs each check on this single minor to avoid duplicate jobs; package
+compatibility metadata remains in `pyproject.toml`.
+
 ```bash
 just install                  # uv sync --extra dev
 just gen-schema               # generate dataclasses from LinkML
@@ -237,14 +241,16 @@ supports them, and can also be added by curators:
   [`research/uniprot-organism-protein-grounding-plan.md`](research/uniprot-organism-protein-grounding-plan.md)
   for source tiers, long-tail queues, review rules, and completion criteria.
 
-  The checked command recipes currently pin UniProt release `2026_02`, matching the
-  local residue frame. If the live API advances, registry fetch intentionally stops;
-  rebuild and re-audit the local frames before updating that pin.
+  The checked command recipes pin the UniProt release through the justfile's
+  `uniprot_grounding_release`, which must match the local residue frame. If the
+  live API advances, registry fetch intentionally stops; rebuild and re-audit the
+  local frames before updating that pin.
 
 ## Seeds
 
 | Source | Records | Bucket |
 | --- | ---: | --- |
+| [eLife metallophores](https://doi.org/10.7554/eLife.109154.3) ([Zenodo 18866949](https://doi.org/10.5281/zenodo.18866949), CC-BY-4.0) | 20 | `data/traits/sequence/{family,domain}/elife_metallophores/`; [analysis and example provenance](research/elife-109154-metallophores.md) |
 | [LinkML `LocalStructuralFeature`](https://linkml.io/valuesets/elements/LocalStructuralFeature/) | 19 | `data/traits/structure/{secondary,active_site,binding_site,cavity,disulfide,metal_site,dynamics,interface}/` |
 | [PROSITE patterns](https://prosite.expasy.org/) (`prosite.dat`, PATTERN) | 1311 | `data/traits/sequence/pattern/` (1279 generic) + `data/traits/sequence/{modified_residue,glycosylation,crosslink}/` (32 PTM subtypes) |
 | [PROSITE profiles](https://prosite.expasy.org/) (`prosite.dat`, MATRIX) | 1434 | `data/traits/sequence/profile/` |
@@ -399,6 +405,11 @@ parameters, with no Mech-specific scoring applied.
 Reports are written below `research/traits/`, preserving the record's directory
 layout. They are evidence proposals only: verify accessions, residue numbering,
 protein/taxon scope, chemical participants, and every proposed causal edge.
+
+## Merge queue
+
+See [the native merge-queue guide](docs/MERGE_QUEUE.md) for the reviewed merge workflow
+when queue enforcement is enabled on `main`.
 
 ## License
 

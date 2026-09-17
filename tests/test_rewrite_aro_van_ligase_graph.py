@@ -29,6 +29,9 @@ def _edge(
     predicate: str = "causally upstream of",
     predicate_id: str = "RO:0002411",
 ) -> dict:
+    snippet = V.VAN_LIGASE_EVIDENCE["snippet"]
+    if predicate_id == "ARO:2000001":
+        snippet = "relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic"
     return {
         "subject": subject,
         "predicate": predicate,
@@ -37,7 +40,7 @@ def _edge(
         "evidence": [
             {
                 "reference": V.TARGET_IDENTIFIER,
-                "snippet": V.VAN_LIGASE_EVIDENCE["snippet"],
+                "snippet": snippet,
             }
         ],
     }

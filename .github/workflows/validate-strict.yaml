@@ -5,31 +5,15 @@
 # The corpus is ~430K records (~2.1GB), so a full run takes minutes even with
 # a multiprocess pool. PRs that only touch data files are scoped to the files
 # that actually changed; a full corpus run is reserved for schema/validator
-# changes (which can invalidate records the PR never touched) and for push to
-# main, as a fleet-wide safety net.
+# changes (which can invalidate records the PR never touched), merge groups,
+# and push to main. Queue groups always validate the complete combined corpus.
 name: validate-strict
 
 on:
+  # Required checks report on every PR and on the combined queue commit.
   pull_request:
-    paths:
-      - "src/proteintraitsmech/schema/proteintraitsmech.yaml"
-      # the schema IMPORTS mech_shared, so a change there changes what this
-      # validates -- without this line the gate would not fire on it (#484)
-      - "src/proteintraitsmech/schema/mech_shared.yaml"
-      - "data/traits/**"
-      # A registry edit can invalidate a QUALIFIED record no diff mentions, the
-      # same argument that puts the schema here (#606).
-      - "data/grounding/**"
-      - "scripts/validate_strict.py"
-      - "scripts/validate_uniprot_grounding.py"
-      - "scripts/uniprot_record_content_gate.py"
-      - "scripts/audit_causal_graphs.py"
-      - "scripts/validation_scope.py"
-      - ".github/workflows/validate-strict.yaml"
-      - "pyproject.toml"
-      # the lockfile, not just the range: `uv sync` installs what uv.lock pins,
-      # so a dependency bump changes the validator without touching pyproject (#537)
-      - "uv.lock"
+  merge_group:
+    types: [checks_requested]
   push:
     branches: [main]
     paths:
@@ -43,6 +27,10 @@ on:
       - "data/grounding/**"
       - "scripts/validate_strict.py"
       - "scripts/validate_uniprot_grounding.py"
+      - "scripts/elife_metallophore_grounding.py"
+      - "scripts/elife_metallophores.py"
+      - "data/curation/elife109154_traits.yaml"
+      - "data/curation/elife109154_example_decisions.jsonl"
       - "scripts/uniprot_record_content_gate.py"
       - "scripts/audit_causal_graphs.py"
       - "scripts/validation_scope.py"
@@ -51,10 +39,15 @@ on:
       # the lockfile, not just the range: `uv sync` installs what uv.lock pins,
       # so a dependency bump changes the validator without touching pyproject (#537)
       - "uv.lock"
+      - ".python-version"
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate-strict:
@@ -67,6 +60,7 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
+          python-version: "3.13"
           enable-cache: true
 
       - name: Install just

@@ -165,7 +165,6 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3003210", "fosa4-aro3003210.yaml"),
     Target("ARO:3003209", "fosa5-aro3003209.yaml"),
     Target("ARO:3004111", "fosa6-aro3004111.yaml"),
-    Target("ARO:3005162", "fosa7-5-aro3005162.yaml"),
     Target("ARO:3004113", "fosa7-aro3004113.yaml"),
     Target("ARO:3007371", "fosa8-aro3007371.yaml"),
     Target("ARO:3000172", "fosb-aro3000172.yaml"),

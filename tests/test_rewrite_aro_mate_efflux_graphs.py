@@ -121,15 +121,12 @@ def test_mate_graph_replaces_ungrounded_extrusion_function() -> None:
     assert changed
     assert "extrusion" not in nodes
     assert "export" in nodes
-    assert "extruded_drug" in nodes
     assert _edge_pairs(out) == {
         ("determinant", "mech0"),
         ("mech0", "resistance"),
         ("determinant", "resistance"),
-        ("cation_gradient", "export"),
         ("determinant", "export"),
-        ("export", "extruded_drug"),
-        ("extruded_drug", "resistance"),
+        ("export", "mech0"),
     }
 
 

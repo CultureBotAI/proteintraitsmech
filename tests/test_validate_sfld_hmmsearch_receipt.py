@@ -623,7 +623,7 @@ def test_same_path_mutation_after_semantic_replay_fails_final_recheck(tmp_path, 
         _verify(paths, expected_hashes)
 
 
-def test_current_protein_registry_has_stable_canonical_fasta_projection():
+def test_original_registry_release_has_stable_canonical_fasta_projection(tmp_path):
     registry_path = REPO / "data/grounding/protein_registry.jsonl"
     if not registry_path.is_file():
         pytest.skip("production ProteinReference registry is not installed")
@@ -632,13 +632,30 @@ def test_current_protein_registry_has_stable_canonical_fasta_projection():
         label="production registry",
         max_bytes=receipt._MAX_BYTES["registry"],  # noqa: SLF001
     )
+    # Later ingests may add a different pinned release to the durable registry.
+    # SFLD still requires a single-release execution batch: preserve its original
+    # byte/hash canary and explicitly test rejection of a mixed-release batch.
+    source_rows = [json.loads(line) for line in capture.raw.splitlines()]
+    if len({row["uniprot_release"] for row in source_rows}) > 1:
+        with pytest.raises(receipt.SfldHmmsearchReceiptError, match="exactly one UniProt release"):
+            receipt._load_registry(capture)  # noqa: SLF001
+    original_release = tmp_path / "registry-2026_02.jsonl"
+    original_release.write_bytes(b"".join(
+        line + b"\n" for line in capture.raw.splitlines()
+        if json.loads(line)["uniprot_release"] == "2026_02"
+    ))
+    capture = receipt._capture_regular_file(  # noqa: SLF001
+        original_release,
+        label="original registry release",
+        max_bytes=receipt._MAX_BYTES["registry"],  # noqa: SLF001
+    )
     rows = receipt._load_registry(capture)  # noqa: SLF001
     fasta = receipt.canonical_registry_fasta(rows)
 
-    assert len(rows) == 126
-    assert capture.sha256 == "d587fad177207ca4f00d1dfb8649f4f9d2d21d01953d483f44a3a6e81acc729c"
-    assert len(fasta) == 79906
-    assert _sha(fasta) == "0aa2b6f9d1ce74ebc132184284475de53f55ccc62d0ecd7498d79d522ef18e9f"
+    assert len(rows) == 123
+    assert capture.sha256 == "9de8d420529ecfcb2da9edb7fc37b46daac7bc8316623a476c7f67186a9058ab"
+    assert len(fasta) == 74871
+    assert _sha(fasta) == "59ecbee65eca77f381e4ff875cefb61f29f40d586f394c67f1ac5f1042784a36"
 
 
 def test_current_sfld_release_replays_exact_pinned_manifest_when_artifacts_exist():

@@ -78,7 +78,11 @@ PLAN_ID_PREFIX = "uniprot-registry-fetch-plan:"
 RECEIPT_ID_PREFIX = "uniprot-registry-fetch-receipt:"
 PENDING_ID_PREFIX = "uniprot-registry-fetch-pending:"
 
-SELECTOR_MANIFEST_SCHEMA_VERSION = 6
+SELECTOR_MANIFEST_SCHEMA_VERSION = 7
+# v7 adds taxon-ordering metadata; candidate identities, digest/count bindings,
+# review invariants and downstream requirements are unchanged from v6. Retain
+# already-staged v6 batches while accepting the current selector's output.
+SUPPORTED_SELECTOR_MANIFEST_SCHEMA_VERSIONS = frozenset({6, SELECTOR_MANIFEST_SCHEMA_VERSION})
 SELECTOR_V6_INVARIANTS = frozenset(
     {
         "shard_is_nonempty",
@@ -698,11 +702,11 @@ def _read_selector_manifest(
     if (
         not isinstance(schema_version, int)
         or isinstance(schema_version, bool)
-        or schema_version != SELECTOR_MANIFEST_SCHEMA_VERSION
+        or schema_version not in SUPPORTED_SELECTOR_MANIFEST_SCHEMA_VERSIONS
     ):
         raise RegistryBuildError(
-            f"selector manifest schema_version must be exact integer "
-            f"{SELECTOR_MANIFEST_SCHEMA_VERSION}"
+            "selector manifest schema_version must be an exact integer in "
+            f"{sorted(SUPPORTED_SELECTOR_MANIFEST_SCHEMA_VERSIONS)}"
         )
     if manifest.get("batch_id") != batch:
         raise RegistryBuildError(

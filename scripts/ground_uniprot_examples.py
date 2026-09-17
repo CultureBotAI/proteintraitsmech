@@ -4298,6 +4298,9 @@ def _parser() -> argparse.ArgumentParser:
         help="atomically install durable registries, then write validated trait records",
     )
     promoter.set_defaults(func=promote)
+    from elife_metallophore_grounding import add_subcommands
+
+    add_subcommands(subparsers)
     return parser
 
 

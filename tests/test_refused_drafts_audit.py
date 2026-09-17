@@ -16,12 +16,22 @@ audit = importlib.import_module("audit_refused_drafts")
 promote = importlib.import_module("promote_family_drafts")
 
 
-def test_the_scan_finds_drafts_at_all():
-    """A scan that reads no files would also report 0 accepted."""
-    assert audit.ARO_DIR.is_dir()
-    drafts = [p for p in audit.ARO_DIR.rglob("*.yaml")
-              if "graph_id: resistance-draft" in p.read_text(encoding="utf-8")]
-    assert len(drafts) > 100, "expected hundreds of drafts; a near-empty scan proves nothing"
+def test_the_scan_shape_finds_drafts(tmp_path):
+    """The completed ARO corpus has 0 drafts, so keep the scan shape pinned on a fixture."""
+    draft = tmp_path / "draft.yaml"
+    draft.write_text("causal_graphs:\n- graph_id: resistance-draft\n", encoding="utf-8")
+    (tmp_path / "reviewed.yaml").write_text(
+        "causal_graphs:\n- graph_id: resistance\n",
+        encoding="utf-8",
+    )
+
+    drafts = [
+        p
+        for p in tmp_path.rglob("*.yaml")
+        if "graph_id: resistance-draft" in p.read_text(encoding="utf-8")
+    ]
+
+    assert drafts == [draft]
 
 
 def test_tet34_would_no_longer_be_accepted():

@@ -608,13 +608,17 @@ def test_offline_fixture_must_match_generated_batch_and_is_not_partially_install
     assert not blocked.exists()
 
 
+@pytest.mark.parametrize("schema_version", [6, 7])
 @pytest.mark.parametrize("defect", ["queue_sha", "row_count", "batch", "duplicate_key"])
-def test_selector_manifest_exactly_binds_queue_count_and_batch(tmp_path, capsys, defect):
+def test_selector_manifest_exactly_binds_queue_count_and_batch(
+    tmp_path, capsys, defect, schema_version
+):
     queue = tmp_path / "candidates.jsonl"
     _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
     manifest = tmp_path / "manifest.json"
     _manifest(manifest, queue)
     value = json.loads(manifest.read_text())
+    value["schema_version"] = schema_version
     if defect == "queue_sha":
         value["candidate_jsonl_sha256"] = "0" * 64
         manifest.write_text(json.dumps(value) + "\n", encoding="utf-8")
@@ -667,7 +671,10 @@ def test_selector_manifest_exactly_binds_queue_count_and_batch(tmp_path, capsys,
         "false_one_approved",
     ],
 )
-def test_selector_v6_shape_and_review_contract_are_fail_closed(tmp_path, capsys, defect):
+@pytest.mark.parametrize("schema_version", [6, 7])
+def test_selector_shape_and_review_contract_are_fail_closed(
+    tmp_path, capsys, defect, schema_version
+):
     queue = tmp_path / "candidates.jsonl"
     row = _candidate("UniProtKB:P12345", "ACDE")
     if defect == "row_source_batch":
@@ -678,6 +685,7 @@ def test_selector_v6_shape_and_review_contract_are_fail_closed(tmp_path, capsys,
     manifest = tmp_path / "manifest.json"
     _manifest(manifest, queue)
     value = json.loads(manifest.read_text())
+    value["schema_version"] = schema_version
     if defect == "schema":
         value["schema_version"] = 5
     elif defect == "source_batch":
@@ -1731,3 +1739,94 @@ def test_registry_builder_has_no_trait_record_write_route():
     assert "data/traits" not in source
     assert "write_validated_record" not in source
     assert "write_record(" not in source
+
+
+@pytest.mark.parametrize("schema_version", [5, 8, "7", 7.0, True, None])
+def test_selector_manifest_rejects_unsupported_or_noninteger_versions(tmp_path, schema_version):
+    queue = tmp_path / "candidates.jsonl"
+    _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
+    manifest = tmp_path / "manifest.json"
+    _manifest(manifest, queue)
+    value = json.loads(manifest.read_text())
+    value["schema_version"] = schema_version
+    manifest.write_text(json.dumps(value) + "\n")
+    candidate_artifact = registry._capture(queue, description="selected candidates")
+    candidates = registry._read_candidates(candidate_artifact, "ready-local")
+    with pytest.raises(registry.RegistryBuildError, match="schema_version"):
+        registry._read_selector_manifest(
+            registry._capture(manifest, description="selector manifest"),
+            batch="ready-local",
+            queue_sha256=candidate_artifact.sha256,
+            candidates=candidates,
+        )
+
+
+@pytest.mark.parametrize("prefer_taxon", [False, True])
+def test_current_selector_output_completes_offline_registry_fetch(
+    tmp_path, monkeypatch, capsys, prefer_taxon
+):
+    """The real selector's manifest must work at the next stage, with and without
+    taxon preference. Hand-built v6 fixtures alone missed this v7 handoff break.
+    """
+    selector = importlib.import_module("select_uniprot_review_batch")
+
+    def no_network(*args, **kwargs):
+        pytest.fail("selector-to-registry integration must remain offline")
+
+    monkeypatch.setattr(registry.urllib.request, "urlopen", no_network)
+    queue = tmp_path / "queue.jsonl"
+    human = {**_candidate("UniProtKB:P12345", "ACDE"), "taxon_id": "NCBITaxon:9606"}
+    preferred = {
+        **_candidate("UniProtKB:P21802", "ACDE"),
+        "candidate_id": "candidate-1-preferred",
+        "taxon_id": "NCBITaxon:83333",
+    }
+    unmatched = {
+        **_candidate("UniProtKB:Q99999", "ACDE", number=2),
+        "taxon_id": "NCBITaxon:9606",
+    }
+    _jsonl(queue, [{**row, "source_namespace": "Pfam"} for row in (human, preferred, unmatched)])
+    selected = tmp_path / "selected.jsonl"
+    manifest = tmp_path / "manifest.json"
+    args = [
+        "--queue", str(queue), "--batch-id", "ready-local",
+        "--out", str(selected), "--manifest-tsv", str(tmp_path / "manifest.tsv"),
+        "--manifest-json", str(manifest), "--apply",
+    ]
+    if prefer_taxon:
+        args.extend(["--prefer-taxon", "NCBITaxon:83333"])
+    assert selector.main(args) == 0
+    capsys.readouterr()
+    selection = json.loads(manifest.read_text())
+    assert selection["schema_version"] == 7
+    assert selection["preferred_taxon_ids"] == (["NCBITaxon:83333"] if prefer_taxon else [])
+    rows = _registry_rows(selected)
+    assert len(rows) == 3
+    assert rows[0]["protein_id"] == ("UniProtKB:P21802" if prefer_taxon else "UniProtKB:P12345")
+    responses = tmp_path / "responses.json"
+    _responses(responses, [{
+        "requested": ["P12345", "P21802", "Q99999"],
+        "results": [_entry("P12345", "ACDE"), _entry("P21802", "ACDE", taxon=83333),
+                    _entry("Q99999", "ACDE")],
+    }], "2026_02")
+    out, blocked = tmp_path / "registry.jsonl", tmp_path / "blocked.tsv"
+    membership, receipt = tmp_path / "memberships.jsonl", tmp_path / "receipt.json"
+    fetch_args = _dry_args(
+        selected, manifest, out, blocked, membership=membership, receipt=receipt,
+        extra=("--offline-responses", str(responses)),
+    )
+    assert registry.main(fetch_args) == 0
+    plan_text = capsys.readouterr().out
+    plan = json.loads(plan_text)
+    assert plan["target_count"] == 3
+    assert plan["candidate_artifact"]["sha256"] == hashlib.sha256(selected.read_bytes()).hexdigest()
+    assert plan["selector_manifest_artifact"]["sha256"] == hashlib.sha256(manifest.read_bytes()).hexdigest()
+    assert not any(path.exists() for path in (out, blocked, membership, receipt))
+    plan_path = tmp_path / "request-plan.json"
+    plan_path.write_text(plan_text)
+    assert registry.main([*fetch_args, "--request-plan", str(plan_path), "--apply"]) == 0
+    assert {row["protein_id"] for row in _registry_rows(out)} == {
+        "UniProtKB:P12345", "UniProtKB:P21802", "UniProtKB:Q99999",
+    }
+    assert _blocked_rows(blocked) == []
+    assert receipt.is_file()
