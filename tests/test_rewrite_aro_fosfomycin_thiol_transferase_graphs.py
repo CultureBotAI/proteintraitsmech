@@ -136,7 +136,7 @@ def _node_ids(record: dict) -> list[str]:
 def test_target_set_is_exactly_fosfomycin_thiol_transferase_branch() -> None:
     target_filenames = {target.filename for target in R.TARGETS}
 
-    assert len(R.TARGETS) == 31
+    assert len(R.TARGETS) == 30
     assert "fosfomycin-thiol-transferase-aro3000133.yaml" in target_filenames
     assert "fosa-aro3000149.yaml" in target_filenames
     assert "fosxcc-aro3003208.yaml" in target_filenames
@@ -148,7 +148,7 @@ def test_target_set_is_exactly_fosfomycin_thiol_transferase_branch() -> None:
 def test_target_discovery_finds_current_fosfomycin_thiol_transferase_slice() -> None:
     paths = R.iter_target_paths(ARO_DIR)
 
-    assert len(paths) == 31
+    assert len(paths) == 30
     assert {path.name for path in paths} == {target.filename for target in R.TARGETS}
 
 

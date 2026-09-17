@@ -108,7 +108,7 @@ def _record(identifier: str = "ARO:3000857", *, child: bool = False) -> dict:
 
     return {
         "identifier": identifier,
-        "label": "16S ribosomal RNA methyltransferase",
+        "label": "16S rRNA methyltransferase",
         "definition": "definition",
         "causal_graphs": [
             {
@@ -243,7 +243,7 @@ def test_enrich_text_rewrites_yaml_aliases_without_duplicating_history():
     text += "\ncuration_history:\n"
     text += "- timestamp: '2026-09-05T00:00:00Z'\n"
     text += "  curator: codex-causal-graph-quality\n"
-    text += "  action: already enriched\n"
+    text += f"  action: {R.HISTORY_ACTION}\n"
     text += "  llm_assisted: true\n"
 
     out, changed = R.enrich_text(text, ARO_DIR / target.filename)

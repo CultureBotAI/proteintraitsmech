@@ -103,7 +103,7 @@ class Target:
     has_drug_edge: bool
 
 
-TARGETS: tuple[Target, ...] = (
+TARGET_LIST: tuple[Target, ...] = (
     Target("ARO:3000458", "macrolide-glycosyltransferase-aro3000458.yaml", False),
     Target("ARO:3000463", "gima-aro3000463.yaml", True),
     Target("ARO:3004236", "gima-family-macrolide-glycosyltransferase-aro3004236.yaml", True),
@@ -113,7 +113,7 @@ TARGETS: tuple[Target, ...] = (
     Target("ARO:3000865", "oled-aro3000865.yaml", True),
     Target("ARO:3000866", "olei-aro3000866.yaml", True),
 )
-TARGET_BY_ID = {target.identifier: target for target in TARGETS}
+TARGETS = {target.identifier: target for target in TARGET_LIST}
 
 
 def _dump(obj: Any) -> str:
@@ -379,7 +379,7 @@ def enrich_text(text: str, path: Path) -> tuple[str, bool]:
     if not isinstance(record, dict):
         raise ValueError(f"{path}: record is not a mapping")
     identifier = record.get("identifier")
-    target = TARGET_BY_ID.get(identifier)
+    target = TARGETS.get(identifier)
     if target is None:
         raise ValueError(f"{path}: not a macrolide glycosyltransferase target: {identifier}")
     if path.name != target.filename:
@@ -401,7 +401,7 @@ def iter_target_paths(path: Path) -> list[Path]:
         return [path]
     if not path.is_dir():
         raise ValueError(f"{path} is neither a file nor a directory")
-    return [path / target.filename for target in TARGETS]
+    return [path / target.filename for target in TARGETS.values()]
 
 
 def main(argv: list[str] | None = None) -> int:
