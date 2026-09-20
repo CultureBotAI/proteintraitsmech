@@ -71,7 +71,7 @@
         <select id="cat-filter"><option value="">All categories</option></select>
       </label>
       <!-- Only the protein map ships `depths`; hidden for the corpus maps. -->
-      <label id="depth-wrap" hidden>Annotation depth
+      <label id="depth-wrap" hidden><span id="depth-label">Annotation depth</span>
         <select id="depth-filter"><option value="">All</option></select>
       </label>
       <label>Search
@@ -159,6 +159,10 @@
       const dWrap=document.getElementById("depth-wrap");
       const dSel=document.getElementById("depth-filter");
       if(d.depths){
+        // The facet's name comes from the map too: it is annotation depth on the
+        // protein map and sequence length on the sequence map.
+        const dl=d.depth_label||"annotation depth";
+        document.getElementById("depth-label").textContent=dl.charAt(0).toUpperCase()+dl.slice(1);
         const dc={}; for(const p of d.points){const k=d.depths[p[6]]; dc[k]=(dc[k]||0)+1;}
         dSel.innerHTML=`<option value="">All ${esc(d.depth_label||"depths")}</option>`;
         d.depths.forEach(k=>{
@@ -171,7 +175,7 @@
       } else { dWrap.hidden=true; dSel.innerHTML=""; }
       buildLegend();
       const coverage=(d.n_total && d.n_shown<d.n_total)
-        ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} ${UNIT} (stratified sample)`
+        ? `${fmt(d.n_shown)} of ${fmt(d.n_total)} ${UNIT} (${d.sample_label||"stratified sample"})`
         : `${fmt(d.n_shown)} ${UNIT}`;
       const ml=METHOD_LABEL[d.method]||(d.method||"").toUpperCase();
       const embLabel=file.includes("definition") ? " · definition-only embedding"

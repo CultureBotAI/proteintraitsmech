@@ -680,8 +680,11 @@ sequence-map *args:
     python3 scripts/build_sequence_map.py {{args}}
 
 # Does the sequence map recover CATH structure better than the trait-based
-# protein map? Neighbour-purity lifts (organism / CATH class / CATH superfamily)
-# on the proteins both maps share. Read-only.
+# protein map? Neighbour-purity lifts (organism / CATH class / CATH superfamily /
+# EC class / EC sub-subclass) on the proteins both maps share, in the raw,
+# centred, PCA and 2-D spaces. --control-map adds a protein map built with
+# `build_protein_map.py --exclude-prefix CATH`; --breakdown adds bootstrap
+# intervals by domain count and sequence length. Read-only.
 measure-sequence-map *args:
     python3 scripts/measure_sequence_map.py {{args}}
 

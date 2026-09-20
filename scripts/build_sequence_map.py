@@ -22,8 +22,11 @@ filter facet is **CATH class**, taken from the protein's own
 sequence map recover fold?" is the question this map exists for. The second
 facet is **sequence length**, so the windowed >1,022-aa tail can be isolated.
 Organism sits on the tooltip and in the CSV. Domain of life was the first
-choice for colour and was dropped: 2,686 of these proteins carry no taxon id,
-and UniProt's species list resolves only 7,001 of the rest.
+choice for colour and was dropped: 2,686 of these proteins carry no taxon id
+(#712 tracks adding a taxonomy source).
+
+CATH class is the *majority* class of a protein's CATH assignments. `--sample`
+draws uniformly, and the payload says so (`sample_label`).
 
 Output schema matches `build_protein_map.py`, so `docs/map.html` renders it
 unchanged: docs/data/sequence_map.json.
@@ -63,10 +66,11 @@ def length_bin(n: int) -> str:
 def primary_axis(axes: dict[str, int]) -> str:
     """The axis most of a protein's exemplified records sit on; ties break in
     the schema's axis order so the label is deterministic."""
-    if not axes:
+    known = {a: n for a, n in axes.items() if a in AXIS_ORDER}
+    if not known:          # no axis, or only the "?" placeholder for a missing one
         return "SEQUENCE"
-    top = max(axes.values())
-    return next(a for a in AXIS_ORDER if axes.get(a) == top)
+    top = max(known.values())
+    return next(a for a in AXIS_ORDER if known.get(a) == top)
 
 
 def cath_labels(proteins: list[dict], profiles: Path) -> dict[str, list[str]]:
@@ -88,9 +92,19 @@ def cath_labels(proteins: list[dict], profiles: Path) -> dict[str, list[str]]:
 
 
 def cath_class(curies: list[str]) -> str:
+    """The CATH class most of a protein's CATH assignments fall in.
+
+    Not the first assignment in sorted order: 1,919 of the 6,246 CATH-labelled
+    example proteins span more than one class, and a lexical sort hands 70% of
+    those to class 1 ("Mainly alpha") whatever their composition. Ties break
+    toward the lower class number so the label stays deterministic.
+    """
     if not curies:
         return NO_FOLD
-    return CATH_CLASS.get(curies[0].split(":")[1].split(".")[0], "Other class")
+    counts = collections.Counter(c.split(":")[1].split(".")[0] for c in curies)
+    top = max(counts.values())
+    digit = min(d for d, n in counts.items() if n == top)
+    return CATH_CLASS.get(digit, "Other class")
 
 
 def main() -> int:
@@ -107,23 +121,31 @@ def main() -> int:
                     help="build from an embedding made with --limit/--accession")
     args = ap.parse_args()
 
-    try:
-        import numpy as np
-        from sklearn.decomposition import PCA
-    except ImportError:
-        print("needs numpy + scikit-learn (+ pacmap/umap) — run with system python3.",
-              file=sys.stderr)
-        return 2
-
     emb = Path(args.emb_dir)
     for name in ("ids.json", "vectors.f16.npy", "proteins.jsonl", "meta.json"):
         if not (emb / name).exists():
             print(f"missing {rel(emb / name)} — run `just embed-sequences` first.",
                   file=sys.stderr)
             return 2
+    # Checked before anything heavy is imported or read: a canary run leaves a
+    # few rows behind, and a map of those must never replace the corpus map.
+    meta = json.loads((emb / "meta.json").read_text(encoding="utf-8"))
+    if meta.get("partial") and not args.allow_partial:
+        print(f"{rel(emb / 'meta.json')} is marked partial ({meta.get('filter')}) — a "
+              f"canary, not the corpus. Run `just embed-sequences` without --limit/"
+              f"--accession, or pass --allow-partial to plot it anyway.", file=sys.stderr)
+        return 2
+
+    try:
+        import numpy as np
+        from sklearn.decomposition import PCA
+    except ImportError:
+        print("needs numpy + scikit-learn (+ pacmap/umap) — run with the interpreter "
+              "that has them (miniforge python3 here), not `uv run`.", file=sys.stderr)
+        return 2
+
     ids = json.loads((emb / "ids.json").read_text(encoding="utf-8"))
     vecs = np.load(emb / "vectors.f16.npy").astype(np.float32)
-    meta = json.loads((emb / "meta.json").read_text(encoding="utf-8"))
     proteins = [json.loads(line) for line in
                 (emb / "proteins.jsonl").read_text(encoding="utf-8").splitlines() if line]
     if len(ids) != len(proteins) or len(ids) != vecs.shape[0] \
@@ -131,12 +153,10 @@ def main() -> int:
         print("ids.json, proteins.jsonl and vectors.f16.npy disagree — rebuild the "
               "embedding.", file=sys.stderr)
         return 1
-    if meta.get("partial") and not args.allow_partial:
-        print(f"{rel(emb / 'meta.json')} is marked partial ({meta.get('filter')}) — a "
-              f"canary, not the corpus. Run `just embed-sequences` without --limit/"
-              f"--accession, or pass --allow-partial to plot it anyway.", file=sys.stderr)
-        return 2
     n_total = len(ids)
+    if n_total < 3:
+        print(f"only {n_total} protein(s) embedded — too few to project.", file=sys.stderr)
+        return 1
 
     rng = np.random.default_rng(args.seed)
     keep = np.arange(n_total)
@@ -150,15 +170,17 @@ def main() -> int:
     X /= np.maximum(np.linalg.norm(X, axis=1, keepdims=True), 1e-12)
     n_comp = min(args.pca, X.shape[0] - 1, X.shape[1])
     pca = PCA(n_components=n_comp, random_state=args.seed)
-    Z = pca.fit_transform(X).astype(np.float32)
+    scores = pca.fit_transform(X).astype(np.float32)
     kept_var = float(pca.explained_variance_ratio_.sum())
-    Z /= np.maximum(np.linalg.norm(Z, axis=1, keepdims=True), 1e-12)
+    Z = scores / np.maximum(np.linalg.norm(scores, axis=1, keepdims=True), 1e-12)
     print(f"{X.shape[0]:,} proteins × {X.shape[1]} → PCA({n_comp}) keeps "
           f"{100 * kept_var:.1f}% of variance", file=sys.stderr)
 
     explained = None
     if args.method == "pca":
-        coords = Z[:, :2]
+        # the raw scores, not the row-normalised ones: the variance ratios the
+        # page prints describe these two components as PCA produced them
+        coords = scores[:, :2]
         explained = [float(v) for v in pca.explained_variance_ratio_[:2]]
     elif args.method == "umap":
         import umap
@@ -208,6 +230,7 @@ def main() -> int:
         "link": "https://www.uniprot.org/uniprotkb/{id}/entry",
         "id_strip_prefix": "UniProtKB:",
         "unit": "proteins",
+        "sample_label": "random sample",   # --sample here is uniform, not stratified
         "embedding": {"model": meta.get("model"), "revision": meta.get("revision"),
                       "dim": meta.get("dim"), "pooling": meta.get("pooling"),
                       "window": meta.get("window"), "overlap": meta.get("overlap"),

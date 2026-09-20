@@ -7,36 +7,46 @@ measures that, the same way `measure_map_structure.py` and
 `research/protein-map-feature-space.md` measured the existing maps — neighbour
 purity as lift over the purity expected from label proportions alone.
 
-The bar as literally stated cannot be met by construction: CATH signatures are
-*input features* of the protein map (`SIG_PREFIXES`), so its CATH purity is
-label leakage, not recovery. Two comparisons are leakage-free and reported
-alongside it:
+CATH signatures are among the protein map's input features (`SIG_PREFIXES`),
+so part of its CATH purity is the label read back. How large that part is gets
+measured rather than assumed: pass `--control-map`, a protein map rebuilt with
+`build_protein_map.py --exclude-prefix CATH --out …`, and the report states the
+share of the shipped map's lift that disappears with the CATH features. EC
+labels are an input to neither map and are reported alongside.
 
-  --control-map      a protein map rebuilt with CATH excluded from its features
-                     (`build_protein_map.py --exclude-prefix CATH --out …`)
-  EC class labels    what the protein does — an input to neither map
+Labels:
 
-Labels, each held independently of the sequence (which is all the sequence
-map saw):
+  organism           — from the Swiss-Prot profiles (one spelling per proteome)
+  CATH class         — majority class of the protein's CATH assignments
+  CATH superfamily   — first sorted assignment (or any shared one: --any-match)
+  EC class / EC sub-subclass — enzyme function, one and three levels
 
-  organism           — is this a curation-effort / proteome map?
-  CATH class         — the coarse fold label the protein map is filtered by
-  CATH superfamily   — the sharp one: fold *and* evolutionary relationship
-  EC class / EC sub-subclass — enzyme function, top level and three levels
+Spaces, all scored on the same proteins with the same k:
 
-Compared on the proteins **both maps contain** that carry the label, so the
-maps are scored on the same proteins with the same k. The sequence map is
-measured in its embedding space (what the layout was computed from) and in 2-D
-(what a reader sees); the protein map ships only its 2-D coordinates, so it is
-measured there. A protein with several CATH assignments is labelled by its
-first sorted one, as `build_protein_map.py` does for class; with `--any-match`
-a neighbour counts as pure when the two proteins share *any* superfamily.
+  ESM-2 embedding, raw            the stored 1,280-d vectors
+  ESM-2 embedding, centred + L2   the same minus the corpus mean, then unit
+                                  length again — the raw vectors are strongly
+                                  anisotropic; centring alone would change
+                                  nothing, Euclidean neighbours being
+                                  translation-invariant
+  PCA(100) + L2                   what PaCMAP is actually given
+  sequence map 2-D                what a reader sees
+  protein map 2-D                 the shipped trait map (only 2-D is shipped)
+  control protein map 2-D         optional, CATH excluded from its inputs
 
-Read-only. Prints a markdown report (optionally --out).
+`--breakdown` adds CATH-superfamily lifts for single- vs multi-superfamily
+proteins and by sequence length, each with a bootstrap 95% interval (proteins
+resampled, neighbourhoods fixed). Lifts are NOT comparable across subsets —
+chance and the multi-superfamily fraction both change with length — so the
+comparable number is the embedding-to-trait-map ratio *within* a subset, which
+is reported with its own interval.
+
+Read-only. Prints a markdown report (optionally --out). Needs numpy +
+scikit-learn: run with the interpreter that has them, not `uv run`.
 
   just measure-sequence-map
   just measure-sequence-map --control-map /path/to/protein_map_nocath.json \\
-      --out research/sequence-map-structure.md
+      --breakdown --out research/sequence-map-structure.measured.md
 """
 
 from __future__ import annotations
@@ -48,17 +58,19 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
-from build_sequence_map import cath_class, cath_labels  # noqa: E402
+from build_sequence_map import LENGTH_BINS, cath_class, cath_labels, length_bin  # noqa: E402
 from measure_map_structure import neighbours, purity  # noqa: E402
 
 DOCS = REPO_ROOT / "docs" / "data"
 EMB = REPO_ROOT / "data" / "embeddings" / "esm2"
 PROFILES = REPO_ROOT / "data" / "profiles" / "profiles.jsonl"
 
-SEQ_EMB = "sequence map · ESM-2 embedding (1,280-d)"
-SEQ_2D = "sequence map · 2-D layout"
-PROT_2D = "protein map · 2-D layout (TF-IDF traits, CATH among the inputs)"
-CTRL_2D = "control protein map · 2-D layout (CATH excluded from the inputs)"
+SEQ_RAW = "ESM-2 embedding, raw (1,280-d)"
+SEQ_CEN = "ESM-2 embedding, centred + L2 (1,280-d)"
+SEQ_PCA = "PCA + L2 (PaCMAP's input)"
+SEQ_2D = "sequence map 2-D"
+PROT_2D = "protein map 2-D (TF-IDF traits, CATH among the inputs)"
+CTRL_2D = "control protein map 2-D (CATH excluded from the inputs)"
 
 
 def superfamily(curie: str) -> str:
@@ -86,6 +98,30 @@ def any_match_purity(ind, label_sets):
     return obs, ch
 
 
+def bootstrap_lifts(ind, y, resamples):
+    """Lift for each bootstrap resample of the proteins, neighbourhoods fixed.
+
+    Per-protein purity is computed once; each resample re-averages it and
+    recomputes chance on the resampled labels, so the interval covers both the
+    numerator and the baseline. Chance uses the collision estimator
+    (n·Σp̂² − 1)/(n − 1) rather than the plug-in Σp̂²: drawing with replacement
+    duplicates proteins, which inflates Σp̂² by about (1 − Σp²)/n — 15% with
+    several hundred rare superfamilies in under a thousand proteins — and would
+    push every interval below its own point estimate.
+    """
+    import numpy as np
+
+    codes = np.unique(y, return_inverse=True)[1]
+    per_point = (codes[ind] == codes[:, None]).mean(axis=1)
+    k = int(codes.max()) + 1
+    out = np.empty(len(resamples), dtype=float)
+    for b, idx in enumerate(resamples):
+        n = len(idx)
+        p = np.bincount(codes[idx], minlength=k) / n
+        out[b] = per_point[idx].mean() / ((n * float((p ** 2).sum()) - 1.0) / (n - 1))
+    return out
+
+
 def load_map(path: str) -> dict:
     p = Path(path)
     if not p.exists():
@@ -104,13 +140,19 @@ def main() -> int:
     ap.add_argument("--k", type=int, default=25)
     ap.add_argument("--any-match", action="store_true",
                     help="superfamily purity counts any shared superfamily")
+    ap.add_argument("--breakdown", action="store_true",
+                    help="CATH-superfamily lifts by domain count and sequence "
+                         "length, with bootstrap intervals")
+    ap.add_argument("--bootstrap", type=int, default=1000, help="resamples for --breakdown")
     ap.add_argument("--out")
     args = ap.parse_args()
 
     try:
         import numpy as np
+        from sklearn.decomposition import PCA
     except ImportError:
-        print("needs numpy + scikit-learn — run with system python3.", file=sys.stderr)
+        print("needs numpy + scikit-learn — run with the interpreter that has them "
+              "(miniforge python3 here), not `uv run`.", file=sys.stderr)
         return 2
 
     emb = Path(args.emb_dir)
@@ -135,25 +177,40 @@ def main() -> int:
     row_of = {a: i for i, a in enumerate(ids)}
     cath = cath_labels(list(proteins.values()), PROFILES)
 
-    # EC from the Swiss-Prot profiles — an input to neither map
+    # The spaces the layout passes through, rebuilt the way build_sequence_map.py
+    # builds them (over every embedded protein, not just the scored subset).
+    lay = seq.get("embedding") or {}
+    centred = vecs - vecs.mean(axis=0, keepdims=True)
+    centred /= np.maximum(np.linalg.norm(centred, axis=1, keepdims=True), 1e-12)
+    n_comp = min(int(lay.get("pca") or 100), vecs.shape[0] - 1, vecs.shape[1])
+    unit = vecs / np.maximum(np.linalg.norm(vecs, axis=1, keepdims=True), 1e-12)
+    scores = PCA(n_components=n_comp, random_state=int(lay.get("seed") or 42)
+                 ).fit_transform(unit).astype(np.float32)
+    pca_in = scores / np.maximum(np.linalg.norm(scores, axis=1, keepdims=True), 1e-12)
+    mean_cos = float(np.linalg.norm(unit.mean(axis=0)) ** 2)   # ≈ mean pairwise cosine
+
+    # organism and EC from the Swiss-Prot profiles: one spelling per proteome,
+    # and an input to neither map
+    org: dict[str, str] = {}
     ec: dict[str, list[str]] = {}
     with PROFILES.open(encoding="utf-8") as fh:
         for line in fh:
             d = json.loads(line)
-            if d["accession"] in proteins and d.get("ec"):
-                ec[d["accession"]] = sorted(d["ec"])
+            a = d["accession"]
+            if a not in proteins:
+                continue
+            if d.get("taxon_label"):
+                org[a] = d["taxon_label"].split(" (")[0]
+            if d.get("ec"):
+                ec[a] = sorted(d["ec"])
 
     seq_pt = {p[3]: p for p in seq["points"]}
     map_pts = {name: {p[3]: p for p in m["points"]} for name, m in maps.items()}
     shared_all = sorted(a for a in seq_pt if a in row_of
                         and all(a in pts for pts in map_pts.values()))
 
-    def org(a):
-        return (proteins[a].get("taxon_label") or "Unknown").split(" (")[0]
-
-    # label → (accessions carrying it, label per accession)
     label_sets = {
-        "organism": {a: org(a) for a in shared_all},
+        "organism": {a: org[a] for a in shared_all if a in org},
         "CATH class": {a: cath_class(cath[a]) for a in shared_all if cath.get(a)},
         "CATH superfamily": {a: superfamily(cath[a][0]) for a in shared_all if cath.get(a)},
         "EC class": {a: lv for a in shared_all if a in ec
@@ -167,88 +224,131 @@ def main() -> int:
         return 1
 
     def space(name, accs):
-        if name == SEQ_EMB:
-            return vecs[[row_of[a] for a in accs]]
+        rows = [row_of[a] for a in accs]
+        if name == SEQ_RAW:
+            return vecs[rows]
+        if name == SEQ_CEN:
+            return centred[rows]
+        if name == SEQ_PCA:
+            return pca_in[rows]
         pts = seq_pt if name == SEQ_2D else map_pts[name]
         return np.asarray([[pts[a][0], pts[a][1]] for a in accs], dtype=np.float32)
 
-    space_names = [SEQ_EMB, SEQ_2D] + list(maps)
+    space_names = [SEQ_RAW, SEQ_CEN, SEQ_PCA, SEQ_2D] + list(maps)
     lifts: dict[tuple[str, str], float] = {}
-    L = ["# Sequence map vs. protein map: which recovers CATH structure?", "",
+    lab_names = [n for n, lab in label_sets.items() if len(lab) >= 100]
+
+    L = ["# Sequence map vs. protein map: neighbour-purity lifts", "",
          f"Scored on the proteins present on every map compared: {len(shared_all):,} "
          f"({len(seq_pt):,} on the sequence map"
-         + "".join(f", {len(pts):,} on the {n.split(' ·')[0]}" for n, pts in map_pts.items())
+         + "".join(f", {len(pts):,} on the {n.split(' 2-D')[0]}" for n, pts in map_pts.items())
          + f"). Per label, only proteins carrying that label count; k={args.k} "
          f"neighbours. Lift = purity / purity expected from label proportions; "
-         f"1.0× is no structure.", "",
-         "| label | proteins | classes | " + " | ".join(space_names) + " |",
-         "|---|--:|--:|" + "--:|" * len(space_names)]
-    for lab_name, lab in label_sets.items():
+         f"1.0× is no structure. PCA({n_comp}); mean pairwise cosine of the raw "
+         f"embedding {mean_cos:.2f}.", "",
+         "| label | proteins | classes | chance |", "|---|--:|--:|--:|"]
+    table = {sn: [] for sn in space_names}
+    for lab_name in lab_names:
+        lab = label_sets[lab_name]
         accs = sorted(lab)
-        if len(accs) < 100:
-            L.append(f"| {lab_name} | {len(accs)} | — | " + " | ".join("too few" for _ in space_names) + " |")
-            continue
         y = np.asarray([lab[a] for a in accs])
         sf_sets = [{superfamily(c) for c in cath[a]} for a in accs] \
-            if lab_name == "CATH superfamily" else None
-        cells = []
+            if lab_name == "CATH superfamily" and args.any_match else None
+        chance = None
         for sn in space_names:
             ind = neighbours(space(sn, accs), args.k)
-            if sf_sets is not None and args.any_match:
-                obs, ch = any_match_purity(ind, sf_sets)
-            else:
-                obs, ch = purity(ind, y)
-            lift = obs / ch if ch else 0.0
-            lifts[(sn, lab_name)] = lift
-            cells.append(f"{obs:.3f} / {ch:.3f} = **{lift:.2f}×**")
-        L.append(f"| {lab_name} | {len(accs):,} | {len(set(y.tolist())):,} | "
-                 + " | ".join(cells) + " |")
+            obs, ch = any_match_purity(ind, sf_sets) if sf_sets is not None \
+                else purity(ind, y)
+            chance = ch
+            lifts[(sn, lab_name)] = obs / ch if ch else 0.0
+            table[sn].append(f"{lifts[(sn, lab_name)]:.2f}×")
+        L.append(f"| {lab_name} | {len(accs):,} | {len(set(y.tolist())):,} | {chance:.4f} |")
+    L += ["", "| space | " + " | ".join(lab_names) + " |",
+          "|---|" + "--:|" * len(lab_names)]
+    L += [f"| {sn} | " + " | ".join(table[sn]) + " |" for sn in space_names]
 
-    s2, se = lifts[(SEQ_2D, "CATH superfamily")], lifts[(SEQ_EMB, "CATH superfamily")]
-    p2 = lifts[(PROT_2D, "CATH superfamily")]
-    L += ["", "## Verdict", ""]
-    L.append(f"**Against the protein map as shipped, the sequence map's CATH-superfamily "
-             f"lift in 2-D is {s2:.2f}× vs {p2:.2f}×** — "
-             + ("above" if s2 > p2 else "below")
-             + " it. That map takes CATH signatures as input features, so its figure is "
-             "label leakage rather than recovery; it is the bar #508 wrote down, "
-             "reported for the record.")
+    sf = "CATH superfamily"
+    s2, sp, sc, sr = (lifts[(n, sf)] for n in (SEQ_2D, SEQ_PCA, SEQ_CEN, SEQ_RAW))
+    p2 = lifts[(PROT_2D, sf)]
+    L += ["", "## What the numbers say", "",
+          f"- **#508's bar, CATH superfamily in 2-D:** sequence map {s2:.2f}×, shipped "
+          f"protein map {p2:.2f}× — the sequence map is "
+          + ("above" if s2 > p2 else "below") + " it."]
     if CTRL_2D in maps:
-        c2 = lifts[(CTRL_2D, "CATH superfamily")]
-        L.append(f"**Against the control protein map with CATH removed from its inputs, "
-                 f"the sequence map's 2-D lift is {s2:.2f}× vs {c2:.2f}×** — "
-                 + (f"the sequence map recovers CATH superfamilies {s2 / c2:.2f}× as "
-                    f"strongly from sequence alone." if s2 > c2 else
-                    "the remaining signatures (Pfam, InterPro, SUPERFAMILY …) still "
-                    "encode fold more sharply than the sequence embedding's 2-D layout "
-                    "does; they are expert structural classifications, not independent "
-                    "of CATH."))
-    L.append(f"In its own embedding space the sequence map's superfamily lift is "
-             f"{se:.2f}×; the 2-D projection keeps {100 * s2 / se:.0f}% of it.")
+        c2 = lifts[(CTRL_2D, sf)]
+        L.append(f"- **How much of the protein map's figure is CATH read back:** removing "
+                 f"the CATH features moves it {p2:.2f}× → {c2:.2f}×, so they account for "
+                 f"{100 * (p2 - c2) / p2:.0f}% of it. Against that control the sequence map "
+                 f"is " + ("above" if s2 > c2 else "below") + f" ({s2:.2f}× vs {c2:.2f}×).")
+    L.append(f"- **Where the sequence map's signal goes:** centring and re-normalising "
+             f"the raw embedding moves it {sr:.2f}× → {sc:.2f}×; PCA + L2, PaCMAP's actual "
+             f"input, holds {sp:.2f}× ({100 * sp / sc:.0f}% of that); the 2-D layout holds "
+             f"{s2:.2f}× ({100 * s2 / sp:.0f}% of its input).")
     if (SEQ_2D, "EC sub-subclass") in lifts:
-        e_s, e_p = lifts[(SEQ_2D, "EC sub-subclass")], lifts[(PROT_2D, "EC sub-subclass")]
-        L.append(f"On enzyme function (EC sub-subclass), which neither map takes as input, "
-                 f"the sequence map scores {e_s:.2f}× in 2-D "
-                 f"({lifts[(SEQ_EMB, 'EC sub-subclass')]:.2f}× in embedding space) "
-                 f"against the protein map's {e_p:.2f}×.")
-    so, po = lifts[(SEQ_2D, "organism")], lifts[(PROT_2D, "organism")]
-    L.append(f"Organism lift: sequence map {so:.2f}×, protein map {po:.2f}×. "
-             + ("The sequence map is *less* organised by organism." if so < po else
-                "The sequence map is *more* organism-organised: orthologues across the "
-                "profile proteomes have near-identical sequences, so proximity by "
-                "organism here is phylogeny rather than curation practice — but it is "
-                "still organism."))
+        L.append(f"- **Enzyme function (EC sub-subclass), an input to neither map:** "
+                 f"sequence map 2-D {lifts[(SEQ_2D, 'EC sub-subclass')]:.2f}× "
+                 f"(centred embedding {lifts[(SEQ_CEN, 'EC sub-subclass')]:.2f}×), protein "
+                 f"map 2-D {lifts[(PROT_2D, 'EC sub-subclass')]:.2f}×.")
+    if (SEQ_2D, "organism") in lifts:
+        L.append(f"- **Organism:** sequence map 2-D {lifts[(SEQ_2D, 'organism')]:.2f}×, "
+                 f"protein map 2-D {lifts[(PROT_2D, 'organism')]:.2f}×. The cause of the "
+                 f"difference is not measured here.")
+
+    if args.breakdown:
+        trait = CTRL_2D if CTRL_2D in maps else PROT_2D
+        lab = label_sets[sf]
+        accs_all = sorted(lab)
+        n_sf = {a: len({superfamily(c) for c in cath[a]}) for a in accs_all}
+        subsets = [("all", accs_all),
+                   ("single-superfamily proteins", [a for a in accs_all if n_sf[a] == 1]),
+                   ("multi-superfamily proteins", [a for a in accs_all if n_sf[a] > 1])]
+        subsets += [(b, [a for a in accs_all if length_bin(proteins[a]["length"]) == b])
+                    for b in LENGTH_BINS]
+        cols = [SEQ_CEN, SEQ_2D, trait]
+        L += ["", f"## Breakdown: CATH superfamily, with bootstrap 95% intervals "
+              f"({args.bootstrap:,} resamples)", "",
+              "Lifts are not comparable *across* rows: chance and the share of "
+              "multi-superfamily proteins both change with length. The last column, the "
+              "embedding-to-trait-map ratio *within* a row, is the comparable quantity. "
+              f"Trait map here: {trait}.", "",
+              "| subset | n | chance | multi-superfamily | " + " | ".join(cols)
+              + " | centred embedding ÷ trait map |", "|---|--:|--:|--:|" + "--:|" * (len(cols) + 1)]
+        rng = np.random.default_rng(0)
+        for name, accs in subsets:
+            if len(accs) < 100:
+                L.append(f"| {name} | {len(accs)} | — | — | " + " | ".join(["too few"] * (len(cols) + 1)) + " |")
+                continue
+            y = np.asarray([lab[a] for a in accs])
+            res = rng.integers(0, len(accs), size=(args.bootstrap, len(accs)))
+            boots, point, cells, chance = {}, {}, [], 0.0
+            for sn in cols:
+                ind = neighbours(space(sn, accs), args.k)
+                obs, chance = purity(ind, y)
+                boots[sn] = bootstrap_lifts(ind, y, res)
+                point[sn] = obs / chance
+                lo, hi = np.percentile(boots[sn], [2.5, 97.5])
+                cells.append(f"{point[sn]:.1f}× [{lo:.1f}, {hi:.1f}]")
+            # chance cancels in the ratio: same proteins, same labels, same resample
+            lo, hi = np.percentile(boots[SEQ_CEN] / boots[trait], [2.5, 97.5])
+            multi = sum(n_sf[a] > 1 for a in accs) / len(accs)
+            L.append(f"| {name} | {len(accs):,} | {chance:.4f} | {100 * multi:.0f}% | "
+                     + " | ".join(cells)
+                     + f" | {point[SEQ_CEN] / point[trait]:.2f} [{lo:.2f}, {hi:.2f}] |")
 
     L += ["", "## Caveats", "",
           "- The protein map ships only 2-D coordinates, so its pre-projection (50-d "
           "SVD) space is not measured here; `research/protein-map-feature-space.md` "
           "reports 3.12× CATH-*class* lift there on a different, larger protein set.",
-          "- Multi-CATH proteins are labelled by their first sorted assignment"
-          + (" for class; superfamily uses any-match." if args.any_match else
-             " for both labels; `--any-match` relaxes superfamily."),
-          "- EC labels come from the Swiss-Prot profiles, so the EC rows cover only "
-          "the profile proteomes' enzymes; the first EC number is used for "
-          "multi-EC proteins.",
+          "- The two 2-D layouts were computed over different populations (the protein "
+          "map over every profile protein, the sequence map over the example proteins); "
+          "both are scored on the shared subset.",
+          "- CATH class is the majority class of a protein's assignments; CATH "
+          "superfamily is the first sorted assignment"
+          + (" relaxed to any shared superfamily (`--any-match`)." if args.any_match
+             else " (`--any-match` relaxes it)."),
+          "- EC and organism labels come from the Swiss-Prot profiles, so those rows "
+          "cover only the profile proteomes; the first EC number is used for multi-EC "
+          "proteins.",
           "- Every row is scored on the shared subset, which is biased toward "
           "well-characterised proteins."]
 
