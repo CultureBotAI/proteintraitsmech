@@ -1,7 +1,7 @@
 """The corpus map's hover tooltip, checked where a browser is not available.
 
-`docs/map.html` serves all three maps — full-record corpus, definition-only
-corpus, and proteins — from one canvas and one tooltip, so these checks cover
+`docs/map.html` serves all four maps — full-record corpus, definition-only
+corpus, proteins, and sequences — from one canvas and one tooltip, so these checks cover
 every map at once. The identifier in the tooltip is tinted with the marker
 colour of the point under the cursor; that only helps if the tint is the colour
 actually painted, and if every hue in every palette stays legible on the
@@ -115,7 +115,7 @@ def _shipped_palettes() -> dict[str, str]:
 
 
 def _all_marker_colors() -> dict[str, str]:
-    """Marker hues across all three maps, keyed by palette:group."""
+    """Marker hues across all four maps, keyed by palette:group."""
     html = MAP_HTML.read_text(encoding="utf-8")
     protein = PROTEIN_MAP.read_text(encoding="utf-8")
     palettes = {
