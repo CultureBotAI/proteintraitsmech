@@ -553,6 +553,7 @@ def test_production_stage_is_artifact_conditional_and_never_synthesizes_inputs()
 
 def test_production_reaction_direction_and_trait_sets_replay_with_synthetic_pair(
     tmp_path: Path,
+    production_registry_pin,
 ) -> None:
     """Exercise real release-141 catalogues without pretending the mapping was fetched."""
     required = (
@@ -563,6 +564,9 @@ def test_production_reaction_direction_and_trait_sets_replay_with_synthetic_pair
     )
     if not all(path.exists() for path in required):
         pytest.skip("ignored production Rhea/grounding artifacts are not installed")
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY, release=stage.EXPECTED_UNIPROT_RELEASE
+    )
     raw = tmp_path / "synthetic-rhea-inputs"
     mapping = raw / "rhea2uniprot_sprot.tsv"
     properties = raw / "rhea-release.properties"
