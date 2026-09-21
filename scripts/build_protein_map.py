@@ -146,6 +146,10 @@ def main() -> int:
                          "(repeatable) — a control map for measuring a label the "
                          "default map takes as input, e.g. --exclude-prefix CATH")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--dump-space", metavar="DIR",
+                    help="also write the pre-projection SVD space (ids.json + "
+                         "space.f32.npy + meta.json) so it can be measured, not only "
+                         "the 2-D layout; e.g. data/embeddings/protein_map_space")
     args = ap.parse_args()
 
     try:
@@ -250,6 +254,23 @@ def main() -> int:
     svd = TruncatedSVD(n_components=n_comp, random_state=args.seed)
     dense = svd.fit_transform(X)
     explained = None
+
+    if args.dump_space:
+        space_dir = Path(args.dump_space)
+        space_dir.mkdir(parents=True, exist_ok=True)
+        (space_dir / "ids.json").write_text(
+            json.dumps([r["accession"] for r in rows]), encoding="utf-8")
+        np.save(space_dir / "space.f32.npy", dense.astype(np.float32))
+        (space_dir / "meta.json").write_text(json.dumps({
+            "space": "TruncatedSVD of the L2-normalised TF-IDF protein × trait matrix"
+                     if args.weighting == "tfidf" else
+                     "TruncatedSVD of the binary protein × trait matrix",
+            "dim": int(dense.shape[1]), "count": int(dense.shape[0]),
+            "features": int(X.shape[1]), "min_support": args.min_support,
+            "excluded_prefixes": sorted(excluded), "seed": args.seed}, indent=2),
+            encoding="utf-8")
+        print(f"wrote the {dense.shape[1]}-d SVD space of {dense.shape[0]:,} proteins → "
+              f"{rel(space_dir)}/", file=sys.stderr)
 
     if args.method == "pca":
         # the first two components of an *uncentred* truncated SVD — reporting

@@ -205,6 +205,30 @@
     interpro/api_cache.json (gitignored, deletable, re-fetchable); nothing fetched is
     committed, here or anywhere else under data/raw/.
 
+# UniProtKB taxon + lineage for the embedded example proteins (REST API; map labels only)
+-
+  url: https://rest.uniprot.org/uniprotkb/accessions
+  local_name: uniprot_lineage/lineage.jsonl
+  name: UniProtKB organism and lineage for canonical-example accessions (REST API)
+  source: uniprot_lineage
+  license: CC BY 4.0 (UniProt Consortium)
+  license_url: https://www.uniprot.org/help/license
+  status: enrichment
+  role: api
+  fetcher: fetch_uniprot_lineage.py
+  note: >-
+    NOT a bulk download -- exact-accession batches (100 per request, ~128 requests) against
+    the accessions endpoint, fields accession/organism_id/organism_name/lineage, for the
+    proteins embedded by embed_sequences.py. It exists because 2,686 of the 12,705
+    canonical examples carry no taxon_id and the sequence map could not colour by domain of
+    life without one (#712). Label source for docs/data/sequence_map.json only: nothing is
+    written to a trait record or to data/grounding, and no example gains a taxon_id from it
+    (that belongs to the release-pinned grounding workflow). Every response must carry the
+    same x-uniprot-release; rows and a receipt (release, UTC time, counts, accessions not
+    returned, sha256) live in data/raw/uniprot_lineage/ (gitignored, deletable,
+    re-fetchable). The map ships organism names and domains derived from it, under
+    UniProt's CC BY 4.0 attribution.
+
 # Pfam-A families (public domain; Pfam ⊂ InterPro, each linked via InterPro xref)
 -
   url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz

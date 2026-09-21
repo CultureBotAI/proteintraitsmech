@@ -29,10 +29,16 @@ Spaces, all scored on the same proteins with the same k:
                                   anisotropic; centring alone would change
                                   nothing, Euclidean neighbours being
                                   translation-invariant
-  PCA(100) + L2                   what PaCMAP is actually given
+  layout input                    what PaCMAP is actually given, rebuilt from the
+                                  prep / PCA / seed recorded in the map
   sequence map 2-D                what a reader sees
-  protein map 2-D                 the shipped trait map (only 2-D is shipped)
+  protein map 2-D                 the shipped trait map
   control protein map 2-D         optional, CATH excluded from its inputs
+  protein map SVD space           optional (`--protein-space`, `--control-space`):
+                                  the 50-d space the trait map's layout came from,
+                                  written by `build_protein_map.py --dump-space`,
+                                  so embedding is compared with embedding and not
+                                  only with a 2-D layout
 
 `--breakdown` adds CATH-superfamily lifts for single- vs multi-superfamily
 proteins and by sequence length, each with a bootstrap 95% interval (proteins
@@ -58,8 +64,14 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
-from build_sequence_map import LENGTH_BINS, cath_class, cath_labels, length_bin  # noqa: E402
-from measure_map_structure import neighbours, purity  # noqa: E402
+from build_sequence_map import (  # noqa: E402
+    LENGTH_BINS,
+    cath_class,
+    cath_labels,
+    length_bin,
+    prepare,
+)
+from measure_map_structure import neighbours  # noqa: E402
 
 DOCS = REPO_ROOT / "docs" / "data"
 EMB = REPO_ROOT / "data" / "embeddings" / "esm2"
@@ -67,10 +79,13 @@ PROFILES = REPO_ROOT / "data" / "profiles" / "profiles.jsonl"
 
 SEQ_RAW = "ESM-2 embedding, raw (1,280-d)"
 SEQ_CEN = "ESM-2 embedding, centred + L2 (1,280-d)"
-SEQ_PCA = "PCA + L2 (PaCMAP's input)"
+SEQ_PCA = "layout input (what PaCMAP is given)"
 SEQ_2D = "sequence map 2-D"
 PROT_2D = "protein map 2-D (TF-IDF traits, CATH among the inputs)"
 CTRL_2D = "control protein map 2-D (CATH excluded from the inputs)"
+PROT_SVD = "protein map SVD space (CATH among the inputs)"
+CTRL_SVD = "control protein map SVD space (CATH excluded)"
+L2_SUFFIX = ", L2-normalised"
 
 
 def superfamily(curie: str) -> str:
@@ -85,41 +100,84 @@ def ec_levels(ec: str, n: int) -> str | None:
     return ".".join(parts[:n])
 
 
-def any_match_purity(ind, label_sets):
-    """Purity where a neighbour counts if it shares any label; chance is the
-    mean pairwise share rate over a random draw of the same neighbourhoods."""
+def share_matrix(label_sets):
+    """n × n boolean: do proteins i and j share any label? The diagonal is False,
+    so a protein never counts as its own match, in purity or in chance."""
     import numpy as np
 
-    n, k = ind.shape
-    obs = sum(1 for i in range(n) for j in ind[i] if label_sets[i] & label_sets[j]) / (n * k)
-    rng = np.random.default_rng(0)
-    rand = rng.integers(0, n, size=(n, k))
-    ch = sum(1 for i in range(n) for j in rand[i] if label_sets[i] & label_sets[j]) / (n * k)
-    return obs, ch
+    labels = sorted(set().union(*label_sets)) if label_sets else []
+    col = {lab: j for j, lab in enumerate(labels)}
+    M = np.zeros((len(label_sets), len(labels)), dtype=np.float32)
+    for i, labs in enumerate(label_sets):
+        for lab in labs:
+            M[i, col[lab]] = 1.0
+    S = (M @ M.T) > 0
+    np.fill_diagonal(S, False)
+    return S
 
 
-def bootstrap_lifts(ind, y, resamples):
-    """Lift for each bootstrap resample of the proteins, neighbourhoods fixed.
+class Scorer:
+    """Neighbour purity, its chance level and their bootstrap for one set of proteins.
 
-    Per-protein purity is computed once; each resample re-averages it and
-    recomputes chance on the resampled labels, so the interval covers both the
-    numerator and the baseline. Chance uses the collision estimator
-    (n·Σp̂² − 1)/(n − 1) rather than the plug-in Σp̂²: drawing with replacement
-    duplicates proteins, which inflates Σp̂² by about (1 − Σp²)/n — 15% with
-    several hundred rare superfamilies in under a thousand proteins — and would
-    push every interval below its own point estimate.
+    Two labelings. *Single*: each protein has one label; chance is Σp². *Any-match*
+    (`label_sets`): a neighbour counts if it shares any label; chance is the exact
+    share rate over all pairs of distinct proteins. Chance does not depend on the
+    space, so it and its bootstrap are computed once and reused for every space.
+
+    Bootstrap: proteins are resampled, neighbourhoods stay fixed. Chance is
+    re-estimated on each resample over pairs of *distinct* proteins — for single
+    labels that is the collision estimator (n·Σp̂² − 1)/(n − 1). The plug-in Σp̂²
+    would count a protein drawn twice as a matching pair, inflating chance by
+    about (1 − Σp²)/n (15% with several hundred rare superfamilies in under a
+    thousand proteins) and pushing every interval below its own point estimate.
     """
-    import numpy as np
 
-    codes = np.unique(y, return_inverse=True)[1]
-    per_point = (codes[ind] == codes[:, None]).mean(axis=1)
-    k = int(codes.max()) + 1
-    out = np.empty(len(resamples), dtype=float)
-    for b, idx in enumerate(resamples):
-        n = len(idx)
-        p = np.bincount(codes[idx], minlength=k) / n
-        out[b] = per_point[idx].mean() / ((n * float((p ** 2).sum()) - 1.0) / (n - 1))
-    return out
+    def __init__(self, y=None, label_sets=None, resamples=None):
+        import numpy as np
+
+        self.np = np
+        self.resamples = resamples
+        if label_sets is not None:
+            self.S = share_matrix(label_sets)
+            n = len(label_sets)
+            self.chance = float(self.S.sum()) / (n * (n - 1))
+        else:
+            self.S = None
+            self.codes = np.unique(y, return_inverse=True)[1]
+            n = len(self.codes)
+            p = np.bincount(self.codes) / n
+            self.chance = float((p ** 2).sum())
+        self.n = n
+        self._chance_boot = None
+
+    def per_point(self, ind):
+        np = self.np
+        if self.S is not None:
+            return self.S[np.arange(self.n)[:, None], ind].mean(axis=1)
+        return (self.codes[ind] == self.codes[:, None]).mean(axis=1)
+
+    def lift(self, ind):
+        return float(self.per_point(ind).mean()) / self.chance if self.chance else 0.0
+
+    def chance_boot(self):
+        np = self.np
+        if self._chance_boot is None:
+            out = np.empty(len(self.resamples), dtype=float)
+            Sf = self.S.astype(np.float32) if self.S is not None else None
+            for b, idx in enumerate(self.resamples):
+                m = len(idx)
+                if Sf is not None:
+                    w = np.bincount(idx, minlength=self.n).astype(np.float32)
+                    out[b] = float(w @ (Sf @ w)) / float(m * m - (w ** 2).sum())
+                else:
+                    p = np.bincount(self.codes[idx]) / m
+                    out[b] = (m * float((p ** 2).sum()) - 1.0) / (m - 1)
+            self._chance_boot = out
+        return self._chance_boot
+
+    def lift_boot(self, ind):
+        pp = self.per_point(ind)
+        return self.np.asarray([pp[idx].mean() for idx in self.resamples]) / self.chance_boot()
 
 
 def load_map(path: str) -> dict:
@@ -136,6 +194,10 @@ def main() -> int:
     ap.add_argument("--protein-map", default="protein_map.json")
     ap.add_argument("--control-map", default=None,
                     help="a protein map built with --exclude-prefix CATH")
+    ap.add_argument("--protein-space", default=None,
+                    help="dir from `build_protein_map.py --dump-space`")
+    ap.add_argument("--control-space", default=None,
+                    help="the same for the --exclude-prefix CATH control")
     ap.add_argument("--emb-dir", default=str(EMB))
     ap.add_argument("--k", type=int, default=25)
     ap.add_argument("--any-match", action="store_true",
@@ -149,7 +211,7 @@ def main() -> int:
 
     try:
         import numpy as np
-        from sklearn.decomposition import PCA
+        import sklearn.neighbors  # noqa: F401  (the neighbour search needs it)
     except ImportError:
         print("needs numpy + scikit-learn — run with the interpreter that has them "
               "(miniforge python3 here), not `uv run`.", file=sys.stderr)
@@ -180,14 +242,31 @@ def main() -> int:
     # The spaces the layout passes through, rebuilt the way build_sequence_map.py
     # builds them (over every embedded protein, not just the scored subset).
     lay = seq.get("embedding") or {}
-    centred = vecs - vecs.mean(axis=0, keepdims=True)
-    centred /= np.maximum(np.linalg.norm(centred, axis=1, keepdims=True), 1e-12)
-    n_comp = min(int(lay.get("pca") or 100), vecs.shape[0] - 1, vecs.shape[1])
+    prep = lay.get("prep") or "l2"            # maps built before --prep existed
+    pca_dims = int(lay["pca"]) if lay.get("pca") is not None else 100
+    centred, *_ = prepare(vecs, "centre", 0)
+    pca_in, _, n_comp, _, _ = prepare(vecs, prep, pca_dims)
     unit = vecs / np.maximum(np.linalg.norm(vecs, axis=1, keepdims=True), 1e-12)
-    scores = PCA(n_components=n_comp, random_state=int(lay.get("seed") or 42)
-                 ).fit_transform(unit).astype(np.float32)
-    pca_in = scores / np.maximum(np.linalg.norm(scores, axis=1, keepdims=True), 1e-12)
     mean_cos = float(np.linalg.norm(unit.mean(axis=0)) ** 2)   # ≈ mean pairwise cosine
+
+    # the trait map's own pre-projection spaces, when they were written out
+    svd_spaces: dict[str, tuple[dict[str, int], object]] = {}
+    for name, d in ((PROT_SVD, args.protein_space), (CTRL_SVD, args.control_space)):
+        if d:
+            sd = Path(d)
+            try:
+                sids = json.loads((sd / "ids.json").read_text(encoding="utf-8"))
+                mat = np.load(sd / "space.f32.npy")
+                srow = {a: i for i, a in enumerate(sids)}
+                svd_spaces[name] = (srow, mat)
+                # as the layout consumed it, and with the row lengths taken out: TF-IDF
+                # SVD rows differ in length ~100-fold, and cosine geometry scores higher
+                svd_spaces[name + L2_SUFFIX] = (
+                    srow, mat / np.maximum(np.linalg.norm(mat, axis=1, keepdims=True), 1e-12))
+            except FileNotFoundError as e:
+                print(f"missing {e.filename} — build it with `build_protein_map.py "
+                      f"--dump-space {d}`.", file=sys.stderr)
+                return 2
 
     # organism and EC from the Swiss-Prot profiles: one spelling per proteome,
     # and an input to neither map
@@ -207,7 +286,8 @@ def main() -> int:
     seq_pt = {p[3]: p for p in seq["points"]}
     map_pts = {name: {p[3]: p for p in m["points"]} for name, m in maps.items()}
     shared_all = sorted(a for a in seq_pt if a in row_of
-                        and all(a in pts for pts in map_pts.values()))
+                        and all(a in pts for pts in map_pts.values())
+                        and all(a in rows for rows, _ in svd_spaces.values()))
 
     label_sets = {
         "organism": {a: org[a] for a in shared_all if a in org},
@@ -231,10 +311,13 @@ def main() -> int:
             return centred[rows]
         if name == SEQ_PCA:
             return pca_in[rows]
+        if name in svd_spaces:
+            srow, mat = svd_spaces[name]
+            return mat[[srow[a] for a in accs]]
         pts = seq_pt if name == SEQ_2D else map_pts[name]
         return np.asarray([[pts[a][0], pts[a][1]] for a in accs], dtype=np.float32)
 
-    space_names = [SEQ_RAW, SEQ_CEN, SEQ_PCA, SEQ_2D] + list(maps)
+    space_names = [SEQ_RAW, SEQ_CEN, SEQ_PCA, SEQ_2D] + list(maps) + list(svd_spaces)
     lifts: dict[tuple[str, str], float] = {}
     lab_names = [n for n, lab in label_sets.items() if len(lab) >= 100]
 
@@ -244,25 +327,24 @@ def main() -> int:
          + "".join(f", {len(pts):,} on the {n.split(' 2-D')[0]}" for n, pts in map_pts.items())
          + f"). Per label, only proteins carrying that label count; k={args.k} "
          f"neighbours. Lift = purity / purity expected from label proportions; "
-         f"1.0× is no structure. PCA({n_comp}); mean pairwise cosine of the raw "
-         f"embedding {mean_cos:.2f}.", "",
+         f"1.0× is no structure. Layout input: {prep} → "
+         + (f"PCA({n_comp}) → L2" if n_comp else "no PCA")
+         + f"; mean pairwise cosine of the raw embedding {mean_cos:.2f}.", "",
          "| label | proteins | classes | chance |", "|---|--:|--:|--:|"]
     table = {sn: [] for sn in space_names}
     for lab_name in lab_names:
         lab = label_sets[lab_name]
         accs = sorted(lab)
         y = np.asarray([lab[a] for a in accs])
-        sf_sets = [{superfamily(c) for c in cath[a]} for a in accs] \
-            if lab_name == "CATH superfamily" and args.any_match else None
-        chance = None
+        any_match = lab_name == "CATH superfamily" and args.any_match
+        scorer = Scorer(label_sets=[{superfamily(c) for c in cath[a]} for a in accs]) \
+            if any_match else Scorer(y=y)
+        chance = scorer.chance
         for sn in space_names:
-            ind = neighbours(space(sn, accs), args.k)
-            obs, ch = any_match_purity(ind, sf_sets) if sf_sets is not None \
-                else purity(ind, y)
-            chance = ch
-            lifts[(sn, lab_name)] = obs / ch if ch else 0.0
+            lifts[(sn, lab_name)] = scorer.lift(neighbours(space(sn, accs), args.k))
             table[sn].append(f"{lifts[(sn, lab_name)]:.2f}×")
-        L.append(f"| {lab_name} | {len(accs):,} | {len(set(y.tolist())):,} | {chance:.4f} |")
+        L.append(f"| {lab_name}" + (" (any shared)" if any_match else "")
+                 + f" | {len(accs):,} | {len(set(y.tolist())):,} | {chance:.4f} |")
     L += ["", "| space | " + " | ".join(lab_names) + " |",
           "|---|" + "--:|" * len(lab_names)]
     L += [f"| {sn} | " + " | ".join(table[sn]) + " |" for sn in space_names]
@@ -280,10 +362,19 @@ def main() -> int:
                  f"the CATH features moves it {p2:.2f}× → {c2:.2f}×, so they account for "
                  f"{100 * (p2 - c2) / p2:.0f}% of it. Against that control the sequence map "
                  f"is " + ("above" if s2 > c2 else "below") + f" ({s2:.2f}× vs {c2:.2f}×).")
+    layout_input = f"{prep} → " + (f"PCA({n_comp}) → L2" if n_comp else "no PCA")
     L.append(f"- **Where the sequence map's signal goes:** centring and re-normalising "
-             f"the raw embedding moves it {sr:.2f}× → {sc:.2f}×; PCA + L2, PaCMAP's actual "
-             f"input, holds {sp:.2f}× ({100 * sp / sc:.0f}% of that); the 2-D layout holds "
-             f"{s2:.2f}× ({100 * s2 / sp:.0f}% of its input).")
+             f"the raw embedding moves it {sr:.2f}× → {sc:.2f}×; the layout's input "
+             f"({layout_input}) holds {sp:.2f}× ({100 * sp / sc:.0f}% of that); the 2-D "
+             f"layout holds {s2:.2f}× ({100 * s2 / sp:.0f}% of its input).")
+    for svd_name in svd_spaces:
+        if svd_name.endswith(L2_SUFFIX):
+            continue
+        v, v2 = lifts[(svd_name, sf)], lifts[(svd_name + L2_SUFFIX, sf)]
+        L.append(f"- **Embedding against embedding:** the {svd_name} scores {v:.2f}× as the "
+                 f"layout consumed it and {v2:.2f}× L2-normalised; the best sequence space "
+                 f"(centred + L2) scores {sc:.2f}×, {100 * sc / v:.0f}% and "
+                 f"{100 * sc / v2:.0f}% of those.")
     if (SEQ_2D, "EC sub-subclass") in lifts:
         L.append(f"- **Enzyme function (EC sub-subclass), an input to neither map:** "
                  f"sequence map 2-D {lifts[(SEQ_2D, 'EC sub-subclass')]:.2f}× "
@@ -304,40 +395,54 @@ def main() -> int:
                    ("multi-superfamily proteins", [a for a in accs_all if n_sf[a] > 1])]
         subsets += [(b, [a for a in accs_all if length_bin(proteins[a]["length"]) == b])
                     for b in LENGTH_BINS]
-        cols = [SEQ_CEN, SEQ_2D, trait]
+        trait_svd = CTRL_SVD if CTRL_SVD in svd_spaces else (
+            PROT_SVD if PROT_SVD in svd_spaces else None)
+        cols = [SEQ_CEN, SEQ_2D, trait] + ([trait_svd] if trait_svd else [])
+        how = ("a neighbour counts if it shares ANY superfamily (`--any-match`)"
+               if args.any_match else
+               "each protein is scored on its FIRST-SORTED superfamily only — re-run with "
+               "`--any-match`, which can reverse the single- vs multi-superfamily comparison")
         L += ["", f"## Breakdown: CATH superfamily, with bootstrap 95% intervals "
-              f"({args.bootstrap:,} resamples)", "",
+              f"({args.bootstrap:,} resamples)", "", f"Labelling: {how}.", "",
               "Lifts are not comparable *across* rows: chance and the share of "
               "multi-superfamily proteins both change with length. The last column, the "
               "embedding-to-trait-map ratio *within* a row, is the comparable quantity. "
               f"Trait map here: {trait}.", "",
               "| subset | n | chance | multi-superfamily | " + " | ".join(cols)
-              + " | centred embedding ÷ trait map |", "|---|--:|--:|--:|" + "--:|" * (len(cols) + 1)]
+              + " | centred embedding ÷ trait map 2-D |"
+              + (" centred embedding ÷ trait SVD space |" if trait_svd else ""),
+              "|---|--:|--:|--:|" + "--:|" * (len(cols) + 1 + bool(trait_svd))]
         rng = np.random.default_rng(0)
         for name, accs in subsets:
             if len(accs) < 100:
-                L.append(f"| {name} | {len(accs)} | — | — | " + " | ".join(["too few"] * (len(cols) + 1)) + " |")
+                L.append(f"| {name} | {len(accs)} | — | — | "
+                         + " | ".join(["too few"] * (len(cols) + 1 + bool(trait_svd))) + " |")
                 continue
-            y = np.asarray([lab[a] for a in accs])
             res = rng.integers(0, len(accs), size=(args.bootstrap, len(accs)))
-            boots, point, cells, chance = {}, {}, [], 0.0
+            scorer = Scorer(label_sets=[{superfamily(c) for c in cath[a]} for a in accs],
+                            resamples=res) if args.any_match else \
+                Scorer(y=np.asarray([lab[a] for a in accs]), resamples=res)
+            chance = scorer.chance
+            boots, point, cells = {}, {}, []
             for sn in cols:
                 ind = neighbours(space(sn, accs), args.k)
-                obs, chance = purity(ind, y)
-                boots[sn] = bootstrap_lifts(ind, y, res)
-                point[sn] = obs / chance
+                boots[sn], point[sn] = scorer.lift_boot(ind), scorer.lift(ind)
                 lo, hi = np.percentile(boots[sn], [2.5, 97.5])
                 cells.append(f"{point[sn]:.1f}× [{lo:.1f}, {hi:.1f}]")
             # chance cancels in the ratio: same proteins, same labels, same resample
             lo, hi = np.percentile(boots[SEQ_CEN] / boots[trait], [2.5, 97.5])
             multi = sum(n_sf[a] > 1 for a in accs) / len(accs)
-            L.append(f"| {name} | {len(accs):,} | {chance:.4f} | {100 * multi:.0f}% | "
-                     + " | ".join(cells)
-                     + f" | {point[SEQ_CEN] / point[trait]:.2f} [{lo:.2f}, {hi:.2f}] |")
+            row = (f"| {name} | {len(accs):,} | {chance:.4f} | {100 * multi:.0f}% | "
+                   + " | ".join(cells)
+                   + f" | {point[SEQ_CEN] / point[trait]:.2f} [{lo:.2f}, {hi:.2f}] |")
+            if trait_svd:
+                lo, hi = np.percentile(boots[SEQ_CEN] / boots[trait_svd], [2.5, 97.5])
+                row += f" {point[SEQ_CEN] / point[trait_svd]:.2f} [{lo:.2f}, {hi:.2f}] |"
+            L.append(row)
 
     L += ["", "## Caveats", "",
-          "- The protein map ships only 2-D coordinates, so its pre-projection (50-d "
-          "SVD) space is not measured here; `research/protein-map-feature-space.md` "
+          "- Without `--protein-space`, the protein map is measured in 2-D only; "
+          "`research/protein-map-feature-space.md` "
           "reports 3.12× CATH-*class* lift there on a different, larger protein set.",
           "- The two 2-D layouts were computed over different populations (the protein "
           "map over every profile protein, the sequence map over the example proteins); "

@@ -137,6 +137,96 @@ def test_verify_picks_always_include_the_longest():
     assert embed.verify_picks(lengths, 0) == []
 
 
+def test_the_mps_fallback_is_refused_unless_explicitly_allowed():
+    # #508 asked for it to stay unset; a warning is easy to scroll past (#710)
+    assert embed.mps_fallback_problem({}, False) is None
+    assert embed.mps_fallback_problem({"PYTORCH_ENABLE_MPS_FALLBACK": "0"}, False) is None
+    assert embed.mps_fallback_problem({"PYTORCH_ENABLE_MPS_FALLBACK": ""}, False) is None
+    refused = embed.mps_fallback_problem({"PYTORCH_ENABLE_MPS_FALLBACK": "1"}, False)
+    assert refused.startswith("error:") and "--allow-mps-fallback" in refused
+    allowed = embed.mps_fallback_problem({"PYTORCH_ENABLE_MPS_FALLBACK": "1"}, True)
+    assert allowed.startswith("warning:")
+
+
+def test_the_fallback_guard_applies_to_mps_only_and_runs_before_the_corpus_is_parsed():
+    # a CPU or CUDA run has no reason to be blocked by an MPS-only variable, and a
+    # refusal should not cost the 80 s it takes to parse the corpus first
+    src = (SCRIPTS / "embed_sequences.py").read_text(encoding="utf-8")
+    main = src[src.index("def main()"):]
+    guard = main.index("mps_fallback_problem(os.environ")
+    assert 'if device.type == "mps":' in main[:guard]
+    assert main.index("device = pick_device(args.device)") < guard < main.index(
+        "files = sequence_files(")
+    assert main.count("pick_device(args.device)") == 1
+
+
+# ---------------------------------------------------------------- preparation
+
+
+def _blobs():
+    rng = np.random.default_rng(0)
+    common = rng.normal(size=16) * 8           # the shared direction raw ESM means have
+    a = common + rng.normal(size=(30, 16))
+    b = common + rng.normal(size=(30, 16)) + np.eye(16)[0] * 4
+    return np.vstack([a, b]).astype(np.float32)
+
+
+def test_prepare_centres_before_normalising_only_when_asked():
+    X = _blobs()
+    l2, *_ = build.prepare(X, "l2", 0)
+    centred, *_ = build.prepare(X, "centre", 0)
+    assert np.allclose(np.linalg.norm(l2, axis=1), 1, atol=1e-5)
+    assert np.allclose(np.linalg.norm(centred, axis=1), 1, atol=1e-5)
+    # uncentred unit vectors all point the same way; centred ones do not
+    assert float(np.linalg.norm(l2.mean(axis=0))) > 0.9
+    assert float(np.linalg.norm(centred.mean(axis=0))) < 0.3
+    assert X[0, 0] == _blobs()[0, 0], "prepare must not modify its input"
+
+
+def test_prepare_with_pca_returns_unit_rows_and_the_variance_it_kept():
+    Z, scores, n_comp, kept, ratios = build.prepare(_blobs(), "centre", 4)
+    assert Z.shape == (60, 4) and scores.shape == (60, 4) and n_comp == 4
+    assert np.allclose(np.linalg.norm(Z, axis=1), 1, atol=1e-5)
+    assert 0 < kept <= 1 and len(ratios) == 4 and kept == pytest.approx(sum(ratios))
+    Z0, scores0, n0, kept0, ratios0 = build.prepare(_blobs(), "l2", 0)
+    assert scores0 is None and n0 == 0 and kept0 == 1.0 and ratios0 == []
+    with pytest.raises(ValueError):
+        build.prepare(_blobs(), "whiten", 0)
+
+
+def test_pca_component_signs_are_fixed_by_the_largest_loading():
+    # an SVD is only defined up to sign per component; without the convention two
+    # numpy builds could mirror the map. Feeding the mirrored data must flip nothing
+    # but the scores themselves.
+    X = _blobs()
+    centred = X - X.mean(axis=0)
+    _, scores, *_ = build.prepare(X, "centre", 3)
+    Xu = centred / np.linalg.norm(centred, axis=1, keepdims=True)
+    Xc = Xu.astype(np.float64) - Xu.mean(axis=0, dtype=np.float64)
+    _, _, Vt = np.linalg.svd(Xc, full_matrices=False)
+    for c in range(3):
+        loading = Vt[c] * np.sign(Vt[c][np.abs(Vt[c]).argmax()])
+        assert loading[np.abs(loading).argmax()] > 0
+        assert np.allclose(scores[:, c], Xc @ loading, atol=1e-4), \
+            f"component {c} does not follow the largest-loading-positive convention"
+
+
+def test_a_negative_pca_width_is_refused():
+    with pytest.raises(ValueError, match=">= 0"):
+        build.prepare(_blobs(), "l2", -3)
+
+
+def test_prepare_is_deterministic_and_matches_the_definition_of_pca():
+    X = _blobs()
+    Z1, s1, *_ = build.prepare(X, "centre", 5)
+    Z2, s2, *_ = build.prepare(X.copy(), "centre", 5)
+    assert np.array_equal(s1, s2) and np.array_equal(Z1, Z2)
+    # scores are uncorrelated and ordered by variance, which is what makes them PCA
+    cov = np.cov(s1.astype(np.float64), rowvar=False)
+    assert np.allclose(cov - np.diag(np.diag(cov)), 0, atol=1e-3)
+    assert np.all(np.diff(np.diag(cov)) <= 1e-6)
+
+
 # --------------------------------------------------------------------- facets
 
 
@@ -185,6 +275,37 @@ def test_cath_labels_merge_the_example_families_with_the_profiles(tmp_path):
     assert labels["UniProtKB:P2"] == []
 
 
+def test_domain_groups_keep_the_three_validated_hues_and_fold_the_rest():
+    assert build.domain_group({"domain": "Bacteria"}) == "Bacteria"
+    assert build.domain_group({"domain": "Viruses"}) == build.OTHER_DOMAIN
+    assert build.domain_group({"domain": "Unresolved"}) == build.OTHER_DOMAIN
+    assert build.domain_group(None) == build.OTHER_DOMAIN
+    # the three domains reuse the protein map's palette; nothing new to validate
+    protein_map = _load("build_protein_map")
+    assert set(build.DOMAIN_ORDER) == set(protein_map.DOMAIN_COLORS_LIGHT)
+    assert build.OTHER_COLOR.lower() in (ROOT / "docs" / "map.html").read_text().lower(), \
+        "the remainder must use the page's own fallback grey, which the contrast test covers"
+
+
+def test_lineage_rows_load_by_accession_with_their_release(tmp_path):
+    path = tmp_path / "lineage.jsonl"
+    path.write_text(
+        json.dumps({"accession": "UniProtKB:P1", "domain": "Archaea",
+                    "organism": "Methanocaldococcus jannaschii",
+                    "uniprot_release": "2026_03"}) + "\n", encoding="utf-8")
+    rows, release = build.load_lineage(path)
+    assert release == "2026_03" and rows["UniProtKB:P1"]["domain"] == "Archaea"
+
+
+def test_colouring_by_domain_without_the_sidecar_is_refused_with_the_fix(tmp_path, monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", [
+        "build_sequence_map.py", "--emb-dir", str(_emb_dir(tmp_path, False)),
+        "--lineage", str(tmp_path / "absent.jsonl"), "--out", str(tmp_path / "m.json")])
+    assert build.main() == 2
+    err = capsys.readouterr().err
+    assert "fetch-uniprot-lineage" in err and "--colour axis" in err
+
+
 # ---------------------------------------------------------- the partial guard
 
 
@@ -219,6 +340,16 @@ def test_the_page_offers_the_sequence_map_and_deep_links_it():
     assert 'data-map="sequence_map.json"' in html
     assert re.search(r'"#sequences":\s*"sequence_map.json"', html)
     assert "just sequence-map" in html, "the not-built hint must name the recipe"
+
+
+def test_third_party_labels_are_credited_on_the_page_not_only_in_the_json():
+    # UniProt's organism names and lineage are CC BY 4.0: attribution where shown
+    html = (ROOT / "docs" / "map.html").read_text(encoding="utf-8")
+    assert "d.lineage.source" in html and "d.lineage.license" in html
+    shipped = json.loads((ROOT / "docs" / "data" / "sequence_map.json").read_text())
+    assert "UniProt" in shipped["lineage"]["source"]
+    assert "CC BY 4.0" in shipped["lineage"]["license"]
+    assert shipped["lineage"]["uniprot_release"]
 
 
 def test_the_second_facet_is_named_by_the_map_not_by_the_page():

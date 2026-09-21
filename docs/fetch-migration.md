@@ -73,6 +73,10 @@ magic bytes, stable content markers, or publisher checksums.
   it derives the exact accession set from one named review ledger and writes only that
   batch's ignored registry, membership, and blocked-accession staging outputs.
 - `fetch-interpro-missing-abstracts` — API enrichment of existing records.
+- `fetch-uniprot-lineage` — exact-accession batches for taxon and domain of life of the
+  embedded example proteins; map labels only, no record or grounding writes. Dry-run plan
+  by default, one-release rule on the `x-uniprot-release` header, per-batch checkpoint and
+  a receipt are in its Python client.
 
 These should reuse the helper only for any fixed bulk sub-download. Their pagination,
 checkpointing, authentication, and partial-result rules belong in their Python clients.

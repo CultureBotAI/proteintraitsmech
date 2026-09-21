@@ -676,17 +676,34 @@ embed-map *args:
 embed-sequences *args:
     python3 scripts/embed_sequences.py {{args}}
 
+# Taxon + domain of life for the embedded example proteins, from UniProt's accessions
+# endpoint → data/raw/uniprot_lineage/ (gitignored). Labels for the sequence map only;
+# writes no record. Dry-run plan by default. Run `just embed-sequences` first. (#712)
+#   just fetch-uniprot-lineage --apply --limit 25    # canary first
+fetch-uniprot-lineage *args:
+    python3 scripts/fetch_uniprot_lineage.py {{args}}
+
 # PaCMAP 2-D sequence-similarity map of the canonical-example proteins from the
-# ESM-2 embeddings → docs/data/sequence_map.json. Run `just embed-sequences` first.
+# ESM-2 embeddings → docs/data/sequence_map.json, coloured by domain of life. Run
+# `just embed-sequences` and `just fetch-uniprot-lineage --apply` first (or pass
+# --colour axis). --prep / --pca / --neighbors defaults come from `just sweep-sequence-map`.
 sequence-map *args:
     python3 scripts/build_sequence_map.py {{args}}
+
+# Which preprocessing and layout settings keep the most structure? Grid over prep ×
+# PCA width × neighbours, ranked on CATH superfamily with EC reported as the label
+# not used to choose, and a multi-seed comparison of the default against the best.
+# Read-only apart from --out. ~10 min. (#711)
+sweep-sequence-map *args:
+    python3 scripts/sweep_sequence_map.py {{args}}
 
 # Does the sequence map recover CATH structure better than the trait-based
 # protein map? Neighbour-purity lifts (organism / CATH class / CATH superfamily /
 # EC class / EC sub-subclass) on the proteins both maps share, in the raw,
-# centred, PCA and 2-D spaces. --control-map adds a protein map built with
-# `build_protein_map.py --exclude-prefix CATH`; --breakdown adds bootstrap
-# intervals by domain count and sequence length. Read-only.
+# centred, layout-input and 2-D spaces. --control-map adds a protein map built with
+# `build_protein_map.py --exclude-prefix CATH`; --protein-space / --control-space add
+# the trait map's own SVD space (`build_protein_map.py --dump-space DIR`);
+# --breakdown adds bootstrap intervals by domain count and sequence length. Read-only.
 measure-sequence-map *args:
     python3 scripts/measure_sequence_map.py {{args}}
 

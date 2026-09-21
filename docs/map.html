@@ -183,7 +183,11 @@
       document.getElementById("hint").textContent=
         `${coverage} · ${ml} projection${embLabel}`
         + (d.explained ? ` (PC1 ${(d.explained[0]*100).toFixed(1)}%, PC2 ${(d.explained[1]*100).toFixed(1)}% variance)` : "")
-        + ` · hover to identify, click to open · toggle ${esc(d.group_label||"axes")} in the legend.`;
+        + ` · hover to identify, click to open · toggle ${esc(d.group_label||"axes")} in the legend.`
+        // Labels taken from a third party are credited where they are shown (CC BY).
+        + (d.lineage ? ` Organism and ${d.group_label||"lineage"}: ${d.lineage.source}`
+            + (d.lineage.uniprot_release ? `, release ${d.lineage.uniprot_release}` : "")
+            + (d.lineage.license ? ` — ${d.lineage.license}.` : ".") : "");
       update(); buildCsv();
     }).catch(()=>{document.getElementById("hint").textContent=
       file.includes("sequence")
