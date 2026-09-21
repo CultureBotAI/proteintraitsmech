@@ -115,6 +115,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Review source/category routing | [review-source-categories](.claude/skills/review-source-categories/SKILL.md) |
 | Sample record quality | [review-record-samples](.claude/skills/review-record-samples/SKILL.md) |
 | Review one named record | [review-yaml-record](.claude/skills/review-yaml-record/SKILL.md) |
+| Review a record category/cohort | [review-yaml-category](.claude/skills/review-yaml-category/SKILL.md) |
 | Curate one named record | [curate-yaml-record](.claude/skills/curate-yaml-record/SKILL.md) |
 | Ground a protein example onto a record | [ground-protein-example](.claude/skills/ground-protein-example/SKILL.md) |
 | Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
