@@ -32,8 +32,12 @@ diluting multidomain proteins, from an ad hoc snippet that was never committed;
 the reproducible breakdown does not support it, and it is withdrawn. 2026-09-20
 (#711, #712): the layout settings were swept and changed, the trait map's own
 SVD space was exported and measured, and the map is coloured by domain of life.
-The 2-D map improved by 59%; the comparison with the trait map got *worse* for
-the embedding once it was made like for like.
+The shipped 2-D map's CATH-superfamily lift rose 58% (14.8× → 23.4×; 59% on
+five-seed means, 14.4× → 22.9×); the comparison with the trait map got *worse*
+for the embedding once it was made like for like. An independent review of
+that work (#743–#750) then showed that the argument against per-domain pooling
+depended on how multi-superfamily proteins were labelled, and turned up a bug
+in the shared neighbour search (#751); both are corrected below.
 
 ## What was built
 
@@ -68,9 +72,12 @@ limit, the longest titin at 34,350 aa (45 windows).
 | canary, 3 short proteins, MPS vs CPU FP32 | same-sequence cosine 1.00000, pairwise shift 0.00000 |
 | canary, titin (34,350 aa, 45 windows) | 0.3 min on MPS; cosine vs CPU 1.00000; largest MPS driver allocation sampled after a batch 8.9 GB |
 | full run, 12,560 unique sequences, 13,956 windows, 6.68 M residues | **48.8 min**, 2,279 residues/s; MPS driver allocation at the end of the run 7.7 GB |
-| PCA(100) variance kept | 87.4% |
-| 2-D layout | 8 s; densest 40×40 cell 1.0%, 94.7% distinct coordinates |
+| 2-D layout (centre → no PCA → 10 neighbours) | 7 s; densest 40×40 cell 1.4%; 89.2% of coordinates distinct at 3 decimals; 322 of 1,600 cells occupied |
+| superseded #508 layout (L2 → PCA(100) → 15 neighbours) | PCA kept 87.4% of variance; densest cell 1.0%; 94.7% distinct at 3 decimals; 484 cells occupied |
 
+The new layout uses less of the canvas because a handful of far outliers set its
+bounds. Rescaling to percentiles would recover about a hundred cells by pinning
+some 110 proteins to false positions on the border, so it is left as it is.
 MPS has no peak-memory counter, so the memory figures are samples, not peaks.
 The 60–90 min estimate in #508 was right. MPS reproduced CPU FP32 to five
 decimals, so the `--dtype float16` question never needed opening. After the
@@ -97,11 +104,18 @@ its first sorted one.
 |---|--:|--:|--:|--:|--:|
 | ESM-2 embedding, raw (1,280-d) | 1.69× | 1.63× | 29.27× | 1.63× | 9.02× |
 | ESM-2 embedding, centred + L2 (1,280-d) = the layout's input | 1.75× | 1.67× | 33.01× | 1.74× | 9.84× |
-| sequence map 2-D | 1.57× | 1.50× | 23.37× | 1.51× | 6.92× |
-| protein map 2-D (CATH among its inputs) | 1.15× | 1.59× | 52.01× | 1.92× | 12.48× |
-| control protein map 2-D (CATH excluded) | 1.15× | 1.55× | 49.98× | 1.86× | 12.49× |
-| protein map SVD space, 50-d (CATH among its inputs) | 1.17× | 1.82× | 70.06× | 2.14× | 15.83× |
-| control protein map SVD space, 50-d (CATH excluded) | 1.18× | 1.75× | 65.72× | 2.13× | 15.96× |
+| sequence map 2-D | 1.57× | 1.50× | 23.36× | 1.51× | 6.92× |
+| protein map 2-D (CATH among its inputs) | 1.15× | 1.58× | 51.95× | 1.92× | 12.45× |
+| control protein map 2-D (CATH excluded) | 1.15× | 1.55× | 49.90× | 1.86× | 12.47× |
+| protein map SVD space, 50-d, as its layout consumed it | 1.14× | 1.82× | 70.01× | 2.14× | 15.78× |
+| — the same, L2-normalised | 1.17× | 1.89× | 74.95× | 2.18× | 16.06× |
+| control protein map SVD space, 50-d (CATH excluded) | 1.15× | 1.75× | 65.61× | 2.13× | 15.91× |
+| — the same, L2-normalised | 1.15× | 1.81× | 70.46× | 2.13× | 16.83× |
+
+These differ in the second decimal from the 2026-09-20 draft because the shared
+neighbour search left a point in its own neighbour list whenever rows were
+duplicated — 45% of proteins in the trait map's SVD space, 1% in the sequence
+embedding (#751). Self is now excluded everywhere.
 
 What these say:
 
@@ -116,14 +130,18 @@ What these say:
 3. **Like for like, the gap is a factor of two.** The first two revisions could
    only set the sequence embedding against the trait map's *2-D layout*. With
    `build_protein_map.py --dump-space` the trait map's own 50-d space is
-   measurable: 65.7× without CATH, against 33.0× for the best sequence space.
+   measurable: 65.6× without CATH as its layout consumed it and 70.5×
+   L2-normalised, against 33.0× for the best sequence space — 50% and 47%.
 4. **On enzyme function, an input to neither map, the trait map also wins**:
-   16.0× vs 9.8× in embedding space, 12.5× vs 6.9× in 2-D.
+   15.9× vs 9.8× in embedding space, 12.5× vs 6.9× in 2-D. EC is not independent
+   of CATH (nearly every EC-labelled protein here has a CATH label too), so this
+   is a second view of the same result, not separate confirmation.
 5. **The layout was throwing signal away, and mostly no longer does.** #508's
    L2 → PCA(100) → L2 input held 26.8× of the centred embedding's 33.0×, and 15
    neighbours kept 55% of that in 2-D. Centring, no PCA and 10 neighbours keep
    71% of 33.0×. The sweep shows 5 neighbours would keep 80% — and lower the
-   global triplet score in every seed, so it was not adopted.
+   global triplet score in every seed, so it was not adopted. The choice was
+   made on five-seed means, not on the grid's single seed.
 6. **The sequence map is more organised by organism** (1.57× vs 1.15×). What
    drives that is not measured here.
 
@@ -132,33 +150,51 @@ What these say:
 CATH superfamily, with bootstrap 95% intervals (1,000 resamples of proteins,
 neighbourhoods fixed), against the control protein map. **Lifts are not
 comparable across rows** — chance and the share of multi-superfamily proteins
-both change with length — so the last column, the ratio within a row, is the
-number to read.
+both change with length — so only ratios *within* a row are read.
 
-| subset | n | chance | multi-superfamily | ESM-2 centred + L2 | sequence map 2-D | control protein map 2-D | control protein map SVD space | embedding ÷ trait 2-D | embedding ÷ trait SVD space |
-|---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
-| all | 4,966 | 0.0049 | 49% | 33.0× [30.7, 35.5] | 23.4× [21.7, 25.1] | 50.0× [46.9, 53.4] | 65.7× [61.6, 70.3] | 0.66 [0.64, 0.68] | 0.50 [0.49, 0.51] |
-| single-superfamily proteins | 2,548 | 0.0065 | 0% | 28.9× [26.9, 31.0] | 20.6× [19.2, 22.3] | 40.8× [38.1, 43.6] | 57.3× [53.7, 61.2] | 0.71 [0.68, 0.74] | 0.50 [0.49, 0.52] |
-| multi-superfamily proteins | 2,418 | 0.0082 | 100% | 16.9× [15.0, 19.0] | 13.6× [12.1, 15.2] | 24.8× [22.1, 27.8] | 29.0× [26.0, 32.4] | 0.68 [0.65, 0.71] | 0.58 [0.56, 0.61] |
-| ≤ 200 aa | 792 | 0.0084 | 10% | 17.8× [16.5, 19.2] | 15.6× [14.5, 16.9] | 15.6× [14.2, 17.1] | 22.8× [21.2, 24.6] | 1.14 [1.06, 1.23] | 0.78 [0.74, 0.82] |
-| 201–500 aa | 2,182 | 0.0067 | 41% | 24.3× [22.2, 26.5] | 18.2× [16.5, 20.0] | 33.1× [30.6, 35.8] | 44.6× [41.3, 48.0] | 0.73 [0.70, 0.76] | 0.54 [0.53, 0.56] |
-| 501–1,022 aa | 1,446 | 0.0082 | 71% | 14.3× [12.7, 16.2] | 11.1× [9.8, 12.7] | 20.6× [18.4, 23.2] | 26.2× [23.4, 29.3] | 0.69 [0.65, 0.74] | 0.54 [0.51, 0.58] |
-| > 1,022 aa (windowed) | 546 | 0.0176 | 76% | 5.7× [4.8, 6.6] | 4.8× [4.0, 5.7] | 9.3× [8.2, 10.5] | 10.9× [9.6, 12.3] | 0.61 [0.55, 0.68] | 0.52 [0.48, 0.56] |
+Half of these proteins carry more than one CATH superfamily, and there are two
+defensible ways to score them. **First-label** gives each protein its
+first-sorted superfamily. **Any-match** (`--any-match`) counts a neighbour that
+shares any superfamily, with chance taken as the exact share rate over all
+pairs. The two are identical for single-superfamily proteins by definition, and
+the corrected scorer returns 0.50 for that row under both.
 
-- **Multidomain dilution is not the explanation.** If a whole-chain mean
-  blurring several folds were the cost, the embedding should close the gap on
-  single-superfamily proteins. Against the trait map's SVD space the ratio is
-  0.50 there and 0.58 on *multi*-superfamily proteins — the opposite direction.
+Centred + L2 embedding ÷ control trait map, as ratio [95% interval]:
+
+| subset | n | multi | first-label ÷ 2-D | first-label ÷ SVD space | any-match ÷ 2-D | any-match ÷ SVD space |
+|---|--:|--:|--:|--:|--:|--:|
+| all | 4,966 | 49% | 0.66 [0.64, 0.68] | 0.50 [0.49, 0.52] | 0.57 [0.55, 0.58] | 0.44 [0.43, 0.45] |
+| single-superfamily | 2,548 | 0% | 0.71 [0.68, 0.74] | 0.50 [0.49, 0.52] | 0.71 [0.68, 0.74] | 0.50 [0.49, 0.52] |
+| multi-superfamily | 2,418 | 100% | 0.68 [0.66, 0.72] | 0.58 [0.56, 0.61] | 0.56 [0.54, 0.58] | 0.48 [0.46, 0.49] |
+| ≤ 200 aa | 792 | 10% | 1.14 [1.06, 1.23] | 0.78 [0.74, 0.82] | 1.05 [0.97, 1.14] | 0.74 [0.69, 0.78] |
+| 201–500 aa | 2,182 | 41% | 0.73 [0.70, 0.77] | 0.55 [0.53, 0.56] | 0.65 [0.63, 0.68] | 0.48 [0.47, 0.50] |
+| 501–1,022 aa | 1,446 | 71% | 0.69 [0.65, 0.74] | 0.55 [0.52, 0.58] | 0.57 [0.55, 0.60] | 0.45 [0.43, 0.47] |
+| > 1,022 aa (windowed) | 546 | 76% | 0.61 [0.55, 0.68] | 0.52 [0.48, 0.56] | 0.55 [0.51, 0.58] | 0.48 [0.44, 0.50] |
+
+The absolute lifts behind these are printed by the script (first-label, all:
+embedding 33.0× [30.7, 35.5], sequence map 2-D 23.4×, control 2-D 49.9×,
+control SVD space 65.6× [61.5, 70.2]).
+
+- **Whether multidomain dilution explains the gap is not settled, and the
+  labelling decides which way it points.** Under first-label the embedding does
+  relatively *better* on multi-superfamily proteins (0.58 vs 0.50 against the
+  trait map's space). Under any-match it does *worse* (0.48 vs 0.50), and much
+  worse against the 2-D layout (0.56 vs 0.71). First-label penalises a
+  multi-domain protein's neighbours for matching its second domain, in both
+  maps but not equally; any-match rewards large multi-domain proteins for
+  sharing anything. The 2026-09-19 revision withdrew the dilution claim and the
+  2026-09-20 draft claimed the opposite on the first-label column alone; neither
+  is supported. Per-domain pooling (#711) is the experiment that would decide it.
 - **The "short proteins" exception was an artefact of comparing an embedding
-  with a 2-D layout.** The embedding beats the control trait map's 2-D layout
-  for proteins of 200 residues or fewer (1.14, interval excluding 1), which the
-  previous revision reported. Against that map's own space it does not (0.78
-  [0.74, 0.82]). Short proteins are where it comes closest; it leads nowhere.
-- **In 2-D the two maps now tie for short proteins** (15.6× each), where the
-  first build trailed 11.6× to 15.6×.
-- **The ratio still falls with length** against the 2-D layout (1.14 → 0.61);
-  against the SVD space it is flat from 201 residues up (0.54, 0.54, 0.52). The
-  cause of the short-protein advantage is not established.
+  with a 2-D layout.** Against the control map's 2-D layout the embedding leads
+  for proteins of 200 residues or fewer under first-label (1.14, interval
+  excluding 1) and ties under any-match (1.05 [0.97, 1.14]). Against that map's
+  own space it trails under both (0.78, 0.74). It leads nowhere.
+- **The ratio falls with length** under every column, most steeply under
+  any-match against 2-D (1.05 → 0.55), which is the pattern dilution predicts —
+  and also the pattern expected if longer proteins simply carry more signatures
+  for the trait map to match on. Length, domain count and annotation depth move
+  together here and this design cannot separate them.
 
 ## Verdict
 
@@ -176,11 +212,13 @@ similarity; the landing text claims no more than that.
 - **Done in this revision:** centre before normalising, sweep PCA width and
   neighbours (`research/sequence-map-sweep.md`), and measure the trait map's
   own SVD space. The first two improved the map; the third widened the gap.
-- **Pool per domain rather than per chain** is still open (#711), but this
-  round's data argue against it as the explanation: the embedding does
-  *relatively better* on multi-superfamily proteins. It would need
-  CATH-Gene3D match coordinates, which `data/raw/interpro_matches/` holds for
-  193 proteins; `just fetch-interpro-frame` can fetch the rest.
+- **Pool per domain rather than per chain** is still open (#711) and is the
+  experiment the breakdown cannot replace: score each CATH-Gene3D domain's own
+  residue mean against that domain's superfamily, beside the whole-chain mean of
+  the same protein. It needs match coordinates, which
+  `data/raw/interpro_matches/` holds for 193 proteins (`just
+  fetch-interpro-frame` fetches the rest, about 5,000 API calls), and one more
+  GPU pass that keeps per-region means.
 - **Domain-of-life colour** is done (#712), from UniProt's lineage per
   accession rather than a taxonomy dump: it also supplies an organism for the
   2,686 examples that carry no taxon id. Those ids are *not* written back to

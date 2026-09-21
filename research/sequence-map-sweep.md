@@ -1,6 +1,8 @@
 # Sequence map: preprocessing and layout sweep
 
-12,705 proteins embedded; scored on 4,989 with a CATH superfamily (912 classes) and 2,227 with an EC sub-subclass (176 classes) that are also on the protein map. Neighbour-purity lift at k=25; PaCMAP, seed 42 for the grid. **Ranked on CATH superfamily; EC and the global score were not used to choose.** Global = random-triplet accuracy against the centred 1,280-d embedding over 199,963 triplets (0.5 = random).
+12,705 proteins embedded; scored on 4,989 with a CATH superfamily (912 classes) and 2,227 with an EC sub-subclass (176 classes) that are also on the protein map. Neighbour-purity lift at k=25; PaCMAP. Global = random-triplet accuracy against the centred 1,280-d embedding over 199,963 triplets (0.5 = random).
+
+## Grid, seed 42, ranked on 2-D CATH superfamily
 
 | prep | PCA | neighbours | variance kept | input CATH | 2-D CATH | 2-D ÷ input | input EC | 2-D EC | global |
 |---|--:|--:|--:|--:|--:|--:|--:|--:|--:|
@@ -24,7 +26,7 @@
 | l2 | none | 15 | 100.0% | 29.4× | **15.7×** | 53% | 9.0× | 5.2× | 0.699 |
 | centre | 100 | 15 | 85.8% | 26.8× | **14.7×** | 55% | 8.1× | 5.4× | 0.714 |
 | centre | none | 30 | 100.0% | 33.1× | **14.3×** | 43% | 9.9× | 5.2× | 0.715 |
-| l2 | 100 | 15 | 87.4% | 26.9× | **14.1×** | 53% | 8.1× | 4.9× | 0.716 ← shipped |
+| l2 | 100 | 15 | 87.4% | 26.9× | **14.1×** | 53% | 8.1× | 4.9× | 0.716 ← #508 baseline |
 | centre | 200 | 30 | 91.7% | 30.5× | **13.9×** | 46% | 9.1× | 5.1× | 0.718 |
 | centre | 50 | 10 | 78.1% | 23.0× | **13.8×** | 60% | 7.0× | 4.8× | 0.711 |
 | l2 | 50 | 10 | 80.6% | 23.1× | **13.8×** | 60% | 7.1× | 4.8× | 0.713 |
@@ -45,27 +47,35 @@
 | l2 | 50 | 50 | 80.6% | 23.1× | **10.6×** | 46% | 7.1× | 4.3× | 0.729 |
 | l2 | none | 50 | 100.0% | 29.4× | **10.4×** | 35% | 9.0× | 4.1× | 0.730 |
 
-## Shipped default, best and choice, over 5 seeds
+## The leaders over 5 seeds, and the rule
 
-*Best* = highest 2-D CATH-superfamily lift. *Choice* = highest among configurations whose global score on the grid seed is at least the shipped default's (0.716).
+The #508 baseline and the top 8 of the grid, each over seeds [42, 1, 2, 3, 4]. **Rule:** a configuration is eligible if its mean global score is no more than one seed-standard-deviation of the baseline below the baseline's mean (0.715 − 0.003 = 0.712); the **choice** is the eligible configuration with the highest mean 2-D CATH-superfamily lift; the **best** ignores the rule.
 
-| configuration | 2-D CATH superfamily (mean, min–max) | 2-D EC sub-subclass (mean, min–max) | global (mean, min–max) |
-|---|--:|--:|--:|
-| l2 → PCA(100) → 15 nb (shipped) | 14.4× (14.1–14.9) | 5.1× (4.9–5.3) | 0.715 (0.711–0.720) |
-| centre → no PCA → 5 nb (best) | 26.2× (25.8–26.4) | 7.8× (7.7–8.0) | 0.679 (0.676–0.683) |
-| centre → no PCA → 10 nb (choice) | 22.9× (22.1–23.5) | 6.8× (6.7–6.9) | 0.718 (0.709–0.725) |
+| configuration | 2-D CATH superfamily (mean, min–max) | 2-D EC sub-subclass (mean, min–max) | global (mean, min–max) | eligible |
+|---|--:|--:|--:|:-:|
+| centre → no PCA → 5 nb (**best**) | 26.2× (25.8–26.4) | 7.8× (7.7–8.0) | 0.679 (0.676–0.683) | no |
+| centre → PCA(200) → 5 nb | 23.7× (23.6–24.1) | 7.0× (6.9–7.1) | 0.692 (0.686–0.698) | no |
+| l2 → PCA(200) → 5 nb | 23.4× (23.1–23.7) | 6.9× (6.8–7.1) | 0.696 (0.691–0.704) | no |
+| centre → no PCA → 10 nb (**choice**) | 22.9× (22.1–23.5) | 6.8× (6.7–6.9) | 0.718 (0.709–0.725) | yes |
+| l2 → no PCA → 5 nb | 22.3× (21.8–22.8) | 7.1× (6.9–7.4) | 0.682 (0.680–0.687) | no |
+| l2 → PCA(200) → 10 nb | 21.4× (21.1–21.7) | 6.6× (6.5–6.8) | 0.717 (0.712–0.722) | yes |
+| centre → PCA(200) → 10 nb | 20.8× (20.1–21.3) | 6.6× (6.5–6.7) | 0.707 (0.696–0.719) | no |
+| l2 → PCA(100) → 5 nb | 20.1× (19.8–20.2) | 6.2× (6.1–6.3) | 0.698 (0.687–0.711) | no |
+| l2 → PCA(100) → 15 nb (**#508 baseline**) | 14.4× (14.1–14.9) | 5.1× (4.9–5.3) | 0.715 (0.711–0.720) | yes |
 
-**Best (centre → no PCA → 5 nb) against the shipped default:**
+**Best (centre → no PCA → 5 nb) against the #508 baseline:**
 
-- CATH superfamily, the label used to rank: worst seed 25.8× vs the default's best seed 14.9× — clear of seed noise.
-- EC sub-subclass, not used to rank: 7.8× vs 5.1× — the gain carries over to a label the setting was not tuned on.
-- Global structure: 0.679 (0.676–0.683) vs 0.715 (0.711–0.720) — every seed is below every seed of the default: the local gain is paid for with the global picture.
+- CATH superfamily, the label ranked on: worst seed 25.8× vs the baseline's best seed 14.9× — clear of seed noise.
+- Global structure: mean 0.679 vs 0.715; below the baseline on 5 of 5 matched seeds; every seed is below every seed of the baseline — the local gain is paid for with the global picture.
+- EC sub-subclass: 7.8× vs 5.1×.
 
-**Choice (centre → no PCA → 10 nb) against the shipped default:**
+**Choice (centre → no PCA → 10 nb) against the #508 baseline:**
 
-- CATH superfamily, the label used to rank: worst seed 22.1× vs the default's best seed 14.9× — clear of seed noise.
-- EC sub-subclass, not used to rank: 6.8× vs 5.1× — the gain carries over to a label the setting was not tuned on.
-- Global structure: 0.718 (0.709–0.725) vs 0.715 (0.711–0.720) — not below the default once seed spread is counted.
+- CATH superfamily, the label ranked on: worst seed 22.1× vs the baseline's best seed 14.9× — clear of seed noise.
+- Global structure: mean 0.718 vs 0.715; below the baseline on 1 of 5 matched seeds; the seed ranges overlap, so the two are not distinguishable on this score.
+- EC sub-subclass: 6.8× vs 5.1×.
+
+**What EC is and is not.** EC sub-subclass was never ranked on, but it is not independent evidence either: across this grid its 2-D lift tracks the CATH lift with Spearman ρ = 0.97, and nearly every EC-labelled protein here also carries a CATH label. It shows the gain is not peculiar to one label. The score that is independent of the ranking label is the global one.
 
 ## Marginal means of 2-D CATH-superfamily lift
 

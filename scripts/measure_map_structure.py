@@ -50,10 +50,20 @@ def neighbours(space, k):
     scored on provably identical neighbourhoods — which is the whole basis of
     the axis-vs-source comparison, not merely an optimisation.
     """
+    import numpy as np
     from sklearn.neighbors import NearestNeighbors
 
-    nn = NearestNeighbors(n_neighbors=min(k, len(space) - 1) + 1).fit(space)
-    return nn.kneighbors(space)[1][:, 1:]
+    k = min(k, len(space) - 1)
+    idx = NearestNeighbors(n_neighbors=k + 1).fit(space).kneighbors(space)[1]
+    # The query point is only guaranteed to come back first when nothing else is at
+    # distance zero. With duplicated rows — proteins with identical trait vectors,
+    # templated records with identical text, coordinates rounded to the same cell —
+    # a twin can take column 0 and leave the point in its own neighbour list, where
+    # it counts as a guaranteed label match. So self is removed wherever it is; if
+    # it was crowded out entirely, the farthest of the k + 1 goes instead.
+    not_self = idx != np.arange(len(space))[:, None]
+    order = np.argsort(~not_self, axis=1, kind="stable")
+    return np.take_along_axis(idx, order, axis=1)[:, :k]
 
 
 def purity(ind, labels):

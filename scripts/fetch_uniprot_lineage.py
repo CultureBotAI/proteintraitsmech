@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -166,9 +167,22 @@ def load_cache(out: Path) -> tuple[dict[str, dict], str | None]:
     return rows, (releases.pop() if releases else None)
 
 
+def load_not_returned(out: Path) -> list[str]:
+    """Accessions an earlier run asked for and UniProt did not return."""
+    path = out / "lineage.fetch.json"
+    try:
+        return list(json.loads(path.read_text(encoding="utf-8")).get("not_returned") or [])
+    except (OSError, ValueError):
+        return []
+
+
 def write_outputs(out: Path, rows: dict[str, dict], missing: list[str], release: str | None,
-                  release_date: str | None, asked: int) -> None:
+                  release_date: str | None) -> None:
+    """Rows and receipt. The receipt always describes the whole cache — never the
+    `--limit` of the run that happened to write it — so a canary after a full run
+    cannot shrink it or forget which accessions UniProt did not return."""
     out.mkdir(parents=True, exist_ok=True)
+    missing = sorted(set(missing) - set(rows))
     body = "".join(json.dumps(rows[a], sort_keys=True) + "\n" for a in sorted(rows))
     tmp = out / "lineage.jsonl.part"
     tmp.write_text(body, encoding="utf-8")
@@ -180,10 +194,10 @@ def write_outputs(out: Path, rows: dict[str, dict], missing: list[str], release:
         "endpoint": ENDPOINT, "fields": FIELDS, "uniprot_release": release,
         "uniprot_release_date": release_date,
         "fetched_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "accessions_asked": asked, "rows": len(rows),
+        "accessions_asked": len(rows) + len(missing), "rows": len(rows),
         "rows_without_taxon": sum(1 for r in rows.values() if not r["taxon_id"]),
         "domains": dict(sorted(domains.items())),
-        "not_returned": sorted(missing),
+        "not_returned": missing,
         "lineage_jsonl_sha256": hashlib.sha256(body.encode("utf-8")).hexdigest(),
         "license": "CC BY 4.0 (UniProt Consortium)",
     }
@@ -211,7 +225,9 @@ def fetch_batch(accessions: list[str], retries: int = 4) -> tuple[list[dict], st
                     link = resp.headers.get("Link") or ""
                     payload = json.load(resp)
                 break
-            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError,
+                    http.client.HTTPException, ConnectionError) as e:
+                # a dropped connection mid-body is none of the first three
                 status = getattr(e, "code", None)
                 if status is not None and status < 500 and status != 429:
                     raise LineageError(f"UniProt refused the request ({status}): {url}") from e
@@ -261,6 +277,10 @@ def main() -> int:
     except LineageError as e:
         print(f"error: {e}", file=sys.stderr)
         return 1
+    if args.expect_release and cached_release and cached_release != args.expect_release:
+        print(f"error: cached rows are from UniProt {cached_release}, not --expect-release "
+              f"{args.expect_release}; re-run with --refresh", file=sys.stderr)
+        return 1
     todo = [a for a in wanted if a not in cached]
     plan = {"endpoint": ENDPOINT, "fields": FIELDS, "accessions": len(wanted),
             "cached": len(wanted) - len(todo), "cached_release": cached_release,
@@ -274,7 +294,12 @@ def main() -> int:
 
     rows = dict(cached)
     release, release_date = cached_release, None
-    missing: list[str] = []
+    # what earlier runs could not get stays on the receipt unless this run gets it
+    missing: list[str] = [] if args.refresh else load_not_returned(out)
+    if not todo:
+        print(f"nothing to fetch: all {len(wanted):,} accessions are cached (UniProt "
+              f"{cached_release}); outputs left untouched", file=sys.stderr)
+        return 0
     try:
         for n, batch in enumerate(batches(todo, args.batch), 1):
             entries, got, date = fetch_batch(batch)
@@ -290,15 +315,14 @@ def main() -> int:
             new_rows, not_returned = match_results(batch, entries, got)
             rows.update({bare(r["accession"]): r for r in new_rows})
             missing.extend(not_returned)
-            write_outputs(out, rows, missing, release, release_date, len(wanted))
+            write_outputs(out, rows, missing, release, release_date)
             print(f"  batch {n}: {len(new_rows)}/{len(batch)} returned · {len(rows):,} rows "
                   f"· UniProt {got}", file=sys.stderr)
             time.sleep(args.sleep)
     except LineageError as e:
         print(f"error: {e}", file=sys.stderr)
         return 1
-    if not todo:
-        write_outputs(out, rows, missing, release, release_date, len(wanted))
+    missing = sorted(set(missing) - set(rows))
     print(f"{len(rows):,} rows in {out / 'lineage.jsonl'} (UniProt {release}); "
           f"{len(missing)} accession(s) not returned", file=sys.stderr)
     return 0

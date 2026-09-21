@@ -14,7 +14,7 @@ Layout: subtract the corpus mean from the 1,280-d mean embeddings → L2-normali
 → PaCMAP, Euclidean, 10 neighbours, PCA init, no PCA before or inside it. #508
 proposed L2 → PCA(100) → L2 → 15 neighbours as a reasoned default; the sweep in
 `research/sequence-map-sweep.md` measured it against the alternatives and these
-settings keep 59% more CATH-superfamily structure in 2-D at the same global
+settings keep 59% more CATH-superfamily structure in 2-D (five-seed means) at the same global
 triplet accuracy. UMAP and PCA are secondary `--method` options (`--method pca`
 needs `--pca N`).
 
@@ -133,6 +133,8 @@ def prepare(vecs, prep: str, pca_dims: int):
     X /= np.maximum(np.linalg.norm(X, axis=1, keepdims=True), 1e-12)
     if not pca_dims:
         return X, None, 0, 1.0, []
+    if pca_dims < 0:
+        raise ValueError(f"pca_dims must be >= 0, not {pca_dims}")
     n_comp = min(pca_dims, X.shape[0] - 1, X.shape[1])
     Xc = X.astype(np.float64) - X.mean(axis=0, keepdims=True, dtype=np.float64)
     U, S, Vt = np.linalg.svd(Xc, full_matrices=False)
@@ -263,6 +265,9 @@ def main() -> int:
     X = vecs[keep]
     rows = [proteins[i] for i in keep]
 
+    if args.pca < 0:
+        print("--pca must be 0 (no PCA) or a positive number of components", file=sys.stderr)
+        return 2
     if args.method == "pca" and not args.pca:
         print("--method pca needs --pca > 0", file=sys.stderr)
         return 2

@@ -23,9 +23,9 @@ domain inside a huge multidomain protein; both are stated limitations, and both
 are smaller errors for a *similarity* map than truncating to the N-terminus.
 
 Compute: FP32, on MPS when available (Apple Silicon), else CUDA, else CPU.
-`PYTORCH_ENABLE_MPS_FALLBACK` must be unset, so an unsupported op fails visibly
-instead of silently running on CPU; the run refuses otherwise
-(`--allow-mps-fallback` overrides).
+On MPS, `PYTORCH_ENABLE_MPS_FALLBACK` must be unset, so an unsupported op fails
+visibly instead of silently running on CPU; the run refuses otherwise
+(`--allow-mps-fallback` overrides). CPU and CUDA runs ignore the variable.
 
 Cache: vectors are cached by sequence SHA-256 in files named for the model,
 revision and compute dtype that made them (`cache_<key>.json` + `.f32.npy`), so
@@ -436,12 +436,6 @@ def main() -> int:
                          "working tree is mid-rewrite by another job")
     args = ap.parse_args()
 
-    problem = mps_fallback_problem(os.environ, args.allow_mps_fallback)
-    if problem:
-        print(problem, file=sys.stderr)
-        if not args.allow_mps_fallback:
-            return 2
-
     try:
         import numpy as np
         import torch
@@ -449,6 +443,16 @@ def main() -> int:
         print("needs torch + transformers + numpy — run with the interpreter that has "
               "them (miniforge python3 here), not `uv run`.", file=sys.stderr)
         return 2
+
+    # Chosen before the corpus is parsed, so a refusal costs nothing. The variable
+    # only changes behaviour on MPS; a CPU or CUDA run has no reason to be blocked.
+    device = pick_device(args.device)
+    if device.type == "mps":
+        problem = mps_fallback_problem(os.environ, args.allow_mps_fallback)
+        if problem:
+            print(problem, file=sys.stderr)
+            if not args.allow_mps_fallback:
+                return 2
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -481,7 +485,6 @@ def main() -> int:
     print(f"cache {cache_key(*cache_id)}: {len(uniq) - len(todo):,} hit, "
           f"{len(todo):,} to embed", file=sys.stderr)
 
-    device = pick_device(args.device)
     embedded_now: set[str] = set()
     if todo:
         print(f"loading {args.model}@{args.revision[:8]} ({args.dtype}) on {device}",

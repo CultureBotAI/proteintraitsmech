@@ -148,12 +148,16 @@ def test_the_mps_fallback_is_refused_unless_explicitly_allowed():
     assert allowed.startswith("warning:")
 
 
-def test_the_embedder_exits_before_loading_anything_when_the_fallback_is_set():
+def test_the_fallback_guard_applies_to_mps_only_and_runs_before_the_corpus_is_parsed():
+    # a CPU or CUDA run has no reason to be blocked by an MPS-only variable, and a
+    # refusal should not cost the 80 s it takes to parse the corpus first
     src = (SCRIPTS / "embed_sequences.py").read_text(encoding="utf-8")
-    guard = src.index("mps_fallback_problem(os.environ")
-    assert guard < src.index("import torch\n    except ImportError"), \
-        "the guard must run before torch is imported or the corpus is parsed"
-    assert "if not args.allow_mps_fallback:\n            return 2" in src
+    main = src[src.index("def main()"):]
+    guard = main.index("mps_fallback_problem(os.environ")
+    assert 'if device.type == "mps":' in main[:guard]
+    assert main.index("device = pick_device(args.device)") < guard < main.index(
+        "files = sequence_files(")
+    assert main.count("pick_device(args.device)") == 1
 
 
 # ---------------------------------------------------------------- preparation
@@ -188,6 +192,28 @@ def test_prepare_with_pca_returns_unit_rows_and_the_variance_it_kept():
     assert scores0 is None and n0 == 0 and kept0 == 1.0 and ratios0 == []
     with pytest.raises(ValueError):
         build.prepare(_blobs(), "whiten", 0)
+
+
+def test_pca_component_signs_are_fixed_by_the_largest_loading():
+    # an SVD is only defined up to sign per component; without the convention two
+    # numpy builds could mirror the map. Feeding the mirrored data must flip nothing
+    # but the scores themselves.
+    X = _blobs()
+    centred = X - X.mean(axis=0)
+    _, scores, *_ = build.prepare(X, "centre", 3)
+    Xu = centred / np.linalg.norm(centred, axis=1, keepdims=True)
+    Xc = Xu.astype(np.float64) - Xu.mean(axis=0, dtype=np.float64)
+    _, _, Vt = np.linalg.svd(Xc, full_matrices=False)
+    for c in range(3):
+        loading = Vt[c] * np.sign(Vt[c][np.abs(Vt[c]).argmax()])
+        assert loading[np.abs(loading).argmax()] > 0
+        assert np.allclose(scores[:, c], Xc @ loading, atol=1e-4), \
+            f"component {c} does not follow the largest-loading-positive convention"
+
+
+def test_a_negative_pca_width_is_refused():
+    with pytest.raises(ValueError, match=">= 0"):
+        build.prepare(_blobs(), "l2", -3)
 
 
 def test_prepare_is_deterministic_and_matches_the_definition_of_pca():
@@ -314,6 +340,16 @@ def test_the_page_offers_the_sequence_map_and_deep_links_it():
     assert 'data-map="sequence_map.json"' in html
     assert re.search(r'"#sequences":\s*"sequence_map.json"', html)
     assert "just sequence-map" in html, "the not-built hint must name the recipe"
+
+
+def test_third_party_labels_are_credited_on_the_page_not_only_in_the_json():
+    # UniProt's organism names and lineage are CC BY 4.0: attribution where shown
+    html = (ROOT / "docs" / "map.html").read_text(encoding="utf-8")
+    assert "d.lineage.source" in html and "d.lineage.license" in html
+    shipped = json.loads((ROOT / "docs" / "data" / "sequence_map.json").read_text())
+    assert "UniProt" in shipped["lineage"]["source"]
+    assert "CC BY 4.0" in shipped["lineage"]["license"]
+    assert shipped["lineage"]["uniprot_release"]
 
 
 def test_the_second_facet_is_named_by_the_map_not_by_the_page():

@@ -90,12 +90,89 @@ def test_only_uniprot_accession_syntax_is_ever_requested(tmp_path):
         fetch.load_accessions(bad)
 
 
+def _apply(monkeypatch, tmp_path, accessions, answer, *extra):
+    """Run main() --apply with UniProt replaced by `answer(batch) -> entries`."""
+    src = tmp_path / "proteins.jsonl"
+    src.write_text("".join(json.dumps({"accession": f"UniProtKB:{a}"}) + "\n"
+                           for a in accessions), encoding="utf-8")
+    calls = []
+
+    def fake_fetch(batch, retries=4):
+        calls.append(list(batch))
+        return answer(batch), "2026_03", "02-September-2026"
+
+    monkeypatch.setattr(fetch, "fetch_batch", fake_fetch)
+    monkeypatch.setattr(fetch.time, "sleep", lambda s: None)
+    monkeypatch.setattr(sys, "argv", ["fetch_uniprot_lineage.py", "--accessions-from", str(src),
+                                      "--out-dir", str(tmp_path / "out"), "--apply", *extra])
+    return fetch.main(), calls
+
+
+def test_a_canary_after_a_full_run_leaves_the_receipt_alone(tmp_path, monkeypatch):
+    # #742 review: `--apply --limit 25` after a full run rewrote the receipt as
+    # "asked 25, not_returned []" with zero requests made
+    accs = ["P11111", "P22222", "P33333", "Q44444"]
+
+    def answer(batch):
+        return [_entry(a) for a in batch if a != "Q44444"]      # UniProt never returns this one
+
+    code, calls = _apply(monkeypatch, tmp_path, accs, answer)
+    assert code == 0 and len(calls) == 1
+    receipt_path = tmp_path / "out" / "lineage.fetch.json"
+    before = receipt_path.read_text()
+    assert json.loads(before)["not_returned"] == ["Q44444"]
+    assert json.loads(before)["accessions_asked"] == 4 and json.loads(before)["rows"] == 3
+
+    code, calls = _apply(monkeypatch, tmp_path, accs, answer, "--limit", "2")
+    assert code == 0 and calls == [], "everything asked for was cached: no request"
+    assert receipt_path.read_text() == before, "a no-op run must not touch the receipt"
+
+
+def test_what_uniprot_never_returned_survives_a_later_partial_run(tmp_path, monkeypatch):
+    def answer(batch):
+        return [_entry(a) for a in batch if a != "Q44444"]
+
+    _apply(monkeypatch, tmp_path, ["P11111", "Q44444"], answer)
+    code, calls = _apply(monkeypatch, tmp_path, ["P11111", "Q44444", "P55555"], answer,
+                         "--limit", "1")          # asks only for P11111: cached, no-op
+    assert code == 0 and calls == []
+    code, calls = _apply(monkeypatch, tmp_path, ["P11111", "P55555"], answer)
+    receipt = json.loads((tmp_path / "out" / "lineage.fetch.json").read_text())
+    assert calls == [["P55555"]]
+    assert receipt["not_returned"] == ["Q44444"], "an earlier miss stays on the receipt"
+    assert receipt["rows"] == 2 and receipt["accessions_asked"] == 3
+
+
+def test_expect_release_is_checked_against_the_cache_before_any_request(tmp_path, monkeypatch, capsys):
+    _apply(monkeypatch, tmp_path, ["P11111"], lambda b: [_entry(a) for a in b])
+    code, calls = _apply(monkeypatch, tmp_path, ["P11111"], lambda b: [],
+                         "--expect-release", "2099_01")
+    assert code == 1 and calls == []
+    assert "2099_01" in capsys.readouterr().err
+
+
+def test_a_dropped_connection_is_retried_not_a_traceback(monkeypatch):
+    import http.client
+
+    attempts = []
+
+    def flaky(req, timeout=0):
+        attempts.append(1)
+        raise http.client.RemoteDisconnected("closed")
+
+    monkeypatch.setattr(fetch.urllib.request, "urlopen", flaky)
+    monkeypatch.setattr(fetch.time, "sleep", lambda s: None)
+    with pytest.raises(fetch.LineageError, match="failed after 3 tries"):
+        fetch.fetch_batch(["P12345"], retries=3)
+    assert len(attempts) == 3
+
+
 def test_outputs_round_trip_and_the_receipt_describes_them(tmp_path):
     rows = {"P11111": fetch.row_from_entry("P11111", _entry("P11111"), "2026_03"),
             "P22222": fetch.row_from_entry(
                 "P22222", _entry("P22222", taxon=562, name="Escherichia coli",
                                  lineage=(("domain", "Bacteria"),)), "2026_03")}
-    fetch.write_outputs(tmp_path, rows, ["A0A000DEAD0"], "2026_03", "02-September-2026", 3)
+    fetch.write_outputs(tmp_path, rows, ["A0A000DEAD0"], "2026_03", "02-September-2026")
     cached, release = fetch.load_cache(tmp_path)
     assert release == "2026_03" and set(cached) == {"P11111", "P22222"}
     receipt = json.loads((tmp_path / "lineage.fetch.json").read_text())
