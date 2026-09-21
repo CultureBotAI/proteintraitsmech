@@ -23,8 +23,9 @@ domain inside a huge multidomain protein; both are stated limitations, and both
 are smaller errors for a *similarity* map than truncating to the N-terminus.
 
 Compute: FP32, on MPS when available (Apple Silicon), else CUDA, else CPU.
-`PYTORCH_ENABLE_MPS_FALLBACK` should stay unset so an unsupported op fails
-visibly instead of silently running on CPU.
+`PYTORCH_ENABLE_MPS_FALLBACK` must be unset, so an unsupported op fails visibly
+instead of silently running on CPU; the run refuses otherwise
+(`--allow-mps-fallback` overrides).
 
 Cache: vectors are cached by sequence SHA-256 in files named for the model,
 revision and compute dtype that made them (`cache_<key>.json` + `.f32.npy`), so
@@ -375,6 +376,22 @@ def save_cache(out: Path, cache: dict, model: str, revision: str, dtype: str) ->
     os.replace(tmp_i, index_p)
 
 
+def mps_fallback_problem(environ, allowed: bool) -> str | None:
+    """What to say when PYTORCH_ENABLE_MPS_FALLBACK is set, or None.
+
+    #508 asked for it to stay unset so an op MPS cannot run fails visibly
+    instead of quietly running on CPU. "0" and the empty string are PyTorch's
+    own spellings of off.
+    """
+    if environ.get("PYTORCH_ENABLE_MPS_FALLBACK", "") in ("", "0"):
+        return None
+    if allowed:
+        return ("warning: PYTORCH_ENABLE_MPS_FALLBACK is set and --allow-mps-fallback was "
+                "given — an op MPS cannot run will run on CPU without saying so.")
+    return ("error: PYTORCH_ENABLE_MPS_FALLBACK is set, so an op MPS cannot run would run on "
+            "CPU without saying so. Unset it, or pass --allow-mps-fallback to accept that.")
+
+
 def verify_picks(lengths: list[int], n: int) -> list[int]:
     """Row indices to re-embed on CPU: spread over the length range, always
     including the longest, which is the one that exercises windowing."""
@@ -409,6 +426,9 @@ def main() -> int:
                          "shift < 0.01)")
     ap.add_argument("--checkpoint-every", type=int, default=500,
                     help="write the cache every N newly embedded proteins")
+    ap.add_argument("--allow-mps-fallback", action="store_true",
+                    help="run even though PYTORCH_ENABLE_MPS_FALLBACK is set (an "
+                         "unsupported op would then run on CPU without saying so)")
     ap.add_argument("--out-dir", default=str(OUT))
     ap.add_argument("--traits-dir", default=str(TRAITS),
                     help="records to read — e.g. an export of a commit "
@@ -416,9 +436,11 @@ def main() -> int:
                          "working tree is mid-rewrite by another job")
     args = ap.parse_args()
 
-    if os.environ.get("PYTORCH_ENABLE_MPS_FALLBACK"):
-        print("warning: PYTORCH_ENABLE_MPS_FALLBACK is set — an unsupported op would "
-              "silently run on CPU; unset it so failures are visible.", file=sys.stderr)
+    problem = mps_fallback_problem(os.environ, args.allow_mps_fallback)
+    if problem:
+        print(problem, file=sys.stderr)
+        if not args.allow_mps_fallback:
+            return 2
 
     try:
         import numpy as np
