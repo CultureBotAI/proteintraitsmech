@@ -818,7 +818,7 @@ def test_required_descriptor_safety_capability_fails_closed(
         _build(case)
 
 
-def test_production_complexportal_snapshot_when_artifacts_exist() -> None:
+def test_production_complexportal_snapshot_when_artifacts_exist(production_registry_pin) -> None:
     required = [
         *(stage.DEFAULT_RAW_DIR / name for name in stage.EXPECTED_CURATED_SOURCE_FILES),
         stage.DEFAULT_RAW_DIR / stage.EXCLUDED_PREDICTED_NAME,
@@ -827,6 +827,9 @@ def test_production_complexportal_snapshot_when_artifacts_exist() -> None:
     ]
     if not all(path.exists() for path in required):
         pytest.skip("ignored production ComplexPortal/grounding artifacts are unavailable")
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY, release=stage.EXPECTED_UNIPROT_RELEASE
+    )
 
     result = stage.build_stage()
     summary = result.summary

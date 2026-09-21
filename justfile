@@ -240,8 +240,10 @@ audit-schema:
 # Unit tests for the pure helpers (scripts/record_io.py and friends). These do NOT
 # touch data/traits - `validate-all` and `audit-graphs` are the data gates.
 # Run the unit tests
+# -rx prints why a test was an expected failure (e.g. a stage pin tracked in an issue),
+# which plain -q reduces to an "x".
 test *args:
-    uv run pytest tests/ {{args}}
+    uv run pytest tests/ -rx {{args}}
 
 # Static checks over the Python. Gated at ZERO rather than ratcheted from a baseline:
 # the 63 pre-existing errors were all trivial (semicolons, `l` as a variable name,

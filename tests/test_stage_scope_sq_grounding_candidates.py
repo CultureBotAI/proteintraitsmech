@@ -908,7 +908,9 @@ def test_production_scope_snapshot_acceptance_when_private_artifacts_exist(
         pytest.skip("private SCOPe snapshot is unavailable")
     assert stage.DEFAULT_PROTEIN_REGISTRY.is_file()
     production_registry_pin(
-        stage.DEFAULT_PROTEIN_REGISTRY, sha256=stage.EXPECTED_PROTEIN_REGISTRY_SHA256
+        stage.DEFAULT_PROTEIN_REGISTRY,
+        release=stage.EXPECTED_UNIPROT_RELEASE,
+        sha256=stage.EXPECTED_PROTEIN_REGISTRY_SHA256,
     )
     result = stage.build_stage(
         comments_path=stage.DEFAULT_COMMENTS,

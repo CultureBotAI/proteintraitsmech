@@ -1,20 +1,27 @@
 """Shared test plumbing for checks that read production data from the checkout.
 
-Most of the suite builds its inputs under ``tmp_path``. A handful of acceptance
-tests instead read the real ``data/grounding`` registry and ignored raw
-artifacts, so their outcome depends on the state of the checkout, not only on
-the code. Two things made those failures hard to read (#713, #734):
+Most of the suite builds its inputs under ``tmp_path``. Six staging scripts have
+an acceptance test that instead reads the real ``data/grounding`` registry and
+ignored raw artifacts, so its outcome depends on the state of the checkout and
+not only on the code. CI has no artifacts and skips them, which is how their
+pins went stale unnoticed (#713, #734):
 
-* a staging script pins the ProteinReference registry it was reviewed against
-  (a UniProt release, or an exact sha256). When the committed registry moves
-  on, the stage refuses it and its acceptance test fails wherever the raw
-  artifacts exist — and nowhere else, because CI has none and skips it;
-* a batch installer rewriting ``data/grounding`` in the same checkout makes
-  otherwise-correct pins fail until the batch is committed.
+* each stage pins the ProteinReference registry it was reviewed against — a
+  UniProt release, and for two of them an exact sha256. The committed registry
+  left those pins behind in #690, and every stage has refused it since.
 
-``production_registry_pin`` turns the first case into an *expected failure*
-that names the pin and the tracking issue, and that stops applying by itself
-once the pin matches again. The report hook labels the second case.
+``production_registry_pin`` separates the two situations that look alike:
+
+* the stage's pin is **listed in ``KNOWN_STALE_PINS``**: the stage cannot run
+  against any current registry until someone re-pins or retires it, which is a
+  tracked decision — the test is an expected failure naming the issue;
+* the pin is **not** listed and the registry does not match it: that is news —
+  a registry moved without its stages, or a batch is mid-install in this
+  checkout — and the test fails, saying which.
+
+Re-pinning a stage changes its pin value, so its entry stops applying by
+itself; ``test_production_pins.py`` fails while an entry names a pin no stage
+uses any more, so the table cannot outlive its reason.
 """
 
 from __future__ import annotations
@@ -24,81 +31,154 @@ import json
 import subprocess
 from functools import lru_cache
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-PIN_ISSUE = "#734"
+
+# pin value → the issue tracking the decision to re-pin or retire the stage.
+# Delete an entry in the same change that re-pins the last stage using it.
+KNOWN_STALE_PINS = {
+    "2026_02": "#734",
+    "d587fad177207ca4f00d1dfb8649f4f9d2d21d01953d483f44a3a6e81acc729c": "#734",
+}
 
 
-def registry_releases(path: Path) -> set[str]:
-    """Every ``uniprot_release`` value in a ProteinReference registry."""
+def registry_releases(path: Path) -> tuple[set[str], int]:
+    """(``uniprot_release`` values, rows that carry none) in a registry."""
     releases: set[str] = set()
+    unlabelled = 0
     with path.open(encoding="utf-8") as handle:
         for line in handle:
-            if line.strip():
-                releases.add(str(json.loads(line).get("uniprot_release")))
-    return releases
+            if not line.strip():
+                continue
+            release = json.loads(line).get("uniprot_release")
+            if release:
+                releases.add(str(release))
+            else:
+                unlabelled += 1
+    return releases, unlabelled
 
 
-def registry_pin_mismatch(path: Path, *, release: str | None = None,
-                          sha256: str | None = None) -> str | None:
-    """Why the registry at ``path`` is not the one a stage is pinned to, or None."""
+def pin_verdict(path: Path, *, release: str | None = None,
+                sha256: str | None = None) -> tuple[str, str]:
+    """``("ok" | "known_stale" | "mismatch", reason)`` for a stage's registry pins.
+
+    An empty registry satisfies a release pin, as it does in the stages' own
+    parsers. Rows without a release are a mismatch in their own right.
+    """
+    broken: list[tuple[str, str]] = []          # (pin value, what is wrong)
     if sha256 is not None:
         actual = hashlib.sha256(path.read_bytes()).hexdigest()
         if actual != sha256:
-            return (f"{path.name} is sha256 {actual[:12]}…, but the stage is pinned to "
-                    f"{sha256[:12]}…")
+            broken.append((sha256, f"{path.name} is sha256 {actual[:12]}…, not the pinned "
+                                   f"{sha256[:12]}…"))
     if release is not None:
-        found = registry_releases(path)
-        if found != {release}:
-            return (f"{path.name} carries UniProt release(s) {sorted(found)}, but the "
-                    f"stage is pinned to {release!r}")
-    return None
+        found, unlabelled = registry_releases(path)
+        if unlabelled:
+            broken.append((release, f"{unlabelled} row(s) of {path.name} carry no "
+                                    f"uniprot_release"))
+        elif found and found != {release}:
+            broken.append((release, f"{path.name} carries UniProt release(s) "
+                                    f"{sorted(found)}, not only the pinned {release!r}"))
+    if not broken:
+        return "ok", ""
+    why = "; ".join(text for _, text in broken)
+    issues = {KNOWN_STALE_PINS.get(pin) for pin, _ in broken}
+    if None not in issues:
+        return "known_stale", (f"{why}. The stage's pin is known to be stale and the stage "
+                               f"cannot run until it is re-pinned or retired "
+                               f"({', '.join(sorted(issues))})")
+    return "mismatch", (f"{why}. This pin is not listed as known-stale: either the registry "
+                        f"moved without re-pinning this stage, or a grounding batch is being "
+                        f"installed in this checkout")
 
 
 @pytest.fixture
 def production_registry_pin():
-    """``check(path, release=…, sha256=…)``: xfail unless the production
-    registry is the snapshot the stage under test is pinned to."""
+    """``check(path, release=…, sha256=…)`` — see the module docstring."""
 
     def check(path: Path, *, release: str | None = None, sha256: str | None = None) -> None:
-        why = registry_pin_mismatch(path, release=release, sha256=sha256)
-        if why:
-            pytest.xfail(f"{why}; the stage cannot run against this registry until it is "
-                         f"re-pinned or retired ({PIN_ISSUE})")
+        verdict, why = pin_verdict(path, release=release, sha256=sha256)
+        if verdict == "known_stale":
+            pytest.xfail(why)
+        if verdict == "mismatch":
+            pytest.fail(why, pytrace=False)
 
     return check
 
 
-@lru_cache(maxsize=1)
-def _dirty_grounding_files() -> tuple[str, ...]:
-    """Tracked files under data/grounding that differ from HEAD (once per session)."""
+def parse_porcelain_z(out: str) -> tuple[str, ...]:
+    """Current paths from ``git status --porcelain -z`` output.
+
+    ``-z`` gives raw, unquoted paths. A rename or copy entry is followed by a
+    second NUL-terminated field holding the path it came from, which is dropped.
+    """
+    fields = out.split("\0")
+    paths, i = [], 0
+    while i < len(fields):
+        entry = fields[i]
+        i += 1
+        if len(entry) < 4:
+            continue
+        paths.append(entry[3:])
+        if entry[0] in "RC" or entry[1] in "RC":
+            i += 1
+    return tuple(paths)
+
+
+def _probe_dirty_grounding_files(run=subprocess.run) -> tuple[str, ...]:
+    """Tracked files under data/grounding that differ from HEAD; () if git cannot say.
+
+    ``--no-optional-locks`` matters here: plain ``git status`` may refresh the
+    index and take ``index.lock``, and this runs in checkouts where another
+    session may be committing at that moment.
+    """
     try:
-        out = subprocess.run(
-            ["git", "status", "--porcelain", "--untracked-files=no", "--", "data/grounding"],
-            cwd=REPO_ROOT, capture_output=True, text=True, timeout=60, check=False).stdout
+        out = run(["git", "--no-optional-locks", "status", "--porcelain", "-z",
+                   "--untracked-files=no", "--", "data/grounding"],
+                  cwd=REPO_ROOT, capture_output=True, text=True, timeout=60, check=False).stdout
     except (OSError, subprocess.SubprocessError):
         return ()
-    return tuple(line[3:] for line in out.splitlines() if line.strip())
+    return parse_porcelain_z(out)
+
+
+@lru_cache(maxsize=1)
+def _dirty_grounding_files() -> tuple[str, ...]:
+    """The probe, once per session."""
+    return _probe_dirty_grounding_files()
 
 
 def checkout_state_note(dirty: tuple[str, ...]) -> str | None:
-    """The note a failing test gets when grounding data differs from HEAD."""
+    """The note a failing production-data test gets when grounding data differs from HEAD."""
     if not dirty:
         return None
     shown = ", ".join(dirty[:4]) + (" …" if len(dirty) > 4 else "")
     return (f"{len(dirty)} tracked file(s) under data/grounding differ from HEAD in this "
-            f"checkout ({shown}). If a grounding batch is being installed here, tests that "
-            f"read production data describe the committed state and may fail until the "
-            f"batch and its pins are committed together.")
+            f"checkout ({shown}). If a grounding batch is being installed here, this test "
+            f"describes the committed state and may fail until the batch and its pins are "
+            f"committed together.")
+
+
+@pytest.fixture
+def production_pins():
+    """The pure helpers, for tests of this plumbing (no ``import conftest`` needed)."""
+    return SimpleNamespace(pin_verdict=pin_verdict, registry_releases=registry_releases,
+                           checkout_state_note=checkout_state_note,
+                           dirty_grounding_files=_dirty_grounding_files,
+                           probe_dirty_grounding_files=_probe_dirty_grounding_files,
+                           parse_porcelain_z=parse_porcelain_z,
+                           KNOWN_STALE_PINS=KNOWN_STALE_PINS, REPO_ROOT=REPO_ROOT)
 
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
     report = outcome.get_result()
-    if report.when != "call" or not report.failed:
+    # only tests that read the production registry; a tmp_path test gains nothing from it
+    if report.when != "call" or not report.failed \
+            or "production_registry_pin" not in getattr(item, "fixturenames", ()):
         return
     note = checkout_state_note(_dirty_grounding_files())
     if note:
