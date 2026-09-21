@@ -900,14 +900,17 @@ def test_every_output_family_is_zero_evidence_no_action_and_receipt_closed(
         assert result.summary["write_action_performed"] is False
 
 
-def test_production_scope_snapshot_acceptance_when_private_artifacts_exist() -> None:
+def test_production_scope_snapshot_acceptance_when_private_artifacts_exist(
+    production_registry_pin,
+) -> None:
     required = [stage.DEFAULT_COMMENTS, stage.DEFAULT_DESCRIPTIONS, stage.DEFAULT_HIERARCHY]
     if not all(path.is_file() for path in required):
         pytest.skip("private SCOPe snapshot is unavailable")
     assert stage.DEFAULT_PROTEIN_REGISTRY.is_file()
-    assert (
-        hashlib.sha256(stage.DEFAULT_PROTEIN_REGISTRY.read_bytes()).hexdigest()
-        == stage.EXPECTED_PROTEIN_REGISTRY_SHA256
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY,
+        release=stage.EXPECTED_UNIPROT_RELEASE,
+        sha256=stage.EXPECTED_PROTEIN_REGISTRY_SHA256,
     )
     result = stage.build_stage(
         comments_path=stage.DEFAULT_COMMENTS,

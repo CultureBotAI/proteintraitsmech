@@ -797,7 +797,9 @@ def test_count_contract_prevents_partial_or_silently_changed_scope(tmp_path: Pat
         _build(case)
 
 
-def test_production_cath_snapshot_golden_when_private_frames_exist() -> None:
+def test_production_cath_snapshot_golden_when_private_frames_exist(
+    production_registry_pin,
+) -> None:
     required = [
         stage.DEFAULT_CATH_NAMES,
         stage.DEFAULT_INTERPRO_FRAME,
@@ -807,6 +809,11 @@ def test_production_cath_snapshot_golden_when_private_frames_exist() -> None:
     ]
     if not all(path.exists() for path in required):
         pytest.skip("private/raw CATH and alignment frames are not all present")
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY,
+        release=stage.EXPECTED_UNIPROT_RELEASE,
+        sha256=stage.EXPECTED_PROTEIN_REGISTRY_SHA256,
+    )
     result = stage.build_stage(
         cath_names_path=stage.DEFAULT_CATH_NAMES,
         interpro_frame_path=stage.DEFAULT_INTERPRO_FRAME,

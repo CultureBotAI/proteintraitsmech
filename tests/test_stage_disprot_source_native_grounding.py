@@ -831,7 +831,7 @@ def test_stage_candidate_still_hits_central_disprot_receipt_lock(tmp_path: Path)
     assert "disprot_provider_receipt_required" in observed
 
 
-def test_production_disprot_snapshot_when_artifacts_exist() -> None:
+def test_production_disprot_snapshot_when_artifacts_exist(production_registry_pin) -> None:
     required = [
         REPO / "data/raw/disprot.entries.json",
         REPO / "data/traits/sequence/disorder",
@@ -840,6 +840,9 @@ def test_production_disprot_snapshot_when_artifacts_exist() -> None:
     ]
     if not all(path.exists() for path in required):
         pytest.skip("ignored production DisProt/grounding artifacts are unavailable")
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY, release=stage.EXPECTED_UNIPROT_RELEASE
+    )
     result = stage.build_stage()
     summary = result.summary
     assert summary["idpo_region_count"] == 9_387

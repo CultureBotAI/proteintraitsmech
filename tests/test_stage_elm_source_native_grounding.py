@@ -581,7 +581,7 @@ def test_cli_has_no_apply_or_output_mode() -> None:
         stage.parse_args(["--out", "forbidden.jsonl"])
 
 
-def test_production_elm_snapshot_when_artifacts_exist() -> None:
+def test_production_elm_snapshot_when_artifacts_exist(production_registry_pin) -> None:
     required = [
         stage.DEFAULT_CLASSES,
         stage.DEFAULT_INSTANCES,
@@ -590,6 +590,9 @@ def test_production_elm_snapshot_when_artifacts_exist() -> None:
     ]
     if not all(path.exists() for path in required):
         pytest.skip("ignored production ELM/grounding artifacts are unavailable")
+    production_registry_pin(
+        stage.DEFAULT_PROTEIN_REGISTRY, release=stage.EXPECTED_UNIPROT_RELEASE
+    )
     result = stage.build_stage()
     summary = result.summary
     assert summary["class_count"] == 353
