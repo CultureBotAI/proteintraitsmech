@@ -24,7 +24,7 @@ Sources (`just fetch-obo` mirrors each into `data/raw/<FILE>.obo`):
   pato   PATO (Phenotype And Trait Ontology, CC-BY-4.0)
          → a curated whitelist of protein-relevant physicochemical
            quality roots (stability, flexibility, elasticity → dynamics;
-           solubility, hydrophobicity, electric charge → surface). PATO
+           solubility, hydrophobicity, hydrophilicity, electric charge → surface). PATO
            qualities are generic modifiers for *any* entity, so a
            whitelist — not a dump — is the right scope.
 
@@ -132,6 +132,11 @@ SOURCES: dict[str, Source] = {
                   "structure/surface/pato"),            # solubility
             Route("PATO:0001884", "STRUCTURE", "STRUCT_SURFACE",
                   "structure/surface/pato"),            # hydrophobicity
+            # Hydrophilicity is a sibling, not a child, of hydrophobicity.
+            # Keep its quality-class route consistent; numerical whole-chain
+            # observations live independently in data/biophysical/.
+            Route("PATO:0001886", "STRUCTURE", "STRUCT_SURFACE",
+                  "structure/surface/pato"),            # hydrophilicity
             Route("PATO:0002193", "STRUCTURE", "STRUCT_SURFACE",
                   "structure/surface/pato"),            # electric charge
         ),

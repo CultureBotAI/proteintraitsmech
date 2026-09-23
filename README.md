@@ -414,3 +414,8 @@ when queue enforcement is enabled on `main`.
 ## License
 
 CC0-1.0 — Public Domain Dedication.
+
+
+The [biophysical sequence pilot](data/biophysical/README.md) adds typed quantitative
+observations for 12 descriptor families, with exact sequence provenance,
+method/condition metadata, and continuous sequence-map overlays.
