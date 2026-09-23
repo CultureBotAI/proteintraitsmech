@@ -1545,7 +1545,9 @@ audit-snippets *args:
 
 # Sequence biophysics: dry run unless --apply; exact registry sequences only.
 calculate-biophysical *args:
-    uv run python scripts/calculate_biophysical.py {{args}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/calculate_biophysical.py "$@"
 
 # Closed schema and cross-object checks; no external services required.
 validate-biophysical file="data/biophysical/pilot.observations.jsonl":
@@ -1553,8 +1555,18 @@ validate-biophysical file="data/biophysical/pilot.observations.jsonl":
 
 # Attach validated scalar values to the sequence map, checking embedding sequence hashes.
 biophysical-map *args:
-    uv run python scripts/build_biophysical_overlay.py {{args}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/build_biophysical_overlay.py "$@"
 
 # Descriptive redundancy and length/source/taxon strata for the sequence pilot.
 analyze-biophysical *args:
-    uv run python scripts/analyze_biophysical.py {{args}}
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/analyze_biophysical.py "$@"
+
+# Check every committed pilot artifact, including numerical replay and map bindings.
+check-biophysical-pilot *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/check_biophysical_pilot.py "$@"

@@ -44,14 +44,16 @@ just calculate-biophysical --proteins data/biophysical/pilot.proteins.txt \
   --output data/biophysical/pilot.observations.jsonl --apply
 just validate-biophysical
 just biophysical-map --apply
-uv run python scripts/analyze_biophysical.py
+just analyze-biophysical
+just check-biophysical-pilot
 ```
 
 The calculator and overlay builder are dry-run by default. Calculation writes a
 JSONL store, a manifest with input hashes/options, and a TSV whose `value` column
 is populated only for scalar results. Profiles and composition vectors remain
 in JSONL; blank scalar cells are not zeros. Repeating the same inputs and code
-produces identical bytes and observation IDs. The calculator's source hash is
+in the same Python/math-library environment produces identical bytes and
+observation IDs. The calculator's source hash is
 recorded on every observation, so code changes deliberately change the IDs.
 
 The embedding snapshot contains only the selected proteins' existing embedding
@@ -122,7 +124,14 @@ profile, and vector objects are closed. The validator checks registry identity,
 hashes, scope, profile windows, composition sums, missingness, thresholded
 disorder summaries and content IDs. Unknown fields, nonfinite values, stale
 sequence versions, unresolved descriptor IDs and duplicate observations fail.
-`just validate-biophysical` runs in CI independently of trait YAML validation.
+`just validate-biophysical` validates an individual observation store. CI runs
+`just check-biophysical-pilot` to validate the entire published pilot: cohort,
+input hashes, all 12 results per protein, numerical replay, manifest, TSV,
+analysis and the map sidecar. Numerical replay tolerates 1e-10 rounding differences
+across Python/math-library platforms; stored content hashes and metadata must
+still agree exactly. This prevents a partial refresh from passing publication
+checks. Supply `--disorder path/to/scores.jsonl` to the bundle check when real
+predictor inputs are recorded in the manifest.
 
 PATO:0001886 (hydrophilicity) and PATO:0001887 (hydrophilic) are imported from the
 same 2025-05-14 release as the existing PATO qualities through `seed_obo.py` and
@@ -137,3 +146,11 @@ checks use Biopython's documented INGAR/PETER examples and independent geometry,
 composition, entropy and SCD examples. The original assessment/audit remain
 historical evidence from the user's main checkout; do not regenerate its corpus
 counts from a sparse worktree.
+## Follow-up work
+
+- [#753: real disorder predictions](https://github.com/CultureBotAI/proteintraitsmech/issues/753)
+  tracks a versioned, licensed source and durable predictor outputs for B22.
+- [#754: cohort expansion and refresh](https://github.com/CultureBotAI/proteintraitsmech/issues/754)
+  tracks representative sampling, coverage, runtime/storage and refresh behavior.
+- [#755: remaining descriptor roadmap](https://github.com/CultureBotAI/proteintraitsmech/issues/755)
+  tracks the 28 later/metadata/specialized entries and their measurement contracts.

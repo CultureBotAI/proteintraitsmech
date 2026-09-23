@@ -35,7 +35,7 @@ mechanistic conclusion is introduced.
 
 Validation performed:
 
-- 341 targeted tests passed across biophysical calculations/provenance, existing
+- 359 targeted tests passed across biophysical calculations/provenance, existing
   schema/strict validation, map/page behavior, source registration, OBO emission,
   shared schema governance and category consistency.
 - All 276 observations passed closed LinkML and registry/semantic validation;
@@ -53,3 +53,26 @@ rerunning with a writable temporary cache and the existing environment passed.
 The remaining 28 inventory entries are the assessment's later/metadata/specialized
 roadmap. The B22 adapter is available, but real disorder values require supplied
 predictor outputs with their actual version, mode and full-sequence hash.
+
+## Publication integration
+
+Rebased the isolated feature branch onto current main (`183a1ad443b`). Added a
+read-only publication check that replays calculations and validates the cohort,
+input hashes, manifest, TSV, analysis and sequence-map sidecar together. The
+existing checks workflow now runs this gate. It detects partial refreshes and
+rehashed but numerically wrong observations, while allowing 1e-10 floating-point
+roundoff across Python/math-library platforms. Stored hashes and all provenance
+metadata remain exact checks.
+
+Added a Pages guide and declared the new browser helper in Jekyll's publication
+configuration. The CLI recipes now preserve arguments containing spaces without
+shell reinterpretation.
+
+The final regression run passed all 359 targeted tests, including 18 publication
+gate and CLI argument tests. The committed pilot passed the complete bundle gate.
+
+Follow-ups are recorded in [#753](https://github.com/CultureBotAI/proteintraitsmech/issues/753)
+(real disorder outputs), [#754](https://github.com/CultureBotAI/proteintraitsmech/issues/754)
+(expanded cohort and refresh workflow), and [#755](https://github.com/CultureBotAI/proteintraitsmech/issues/755)
+(the other 28 inventory entries and reuse decisions). The guide links to these
+issues and records the implemented scope separately from those follow-ups.

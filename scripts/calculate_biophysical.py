@@ -36,6 +36,13 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def summary_tsv(observations):
+    fields = ("protein_id", "descriptor_id", "status", "value", "unit", "sequence_sha256", "observation_id")
+    lines = ["\t".join(fields)]
+    lines.extend("\t".join(str(o.get(k, "")) for k in fields) for o in observations)
+    return "\n".join(lines) + "\n"
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registry", type=Path, default=REGISTRY)
@@ -92,11 +99,9 @@ def main(argv=None):
             paths = [args.output, args.output.with_suffix(".manifest.json"), args.output.with_suffix(".tsv")]
             if any(p.resolve() == source.resolve() for p in paths for source in input_paths if source):
                 raise ValueError("output must not overwrite an input")
-            lines = ["protein_id\tdescriptor_id\tstatus\tvalue\tunit\tsequence_sha256\tobservation_id"]
-            lines.extend("\t".join(str(o.get(k, "")) for k in lines[0].split("\t")) for o in observations)
             atomic_write(paths[0], text)
             atomic_write(paths[1], json.dumps(manifest, indent=2) + "\n")
-            atomic_write(paths[2], "\n".join(lines) + "\n")
+            atomic_write(paths[2], summary_tsv(observations))
         else:
             print("Dry run; use --apply to write the validated observations and manifest.")
     except (OSError, ValueError, KeyError) as exc:
