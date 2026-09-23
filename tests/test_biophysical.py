@@ -253,6 +253,15 @@ def test_overlay_preserves_coordinates_and_zero_values(catalog):
     assert next(s for s in overlay["series"] if s["descriptor_id"].endswith("B22"))["available"] == 0
 
 
+def test_overlay_accepts_zero_embedding_overlap_but_not_missing_overlap(catalog):
+    p, data, embedded, meta = map_inputs()
+    meta["overlap"] = 0
+    assert build_overlay(data, embedded, meta, bio.calculate(p), catalog)["map_proteins"] == 1
+    del meta["overlap"]
+    with pytest.raises(ValueError, match="overlap"):
+        build_overlay(data, embedded, meta, bio.calculate(p), catalog)
+
+
 def test_overlay_rejects_stale_sequence_or_mixed_conditions(catalog):
     p, data, embedded, meta = map_inputs()
     observations = bio.calculate(p)

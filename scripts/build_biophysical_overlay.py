@@ -18,7 +18,9 @@ from validate_biophysical import CATALOG, REGISTRY, load_catalog, load_registry,
 
 def build_overlay(map_data, embedding_proteins, embedding_meta, observations, catalog):
     for name in ("model", "revision", "pooling", "window", "overlap"):
-        if not embedding_meta.get(name) or embedding_meta[name] != map_data.get("embedding", {}).get(name):
+        value = embedding_meta.get(name)
+        present = type(value) is int and value >= 0 if name == "overlap" else bool(value)
+        if not present or value != map_data.get("embedding", {}).get(name):
             raise ValueError(f"embedding {name} does not match the map")
     points = {p[3] for p in map_data["points"]}
     if len(points) != len(map_data["points"]):
