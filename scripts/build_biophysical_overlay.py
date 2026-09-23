@@ -29,7 +29,10 @@ def build_overlay(map_data, embedding_proteins, embedding_meta, observations, ca
             raise ValueError("duplicate embedding protein ID")
         embeddings[row["accession"]] = row
     groups, signatures = {}, {}
-    for obs in observations:
+    # Summarize a series using an available result's method when possible.
+    # Missing rows carry their own observation IDs but contribute no values to
+    # pool, so an absent predictor must not conflict with a supplied predictor.
+    for obs in sorted(observations, key=lambda o: o["status"] != "OK"):
         key = obs["protein_id"]
         desc = catalog[obs["descriptor_id"]]
         if key not in points or obs["scope"] != "WHOLE_PROTEIN" or desc["value_kind"] not in {"SCALAR", "SCALAR_PROFILE"}:
@@ -41,9 +44,10 @@ def build_overlay(map_data, embedding_proteins, embedding_meta, observations, ca
         context = comparison_context(obs)
         method = context["method"]
         signature = canonical_json(context)
-        if did in signatures and signatures[did] != signature:
-            raise ValueError(f"{did}: incompatible methods or conditions; build separate overlays")
-        signatures[did] = signature
+        if obs["status"] == "OK":
+            if did in signatures and signatures[did] != signature:
+                raise ValueError(f"{did}: incompatible methods or conditions; build separate overlays")
+            signatures[did] = signature
         series = groups.setdefault(did, {"descriptor_id": did, "label": desc["label"],
                   "unit": obs["unit"], "method": method, "conditions": obs.get("conditions", {}),
                   "interpretation_limits": desc["interpretation_limits"], "values": {}})

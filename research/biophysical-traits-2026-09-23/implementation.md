@@ -35,7 +35,7 @@ mechanistic conclusion is introduced.
 
 Validation performed:
 
-- 359 targeted tests passed across biophysical calculations/provenance, existing
+- 361 targeted tests passed across biophysical calculations/provenance, existing
   schema/strict validation, map/page behavior, source registration, OBO emission,
   shared schema governance and category consistency.
 - All 276 observations passed closed LinkML and registry/semantic validation;
@@ -68,8 +68,11 @@ Added a Pages guide and declared the new browser helper in Jekyll's publication
 configuration. The CLI recipes now preserve arguments containing spaces without
 shell reinterpretation.
 
-The final regression run passed all 359 targeted tests, including 18 publication
+The final regression run passed all 361 targeted tests, including 18 publication
 gate and CLI argument tests. The committed pilot passed the complete bundle gate.
+Partial disorder-prediction coverage now displays available scores alongside
+missing entries, in either input order, while incompatible available predictor
+versions still fail validation.
 
 Follow-ups are recorded in [#753](https://github.com/CultureBotAI/proteintraitsmech/issues/753)
 (real disorder outputs), [#754](https://github.com/CultureBotAI/proteintraitsmech/issues/754)

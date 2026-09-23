@@ -115,6 +115,9 @@ prediction server. For a region, scores are sliced after validating the full
 sequence context. The source object is content-hashed; the input file hash is
 also retained in the run manifest. Exactly 0.5 does not exceed the default
 threshold. Imported scores remain `MODEL_PREDICTION`, not observed disorder.
+Partial predictor coverage is supported: proteins without supplied scores stay
+unavailable. Available scores in one map overlay must share their predictor,
+version, mode and threshold.
 
 ## Schema and vocabulary
 

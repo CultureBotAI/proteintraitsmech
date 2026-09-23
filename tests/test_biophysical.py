@@ -266,6 +266,31 @@ def test_overlay_rejects_stale_sequence_or_mixed_conditions(catalog):
         build_overlay(data, embedded, {**meta, "revision": "different"}, observations, catalog)
 
 
+@pytest.mark.parametrize("missing_first", [True, False])
+def test_overlay_accepts_partial_disorder_coverage_but_rejects_mixed_predictors(catalog, missing_first):
+    missing, data, embedded, meta = map_inputs()
+    available = protein(protein_id="UniProtKB:P12346")
+    data["points"].append([0.4, 0.5, 0, available["protein_id"]])
+    embedded.append(dict(accession=available["protein_id"], length=available["sequence_length"],
+                         sequence_sha256=available["sequence_sha256"]))
+    predicted = bio.calculate(available, disorder=prediction(available, [0.7] * available["sequence_length"]))
+    unavailable = bio.calculate(missing)
+    observations = unavailable + predicted if missing_first else predicted + unavailable
+    registry = {p["protein_id"]: p for p in (missing, available)}
+    assert validate_collection(observations, registry, catalog) == []
+    overlay = build_overlay(data, embedded, meta, observations, catalog)
+    disorder = next(s for s in overlay["series"] if s["descriptor_id"].endswith("B22"))
+    assert disorder["available"] == 1
+    assert disorder["values"][missing["protein_id"]]["status"] == "NOT_AVAILABLE"
+    assert disorder["values"][available["protein_id"]]["value"] == 1.0
+    assert disorder["method"]["name"] == "SyntheticPredictorFixture"
+    assert disorder["method"]["version"] == "test-1"
+    incompatible = prediction(missing, [0.8] * missing["sequence_length"])
+    incompatible["version"] = "test-2"
+    with pytest.raises(ValueError, match="incompatible methods"):
+        build_overlay(data, embedded, meta, bio.calculate(missing, disorder=incompatible) + predicted, catalog)
+
+
 def test_browser_numeric_filter_includes_zero_and_excludes_missing():
     import shutil
     if not shutil.which("node"):
