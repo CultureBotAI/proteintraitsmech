@@ -3355,6 +3355,11 @@ def _selected_rows_for_merged_protein_references(
         if durable_reference == selected_reference:
             effective.append(row)
             continue
+        if _requires_same_release_protein_reference(row):
+            raise GroundingError(
+                f"{row['candidate_id']}: SOURCE_MEMBERSHIP ProteinReference changed "
+                "uniprot_release"
+            )
         if not _same_protein_reference_except_release(durable_reference, selected_reference):
             raise GroundingError(
                 f"{row['candidate_id']}: merged ProteinReference changed more than "

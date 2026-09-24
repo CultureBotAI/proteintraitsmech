@@ -2625,6 +2625,35 @@ def test_promote_rejects_membership_with_durable_protein_from_different_uniprot_
     assert not local_sources["durable_evidence"].exists()
 
 
+def test_effective_selected_rows_reject_source_membership_release_remap():
+    selected_reference = {
+        "protein_id": "UniProtKB:P12345",
+        "protein_label": "Fixture protein",
+        "reviewed": True,
+        "sequence": "ACDEFGHIK",
+        "sequence_length": 9,
+        "sequence_sha256": hashlib.sha256(b"ACDEFGHIK").hexdigest(),
+        "taxon_id": "NCBITaxon:9606",
+        "taxon_label": "Homo sapiens",
+        "uniprot_release": "2026_03",
+    }
+    durable_reference = {**selected_reference, "uniprot_release": "2026_02"}
+
+    with pytest.raises(ground.GroundingError, match="SOURCE_MEMBERSHIP"):
+        ground._selected_rows_for_merged_protein_references(
+            [
+                {
+                    "candidate_id": "ug-source-membership",
+                    "mapping_method": "SOURCE_MEMBERSHIP",
+                    "protein_id": selected_reference["protein_id"],
+                    "uniprot_release": selected_reference["uniprot_release"],
+                }
+            ],
+            {selected_reference["protein_id"]: selected_reference},
+            {durable_reference["protein_id"]: durable_reference},
+        )
+
+
 @pytest.mark.parametrize("registry_kind", ["protein", "evidence"])
 def test_promote_rejects_durable_registry_conflicts_without_changing_any_artifact(
     local_sources, monkeypatch, registry_kind
