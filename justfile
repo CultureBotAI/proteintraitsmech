@@ -861,8 +861,12 @@ verify-family-drafts *args:
 
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
-    mkdir -p data/raw/cath
-    curl -sSLf --max-time 120 -o data/raw/cath/cath-names.txt ftp://orengoftp.biochem.ucl.ac.uk/cath/releases/latest-release/cath-classification-data/cath-names.txt
+    python3 scripts/fetch_source.py \
+      https://download.cathdb.info/cath/releases/all-releases/v4_4_0/cath-classification-data/cath-names-v4_4_0.txt \
+      data/raw/cath/cath-names.txt \
+      --min-bytes 400000 \
+      --sha256 9a7b68548a4b755ceda673cfcaba3f19733e1d571f6fafca34e54f62675cdd3a \
+      --contains 'CATH VERSION: v4.4.0'
     @wc -l data/raw/cath/cath-names.txt
 
 # Seed the CATH structural hierarchy (Class/Architecture/Topology/Homologous
