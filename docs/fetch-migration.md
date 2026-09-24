@@ -77,6 +77,9 @@ magic bytes, stable content markers, or publisher checksums.
   embedded example proteins; map labels only, no record or grounding writes. Dry-run plan
   by default, one-release rule on the `x-uniprot-release` header, per-batch checkpoint and
   a receipt are in its Python client.
+- `fetch-biolip-sifts` — derives one PDBe residue-level SIFTS XML URL per PDB from the
+  BioLiP missing-protein stage, then writes a complete, content-addressed manifest under
+  the ignored BioLiP SIFTS raw snapshot root.
 
 These should reuse the helper only for any fixed bulk sub-download. Their pagination,
 checkpointing, authentication, and partial-result rules belong in their Python clients.
