@@ -319,23 +319,33 @@ def _validate_manifest(
         raise BioLipSiftsFetchError("SIFTS manifest entry is not an object")
     if any(not isinstance(item, dict) for item in failures):
         raise BioLipSiftsFetchError("SIFTS manifest failure is malformed")
-    if [item.get("pdb_id") for item in entries] != sorted(item.get("pdb_id") for item in entries):
-        raise BioLipSiftsFetchError("SIFTS manifest entries are not sorted")
-    if [item.get("pdb_id") for item in failures] != sorted(item.get("pdb_id") for item in failures):
-        raise BioLipSiftsFetchError("SIFTS manifest failures are not sorted")
-
-    entry_ids = set()
+    entry_id_list = []
     for entry in entries:
         _validate_entry(entry)
-        entry_ids.add(entry["pdb_id"])
-    failure_ids = set()
+        entry_id_list.append(entry["pdb_id"])
+    if entry_id_list != sorted(entry_id_list):
+        raise BioLipSiftsFetchError("SIFTS manifest entries are not sorted")
+    entry_ids = set(entry_id_list)
+    if len(entry_ids) != len(entry_id_list):
+        raise BioLipSiftsFetchError("SIFTS manifest contains duplicate entries")
+
+    failure_id_list = []
     for failure in failures:
         if not isinstance(failure, dict) or set(failure) != {"pdb_id", "error"}:
             raise BioLipSiftsFetchError("SIFTS manifest failure is malformed")
         pdb_id = failure["pdb_id"]
-        if not isinstance(pdb_id, str) or not isinstance(failure["error"], str):
+        if (
+            not isinstance(pdb_id, str)
+            or PDB_RE.fullmatch(pdb_id) is None
+            or not isinstance(failure["error"], str)
+        ):
             raise BioLipSiftsFetchError("SIFTS manifest failure is malformed")
-        failure_ids.add(pdb_id)
+        failure_id_list.append(pdb_id)
+    if failure_id_list != sorted(failure_id_list):
+        raise BioLipSiftsFetchError("SIFTS manifest failures are not sorted")
+    failure_ids = set(failure_id_list)
+    if len(failure_ids) != len(failure_id_list):
+        raise BioLipSiftsFetchError("SIFTS manifest contains duplicate failures")
     if entry_ids & failure_ids:
         raise BioLipSiftsFetchError("SIFTS manifest has conflicting entries/failures")
     if not entry_ids <= requested_pdb_ids or not failure_ids <= requested_pdb_ids:

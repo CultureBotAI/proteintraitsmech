@@ -211,6 +211,47 @@ def test_manifest_bound_xml_corruption_fails_without_rewriting_manifest(
     assert fetcher._load_manifest(manifest_path) == manifest_before
 
 
+def test_duplicate_manifest_pdb_rows_fail_closed(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    stage = tmp_path / "biolip-stage.jsonl"
+    snapshot_dir = tmp_path / "snapshots"
+    _write_stage(stage, _canonical_request())
+    payload = gzip.compress(_sifts_xml())
+
+    def urlopen(_request: Any, *, timeout: int) -> _Response:
+        del timeout
+        return _Response(payload)
+
+    monkeypatch.setattr(fetcher.urllib.request, "urlopen", urlopen)
+    args = [
+        "--stage",
+        str(stage),
+        "--snapshot-dir",
+        str(snapshot_dir),
+        "--snapshot-id",
+        "fixture-2026-09-24",
+        "--apply",
+    ]
+
+    assert fetcher.main(args) == 0
+    manifest_path = snapshot_dir / "fixture-2026-09-24" / fetcher.MANIFEST_NAME
+    manifest = fetcher._load_manifest(manifest_path)
+    manifest["complete"] = False
+    manifest["entries"].append(dict(manifest["entries"][0]))
+    manifest_path.write_text(fetcher.canonical_json(manifest) + "\n")
+    assert fetcher.main(args) == 2
+
+    manifest["entries"] = []
+    manifest["failures"] = [
+        {"pdb_id": "1c1e", "error": "first"},
+        {"pdb_id": "1c1e", "error": "second"},
+    ]
+    manifest_path.write_text(fetcher.canonical_json(manifest) + "\n")
+    assert fetcher.main(args) == 2
+
+
 def test_wrong_stage_source_root_fails_closed(tmp_path: Path) -> None:
     request = _canonical_request()
     request["requested_source_root"] = (
