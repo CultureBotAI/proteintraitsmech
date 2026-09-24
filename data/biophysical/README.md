@@ -118,6 +118,9 @@ threshold. Imported scores remain `MODEL_PREDICTION`, not observed disorder.
 Partial predictor coverage is supported: proteins without supplied scores stay
 unavailable. Available scores in one map overlay must share their predictor,
 version, mode and threshold.
+The adapter preserves every reference residue and does not claim a predictor's
+alphabet or nonstandard-residue policy. The predictor's documented input
+limitations must be checked when acquiring its scores.
 
 ## Schema and vocabulary
 
@@ -127,13 +130,21 @@ profile, and vector objects are closed. The validator checks registry identity,
 hashes, scope, profile windows, composition sums, missingness, thresholded
 disorder summaries and content IDs. Unknown fields, nonfinite values, stale
 sequence versions, unresolved descriptor IDs and duplicate observations fail.
+The twelve pilot IDs also have fixed inventory IDs, result shapes and units;
+catalog edits cannot bypass their scientific checks. These operational
+descriptors require `SEQUENCE_CALCULATION`, except B22, which requires
+`MODEL_PREDICTION`. Experimental measurements need separately defined
+operational descriptors. Populated B22 results must retain predictor mode and
+the full-reference-sequence prediction context.
 `just validate-biophysical` validates an individual observation store. CI runs
 `just check-biophysical-pilot` to validate the entire published pilot: cohort,
 input hashes, all 12 results per protein, numerical replay, manifest, TSV,
 analysis and the map sidecar. Numerical replay tolerates 1e-10 rounding differences
 across Python/math-library platforms; stored content hashes and metadata must
 still agree exactly. This prevents a partial refresh from passing publication
-checks. Supply `--disorder path/to/scores.jsonl` to the bundle check when real
+checks. Every selected pilot protein must appear exactly once in the source map.
+Calculation and verification share the same cohort-file parser, including blank
+lines and indented `#` comments. Supply `--disorder path/to/scores.jsonl` to the bundle check when real
 predictor inputs are recorded in the manifest.
 
 PATO:0001886 (hydrophilicity) and PATO:0001887 (hydrophilic) are imported from the
@@ -149,6 +160,7 @@ checks use Biopython's documented INGAR/PETER examples and independent geometry,
 composition, entropy and SCD examples. The original assessment/audit remain
 historical evidence from the user's main checkout; do not regenerate its corpus
 counts from a sparse worktree.
+
 ## Follow-up work
 
 - [#753: real disorder predictions](https://github.com/CultureBotAI/proteintraitsmech/issues/753)

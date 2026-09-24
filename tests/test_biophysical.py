@@ -136,6 +136,17 @@ def test_disorder_threshold_segments_and_parent_context(catalog):
     assert any("intervals disagree" in e for e in errors(observed, p, catalog))
 
 
+@pytest.mark.parametrize("sequence", [bio.ALPHABET, "AX"])
+def test_external_disorder_does_not_invent_the_predictors_residue_policy(catalog, sequence):
+    p = protein(sequence)
+    obs = by_code(bio.calculate(p, disorder=prediction(p, [0.7] * len(sequence))))["B22"]
+    assert obs["status"] == "OK"
+    assert obs["value"] == 1.0
+    parameters = {param["name"] for param in obs["method"]["parameters"]}
+    assert not {"alphabet", "nonstandard_residues"} & parameters
+    assert not errors(obs, p, catalog)
+
+
 @pytest.mark.parametrize("mutate", [
     lambda p: p.update(sequence_sha256="0" * 64),
     lambda p: p.update(scores=[0.2]),
@@ -213,6 +224,49 @@ def test_catalog_represents_all_twelve_families_and_quality_links(catalog):
     assert {d["inventory_id"] for d in catalog.values()} == set(bio.PILOT)
     assert "PATO:0001886" in catalog["proteintraitsmech:B08"]["quality_anchors"]
     assert not schema_errors({"descriptors": list(catalog.values())}, "BiophysicalDescriptorCatalog")
+
+
+@pytest.mark.parametrize("field,value", [
+    ("inventory_id", "B99"), ("descriptor_id", "other:basic_fraction"),
+    ("value_kind", "VECTOR"), ("unit", "kg"),
+])
+def test_catalog_rejects_changes_to_known_operational_contracts(tmp_path, catalog, field, value):
+    descriptors = deepcopy(list(catalog.values()))
+    next(d for d in descriptors if d["inventory_id"] == "B03")[field] = value
+    path = tmp_path / "catalog.yaml"
+    path.write_text(yaml.safe_dump({"descriptors": descriptors}))
+    with pytest.raises(ValueError, match="pilot descriptor contract"):
+        load_catalog(path)
+
+
+def test_direct_validation_cannot_bypass_fraction_checks_with_remapped_inventory(catalog):
+    p = protein()
+    obs = by_code(bio.calculate(p))["B03"]
+    obs["value"] = 2.0
+    catalog = deepcopy(catalog)
+    catalog[obs["descriptor_id"]]["inventory_id"] = "B99"
+    assert any("pilot descriptor contract" in e for e in errors(obs, p, catalog))
+
+
+@pytest.mark.parametrize("code", ["B01", "B22"])
+@pytest.mark.parametrize("status", ["OK", "NOT_AVAILABLE"])
+def test_pilot_calculations_cannot_be_relabeled_experimental(catalog, code, status):
+    p = protein()
+    obs = by_code(bio.calculate(p, disorder=prediction(p, [0.7] * p["sequence_length"])))[code]
+    if status != "OK":
+        for key in ("value", "profile", "intervals"):
+            obs.pop(key, None)
+        obs.update(status=status, missing_reason="Synthetic missing result")
+    obs["evidence_mode"] = "EXPERIMENT"
+    assert any("evidence mode" in e for e in errors(obs, p, catalog))
+
+
+@pytest.mark.parametrize("name", ["mode", "prediction_context"])
+def test_populated_disorder_requires_predictor_mode_and_context(catalog, name):
+    p = protein()
+    obs = by_code(bio.calculate(p, disorder=prediction(p, [0.7] * p["sequence_length"])))["B22"]
+    obs["method"]["parameters"] = [param for param in obs["method"]["parameters"] if param["name"] != name]
+    assert any("predictor mode and full-sequence context" in e for e in errors(obs, p, catalog))
 
 
 def test_cli_is_idempotent_and_dry_run_by_default(tmp_path, catalog, capsys):

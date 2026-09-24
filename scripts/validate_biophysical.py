@@ -14,12 +14,36 @@ from linkml.validator import Validator
 from linkml.validator.plugins import JsonschemaValidationPlugin
 from linkml.validator.report import Severity
 
-from biophysical import ALPHABET, disorder_segments, observation_id, sha256
+from biophysical import ALPHABET, descriptor_id, disorder_segments, observation_id, sha256
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "src/proteintraitsmech/schema/proteintraitsmech.yaml"
 CATALOG = ROOT / "data/biophysical/descriptors.yaml"
 REGISTRY = ROOT / "data/grounding/protein_registry.jsonl"
+# These operational identities select the semantic checks below. Catalog prose
+# can be enriched, but changing an identity, result shape or unit must not bypass
+# those checks or make their required payload fields disappear.
+PILOT_CONTRACTS = {
+    "B01": ("SCALAR", "e"), "B02": ("SCALAR", "pH"),
+    "B03": ("SCALAR", "1"), "B04": ("SCALAR", "1"),
+    "B05": ("SCALAR", "1"), "B06": ("SCALAR", "1"),
+    "B08": ("SCALAR", "1"), "B09": ("PROFILE", "1"),
+    "B10": ("PROFILE", "1"), "B13": ("VECTOR", "1"),
+    "B16": ("SCALAR", "bit"), "B22": ("SCALAR_PROFILE", "1"),
+}
+PILOT_IDS = {descriptor_id(code): code for code in PILOT_CONTRACTS}
+
+
+def pilot_descriptor_errors(descriptor):
+    code = PILOT_IDS.get(descriptor.get("descriptor_id"), descriptor.get("inventory_id"))
+    if code not in PILOT_CONTRACTS:
+        return []
+    kind, unit = PILOT_CONTRACTS[code]
+    if (descriptor.get("descriptor_id"), descriptor.get("inventory_id"),
+        descriptor.get("value_kind"), descriptor.get("unit")) != (descriptor_id(code), code, kind, unit):
+        return [f"pilot descriptor contract for {descriptor_id(code)} requires the canonical ID, "
+                f"inventory_id={code}, value_kind={kind}, unit={unit}"]
+    return []
 
 
 @lru_cache(maxsize=1)
@@ -76,6 +100,9 @@ def load_catalog(path=CATALOG):
     rows = {}
     inventory_ids = set()
     for row in data["descriptors"]:
+        errors = pilot_descriptor_errors(row)
+        if errors:
+            raise ValueError("; ".join(errors))
         key = row["descriptor_id"]
         if key in rows or row["inventory_id"] in inventory_ids:
             raise ValueError(f"duplicate descriptor: {key}")
@@ -114,6 +141,10 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
         errors.append("descriptor_id does not resolve in the catalog")
     if protein is None or descriptor is None:
         return errors
+    contract_errors = pilot_descriptor_errors(descriptor)
+    if contract_errors:
+        return errors + contract_errors
+    code = descriptor["inventory_id"]
     for name in ("sequence_sha256", "sequence_length", "uniprot_release", "sequence_version"):
         if obs.get(name) != protein.get(name):
             errors.append(f"{name} does not match the ProteinReference")
@@ -154,6 +185,10 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
         errors.append("method identity and provenance must not be blank")
     if not obs["proteoform"].strip():
         errors.append("proteoform assumptions must not be blank")
+    if code in PILOT_CONTRACTS:
+        expected_mode = "MODEL_PREDICTION" if code == "B22" else "SEQUENCE_CALCULATION"
+        if obs["evidence_mode"] != expected_mode:
+            errors.append(f"pilot descriptor {code} requires evidence mode {expected_mode}")
     parameters = {p["name"]: p["value"] for p in params}
     if obs["evidence_mode"] == "STRUCTURE_CALCULATION" and not all(
         obs["method"].get(k) for k in ("structure_id", "chain_id", "conformer")
@@ -180,7 +215,6 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
                 "SCALAR_PROFILE": {"value", "profile", "intervals"}}[descriptor["value_kind"]]
     if present != expected:
         return errors + [f"descriptor requires result fields {sorted(expected)}"]
-    code = descriptor["inventory_id"]
     if obs["evidence_mode"] == "SEQUENCE_CALCULATION" and set(sequence) - set(ALPHABET):
         errors.append("sequence calculations on nonstandard residues must be undefined")
     if code == "B01" and "ph" not in obs.get("conditions", {}):
@@ -230,8 +264,10 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
         except (KeyError, ValueError):
             errors.append("window profile requires an integer window parameter")
     if code == "B22":
-        if obs["evidence_mode"] not in {"MODEL_PREDICTION", "EXPERIMENT"}:
-            errors.append("disorder requires a predictor or experiment")
+        if not parameters.get("mode") or parameters.get("prediction_context") != (
+            "full reference sequence before region slicing"
+        ):
+            errors.append("disorder requires predictor mode and full-sequence context")
         try:
             threshold = float(parameters["threshold"])
             scores = [p["value"] for p in profile]

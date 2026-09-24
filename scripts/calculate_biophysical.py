@@ -36,6 +36,11 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def read_protein_selection(path):
+    return [line for raw in path.read_text().splitlines()
+            if (line := raw.strip()) and not line.startswith("#")]
+
+
 def summary_tsv(observations):
     fields = ("protein_id", "descriptor_id", "status", "value", "unit", "sequence_sha256", "observation_id")
     lines = ["\t".join(fields)]
@@ -65,8 +70,7 @@ def main(argv=None):
         if args.output.suffix != ".jsonl":
             raise ValueError("observation output must have the .jsonl suffix")
         registry, catalog = load_registry(args.registry), load_catalog(args.catalog)
-        ids = args.proteins.read_text().splitlines() if args.proteins else sorted(registry)
-        ids = [p.strip() for p in ids if p.strip() and not p.startswith("#")]
+        ids = read_protein_selection(args.proteins) if args.proteins else sorted(registry)
         if not ids or len(ids) != len(set(ids)) or set(ids) - registry.keys():
             raise ValueError("selection must be nonempty, unique and present in the registry")
         if (args.start is not None or args.end is not None) and len(ids) != 1:

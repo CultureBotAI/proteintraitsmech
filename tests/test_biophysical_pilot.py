@@ -171,3 +171,56 @@ def test_numeric_conditions_are_exact_metadata_even_inside_replay_tolerance(pilo
     rows[0]["observation_id"] = observation_id(rows[0])
     path.write_text("".join(canonical_json(row) + "\n" for row in rows))
     assert any("numerical replay or provenance differs" in error for error in check_pilot(pilot))
+
+
+@pytest.mark.parametrize("include_second", [True, False])
+def test_pilot_requires_every_selected_protein_in_the_map(pilot, include_second):
+    folder = pilot / "data/biophysical"
+    registry_path = pilot / "data/grounding/protein_registry.jsonl"
+    first = json.loads(registry_path.read_text())
+    second = {**first, "protein_id": "UniProtKB:P12346"}
+    registry = {p["protein_id"]: p for p in (first, second)}
+    registry_path.write_text("".join(canonical_json(p) + "\n" for p in registry.values()))
+    selected = folder / "pilot.proteins.txt"
+    selected.write_text("\n".join(registry) + "\n")
+    bindings_path = folder / "pilot.embedding-proteins.jsonl"
+    first_binding = json.loads(bindings_path.read_text())
+    bindings_path.write_text(canonical_json(first_binding) + "\n" +
+                            canonical_json({**first_binding, "accession": second["protein_id"]}) + "\n")
+    map_path = pilot / "docs/data/sequence_map.json"
+    if include_second:
+        map_data = json.loads(map_path.read_text())
+        map_data["points"].append([0.4, 0.5, 0, second["protein_id"]])
+        map_path.write_text(json.dumps(map_data))
+    observations_path = folder / "pilot.observations.jsonl"
+    catalog_path = folder / "descriptors.yaml"
+    assert calculate_main(["--registry", str(registry_path), "--catalog", str(catalog_path),
+                          "--proteins", str(selected), "--output", str(observations_path), "--apply"]) == 0
+    # The general builder may use the matching subset; the publication gate must
+    # reject an incomplete join even after every derived artifact is refreshed.
+    assert overlay_main(["--map", str(map_path), "--embedding-proteins", str(bindings_path),
+                         "--embedding-meta", str(folder / "pilot.embedding-meta.json"),
+                         "--registry", str(registry_path), "--catalog", str(catalog_path),
+                         "--observations", str(observations_path),
+                         "--output", str(map_path.with_name("sequence_biophysical.json")), "--apply"]) == 0
+    report = summarize(list(read_jsonl(observations_path)), registry, load_catalog(catalog_path))
+    report["observations_sha256"] = digest(observations_path)
+    (folder / "pilot.analysis.json").write_text(json.dumps(report))
+    if include_second:
+        assert check_pilot(pilot) == []
+    else:
+        assert any("exactly once in the sequence map" in error for error in check_pilot(pilot))
+
+
+def test_cohort_comments_reproduce_consistently(pilot):
+    folder = pilot / "data/biophysical"
+    selected = folder / "pilot.proteins.txt"
+    selected.write_text("  # indented cohort note\n\n  " + selected.read_text().strip() + "  \n")
+    assert check_pilot(pilot) == []
+    path = folder / "pilot.observations.jsonl"
+    before = path.read_bytes()
+    assert calculate_main(["--registry", str(pilot / "data/grounding/protein_registry.jsonl"),
+                          "--catalog", str(folder / "descriptors.yaml"), "--proteins", str(selected),
+                          "--output", str(path), "--apply"]) == 0
+    assert path.read_bytes() == before
+    assert check_pilot(pilot) == []

@@ -85,3 +85,12 @@ Follow-ups are recorded in [#753](https://github.com/CultureBotAI/proteintraitsm
 (expanded cohort and refresh workflow), and [#755](https://github.com/CultureBotAI/proteintraitsmech/issues/755)
 (the other 28 inventory entries and reuse decisions). The guide links to these
 issues and records the implemented scope separately from those follow-ups.
+
+## Adversarial review — 2026-09-24
+
+The [adversarial review](adversarial-review-2026-09-24.md) records three reproduced
+validation/provenance findings (#757–#759) and their fixes. The resulting 382-test
+targeted regression run and complete pilot check passed. Calculator version
+1.0.1 corrects external-predictor metadata; the regenerated observations preserve
+all numerical results and statuses while updating method provenance and content
+identifiers consistently across the published bundle.

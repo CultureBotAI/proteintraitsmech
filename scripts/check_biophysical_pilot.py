@@ -18,7 +18,7 @@ import sys
 from analyze_biophysical import summarize
 from biophysical import PILOT, VERSION, calculate, descriptor_id
 from build_biophysical_overlay import build_overlay
-from calculate_biophysical import digest, summary_tsv
+from calculate_biophysical import digest, read_protein_selection, summary_tsv
 from validate_biophysical import load_catalog, load_registry, read_jsonl, validate_collection
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,10 +51,15 @@ def check_pilot(root=ROOT, disorder_path=None):
     errors = validate_collection(observations, registry, catalog)
     if errors:
         return errors
-    selected = [line.strip() for line in (folder / "pilot.proteins.txt").read_text().splitlines()
-                if line.strip() and not line.lstrip().startswith("#")]
+    selected = read_protein_selection(folder / "pilot.proteins.txt")
     if not selected or len(selected) != len(set(selected)) or set(selected) - registry.keys():
         return ["pilot protein selection must be nonempty, unique and resolve in the registry"]
+    map_data = json.loads(map_path.read_text())
+    map_counts = Counter(point[3] for point in map_data["points"])
+    missing_or_repeated = [pid for pid in selected if map_counts[pid] != 1]
+    if missing_or_repeated:
+        return ["pilot proteins must appear exactly once in the sequence map: " +
+                ", ".join(sorted(missing_or_repeated))]
     expected_descriptors = {descriptor_id(code) for code in PILOT}
     if catalog.keys() != expected_descriptors:
         errors.append("pilot catalog must contain exactly the twelve implemented descriptor families")
@@ -103,7 +108,6 @@ def check_pilot(root=ROOT, disorder_path=None):
                 errors.append(f"{pid} / {expected['descriptor_id']}: numerical replay or provenance differs")
     if observations_path.with_suffix(".tsv").read_text() != summary_tsv(observations):
         errors.append("pilot TSV differs from its observations")
-    map_data = json.loads(map_path.read_text())
     bindings = list(read_jsonl(bindings_path))
     if {r.get("accession") for r in bindings} != set(selected):
         errors.append("pilot embedding bindings must cover exactly the selected cohort")

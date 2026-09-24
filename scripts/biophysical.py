@@ -12,7 +12,7 @@ import json
 import math
 from pathlib import Path
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 ALPHABET = "ACDEFGHIKLMNPQRSTVWY"
 PILOT = ("B01", "B02", "B03", "B04", "B05", "B06", "B08", "B09", "B10", "B13", "B16", "B22")
 # Kyte & Doolittle 1982, AAindex KYTJ820101. Larger means more hydrophobic.
@@ -199,8 +199,12 @@ def calculate(protein, *, start=None, end=None, ph=7.0, window=19, moment_window
     observations = []
 
     def add(code, name, reference, *, unit="1", parameters=None, **result):
-        params = {"alphabet": ALPHABET, "nonstandard_residues": "undefined; never mask or impute",
-                  **(parameters or {})}
+        # External scores retain the predictor's input assumptions. The adapter
+        # preserves the reference sequence; it must not invent a predictor
+        # alphabet or inherit the local calculators' nonstandard-residue policy.
+        params = {} if code == "B22" else {
+            "alphabet": ALPHABET, "nonstandard_residues": "undefined; never mask or impute"}
+        params.update(parameters or {})
         obs = {"descriptor_id": descriptor_id(code),
                **{k: protein[k] for k in ("protein_id", "sequence_sha256", "sequence_length", "uniprot_release")},
                "analyzed_sequence_sha256": sha256(sequence),
