@@ -95,13 +95,13 @@ DEFAULT_TRAITS_ROOT = REPO_ROOT / "data/traits"
 DEFAULT_PROTEIN_REGISTRY = REPO_ROOT / "data/grounding/protein_registry.jsonl"
 
 EXPECTED_CATH_NAMES_SHA256 = "9a7b68548a4b755ceda673cfcaba3f19733e1d571f6fafca34e54f62675cdd3a"
-EXPECTED_INTERPRO_FRAME_SHA256 = "8d350d73ed5e0525f15885bcff847913d7de208bf58e0155955b47426a382cc0"
-EXPECTED_RESIDUE_FRAME_SHA256 = "35f053876b234b92267c0f18e94bc8f085316f39343aa98668b714c610ba7848"
+EXPECTED_INTERPRO_FRAME_SHA256 = "bc2d66820c23b4ddd4306357f19f0c067a96aa8b5943b3b54991c380a1ec43d6"
+EXPECTED_RESIDUE_FRAME_SHA256 = "4fc4d2fb435f0358d0b194475b60076b1c2f0b5bad6fa48d4461ab02c6d1f130"
 EXPECTED_PROTEIN_REGISTRY_SHA256 = (
-    "d587fad177207ca4f00d1dfb8649f4f9d2d21d01953d483f44a3a6e81acc729c"
+    "c856d00e6415c4baed59b13de3483f5285154b47c1daca32490d86310aedf613"
 )
-EXPECTED_INTERPRO_RELEASE = "109.0"
-EXPECTED_UNIPROT_RELEASE = "2026_02"
+EXPECTED_INTERPRO_RELEASE = "110.0"
+EXPECTED_UNIPROT_RELEASE = "2026_03"
 
 SOURCE_PINS = {
     "cath_names": EXPECTED_CATH_NAMES_SHA256,
@@ -115,18 +115,18 @@ PRODUCTION_COUNTS = {
     "no_example_trait_count": 4192,
     "native_exact_representative_count": 4191,
     "native_placeholder_count": 1,
-    "annotation_discovery_count": 953,
-    "annotation_single_location_count": 813,
+    "annotation_discovery_count": 952,
+    "annotation_single_location_count": 812,
     "annotation_ungrouped_multi_location_count": 140,
-    "annotation_unique_trait_count": 379,
-    "annotation_unique_protein_count": 415,
-    "protein_registry_row_count": 126,
+    "annotation_unique_trait_count": 378,
+    "annotation_unique_protein_count": 414,
+    "protein_registry_row_count": 441,
     "annotation_exact_local_reference_count": 0,
-    "annotation_missing_local_reference_count": 953,
+    "annotation_missing_local_reference_count": 952,
     "annotation_exact_local_reference_unique_protein_count": 0,
-    "annotation_missing_local_reference_unique_protein_count": 415,
-    "protein_reference_request_count": 415,
-    "protein_reference_request_unique_protein_count": 415,
+    "annotation_missing_local_reference_unique_protein_count": 414,
+    "protein_reference_request_count": 414,
+    "protein_reference_request_unique_protein_count": 414,
     "protein_reference_request_multi_observation_count": 175,
     "protein_reference_request_max_observation_count": 15,
 }
@@ -161,6 +161,7 @@ _ACCESSION_RE = re.compile(
 )
 _SEQUENCE_RE = re.compile(r"^[A-Z*]+$")
 _TAXON_RE = re.compile(r"^NCBITaxon:[1-9][0-9]*$")
+_UNIPROT_RELEASE_RE = re.compile(r"^[0-9]{4}_[0-9]{2}$")
 
 REGISTRY_SCHEMA = frozenset(
     {
@@ -926,10 +927,9 @@ def _validate_registry_row(row: Mapping[str, Any], *, source: str) -> None:
     accession = protein_id.removeprefix("UniProtKB:")
     if _ACCESSION_RE.fullmatch(accession) is None:
         raise CathStageError(f"{source}: ProteinReference must use a canonical UniProt accession")
-    if row["uniprot_release"] != EXPECTED_UNIPROT_RELEASE:
-        raise CathStageError(
-            f"{source}: ProteinReference release must be exactly {EXPECTED_UNIPROT_RELEASE}"
-        )
+    release = row["uniprot_release"]
+    if not isinstance(release, str) or _UNIPROT_RELEASE_RE.fullmatch(release) is None:
+        raise CathStageError(f"{source}: invalid UniProt release")
     for field in ("protein_label", "taxon_label"):
         if not isinstance(row[field], str) or not row[field]:
             raise CathStageError(f"{source}: {field} must be a non-empty string")
@@ -1566,6 +1566,11 @@ def build_stage(
                         f"{accession} {trait_id}: InterPro interval exceeds residue frame"
                     )
                 reference = references.get(f"UniProtKB:{accession}")
+                if (
+                    reference is not None
+                    and reference.row["uniprot_release"] != expected_uniprot_release
+                ):
+                    reference = None
                 if reference is not None and (
                     reference.row["sequence_length"] != len(sequence)
                     or reference.row["sequence_sha256"]

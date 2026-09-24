@@ -3101,6 +3101,61 @@ found.
   native qualification additionally requires the versioned CATH domain/boundary
   release and residue-complete SIFTS replay described above.
 
+### 2026-09-24 — CATH v3 InterPro 110 / UniProt 2026_03 source-contract refresh
+
+- This checkpoint supersedes only CATH's local frame and protected-registry pins from
+  the 2026-08-25 CATH v2 log. CATH names v4.4.0 remain pinned to
+  `9a7b68548a4b755ceda673cfcaba3f19733e1d571f6fafca34e54f62675cdd3a`;
+  the InterPro annotation frame is now InterPro `110.0` at
+  `bc2d66820c23b4ddd4306357f19f0c067a96aa8b5943b3b54991c380a1ec43d6`;
+  and the UniProt residue frame is now UniProt `2026_03` at
+  `4fc4d2fb435f0358d0b194475b60076b1c2f0b5bad6fa48d4461ab02c6d1f130`.
+- The CATH stage now binds the current 441-row mixed-release durable
+  `data/grounding/protein_registry.jsonl`, SHA-256
+  `c856d00e6415c4baed59b13de3483f5285154b47c1daca32490d86310aedf613`,
+  size 405,702 bytes. Registry validation still requires canonical LF JSONL, exact
+  fields, accessions, sequence lengths, checksums, sequence versions, duplicate-key/
+  identity checks, and path/no-follow/drift checks, but it no longer requires every
+  durable row to be from one UniProt release. A local ProteinReference is exact for this
+  CATH run only when its `uniprot_release` is `2026_03`; older rows remain part of the
+  absence-establishing registry artifact.
+- InterPro 110 changes the local exact-match discovery partition to 952 direct
+  H-superfamily observations across 378 CATH traits and 414 proteins: 812 are
+  single-location discoveries and 140 remain blocked ungrouped multi-location
+  discoveries. None of the 414 exact CATH/Gene3D proteins is present in the current
+  registry at release `2026_03`, so all 952 discovery rows retain
+  `MISSING_LOCAL_PROTEIN_REFERENCE` and emit 414 sorted ProteinReference requests.
+  The request aggregation shape is otherwise unchanged: 175 requests aggregate more
+  than one observation, and the maximum observation count for one request is still 15.
+- The native lane remains exactly a blocker lane. The stage still emits one
+  `CATH_NATIVE_REPRESENTATIVE_BLOCKER` for each of the 4,192 CATH traits without a
+  canonical example, including 4,191 exact representatives and one CATH names
+  placeholder. No row emits GroundingEvidence or a qualification claim, and CATH
+  qualification remains closed on the same missing provider receipts, native CATH
+  domain boundaries, residue-complete SIFTS replay, verified exact-release
+  ProteinReferences, occurrence grouping, and human review requirements described in
+  the v2 checkpoint.
+- The refreshed annotation, native-blocker, request, and combined non-summary row
+  SHA-256 values are
+  `c77d0dee72b33b4899ca664b356cd8d886c622722d8ae69275e11bf9c60a8dba`,
+  `0a18d0cce9af9191b2a66d2eab96f7c614f93626e790e6e3c43cb255a0080ca1`,
+  `dac3d0b61783d7b5001397c4559c568f60147a4a79140e94b318818189a69f58`,
+  and `21ed55706accd783fad527e175080f0a74a768310fed504c08ba9654a2cbd3e9`.
+  The unchanged all/scope trait-binding hashes are
+  `0393f4b4a505c12698868594965877a119248cffb9266b3a4cf8114f1cd379c8`
+  and `2ce522975ace7ded750f6218bc050d40a1cd16510ff19c416a78d3d82c43ac63`.
+  The summary row hashes to
+  `2cd50feec9980c1080a4ef4aed41855da1bceb01a9363e55bdf789ea0093594d`,
+  the stage ID is
+  `cath-grounding-discovery-stage:2b5c7ae237bb2ec76ce0366552169203e68f1a8aa25dc237f63e557a45b8fbee`,
+  and the complete refreshed stream hashes to
+  `51f8f1c0ffd9f12cc3e6910e559acf5f7a28a1a4fd0a4d5c12083369025e28f4`.
+- The CATH stage/test focused gate passed with the production snapshot both deselected
+  and enabled, Ruff lint and `git diff --check` are clean, and the complete repository
+  test suite passed against the refreshed pins. No network request, trait write, durable
+  grounding write, evidence row, qualification, review decision, commit, or pull request
+  occurred in this refresh.
+
 ### 2026-08-25 — consolidated provider-receipt boundary and protected staging paths
 
 - A read-only adversarial replay showed that otherwise well-shaped evidence from
