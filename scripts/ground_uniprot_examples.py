@@ -3294,6 +3294,84 @@ def _merge_registry_rows(
     return merged
 
 
+def _same_protein_reference_except_release(
+    first: dict[str, Any], second: dict[str, Any]
+) -> bool:
+    """Return true when two ProteinReference rows only disagree on UniProt release."""
+
+    return {
+        key: value for key, value in first.items() if key != "uniprot_release"
+    } == {key: value for key, value in second.items() if key != "uniprot_release"}
+
+
+def _requires_same_release_protein_reference(row: dict[str, Any]) -> bool:
+    """Whether promotion must keep the selected ProteinReference release byte-exact."""
+
+    return row.get("mapping_method") == "SOURCE_MEMBERSHIP"
+
+
+def _merge_protein_reference_rows(
+    existing: dict[str, dict[str, Any]],
+    additions: dict[str, dict[str, Any]],
+    selected: list[dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Merge selected ProteinReference rows, reusing older same-sequence rows when safe."""
+
+    exact_release_required = {
+        str(row["protein_id"])
+        for row in selected
+        if _requires_same_release_protein_reference(row)
+    }
+    merged = dict(existing)
+    for protein_id in sorted(additions):
+        row = additions[protein_id]
+        previous = merged.get(protein_id)
+        if previous is None or previous == row:
+            merged[protein_id] = row
+            continue
+        if (
+            protein_id not in exact_release_required
+            and _same_protein_reference_except_release(previous, row)
+        ):
+            continue
+        raise GroundingError(
+            f"conflict: durable ProteinReference already has different row for {protein_id}"
+        )
+    return merged
+
+
+def _selected_rows_for_merged_protein_references(
+    selected: list[dict[str, Any]],
+    selected_references: dict[str, dict[str, Any]],
+    registry: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Return selected rows whose UniProt release matches the durable registry."""
+
+    effective: list[dict[str, Any]] = []
+    for row in selected:
+        protein_id = str(row["protein_id"])
+        selected_reference = selected_references[protein_id]
+        durable_reference = registry[protein_id]
+        if durable_reference == selected_reference:
+            effective.append(row)
+            continue
+        if _requires_same_release_protein_reference(row):
+            raise GroundingError(
+                f"{row['candidate_id']}: SOURCE_MEMBERSHIP ProteinReference changed "
+                "uniprot_release"
+            )
+        if not _same_protein_reference_except_release(durable_reference, selected_reference):
+            raise GroundingError(
+                f"{row['candidate_id']}: merged ProteinReference changed more than "
+                "uniprot_release"
+            )
+        effective_row = dict(row)
+        effective_row["uniprot_release"] = durable_reference["uniprot_release"]
+        effective_row["candidate_id"] = derive_candidate_id(effective_row)
+        effective.append(effective_row)
+    return effective
+
+
 def _registry_text(registry: dict[str, dict[str, Any]]) -> str:
     return "".join(_canonical_json(registry[key]) + "\n" for key in sorted(registry))
 
@@ -3878,7 +3956,10 @@ def promote(args: argparse.Namespace) -> int:
         except MembershipSnapshotError as exc:
             raise GroundingError(f"durable membership merge conflict: {exc}") from exc
         membership_changed = durable_membership_digest != _text_digest(membership_text)
-    registry = _merge_registry_rows(existing_registry, selected_references, kind="ProteinReference")
+    registry = _merge_protein_reference_rows(existing_registry, selected_references, selected)
+    effective_selected = _selected_rows_for_merged_protein_references(
+        selected, selected_references, registry
+    )
     evidence_registry = _merge_registry_rows(
         existing_evidence, selected_evidence, kind="GroundingEvidence"
     )
@@ -3890,7 +3971,7 @@ def promote(args: argparse.Namespace) -> int:
     registry_changed = durable_registry_digest != _text_digest(registry_text)
     evidence_changed = durable_evidence_digest != _text_digest(evidence_text)
     hierarchy_index: dict[str, frozenset[str]] = {}
-    if any(row.get("source_trait_id") != row.get("trait_id") for row in selected):
+    if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected):
         from validate_uniprot_grounding import build_hierarchy_index
 
         hierarchy_index, hierarchy_findings = build_hierarchy_index(
@@ -3902,7 +3983,7 @@ def promote(args: argparse.Namespace) -> int:
             )
             raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
     grouped: dict[Path, list[dict[str, Any]]] = defaultdict(list)
-    for row in selected:
+    for row in effective_selected:
         path = _safe_record_path(row["record_path"], traits_root)
         grouped[path].append(row)
     if len(grouped) > args.max_batch:
@@ -3945,7 +4026,7 @@ def promote(args: argparse.Namespace) -> int:
         prospective_sha256[path] = _text_digest(candidate_text)
         candidates_to_write[path] = (original_sha, candidate_text)
     bindings = _promotion_qualified_record_preflight(
-        selected=selected,
+        selected=effective_selected,
         selected_evidence=selected_evidence,
         durable_bindings=existing_bindings,
         durable_records=durable_bound_records,

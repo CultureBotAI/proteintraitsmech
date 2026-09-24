@@ -2562,6 +2562,98 @@ def test_promote_merges_existing_durable_rows_but_not_unapproved_staging_rows(
     assert list(durable_evidence) == sorted(durable_evidence)
 
 
+def test_promote_reuses_same_sequence_durable_protein_from_older_uniprot_release(
+    local_sources, monkeypatch
+):
+    selected_source_reference = json.loads(
+        local_sources["source_registry"].read_text(encoding="utf-8")
+    )
+    selected_source_reference["uniprot_release"] = "2026_03"
+    _jsonl(local_sources["source_registry"], [selected_source_reference])
+    candidate = {**local_sources["candidate"], "sequence_release": "2026_03"}
+    _jsonl(local_sources["queue"], [candidate])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    selected_reference = json.loads(local_sources["registry"].read_text(encoding="utf-8"))
+    row = _resolved(local_sources)
+    assert row["uniprot_release"] == "2026_03"
+    existing_reference = {**selected_reference, "uniprot_release": "2026_02"}
+    local_sources["durable_registry"].parent.mkdir()
+    _jsonl(local_sources["durable_registry"], [existing_reference])
+    approved = local_sources["review"].with_name("same-sequence-older-release.tsv")
+    _write_decisions(approved, [(row, "APPROVED")])
+    writes: list[pathlib.Path] = []
+
+    def validated_write(path, text, encoding="utf-8"):
+        assert encoding == "utf-8"
+        writes.append(pathlib.Path(path))
+        pathlib.Path(path).write_text(text, encoding=encoding)
+
+    monkeypatch.setattr(ground, "write_validated_record", validated_write)
+
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+
+    assert writes == [local_sources["record"]]
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    assert record["canonical_examples"][0]["uniprot_release"] == "2026_02"
+    assert _jsonl_rows(local_sources["durable_registry"]) == [existing_reference]
+    assert len(_jsonl_rows(local_sources["durable_evidence"])) == 1
+    bindings = _jsonl_rows(local_sources["durable_bindings"])
+    assert bindings[0]["candidate_id"] == ground.derive_candidate_id(
+        {**row, "uniprot_release": "2026_02"}
+    )
+
+    assert ground.main(_promote_args(local_sources, approved)) == 0
+
+
+def test_promote_rejects_membership_with_durable_protein_from_different_uniprot_release(
+    local_sources,
+):
+    _prepare_membership_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    selected_reference = json.loads(local_sources["registry"].read_text(encoding="utf-8"))
+    local_sources["durable_registry"].parent.mkdir()
+    _jsonl(
+        local_sources["durable_registry"],
+        [{**selected_reference, "uniprot_release": "2026_01"}],
+    )
+    approved = local_sources["review"].with_name("membership-release-conflict.tsv")
+    _approve(local_sources["review"], approved)
+
+    assert ground.main(_promote_args(local_sources, approved)) == 2
+
+    assert local_sources["durable_registry"].exists()
+    assert not local_sources["durable_evidence"].exists()
+
+
+def test_effective_selected_rows_reject_source_membership_release_remap():
+    selected_reference = {
+        "protein_id": "UniProtKB:P12345",
+        "protein_label": "Fixture protein",
+        "reviewed": True,
+        "sequence": "ACDEFGHIK",
+        "sequence_length": 9,
+        "sequence_sha256": hashlib.sha256(b"ACDEFGHIK").hexdigest(),
+        "taxon_id": "NCBITaxon:9606",
+        "taxon_label": "Homo sapiens",
+        "uniprot_release": "2026_03",
+    }
+    durable_reference = {**selected_reference, "uniprot_release": "2026_02"}
+
+    with pytest.raises(ground.GroundingError, match="SOURCE_MEMBERSHIP"):
+        ground._selected_rows_for_merged_protein_references(
+            [
+                {
+                    "candidate_id": "ug-source-membership",
+                    "mapping_method": "SOURCE_MEMBERSHIP",
+                    "protein_id": selected_reference["protein_id"],
+                    "uniprot_release": selected_reference["uniprot_release"],
+                }
+            ],
+            {selected_reference["protein_id"]: selected_reference},
+            {durable_reference["protein_id"]: durable_reference},
+        )
+
+
 @pytest.mark.parametrize("registry_kind", ["protein", "evidence"])
 def test_promote_rejects_durable_registry_conflicts_without_changing_any_artifact(
     local_sources, monkeypatch, registry_kind
