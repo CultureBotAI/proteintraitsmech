@@ -855,10 +855,11 @@ def _provider_evidence(
 def derive_interpro_location_id(
     protein_id: str, source_trait_id: str, intervals: list[dict[str, int]]
 ) -> str:
+    normalised, reasons = _normalise_intervals(intervals)
     identity = {
         "protein_id": protein_id,
         "source_trait_id": source_trait_id,
-        "intervals": copy.deepcopy(intervals),
+        "intervals": normalised if not reasons else copy.deepcopy(intervals),
     }
     return "interpro-location:" + _value_digest(identity)
 

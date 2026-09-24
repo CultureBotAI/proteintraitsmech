@@ -9,7 +9,7 @@ import importlib
 import json
 import pathlib
 import sys
-from types import MappingProxyType
+from types import MappingProxyType, SimpleNamespace
 
 import pytest
 import yaml
@@ -850,6 +850,15 @@ def test_candidate_id_covers_sequence_release_coordinates_and_positions(local_so
         != ground.derive_candidate_id(
             {**row, "interpro_location_id": "interpro-location:b"}
         )
+    )
+    assert ground.derive_interpro_location_id(
+        "UniProtKB:P12345",
+        "Pfam:PF00001",
+        [{"start": 7, "end": 8}, {"start": 2, "end": 3}],
+    ) == ground.derive_interpro_location_id(
+        "UniProtKB:P12345",
+        "Pfam:PF00001",
+        [{"start": 2, "end": 3}, {"start": 7, "end": 8}],
     )
     # Schema-facing resolved rows use uniprot_release, but retain the same identity.
     resolved_shape = {**row, "uniprot_release": row["sequence_release"]}
@@ -2222,6 +2231,58 @@ def test_resolve_qualifies_grouped_multi_fragment_interpro_location(local_source
         "interpro_frame",
         "interpro_grouped_location",
     }
+
+
+def test_promotion_replays_grouped_interpro_provider_evidence(local_sources):
+    intervals = [{"start": 2, "end": 3}, {"start": 7, "end": 8}]
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"Pfam:PF00001": [[2, 3], [7, 8]]}},
+    )
+    _sidecar(
+        local_sources["interpro_grouped"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"Pfam:PF00001": [[[2, 3], [7, 8]]]}},
+    )
+    candidate = {
+        **local_sources["candidate"],
+        "intervals": list(reversed(intervals)),
+        "interpro_location_id": ground.derive_interpro_location_id(
+            "UniProtKB:P12345",
+            "Pfam:PF00001",
+            intervals,
+        ),
+    }
+    candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+    _jsonl(local_sources["queue"], [candidate])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    replay_args = SimpleNamespace(
+        residue_frame=local_sources["residue"],
+        interpro_frame=local_sources["interpro"],
+        interpro_grouped_frame=local_sources["interpro_grouped"],
+        profiles=local_sources["profiles"],
+        protein_registry=local_sources["registry"],
+        membership_registry=local_sources["membership"],
+        sifts_registry=local_sources["sifts"],
+    )
+
+    cache = ground._provider_cache([row], replay_args)
+    assert ground._verify_provider_evidence(row, replay_args, cache) == []
+
+    _sidecar(
+        local_sources["interpro_grouped"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"Pfam:PF00001": [[[2, 3]]]}},
+    )
+    stale_cache = ground._provider_cache([row], replay_args)
+    assert "stale:provider_entry_missing:interpro_grouped_location" in (
+        ground._verify_provider_evidence(row, replay_args, stale_cache)
+    )
 
 
 def test_resolve_rejects_stale_grouped_interpro_location_id(local_sources):
