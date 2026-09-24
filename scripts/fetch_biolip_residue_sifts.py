@@ -365,7 +365,10 @@ def _write_manifest(
 
 def _validate_xml_against_entry(path: Path, entry: Mapping[str, Any]) -> None:
     _validate_entry(entry)
-    parsed = ecod_sifts.load_sifts_xml(path)
+    try:
+        parsed = ecod_sifts.load_sifts_xml(path)
+    except ecod_sifts.EcodSiftsError as exc:
+        raise BioLipSiftsFetchError(str(exc)) from exc
     actual = _manifest_entry(parsed, path=path)
     if actual != dict(entry):
         raise BioLipSiftsFetchError(f"SIFTS XML does not match manifest entry: {path}")
@@ -475,12 +478,16 @@ def fetch(args: argparse.Namespace) -> int:
         target = snapshot_dir / f"{pdb_id}.xml.gz"
         url = f"{SIFTS_SOURCE_ROOT}/{pdb_id}.xml.gz"
         existing_entry = entries.get(pdb_id)
+        if existing_entry is not None:
+            if not target.is_file():
+                raise BioLipSiftsFetchError(f"manifest-bound SIFTS file is missing: {target}")
+            _validate_xml_against_entry(target, existing_entry)
+            failures.pop(pdb_id, None)
+            _write_manifest(manifest_path, contract, entries, failures)
+            continue
+
         try:
-            if existing_entry is not None:
-                if not target.is_file():
-                    raise BioLipSiftsFetchError(f"manifest-bound SIFTS file is missing: {target}")
-                _validate_xml_against_entry(target, existing_entry)
-            elif target.is_file():
+            if target.is_file():
                 parsed = ecod_sifts.load_sifts_xml(target)
                 if parsed.pdb_id != pdb_id:
                     raise BioLipSiftsFetchError(

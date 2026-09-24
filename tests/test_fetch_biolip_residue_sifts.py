@@ -5,6 +5,7 @@ from __future__ import annotations
 import gzip
 import importlib
 import sys
+import urllib.error
 from pathlib import Path
 from typing import Any
 
@@ -165,6 +166,49 @@ def test_apply_fetches_canonical_manifest_and_is_immutable(
     monkeypatch.setattr(fetcher.urllib.request, "urlopen", no_network)
     assert fetcher.main(args) == 0
     assert hits == 1
+
+
+def test_manifest_bound_xml_corruption_fails_without_rewriting_manifest(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    stage = tmp_path / "biolip-stage.jsonl"
+    snapshot_dir = tmp_path / "snapshots"
+    _write_stage(stage, _canonical_request("1c1e"), _canonical_request("2def"))
+    first_payload = gzip.compress(_sifts_xml("1c1e"))
+
+    def first_urlopen(request: Any, *, timeout: int) -> _Response:
+        del timeout
+        if request.full_url == f"{fetcher.SIFTS_SOURCE_ROOT}/1c1e.xml.gz":
+            return _Response(first_payload)
+        raise urllib.error.URLError("transient 2def failure")
+
+    monkeypatch.setattr(fetcher.urllib.request, "urlopen", first_urlopen)
+    args = [
+        "--stage",
+        str(stage),
+        "--snapshot-dir",
+        str(snapshot_dir),
+        "--snapshot-id",
+        "fixture-2026-09-24",
+        "--apply",
+    ]
+
+    assert fetcher.main(args) == 1
+    manifest_path = snapshot_dir / "fixture-2026-09-24" / fetcher.MANIFEST_NAME
+    manifest_before = fetcher._load_manifest(manifest_path)
+    assert [entry["pdb_id"] for entry in manifest_before["entries"]] == ["1c1e"]
+    assert [failure["pdb_id"] for failure in manifest_before["failures"]] == ["2def"]
+
+    target = manifest_path.parent / "1c1e.xml.gz"
+    target.write_bytes(gzip.compress(b"not SIFTS XML"))
+
+    def no_network(*_args: Any, **_kwargs: Any) -> _Response:
+        raise AssertionError("manifest-bound corruption must fail before retrying failures")
+
+    monkeypatch.setattr(fetcher.urllib.request, "urlopen", no_network)
+    assert fetcher.main(args) == 2
+    assert fetcher._load_manifest(manifest_path) == manifest_before
 
 
 def test_wrong_stage_source_root_fails_closed(tmp_path: Path) -> None:
