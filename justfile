@@ -1043,6 +1043,7 @@ audit-uniprot-grounding *args:
       --traits data/traits \
       --residue-frame data/raw/align_cache/residue_frame.json \
       --interpro-frame data/raw/align_cache/interpro_frame.json \
+      --interpro-grouped-frame data/raw/align_cache/interpro_grouped_locations.json \
       --profiles data/profiles/profiles.jsonl \
       --out reports/uniprot-grounding "$@"
 
@@ -1190,7 +1191,7 @@ resolve-uniprot-review-batch batch_id *args:
     shift
     for argument in "$@"; do
       case "$argument" in
-        --queue|--queue=*|--selector-manifest|--selector-manifest=*|--fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--providers|--providers=*|--protein-registry|--protein-registry=*|--membership-registry|--membership-registry=*|--sifts-registry|--sifts-registry=*|--durable-membership-registry|--durable-membership-registry=*|--registry-blocked|--registry-blocked=*|--expect-uniprot-release|--expect-uniprot-release=*|--batch|--batch=*|--out|--out=*|--review|--review=*|--registry-out|--registry-out=*|--evidence-out|--evidence-out=*|--replace-staging-outputs|--replace-staging-outputs=*|--limit|--limit=*|--allow-unreceipted-inputs|--allow-unreceipted-inputs=*|--allow-offline-uniprot-fixture|--allow-offline-uniprot-fixture=*|--allow-offline-sifts-fixtures|--allow-offline-sifts-fixtures=*)
+        --queue|--queue=*|--selector-manifest|--selector-manifest=*|--fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--providers|--providers=*|--protein-registry|--protein-registry=*|--membership-registry|--membership-registry=*|--sifts-registry|--sifts-registry=*|--durable-membership-registry|--durable-membership-registry=*|--registry-blocked|--registry-blocked=*|--expect-uniprot-release|--expect-uniprot-release=*|--batch|--batch=*|--out|--out=*|--review|--review=*|--registry-out|--registry-out=*|--evidence-out|--evidence-out=*|--replace-staging-outputs|--replace-staging-outputs=*|--limit|--limit=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--allow-unreceipted-inputs|--allow-unreceipted-inputs=*|--allow-offline-uniprot-fixture|--allow-offline-uniprot-fixture=*|--allow-offline-sifts-fixtures|--allow-offline-sifts-fixtures=*)
           echo "ERROR: bounded review resolver argument is fixed by the recipe: $argument" >&2
           exit 2
           ;;
@@ -1202,6 +1203,7 @@ resolve-uniprot-review-batch batch_id *args:
       --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
       --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
       --providers protein-registry,interpro,uniprot-membership \
+      --interpro-grouped-frame data/raw/align_cache/interpro_grouped_locations.json \
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
       --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \

@@ -86,6 +86,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRAITS = REPO_ROOT / "data" / "traits"
 DEFAULT_RESIDUE_FRAME = REPO_ROOT / "data" / "raw" / "align_cache" / "residue_frame.json"
 DEFAULT_INTERPRO_FRAME = REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_frame.json"
+DEFAULT_INTERPRO_GROUPED_FRAME = (
+    REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_grouped_locations.json"
+)
 DEFAULT_PROFILES = REPO_ROOT / "data" / "profiles" / "profiles.jsonl"
 DEFAULT_PRINTS_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
 DEFAULT_PRINTS_API = DEFAULT_PRINTS_DIR / "prints.jsonl"
@@ -499,6 +502,10 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
                 "sifts_mapping_id": _clean_text(row.get("sifts_mapping_id")),
             }
         )
+    if identity["mapping_method"] == "INTERPRO_MATCH":
+        interpro_location_id = _clean_text(row.get("interpro_location_id"))
+        if interpro_location_id:
+            payload["interpro_location_id"] = interpro_location_id
     return "ug-" + _value_digest(payload)
 
 
@@ -845,6 +852,35 @@ def _provider_evidence(
     return evidence
 
 
+def derive_interpro_location_id(
+    protein_id: str, source_trait_id: str, intervals: list[dict[str, int]]
+) -> str:
+    identity = {
+        "protein_id": protein_id,
+        "source_trait_id": source_trait_id,
+        "intervals": copy.deepcopy(intervals),
+    }
+    return "interpro-location:" + _value_digest(identity)
+
+
+def _normalise_interpro_location_groups(
+    value: Any, protein_id: str, source_trait_id: str
+) -> tuple[dict[str, list[dict[str, int]]], list[str]]:
+    if not isinstance(value, list) or not value:
+        return {}, ["invalid:interpro_grouped_locations"]
+    out: dict[str, list[dict[str, int]]] = {}
+    reasons: list[str] = []
+    for number, raw_group in enumerate(value, 1):
+        intervals, interval_reasons = _normalise_intervals(raw_group)
+        if interval_reasons or not intervals:
+            reasons.extend(f"invalid:interpro_group_{number}:{reason}" for reason in interval_reasons)
+            if not intervals:
+                reasons.append(f"invalid:interpro_group_{number}:empty")
+            continue
+        out[derive_interpro_location_id(protein_id, source_trait_id, intervals)] = intervals
+    return out, reasons
+
+
 @dataclass
 class ProviderContext:
     providers: set[str]
@@ -854,6 +890,9 @@ class ProviderContext:
     interpro_path: Path | None = None
     interpro: dict[str, Any] = field(default_factory=dict)
     interpro_meta: dict = field(default_factory=dict)
+    interpro_grouped_path: Path | None = None
+    interpro_grouped: dict[str, Any] = field(default_factory=dict)
+    interpro_grouped_meta: dict = field(default_factory=dict)
     profiles_path: Path | None = None
     profiles: dict[str, dict] = field(default_factory=dict)
     registry_path: Path | None = None
@@ -959,8 +998,13 @@ def _provider_context(
     interpro_path = args.interpro_frame.resolve()
     interpro: dict[str, Any] = {}
     interpro_meta: dict = {}
+    interpro_grouped_path = args.interpro_grouped_frame.resolve()
+    interpro_grouped: dict[str, Any] = {}
+    interpro_grouped_meta: dict = {}
     if "interpro" in providers:
         interpro, interpro_meta = _load_sidecar(interpro_path)
+        if interpro_grouped_path.is_file():
+            interpro_grouped, interpro_grouped_meta = _load_sidecar(interpro_grouped_path)
     membership_path = (
         Path(verified_fetch.request_plan["output_paths"]["membership_registry"])
         if verified_fetch is not None
@@ -1044,6 +1088,9 @@ def _provider_context(
         interpro_path=interpro_path,
         interpro=interpro,
         interpro_meta=interpro_meta,
+        interpro_grouped_path=interpro_grouped_path,
+        interpro_grouped=interpro_grouped,
+        interpro_grouped_meta=interpro_grouped_meta,
         profiles_path=args.profiles.resolve(),
         profiles=profiles,
         registry_path=registry_path,
@@ -1159,6 +1206,7 @@ def _validate_resolve_output_paths(args: argparse.Namespace) -> None:
         "queue",
         "residue_frame",
         "interpro_frame",
+        "interpro_grouped_frame",
         "profiles",
         "prints_manifest",
         "prints_api",
@@ -1479,12 +1527,14 @@ def _resolve_occurrence(
         raw_source_intervals = matches.get(source_trait_id) if isinstance(matches, dict) else None
         source_intervals, source_interval_reasons = _normalise_intervals(raw_source_intervals)
         reasons.extend(source_interval_reasons)
+        interpro_location_id = _clean_text(candidate.get("interpro_location_id"))
         if raw_source_intervals is None:
             reasons.append("missing:exact_interpro_match")
         else:
-            if intervals and intervals != source_intervals:
+            if not interpro_location_id and intervals and intervals != source_intervals:
                 reasons.append("mismatch:interpro_intervals")
-            intervals = source_intervals
+            if not interpro_location_id:
+                intervals = source_intervals
             evidence.append(
                 _provider_evidence(
                     "interpro_frame",
@@ -1496,6 +1546,43 @@ def _resolve_occurrence(
                 )
             )
         provider_release = _clean_text(context.interpro_meta.get("release"))
+        if interpro_location_id:
+            grouped_matches = context.interpro_grouped.get(accession)
+            raw_groups = (
+                grouped_matches.get(source_trait_id)
+                if isinstance(grouped_matches, dict)
+                else None
+            )
+            grouped_by_id: dict[str, list[dict[str, int]]] = {}
+            if raw_groups is None:
+                reasons.append("missing:interpro_grouped_location")
+            else:
+                grouped_by_id, grouped_reasons = _normalise_interpro_location_groups(
+                    raw_groups,
+                    protein_id,
+                    source_trait_id,
+                )
+                reasons.extend(grouped_reasons)
+            grouped_intervals = grouped_by_id.get(interpro_location_id)
+            if grouped_intervals is None:
+                reasons.append("missing:exact_interpro_grouped_location")
+            else:
+                if intervals and intervals != grouped_intervals:
+                    reasons.append("mismatch:interpro_grouped_intervals")
+                intervals = grouped_intervals
+                evidence.append(
+                    _provider_evidence(
+                        "interpro_grouped_location",
+                        context.interpro_grouped_path or Path("."),
+                        interpro_location_id,
+                        grouped_intervals,
+                        context.interpro_grouped_meta,
+                        trait_id=source_trait_id,
+                    )
+                )
+            grouped_release = _clean_text(context.interpro_grouped_meta.get("release"))
+            if provider_release and grouped_release and provider_release != grouped_release:
+                reasons.append("mismatch:interpro_grouped_release")
         if source_release and provider_release and source_release != provider_release:
             reasons.append("mismatch:source_release")
         source_release = provider_release or source_release
@@ -1810,7 +1897,11 @@ def _resolve_occurrence(
         # can therefore mean a discontinuous occurrence, repeated independent hits, or a
         # PRINTS-style fingerprint.  Treating that list as one occurrence would invent a
         # biological assertion.  A richer provider must group it before qualification.
-        if mapping_method == "INTERPRO_MATCH" and len(intervals) > 1:
+        if (
+            mapping_method == "INTERPRO_MATCH"
+            and len(intervals) > 1
+            and not _clean_text(candidate.get("interpro_location_id"))
+        ):
             reasons.append("ambiguous:ungrouped_interpro_locations")
     else:
         if coordinate_frame is not None:
@@ -1883,9 +1974,12 @@ def _resolve_occurrence(
     ):
         if candidate.get(key) is not None:
             occurrence[key] = candidate[key]
-    source_kind = (
-        "uniprot_membership" if mapping_method == "SOURCE_MEMBERSHIP" else "interpro_frame"
-    )
+    if mapping_method == "SOURCE_MEMBERSHIP":
+        source_kind = "uniprot_membership"
+    elif _clean_text(candidate.get("interpro_location_id")):
+        source_kind = "interpro_grouped_location"
+    else:
+        source_kind = "interpro_frame"
     source_evidence = next((item for item in evidence if item.get("kind") == source_kind), None)
     if source_evidence is None:
         reasons.append("missing:source_provider_evidence")
@@ -2447,6 +2541,8 @@ def _provider_projection(
             return None
         intervals, reasons = _normalise_intervals(entry.get(evidence.get("trait_id")))
         return None if reasons else intervals
+    if kind == "interpro_grouped_location":
+        return payload.get(str(key))
     if kind == "profiles":
         return _metadata_projection(payload.get(str(key), {}))
     if kind in {"source_protein_registry", "protein_registry"}:
@@ -2462,6 +2558,7 @@ def _provider_override(kind: str, evidence: dict[str, Any], args: argparse.Names
     override = {
         "residue_frame": args.residue_frame,
         "interpro_frame": args.interpro_frame,
+        "interpro_grouped_location": args.interpro_grouped_frame,
         "profiles": args.profiles,
         # A source registry and the normalized output registry can differ in shape.
         # Never redirect source evidence to the output registry merely because the
@@ -2494,6 +2591,24 @@ def _provider_cache(
             continue
         if kind in {"residue_frame", "interpro_frame"}:
             cache[(kind, path)] = _load_sidecar(path)
+        elif kind == "interpro_grouped_location":
+            grouped, grouped_meta = _load_sidecar(path)
+            location_index: dict[str, list[dict[str, int]]] = {}
+            for accession, matches in grouped.items():
+                if not isinstance(accession, str) or not isinstance(matches, dict):
+                    continue
+                for source_trait_id, raw_groups in matches.items():
+                    if not isinstance(source_trait_id, str):
+                        continue
+                    by_id, _ = _normalise_interpro_location_groups(
+                        raw_groups,
+                        f"UniProtKB:{accession}",
+                        source_trait_id,
+                    )
+                    for location_id in keys:
+                        if location_id in by_id:
+                            location_index[location_id] = by_id[location_id]
+            cache[(kind, path)] = (location_index, grouped_meta)
         elif kind == "profiles":
             cache[(kind, path)] = (_load_profiles(path, keys), {})
         elif kind in {"source_protein_registry", "protein_registry"}:
@@ -2573,7 +2688,7 @@ def _verify_provider_evidence(
         if observed_digest != evidence.get("entry_sha256"):
             reasons.append(f"stale:provider_entry_changed:{kind}")
             continue
-        if kind in {"residue_frame", "interpro_frame"}:
+        if kind in {"residue_frame", "interpro_frame", "interpro_grouped_location"}:
             _, meta = cache[(kind, path)]
             if evidence.get("release") != meta.get("release"):
                 reasons.append(f"stale:provider_release_changed:{kind}")
@@ -3398,6 +3513,7 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
     for optional in (
         args.residue_frame,
         args.interpro_frame,
+        args.interpro_grouped_frame,
         args.profiles,
         args.sifts_registry,
         args.interpro_xml,
@@ -4167,6 +4283,11 @@ def _parser() -> argparse.ArgumentParser:
     resolver.add_argument("--traits", type=Path, default=DEFAULT_TRAITS)
     resolver.add_argument("--residue-frame", type=Path, default=DEFAULT_RESIDUE_FRAME)
     resolver.add_argument("--interpro-frame", type=Path, default=DEFAULT_INTERPRO_FRAME)
+    resolver.add_argument(
+        "--interpro-grouped-frame",
+        type=Path,
+        default=DEFAULT_INTERPRO_GROUPED_FRAME,
+    )
     resolver.add_argument("--profiles", type=Path, default=DEFAULT_PROFILES)
     resolver.add_argument(
         "--prints-manifest",
@@ -4342,6 +4463,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     promoter.add_argument("--residue-frame", type=Path)
     promoter.add_argument("--interpro-frame", type=Path)
+    promoter.add_argument("--interpro-grouped-frame", type=Path)
     promoter.add_argument("--profiles", type=Path)
     promoter.add_argument("--interpro-xml", type=Path, default=DEFAULT_INTERPRO_XML)
     promoter.add_argument("--interpro-xml-sha256", default=INTERPRO_109_XML_SHA256)
