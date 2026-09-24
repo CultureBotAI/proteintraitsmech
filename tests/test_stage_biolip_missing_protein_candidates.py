@@ -319,11 +319,9 @@ def test_scope_is_no_example_only_and_fetch_queue_is_small_and_deduplicated(
     assert [row["pdb_id"] for row in result.fetch_requests] == ["1abc", "2def"]
     request_1abc = result.fetch_requests[0]
     assert request_1abc["source_occurrence_count"] == 2
-    assert request_1abc["requested_artifact_kind"] == (
-        "PDBe_SIFTS_REMEDIATED_RESIDUE_LEVEL_XML_GZIP"
-    )
+    assert request_1abc["requested_artifact_kind"] == "PDBe_SIFTS_RESIDUE_LEVEL_XML_GZIP"
     assert request_1abc["requested_source_root"] == (
-        "https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml_remediated"
+        "https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml"
     )
     assert request_1abc["requested_relative_path"] == "1abc.xml.gz"
     assert request_1abc["fetch_manifest_required"] is True
@@ -693,27 +691,27 @@ def test_production_biolip_missing_protein_snapshot_when_artifacts_exist() -> No
         "1bba8f1fd537b5eb6ceb3e4c1db034cded0d4b6f28b449398a5aed96bea666ff"
     )
     assert summary["all_trait_binding_rows_sha256"] == (
-        "0671a0a53d026bae51be05d81e4501f091f80d27581c8b3f057a12b084dca856"
+        "ef415e9d70d3f3da9f4feaec64e0e0ad41165cc771f37a8a332f837feeaa4cc1"
     )
     assert summary["no_example_trait_binding_rows_sha256"] == (
         "bcb586ace9ee5803e4774579ac36e6e83b626a48ff4ec95bf9e79c04472bc097"
     )
     assert summary["occurrence_rows_sha256"] == (
-        "d23d161fd7dfe61e43a63bb1e081d00c327e86f20b6be4d7aca49c186fc47325"
+        "fa3cbade422baf150da4795d87d6a4821a713c48b96d570d9bd08dde475ee635"
     )
     assert summary["fetch_request_rows_sha256"] == (
-        "f135281921caa6b974d71026aedb78263ea948a2c2d6058dacd208332f989726"
+        "66012d95884e43cf5376e9c2faa615affab902f48c40b4c6afca9eab9e865547"
     )
     assert summary["combined_non_summary_rows_sha256"] == (
-        "fcc804932d40efba7c2585307a9c10c1ee07d09d6d8430dfa22f80a38e61da2e"
+        "11ac82b81e882cc7f835101952741a7d0277deb57e6bb51ef711c050eab2a11b"
     )
     assert summary["stage_id"] == (
         "biolip-missing-protein-stage:"
-        "f9fc94db49a9c066fba504596d88dc2f2ffeba46841e8f1359031eccd2b311dc"
+        "a761c8152bf2e2c95c6c566c257654fe71561e8eb159f88c97fc5a0366750192"
     )
     assert len(result.occurrences) + len(result.fetch_requests) + 1 == 1_122
     assert hashlib.sha256(stage.render_stage(result).encode("utf-8")).hexdigest() == (
-        "3cb24236f59e0c72b88a00583a1d7fd8c6001763d0e7ac36777e21fd963271fb"
+        "0311ec6178b35c0a95d6054d6f4140ae91d031f49ef3b29a258c177452e83615"
     )
     assert {
         (

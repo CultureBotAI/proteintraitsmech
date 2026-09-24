@@ -443,6 +443,9 @@ fetch-biolip:
     python3 scripts/fetch_source.py https://zhanggroup.org/BioLiP/download/readme.txt data/raw/biolip/readme.txt --max-time 60 --min-bytes 100
     @wc -l data/raw/biolip/BioLiP_nr.txt data/raw/biolip/ligand.tsv
 
+fetch-biolip-sifts *args:
+    uv run python scripts/fetch_biolip_residue_sifts.py {{args}}
+
 # Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
 # Requires `just fetch-biolip` first. Dry-run by default; --apply to write.
 seed-biolip *args:
