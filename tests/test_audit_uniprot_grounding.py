@@ -465,6 +465,54 @@ def test_audit_is_fail_closed_and_emits_exact_candidates(tmp_path):
     assert sum(int(row["count"]) for row in totals) == 9
 
 
+def test_grouped_interpro_sidecar_discharges_multi_fragment_location(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    grouped = tmp_path / "interpro-grouped.json"
+    _json(
+        grouped,
+        {
+            "_meta": {"schema": 1, "source": "InterPro", "release": "109.0"},
+            "proteins": {
+                "Q54321": {
+                    "Pfam:PF00001": [
+                        [[1, 3], [5, 6]],
+                    ]
+                }
+            },
+        },
+    )
+
+    _, candidates, blocked = A.run_audit(
+        traits,
+        residue,
+        interpro,
+        profiles,
+        tmp_path / "out",
+        max_candidates_per_record=3,
+        interpro_grouped_frame=grouped,
+        protein_registry_path=tmp_path / "missing-proteins.jsonl",
+        evidence_registry_path=tmp_path / "missing-evidence.jsonl",
+    )
+
+    row = next(
+        candidate
+        for candidate in candidates
+        if candidate["trait_id"] == "Pfam:PF00001"
+        and candidate["protein_id"] == "UniProtKB:Q54321"
+    )
+    assert row["batch"] == "ready-local"
+    assert row["candidate_status"] == "LOCATION_VERIFIED"
+    assert row["intervals"] == [{"start": 1, "end": 3}, {"start": 5, "end": 6}]
+    assert row["interpro_location_id"].startswith("interpro-location:")
+    assert row["reasons"] == []
+    assert row["candidate_id"] == A._candidate_id(row)
+    assert (
+        "Pfam:PF00001",
+        "UniProtKB:Q54321",
+        "UNGROUPED_INTERPRO_LOCATIONS",
+    ) not in {(row.trait_id, row.protein_id, row.reason) for row in blocked}
+
+
 def test_outputs_are_byte_identical_on_rerun(tmp_path):
     traits, residue, interpro, profiles = _inputs(tmp_path)
     out = tmp_path / "out"

@@ -151,6 +151,7 @@ class Profile:
 class CandidateEvidence:
     accession: str
     intervals: tuple[tuple[int, int], ...]
+    interpro_location_id: str | None = None
     profile: Profile | None = None
     sequence: str | None = None
     failures: list[str] = field(default_factory=list)
@@ -636,6 +637,43 @@ def _normal_intervals(value: object) -> tuple[tuple[int, int], ...] | None:
     return tuple(sorted(out))
 
 
+def _interpro_location_id(
+    accession: str, trait_id: str, intervals: tuple[tuple[int, int], ...]
+) -> str:
+    identity = {
+        "protein_id": f"UniProtKB:{accession}",
+        "source_trait_id": trait_id,
+        "intervals": [{"start": start, "end": end} for start, end in intervals],
+    }
+    canonical = json.dumps(identity, sort_keys=True, separators=(",", ":"))
+    return "interpro-location:" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def _normal_interpro_location_groups(
+    value: object, accession: str, trait_id: str
+) -> list[CandidateEvidence] | None:
+    if not isinstance(value, list) or not value:
+        return None
+    out: list[CandidateEvidence] = []
+    seen: set[str] = set()
+    for group in value:
+        intervals = _normal_intervals(group)
+        if intervals is None:
+            return None
+        location_id = _interpro_location_id(accession, trait_id, intervals)
+        if location_id in seen:
+            continue
+        seen.add(location_id)
+        out.append(
+            CandidateEvidence(
+                accession,
+                intervals,
+                interpro_location_id=location_id,
+            )
+        )
+    return out or None
+
+
 def _candidate_id(row: dict) -> str:
     identity = {
         "trait_id": row["trait_id"],
@@ -651,6 +689,8 @@ def _candidate_id(row: dict) -> str:
         "intervals": row.get("intervals", []),
         "residue_positions": row.get("residue_positions", []),
     }
+    if row.get("interpro_location_id"):
+        identity["interpro_location_id"] = row["interpro_location_id"]
     canonical = json.dumps(identity, sort_keys=True, separators=(",", ":"))
     return "ug-" + hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
@@ -686,6 +726,7 @@ def discover_candidates(
     interpro_frame_path: Path,
     profiles_path: Path,
     max_candidates_per_record: int,
+    interpro_grouped_frame_path: Path | None = None,
 ) -> tuple[list[dict], list[Blocked]]:
     """Join exact local source matches and return candidate/blocked ledgers."""
     target_records: dict[str, list[RecordAudit]] = collections.defaultdict(list)
@@ -698,10 +739,38 @@ def discover_candidates(
     exact: dict[str, list[CandidateEvidence]] = collections.defaultdict(list)
     wanted_accessions: set[str] = set()
     malformed_matches: list[tuple[str, str]] = []
+    grouped_pairs: set[tuple[str, str]] = set()
+    if interpro_grouped_frame_path is not None and interpro_grouped_frame_path.is_file():
+        grouped, grouped_meta = _load_sidecar(interpro_grouped_frame_path, "proteins")
+        grouped_release = grouped_meta.get("release")
+        if interpro_release and grouped_release and interpro_release != grouped_release:
+            raise AuditInputError(
+                "InterPro compact and grouped sidecars have different releases: "
+                f"{interpro_release!r} != {grouped_release!r}"
+            )
+        for accession, matches in grouped.items():
+            if not isinstance(accession, str) or not isinstance(matches, dict):
+                continue
+            for trait_id, raw_groups in matches.items():
+                if trait_id not in target_records:
+                    continue
+                location_groups = _normal_interpro_location_groups(
+                    raw_groups,
+                    accession,
+                    trait_id,
+                )
+                if location_groups is None:
+                    malformed_matches.append((trait_id, accession))
+                    continue
+                exact[trait_id].extend(location_groups)
+                wanted_accessions.add(accession)
+                grouped_pairs.add((trait_id, accession))
     for accession, matches in interpro.items():
         if not isinstance(accession, str) or not isinstance(matches, dict):
             continue
         for trait_id, raw_intervals in matches.items():
+            if (trait_id, accession) in grouped_pairs:
+                continue
             if trait_id not in target_records:
                 continue
             intervals = _normal_intervals(raw_intervals)
@@ -783,7 +852,11 @@ def discover_candidates(
                 not (1 <= start <= end <= len(item.sequence)) for start, end in item.intervals
             ):
                 item.failures.append("INTERPRO_INTERVAL_OUT_OF_BOUNDS")
-            if _scope(record) == "LOCALIZED" and len(item.intervals) > 1:
+            if (
+                _scope(record) == "LOCALIZED"
+                and len(item.intervals) > 1
+                and not item.interpro_location_id
+            ):
                 # The compact InterPro sidecar flattens location fragments and repeated
                 # hits into one list.  Without original hit/location grouping, several
                 # ranges cannot safely be asserted as one discontinuous occurrence.
@@ -888,6 +961,8 @@ def discover_candidates(
                 # blocking local checks have passed for rows emitted here.
                 "reasons": sorted(set(item.failures)),
             }
+            if item.interpro_location_id:
+                row["interpro_location_id"] = item.interpro_location_id
             if scope == "LOCALIZED":
                 row["coordinate_frame"] = "UNIPROT_CANONICAL"
             row["candidate_id"] = _candidate_id(row)
@@ -1017,6 +1092,7 @@ def run_audit(
     out: Path,
     max_candidates_per_record: int = 3,
     *,
+    interpro_grouped_frame: Path | None = None,
     protein_registry_path: Path = DEFAULT_PROTEIN_REGISTRY,
     evidence_registry_path: Path = DEFAULT_EVIDENCE_REGISTRY,
     membership_registry_path: Path = DEFAULT_MEMBERSHIP_REGISTRY,
@@ -1037,6 +1113,7 @@ def run_audit(
         interpro_frame,
         profiles,
         max_candidates_per_record,
+        interpro_grouped_frame,
     )
     blocked.extend(candidate_blocks)
     write_outputs(out, records, candidates, blocked)
@@ -1050,6 +1127,7 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--traits", type=Path, required=True)
     ap.add_argument("--residue-frame", type=Path, required=True)
     ap.add_argument("--interpro-frame", type=Path, required=True)
+    ap.add_argument("--interpro-grouped-frame", type=Path)
     ap.add_argument("--profiles", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument(
@@ -1099,6 +1177,7 @@ def main(argv: list[str] | None = None) -> int:
             args.profiles,
             args.out,
             args.max_candidates_per_record,
+            interpro_grouped_frame=args.interpro_grouped_frame,
             protein_registry_path=args.protein_registry,
             evidence_registry_path=args.evidence_registry,
             membership_registry_path=args.membership_registry,

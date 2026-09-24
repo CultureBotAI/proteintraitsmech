@@ -16,6 +16,8 @@ distinct trait categories.
 
 Output: `data/raw/align_cache/interpro_frame.json` (gitignored, regenerable)
   {"<ACC>": {"<PREFIX>:<SIG>": [[start, end], …], …}, …}
+and `data/raw/align_cache/interpro_grouped_locations.json`
+  {"<ACC>": {"<PREFIX>:<SIG>": [[[start, end], …], …]}, …}
 
 Signature accessions are mapped back to the corpus's CURIE prefixes, so a lookup
 is keyed exactly as a record's `identifier`.
@@ -46,6 +48,9 @@ import sidecar  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 OUT = REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_frame.json"
+GROUPED_OUT = (
+    REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_grouped_locations.json"
+)
 RESIDUE_FRAME = REPO_ROOT / "data" / "raw" / "align_cache" / "residue_frame.json"
 
 # InterPro `source_database` → the corpus CURIE prefix. Inverse of the aligner's
@@ -109,11 +114,61 @@ def target_proteins() -> list:
                   if len(prot_cats.get(a, set())) > 1)
 
 
-def fetch_protein(acc: str, tries: int = 3):
-    """{CURIE: [[start, end], …]} of every member-DB match on this protein."""
+def _curie(metadata: dict) -> str | None:
+    prefix = DB_PREFIX.get(metadata.get("source_database"))
+    sig = metadata.get("accession")
+    if not prefix or not isinstance(sig, str) or not sig:
+        return None
+    # InterPro reports CATH-Gene3D as "G3DSA:1.10.510.10"; the corpus
+    # (and build_swissprot_profiles.py) key on the bare CATH code, so a
+    # lookup would never match without stripping it.
+    if sig.startswith("G3DSA:"):
+        sig = sig.split(":", 1)[1]
+    return f"{prefix}:{sig}"
+
+
+def extract_entry_matches(
+    results: list[dict],
+) -> tuple[dict[str, list[list[int]]], dict[str, list[list[list[int]]]]]:
+    """Return flat and per-entry_protein_location InterPro matches.
+
+    The compact frame preserves the legacy flattened lookup used by existing
+    queues.  The grouped frame keeps every InterPro ``entry_protein_location`` as
+    one independent hit, including any discontinuous fragments within that hit.
+    """
+    flat: dict[str, list[list[int]]] = {}
+    grouped: dict[str, list[list[list[int]]]] = {}
+    for entry in results:
+        curie = _curie(entry.get("metadata") or {})
+        if curie is None:
+            continue
+        for protein in entry.get("proteins") or []:
+            for location in protein.get("entry_protein_locations") or []:
+                fragments: list[list[int]] = []
+                for fragment in location.get("fragments") or []:
+                    try:
+                        start, end = int(fragment["start"]), int(fragment["end"])
+                    except (KeyError, TypeError, ValueError):
+                        continue
+                    fragments.append([min(start, end), max(start, end)])
+                if not fragments:
+                    continue
+                flat.setdefault(curie, []).extend(fragments)
+                grouped.setdefault(curie, []).append(fragments)
+    return (
+        {key: value for key, value in flat.items() if value},
+        {key: value for key, value in grouped.items() if value},
+    )
+
+
+def fetch_protein(
+    acc: str, tries: int = 3
+) -> tuple[dict[str, list[list[int]]], dict[str, list[list[list[int]]]]] | None:
+    """Return flat and grouped member-DB matches on this protein."""
     url = (f"https://www.ebi.ac.uk/interpro/api/entry/all/protein/uniprot/{acc}/"
            f"?page_size=200")
-    out: dict = {}
+    flat: dict[str, list[list[int]]] = {}
+    grouped: dict[str, list[list[list[int]]]] = {}
     while url:
         data = None
         for i in range(tries):
@@ -129,12 +184,12 @@ def fetch_protein(acc: str, tries: int = 3):
                         # cacheable answer; letting json.loads() choke on the
                         # empty body instead cost three retries and ~6s and then
                         # reported a false failure (issue #56).
-                        return {}
+                        return {}, {}
                     data = json.loads(body.decode("utf-8"))
                 break
             except urllib.error.HTTPError as e:
                 if e.code in (204, 404):   # no matches: a real, cacheable answer
-                    return {}
+                    return {}, {}
                 if i == tries - 1:
                     return None
                 time.sleep(2.0 * (i + 1))
@@ -144,28 +199,16 @@ def fetch_protein(acc: str, tries: int = 3):
                 time.sleep(2.0 * (i + 1))
         if data is None:
             return None
-        for e in data.get("results") or []:
-            md = e.get("metadata") or {}
-            prefix = DB_PREFIX.get(md.get("source_database"))
-            sig = md.get("accession")
-            if not (prefix and sig):
-                continue
-            # InterPro reports CATH-Gene3D as "G3DSA:1.10.510.10"; the corpus
-            # (and build_swissprot_profiles.py) key on the bare CATH code, so a
-            # lookup would never match without stripping it.
-            if sig.startswith("G3DSA:"):
-                sig = sig.split(":", 1)[1]
-            spans = out.setdefault(f"{prefix}:{sig}", [])
-            for pr in e.get("proteins") or []:
-                for loc in pr.get("entry_protein_locations") or []:
-                    for fr in loc.get("fragments") or []:
-                        try:
-                            s, en = int(fr["start"]), int(fr["end"])
-                        except (KeyError, TypeError, ValueError):
-                            continue
-                        spans.append([min(s, en), max(s, en)])
+        page_flat, page_grouped = extract_entry_matches(data.get("results") or [])
+        for curie, intervals in page_flat.items():
+            flat.setdefault(curie, []).extend(intervals)
+        for curie, locations in page_grouped.items():
+            grouped.setdefault(curie, []).extend(locations)
         url = data.get("next")
-    return {k: v for k, v in out.items() if v}
+    return (
+        {key: value for key, value in flat.items() if value},
+        {key: value for key, value in grouped.items() if value},
+    )
 
 
 def main() -> int:
@@ -183,9 +226,11 @@ def main() -> int:
     ap.add_argument("--allow-partial", action="store_true",
                     help="write even if some proteins failed after retries")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--grouped-out", default=str(GROUPED_OUT))
     args = ap.parse_args()
 
     outp = Path(args.out)
+    grouped_outp = Path(args.grouped_out)
     release = sidecar.interpro_release()
     have, meta = sidecar.read(outp, "proteins")
     if have:
@@ -193,13 +238,21 @@ def main() -> int:
             return 2
         print(f"resuming: {len(have):,} proteins already in {outp.name} "
               f"(release {meta.get('release')})", file=sys.stderr)
+    grouped_have, grouped_meta = sidecar.read(grouped_outp, "proteins")
+    if grouped_have:
+        if not sidecar.check_release(grouped_meta, release, grouped_outp, args.allow_stale):
+            return 2
+        print(f"resuming: {len(grouped_have):,} proteins already in "
+              f"{grouped_outp.name} (release {grouped_meta.get('release')})",
+              file=sys.stderr)
 
     targets = target_proteins()
-    todo = [a for a in targets if a not in have]
+    todo = [a for a in targets if a not in have or a not in grouped_have]
     if args.limit:
         todo = todo[:args.limit]
+    already_cached = sum(1 for a in targets if a in have and a in grouped_have)
     print(f"target proteins: {len(targets):,} | already cached: "
-          f"{len(targets)-len([a for a in targets if a not in have]):,} | to fetch: {len(todo):,}")
+          f"{already_cached:,} | to fetch: {len(todo):,}")
     if not args.apply:
         print("Dry-run — pass --apply to fetch and write.")
         return 0
@@ -215,7 +268,9 @@ def main() -> int:
             if got is None:
                 failed += 1
             else:
-                have[acc] = got
+                flat, grouped = got
+                have[acc] = flat
+                grouped_have[acc] = grouped
             if n % 500 == 0:
                 print(f"  {n:,}/{len(todo):,} fetched ({failed} failed)",
                       file=sys.stderr)
@@ -223,10 +278,15 @@ def main() -> int:
                 outp.write_text(json.dumps(
                     sidecar.wrap("proteins", have, "InterPro", release),
                     separators=(",", ":")), encoding="utf-8")
+                grouped_outp.parent.mkdir(parents=True, exist_ok=True)
+                grouped_outp.write_text(json.dumps(
+                    sidecar.wrap("proteins", grouped_have, "InterPro", release),
+                    separators=(",", ":")), encoding="utf-8")
 
     n_sig = sum(len(v) for v in have.values())
+    n_grouped_sig = sum(len(v) for v in grouped_have.values())
     print(f"proteins in sidecar: {len(have):,} | signature matches: {n_sig:,} | "
-          f"failed: {failed:,}")
+          f"grouped signature matches: {n_grouped_sig:,} | failed: {failed:,}")
     if failed and not args.allow_partial:
         print("some proteins failed after retries — the sidecar was still "
               "checkpointed and the run is resumable; re-run to fill the gaps, "
@@ -234,11 +294,20 @@ def main() -> int:
     outp.parent.mkdir(parents=True, exist_ok=True)
     outp.write_text(json.dumps(sidecar.wrap("proteins", have, "InterPro", release),
                                separators=(",", ":")), encoding="utf-8")
+    grouped_outp.parent.mkdir(parents=True, exist_ok=True)
+    grouped_outp.write_text(json.dumps(
+        sidecar.wrap("proteins", grouped_have, "InterPro", release),
+        separators=(",", ":")), encoding="utf-8")
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:
         shown = outp
     print(f"WROTE {shown} ({outp.stat().st_size/1e6:.1f} MB)")
+    try:
+        shown_grouped = grouped_outp.relative_to(REPO_ROOT)
+    except ValueError:
+        shown_grouped = grouped_outp
+    print(f"WROTE {shown_grouped} ({grouped_outp.stat().st_size/1e6:.1f} MB)")
     return 1 if (failed and not args.allow_partial) else 0
 
 
