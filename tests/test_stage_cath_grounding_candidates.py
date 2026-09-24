@@ -175,7 +175,7 @@ def _case(tmp_path: Path) -> dict[str, Any]:
                 "schema": 1,
                 "built": "2026-07-27",
                 "source": "InterPro",
-                "release": "109.0",
+                "release": stage.EXPECTED_INTERPRO_RELEASE,
                 "count": 3,
             },
             "proteins": {
@@ -192,7 +192,7 @@ def _case(tmp_path: Path) -> dict[str, Any]:
                 "schema": 1,
                 "built": "2026-07-27",
                 "source": "UniProt",
-                "release": "2026_02",
+                "release": stage.EXPECTED_UNIPROT_RELEASE,
                 "count": 3,
                 "absent": [],
             },
@@ -644,7 +644,7 @@ def test_duplicate_yaml_keys_and_symlinks_fail_before_staging(tmp_path: Path) ->
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
-        (lambda row: {**row, "uniprot_release": "2026_01"}, "release must be exactly 2026_02"),
+        (lambda row: {**row, "uniprot_release": "2026-02"}, "invalid UniProt release"),
         (lambda row: {**row, "sequence_length": 99}, "sequence_length does not match"),
         (lambda row: {**row, "sequence_sha256": "0" * 64}, "sha256 does not match"),
         (lambda row: {**row, "unexpected": 1}, "schema mismatch"),
@@ -718,13 +718,40 @@ def test_missing_rows_bind_the_exact_registry_that_established_absence(tmp_path:
     )
 
 
+def test_mixed_release_registry_rows_are_not_current_exact_references(tmp_path: Path) -> None:
+    case = _case(tmp_path)
+    _write_registry(
+        case["registry"],
+        [{**_registry_row("P12345"), "uniprot_release": "2026_02"}],
+    )
+    _repin_registry(case)
+    case["counts"].update(
+        {
+            "annotation_exact_local_reference_count": 0,
+            "annotation_missing_local_reference_count": 3,
+            "annotation_exact_local_reference_unique_protein_count": 0,
+            "annotation_missing_local_reference_unique_protein_count": 3,
+            "protein_reference_request_count": 3,
+            "protein_reference_request_unique_protein_count": 3,
+        }
+    )
+
+    result = _build(case)
+
+    p12345 = result.annotation_discoveries[0]
+    assert p12345["protein_id"] == "UniProtKB:P12345"
+    assert p12345["protein_reference_binding"]["status"] == "MISSING_EXACT_PROTEIN_REFERENCE"
+    assert p12345["candidate_status"] == stage.MISSING_LOCAL_PROTEIN_REFERENCE
+    assert len(result.protein_requests) == 3
+
+
 def test_frame_releases_are_exact(tmp_path: Path) -> None:
     case = _case(tmp_path / "interpro")
     value = json.loads(case["interpro"].read_text(encoding="utf-8"))
     value["_meta"]["release"] = "108.0"
     _canonical_file(case["interpro"], value)
     case["pins"]["interpro_frame"] = hashlib.sha256(case["interpro"].read_bytes()).hexdigest()
-    with pytest.raises(stage.CathStageError, match="InterPro.*109.0"):
+    with pytest.raises(stage.CathStageError, match=f"InterPro.*{stage.EXPECTED_INTERPRO_RELEASE}"):
         _build(case)
 
     case = _case(tmp_path / "residue")
@@ -732,7 +759,10 @@ def test_frame_releases_are_exact(tmp_path: Path) -> None:
     value["_meta"]["release"] = "2026_01"
     _canonical_file(case["residue"], value)
     case["pins"]["residue_frame"] = hashlib.sha256(case["residue"].read_bytes()).hexdigest()
-    with pytest.raises(stage.CathStageError, match="residue frame release.*2026_02"):
+    with pytest.raises(
+        stage.CathStageError,
+        match=f"residue frame release.*{stage.EXPECTED_UNIPROT_RELEASE}",
+    ):
         _build(case)
 
 
@@ -811,7 +841,6 @@ def test_production_cath_snapshot_golden_when_private_frames_exist(
         pytest.skip("private/raw CATH and alignment frames are not all present")
     production_registry_pin(
         stage.DEFAULT_PROTEIN_REGISTRY,
-        release=stage.EXPECTED_UNIPROT_RELEASE,
         sha256=stage.EXPECTED_PROTEIN_REGISTRY_SHA256,
     )
     result = stage.build_stage(
@@ -826,40 +855,40 @@ def test_production_cath_snapshot_golden_when_private_frames_exist(
     assert result.summary["native_blocker_count"] == 4192
     assert result.summary["native_exact_representative_count"] == 4191
     assert result.summary["native_placeholder_count"] == 1
-    assert result.summary["annotation_discovery_count"] == 953
-    assert result.summary["annotation_single_location_count"] == 813
+    assert result.summary["annotation_discovery_count"] == 952
+    assert result.summary["annotation_single_location_count"] == 812
     assert result.summary["annotation_ungrouped_multi_location_count"] == 140
-    assert result.summary["annotation_unique_trait_count"] == 379
-    assert result.summary["annotation_unique_protein_count"] == 415
-    assert result.summary["protein_registry_row_count"] == 126
+    assert result.summary["annotation_unique_trait_count"] == 378
+    assert result.summary["annotation_unique_protein_count"] == 414
+    assert result.summary["protein_registry_row_count"] == 441
     assert result.summary["annotation_exact_local_reference_count"] == 0
-    assert result.summary["annotation_missing_local_reference_count"] == 953
-    assert result.summary["annotation_missing_local_reference_unique_protein_count"] == 415
-    assert result.summary["protein_reference_request_count"] == 415
-    assert result.summary["protein_reference_request_unique_protein_count"] == 415
+    assert result.summary["annotation_missing_local_reference_count"] == 952
+    assert result.summary["annotation_missing_local_reference_unique_protein_count"] == 414
+    assert result.summary["protein_reference_request_count"] == 414
+    assert result.summary["protein_reference_request_unique_protein_count"] == 414
     assert result.summary["protein_reference_request_multi_observation_count"] == 175
     assert result.summary["protein_reference_request_max_observation_count"] == 15
-    assert len(result.protein_requests) == 415
+    assert len(result.protein_requests) == 414
     assert result.summary["protein_registry_artifact"]["sha256"] == (
         stage.EXPECTED_PROTEIN_REGISTRY_SHA256
     )
-    assert result.summary["protein_registry_artifact"]["size_bytes"] == 121_024
+    assert result.summary["protein_registry_artifact"]["size_bytes"] == 405_702
     assert result.summary["grounding_evidence_emitted_count"] == 0
     assert result.summary["network_action_performed"] is False
     assert result.summary["write_action_performed"] is False
     # Filled from an independent local replay; these pin the complete output
     # projections, not just the headline counts.
     assert result.summary["annotation_discovery_rows_sha256"] == (
-        "2353d5b87145ead27efde2a53ac4fec9ba65fbc3ccd9fa89097ad8a42772ad22"
+        "c77d0dee72b33b4899ca664b356cd8d886c622722d8ae69275e11bf9c60a8dba"
     )
     assert result.summary["native_blocker_rows_sha256"] == (
-        "e0621a95c7a41252166c38fe58151d6c80c56e55aa64b70f66bbef4dc2194893"
+        "0a18d0cce9af9191b2a66d2eab96f7c614f93626e790e6e3c43cb255a0080ca1"
     )
     assert result.summary["protein_request_rows_sha256"] == (
-        "057cc96e77c3f552560e0834e2c9f0bb249be1a6db252d801d22edfa84c19dee"
+        "dac3d0b61783d7b5001397c4559c568f60147a4a79140e94b318818189a69f58"
     )
     assert result.summary["combined_non_summary_rows_sha256"] == (
-        "933a27907206e4dd4006c11824a2a32ef8c2e33f8abf72d0deb52e803c0665ca"
+        "21ed55706accd783fad527e175080f0a74a768310fed504c08ba9654a2cbd3e9"
     )
     assert result.summary["all_cath_trait_binding_rows_sha256"] == (
         "0393f4b4a505c12698868594965877a119248cffb9266b3a4cf8114f1cd379c8"
@@ -869,11 +898,11 @@ def test_production_cath_snapshot_golden_when_private_frames_exist(
     )
     assert result.summary["stage_id"] == (
         "cath-grounding-discovery-stage:"
-        "992c025a015c871d78c181bc11f6049d2887f53f3d843b5aa352b8da3d004fdf"
+        "2b5c7ae237bb2ec76ce0366552169203e68f1a8aa25dc237f63e557a45b8fbee"
     )
     assert result.summary["summary_row_sha256"] == (
-        "e984a7a08797feffd80515fd9e27f45043ec2a65d3dbd20479b883729dbe508b"
+        "2cd50feec9980c1080a4ef4aed41855da1bceb01a9363e55bdf789ea0093594d"
     )
     assert hashlib.sha256(stage.render_stage(result).encode("utf-8")).hexdigest() == (
-        "2bf8ed6204f0216a43794616840c9d131869bde20a517df54fe690528e49c062"
+        "51f8f1c0ffd9f12cc3e6910e559acf5f7a28a1a4fd0a4d5c12083369025e28f4"
     )
