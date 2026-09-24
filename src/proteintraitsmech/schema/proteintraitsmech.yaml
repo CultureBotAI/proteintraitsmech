@@ -107,6 +107,284 @@ imports:
 
 classes:
 
+  BiophysicalDescriptorCatalog:
+    tree_root: true
+    description: Operational descriptors independent of the five trait axes. Quality anchors remain
+      ontology classes; descriptor methods produce observations, not automatic trait assignments.
+    attributes:
+      descriptors:
+        range: BiophysicalDescriptor
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  BiophysicalDescriptor:
+    description: Definition of one versioned numerical descriptor family in the biophysical pilot.
+    attributes:
+      descriptor_id:
+        range: string
+        required: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      inventory_id:
+        range: string
+        required: true
+        pattern: ^B[0-9]{2}$
+      label:
+        range: string
+        required: true
+      definition:
+        range: string
+        required: true
+      family:
+        range: string
+        required: true
+      value_kind:
+        range: BiophysicalValueKindEnum
+        required: true
+      unit:
+        range: string
+        required: true
+      quality_anchors:
+        range: string
+        multivalued: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      interpretation_limits:
+        range: string
+        required: true
+      references:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  BiophysicalObservation:
+    tree_root: true
+    description: Content-addressed result on an exact release-pinned ProteinReference or contiguous
+      region. Kept in a separate JSONL store. It never qualifies a canonical example or asserts a qualitative
+      state automatically. Semantic validation dereferences the registry and catalog and verifies coordinates,
+      result shapes, and hashes.
+    attributes:
+      observation_id:
+        range: string
+        required: true
+        pattern: ^ptm-observation:[0-9a-f]{64}$
+      descriptor_id:
+        range: string
+        required: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      protein_id:
+        range: string
+        required: true
+        pattern: ^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$
+      sequence_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      sequence_length:
+        range: integer
+        required: true
+        minimum_value: 1
+      uniprot_release:
+        range: string
+        required: true
+        pattern: ^[0-9]{4}_[0-9]{2}$
+      sequence_version:
+        range: integer
+        minimum_value: 1
+      scope:
+        range: BiophysicalScopeEnum
+        required: true
+      region:
+        range: SequenceInterval
+        description: Required only for REGION; 1-indexed inclusive in the full reference sequence, including
+          isoforms.
+      analyzed_sequence_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      proteoform:
+        range: string
+        required: true
+        description: Explicit construct/modification assumption; sequence calculations do not observe
+          maturation or PTMs.
+      trait_occurrence_evidence_id:
+        range: string
+        pattern: ^ug-evidence:[0-9a-f]{64}$
+        description: Optional exact GroundingEvidence key; must independently resolve to this protein,
+          hash and scope.
+      evidence_mode:
+        range: BiophysicalEvidenceModeEnum
+        required: true
+      status:
+        range: BiophysicalStatusEnum
+        required: true
+      missing_reason:
+        range: string
+        description: Required for UNDEFINED or NOT_AVAILABLE; no numerical result may accompany a missing
+          status.
+      value:
+        range: double
+      components:
+        range: BiophysicalComponent
+        multivalued: true
+        inlined_as_list: true
+      profile:
+        range: BiophysicalProfilePoint
+        multivalued: true
+        inlined_as_list: true
+      intervals:
+        range: SequenceInterval
+        multivalued: true
+        inlined_as_list: true
+        description: Derived positive segments, for example predicted disorder; never observed disorder
+          by implication.
+      unit:
+        range: string
+        required: true
+      scale:
+        range: string
+      normalization:
+        range: string
+      method:
+        range: BiophysicalMethod
+        required: true
+      conditions:
+        range: BiophysicalConditions
+      uncertainty:
+        range: BiophysicalUncertainty
+      comparator:
+        range: BiophysicalComparator
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+  BiophysicalComponent:
+    description: One named component of a vector (for example an amino-acid fraction).
+    attributes:
+      label:
+        range: string
+        required: true
+      value:
+        range: double
+        required: true
+  BiophysicalProfilePoint:
+    description: Numerical value over a 1-indexed inclusive window in the full protein frame. Residue
+      profiles have start=end. Windows may overlap.
+    attributes:
+      start:
+        range: integer
+        required: true
+        minimum_value: 1
+      end:
+        range: integer
+        required: true
+        minimum_value: 1
+      value:
+        range: double
+        required: true
+  BiophysicalMethod:
+    description: Reproducible method provenance. Parameters are named strings to preserve literal conventions
+      and avoid untyped nested objects.
+    attributes:
+      name:
+        range: string
+        required: true
+      version:
+        range: string
+        required: true
+      reference:
+        range: string
+        required: true
+      implementation:
+        range: string
+        required: true
+      implementation_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      parameters:
+        range: BiophysicalParameter
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      source_artifact_sha256:
+        range: string
+        pattern: ^[0-9a-f]{64}$
+      structure_id:
+        range: string
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      chain_id:
+        range: string
+      conformer:
+        range: string
+  BiophysicalParameter:
+    description: One explicit algorithm or assay setting; names must be unique within the method.
+    attributes:
+      name:
+        range: string
+        required: true
+      value:
+        range: string
+        required: true
+  BiophysicalConditions:
+    description: Conditions actually used or assumed. Omit unknown conditions, never populate them with
+      a default experimental value.
+    attributes:
+      ph:
+        range: double
+        minimum_value: 0
+        maximum_value: 14
+      temperature_celsius:
+        range: double
+        minimum_value: -273.15
+      ionic_strength_molar:
+        range: double
+        minimum_value: 0
+      concentration_molar:
+        range: double
+        minimum_value: 0
+      buffer:
+        range: string
+      solvent:
+        range: string
+      redox_state:
+        range: string
+      partners:
+        range: string
+        multivalued: true
+      ligands:
+        range: string
+        multivalued: true
+  BiophysicalUncertainty:
+    description: Uncertainty in the result unit, with an explicit interpretation (SD, SE, interval or
+      instrument resolution).
+    attributes:
+      kind:
+        range: string
+        required: true
+      value:
+        range: double
+        minimum_value: 0
+      lower:
+        range: double
+      upper:
+        range: double
+      description:
+        range: string
+        required: true
+  BiophysicalComparator:
+    description: Baseline for a relative claim, in the same unit as the result.
+    attributes:
+      description:
+        range: string
+        required: true
+      observation_id:
+        range: string
+        pattern: ^ptm-observation:[0-9a-f]{64}$
+      value:
+        range: double
+
   ProteinTraitRecord:
     class_uri: proteintraitsmech:ProteinTraitRecord
     description: >-
@@ -1761,6 +2039,45 @@ classes:
 # ================================================================
 
 enums:
+
+  BiophysicalValueKindEnum:
+    description: Allowed result shapes.
+    permissible_values:
+      SCALAR:
+        description: One numerical value.
+      VECTOR:
+        description: Named numerical components.
+      PROFILE:
+        description: Values with residue windows.
+      SCALAR_PROFILE:
+        description: A summary value plus a residue profile and derived intervals.
+  BiophysicalScopeEnum:
+    description: Subject analyzed in the full reference coordinate frame.
+    permissible_values:
+      WHOLE_PROTEIN:
+        description: Entire pinned sequence.
+      REGION:
+        description: One contiguous region; chain cleavage assumptions must be declared separately.
+  BiophysicalEvidenceModeEnum:
+    description: How the result was obtained.
+    permissible_values:
+      SEQUENCE_CALCULATION:
+        description: Deterministic calculation from sequence.
+      STRUCTURE_CALCULATION:
+        description: Calculation from an explicitly identified structural model.
+      MODEL_PREDICTION:
+        description: Named predictive model with version and parameters.
+      EXPERIMENT:
+        description: Direct experimental observation with assay conditions.
+  BiophysicalStatusEnum:
+    description: Missingness is distinct from a numerical zero.
+    permissible_values:
+      OK:
+        description: A defined result is available.
+      UNDEFINED:
+        description: Method is undefined for this input or scope.
+      NOT_AVAILABLE:
+        description: Required prediction or experimental evidence was not supplied.
 
   TraitAxisEnum:
     description: Primary axis of a ProteinTraitRecord.

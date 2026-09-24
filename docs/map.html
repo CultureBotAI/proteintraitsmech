@@ -22,10 +22,12 @@
   .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;margin:.2rem 0 1rem}
   .stats{display:flex;gap:18px;font-size:.8rem;color:var(--muted)}
   .stat b{color:var(--accent);font-size:1.05rem;font-variant-numeric:tabular-nums;margin-left:.3em}
-  .controls label{display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted)}
-  .controls select,.controls input{font:inherit;font-size:.9rem;padding:.4em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:200px}
+  .controls label{max-width:100%;display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted)}
+  .controls select,.controls input{max-width:100%;font:inherit;font-size:.9rem;padding:.4em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:200px}
+  .controls input[type="checkbox"]{min-width:0;width:auto}
+  .controls .availability-toggle{flex-direction:row;align-items:center;align-self:center}
   .controls select:focus,.controls input:focus{outline:none;border-color:var(--accent)}
-  .embseg{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:flex-end;background:var(--card)}
+  .embseg{display:flex;flex-wrap:wrap;max-width:100%;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:flex-end;background:var(--card)}
   .embseg .seg-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;padding:0 .7em;background:var(--pastel-a)}
   .seg-btn{font:inherit;font-size:.85rem;padding:.45em .9em;border:0;border-left:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
   .seg-btn:hover{background:var(--stage-bg)}
@@ -39,8 +41,8 @@
   #stage{position:relative;background:var(--stage-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
   #tip{position:absolute;pointer-events:none;background:#000;color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
-  /* Set per hover to the marker colour of the point under the cursor, so the
-     identifier and its dot read as one object. Worst-case contrast on the
+  /* Categorical views tint the identifier with its marker colour; continuous
+     overlays use white because their scale also contains dark colours. Worst-case contrast on the
      opaque tooltip is 4.76:1 (light SEQUENCE #2a78d6), clearing AA. */
   #tip b{color:var(--tip-id,#ffd700);font-weight:600}
   #tip .t-sub{color:#cfcfcf}
@@ -57,8 +59,8 @@
 </head>
 <body>
   <header class="site">
-    <h1>Corpus map</h1>
-    <p>2-D map of every record's text embedding, colored by trait axis ·
+    <h1 id="map-title">Corpus map</h1>
+    <p><span id="map-description">2-D map of every record's text embedding, colored by trait axis</span> ·
        <a href="index.html">home</a> · <a href="browse.html">browse</a></p>
   </header>
   <main class="wrap">
@@ -85,6 +87,18 @@
         <button class="seg-btn" data-map="sequence_map.json" title="one point per canonical-example protein, positioned by its ESM-2 sequence embedding — no annotation in the input">Sequences</button>
       </div>
     </div>
+    <div id="biophysical-controls" hidden>
+      <div class="controls">
+        <label>Color by
+          <select id="biophysical-descriptor"><option value="">Domain of life</option></select>
+        </label>
+        <label>Minimum <input id="biophysical-min" type="number" step="any"></label>
+        <label>Maximum <input id="biophysical-max" type="number" step="any"></label>
+        <label class="availability-toggle"><input id="biophysical-available" type="checkbox"> Only proteins with values</label>
+      </div>
+      <p class="hint" id="biophysical-legend"></p>
+    </div>
+    <p class="hint" id="legend-label" hidden></p>
     <div class="legend" id="legend"></div>
     <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
     <p class="hint" id="hint">Loading corpus map…</p>
@@ -93,6 +107,7 @@
       <span class="hint" id="dl-note">Data-table fallback for this dense scatter — the CSV lists every plotted point (identifier / CURIE, trait axis, trait category, x, y).</span>
     </div>
   </main>
+  <script src="biophysical-map.js"></script>
   <script>
   // Axis palette (matches the landing stat-card hues).
   // Categorical hues in fixed order, validated with the dataviz skill's
@@ -122,7 +137,69 @@
   const cv=document.getElementById("cv"), ctx=cv.getContext("2d");
   const W=cv.width, H=cv.height, PAD=14;
   const tip=document.getElementById("tip");
-  let DATA=null, CURRENT_MAP=null;
+  let DATA=null, CURRENT_MAP=null, loadSerial=0, baseHint="";
+  let BIO=null, bioSeries=null, bioMin=null, bioMax=null, bioAvailable=true;
+  const bioWrap=document.getElementById("biophysical-controls");
+  const bioSelect=document.getElementById("biophysical-descriptor");
+  const pointColor=p=>bioSeries ? PTMBiophysical.color(bioSeries,p[3]) : colorOf(DATA.axes[p[2]]);
+  function resetBiophysical(){
+    BIO=null; bioSeries=null; bioMin=null; bioMax=null; bioAvailable=true;
+    bioWrap.hidden=true; document.getElementById("legend-label").hidden=true;
+    document.getElementById("biophysical-min").value="";
+    document.getElementById("biophysical-max").value="";
+    document.getElementById("biophysical-available").checked=true;
+    bioSelect.innerHTML='<option value="">Domain of life</option>';
+  }
+  async function loadBiophysical(rawMap, serial){
+    try {
+      const response=await fetch("data/sequence_biophysical.json");
+      if(!response.ok) return;
+      const overlay=await response.json();
+      const hash=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",
+        new TextEncoder().encode(rawMap))),b=>b.toString(16).padStart(2,"0")).join("");
+      if(serial!==loadSerial) return;
+      if(hash!==overlay.map_sha256){
+        document.getElementById("hint").textContent+=" Biophysical values await an update for this map.";
+        return;
+      }
+      BIO=overlay;
+      bioSelect.options[0].textContent=DATA.group_label||"Default groups";
+      overlay.series.forEach(series=>{
+        const option=document.createElement("option"); option.value=series.descriptor_id;
+        option.textContent=series.label+" ("+series.available+" values)";
+        option.disabled=series.available===0; bioSelect.appendChild(option);
+      });
+      bioWrap.hidden=false; updateBioLegend();
+    } catch(error) {
+      if(serial===loadSerial) document.getElementById("hint").textContent+=" Biophysical values unavailable.";
+    }
+  }
+  function updateBioLegend(){
+    const label=document.getElementById("biophysical-legend");
+    document.getElementById("legend-label").hidden=!bioSeries;
+    document.getElementById("legend-label").textContent="Filter "+(DATA.group_label||"groups");
+    document.getElementById("hint").textContent=bioSeries
+      ? baseHint.replace("coloured by "+DATA.group_label,"coloured by "+bioSeries.label) : baseHint;
+    if(!bioSeries){label.textContent="Choose a continuous sequence descriptor. Values cover a selected pilot subset."; return;}
+    label.textContent=`${bioSeries.available} / ${DATA.points.length} proteins · ${bioSeries.minimum.toPrecision(4)} to ${bioSeries.maximum.toPrecision(4)} ${bioSeries.unit}`
+      + (bioSeries.conditions.ph!==undefined ? ` · pH ${bioSeries.conditions.ph}` : "")
+      + ` · light to dark blue; gray = unavailable. ${bioSeries.interpretation_limits}`;
+  }
+  bioSelect.addEventListener("change",()=>{
+    bioSeries=BIO.series.find(s=>s.descriptor_id===bioSelect.value)||null;
+    bioMin=null; bioMax=null;
+    document.getElementById("biophysical-min").value="";
+    document.getElementById("biophysical-max").value="";
+    updateBioLegend(); update(); buildCsv();
+  });
+  for(const bound of ["min","max"]){
+    document.getElementById("biophysical-"+bound).addEventListener("input",e=>{
+      const v=e.target.value==="" ? null : e.target.valueAsNumber;
+      if(bound==="min") bioMin=Number.isFinite(v)?v:null; else bioMax=Number.isFinite(v)?v:null;
+      update();
+    });
+  }
+  document.getElementById("biophysical-available").addEventListener("change",e=>{bioAvailable=e.target.checked; update();});
   const activeAxes=new Set();      // axis names currently shown (legend toggles)
   let catFilter="", depthFilter="", query="";   // dropdowns + search
   let VF=new Uint8Array(0);        // per-point: passes all filters
@@ -137,8 +214,15 @@
   function loadMap(file){
     document.getElementById("hint").textContent="Loading corpus map…";
     CURRENT_MAP=file;
-    fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
+    const serial=++loadSerial; resetBiophysical();
+    fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.text();}).then(rawMap=>{
+      if(serial!==loadSerial) return;
+      const d=JSON.parse(rawMap);
       DATA=d; VF=new Uint8Array(d.points.length);
+      document.getElementById("map-title").textContent=file==="sequence_map.json" ? "Sequence map" : file==="protein_map.json" ? "Protein map" : "Corpus map";
+      document.getElementById("map-description").textContent=file==="sequence_map.json"
+        ? "Proteins positioned by sequence similarity" : file==="protein_map.json"
+        ? "Proteins positioned by shared annotated traits" : "Trait records positioned by text similarity";
       COLORS_LIGHT=d.colors||null; COLORS_DARK=d.colors_dark||d.colors||null;
       LINK=d.link||null;
       ID_STRIP=d.id_strip_prefix||""; UNIT=d.unit||"records";
@@ -188,8 +272,10 @@
         + (d.lineage ? ` Organism and ${d.group_label||"lineage"}: ${d.lineage.source}`
             + (d.lineage.uniprot_release ? `, release ${d.lineage.uniprot_release}` : "")
             + (d.lineage.license ? ` — ${d.lineage.license}.` : ".") : "");
+      baseHint=document.getElementById("hint").textContent;
       update(); buildCsv();
-    }).catch(()=>{document.getElementById("hint").textContent=
+      if(file==="sequence_map.json") loadBiophysical(rawMap,serial);
+    }).catch(()=>{if(serial!==loadSerial) return; document.getElementById("hint").textContent=
       file.includes("sequence")
         ? "Sequence map not built yet (run `just embed-sequences`, then `just sequence-map`)."
         : file.includes("protein")
@@ -243,17 +329,22 @@
     const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
     const hasOrg=!!DATA.orgs;
     const hasDepth=!!DATA.depths;
-    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")}${hasOrg?",organism":""},${(DATA.cat_label||"trait_category").replace(/ /g,"_")}${hasDepth?","+(DATA.depth_label||"depth").replace(/ /g,"_"):""},x,y`];
+    const lines=[`identifier,${(DATA.group_label||"trait_axis").replace(/ /g,"_")}${hasOrg?",organism":""},${(DATA.cat_label||"trait_category").replace(/ /g,"_")}${hasDepth?","+(DATA.depth_label||"depth").replace(/ /g,"_"):""},x,y${bioSeries?",descriptor,value,unit,observation_id":""}`];
     for(const p of DATA.points){
       const row=[p[3], DATA.axes[p[2]]];
       if(hasOrg) row.push(p[5]!==undefined ? DATA.orgs[p[5]] : "");
       row.push(DATA.cats[p[4]]);
       if(hasDepth) row.push(p[6]!==undefined ? DATA.depths[p[6]] : "");
       row.push(p[0], p[1]);
+      if(bioSeries){
+        const observation=bioSeries.values[p[3]];
+        row.push(bioSeries.descriptor_id,PTMBiophysical.value(bioSeries,p[3])??"",bioSeries.unit,observation?observation.observation_id:"");
+      }
       lines.push(row.map(q).join(","));
     }
     const blob=new Blob([lines.join("\n")],{type:"text/csv"});
     const dl=document.getElementById("csv-dl");
+    if(dl.href.startsWith("blob:")) URL.revokeObjectURL(dl.href);
     dl.href=URL.createObjectURL(blob);
     dl.removeAttribute("aria-disabled");
   }
@@ -285,7 +376,8 @@
       const ok = activeAxes.has(DATA.axes[p[2]])
         && (!catFilter || DATA.cats[p[4]]===catFilter)
         && (!depthFilter || (DATA.depths && DATA.depths[p[6]]===depthFilter))
-        && (!query || p[3].toLowerCase().includes(query));
+        && (!query || p[3].toLowerCase().includes(query))
+        && PTMBiophysical.passes(bioSeries,p[3],bioMin,bioMax,bioAvailable);
       VF[i]=ok?1:0; if(ok) vis++;
     }
     document.getElementById("s-visible").textContent=fmt(vis);
@@ -328,7 +420,7 @@
     for(let i=0;i<pts.length;i++){
       if(!VF[i]) continue;
       const p=pts[i], [x,y]=px(p);
-      ctx.fillStyle=colorOf(DATA.axes[p[2]]);
+      ctx.fillStyle=pointColor(p);
       if(round){
         // a surface ring keeps overlapping marks readable once they are big
         ctx.beginPath(); ctx.arc(x,y,half,0,6.2832); ctx.fill(); ctx.stroke();
@@ -355,13 +447,14 @@
       const mx=(ev.x-r.left)*sx, my=(ev.y-r.top)*sy;
       const p=nearest(mx,my);
       if(p){
-        tip.style.setProperty("--tip-id", colorOf(DATA.axes[p[2]]));
+        tip.style.setProperty("--tip-id", bioSeries ? "#ffffff" : pointColor(p));
         const org=(DATA.orgs && p[5]!==undefined) ? DATA.orgs[p[5]] : null;
         tip.innerHTML=`<b>${esc(p[3])}</b><br><span class="t-sub">`
           + (org ? esc(org)+" · " : "")
           + `${esc(DATA.axes[p[2]])} · ${esc(DATA.cats[p[4]])}`
           + (DATA.depths && p[6]!==undefined ? ` · ${esc(DATA.depths[p[6]])}` : "")
-          + `</span>`;
+          + `</span>`
+          + (bioSeries ? `<br>${esc(bioSeries.label)}: ${esc(PTMBiophysical.value(bioSeries,p[3])===null ? "unavailable" : PTMBiophysical.value(bioSeries,p[3]).toPrecision(4)+" "+bioSeries.unit)}` : "");
         tip.style.left=(mx/sx)+"px"; tip.style.top=(my/sy)+"px"; tip.style.opacity=1;
       } else tip.style.opacity=0;
     });

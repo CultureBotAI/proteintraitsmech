@@ -162,10 +162,12 @@ def test_tooltip_identifier_is_tinted_with_the_hovered_marker_colour():
     one shared call cannot.
     """
     html = MAP_HTML.read_text(encoding="utf-8")
-    paint = "ctx.fillStyle=colorOf(DATA.axes[p[2]])"
-    tint = 'tip.style.setProperty("--tip-id", colorOf(DATA.axes[p[2]]))'
-    assert paint in html, "draw() no longer colours markers with colorOf(DATA.axes[p[2]])"
-    assert tint in html, "the tooltip identifier is no longer tinted with the marker colour"
+    paint = "ctx.fillStyle=pointColor(p)"
+    tint = 'tip.style.setProperty("--tip-id", bioSeries ? "#ffffff" : pointColor(p))'
+    # A continuous scale includes dark colors: use white on the black tooltip.
+    # Categorical views retain the matching marker tint and its contrast checks.
+    assert paint in html, "draw() no longer colours markers with pointColor(p)"
+    assert tint in html, "categorical tint / readable continuous-overlay tint is missing"
     assert re.search(r"#tip b\{color:var\(--tip-id,", html), (
         "#tip b must consume --tip-id, or the tint set on hover is inert"
     )

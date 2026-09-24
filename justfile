@@ -1542,3 +1542,31 @@ audit-snippets *args:
         --config-baseline audit/config-literal-baseline.json \
         --archetypes --max-archetypes 323 \
         --archetype-baseline audit/archetype-baseline.json {{args}}
+
+# Sequence biophysics: dry run unless --apply; exact registry sequences only.
+calculate-biophysical *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/calculate_biophysical.py "$@"
+
+# Closed schema and cross-object checks; no external services required.
+validate-biophysical file="data/biophysical/pilot.observations.jsonl":
+    uv run python scripts/validate_biophysical.py {{quote(file)}}
+
+# Attach validated scalar values to the sequence map, checking embedding sequence hashes.
+biophysical-map *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/build_biophysical_overlay.py "$@"
+
+# Descriptive redundancy and length/source/taxon strata for the sequence pilot.
+analyze-biophysical *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/analyze_biophysical.py "$@"
+
+# Check every committed pilot artifact, including numerical replay and map bindings.
+check-biophysical-pilot *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/check_biophysical_pilot.py "$@"

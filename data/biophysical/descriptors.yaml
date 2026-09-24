@@ -1,0 +1,144 @@
+descriptors:
+- descriptor_id: proteintraitsmech:B01
+  inventory_id: B01
+  label: Net electric charge at specified pH
+  definition: Sum of modeled ionization charges on the selected sequence, in elementary charges;
+    includes stated terminal groups.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: e
+  interpretation_limits: An independent-site sequence model, not a surface potential or PTM-aware
+    experimental charge.
+  references:
+  - reference: https://biopython.org/docs/1.85/api/Bio.SeqUtils.IsoelectricPoint.html
+  quality_anchors:
+  - PATO:0002193
+- descriptor_id: proteintraitsmech:B02
+  inventory_id: B02
+  label: Isoelectric point
+  definition: pH at which the specified sequence ionization model crosses zero net charge.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: pH
+  interpretation_limits: Defined only for a unique zero crossing in the stated titration interval;
+    predicted and measured pI remain separate.
+  references:
+  - reference: https://biopython.org/docs/1.85/api/Bio.SeqUtils.IsoelectricPoint.html
+- descriptor_id: proteintraitsmech:B03
+  inventory_id: B03
+  label: Basic-residue fraction
+  definition: Number of lysine and arginine residues divided by the selected sequence length.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: '1'
+  interpretation_limits: Composition only; excludes histidine and is not actual net charge.
+  references:
+  - reference: https://pappulab.github.io/localCIDER/
+- descriptor_id: proteintraitsmech:B04
+  inventory_id: B04
+  label: Acidic-residue fraction
+  definition: Number of aspartate and glutamate residues divided by the selected sequence length.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: '1'
+  interpretation_limits: Composition only; not the acidity of a solution.
+  references:
+  - reference: https://pappulab.github.io/localCIDER/
+- descriptor_id: proteintraitsmech:B05
+  inventory_id: B05
+  label: Fraction of charged residues
+  definition: Number of K, R, D and E residues divided by the selected sequence length.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: '1'
+  interpretation_limits: Neutral-pH compositional convention; equals B03+B04 and is not independent
+    of them.
+  references:
+  - reference: https://pubmed.ncbi.nlm.nih.gov/23901099/
+- descriptor_id: proteintraitsmech:B06
+  inventory_id: B06
+  label: Sequence charge decoration
+  definition: Sum over residue pairs i<j of q_i*q_j*sqrt(j-i), divided by sequence length, using
+    KR=+1, DE=-1 and all other residues=0.
+  family: Electrostatics and ionization
+  value_kind: SCALAR
+  unit: '1'
+  interpretation_limits: SCD, not kappa. Mathematically zero without charged pairs. Conformational
+    interpretation is IDR-specific; depends on sequence length.
+  references:
+  - reference: https://doi.org/10.1063/1.4929391
+- descriptor_id: proteintraitsmech:B08
+  inventory_id: B08
+  label: Mean Kyte-Doolittle hydropathy
+  definition: Arithmetic mean of the original Kyte-Doolittle residue values, AAindex KYTJ820101.
+  family: Water and membrane affinity
+  value_kind: SCALAR
+  unit: '1'
+  interpretation_limits: Higher values are more hydrophobic on this scale; no inferred solubility
+    or categorical cutoff.
+  references:
+  - reference: https://www.genome.jp/entry/aaindex:KYTJ820101
+  quality_anchors:
+  - PATO:0001884
+  - PATO:0001886
+- descriptor_id: proteintraitsmech:B09
+  inventory_id: B09
+  label: Local Kyte-Doolittle hydropathy profile
+  definition: Uniform moving mean of original Kyte-Doolittle values in complete windows with stride
+    one.
+  family: Water and membrane affinity
+  value_kind: PROFILE
+  unit: '1'
+  interpretation_limits: Full-protein coordinates; omit incomplete edge windows. A peak is not proof
+    of membrane insertion.
+  references:
+  - reference: https://www.genome.jp/entry/aaindex:KYTJ820101
+  quality_anchors:
+  - PATO:0001884
+  - PATO:0001886
+- descriptor_id: proteintraitsmech:B10
+  inventory_id: B10
+  label: Local hydrophobic moment
+  definition: Magnitude of the mean vector sum of Kyte-Doolittle residue values in candidate windows
+    with a specified constant residue rotation.
+  family: Water and membrane affinity
+  value_kind: PROFILE
+  unit: '1'
+  interpretation_limits: Default 100-degree rotation models a helix candidate. It does not establish
+    a helix or membrane binding; values depend on scale, angle and window.
+  references:
+  - reference: https://doi.org/10.1038/299371a0
+- descriptor_id: proteintraitsmech:B13
+  inventory_id: B13
+  label: Amino-acid composition vector
+  definition: Fractions of all 20 standard amino acids in the selected sequence, summing to one.
+  family: Composition and heterogeneity
+  value_kind: VECTOR
+  unit: '1'
+  interpretation_limits: One vector, not 20 new trait classes. Nonstandard residues make the pilot
+    calculation undefined.
+  references:
+  - reference: https://biopython.org/docs/latest/api/Bio.SeqUtils.ProtParam.html
+- descriptor_id: proteintraitsmech:B16
+  inventory_id: B16
+  label: Shannon sequence entropy
+  definition: Negative sum of p(a)*log2(p(a)) over observed amino-acid fractions.
+  family: Composition and heterogeneity
+  value_kind: SCALAR
+  unit: bit
+  interpretation_limits: A whole-scope compositional statistic, not a SEG call, disorder predictor,
+    or order-sensitive complexity measure. No low-complexity cutoff.
+  references:
+  - reference: https://doi.org/10.1002/j.1538-7305.1948.tb01338.x
+- descriptor_id: proteintraitsmech:B22
+  inventory_id: B22
+  label: Predicted disordered fraction and segments
+  definition: Fraction and contiguous intervals with external per-residue predictor scores strictly
+    greater than the declared threshold.
+  family: Conformation and dynamics
+  value_kind: SCALAR_PROFILE
+  unit: '1'
+  interpretation_limits: Predictor, version, mode, full input sequence hash and score-source hash
+    are required. Predicted disorder is distinct from observed disorder.
+  references:
+  - reference: https://iupred3.elte.hu/

@@ -116,3 +116,16 @@ Databases: `UniProtKB`, `Pfam`, `InterPro`, `PROSITE`, `SMART`, `CATH`, `SCOP`, 
 Provenance: `PMID`, `DOI`, `dcterms`, `skos`, `biolink`.
 
 [← back to index](./)
+
+## Biophysical descriptor observations
+
+`BiophysicalDescriptorCatalog` defines numerical properties independently of the
+five trait axes. `BiophysicalObservation` stores a scalar, composition vector, or
+coordinate-bearing profile for an exact release-pinned protein or region, with
+method/version, conditions, units, evidence mode and explicit missingness.
+Observations live in `data/biophysical/`, not in quality-class YAML records.
+
+See the [biophysical pilot guide](biophysical.md) for the 12
+implemented descriptor families, disorder-score input format, sequence-map
+controls, and `just check-biophysical-pilot` publication checks. The remaining inventory is a
+roadmap; the pilot makes no new qualitative protein assignments.

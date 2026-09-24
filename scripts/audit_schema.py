@@ -48,9 +48,10 @@ import yaml
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA = ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
 TRAITS = ROOT / "data" / "traits"
-# Three document roots, not one. `ProteinProfile` ("A Swiss-Prot protein and the corpus
+# Explicit document roots, not only trait records. `ProteinProfile` ("A Swiss-Prot protein and the corpus
 # trait classes it carries") is written to data/profiles, while `ProteinReference` is the
-# release-stamped UniProt registry document used by the grounding workflow. Treating either
+# release-stamped UniProt registry document used by the grounding workflow. Biophysical
+# catalogs/observations are external document roots as well. Treating these
 # as reachable only from ProteinTraitRecord would report an intentional document type as
 # dead weight. Keep the complete root set explicit so deleting or renaming one also fails
 # this audit.
@@ -59,6 +60,8 @@ ROOT_CLASSES = (
     "ProteinProfile",
     "ProteinReference",
     "GroundingEvidence",
+    "BiophysicalDescriptorCatalog",
+    "BiophysicalObservation",
 )
 
 # Categories deliberately NOT bound to an axis. README: "`UPPER` / `OTHER` are
