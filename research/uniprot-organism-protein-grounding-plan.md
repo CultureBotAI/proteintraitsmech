@@ -2500,9 +2500,11 @@ found.
   stage. It emits 641 source-occurrence rows, 480 deduplicated official-SIFTS fetch
   requests, and one summary: 1,122 canonical JSONL rows total. It exposes no write,
   output-file, fetch, network, apply, protein-ID, or qualification path. The 480 requests
-  target the official PDBe remediated residue-level SIFTS XML namespace documented by
+  target the official PDBe per-entry residue-level SIFTS XML namespace documented by
   [PDBe SIFTS Quick Access](https://www.ebi.ac.uk/pdbe/docs/sifts/quick.html):
-  `https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml_remediated/{pdb}.xml.gz`.
+  `https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml/{pdb}.xml.gz`. The older
+  `xml_remediated` root is absent from the live PDBe FTP index on 2026-09-24 and must
+  not be used for new BioLiP fetch requests.
   A future fetch must be complete, canonical, and content-addressed; merely creating a
   partial cache cannot unlock any candidate.
 - The final content partitions are occurrence rows
@@ -2556,7 +2558,7 @@ found.
   found no High or Medium issue.
 - BioLiP still lacks a provider release receipt and has academic-use terms without an
   explicit open license. These remain independent promotion blockers alongside the
-  missing remediated SIFTS manifest, release-pinned ProteinReferences, residue replay,
+  missing SIFTS manifest, release-pinned ProteinReferences, residue replay,
   and scientific review. No network fetch was performed and no trait, durable grounding
   row, qualification receipt, review decision, commit, or pull request was written.
   The safety replay retained 126/127 durable registry/evidence lines and their SHA-256

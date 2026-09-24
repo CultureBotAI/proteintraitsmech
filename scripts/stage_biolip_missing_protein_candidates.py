@@ -56,7 +56,7 @@ BLOCKED_STATUS = "BLOCKED_SOURCE_RESIDUE_INCONSISTENCY"
 MISSING_SOURCE_ACCESSION = "MISSING_SOURCE_UNIPROT_ACCESSION"
 MISSING_PROVIDER_RELEASE = "MISSING_BIOLIP_PROVIDER_RELEASE_RECEIPT"
 MISSING_OPEN_LICENSE = "BIOLIP_HAS_NO_EXPLICIT_OPEN_LICENSE"
-MISSING_RESIDUE_SIFTS = "MISSING_RELEASE_MANIFESTED_REMEDIATED_RESIDUE_LEVEL_SIFTS"
+MISSING_RESIDUE_SIFTS = "MISSING_RELEASE_MANIFESTED_RESIDUE_LEVEL_SIFTS"
 MISSING_PROTEIN_REFERENCE = "MISSING_RELEASE_PINNED_PROTEIN_REFERENCE"
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -1136,8 +1136,8 @@ def _fetch_request_row(
         "network_action_performed": False,
         "structure_id": f"PDB:{pdb_id}",
         "pdb_id": pdb_id,
-        "requested_artifact_kind": "PDBe_SIFTS_REMEDIATED_RESIDUE_LEVEL_XML_GZIP",
-        "requested_source_root": ("https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml_remediated"),
+        "requested_artifact_kind": "PDBe_SIFTS_RESIDUE_LEVEL_XML_GZIP",
+        "requested_source_root": "https://ftp.ebi.ac.uk/pub/databases/msd/sifts/xml",
         "requested_relative_path": f"{pdb_id}.xml.gz",
         "fetch_manifest_required": True,
         "required_fetch_manifest_semantics": (
@@ -1302,7 +1302,7 @@ def build_stage(
                 "NETWORK_RESPONSES",
             ],
             "required_future_evidence": [
-                "RELEASE_MANIFESTED_REMEDIATED_RESIDUE_LEVEL_SIFTS_XML",
+                "RELEASE_MANIFESTED_RESIDUE_LEVEL_SIFTS_XML",
                 "RELEASE_PINNED_PROTEIN_REFERENCE",
                 "BIOLIP_PROVIDER_RELEASE_RECEIPT",
                 "BIOLIP_RIGHTS_REVIEW",
