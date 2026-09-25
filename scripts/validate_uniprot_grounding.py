@@ -59,6 +59,7 @@ UNIPROT_RE = re.compile(
 TAXON_RE = re.compile(r"^NCBITaxon:[0-9]+$")
 CURIE_RE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+INTERPRO_LOCATION_RE = re.compile(r"^interpro-location:[0-9a-f]{64}$")
 RELEASE_RE = re.compile(r"^[0-9]{4}_[0-9]{2}$")
 SEQUENCE_RE = re.compile(r"^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$")
 ELM_TRAIT_RE = re.compile(r"^ELM:ELME[0-9]{6}$")
@@ -1446,6 +1447,20 @@ def validate_grounding_evidence(evidence: object, *, path: Path, line: int) -> l
                     code, f"{field} must be 64 lower-case hex digits", path, line, evidence
                 )
             )
+    interpro_location_id = evidence.get("interpro_location_id")
+    if "interpro_location_id" in evidence and (
+        not isinstance(interpro_location_id, str)
+        or INTERPRO_LOCATION_RE.fullmatch(interpro_location_id) is None
+    ):
+        findings.append(
+            _evidence_finding(
+                "invalid_interpro_location_id",
+                "interpro_location_id must be interpro-location: plus 64 lower-case hex digits",
+                path,
+                line,
+                evidence,
+            )
+        )
     if "provider_kind" in evidence and evidence.get("provider_kind") not in EVIDENCE_PROVIDER_KINDS:
         findings.append(
             _evidence_finding(

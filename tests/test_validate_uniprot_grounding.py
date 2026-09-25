@@ -1707,6 +1707,15 @@ def test_current_durable_interpro_evidence_remains_clean_when_present():
     assert findings == []
 
 
+def test_interpro_location_id_must_be_canonical_when_present():
+    grounded = occurrence(interpro_location_id="bad-location-id")
+    evidence = EVIDENCE_REGISTRY[grounded["source_evidence_id"]]
+
+    observed = codes(V.validate_grounding_evidence(evidence, path=Path("evidence.jsonl"), line=1))
+
+    assert "invalid_interpro_location_id" in observed
+
+
 def test_uniprot_feature_provider_release_must_equal_source_release():
     feature = occurrence(
         mapping_method="UNIPROT_FEATURE",
