@@ -1703,7 +1703,7 @@ def test_current_durable_interpro_evidence_remains_clean_when_present():
 
     registry, findings = V.load_evidence_registry(path)
     interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
-    assert len(interpro) == 2238
+    assert len(interpro) == 2743
     assert findings == []
 
 
