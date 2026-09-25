@@ -55,3 +55,23 @@ def test_extract_entry_matches_preserves_interpro_location_groups() -> None:
         "CATH:1.10.10.10": [[[7, 9], [2, 4]], [[18, 20]]],
         "Pfam:PF00001": [[[3, 5]]],
     }
+
+
+def test_read_accession_targets_accepts_comments_uniprot_ids_and_deduplicates(
+    tmp_path: Path,
+) -> None:
+    targets = tmp_path / "accessions.txt"
+    targets.write_text(
+        "\n".join(
+            [
+                "# bounded grouped InterPro repair batch",
+                "UniProtKB:P12345",
+                "Q54321",
+                "P12345",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    assert F.read_accession_targets(targets) == ["P12345", "Q54321"]

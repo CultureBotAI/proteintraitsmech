@@ -39,7 +39,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -211,6 +211,21 @@ def fetch_protein(
     )
 
 
+def read_accession_targets(path: Path) -> list[str]:
+    """Return a stable unique accession list from a newline-delimited file."""
+    accessions: dict[str, None] = {}
+    for line_number, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("UniProtKB:"):
+            line = line.split(":", 1)[1]
+        if not line or any(character.isspace() for character in line):
+            raise ValueError(f"{path}:{line_number}: invalid UniProt accession {raw_line!r}")
+        accessions[line] = None
+    return sorted(accessions)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -225,6 +240,8 @@ def main() -> int:
                     help="resume from a sidecar built against a different release")
     ap.add_argument("--allow-partial", action="store_true",
                     help="write even if some proteins failed after retries")
+    ap.add_argument("--accessions", type=Path,
+                    help="newline-delimited UniProt accessions to fetch instead of scanning traits")
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--grouped-out", default=str(GROUPED_OUT))
     args = ap.parse_args()
@@ -246,7 +263,15 @@ def main() -> int:
               f"{grouped_outp.name} (release {grouped_meta.get('release')})",
               file=sys.stderr)
 
-    targets = target_proteins()
+    if args.accessions is None:
+        targets = target_proteins()
+    else:
+        try:
+            targets = read_accession_targets(args.accessions)
+        except OSError as exc:
+            ap.error(str(exc))
+        except ValueError as exc:
+            ap.error(str(exc))
     todo = [a for a in targets if a not in have or a not in grouped_have]
     if args.limit:
         todo = todo[:args.limit]
@@ -264,7 +289,9 @@ def main() -> int:
         return acc, fetch_protein(acc)
 
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        for n, (acc, got) in enumerate(pool.map(_one, todo), 1):
+        futures = [pool.submit(_one, acc) for acc in todo]
+        for n, future in enumerate(as_completed(futures), 1):
+            acc, got = future.result()
             if got is None:
                 failed += 1
             else:

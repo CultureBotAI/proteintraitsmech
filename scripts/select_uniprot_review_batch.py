@@ -60,7 +60,7 @@ import re
 import sys
 import tempfile
 from collections import Counter, defaultdict, deque
-from collections.abc import Iterable
+from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from io import StringIO
 from pathlib import Path, PurePosixPath
@@ -293,10 +293,12 @@ class ReviewedBatchSnapshot:
 class ReviewExclusions:
     records: frozenset[tuple[str, str]]
     reviewed_records: frozenset[tuple[str, str]]
+    stale_reviewed_records: frozenset[tuple[str, str]]
     already_absent_records: frozenset[tuple[str, str]]
     all_rejected_records: frozenset[tuple[str, str]]
     candidate_ids: frozenset[str]
     excluded_candidate_ids: frozenset[str]
+    stale_reviewed_candidate_ids: frozenset[str]
     already_absent_candidate_ids: frozenset[str]
     all_rejected_candidate_ids: frozenset[str]
     defer_unchanged_all_rejected: bool
@@ -411,24 +413,28 @@ def _safe_record_path(value: Any, line_number: int, *, subject: str = "candidate
 
 
 def _preferred_taxon_ids(values: Iterable[str]) -> tuple[str, ...]:
-    """Normalize `--prefer-taxon` into a sorted, deduplicated, validated tuple.
+    """Normalize `--prefer-taxon` into an order-preserving validated tuple.
 
-    Sorted and deduplicated because the value is recorded in the manifest and must
-    reproduce the same batch from the same request however the flags were typed.
+    First appearance wins because flag order is the desired priority order among
+    organisms, and the value is recorded in the manifest to reproduce the same
+    batch from the same request.
     Validated because a silently ignored typo is the worst outcome here: the batch
     would look preference-honouring and be ordered exactly as if no preference had
     been asked for.
     """
 
     cleaned = []
+    seen: set[str] = set()
     for value in values:
         taxon_id = _clean(value)
         if taxon_id is None or not _TAXON_ID.fullmatch(taxon_id):
             raise SelectionError(
                 f"--prefer-taxon must be an NCBITaxon CURIE such as NCBITaxon:83333, got {value!r}"
             )
-        cleaned.append(taxon_id)
-    return tuple(sorted(set(cleaned)))
+        if taxon_id not in seen:
+            seen.add(taxon_id)
+            cleaned.append(taxon_id)
+    return tuple(cleaned)
 
 
 def _validate_shard_pair(shard_count: int, shard_index: int) -> None:
@@ -585,27 +591,25 @@ def review_flags(row: dict[str, Any]) -> tuple[str, ...]:
 
 
 def _candidate_order(
-    row: dict[str, Any], preferred_taxon_ids: frozenset[str]
+    row: dict[str, Any], preferred_taxon_ranks: Mapping[str, int]
 ) -> tuple[int, str, str, int]:
     """Give retained alternatives a stable order independent of queue ordering.
 
-    `preferred_taxon_ids` adds a leading rank rather than re-sorting: a preferred
-    alternative sorts ahead of an unpreferred one, and within each rank the
-    existing (protein, candidate, queue line) key still decides. Preference is a
+    `preferred_taxon_ranks` adds a leading rank rather than filtering: lower-ranked
+    preferred taxa sort ahead of later preferred taxa and unpreferred taxa, and
+    within each rank the existing (protein, candidate, queue line) key still
+    decides. Preference is a
     *reordering*, never a filter — every alternative is retained, so no record
     can be emptied by asking for an organism it does not have (#656).
 
     It has deliberately no default (#666): forgetting it would order the batch as
     though no preference had been asked for, and every count and invariant would
-    still pass. Pass an empty frozenset to mean "no preference".
-
-    All preferred taxa share rank 0; the set is unordered, so repeating the flag
-    does not express a priority between organisms (#667).
+    still pass. Pass an empty mapping to mean "no preference".
     """
 
     taxon_id = _clean(row.get("taxon_id")) or ""
     return (
-        0 if taxon_id in preferred_taxon_ids else 1,
+        preferred_taxon_ranks.get(taxon_id, len(preferred_taxon_ranks)),
         _clean(row.get("protein_id")) or "",
         _clean(row.get("candidate_id")) or "",
         int(row["_queue_line"]),
@@ -657,7 +661,7 @@ def _trait_records(
             )
         by_path[record_path].append(row)
 
-    preferred = frozenset(preferred_taxon_ids)
+    preferred = {taxon_id: rank for rank, taxon_id in enumerate(preferred_taxon_ids)}
     records: list[TraitRecord] = []
     for record_path in sorted(by_path):
         candidates = by_path[record_path]
@@ -1212,6 +1216,7 @@ def _review_exclusions(
     current_queue_sha256: str,
     current_source_batch: str,
     defer_unchanged_all_rejected: bool = False,
+    reopen_stale_reviewed: bool = False,
 ) -> ReviewExclusions:
     artifacts = tuple(
         sorted(
@@ -1229,10 +1234,12 @@ def _review_exclusions(
         return ReviewExclusions(
             records=frozenset(),
             reviewed_records=frozenset(),
+            stale_reviewed_records=frozenset(),
             already_absent_records=frozenset(),
             all_rejected_records=frozenset(),
             candidate_ids=frozenset(),
             excluded_candidate_ids=frozenset(),
+            stale_reviewed_candidate_ids=frozenset(),
             already_absent_candidate_ids=frozenset(),
             all_rejected_candidate_ids=frozenset(),
             defer_unchanged_all_rejected=defer_unchanged_all_rejected,
@@ -1261,10 +1268,12 @@ def _review_exclusions(
     batches: list[ReviewedBatchSnapshot] = []
     seen: dict[str, ExplicitDecision] = {}
     reviewed_records: set[tuple[str, str]] = set()
+    stale_reviewed_records: set[tuple[str, str]] = set()
     all_rejected_records: set[tuple[str, str]] = set()
     current_exclusions: set[tuple[str, str]] = set()
     already_absent: set[tuple[str, str]] = set()
     excluded_candidate_ids: set[str] = set()
+    stale_reviewed_candidate_ids: set[str] = set()
     already_absent_candidate_ids: set[str] = set()
     all_rejected_candidate_ids: set[str] = set()
     deferred_all_rejected_records: set[tuple[str, str]] = set()
@@ -1425,7 +1434,6 @@ def _review_exclusions(
             continue
 
         approved_adjudication = approved[0]
-        reviewed_records.add(record_key)
         approved_ids = set(approved_adjudication.candidate_ids)
         current_ids = current_record_candidates.get(record_key)
         if current_ids is None:
@@ -1437,16 +1445,21 @@ def _review_exclusions(
                 raise SelectionError(
                     f"stale reviewed record identity trait_id={record_key[0]!r}, "
                     f"record_path={record_key[1]!r} in the current exact queue batch"
-                )
+            )
             already_absent.add(record_key)
+            reviewed_records.add(record_key)
             already_absent_candidate_ids.update(approved_ids)
         elif current_ids != approved_ids:
-            raise SelectionError(
-                f"stale candidate alternatives for trait_id={record_key[0]!r}, "
-                f"record_path={record_key[1]!r}; added={sorted(current_ids - approved_ids)!r}, "
-                f"missing={sorted(approved_ids - current_ids)!r}; re-review is required"
-            )
+            if not reopen_stale_reviewed:
+                raise SelectionError(
+                    f"stale candidate alternatives for trait_id={record_key[0]!r}, "
+                    f"record_path={record_key[1]!r}; added={sorted(current_ids - approved_ids)!r}, "
+                    f"missing={sorted(approved_ids - current_ids)!r}; re-review is required"
+                )
+            stale_reviewed_records.add(record_key)
+            stale_reviewed_candidate_ids.update(current_ids)
         else:
+            reviewed_records.add(record_key)
             current_exclusions.add(record_key)
             excluded_candidate_ids.update(approved_ids)
         if rejected:
@@ -1517,10 +1530,12 @@ def _review_exclusions(
     return ReviewExclusions(
         records=frozenset(current_exclusions),
         reviewed_records=frozenset(reviewed_records),
+        stale_reviewed_records=frozenset(stale_reviewed_records),
         already_absent_records=frozenset(already_absent),
         all_rejected_records=frozenset(all_rejected_records),
         candidate_ids=frozenset(seen),
         excluded_candidate_ids=frozenset(excluded_candidate_ids),
+        stale_reviewed_candidate_ids=frozenset(stale_reviewed_candidate_ids),
         already_absent_candidate_ids=frozenset(already_absent_candidate_ids),
         all_rejected_candidate_ids=frozenset(all_rejected_candidate_ids),
         defer_unchanged_all_rejected=defer_unchanged_all_rejected,
@@ -1884,8 +1899,8 @@ def _decision_ledger_manifest(
                 exclusions.excluded_candidate_ids | exclusions.deferred_all_rejected_candidate_ids
             ),
             "current_exact_batch_excluded_trait_records": len(exclusions.records),
-            "stale_candidate_rows": 0,
-            "stale_trait_records": 0,
+            "stale_candidate_rows": len(exclusions.stale_reviewed_candidate_ids),
+            "stale_trait_records": len(exclusions.stale_reviewed_records),
         },
         "all_rejected_not_excluded": {
             "candidate_rows": len(residual_all_rejected_candidate_ids),
@@ -2308,8 +2323,8 @@ def _manifest_tsv(
                 "all_rejected_candidate_ids_sha256": _identity_set_sha256(
                     residual_all_rejected_candidate_ids
                 ),
-                "stale_reviewed_candidate_rows": 0,
-                "stale_reviewed_trait_records": 0,
+                "stale_reviewed_candidate_rows": len(exclusions.stale_reviewed_candidate_ids),
+                "stale_reviewed_trait_records": len(exclusions.stale_reviewed_records),
                 "pre_exclusion_source_slice_candidate_rows": _candidate_count(pre_exclusion_global),
                 "pre_exclusion_source_slice_trait_records": len(pre_exclusion_global),
                 "excluded_source_slice_candidate_rows": _candidate_count(source_slice_excluded),
@@ -2423,6 +2438,7 @@ def run(args: argparse.Namespace) -> int:
         current_queue_sha256=snapshot.sha256,
         current_source_batch=source_batch,
         defer_unchanged_all_rejected=args.defer_unchanged_all_rejected,
+        reopen_stale_reviewed=args.reopen_stale_reviewed,
     )
     exact_batch_excluded = [
         record for record in exact_batch_records if record.key in exclusions.records
@@ -2569,9 +2585,8 @@ def _parser() -> argparse.ArgumentParser:
         metavar="NCBITAXON_CURIE",
         help=(
             "rank alternatives from this organism first within each trait record; "
-            "repeat for several (e.g. --prefer-taxon NCBITaxon:83333). Repeats form "
-            "an unordered set, not a priority list: every preferred organism shares "
-            "the same rank. This never drops an alternative, so a record with no "
+            "repeat in priority order for several (e.g. --prefer-taxon NCBITaxon:83333 "
+            "--prefer-taxon NCBITaxon:9606). This never drops an alternative, so a record with no "
             "candidate from a preferred organism keeps every candidate it had"
         ),
     )
@@ -2645,6 +2660,14 @@ def _parser() -> argparse.ArgumentParser:
             "every resolved alternative; this does not detect source/gate/resolver "
             "changes, so omit it after any such change (default: reopen all rejected "
             "groups)"
+        ),
+    )
+    parser.add_argument(
+        "--reopen-stale-reviewed",
+        action="store_true",
+        help=(
+            "do not exclude approved record groups whose current candidate IDs differ "
+            "from the reviewed snapshot; re-select them for explicit re-review"
         ),
     )
     parser.add_argument("--out", type=Path, help="selected candidate JSONL path")
