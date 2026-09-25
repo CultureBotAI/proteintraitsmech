@@ -2222,6 +2222,8 @@ def test_resolve_qualifies_grouped_multi_fragment_interpro_location(local_source
     assert row["qualification_status"] == "QUALIFIED"
     assert row["reasons"] == []
     assert row["intervals"] == intervals
+    assert "interpro_location_id" not in row["trait_occurrence"]
+    assert row["grounding_evidence"]["interpro_location_id"] == candidate["interpro_location_id"]
     assert row["grounding_evidence"]["provider_entry_sha256"] == next(
         evidence["entry_sha256"]
         for evidence in row["provider_evidence"]
@@ -2283,6 +2285,19 @@ def test_promotion_replays_grouped_interpro_provider_evidence(local_sources):
     assert "stale:provider_entry_missing:interpro_grouped_location" in (
         ground._verify_provider_evidence(row, replay_args, stale_cache)
     )
+
+    _sidecar(
+        local_sources["interpro_grouped"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"Pfam:PF00001": [[[2, 3], [7, 8]]]}},
+    )
+    approved = local_sources["review"].with_name("grouped-interpro-approved.tsv")
+    _approve(local_sources["review"], approved)
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert _jsonl_rows(local_sources["durable_bindings"])[0]["candidate_id"] == candidate[
+        "candidate_id"
+    ]
 
 
 def test_resolve_rejects_stale_grouped_interpro_location_id(local_sources):
