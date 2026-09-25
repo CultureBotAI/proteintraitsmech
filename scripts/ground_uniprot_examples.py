@@ -1520,6 +1520,7 @@ def _resolve_occurrence(
     membership: dict[str, Any] | None = None
     preserved_occurrence: dict[str, Any] | None = None
     preserved_grounding_evidence: dict[str, Any] | None = None
+    interpro_location_id = ""
     if mapping_method == "INTERPRO_MATCH":
         if "interpro" not in context.providers:
             reasons.append("missing:interpro_provider")
@@ -1528,7 +1529,7 @@ def _resolve_occurrence(
         raw_source_intervals = matches.get(source_trait_id) if isinstance(matches, dict) else None
         source_intervals, source_interval_reasons = _normalise_intervals(raw_source_intervals)
         reasons.extend(source_interval_reasons)
-        interpro_location_id = _clean_text(candidate.get("interpro_location_id"))
+        interpro_location_id = _clean_text(candidate.get("interpro_location_id")) or ""
         if raw_source_intervals is None:
             reasons.append("missing:exact_interpro_match")
         else:
@@ -1996,8 +1997,11 @@ def _resolve_occurrence(
         if mapping_method == "SOURCE_MEMBERSHIP"
         else str(source_evidence.get("source") or "InterPro")
     )
+    evidence_occurrence = dict(occurrence)
+    if mapping_method == "INTERPRO_MATCH" and interpro_location_id:
+        evidence_occurrence["interpro_location_id"] = interpro_location_id
     grounding_evidence = build_grounding_evidence(
-        occurrence,
+        evidence_occurrence,
         provider_kind=provider_kind,
         provider_source=provider_source,
         provider_release=str(source_evidence.get("release") or source_release),
@@ -3120,6 +3124,7 @@ def _durable_gate_candidate(
         "chain_id": evidence.get("chain_id"),
         "ecod_domain_id": evidence.get("ecod_domain_id"),
         "sifts_mapping_id": evidence.get("sifts_mapping_id"),
+        "interpro_location_id": evidence.get("interpro_location_id"),
     }
     expected_candidate_id = derive_candidate_id(identity)
     if binding["candidate_id"] != expected_candidate_id:

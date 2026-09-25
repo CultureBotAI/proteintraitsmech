@@ -59,6 +59,7 @@ UNIPROT_RE = re.compile(
 TAXON_RE = re.compile(r"^NCBITaxon:[0-9]+$")
 CURIE_RE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+INTERPRO_LOCATION_RE = re.compile(r"^interpro-location:[0-9a-f]{64}$")
 RELEASE_RE = re.compile(r"^[0-9]{4}_[0-9]{2}$")
 SEQUENCE_RE = re.compile(r"^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$")
 ELM_TRAIT_RE = re.compile(r"^ELM:ELME[0-9]{6}$")
@@ -122,13 +123,18 @@ OCCURRENCE_EVIDENCE_FIELDS = (
     "source_residue_count",
     "mapped_residue_count",
 )
+EVIDENCE_ONLY_FIELDS = (
+    "interpro_location_id",
+)
 EVIDENCE_PROVIDER_FIELDS = (
     "provider_kind",
     "provider_source",
     "provider_release",
     "provider_entry_sha256",
 )
-EVIDENCE_PAYLOAD_FIELDS = OCCURRENCE_EVIDENCE_FIELDS + EVIDENCE_PROVIDER_FIELDS
+EVIDENCE_PAYLOAD_FIELDS = (
+    OCCURRENCE_EVIDENCE_FIELDS + EVIDENCE_ONLY_FIELDS + EVIDENCE_PROVIDER_FIELDS
+)
 EVIDENCE_ALLOWED_FIELDS = {"evidence_id", *EVIDENCE_PAYLOAD_FIELDS}
 EVIDENCE_PROVIDER_KINDS = {"UNIPROT", "INTERPRO", "SIFTS", "SOURCE_DATABASE"}
 
@@ -569,13 +575,26 @@ def load_registry(path: Path) -> tuple[dict[str, dict[str, Any]], list[Finding]]
 def canonical_evidence_payload(value: Mapping[str, Any]) -> dict[str, Any]:
     """Return the stable, complete payload used to address GroundingEvidence.
 
-    Optional fields are represented as JSON null, so omission and an explicit
-    null cannot create two identifiers for the same assertion. Lists retain
-    their biologically significant order. JSON object key order is normalized
-    by :func:`compute_evidence_id`.
+    Optional TraitOccurrence fields are represented as JSON null, so omission and
+    an explicit null cannot create two identifiers for the same public occurrence
+    assertion. Evidence-only extension fields are included only when present so
+    adding a new extension does not invalidate historical content addresses that
+    could not have carried that field. Lists retain their biologically significant
+    order. JSON object key order is normalized by :func:`compute_evidence_id`.
     """
 
-    return {field: value.get(field) for field in EVIDENCE_PAYLOAD_FIELDS}
+    payload = {
+        field: value.get(field)
+        for field in OCCURRENCE_EVIDENCE_FIELDS + EVIDENCE_PROVIDER_FIELDS
+    }
+    payload.update(
+        {
+            field: value.get(field)
+            for field in EVIDENCE_ONLY_FIELDS
+            if value.get(field) is not None
+        }
+    )
+    return payload
 
 
 def compute_evidence_id(value: Mapping[str, Any]) -> str:
@@ -608,7 +627,7 @@ def build_grounding_evidence(
 
     evidence = {
         field: occurrence[field]
-        for field in OCCURRENCE_EVIDENCE_FIELDS
+        for field in OCCURRENCE_EVIDENCE_FIELDS + EVIDENCE_ONLY_FIELDS
         if field in occurrence and occurrence[field] is not None
     }
     evidence.update(
@@ -1428,6 +1447,20 @@ def validate_grounding_evidence(evidence: object, *, path: Path, line: int) -> l
                     code, f"{field} must be 64 lower-case hex digits", path, line, evidence
                 )
             )
+    interpro_location_id = evidence.get("interpro_location_id")
+    if "interpro_location_id" in evidence and (
+        not isinstance(interpro_location_id, str)
+        or INTERPRO_LOCATION_RE.fullmatch(interpro_location_id) is None
+    ):
+        findings.append(
+            _evidence_finding(
+                "invalid_interpro_location_id",
+                "interpro_location_id must be interpro-location: plus 64 lower-case hex digits",
+                path,
+                line,
+                evidence,
+            )
+        )
     if "provider_kind" in evidence and evidence.get("provider_kind") not in EVIDENCE_PROVIDER_KINDS:
         findings.append(
             _evidence_finding(
