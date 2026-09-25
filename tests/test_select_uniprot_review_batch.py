@@ -884,6 +884,54 @@ def test_decision_ledgers_reject_partial_duplicate_stale_and_unknown_rows(
     assert all(not path.exists() for path in paths)
 
 
+def test_reopen_stale_reviewed_reselects_approved_group_with_changed_alternatives(
+    tmp_path,
+):
+    queue = tmp_path / "candidates.jsonl"
+    paths = _paths(tmp_path)
+    first = _candidate("Alpha", 1)
+    prior_second = _candidate(
+        "Alpha", 1, suffix="-prior-alternative", protein_id="UniProtKB:Q00001"
+    )
+    current_second = {
+        **prior_second,
+        "candidate_id": "candidate-Alpha-00001-current-alternative",
+        "protein_id": "UniProtKB:Q00002",
+    }
+    _jsonl(queue, [first, current_second, _candidate("Alpha", 2)])
+    prior = _review_bundle(
+        tmp_path,
+        "prior",
+        [first, prior_second],
+        [_decision(first, "APPROVED"), _decision(prior_second)],
+    )
+
+    assert (
+        selector.main(
+            _args(
+                queue,
+                paths,
+                *_exclusion_args(prior),
+                "--reopen-stale-reviewed",
+                "--max-records",
+                "2",
+            )
+        )
+        == 0
+    )
+
+    assert {
+        first["candidate_id"],
+        current_second["candidate_id"],
+    } <= {row["candidate_id"] for row in _rows(paths[0])}
+    manifest = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert manifest["reviewed_exclusions"]["projection"]["stale_candidate_rows"] == 2
+    assert manifest["reviewed_exclusions"]["projection"]["stale_trait_records"] == 1
+    total = _tsv(paths[1])[-1]
+    assert total["stale_reviewed_candidate_rows"] == "2"
+    assert total["stale_reviewed_trait_records"] == "1"
+
+
 def test_all_rejected_group_reenters_even_when_current_alternatives_changed(tmp_path):
     queue = tmp_path / "candidates.jsonl"
     paths = _paths(tmp_path)
@@ -1730,7 +1778,7 @@ def test_omitting_the_flag_leaves_the_pre_existing_order_untouched(tmp_path):
     assert manifest["shard_selected_records_led_by_preferred_taxon"] == 0
 
 
-def test_the_manifest_records_the_preference_deduplicated_and_sorted(tmp_path):
+def test_the_manifest_records_the_preference_deduplicated_in_priority_order(tmp_path):
     """The manifest is what makes a batch id reproducible.
 
     Without the preference recorded there, the same batch id and the same queue
@@ -1739,14 +1787,27 @@ def test_the_manifest_records_the_preference_deduplicated_and_sorted(tmp_path):
     """
     queue = _taxon_queue(tmp_path)
     paths = _paths(tmp_path)
-    args = _args(queue, paths, "--prefer-taxon", ARCHAEON, "--prefer-taxon", ECOLI,
+    args = _args(queue, paths, "--prefer-taxon", ECOLI, "--prefer-taxon", ARCHAEON,
                  "--prefer-taxon", ECOLI)
     assert selector.main(args) == 0
 
     manifest = json.loads(paths[2].read_text(encoding="utf-8"))
-    assert manifest["preferred_taxon_ids"] == [ARCHAEON, ECOLI]
+    assert manifest["preferred_taxon_ids"] == [ECOLI, ARCHAEON]
     assert manifest["shard_selected_records_led_by_preferred_taxon"] == 1
     assert manifest["candidate_jsonl_sha256"] == hashlib.sha256(paths[0].read_bytes()).hexdigest()
+
+
+def test_prefer_taxon_order_ranks_preferred_organisms(tmp_path):
+    """Earlier --prefer-taxon values lead later preferred alternatives."""
+    queue = _taxon_queue(tmp_path)
+    paths = _paths(tmp_path)
+    assert (
+        selector.main(_args(queue, paths, "--prefer-taxon", ARCHAEON, "--prefer-taxon", ECOLI))
+        == 0
+    )
+
+    first = _selected_by_record(paths[0])["fixtures/Alpha/00001.yaml"]
+    assert [row["taxon_id"] for row in first] == [ARCHAEON, ECOLI, HUMAN]
 
 
 @pytest.mark.parametrize("value", ["83333", "NCBITaxon:", "taxid:83333", "NCBITaxon:83333x", " "])
@@ -1822,4 +1883,4 @@ def test_candidate_order_requires_an_explicit_preference(tmp_path):
     """#666: the argument has no default, so forgetting it cannot pass silently."""
     with pytest.raises(TypeError):
         selector._candidate_order({"_queue_line": 1})
-    assert selector._candidate_order({"_queue_line": 1}, frozenset()) == (1, "", "", 1)
+    assert selector._candidate_order({"_queue_line": 1}, {}) == (0, "", "", 1)
