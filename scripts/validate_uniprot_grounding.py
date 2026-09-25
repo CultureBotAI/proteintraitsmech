@@ -48,6 +48,9 @@ DEFAULT_REPORT = ROOT / "reports" / "uniprot-grounding" / "validation.tsv"
 DEFAULT_REGISTRY = ROOT / "data" / "grounding" / "protein_registry.jsonl"
 DEFAULT_EVIDENCE_REGISTRY = ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
 DEFAULT_MEMBERSHIP_REGISTRY = ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
+DEFAULT_QUALIFIED_RECORD_BINDINGS = (
+    ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl"
+)
 
 QUALIFIED = "QUALIFIED"
 LEGACY_UNVERIFIED = "LEGACY_UNVERIFIED"
@@ -137,6 +140,16 @@ EVIDENCE_PAYLOAD_FIELDS = (
 )
 EVIDENCE_ALLOWED_FIELDS = {"evidence_id", *EVIDENCE_PAYLOAD_FIELDS}
 EVIDENCE_PROVIDER_KINDS = {"UNIPROT", "INTERPRO", "SIFTS", "SOURCE_DATABASE"}
+QUALIFIED_RECORD_BINDING_FIELDS = {
+    "schema_version",
+    "evidence_id",
+    "candidate_id",
+    "trait_id",
+    "record_path",
+    "record_sha256",
+    "content_gate_projection",
+    "content_gate_digest",
+}
 
 INTERPRO_NAMESPACES = {
     "CATH",
@@ -608,6 +621,14 @@ def compute_evidence_id(value: Mapping[str, Any]) -> str:
         separators=(",", ":"),
     ).encode("utf-8")
     return EVIDENCE_PREFIX + hashlib.sha256(encoded).hexdigest()
+
+
+def _canonical_json(value: object) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+
+
+def _value_digest(value: object) -> str:
+    return hashlib.sha256(_canonical_json(value).encode("utf-8")).hexdigest()
 
 
 def build_grounding_evidence(
@@ -1832,6 +1853,397 @@ def load_evidence_registry(
                 continue
             registry[evidence_id] = value
     return registry, findings
+
+
+def _binding_finding(
+    code: str,
+    message: str,
+    path: Path,
+    line: int,
+    value: object = None,
+) -> Finding:
+    binding = value if isinstance(value, dict) else {}
+    return _finding(
+        code,
+        message,
+        file=f"{path}:{line}",
+        trait_id=binding.get("trait_id", ""),
+        protein_id="",
+        example_index="",
+        occurrence_index="",
+    )
+
+
+def _qualified_record_path(
+    value: object,
+    *,
+    repo_root: Path = ROOT,
+    traits_root: Path = DEFAULT_TRAITS,
+) -> Path | None:
+    if not isinstance(value, str) or not value.strip():
+        return None
+    path = Path(value)
+    if path.is_absolute() or ".." in path.parts or path.as_posix() != value:
+        return None
+    absolute = (repo_root / path).resolve()
+    try:
+        absolute.relative_to(traits_root.resolve())
+    except ValueError:
+        return None
+    return absolute
+
+
+def _binding_record_cache(
+    path: Path,
+    cache: dict[Path, tuple[object, str, list[Finding]]],
+) -> tuple[object, str, list[Finding]]:
+    if path not in cache:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError) as error:
+            cache[path] = (
+                None,
+                "",
+                [_finding("binding_record_unreadable", str(error), file=str(path))],
+            )
+        else:
+            value, error = _load_yaml_value(path, text)
+            cache[path] = (
+                value,
+                hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                [] if error is None else [error],
+            )
+    return cache[path]
+
+
+def _installed_qualified_occurrences(
+    record: object,
+    evidence_id: str,
+) -> list[Mapping[str, Any]]:
+    if not isinstance(record, Mapping):
+        return []
+    matches: list[Mapping[str, Any]] = []
+    examples = record.get("canonical_examples")
+    if not isinstance(examples, list):
+        return matches
+    for example in examples:
+        if not isinstance(example, Mapping):
+            continue
+        occurrences = example.get("trait_occurrences")
+        if not isinstance(occurrences, list):
+            continue
+        for occurrence in occurrences:
+            if (
+                isinstance(occurrence, Mapping)
+                and occurrence.get("source_evidence_id") == evidence_id
+                and occurrence.get("qualification_status") == QUALIFIED
+            ):
+                matches.append(occurrence)
+    return matches
+
+
+def _validate_qualified_record_binding(
+    binding: object,
+    *,
+    path: Path,
+    line: int,
+    evidence_registry: Mapping[str, Mapping[str, Any]],
+    record_cache: dict[Path, tuple[object, str, list[Finding]]],
+    repo_root: Path,
+    traits_root: Path,
+) -> tuple[str | None, list[Finding]]:
+    if not isinstance(binding, dict):
+        return None, [
+            _binding_finding(
+                "binding_not_object",
+                "qualified-record binding line must be a JSON object",
+                path,
+                line,
+            )
+        ]
+
+    findings: list[Finding] = []
+    fields = set(binding)
+    missing = sorted(QUALIFIED_RECORD_BINDING_FIELDS - fields)
+    extra = sorted(fields - QUALIFIED_RECORD_BINDING_FIELDS)
+    if missing:
+        findings.append(
+            _binding_finding(
+                "binding_missing_field",
+                "missing required field(s): " + ", ".join(missing),
+                path,
+                line,
+                binding,
+            )
+        )
+    if extra:
+        findings.append(
+            _binding_finding(
+                "binding_unknown_field",
+                "unknown qualified-record binding field(s): " + ", ".join(extra),
+                path,
+                line,
+                binding,
+            )
+        )
+
+    if binding.get("schema_version") != 1 or isinstance(binding.get("schema_version"), bool):
+        findings.append(
+            _binding_finding(
+                "binding_invalid_schema_version",
+                "qualified-record binding schema_version must be 1",
+                path,
+                line,
+                binding,
+            )
+        )
+
+    evidence_id = binding.get("evidence_id")
+    evidence_id_valid = isinstance(evidence_id, str) and re.fullmatch(
+        rf"{re.escape(EVIDENCE_PREFIX)}[0-9a-f]{{64}}", evidence_id
+    )
+    if not evidence_id_valid:
+        findings.append(
+            _binding_finding(
+                "binding_invalid_evidence_id",
+                "qualified-record binding evidence_id is invalid",
+                path,
+                line,
+                binding,
+            )
+        )
+
+    for field in ("candidate_id", "trait_id", "record_path"):
+        if not isinstance(binding.get(field), str) or not binding[field].strip():
+            findings.append(
+                _binding_finding(
+                    "binding_invalid_field",
+                    f"qualified-record binding lacks non-empty {field}",
+                    path,
+                    line,
+                    binding,
+                )
+            )
+    for field in ("record_sha256", "content_gate_digest"):
+        value = binding.get(field)
+        if not isinstance(value, str) or SHA256_RE.fullmatch(value) is None:
+            findings.append(
+                _binding_finding(
+                    "binding_invalid_sha256",
+                    f"{field} must be 64 lower-case hex digits",
+                    path,
+                    line,
+                    binding,
+                )
+            )
+
+    projection = binding.get("content_gate_projection")
+    if not isinstance(projection, dict):
+        findings.append(
+            _binding_finding(
+                "binding_invalid_content_gate_projection",
+                "content_gate_projection must be an object",
+                path,
+                line,
+                binding,
+            )
+        )
+    elif binding.get("content_gate_digest") != _value_digest(projection):
+        findings.append(
+            _binding_finding(
+                "binding_content_gate_digest_mismatch",
+                "content_gate_digest does not match content_gate_projection",
+                path,
+                line,
+                binding,
+            )
+        )
+
+    record_path = _qualified_record_path(
+        binding.get("record_path"),
+        repo_root=repo_root,
+        traits_root=traits_root,
+    )
+    if record_path is None:
+        findings.append(
+            _binding_finding(
+                "binding_invalid_record_path",
+                "record_path must be canonical, repo-relative, and under data/traits",
+                path,
+                line,
+                binding,
+            )
+        )
+    else:
+        record, record_sha256, record_findings = _binding_record_cache(record_path, record_cache)
+        if record_findings:
+            findings.extend(
+                _binding_finding(finding.code, finding.message, path, line, binding)
+                for finding in record_findings
+            )
+        else:
+            if binding.get("record_sha256") != record_sha256:
+                findings.append(
+                    _binding_finding(
+                        "binding_record_sha256_mismatch",
+                        "record_sha256 does not match current YAML bytes",
+                        path,
+                        line,
+                        binding,
+                    )
+                )
+            if isinstance(record, Mapping) and record.get("identifier") != binding.get("trait_id"):
+                findings.append(
+                    _binding_finding(
+                        "binding_trait_id_mismatch",
+                        "qualified-record binding trait_id disagrees with the record identifier",
+                        path,
+                        line,
+                        binding,
+                    )
+                )
+            if isinstance(evidence_id, str):
+                matches = _installed_qualified_occurrences(record, evidence_id)
+                if len(matches) != 1:
+                    findings.append(
+                        _binding_finding(
+                            "binding_occurrence_cardinality",
+                            "qualified-record binding must resolve to exactly one installed "
+                            f"QUALIFIED occurrence; observed {len(matches)}",
+                            path,
+                            line,
+                            binding,
+                        )
+                    )
+                elif evidence_id in evidence_registry:
+                    evidence = evidence_registry[evidence_id]
+                    mismatched = [
+                        field
+                        for field in OCCURRENCE_EVIDENCE_FIELDS
+                        if matches[0].get(field) != evidence.get(field)
+                    ]
+                    if mismatched:
+                        findings.append(
+                            _binding_finding(
+                                "binding_occurrence_evidence_mismatch",
+                                "installed occurrence differs from source evidence in: "
+                                + ", ".join(mismatched),
+                                path,
+                                line,
+                                binding,
+                            )
+                        )
+
+    if isinstance(evidence_id, str) and evidence_id not in evidence_registry:
+        findings.append(
+            _binding_finding(
+                "binding_unknown_evidence_id",
+                f"evidence_id {evidence_id!r} is absent from the evidence registry",
+                path,
+                line,
+                binding,
+            )
+        )
+    elif isinstance(evidence_id, str):
+        evidence = evidence_registry[evidence_id]
+        if binding.get("trait_id") != evidence.get("trait_id"):
+            findings.append(
+                _binding_finding(
+                    "binding_evidence_trait_mismatch",
+                    "qualified-record binding trait_id disagrees with durable evidence",
+                    path,
+                    line,
+                    binding,
+                )
+            )
+    return evidence_id if evidence_id_valid else None, findings
+
+
+def load_qualified_record_bindings(
+    path: Path,
+    evidence_registry: Mapping[str, Mapping[str, Any]],
+    *,
+    repo_root: Path = ROOT,
+    traits_root: Path = DEFAULT_TRAITS,
+) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
+    """Load and validate durable evidence-to-record content-gate receipts."""
+
+    bindings: dict[str, dict[str, Any]] = {}
+    findings: list[Finding] = []
+    if not path.is_file():
+        return bindings, [
+            _binding_finding(
+                "binding_registry_not_found",
+                "qualified-record binding registry does not exist",
+                path,
+                0,
+            )
+        ]
+
+    record_cache: dict[Path, tuple[object, str, list[Finding]]] = {}
+    with path.open(encoding="utf-8") as handle:
+        for line_number, raw in enumerate(handle, 1):
+            if not raw.strip():
+                continue
+            try:
+                value = json.loads(raw)
+            except json.JSONDecodeError as error:
+                findings.append(
+                    _binding_finding(
+                        "binding_json_error",
+                        f"invalid JSON: {error.msg}",
+                        path,
+                        line_number,
+                    )
+                )
+                continue
+            evidence_id, row_findings = _validate_qualified_record_binding(
+                value,
+                path=path,
+                line=line_number,
+                evidence_registry=evidence_registry,
+                record_cache=record_cache,
+                repo_root=repo_root,
+                traits_root=traits_root,
+            )
+            findings.extend(row_findings)
+            if evidence_id is None or not isinstance(value, dict):
+                continue
+            if evidence_id in bindings:
+                findings.append(
+                    _binding_finding(
+                        "duplicate_binding_key",
+                        f"duplicate qualified-record binding for {evidence_id}",
+                        path,
+                        line_number,
+                        value,
+                    )
+                )
+                continue
+            bindings[evidence_id] = value
+
+    missing = sorted(set(evidence_registry) - set(bindings))
+    extra = sorted(set(bindings) - set(evidence_registry))
+    for evidence_id in missing[:25]:
+        findings.append(
+            _binding_finding(
+                "binding_missing_evidence",
+                f"missing qualified-record binding for {evidence_id}",
+                path,
+                0,
+            )
+        )
+    for evidence_id in extra[:25]:
+        findings.append(
+            _binding_finding(
+                "binding_extra_evidence",
+                f"qualified-record binding has no durable evidence for {evidence_id}",
+                path,
+                0,
+                bindings[evidence_id],
+            )
+        )
+    return bindings, findings
 
 
 def load_membership_registry(
@@ -3239,6 +3651,15 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
+        "--qualified-record-bindings",
+        type=Path,
+        default=DEFAULT_QUALIFIED_RECORD_BINDINGS,
+        help=(
+            "transactional evidence-to-record content-gate receipts "
+            f"(default {DEFAULT_QUALIFIED_RECORD_BINDINGS})"
+        ),
+    )
+    parser.add_argument(
         "--hierarchy-traits",
         nargs="+",
         type=Path,
@@ -3312,6 +3733,7 @@ def main(argv: list[str] | None = None) -> int:
     registry: dict[str, dict[str, Any]] = {}
     evidence_registry: dict[str, dict[str, Any]] | None = None
     memberships: list[dict[str, Any]] = []
+    qualified_record_bindings: dict[str, dict[str, Any]] = {}
     hierarchy_index: dict[str, frozenset[str]] | None = None
     findings: list[Finding] = list(input_findings)
     registry_explicit = args.registry != DEFAULT_REGISTRY
@@ -3322,6 +3744,17 @@ def main(argv: list[str] | None = None) -> int:
     if qualified_input or evidence_explicit or args.evidence_registry.is_file():
         evidence_registry, evidence_findings = load_evidence_registry(args.evidence_registry)
         findings.extend(evidence_findings)
+    binding_explicit = args.qualified_record_bindings != DEFAULT_QUALIFIED_RECORD_BINDINGS
+    default_binding_visible = (
+        args.evidence_registry == DEFAULT_EVIDENCE_REGISTRY
+        and args.qualified_record_bindings.is_file()
+    )
+    if evidence_registry is not None and (binding_explicit or default_binding_visible):
+        qualified_record_bindings, binding_findings = load_qualified_record_bindings(
+            args.qualified_record_bindings,
+            evidence_registry,
+        )
+        findings.extend(binding_findings)
     evidence_lookup = evidence_registry or {}
     uniprot_membership_uses = [
         use
@@ -3382,6 +3815,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"files scanned: {len(files)}", file=sys.stderr)
         print(f"registry proteins: {len(registry)}", file=sys.stderr)
         print(f"source evidence objects: {len(evidence_registry or {})}", file=sys.stderr)
+        print(
+            f"qualified record bindings: {len(qualified_record_bindings)}",
+            file=sys.stderr,
+        )
         print(f"UniProt membership objects: {len(memberships)}", file=sys.stderr)
         print(f"hierarchy records: {len(hierarchy_index or {})}", file=sys.stderr)
         print(f"semantic findings: {len(findings)}", file=sys.stderr)

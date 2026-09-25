@@ -182,6 +182,72 @@ def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
     }
 
 
+def qualified_record_binding(
+    evidence_id: str,
+    record_path: str,
+    record_text: str,
+    **changes: object,
+) -> dict:
+    projection = {
+        "schema_version": 1,
+        "record_identifier": "PROSITE:PS00001",
+        "candidate": {
+            "candidate_id": "ug-" + "1" * 64,
+            "trait_id": "PROSITE:PS00001",
+            "source_trait_id": "PROSITE:PS00001",
+            "mapping_method": "INTERPRO_MATCH",
+            "scope": "LOCALIZED",
+            "sequence_length": len(SEQUENCE),
+            "intervals": [{"start": 2, "end": 4, "expected_sequence": "STA"}],
+        },
+        "findings": [],
+    }
+    value = {
+        "schema_version": 1,
+        "evidence_id": evidence_id,
+        "candidate_id": projection["candidate"]["candidate_id"],
+        "trait_id": "PROSITE:PS00001",
+        "record_path": record_path,
+        "record_sha256": hashlib.sha256(record_text.encode("utf-8")).hexdigest(),
+        "content_gate_projection": projection,
+        "content_gate_digest": V._value_digest(projection),
+    }
+    value.update(changes)
+    return value
+
+
+def qualified_binding_fixture(tmp_path: Path) -> dict[str, object]:
+    repo = tmp_path / "repo"
+    traits = repo / "data" / "traits"
+    trait_path = traits / "fixture.yaml"
+    grounded_record = record()
+    record_text = yaml.safe_dump(grounded_record, sort_keys=False)
+    trait_path.parent.mkdir(parents=True)
+    trait_path.write_text(record_text, encoding="utf-8")
+    occurrence = grounded_record["canonical_examples"][0]["trait_occurrences"][0]
+    evidence_id = occurrence["source_evidence_id"]
+    evidence = EVIDENCE_REGISTRY[evidence_id]
+    binding = qualified_record_binding(
+        evidence_id,
+        "data/traits/fixture.yaml",
+        record_text,
+    )
+    binding_path = repo / "data" / "grounding" / "qualified_record_bindings.jsonl"
+    binding_path.parent.mkdir(parents=True)
+    binding_path.write_text(json.dumps(binding) + "\n", encoding="utf-8")
+    return {
+        "repo": repo,
+        "traits": traits,
+        "trait_path": trait_path,
+        "record": grounded_record,
+        "record_text": record_text,
+        "evidence_id": evidence_id,
+        "evidence": evidence,
+        "binding": binding,
+        "binding_path": binding_path,
+    }
+
+
 def validate_record(
     value: object,
     registry: dict[str, dict],
@@ -1703,7 +1769,7 @@ def test_current_durable_interpro_evidence_remains_clean_when_present():
 
     registry, findings = V.load_evidence_registry(path)
     interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
-    assert len(interpro) == 10502
+    assert len(interpro) == 10510
     assert findings == []
 
 
@@ -1897,6 +1963,56 @@ def test_cli_replays_exact_uniprot_membership_provider_fact(tmp_path):
         == 0
     )
     assert output.read_text(encoding="utf-8").count("\n") == 1
+
+
+def test_qualified_record_bindings_validate_current_record_preimage(tmp_path):
+    fixture = qualified_binding_fixture(tmp_path)
+
+    loaded, findings = V.load_qualified_record_bindings(
+        fixture["binding_path"],
+        {fixture["evidence_id"]: fixture["evidence"]},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+
+    assert findings == []
+    assert set(loaded) == {fixture["evidence_id"]}
+
+    fixture["trait_path"].write_text(
+        str(fixture["record_text"]) + "# curator edit\n",
+        encoding="utf-8",
+    )
+    _loaded, findings = V.load_qualified_record_bindings(
+        fixture["binding_path"],
+        {fixture["evidence_id"]: fixture["evidence"]},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+
+    assert "binding_record_sha256_mismatch" in codes(findings)
+
+
+def test_qualified_record_bindings_must_cover_durable_evidence_exactly(tmp_path):
+    fixture = qualified_binding_fixture(tmp_path)
+    binding_path = fixture["binding_path"]
+    assert isinstance(binding_path, Path)
+
+    _loaded, findings = V.load_qualified_record_bindings(
+        binding_path,
+        {},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    assert {"binding_unknown_evidence_id", "binding_extra_evidence"} <= codes(findings)
+
+    binding_path.write_text("", encoding="utf-8")
+    _loaded, findings = V.load_qualified_record_bindings(
+        binding_path,
+        {fixture["evidence_id"]: fixture["evidence"]},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    assert "binding_missing_evidence" in codes(findings)
 
 
 def test_cli_membership_replay_rejects_missing_tampered_or_wrong_exact_fact(tmp_path):
