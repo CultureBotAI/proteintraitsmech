@@ -109,6 +109,9 @@ PROTECTED_GROUNDING_ROOT = REPO_ROOT / "data" / "grounding"
 MAX_PROMOTION_BATCH = 1_000
 MIN_SOURCE_REVIEWS = 25
 
+# Promotion replays every durable record; use LibYAML's safe parser when available.
+_YAML_SAFE_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
 _QUALIFIED_RECORD_BINDING_FIELDS = frozenset(
     {
         "schema_version",
@@ -1248,7 +1251,7 @@ def _record_facts(path: Path, context: ProviderContext) -> tuple[dict, str, str]
         return cached
     text = path.read_text(encoding="utf-8")
     try:
-        record = yaml.safe_load(text)
+        record = yaml.load(text, Loader=_YAML_SAFE_LOADER)
     except yaml.YAMLError as exc:
         raise GroundingError(f"invalid:record_yaml:{path}:{exc}") from exc
     if not isinstance(record, dict):
@@ -3657,7 +3660,7 @@ def _load_bound_durable_records(
         if path not in records:
             try:
                 text = path.read_text(encoding="utf-8")
-                record = yaml.safe_load(text)
+                record = yaml.load(text, Loader=_YAML_SAFE_LOADER)
             except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
                 raise GroundingError(
                     f"{path}: cannot load durable qualified-record binding: {exc}"
@@ -4120,7 +4123,7 @@ def promote(args: argparse.Namespace) -> int:
     for path in sorted(grouped):
         original_text = path.read_text(encoding="utf-8")
         try:
-            record = yaml.safe_load(original_text)
+            record = yaml.load(original_text, Loader=_YAML_SAFE_LOADER)
         except yaml.YAMLError as exc:
             raise GroundingError(f"{path}: invalid YAML: {exc}") from exc
         if not isinstance(record, dict):

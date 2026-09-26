@@ -71,6 +71,65 @@ def _record(identifier: str = "Pfam:PF00001", axis: str = "SEQUENCE") -> str:
     )
 
 
+@pytest.mark.parametrize("loader", [yaml.SafeLoader, ground._YAML_SAFE_LOADER])
+def test_record_facts_preserves_yaml_types_order_and_byte_binding(tmp_path, monkeypatch, loader):
+    monkeypatch.setattr(ground, "_YAML_SAFE_LOADER", loader)
+    text = _record().replace(
+        "A fixture trait.", "A β-rich region.\n  Coordinates use inclusive endpoints."
+    ) + (
+        "canonical_examples:\n"
+        "- protein_id: UniProtKB:P12345\n"
+        "  protein_label: Fixture protein\n"
+        "  sequence_length: 9\n"
+        "  reviewed: true\n"
+        "  uniprot_release: '2026_03'\n"
+        "  fetched_at: '2026-09-16'\n"
+        "  features:\n"
+        "  - type: DOMAIN\n"
+        "    start: 2\n"
+        "    end: 5\n"
+        "    description: |-\n"
+        "      First line.\n"
+        "      Second line.\n"
+    )
+    path = tmp_path / "record.yaml"
+    path.write_bytes(text.encode("utf-8"))
+    context = ground.ProviderContext(providers=set(), residue_path=tmp_path / "residue.json")
+
+    record, preimage, sha256 = ground._record_facts(path, context)
+
+    assert preimage == text
+    assert sha256 == hashlib.sha256(text.encode("utf-8")).hexdigest()
+    assert record["definition"] == "A β-rich region. Coordinates use inclusive endpoints."
+    example = record["canonical_examples"][0]
+    assert list(example) == [
+        "protein_id", "protein_label", "sequence_length", "reviewed",
+        "uniprot_release", "fetched_at", "features",
+    ]
+    assert type(example["sequence_length"]) is int
+    assert example["sequence_length"] == 9
+    assert example["reviewed"] is True
+    assert example["uniprot_release"] == "2026_03"
+    assert example["fetched_at"] == "2026-09-16"
+    assert example["features"] == [
+        {"type": "DOMAIN", "start": 2, "end": 5, "description": "First line.\nSecond line."}
+    ]
+    assert path.read_bytes() == text.encode("utf-8")
+
+
+@pytest.mark.parametrize("loader", [yaml.SafeLoader, ground._YAML_SAFE_LOADER])
+def test_record_facts_rejects_python_object_tags(tmp_path, monkeypatch, loader):
+    monkeypatch.setattr(ground, "_YAML_SAFE_LOADER", loader)
+    path = tmp_path / "record.yaml"
+    path.write_text("identifier: !!python/object/apply:builtins.str [123]\n", encoding="utf-8")
+    context = ground.ProviderContext(providers=set(), residue_path=tmp_path / "residue.json")
+
+    with pytest.raises(ground.GroundingError, match="invalid:record_yaml"):
+        ground._record_facts(path, context)
+
+    assert not context.record_cache
+
+
 @pytest.fixture
 def local_sources(tmp_path):
     traits = tmp_path / "traits"
