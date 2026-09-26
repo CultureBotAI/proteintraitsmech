@@ -1170,6 +1170,11 @@ fetch-uniprot-review-batch batch_id *args:
         --receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json
     fi
 
+# Prepare the independently reviewed IEDB source input; dry-run unless --apply.
+# This installs source facts only. Coordinates use the reviewed grounding promoter.
+prepare-iedb-peptide-source snapshot *args:
+    uv run python scripts/ground_uniprot_examples.py iedb-prepare-source --snapshot {{quote(snapshot)}} {{args}}
+
 # Prepare the independently reviewed M-CSA native input; dry-run unless --apply.
 # This installs source facts only. Coordinates use the reviewed grounding promoter.
 prepare-mcsa-native-source snapshot *args:

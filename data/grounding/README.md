@@ -18,6 +18,14 @@ canonical example:
   the same exact-accession response as its `ProteinReference` and is bound to that release
   and sequence checksum; a discovery query or generic search hit is never membership
   evidence.
+- `iedb_peptide_source_snapshot.json` contains native IEDB rows, the exact export
+  and fetch-receipt checksums, complete ProteinReferences, and the meaning of each
+  corresponding peptide trait. The provider checks an independently reviewed file
+  checksum fixed in code. It qualifies a `PATTERN_MATCH` only for an unmodified
+  peptide with one literal match on its exact existing parent protein. Overlapping
+  repeats, changed parents, and conflicting native coordinates are rejected. The
+  claim is limited to peptide identity and position on that sequence. Source and
+  license metadata remain in the snapshot and trait records.
 - `mcsa_native_source_snapshot.json` retains the complete captured M-CSA entry
   set, acquisition manifest, complete ProteinReferences, and every non-example
   field of each corresponding trait record. Its independently reviewed file
@@ -59,6 +67,13 @@ explicit review decision. The default remains one approved alternative per trait
 Enrichment preserves example order and generic features, keeps the 1,000-approved-
 candidate cap, and replays the same sequence, source, schema, evidence and record
 checks before its transaction. It cannot append a new example protein.
+
+Prepare the reviewed IEDB input with
+`just prepare-iedb-peptide-source <snapshot.json>`; add `--apply` after inspecting the
+dry run. Preparation creates no qualified evidence or coordinates. Resolve candidates
+with `--providers protein-registry,iedb-peptide`, then use the same bounded review and
+central promotion workflow as the other sources. Repeated preparation accepts only
+identical bytes; a different native release requires review of its new fixed checksum.
 
 Prepare the reviewed M-CSA input with
 `just prepare-mcsa-native-source <snapshot.json>` and inspect the dry run before
