@@ -1180,6 +1180,10 @@ prepare-iedb-peptide-source snapshot *args:
 prepare-mcsa-native-source snapshot *args:
     uv run python scripts/ground_uniprot_examples.py mcsa-prepare-source --snapshot {{quote(snapshot)}} {{args}}
 
+# Prepare an independently registered complete InterPro capture; dry-run by default.
+prepare-interpro-native-source snapshot *args:
+    uv run python scripts/ground_uniprot_examples.py interpro-native-prepare-source --snapshot {{quote(snapshot)}} {{args}}
+
 # Resolve one exact candidate batch without modifying traits. The source registry
 # is the official API snapshot; normalized promotion inputs remain staging outputs.
 resolve-uniprot-grounding *args:
@@ -1335,6 +1339,11 @@ fetch-residue-frame *args:
 #   just fetch-interpro-frame --apply
 fetch-interpro-frame *args:
     python3 scripts/fetch_interpro_frame.py {{args}}
+
+# Preserve native location groups, complete pagination, and same-GET release headers.
+# One exact registry protein per invocation. Dry-run emits the required apply plan.
+fetch-interpro-native *args:
+    uv run python scripts/fetch_interpro_native.py {{args}}
 
 # Adjudicate the identical-residue-set links from the alignment overlay (issue #7,
 # phase 12): a CATH superfamily and an InterPro entry covering the same residues

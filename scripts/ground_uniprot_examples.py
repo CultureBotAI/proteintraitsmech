@@ -165,6 +165,7 @@ _CANDIDATE_ID_FIELDS = (
     "intervals",
     "residue_positions",
 )
+_NATIVE_CANDIDATE_FIELDS = ("native_source", "native_location_set_sha256", "native_locations")
 
 _REVIEW_COLUMNS = (
     "candidate_id",
@@ -184,6 +185,7 @@ _REVIEW_COLUMNS = (
     "source_release",
     "uniprot_release",
     "intervals",
+    "native_locations",
     "review_flags",
     "reasons",
     "reviewer",
@@ -468,19 +470,33 @@ def _normalise_positions(value: Any) -> tuple[list[int], list[str]]:
     return sorted(set(out)), reasons
 
 
+def _native_candidate(row: dict[str, Any]) -> bool:
+    return any(key in row for key in _NATIVE_CANDIDATE_FIELDS)
+
+
 def _row_occurrences(row: dict[str, Any]) -> list[dict[str, Any]]:
-    values = [row.get("trait_occurrence")]
-    if "trait_occurrences" in row:
-        raise GroundingError("invalid:unsupported_plural_occurrences")
+    if _native_candidate(row):
+        values = row.get("trait_occurrences")
+        if "trait_occurrence" in row:
+            raise GroundingError("invalid:mixed_singular_native_occurrence")
+    else:
+        values = [row.get("trait_occurrence")]
+        if "trait_occurrences" in row:
+            raise GroundingError("invalid:unsupported_plural_occurrences")
     if not isinstance(values, list) or not values or any(not isinstance(v, dict) for v in values):
         raise GroundingError(f"{row.get('candidate_id')}: missing trait_occurrence projection")
     return values
 
 
 def _row_evidence(row: dict[str, Any]) -> list[dict[str, Any]]:
-    values = [row.get("grounding_evidence")]
-    if "grounding_evidence_rows" in row:
-        raise GroundingError("invalid:unsupported_plural_evidence")
+    if _native_candidate(row):
+        values = row.get("grounding_evidence_rows")
+        if "grounding_evidence" in row:
+            raise GroundingError("invalid:mixed_singular_native_evidence")
+    else:
+        values = [row.get("grounding_evidence")]
+        if "grounding_evidence_rows" in row:
+            raise GroundingError("invalid:unsupported_plural_evidence")
     if not isinstance(values, list) or not values or any(not isinstance(v, dict) for v in values):
         raise GroundingError(f"{row.get('candidate_id')}: missing grounding_evidence projection")
     return values
@@ -524,6 +540,8 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
         "residue_positions": positions,
     }
     payload = {key: identity[key] for key in _CANDIDATE_ID_FIELDS}
+    if _native_candidate(row):
+        payload.update({key: row.get(key) for key in _NATIVE_CANDIDATE_FIELDS})
     if identity["mapping_method"] == "SIFTS_RESIDUE_MAPPING":
         # One ECOD trait/protein pair can have several independently reviewable
         # structure occurrences.  Their exact structure, chain, and content-addressed
@@ -988,6 +1006,7 @@ def _provider_context(
         "prints-snapshot",
         "iedb-peptide",
         "mcsa-native",
+        "interpro-native",
     }
     if unknown:
         raise GroundingError(f"unknown provider(s): {', '.join(sorted(unknown))}")
@@ -1131,6 +1150,15 @@ def _provider_context(
             assert_source_unchanged()
         except (OSError, ValueError) as exc:
             raise GroundingError(f"invalid M-CSA native source: {exc}") from exc
+    if "interpro-native" in providers:
+        from interpro_native_grounding import assert_source_unchanged
+
+        try:
+            sources = {row.get("native_source") for row in candidates if _native_candidate(row)}
+            for source in sources:
+                assert_source_unchanged(source)
+        except (OSError, ValueError, TypeError) as exc:
+            raise GroundingError(f"invalid native InterPro source: {exc}") from exc
     return ProviderContext(
         providers=providers,
         residue_path=residue_path,
@@ -2174,6 +2202,53 @@ def _resolve_occurrence(
     return occurrence, grounding_evidence, evidence, intervals
 
 
+def _resolve_native_occurrences(candidate, record, reference, context, reasons):
+    """Resolve all source locations as one protein alternative, preserving grouping."""
+    from interpro_native_grounding import candidate_fields, resolve_occurrences, source_path
+    from validate_uniprot_grounding import validate_grounding_evidence
+
+    if "interpro-native" not in context.providers or reference is None:
+        reasons.append("missing:interpro_native_provider_or_reference")
+        return [], [], []
+    try:
+        source = candidate.get("native_source")
+        fact, occurrences, evidence = resolve_occurrences(
+            record, reference, _display_path(_safe_record_path(candidate.get("record_path"),
+                                                              REPO_ROOT / "data/traits")), source)
+        expected_fields = candidate_fields(evidence[0])
+        conflicts = []
+        for key, expected in expected_fields.items():
+            if candidate.get(key) is not None and candidate[key] != expected:
+                conflicts.append(f"mismatch:{key}")
+        for key in ("trait_id", "protein_id", "source_trait_id", "mapping_method", "scope",
+                    "coordinate_frame", "evidence_source", "source_release", "sequence_sha256"):
+            if candidate.get(key) is not None and candidate[key] != occurrences[0].get(key):
+                conflicts.append(f"mismatch:native_{key}")
+        for key in ("intervals", "residue_positions", "inheritance_path", "expected_residues",
+                    "structure_id", "chain_id", "mapping_completeness", "source_residue_count",
+                    "mapped_residue_count"):
+            if candidate.get(key) not in (None, [], ""):
+                conflicts.append(f"invalid:native_{key}")
+        for item in evidence:
+            conflicts.extend(f"invalid:interpro_native_evidence:{finding.code}" for finding in
+                             validate_grounding_evidence(item, path=source_path(source), line=0))
+        if conflicts:
+            reasons.extend(conflicts)
+            return [], [], []
+        candidate.update(expected_fields)
+        claims = [{**occurrence, "qualification_status": "QUALIFIED",
+                   "source_evidence_id": item["evidence_id"]}
+                  for occurrence, item in zip(occurrences, evidence, strict=True)]
+        proof = {"kind": "interpro_native", "path": source,
+                 "key": fact["location_set_sha256"], "source": "InterPro",
+                 "release": occurrences[0]["source_release"], "built": None,
+                 "entry_sha256": fact["location_set_sha256"], "trait_id": fact["trait_id"]}
+        return claims, evidence, [proof]
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        reasons.append(f"invalid:interpro_native_source:{exc}")
+        return [], [], []
+
+
 def _resolve_candidate(
     candidate: dict[str, Any], context: ProviderContext, traits_root: Path
 ) -> tuple[dict[str, Any], dict[str, Any] | None]:
@@ -2250,6 +2325,8 @@ def _resolve_candidate(
     provider_evidence: list[dict[str, Any]] = []
     occurrence: dict[str, Any] | None = None
     grounding_evidence: dict[str, Any] | None = None
+    native_occurrences: list[dict] = []
+    native_evidence: list[dict] = []
     if protein_id and _UNIPROT.fullmatch(protein_id):
         reference, sequence_evidence = _build_protein_reference(row, protein_id, context, reasons)
         provider_evidence.extend(sequence_evidence)
@@ -2261,14 +2338,20 @@ def _resolve_candidate(
                 "trait_occurrence": producer_occurrence,
                 "grounding_evidence": producer_grounding_evidence,
             }
-        (
-            occurrence,
-            grounding_evidence,
-            occurrence_evidence,
-            ledger_intervals,
-        ) = _resolve_occurrence(
-            occurrence_candidate, record, protein_id, reference, context, reasons
-        )
+        if _native_candidate(row):
+            native_occurrences, native_evidence, occurrence_evidence = _resolve_native_occurrences(
+                row, record, reference, context, reasons)
+            occurrence = native_occurrences[0] if native_occurrences else None
+            ledger_intervals = []
+        else:
+            (
+                occurrence,
+                grounding_evidence,
+                occurrence_evidence,
+                ledger_intervals,
+            ) = _resolve_occurrence(
+                occurrence_candidate, record, protein_id, reference, context, reasons
+            )
         provider_evidence.extend(occurrence_evidence)
     else:
         ledger_intervals = []
@@ -2310,8 +2393,12 @@ def _resolve_candidate(
         row["intervals"] = ledger_intervals
         row["residue_positions"] = occurrence.get("residue_positions", [])
         row["evidence_tier"] = row.get("evidence_tier") or "A"
-        row["trait_occurrence"] = occurrence
-        row["grounding_evidence"] = grounding_evidence
+        if _native_candidate(row):
+            row["trait_occurrences"] = native_occurrences
+            row["grounding_evidence_rows"] = native_evidence
+        else:
+            row["trait_occurrence"] = occurrence
+            row["grounding_evidence"] = grounding_evidence
     if (
         record
         and context.content_gate is not None
@@ -2319,7 +2406,9 @@ def _resolve_candidate(
         and occurrence is not None
     ):
         try:
-            content_findings.extend(context.content_gate.evaluate_candidate(record, row))
+            for member in native_occurrences or [occurrence]:
+                gate_row = {**row, "intervals": member.get("intervals", [])} if native_occurrences else row
+                content_findings.extend(context.content_gate.evaluate_candidate(record, gate_row))
         except ContentGateError as exc:
             raise GroundingError(
                 f"{trait_id or row.get('record_path')}: record-content source replay "
@@ -2375,6 +2464,18 @@ def _review_flags(row: dict[str, Any]) -> list[str]:
     intervals, _ = _normalise_intervals(row.get("intervals"))
     if len(intervals) > 1:
         flags.append("MULTI_INTERVAL_OR_HIT")
+    if _native_candidate(row):
+        locations = row.get("native_locations") or []
+        if not isinstance(locations, list):
+            locations = []
+        locations = [location for location in locations if isinstance(location, list)]
+        if len(locations) > 1:
+            flags.extend(["MULTI_INTERVAL_OR_HIT", "MULTIPLE_NATIVE_LOCATIONS"])
+        if any(len(location) > 1 for location in locations):
+            flags.append("DISCONTINUOUS_NATIVE_LOCATION")
+        if any(location == [{"start": 1, "end": row.get("sequence_length")}]
+               for location in locations):
+            flags.append("FULL_SEQUENCE_NATIVE_LOCATION")
     positions, _ = _normalise_positions(row.get("residue_positions"))
     if positions:
         flags.append("DISCONTINUOUS_RESIDUE_SET")
@@ -2613,6 +2714,7 @@ def resolve(args: argparse.Namespace) -> int:
                 "source_release": row.get("source_release") or "",
                 "uniprot_release": row.get("uniprot_release") or "",
                 "intervals": _canonical_json(row.get("intervals") or []),
+                "native_locations": _canonical_json(row.get("native_locations") or []),
                 "review_flags": ";".join(_review_flags(row)),
                 "reasons": ";".join(row.get("reasons") or []),
                 "reviewer": "",
@@ -2710,12 +2812,19 @@ def _provider_projection(
         return payload.get(str(key))
     if kind == "uniprot_membership":
         return payload.get(str(key))
-    if kind in {"sifts_mapping", "iedb_peptide", "mcsa_native"}:
+    if kind in {"sifts_mapping", "iedb_peptide", "mcsa_native", "interpro_native"}:
         return payload.get(str(key))
     return None
 
 
 def _provider_override(kind: str, evidence: dict[str, Any], args: argparse.Namespace) -> Path:
+    if kind == "interpro_native":
+        from interpro_native_grounding import source_path
+
+        try:
+            return source_path(evidence.get("path")).resolve()
+        except (OSError, ValueError, TypeError) as exc:
+            raise GroundingError(f"invalid native InterPro provider path: {exc}") from exc
     if kind == "mcsa_native":
         from mcsa_native_grounding import source_path
 
@@ -2803,6 +2912,13 @@ def _provider_cache(
                 cache[(kind, path)] = (source_facts(keys), {"source": SOURCE, "release": SOURCE_RELEASE})
             except (OSError, ValueError) as exc:
                 raise GroundingError(f"invalid M-CSA source facts: {exc}") from exc
+        elif kind == "interpro_native":
+            from interpro_native_grounding import source_facts
+
+            try:
+                cache[(kind, path)] = (source_facts(_display_path(path), keys), {})
+            except (OSError, ValueError, TypeError) as exc:
+                raise GroundingError(f"invalid native InterPro source facts: {exc}") from exc
         elif kind == "iedb_peptide":
             from iedb_peptide_grounding import SOURCE, SOURCE_RELEASE, source_facts
 
@@ -2825,6 +2941,39 @@ def _provider_cache(
                 {},
             )
     return cache
+
+
+def _native_projection_errors(row, proof, current):
+    """Require the whole reviewed set, even after caller-side hashes are recomputed."""
+    from interpro_native_grounding import candidate_fields, project_set
+
+    try:
+        fact, occurrences, evidence = project_set(
+            row.get("native_source"), row.get("native_location_set_sha256"))
+        expected_fields = candidate_fields(evidence[0])
+        expected_claims = [{**o, "qualification_status": "QUALIFIED",
+                            "source_evidence_id": e["evidence_id"]}
+                           for o, e in zip(occurrences, evidence, strict=True)]
+        expected_proof = {
+            "kind": "interpro_native", "path": row["native_source"],
+            "key": fact["location_set_sha256"], "source": "InterPro",
+            "release": occurrences[0]["source_release"], "built": None,
+            "entry_sha256": fact["location_set_sha256"], "trait_id": fact["trait_id"],
+        }
+        _row_members(row)
+        if (proof != expected_proof or current != fact
+                or row.get("record_path") != fact["record_path"]
+                or _row_occurrences(row) != expected_claims or _row_evidence(row) != evidence
+                or any(row.get(key) != value for key, value in expected_fields.items())
+                or any(row.get(key) != occurrences[0].get(key) for key in
+                       ("trait_id", "protein_id", "source_trait_id", "mapping_method", "scope",
+                        "coordinate_frame", "evidence_source", "source_release", "sequence_sha256"))
+                or row.get("intervals") not in (None, [])
+                or row.get("residue_positions") not in (None, [])):
+            return ["mismatch:interpro_native_complete_projection"]
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        return [f"invalid:interpro_native_complete_projection:{exc}"]
+    return []
 
 
 def _verify_provider_evidence(
@@ -2860,6 +3009,8 @@ def _verify_provider_evidence(
             continue
         if kind in {"iedb_peptide", "mcsa_native"}:
             observed_digest = current["fact_sha256"]
+        elif kind == "interpro_native":
+            observed_digest = current["location_set_sha256"]
         elif kind == "uniprot_membership":
             from uniprot_membership_snapshot import membership_entry_sha256
 
@@ -2873,6 +3024,8 @@ def _verify_provider_evidence(
         if observed_digest != evidence.get("entry_sha256"):
             reasons.append(f"stale:provider_entry_changed:{kind}")
             continue
+        if kind == "interpro_native":
+            reasons.extend(_native_projection_errors(row, evidence, current))
         if kind == "mcsa_native":
             from mcsa_native_grounding import SOURCE, SOURCE_PATH, SOURCE_RELEASE, contract_errors
 
@@ -2942,8 +3095,11 @@ def _verify_provider_evidence(
                 reasons.append("mismatch:sifts_grounding_provider_binding")
     if "protein_registry" not in kinds:
         reasons.append("missing:protein_registry_evidence")
-    if row.get("mapping_method") == "INTERPRO_MATCH" and "interpro_frame" not in kinds:
+    if (row.get("mapping_method") == "INTERPRO_MATCH"
+            and not kinds & {"interpro_frame", "interpro_native"}):
         reasons.append("missing:interpro_evidence")
+    if _native_candidate(row) and "interpro_native" not in kinds:
+        reasons.append("missing:interpro_native_evidence")
     if row.get("mapping_method") == "SOURCE_MEMBERSHIP" and "uniprot_membership" not in kinds:
         reasons.append("missing:uniprot_membership_evidence")
     if row.get("mapping_method") == "SIFTS_RESIDUE_MAPPING" and "sifts_mapping" not in kinds:
@@ -3350,6 +3506,17 @@ def _durable_gate_candidate(
         "sifts_mapping_id": evidence.get("sifts_mapping_id"),
         "interpro_location_id": evidence.get("interpro_location_id"),
     }
+    from interpro_native_grounding import is_native_source
+
+    if is_native_source(evidence.get("provider_source")):
+        from interpro_native_grounding import candidate_fields
+
+        try:
+            identity.update(candidate_fields(evidence))
+            identity["intervals"] = []
+            identity["residue_positions"] = []
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            raise GroundingError(f"native durable candidate cannot be replayed: {exc}") from exc
     expected_candidate_id = derive_candidate_id(identity)
     if binding["candidate_id"] != expected_candidate_id:
         raise GroundingError(
@@ -3749,6 +3916,9 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
     ):
         if optional is not None:
             protected_input_keys.add(_physical_path_key(optional))
+    from interpro_native_grounding import SOURCES, source_path
+
+    protected_input_keys.update(_physical_path_key(source_path(name)) for name in SOURCES)
     for name, output in outputs.items():
         if output_keys[name] in protected_input_keys:
             raise GroundingError(
@@ -3995,7 +4165,8 @@ def _promotion_qualified_record_preflight(
         path = _safe_record_path(row["record_path"], traits_root)
         record = gate_records[path]
         for occurrence in _row_occurrences(row):
-            projection, findings = _content_gate_projection(gate, record, row, args)
+            gate_row = {**row, "intervals": occurrence.get("intervals", [])} if _native_candidate(row) else row
+            projection, findings = _content_gate_projection(gate, record, gate_row, args)
             hard_codes = sorted(
                 finding.code for finding in findings if finding.severity == CONTENT_GATE_HARD
             )
@@ -4520,6 +4691,14 @@ def promote(args: argparse.Namespace) -> int:
             assert_source_unchanged()
         except (OSError, ValueError) as exc:
             raise GroundingError(f"M-CSA source changed during promotion preflight: {exc}") from exc
+    from interpro_native_grounding import assert_source_unchanged, is_native_source
+
+    for source in {item.get("provider_source") for item in evidence_registry.values()
+                   if is_native_source(item.get("provider_source"))}:
+        try:
+            assert_source_unchanged(source)
+        except (OSError, ValueError) as exc:
+            raise GroundingError(f"native InterPro source changed during promotion: {exc}") from exc
     _install_promotion_transaction(
         artifact_updates,
         {path: candidate_text for path, (_sha, candidate_text) in candidates_to_write.items()},
@@ -4582,6 +4761,31 @@ def prepare_mcsa_source(args: argparse.Namespace) -> int:
             _install_promotion_transaction([(destination, raw.decode("utf-8"))], {})
     except (OSError, ValueError, TypeError, KeyError) as exc:
         raise GroundingError(f"M-CSA source preparation rejected: {exc}") from exc
+    return 0
+
+
+def prepare_interpro_native_source(args: argparse.Namespace) -> int:
+    """Install only an independently registered complete source snapshot."""
+    from interpro_native_grounding import SOURCE_DIRECTORY, SOURCES, source_path
+    from interpro_native_snapshot import sha, verify_snapshot
+
+    try:
+        raw = args.snapshot.read_bytes()
+        name = SOURCE_DIRECTORY + sha(raw) + ".json"
+        destination = source_path(name)  # refuses unregistered bytes and unsafe paths
+        expected, pins = SOURCES[name]
+        verified = verify_snapshot(raw, expected, dict(pins))
+        if destination.exists():
+            if destination.read_bytes() != raw:
+                raise GroundingError("native InterPro source destination contains different bytes")
+            print(f"UNCHANGED: {len(verified.sets):,} native location sets already installed")
+            return 0
+        print(f"{'APPLY' if args.apply else 'DRY-RUN'}: {len(verified.sets):,} native location "
+              "sets; no trait, protein, evidence or qualification writes")
+        if args.apply:
+            _install_promotion_transaction([(destination, raw.decode("utf-8"))], {})
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        raise GroundingError(f"native InterPro source preparation rejected: {exc}") from exc
     return 0
 
 
@@ -4850,6 +5054,12 @@ def _parser() -> argparse.ArgumentParser:
     mcsa.add_argument("--snapshot", type=Path, required=True)
     mcsa.add_argument("--apply", action="store_true")
     mcsa.set_defaults(func=prepare_mcsa_source)
+    native = subparsers.add_parser(
+        "interpro-native-prepare-source", help="prepare a registered complete native InterPro source",
+    )
+    native.add_argument("--snapshot", type=Path, required=True)
+    native.add_argument("--apply", action="store_true")
+    native.set_defaults(func=prepare_interpro_native_source)
     return parser
 
 

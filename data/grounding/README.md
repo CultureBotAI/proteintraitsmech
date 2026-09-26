@@ -26,6 +26,12 @@ canonical example:
   repeats, changed parents, and conflicting native coordinates are rejected. The
   claim is limited to peptide identity and position on that sequence. Source and
   license metadata remain in the snapshot and trait records.
+- `interpro_native/<sha256>.json` retains complete native InterPro response bodies,
+  header receipts, acquisition plans, protein references and corresponding record
+  meanings. The full snapshot and each acquisition have independently registered
+  checksums. Each native location produces one occurrence and evidence row; a
+  discontinuous location retains all its fragments in that occurrence. Validation
+  requires the entire location set and rejects omitted or duplicate members.
 - `mcsa_native_source_snapshot.json` retains the complete captured M-CSA entry
   set, acquisition manifest, complete ProteinReferences, and every non-example
   field of each corresponding trait record. Its independently reviewed file
@@ -58,6 +64,33 @@ Do not hand-edit these registries. Build staging outputs from pinned providers, 
 source-stratified ledger, install the approved rows with the grounding promoter, and run
 `just validate-all` before committing the registry and trait changes together. A
 `QUALIFIED` record whose registry row is absent or inconsistent fails semantic validation.
+
+Native InterPro acquisition uses `just fetch-interpro-native` with `--registry`,
+`--protein UniProtKB:<accession>`, `--expect-release`, `--expect-minor` and an
+`--out data/raw/interpro_native/<run>/<accession>` directory. Save the dry-run JSON
+plan and repeat with `--request-plan <plan.json> --apply` to capture that exact
+reference. The route saves complete pagination and each response's body and
+release headers, then replays the saved files before publishing `bundle.json`.
+It preserves independent match locations and the fragments within each location.
+Failed runs retain partial files with `failure.json`; use a new output directory
+for a retry. These bundles do not qualify coordinates.
+
+Prepare an independently registered portable snapshot with
+`just prepare-interpro-native-source <snapshot.json>`, inspect the dry run, then
+add `--apply`. Preparation installs only immutable source input. Resolve with
+`--providers protein-registry,interpro-native`; each candidate identifies its
+`native_source`, `native_location_set_sha256` and complete `native_locations`.
+The resolver regenerates every occurrence and evidence row from the source.
+Review all locations as one protein alternative, then use the central promoter.
+The review table shows the grouped locations; separate evidence and record bindings
+are written for every occurrence. Repeated promotion is idempotent, and incomplete
+or conflicting sets fail before a record or registry write. Legacy flattened
+InterPro locations retain their original restrictions.
+
+Source registration does not approve a trait definition, biological scope or
+publication license. Preserve member-database provenance and missing license
+fields, complete source-specific review, and resolve release blockers before
+publication.
 
 To add coordinates to several proteins already listed on one trait, use the central
 promoter's optional `--enrich-existing-examples` flag. Each approved protein must
