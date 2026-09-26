@@ -750,6 +750,18 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
         errors.extend(native_errors)
         mcsa_native_verified = not native_errors
 
+    # Only registered complete native captures discharge the newer InterPro
+    # acquisition contract. Legacy flattened providers keep their existing gates.
+    from interpro_native_grounding import is_native_source
+
+    interpro_native_verified = False
+    if is_native_source(evidence.get("provider_source")):
+        from interpro_native_grounding import contract_errors
+
+        native_errors = contract_errors(dict(evidence))
+        errors.extend(native_errors)
+        interpro_native_verified = not native_errors
+
     allowed_kinds = {
         "UNIPROT_FEATURE": {"UNIPROT"},
         "INTERPRO_MATCH": {"INTERPRO"},
@@ -1190,7 +1202,7 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
             if (
                 evidence.get("source_release") != "109.0"
                 or evidence.get("provider_release") != "109.0"
-            ):
+            ) and not interpro_native_verified:
                 errors.append(
                     (
                         "cath_release_mismatch",
@@ -1228,13 +1240,14 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "CATH evidence requires INTERPRO_MATCH or SIFTS_RESIDUE_MAPPING",
                 )
             )
-        errors.append(
-            (
-                "cath_provider_receipt_required",
-                "CATH evidence cannot qualify until authentic source/provider acquisition "
-                "receipts are represented and verified by the grounding boundary",
+        if not interpro_native_verified:
+            errors.append(
+                (
+                    "cath_provider_receipt_required",
+                    "CATH evidence cannot qualify until authentic source/provider acquisition "
+                    "receipts are represented and verified by the grounding boundary",
+                )
             )
-        )
 
     for lock in pending_locks:
         if lock.key == "mcsa" and mcsa_native_verified:
@@ -3135,6 +3148,14 @@ def _validate_occurrence(
 
     if reference is None:
         return findings
+    evidence = (evidence_registry or {}).get(occurrence.get("source_evidence_id"), {})
+    from interpro_native_grounding import is_native_source
+
+    if is_native_source(evidence.get("provider_source")):
+        from interpro_native_grounding import record_errors
+
+        findings.extend(_finding(code, message, **context) for code, message in
+                        record_errors(dict(record), dict(reference), dict(evidence)))
     if _namespace(trait_id) in {"MCSA", "M-CSA"}:
         from mcsa_native_grounding import record_errors
 
@@ -3510,6 +3531,19 @@ def validate_record(
                     occurrence_index=occurrence_index,
                 )
             )
+        if reference is not None and qualified_occurrences:
+            from interpro_native_grounding import complete_set_errors, is_native_source
+
+            claims = [o for o in occurrences if isinstance(o, dict)
+                      and o.get("qualification_status") == QUALIFIED]
+            if any(is_native_source((evidence_registry or {}).get(
+                    o.get("source_evidence_id"), {}).get("provider_source")) for o in claims):
+                findings.extend(
+                    _finding(code, message, file=file, trait_id=trait_id,
+                             protein_id=pid, example_index=example_index)
+                    for code, message in complete_set_errors(
+                        record, reference, claims, evidence_registry or {})
+                )
         if status == QUALIFIED and qualified_occurrences == 0:
             findings.append(
                 _finding(
