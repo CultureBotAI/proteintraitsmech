@@ -65,6 +65,16 @@ magic bytes, stable content markers, or publisher checksums.
   release-pinned grounding workflow.
 - `fetch-residue-frame` — residue-coordinate API enrichment.
 - `fetch-interpro-frame` — InterPro API enrichment.
+- `fetch-interpro-native` — one exact ProteinReference per immutable acquisition.
+  Dry-run emits a digest-bound plan; apply retains complete per-protein pagination,
+  native location/fragment boundaries, raw bodies and headers from each same GET.
+  Every response must match the expected major and minor InterPro release, bracketed
+  by unchanged API catalogs. The native protein must exactly match the reference's
+  accession, sequence, taxon and review status. Transient errors receive bounded
+  retries; redirects are refused. Failed runs retain partial files and failure.json,
+  without bundle.json. A complete bundle is published only after replay from saved
+  files. Existing directories are immutable; retries require a new directory.
+  This route performs acquisition only and cannot qualify or promote coordinates.
 - `fetch-uniprot-registry` — exact-accession, same-response protein metadata/sequence and
   database-cross-reference snapshots for the grounding workflow; release-header,
   checksum, exact-membership, and content-address gates are implemented in its Python

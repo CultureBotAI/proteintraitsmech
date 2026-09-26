@@ -1336,6 +1336,11 @@ fetch-residue-frame *args:
 fetch-interpro-frame *args:
     python3 scripts/fetch_interpro_frame.py {{args}}
 
+# Preserve native location groups, complete pagination, and same-GET release headers.
+# One exact registry protein per invocation. Dry-run emits the required apply plan.
+fetch-interpro-native *args:
+    uv run python scripts/fetch_interpro_native.py {{args}}
+
 # Adjudicate the identical-residue-set links from the alignment overlay (issue #7,
 # phase 12): a CATH superfamily and an InterPro entry covering the same residues
 # are the same superfamily under two identifiers only if InterPro actually

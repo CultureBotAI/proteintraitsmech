@@ -229,6 +229,26 @@
     re-fetchable). The map ships organism names and domains derived from it, under
     UniProt's CC BY 4.0 attribution.
 
+- url: https://www.ebi.ac.uk/interpro/api/entry/all/protein/uniprot/{accession}/
+  local_name: interpro_native/
+  name: InterPro native protein locations and response receipts
+  source: interpro
+  license: Member-database terms retained; source-specific review required before promotion
+  license_review: pending
+  status: enrichment
+  role: api
+  fetcher: fetch_interpro_native.py
+  note: >-
+    Paginated per-protein API acquisition through just fetch-interpro-native, not
+    a bulk download. Also captures /api/?format=json before and after and the
+    exact /api/protein/uniprot/{accession}/?format=json response. Saves each raw
+    body with its own GET headers, pins InterPro major/minor releases, preserves
+    independent locations and discontinuous fragments, and compares the entire
+    native sequence with an existing ProteinReference. Ignored immutable bundles
+    below data/raw/interpro_native are discovery inputs, not qualified evidence.
+    Native and reference UniProt release labels are retained separately. The
+    existing flattened interpro_frame.json remains a separate legacy source.
+
 # Pfam-A families (public domain; Pfam ⊂ InterPro, each linked via InterPro xref)
 -
   url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz
