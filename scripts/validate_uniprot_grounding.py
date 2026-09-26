@@ -733,6 +733,12 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
 
         errors.extend(contract_errors(dict(evidence)))
 
+    iedb_source = source == "IEDB" or "IEDB" in namespaces
+    if iedb_source:
+        from iedb_peptide_grounding import contract_errors
+
+        errors.extend(contract_errors(dict(evidence)))
+
     # M-CSA publishes exact UniProt-frame reference residues separately from
     # PDB-chain numbering. Only a complete replay of the independently pinned
     # native source may use that frame; other M-CSA assertions keep their lock.
@@ -1255,7 +1261,7 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "boundary",
                 )
             )
-        elif kind == "SOURCE_DATABASE" and not elife_source:
+        elif kind == "SOURCE_DATABASE" and not (elife_source or iedb_source):
             errors.append(
                 (
                     "source_database_contract_required",
@@ -3131,6 +3137,12 @@ def _validate_occurrence(
         return findings
     if _namespace(trait_id) in {"MCSA", "M-CSA"}:
         from mcsa_native_grounding import record_errors
+
+        evidence = (evidence_registry or {}).get(occurrence.get("source_evidence_id"), {})
+        findings.extend(_finding(code, message, **context) for code, message in
+                        record_errors(dict(record), dict(reference), dict(evidence)))
+    if isinstance(trait_id, str) and trait_id.startswith("IEDB:"):
+        from iedb_peptide_grounding import record_errors
 
         evidence = (evidence_registry or {}).get(occurrence.get("source_evidence_id"), {})
         findings.extend(_finding(code, message, **context) for code, message in
