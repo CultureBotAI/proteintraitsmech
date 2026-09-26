@@ -65,16 +65,27 @@ def summarize(observations, registry, catalog):
         correlations = []
         for a, b in itertools.combinations(sorted(values), 2):
             paired = sorted(members & values[a].keys() & values[b].keys())
+            representatives = {}
+            for pid in paired:
+                representatives.setdefault(registry[pid]["sequence_sha256"], pid)
+            paired = sorted(representatives.values())
             rho = spearman([values[a][k] for k in paired], [values[b][k] for k in paired])
             correlations.append({"a": a, "b": b, "n": len(paired), "spearman_rho": rho})
-        output[group] = {"proteins": len(members), "correlations": correlations}
+        output[group] = {"proteins": len(members),
+                         "unique_sequences": len({registry[p]["sequence_sha256"] for p in members}),
+                         "statuses_by_descriptor": {
+                             code: dict(Counter(o["status"] for o in observations
+                                                if o["protein_id"] in members and
+                                                catalog[o["descriptor_id"]]["inventory_id"] == code))
+                             for code in sorted({catalog[o["descriptor_id"]]["inventory_id"] for o in observations})},
+                         "correlations": correlations}
     complete = set(values["B03"]) & values["B04"].keys() & values["B05"].keys()
     return {"proteins": len(ids), "observation_count": len(observations),
             "statuses": dict(Counter(o["status"] for o in observations)),
             "fcr_identity": {"n": len(complete), "maximum_absolute_error": max((
                 abs(values["B05"][k] - values["B03"][k] - values["B04"][k]) for k in complete), default=None)},
             "strata": output,
-            "interpretation": "Selected pilot only. Correlations are descriptive, not mechanism or independent embedding validation. Null means fewer than four paired values or a constant vector. Length bins are analysis strata, not trait classes. Source strata are UniProt releases, not independent assay or database sources."}
+            "interpretation": "Selected cohort only. Correlations use one accession per exact sequence within each stratum; sequence similarity beyond exact identity is not controlled. Descriptive associations are not mechanism or independent embedding validation. Null means fewer than four unique paired sequences or a constant vector. Length bins are analysis strata, not trait classes. Source strata are UniProt releases, not independent assay or database sources."}
 
 
 def main():

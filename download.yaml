@@ -14,6 +14,55 @@
 # README seeds table, and research/protein-trait-sources-round*.md.
 ---
 
+# Locally executed, version-pinned predictor; scores stay MODEL_PREDICTION.
+- url: https://pypi.org/pypi/metapredict/3.0.2/json
+  local_name: metapredict/3.0.2/pypi.json
+  name: metapredict 3.0.2 (V3 disorder network)
+  source: metapredict
+  license: MIT
+  license_url: https://github.com/idptools/metapredict/blob/34ddeefba8285c57fb5307792ce5f6789f860bef/LICENSE
+  status: enrichment
+  role: enrichment
+  fetcher: fetch_source.py
+  enricher: predict_biophysical_disorder.py
+  note: >-
+    Local CPU inference on exact registry sequences, not a prediction service.
+    Software and bundled networks are distributed under MIT; retain the license
+    with upstream reference fixtures. Sequence attribution remains UniProt CC BY
+    4.0. Raw local outputs, dependency versions, model and input hashes are retained.
+- url: https://raw.githubusercontent.com/idptools/metapredict/34ddeefba8285c57fb5307792ce5f6789f860bef/metapredict/backend/networks/metameta_2_7_22_nl2_hs20_b32_V3.pt
+  source: metapredict
+  license: MIT
+  role: enrichment
+  local_name: metapredict/3.0.2/model.pt
+- url: https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0019425&type=manuscript
+  name: Crespo and Rubini 2011 ubiquitin stability measurements
+  source: crespo_ubiquitin_2011
+  local_name: biophysical/crespo2011.xml
+  license: CC-BY (version not specified in retained article)
+  license_url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0019425
+  status: enrichment
+  role: enrichment
+  fetcher: fetch_source.py
+  enricher: import_biophysical_experiments.py
+  note: >-
+    Primary thermal/chemical stability study. Only the wild-type human ubiquitin
+    construct is in scope; fluoroproline variants are not unmodified sequences.
+- url: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4353059/fullTextXML
+  name: Neugebauer et al. 2015 lysozyme solubility compilation
+  source: lysozyme_solubility_2015
+  local_name: biophysical/crystallization2015.xml
+  license: CC-BY (version not specified in retained article)
+  license_url: https://pmc.ncbi.nlm.nih.gov/articles/PMC4353059/
+  status: enrichment
+  role: enrichment
+  fetcher: fetch_source.py
+  enricher: import_biophysical_experiments.py
+  note: >-
+    Table 1 reproduces solubility values from earlier studies. Preserve the
+    secondary-source chain, original study identity, and condition differences;
+    reactor concentrations in Table 3 are not equilibrium solubility.
+
 # ============================================================ SEEDED =========
 
 # Publication-scoped signature definitions; source membership is distinct from activity.

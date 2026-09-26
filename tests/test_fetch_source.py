@@ -87,6 +87,8 @@ class ReleaseHandler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", "text/plain")
         self.send_header("ETag", '"release-7"')
         self.send_header("Last-Modified", "Wed, 20 Aug 2025 12:00:00 GMT")
+        self.send_header("X-UniProt-Release", "2026_03")
+        self.send_header("X-UniProt-Release-Date", "02-September-2026")
         self.end_headers()
         try:
             self.wfile.write(PAYLOAD)
@@ -149,6 +151,8 @@ def test_success_records_release_metadata(release_server, tmp_path):
     assert metadata["sha256"] == digest
     assert metadata["etag"] == '"release-7"'
     assert metadata["last_modified"] == "Wed, 20 Aug 2025 12:00:00 GMT"
+    assert metadata["uniprot_release"] == "2026_03"
+    assert metadata["uniprot_release_date"] == "02-September-2026"
     assert metadata["requested_url"] == f"{release_server}/redirect"
     assert metadata["resolved_url"] == f"{release_server}/success"
 

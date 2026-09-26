@@ -19,6 +19,8 @@ from analyze_biophysical import summarize
 from biophysical import PILOT, VERSION, calculate, descriptor_id
 from build_biophysical_overlay import build_overlay
 from calculate_biophysical import digest, read_protein_selection, summary_tsv
+from predict_biophysical_disorder import check_disorder_bundle
+from select_biophysical_cohort import check_cohort
 from validate_biophysical import load_catalog, load_registry, read_jsonl, validate_collection
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -39,14 +41,24 @@ def equal_with_roundoff(actual, expected):
     return type(actual) is type(expected) and actual == expected
 
 
-def check_pilot(root=ROOT, disorder_path=None):
+def check_pilot(root=ROOT, disorder_path=None, require_input_provenance=False):
     folder = root / "data/biophysical"
+    if (folder / ".refresh-incomplete").exists():
+        return ["biophysical refresh was interrupted; finish a complete validated refresh before publishing"]
     observations_path = folder / "pilot.observations.jsonl"
     registry_path = root / "data/grounding/protein_registry.jsonl"
     catalog_path = folder / "descriptors.yaml"
     map_path = root / "docs/data/sequence_map.json"
     bindings_path = folder / "pilot.embedding-proteins.jsonl"
     registry, catalog = load_registry(registry_path), load_catalog(catalog_path)
+    if require_input_provenance or (folder / "cohort.policy.json").exists():
+        cohort_errors = check_cohort(root, registry)
+        if cohort_errors:
+            return cohort_errors
+    if require_input_provenance or (folder / "disorder/run.json").exists():
+        check_disorder_bundle(root)
+        if disorder_path is None:
+            disorder_path = folder / "disorder/predictions.jsonl"
     observations = list(read_jsonl(observations_path))
     errors = validate_collection(observations, registry, catalog)
     if errors:
@@ -129,9 +141,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--disorder", type=Path, help="Required when the pilot manifest names disorder inputs")
+    parser.add_argument("--require-input-provenance", action="store_true",
+                        help="Require the shipped cohort policy and retained predictor run (used by CI)")
     args = parser.parse_args(argv)
     try:
-        errors = check_pilot(args.root, args.disorder)
+        errors = check_pilot(args.root, args.disorder, args.require_input_provenance)
     except (OSError, ValueError, KeyError, TypeError, AttributeError, OverflowError) as exc:
         errors = [f"pilot bundle validation failed: {exc}"]
     if errors:
