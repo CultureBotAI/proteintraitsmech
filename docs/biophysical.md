@@ -10,7 +10,8 @@ hydropathy, or compositional entropy. Minimum and maximum values filter the
 selected descriptor; the existing organism-domain, CATH and length filters
 remain available. The CSV includes numerical values and observation identifiers.
 
-The initial cohort contains 23 reviewed proteins. Coverage is shown beside the
+The cohort contains 256 reviewed proteins, selected across taxon, length and
+source-release groups with exact sequence matches. Coverage is shown beside the
 controls, and proteins without values are initially filtered out. The map's
 positions still come from the existing sequence embeddings. A colored region
 of the plot is exploratory evidence, not a demonstrated biological mechanism.
@@ -22,11 +23,16 @@ Whole-chain charge at pH 7 uses a sequence ionization model; it is not a surface
 potential measurement. Local hydrophobic moments assume a stated geometry and
 do not establish that a segment forms a helix.
 
-Disorder has a validated input adapter for named, versioned predictor scores.
-No predictor outputs were supplied for this pilot, so its 23 disorder entries
-are explicitly unavailable. The other 253 observations are calculated results.
-Experimental stability, solubility and the remaining descriptor inventory are
-follow-up work.
+The sequence bundle contains 3,072 observations, including disorder scores from
+metapredict 3.0.2 (V3). The disorder fraction counts residues whose score is
+strictly greater than 0.5. These are model predictions; they do not establish
+experimentally observed disorder or independently validate the map's embeddings.
+
+A separate [experimental collection](https://github.com/CultureBotAI/proteintraitsmech/blob/main/data/biophysical/experimental/README.md)
+contains 14 published stability and solubility measurements on human ubiquitin
+and mature hen egg-white lysozyme. Their construct mappings, pH, temperature,
+assay and reporting gaps travel with each value. These measurements refer to
+specific protein regions and conditions, so they are not whole-protein map colors.
 
 The [implementation and reproduction guide](https://github.com/CultureBotAI/proteintraitsmech/blob/main/data/biophysical/README.md)
 contains the method table, scope conventions, predictor-input contract and

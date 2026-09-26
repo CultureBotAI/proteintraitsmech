@@ -132,6 +132,7 @@ def test_ci_checks_the_bundle_and_pages_declares_the_new_assets():
     workflow = yaml.safe_load((ROOT / ".github/workflows/checks.yml").read_text())
     runs = [step.get("run", "") for job in workflow["jobs"].values() for step in job["steps"]]
     assert "just check-biophysical-pilot" in runs
+    assert "just check-biophysical-experiments" in runs
     recipe = (ROOT / "justfile").read_text().split("\ncheck-biophysical-pilot ", 1)[1].split("\n\n", 1)[0]
     assert "scripts/check_biophysical_pilot.py" in recipe
     included = yaml.safe_load((ROOT / "docs/_config.yml").read_text())["include"]
@@ -145,6 +146,10 @@ def test_ci_checks_the_bundle_and_pages_declares_the_new_assets():
     ("biophysical-map", "build_biophysical_overlay.py"),
     ("analyze-biophysical", "analyze_biophysical.py"),
     ("check-biophysical-pilot", "check_biophysical_pilot.py"),
+    ("select-biophysical-cohort", "select_biophysical_cohort.py"),
+    ("refresh-biophysical", "refresh_biophysical.py"),
+    ("import-biophysical-experiments", "import_biophysical_experiments.py"),
+    ("check-biophysical-experiments", "import_biophysical_experiments.py"),
 ])
 def test_recipes_preserve_spaced_arguments_without_shell_reinterpretation(tmp_path, recipe, script):
     import os
@@ -160,7 +165,9 @@ def test_recipes_preserve_spaced_arguments_without_shell_reinterpretation(tmp_pa
                PTM_TEST_ARGV=str(capture))
     subprocess.run(["just", "--justfile", str(ROOT / "justfile"), recipe, "--output", argument],
                    cwd=ROOT, env=env, check=True, capture_output=True, text=True)
-    assert json.loads(capture.read_text()) == ["run", "python", "scripts/" + script, "--output", argument]
+    extra = {"check-biophysical-pilot": ["--require-input-provenance"],
+             "check-biophysical-experiments": ["--check"]}.get(recipe, [])
+    assert json.loads(capture.read_text()) == ["run", "python", "scripts/" + script, *extra, "--output", argument]
     assert not marker.exists()
 
 

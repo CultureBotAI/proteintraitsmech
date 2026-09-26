@@ -235,6 +235,8 @@ def fetch(
             ("etag", "etag"),
             ("last_modified", "last-modified"),
             ("content_type", "content-type"),
+            ("uniprot_release", "x-uniprot-release"),
+            ("uniprot_release_date", "x-uniprot-release-date"),
         ):
             value = _last_header(raw_headers, header_name)
             if value:

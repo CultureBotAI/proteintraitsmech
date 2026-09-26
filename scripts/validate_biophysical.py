@@ -32,6 +32,18 @@ PILOT_CONTRACTS = {
     "B16": ("SCALAR", "bit"), "B22": ("SCALAR_PROFILE", "1"),
 }
 PILOT_IDS = {descriptor_id(code): code for code in PILOT_CONTRACTS}
+EXPERIMENTAL_CONTRACTS = {"B25": "degC", "B26": "kJ/mol", "B27": "mol/L", "B30": "g/L"}
+
+
+def experimental_descriptor_errors(descriptor):
+    identities = {descriptor_id(code): code for code in EXPERIMENTAL_CONTRACTS}
+    code = identities.get(descriptor.get("descriptor_id"), descriptor.get("inventory_id"))
+    if code in EXPERIMENTAL_CONTRACTS and (
+        descriptor.get("descriptor_id"), descriptor.get("inventory_id"),
+        descriptor.get("value_kind"), descriptor.get("unit")
+    ) != (descriptor_id(code), code, "SCALAR", EXPERIMENTAL_CONTRACTS[code]):
+        return [f"experimental descriptor contract for {code} requires its canonical ID, SCALAR shape and unit {EXPERIMENTAL_CONTRACTS[code]}"]
+    return []
 
 
 def pilot_descriptor_errors(descriptor):
@@ -100,7 +112,7 @@ def load_catalog(path=CATALOG):
     rows = {}
     inventory_ids = set()
     for row in data["descriptors"]:
-        errors = pilot_descriptor_errors(row)
+        errors = pilot_descriptor_errors(row) + experimental_descriptor_errors(row)
         if errors:
             raise ValueError("; ".join(errors))
         key = row["descriptor_id"]
@@ -141,7 +153,7 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
         errors.append("descriptor_id does not resolve in the catalog")
     if protein is None or descriptor is None:
         return errors
-    contract_errors = pilot_descriptor_errors(descriptor)
+    contract_errors = pilot_descriptor_errors(descriptor) + experimental_descriptor_errors(descriptor)
     if contract_errors:
         return errors + contract_errors
     code = descriptor["inventory_id"]
@@ -189,6 +201,8 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
         expected_mode = "MODEL_PREDICTION" if code == "B22" else "SEQUENCE_CALCULATION"
         if obs["evidence_mode"] != expected_mode:
             errors.append(f"pilot descriptor {code} requires evidence mode {expected_mode}")
+    if code in EXPERIMENTAL_CONTRACTS and obs["evidence_mode"] != "EXPERIMENT":
+        errors.append(f"experimental descriptor {code} requires evidence mode EXPERIMENT")
     parameters = {p["name"]: p["value"] for p in params}
     if obs["evidence_mode"] == "STRUCTURE_CALCULATION" and not all(
         obs["method"].get(k) for k in ("structure_id", "chain_id", "conformer")
@@ -215,6 +229,30 @@ def validate_observation(obs, registry, catalog, occurrence_evidence=None):
                 "SCALAR_PROFILE": {"value", "profile", "intervals"}}[descriptor["value_kind"]]
     if present != expected:
         return errors + [f"descriptor requires result fields {sorted(expected)}"]
+    if code in EXPERIMENTAL_CONTRACTS:
+        conditions = obs.get("conditions", {})
+        required = {"sample_identity", "sequence_identity_basis", "source_locator", "assay",
+                    "unreported_conditions", "uncertainty_status"}
+        if not required <= parameters.keys() or not obs["method"].get("source_artifact_sha256"):
+            errors.append("experimental observations require source hash, sample identity, assay, locator and explicit reporting gaps")
+        if "ph" not in conditions:
+            errors.append("experimental stability/solubility requires measured pH")
+        if code in {"B26", "B27", "B30"} and "temperature_celsius" not in conditions:
+            errors.append("experimental free energy, denaturation midpoint and solubility require temperature")
+        if obs.get("comparator"):
+            errors.append("these experimental descriptors are absolute observations, not delta values")
+        if code == "B25" and obs["value"] <= -273.15:
+            errors.append("thermal unfolding midpoint must be above absolute zero")
+        if code == "B26" and (obs.get("normalization") != "G(unfolded)-G(native)" or
+                not {"reference_state", "equilibrium_model", "source_sign_convention"} <= parameters.keys()):
+            errors.append("unfolding free energy requires explicit sign, reference state and equilibrium model")
+        if code == "B27" and (obs["value"] < 0 or
+                not {"denaturant", "transition_criterion"} <= parameters.keys()):
+            errors.append("chemical denaturation midpoint requires a nonnegative concentration, denaturant and transition criterion")
+        if code == "B30" and (obs["value"] < 0 or not conditions.get("buffer") or
+                obs.get("normalization") != "mass concentration of dissolved protein" or
+                not {"solid_phase", "equilibrium_basis", "salt_composition"} <= parameters.keys()):
+            errors.append("equilibrium solubility requires nonnegative mass concentration, buffer, salt composition, solid phase and equilibrium basis")
     if obs["evidence_mode"] == "SEQUENCE_CALCULATION" and set(sequence) - set(ALPHABET):
         errors.append("sequence calculations on nonstandard residues must be undefined")
     if code == "B01" and "ph" not in obs.get("conditions", {}):

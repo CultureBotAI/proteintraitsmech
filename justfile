@@ -1578,4 +1578,28 @@ analyze-biophysical *args:
 check-biophysical-pilot *args:
     #!/usr/bin/env bash
     set -euo pipefail
-    exec uv run python scripts/check_biophysical_pilot.py "$@"
+    exec uv run python scripts/check_biophysical_pilot.py --require-input-provenance "$@"
+
+# Preview/reproduce the bounded cohort; --apply refreshes its selection artifacts.
+select-biophysical-cohort *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/select_biophysical_cohort.py "$@"
+
+# Rebuild and validate the complete sequence bundle before replacing published outputs.
+refresh-biophysical *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/refresh_biophysical.py "$@"
+
+# Preview or reproduce curated experimental measurements; --apply writes artifacts.
+import-biophysical-experiments *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/import_biophysical_experiments.py "$@"
+
+# Replay the experimental measurements against retained publication tables.
+check-biophysical-experiments *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/import_biophysical_experiments.py --check "$@"
