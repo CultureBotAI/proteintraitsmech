@@ -468,6 +468,37 @@ def _normalise_positions(value: Any) -> tuple[list[int], list[str]]:
     return sorted(set(out)), reasons
 
 
+def _row_occurrences(row: dict[str, Any]) -> list[dict[str, Any]]:
+    values = [row.get("trait_occurrence")]
+    if "trait_occurrences" in row:
+        raise GroundingError("invalid:unsupported_plural_occurrences")
+    if not isinstance(values, list) or not values or any(not isinstance(v, dict) for v in values):
+        raise GroundingError(f"{row.get('candidate_id')}: missing trait_occurrence projection")
+    return values
+
+
+def _row_evidence(row: dict[str, Any]) -> list[dict[str, Any]]:
+    values = [row.get("grounding_evidence")]
+    if "grounding_evidence_rows" in row:
+        raise GroundingError("invalid:unsupported_plural_evidence")
+    if not isinstance(values, list) or not values or any(not isinstance(v, dict) for v in values):
+        raise GroundingError(f"{row.get('candidate_id')}: missing grounding_evidence projection")
+    return values
+
+
+def _row_members(row: dict[str, Any]) -> list[tuple[dict, dict]]:
+    occurrences, evidence = _row_occurrences(row), _row_evidence(row)
+    if len(occurrences) != len(evidence):
+        raise GroundingError("invalid:native_occurrence_evidence_cardinality")
+    ids = [e.get("evidence_id") for e in evidence]
+    if any(not isinstance(key, str) or not key for key in ids) or len(set(ids)) != len(ids):
+        raise GroundingError("invalid:duplicate_or_missing_occurrence_evidence_id")
+    members = list(zip(occurrences, evidence, strict=True))
+    if any(o.get("source_evidence_id") != e["evidence_id"] for o, e in members):
+        raise GroundingError("mismatch:occurrence_evidence_member")
+    return members
+
+
 def derive_candidate_id(row: dict[str, Any]) -> str:
     """Stable evidence identity shared by audits and candidate generators.
 
@@ -2034,6 +2065,9 @@ def _resolve_candidate(
     # installed again below.
     producer_occurrence = row.pop("trait_occurrence", None)
     producer_grounding_evidence = row.pop("grounding_evidence", None)
+    # Plural producer claims are recomputed from the registered complete source set.
+    row.pop("trait_occurrences", None)
+    row.pop("grounding_evidence_rows", None)
     original_candidate_id = _clean_text(row.get("candidate_id"))
     producer_reasons = row.pop("reasons", None)
     reasons: list[str] = []
@@ -2272,20 +2306,20 @@ def _assert_exact_staging_projection(
     expected_evidence: dict[str, dict[str, Any]] = {}
     for row in qualified:
         candidate_id = str(row.get("candidate_id") or "")
-        embedded = row.get("grounding_evidence")
-        if not isinstance(embedded, dict):
-            raise GroundingError(
-                f"{candidate_id}: exact staging projection lacks embedded GroundingEvidence"
-            )
-        evidence_id = _clean_text(embedded.get("evidence_id"))
-        if not evidence_id:
-            raise GroundingError(f"{candidate_id}: exact staging projection lacks evidence_id")
-        previous = expected_evidence.get(evidence_id)
-        if previous is not None and previous != embedded:
-            raise GroundingError(
-                f"{candidate_id}: conflicting exact staging evidence {evidence_id}"
-            )
-        expected_evidence[evidence_id] = embedded
+        for embedded in _row_evidence(row):
+            if not isinstance(embedded, dict):
+                raise GroundingError(
+                    f"{candidate_id}: exact staging projection lacks embedded GroundingEvidence"
+                )
+            evidence_id = _clean_text(embedded.get("evidence_id"))
+            if not evidence_id:
+                raise GroundingError(f"{candidate_id}: exact staging projection lacks evidence_id")
+            previous = expected_evidence.get(evidence_id)
+            if previous is not None and previous != embedded:
+                raise GroundingError(
+                    f"{candidate_id}: conflicting exact staging evidence {evidence_id}"
+                )
+            expected_evidence[evidence_id] = embedded
 
     if set(registry) != expected_protein_ids:
         missing = sorted(expected_protein_ids - set(registry))
@@ -2411,16 +2445,16 @@ def resolve(args: argparse.Namespace) -> int:
                     item.get("trait_id", ""),
                 ),
             )
-            grounding_evidence = row.get("grounding_evidence")
-            if not isinstance(grounding_evidence, dict):
-                raise GroundingError(
-                    f"{row['candidate_id']}: qualified row lacks grounding_evidence"
-                )
-            evidence_id = str(grounding_evidence.get("evidence_id") or "")
-            previous = evidence_by_id.get(evidence_id)
-            if previous is not None and previous != grounding_evidence:
-                raise GroundingError(f"conflicting grounding evidence for {evidence_id}")
-            evidence_by_id[evidence_id] = grounding_evidence
+            for grounding_evidence in _row_evidence(row):
+                if not isinstance(grounding_evidence, dict):
+                    raise GroundingError(
+                        f"{row['candidate_id']}: qualified row lacks grounding_evidence"
+                    )
+                evidence_id = str(grounding_evidence.get("evidence_id") or "")
+                previous = evidence_by_id.get(evidence_id)
+                if previous is not None and previous != grounding_evidence:
+                    raise GroundingError(f"conflicting grounding evidence for {evidence_id}")
+                evidence_by_id[evidence_id] = grounding_evidence
         row["resolution_digest"] = _resolution_digest(row)
     if args.replace_staging_outputs:
         _assert_exact_staging_projection(resolved, existing_registry, evidence_by_id)
@@ -2744,9 +2778,7 @@ def _verify_provider_evidence(
 
 
 def _authoritative_example(row: dict[str, Any]) -> dict[str, Any]:
-    occurrence = row.get("trait_occurrence")
-    if not isinstance(occurrence, dict):
-        raise GroundingError(f"{row.get('candidate_id')}: missing trait_occurrence")
+    occurrences = _row_occurrences(row)
     example: dict[str, Any] = {
         "protein_id": row["protein_id"],
         "protein_label": row["protein_label"],
@@ -2758,7 +2790,7 @@ def _authoritative_example(row: dict[str, Any]) -> dict[str, Any]:
         "uniprot_release": row["uniprot_release"],
         "source": "UNIPROT_GROUNDING",
         "qualification_status": "QUALIFIED",
-        "trait_occurrences": [occurrence],
+        "trait_occurrences": copy.deepcopy(occurrences),
     }
     if row.get("sequence_version") is not None:
         example["sequence_version"] = row["sequence_version"]
@@ -2779,7 +2811,18 @@ def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict,
     occurrences = merged.get("trait_occurrences") or []
     if not isinstance(occurrences, list):
         raise GroundingError("invalid:existing_trait_occurrences")
-    wanted = authoritative["trait_occurrences"][0]
+    wanted_set = authoritative["trait_occurrences"]
+    if (not isinstance(wanted_set, list) or not wanted_set
+            or any(not isinstance(o, dict) for o in wanted_set)):
+        raise GroundingError("invalid:authoritative_trait_occurrences")
+    wanted = wanted_set[0]
+    if any((o.get("trait_id"), o.get("protein_id")) !=
+           (wanted.get("trait_id"), wanted.get("protein_id")) for o in wanted_set):
+        raise GroundingError("invalid:mixed_authoritative_trait_protein")
+    if len(wanted_set) > 1:
+        keys = [o.get("source_evidence_id") for o in wanted_set]
+        if any(not isinstance(key, str) or not key for key in keys) or len(set(keys)) != len(keys):
+            raise GroundingError("invalid:duplicate_authoritative_trait_occurrence")
     matching = [
         index
         for index, occurrence in enumerate(occurrences)
@@ -2787,18 +2830,18 @@ def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict,
         and occurrence.get("trait_id") == wanted.get("trait_id")
         and occurrence.get("protein_id") == wanted.get("protein_id")
     ]
-    if len(matching) > 1:
+    if len(matching) > 1 and len(wanted_set) == 1:
         raise GroundingError("invalid:duplicate_existing_trait_occurrence")
     if matching:
-        index = matching[0]
-        if (
-            occurrences[index].get("qualification_status") == "QUALIFIED"
-            and occurrences[index] != wanted
-        ):
+        current_set = [occurrences[index] for index in matching]
+        if (any(o.get("qualification_status") == "QUALIFIED" for o in current_set)
+                and current_set != wanted_set):
             raise GroundingError("conflict:different_qualified_trait_occurrence")
-        occurrences[index] = wanted
+        first = matching[0]
+        occurrences = [o for index, o in enumerate(occurrences) if index not in matching]
+        occurrences[first:first] = copy.deepcopy(wanted_set)
     else:
-        occurrences.append(wanted)
+        occurrences.extend(copy.deepcopy(wanted_set))
     merged["trait_occurrences"] = occurrences
     return merged, merged != existing
 
@@ -3313,26 +3356,23 @@ def _selected_registry_rows(
             raise GroundingError(f"conflicting selected ProteinReference rows for {protein_id}")
         references[protein_id] = reference
 
-        occurrence = row.get("trait_occurrence")
-        if not isinstance(occurrence, dict):
-            raise GroundingError(f"{candidate_id}: selected row lacks trait_occurrence")
-        evidence_id = _clean_text(occurrence.get("source_evidence_id"))
-        if not evidence_id:
-            raise GroundingError(f"{candidate_id}: selected occurrence lacks source_evidence_id")
-        evidence = staging_evidence.get(evidence_id)
-        if evidence is None:
-            raise GroundingError(
-                f"{candidate_id}: source evidence {evidence_id!r} is absent from staging registry"
-            )
-        embedded_evidence = row.get("grounding_evidence")
-        if not isinstance(embedded_evidence, dict) or embedded_evidence != evidence:
-            raise GroundingError(
-                f"{candidate_id}: staging GroundingEvidence differs from reviewed resolution"
-            )
-        previous_evidence = evidence_rows.get(evidence_id)
-        if previous_evidence is not None and previous_evidence != evidence:
-            raise GroundingError(f"conflicting selected GroundingEvidence rows for {evidence_id}")
-        evidence_rows[evidence_id] = evidence
+        for occurrence, embedded_evidence in _row_members(row):
+            evidence_id = _clean_text(occurrence.get("source_evidence_id"))
+            if not evidence_id:
+                raise GroundingError(f"{candidate_id}: selected occurrence lacks source_evidence_id")
+            evidence = staging_evidence.get(evidence_id)
+            if evidence is None:
+                raise GroundingError(
+                    f"{candidate_id}: source evidence {evidence_id!r} is absent from staging registry"
+                )
+            if not isinstance(embedded_evidence, dict) or embedded_evidence != evidence:
+                raise GroundingError(
+                    f"{candidate_id}: staging GroundingEvidence differs from reviewed resolution"
+                )
+            previous_evidence = evidence_rows.get(evidence_id)
+            if previous_evidence is not None and previous_evidence != evidence:
+                raise GroundingError(f"conflicting selected GroundingEvidence rows for {evidence_id}")
+            evidence_rows[evidence_id] = evidence
     return references, evidence_rows
 
 
@@ -3572,9 +3612,11 @@ def _validate_resolved_row(row: dict[str, Any], approval: dict[str, str]) -> lis
         reasons.append("invalid:resolution_digest")
     if approval.get("resolution_digest") != row.get("resolution_digest"):
         reasons.append("stale:approval_resolution_digest")
-    occurrence = row.get("trait_occurrence")
-    if not isinstance(occurrence, dict) or occurrence.get("qualification_status") != "QUALIFIED":
-        reasons.append("missing:qualified_trait_occurrence")
+    try:
+        if any(o.get("qualification_status") != "QUALIFIED" for o, _ in _row_members(row)):
+            reasons.append("missing:qualified_trait_occurrence")
+    except GroundingError as exc:
+        reasons.append(str(exc))
     required = (
         "candidate_id",
         "record_path",
@@ -3774,32 +3816,32 @@ def _promotion_qualified_record_preflight(
         candidate_id = str(row["candidate_id"])
         path = _safe_record_path(row["record_path"], traits_root)
         record = gate_records[path]
-        projection, findings = _content_gate_projection(gate, record, row, args)
-        hard_codes = sorted(
-            finding.code for finding in findings if finding.severity == CONTENT_GATE_HARD
-        )
-        if hard_codes:
-            blocked.append(f"{candidate_id}: {','.join(hard_codes)} ({_display_path(path)})")
-        occurrence = row.get("trait_occurrence")
-        evidence_id = _clean_text(
-            occurrence.get("source_evidence_id") if isinstance(occurrence, dict) else None
-        )
-        if evidence_id is None or evidence_id not in selected_evidence:
-            raise GroundingError(f"{candidate_id}: cannot bind selected source evidence")
-        receipt = _qualified_record_binding(
-            evidence_id=evidence_id,
-            candidate_id=candidate_id,
-            trait_id=str(row["trait_id"]),
-            record_path=path,
-            record_sha256=prospective_sha256[path],
-            content_gate_projection=projection,
-        )
-        previous = next_bindings.get(evidence_id)
-        if previous is not None and previous != receipt:
-            raise GroundingError(
-                f"{candidate_id}: selected receipt conflicts with durable binding {evidence_id}"
+        for occurrence in _row_occurrences(row):
+            projection, findings = _content_gate_projection(gate, record, row, args)
+            hard_codes = sorted(
+                finding.code for finding in findings if finding.severity == CONTENT_GATE_HARD
             )
-        next_bindings[evidence_id] = receipt
+            if hard_codes:
+                blocked.append(f"{candidate_id}: {','.join(hard_codes)} ({_display_path(path)})")
+            evidence_id = _clean_text(
+                occurrence.get("source_evidence_id") if isinstance(occurrence, dict) else None
+            )
+            if evidence_id is None or evidence_id not in selected_evidence:
+                raise GroundingError(f"{candidate_id}: cannot bind selected source evidence")
+            receipt = _qualified_record_binding(
+                evidence_id=evidence_id,
+                candidate_id=candidate_id,
+                trait_id=str(row["trait_id"]),
+                record_path=path,
+                record_sha256=prospective_sha256[path],
+                content_gate_projection=projection,
+            )
+            previous = next_bindings.get(evidence_id)
+            if previous is not None and previous != receipt:
+                raise GroundingError(
+                    f"{candidate_id}: selected receipt conflicts with durable binding {evidence_id}"
+                )
+            next_bindings[evidence_id] = receipt
 
     if stale:
         raise GroundingError(
