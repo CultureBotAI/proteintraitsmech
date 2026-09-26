@@ -29,6 +29,7 @@ const PREFIXES = {
   NCBITaxon:     "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=",
   Pfam:          "https://www.ebi.ac.uk/interpro/entry/pfam/",
   InterPro:      "https://www.ebi.ac.uk/interpro/entry/InterPro/",
+  IEDB:          "https://www.iedb.org/epitope/",
   TED:           "https://ted.cathdb.info/",
   PR:            "https://www.ebi.ac.uk/ols4/ontologies/pr/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FPR_",
   PATO:          "http://purl.obolibrary.org/obo/PATO_",
@@ -862,8 +863,44 @@ function renderExample(e, lazyPending) {
       ${tax}
       <div class="ex-badges">${badges.join(" ")}</div>
       ${families}
+      ${renderTraitCoordinates(e)}
       ${sequenceHtml}
     </li>`;
+}
+
+function renderTraitCoordinates(e) {
+  if (!(e.occ || []).length) return "";
+  const methods = {
+    UNIPROT_FEATURE: "UniProt feature",
+    INTERPRO_MATCH: "Signature match",
+    SOURCE_NATIVE_COORDINATES: "Source coordinates",
+    SIFTS_RESIDUE_MAPPING: "Structure residue mapping",
+    PATTERN_MATCH: "Pattern match",
+  };
+  const rows = e.occ.map(occurrence => {
+    const coordinates = [];
+    if ((occurrence.ranges || []).length) {
+      coordinates.push(occurrence.ranges.map(([start, end]) =>
+        start === end ? String(start) : `${start}–${end}`).join(", "));
+    }
+    if ((occurrence.positions || []).length) {
+      coordinates.push(`Residues ${occurrence.positions.join(", ")}`);
+    }
+    const source = occurrence.source_trait_id ? curieLink(occurrence.source_trait_id) : "";
+    const method = methods[occurrence.mapping_method] || occurrence.mapping_method || "";
+    const frame = {UNIPROT_ISOFORM: "UniProt isoform", UNIPROT_CANONICAL: "UniProt canonical"}
+      [occurrence.coordinate_frame] || occurrence.coordinate_frame || "";
+    return `<li><strong>${escapeHTML(coordinates.join("; "))}</strong>
+      <span class="ex-location-source">${escapeHTML(method)} · ${escapeHTML(frame)}
+      ${occurrence.evidence_source ? ` · ${escapeHTML(occurrence.evidence_source)}` : ""}
+      ${source ? ` · ${source}` : ""}</span>
+      ${occurrence.source_release ? `<span class="ex-location-source">Source release: ${escapeHTML(occurrence.source_release)}</span>` : ""}</li>`;
+  }).join("");
+  const reference = [e.sv ? `sequence version ${e.sv}` : "", e.rel ? `UniProt release ${e.rel}` : ""]
+    .filter(Boolean).join(" · ");
+  return `<div class="ex-locations"><div>Trait coordinates <span class="muted">(1-based, inclusive)</span></div>
+    ${reference ? `<div class="ex-location-source">${escapeHTML(reference)}</div>` : ""}
+    <ul>${rows}</ul></div>`;
 }
 
 /* ------------------------------------------------------------------ */
