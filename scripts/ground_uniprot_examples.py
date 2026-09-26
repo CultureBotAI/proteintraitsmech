@@ -3941,7 +3941,7 @@ def promote(args: argparse.Namespace) -> int:
         for record_key, candidate_ids in approved_by_record.items()
         if len(candidate_ids) > 1
     }
-    if multiply_approved:
+    if multiply_approved and not args.enrich_existing_examples:
         detail = "; ".join(
             f"{_review_record_label(record_key)}=[{', '.join(sorted(candidate_ids))}]"
             for record_key, candidate_ids in sorted(multiply_approved.items())[:5]
@@ -3949,6 +3949,14 @@ def promote(args: argparse.Namespace) -> int:
         raise GroundingError(
             "review protocol approves multiple alternatives for one trait record: " + detail
         )
+    if args.enrich_existing_examples:
+        for record_key, candidate_ids in sorted(multiply_approved.items()):
+            proteins = [_clean_text(by_id[key].get("protein_id")) for key in candidate_ids]
+            if len(proteins) != len(set(proteins)):
+                raise GroundingError(
+                    "review protocol approves multiple alternatives for one trait/protein pair: "
+                    + _review_record_label(record_key)
+                )
     undecided_approved_alternatives: dict[tuple[str, str], list[str]] = {}
     for record_key in approved_by_record:
         undecided = sorted(
@@ -4171,6 +4179,28 @@ def promote(args: argparse.Namespace) -> int:
         if not isinstance(record, dict):
             raise GroundingError(f"{path}: record is not a mapping")
         original_sha = _text_digest(original_text)
+        if args.enrich_existing_examples:
+            examples = record.get("canonical_examples") or []
+            if not isinstance(examples, list):
+                raise GroundingError("invalid:canonical_examples_not_a_list")
+            existing_ids = Counter(
+                example["protein_id"] for example in examples
+                if isinstance(example, dict) and isinstance(example.get("protein_id"), str)
+            )
+            selected_ids: set[str] = set()
+            for row in grouped[path]:
+                protein_id = row["protein_id"]
+                if protein_id in selected_ids:
+                    raise GroundingError(
+                        "review protocol approves multiple alternatives for one trait/protein "
+                        f"pair: {_display_path(path)} {protein_id}"
+                    )
+                selected_ids.add(protein_id)
+                if existing_ids[protein_id] != 1:
+                    raise GroundingError(
+                        f"{row['candidate_id']}: --enrich-existing-examples requires exactly "
+                        f"one existing {protein_id} example; found {existing_ids[protein_id]}"
+                    )
         changed = False
         for row in sorted(grouped[path], key=lambda item: item["candidate_id"]):
             if record.get("identifier") != row.get("trait_id"):
@@ -4544,6 +4574,15 @@ def _parser() -> argparse.ArgumentParser:
         help=(
             "minimum decided unique trait records per promoted source, capped by "
             f"available records (default: {MIN_SOURCE_REVIEWS})"
+        ),
+    )
+    promoter.add_argument(
+        "--enrich-existing-examples",
+        action="store_true",
+        help=(
+            "allow reviewed distinct existing proteins on the same trait; every selected "
+            "protein must already occur exactly once, with at most one approval per "
+            "trait/protein pair; retains the candidate cap and all evidence/review gates"
         ),
     )
     promoter.add_argument(
