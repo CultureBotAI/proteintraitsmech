@@ -733,6 +733,17 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
 
         errors.extend(contract_errors(dict(evidence)))
 
+    # M-CSA publishes exact UniProt-frame reference residues separately from
+    # PDB-chain numbering. Only a complete replay of the independently pinned
+    # native source may use that frame; other M-CSA assertions keep their lock.
+    mcsa_native_verified = False
+    if method == "SOURCE_NATIVE_COORDINATES" and any(lock.key == "mcsa" for lock in pending_locks):
+        from mcsa_native_grounding import contract_errors
+
+        native_errors = contract_errors(dict(evidence))
+        errors.extend(native_errors)
+        mcsa_native_verified = not native_errors
+
     allowed_kinds = {
         "UNIPROT_FEATURE": {"UNIPROT"},
         "INTERPRO_MATCH": {"INTERPRO"},
@@ -1220,6 +1231,8 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
         )
 
     for lock in pending_locks:
+        if lock.key == "mcsa" and mcsa_native_verified:
+            continue
         errors.append((lock.code, lock.message))
 
     detailed_lock_matched = any(
@@ -1295,7 +1308,7 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
         bool(namespaces & STRUCTURE_DERIVED_NAMESPACES)
         or evidence.get("structure_id") is not None
         or ("CATH" in namespaces and method != "INTERPRO_MATCH")
-    )
+    ) and not mcsa_native_verified
     if structure_derived and method != "SIFTS_RESIDUE_MAPPING":
         errors.append(
             (
@@ -3116,6 +3129,12 @@ def _validate_occurrence(
 
     if reference is None:
         return findings
+    if _namespace(trait_id) in {"MCSA", "M-CSA"}:
+        from mcsa_native_grounding import record_errors
+
+        evidence = (evidence_registry or {}).get(occurrence.get("source_evidence_id"), {})
+        findings.extend(_finding(code, message, **context) for code, message in
+                        record_errors(dict(record), dict(reference), dict(evidence)))
     if isinstance(trait_id, str) and trait_id.startswith("proteintraitsmech:ELIFE109154_"):
         from elife_metallophore_grounding import record_errors
 
