@@ -1170,6 +1170,11 @@ fetch-uniprot-review-batch batch_id *args:
         --receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json
     fi
 
+# Prepare the independently reviewed M-CSA native input; dry-run unless --apply.
+# This installs source facts only. Coordinates use the reviewed grounding promoter.
+prepare-mcsa-native-source snapshot *args:
+    uv run python scripts/ground_uniprot_examples.py mcsa-prepare-source --snapshot {{quote(snapshot)}} {{args}}
+
 # Resolve one exact candidate batch without modifying traits. The source registry
 # is the official API snapshot; normalized promotion inputs remain staging outputs.
 resolve-uniprot-grounding *args:

@@ -986,6 +986,7 @@ def _provider_context(
         "uniprot-membership",
         "sifts-mapping",
         "prints-snapshot",
+        "mcsa-native",
     }
     if unknown:
         raise GroundingError(f"unknown provider(s): {', '.join(sorted(unknown))}")
@@ -1115,6 +1116,13 @@ def _provider_context(
             prints_release = parse_prints_kdat(prints_kdat_path, PRINTS_42_0_SHA256)
         except (PrintsSnapshotError, ValueError, OSError) as exc:
             raise GroundingError(f"invalid PRINTS snapshot provider: {exc}") from exc
+    if "mcsa-native" in providers:
+        from mcsa_native_grounding import assert_source_unchanged
+
+        try:
+            assert_source_unchanged()
+        except (OSError, ValueError) as exc:
+            raise GroundingError(f"invalid M-CSA native source: {exc}") from exc
     return ProviderContext(
         providers=providers,
         residue_path=residue_path,
@@ -1676,6 +1684,52 @@ def _resolve_occurrence(
                 )
                 membership_evidence["entry_sha256"] = membership_entry_sha256(membership)
                 evidence.append(membership_evidence)
+    elif mapping_method == "SOURCE_NATIVE_COORDINATES":
+        if "mcsa-native" not in context.providers:
+            reasons.append("missing:mcsa_native_provider")
+        if reference is None:
+            reasons.append("missing:protein_reference_for_mcsa")
+        if scope != "LOCALIZED" or source_trait_id != trait_id:
+            reasons.append("mismatch:mcsa_requires_exact_localized_trait")
+        if intervals or any(candidate.get(key) is not None for key in (
+            "inheritance_path", "mapping_completeness", "source_residue_count",
+            "mapped_residue_count", "structure_id", "chain_id",
+        )):
+            reasons.append("invalid:mcsa_additional_coordinate_claims")
+        if reference is not None and "mcsa-native" in context.providers:
+            from mcsa_native_grounding import (
+                PROVIDER_KIND, SOURCE, SOURCE_PATH, SOURCE_RELEASE,
+                resolve_occurrence, source_path,
+            )
+
+            try:
+                path = _display_path(_stored_path(candidate["record_path"]))
+                fact, exact_occurrence, exact_evidence = resolve_occurrence(record, reference, path)
+                if positions and positions != exact_occurrence["residue_positions"]:
+                    reasons.append("mismatch:mcsa_native_residues")
+                if (candidate.get("expected_residues") is not None
+                        and candidate["expected_residues"] != exact_occurrence["expected_residues"]):
+                    reasons.append("mismatch:mcsa_expected_residues")
+                if evidence_source and evidence_source != SOURCE:
+                    reasons.append("mismatch:mcsa_evidence_source")
+                if source_release and source_release != SOURCE_RELEASE:
+                    reasons.append("mismatch:mcsa_source_release")
+                source_evidence = _provider_evidence(
+                    PROVIDER_KIND, source_path(), fact["fact_sha256"], fact,
+                    {"source": SOURCE, "release": SOURCE_RELEASE},
+                    trait_id=trait_id, stable_path=SOURCE_PATH,
+                )
+                source_evidence["entry_sha256"] = fact["fact_sha256"]
+                evidence.append(source_evidence)
+                positions = exact_occurrence["residue_positions"]
+                evidence_source, source_release = SOURCE, SOURCE_RELEASE
+                preserved_occurrence = {
+                    **exact_occurrence, "qualification_status": "QUALIFIED",
+                    "source_evidence_id": exact_evidence["evidence_id"],
+                }
+                preserved_grounding_evidence = exact_evidence
+            except (OSError, ValueError, KeyError, TypeError) as exc:
+                reasons.append(f"invalid:mcsa_source_replay:{exc}")
     elif mapping_method == "SIFTS_RESIDUE_MAPPING":
         branch_reason_count = len(reasons)
         if "sifts-mapping" not in context.providers:
@@ -1978,6 +2032,20 @@ def _resolve_occurrence(
     if mapping_method == "SIFTS_RESIDUE_MAPPING":
         if preserved_occurrence is None or preserved_grounding_evidence is None:
             reasons.append("missing:verified_sifts_projection")
+            return None, None, evidence, intervals
+        return preserved_occurrence, preserved_grounding_evidence, evidence, intervals
+    if mapping_method in {"SOURCE_NATIVE_COORDINATES"}:
+        source_key = "mcsa_native"
+        if preserved_occurrence is None or preserved_grounding_evidence is None:
+            reasons.append(f"missing:verified_{source_key}_projection")
+            return None, None, evidence, intervals
+        from validate_uniprot_grounding import validate_grounding_evidence
+
+        findings = validate_grounding_evidence(
+            preserved_grounding_evidence, path=Path(f"<{source_key} source>"), line=0,
+        )
+        if findings:
+            reasons.extend(f"invalid:{source_key}_grounding_evidence:{finding.code}" for finding in findings)
             return None, None, evidence, intervals
         return preserved_occurrence, preserved_grounding_evidence, evidence, intervals
     occurrence: dict[str, Any] = {
@@ -2591,12 +2659,16 @@ def _provider_projection(
         return payload.get(str(key))
     if kind == "uniprot_membership":
         return payload.get(str(key))
-    if kind == "sifts_mapping":
+    if kind in {"sifts_mapping", "mcsa_native"}:
         return payload.get(str(key))
     return None
 
 
 def _provider_override(kind: str, evidence: dict[str, Any], args: argparse.Namespace) -> Path:
+    if kind == "mcsa_native":
+        from mcsa_native_grounding import source_path
+
+        return source_path().resolve()
     override = {
         "residue_frame": args.residue_frame,
         "interpro_frame": args.interpro_frame,
@@ -2669,6 +2741,13 @@ def _provider_cache(
                 {row["membership_id"]: row for row in rows if row["membership_id"] in keys},
                 {},
             )
+        elif kind == "mcsa_native":
+            from mcsa_native_grounding import SOURCE, SOURCE_RELEASE, source_facts
+
+            try:
+                cache[(kind, path)] = (source_facts(keys), {"source": SOURCE, "release": SOURCE_RELEASE})
+            except (OSError, ValueError) as exc:
+                raise GroundingError(f"invalid M-CSA source facts: {exc}") from exc
         elif kind == "sifts_mapping":
             try:
                 from build_ecod_sifts_candidates import (
@@ -2717,7 +2796,9 @@ def _verify_provider_evidence(
         if current is None:
             reasons.append(f"stale:provider_entry_missing:{kind}")
             continue
-        if kind == "uniprot_membership":
+        if kind in {"mcsa_native"}:
+            observed_digest = current["fact_sha256"]
+        elif kind == "uniprot_membership":
             from uniprot_membership_snapshot import membership_entry_sha256
 
             observed_digest = membership_entry_sha256(current)
@@ -2730,6 +2811,22 @@ def _verify_provider_evidence(
         if observed_digest != evidence.get("entry_sha256"):
             reasons.append(f"stale:provider_entry_changed:{kind}")
             continue
+        if kind == "mcsa_native":
+            from mcsa_native_grounding import SOURCE, SOURCE_PATH, SOURCE_RELEASE, contract_errors
+
+            grounding_evidence = row.get("grounding_evidence")
+            if (evidence.get("path") != SOURCE_PATH or evidence.get("source") != SOURCE
+                    or evidence.get("release") != SOURCE_RELEASE
+                    or evidence.get("key") != observed_digest
+                    or evidence.get("trait_id") != current["record_semantics"]["identifier"]
+                    or row.get("trait_id") != current["record_semantics"]["identifier"]
+                    or row.get("record_path") != current["record_path"]
+                    or row.get("protein_id") != current["protein_reference"]["protein_id"]
+                    or not isinstance(grounding_evidence, dict)
+                    or grounding_evidence.get("provider_entry_sha256") != observed_digest):
+                reasons.append("mismatch:mcsa_grounding_provider_binding")
+            elif contract_errors(grounding_evidence):
+                reasons.append("invalid:mcsa_grounding_source_contract")
         if kind in {"residue_frame", "interpro_frame", "interpro_grouped_location"}:
             _, meta = cache[(kind, path)]
             if evidence.get("release") != meta.get("release"):
@@ -2774,6 +2871,8 @@ def _verify_provider_evidence(
         reasons.append("missing:uniprot_membership_evidence")
     if row.get("mapping_method") == "SIFTS_RESIDUE_MAPPING" and "sifts_mapping" not in kinds:
         reasons.append("missing:sifts_mapping_evidence")
+    if row.get("mapping_method") == "SOURCE_NATIVE_COORDINATES" and "mcsa_native" not in kinds:
+        reasons.append("missing:mcsa_native_evidence")
     return sorted(set(reasons))
 
 
@@ -4328,6 +4427,13 @@ def promote(args: argparse.Namespace) -> int:
         artifact_updates.append((args.durable_evidence_registry, evidence_text))
     if bindings_changed:
         artifact_updates.append((args.durable_qualified_record_bindings, bindings_text))
+    if any(item.get("evidence_source") == "M-CSA" for item in evidence_registry.values()):
+        from mcsa_native_grounding import assert_source_unchanged
+
+        try:
+            assert_source_unchanged()
+        except (OSError, ValueError) as exc:
+            raise GroundingError(f"M-CSA source changed during promotion preflight: {exc}") from exc
     _install_promotion_transaction(
         artifact_updates,
         {path: candidate_text for path, (_sha, candidate_text) in candidates_to_write.items()},
@@ -4338,6 +4444,31 @@ def promote(args: argparse.Namespace) -> int:
         "artifact(s) before trait mutation"
     )
     print(f"WROTE {len(candidates_to_write):,} validated trait record(s)")
+    return 0
+
+
+def prepare_mcsa_source(args: argparse.Namespace) -> int:
+    """Install only the reviewed immutable native source input; never qualify traits."""
+    from mcsa_native_grounding import SOURCE_PINS, SOURCE_SHA256, source_path
+    from mcsa_native_snapshot import verify_snapshot
+
+    try:
+        raw = args.snapshot.read_bytes()
+        verified = verify_snapshot(raw, SOURCE_SHA256, SOURCE_PINS)
+        destination = source_path()
+        if destination.is_symlink():
+            raise GroundingError("M-CSA source destination cannot be a symlink")
+        if destination.exists():
+            if destination.read_bytes() != raw:
+                raise GroundingError("M-CSA source destination already contains different bytes")
+            print(f"UNCHANGED: {len(verified.facts):,} reviewed M-CSA source facts already installed")
+            return 0
+        print(f"{'APPLY' if args.apply else 'DRY-RUN'}: {len(verified.facts):,} reviewed M-CSA "
+              "source facts; no trait, protein, evidence or qualification writes")
+        if args.apply:
+            _install_promotion_transaction([(destination, raw.decode("utf-8"))], {})
+    except (OSError, ValueError, TypeError, KeyError) as exc:
+        raise GroundingError(f"M-CSA source preparation rejected: {exc}") from exc
     return 0
 
 
@@ -4594,6 +4725,12 @@ def _parser() -> argparse.ArgumentParser:
     from elife_metallophore_grounding import add_subcommands
 
     add_subcommands(subparsers)
+    mcsa = subparsers.add_parser(
+        "mcsa-prepare-source", help="prepare a reviewed immutable M-CSA native source input",
+    )
+    mcsa.add_argument("--snapshot", type=Path, required=True)
+    mcsa.add_argument("--apply", action="store_true")
+    mcsa.set_defaults(func=prepare_mcsa_source)
     return parser
 
 

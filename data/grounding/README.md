@@ -18,6 +18,18 @@ canonical example:
   the same exact-accession response as its `ProteinReference` and is bound to that release
   and sequence checksum; a discovery query or generic search hit is never membership
   evidence.
+- `mcsa_native_source_snapshot.json` retains the complete captured M-CSA entry
+  set, acquisition manifest, complete ProteinReferences, and every non-example
+  field of each corresponding trait record. Its independently reviewed file
+  checksum is fixed in the provider. `SOURCE_NATIVE_COORDINATES` requires the
+  complete catalytic residue set from native `residue_sequences` rows marked
+  `is_reference`, mapped to the exact existing UniProt accession. Every residue
+  identity and position must agree with that release-pinned sequence, including
+  selenocysteine. Discontinuous positions stay explicit. PDB chain numbering,
+  offsets, homologues, and partial sites cannot satisfy this contract. The native
+  source is attributed to [M-CSA, Thornton group, EMBL-EBI](https://www.ebi.ac.uk/thornton-srv/m-csa/)
+  under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); source and
+  license metadata remain in the snapshot and trait records.
 - `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
   explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.
   `elife109154_acquisition_receipt.json` binds those assertions to source archive and
@@ -47,6 +59,15 @@ explicit review decision. The default remains one approved alternative per trait
 Enrichment preserves example order and generic features, keeps the 1,000-approved-
 candidate cap, and replays the same sequence, source, schema, evidence and record
 checks before its transaction. It cannot append a new example protein.
+
+Prepare the reviewed M-CSA input with
+`just prepare-mcsa-native-source <snapshot.json>` and inspect the dry run before
+adding `--apply`. Preparation installs only the immutable source input. Resolve
+with `--providers protein-registry,mcsa-native`, review the complete native residue
+set for each existing example, and use the central promoter. Promotion replays the
+current full record and reference, rechecks the source bytes, and updates the
+evidence and record bindings transactionally. Other M-CSA assertions retain their
+existing provider requirements.
 
 The durable protein registry can contain proteins pinned to different UniProt releases.
 Execution contracts that require one release, including SFLD HMMER receipts, must receive
