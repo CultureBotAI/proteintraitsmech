@@ -4045,13 +4045,17 @@ found.
   `protein_registry.jsonl` and `uniprot_memberships.jsonl` stay flat. Historical entries
   above that name the flat files describe the layout of their time and are left as they
   are.
-- Measured on `5bf6e9fcb8a` before migration: evidence 12,577 rows, 7,539,553 bytes,
-  SHA-256 `caa9834e838ae8cb98d1cba68987157a2f832021098b8dabab5b087dc958a510`; bindings
-  12,577 rows, 19,008,589 bytes, SHA-256
-  `4a6082161da083942306813fde679caa4e097c618a5524a9b90a634e269dc310`. Each splits into
-  256 shards (largest 41,203 and 104,100 bytes), and joining the shards in name order
-  reproduces each flat file byte for byte, so a registry's logical digest equals its
-  former flat SHA-256.
+- Design-time measurement, taken on `5bf6e9fcb8a` while #801 was being designed: evidence
+  12,577 rows, 7,539,553 bytes, SHA-256
+  `caa9834e838ae8cb98d1cba68987157a2f832021098b8dabab5b087dc958a510`; bindings 12,577
+  rows, 19,008,589 bytes, SHA-256
+  `4a6082161da083942306813fde679caa4e097c618a5524a9b90a634e269dc310`. Each split into
+  256 shards (largest 41,203 and 104,100 bytes). These figures are not the migrated
+  data: promotions that landed before the migration added rows, so the data commit was
+  regenerated on its final base. The `history/mappings/grounding-registry-layout/`
+  record holds the authoritative migrated row counts and SHA-256 values.
+- Joining the shards in name order reproduces each flat file byte for byte, so a
+  registry's logical digest equals its former flat SHA-256.
 - The promoter, the semantic validator, the audit, and eLife promotion now default to
   the sharded paths. The promoter's transaction plans every shard write before the
   first one, re-verifies installed directories before trait writes, rolls back on an

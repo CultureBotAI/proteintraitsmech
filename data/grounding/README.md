@@ -47,10 +47,11 @@ source-stratified ledger, install the approved rows with the grounding promoter,
 
 ## Sharded evidence and bindings registries (#801)
 
-Every promotion grows the evidence and bindings registries (the flat bindings file was
-19,008,589 bytes at 12,577 rows), so each is a directory of JSONL shards instead of one
-file (layout `evidence-id-hex2`, version 1, implemented in
-`scripts/grounding_registry_layout.py`):
+Every promotion grows the evidence and bindings registries, so each is a directory of
+JSONL shards rather than one ever-growing file (layout `evidence-id-hex2`, version 1,
+implemented in `scripts/grounding_registry_layout.py`). For current row counts and shard
+sizes, run `just check-grounding-registries` rather than trusting a figure written here.
+The layout rules:
 
 - A row lives in `<hh>.jsonl`, where `<hh>` is the two hex digits right after
   `ug-evidence:` in its `evidence_id`, so there are at most 256 shards. Only non-empty
