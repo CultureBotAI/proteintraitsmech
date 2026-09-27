@@ -2,7 +2,8 @@
 """Sharded on-disk layout for the durable evidence and bindings registries (#801).
 
 ``occurrence_evidence.jsonl`` and ``qualified_record_bindings.jsonl`` grew toward
-GitHub's 50 MB file limit, so each now lives in an ``X.jsonl.d`` directory:
+GitHub's 50 MB large-file warning (and its 100 MB hard limit), so each now lives in an
+``X.jsonl.d`` directory:
 
 * a row goes to ``evidence_id[12:14] + ".jsonl"``, the two hex digits after
   ``ug-evidence:``, so there are at most 256 shards and only non-empty ones exist;
