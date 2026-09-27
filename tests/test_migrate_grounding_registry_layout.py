@@ -371,6 +371,16 @@ def test_apply_refuses_while_another_writer_holds_the_lock(
     assert tree(root.parent) == before
 
 
+def test_apply_reports_an_unusable_lock_file_and_writes_nothing(
+    root: Path, report: Path, capsys
+) -> None:
+    (root / layout.LOCK_NAME).mkdir()
+    before = tree(root.parent)
+    assert run(root, report, "--apply") == 2
+    assert "ERROR: registry_lock_unavailable" in capsys.readouterr().err
+    assert tree(root.parent) == before
+
+
 # ------------------------------------------------------------------------ rollback
 
 

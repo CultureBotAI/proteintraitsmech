@@ -94,7 +94,12 @@ advisory lock on the gitignored `data/grounding/.grounding-registries.lock`. Whe
 locks `.grounding-registries.lock` in every directory it writes a durable registry
 into; it never creates one inside a sharded registry or a trait tree. A second
 writer fails fast with `registry_locked`, naming the holder's pid. The kernel releases
-the lock when its process exits, so it never goes stale; dry runs do not lock.
+the lock when its holder exits, so a crashed writer never leaves it held; the lock file
+itself is never deleted. A lock file another user created (mode 0644) is locked through
+a read-only descriptor. If the file cannot be opened or locked at all (a symlink, no
+permission, or a network filesystem without `flock` support), the writer stops with
+`registry_lock_unavailable` before writing anything. Between machines sharing a network
+checkout, `flock` exclusion is not guaranteed. Dry runs do not lock.
 
 **Torn install recovery.** In-process failures roll back exactly. A power loss or
 `kill -9` mid-install can leave a manifest mismatch, a shard the commit does not have,

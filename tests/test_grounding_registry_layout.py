@@ -9,6 +9,7 @@ cover.
 
 from __future__ import annotations
 
+import errno
 import hashlib
 import importlib
 import json
@@ -677,6 +678,85 @@ def test_registry_lock_never_lands_inside_a_sharded_registry(
     assert caught.value.code == "registry_layout_conflict"
     assert sorted(entry.name for entry in registry.iterdir()) == before
     assert list(registry.parent.rglob(layout.LOCK_NAME)) == []
+
+
+needs_non_root = pytest.mark.skipif(
+    hasattr(os, "geteuid") and os.geteuid() == 0, reason="root bypasses file modes"
+)
+
+
+@needs_non_root
+def test_registry_lock_locks_a_lock_file_it_may_not_write_read_only(tmp_path: Path) -> None:
+    # Stands in for the 0644 file another user created: this user cannot write it.
+    lock_file = tmp_path / layout.LOCK_NAME
+    lock_file.write_text("4242\n")
+    lock_file.chmod(0o444)
+    try:
+        with layout.registry_lock(tmp_path) as lock_path:
+            assert lock_path == lock_file
+            result = subprocess.run(
+                [sys.executable, "-c", _TRY, str(SCRIPTS), str(tmp_path)],
+                capture_output=True, text=True, timeout=120,
+            )
+        assert result.returncode == 3, result.stderr
+        assert result.stdout.startswith("registry_locked: ")
+        assert lock_file.read_text() == "4242\n"  # the pid note is left alone
+    finally:
+        lock_file.chmod(0o644)
+
+
+def _unusable_lock(directory: Path, kind: str) -> Path | None:
+    """Make the lock path unusable; return a file that must stay untouched, if any."""
+    lock_file = directory / layout.LOCK_NAME
+    if kind == "symlink":
+        target = directory.parent / "elsewhere.txt"
+        target.write_text("not a lock\n")
+        lock_file.symlink_to(target)
+        return target
+    if kind == "directory":
+        lock_file.mkdir()
+        return None
+    lock_file.write_text("")
+    lock_file.chmod(0o000)
+    return None
+
+
+UNUSABLE_LOCKS = [
+    "symlink",
+    "directory",
+    pytest.param("no-permission", marks=needs_non_root),
+]
+
+
+@pytest.mark.parametrize("kind", UNUSABLE_LOCKS)
+def test_registry_lock_refuses_an_unusable_lock_file_cleanly(tmp_path: Path, kind: str) -> None:
+    directory = tmp_path / "grounding"
+    directory.mkdir()
+    untouched = _unusable_lock(directory, kind)
+    try:
+        with pytest.raises(RegistryLayoutError) as caught:
+            with layout.registry_lock(directory):
+                pytest.fail("the lock must not be granted")
+    finally:
+        if kind == "no-permission":
+            (directory / layout.LOCK_NAME).chmod(0o644)
+    assert caught.value.code == "registry_lock_unavailable"
+    assert "Nothing was written" in str(caught.value)
+    if untouched is not None:
+        assert untouched.read_text() == "not a lock\n"  # O_NOFOLLOW: no pid written
+
+
+def test_registry_lock_reports_a_filesystem_without_flock(tmp_path: Path, monkeypatch) -> None:
+    def no_locks(descriptor: int, operation: int) -> None:
+        raise OSError(errno.ENOLCK, os.strerror(errno.ENOLCK))
+
+    monkeypatch.setattr(layout.fcntl, "flock", no_locks)
+    with pytest.raises(RegistryLayoutError) as caught:
+        with layout.registry_lock(tmp_path):
+            pytest.fail("the lock must not be granted")
+    assert caught.value.code == "registry_lock_unavailable"
+    assert "ENOLCK" in str(caught.value)
+    assert "may not support flock" in str(caught.value)
 
 
 def test_sharded_ancestor_ignores_letter_case() -> None:

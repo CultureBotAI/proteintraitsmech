@@ -7,6 +7,7 @@ import csv
 import hashlib
 import importlib
 import json
+import os
 import pathlib
 import sys
 from types import MappingProxyType, SimpleNamespace
@@ -3861,6 +3862,48 @@ def test_promote_apply_locks_every_directory_it_writes_durable_registries_into(
     assert local_sources["record"].read_bytes() != original
     assert _lock_files(durable) == [durable / layout.LOCK_NAME]
     assert _lock_files(scratch) == [scratch / layout.LOCK_NAME]
+
+
+@pytest.mark.parametrize("lock_file", ["read-only", "symlink"])
+def test_promote_apply_handles_a_lock_file_it_cannot_write(
+    local_sources, tmp_path, capsys, lock_file
+):
+    """A lock file left by another user still locks; one that cannot be opened is a clean
+    exit 2 with registry_lock_unavailable, never a traceback."""
+
+    if lock_file == "read-only" and hasattr(os, "geteuid") and os.geteuid() == 0:
+        pytest.skip("root bypasses file modes")
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("lock-file-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable = local_sources["durable_bindings"].parent
+    durable.mkdir()
+    lock_path = durable / layout.LOCK_NAME
+    original = local_sources["record"].read_bytes()
+    if lock_file == "read-only":
+        lock_path.write_text("4242\n")
+        lock_path.chmod(0o444)
+    else:
+        target = tmp_path / "elsewhere.txt"
+        target.write_text("not a lock\n")
+        lock_path.symlink_to(target)
+    capsys.readouterr()
+    try:
+        result = ground.main(_promote_args(local_sources, approved, apply=True))
+    finally:
+        if lock_file == "read-only":
+            lock_path.chmod(0o644)
+    if lock_file == "read-only":
+        assert result == 0
+        assert local_sources["record"].read_bytes() != original
+        assert lock_path.read_text() == "4242\n"
+    else:
+        assert result == 2
+        assert "ERROR: registry_lock_unavailable" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert target.read_text() == "not a lock\n"
+        assert sorted(entry.name for entry in durable.iterdir()) == [layout.LOCK_NAME]
 
 
 def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tmp_path):

@@ -25,6 +25,7 @@ The one file it creates is the advisory lock beside the registries.
 from __future__ import annotations
 
 import argparse
+import errno
 import fcntl
 import hashlib
 import io
@@ -561,13 +562,57 @@ def plan_sharded_write(path: Path | str, text: str) -> list[tuple[Path, bytes | 
     return plan
 
 
+def _lock_unavailable(lock_path: Path, action: str, error: OSError) -> RegistryLayoutError:
+    code = errno.errorcode.get(error.errno or 0, "unknown errno")
+    if action == "lock":
+        hint = (
+            "this filesystem may not support flock (some network filesystems do not); "
+            "run the writer from a local checkout"
+        )
+    else:
+        hint = (
+            "it must be a regular file this user can open; if no writer is running, "
+            "remove it (it holds only the last holder's pid)"
+        )
+    return RegistryLayoutError(
+        "registry_lock_unavailable",
+        f"cannot {action} {lock_path}: {error.strerror or error} ({code}); {hint}. "
+        "Nothing was written",
+        lock_path,
+    )
+
+
+def _open_lock_file(lock_path: Path) -> tuple[int, bool]:
+    """Open the lock file, never through a symlink; return ``(descriptor, writable)``.
+
+    ``flock`` needs only a descriptor, so a lock file this user may not write, such as
+    one another user created with mode 0644, is opened read-only and still locks.
+    """
+
+    # O_NOFOLLOW: the pid is written into this file, so never through a symlink.
+    nofollow = getattr(os, "O_NOFOLLOW", 0)
+    try:
+        return os.open(lock_path, os.O_RDWR | os.O_CREAT | nofollow, 0o644), True
+    except PermissionError as error:
+        try:
+            return os.open(lock_path, os.O_RDONLY | nofollow), False
+        except OSError:
+            raise _lock_unavailable(lock_path, "open", error) from error
+    except OSError as error:
+        raise _lock_unavailable(lock_path, "open", error) from error
+
+
 @contextmanager
 def registry_lock(directory: Path | str) -> Iterator[Path | None]:
     """Hold an exclusive advisory lock on the registries in ``directory``.
 
     Yields ``None`` without locking when ``directory`` does not exist, so a caller
     pointed at a missing root never creates it. The kernel drops a flock when its
-    descriptor closes or the process dies, so a lock can never go stale.
+    descriptor closes or the process dies, so a crashed holder never leaves the lock
+    held; the lock file itself is never deleted. A lock file this user cannot write is
+    locked read-only and its pid note is left alone. Any other failure to open or lock
+    the file raises ``registry_lock_unavailable`` before the caller writes anything;
+    only contention is ``registry_locked``.
     """
 
     directory = Path(directory)
@@ -583,8 +628,7 @@ def registry_lock(directory: Path | str) -> Iterator[Path | None]:
         yield None
         return
     lock_path = directory / LOCK_NAME
-    # O_NOFOLLOW: the pid is written into this file, so never through a symlink.
-    descriptor = os.open(lock_path, os.O_RDWR | os.O_CREAT | getattr(os, "O_NOFOLLOW", 0), 0o644)
+    descriptor, writable = _open_lock_file(lock_path)
     try:
         try:
             fcntl.flock(descriptor, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -597,9 +641,15 @@ def registry_lock(directory: Path | str) -> Iterator[Path | None]:
                 "wait for it to finish",
                 lock_path,
             ) from error
-        os.ftruncate(descriptor, 0)
-        os.lseek(descriptor, 0, os.SEEK_SET)
-        os.write(descriptor, f"{os.getpid()}\n".encode("ascii"))
+        except OSError as error:
+            raise _lock_unavailable(lock_path, "lock", error) from error
+        if writable:
+            try:
+                os.ftruncate(descriptor, 0)
+                os.lseek(descriptor, 0, os.SEEK_SET)
+                os.write(descriptor, f"{os.getpid()}\n".encode("ascii"))
+            except OSError as error:
+                raise _lock_unavailable(lock_path, "record the pid in", error) from error
         yield lock_path
     finally:
         os.close(descriptor)
