@@ -89,7 +89,10 @@ all shard writes before the first one, writes each manifest last, re-verifies th
 installed directories, and rolls back on any failure or interrupt.
 
 **Lock.** `promote --apply`, eLife `--apply`, and the migration hold an exclusive
-advisory lock on the gitignored `data/grounding/.grounding-registries.lock`. A second
+advisory lock on the gitignored `data/grounding/.grounding-registries.lock`. When
+`promote --apply` is pointed at other durable paths, it first validates them and then
+locks `.grounding-registries.lock` in every directory it writes a durable registry
+into; it never creates one inside a sharded registry or a trait tree. A second
 writer fails fast with `registry_locked`, naming the holder's pid. The kernel releases
 the lock when its process exits, so it never goes stale; dry runs do not lock.
 

@@ -660,12 +660,30 @@ def test_registry_lock_on_a_missing_directory_yields_none_and_creates_nothing(
     assert not missing.parent.exists()
 
 
-def test_registry_lock_never_lands_inside_a_sharded_registry(registry: Path) -> None:
+@pytest.mark.parametrize("spelling", ["exact", "case-alias", "subdirectory"])
+def test_registry_lock_never_lands_inside_a_sharded_registry(
+    registry: Path, spelling: str
+) -> None:
+    # On case-insensitive APFS the upper-case alias *is* the registry directory.
+    directory = {
+        "exact": registry,
+        "case-alias": registry.with_name(registry.name[: -len("d")] + "D"),
+        "subdirectory": registry / "nested",
+    }[spelling]
+    before = sorted(entry.name for entry in registry.iterdir())
     with pytest.raises(RegistryLayoutError) as caught:
-        with layout.registry_lock(registry):
+        with layout.registry_lock(directory):
             pass
     assert caught.value.code == "registry_layout_conflict"
-    assert not (registry / layout.LOCK_NAME).exists()
+    assert sorted(entry.name for entry in registry.iterdir()) == before
+    assert list(registry.parent.rglob(layout.LOCK_NAME)) == []
+
+
+def test_sharded_ancestor_ignores_letter_case() -> None:
+    assert layout.sharded_ancestor(Path("/r/x.jsonl.d/sub/f")) == Path("/r/x.jsonl.d")
+    assert layout.sharded_ancestor(Path("/r/X.JSONL.D")) == Path("/r/X.JSONL.D")
+    assert layout.sharded_ancestor(Path("/r/.jsonl.d/x.jsonl")) is None
+    assert layout.sharded_ancestor(Path("/r/grounding")) is None
 
 
 # --------------------------------------------------------------------------- check

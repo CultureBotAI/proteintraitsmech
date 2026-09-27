@@ -40,7 +40,7 @@ import sys
 import tempfile
 import unicodedata
 from collections import Counter, defaultdict
-from contextlib import nullcontext
+from contextlib import ExitStack
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
@@ -3614,6 +3614,15 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
                 f"{name} under data/grounding must be a sharded {layout.SHARD_SUFFIX} "
                 f"registry: {output}"
             )
+    # Also any sharded registry that is not one of these outputs, in any letter case:
+    # APFS resolves X.jsonl.D to X.jsonl.d, which the exact-name checks above miss.
+    for output in outputs.values():
+        enclosing = layout.sharded_ancestor(output.resolve().parent)
+        if enclosing is not None:
+            raise GroundingError(
+                f"durable registry output must not be inside the sharded registry "
+                f"{enclosing}: {output}"
+            )
 
 
 def _semantic_errors_for_record(
@@ -4681,22 +4690,28 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _promotion_lock_directory(args: argparse.Namespace) -> Path | None:
-    """The directory whose registries ``promote --apply`` holds exclusively.
+def _promotion_lock_directories(args: argparse.Namespace) -> list[Path]:
+    """Every directory ``promote --apply`` writes a durable registry into, once each.
 
-    It is the bindings registry's parent, ``data/grounding`` by default.  ``None``
-    means no lock: a parent inside a trait root or inside a sharded registry is
-    refused by path validation later, and a lock file must never be created there.
+    That is ``data/grounding`` alone for the default outputs.  The outputs may be split
+    across directories, and each one is locked, so no other promote, eLife promote or
+    migration can write any of them concurrently.  Call it only after
+    ``_validate_durable_paths``, which keeps every output, and so every directory here,
+    outside the trait roots and outside any sharded registry: a lock file must never be
+    created there.  Directories are deduplicated by filesystem identity and sorted, so
+    concurrent writers take them in one order.
     """
 
-    directory = args.durable_qualified_record_bindings.resolve().parent
-    if (
-        any(layout.is_sharded(part) for part in (directory, *directory.parents))
-        or _path_is_under(directory, DEFAULT_TRAITS)
-        or _path_is_under(directory, args.traits)
+    directories: dict[tuple[Any, ...], Path] = {}
+    for output in (
+        args.durable_protein_registry,
+        args.durable_evidence_registry,
+        args.durable_membership_registry,
+        args.durable_qualified_record_bindings,
     ):
-        return None
-    return directory
+        directory = output.resolve().parent
+        directories.setdefault(_physical_path_key(directory), directory)
+    return sorted(directories.values())
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -4716,9 +4731,12 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "promote" and args.apply:
             # One writer at a time per registry directory (#801); dry runs never lock.
-            lock_directory = _promotion_lock_directory(args)
-            lock = nullcontext() if lock_directory is None else layout.registry_lock(lock_directory)
-            with lock:
+            # Validate first, so the lock is never taken, or its file created, where the
+            # promotion would then refuse to write.
+            _validate_durable_paths(args, args.traits.resolve())
+            with ExitStack() as locks:
+                for directory in _promotion_lock_directories(args):
+                    locks.enter_context(layout.registry_lock(directory))
                 return args.func(args)
         return args.func(args)
     except (GroundingError, layout.RegistryLayoutError) as exc:

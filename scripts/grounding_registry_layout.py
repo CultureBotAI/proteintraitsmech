@@ -121,6 +121,22 @@ def is_sharded(path: Path | str) -> bool:
     return name.endswith(SHARD_SUFFIX) and len(name) > len(SHARD_SUFFIX)
 
 
+def sharded_ancestor(path: Path | str) -> Path | None:
+    """``path`` or its nearest ancestor named like a sharded registry, in any case.
+
+    The layout is still selected by the exact name. This is for the guards that keep
+    foreign files out of a registry: APFS and other case-insensitive filesystems
+    resolve ``X.jsonl.D`` to ``X.jsonl.d``, and ``Path.resolve()`` keeps the caller's
+    spelling, so an exact-name check alone lets the alias through.
+    """
+
+    path = Path(path)
+    for candidate in (path, *path.parents):
+        if is_sharded(candidate.name.casefold()):
+            return candidate
+    return None
+
+
 def legacy_twin(path: Path | str) -> Path | None:
     """``X.jsonl.d`` <-> ``X.jsonl``; ``None`` for a name with no twin."""
 
@@ -555,11 +571,12 @@ def registry_lock(directory: Path | str) -> Iterator[Path | None]:
     """
 
     directory = Path(directory)
-    if is_sharded(directory):
+    enclosing = sharded_ancestor(directory.resolve())
+    if enclosing is not None:
         # The lock file would itself be an unexpected entry inside the registry.
         raise RegistryLayoutError(
             "registry_layout_conflict",
-            f"refusing to lock inside a sharded registry: {directory}",
+            f"refusing to lock inside the sharded registry {enclosing}: {directory}",
             directory,
         )
     if not directory.is_dir():

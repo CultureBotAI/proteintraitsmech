@@ -3774,6 +3774,95 @@ def test_second_promote_apply_under_a_held_lock_exits_2_and_dry_runs_take_no_loc
     assert local_sources["record"].read_bytes() != original
 
 
+def _lock_files(root: pathlib.Path) -> list[pathlib.Path]:
+    return sorted(root.rglob(layout.LOCK_NAME)) if root.exists() else []
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        "bindings-inside-traits",
+        "bindings-inside-default-traits",
+        "bindings-inside-sharded-registry",
+        "bindings-inside-case-alias-of-sharded-registry",
+        "protein-inside-another-sharded-registry",
+    ],
+)
+def test_promote_apply_never_locks_inside_a_trait_tree_or_a_sharded_registry(
+    local_sources, tmp_path, monkeypatch, capsys, case
+):
+    """Validation runs before the lock is chosen, so a refused layout leaves no lock file.
+
+    On case-insensitive APFS ``occurrence_evidence.jsonl.D`` *is* the evidence registry,
+    so a lock file created there would make every later read of it fail.
+    """
+
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("protected-approved.tsv")
+    _approve(local_sources["review"], approved)
+    evidence = local_sources["durable_evidence"]
+    _write_sharded(evidence, [])
+    default_traits = tmp_path / "default-traits"
+    default_traits.mkdir()
+    monkeypatch.setattr(ground, "DEFAULT_TRAITS", default_traits)
+    foreign = tmp_path / "other-grounding" / "occurrence_evidence.jsonl.d"
+    _write_sharded(foreign, [])
+    if case == "bindings-inside-traits":
+        local_sources["durable_bindings"] = (
+            local_sources["traits"] / "sub" / "qualified_record_bindings.jsonl.d"
+        )
+        (local_sources["traits"] / "sub").mkdir()
+    elif case == "bindings-inside-default-traits":
+        local_sources["durable_bindings"] = default_traits / "qualified_record_bindings.jsonl.d"
+    elif case == "bindings-inside-sharded-registry":
+        local_sources["durable_bindings"] = evidence / "qualified_record_bindings.jsonl.d"
+    elif case == "bindings-inside-case-alias-of-sharded-registry":
+        alias = evidence.with_name(evidence.name[: -len("d")] + "D")
+        local_sources["durable_bindings"] = alias / "qualified_record_bindings.jsonl.d"
+    else:
+        local_sources["durable_registry"] = foreign / "protein_registry.jsonl"
+    protected = [local_sources["traits"], default_traits, evidence, foreign]
+    before = {root: _tree(root) for root in protected}
+
+    for apply in (False, True):
+        assert ground.main(_promote_args(local_sources, approved, apply=apply)) == 2
+        assert "ERROR: durable registry output" in capsys.readouterr().err
+    assert {root: _tree(root) for root in protected} == before
+    for root in protected:
+        assert _lock_files(root) == []
+
+
+@pytest.mark.parametrize("held", ["bindings-directory", "other-outputs-directory"])
+def test_promote_apply_locks_every_directory_it_writes_durable_registries_into(
+    local_sources, tmp_path, capsys, held
+):
+    """Durable outputs split across two directories are both locked, so neither can be
+    written while another writer, such as eLife promote on data/grounding, holds it."""
+
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("split-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable = local_sources["durable_evidence"].parent
+    durable.mkdir()
+    scratch = tmp_path / "scratch-bindings"
+    scratch.mkdir()
+    local_sources["durable_bindings"] = scratch / "qualified_record_bindings.jsonl.d"
+    original = local_sources["record"].read_bytes()
+
+    with layout.registry_lock(scratch if held == "bindings-directory" else durable):
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+        assert "registry_locked" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert not local_sources["durable_evidence"].exists()
+        assert not local_sources["durable_bindings"].exists()
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert local_sources["record"].read_bytes() != original
+    assert _lock_files(durable) == [durable / layout.LOCK_NAME]
+    assert _lock_files(scratch) == [scratch / layout.LOCK_NAME]
+
+
 def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tmp_path):
     args = ground._parser().parse_args(
         [
