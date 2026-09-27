@@ -4035,3 +4035,31 @@ found.
   at this checkpoint. The controlled Rhea acquisition-runner boundary is complete and
   fully replayed; the next operation remains a separately authorized `--apply` against a
   saved and reviewed execution plan under explicitly permitted network access.
+
+### 2026-09-26 — sharded durable evidence and bindings registries (#801)
+
+- The durable `occurrence_evidence` and `qualified_record_bindings` registries move from
+  single JSONL files to `.jsonl.d` directories of up to 256 shards, keyed by the two hex
+  digits after `ug-evidence:` and committed by a `manifest.json` written last
+  (`scripts/grounding_registry_layout.py`; layout rules in `data/grounding/README.md`).
+  `protein_registry.jsonl` and `uniprot_memberships.jsonl` stay flat. Historical entries
+  above that name the flat files describe the layout of their time and are left as they
+  are.
+- Measured on `5bf6e9fcb8a` before migration: evidence 12,577 rows, 7,539,553 bytes,
+  SHA-256 `caa9834e838ae8cb98d1cba68987157a2f832021098b8dabab5b087dc958a510`; bindings
+  12,577 rows, 19,008,589 bytes, SHA-256
+  `4a6082161da083942306813fde679caa4e097c618a5524a9b90a634e269dc310`. Each splits into
+  256 shards (largest 41,203 and 104,100 bytes), and joining the shards in name order
+  reproduces each flat file byte for byte, so a registry's logical digest equals its
+  former flat SHA-256.
+- The promoter, the semantic validator, the audit, and eLife promotion now default to
+  the sharded paths. The promoter's transaction plans every shard write before the
+  first one, re-verifies installed directories before trait writes, rolls back on an
+  interrupt, and runs `promote --apply` under an advisory lock. A missing evidence or
+  bindings registry under `data/grounding/` is an error rather than a fresh start. The
+  validator no longer skips bindings when durable evidence is present, and eLife
+  promotion refuses to add evidence while a bindings registry exists, because it cannot
+  write receipts yet.
+- The one-shot receipt repair (`repair_uniprot_durable_receipts.py`) refuses sharded
+  registries as retired. The data migration is a separate commit in the same pull
+  request: the new default paths are unusable until it has run.

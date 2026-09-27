@@ -131,9 +131,19 @@ validate-linkml *args:
 
 # Cross-object/sequence validation for release-pinned UniProt grounding. Legacy
 # examples remain LEGACY_UNVERIFIED during migration; --require-qualified is the
-# corpus-completion gate. Durable registries default under data/grounding/.
+# corpus-completion gate. Durable registries default under data/grounding/: the flat
+# protein_registry.jsonl plus the sharded occurrence_evidence.jsonl.d/ and
+# qualified_record_bindings.jsonl.d/ directories (#801).
 validate-uniprot-grounding *args:
     uv run python scripts/validate_uniprot_grounding.py {{args}}
+
+# Fast structural check of the two sharded grounding registries (#801): listing,
+# row placement/order/canonical form, manifests, evidence == bindings key sets, and
+# the MAX_SHARD_BYTES tripwire. Rows are not semantically validated; that is
+# validate-uniprot-grounding. --root points it at another directory.
+# Read-only; prints each registry's logical sha256 (equal to the legacy flat file's).
+check-grounding-registries *args:
+    uv run python scripts/grounding_registry_layout.py check {{args}}
 
 # ============== Curation history (#484) ==============
 
