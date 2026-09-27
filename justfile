@@ -145,6 +145,21 @@ validate-uniprot-grounding *args:
 check-grounding-registries *args:
     uv run python scripts/grounding_registry_layout.py check {{args}}
 
+# One-time (#801): split the flat occurrence_evidence.jsonl and
+# qualified_record_bindings.jsonl into their .jsonl.d shard directories, byte-identical
+# in logical content. Dry-run by default: prints the JSON plan and round-trip proofs and
+# writes nothing. --apply needs a clean data/grounding, holds the registry lock, installs
+# both directories and deletes both flat files in one rolled-back transaction, re-checks
+# the result, and writes reports/uniprot-grounding/registry-layout-migration-801.json.
+# Pin the inputs with --expect-evidence-sha256 / --expect-bindings-sha256. A re-run
+# after migration reports "already migrated"; a mixed or partial state is refused.
+#
+# Shard the flat evidence and bindings registries (#801); dry-run unless --apply
+migrate-grounding-registries *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/migrate_grounding_registry_layout.py "$@"
+
 # ============== Curation history (#484) ==============
 
 claw_src := env_var_or_default("CLAW_SRC", "../culturebotai-claw/src")

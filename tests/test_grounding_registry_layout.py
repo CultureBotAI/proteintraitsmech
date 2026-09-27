@@ -1,9 +1,10 @@
 """Tests for the sharded evidence/bindings registry layout (#801).
 
-Everything here builds its registries under ``tmp_path``; nothing reads or writes
-``data/grounding``. The module never writes a registry itself, so ``install`` below
-applies a ``plan_sharded_write`` plan the way the promoter's transaction does, minus
-the rollback that the promoter's own tests cover.
+Everything here builds its registries under ``tmp_path``; nothing writes
+``data/grounding``, and only the production test at the end reads it. The module never
+writes a registry itself, so ``install`` below applies a ``plan_sharded_write`` plan the
+way the promoter's transaction does, minus the rollback that the promoter's own tests
+cover.
 """
 
 from __future__ import annotations
@@ -724,3 +725,45 @@ def test_check_fails_when_a_registry_is_absent(grounding_root: Path, capsys) -> 
     (grounding_root / layout.CHECKED_REGISTRIES[1]).rmdir()
     assert layout.main(["check", "--root", str(grounding_root)]) == 1
     assert f"{layout.CHECKED_REGISTRIES[1]}: absent" in capsys.readouterr().err
+
+
+# ---------------------------------------------------------------------- production
+
+
+def test_committed_registries_are_sharded_clean_and_paired() -> None:
+    """Read-only check of the committed ``data/grounding`` registries.
+
+    It fails rather than skips: a missing directory, a leftover flat twin, any layout
+    issue, unequal evidence and bindings key sets, or a shard over the tripwire means
+    the promoter and validator are about to refuse production data.
+    """
+    ground = importlib.import_module("ground_uniprot_examples")
+    validator = importlib.import_module("validate_uniprot_grounding")
+    evidence_path, bindings_path = (
+        layout.DEFAULT_ROOT / name for name in layout.CHECKED_REGISTRIES
+    )
+    assert (ground.DEFAULT_DURABLE_EVIDENCE_REGISTRY, validator.DEFAULT_EVIDENCE_REGISTRY) == (
+        evidence_path, evidence_path,
+    )
+    assert (
+        ground.DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS,
+        validator.DEFAULT_QUALIFIED_RECORD_BINDINGS,
+    ) == (bindings_path, bindings_path)
+
+    key_sets = []
+    for path in (evidence_path, bindings_path):
+        assert not os.path.lexists(layout.legacy_twin(path)), f"legacy flat twin of {path}"
+        image = layout.read_registry(path)
+        assert image.kind == "sharded", f"{path} is {image.kind}"
+        assert image.issues == (), image.issues[:5]
+        # Also refuses a row that does not parse, which read_registry leaves to loaders.
+        assert layout.sharded_digest(path) == image.logical_sha256
+        shards = image.manifest["shards"]
+        assert shards, f"{path} has no rows"
+        assert max(entry["bytes"] for entry in shards.values()) <= layout.MAX_SHARD_BYTES
+        key_sets.append({json.loads(line)[layout.KEY_FIELD] for _, _, line in image.lines})
+    evidence_keys, binding_keys = key_sets
+    assert evidence_keys == binding_keys, (
+        f"{len(evidence_keys - binding_keys)} evidence row(s) without a binding, "
+        f"{len(binding_keys - evidence_keys)} binding(s) without evidence"
+    )
