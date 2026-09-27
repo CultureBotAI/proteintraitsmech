@@ -10,6 +10,8 @@ import hashlib
 import importlib
 import json
 import os
+import re
+import shlex
 import subprocess
 import sys
 from contextlib import contextmanager
@@ -475,6 +477,88 @@ def test_apply_inside_a_checkout_requires_a_clean_grounding_root(
     ]
     added = [line for line in status if line.startswith("??")]
     assert len(added) == len(status) - 2 == 2 * 4
+
+
+def _committed_flat_checkout(tmp_path: Path) -> tuple[Path, Path]:
+    """A throwaway repository whose HEAD holds the flat registries, as before #801."""
+
+    repo = tmp_path / "repo"
+    grounding = repo / "data" / "grounding"
+    grounding.mkdir(parents=True)
+    (grounding / f"{EVIDENCE}.jsonl").write_text(EVIDENCE_TEXT, encoding="utf-8")
+    (grounding / f"{BINDINGS}.jsonl").write_text(BINDINGS_TEXT, encoding="utf-8")
+    (grounding / "protein_registry.jsonl").write_bytes(PROTEIN_BYTES)
+    (repo / ".gitignore").write_text(f"data/grounding/{layout.LOCK_NAME}\n", encoding="utf-8")
+    _git(repo, "init", "-q", ".")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-q", "-m", "flat registries")
+    return repo, grounding
+
+
+class _Killed(Exception):
+    """Stands in for SIGKILL: the install stops dead and nothing rolls it back."""
+
+
+@pytest.mark.parametrize("failure", ["post-apply-check", "killed-before-last-delete"])
+def test_the_printed_recovery_returns_a_failed_migration_to_a_state_it_accepts(
+    tmp_path: Path, report: Path, capsys, monkeypatch, failure: str
+) -> None:
+    repo, grounding = _committed_flat_checkout(tmp_path)
+    monkeypatch.setattr(migrate, "REPO_ROOT", repo)
+    if failure == "post-apply-check":
+        # Another writer, one that ignores the lock, touches the protein registry after
+        # the transaction committed; the checks fail with the install left in place.
+        real_digests = migrate._unchanged_digests
+        calls: list[Path] = []
+
+        def drifted(root: Path) -> dict[str, str | None]:
+            calls.append(root)
+            digests = real_digests(root)
+            if len(calls) > 1:
+                digests["protein_registry.jsonl"] = "0" * 64
+            return digests
+
+        monkeypatch.setattr(migrate, "_unchanged_digests", drifted)
+        assert run(grounding, report, "--apply") == 2
+        monkeypatch.setattr(migrate, "_unchanged_digests", real_digests)
+        message = capsys.readouterr().err
+        assert "post-apply check(s) failed after install" in message
+    else:
+        def killed_before_last_delete(artifact_updates, trait_updates):
+            planned, _verify = ground._plan_artifact_updates(artifact_updates)
+            for path, payload in planned[:-1]:
+                ground._apply_artifact_operation(path, payload)
+            raise _Killed
+
+        real_install = ground._install_promotion_transaction
+        monkeypatch.setattr(ground, "_install_promotion_transaction", killed_before_last_delete)
+        with pytest.raises(_Killed):
+            run(grounding, report, "--apply")
+        monkeypatch.setattr(ground, "_install_promotion_transaction", real_install)
+        capsys.readouterr()
+        assert run(grounding, report) == 2
+        message = capsys.readouterr().err
+        assert "refusing an ambiguous registry state" in message
+    # The torn state holds untracked shard directories that `git restore` cannot remove.
+    assert (grounding / f"{EVIDENCE}.jsonl.d").is_dir()
+    assert (grounding / f"{BINDINGS}.jsonl.d").is_dir()
+
+    commands = [
+        shlex.split(command)
+        for command in re.findall(r"`([^`]+)`", message)
+        if command.startswith("git ")
+    ]
+    assert commands, message
+    for command in commands:
+        _git(repo, *command[1:])
+
+    assert _git(repo, "status", "--porcelain", "--untracked-files=all") == ""
+    assert (grounding / layout.LOCK_NAME).exists()  # gitignored, so git clean keeps it
+    assert run(grounding, report) == 0
+    assert run(grounding, report, "--apply") == 0
+    for name, text in ((EVIDENCE, EVIDENCE_TEXT), (BINDINGS, BINDINGS_TEXT)):
+        assert joined_shards(grounding / f"{name}.jsonl.d") == text.encode("utf-8")
+        assert not (grounding / f"{name}.jsonl").exists()
 
 
 # ---------------------------------------------------------------------- entry point

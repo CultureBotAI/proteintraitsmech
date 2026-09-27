@@ -15,7 +15,11 @@ directories and deletes both flat files in one promoter transaction (rolled back
 failure), re-checks the result on disk, and writes the JSON report.
 
 A mixed or partial state (one registry migrated, both layouts present, a registry
-missing) is refused rather than repaired; restore ``data/grounding`` from git.
+missing) is refused rather than repaired. Until the migration is committed its
+``.jsonl.d`` directories are untracked, and ``git restore`` never deletes untracked
+files, so recovery (after an interrupted run, or a post-apply check that failed after
+the install) is ``git restore --source=HEAD --staged --worktree -- data/grounding``
+followed by ``git clean -f -d -- data/grounding``; the refusal prints exactly that.
 ``protein_registry.jsonl`` and ``uniprot_memberships.jsonl`` stay flat and are
 checked to be byte-identical afterwards. Trait records are never read or written.
 """
@@ -27,6 +31,7 @@ import hashlib
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -86,6 +91,23 @@ def _paths(root: Path, name: str) -> tuple[Path, Path]:
     return flat, flat.with_name(flat.name + ".d")
 
 
+def _recovery(root: Path) -> str:
+    """The commands that return ``root`` to its committed image.
+
+    ``git restore`` brings back the tracked flat files but never deletes an untracked
+    ``.jsonl.d`` directory, shard or write residue, so ``git clean`` must follow it.
+    Without ``-x`` it keeps the gitignored lock file.
+    """
+
+    quoted = shlex.quote(str(root))
+    return (
+        "after confirming no writer is running, restore the committed image with "
+        f"`git restore --source=HEAD --staged --worktree -- {quoted}`, list the untracked "
+        f"shard directories and residue with `git clean -n -d -- {quoted}`, and remove "
+        f"them with `git clean -f -d -- {quoted}`"
+    )
+
+
 def _state(root: Path) -> str:
     """``flat`` or ``sharded`` when both registries agree; refuse everything else."""
 
@@ -104,7 +126,7 @@ def _state(root: Path) -> str:
     detail = ", ".join(f"{name}: {state}" for name, state in states.items())
     raise MigrationError(
         f"refusing an ambiguous registry state under {root} ({detail}); the migration "
-        "runs only from both flat files, so restore data/grounding from git first"
+        f"runs only from both flat files, so {_recovery(root)}"
     )
 
 
@@ -263,7 +285,7 @@ def _post_apply_checks(
     if failed:
         raise MigrationError(
             "post-apply check(s) failed after install: " + "; ".join(failed[:5])
-            + f"; restore with `git restore --source=HEAD -- {root}`"
+            + f"; the install is on disk and was not rolled back, so {_recovery(root)}"
         )
     return checks
 

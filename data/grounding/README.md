@@ -94,12 +94,23 @@ writer fails fast with `registry_locked`, naming the holder's pid. The kernel re
 the lock when its process exits, so it never goes stale; dry runs do not lock.
 
 **Torn install recovery.** In-process failures roll back exactly. A power loss or
-`kill -9` mid-install can leave a manifest mismatch or hidden
-`.<hh>.jsonl.<random>` / `.manifest.json.<random>` temporary files, which validation
-names as `registry_manifest_mismatch` or "interrupted atomic write residue". After
-confirming no writer is running, restore the committed image with
-`git restore --source=HEAD -- data/grounding`, delete the residue files named in the
-error, and replay the promotion.
+`kill -9` mid-install can leave a manifest mismatch, a shard the commit does not have,
+or hidden `.<hh>.jsonl.<random>` / `.manifest.json.<random>` temporary files, which
+validation names as `registry_manifest_mismatch` or "interrupted atomic write residue".
+`git restore` alone brings back tracked files but never deletes an untracked shard,
+residue file or directory, so after confirming no writer is running:
+
+```bash
+git restore --source=HEAD --staged --worktree -- data/grounding
+git clean -n -d -- data/grounding   # review what would be removed
+git clean -f -d -- data/grounding   # without -x, keeps the gitignored lock file
+```
+
+Then replay the promotion. An interrupted `just migrate-grounding-registries --apply`,
+or one whose post-apply check failed after the install, recovers the same way: until
+the migration is committed its `.jsonl.d` directories are untracked, so `git clean`
+removes them and `git restore` brings back both flat files. The migration's refusal
+prints these commands.
 
 **Merge conflicts.** Registry shards, manifests, `protein_registry.jsonl`, and the
 biophysical pilot pin are never hand-merged. When a branch conflicts under
