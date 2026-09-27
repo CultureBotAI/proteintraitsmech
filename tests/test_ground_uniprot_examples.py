@@ -3634,7 +3634,10 @@ def test_transaction_refuses_to_leave_both_registry_layouts(tmp_path, case):
     ("payload", "message"),
     [
         ('{"value": 1, "evidence_id": "ug-evidence:' + "0" * 64 + '"}\n', "not canonical"),
-        (_sharded_text([_registry_row("01", 1)]) + _sharded_text([_registry_row("00", 1)]), "sorts"),
+        (
+            _sharded_text([_registry_row("01", 1)]) + _sharded_text([_registry_row("00", 1)]),
+            "sorts",
+        ),
         (_sharded_text([_registry_row("00", 1)]).rstrip("\n"), "final newline"),
         ('{"evidence_id":"not-a-key"}\n', "evidence_id"),
         (None, "cannot be deleted"),

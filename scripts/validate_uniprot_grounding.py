@@ -17,8 +17,9 @@ flag.
 
 The protein, occurrence-evidence, and UniProt-membership registries are JSONL
 with one normalized object per line.  The durable evidence and qualified-record
-binding registries are sharded ``.jsonl.d`` directories of that JSONL (#801).  A qualified UniProt ``SOURCE_MEMBERSHIP``
-claim is replayed against the exact content-addressed database cross-reference::
+binding registries are sharded ``.jsonl.d`` directories of that JSONL (#801).
+A qualified UniProt ``SOURCE_MEMBERSHIP`` claim is replayed against the exact
+content-addressed database cross-reference::
 
     python scripts/validate_uniprot_grounding.py data/traits/sequence/domain \
       --registry reports/uniprot-grounding/protein_registry.jsonl \
