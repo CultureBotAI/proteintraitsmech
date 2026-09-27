@@ -17,6 +17,7 @@ from pathlib import Path
 
 import yaml
 
+import grounding_registry_layout as layout
 from elife_metallophores import (
     ARCHIVE_MD5, ARCHIVE_SHA256, ARCHIVE_URL, ASSERTIONS_PATH, DOMAIN_MODELS,
     EXCLUDED_REFERENCE_BGCS,
@@ -296,9 +297,17 @@ def resolve(args: argparse.Namespace) -> int:
 
 
 def promote(args: argparse.Namespace) -> int:
+    if not args.apply:
+        return _promote(args)
+    # One writer at a time on the durable registries (#801); dry runs never lock.
+    with layout.registry_lock(ROOT / "data/grounding"):
+        return _promote(args)
+
+
+def _promote(args: argparse.Namespace) -> int:
     from ground_uniprot_examples import (
-        _install_promotion_transaction, _replace_examples_block, _strict_errors_for_text,
-        _registry_text,
+        _artifact_digest, _install_promotion_transaction, _replace_examples_block,
+        _strict_errors_for_text, _registry_text, _text_digest,
     )
     from validate_uniprot_grounding import load_evidence_registry, load_registry, validate_record
 
@@ -323,7 +332,8 @@ def promote(args: argparse.Namespace) -> int:
     if not selected:
         raise ValueError("no approved examples")
     registry_path = ROOT / "data/grounding/protein_registry.jsonl"
-    evidence_path = ROOT / "data/grounding/occurrence_evidence.jsonl"
+    evidence_path = ROOT / "data/grounding/occurrence_evidence.jsonl.d"
+    bindings_path = ROOT / "data/grounding/qualified_record_bindings.jsonl.d"
     existing_assertions = read_jsonl(ROOT / ASSERTIONS_PATH) if (ROOT / ASSERTIONS_PATH).exists() else []
     assertions = {r["assertion_digest"]: r for r in existing_assertions}
     bindings = {r["assertion"]["assertion_digest"]: r["resolution_digest"] for r in selected}
@@ -352,6 +362,7 @@ def promote(args: argparse.Namespace) -> int:
         evidence_registry, evidence_errors = load_evidence_registry(evidence_path)
     if errors or evidence_errors:
         raise ValueError("durable registry validation failed before promotion")
+    original_keys = set(evidence_registry)
     updates = {}
     for row in selected:
         pid = row["reference"]["protein_id"]
@@ -370,6 +381,15 @@ def promote(args: argparse.Namespace) -> int:
         if previous is None:
             examples.append(copy.deepcopy(row["example"]))
         updates[path] = _replace_examples_block(text, record)
+    added = set(evidence_registry) - original_keys
+    if added and layout.registry_exists(bindings_path):
+        # Durable evidence must stay exactly covered by qualified-record bindings, and
+        # this route cannot write them yet; refuse before any write rather than leave
+        # evidence the promoter and validator would then reject.
+        raise ValueError(
+            f"eLife promotion would add {len(added)} evidence row(s) without "
+            "qualified-record bindings (eLife promote cannot write bindings)"
+        )
     with assertion_context(assertion_rows):
         for path, text in updates.items():
             if _strict_errors_for_text(text):
@@ -386,8 +406,10 @@ def promote(args: argparse.Namespace) -> int:
         (registry_path, _registry_text(registry)),
         (evidence_path, _registry_text(evidence_registry)),
     ]
+    # Compare digests, not text: a sharded registry is a directory, and its digest is
+    # only returned after the whole layout verifies.
     artifacts = [(path, text) for path, text in artifacts
-                 if not path.exists() or path.read_text() != text]
+                 if _artifact_digest(path) != _text_digest(text)]
     if args.apply and (updates or artifacts):
         _install_promotion_transaction(artifacts, updates)
     print(json.dumps({"approved_examples": len(selected), "trait_records": len(updates),

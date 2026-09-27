@@ -40,12 +40,14 @@ import sys
 import tempfile
 import unicodedata
 from collections import Counter, defaultdict
+from contextlib import nullcontext
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
 import yaml
 
+import grounding_registry_layout as layout
 from fetch_uniprot_registry import (
     RegistryBuildError as FetchReceiptError,
     VerifiedFetchReceipt,
@@ -100,10 +102,14 @@ DEFAULT_OUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding"
 DEFAULT_EVIDENCE_REGISTRY = DEFAULT_OUT_DIR / "occurrence_evidence.jsonl"
 DEFAULT_MEMBERSHIP_REGISTRY = DEFAULT_OUT_DIR / "uniprot_memberships.jsonl"
 DEFAULT_DURABLE_PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_DURABLE_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Evidence and bindings are sharded ``.jsonl.d`` directories (#801); see
+# grounding_registry_layout.py. The protein and membership registries stay flat.
+DEFAULT_DURABLE_EVIDENCE_REGISTRY = (
+    REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
+)
 DEFAULT_DURABLE_MEMBERSHIP_REGISTRY = REPO_ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS = (
-    REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl"
+    REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
 )
 PROTECTED_GROUNDING_ROOT = REPO_ROOT / "data" / "grounding"
 MAX_PROMOTION_BATCH = 1_000
@@ -2909,8 +2915,24 @@ def _semantic_evidence_registry(path: Path) -> dict[str, dict[str, Any]]:
 
 
 def _artifact_digest(path: Path) -> str | None:
-    """Return a file-content digest, distinguishing a missing durable artifact."""
+    """Return a content digest, distinguishing a missing durable artifact.
 
+    A sharded ``.jsonl.d`` registry is hashed by its logical digest, the sha256 of
+    its shards joined in name order, which equals the flat file it replaced.  That
+    digest is returned only after the listing, every row's placement, order and
+    canonical form, and the manifest verify, so a torn or hand-edited directory is
+    refused rather than hashed.  A flat path whose sharded twin exists is refused the
+    same way (#801).
+    """
+
+    twin = layout.legacy_twin(path)
+    if layout.is_sharded(path) or (
+        twin is not None and layout.is_sharded(twin) and os.path.lexists(twin)
+    ):
+        try:
+            return layout.sharded_digest(path)
+        except layout.RegistryLayoutError as exc:
+            raise GroundingError(f"durable registry layout rejected: {exc}") from exc
     if not path.exists():
         return None
     if not path.is_file():
@@ -2931,6 +2953,21 @@ def _load_durable_registry(path: Path) -> tuple[dict[str, dict[str, Any]], str |
     return registry, before
 
 
+def _refuse_missing_protected_registry(path: Path, kind: str) -> None:
+    """Refuse a fresh start for a missing evidence or bindings registry in production.
+
+    Reading an absent registry as empty is only for scratch fixture paths.  Under
+    ``data/grounding`` it means a lost or unmigrated registry, and promoting over it
+    would silently drop every durable row.
+    """
+
+    if _path_is_under(path, PROTECTED_GROUNDING_ROOT):
+        raise GroundingError(
+            f"durable {kind} registry missing under data/grounding: {path}; restore it from "
+            "git -- the sharded layout is created only by just migrate-grounding-registries"
+        )
+
+
 def _load_durable_evidence_registry(
     path: Path,
 ) -> tuple[dict[str, dict[str, Any]], str | None]:
@@ -2938,6 +2975,7 @@ def _load_durable_evidence_registry(
 
     before = _artifact_digest(path)
     if before is None:
+        _refuse_missing_protected_registry(path, "evidence")
         return {}, None
     evidence = _semantic_evidence_registry(path)
     after = _artifact_digest(path)
@@ -2959,6 +2997,7 @@ def _load_durable_qualified_record_bindings(
 
     before = _artifact_digest(path)
     if before is None:
+        _refuse_missing_protected_registry(path, "qualified-record binding")
         if durable_evidence:
             raise GroundingError(
                 "durable qualified-record binding registry is missing while durable "
@@ -2967,68 +3006,76 @@ def _load_durable_qualified_record_bindings(
         return {}, None
 
     bindings: dict[str, dict[str, Any]] = {}
-    with path.open(encoding="utf-8") as handle:
-        for line_number, line in enumerate(handle, 1):
-            if not line.strip():
-                continue
-            try:
-                binding = json.loads(line)
-            except json.JSONDecodeError as exc:
+    image = layout.read_registry(path)
+    if image.issues:
+        issue = image.issues[0]
+        where = f"{issue.file}:{issue.line}" if issue.line else str(issue.file)
+        raise GroundingError(f"{where}: {issue.code}: {issue.message}")
+    if image.logical_sha256 != before:
+        raise GroundingError(
+            f"durable qualified-record binding registry changed during preflight: {path}"
+        )
+    for source, line_number, line in image.lines:
+        if not line.strip():
+            continue
+        try:
+            binding = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise GroundingError(
+                f"{source}:{line_number}: invalid qualified-record binding JSON: {exc}"
+            ) from exc
+        if not isinstance(binding, dict):
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding is not an object"
+            )
+        fields = set(binding)
+        if fields != _QUALIFIED_RECORD_BINDING_FIELDS:
+            missing = sorted(_QUALIFIED_RECORD_BINDING_FIELDS - fields)
+            extra = sorted(fields - _QUALIFIED_RECORD_BINDING_FIELDS)
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding schema mismatch; "
+                f"missing={missing}, extra={extra}"
+            )
+        if binding.get("schema_version") != 1 or isinstance(
+            binding.get("schema_version"), bool
+        ):
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding schema_version must be 1"
+            )
+        evidence_id = binding.get("evidence_id")
+        if (
+            not isinstance(evidence_id, str)
+            or re.fullmatch(r"ug-evidence:[0-9a-f]{64}", evidence_id) is None
+        ):
+            raise GroundingError(
+                f"{source}:{line_number}: invalid qualified-record binding evidence_id"
+            )
+        if evidence_id in bindings:
+            raise GroundingError(
+                f"{source}:{line_number}: duplicate qualified-record binding for {evidence_id}"
+            )
+        for field_name in ("candidate_id", "trait_id", "record_path"):
+            if _clean_text(binding.get(field_name)) is None:
                 raise GroundingError(
-                    f"{path}:{line_number}: invalid qualified-record binding JSON: {exc}"
-                ) from exc
-            if not isinstance(binding, dict):
-                raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding is not an object"
+                    f"{source}:{line_number}: qualified-record binding lacks {field_name}"
                 )
-            fields = set(binding)
-            if fields != _QUALIFIED_RECORD_BINDING_FIELDS:
-                missing = sorted(_QUALIFIED_RECORD_BINDING_FIELDS - fields)
-                extra = sorted(fields - _QUALIFIED_RECORD_BINDING_FIELDS)
+        for field_name in ("record_sha256", "content_gate_digest"):
+            value = binding.get(field_name)
+            if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
                 raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding schema mismatch; "
-                    f"missing={missing}, extra={extra}"
+                    f"{source}:{line_number}: qualified-record binding has invalid {field_name}"
                 )
-            if binding.get("schema_version") != 1 or isinstance(
-                binding.get("schema_version"), bool
-            ):
-                raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding schema_version must be 1"
-                )
-            evidence_id = binding.get("evidence_id")
-            if (
-                not isinstance(evidence_id, str)
-                or re.fullmatch(r"ug-evidence:[0-9a-f]{64}", evidence_id) is None
-            ):
-                raise GroundingError(
-                    f"{path}:{line_number}: invalid qualified-record binding evidence_id"
-                )
-            if evidence_id in bindings:
-                raise GroundingError(
-                    f"{path}:{line_number}: duplicate qualified-record binding for {evidence_id}"
-                )
-            for field_name in ("candidate_id", "trait_id", "record_path"):
-                if _clean_text(binding.get(field_name)) is None:
-                    raise GroundingError(
-                        f"{path}:{line_number}: qualified-record binding lacks {field_name}"
-                    )
-            for field_name in ("record_sha256", "content_gate_digest"):
-                value = binding.get(field_name)
-                if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
-                    raise GroundingError(
-                        f"{path}:{line_number}: qualified-record binding has invalid {field_name}"
-                    )
-            projection = binding.get("content_gate_projection")
-            if not isinstance(projection, dict):
-                raise GroundingError(
-                    f"{path}:{line_number}: content_gate_projection is not an object"
-                )
-            if binding["content_gate_digest"] != _value_digest(projection):
-                raise GroundingError(
-                    f"{path}:{line_number}: tampered qualified-record content-gate digest "
-                    f"for {evidence_id}"
-                )
-            bindings[evidence_id] = binding
+        projection = binding.get("content_gate_projection")
+        if not isinstance(projection, dict):
+            raise GroundingError(
+                f"{source}:{line_number}: content_gate_projection is not an object"
+            )
+        if binding["content_gate_digest"] != _value_digest(projection):
+            raise GroundingError(
+                f"{source}:{line_number}: tampered qualified-record content-gate digest "
+                f"for {evidence_id}"
+            )
+        bindings[evidence_id] = binding
 
     missing = sorted(set(durable_evidence) - set(bindings))
     extra = sorted(set(bindings) - set(durable_evidence))
@@ -3535,6 +3582,38 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
             )
         if _path_is_under(output, traits_root) or _path_is_under(output, DEFAULT_TRAITS):
             raise GroundingError(f"durable registry output must be outside trait records: {output}")
+    # A sharded registry is a directory the transaction owns entry by entry (#801):
+    # nothing else may live inside one, and production evidence and bindings are
+    # always sharded, so a flat path there can never shadow the real registry.
+    for name, output in outputs.items():
+        for other_name, other in outputs.items():
+            if other_name != name and _path_is_under(output, other):
+                raise GroundingError(
+                    f"durable registry outputs must not nest: {output} is inside {other}"
+                )
+    output_attributes = {
+        "durable_protein_registry",
+        "durable_evidence_registry",
+        "durable_membership_registry",
+        "durable_qualified_record_bindings",
+    }
+    sharded_outputs = [output for output in outputs.values() if layout.is_sharded(output)]
+    for attribute, value in sorted(vars(args).items()):
+        if attribute in output_attributes or not isinstance(value, Path):
+            continue
+        for output in sharded_outputs:
+            if _path_is_under(value, output):
+                raise GroundingError(
+                    f"--{attribute.replace('_', '-')} must not be inside the sharded durable "
+                    f"registry {output}: {value}"
+                )
+    for name in ("durable evidence registry", "durable qualified-record bindings"):
+        output = outputs[name]
+        if _path_is_under(output, PROTECTED_GROUNDING_ROOT) and not layout.is_sharded(output):
+            raise GroundingError(
+                f"{name} under data/grounding must be a sharded {layout.SHARD_SUFFIX} "
+                f"registry: {output}"
+            )
 
 
 def _semantic_errors_for_record(
@@ -3812,8 +3891,75 @@ def _promotion_qualified_record_preflight(
     return next_bindings
 
 
+def _plan_artifact_updates(
+    updates: list[tuple[Path, str | None]],
+) -> tuple[list[tuple[Path, str | bytes | None]], list[tuple[Path, str]]]:
+    """Expand artifact updates into exact file operations, before any write.
+
+    A sharded ``.jsonl.d`` target becomes its changed shards, deletions of shards that
+    are now empty, and ``manifest.json`` last; when anything changes, its expected
+    logical digest is returned for the post-install verify.  ``(path, None)`` deletes a
+    non-sharded file.  Every other target is written verbatim, as before #801.  A
+    target whose layout twin exists, or is written by the same call, is refused unless
+    that twin is deleted here, so an install can never leave both layouts on disk.
+    """
+
+    resolved = [(path.resolve(), text) for path, text in updates]
+    deleted = {path for path, text in resolved if text is None}
+    written = {path for path, text in resolved if text is not None}
+    planned: list[tuple[Path, str | bytes | None]] = []
+    verify: list[tuple[Path, str]] = []
+    for path, text in resolved:
+        twin = layout.legacy_twin(path)
+        if (
+            text is not None
+            and twin is not None
+            and (os.path.lexists(twin) or twin in written)
+            and twin not in deleted
+        ):
+            raise GroundingError(
+                f"refusing to write {path} while its other registry layout {twin} exists"
+            )
+        if not layout.is_sharded(path):
+            planned.append((path, text))
+            continue
+        if text is None:
+            raise GroundingError(f"a sharded registry cannot be deleted by a transaction: {path}")
+        try:
+            plan = layout.plan_sharded_write(path, text)
+        except layout.RegistryLayoutError as exc:
+            raise GroundingError(f"refusing sharded registry write to {path}: {exc}") from exc
+        planned.extend(plan)
+        if plan:
+            verify.append((path, _text_digest(text)))
+    return planned, verify
+
+
+def _apply_artifact_operation(path: Path, payload: str | bytes | None) -> None:
+    """Perform one planned step: delete, install exact shard bytes, or write text."""
+
+    if payload is None:
+        path.unlink()
+    elif isinstance(payload, bytes):
+        _atomic_bytes(path, payload)
+    else:
+        _atomic_text(path, payload)
+
+
+def _missing_directories(paths: Iterable[Path]) -> list[Path]:
+    """Directories an install would create, deepest first, so rollback can remove them."""
+
+    missing: set[Path] = set()
+    for path in paths:
+        parent = path.parent
+        while parent != parent.parent and not os.path.lexists(parent):
+            missing.add(parent)
+            parent = parent.parent
+    return sorted(missing, key=lambda directory: len(directory.parts), reverse=True)
+
+
 def _install_promotion_transaction(
-    artifact_updates: list[tuple[Path, str]],
+    artifact_updates: list[tuple[Path, str | None]],
     trait_updates: dict[Path, str],
 ) -> None:
     """Install a prevalidated promotion set with exact in-process rollback.
@@ -3823,24 +3969,38 @@ def _install_promotion_transaction(
     failure prevents an ordinary validation/I/O exception from leaving registries,
     receipts, and trait records at different promotion generations.  A sudden process
     or OS crash still requires a journal for true multi-file crash atomicity.
+
+    Sharded registries are planned and refused before the first write, installed shard
+    by shard with each manifest last, and re-verified against the intended text after
+    any deletes and before the first trait write (#801).  Rollback also runs on an
+    interrupt, restores in reverse order so a manifest is restored first, and removes
+    the directories this install created.
     """
 
-    targets = [path.resolve() for path, _text in artifact_updates]
+    planned, verify = _plan_artifact_updates(artifact_updates)
+    targets = [path for path, _payload in planned]
     targets.extend(path.resolve() for path in sorted(trait_updates))
     if len(targets) != len(set(targets)):
         raise GroundingError("promotion transaction contains duplicate output paths")
     snapshots = {path: path.read_bytes() if path.is_file() else None for path in targets}
+    created = _missing_directories(targets)
     attempted: list[Path] = []
     try:
-        for path, text in artifact_updates:
-            resolved = path.resolve()
-            attempted.append(resolved)
-            _atomic_text(resolved, text)
+        for path, payload in planned:
+            attempted.append(path)
+            _apply_artifact_operation(path, payload)
+        for path, expected in verify:
+            installed = layout.sharded_digest(path)
+            if installed != expected:
+                raise GroundingError(
+                    f"installed sharded registry does not verify as the intended image: "
+                    f"{path} ({installed} != {expected})"
+                )
         for path in sorted(trait_updates):
             resolved = path.resolve()
             attempted.append(resolved)
             write_validated_record(resolved, trait_updates[path], encoding="utf-8")
-    except Exception as exc:
+    except BaseException as exc:
         rollback_errors: list[str] = []
         for path in reversed(attempted):
             try:
@@ -3851,11 +4011,19 @@ def _install_promotion_transaction(
                     _atomic_bytes(path, snapshot)
             except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O path
                 rollback_errors.append(f"{path}: {rollback_exc}")
+        for directory in created:
+            try:
+                if os.path.lexists(directory):
+                    directory.rmdir()
+            except OSError as rollback_exc:  # pragma: no cover - foreign entry appeared
+                rollback_errors.append(f"{directory}: {rollback_exc}")
         if rollback_errors:
             raise GroundingError(
                 "promotion transaction failed and rollback was incomplete: "
                 + "; ".join(rollback_errors[:5])
             ) from exc
+        if not isinstance(exc, Exception):
+            raise
         raise GroundingError(f"promotion transaction failed and was rolled back: {exc}") from exc
 
 
@@ -4513,6 +4681,24 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _promotion_lock_directory(args: argparse.Namespace) -> Path | None:
+    """The directory whose registries ``promote --apply`` holds exclusively.
+
+    It is the bindings registry's parent, ``data/grounding`` by default.  ``None``
+    means no lock: a parent inside a trait root or inside a sharded registry is
+    refused by path validation later, and a lock file must never be created there.
+    """
+
+    directory = args.durable_qualified_record_bindings.resolve().parent
+    if (
+        any(layout.is_sharded(part) for part in (directory, *directory.parents))
+        or _path_is_under(directory, DEFAULT_TRAITS)
+        or _path_is_under(directory, args.traits)
+    ):
+        return None
+    return directory
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "resolve" and args.protein_registry:
@@ -4528,8 +4714,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "promote" and args.sifts_registry is None:
         args.sifts_registry = args.resolved.resolve().parent / "sifts_mappings.jsonl"
     try:
+        if args.command == "promote" and args.apply:
+            # One writer at a time per registry directory (#801); dry runs never lock.
+            lock_directory = _promotion_lock_directory(args)
+            lock = nullcontext() if lock_directory is None else layout.registry_lock(lock_directory)
+            with lock:
+                return args.func(args)
         return args.func(args)
-    except GroundingError as exc:
+    except (GroundingError, layout.RegistryLayoutError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
 

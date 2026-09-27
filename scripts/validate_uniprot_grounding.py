@@ -16,7 +16,8 @@ example.  A QUALIFIED claim is always validated strictly, with or without that
 flag.
 
 The protein, occurrence-evidence, and UniProt-membership registries are JSONL
-with one normalized object per line.  A qualified UniProt ``SOURCE_MEMBERSHIP``
+with one normalized object per line.  The durable evidence and qualified-record
+binding registries are sharded ``.jsonl.d`` directories of that JSONL (#801).  A qualified UniProt ``SOURCE_MEMBERSHIP``
 claim is replayed against the exact content-addressed database cross-reference::
 
     python scripts/validate_uniprot_grounding.py data/traits/sequence/domain \
@@ -42,14 +43,18 @@ from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
 
+import grounding_registry_layout as layout
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRAITS = ROOT / "data" / "traits"
 DEFAULT_REPORT = ROOT / "reports" / "uniprot-grounding" / "validation.tsv"
 DEFAULT_REGISTRY = ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_EVIDENCE_REGISTRY = ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Sharded ``.jsonl.d`` directories (#801); a flat path given explicitly still reads
+# as one file.
+DEFAULT_EVIDENCE_REGISTRY = ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
 DEFAULT_MEMBERSHIP_REGISTRY = ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 DEFAULT_QUALIFIED_RECORD_BINDINGS = (
-    ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl"
+    ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
 )
 
 QUALIFIED = "QUALIFIED"
@@ -1806,52 +1811,58 @@ def load_evidence_registry(
     """Load a strict, content-addressed GroundingEvidence JSONL registry.
 
     Invalid rows are rejected from the returned mapping; callers can never
-    dereference an object with unknown/missing fields or a bad digest.
+    dereference an object with unknown/missing fields or a bad digest.  A
+    ``.jsonl.d`` path is a sharded registry (#801): each layout defect is a finding
+    with its own code, and row findings name the shard file and line.
     """
 
     registry: dict[str, dict[str, Any]] = {}
     findings: list[Finding] = []
-    if not path.is_file():
+    image = layout.read_registry(path)
+    if image.kind == "absent":
         return registry, [
             _evidence_finding(
                 "evidence_registry_not_found", "evidence registry does not exist", path, 0
             )
         ]
-    with path.open(encoding="utf-8") as handle:
-        for line_number, raw in enumerate(handle, 1):
-            if not raw.strip():
-                continue
-            try:
-                value = json.loads(
-                    raw,
-                    parse_constant=lambda token: (_ for _ in ()).throw(
-                        ValueError(f"non-finite JSON value {token}")
-                    ),
+    findings.extend(
+        _evidence_finding(issue.code, issue.message, issue.file, issue.line)
+        for issue in image.issues
+    )
+    for source, line_number, raw in image.lines:
+        if not raw.strip():
+            continue
+        try:
+            value = json.loads(
+                raw,
+                parse_constant=lambda token: (_ for _ in ()).throw(
+                    ValueError(f"non-finite JSON value {token}")
+                ),
+            )
+        except (json.JSONDecodeError, ValueError) as error:
+            findings.append(
+                _evidence_finding(
+                    "evidence_json_error", f"invalid JSON: {error}", source, line_number
                 )
-            except (json.JSONDecodeError, ValueError) as error:
-                findings.append(
-                    _evidence_finding(
-                        "evidence_json_error", f"invalid JSON: {error}", path, line_number
-                    )
+            )
+            continue
+        row_findings = validate_grounding_evidence(value, path=source, line=line_number)
+        findings.extend(row_findings)
+        if row_findings or not isinstance(value, dict):
+            continue
+        evidence_id = value["evidence_id"]
+        if evidence_id in registry:
+            findings.append(
+                _evidence_finding(
+                    "duplicate_evidence_key",
+                    f"duplicate evidence_id; first occurrence retained: {evidence_id}",
+                    source,
+                    line_number,
+                    value,
                 )
-                continue
-            row_findings = validate_grounding_evidence(value, path=path, line=line_number)
-            findings.extend(row_findings)
-            if row_findings or not isinstance(value, dict):
-                continue
-            evidence_id = value["evidence_id"]
-            if evidence_id in registry:
-                findings.append(
-                    _evidence_finding(
-                        "duplicate_evidence_key",
-                        f"duplicate evidence_id; first occurrence retained: {evidence_id}",
-                        path,
-                        line_number,
-                        value,
-                    )
-                )
-                continue
-            registry[evidence_id] = value
+            )
+            continue
+        registry[evidence_id] = value
     return registry, findings
 
 
@@ -2166,11 +2177,17 @@ def load_qualified_record_bindings(
     repo_root: Path = ROOT,
     traits_root: Path = DEFAULT_TRAITS,
 ) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
-    """Load and validate durable evidence-to-record content-gate receipts."""
+    """Load and validate durable evidence-to-record content-gate receipts.
+
+    A ``.jsonl.d`` path is read through the sharded layout (#801): layout defects
+    become findings, row findings name the shard file and line, and coverage findings
+    name the registry directory.
+    """
 
     bindings: dict[str, dict[str, Any]] = {}
     findings: list[Finding] = []
-    if not path.is_file():
+    image = layout.read_registry(path)
+    if image.kind == "absent":
         return bindings, [
             _binding_finding(
                 "binding_registry_not_found",
@@ -2179,48 +2196,51 @@ def load_qualified_record_bindings(
                 0,
             )
         ]
+    findings.extend(
+        _binding_finding(issue.code, issue.message, issue.file, issue.line)
+        for issue in image.issues
+    )
 
     record_cache: dict[Path, tuple[object, str, list[Finding]]] = {}
-    with path.open(encoding="utf-8") as handle:
-        for line_number, raw in enumerate(handle, 1):
-            if not raw.strip():
-                continue
-            try:
-                value = json.loads(raw)
-            except json.JSONDecodeError as error:
-                findings.append(
-                    _binding_finding(
-                        "binding_json_error",
-                        f"invalid JSON: {error.msg}",
-                        path,
-                        line_number,
-                    )
+    for source, line_number, raw in image.lines:
+        if not raw.strip():
+            continue
+        try:
+            value = json.loads(raw)
+        except json.JSONDecodeError as error:
+            findings.append(
+                _binding_finding(
+                    "binding_json_error",
+                    f"invalid JSON: {error.msg}",
+                    source,
+                    line_number,
                 )
-                continue
-            evidence_id, row_findings = _validate_qualified_record_binding(
-                value,
-                path=path,
-                line=line_number,
-                evidence_registry=evidence_registry,
-                record_cache=record_cache,
-                repo_root=repo_root,
-                traits_root=traits_root,
             )
-            findings.extend(row_findings)
-            if evidence_id is None or not isinstance(value, dict):
-                continue
-            if evidence_id in bindings:
-                findings.append(
-                    _binding_finding(
-                        "duplicate_binding_key",
-                        f"duplicate qualified-record binding for {evidence_id}",
-                        path,
-                        line_number,
-                        value,
-                    )
+            continue
+        evidence_id, row_findings = _validate_qualified_record_binding(
+            value,
+            path=source,
+            line=line_number,
+            evidence_registry=evidence_registry,
+            record_cache=record_cache,
+            repo_root=repo_root,
+            traits_root=traits_root,
+        )
+        findings.extend(row_findings)
+        if evidence_id is None or not isinstance(value, dict):
+            continue
+        if evidence_id in bindings:
+            findings.append(
+                _binding_finding(
+                    "duplicate_binding_key",
+                    f"duplicate qualified-record binding for {evidence_id}",
+                    source,
+                    line_number,
+                    value,
                 )
-                continue
-            bindings[evidence_id] = value
+            )
+            continue
+        bindings[evidence_id] = value
 
     missing = sorted(set(evidence_registry) - set(bindings))
     extra = sorted(set(bindings) - set(evidence_registry))
@@ -3634,6 +3654,10 @@ def _write_findings(path: Path, findings: Sequence[Finding]) -> None:
             writer.writerow(asdict(finding))
 
 
+def _same_path(left: Path, right: Path) -> bool:
+    return left.resolve() == right.resolve()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -3649,7 +3673,10 @@ def main(argv: list[str] | None = None) -> int:
         "--evidence-registry",
         type=Path,
         default=DEFAULT_EVIDENCE_REGISTRY,
-        help=f"GroundingEvidence JSONL registry (default {DEFAULT_EVIDENCE_REGISTRY})",
+        help=(
+            "GroundingEvidence registry: a sharded .jsonl.d directory or a flat JSONL "
+            f"file (default {DEFAULT_EVIDENCE_REGISTRY})"
+        ),
     )
     parser.add_argument(
         "--membership-registry",
@@ -3750,21 +3777,38 @@ def main(argv: list[str] | None = None) -> int:
     if qualified_input or registry_explicit or args.registry.is_file():
         registry, registry_findings = load_registry(args.registry)
         findings.extend(registry_findings)
-    evidence_explicit = args.evidence_registry != DEFAULT_EVIDENCE_REGISTRY
-    if qualified_input or evidence_explicit or args.evidence_registry.is_file():
+    # Durable evidence is only ever checked together with its bindings (#801). Paths
+    # compare by resolved identity, so a relative spelling of a default is still the
+    # default, and either artifact existing in either layout loads both: a missing
+    # partner is a finding, never a silent skip.
+    evidence_explicit = not _same_path(args.evidence_registry, DEFAULT_EVIDENCE_REGISTRY)
+    binding_explicit = not _same_path(
+        args.qualified_record_bindings, DEFAULT_QUALIFIED_RECORD_BINDINGS
+    )
+    if (
+        qualified_input
+        or evidence_explicit
+        or binding_explicit
+        or layout.registry_exists(args.evidence_registry)
+        or layout.registry_exists(args.qualified_record_bindings)
+    ):
         evidence_registry, evidence_findings = load_evidence_registry(args.evidence_registry)
         findings.extend(evidence_findings)
-    binding_explicit = args.qualified_record_bindings != DEFAULT_QUALIFIED_RECORD_BINDINGS
-    default_binding_visible = (
-        args.evidence_registry == DEFAULT_EVIDENCE_REGISTRY
-        and args.qualified_record_bindings.is_file()
-    )
-    if evidence_registry is not None and (binding_explicit or default_binding_visible):
+    evidence_is_durable = layout.is_sharded(args.evidence_registry) or not evidence_explicit
+    if evidence_registry is not None and (evidence_is_durable or binding_explicit):
         qualified_record_bindings, binding_findings = load_qualified_record_bindings(
             args.qualified_record_bindings,
             evidence_registry,
         )
         findings.extend(binding_findings)
+    elif evidence_registry is not None:
+        # The one remaining skip: an explicit flat staging ledger has no receipts of its
+        # own. Say so even under --quiet, so a green run never implies bindings passed.
+        print(
+            "qualified record bindings: NOT CHECKED (explicit non-durable "
+            "--evidence-registry; pass --qualified-record-bindings)",
+            file=sys.stderr,
+        )
     evidence_lookup = evidence_registry or {}
     uniprot_membership_uses = [
         use

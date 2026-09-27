@@ -18,6 +18,7 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 ground = importlib.import_module("ground_uniprot_examples")
 grounding_validator = importlib.import_module("validate_uniprot_grounding")
+layout = importlib.import_module("grounding_registry_layout")
 membership_snapshot = importlib.import_module("uniprot_membership_snapshot")
 ecod_sifts = importlib.import_module("build_ecod_sifts_candidates")
 fetch_registry = importlib.import_module("fetch_uniprot_registry")
@@ -32,6 +33,43 @@ def _jsonl(path: pathlib.Path, rows: list[dict]) -> None:
 
 def _jsonl_rows(path: pathlib.Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+
+def _shard_durable_outputs(fixture: dict) -> None:
+    """Point the fixture's durable evidence and bindings at sharded ``.jsonl.d`` paths."""
+
+    for key in ("durable_evidence", "durable_bindings"):
+        fixture[key] = fixture[key].with_name(fixture[key].name + ".d")
+
+
+def _durable_exists(path: pathlib.Path) -> bool:
+    return path.is_dir() if layout.is_sharded(path) else path.is_file()
+
+
+def _durable_bytes(path: pathlib.Path) -> bytes:
+    """A durable registry's logical bytes: the flat file, or its verified shards joined."""
+
+    if not layout.is_sharded(path):
+        return path.read_bytes()
+    assert layout.read_registry(path).issues == ()
+    return b"".join(shard.read_bytes() for shard in sorted(path.glob("[0-9a-f][0-9a-f].jsonl")))
+
+
+def _artifact_image(path: pathlib.Path) -> bytes | dict[str, bytes]:
+    """Exact on-disk bytes of a file, or of every entry of a sharded registry."""
+
+    if path.is_dir():
+        return {entry.name: entry.read_bytes() for entry in sorted(path.iterdir())}
+    return path.read_bytes()
+
+
+def _tree(root: pathlib.Path) -> dict[str, bytes | None]:
+    """Every file (with its bytes) and directory (``None``) under ``root``."""
+
+    return {
+        entry.relative_to(root).as_posix(): None if entry.is_dir() else entry.read_bytes()
+        for entry in sorted(root.rglob("*"))
+    }
 
 
 def _sidecar(path: pathlib.Path, source: str, release: str, proteins: dict) -> None:
@@ -2572,7 +2610,12 @@ def test_promote_rejects_small_source_when_one_available_record_is_undecided(loc
     assert not local_sources["durable_evidence"].exists()
 
 
-def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, monkeypatch):
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+def test_promote_is_dry_run_then_validated_apply_and_idempotent(
+    local_sources, monkeypatch, durable_layout
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("approved.tsv")
     _approve(local_sources["review"], approved)
@@ -2582,8 +2625,8 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
         assert encoding == "utf-8"
         # Durable references and source evidence must exist before trait mutation.
         assert local_sources["durable_registry"].is_file()
-        assert local_sources["durable_evidence"].is_file()
-        assert local_sources["durable_bindings"].is_file()
+        assert _durable_exists(local_sources["durable_evidence"])
+        assert _durable_exists(local_sources["durable_bindings"])
         writes.append(pathlib.Path(path))
         pathlib.Path(path).write_text(text, encoding=encoding)
 
@@ -2599,13 +2642,26 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
     assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
     assert writes == [local_sources["record"]]
     durable_reference = json.loads(local_sources["durable_registry"].read_text())
-    durable_evidence = json.loads(local_sources["durable_evidence"].read_text())
+    durable_evidence = json.loads(_durable_bytes(local_sources["durable_evidence"]))
     assert durable_reference == json.loads(local_sources["registry"].read_text())
     assert durable_evidence == json.loads(local_sources["evidence"].read_text())
+    if durable_layout == "sharded":
+        # One evidence row: one shard plus the manifest, whose logical digest is the
+        # sha256 the flat file would have had.
+        evidence_dir = local_sources["durable_evidence"]
+        [shard] = sorted(evidence_dir.glob("[0-9a-f][0-9a-f].jsonl"))
+        assert shard.name == layout.shard_name(durable_evidence["evidence_id"])
+        assert sorted(entry.name for entry in evidence_dir.iterdir()) == [
+            shard.name,
+            layout.MANIFEST_NAME,
+        ]
+        manifest = json.loads((evidence_dir / layout.MANIFEST_NAME).read_text())
+        assert manifest["logical_sha256"] == hashlib.sha256(shard.read_bytes()).hexdigest()
+        assert ground._artifact_digest(evidence_dir) == manifest["logical_sha256"]
     durable_bytes = (
         local_sources["durable_registry"].read_bytes(),
-        local_sources["durable_evidence"].read_bytes(),
-        local_sources["durable_bindings"].read_bytes(),
+        _artifact_image(local_sources["durable_evidence"]),
+        _artifact_image(local_sources["durable_bindings"]),
     )
     record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
     example = record["canonical_examples"][0]
@@ -2619,8 +2675,8 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
     assert writes == [local_sources["record"]]
     assert (
         local_sources["durable_registry"].read_bytes(),
-        local_sources["durable_evidence"].read_bytes(),
-        local_sources["durable_bindings"].read_bytes(),
+        _artifact_image(local_sources["durable_evidence"]),
+        _artifact_image(local_sources["durable_bindings"]),
     ) == durable_bytes
     assert not local_sources["durable_membership"].exists()
 
@@ -3263,15 +3319,22 @@ def test_current_hard_debt_blocks_even_with_a_digest_valid_durable_receipt(local
     assert all(local_sources[key].read_bytes() == value for key, value in before.items())
 
 
-def test_all_clean_durable_and_selected_receipts_replay_idempotently(local_sources, capsys):
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+def test_all_clean_durable_and_selected_receipts_replay_idempotently(
+    local_sources, capsys, durable_layout
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("clean-binding-approved.tsv")
     _approve(local_sources["review"], approved)
     assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
-    receipt = _jsonl_rows(local_sources["durable_bindings"])[0]
+    [receipt] = [
+        json.loads(line) for line in _durable_bytes(local_sources["durable_bindings"]).splitlines()
+    ]
     assert (
         receipt["evidence_id"]
-        == json.loads(local_sources["durable_evidence"].read_text(encoding="utf-8"))["evidence_id"]
+        == json.loads(_durable_bytes(local_sources["durable_evidence"]))["evidence_id"]
     )
     assert receipt["record_path"] == ground._display_path(local_sources["record"])
     assert (
@@ -3282,17 +3345,24 @@ def test_all_clean_durable_and_selected_receipts_replay_idempotently(local_sourc
     )
 
     before = {
-        key: local_sources[key].read_bytes()
+        key: _artifact_image(local_sources[key])
         for key in ("record", "durable_registry", "durable_evidence", "durable_bindings")
     }
     assert ground.main(_promote_args(local_sources, approved)) == 0
     assert "1 qualified-record binding(s)" in capsys.readouterr().out
-    assert all(local_sources[key].read_bytes() == value for key, value in before.items())
+    assert all(_artifact_image(local_sources[key]) == value for key, value in before.items())
+    # The applied replay rewrites nothing either: every artifact's digest is unchanged.
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert "WROTE 0 durable registry artifact(s)" in capsys.readouterr().out
+    assert all(_artifact_image(local_sources[key]) == value for key, value in before.items())
 
 
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
 def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_failure(
-    local_sources, monkeypatch, capsys
+    local_sources, monkeypatch, capsys, durable_layout
 ):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("rollback-binding-approved.tsv")
     _approve(local_sources["review"], approved)
@@ -3300,8 +3370,8 @@ def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_fai
 
     def fail_after_replace(path, text, encoding="utf-8"):
         assert local_sources["durable_registry"].is_file()
-        assert local_sources["durable_evidence"].is_file()
-        assert local_sources["durable_bindings"].is_file()
+        assert _durable_exists(local_sources["durable_evidence"])
+        assert _durable_exists(local_sources["durable_bindings"])
         pathlib.Path(path).write_text(text, encoding=encoding)
         raise OSError("injected trait install failure")
 
@@ -3314,6 +3384,391 @@ def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_fai
     assert not local_sources["durable_evidence"].exists()
     assert not local_sources["durable_bindings"].exists()
     assert not local_sources["durable_membership"].exists()
+    # The directories the install created, sharded registries included, are gone too.
+    assert not local_sources["durable_registry"].parent.exists()
+
+
+@pytest.mark.parametrize(
+    ("tamper", "expected"),
+    [
+        ("edit", "registry_manifest_mismatch"),
+        ("add", "registry_manifest_mismatch"),
+        ("remove", "registry_manifest_mismatch"),
+        ("edit-and-reseal", "changed during promotion preflight"),
+    ],
+)
+def test_promoter_refuses_a_shard_changed_between_preflight_and_apply(
+    local_sources, monkeypatch, capsys, tamper, expected
+):
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("stale-shard-approved.tsv")
+    _approve(local_sources["review"], approved)
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    capsys.readouterr()
+    bindings = local_sources["durable_bindings"]
+    untouched = {
+        key: _artifact_image(local_sources[key])
+        for key in ("record", "durable_registry", "durable_evidence")
+    }
+    tampered: list[bytes | dict[str, bytes]] = []
+    preflight = ground._promotion_qualified_record_preflight
+
+    def tamper_after_preflight(*args, **kwargs):
+        result = preflight(*args, **kwargs)
+        [shard] = sorted(bindings.glob("[0-9a-f][0-9a-f].jsonl"))
+        row = json.loads(shard.read_text(encoding="utf-8"))
+        if tamper == "remove":
+            shard.unlink()
+        elif tamper == "add":
+            # A well-formed row in its correct shard; only the manifest can catch it.
+            prefix = "ff" if shard.name != "ff.jsonl" else "00"
+            added = dict(row, evidence_id=f"ug-evidence:{prefix}{row['evidence_id'][14:]}")
+            (bindings / f"{prefix}.jsonl").write_text(
+                layout.canonical_line(added), encoding="utf-8"
+            )
+        else:
+            edited = dict(row, candidate_id=row["candidate_id"] + "-edited")
+            shard.write_text(layout.canonical_line(edited), encoding="utf-8")
+            if tamper == "edit-and-reseal":
+                (bindings / layout.MANIFEST_NAME).write_text(
+                    layout.build_manifest_text({shard.name: shard.read_bytes()}),
+                    encoding="utf-8",
+                )
+        tampered.append(_artifact_image(bindings))
+        return result
+
+    writes: list[tuple] = []
+    monkeypatch.setattr(ground, "_promotion_qualified_record_preflight", tamper_after_preflight)
+    monkeypatch.setattr(
+        ground, "write_validated_record", lambda *args, **kwargs: writes.append(args)
+    )
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    assert expected in capsys.readouterr().err
+    assert writes == []
+    assert all(_artifact_image(local_sources[key]) == value for key, value in untouched.items())
+    assert tampered == [_artifact_image(bindings)]
+
+
+def _registry_row(prefix: str, value: int) -> dict:
+    """A minimal row keyed into shard ``<prefix>.jsonl``; the layout reads only the key."""
+
+    return {"evidence_id": f"ug-evidence:{prefix}{value:062x}", "value": value}
+
+
+def _sharded_text(rows: list[dict]) -> str:
+    ordered = sorted(rows, key=lambda row: row["evidence_id"])
+    return "".join(layout.canonical_line(row) for row in ordered)
+
+
+def _write_sharded(path: pathlib.Path, rows: list[dict]) -> None:
+    shards = layout.split_registry_text(_sharded_text(rows))
+    path.mkdir(parents=True)
+    for name, data in shards.items():
+        (path / name).write_bytes(data)
+    (path / layout.MANIFEST_NAME).write_text(layout.build_manifest_text(shards), encoding="utf-8")
+
+
+def _transaction_case(root: pathlib.Path) -> tuple[list, dict]:
+    """One install exercising every kind of transaction step.
+
+    An existing sharded registry gets a changed shard, a new shard, an emptied
+    (deleted) shard, and a new manifest; a flat registry migrates to its sharded twin
+    and is deleted in the same call; a verbatim JSON artifact lands in two directories
+    the install creates; and one trait record is rewritten.
+    """
+
+    grounding = root / "grounding"
+    existing = grounding / "occurrence_evidence.jsonl.d"
+    _write_sharded(existing, [_registry_row("00", 1), _registry_row("01", 2)])
+    legacy = grounding / "migrated.jsonl"
+    legacy.write_text(_sharded_text([_registry_row("0a", 3)]), encoding="utf-8")
+    record = root / "traits" / "record.yaml"
+    record.parent.mkdir(parents=True)
+    record.write_text("identifier: X\n", encoding="utf-8")
+    updates = [
+        (existing, _sharded_text([_registry_row("00", 9), _registry_row("02", 4)])),
+        (legacy.with_name("migrated.jsonl.d"), legacy.read_text(encoding="utf-8")),
+        (legacy, None),
+        (root / "new" / "deeper" / "receipt.json", '{"b": 1, "a": [2]}\n'),
+    ]
+    return updates, {record: "identifier: X\nlabel: changed\n"}
+
+
+def _plain_record_writer(path, text, encoding="utf-8"):
+    pathlib.Path(path).write_text(text, encoding=encoding)
+
+
+# 4 steps for the existing registry, 2 for the migrated one, the flat delete, the
+# verbatim receipt, and the trait write.
+TRANSACTION_STEPS = 9
+
+
+def test_transaction_installs_shards_manifests_deletes_and_verbatim_files(
+    tmp_path, monkeypatch
+):
+    updates, traits = _transaction_case(tmp_path)
+    planned, verify = ground._plan_artifact_updates(updates)
+    assert len(planned) + len(traits) == TRANSACTION_STEPS
+    existing, existing_text = updates[0]
+    migrated, migrated_text = updates[1]
+    assert [path.name for path, _payload in planned][:4] == [
+        "00.jsonl",
+        "02.jsonl",
+        "01.jsonl",
+        layout.MANIFEST_NAME,
+    ]
+    assert [payload for path, payload in planned if path.name == "01.jsonl"] == [None]
+    assert [path for path, _digest in verify] == [existing.resolve(), migrated.resolve()]
+    monkeypatch.setattr(ground, "write_validated_record", _plain_record_writer)
+
+    ground._install_promotion_transaction(updates, traits)
+
+    assert ground._artifact_digest(existing) == ground._text_digest(existing_text)
+    assert sorted(entry.name for entry in existing.iterdir()) == [
+        "00.jsonl",
+        "02.jsonl",
+        layout.MANIFEST_NAME,
+    ]
+    assert layout.plan_sharded_write(existing, existing_text) == []
+    assert ground._artifact_digest(migrated) == ground._text_digest(migrated_text)
+    assert not updates[2][0].exists()
+    receipt, receipt_text = updates[3]
+    assert receipt.read_text(encoding="utf-8") == receipt_text  # verbatim, not canonical
+    assert [path.read_text(encoding="utf-8") for path in traits] == list(traits.values())
+
+
+@pytest.mark.parametrize("failure", [OSError, KeyboardInterrupt], ids=["oserror", "interrupt"])
+@pytest.mark.parametrize("when", ["before", "after"])
+@pytest.mark.parametrize("step_index", range(TRANSACTION_STEPS))
+def test_transaction_restores_every_preimage_after_a_fault_at_any_step(
+    tmp_path, monkeypatch, failure, when, step_index
+):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    calls = 0
+    apply_operation = ground._apply_artifact_operation
+
+    def step(action):
+        nonlocal calls
+        calls += 1
+        if calls - 1 == step_index and when == "before":
+            raise failure("injected transaction fault")
+        action()
+        if calls - 1 == step_index and when == "after":
+            raise failure("injected transaction fault")
+
+    monkeypatch.setattr(
+        ground,
+        "_apply_artifact_operation",
+        lambda path, payload: step(lambda: apply_operation(path, payload)),
+    )
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": step(
+            lambda: _plain_record_writer(path, text, encoding)
+        ),
+    )
+
+    if failure is KeyboardInterrupt:
+        with pytest.raises(KeyboardInterrupt):
+            ground._install_promotion_transaction(updates, traits)
+    else:
+        with pytest.raises(ground.GroundingError, match="failed and was rolled back"):
+            ground._install_promotion_transaction(updates, traits)
+    assert calls == step_index + 1
+    # Byte-identical preimages, no residue, and the created directories removed.
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize("failure", ["mismatch", "interrupt"])
+def test_post_install_verify_failure_rolls_back_before_any_trait_write(
+    tmp_path, monkeypatch, failure
+):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    writes: list[tuple] = []
+
+    def disagree(path):
+        if failure == "interrupt":
+            raise KeyboardInterrupt
+        return "0" * 64
+
+    monkeypatch.setattr(ground.layout, "sharded_digest", disagree)
+    monkeypatch.setattr(
+        ground, "write_validated_record", lambda *args, **kwargs: writes.append(args)
+    )
+    if failure == "interrupt":
+        with pytest.raises(KeyboardInterrupt):
+            ground._install_promotion_transaction(updates, traits)
+    else:
+        with pytest.raises(ground.GroundingError, match="does not verify"):
+            ground._install_promotion_transaction(updates, traits)
+    assert writes == []
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize("case", ["sharded-over-flat", "flat-over-sharded", "both-in-one-call"])
+def test_transaction_refuses_to_leave_both_registry_layouts(tmp_path, case):
+    flat = tmp_path / "occurrence_evidence.jsonl"
+    sharded = tmp_path / "occurrence_evidence.jsonl.d"
+    rows = [_registry_row("00", 1)]
+    text = _sharded_text(rows)
+    if case == "sharded-over-flat":
+        flat.write_text(text, encoding="utf-8")
+        updates = [(sharded, text)]
+    elif case == "flat-over-sharded":
+        _write_sharded(sharded, rows)
+        updates = [(flat, text)]
+    else:
+        updates = [(flat, text), (sharded, text)]
+    before = _tree(tmp_path)
+
+    with pytest.raises(ground.GroundingError, match="other registry layout"):
+        ground._install_promotion_transaction(updates, {})
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize(
+    ("payload", "message"),
+    [
+        ('{"value": 1, "evidence_id": "ug-evidence:' + "0" * 64 + '"}\n', "not canonical"),
+        (_sharded_text([_registry_row("01", 1)]) + _sharded_text([_registry_row("00", 1)]), "sorts"),
+        (_sharded_text([_registry_row("00", 1)]).rstrip("\n"), "final newline"),
+        ('{"evidence_id":"not-a-key"}\n', "evidence_id"),
+        (None, "cannot be deleted"),
+    ],
+    ids=["noncanonical", "unsorted", "unterminated", "bad-key", "delete"],
+)
+def test_transaction_refuses_a_malformed_sharded_image_before_any_write(
+    tmp_path, payload, message
+):
+    registry = tmp_path / "grounding" / "occurrence_evidence.jsonl.d"
+    other = tmp_path / "grounding" / "receipt.json"
+
+    with pytest.raises(ground.GroundingError, match=message):
+        ground._install_promotion_transaction([(other, "{}\n"), (registry, payload)], {})
+    assert _tree(tmp_path) == {}
+
+
+def test_flat_artifacts_are_still_written_verbatim(tmp_path):
+    # Staging-style flat JSONL keeps its lenient pre-#801 handling: no key, order, or
+    # canonical-form check, and the bytes land exactly as given.
+    flat = tmp_path / "durable" / "occurrence_evidence.jsonl"
+    receipt = tmp_path / "durable" / "receipt.json"
+    flat_text = '{"z": 1, "a": 2}\n\n{"evidence_id": "free-form"}\n'
+    receipt_text = '{\n  "b": 1\n}'
+
+    ground._install_promotion_transaction([(flat, flat_text), (receipt, receipt_text)], {})
+    assert flat.read_bytes() == flat_text.encode("utf-8")
+    assert receipt.read_bytes() == receipt_text.encode("utf-8")
+
+
+@pytest.mark.parametrize("case", ["nested-output", "input-inside", "traits-inside"])
+def test_promoter_rejects_paths_inside_a_sharded_durable_output(local_sources, case):
+    _shard_durable_outputs(local_sources)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    evidence = args.durable_evidence_registry
+    if case == "nested-output":
+        args.durable_protein_registry = evidence / "protein_registry.jsonl"
+        message = "must not nest"
+    elif case == "input-inside":
+        args.approved = evidence / "approved.tsv"
+        message = "--approved must not be inside the sharded durable registry"
+    else:
+        args.traits = evidence / "traits"
+        message = "--traits must not be inside the sharded durable registry"
+
+    with pytest.raises(ground.GroundingError, match=message):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    assert not evidence.exists()
+
+
+@pytest.mark.parametrize(
+    "attribute", ["durable_evidence_registry", "durable_qualified_record_bindings"]
+)
+def test_promoter_rejects_flat_evidence_or_bindings_output_under_protected_root(
+    local_sources, tmp_path, monkeypatch, attribute
+):
+    protected = tmp_path / "protected-grounding"
+    monkeypatch.setattr(ground, "PROTECTED_GROUNDING_ROOT", protected)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    flat = protected / getattr(args, attribute).name
+    setattr(args, attribute, flat)
+
+    with pytest.raises(ground.GroundingError, match=r"must be a sharded \.jsonl\.d registry"):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    setattr(args, attribute, flat.with_name(flat.name + ".d"))
+    ground._validate_durable_paths(args, args.traits.resolve())
+    assert not protected.exists()
+
+
+def test_absent_evidence_or_bindings_under_protected_root_is_not_a_fresh_start(
+    tmp_path, monkeypatch
+):
+    protected = tmp_path / "grounding"
+    protected.mkdir()
+    monkeypatch.setattr(ground, "PROTECTED_GROUNDING_ROOT", protected)
+
+    with pytest.raises(ground.GroundingError, match="evidence registry missing under"):
+        ground._load_durable_evidence_registry(protected / "occurrence_evidence.jsonl.d")
+    with pytest.raises(
+        ground.GroundingError, match="qualified-record binding registry missing under"
+    ):
+        ground._load_durable_qualified_record_bindings(
+            protected / "qualified_record_bindings.jsonl.d", {}
+        )
+    # Scratch fixture paths keep reading a missing registry as empty.
+    scratch = tmp_path / "scratch"
+    assert ground._load_durable_evidence_registry(scratch / "occurrence_evidence.jsonl.d") == (
+        {},
+        None,
+    )
+    assert ground._load_durable_qualified_record_bindings(
+        scratch / "qualified_record_bindings.jsonl.d", {}
+    ) == ({}, None)
+    assert list(protected.iterdir()) == []
+    assert not scratch.exists()
+
+
+def test_legacy_flat_path_beside_its_sharded_twin_is_refused_by_the_promoter(tmp_path):
+    sharded = tmp_path / "qualified_record_bindings.jsonl.d"
+    _write_sharded(sharded, [])
+
+    with pytest.raises(ground.GroundingError, match="registry migrated to"):
+        ground._artifact_digest(tmp_path / "qualified_record_bindings.jsonl")
+    assert ground._artifact_digest(sharded) == hashlib.sha256(b"").hexdigest()
+
+
+def test_second_promote_apply_under_a_held_lock_exits_2_and_dry_runs_take_no_lock(
+    local_sources, capsys
+):
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("locked-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable_root = local_sources["durable_bindings"].parent
+    durable_root.mkdir()
+    lock_file = durable_root / layout.LOCK_NAME
+    original = local_sources["record"].read_bytes()
+
+    assert ground.main(_promote_args(local_sources, approved)) == 0
+    assert not lock_file.exists()
+    with layout.registry_lock(durable_root) as held:
+        assert held == lock_file
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+        assert "registry_locked" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert sorted(entry.name for entry in durable_root.iterdir()) == [layout.LOCK_NAME]
+        # A dry run never contends for the lock.
+        assert ground.main(_promote_args(local_sources, approved)) == 0
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert local_sources["record"].read_bytes() != original
 
 
 def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tmp_path):
@@ -3337,11 +3792,11 @@ def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tm
         args.durable_qualified_record_bindings == ground.DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS
     )
     assert args.durable_protein_registry == REPO / "data/grounding/protein_registry.jsonl"
-    assert args.durable_evidence_registry == REPO / "data/grounding/occurrence_evidence.jsonl"
+    assert args.durable_evidence_registry == REPO / "data/grounding/occurrence_evidence.jsonl.d"
     assert args.durable_membership_registry == REPO / "data/grounding/uniprot_memberships.jsonl"
     assert (
         args.durable_qualified_record_bindings
-        == REPO / "data/grounding/qualified_record_bindings.jsonl"
+        == REPO / "data/grounding/qualified_record_bindings.jsonl.d"
     )
 
 

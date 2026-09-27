@@ -30,6 +30,8 @@ FULL_VALIDATION_PATHS = frozenset(
         "scripts/uniprot_record_content_gate.py",
         "scripts/validate_strict.py",
         "scripts/validate_uniprot_grounding.py",
+        # The grounding validator reads the durable registries through it (#801).
+        "scripts/grounding_registry_layout.py",
         "scripts/elife_metallophore_grounding.py",
         "scripts/elife_metallophores.py",
         "data/curation/elife109154_traits.yaml",
