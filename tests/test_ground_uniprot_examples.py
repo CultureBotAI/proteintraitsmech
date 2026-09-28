@@ -71,6 +71,65 @@ def _record(identifier: str = "Pfam:PF00001", axis: str = "SEQUENCE") -> str:
     )
 
 
+@pytest.mark.parametrize("loader", [yaml.SafeLoader, ground._YAML_SAFE_LOADER])
+def test_record_facts_preserves_yaml_types_order_and_byte_binding(tmp_path, monkeypatch, loader):
+    monkeypatch.setattr(ground, "_YAML_SAFE_LOADER", loader)
+    text = _record().replace(
+        "A fixture trait.", "A β-rich region.\n  Coordinates use inclusive endpoints."
+    ) + (
+        "canonical_examples:\n"
+        "- protein_id: UniProtKB:P12345\n"
+        "  protein_label: Fixture protein\n"
+        "  sequence_length: 9\n"
+        "  reviewed: true\n"
+        "  uniprot_release: '2026_03'\n"
+        "  fetched_at: '2026-09-16'\n"
+        "  features:\n"
+        "  - type: DOMAIN\n"
+        "    start: 2\n"
+        "    end: 5\n"
+        "    description: |-\n"
+        "      First line.\n"
+        "      Second line.\n"
+    )
+    path = tmp_path / "record.yaml"
+    path.write_bytes(text.encode("utf-8"))
+    context = ground.ProviderContext(providers=set(), residue_path=tmp_path / "residue.json")
+
+    record, preimage, sha256 = ground._record_facts(path, context)
+
+    assert preimage == text
+    assert sha256 == hashlib.sha256(text.encode("utf-8")).hexdigest()
+    assert record["definition"] == "A β-rich region. Coordinates use inclusive endpoints."
+    example = record["canonical_examples"][0]
+    assert list(example) == [
+        "protein_id", "protein_label", "sequence_length", "reviewed",
+        "uniprot_release", "fetched_at", "features",
+    ]
+    assert type(example["sequence_length"]) is int
+    assert example["sequence_length"] == 9
+    assert example["reviewed"] is True
+    assert example["uniprot_release"] == "2026_03"
+    assert example["fetched_at"] == "2026-09-16"
+    assert example["features"] == [
+        {"type": "DOMAIN", "start": 2, "end": 5, "description": "First line.\nSecond line."}
+    ]
+    assert path.read_bytes() == text.encode("utf-8")
+
+
+@pytest.mark.parametrize("loader", [yaml.SafeLoader, ground._YAML_SAFE_LOADER])
+def test_record_facts_rejects_python_object_tags(tmp_path, monkeypatch, loader):
+    monkeypatch.setattr(ground, "_YAML_SAFE_LOADER", loader)
+    path = tmp_path / "record.yaml"
+    path.write_text("identifier: !!python/object/apply:builtins.str [123]\n", encoding="utf-8")
+    context = ground.ProviderContext(providers=set(), residue_path=tmp_path / "residue.json")
+
+    with pytest.raises(ground.GroundingError, match="invalid:record_yaml"):
+        ground._record_facts(path, context)
+
+    assert not context.record_cache
+
+
 @pytest.fixture
 def local_sources(tmp_path):
     traits = tmp_path / "traits"
@@ -459,6 +518,63 @@ def _unrelated_registry_rows(fixture: dict, protein_id: str) -> tuple[dict, dict
     evidence["protein_id"] = protein_id
     evidence["evidence_id"] = grounding_validator.compute_evidence_id(evidence)
     return reference, evidence
+
+
+def _prepare_existing_example_pair(fixture, *, omit=None, duplicate=None):
+    references = _jsonl_rows(fixture["source_registry"])
+    second_sequence = "LMNPQRSTV"
+    references.append({
+        **references[0],
+        "protein_id": "UniProtKB:P54321",
+        "protein_label": "Second fixture protein",
+        "sequence": second_sequence,
+        "sequence_sha256": hashlib.sha256(second_sequence.encode("ascii")).hexdigest(),
+    })
+    _jsonl(fixture["source_registry"], references)
+    for name in ("residue", "interpro"):
+        document = json.loads(fixture[name].read_text())
+        document["proteins"]["P54321"] = (
+            {"seq": second_sequence, "ft": []}
+            if name == "residue" else {"Pfam:PF00001": [[2, 5]]}
+        )
+        document["_meta"]["count"] = 2
+        fixture[name].write_text(json.dumps(document))
+    profiles = _jsonl_rows(fixture["profiles"])
+    profiles.append({**profiles[0], "accession": "UniProtKB:P54321"})
+    _jsonl(fixture["profiles"], profiles)
+    candidates = [fixture["candidate"], {
+        **fixture["candidate"],
+        "protein_id": references[1]["protein_id"],
+        "sequence_sha256": references[1]["sequence_sha256"],
+    }]
+    _jsonl(fixture["queue"], candidates)
+    examples = [{
+        "protein_id": reference["protein_id"],
+        "protein_label": "Preserved legacy example",
+        "sequence": reference["sequence"],
+        "features": [{"feature_type": "DOMAIN", "start": 1, "end": 3,
+                      "note": "Generic feature retained separately"}],
+    } for reference in reversed(references)]
+    examples.insert(1, {"protein_id": "UniProtKB:Q99999", "protein_label": "Untouched example"})
+    examples = [example for example in examples if example["protein_id"] != omit]
+    if duplicate:
+        examples.append(dict(next(e for e in examples if e["protein_id"] == duplicate)))
+    before = {**yaml.safe_load(_record()), "canonical_examples": examples}
+    fixture["record"].write_text(yaml.safe_dump(before, sort_keys=False))
+    assert ground.main(_resolve_args(fixture)) == 0
+    rows = _jsonl_rows(fixture["resolved"])
+    assert len(rows) == 2 and all(row["qualification_status"] == "QUALIFIED" for row in rows)
+    approved = fixture["review"].with_name("existing-pair-approved.tsv")
+    _approve(fixture["review"], approved)
+    return before, rows, approved
+
+
+def _promotion_images(fixture):
+    return {
+        key: fixture[key].read_bytes() if fixture[key].exists() else None
+        for key in ("record", "durable_registry", "durable_evidence", "durable_bindings",
+                    "durable_membership")
+    }
 
 
 def _membership_row(
@@ -2478,6 +2594,167 @@ def test_promote_rejects_multiple_approved_alternatives_for_one_trait_record(loc
     assert alternative["candidate_id"] in error
     assert not local_sources["durable_registry"].exists()
     assert not local_sources["durable_evidence"].exists()
+
+
+def test_enrich_existing_examples_preserves_order_features_and_is_idempotent(local_sources):
+    before, rows, approved = _prepare_existing_example_pair(local_sources)
+    args = [*_promote_args(local_sources, approved), "--enrich-existing-examples"]
+    images = _promotion_images(local_sources)
+    assert ground.main(args) == 0
+    assert _promotion_images(local_sources) == images
+
+    assert ground.main([*args, "--apply"]) == 0
+    record = yaml.safe_load(local_sources["record"].read_text())
+    assert [e["protein_id"] for e in record["canonical_examples"]] == [
+        e["protein_id"] for e in before["canonical_examples"]
+    ]
+    assert record["canonical_examples"][1] == before["canonical_examples"][1]
+    assert {k: v for k, v in record.items() if k != "canonical_examples"} == {
+        k: v for k, v in before.items() if k != "canonical_examples"
+    }
+    by_protein = {row["protein_id"]: row for row in rows}
+    qualified = []
+    for original, example in zip(before["canonical_examples"], record["canonical_examples"]):
+        if example["protein_id"] not in by_protein:
+            continue
+        assert example["sequence"] == original["sequence"]
+        assert example["features"] == original["features"]
+        assert example["trait_occurrences"] == [by_protein[example["protein_id"]]["trait_occurrence"]]
+        qualified.append(example)
+    registry = ground._semantic_registry(local_sources["durable_registry"])
+    evidence = ground._semantic_evidence_registry(local_sources["durable_evidence"])
+    assert len(registry) == len(evidence) == len(qualified) == 2
+    assert not grounding_validator.validate_record(
+        {**record, "canonical_examples": qualified}, registry,
+        evidence_registry=evidence, file=str(local_sources["record"]), require_qualified=True,
+    )
+    bindings = _jsonl_rows(local_sources["durable_bindings"])
+    assert {row["evidence_id"] for row in bindings} == set(evidence)
+    assert all(row["record_sha256"] == hashlib.sha256(
+        local_sources["record"].read_bytes()).hexdigest() for row in bindings)
+    installed = _promotion_images(local_sources)
+    assert ground.main([*args, "--apply"]) == 0
+    assert _promotion_images(local_sources) == installed
+
+
+def test_multiple_existing_examples_still_require_opt_in(local_sources, capsys):
+    _, _, approved = _prepare_existing_example_pair(local_sources)
+    images = _promotion_images(local_sources)
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    assert "approves multiple alternatives for one trait record" in capsys.readouterr().err
+    assert _promotion_images(local_sources) == images
+
+
+@pytest.mark.parametrize("kind", ["missing", "duplicate"])
+def test_enrich_existing_examples_cannot_append_or_choose_duplicate_examples(
+    local_sources, capsys, kind,
+):
+    _, _, approved = _prepare_existing_example_pair(
+        local_sources,
+        omit="UniProtKB:P54321" if kind == "missing" else None,
+        duplicate="UniProtKB:P12345" if kind == "duplicate" else None,
+    )
+    images = _promotion_images(local_sources)
+    assert ground.main([
+        *_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples",
+    ]) == 2
+    assert "requires exactly one existing" in capsys.readouterr().err
+    assert _promotion_images(local_sources) == images
+
+
+def test_enrich_existing_examples_rejects_two_approvals_for_one_protein(local_sources, capsys):
+    _, rows, approved = _prepare_existing_example_pair(local_sources)
+    alternative = _alternative(rows[0], "ug-" + "a" * 64)
+    _jsonl(local_sources["resolved"], [*rows, alternative])
+    _write_decisions(approved, [(row, "APPROVED") for row in [*rows, alternative]])
+    images = _promotion_images(local_sources)
+    assert ground.main([
+        *_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples",
+    ]) == 2
+    assert "multiple alternatives for one trait/protein pair" in capsys.readouterr().err
+    assert _promotion_images(local_sources) == images
+
+
+def test_enrich_existing_examples_cannot_inflate_source_review_coverage(local_sources, capsys):
+    _, rows, approved = _prepare_existing_example_pair(local_sources)
+    undecided_record = _alternative(
+        rows[0], "ug-" + "b" * 64, trait_id="Pfam:PF00002",
+        record_path=str(local_sources["traits"] / "second.yaml"),
+    )
+    _jsonl(local_sources["resolved"], [*rows, undecided_record])
+    args = [*_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples"]
+    args[args.index("--min-source-reviews") + 1] = "2"
+    images = _promotion_images(local_sources)
+    assert ground.main(args) == 2
+    assert "lacks source-stratified coverage: Pfam=1/2" in capsys.readouterr().err
+    assert _promotion_images(local_sources) == images
+
+
+@pytest.mark.parametrize("failure", ["undecided", "cap", "provider", "stale", "digest"])
+def test_enrich_existing_examples_retains_preflight_gates(local_sources, capsys, failure):
+    _, rows, approved = _prepare_existing_example_pair(local_sources)
+    args = [*_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples"]
+    if failure == "undecided":
+        _write_decisions(approved, [(rows[0], "APPROVED"), (rows[1], "SKIP")])
+        expected = "leaves alternatives undecided"
+    elif failure == "cap":
+        args += ["--max-batch", "1"]
+        expected = "2 candidates; cap is 1"
+    elif failure == "provider":
+        frame = json.loads(local_sources["interpro"].read_text())
+        frame["proteins"]["P54321"]["Pfam:PF00001"] = [[2, 6]]
+        local_sources["interpro"].write_text(json.dumps(frame))
+        expected = "stale:provider_entry_changed:interpro_frame"
+    elif failure == "stale":
+        local_sources["record"].write_text(local_sources["record"].read_text() + "# curator edit\n")
+        expected = "stale:record_changed_since_resolve"
+    else:
+        rows[1]["intervals"] = [{"start": 2, "end": 6}]
+        _jsonl(local_sources["resolved"], rows)
+        expected = "resolution_digest"
+    images = _promotion_images(local_sources)
+    assert ground.main(args) == 2
+    assert expected in capsys.readouterr().err
+    assert _promotion_images(local_sources) == images
+
+
+def test_enrich_existing_examples_rolls_back_the_entire_transaction(local_sources, monkeypatch):
+    _, _, approved = _prepare_existing_example_pair(local_sources)
+    images = _promotion_images(local_sources)
+    original_write = ground.write_validated_record
+    writes = []
+
+    def interrupted_write(path, text, encoding="utf-8"):
+        assert len(_jsonl_rows(local_sources["durable_evidence"])) == 2
+        assert len(_jsonl_rows(local_sources["durable_bindings"])) == 2
+        original_write(path, text, encoding=encoding)
+        writes.append(path)
+        raise OSError("injected interruption after validated trait write")
+
+    monkeypatch.setattr(ground, "write_validated_record", interrupted_write)
+    assert ground.main([
+        *_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples",
+    ]) == 2
+    assert writes == [local_sources["record"]]
+    assert _promotion_images(local_sources) == images
+
+
+def test_enrich_existing_examples_refreshes_prior_evidence_bindings(local_sources):
+    _, rows, approved = _prepare_existing_example_pair(local_sources)
+    _write_decisions(approved, [(rows[0], "APPROVED"), (rows[1], "REJECTED")])
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    prior_evidence = _jsonl_rows(local_sources["durable_evidence"])[0]
+    assert ground.main([*_resolve_args(local_sources), "--replace-staging-outputs"]) == 0
+    _approve(local_sources["review"], approved)
+    assert ground.main([
+        *_promote_args(local_sources, approved, apply=True), "--enrich-existing-examples",
+    ]) == 0
+    evidence = _jsonl_rows(local_sources["durable_evidence"])
+    assert prior_evidence in evidence and len(evidence) == 2
+    bindings = _jsonl_rows(local_sources["durable_bindings"])
+    assert len(bindings) == 2
+    assert all(row["record_sha256"] == hashlib.sha256(
+        local_sources["record"].read_bytes()).hexdigest() for row in bindings)
 
 
 @pytest.mark.parametrize("undecided", [None, "", "SKIP"])

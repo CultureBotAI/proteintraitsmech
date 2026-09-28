@@ -39,6 +39,15 @@ source-stratified ledger, install the approved rows with the grounding promoter,
 `just validate-all` before committing the registry and trait changes together. A
 `QUALIFIED` record whose registry row is absent or inconsistent fails semantic validation.
 
+To add coordinates to several proteins already listed on one trait, use the central
+promoter's optional `--enrich-existing-examples` flag. Each approved protein must
+already occur exactly once in the current record, and only one source alternative
+may be approved for each trait/protein pair. Every alternative still needs an
+explicit review decision. The default remains one approved alternative per trait.
+Enrichment preserves example order and generic features, keeps the 1,000-approved-
+candidate cap, and replays the same sequence, source, schema, evidence and record
+checks before its transaction. It cannot append a new example protein.
+
 The durable protein registry can contain proteins pinned to different UniProt releases.
 Execution contracts that require one release, including SFLD HMMER receipts, must receive
 a release-specific staging registry through `--registry`. The eLife ingest preserves the
