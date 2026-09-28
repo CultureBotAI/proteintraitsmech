@@ -1769,7 +1769,7 @@ def test_current_durable_interpro_evidence_remains_clean_when_present():
 
     registry, findings = V.load_evidence_registry(path)
     interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
-    assert len(interpro) == 17024
+    assert len(interpro) == 17338
     assert findings == []
 
 
@@ -1905,6 +1905,13 @@ def test_prosite_and_literal_patterns_are_checked_against_occurrence_sequence():
     assert error is None and compiled is not None and compiled.fullmatch("STA")
     compiled, error = V.compile_sequence_pattern("S-T-{P}.")
     assert error is None and compiled is not None and compiled.fullmatch("STA")
+    compiled, error = V.compile_sequence_pattern("F-[IVFY]-G-[LM]-M-[G>].")
+    assert error is None and compiled is not None
+    assert compiled.fullmatch("FFGLMG")
+    assert compiled.fullmatch("FFGLM")
+    assert not compiled.fullmatch("FFGLMA")
+    compiled, error = V.compile_sequence_pattern("[SAG](2).")
+    assert error is None and compiled is not None and compiled.fullmatch("AS")
     compiled, error = V.compile_sequence_pattern("STA")
     assert error is None and compiled is not None and compiled.fullmatch("STA")
 
