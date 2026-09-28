@@ -2577,8 +2577,18 @@ def _prosite_atom(atom: str) -> str | None:
         base = "[ACDEFGHIKLMNPQRSTVWYUOBZJX*]"
     elif re.fullmatch(r"[ACDEFGHIKLMNPQRSTVWYUOBZJX*]", atom, re.I):
         base = re.escape(atom.upper())
-    elif re.fullmatch(r"\[[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+\]", atom, re.I):
-        base = atom.upper()
+    elif re.fullmatch(r"\[[ACDEFGHIKLMNPQRSTVWYUOBZJX*<>]+\]", atom, re.I):
+        terminal_prefix = r"\A" if "<" in atom else None
+        terminal_suffix = r"\Z" if ">" in atom else None
+        residues = atom[1:-1].replace("<", "").replace(">", "").upper()
+        if not residues or (repeat and (terminal_prefix is not None or terminal_suffix is not None)):
+            return None
+        alternatives = [f"[{residues}]"]
+        if terminal_prefix is not None:
+            alternatives.append(terminal_prefix)
+        if terminal_suffix is not None:
+            alternatives.append(terminal_suffix)
+        base = "(?:" + "|".join(alternatives) + ")"
     elif re.fullmatch(r"\{[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+\}", atom, re.I):
         base = "[^" + atom[1:-1].upper() + "]"
     else:
