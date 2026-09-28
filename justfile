@@ -1047,6 +1047,12 @@ audit-uniprot-grounding *args:
       --profiles data/profiles/profiles.jsonl \
       --out reports/uniprot-grounding "$@"
 
+# Join normalized iModulonDB component-gene rows to the local UniProt registry
+# and canonical examples. Dry-run by default; pass --apply to write
+# reports/imodulondb/candidates.jsonl, blocked.tsv, and summary.md.
+stage-imodulondb *args:
+    uv run python scripts/stage_imodulondb_uniprot_candidates.py {{args}}
+
 # Select a deterministic source-stratified review batch (<=1,000 unique trait
 # records, >=25 per available source, and every recognized special case). Dry-run
 # by default; --apply writes only ignored staging artifacts and their manifests.
