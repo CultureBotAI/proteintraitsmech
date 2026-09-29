@@ -3616,6 +3616,15 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
                 f"{name} under data/grounding must be a sharded {layout.SHARD_SUFFIX} "
                 f"registry: {output}"
             )
+    # The layout reader, and with it the validator and `check`, refuses a symlinked
+    # sharded registry (registry_layout_conflict). Every durable load and write below
+    # resolves its path first, so without this the promoter would accept the symlink and
+    # write through it into its target (#867).
+    for name, output in outputs.items():
+        if layout.is_sharded(output) and os.path.islink(output):
+            raise GroundingError(
+                f"registry_layout_conflict: {name} must not be a symlink: {output}"
+            )
     # Also any sharded registry that is not one of these outputs, in any letter case:
     # APFS resolves X.jsonl.D to X.jsonl.d, which the exact-name checks above miss.
     for output in outputs.values():

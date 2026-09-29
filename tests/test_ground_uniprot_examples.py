@@ -3801,6 +3801,29 @@ def test_promoter_rejects_flat_evidence_or_bindings_output_under_protected_root(
     assert not protected.exists()
 
 
+@pytest.mark.parametrize(
+    "attribute", ["durable_evidence_registry", "durable_qualified_record_bindings"]
+)
+def test_promoter_refuses_a_symlinked_sharded_durable_registry(local_sources, attribute):
+    """The promoter must not write through a symlink the validator rejects (#867)."""
+
+    _shard_durable_outputs(local_sources)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    registry = getattr(args, attribute)
+    target = registry.with_name("elsewhere-" + registry.name)
+    target.mkdir(parents=True)
+    (target / layout.MANIFEST_NAME).write_text(layout.build_manifest_text({}), encoding="utf-8")
+    registry.symlink_to(target, target_is_directory=True)
+    target_before = sorted((path.name, path.read_bytes()) for path in target.iterdir())
+
+    with pytest.raises(ground.GroundingError, match="must not be a symlink"):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    assert layout.read_registry(registry).issues[0].code == "registry_layout_conflict"
+    assert sorted((path.name, path.read_bytes()) for path in target.iterdir()) == target_before
+
+
 def test_absent_evidence_or_bindings_under_protected_root_is_not_a_fresh_start(
     tmp_path, monkeypatch
 ):
