@@ -837,12 +837,16 @@ def test_committed_registries_are_sharded_clean_and_paired() -> None:
     """
     ground = importlib.import_module("ground_uniprot_examples")
     validator = importlib.import_module("validate_uniprot_grounding")
+    audit = importlib.import_module("audit_uniprot_grounding")
     evidence_path, bindings_path = (
         layout.DEFAULT_ROOT / name for name in layout.CHECKED_REGISTRIES
     )
-    assert (ground.DEFAULT_DURABLE_EVIDENCE_REGISTRY, validator.DEFAULT_EVIDENCE_REGISTRY) == (
-        evidence_path, evidence_path,
-    )
+    # The audit recipe never passes --evidence-registry, so its default is production (#873).
+    assert (
+        ground.DEFAULT_DURABLE_EVIDENCE_REGISTRY,
+        validator.DEFAULT_EVIDENCE_REGISTRY,
+        audit.DEFAULT_EVIDENCE_REGISTRY,
+    ) == (evidence_path, evidence_path, evidence_path)
     assert (
         ground.DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS,
         validator.DEFAULT_QUALIFIED_RECORD_BINDINGS,
