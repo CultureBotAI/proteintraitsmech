@@ -811,6 +811,27 @@ def test_check_fails_on_any_issue(grounding_root: Path, capsys) -> None:
     assert "registry_manifest_missing" in capsys.readouterr().err
 
 
+def test_check_fails_on_an_unparseable_row(grounding_root: Path, capsys) -> None:
+    """A row that is not JSON raises no layout issue, so only `check`'s own unparseable
+    condition can fail it; the manifest is resealed to leave nothing else wrong (#871)."""
+
+    registry = grounding_root / layout.CHECKED_REGISTRIES[0]
+    shard = sorted(registry.glob("[0-9a-f][0-9a-f].jsonl"))[0]
+    shard.write_bytes(shard.read_bytes() + b"{not json\n")
+    shards = {path.name: path.read_bytes() for path in registry.glob("[0-9a-f][0-9a-f].jsonl")}
+    (registry / layout.MANIFEST_NAME).write_text(
+        layout.build_manifest_text(shards), encoding="utf-8"
+    )
+    assert layout.read_registry(registry).issues == ()
+
+    assert layout.main(["check", "--root", str(grounding_root)]) == 1
+    captured = capsys.readouterr()
+    assert f"{shard}:" in captured.err and "row is not JSON" in captured.err
+    assert f"{layout.CHECKED_REGISTRIES[0]}: kind=sharded" in captured.out
+    assert "logical_sha256=-" in captured.out
+    assert captured.out.rstrip().endswith("grounding registries: FAILED")
+
+
 def test_check_fails_on_an_oversized_shard(grounding_root: Path, capsys, monkeypatch) -> None:
     monkeypatch.setattr(layout, "MAX_SHARD_BYTES", 100)
     assert layout.main(["check", "--root", str(grounding_root)]) == 1

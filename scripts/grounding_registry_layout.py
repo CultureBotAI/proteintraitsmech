@@ -679,10 +679,12 @@ def _check(root: Path) -> int:
                 file=sys.stderr,
             )
         failed = failed or bool(image.issues or scan.unparseable or oversized)
+        # Never print a digest for a registry the readers would refuse (#871).
+        digest = None if scan.unparseable else image.logical_sha256
         print(
             f"{name}: kind={image.kind} rows={len(scan.keys)} shards={len(sizes)} "
             f"max_shard_bytes={max(sizes.values(), default=0)} "
-            f"logical_sha256={image.logical_sha256 or '-'}"
+            f"logical_sha256={digest or '-'}"
         )
         key_sets[name] = frozenset(scan.keys)
     if len(key_sets) == len(CHECKED_REGISTRIES):
