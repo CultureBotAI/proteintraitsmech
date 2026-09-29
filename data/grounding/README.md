@@ -86,7 +86,9 @@ would change evidence identifiers.
 **Never hand-edit a shard or a manifest**, and never regenerate a manifest to make an
 edit verify. Every change goes through the grounding promoter, whose transaction plans
 all shard writes before the first one, writes each manifest last, re-verifies the
-installed directories, and rolls back on any failure or interrupt.
+installed directories, and rolls back on any in-process failure, Ctrl-C included. A
+further Ctrl-C is held from the rollback's first step until it finishes, and a restore
+that still fails is reported as an incomplete rollback naming its paths.
 
 **Lock.** `promote --apply`, eLife `--apply`, and the migration hold an exclusive
 advisory lock on the gitignored `data/grounding/.grounding-registries.lock`. When
@@ -101,10 +103,12 @@ permission, or a network filesystem without `flock` support), the writer stops w
 `registry_lock_unavailable` before writing anything. Between machines sharing a network
 checkout, `flock` exclusion is not guaranteed. Dry runs do not lock.
 
-**Torn install recovery.** In-process failures roll back exactly. A power loss or
-`kill -9` mid-install can leave a manifest mismatch, a shard the commit does not have,
-or hidden `.<hh>.jsonl.<random>` / `.manifest.json.<random>` temporary files, which
-validation names as `registry_manifest_mismatch` or "interrupted atomic write residue".
+**Torn install recovery.** In-process failures roll back exactly. A power loss,
+`kill -9`, or a signal Python does not turn into an exception (such as an unhandled
+SIGTERM) mid-install is never rolled back. It can leave a manifest mismatch, a shard
+the commit does not have, or hidden `.<hh>.jsonl.<random>` / `.manifest.json.<random>`
+temporary files, which validation names as `registry_manifest_mismatch` or
+"interrupted atomic write residue".
 `git restore` alone brings back tracked files but never deletes an untracked shard,
 residue file or directory, so after confirming no writer is running:
 

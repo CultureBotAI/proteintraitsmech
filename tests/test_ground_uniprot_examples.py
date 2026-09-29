@@ -9,7 +9,9 @@ import importlib
 import json
 import os
 import pathlib
+import signal
 import sys
+import threading
 from types import MappingProxyType, SimpleNamespace
 
 import pytest
@@ -3580,6 +3582,93 @@ def test_transaction_restores_every_preimage_after_a_fault_at_any_step(
             ground._install_promotion_transaction(updates, traits)
     assert calls == step_index + 1
     # Byte-identical preimages, no residue, and the created directories removed.
+    assert _tree(tmp_path) == before
+
+
+# Rollback of _transaction_case, in reverse install order: the trait restore is its 1st
+# _atomic_bytes call, 01.jsonl (deleted by the install) its 4th.
+ROLLBACK_WRITE_PATHS = {
+    1: "traits/record.yaml",
+    4: "grounding/occurrence_evidence.jsonl.d/01.jsonl",
+}
+
+
+@pytest.mark.parametrize("rollback_write", sorted(ROLLBACK_WRITE_PATHS))
+@pytest.mark.parametrize("second_interrupt", ["sigint", "raised"])
+def test_a_second_interrupt_during_the_rollback_cannot_leave_a_silent_torn_install(
+    tmp_path, monkeypatch, second_interrupt, rollback_write
+):
+    """A real Ctrl-C is held until the rollback ends; any other exception from a restore
+    lets the remaining restores run and is reported as an incomplete rollback (#865)."""
+
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    rolling_back = False
+    rollback_writes = 0
+    atomic_bytes = ground._atomic_bytes
+
+    def interrupted_trait_write(path, text, encoding="utf-8"):
+        nonlocal rolling_back
+        _plain_record_writer(path, text, encoding)
+        rolling_back = True
+        raise KeyboardInterrupt  # the first Ctrl-C, after the last install step
+
+    def restore(path, payload):
+        nonlocal rollback_writes
+        if rolling_back:
+            rollback_writes += 1
+            if rollback_writes == rollback_write:
+                if second_interrupt == "sigint":
+                    signal.raise_signal(signal.SIGINT)
+                else:
+                    raise KeyboardInterrupt
+        atomic_bytes(path, payload)
+
+    monkeypatch.setattr(ground, "write_validated_record", interrupted_trait_write)
+    monkeypatch.setattr(ground, "_atomic_bytes", restore)
+    handler = signal.getsignal(signal.SIGINT)
+
+    if second_interrupt == "sigint":
+        with pytest.raises(KeyboardInterrupt, match="the rollback completed"):
+            ground._install_promotion_transaction(updates, traits)
+        assert _tree(tmp_path) == before
+    else:
+        with pytest.raises(ground.GroundingError, match="rollback was incomplete") as caught:
+            ground._install_promotion_transaction(updates, traits)
+        skipped = ROLLBACK_WRITE_PATHS[rollback_write]
+        assert f"{skipped}: KeyboardInterrupt" in str(caught.value)
+        after = _tree(tmp_path)
+        differing = {
+            name
+            for name in before.keys() | after.keys()
+            if before.get(name, b"") != after.get(name, b"")
+        }
+        assert differing == {skipped}
+    assert rollback_writes == 5
+    assert signal.getsignal(signal.SIGINT) is handler
+
+
+def test_a_rollback_off_the_main_thread_still_restores_every_preimage(tmp_path, monkeypatch):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    outcome: list[BaseException] = []
+
+    def failing_trait_write(path, text, encoding="utf-8"):
+        raise OSError("injected trait failure")
+
+    monkeypatch.setattr(ground, "write_validated_record", failing_trait_write)
+
+    def install():
+        try:
+            ground._install_promotion_transaction(updates, traits)
+        except BaseException as exc:
+            outcome.append(exc)
+
+    worker = threading.Thread(target=install)
+    worker.start()
+    worker.join(timeout=120)
+    assert len(outcome) == 1 and isinstance(outcome[0], ground.GroundingError)
+    assert "failed and was rolled back" in str(outcome[0])
     assert _tree(tmp_path) == before
 
 

@@ -36,14 +36,16 @@ import hashlib
 import json
 import os
 import re
+import signal
 import sys
 import tempfile
+import threading
 import unicodedata
 from collections import Counter, defaultdict
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 import yaml
 
@@ -3967,6 +3969,30 @@ def _missing_directories(paths: Iterable[Path]) -> list[Path]:
     return sorted(missing, key=lambda directory: len(directory.parts), reverse=True)
 
 
+@contextmanager
+def _interrupts_held() -> Iterator[list[int]]:
+    """Hold Ctrl-C (SIGINT) until the block ends, recording each one that arrives.
+
+    A rollback cut short by a second Ctrl-C would leave registries and trait records at
+    different promotion generations.  Only the main thread receives Python signal
+    handlers, so elsewhere nothing can interrupt the block and nothing is installed;
+    the same holds when the current handler was not set from Python.
+    """
+
+    received: list[int] = []
+    if (
+        threading.current_thread() is not threading.main_thread()
+        or signal.getsignal(signal.SIGINT) is None
+    ):
+        yield received
+        return
+    previous = signal.signal(signal.SIGINT, lambda signum, _frame: received.append(signum))
+    try:
+        yield received
+    finally:
+        signal.signal(signal.SIGINT, previous)
+
+
 def _install_promotion_transaction(
     artifact_updates: list[tuple[Path, str | None]],
     trait_updates: dict[Path, str],
@@ -3983,7 +4009,9 @@ def _install_promotion_transaction(
     by shard with each manifest last, and re-verified against the intended text after
     any deletes and before the first trait write (#801).  Rollback also runs on an
     interrupt, restores in reverse order so a manifest is restored first, and removes
-    the directories this install created.
+    the directories this install created.  A further Ctrl-C is held from the rollback's
+    first step until it ends, and a restore that raises anything, an interrupt
+    included, does not stop the others; it is reported as an incomplete rollback.
     """
 
     planned, verify = _plan_artifact_updates(artifact_updates)
@@ -4010,26 +4038,34 @@ def _install_promotion_transaction(
             attempted.append(resolved)
             write_validated_record(resolved, trait_updates[path], encoding="utf-8")
     except BaseException as exc:
-        rollback_errors: list[str] = []
-        for path in reversed(attempted):
-            try:
-                snapshot = snapshots[path]
-                if snapshot is None:
-                    path.unlink(missing_ok=True)
-                else:
-                    _atomic_bytes(path, snapshot)
-            except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O path
-                rollback_errors.append(f"{path}: {rollback_exc}")
-        for directory in created:
-            try:
-                if os.path.lexists(directory):
-                    directory.rmdir()
-            except OSError as rollback_exc:  # pragma: no cover - foreign entry appeared
-                rollback_errors.append(f"{directory}: {rollback_exc}")
+        with _interrupts_held() as interrupts:
+            rollback_errors: list[str] = []
+            for path in reversed(attempted):
+                try:
+                    snapshot = snapshots[path]
+                    if snapshot is None:
+                        path.unlink(missing_ok=True)
+                    else:
+                        _atomic_bytes(path, snapshot)
+                except BaseException as rollback_exc:
+                    rollback_errors.append(
+                        f"{path}: {type(rollback_exc).__name__}: {rollback_exc}"
+                    )
+            for directory in created:
+                try:
+                    if os.path.lexists(directory):
+                        directory.rmdir()
+                except OSError as rollback_exc:  # pragma: no cover - foreign entry appeared
+                    rollback_errors.append(f"{directory}: {rollback_exc}")
         if rollback_errors:
             raise GroundingError(
                 "promotion transaction failed and rollback was incomplete: "
                 + "; ".join(rollback_errors[:5])
+            ) from exc
+        if isinstance(exc, KeyboardInterrupt) or (interrupts and isinstance(exc, Exception)):
+            raise KeyboardInterrupt(
+                "promotion transaction interrupted; the rollback completed, so every "
+                "target holds its pre-transaction bytes again"
             ) from exc
         if not isinstance(exc, Exception):
             raise
