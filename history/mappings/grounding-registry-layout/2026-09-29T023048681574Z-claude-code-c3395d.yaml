@@ -1,0 +1,34 @@
+history_version: 1
+target:
+  kind: mapping
+  path: data/grounding/qualified_record_bindings.jsonl.d
+  slug: grounding-registry-layout
+session:
+  id: 2026-09-29T023048681574Z-claude-code-c3395d
+  timestamp: '2026-09-29T02:30:48.681574Z'
+  actors:
+  - type: ai_agent
+    name: claude-code
+    model: Claude Opus 5.5
+    agent_tool: Claude Code
+links:
+  issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/801
+  prs:
+  - https://github.com/CultureBotAI/proteintraitsmech/pull/856
+events:
+- type: EDIT
+  outcome: changed
+  summary: Migrate evidence and bindings registries to the sharded layout, byte-identical
+    logical content (#801)
+  details: 'One-time re-layout by just migrate-grounding-registries --apply, pinned with --expect-evidence-sha256
+    and --expect-bindings-sha256, run on the data of 4872b9d4a62 (after #896). data/grounding/occurrence_evidence.jsonl
+    (19,495 rows, 12,022,967 bytes, sha256 50ffbb3f098d53dca6ac8aabb71f40483ec1d5b9e779caa87e79501caad5a467)
+    became occurrence_evidence.jsonl.d/, and qualified_record_bindings.jsonl (19,495 rows,
+    29,408,035 bytes, sha256 0fb571dd73f8eca5b0c371d74ffbb7f73930d4925ce8d1698559d4c3b49d334f)
+    became qualified_record_bindings.jsonl.d/. Each directory holds 256 evidence-id prefix
+    shards plus manifest.json. Joining a directory''s shards in name order reproduces its
+    flat file byte for byte, so each manifest logical_sha256 equals the former flat sha256,
+    and re-planning either registry writes nothing. No row was rewritten, no trait record
+    changed, and protein_registry.jsonl is byte-identical (sha256 51c094aa832bd632ebb24a4960048a5f5eeb75c86700c31a63c42b7e4c5347e6,
+    the biophysical pilot pin).'

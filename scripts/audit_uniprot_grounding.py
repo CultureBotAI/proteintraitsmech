@@ -50,7 +50,8 @@ import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Sharded ``.jsonl.d`` directory (#801), read through the semantic validator's loader.
+DEFAULT_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
 DEFAULT_MEMBERSHIP_REGISTRY = REPO_ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 
 UNIPROT_ID = re.compile(
@@ -1142,7 +1143,10 @@ def parser() -> argparse.ArgumentParser:
         "--evidence-registry",
         type=Path,
         default=DEFAULT_EVIDENCE_REGISTRY,
-        help=f"authoritative GroundingEvidence JSONL (default: {DEFAULT_EVIDENCE_REGISTRY})",
+        help=(
+            "authoritative GroundingEvidence registry, sharded .jsonl.d or flat JSONL "
+            f"(default: {DEFAULT_EVIDENCE_REGISTRY})"
+        ),
     )
     ap.add_argument(
         "--membership-registry",

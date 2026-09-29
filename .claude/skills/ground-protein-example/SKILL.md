@@ -67,7 +67,11 @@ which durable claims are hard debt, and what is blocked.
 - `CanonicalExample`, `TraitOccurrence`, `GroundingEvidence`,
   `TraitOccurrenceMappingMethodEnum`, and `GroundingEvidenceProviderKindEnum` in
   `src/proteintraitsmech/schema/proteintraitsmech.yaml`;
-- `data/grounding/README.md` and the two durable registries beside it;
+- `data/grounding/README.md` and the durable registries beside it (the flat
+  `protein_registry.jsonl`; the sharded `occurrence_evidence.jsonl.d/` and
+  `qualified_record_bindings.jsonl.d/` directories). Never hand-merge their shards or
+  manifests on a conflict: take `origin/main`'s `data/grounding/` and replay the
+  promotion from its staging ledgers;
 - the target record in full.
 
 ## Workflow

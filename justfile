@@ -131,9 +131,34 @@ validate-linkml *args:
 
 # Cross-object/sequence validation for release-pinned UniProt grounding. Legacy
 # examples remain LEGACY_UNVERIFIED during migration; --require-qualified is the
-# corpus-completion gate. Durable registries default under data/grounding/.
+# corpus-completion gate. Durable registries default under data/grounding/: the flat
+# protein_registry.jsonl plus the sharded occurrence_evidence.jsonl.d/ and
+# qualified_record_bindings.jsonl.d/ directories (#801).
 validate-uniprot-grounding *args:
     uv run python scripts/validate_uniprot_grounding.py {{args}}
+
+# Fast structural check of the two sharded grounding registries (#801): listing,
+# row placement/order/canonical form, manifests, evidence == bindings key sets, and
+# the MAX_SHARD_BYTES tripwire. Rows are not semantically validated; that is
+# validate-uniprot-grounding. --root points it at another directory.
+# Read-only; prints each registry's logical sha256 (equal to the legacy flat file's).
+check-grounding-registries *args:
+    uv run python scripts/grounding_registry_layout.py check {{args}}
+
+# One-time (#801): split the flat occurrence_evidence.jsonl and
+# qualified_record_bindings.jsonl into their .jsonl.d shard directories, byte-identical
+# in logical content. Dry-run by default: prints the JSON plan and round-trip proofs and
+# writes nothing. --apply needs a clean data/grounding, holds the registry lock, installs
+# both directories and deletes both flat files in one rolled-back transaction, re-checks
+# the result, and writes reports/uniprot-grounding/registry-layout-migration-801.json.
+# Pin the inputs with --expect-evidence-sha256 / --expect-bindings-sha256. A re-run
+# after migration reports "already migrated"; a mixed or partial state is refused.
+#
+# Shard the flat evidence and bindings registries (#801); dry-run unless --apply
+migrate-grounding-registries *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/migrate_grounding_registry_layout.py "$@"
 
 # ============== Curation history (#484) ==============
 

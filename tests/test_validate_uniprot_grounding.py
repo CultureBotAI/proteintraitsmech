@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import validate_uniprot_grounding as V  # noqa: E402
+import grounding_registry_layout as layout  # noqa: E402
 import uniprot_membership_snapshot as M  # noqa: E402
 from validate_strict import validate_one  # noqa: E402
 
@@ -1762,15 +1763,13 @@ def test_pending_provider_locks_do_not_change_uniprot_feature_or_membership_cont
         assert V.validate_grounding_evidence(evidence, path=Path("evidence.jsonl"), line=1) == []
 
 
-def test_current_durable_interpro_evidence_remains_clean_when_present():
-    path = V.DEFAULT_EVIDENCE_REGISTRY
-    if not path.is_file():
-        pytest.skip("durable grounding evidence is not installed")
-
-    registry, findings = V.load_evidence_registry(path)
-    interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
-    assert len(interpro) == 19462
+def test_current_durable_interpro_evidence_remains_clean():
+    # Read-only production check. It fails rather than skips: a missing or unmigrated
+    # durable registry is exactly what it exists to catch (#801). No row count is
+    # pinned, because every promotion would have to edit it.
+    registry, findings = V.load_evidence_registry(V.DEFAULT_EVIDENCE_REGISTRY)
     assert findings == []
+    assert any(row["provider_kind"] == "INTERPRO" for row in registry.values())
 
 
 def test_interpro_location_id_must_be_canonical_when_present():
@@ -2200,8 +2199,10 @@ def test_cli_writes_deterministic_tsv_and_fails_false_qualified_claim(tmp_path):
 def test_cli_missing_default_registries_is_legacy_safe_but_qualified_fails(tmp_path, monkeypatch):
     missing_proteins = tmp_path / "missing-proteins.jsonl"
     missing_evidence = tmp_path / "missing-evidence.jsonl"
+    missing_bindings = tmp_path / "missing-bindings.jsonl.d"
     monkeypatch.setattr(V, "DEFAULT_REGISTRY", missing_proteins)
     monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", missing_evidence)
+    monkeypatch.setattr(V, "DEFAULT_QUALIFIED_RECORD_BINDINGS", missing_bindings)
 
     legacy_path = tmp_path / "legacy.yaml"
     legacy_path.write_text(
@@ -2228,6 +2229,7 @@ def test_cli_missing_default_registries_is_legacy_safe_but_qualified_fails(tmp_p
     observed = output.read_text(encoding="utf-8")
     assert "registry_not_found" in observed
     assert "evidence_registry_not_found" in observed
+    assert "binding_registry_not_found" in observed
 
 
 def test_quoted_and_escaped_qualification_keys_cannot_skip_elm_validation(tmp_path, monkeypatch):
@@ -2268,13 +2270,16 @@ def test_quoted_and_escaped_qualification_keys_cannot_skip_elm_validation(tmp_pa
 
     missing_proteins = tmp_path / "missing-proteins.jsonl"
     missing_evidence = tmp_path / "missing-evidence.jsonl"
+    missing_bindings = tmp_path / "missing-bindings.jsonl.d"
     monkeypatch.setattr(V, "DEFAULT_REGISTRY", missing_proteins)
     monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", missing_evidence)
+    monkeypatch.setattr(V, "DEFAULT_QUALIFIED_RECORD_BINDINGS", missing_bindings)
     output = tmp_path / "quoted-validation.tsv"
     assert V.main([str(tmp_path / "quoted.yaml"), "--out", str(output), "--quiet"]) == 1
     observed = output.read_text(encoding="utf-8")
     assert "registry_not_found" in observed
     assert "evidence_registry_not_found" in observed
+    assert "binding_registry_not_found" in observed
 
 
 def test_iter_yaml_files_recursively_discovers_uppercase_yml_suffix(tmp_path):
@@ -2397,3 +2402,300 @@ def test_the_flag_does_not_mask_an_empty_corpus(tmp_path, monkeypatch):
     """
     monkeypatch.setattr(V, "DEFAULT_TRAITS", tmp_path / "empty-traits")
     assert V.main(["--allow-missing"]) == 2
+
+
+# --- sharded durable registries (#801) --------------------------------------
+# Every CLI test below points all four default registries into tmp_path and runs from
+# there, so none of them reads the production data/grounding registries.
+
+
+def _write_sharded_registry(path: Path, rows: list[dict]) -> None:
+    text = "".join(
+        layout.canonical_line(row) for row in sorted(rows, key=lambda row: row["evidence_id"])
+    )
+    shards = layout.split_registry_text(text)
+    path.mkdir(parents=True)
+    for name, data in shards.items():
+        (path / name).write_bytes(data)
+    (path / layout.MANIFEST_NAME).write_text(layout.build_manifest_text(shards), encoding="utf-8")
+
+
+def _durable_evidence_rows() -> list[dict]:
+    """Two valid evidence rows (their shards follow from their content digests)."""
+
+    rows = [
+        EVIDENCE_REGISTRY[occurrence()["source_evidence_id"]],
+        EVIDENCE_REGISTRY[
+            occurrence(intervals=[{"start": 3, "end": 5, "expected_sequence": "TAC"}])[
+                "source_evidence_id"
+            ]
+        ],
+    ]
+    assert len({row["evidence_id"] for row in rows}) == 2
+    return rows
+
+
+def _sharded_cli_defaults(tmp_path: Path, monkeypatch) -> tuple[Path, Path, Path]:
+    """Point every default registry at tmp_path/data/grounding; return a legacy input."""
+
+    grounding = tmp_path / "data" / "grounding"
+    grounding.mkdir(parents=True)
+    monkeypatch.setattr(V, "DEFAULT_REGISTRY", grounding / "protein_registry.jsonl")
+    monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", grounding / "occurrence_evidence.jsonl.d")
+    monkeypatch.setattr(
+        V, "DEFAULT_MEMBERSHIP_REGISTRY", grounding / "uniprot_memberships.jsonl"
+    )
+    monkeypatch.setattr(
+        V,
+        "DEFAULT_QUALIFIED_RECORD_BINDINGS",
+        grounding / "qualified_record_bindings.jsonl.d",
+    )
+    monkeypatch.chdir(tmp_path)
+    legacy = tmp_path / "legacy.yaml"
+    legacy.write_text(
+        yaml.safe_dump(
+            {
+                "identifier": "Pfam:PF00001",
+                "canonical_examples": [
+                    {"protein_id": "UniProtKB:P12345", "protein_label": "legacy"}
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return (
+        grounding / "occurrence_evidence.jsonl.d",
+        grounding / "qualified_record_bindings.jsonl.d",
+        legacy,
+    )
+
+
+def _finding_codes(output: Path) -> set[str]:
+    rows = output.read_text(encoding="utf-8").splitlines()[1:]
+    return {row.split("\t")[5] for row in rows}
+
+
+def test_cli_sharded_evidence_and_bindings_validate_together(tmp_path, monkeypatch, capsys):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, [])
+    _write_sharded_registry(bindings, [])
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 0
+    assert _finding_codes(output) == set()
+    assert "NOT CHECKED" not in capsys.readouterr().err
+
+
+def test_cli_sharded_evidence_without_bindings_fails_even_for_legacy_input(
+    tmp_path, monkeypatch
+):
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"binding_registry_not_found"}
+
+
+@pytest.mark.parametrize("flag", ["--evidence-registry", "--qualified-record-bindings"])
+def test_cli_relative_spelling_of_a_durable_default_still_requires_bindings(
+    tmp_path, monkeypatch, flag
+):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    relative = (evidence if flag == "--evidence-registry" else bindings).relative_to(tmp_path)
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), flag, str(relative), "--out", str(output), "--quiet"]) == 1
+    assert "binding_registry_not_found" in _finding_codes(output)
+
+
+@pytest.mark.parametrize("tamper", ["remove-shard", "edit-manifest", "edit-shard"])
+def test_cli_rejects_a_sharded_registry_that_no_longer_matches_its_manifest(
+    tmp_path, monkeypatch, tamper
+):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    _write_sharded_registry(bindings, [])
+    shard = sorted(evidence.glob("[0-9a-f][0-9a-f].jsonl"))[0]
+    if tamper == "remove-shard":
+        shard.unlink()
+    elif tamper == "edit-manifest":
+        manifest = json.loads((evidence / layout.MANIFEST_NAME).read_text(encoding="utf-8"))
+        manifest["row_count"] += 1
+        (evidence / layout.MANIFEST_NAME).write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+    else:
+        shard.write_bytes(shard.read_bytes().replace(b'"scope":"LOCALIZED"', b'"scope":"LOCAL"'))
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert "registry_manifest_mismatch" in _finding_codes(output)
+
+
+@pytest.mark.parametrize(
+    ("defect", "code"),
+    [
+        ("residue", "registry_shard_unexpected"),
+        ("manifest-missing", "registry_manifest_missing"),
+        ("misplaced-row", "registry_row_misplaced"),
+    ],
+)
+def test_cli_reports_layout_defects_in_the_bindings_registry(
+    tmp_path, monkeypatch, defect, code
+):
+    """Bindings-registry layout issues become validator findings, not only evidence ones
+    (#870)."""
+
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, [])
+    _write_sharded_registry(bindings, [])
+    if defect == "residue":
+        (bindings / ".00.jsonl.abcd1234").write_text("partial\n", encoding="utf-8")
+    elif defect == "manifest-missing":
+        (bindings / layout.MANIFEST_NAME).unlink()
+    else:
+        # An "aa" key sealed into shard 00: only the placement check can catch it.
+        misplaced = layout.canonical_line({"evidence_id": "ug-evidence:" + "a" * 64})
+        (bindings / "00.jsonl").write_text(misplaced, encoding="utf-8")
+        (bindings / layout.MANIFEST_NAME).write_text(
+            layout.build_manifest_text({"00.jsonl": misplaced.encode("utf-8")}),
+            encoding="utf-8",
+        )
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert code in _finding_codes(output)
+
+
+@pytest.mark.parametrize("state", ["both-layouts", "unmigrated", "legacy-path-after-migration"])
+def test_cli_rejects_every_mixed_registry_layout(tmp_path, monkeypatch, state):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    rows = _durable_evidence_rows()
+    flat = evidence.with_name("occurrence_evidence.jsonl")
+    flat_text = "".join(
+        layout.canonical_line(row) for row in sorted(rows, key=lambda row: row["evidence_id"])
+    )
+    if state != "unmigrated":
+        _write_sharded_registry(evidence, rows)
+    if state != "legacy-path-after-migration":
+        flat.write_text(flat_text, encoding="utf-8")
+    _write_sharded_registry(bindings, [])
+    arguments = [str(legacy)]
+    if state == "legacy-path-after-migration":
+        arguments += ["--evidence-registry", str(flat)]
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([*arguments, "--out", str(output), "--quiet"]) == 1
+    assert "registry_layout_conflict" in _finding_codes(output)
+
+
+def test_cli_bindings_without_evidence_fail(tmp_path, monkeypatch):
+    _evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(bindings, [])
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"evidence_registry_not_found"}
+
+
+@pytest.mark.parametrize("spelling", ["relative", "absolute"])
+def test_cli_explicit_bindings_flag_naming_the_default_is_always_checked(
+    tmp_path, monkeypatch, capsys, spelling
+):
+    """Passing --qualified-record-bindings, even as the default directory, checks it (#864)."""
+
+    _evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    staging = tmp_path / "reports" / "occurrence_evidence.jsonl"
+    staging.parent.mkdir()
+    staging.write_text(
+        "".join(json.dumps(row) + "\n" for row in _durable_evidence_rows()), encoding="utf-8"
+    )
+    named = bindings.relative_to(tmp_path) if spelling == "relative" else bindings
+    output = tmp_path / "validation.tsv"
+
+    arguments = ["--evidence-registry", str(staging), "--qualified-record-bindings", str(named)]
+    assert V.main([str(legacy), *arguments, "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"binding_registry_not_found"}
+    assert "NOT CHECKED" not in capsys.readouterr().err
+
+
+def test_cli_relative_spelling_of_the_evidence_default_is_the_default(tmp_path, monkeypatch):
+    """With both registries absent, a relative spelling of the default evidence path is the
+    default: legacy-only input still exits 0, exactly as with no flag (#864)."""
+
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    output = tmp_path / "validation.tsv"
+    relative = str(evidence.relative_to(tmp_path))
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 0
+    assert _finding_codes(output) == set()
+    assert (
+        V.main([str(legacy), "--evidence-registry", relative, "--out", str(output), "--quiet"])
+        == 0
+    )
+    assert _finding_codes(output) == set()
+
+
+def test_cli_explicit_flat_staging_evidence_announces_unchecked_bindings(
+    tmp_path, monkeypatch, capsys
+):
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    staging = tmp_path / "reports" / "occurrence_evidence.jsonl"
+    staging.parent.mkdir()
+    staging.write_text(
+        "".join(json.dumps(row) + "\n" for row in _durable_evidence_rows()), encoding="utf-8"
+    )
+    output = tmp_path / "validation.tsv"
+
+    assert (
+        V.main([str(legacy), "--evidence-registry", str(staging), "--out", str(output), "--quiet"])
+        == 0
+    )
+    assert _finding_codes(output) == set()
+    assert "qualified record bindings: NOT CHECKED" in capsys.readouterr().err
+
+
+def test_sharded_loaders_name_the_shard_file_and_line(tmp_path):
+    fixture = qualified_binding_fixture(tmp_path)
+    binding_dir = fixture["binding_path"].with_name("qualified_record_bindings.jsonl.d")
+    _write_sharded_registry(binding_dir, [fixture["binding"]])
+    fixture["binding_path"].unlink()
+    shard = binding_dir / layout.shard_name(fixture["evidence_id"])
+    fixture["trait_path"].write_text(
+        str(fixture["record_text"]) + "# curator edit\n", encoding="utf-8"
+    )
+
+    loaded, findings = V.load_qualified_record_bindings(
+        binding_dir,
+        {fixture["evidence_id"]: fixture["evidence"]},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    assert set(loaded) == {fixture["evidence_id"]}
+    assert [(finding.code, finding.file) for finding in findings] == [
+        ("binding_record_sha256_mismatch", f"{shard}:1")
+    ]
+
+    _loaded, findings = V.load_qualified_record_bindings(
+        binding_dir,
+        {},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    # Coverage findings name the registry directory, not a shard.
+    assert f"{binding_dir}:0" in {
+        finding.file for finding in findings if finding.code == "binding_extra_evidence"
+    }
+
+    evidence_dir = tmp_path / "occurrence_evidence.jsonl.d"
+    tampered = dict(fixture["evidence"], source_release="110.0")
+    _write_sharded_registry(evidence_dir, [tampered])
+    registry, findings = V.load_evidence_registry(evidence_dir)
+    assert registry == {}
+    assert findings
+    assert {finding.file for finding in findings} == {
+        f"{evidence_dir / layout.shard_name(tampered['evidence_id'])}:1"
+    }
