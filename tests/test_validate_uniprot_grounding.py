@@ -2565,6 +2565,44 @@ def test_cli_bindings_without_evidence_fail(tmp_path, monkeypatch):
     assert _finding_codes(output) == {"evidence_registry_not_found"}
 
 
+@pytest.mark.parametrize("spelling", ["relative", "absolute"])
+def test_cli_explicit_bindings_flag_naming_the_default_is_always_checked(
+    tmp_path, monkeypatch, capsys, spelling
+):
+    """Passing --qualified-record-bindings, even as the default directory, checks it (#864)."""
+
+    _evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    staging = tmp_path / "reports" / "occurrence_evidence.jsonl"
+    staging.parent.mkdir()
+    staging.write_text(
+        "".join(json.dumps(row) + "\n" for row in _durable_evidence_rows()), encoding="utf-8"
+    )
+    named = bindings.relative_to(tmp_path) if spelling == "relative" else bindings
+    output = tmp_path / "validation.tsv"
+
+    arguments = ["--evidence-registry", str(staging), "--qualified-record-bindings", str(named)]
+    assert V.main([str(legacy), *arguments, "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"binding_registry_not_found"}
+    assert "NOT CHECKED" not in capsys.readouterr().err
+
+
+def test_cli_relative_spelling_of_the_evidence_default_is_the_default(tmp_path, monkeypatch):
+    """With both registries absent, a relative spelling of the default evidence path is the
+    default: legacy-only input still exits 0, exactly as with no flag (#864)."""
+
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    output = tmp_path / "validation.tsv"
+    relative = str(evidence.relative_to(tmp_path))
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 0
+    assert _finding_codes(output) == set()
+    assert (
+        V.main([str(legacy), "--evidence-registry", relative, "--out", str(output), "--quiet"])
+        == 0
+    )
+    assert _finding_codes(output) == set()
+
+
 def test_cli_explicit_flat_staging_evidence_announces_unchecked_bindings(
     tmp_path, monkeypatch, capsys
 ):

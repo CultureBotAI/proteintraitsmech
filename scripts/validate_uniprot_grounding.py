@@ -3691,7 +3691,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--qualified-record-bindings",
         type=Path,
-        default=DEFAULT_QUALIFIED_RECORD_BINDINGS,
+        # None records whether the flag was given at all: passing it, even spelled as
+        # the default directory, always checks the bindings (#864).
+        default=None,
         help=(
             "transactional evidence-to-record content-gate receipts "
             f"(default {DEFAULT_QUALIFIED_RECORD_BINDINGS})"
@@ -3721,6 +3723,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args(argv)
+    binding_explicit = args.qualified_record_bindings is not None
+    if not binding_explicit:
+        args.qualified_record_bindings = DEFAULT_QUALIFIED_RECORD_BINDINGS
 
     roots = args.paths or [DEFAULT_TRAITS]
     files = iter_yaml_files(roots)
@@ -3778,14 +3783,12 @@ def main(argv: list[str] | None = None) -> int:
     if qualified_input or registry_explicit or args.registry.is_file():
         registry, registry_findings = load_registry(args.registry)
         findings.extend(registry_findings)
-    # Durable evidence is only ever checked together with its bindings (#801). Paths
-    # compare by resolved identity, so a relative spelling of a default is still the
-    # default, and either artifact existing in either layout loads both: a missing
-    # partner is a finding, never a silent skip.
+    # Durable evidence is only ever checked together with its bindings (#801). The
+    # evidence path compares by resolved identity, so a relative spelling of the default
+    # is still the default; an explicit --qualified-record-bindings is always checked
+    # (#864). Either artifact existing in either layout loads both: a missing partner is
+    # a finding, never a silent skip.
     evidence_explicit = not _same_path(args.evidence_registry, DEFAULT_EVIDENCE_REGISTRY)
-    binding_explicit = not _same_path(
-        args.qualified_record_bindings, DEFAULT_QUALIFIED_RECORD_BINDINGS
-    )
     if (
         qualified_input
         or evidence_explicit
@@ -3807,7 +3810,7 @@ def main(argv: list[str] | None = None) -> int:
         # own. Say so even under --quiet, so a green run never implies bindings passed.
         print(
             "qualified record bindings: NOT CHECKED (explicit non-durable "
-            "--evidence-registry; pass --qualified-record-bindings)",
+            "--evidence-registry and no --qualified-record-bindings; pass it to check them)",
             file=sys.stderr,
         )
     evidence_lookup = evidence_registry or {}
