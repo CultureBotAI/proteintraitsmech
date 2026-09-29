@@ -39,6 +39,10 @@ canonical example:
   sequence classification, not experimentally demonstrated activity. See the
   [publication analysis](../../research/elife-109154-metallophores.md) and use the
   registered `ground_uniprot_examples.py elife-promote` route for reviewed changes.
+  Since #801, `elife-promote` cannot write qualified-record bindings, so it refuses any
+  batch that would add evidence while the bindings registry exists (always, in this
+  repository). It can still replay an unchanged panel; adding a new eLife example waits
+  for eLife promotion to write bindings.
 
 Do not hand-edit these registries. Build staging outputs from pinned providers, review the
 source-stratified ledger, install the approved rows with the grounding promoter, and run
