@@ -2534,6 +2534,41 @@ def test_cli_rejects_a_sharded_registry_that_no_longer_matches_its_manifest(
     assert "registry_manifest_mismatch" in _finding_codes(output)
 
 
+@pytest.mark.parametrize(
+    ("defect", "code"),
+    [
+        ("residue", "registry_shard_unexpected"),
+        ("manifest-missing", "registry_manifest_missing"),
+        ("misplaced-row", "registry_row_misplaced"),
+    ],
+)
+def test_cli_reports_layout_defects_in_the_bindings_registry(
+    tmp_path, monkeypatch, defect, code
+):
+    """Bindings-registry layout issues become validator findings, not only evidence ones
+    (#870)."""
+
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, [])
+    _write_sharded_registry(bindings, [])
+    if defect == "residue":
+        (bindings / ".00.jsonl.abcd1234").write_text("partial\n", encoding="utf-8")
+    elif defect == "manifest-missing":
+        (bindings / layout.MANIFEST_NAME).unlink()
+    else:
+        # An "aa" key sealed into shard 00: only the placement check can catch it.
+        misplaced = layout.canonical_line({"evidence_id": "ug-evidence:" + "a" * 64})
+        (bindings / "00.jsonl").write_text(misplaced, encoding="utf-8")
+        (bindings / layout.MANIFEST_NAME).write_text(
+            layout.build_manifest_text({"00.jsonl": misplaced.encode("utf-8")}),
+            encoding="utf-8",
+        )
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert code in _finding_codes(output)
+
+
 @pytest.mark.parametrize("state", ["both-layouts", "unmigrated", "legacy-path-after-migration"])
 def test_cli_rejects_every_mixed_registry_layout(tmp_path, monkeypatch, state):
     evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
