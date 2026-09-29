@@ -262,6 +262,40 @@ def test_partial_promotion_persists_external_reviews_and_replays_without_changes
     assert {p: p.read_bytes() for p in (tmp_path / "data").rglob("*") if p.is_file()} == before
 
 
+def test_promotion_apply_takes_the_registry_lock_but_a_dry_run_does_not(monkeypatch, tmp_path):
+    """eLife --apply holds the data/grounding writer lock the README documents (#872)."""
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
+    review_input = tmp_path / "external-review.jsonl"
+    review_input.write_text(grounding.jsonl_text([approved_decision(rows[0])]))
+    before = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+
+    with layout.registry_lock(tmp_path / "data/grounding"):
+        with pytest.raises(layout.RegistryLayoutError) as locked:
+            grounding.promote(argparse.Namespace(decisions=review_input, apply=True))
+        assert locked.value.code == "registry_locked"
+        assert grounding.promote(argparse.Namespace(decisions=review_input, apply=False)) == 0
+    after = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+    assert {p: data for p, data in after.items() if p.name != layout.LOCK_NAME} == before
+
+
+def test_an_unchanged_replay_installs_nothing(monkeypatch, tmp_path):
+    """Unchanged artifacts are filtered by digest, so a replay opens no transaction (#872)."""
+    import ground_uniprot_examples as ground
+
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
+    review_input = tmp_path / "external-review.jsonl"
+    review_input.write_text(grounding.jsonl_text([approved_decision(row) for row in rows]))
+    assert grounding.promote(argparse.Namespace(decisions=review_input, apply=True)) == 0
+    installs = []
+    monkeypatch.setattr(
+        ground, "_install_promotion_transaction", lambda *args: installs.append(args)
+    )
+
+    args = argparse.Namespace(decisions=tmp_path / DECISIONS_PATH, apply=True)
+    assert grounding.promote(args) == 0
+    assert installs == []
+
+
 def test_promotion_cannot_add_evidence_beside_a_bindings_registry(monkeypatch, tmp_path):
     """eLife promote cannot write qualified-record receipts, so it must not add evidence
     that the promoter and validator would then find unbound (#801)."""
