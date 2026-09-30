@@ -88,6 +88,7 @@ class Snapshot:
     manifest_sha256: str
     manifest: dict[str, Any]
     entries_by_pdb: Mapping[str, dict[str, Any]]
+    uniprot_release: str
 
 
 @dataclass(frozen=True)
@@ -238,24 +239,56 @@ def _read_snapshot(path: Path, *, stage: CapturedStage) -> Snapshot:
     entries = manifest.get("entries")
     if not isinstance(entries, list) or not entries:
         raise BioLipSiftsMappingError("BioLiP SIFTS manifest contains no entries")
-    if manifest.get("requested_pdb_count") != len(entries):
+    expected_pdb_ids = sorted(
+        {
+            row["source_binding"]["source_occurrence_key"]["pdb_id"]
+            for row in stage.occurrences
+        }
+    )
+    if manifest.get("requested_pdb_count") != len(expected_pdb_ids):
         raise BioLipSiftsMappingError("BioLiP SIFTS manifest requested_pdb_count mismatch")
+    if manifest.get("fetch_request_count") != len(expected_pdb_ids):
+        raise BioLipSiftsMappingError("BioLiP SIFTS manifest fetch_request_count mismatch")
+    pdb_ids: list[str] = []
+    sifts_uniprot_releases: set[str] = set()
     entries_by_pdb: dict[str, dict[str, Any]] = {}
     for entry in entries:
         if not isinstance(entry, dict):
             raise BioLipSiftsMappingError("BioLiP SIFTS manifest entry is not an object")
         pdb_id = _require_text(entry.get("pdb_id"), field="pdb_id", source=str(manifest_path))
+        pdb_ids.append(pdb_id)
+        sifts_uniprot_releases.add(
+            _require_text(
+                entry.get("sifts_uniprot_release"),
+                field="sifts_uniprot_release",
+                source=str(manifest_path),
+            )
+        )
         if entry.get("path") != f"{pdb_id}.xml.gz":
             raise BioLipSiftsMappingError(f"SIFTS manifest entry path mismatch for {pdb_id}")
         if pdb_id in entries_by_pdb:
             raise BioLipSiftsMappingError(f"duplicate SIFTS manifest entry for {pdb_id}")
         entries_by_pdb[pdb_id] = entry
+    if pdb_ids != sorted(pdb_ids):
+        raise BioLipSiftsMappingError("BioLiP SIFTS manifest entries are not sorted")
+    if pdb_ids != expected_pdb_ids:
+        missing = sorted(set(expected_pdb_ids) - set(pdb_ids))
+        unexpected = sorted(set(pdb_ids) - set(expected_pdb_ids))
+        raise BioLipSiftsMappingError(
+            "BioLiP SIFTS manifest PDB set mismatch: "
+            f"missing={missing!r}, unexpected={unexpected!r}"
+        )
+    if len(sifts_uniprot_releases) != 1:
+        raise BioLipSiftsMappingError(
+            "BioLiP SIFTS manifest contains multiple SIFTS UniProt releases"
+        )
     return Snapshot(
         path=path,
         manifest_path=manifest_path,
         manifest_sha256=digest,
         manifest=manifest,
         entries_by_pdb=entries_by_pdb,
+        uniprot_release=next(iter(sifts_uniprot_releases)),
     )
 
 
@@ -495,7 +528,7 @@ def build_stage(*, source_stage: Path, sifts_snapshot: Path) -> StageResult:
             "mapping_candidate_ids_sha256": value_sha256(candidate_ids),
             "trait_ids": sorted({row["trait_id"] for row in rows}),
             "record_paths": sorted({row["record_path"] for row in rows}),
-            "sifts_uniprot_release": snapshot.manifest["entries"][0]["sifts_uniprot_release"],
+            "sifts_uniprot_release": snapshot.uniprot_release,
         }
         requests.append(
             _content_address(

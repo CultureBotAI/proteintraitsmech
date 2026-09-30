@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import gzip
+import hashlib
 import importlib
 import json
 import sys
@@ -85,14 +86,33 @@ def _sifts_xml(pdb_id: str) -> bytes:
 """.encode()
 
 
-def _write_inputs(tmp_path: Path) -> tuple[Path, Path]:
+def _manifest_entry(
+    snapshot: Path, pdb_id: str, *, sifts_uniprot_release: str = "2026_03"
+) -> dict[str, Any]:
+    xml = gzip.compress(_sifts_xml(pdb_id))
+    xml_path = snapshot / f"{pdb_id}.xml.gz"
+    xml_path.write_bytes(xml)
+    return {
+        "path": xml_path.name,
+        "pdb_id": pdb_id,
+        "sha256": hashlib.sha256(xml).hexdigest(),
+        "sifts_entry_date": "2026-09-27",
+        "sifts_uniprot_release": sifts_uniprot_release,
+        "sifts_uniprot_version": sifts_uniprot_release.replace("_", "."),
+        "size_bytes": len(xml),
+        "url": f"{mapper.SIFTS_XML_ROOT}/{xml_path.name}",
+    }
+
+
+def _write_inputs(tmp_path: Path, rows: list[dict[str, Any]] | None = None) -> tuple[Path, Path]:
     stage = tmp_path / "stage.jsonl"
     snapshot = tmp_path / "snapshot"
     snapshot.mkdir()
-    rows = [
-        _occurrence("occurrence:ok", "1abc", "OK", 1),
-        _occurrence("occurrence:blocked", "1abc", "BAD", 2),
-    ]
+    if rows is None:
+        rows = [
+            _occurrence("occurrence:ok", "1abc", "OK", 1),
+            _occurrence("occurrence:blocked", "1abc", "BAD", 2),
+        ]
     summary = {
         "schema_version": 1,
         "kind": mapper.INPUT_SUMMARY_KIND,
@@ -104,35 +124,24 @@ def _write_inputs(tmp_path: Path) -> tuple[Path, Path]:
         "".join(mapper.canonical_json(row) + "\n" for row in [*rows, summary]),
         encoding="utf-8",
     )
-    xml = gzip.compress(_sifts_xml("1abc"))
-    xml_path = snapshot / "1abc.xml.gz"
-    xml_path.write_bytes(xml)
+    pdb_ids = sorted(
+        {row["source_binding"]["source_occurrence_key"]["pdb_id"] for row in rows}
+    )
     manifest = {
         "schema_version": 1,
         "kind": mapper.SNAPSHOT_KIND,
         "complete": True,
-        "entries": [
-            {
-                "path": "1abc.xml.gz",
-                "pdb_id": "1abc",
-                "sha256": __import__("hashlib").sha256(xml).hexdigest(),
-                "sifts_entry_date": "2026-09-27",
-                "sifts_uniprot_release": "2026_03",
-                "sifts_uniprot_version": "2026.03",
-                "size_bytes": len(xml),
-                "url": f"{mapper.SIFTS_XML_ROOT}/1abc.xml.gz",
-            }
-        ],
+        "entries": [_manifest_entry(snapshot, pdb_id) for pdb_id in pdb_ids],
         "failures": [],
-        "fetch_request_count": 1,
-        "requested_pdb_count": 1,
+        "fetch_request_count": len(pdb_ids),
+        "requested_pdb_count": len(pdb_ids),
         "snapshot_id": "fixture",
         "source": "PDBe SIFTS residue-level XML",
         "source_root": mapper.SIFTS_XML_ROOT,
         "stage_combined_non_summary_rows_sha256": "fixture",
         "stage_id": "biolip-missing-protein-stage:fixture",
         "stage_path": "stage.jsonl",
-        "stage_sha256": __import__("hashlib").sha256(stage.read_bytes()).hexdigest(),
+        "stage_sha256": hashlib.sha256(stage.read_bytes()).hexdigest(),
     }
     (snapshot / "manifest.json").write_text(
         mapper.canonical_json(manifest) + "\n",
@@ -203,6 +212,33 @@ def test_incomplete_snapshot_refuses_to_map(tmp_path: Path) -> None:
     manifest_path = snapshot / "manifest.json"
     manifest = json.loads(manifest_path.read_text())
     manifest["complete"] = False
+    manifest_path.write_text(mapper.canonical_json(manifest) + "\n")
+
+    assert mapper.main(["--stage", str(stage), "--sifts-snapshot", str(snapshot)]) == 2
+
+
+def test_snapshot_manifest_pdb_set_must_match_ready_stage(tmp_path: Path) -> None:
+    stage, snapshot = _write_inputs(tmp_path)
+    manifest_path = snapshot / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["entries"].append(_manifest_entry(snapshot, "9bad"))
+    manifest["fetch_request_count"] += 1
+    manifest["requested_pdb_count"] += 1
+    manifest_path.write_text(mapper.canonical_json(manifest) + "\n")
+
+    assert mapper.main(["--stage", str(stage), "--sifts-snapshot", str(snapshot)]) == 2
+
+
+def test_snapshot_manifest_release_must_be_singleton(tmp_path: Path) -> None:
+    rows = [
+        _occurrence("occurrence:one", "1abc", "ONE", 1),
+        _occurrence("occurrence:two", "2def", "TWO", 1),
+    ]
+    stage, snapshot = _write_inputs(tmp_path, rows=rows)
+    manifest_path = snapshot / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["entries"][1]["sifts_uniprot_release"] = "2025_04"
+    manifest["entries"][1]["sifts_uniprot_version"] = "2025.04"
     manifest_path.write_text(mapper.canonical_json(manifest) + "\n")
 
     assert mapper.main(["--stage", str(stage), "--sifts-snapshot", str(snapshot)]) == 2
