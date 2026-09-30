@@ -171,10 +171,11 @@ def _responses(path: Path, responses: list[dict[str, Any]], release: str = "2026
     )
 
 
-def _paths(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path]:
+def _paths(tmp_path: Path) -> tuple[Path, Path, Path, Path, Path, Path]:
     return (
         tmp_path / "registry.jsonl",
         tmp_path / "memberships.jsonl",
+        tmp_path / "mappings.jsonl",
         tmp_path / "blocked.tsv",
         tmp_path / "receipt.json",
         tmp_path / "plan.json",
@@ -188,7 +189,7 @@ def _dry_args(
     extra: tuple[str, ...] = (),
 ) -> list[str]:
     stage, snapshot = _write_inputs(tmp_path)
-    out, memberships, blocked, receipt, _plan = _paths(tmp_path)
+    out, memberships, mappings, blocked, receipt, _plan = _paths(tmp_path)
     args = [
         "--stage",
         str(stage),
@@ -200,6 +201,8 @@ def _dry_args(
         str(out),
         "--membership-out",
         str(memberships),
+        "--mapping-out",
+        str(mappings),
         "--blocked",
         str(blocked),
         "--receipt",
@@ -214,13 +217,20 @@ def _prepare_apply(
     tmp_path: Path,
     responses: Path,
     *extra: str,
-) -> tuple[list[str], Path, Path, Path, Path]:
-    out, memberships, blocked, receipt, plan = _paths(tmp_path)
+) -> tuple[list[str], Path, Path, Path, Path, Path]:
+    out, memberships, mappings, blocked, receipt, plan = _paths(tmp_path)
     args = _dry_args(tmp_path, responses=responses, extra=extra)
     namespace = fetcher.parser().parse_args(args)
     prepared = fetcher._derive_request_plan(namespace)
     plan.write_text(fetcher.render_request_plan(prepared.plan), encoding="utf-8")
-    return [*args, "--request-plan", str(plan), "--apply"], out, memberships, blocked, receipt
+    return (
+        [*args, "--request-plan", str(plan), "--apply"],
+        out,
+        memberships,
+        mappings,
+        blocked,
+        receipt,
+    )
 
 
 def _jsonl_rows(path: Path) -> list[dict[str, Any]]:
@@ -254,8 +264,8 @@ def test_dry_run_emits_exact_canonical_plan_without_outputs(
         "https://rest.uniprot.org/uniprotkb/search?"
     )
     assert plan["mapping_stage"]["mapped_unique_protein_count"] == 1
-    out, memberships, blocked, receipt, plan_path = _paths(tmp_path)
-    assert not any(path.exists() for path in (out, memberships, blocked, receipt, plan_path))
+    out, memberships, mappings, blocked, receipt, plan_path = _paths(tmp_path)
+    assert not any(path.exists() for path in (out, memberships, mappings, blocked, receipt, plan_path))
 
 
 def raise_network_attempt() -> None:
@@ -268,7 +278,7 @@ def test_offline_apply_writes_references_memberships_blocked_and_receipt(tmp_pat
         responses,
         [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
     )
-    args, out, memberships, blocked, receipt = _prepare_apply(tmp_path, responses)
+    args, out, memberships, mappings, blocked, receipt = _prepare_apply(tmp_path, responses)
 
     assert fetcher.main(args) == 0
 
@@ -278,6 +288,23 @@ def test_offline_apply_writes_references_memberships_blocked_and_receipt(tmp_pat
     membership_rows = _jsonl_rows(memberships)
     assert len(membership_rows) == 1
     assert membership_rows[0]["source_trait_id"] == "Pfam:PF00001"
+    mapping_rows = _jsonl_rows(mappings)
+    assert len(mapping_rows) == 1
+    assert mapping_rows[0]["kind"] == fetcher.MAPPING_REGISTRY_KIND
+    assert mapping_rows[0]["mapping_id"].startswith(fetcher.MAPPING_REGISTRY_ID_PREFIX)
+    without_row_hash = dict(mapping_rows[0])
+    observed_row_hash = without_row_hash.pop("mapping_row_sha256")
+    assert observed_row_hash == mapper.value_sha256(without_row_hash)
+    without_mapping_id = dict(without_row_hash)
+    observed_mapping_id = without_mapping_id.pop("mapping_id")
+    assert observed_mapping_id == (
+        fetcher.MAPPING_REGISTRY_ID_PREFIX + mapper.value_sha256(without_mapping_id)
+    )
+    assert mapping_rows[0]["protein_id"] == "UniProtKB:P12345"
+    assert mapping_rows[0]["sequence_sha256"] == references[0]["sequence_sha256"]
+    assert mapping_rows[0]["uniprot_release"] == "2026_03"
+    assert mapping_rows[0]["fetch_request_plan_id"].startswith(fetcher.PLAN_ID_PREFIX)
+    assert mapping_rows[0]["mapped_residues"][0]["uniprot_position"] == 10
     assert blocked.read_text(encoding="utf-8") == (
         "protein_id\taccession\tcandidate_count\tcandidate_ids\t"
         "trait_ids\treason\tdetail\n"
@@ -288,17 +315,19 @@ def test_offline_apply_writes_references_memberships_blocked_and_receipt(tmp_pat
     assert value["observed_uniprot_release"] == "2026_03"
     assert value["outputs"]["protein_registry"]["row_count"] == 1
     assert value["outputs"]["membership_registry"]["row_count"] == 1
+    assert value["outputs"]["sifts_mapping_registry"]["row_count"] == 1
     assert value["outputs"]["blocked_registry"]["row_count"] == 0
 
 
 def test_missing_exact_accession_is_blocked_not_substituted(tmp_path: Path) -> None:
     responses = tmp_path / "responses.json"
     _responses(responses, [{"requested": ["P12345"], "results": [_entry("Q9H9K5")]}])
-    args, out, _memberships, blocked, _receipt = _prepare_apply(tmp_path, responses)
+    args, out, _memberships, mappings, blocked, _receipt = _prepare_apply(tmp_path, responses)
 
     assert fetcher.main(args) == 0
 
     assert _jsonl_rows(out) == []
+    assert _jsonl_rows(mappings) == []
     assert "ACCESSION_NOT_RETURNED" in blocked.read_text(encoding="utf-8")
 
 
@@ -308,11 +337,12 @@ def test_fetched_sequence_must_replay_mapped_biolip_sifts_residues(tmp_path: Pat
         responses,
         [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCK")]}],
     )
-    args, out, _memberships, blocked, _receipt = _prepare_apply(tmp_path, responses)
+    args, out, _memberships, mappings, blocked, _receipt = _prepare_apply(tmp_path, responses)
 
     assert fetcher.main(args) == 0
 
     assert _jsonl_rows(out) == []
+    assert _jsonl_rows(mappings) == []
     blocked_text = blocked.read_text(encoding="utf-8")
     assert "MAPPED_RESIDUE_VALIDATION_FAILED" in blocked_text
     assert "mapped position 10 expected A but fetched sequence has K" in blocked_text
@@ -325,12 +355,13 @@ def test_release_mismatch_fails_before_replacing_outputs(tmp_path: Path) -> None
         [{"requested": ["P12345"], "results": [_entry("P12345")]}],
         release="2026_04",
     )
-    args, out, memberships, blocked, receipt = _prepare_apply(
+    args, out, memberships, mappings, blocked, receipt = _prepare_apply(
         tmp_path, responses, "--expect-release", "2026_03"
     )
     for path, marker in (
         (out, "old-registry\n"),
         (memberships, "old-memberships\n"),
+        (mappings, "old-mappings\n"),
         (blocked, "old-blocked\n"),
         (receipt, "old-receipt\n"),
     ):
@@ -340,6 +371,7 @@ def test_release_mismatch_fails_before_replacing_outputs(tmp_path: Path) -> None
 
     assert out.read_text(encoding="utf-8") == "old-registry\n"
     assert memberships.read_text(encoding="utf-8") == "old-memberships\n"
+    assert mappings.read_text(encoding="utf-8") == "old-mappings\n"
     assert blocked.read_text(encoding="utf-8") == "old-blocked\n"
     assert receipt.read_text(encoding="utf-8") == "old-receipt\n"
 
@@ -347,7 +379,7 @@ def test_release_mismatch_fails_before_replacing_outputs(tmp_path: Path) -> None
 def test_apply_requires_exact_saved_plan(tmp_path: Path, capsys) -> None:
     responses = tmp_path / "responses.json"
     _responses(responses, [{"requested": ["P12345"], "results": []}])
-    args, out, memberships, blocked, receipt = _prepare_apply(tmp_path, responses)
+    args, out, memberships, mappings, blocked, receipt = _prepare_apply(tmp_path, responses)
 
     without_plan = list(args)
     index = without_plan.index("--request-plan")
@@ -357,12 +389,14 @@ def test_apply_requires_exact_saved_plan(tmp_path: Path, capsys) -> None:
 
     assert fetcher.main([*args, "--batch-size", "2"]) == 2
     assert "does not match rederived exact plan" in capsys.readouterr().err
-    assert not any(path.exists() for path in (out, memberships, blocked, receipt))
+    assert fetcher.main([*args, "--mapping-out", str(tmp_path / "moved-mappings.jsonl")]) == 2
+    assert "does not match rederived exact plan" in capsys.readouterr().err
+    assert not any(path.exists() for path in (out, memberships, mappings, blocked, receipt))
 
 
 def test_sifts_release_must_match_expected_uniprot_release(tmp_path: Path, capsys) -> None:
     stage, snapshot = _write_inputs(tmp_path)
-    out, memberships, blocked, receipt, _plan = _paths(tmp_path)
+    out, memberships, mappings, blocked, receipt, _plan = _paths(tmp_path)
     args = [
         "--stage",
         str(stage),
@@ -383,12 +417,12 @@ def test_sifts_release_must_match_expected_uniprot_release(tmp_path: Path, capsy
     assert fetcher.main(args) == 2
 
     assert "does not match expected UniProt release" in capsys.readouterr().err
-    assert not any(path.exists() for path in (out, memberships, blocked, receipt))
+    assert not any(path.exists() for path in (out, memberships, mappings, blocked, receipt))
 
 
 def test_outputs_must_not_overwrite_bound_inputs(tmp_path: Path, capsys) -> None:
     stage, snapshot = _write_inputs(tmp_path)
-    out, memberships, blocked, receipt, _plan = _paths(tmp_path)
+    out, memberships, mappings, blocked, receipt, _plan = _paths(tmp_path)
 
     assert (
         fetcher.main(
@@ -403,6 +437,8 @@ def test_outputs_must_not_overwrite_bound_inputs(tmp_path: Path, capsys) -> None
                 str(stage),
                 "--membership-out",
                 str(memberships),
+                "--mapping-out",
+                str(mappings),
                 "--blocked",
                 str(blocked),
                 "--receipt",
@@ -413,4 +449,4 @@ def test_outputs_must_not_overwrite_bound_inputs(tmp_path: Path, capsys) -> None
     )
 
     assert "output collides with BioLiP source stage" in capsys.readouterr().err
-    assert not any(path.exists() for path in (out, memberships, blocked, receipt))
+    assert not any(path.exists() for path in (out, memberships, mappings, blocked, receipt))
