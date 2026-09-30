@@ -416,6 +416,77 @@ def test_biolip_sifts_mapping_registry_accepts_writer_canonical_non_ascii(
     assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
 
 
+def test_biolip_sifts_mapping_registry_accepts_dna_xref_exception(
+    tmp_path: Path,
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    row["trait_id"] = "proteintraitsmech:BIOLIP_CCD_DNA"
+    row["record_path"] = (
+        "data/traits/structure/binding_site/biolip/dna-binding-site-ccd-dna.yaml"
+    )
+    source_projection = row["source_projection"]
+    source_projection["source_binding"]["ligand_id"] = "dna"
+    source_projection["source_binding"]["source_occurrence_key"]["ligand_id"] = "dna"
+    source_projection["trait_binding"].update(
+        {
+            "ligand_id": "dna",
+            "trait_id": row["trait_id"],
+            "trait_record_path": row["record_path"],
+            "trait_source_xref_status": (
+                "EXPLICIT_CURRENT_POLYMER_DNA_COLLISION_XREF_EXCEPTION"
+            ),
+            "trait_source_xrefs": ["CHEBI:16991", "pdb.ligand:DNA"],
+        }
+    )
+    _write_readdressed_mapping(mappings, row)
+
+    assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
+
+
+@pytest.mark.parametrize(
+    "field_text",
+    [
+        "P12345",
+        "P12345,Q9H9K5",
+        "P12345,NOPE",
+        "-",
+    ],
+)
+def test_biolip_sifts_mapping_registry_accepts_source_uniprot_provenance(
+    tmp_path: Path,
+    field_text: str,
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    status, accessions = fetcher._parse_source_uniprot_accessions(field_text)
+    source_binding = row["source_projection"]["source_binding"]
+    source_binding["source_uniprot_field_text"] = field_text
+    source_binding["source_uniprot_claim_status"] = status
+    source_binding["source_uniprot_accession_claims"] = list(accessions)
+    _write_readdressed_mapping(mappings, row)
+
+    assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
+
+
 @pytest.mark.parametrize("count_field", ["source_residue_count", "mapped_residue_count"])
 def test_biolip_sifts_mapping_registry_rejects_boolean_counts(
     tmp_path: Path, count_field: str
@@ -505,6 +576,30 @@ def test_biolip_sifts_mapping_registry_rejects_malformed_source_projection(
     _write_readdressed_mapping(mappings, row)
 
     with pytest.raises(fetcher.RegistryBuildError, match=match):
+        fetcher.load_mapping_registry(mappings)
+
+
+def test_biolip_sifts_mapping_registry_rejects_source_uniprot_provenance_mismatch(
+    tmp_path: Path,
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    source_binding = row["source_projection"]["source_binding"]
+    source_binding["source_uniprot_field_text"] = "P12345,Q9H9K5"
+    source_binding["source_uniprot_claim_status"] = "SINGLE"
+    source_binding["source_uniprot_accession_claims"] = ["P12345"]
+    _write_readdressed_mapping(mappings, row)
+
+    with pytest.raises(fetcher.RegistryBuildError, match="claim status mismatch"):
         fetcher.load_mapping_registry(mappings)
 
 

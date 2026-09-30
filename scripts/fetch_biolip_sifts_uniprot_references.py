@@ -444,6 +444,27 @@ def _validate_binding_residue_pair(
             )
 
 
+def _parse_source_uniprot_accessions(value: str) -> tuple[str, tuple[str, ...]]:
+    semantic = value.strip(" \t")
+    if semantic in {"", "-"}:
+        return "MISSING", ()
+    accessions = tuple(item.strip(" \t") for item in semantic.split(","))
+    if any(not item or _ACCESSION.fullmatch(item) is None for item in accessions):
+        return "MALFORMED", accessions
+    return ("SINGLE" if len(accessions) == 1 else "MULTIPLE"), accessions
+
+
+def _validate_source_uniprot_projection(source_binding: Mapping[str, Any]) -> None:
+    source_text = source_binding.get("source_uniprot_field_text")
+    if not isinstance(source_text, str):
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt field is invalid")
+    status, accessions = _parse_source_uniprot_accessions(source_text)
+    if source_binding.get("source_uniprot_claim_status") != status:
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt claim status mismatch")
+    if source_binding.get("source_uniprot_accession_claims") != list(accessions):
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt accession claims mismatch")
+
+
 def _validate_mapping_residue(row: Mapping[str, Any], chain_id: str, index: int) -> int:
     if set(row) != {
         "author_insertion_code",
@@ -506,8 +527,6 @@ def _validate_source_projection(
         raise RegistryBuildError("BioLiP/SIFTS record digest projection mismatch")
     if trait_binding.get("trait_record_has_canonical_examples") is not False:
         raise RegistryBuildError("BioLiP/SIFTS trait binding must not have examples")
-    if trait_binding.get("trait_source_xref_status") != "EXACT_SEEDER_SOURCE_XREFS":
-        raise RegistryBuildError("BioLiP/SIFTS trait source xref status mismatch")
 
     source_binding = _require_mapping(
         source_projection.get("source_binding"),
@@ -549,12 +568,7 @@ def _validate_source_projection(
         _require_sha256(source_binding, field)
     if source_binding["source_raw_line_sha256_basis"] != "RAW_UTF8_PHYSICAL_LINE_INCLUDING_LF":
         raise RegistryBuildError("BioLiP/SIFTS source raw-line hash basis mismatch")
-    if source_binding.get("source_uniprot_accession_claims") != []:
-        raise RegistryBuildError("BioLiP/SIFTS source UniProt accession claims mismatch")
-    if source_binding.get("source_uniprot_claim_status") != "MISSING":
-        raise RegistryBuildError("BioLiP/SIFTS source UniProt claim status mismatch")
-    if source_binding.get("source_uniprot_field_text") != "":
-        raise RegistryBuildError("BioLiP/SIFTS source UniProt field must be empty")
+    _validate_source_uniprot_projection(source_binding)
     source_line_numbers = source_binding.get("source_line_numbers")
     if (
         not isinstance(source_line_numbers, list)
@@ -588,7 +602,20 @@ def _validate_source_projection(
             )
     if trait_binding.get("ligand_id") != key["ligand_id"]:
         raise RegistryBuildError("BioLiP/SIFTS ligand projection mismatch")
-    if trait_binding.get("trait_source_xrefs") != [f"pdb.ligand:{key['ligand_id']}"]:
+    expected_xrefs_by_status = {
+        "EXACT_SEEDER_SOURCE_XREFS": [f"pdb.ligand:{key['ligand_id']}"]
+    }
+    if key["ligand_id"] == "dna":
+        expected_xrefs_by_status["EXPLICIT_CURRENT_POLYMER_DNA_COLLISION_XREF_EXCEPTION"] = [
+            "CHEBI:16991",
+            "pdb.ligand:DNA",
+        ]
+    expected_xrefs = expected_xrefs_by_status.get(
+        str(trait_binding.get("trait_source_xref_status"))
+    )
+    if expected_xrefs is None:
+        raise RegistryBuildError("BioLiP/SIFTS trait source xref status mismatch")
+    if trait_binding.get("trait_source_xrefs") != expected_xrefs:
         raise RegistryBuildError("BioLiP/SIFTS trait source xrefs mismatch")
 
     binding_residue_pairs = source_projection.get("binding_residue_pairs")
