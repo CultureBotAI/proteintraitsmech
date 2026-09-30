@@ -80,6 +80,10 @@ magic bytes, stable content markers, or publisher checksums.
 - `fetch-biolip-sifts` — derives one PDBe residue-level SIFTS XML URL per PDB from the
   BioLiP missing-protein stage, then writes a complete, content-addressed manifest under
   the ignored BioLiP SIFTS raw snapshot root.
+- `fetch-biolip-sifts-uniprot` — derives exact UniProt accessions from the BioLiP SIFTS
+  mapping stage, replays that stage before every network request and write, then writes a
+  complete registry, membership, blocked-accession ledger, and receipt under the ignored
+  UniProt grounding staging root.
 
 These should reuse the helper only for any fixed bulk sub-download. Their pagination,
 checkpointing, authentication, and partial-result rules belong in their Python clients.
