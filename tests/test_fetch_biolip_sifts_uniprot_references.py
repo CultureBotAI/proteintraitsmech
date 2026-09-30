@@ -275,6 +275,33 @@ def _write_readdressed_mapping(path: Path, row: dict[str, Any]) -> None:
     path.write_text(fetcher._canonical_json(row) + "\n", encoding="utf-8")
 
 
+def _bind_source_ligand(
+    row: dict[str, Any],
+    *,
+    ligand_id: str,
+    trait_id: str,
+    trait_record_path: str,
+    trait_source_xref_status: str,
+    trait_source_xrefs: list[str],
+) -> None:
+    row["trait_id"] = trait_id
+    row["record_path"] = trait_record_path
+    source_projection = row["source_projection"]
+    source_projection["source_binding"]["ligand_id"] = ligand_id
+    source_projection["source_binding"]["source_occurrence_key"][
+        "ligand_id"
+    ] = ligand_id
+    source_projection["trait_binding"].update(
+        {
+            "ligand_id": ligand_id,
+            "trait_id": trait_id,
+            "trait_record_path": trait_record_path,
+            "trait_source_xref_status": trait_source_xref_status,
+            "trait_source_xrefs": trait_source_xrefs,
+        }
+    )
+
+
 def test_dry_run_emits_exact_canonical_plan_without_outputs(
     tmp_path: Path, capsys, monkeypatch
 ) -> None:
@@ -430,27 +457,88 @@ def test_biolip_sifts_mapping_registry_accepts_dna_xref_exception(
     assert fetcher.main(args) == 0
 
     [row] = _jsonl_rows(mappings)
-    row["trait_id"] = "proteintraitsmech:BIOLIP_CCD_DNA"
-    row["record_path"] = (
-        "data/traits/structure/binding_site/biolip/dna-binding-site-ccd-dna.yaml"
-    )
-    source_projection = row["source_projection"]
-    source_projection["source_binding"]["ligand_id"] = "dna"
-    source_projection["source_binding"]["source_occurrence_key"]["ligand_id"] = "dna"
-    source_projection["trait_binding"].update(
-        {
-            "ligand_id": "dna",
-            "trait_id": row["trait_id"],
-            "trait_record_path": row["record_path"],
-            "trait_source_xref_status": (
-                "EXPLICIT_CURRENT_POLYMER_DNA_COLLISION_XREF_EXCEPTION"
-            ),
-            "trait_source_xrefs": ["CHEBI:16991", "pdb.ligand:DNA"],
-        }
+    _bind_source_ligand(
+        row,
+        ligand_id="dna",
+        trait_id="proteintraitsmech:BIOLIP_DNA",
+        trait_record_path=(
+            "data/traits/structure/binding_site/biolip/dna-binding-site-dna.yaml"
+        ),
+        trait_source_xref_status="EXPLICIT_CURRENT_POLYMER_DNA_COLLISION_XREF_EXCEPTION",
+        trait_source_xrefs=["CHEBI:16991", "pdb.ligand:DNA"],
     )
     _write_readdressed_mapping(mappings, row)
 
     assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
+
+
+@pytest.mark.parametrize(
+    ("ligand_id", "trait_id", "trait_record_path", "trait_source_xrefs"),
+    [
+        (
+            "dna",
+            "proteintraitsmech:BIOLIP_DNA",
+            "data/traits/structure/binding_site/biolip/dna-binding-site-dna.yaml",
+            ["CHEBI:16991"],
+        ),
+        (
+            "rna",
+            "proteintraitsmech:BIOLIP_RNA",
+            "data/traits/structure/binding_site/biolip/rna-binding-site-rna.yaml",
+            ["CHEBI:33697"],
+        ),
+        (
+            "peptide",
+            "proteintraitsmech:BIOLIP_PEPTIDE",
+            "data/traits/structure/binding_site/biolip/peptide-binding-site-peptide.yaml",
+            ["CHEBI:16670"],
+        ),
+    ],
+)
+def test_biolip_sifts_mapping_registry_accepts_exact_polymer_xrefs(
+    tmp_path: Path,
+    ligand_id: str,
+    trait_id: str,
+    trait_record_path: str,
+    trait_source_xrefs: list[str],
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    _bind_source_ligand(
+        row,
+        ligand_id=ligand_id,
+        trait_id=trait_id,
+        trait_record_path=trait_record_path,
+        trait_source_xref_status="EXACT_SEEDER_SOURCE_XREFS",
+        trait_source_xrefs=trait_source_xrefs,
+    )
+    _write_readdressed_mapping(mappings, row)
+
+    assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
+
+
+@pytest.mark.parametrize(
+    ("field_text", "expected"),
+    [
+        ("P12345-0", ("MALFORMED", ("P12345-0",))),
+        ("P12345-01", ("MALFORMED", ("P12345-01",))),
+        ("P12345-1", ("SINGLE", ("P12345-1",))),
+    ],
+)
+def test_parse_source_uniprot_accessions_rejects_zero_isoforms(
+    field_text: str,
+    expected: tuple[str, tuple[str, ...]],
+) -> None:
+    assert fetcher._parse_source_uniprot_accessions(field_text) == expected
 
 
 @pytest.mark.parametrize(
@@ -459,6 +547,7 @@ def test_biolip_sifts_mapping_registry_accepts_dna_xref_exception(
         "P12345",
         "P12345,Q9H9K5",
         "P12345,NOPE",
+        "P12345-0",
         "-",
     ],
 )

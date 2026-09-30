@@ -78,6 +78,15 @@ RECEIPT_KIND = "BIOLIP_SIFTS_UNIPROT_FETCH_RECEIPT"
 RECEIPT_ID_PREFIX = "biolip-sifts-uniprot-fetch-receipt:"
 
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_SOURCE_ACCESSION = re.compile(
+    r"^(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|"
+    r"[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})(?:-[1-9][0-9]*)?$"
+)
+_POLYMER_LIGAND_XREFS = {
+    "dna": "CHEBI:16991",
+    "rna": "CHEBI:33697",
+    "peptide": "CHEBI:16670",
+}
 
 MAPPING_REGISTRY_FIELDS = frozenset(
     {
@@ -449,7 +458,7 @@ def _parse_source_uniprot_accessions(value: str) -> tuple[str, tuple[str, ...]]:
     if semantic in {"", "-"}:
         return "MISSING", ()
     accessions = tuple(item.strip(" \t") for item in semantic.split(","))
-    if any(not item or _ACCESSION.fullmatch(item) is None for item in accessions):
+    if any(not item or _SOURCE_ACCESSION.fullmatch(item) is None for item in accessions):
         return "MALFORMED", accessions
     return ("SINGLE" if len(accessions) == 1 else "MULTIPLE"), accessions
 
@@ -463,6 +472,11 @@ def _validate_source_uniprot_projection(source_binding: Mapping[str, Any]) -> No
         raise RegistryBuildError("BioLiP/SIFTS source UniProt claim status mismatch")
     if source_binding.get("source_uniprot_accession_claims") != list(accessions):
         raise RegistryBuildError("BioLiP/SIFTS source UniProt accession claims mismatch")
+
+
+def _expected_exact_source_xrefs(ligand_id: str) -> list[str]:
+    xref = _POLYMER_LIGAND_XREFS.get(ligand_id)
+    return [xref if xref is not None else f"pdb.ligand:{ligand_id}"]
 
 
 def _validate_mapping_residue(row: Mapping[str, Any], chain_id: str, index: int) -> int:
@@ -603,7 +617,7 @@ def _validate_source_projection(
     if trait_binding.get("ligand_id") != key["ligand_id"]:
         raise RegistryBuildError("BioLiP/SIFTS ligand projection mismatch")
     expected_xrefs_by_status = {
-        "EXACT_SEEDER_SOURCE_XREFS": [f"pdb.ligand:{key['ligand_id']}"]
+        "EXACT_SEEDER_SOURCE_XREFS": _expected_exact_source_xrefs(key["ligand_id"])
     }
     if key["ligand_id"] == "dna":
         expected_xrefs_by_status["EXPLICIT_CURRENT_POLYMER_DNA_COLLISION_XREF_EXCEPTION"] = [
