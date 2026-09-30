@@ -471,6 +471,10 @@ fetch-biolip:
 fetch-biolip-sifts *args:
     uv run python scripts/fetch_biolip_residue_sifts.py {{args}}
 
+# Read-only, stdout-only BioLiP source residue to SIFTS UniProt mapping stage.
+stage-biolip-sifts-mappings *args:
+    uv run python scripts/stage_biolip_sifts_mappings.py {{args}}
+
 # Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
 # Requires `just fetch-biolip` first. Dry-run by default; --apply to write.
 seed-biolip *args:
