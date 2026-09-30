@@ -42,6 +42,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 KNOWN_STALE_PINS = {
     "2026_02": "#734",
     "d587fad177207ca4f00d1dfb8649f4f9d2d21d01953d483f44a3a6e81acc729c": "#734",
+    "c856d00e6415c4baed59b13de3483f5285154b47c1daca32490d86310aedf613": "#734",
 }
 
 

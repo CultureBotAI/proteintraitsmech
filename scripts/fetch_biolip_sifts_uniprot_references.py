@@ -19,7 +19,9 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import json
 import os
+import re
 import sys
 import tempfile
 from dataclasses import dataclass
@@ -74,6 +76,48 @@ MAPPING_REGISTRY_ID_PREFIX = "biolip-sifts:"
 RECEIPT_SCHEMA_VERSION = 1
 RECEIPT_KIND = "BIOLIP_SIFTS_UNIPROT_FETCH_RECEIPT"
 RECEIPT_ID_PREFIX = "biolip-sifts-uniprot-fetch-receipt:"
+
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+
+MAPPING_REGISTRY_FIELDS = frozenset(
+    {
+        "chain_id",
+        "coordinate_frame",
+        "expected_residues",
+        "fetch_request_plan_id",
+        "kind",
+        "mapped_residue_count",
+        "mapped_residues",
+        "mapping_candidate_id",
+        "mapping_candidate_row_sha256",
+        "mapping_completeness",
+        "mapping_id",
+        "mapping_method",
+        "mapping_row_sha256",
+        "mapping_stage",
+        "protein_id",
+        "qualification_claimed",
+        "record_path",
+        "record_sha256",
+        "residue_positions",
+        "schema_version",
+        "scope",
+        "sequence_sha256",
+        "sifts_entry_date",
+        "sifts_snapshot",
+        "sifts_source_url",
+        "sifts_uniprot_release",
+        "sifts_uniprot_version",
+        "sifts_xml_sha256",
+        "source_projection",
+        "source_residue_count",
+        "source_stage_artifact",
+        "stage_status",
+        "structure_id",
+        "trait_id",
+        "uniprot_release",
+    }
+)
 
 _BLOCKED_COLUMNS = (
     "protein_id",
@@ -228,6 +272,292 @@ def _mappings_by_candidate_id(
             raise RegistryBuildError(f"duplicate BioLiP/SIFTS mapping candidate {candidate_id}")
         by_id[candidate_id] = mapping
     return by_id
+
+
+def mapping_entry_sha256(value: Mapping[str, Any]) -> str:
+    """Digest a BioLiP/SIFTS mapping row, excluding its row-hash field."""
+
+    return mapper.value_sha256(
+        {key: value[key] for key in value if key != "mapping_row_sha256"}
+    )
+
+
+def _mapping_id_sha256(value: Mapping[str, Any]) -> str:
+    return mapper.value_sha256(
+        {
+            key: value[key]
+            for key in value
+            if key not in {"mapping_id", "mapping_row_sha256"}
+        }
+    )
+
+
+def _require_registry_text(row: Mapping[str, Any], field: str) -> str:
+    value = row.get(field)
+    if not isinstance(value, str) or not value:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapping lacks required {field}")
+    return value
+
+
+def _require_sha256(row: Mapping[str, Any], field: str) -> str:
+    value = _require_registry_text(row, field)
+    if _SHA256.fullmatch(value) is None:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapping {field} is not a SHA-256 digest")
+    return value
+
+
+def _require_release(row: Mapping[str, Any], field: str) -> str:
+    value = _require_registry_text(row, field)
+    if _RELEASE.fullmatch(value) is None:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapping {field} is not a UniProt release")
+    return value
+
+
+def _require_int(
+    row: Mapping[str, Any], field: str, *, positive: bool = False, context: str
+) -> int:
+    value = row.get(field)
+    if type(value) is not int:
+        raise RegistryBuildError(f"BioLiP/SIFTS {context} has invalid {field}")
+    if positive and value < 1:
+        raise RegistryBuildError(f"BioLiP/SIFTS {context} has invalid {field}")
+    return value
+
+
+def _validate_mapping_residue(row: Mapping[str, Any], chain_id: str, index: int) -> int:
+    if set(row) != {
+        "author_insertion_code",
+        "author_residue_number",
+        "chain_id",
+        "ordinal",
+        "pdb_amino_acid",
+        "pdbe_sequence_position",
+        "source_amino_acid",
+        "uniprot_amino_acid",
+        "uniprot_position",
+    }:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} has invalid fields")
+    if row.get("chain_id") != chain_id:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} chain mismatch")
+    if row.get("ordinal") != index:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} ordinal mismatch")
+    if not isinstance(row.get("author_insertion_code"), str):
+        raise RegistryBuildError(
+            f"BioLiP/SIFTS mapped residue {index} author insertion code is invalid"
+        )
+    _require_int(row, "author_residue_number", context=f"mapped residue {index}")
+    _require_int(row, "pdbe_sequence_position", positive=True, context=f"mapped residue {index}")
+    _require_int(row, "uniprot_position", positive=True, context=f"mapped residue {index}")
+    for field in ("source_amino_acid", "pdb_amino_acid", "uniprot_amino_acid"):
+        value = row.get(field)
+        if not isinstance(value, str) or len(value) != 1:
+            raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} has invalid {field}")
+    if row["source_amino_acid"] != row["pdb_amino_acid"]:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} PDB mismatch")
+    if row["source_amino_acid"] != row["uniprot_amino_acid"]:
+        raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} UniProt mismatch")
+    return int(row["uniprot_position"])
+
+
+def _validate_mapping_registry_row(row: Mapping[str, Any]) -> None:
+    if set(row) != MAPPING_REGISTRY_FIELDS:
+        missing = sorted(MAPPING_REGISTRY_FIELDS - set(row))
+        extra = sorted(set(row) - MAPPING_REGISTRY_FIELDS)
+        raise RegistryBuildError(
+            f"BioLiP/SIFTS mapping fields mismatch; missing={missing}, extra={extra}"
+        )
+    if row.get("schema_version") != PLAN_SCHEMA_VERSION:
+        raise RegistryBuildError("BioLiP/SIFTS mapping schema_version is unsupported")
+    if row.get("kind") != MAPPING_REGISTRY_KIND:
+        raise RegistryBuildError("BioLiP/SIFTS mapping has unexpected kind")
+    if row.get("stage_status") != "RELEASE_PINNED_PROTEIN_REFERENCE_BOUND":
+        raise RegistryBuildError("BioLiP/SIFTS mapping stage_status is not bound")
+    if row.get("qualification_claimed") is not False:
+        raise RegistryBuildError("BioLiP/SIFTS mapping must not claim qualification")
+
+    mapping_id = _require_registry_text(row, "mapping_id")
+    expected_mapping_id = MAPPING_REGISTRY_ID_PREFIX + _mapping_id_sha256(row)
+    if mapping_id != expected_mapping_id:
+        raise RegistryBuildError("BioLiP/SIFTS mapping_id digest mismatch")
+    if _require_sha256(row, "mapping_row_sha256") != mapping_entry_sha256(row):
+        raise RegistryBuildError("BioLiP/SIFTS mapping_row_sha256 mismatch")
+    if not _require_registry_text(row, "mapping_candidate_id").startswith(
+        "biolip-sifts-mapping-candidate:"
+    ):
+        raise RegistryBuildError("BioLiP/SIFTS mapping_candidate_id has invalid prefix")
+    _require_sha256(row, "mapping_candidate_row_sha256")
+
+    protein_id = _require_registry_text(row, "protein_id")
+    if not protein_id.startswith("UniProtKB:") or _ACCESSION.fullmatch(protein_id[10:]) is None:
+        raise RegistryBuildError("BioLiP/SIFTS mapping protein_id is not an accession")
+    for field in (
+        "chain_id",
+        "coordinate_frame",
+        "expected_residues",
+        "fetch_request_plan_id",
+        "mapping_method",
+        "mapping_completeness",
+        "record_path",
+        "scope",
+        "sifts_entry_date",
+        "sifts_source_url",
+        "sifts_uniprot_version",
+        "stage_status",
+        "structure_id",
+        "trait_id",
+    ):
+        _require_registry_text(row, field)
+    for field in ("record_sha256", "sequence_sha256", "sifts_xml_sha256"):
+        _require_sha256(row, field)
+    if row["mapping_method"] != mapper.MAPPING_METHOD:
+        raise RegistryBuildError("BioLiP/SIFTS mapping_method mismatch")
+    if row["scope"] != mapper.SCOPE:
+        raise RegistryBuildError("BioLiP/SIFTS scope mismatch")
+    if row["coordinate_frame"] != mapper.COORDINATE_FRAME:
+        raise RegistryBuildError("BioLiP/SIFTS coordinate_frame mismatch")
+    if row["mapping_completeness"] != "COMPLETE":
+        raise RegistryBuildError("BioLiP/SIFTS mapping is not complete")
+    if not str(row["structure_id"]).startswith("PDB:"):
+        raise RegistryBuildError("BioLiP/SIFTS structure_id is not a PDB CURIE")
+    uniprot_release = _require_release(row, "uniprot_release")
+    if _require_release(row, "sifts_uniprot_release") != uniprot_release:
+        raise RegistryBuildError("BioLiP/SIFTS UniProt releases disagree")
+    if row["sifts_uniprot_version"] != uniprot_release.replace("_", "."):
+        raise RegistryBuildError("BioLiP/SIFTS release/version mismatch")
+
+    snapshot = row.get("sifts_snapshot")
+    if not isinstance(snapshot, dict) or set(snapshot) != {
+        "sifts_manifest_entry",
+        "sifts_manifest_entry_sha256",
+        "sifts_manifest_path",
+        "sifts_manifest_sha256",
+        "sifts_snapshot_id",
+    }:
+        raise RegistryBuildError("BioLiP/SIFTS snapshot projection is invalid")
+    manifest_entry = snapshot["sifts_manifest_entry"]
+    if not isinstance(manifest_entry, dict) or set(manifest_entry) != {
+        "path",
+        "pdb_id",
+        "sha256",
+        "sifts_entry_date",
+        "sifts_uniprot_release",
+        "sifts_uniprot_version",
+        "size_bytes",
+        "url",
+    }:
+        raise RegistryBuildError("BioLiP/SIFTS manifest entry projection is invalid")
+    pdb_id = _require_registry_text(manifest_entry, "pdb_id")
+    if not re.fullmatch(r"[0-9][a-z0-9]{3}", pdb_id):
+        raise RegistryBuildError("BioLiP/SIFTS manifest entry pdb_id is invalid")
+    if manifest_entry.get("path") != f"{pdb_id}.xml.gz":
+        raise RegistryBuildError("BioLiP/SIFTS manifest entry path mismatch")
+    if row["structure_id"] != f"PDB:{pdb_id}":
+        raise RegistryBuildError("BioLiP/SIFTS structure/PDB mismatch")
+    _require_int(manifest_entry, "size_bytes", positive=True, context="manifest entry")
+    duplicated_entry_fields = {
+        "sha256": "sifts_xml_sha256",
+        "sifts_entry_date": "sifts_entry_date",
+        "sifts_uniprot_release": "sifts_uniprot_release",
+        "sifts_uniprot_version": "sifts_uniprot_version",
+        "url": "sifts_source_url",
+    }
+    for field, row_field in duplicated_entry_fields.items():
+        if row.get(row_field) != manifest_entry.get(field):
+            raise RegistryBuildError(f"BioLiP/SIFTS manifest entry {field} mismatch")
+    if snapshot["sifts_manifest_entry_sha256"] != mapper.value_sha256(manifest_entry):
+        raise RegistryBuildError("BioLiP/SIFTS manifest entry digest mismatch")
+    for field in ("sifts_manifest_path", "sifts_snapshot_id"):
+        _require_registry_text(snapshot, field)
+    for field in ("sifts_manifest_sha256",):
+        _require_sha256(snapshot, field)
+
+    mapped_residues = row.get("mapped_residues")
+    residue_positions = row.get("residue_positions")
+    if (
+        not isinstance(mapped_residues, list)
+        or not mapped_residues
+        or not isinstance(residue_positions, list)
+    ):
+        raise RegistryBuildError("BioLiP/SIFTS residue projection is invalid")
+    source_residue_count = _require_int(
+        row, "source_residue_count", positive=True, context="mapping"
+    )
+    mapped_residue_count = _require_int(
+        row, "mapped_residue_count", positive=True, context="mapping"
+    )
+    if source_residue_count != len(mapped_residues) or mapped_residue_count != len(
+        mapped_residues
+    ):
+        raise RegistryBuildError("BioLiP/SIFTS mapped residue count mismatch")
+    positions: list[int] = []
+    residues: list[str] = []
+    for index, residue in enumerate(mapped_residues, 1):
+        if not isinstance(residue, dict):
+            raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} is invalid")
+        positions.append(_validate_mapping_residue(residue, str(row["chain_id"]), index))
+        residues.append(str(residue["source_amino_acid"]))
+    if residue_positions != positions:
+        raise RegistryBuildError("BioLiP/SIFTS residue_positions mismatch")
+    if row["expected_residues"] != "".join(residues):
+        raise RegistryBuildError("BioLiP/SIFTS expected_residues mismatch")
+
+    source_projection = row.get("source_projection")
+    if not isinstance(source_projection, dict):
+        raise RegistryBuildError("BioLiP/SIFTS source projection is invalid")
+    trait_binding = source_projection.get("trait_binding")
+    source_binding = source_projection.get("source_binding")
+    if not isinstance(trait_binding, dict) or not isinstance(source_binding, dict):
+        raise RegistryBuildError("BioLiP/SIFTS source projection is incomplete")
+    if trait_binding.get("trait_id") != row["trait_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS trait projection mismatch")
+    if trait_binding.get("trait_record_path") != row["record_path"]:
+        raise RegistryBuildError("BioLiP/SIFTS record projection mismatch")
+    if trait_binding.get("trait_record_sha256") != row["record_sha256"]:
+        raise RegistryBuildError("BioLiP/SIFTS record digest projection mismatch")
+    if source_binding.get("structure_id") != row["structure_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS structure projection mismatch")
+    key = source_binding.get("source_occurrence_key")
+    if not isinstance(key, dict) or key.get("receptor_chain") != row["chain_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS chain projection mismatch")
+
+
+def load_mapping_registry(path: Path) -> dict[str, dict[str, Any]]:
+    """Load BioLiP/SIFTS registry rows and verify their content addresses."""
+
+    if not path.is_file():
+        raise RegistryBuildError(f"BioLiP/SIFTS mapping registry does not exist: {path}")
+    registry: dict[str, dict[str, Any]] = {}
+    with path.open(encoding="utf-8") as handle:
+        for line_number, raw in enumerate(handle, 1):
+            if not raw.strip():
+                raise RegistryBuildError(
+                    f"{path}:{line_number}: blank BioLiP/SIFTS mapping row"
+                )
+            try:
+                row = json.loads(raw)
+            except json.JSONDecodeError as exc:
+                raise RegistryBuildError(
+                    f"{path}:{line_number}: invalid BioLiP/SIFTS mapping JSON: {exc}"
+                ) from exc
+            if not isinstance(row, dict):
+                raise RegistryBuildError(
+                    f"{path}:{line_number}: BioLiP/SIFTS mapping row is not an object"
+                )
+            if raw != mapper.canonical_json(row) + "\n":
+                raise RegistryBuildError(
+                    f"{path}:{line_number}: BioLiP/SIFTS mapping row is not canonical"
+                )
+            try:
+                _validate_mapping_registry_row(row)
+            except RegistryBuildError as exc:
+                raise RegistryBuildError(f"{path}:{line_number}: {exc}") from exc
+            mapping_id = str(row["mapping_id"])
+            if mapping_id in registry:
+                raise RegistryBuildError(
+                    f"{path}:{line_number}: duplicate BioLiP/SIFTS mapping {mapping_id}"
+                )
+            registry[mapping_id] = row
+    return registry
 
 
 def _chunks(values: Sequence[Target], size: int) -> Iterable[Sequence[Target]]:

@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import pytest
+
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
@@ -237,6 +239,14 @@ def _jsonl_rows(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
 
 
+def _write_readdressed_mapping(path: Path, row: dict[str, Any]) -> None:
+    row.pop("mapping_id", None)
+    row.pop("mapping_row_sha256", None)
+    row["mapping_id"] = fetcher.MAPPING_REGISTRY_ID_PREFIX + mapper.value_sha256(row)
+    row["mapping_row_sha256"] = mapper.value_sha256(row)
+    path.write_text(mapper.canonical_json(row) + "\n", encoding="utf-8")
+
+
 def test_dry_run_emits_exact_canonical_plan_without_outputs(
     tmp_path: Path, capsys, monkeypatch
 ) -> None:
@@ -317,6 +327,91 @@ def test_offline_apply_writes_references_memberships_blocked_and_receipt(tmp_pat
     assert value["outputs"]["membership_registry"]["row_count"] == 1
     assert value["outputs"]["sifts_mapping_registry"]["row_count"] == 1
     assert value["outputs"]["blocked_registry"]["row_count"] == 0
+
+
+def test_biolip_sifts_mapping_registry_loader_verifies_output_rows(tmp_path: Path) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    rows = _jsonl_rows(mappings)
+    loaded = fetcher.load_mapping_registry(mappings)
+
+    assert set(loaded) == {rows[0]["mapping_id"]}
+    assert loaded[rows[0]["mapping_id"]] == rows[0]
+    assert fetcher.mapping_entry_sha256(rows[0]) == rows[0]["mapping_row_sha256"]
+
+
+def test_biolip_sifts_mapping_registry_rejects_tampered_rows(tmp_path: Path) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    row["sequence_sha256"] = "0" * 64
+    mappings.write_text(mapper.canonical_json(row) + "\n", encoding="utf-8")
+
+    with pytest.raises(fetcher.RegistryBuildError, match="mapping_id digest mismatch"):
+        fetcher.load_mapping_registry(mappings)
+
+
+@pytest.mark.parametrize("count_field", ["source_residue_count", "mapped_residue_count"])
+def test_biolip_sifts_mapping_registry_rejects_boolean_counts(
+    tmp_path: Path, count_field: str
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    row[count_field] = True
+    _write_readdressed_mapping(mappings, row)
+
+    with pytest.raises(fetcher.RegistryBuildError, match=rf"invalid {count_field}"):
+        fetcher.load_mapping_registry(mappings)
+
+
+def test_biolip_sifts_mapping_registry_rejects_boolean_manifest_size(
+    tmp_path: Path,
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    manifest_entry = row["sifts_snapshot"]["sifts_manifest_entry"]
+    manifest_entry["size_bytes"] = True
+    row["sifts_snapshot"]["sifts_manifest_entry_sha256"] = mapper.value_sha256(
+        manifest_entry
+    )
+    _write_readdressed_mapping(mappings, row)
+
+    with pytest.raises(fetcher.RegistryBuildError, match="invalid size_bytes"):
+        fetcher.load_mapping_registry(mappings)
 
 
 def test_missing_exact_accession_is_blocked_not_substituted(tmp_path: Path) -> None:
