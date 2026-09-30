@@ -40,8 +40,18 @@ def _occurrence(source_id: str, pdb_id: str, ligand: str, position: int) -> dict
             }
         ],
         "source_binding": {
-            "structure_id": f"PDB:{pdb_id}",
-            "source_raw_line_sha256": "0" * 64,
+            "binding_residues_pdb_author_text": f"A{position}",
+            "binding_residues_receptor_sequence_text": "A1",
+            "binding_site_code": "BS01",
+            "ligand_chain_id": "X",
+            "ligand_id": ligand,
+            "ligand_serial_number_text": "1",
+            "receptor_chain_id": "A",
+            "receptor_sequence_length": 1,
+            "receptor_sequence_sha256": "3" * 64,
+            "resolution_text": "1.0",
+            "source_field_projection_sha256": "4" * 64,
+            "source_line_numbers": [1],
             "source_occurrence_key": {
                 "binding_site_code": "BS01",
                 "ligand_chain": "X",
@@ -50,11 +60,22 @@ def _occurrence(source_id: str, pdb_id: str, ligand: str, position: int) -> dict
                 "pdb_id": pdb_id,
                 "receptor_chain": "A",
             },
+            "source_physical_line_count": 1,
+            "source_raw_line_sha256": "0" * 64,
+            "source_raw_line_sha256_basis": "RAW_UTF8_PHYSICAL_LINE_INCLUDING_LF",
+            "source_uniprot_accession_claims": [],
+            "source_uniprot_claim_status": "MISSING",
+            "source_uniprot_field_text": "",
+            "structure_id": f"PDB:{pdb_id}",
         },
         "trait_binding": {
+            "ligand_id": ligand,
             "trait_id": f"proteintraitsmech:BIOLIP_{ligand}",
+            "trait_record_has_canonical_examples": False,
             "trait_record_path": f"data/traits/structure/binding_site/biolip/{ligand}.yaml",
             "trait_record_sha256": "1" * 64,
+            "trait_source_xref_status": "EXACT_SEEDER_SOURCE_XREFS",
+            "trait_source_xrefs": [f"pdb.ligand:{ligand}"],
         },
         "source_occurrence_id": source_id,
         "source_occurrence_row_sha256": "2" * 64,
@@ -113,7 +134,14 @@ def _write_inputs(
     stage = tmp_path / "stage.jsonl"
     snapshot = tmp_path / "snapshot"
     snapshot.mkdir()
-    rows = rows or [_occurrence("occurrence:ok", "1abc", "ATP", 1)]
+    rows = rows or [
+        _occurrence(
+            "biolip-missing-protein-source-occurrence:ok",
+            "1abc",
+            "ATP",
+            1,
+        )
+    ]
     summary = {
         "schema_version": 1,
         "kind": mapper.INPUT_SUMMARY_KIND,
@@ -244,7 +272,7 @@ def _write_readdressed_mapping(path: Path, row: dict[str, Any]) -> None:
     row.pop("mapping_row_sha256", None)
     row["mapping_id"] = fetcher.MAPPING_REGISTRY_ID_PREFIX + mapper.value_sha256(row)
     row["mapping_row_sha256"] = mapper.value_sha256(row)
-    path.write_text(mapper.canonical_json(row) + "\n", encoding="utf-8")
+    path.write_text(fetcher._canonical_json(row) + "\n", encoding="utf-8")
 
 
 def test_dry_run_emits_exact_canonical_plan_without_outputs(
@@ -367,6 +395,27 @@ def test_biolip_sifts_mapping_registry_rejects_tampered_rows(tmp_path: Path) -> 
         fetcher.load_mapping_registry(mappings)
 
 
+def test_biolip_sifts_mapping_registry_accepts_writer_canonical_non_ascii(
+    tmp_path: Path,
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    row["source_stage_artifact"]["path"] = str(tmp_path / "josé" / "stage.jsonl")
+    _write_readdressed_mapping(mappings, row)
+
+    assert "josé" in mappings.read_text(encoding="utf-8")
+    assert fetcher.load_mapping_registry(mappings)[row["mapping_id"]] == row
+
+
 @pytest.mark.parametrize("count_field", ["source_residue_count", "mapped_residue_count"])
 def test_biolip_sifts_mapping_registry_rejects_boolean_counts(
     tmp_path: Path, count_field: str
@@ -411,6 +460,51 @@ def test_biolip_sifts_mapping_registry_rejects_boolean_manifest_size(
     _write_readdressed_mapping(mappings, row)
 
     with pytest.raises(fetcher.RegistryBuildError, match="invalid size_bytes"):
+        fetcher.load_mapping_registry(mappings)
+
+
+@pytest.mark.parametrize(
+    ("mutate", "match"),
+    [
+        pytest.param(
+            lambda row: row["source_projection"].pop("source_occurrence_id"),
+            "source projection is invalid",
+            id="missing-source-occurrence-id",
+        ),
+        pytest.param(
+            lambda row: row["source_projection"]["source_binding"][
+                "source_occurrence_key"
+            ].__setitem__("pdb_id", "2def"),
+            "source occurrence PDB mismatch",
+            id="pdb-key-mismatch",
+        ),
+        pytest.param(
+            lambda row: row["source_projection"]["binding_residue_pairs"][
+                0
+            ].__setitem__("source_amino_acid", "G"),
+            "source_amino_acid mismatch",
+            id="binding-pair-residue-mismatch",
+        ),
+    ],
+)
+def test_biolip_sifts_mapping_registry_rejects_malformed_source_projection(
+    tmp_path: Path, mutate, match: str
+) -> None:
+    responses = tmp_path / "responses.json"
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "CCCCCCCCCA")]}],
+    )
+    args, _out, _memberships, mappings, _blocked, _receipt = _prepare_apply(
+        tmp_path, responses
+    )
+    assert fetcher.main(args) == 0
+
+    [row] = _jsonl_rows(mappings)
+    mutate(row)
+    _write_readdressed_mapping(mappings, row)
+
+    with pytest.raises(fetcher.RegistryBuildError, match=match):
         fetcher.load_mapping_registry(mappings)
 
 

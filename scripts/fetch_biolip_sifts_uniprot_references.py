@@ -119,6 +119,76 @@ MAPPING_REGISTRY_FIELDS = frozenset(
     }
 )
 
+SOURCE_PROJECTION_FIELDS = frozenset(
+    {
+        "binding_residue_pairs",
+        "source_binding",
+        "source_occurrence_id",
+        "source_occurrence_row_sha256",
+        "trait_binding",
+    }
+)
+
+SOURCE_BINDING_FIELDS = frozenset(
+    {
+        "binding_residues_pdb_author_text",
+        "binding_residues_receptor_sequence_text",
+        "binding_site_code",
+        "ligand_chain_id",
+        "ligand_id",
+        "ligand_serial_number_text",
+        "receptor_chain_id",
+        "receptor_sequence_length",
+        "receptor_sequence_sha256",
+        "resolution_text",
+        "source_field_projection_sha256",
+        "source_line_numbers",
+        "source_occurrence_key",
+        "source_physical_line_count",
+        "source_raw_line_sha256",
+        "source_raw_line_sha256_basis",
+        "source_uniprot_accession_claims",
+        "source_uniprot_claim_status",
+        "source_uniprot_field_text",
+        "structure_id",
+    }
+)
+
+SOURCE_OCCURRENCE_KEY_FIELDS = frozenset(
+    {
+        "binding_site_code",
+        "ligand_chain",
+        "ligand_id",
+        "ligand_serial_number",
+        "pdb_id",
+        "receptor_chain",
+    }
+)
+
+BINDING_RESIDUE_PAIR_FIELDS = frozenset(
+    {
+        "author_insertion_code",
+        "author_residue_number",
+        "author_residue_token",
+        "biolip_receptor_sequence_position",
+        "ordinal",
+        "receptor_sequence_residue_token",
+        "source_amino_acid",
+    }
+)
+
+TRAIT_BINDING_FIELDS = frozenset(
+    {
+        "ligand_id",
+        "trait_id",
+        "trait_record_has_canonical_examples",
+        "trait_record_path",
+        "trait_record_sha256",
+        "trait_source_xref_status",
+        "trait_source_xrefs",
+    }
+)
+
 _BLOCKED_COLUMNS = (
     "protein_id",
     "accession",
@@ -324,6 +394,56 @@ def _require_int(
     return value
 
 
+def _require_mapping(
+    value: Any, fields: frozenset[str], *, context: str
+) -> Mapping[str, Any]:
+    if not isinstance(value, dict) or set(value) != fields:
+        raise RegistryBuildError(f"BioLiP/SIFTS {context} projection is invalid")
+    return value
+
+
+def _validate_binding_residue_pair(
+    pair: Mapping[str, Any],
+    mapped_residue: Mapping[str, Any],
+    index: int,
+) -> None:
+    if set(pair) != BINDING_RESIDUE_PAIR_FIELDS:
+        raise RegistryBuildError(f"BioLiP/SIFTS binding residue pair {index} is invalid")
+    if pair.get("ordinal") != index:
+        raise RegistryBuildError(f"BioLiP/SIFTS binding residue pair {index} ordinal mismatch")
+    if not isinstance(pair.get("author_insertion_code"), str):
+        raise RegistryBuildError(
+            f"BioLiP/SIFTS binding residue pair {index} insertion code is invalid"
+        )
+    _require_int(pair, "author_residue_number", context=f"binding residue pair {index}")
+    _require_int(
+        pair,
+        "biolip_receptor_sequence_position",
+        positive=True,
+        context=f"binding residue pair {index}",
+    )
+    for field in (
+        "author_residue_token",
+        "receptor_sequence_residue_token",
+        "source_amino_acid",
+    ):
+        _require_registry_text(pair, field)
+    if len(str(pair["source_amino_acid"])) != 1:
+        raise RegistryBuildError(
+            f"BioLiP/SIFTS binding residue pair {index} amino acid is invalid"
+        )
+    copied_fields = (
+        "author_insertion_code",
+        "author_residue_number",
+        "source_amino_acid",
+    )
+    for field in copied_fields:
+        if pair[field] != mapped_residue[field]:
+            raise RegistryBuildError(
+                f"BioLiP/SIFTS binding residue pair {index} {field} mismatch"
+            )
+
+
 def _validate_mapping_residue(row: Mapping[str, Any], chain_id: str, index: int) -> int:
     if set(row) != {
         "author_insertion_code",
@@ -357,6 +477,131 @@ def _validate_mapping_residue(row: Mapping[str, Any], chain_id: str, index: int)
     if row["source_amino_acid"] != row["uniprot_amino_acid"]:
         raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} UniProt mismatch")
     return int(row["uniprot_position"])
+
+
+def _validate_source_projection(
+    row: Mapping[str, Any],
+    mapped_residues: Sequence[Mapping[str, Any]],
+) -> None:
+    source_projection = _require_mapping(
+        row.get("source_projection"),
+        SOURCE_PROJECTION_FIELDS,
+        context="source",
+    )
+    occurrence_id = _require_registry_text(source_projection, "source_occurrence_id")
+    if not occurrence_id.startswith("biolip-missing-protein-source-occurrence:"):
+        raise RegistryBuildError("BioLiP/SIFTS source occurrence id is invalid")
+    _require_sha256(source_projection, "source_occurrence_row_sha256")
+
+    trait_binding = _require_mapping(
+        source_projection.get("trait_binding"),
+        TRAIT_BINDING_FIELDS,
+        context="trait binding",
+    )
+    if trait_binding.get("trait_id") != row["trait_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS trait projection mismatch")
+    if trait_binding.get("trait_record_path") != row["record_path"]:
+        raise RegistryBuildError("BioLiP/SIFTS record projection mismatch")
+    if trait_binding.get("trait_record_sha256") != row["record_sha256"]:
+        raise RegistryBuildError("BioLiP/SIFTS record digest projection mismatch")
+    if trait_binding.get("trait_record_has_canonical_examples") is not False:
+        raise RegistryBuildError("BioLiP/SIFTS trait binding must not have examples")
+    if trait_binding.get("trait_source_xref_status") != "EXACT_SEEDER_SOURCE_XREFS":
+        raise RegistryBuildError("BioLiP/SIFTS trait source xref status mismatch")
+
+    source_binding = _require_mapping(
+        source_projection.get("source_binding"),
+        SOURCE_BINDING_FIELDS,
+        context="source binding",
+    )
+    if source_binding.get("structure_id") != row["structure_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS structure projection mismatch")
+    if source_binding.get("receptor_chain_id") != row["chain_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS receptor chain projection mismatch")
+    _require_int(
+        source_binding,
+        "receptor_sequence_length",
+        positive=True,
+        context="source binding",
+    )
+    _require_int(
+        source_binding,
+        "source_physical_line_count",
+        positive=True,
+        context="source binding",
+    )
+    for field in (
+        "binding_residues_pdb_author_text",
+        "binding_residues_receptor_sequence_text",
+        "binding_site_code",
+        "ligand_chain_id",
+        "ligand_id",
+        "ligand_serial_number_text",
+        "resolution_text",
+        "source_raw_line_sha256_basis",
+    ):
+        _require_registry_text(source_binding, field)
+    for field in (
+        "receptor_sequence_sha256",
+        "source_field_projection_sha256",
+        "source_raw_line_sha256",
+    ):
+        _require_sha256(source_binding, field)
+    if source_binding["source_raw_line_sha256_basis"] != "RAW_UTF8_PHYSICAL_LINE_INCLUDING_LF":
+        raise RegistryBuildError("BioLiP/SIFTS source raw-line hash basis mismatch")
+    if source_binding.get("source_uniprot_accession_claims") != []:
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt accession claims mismatch")
+    if source_binding.get("source_uniprot_claim_status") != "MISSING":
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt claim status mismatch")
+    if source_binding.get("source_uniprot_field_text") != "":
+        raise RegistryBuildError("BioLiP/SIFTS source UniProt field must be empty")
+    source_line_numbers = source_binding.get("source_line_numbers")
+    if (
+        not isinstance(source_line_numbers, list)
+        or not source_line_numbers
+        or any(type(value) is not int or value < 1 for value in source_line_numbers)
+    ):
+        raise RegistryBuildError("BioLiP/SIFTS source line numbers are invalid")
+
+    key = _require_mapping(
+        source_binding.get("source_occurrence_key"),
+        SOURCE_OCCURRENCE_KEY_FIELDS,
+        context="source occurrence key",
+    )
+    for field in SOURCE_OCCURRENCE_KEY_FIELDS:
+        _require_registry_text(key, field)
+    pdb_id = str(row["structure_id"])[4:]
+    if key["pdb_id"] != pdb_id:
+        raise RegistryBuildError("BioLiP/SIFTS source occurrence PDB mismatch")
+    if key["receptor_chain"] != row["chain_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS chain projection mismatch")
+    key_binding_fields = {
+        "binding_site_code": "binding_site_code",
+        "ligand_chain": "ligand_chain_id",
+        "ligand_id": "ligand_id",
+        "ligand_serial_number": "ligand_serial_number_text",
+    }
+    for key_field, binding_field in key_binding_fields.items():
+        if key[key_field] != source_binding[binding_field]:
+            raise RegistryBuildError(
+                f"BioLiP/SIFTS source occurrence {key_field} mismatch"
+            )
+    if trait_binding.get("ligand_id") != key["ligand_id"]:
+        raise RegistryBuildError("BioLiP/SIFTS ligand projection mismatch")
+    if trait_binding.get("trait_source_xrefs") != [f"pdb.ligand:{key['ligand_id']}"]:
+        raise RegistryBuildError("BioLiP/SIFTS trait source xrefs mismatch")
+
+    binding_residue_pairs = source_projection.get("binding_residue_pairs")
+    if not isinstance(binding_residue_pairs, list) or len(binding_residue_pairs) != len(
+        mapped_residues
+    ):
+        raise RegistryBuildError("BioLiP/SIFTS binding residue pair count mismatch")
+    for index, (pair, residue) in enumerate(
+        zip(binding_residue_pairs, mapped_residues, strict=True), 1
+    ):
+        if not isinstance(pair, dict):
+            raise RegistryBuildError(f"BioLiP/SIFTS binding residue pair {index} is invalid")
+        _validate_binding_residue_pair(pair, residue, index)
 
 
 def _validate_mapping_registry_row(row: Mapping[str, Any]) -> None:
@@ -491,34 +736,19 @@ def _validate_mapping_registry_row(row: Mapping[str, Any]) -> None:
         raise RegistryBuildError("BioLiP/SIFTS mapped residue count mismatch")
     positions: list[int] = []
     residues: list[str] = []
+    validated_mapped_residues: list[Mapping[str, Any]] = []
     for index, residue in enumerate(mapped_residues, 1):
         if not isinstance(residue, dict):
             raise RegistryBuildError(f"BioLiP/SIFTS mapped residue {index} is invalid")
         positions.append(_validate_mapping_residue(residue, str(row["chain_id"]), index))
         residues.append(str(residue["source_amino_acid"]))
+        validated_mapped_residues.append(residue)
     if residue_positions != positions:
         raise RegistryBuildError("BioLiP/SIFTS residue_positions mismatch")
     if row["expected_residues"] != "".join(residues):
         raise RegistryBuildError("BioLiP/SIFTS expected_residues mismatch")
 
-    source_projection = row.get("source_projection")
-    if not isinstance(source_projection, dict):
-        raise RegistryBuildError("BioLiP/SIFTS source projection is invalid")
-    trait_binding = source_projection.get("trait_binding")
-    source_binding = source_projection.get("source_binding")
-    if not isinstance(trait_binding, dict) or not isinstance(source_binding, dict):
-        raise RegistryBuildError("BioLiP/SIFTS source projection is incomplete")
-    if trait_binding.get("trait_id") != row["trait_id"]:
-        raise RegistryBuildError("BioLiP/SIFTS trait projection mismatch")
-    if trait_binding.get("trait_record_path") != row["record_path"]:
-        raise RegistryBuildError("BioLiP/SIFTS record projection mismatch")
-    if trait_binding.get("trait_record_sha256") != row["record_sha256"]:
-        raise RegistryBuildError("BioLiP/SIFTS record digest projection mismatch")
-    if source_binding.get("structure_id") != row["structure_id"]:
-        raise RegistryBuildError("BioLiP/SIFTS structure projection mismatch")
-    key = source_binding.get("source_occurrence_key")
-    if not isinstance(key, dict) or key.get("receptor_chain") != row["chain_id"]:
-        raise RegistryBuildError("BioLiP/SIFTS chain projection mismatch")
+    _validate_source_projection(row, validated_mapped_residues)
 
 
 def load_mapping_registry(path: Path) -> dict[str, dict[str, Any]]:
@@ -543,7 +773,7 @@ def load_mapping_registry(path: Path) -> dict[str, dict[str, Any]]:
                 raise RegistryBuildError(
                     f"{path}:{line_number}: BioLiP/SIFTS mapping row is not an object"
                 )
-            if raw != mapper.canonical_json(row) + "\n":
+            if raw != _canonical_json(row) + "\n":
                 raise RegistryBuildError(
                     f"{path}:{line_number}: BioLiP/SIFTS mapping row is not canonical"
                 )
