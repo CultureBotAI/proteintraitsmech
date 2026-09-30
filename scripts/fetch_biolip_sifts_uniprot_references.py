@@ -9,7 +9,9 @@ touch the network or write outputs.
 ``--apply`` requires an exact saved ``--request-plan``.  The current BioLiP stage,
 SIFTS manifest, mapping summary, request chunks, offline fixture when supplied, and
 output paths must still match that saved plan before the first REST request and again
-before any ignored staging output is replaced.
+before any ignored staging output is replaced.  Successful exact responses also emit a
+content-addressed BioLiP/SIFTS mapping registry row for every fetched candidate whose
+mapped residue identities replay against the fetched UniProt sequence.
 """
 
 from __future__ import annotations
@@ -60,12 +62,15 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding"
 DEFAULT_REGISTRY = DEFAULT_OUT_DIR / "biolip-sifts-uniprot_registry.jsonl"
 DEFAULT_MEMBERSHIPS = DEFAULT_OUT_DIR / "biolip-sifts-uniprot_memberships.jsonl"
+DEFAULT_MAPPINGS = DEFAULT_OUT_DIR / "biolip-sifts-mappings.jsonl"
 DEFAULT_BLOCKED = DEFAULT_OUT_DIR / "biolip-sifts-registry_blocked.tsv"
 DEFAULT_RECEIPT = DEFAULT_OUT_DIR / "biolip-sifts-uniprot_fetch_receipt.json"
 
 PLAN_SCHEMA_VERSION = 1
 PLAN_KIND = "BIOLIP_SIFTS_UNIPROT_FETCH_REQUEST_PLAN"
 PLAN_ID_PREFIX = "biolip-sifts-uniprot-fetch-plan:"
+MAPPING_REGISTRY_KIND = "BIOLIP_SIFTS_MAPPING_REGISTRY_ROW"
+MAPPING_REGISTRY_ID_PREFIX = "biolip-sifts:"
 RECEIPT_SCHEMA_VERSION = 1
 RECEIPT_KIND = "BIOLIP_SIFTS_UNIPROT_FETCH_RECEIPT"
 RECEIPT_ID_PREFIX = "biolip-sifts-uniprot-fetch-receipt:"
@@ -93,6 +98,7 @@ def _resolved_output_paths(args: argparse.Namespace) -> dict[str, Path]:
     outputs = {
         "protein_registry": args.out,
         "membership_registry": args.membership_out or DEFAULT_MEMBERSHIPS,
+        "sifts_mapping_registry": args.mapping_out or DEFAULT_MAPPINGS,
         "blocked_registry": args.blocked,
         "fetch_receipt": args.receipt or DEFAULT_RECEIPT,
     }
@@ -383,6 +389,57 @@ def _blocked_text(rows: Sequence[Mapping[str, str | int]]) -> str:
     return buffer.getvalue()
 
 
+def _mapping_registry_row(
+    mapping: Mapping[str, Any],
+    *,
+    reference: Mapping[str, Any],
+    plan: Mapping[str, Any],
+) -> dict[str, Any]:
+    sifts_snapshot = mapping["sifts_snapshot"]
+    sifts_entry = sifts_snapshot["sifts_manifest_entry"]
+    row: dict[str, Any] = {
+        "schema_version": PLAN_SCHEMA_VERSION,
+        "kind": MAPPING_REGISTRY_KIND,
+        "stage_status": "RELEASE_PINNED_PROTEIN_REFERENCE_BOUND",
+        "qualification_claimed": False,
+        "mapping_candidate_id": mapping["candidate_id"],
+        "mapping_candidate_row_sha256": mapping["candidate_row_sha256"],
+        "trait_id": mapping["trait_id"],
+        "record_path": mapping["record_path"],
+        "record_sha256": mapping["record_sha256"],
+        "structure_id": mapping["structure_id"],
+        "chain_id": mapping["chain_id"],
+        "protein_id": mapping["protein_id"],
+        "sequence_sha256": reference["sequence_sha256"],
+        "uniprot_release": reference["uniprot_release"],
+        "mapping_method": mapping["mapping_method"],
+        "scope": mapping["scope"],
+        "coordinate_frame": mapping["coordinate_frame"],
+        "residue_positions": mapping["residue_positions"],
+        "expected_residues": mapping["expected_residues"],
+        "source_residue_count": mapping["source_residue_count"],
+        "mapped_residue_count": mapping["mapped_residue_count"],
+        "mapping_completeness": mapping["mapping_completeness"],
+        "mapped_residues": mapping["mapped_residues"],
+        "source_projection": mapping["source_projection"],
+        "sifts_snapshot": sifts_snapshot,
+        "sifts_entry_date": sifts_entry["sifts_entry_date"],
+        "sifts_uniprot_release": sifts_entry["sifts_uniprot_release"],
+        "sifts_uniprot_version": sifts_entry["sifts_uniprot_version"],
+        "sifts_xml_sha256": sifts_entry["sha256"],
+        "sifts_source_url": sifts_entry["url"],
+        "source_stage_artifact": plan["source_stage_artifact"],
+        "mapping_stage": plan["mapping_stage"],
+        "fetch_request_plan_id": plan["request_plan_id"],
+    }
+    return mapper._content_address(  # noqa: SLF001 - reuse the BioLiP stage address rule
+        row,
+        id_field="mapping_id",
+        prefix=MAPPING_REGISTRY_ID_PREFIX,
+        row_hash_field="mapping_row_sha256",
+    )
+
+
 def _validate_mapped_residues(
     reference: Mapping[str, Any],
     target: Target,
@@ -442,9 +499,11 @@ def _receipt(
     release: str,
     registry_text: str,
     membership_text: str,
+    mapping_text: str,
     blocked_text: str,
     reference_count: int,
     membership_count: int,
+    mapping_count: int,
     blocked_count: int,
 ) -> dict[str, Any]:
     output_paths = plan["output_paths"]
@@ -470,6 +529,9 @@ def _receipt(
             ),
             "membership_registry": _output_projection(
                 output_paths["membership_registry"], membership_text, row_count=membership_count
+            ),
+            "sifts_mapping_registry": _output_projection(
+                output_paths["sifts_mapping_registry"], mapping_text, row_count=mapping_count
             ),
             "blocked_registry": _output_projection(
                 output_paths["blocked_registry"], blocked_text, row_count=blocked_count
@@ -498,7 +560,7 @@ def _atomic_write(path: Path, text: str) -> None:
 
 def _fetch_outputs(
     *, args: argparse.Namespace, prepared: PreparedPlan, supplied_plan: Mapping[str, Any]
-) -> tuple[str, str, str, str, int, int, int]:
+) -> tuple[str, str, str, str, str, int, int, int, int]:
     client = (
         OfflineClient(prepared.offline_fixture)
         if prepared.offline_fixture is not None
@@ -510,6 +572,7 @@ def _fetch_outputs(
     )
     references: list[dict[str, Any]] = []
     memberships: list[dict[str, Any]] = []
+    mapping_registry: list[dict[str, Any]] = []
     blocked: list[dict[str, str | int]] = []
     response_receipts: list[dict[str, Any]] = []
     pinned_release: str | None = None
@@ -607,6 +670,14 @@ def _fetch_outputs(
                 )
                 continue
             references.append(reference)
+            for candidate_id in target.candidates[0]["mapping_candidate_ids"]:
+                mapping_registry.append(
+                    _mapping_registry_row(
+                        prepared.mappings_by_candidate_id[candidate_id],
+                        reference=reference,
+                        plan=supplied_plan,
+                    )
+                )
             try:
                 memberships.extend(
                     extract_entry_memberships(
@@ -625,8 +696,26 @@ def _fetch_outputs(
     if pinned_release is None:
         raise RegistryBuildError("fetch produced no release-stamped responses")
     references.sort(key=lambda row: row["protein_id"])
+    mapping_registry.sort(key=lambda row: row["mapping_id"])
     if len({row["protein_id"] for row in references}) != len(references):
         raise RegistryBuildError("internal error: duplicate ProteinReference output key")
+    if len({row["mapping_id"] for row in mapping_registry}) != len(mapping_registry):
+        raise RegistryBuildError("internal error: duplicate BioLiP/SIFTS mapping output key")
+    reference_ids = {str(row["protein_id"]) for row in references}
+    expected_mapping_candidate_ids = {
+        candidate_id
+        for target in prepared.targets
+        if target.protein_id in reference_ids
+        for candidate_id in target.candidates[0]["mapping_candidate_ids"]
+    }
+    observed_mapping_candidate_ids = {
+        str(row["mapping_candidate_id"]) for row in mapping_registry
+    }
+    if expected_mapping_candidate_ids != observed_mapping_candidate_ids:
+        raise RegistryBuildError(
+            "internal error: BioLiP/SIFTS mapping outputs do not account for every "
+            "successful mapped candidate"
+        )
     try:
         memberships = merge_memberships(memberships)
         membership_text = dump_memberships(memberships)
@@ -634,9 +723,9 @@ def _fetch_outputs(
         raise RegistryBuildError(f"invalid UniProt membership snapshot: {exc}") from exc
 
     registry_text = "".join(_canonical_json(reference) + "\n" for reference in references)
+    mapping_text = "".join(_canonical_json(row) + "\n" for row in mapping_registry)
     blocked_text = _blocked_text(blocked)
     target_ids = {target.protein_id for target in prepared.targets}
-    reference_ids = {str(row["protein_id"]) for row in references}
     blocked_ids = {str(row["protein_id"]) for row in blocked}
     if reference_ids & blocked_ids or reference_ids | blocked_ids != target_ids:
         raise RegistryBuildError("internal error: fetched outputs do not account for every target")
@@ -650,18 +739,22 @@ def _fetch_outputs(
         release=pinned_release,
         registry_text=registry_text,
         membership_text=membership_text,
+        mapping_text=mapping_text,
         blocked_text=blocked_text,
         reference_count=len(references),
         membership_count=len(memberships),
+        mapping_count=len(mapping_registry),
         blocked_count=len(blocked),
     )
     return (
         registry_text,
         membership_text,
+        mapping_text,
         blocked_text,
         _canonical_json(receipt) + "\n",
         len(references),
         len(memberships),
+        len(mapping_registry),
         len(blocked),
     )
 
@@ -688,19 +781,23 @@ def build(args: argparse.Namespace) -> int:
     (
         registry_text,
         membership_text,
+        mapping_text,
         blocked_text,
         receipt_text,
         reference_count,
         membership_count,
+        mapping_count,
         blocked_count,
     ) = _fetch_outputs(args=args, prepared=prepared, supplied_plan=supplied_plan)
 
     _atomic_write(output_paths["protein_registry"], registry_text)
     _atomic_write(output_paths["membership_registry"], membership_text)
+    _atomic_write(output_paths["sifts_mapping_registry"], mapping_text)
     _atomic_write(output_paths["blocked_registry"], blocked_text)
     _atomic_write(output_paths["fetch_receipt"], receipt_text)
     print(f"WROTE {output_paths['protein_registry']} ({reference_count:,} ProteinReference rows)")
     print(f"WROTE {output_paths['membership_registry']} ({membership_count:,} membership rows)")
+    print(f"WROTE {output_paths['sifts_mapping_registry']} ({mapping_count:,} SIFTS mapping rows)")
     print(f"WROTE {output_paths['blocked_registry']} ({blocked_count:,} blocked accessions)")
     print(f"WROTE {output_paths['fetch_receipt']} (generation boundary)")
     return 0
@@ -714,6 +811,7 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--expect-release", required=True)
     ap.add_argument("--out", type=Path, default=DEFAULT_REGISTRY)
     ap.add_argument("--membership-out", type=Path)
+    ap.add_argument("--mapping-out", type=Path)
     ap.add_argument("--blocked", type=Path, default=DEFAULT_BLOCKED)
     ap.add_argument("--receipt", type=Path)
     ap.add_argument("--request-plan", type=Path)

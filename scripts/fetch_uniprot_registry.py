@@ -506,9 +506,7 @@ def _is_below(path: Path, parent: Path) -> bool:
 def _validate_staging_output_paths(paths: Mapping[str, Path]) -> None:
     resolved = {_output_path(path) for path in paths.values()}
     if len(resolved) != len(paths):
-        raise RegistryBuildError(
-            "registry, membership, blocked, and receipt paths must be distinct"
-        )
+        raise RegistryBuildError("staging output paths must be distinct")
     protected = (REPO_ROOT / "data" / "traits", REPO_ROOT / "data" / "grounding")
     for role, path in paths.items():
         if any(_is_below(path, root) for root in protected):
