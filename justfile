@@ -475,6 +475,11 @@ fetch-biolip-sifts *args:
 stage-biolip-sifts-mappings *args:
     uv run python scripts/stage_biolip_sifts_mappings.py {{args}}
 
+# Fetch release-pinned UniProt references for BioLiP/SIFTS mapping candidates.
+fetch-biolip-sifts-uniprot *args:
+    uv run python scripts/fetch_biolip_sifts_uniprot_references.py \
+      --expect-release {{uniprot_grounding_release}} {{args}}
+
 # Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
 # Requires `just fetch-biolip` first. Dry-run by default; --apply to write.
 seed-biolip *args:
