@@ -41,7 +41,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "stability" / "conditions"
 
 DEFINITION_SOURCE = "ProteinTraitsMech curated structural-stability taxonomy"
-LICENSE = "CC0-1.0"
+LICENSE = "CC-BY-4.0"
 
 PATO_STABILITY = "PATO:0015026"
 PATO_INCREASED = "PATO:0015027"

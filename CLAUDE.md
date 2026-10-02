@@ -73,7 +73,7 @@ The five paths and axes are:
   candidate ledgers only. Add a new canonical example solely through the release-pinned
   candidate → resolve → semantic validate → reviewed promote workflow documented in
   `research/uniprot-organism-protein-grounding-plan.md`.
-- Do not assume the root CC0 dedication overrides upstream terms. Preserve per-record
+- Do not assume the project licenses overrides upstream terms. Preserve per-record
   provenance/license metadata, treat restrictive or missing terms as a release blocker,
   and escalate unresolved source dispositions under issue #517.
 - Closed-mode validation rejects unknown fields. Change the schema first, regenerate as

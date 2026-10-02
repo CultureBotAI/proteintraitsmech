@@ -59,7 +59,7 @@ ECOD_TXT = RAW_DIR / "ecod.latest.domains.txt"
 
 # ECOD is redistributed under a permissive academic license
 # (http://prodata.swmed.edu/ecod/). No SPDX identifier, but it is tighter than
-# the CC0 corpus default, so stamp `license: free for academic use (ECOD)`.
+# project-authored CC-BY-4.0 data, so stamp `license: free for academic use (ECOD)`.
 
 LEVEL_TO_CATEGORY = {
     "A": ("STRUCT_ARCHITECTURE",         "structure/architecture"),
@@ -248,7 +248,7 @@ def build_yaml(node: Node, release: str, nodes: dict, x_to_a: dict[str, str]) ->
             for x in xref_items:
                 lines.append(f"  - {x}")
 
-    lines.append("license: free for academic use (ECOD)")   # tighter than the CC0 corpus default
+    lines.append("license: free for academic use (ECOD)")   # tighter than project-authored CC-BY-4.0 data
     return "\n".join(lines) + "\n"
 
 

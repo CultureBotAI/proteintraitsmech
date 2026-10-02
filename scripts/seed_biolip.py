@@ -42,7 +42,7 @@ Inputs (fetch via `just fetch-biolip`, gitignored under data/raw/biolip/):
   ligand.tsv      CCD id → formula / InChI / InChIKey / SMILES / name
 
 ⚠ LICENSE: BioLiP2 is free for academic use (Zhang Lab) with NO explicit
-open license. The corpus is otherwise CC0-1.0, so every BioLiP record is
+open license. Project-authored data use CC-BY-4.0, so every BioLiP record is
 stamped with the BioLiP license and FLAGGED. See download.yaml.
 
 Idempotent (skips existing files by path); dry-run unless --apply.
