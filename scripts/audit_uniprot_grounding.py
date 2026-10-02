@@ -1390,8 +1390,9 @@ def parser() -> argparse.ArgumentParser:
         "--record-content-gate",
         action="store_true",
         help=(
-            "YAML-parse exact-match records and replay checksum-pinned source "
-            "content gates before emitting candidates"
+            "YAML-parse exact-match HAMAP/InterPro/PANTHER/Pfam records "
+            "and replay checksum-pinned source content gates before "
+            "emitting candidates"
         ),
     )
     ap.add_argument(

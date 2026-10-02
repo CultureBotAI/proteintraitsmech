@@ -534,30 +534,35 @@ def test_audit_revisits_qualified_records_for_taxon_completion(tmp_path):
     assert A.should_discover_candidates(record, {"NCBITaxon:83333"})
 
 
-def test_audit_gates_only_replayable_source_namespaces(tmp_path):
-    gated = A.RecordAudit(
-        trait_id="PANTHER:PTHR00001",
-        path=tmp_path / "panther.yaml",
-        record_path="panther.yaml",
+@pytest.mark.parametrize(
+    ("source_namespace", "expected"),
+    [
+        ("HAMAP", True),
+        ("InterPro", True),
+        ("PANTHER", True),
+        ("Pfam", True),
+        ("CDD", False),
+        ("Gene3D", False),
+        ("SUPFAM", False),
+    ],
+)
+def test_audit_gates_only_replayable_source_namespaces(
+    tmp_path,
+    source_namespace,
+    expected,
+):
+    record = A.RecordAudit(
+        trait_id=f"{source_namespace}:fixture",
+        path=tmp_path / f"{source_namespace}.yaml",
+        record_path=f"{source_namespace}.yaml",
         trait_axis="FUNCTION",
         trait_category="FUNC_PROTEIN_FAMILY",
-        source_namespace="PANTHER",
-        grounding_state="NO_PROTEIN",
-        inline_state="NO_VALID_PROTEIN",
-    )
-    ungated = A.RecordAudit(
-        trait_id="CDD:cd00001",
-        path=tmp_path / "cdd.yaml",
-        record_path="cdd.yaml",
-        trait_axis="SEQUENCE",
-        trait_category="SEQ_DOMAIN",
-        source_namespace="CDD",
+        source_namespace=source_namespace,
         grounding_state="NO_PROTEIN",
         inline_state="NO_VALID_PROTEIN",
     )
 
-    assert A.should_gate_record_content(gated)
-    assert not A.should_gate_record_content(ungated)
+    assert A.should_gate_record_content(record) is expected
 
 
 def test_audit_record_content_gate_blocks_doomed_exact_candidates(tmp_path):
