@@ -155,7 +155,7 @@ For each issue or group representative:
 Treat these as P0 when live:
 
 - **Records exist for a source whose `download.yaml` block is `rejected` or
-  `candidate`.** In a CC0-dedicated repo this is licensing exposure, not
+  `candidate`.** In a repository that redistributes source data this is licensing exposure, not
   bookkeeping (the ELM case, #542; policy in #517).
 - **A trait record written through an unaudited route** — anything that is not a
   seeder via `record_io.write_record`, a registered in-place editor, or a declared

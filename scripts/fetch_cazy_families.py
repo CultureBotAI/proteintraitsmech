@@ -8,7 +8,7 @@ machinery. There is no open bulk download of the family-level metadata (the
 cazy_data.zip is the per-protein dump), so we scrape the per-family pages.
 
 License: CAZy content is © AFMB, academic-use, NOT openly licensed. Records seeded
-from this are stamped with that license and FLAGGED (the corpus is otherwise CC0).
+from this are stamped with that license and FLAGGED (project-authored data use CC-BY-4.0).
 
 For each family we capture: clan, mechanism, catalytic 3D fold, note, and the
 "Activities in Family" table (EC numbers + activity names). Cached, resumable, and

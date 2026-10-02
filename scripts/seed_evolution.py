@@ -18,7 +18,7 @@ EVO_CLADE_SPECIFIC) record carrying an `NCBITaxon:` xref for the clade; the
 generic terms below are the parents such scoped records attach to.
 
 `mapping_status: SEEDED`; curator-minted `proteintraitsmech:EVO_*` identifiers;
-license CC0-1.0. Idempotent; dry-run unless --apply. Stdlib-only.
+license CC-BY-4.0. Idempotent; dry-run unless --apply. Stdlib-only.
 """
 
 from __future__ import annotations
@@ -34,7 +34,7 @@ from yaml_emit import folded, yaml_escape  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "evolution"
 DEFINITION_SOURCE = "ProteinTraitsMech curated evolutionary/pangenome taxonomy"
-LICENSE = "CC0-1.0"
+LICENSE = "CC-BY-4.0"
 
 # (id_suffix, subdir, label, definition, [synonyms])
 # trait_category is the COARSE category derived from subdir (conservation →

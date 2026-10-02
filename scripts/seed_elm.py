@@ -13,7 +13,7 @@ We route them to the matching SEQ_* category:
 Each class carries its regex in `sequence_pattern`.
 
 ⚠️ Licence: ELM is released for **non-commercial** use (ELM Software License) —
-stamped per-record, distinct from the repo's CC0 default (as with PROSITE).
+stamped per-record, distinct from the project data license (as with PROSITE).
 
 Input (fetch via `just fetch-elm`, gitignored):
   data/raw/elm/elm_classes.tsv  (elm.eu.org/elms/elms_index.tsv)

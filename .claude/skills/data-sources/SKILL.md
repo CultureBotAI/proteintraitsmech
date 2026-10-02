@@ -9,7 +9,7 @@ description: Use this skill to create, review, maintain, and update download.yam
 `download.yaml` (repo root) is both the **download manifest** (kghub-downloader
 format, `run.py download`-compatible, as in KG-Microbe) and the **source
 catalogue**. It answers "where did our data come from, can we redistribute it,
-and what's next." The whole corpus is CC0, so a mislabelled licence is a real
+and what's next." Project-authored data are CC-BY-4.0 and sources retain their terms, so a mislabelled licence is a real
 problem. (It replaced the older `data/sources.yaml` registry.)
 
 ## Format

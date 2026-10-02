@@ -272,8 +272,8 @@ supports them, and can also be added by curators:
 | [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |
 | [METPO](https://github.com/berkeleybop/metpo) (Microbial Ecophysiological Trait & Phenotype Ontology, CC-BY-4.0) | 118 | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` (growth-preference / tolerance + metabolism / enzyme-test branches) |
 | [PATO](https://github.com/pato-ontology/pato) (Phenotype And Trait Ontology, CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` (curated physicochemical quality whitelist) |
-| Curated stability taxonomy (`seed_stability.py`, CC0-1.0) | 33 | `data/traits/structure/stability/conditions/` (11 stressors × {base, increased, decreased}, parented to PATO stability) |
-| Curated evolutionary / pangenome taxonomy (`seed_evolution.py`, CC0-1.0) | 9 | `data/traits/evolution/{conservation,pangenome}/` (EVOLUTION axis: conserved / clade-specific / variable + pangenome core/soft-core/shell/cloud/persistent/singleton) |
+| Curated stability taxonomy (`seed_stability.py`, CC-BY-4.0) | 33 | `data/traits/structure/stability/conditions/` (11 stressors × {base, increased, decreased}, parented to PATO stability) |
+| Curated evolutionary / pangenome taxonomy (`seed_evolution.py`, CC-BY-4.0) | 9 | `data/traits/evolution/{conservation,pangenome}/` (EVOLUTION axis: conserved / clade-specific / variable + pangenome core/soft-core/shell/cloud/persistent/singleton) |
 | [TCDB](https://www.tcdb.org/) transport classification (`seed_tcdb.py`, CC-BY-SA 3.0) | 2285 | `data/traits/function/transport/tcdb/` (Class/Subclass/Family → FUNC_TRANSPORT; 946 families ChEBI-grounded) |
 | [COG 2020](https://www.ncbi.nlm.nih.gov/research/cog/) orthologous groups (`seed_cog.py`, US Gov public domain) | 4903 | `data/traits/function/ortholog_group/cog/` (4,877 COGs + 26 functional categories → FUNC_ORTHOLOG_GROUP) |
 | [Rhea](https://www.rhea-db.org/) reactions (`seed_rhea.py`, CC-BY 4.0) | 18558 | `data/traits/function/enzymatic_activity/rhea/` (master reactions → FUNC_ENZYMATIC_ACTIVITY; ChEBI participants; EC via rhea2ec) |
@@ -285,7 +285,7 @@ supports them, and can also be added by curators:
 | [IDEAL](https://www.ideal-db.org/) protean segments (`seed_ideal.py`, CC-BY 4.0) — **pivoted** | 1 | `data/traits/sequence/disorder/` (ProS trait; 1,448 IDPs as examples) |
 | [ELM](http://elm.eu.org/) linear-motif classes (`seed_elm.py`, ⚠ non-commercial) | 353 | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` (TRG→SEQ_TARGETING_SIGNAL, CLV→SEQ_CLEAVAGE_SITE, …; regex→sequence_pattern) |
 | [MEROPS](https://www.ebi.ac.uk/merops/) peptidase families (`seed_merops.py`, academic) | 370 | `data/traits/sequence/family/merops/` (S01→chymotrypsin, …; catalytic type → SEQ_FAMILY) |
-| Curated RiPP leader classes (`seed_ripp.py`, CC0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
+| Curated RiPP leader classes (`seed_ripp.py`, CC-BY-4.0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
 
 The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.
 
@@ -413,7 +413,14 @@ when queue enforcement is enabled on `main`.
 
 ## License
 
-CC0-1.0 — Public Domain Dedication.
+Project-authored data, records, annotations, mappings, data exports and narrative
+documentation are licensed under [CC BY 4.0](LICENSE-DATA). Project-authored
+code, scripts, tests, schemas and website templates are licensed under
+[BSD-3-Clause](LICENSE-CODE). See [LICENSE](LICENSE) for scope and attribution.
+
+Third-party material retains its own licenses and notices. Preserve upstream
+attribution and source-specific terms when redistributing a record or subset.
+Previously released material remains available under its original license.
 
 
 The [biophysical sequence pilot](data/biophysical/README.md) adds typed quantitative

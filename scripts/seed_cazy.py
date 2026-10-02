@@ -8,8 +8,8 @@ catalytic machinery. Because the classification is defined by amino-acid sequenc
 similarity, CAZy families are a SEQUENCE trait (SEQ_FAMILY), per the
 axis-follows-representation convention.
 
-⚠ LICENSE: CAZy content is © AFMB, academic-use, NOT openly licensed. This corpus
-is otherwise CC0-1.0, so every CAZy record is stamped with the CAZy license and
+⚠ LICENSE: CAZy content is © AFMB, academic-use, NOT openly licensed. Project-authored data
+use CC-BY-4.0, so every CAZy record is stamped with the CAZy license and
 FLAGGED. See download.yaml.
 
 Hierarchy emitted:
