@@ -59,6 +59,11 @@ UNIPROT_ID = re.compile(
     r"[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})(?:-[0-9]+)?$"
 )
 TAXON_ID = re.compile(r"^NCBITaxon:[0-9]+$")
+MODEL_COMPLETION_TAXA = (
+    "NCBITaxon:9606",  # Homo sapiens
+    "NCBITaxon:83333",  # Escherichia coli K-12
+    "NCBITaxon:559292",  # Saccharomyces cerevisiae S288c
+)
 SEQUENCE = re.compile(r"^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 TOP_SCALAR = re.compile(r"(?m)^(identifier|trait_axis|trait_category):[ \t]*(.*?)[ \t]*$")
@@ -164,6 +169,40 @@ def _clean_scalar(value: str) -> str:
     if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
         return value[1:-1]
     return value
+
+
+def select_ranked_candidates(
+    ranked: Sequence[CandidateEvidence],
+    max_candidates_per_record: int,
+    include_taxa: set[str],
+) -> list[CandidateEvidence]:
+    """Return capped exact candidates plus every candidate in completion taxa."""
+    selected: list[CandidateEvidence] = []
+    seen: set[tuple[str, str, tuple[tuple[int, int], ...]]] = set()
+    for index, candidate in enumerate(ranked):
+        profile = candidate.profile
+        if (
+            index >= max_candidates_per_record
+            and (profile is None or profile.taxon_id not in include_taxa)
+        ):
+            continue
+        key = (
+            candidate.accession,
+            candidate.interpro_location_id or "",
+            candidate.intervals,
+        )
+        if key in seen:
+            continue
+        selected.append(candidate)
+        seen.add(key)
+    return selected
+
+
+def should_discover_candidates(record: RecordAudit, include_taxa: set[str]) -> bool:
+    """Whether the audit should emit new candidate alternatives for a record."""
+    if not record.trait_id:
+        return False
+    return bool(include_taxa) or record.grounding_state != "QUALIFIED"
 
 
 def cheap_metadata(text: str) -> tuple[str, str, str]:
@@ -728,11 +767,13 @@ def discover_candidates(
     profiles_path: Path,
     max_candidates_per_record: int,
     interpro_grouped_frame_path: Path | None = None,
+    include_taxa: set[str] | None = None,
 ) -> tuple[list[dict], list[Blocked]]:
     """Join exact local source matches and return candidate/blocked ledgers."""
+    include_taxa = include_taxa or set()
     target_records: dict[str, list[RecordAudit]] = collections.defaultdict(list)
     for record in records:
-        if record.grounding_state != "QUALIFIED" and record.trait_id:
+        if should_discover_candidates(record, include_taxa):
             target_records[record.trait_id].append(record)
 
     interpro, interpro_meta = _load_sidecar(interpro_frame_path, "proteins")
@@ -800,7 +841,7 @@ def discover_candidates(
             )
 
     for record in records:
-        if record.grounding_state == "QUALIFIED":
+        if not should_discover_candidates(record, include_taxa):
             continue
         for protein_id in record.valid_protein_ids:
             accession = protein_id.split(":", 1)[1]
@@ -910,7 +951,11 @@ def discover_candidates(
             record.candidate_state = "LOCAL_EXACT_CANDIDATE"
 
         ranked = valid + review_only
-        selected = ranked[:max_candidates_per_record] if max_candidates_per_record else ranked
+        selected = (
+            list(ranked)
+            if max_candidates_per_record == 0
+            else select_ranked_candidates(ranked, max_candidates_per_record, include_taxa)
+        )
         for rank, item in enumerate(selected, 1):
             profile = item.profile
             sequence = item.sequence
@@ -1098,6 +1143,7 @@ def run_audit(
     evidence_registry_path: Path = DEFAULT_EVIDENCE_REGISTRY,
     membership_registry_path: Path = DEFAULT_MEMBERSHIP_REGISTRY,
     hierarchy_traits: Sequence[Path] | None = None,
+    include_taxa: set[str] | None = None,
 ) -> tuple[list[RecordAudit], list[dict], list[Blocked]]:
     if max_candidates_per_record < 0:
         raise AuditInputError("--max-candidates-per-record must be >= 0")
@@ -1115,6 +1161,7 @@ def run_audit(
         profiles,
         max_candidates_per_record,
         interpro_grouped_frame,
+        include_taxa,
     )
     blocked.extend(candidate_blocks)
     write_outputs(out, records, candidates, blocked)
@@ -1166,13 +1213,43 @@ def parser() -> argparse.ArgumentParser:
         "--max-candidates-per-record",
         type=int,
         default=3,
-        help="retain this many ranked exact matches per record; 0 retains all (default: 3)",
+        help=(
+            "retain this many ranked exact matches per record before --include-taxon "
+            "completion rows are added; 0 retains all (default: 3)"
+        ),
+    )
+    ap.add_argument(
+        "--include-taxon",
+        action="append",
+        default=[],
+        help=(
+            "also retain every exact candidate from this NCBITaxon CURIE, "
+            "even beyond --max-candidates-per-record; repeatable"
+        ),
+    )
+    ap.add_argument(
+        "--include-human-ecoli-yeast",
+        action="store_true",
+        help=(
+            "shortcut for --include-taxon NCBITaxon:9606, "
+            "NCBITaxon:83333 and NCBITaxon:559292"
+        ),
     )
     return ap
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    include_taxa = set(args.include_taxon)
+    if args.include_human_ecoli_yeast:
+        include_taxa.update(MODEL_COMPLETION_TAXA)
+    invalid_taxa = sorted(taxon for taxon in include_taxa if not TAXON_ID.fullmatch(taxon))
+    if invalid_taxa:
+        print(
+            "--include-taxon expects NCBITaxon CURIEs, got: " + ", ".join(invalid_taxa),
+            file=sys.stderr,
+        )
+        return 2
     try:
         records, candidates, blocked = run_audit(
             args.traits,
@@ -1186,6 +1263,7 @@ def main(argv: list[str] | None = None) -> int:
             evidence_registry_path=args.evidence_registry,
             membership_registry_path=args.membership_registry,
             hierarchy_traits=args.hierarchy_traits,
+            include_taxa=include_taxa,
         )
     except AuditInputError as exc:
         print(f"audit input error: {exc}", file=sys.stderr)
