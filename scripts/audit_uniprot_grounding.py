@@ -44,9 +44,23 @@ import sys
 import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Mapping, Sequence
+from typing import Any, Callable, Iterable, Iterator, Mapping, Sequence
 
 import yaml
+from uniprot_record_content_gate import (
+    DEFAULT_INTERPRO_XML as DEFAULT_CONTENT_GATE_INTERPRO_XML,
+    DEFAULT_PANTHER_CLASSIFICATIONS as DEFAULT_CONTENT_GATE_PANTHER_CLASSIFICATIONS,
+    DEFAULT_PFAM_CLANS as DEFAULT_CONTENT_GATE_PFAM_CLANS,
+    DEFAULT_PFAM_TYPES as DEFAULT_CONTENT_GATE_PFAM_TYPES,
+    INTERPRO_109_XML_SHA256,
+    PANTHER_19_CLASSIFICATIONS_SHA256,
+    PFAM_A_CLANS_SHA256,
+    PFAM_TYPES_SHA256,
+    ContentGateError,
+    RecordContentGate,
+    SourceConfig,
+    hard_reasons as record_content_hard_reasons,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
@@ -82,6 +96,7 @@ WHOLE_PROTEIN_CATEGORIES = {
     "SEQ_FAMILY",
     "SEQ_HOMOLOGOUS_SUPERFAMILY",
 }
+RECORD_CONTENT_GATE_NAMESPACES = frozenset({"HAMAP", "InterPro", "PANTHER", "Pfam"})
 
 RECORD_COLUMNS = (
     "trait_id",
@@ -163,6 +178,9 @@ class CandidateEvidence:
     failures: list[str] = field(default_factory=list)
 
 
+ContentGateFactory = Callable[[Sequence[Mapping[str, Any]], SourceConfig], RecordContentGate]
+
+
 def _clean_scalar(value: str) -> str:
     """Decode the simple top-level scalar spellings used for routing fields."""
     value = value.split(" #", 1)[0].strip()
@@ -203,6 +221,26 @@ def should_discover_candidates(record: RecordAudit, include_taxa: set[str]) -> b
     if not record.trait_id:
         return False
     return bool(include_taxa) or record.grounding_state != "QUALIFIED"
+
+
+def should_gate_record_content(record: RecordAudit) -> bool:
+    """Whether hard source-content gates can currently replay this source."""
+    return record.source_namespace in RECORD_CONTENT_GATE_NAMESPACES
+
+
+def _content_gate_config(args: argparse.Namespace) -> SourceConfig:
+    """Bind record-content replay to caller-selected, checksum-pinned sources."""
+
+    return SourceConfig(
+        interpro_xml=args.interpro_xml.resolve(),
+        interpro_xml_sha256=args.interpro_xml_sha256,
+        pfam_clans=args.pfam_clans.resolve(),
+        pfam_clans_sha256=args.pfam_clans_sha256,
+        pfam_types=args.pfam_types.resolve(),
+        pfam_types_sha256=args.pfam_types_sha256,
+        panther_classifications=args.panther_classifications.resolve(),
+        panther_classifications_sha256=args.panther_classifications_sha256,
+    )
 
 
 def cheap_metadata(text: str) -> tuple[str, str, str]:
@@ -760,6 +798,91 @@ def _profile_failures(profile: Profile | None, sequence: str | None) -> list[str
     return failures
 
 
+def _load_record_content_gate_record(
+    record: RecordAudit,
+) -> tuple[Mapping[str, Any] | None, Blocked | None]:
+    """YAML-load one record for source-content replay."""
+    loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+    try:
+        with record.path.open(encoding="utf-8") as handle:
+            blob = yaml.load(handle, Loader=loader)
+    except (OSError, yaml.YAMLError) as exc:
+        return None, Blocked(
+            record.trait_id,
+            record.record_path,
+            "",
+            "RECORD_CONTENT_GATE_YAML_ERROR",
+            str(exc),
+        )
+    if not isinstance(blob, dict):
+        return None, Blocked(
+            record.trait_id,
+            record.record_path,
+            "",
+            "RECORD_CONTENT_GATE_YAML_ERROR",
+            "record root is not a mapping",
+        )
+    return blob, None
+
+
+def _record_content_blocked_records(
+    records: Sequence[RecordAudit],
+    config: SourceConfig,
+    *,
+    make_gate: ContentGateFactory = RecordContentGate,
+) -> tuple[set[str], list[Blocked]]:
+    """Return exact-match records that source replay proves cannot be promoted."""
+    blocked_paths: set[str] = set()
+    blocks: list[Blocked] = []
+    materialized: list[tuple[RecordAudit, Mapping[str, Any]]] = []
+    for record in records:
+        blob, block = _load_record_content_gate_record(record)
+        if block is not None:
+            blocked_paths.add(record.record_path)
+            blocks.append(block)
+            continue
+        assert blob is not None
+        materialized.append((record, blob))
+
+    if not materialized:
+        return blocked_paths, blocks
+
+    try:
+        gate = make_gate([blob for _, blob in materialized], config)
+    except ContentGateError as exc:
+        raise AuditInputError(f"record-content source replay failed closed: {exc}") from exc
+
+    for record, blob in materialized:
+        try:
+            findings = gate.evaluate(blob)
+        except ContentGateError as exc:
+            raise AuditInputError(
+                f"{record.trait_id or record.record_path}: "
+                f"record-content source replay failed closed: {exc}"
+            ) from exc
+        details_by_reason: dict[str, list[str]] = collections.defaultdict(list)
+        for finding in findings:
+            detail = str(getattr(finding, "detail", "") or "")
+            for reason in record_content_hard_reasons([finding]):
+                if detail:
+                    details_by_reason[reason].append(detail)
+                else:
+                    details_by_reason.setdefault(reason, [])
+        for reason in sorted(details_by_reason):
+            blocked_paths.add(record.record_path)
+            blocks.append(
+                Blocked(
+                    record.trait_id,
+                    record.record_path,
+                    "",
+                    reason,
+                    "; ".join(sorted(set(details_by_reason[reason]))),
+                )
+            )
+
+    return blocked_paths, blocks
+
+
 def discover_candidates(
     records: list[RecordAudit],
     residue_frame_path: Path,
@@ -768,6 +891,8 @@ def discover_candidates(
     max_candidates_per_record: int,
     interpro_grouped_frame_path: Path | None = None,
     include_taxa: set[str] | None = None,
+    record_content_config: SourceConfig | None = None,
+    make_record_content_gate: ContentGateFactory = RecordContentGate,
 ) -> tuple[list[dict], list[Blocked]]:
     """Join exact local source matches and return candidate/blocked ledgers."""
     include_taxa = include_taxa or set()
@@ -822,11 +947,29 @@ def discover_candidates(
             exact[trait_id].append(CandidateEvidence(accession, intervals))
             wanted_accessions.add(accession)
 
+    blocked: list[Blocked] = []
+    content_blocked_records: set[str] = set()
+    if record_content_config is not None:
+        exact_records = [
+            record
+            for record in records
+            if (
+                should_discover_candidates(record, include_taxa)
+                and should_gate_record_content(record)
+                and exact.get(record.trait_id)
+            )
+        ]
+        content_blocked_records, content_blocks = _record_content_blocked_records(
+            exact_records,
+            record_content_config,
+            make_gate=make_record_content_gate,
+        )
+        blocked.extend(content_blocks)
+
     profiles, duplicate_profiles = _load_profiles(profiles_path, wanted_accessions)
     residue, residue_meta = _load_sidecar(residue_frame_path, "proteins")
     uniprot_release = residue_meta.get("release")
     absent = set(residue_meta.get("absent") or [])
-    blocked: list[Blocked] = []
     candidates: list[dict] = []
 
     for trait_id, accession in malformed_matches:
@@ -862,6 +1005,10 @@ def discover_candidates(
                     else "ACCESSION_MISSING_FROM_RESIDUE_FRAME"
                 )
                 blocked.append(Blocked(record.trait_id, record.record_path, protein_id, reason))
+
+        if record.record_path in content_blocked_records:
+            record.candidate_state = "RECORD_CONTENT_BLOCKED"
+            continue
 
         evidence = exact.get(record.trait_id, [])
         if not evidence:
@@ -1144,6 +1291,8 @@ def run_audit(
     membership_registry_path: Path = DEFAULT_MEMBERSHIP_REGISTRY,
     hierarchy_traits: Sequence[Path] | None = None,
     include_taxa: set[str] | None = None,
+    record_content_config: SourceConfig | None = None,
+    make_record_content_gate: ContentGateFactory = RecordContentGate,
 ) -> tuple[list[RecordAudit], list[dict], list[Blocked]]:
     if max_candidates_per_record < 0:
         raise AuditInputError("--max-candidates-per-record must be >= 0")
@@ -1162,6 +1311,8 @@ def run_audit(
         max_candidates_per_record,
         interpro_grouped_frame,
         include_taxa,
+        record_content_config,
+        make_record_content_gate,
     )
     blocked.extend(candidate_blocks)
     write_outputs(out, records, candidates, blocked)
@@ -1235,6 +1386,39 @@ def parser() -> argparse.ArgumentParser:
             "NCBITaxon:83333 and NCBITaxon:559292"
         ),
     )
+    ap.add_argument(
+        "--record-content-gate",
+        action="store_true",
+        help=(
+            "YAML-parse exact-match HAMAP/InterPro/PANTHER/Pfam records "
+            "and replay checksum-pinned source content gates before "
+            "emitting candidates"
+        ),
+    )
+    ap.add_argument(
+        "--interpro-xml",
+        type=Path,
+        default=DEFAULT_CONTENT_GATE_INTERPRO_XML,
+        help="InterPro XML used for record-content replay",
+    )
+    ap.add_argument(
+        "--interpro-xml-sha256",
+        default=INTERPRO_109_XML_SHA256,
+        help="required SHA-256 of --interpro-xml for record-content replay",
+    )
+    ap.add_argument("--pfam-clans", type=Path, default=DEFAULT_CONTENT_GATE_PFAM_CLANS)
+    ap.add_argument("--pfam-clans-sha256", default=PFAM_A_CLANS_SHA256)
+    ap.add_argument("--pfam-types", type=Path, default=DEFAULT_CONTENT_GATE_PFAM_TYPES)
+    ap.add_argument("--pfam-types-sha256", default=PFAM_TYPES_SHA256)
+    ap.add_argument(
+        "--panther-classifications",
+        type=Path,
+        default=DEFAULT_CONTENT_GATE_PANTHER_CLASSIFICATIONS,
+    )
+    ap.add_argument(
+        "--panther-classifications-sha256",
+        default=PANTHER_19_CLASSIFICATIONS_SHA256,
+    )
     return ap
 
 
@@ -1264,6 +1448,9 @@ def main(argv: list[str] | None = None) -> int:
             membership_registry_path=args.membership_registry,
             hierarchy_traits=args.hierarchy_traits,
             include_taxa=include_taxa,
+            record_content_config=(
+                _content_gate_config(args) if args.record_content_gate else None
+            ),
         )
     except AuditInputError as exc:
         print(f"audit input error: {exc}", file=sys.stderr)

@@ -8,6 +8,7 @@ import importlib.util
 import json
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 import yaml
@@ -531,6 +532,95 @@ def test_audit_revisits_qualified_records_for_taxon_completion(tmp_path):
 
     assert not A.should_discover_candidates(record, set())
     assert A.should_discover_candidates(record, {"NCBITaxon:83333"})
+
+
+@pytest.mark.parametrize(
+    ("source_namespace", "expected"),
+    [
+        ("HAMAP", True),
+        ("InterPro", True),
+        ("PANTHER", True),
+        ("Pfam", True),
+        ("CDD", False),
+        ("Gene3D", False),
+        ("SUPFAM", False),
+    ],
+)
+def test_audit_gates_only_replayable_source_namespaces(
+    tmp_path,
+    source_namespace,
+    expected,
+):
+    record = A.RecordAudit(
+        trait_id=f"{source_namespace}:fixture",
+        path=tmp_path / f"{source_namespace}.yaml",
+        record_path=f"{source_namespace}.yaml",
+        trait_axis="FUNCTION",
+        trait_category="FUNC_PROTEIN_FAMILY",
+        source_namespace=source_namespace,
+        grounding_state="NO_PROTEIN",
+        inline_state="NO_VALID_PROTEIN",
+    )
+
+    assert A.should_gate_record_content(record) is expected
+
+
+def test_audit_record_content_gate_blocks_doomed_exact_candidates(tmp_path):
+    _traits, residue, interpro, profiles = _inputs(tmp_path)
+    record_path = tmp_path / "panther.yaml"
+    record_path.write_text(
+        "identifier: PANTHER:PTHR00001\n"
+        "trait_axis: FUNCTION\n"
+        "trait_category: FUNC_PROTEIN_FAMILY\n",
+        encoding="utf-8",
+    )
+    record = A.RecordAudit(
+        trait_id="PANTHER:PTHR00001",
+        path=record_path,
+        record_path="panther.yaml",
+        trait_axis="FUNCTION",
+        trait_category="FUNC_PROTEIN_FAMILY",
+        source_namespace="PANTHER",
+        grounding_state="NO_PROTEIN",
+        inline_state="NO_VALID_PROTEIN",
+    )
+
+    class FakeContentGate:
+        def __init__(self, records, config):
+            assert config == A.SourceConfig()
+            assert [row["identifier"] for row in records] == ["PANTHER:PTHR00001"]
+
+        def evaluate(self, _record):
+            return [
+                SimpleNamespace(
+                    severity="HARD",
+                    code="definition_template_only",
+                    detail="definition did not name the specific PANTHER family",
+                )
+            ]
+
+    candidates, blocked = A.discover_candidates(
+        [record],
+        residue,
+        interpro,
+        profiles,
+        3,
+        record_content_config=A.SourceConfig(),
+        make_record_content_gate=FakeContentGate,
+    )
+
+    assert candidates == []
+    assert record.candidate_state == "RECORD_CONTENT_BLOCKED"
+    assert {
+        (block.trait_id, block.protein_id, block.reason, block.detail) for block in blocked
+    } == {
+        (
+            "PANTHER:PTHR00001",
+            "",
+            "unqualifiable:record_content:definition_template_only",
+            "definition did not name the specific PANTHER family",
+        )
+    }
 
 
 @pytest.mark.parametrize("value", ["9606", "NCBITaxon:", "taxid:9606", "NCBITaxon:9606x"])
