@@ -9,6 +9,7 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
 import yaml
 
 REPO = Path(__file__).resolve().parent.parent
@@ -463,6 +464,99 @@ def test_audit_is_fail_closed_and_emits_exact_candidates(tmp_path):
     assert len(_read_tsv(out / "records.tsv")) == 9
     totals = [row for row in _read_tsv(out / "summary.tsv") if row["group_by"] == "ALL"]
     assert sum(int(row["count"]) for row in totals) == 9
+
+
+def test_audit_retains_completion_taxa_beyond_candidate_cap(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    out = tmp_path / "out"
+
+    records, candidates, _blocked = A.run_audit(
+        traits,
+        residue,
+        interpro,
+        profiles,
+        out,
+        max_candidates_per_record=1,
+        protein_registry_path=tmp_path / "missing-proteins.jsonl",
+        evidence_registry_path=tmp_path / "missing-evidence.jsonl",
+        include_taxa={"NCBITaxon:9606"},
+    )
+
+    pfam_candidates = [
+        row for row in candidates if row["trait_id"] == "Pfam:PF00001"
+    ]
+
+    assert [row["protein_id"] for row in pfam_candidates] == [
+        "UniProtKB:P12345",
+        "UniProtKB:Q54321",
+    ]
+    assert {row["batch"] for row in pfam_candidates} == {
+        "ready-local",
+        "needs-grouped-interpro",
+    }
+    assert {
+        row.trait_id: row.candidate_count for row in records
+    }["Pfam:PF00001"] == 2
+
+
+def test_audit_completion_taxa_do_not_duplicate_capped_candidates():
+    candidate = A.CandidateEvidence(
+        accession="P12345",
+        intervals=((2, 4),),
+        profile=A.Profile(
+            "UniProtKB:P12345",
+            "Example protein",
+            "NCBITaxon:9606",
+            "Homo sapiens",
+            6,
+            True,
+        ),
+    )
+
+    assert A.select_ranked_candidates([candidate], 1, {"NCBITaxon:9606"}) == [candidate]
+
+
+def test_audit_revisits_qualified_records_for_taxon_completion(tmp_path):
+    record = A.RecordAudit(
+        trait_id="Pfam:PF00001",
+        path=tmp_path / "record.yaml",
+        record_path="record.yaml",
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_DOMAIN",
+        source_namespace="Pfam",
+        grounding_state="QUALIFIED",
+        inline_state="STRICT_INLINE_SHAPE",
+        qualified_example_count=1,
+    )
+
+    assert not A.should_discover_candidates(record, set())
+    assert A.should_discover_candidates(record, {"NCBITaxon:83333"})
+
+
+@pytest.mark.parametrize("value", ["9606", "NCBITaxon:", "taxid:9606", "NCBITaxon:9606x"])
+def test_audit_rejects_invalid_include_taxa(tmp_path, capsys, value):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+
+    assert A.main([
+        "--traits",
+        str(traits),
+        "--residue-frame",
+        str(residue),
+        "--interpro-frame",
+        str(interpro),
+        "--profiles",
+        str(profiles),
+        "--out",
+        str(tmp_path / "out"),
+        "--protein-registry",
+        str(tmp_path / "missing-proteins.jsonl"),
+        "--evidence-registry",
+        str(tmp_path / "missing-evidence.jsonl"),
+        "--include-taxon",
+        value,
+    ]) == 2
+
+    assert "--include-taxon expects NCBITaxon CURIEs" in capsys.readouterr().err
 
 
 def test_grouped_interpro_sidecar_discharges_multi_fragment_location(tmp_path):
