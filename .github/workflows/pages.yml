@@ -18,6 +18,8 @@ on:
       - "data/mappings/**"
       - "docs/**"
       - "scripts/build_docs_index.py"
+      - "scripts/render_docs_landing.py"
+      - "conf/landing_sources.json"
       - "scripts/audit_pages_size.py"
       - "conf/pages_budgets.json"
       - ".github/workflows/pages.yml"
@@ -45,6 +47,10 @@ jobs:
         run: |
           python -m pip install --quiet pyyaml
           python scripts/build_docs_index.py
+      - name: Render and verify landing counts from the generated browser index
+        run: |
+          python scripts/render_docs_landing.py
+          python scripts/render_docs_landing.py --check
       - uses: actions/configure-pages@v5
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1

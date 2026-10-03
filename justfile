@@ -1399,10 +1399,12 @@ trait-correlations *args:
 suggest-examples *args:
     uv run python scripts/suggest_canonical_examples.py {{args}}
 
-# Regenerate docs/data/records.json + facets.json used by the browse
-# page. Requires PyYAML; walks every data/traits/**/*.yaml.
+# Regenerate browser shards/facets and static landing counts from the same index.
+# Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
     python3 scripts/build_docs_index.py
+    python3 scripts/render_docs_landing.py
+    python3 scripts/render_docs_landing.py --check
 
 # Compose all layered definitions (GENERAL / STRUCTURAL / MECHANISTIC) across the
 # corpus, idempotently, in dependency order: base source layers first, then the
