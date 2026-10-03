@@ -249,7 +249,7 @@ def main() -> int:
     outp = Path(args.out)
     grouped_outp = Path(args.grouped_out)
     release = sidecar.interpro_release()
-    if not release:
+    if not isinstance(release, str) or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", release):
         print("ERROR: cannot determine the current InterPro release; no matches fetched "
               "or sidecars changed. Retry when release metadata is available.", file=sys.stderr)
         return 2

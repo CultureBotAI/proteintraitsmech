@@ -83,8 +83,9 @@ def test_read_accession_targets_accepts_comments_uniprot_ids_and_deduplicates(
 @pytest.mark.parametrize("cached", [False, True])
 @pytest.mark.parametrize("apply", [False, True])
 @pytest.mark.parametrize("allow_stale", [False, True])
+@pytest.mark.parametrize("release", [None, "", " ", "error", "110.0-error", 110, True])
 def test_unknown_release_stops_before_fetch_or_sidecar_change(
-    tmp_path, monkeypatch, capsys, cached, apply, allow_stale
+    tmp_path, monkeypatch, capsys, cached, apply, allow_stale, release
 ):
     accessions = tmp_path / "accessions.txt"
     accessions.write_text("P12345\n")
@@ -102,12 +103,36 @@ def test_unknown_release_stops_before_fetch_or_sidecar_change(
     if allow_stale:
         args.append("--allow-stale")
     monkeypatch.setattr(sys, "argv", args)
-    monkeypatch.setattr(F.sidecar, "interpro_release", lambda: None)
+    monkeypatch.setattr(F.sidecar, "interpro_release", lambda: release)
     monkeypatch.setattr(F, "fetch_protein", lambda *a: pytest.fail("must not fetch unpinned data"))
 
     assert F.main() == 2
     assert "cannot determine the current InterPro release" in capsys.readouterr().err
     assert {p: p.read_bytes() if p.exists() else None for p in (flat, grouped)} == before
+
+
+def test_malformed_release_endpoint_payload_fails_closed(tmp_path, monkeypatch):
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def read(self):
+            return b'{"error":"temporary upstream metadata failure"}'
+
+    flat = tmp_path / "flat.json"
+    grouped = tmp_path / "grouped.json"
+    monkeypatch.setattr(F.sidecar.urllib.request, "urlopen", lambda *a, **kw: Response())
+    monkeypatch.setattr(sys, "argv", [str(SCRIPT), "--out", str(flat),
+                                    "--grouped-out", str(grouped), "--apply"])
+    monkeypatch.setattr(F, "target_proteins", lambda: pytest.fail("must not scan targets"))
+    monkeypatch.setattr(F, "fetch_protein", lambda *a: pytest.fail("must not fetch"))
+
+    assert F.main() == 2
+    assert not flat.exists()
+    assert not grouped.exists()
 
 
 def test_known_release_stamps_both_fetched_sidecars(tmp_path, monkeypatch):
