@@ -2572,6 +2572,50 @@ found.
   CATH, 3did, and BioLiP source-stage suite separately passed 81 tests with four
   production goldens deselected in 3.52 seconds.
 
+### 2026-10-02 — BioLiP residue-level SIFTS verification and resolver boundary
+
+- The local BioLiP source stage still replays against the live trait tree with the same
+  pinned BioLiP source hashes: `BioLiP_nr.txt` at
+  `4688b8c3c3acf68a6e3816780cc0ddbba8d2ba6aaa40a41daba741b099d33099` and
+  `readme.txt` at
+  `120b22b3e26cf0d0ce7edfde122925963cdd81e6e5a8f4165d16f3238406c161`.
+  Current exact-route binding covers all 6,020 BioLiP traits; the 445 traits without a
+  canonical example bind 641 exact no-example source rows. Pairwise residue validation
+  keeps 638 rows ready for residue-level SIFTS mapping, requests 480 PDB XML files, and
+  retains three source-residue blockers. The updated source-stage ID is
+  `biolip-missing-protein-stage:a761c8152bf2e2c95c6c566c257654fe71561e8eb159f88c97fc5a0366750192`,
+  with occurrence-row, fetch-request, and combined non-summary SHA-256 values
+  `fa3cbade422baf150da4795d87d6a4821a713c48b96d570d9bd08dde475ee635`,
+  `66012d95884e43cf5376e9c2faa615affab902f48c40b4c6afca9eab9e865547`,
+  and `11ac82b81e882cc7f835101952741a7d0277deb57e6bb51ef711c050eab2a11b`.
+- The residue-level SIFTS mapper replays that source-stage stream against the complete
+  local `biolip-missing-protein-2026-09-24-full` snapshot, whose manifest hashes to
+  `dc9ca45ee4e5c3944f407153d6304a503d10a0ebc1a2a548d36fa2b4ea06c767`. It maps
+  344 complete BioLiP/SIFTS candidates across 252 traits and 278 proteins, retains 294
+  SIFTS blockers, and emits 278 exact UniProt ProteinReference requests. The mapping
+  stage ID is
+  `biolip-sifts-mapping-stage:c100dc8f8f09cfb182f4a9392ab999cb62da01c643b9b5ee403c3f134afa3daa`,
+  with candidate-row, blocker-row, and request-row SHA-256 values
+  `db92169cb5788eaa03f6ed4bb9e65174b61c274870eacdebd6b826c3dc7ca7eb`,
+  `f76dc350b4176837eae29fc14aa5d9ecc77290fa1bf6fa05fb9389e4395af0e6`,
+  and `8d606b5e1cede46e21be85916f5b408e3b652ff3a1881d386824fba23d75e5eb`.
+- The existing BioLiP/SIFTS UniProt fetch receipt binds request plan
+  `biolip-sifts-uniprot-fetch-plan:0b3429fe2c8532eea8e1e15b91de7a3de3c8404a25286a377819c1be3e99d8cc`
+  to UniProt release `2026_03` and three exact REST requests. It staged all 278
+  `ProteinReference` rows, 4,492 exact membership rows, and 344
+  `BIOLIP_SIFTS_MAPPING_REGISTRY_ROW` rows with zero blocked accessions; the receipt ID
+  is
+  `biolip-sifts-uniprot-fetch-receipt:985b8eef34c0284f4afaf55aa39846ca5a3e6bd8ddc1b67cdfa4b25fd9c043a0`.
+- BioLiP qualification remains blocked, but the local blocker has narrowed: the missing
+  protein and residue-mapping evidence now exists in ignored staging, while the shared
+  `SIFTS_RESIDUE_MAPPING` resolver/promotion path is still ECOD-shaped and verifies
+  `ecod-sifts:` rows with ECOD source projections. It must gain an equivalent
+  BioLiP/SIFTS candidate boundary and `biolip-sifts:` provider replay before these rows
+  can enter the ordinary review queue. Provider-release evidence, the academic-use
+  rights disposition, human review, and separate durable promotion authorization remain
+  independent gates. This checkpoint performed no network request, trait write, durable
+  grounding write, evidence qualification, review decision, commit, or pull request.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,
