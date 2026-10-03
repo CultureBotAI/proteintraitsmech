@@ -74,7 +74,7 @@ DEFAULT_OUTPUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding" / "review-batch
 
 MINIMUM_PER_SOURCE = 25
 MAX_REVIEW_BATCH = 1000
-MANIFEST_SCHEMA_VERSION = 7
+MANIFEST_SCHEMA_VERSION = 8
 SELECTION_ALGORITHM = "reviewed-exclusion-record-group-sha256-shard-special-first-minimum-rr-v6"
 SHARD_ALGORITHM = "sha256-canonical-json-trait-id-record-path-modulo-v1"
 DECISION_EXCLUSION_ALGORITHM = (
@@ -1294,7 +1294,6 @@ def _review_exclusions(
             current_source_batch=current_source_batch,
         )
         decisions_by_record: dict[tuple[str, str], set[str]] = defaultdict(set)
-        statuses_by_record: dict[tuple[str, str], list[str]] = defaultdict(list)
         decisions_by_id: dict[str, ExplicitDecision] = {}
         batch_approved_records = 0
         batch_all_rejected_records = 0
@@ -1327,7 +1326,6 @@ def _review_exclusions(
                     f"trait_id={prior_key[0]!r}, record_path={prior_key[1]!r}"
                 )
             decisions_by_record[prior_key].add(decision.candidate_id)
-            statuses_by_record[prior_key].append(decision.decision)
 
         for record_key, decided_ids in sorted(decisions_by_record.items()):
             expected_ids = prior_record_candidates[record_key]
