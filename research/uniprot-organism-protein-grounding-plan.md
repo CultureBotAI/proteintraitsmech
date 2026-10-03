@@ -2905,6 +2905,91 @@ found.
   proteins, isoforms, unqueued examples, and traits unsupported by these provider
   routes remain coverage work. This batch does not complete the all-protein goal.
 
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 2 of 8
+
+- From base `cf9adc35d5e8af97f814448fc46e7e8ec4a7062e`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-002of008`: 61 approvals,
+  54 validated record writes, and two assertions already present exactly.
+  The actual delta is 59 legacy-example qualifications and localized occurrences
+  (44 human, 11 yeast S288c, four E. coli K-12), 37 full-sequence references,
+  and **zero new example accession IDs**. All 112 alternatives across 68 record
+  groups have explicit decisions; 51 non-target alternatives are deferred in
+  this pass, not rejected as biological carriers.
+- All approved occurrences name their exact CDD model directly in the canonical
+  UniProt frame, using InterPro `110.0` coordinates and UniProt `2026_03`
+  sequences. Fresh provider replay checks all 112 assertions; 21 of the 61
+  approvals use grouped-location identity and 40 use a flat projection.
+  FSCN1 Q16658/CDD:cd23356 383–493 and VRTN Q9H8Y1/CDD:cd22791 74–241
+  are exact installed no-ops, not replacements. No local alignment, computed
+  motif coordinates, extra isoforms, or general feature tracks are admitted.
+- Git-base replay proves all prior protein references, evidence, bindings,
+  example fields, occurrences, example order, and raw bytes outside
+  `canonical_examples` are preserved. All 12 all-deferred record groups are
+  byte-identical. All 61 selected-example projections pass
+  `require_qualified=True`; this does not qualify other legacy examples.
+  The registries now contain 12,462 protein references and 20,617 evidence
+  rows with matching binding keys. Digests are:
+
+  | Durable artifact | SHA-256 |
+  | --- | --- |
+  | Protein registry | `108ef14d1f1ad5af27999e84ce12c99968ed6c42d811c7d700b34d3241b455dd` |
+  | Evidence logical image | `4cb23fa6ac38ba0d531a9da399e1fb3860234044347379c34b4f3c467670b966` |
+  | Bindings logical image | `047f1ed403932e42907ab6225ac162c73663b7b723ccd4a657e4a2e027ad6ad7` |
+
+- Adversarial issue #946 reproduced the stale biophysical pilot registry pin.
+  The registered calculator replay fixes that dependency while preserving the
+  observation JSONL and TSV bytes. The observation SHA-256 remains
+  `1d2221a3bfe40aa1f76420276f7a100276bac54cec88321c3f8b942bb9313362`.
+  The pilot checker and registry-layout gate pass, as do all 389 focused
+  grounding/registry/pilot/browser tests (105.18 seconds), the writer audit,
+  history validation, and lint. Scoped `validate-all` passes all 54 changed
+  records with zero semantic findings; full `validate-all` passes all
+  429,293 records with zero strict errors and zero semantic findings. Full CI,
+  browser rebuild, and Pages budgets remain pending at this checkpoint;
+  terminal results must be recorded before
+  merge rather than inferred from the successful promotion.
+- Adversarial issue #947 is addressed by the
+  [tracked shard-2 review](cdd-cnp020-shard2-target-grounding-review-2026-10-03.md),
+  with all 68 paths, selected intervals, scope deferrals, source caveats, and
+  immutable staging hashes. The existing staging hashes in the preceding
+  shard-1 checkpoint still match. Retained local replay basename:
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-002of008`.
+  These ignored files are not published artifacts; the durable registry and
+  trait objects are the installed claims. AI review is not human curator
+  sign-off and no mapping status or source definition is changed.
+- The full 68-group inventory has 60 target-bearing records with 61 qualified
+  and 11 legacy-unverified target examples. Four of the 12 all-deferred groups
+  contain existing target examples. The same 11 accession/model gaps listed
+  in the preceding staging checkpoint remain unqualified and are enumerated
+  in the review; none is silently counted as completed.
+- A separate full scan of the frozen profile JSONL across the 186 unique record
+  groups in CNP020 shards 0–2 found 189 exact target-profile/trait pairs and
+  three missing example accession IDs: Q9Y2X8 and P15732 on CDD:cd23792,
+  and Q02516/HAP5 on CDD:cd22908. The profile checksum is
+  `57b2f433eb82bfd9f59a8da5155a4aee6f98a6dcb7391b89c5166e4ceef89fc5`.
+  The publication pass freshly rechecks that checksum, exact record example
+  lists, and all three accessions in the separate acquisition list. These
+  discovery leads are not qualification evidence and are not added by this
+  PR. The audit route can revisit qualified records with target-taxon
+  inclusion; do not incorrectly treat it as limited to existing examples.
+- The separate InterPro crawl remains outside this promotion. Freeze and
+  verify its terminal release before using it for further admissions. Other
+  strains, unreviewed proteins, isoforms, omitted accession IDs, other sources,
+  and unsupported routes remain coverage work. The browser currently projects
+  legacy inline sequence/features, not the new registry-backed occurrence
+  coordinates. The all-protein goal remains open.
+- During publication review, that isolated crawl exited successfully: 25,573
+  proteins in the completed sidecars (including one cached canary), 256,531
+  signature matches, and zero reported failed requests. Under
+  `reports/uniprot-grounding/target-profile-interpro-completion-2026-10-03/`,
+  the flat frame is 9,148,698 bytes, SHA-256
+  `9ede3ae6454e8d50134ca92a38f577ab08b8082937f37b6f2e656ecc92bfa801`;
+  the grouped frame is 9,883,812 bytes, SHA-256
+  `3738366dac0ad8fcc43bb98e58cbe052b181ffee5f6a0ab13a10f3cf2541f25b`.
+  Both metadata blocks declare InterPro `110.0`; an end-of-crawl upstream
+  release-consistency check is still outstanding. No new assertion from these
+  sidecars is promoted or otherwise admitted by this PR.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,
