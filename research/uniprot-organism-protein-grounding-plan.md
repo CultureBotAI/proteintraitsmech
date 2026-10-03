@@ -2630,6 +2630,12 @@ found.
   exact reviewed-exclusion quadruples and run with unchanged-all-rejected deferral,
   failed only with the expected terminal error: no residual trait records remain in the
   selected source slice after excluding fully reviewed record groups.
+- A same-day replay on current `main` reproduced both terminal selector states with
+  unchanged-all-rejected deferral. `human-ecoli-yeast-repair-cnp-021`, pointed at the 20
+  CNP finalized ledgers, failed only with the expected no-residual-trait-record error
+  for the CDD/NCBIfam/PROSITE slice. `human-ecoli-yeast-repair-mixed-042`, pointed at
+  all 61 CNP and mixed finalized ledgers, failed with the same expected terminal error
+  for the CATH/HAMAP/InterPro/PANTHER/Pfam slice.
 - Those 61 finalized ledgers bind an explicit decision to every one of the 292,934
   selected alternatives: 50,311 rows are `APPROVED` and 242,623 are `REJECTED`. The
   approved set covers 50,311 one-approved trait records and leaves 9,403 fully reviewed
@@ -2645,6 +2651,13 @@ found.
   present and 31 pending record writes. Further progress now requires separately
   authorized `promote --apply` runs to install the remaining approved rows into
   `data/traits/` and the durable grounding registries.
+- Two additional dry promotion preflights on current `main` passed without durable
+  writes. `human-ecoli-yeast-repair-mixed-001` reports 236 approved candidates: 112
+  already present and 124 pending record writes. `human-ecoli-yeast-repair-cnp-002`
+  reports 1,000 approved candidates: 798 already present and 202 pending record writes.
+  `human-ecoli-yeast-repair-cnp-003` reports 1,000 approved candidates: 777 already
+  present and 223 pending record writes. `human-ecoli-yeast-repair-mixed-002` reports
+  660 approved candidates: 368 already present and 292 pending record writes.
 - The direct promotion, partition finalization, exact reviewed-exclusion selection, and
   historical bootstrap routes now accept several explicitly `APPROVED` alternatives for
   one trait record, provided every alternative in that record group is still explicitly
