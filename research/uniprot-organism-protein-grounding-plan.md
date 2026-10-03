@@ -2761,6 +2761,9 @@ found.
   These hashes identify retained local staging; they do not make its bytes available
   in a fresh checkout. The durable sequence/evidence/binding registries and trait
   occurrences are committed together. Review handoff issue: [#940](https://github.com/CultureBotAI/proteintraitsmech/issues/940).
+  The [durable review report](cdd-cnp020-shard0-target-grounding-review-2026-10-03.md)
+  is published under `research/`; its skill-generated original remains ignored under
+  `reports/`, preserving the clean-checkout boundary checked in CI (review issue #942).
 - Two existing human examples still lack qualification in this reviewed cohort:
   DYDC2 `UniProtKB:Q96IM9` on `CDD:cd22966` and SDF2 `UniProtKB:Q99470` on
   `CDD:cd23293`. Both are in the separate ignored target-profile acquisition list;
