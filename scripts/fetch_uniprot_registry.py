@@ -106,8 +106,8 @@ SELECTOR_V6_INVARIANTS = frozenset(
 )
 SELECTOR_DOWNSTREAM_REQUIREMENTS = frozenset(
     {
+        "approved_adjudications_may_include_multiple_candidates",
         "all_alternatives_must_receive_an_explicit_review_decision",
-        "at_most_one_approved_candidate_per_record",
     }
 )
 

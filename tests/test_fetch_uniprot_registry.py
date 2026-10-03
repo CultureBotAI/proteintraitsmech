@@ -668,7 +668,7 @@ def test_selector_manifest_exactly_binds_queue_count_and_batch(
         "missing_invariant",
         "false_invariant",
         "missing_exhaustive",
-        "false_one_approved",
+        "false_multi_approved",
     ],
 )
 @pytest.mark.parametrize("schema_version", [6, 7])
@@ -700,8 +700,10 @@ def test_selector_shape_and_review_contract_are_fail_closed(
         value["downstream_requirements"].pop(
             "all_alternatives_must_receive_an_explicit_review_decision"
         )
-    elif defect == "false_one_approved":
-        value["downstream_requirements"]["at_most_one_approved_candidate_per_record"] = False
+    elif defect == "false_multi_approved":
+        value["downstream_requirements"][
+            "approved_adjudications_may_include_multiple_candidates"
+        ] = False
     manifest.write_text(json.dumps(value, sort_keys=True) + "\n", encoding="utf-8")
     paths = [tmp_path / name for name in ("registry", "blocked", "membership", "receipt")]
     assert (

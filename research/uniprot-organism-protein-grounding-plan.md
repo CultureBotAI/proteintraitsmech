@@ -2616,6 +2616,44 @@ found.
   independent gates. This checkpoint performed no network request, trait write, durable
   grounding write, evidence qualification, review decision, commit, or pull request.
 
+### 2026-10-03 — human/E. coli/yeast repair queue review exhaustion
+
+- The local ignored `repair-existing-local` queue covers 292,934 candidates for 59,714
+  trait records after exact source-bound resolution of the Swiss-Prot human,
+  *E. coli*, and *S. cerevisiae* profile candidates. The CDD/NCBIfam/PROSITE phase is
+  finalized through `human-ecoli-yeast-repair-cnp-020`; that final CNP selector
+  retained all 970 remaining candidate rows across 542 records. The subsequent mixed
+  CATH/HAMAP/InterPro/PANTHER/Pfam phase is finalized through
+  `human-ecoli-yeast-repair-mixed-041`; that final mixed selector retained all 331
+  remaining candidate rows across 172 records. A dry terminal selector for
+  `human-ecoli-yeast-repair-mixed-042`, pointed at all 61 finalized review batches as
+  exact reviewed-exclusion quadruples and run with unchanged-all-rejected deferral,
+  failed only with the expected terminal error: no residual trait records remain in the
+  selected source slice after excluding fully reviewed record groups.
+- Those 61 finalized ledgers bind an explicit decision to every one of the 292,934
+  selected alternatives: 50,311 rows are `APPROVED` and 242,623 are `REJECTED`. The
+  approved set covers 50,311 one-approved trait records and leaves 9,403 fully reviewed
+  all-rejected record groups. Comparing each approved row's resolved
+  `grounding_evidence.evidence_id` with the current durable
+  `data/grounding/occurrence_evidence.jsonl.d/` registry found 13,828 exact approvals
+  already installed and 36,483 reviewed approvals still staging-only. The durable
+  registry held 20,398 evidence rows at that checkpoint.
+- Current dry promotion preflights still pass at both ends of the repaired queue without
+  writing durable state. `human-ecoli-yeast-repair-cnp-001` reports 1,000 approved
+  candidates: 688 already present and 312 pending record writes. The tail
+  `human-ecoli-yeast-repair-mixed-041` reports 151 approved candidates: 120 already
+  present and 31 pending record writes. Further progress now requires separately
+  authorized `promote --apply` runs to install the remaining approved rows into
+  `data/traits/` and the durable grounding registries.
+- The direct promotion, partition finalization, exact reviewed-exclusion selection, and
+  historical bootstrap routes now accept several explicitly `APPROVED` alternatives for
+  one trait record, provided every alternative in that record group is still explicitly
+  decided. A regression fixture resolves and approves both a human and an *E. coli*
+  protein for one Pfam trait, promotes them, and verifies that both `QUALIFIED`
+  examples and both durable evidence rows are installed. This removes the one-exemplar
+  blocker for target-organism completion while keeping complete record-group review
+  decisions as the boundary for durable promotion and reviewed-history exclusion.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,

@@ -222,6 +222,69 @@ def local_sources(tmp_path):
     }
 
 
+def _update_sidecar(path: pathlib.Path, accession: str, entry: dict) -> None:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["proteins"][accession] = entry
+    payload["_meta"]["count"] = len(payload["proteins"])
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def _append_jsonl(path: pathlib.Path, row: dict) -> None:
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n")
+
+
+def _add_second_interpro_candidate(fixture: dict) -> None:
+    accession = "Q67890"
+    protein_id = f"UniProtKB:{accession}"
+    sequence = "ACDEFGHIK"
+    sequence_sha256 = hashlib.sha256(sequence.encode("ascii")).hexdigest()
+    _update_sidecar(
+        fixture["residue"],
+        accession,
+        {"seq": sequence, "ft": []},
+    )
+    _update_sidecar(
+        fixture["interpro"],
+        accession,
+        {"Pfam:PF00001": [[2, 5]]},
+    )
+    _update_sidecar(
+        fixture["interpro_grouped"],
+        accession,
+        {"Pfam:PF00001": [[[2, 5]]]},
+    )
+    _append_jsonl(
+        fixture["profiles"],
+        {
+            "accession": protein_id,
+            "name": "Second fixture protein",
+            "taxon": "NCBITaxon:83333",
+            "taxon_label": "Escherichia coli",
+            "length": len(sequence),
+            "reviewed": True,
+        },
+    )
+    _append_jsonl(
+        fixture["source_registry"],
+        {
+            "protein_id": protein_id,
+            "protein_label": "Second fixture protein",
+            "taxon_id": "NCBITaxon:83333",
+            "taxon_label": "Escherichia coli",
+            "sequence": sequence,
+            "sequence_length": len(sequence),
+            "sequence_sha256": sequence_sha256,
+            "reviewed": True,
+            "uniprot_release": "2026_02",
+        },
+    )
+    _jsonl(
+        fixture["queue"],
+        [fixture["candidate"], {**fixture["candidate"], "protein_id": protein_id}],
+    )
+
+
 def _resolve_args(fixture: dict) -> list[str]:
     return [
         "resolve",
@@ -2830,21 +2893,44 @@ def test_promote_review_minimum_is_capped_by_available_unique_trait_records(loca
     assert "review coverage: Pfam=1/1" in capsys.readouterr().out
 
 
-def test_promote_rejects_multiple_approved_alternatives_for_one_trait_record(local_sources, capsys):
+def test_promote_installs_multiple_approved_alternatives_for_one_trait_record(
+    local_sources, monkeypatch
+):
+    _add_second_interpro_candidate(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
-    first = _resolved(local_sources)
-    alternative = _alternative(first, "ug-" + "a" * 64)
-    _jsonl(local_sources["resolved"], [first, alternative])
+    rows = _jsonl_rows(local_sources["resolved"])
+    assert len(rows) == 2
     approved = local_sources["review"].with_name("multiple-approved-alternatives.tsv")
-    _write_decisions(approved, [(first, "APPROVED"), (alternative, "APPROVED")])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
 
-    assert ground.main(_promote_args(local_sources, approved)) == 2
-    error = capsys.readouterr().err
-    assert "approves multiple alternatives for one trait record" in error
-    assert first["candidate_id"] in error
-    assert alternative["candidate_id"] in error
-    assert not local_sources["durable_registry"].exists()
-    assert not local_sources["durable_evidence"].exists()
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(
+            text, encoding=encoding
+        ),
+    )
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    examples = record["canonical_examples"]
+    assert {example["protein_id"] for example in examples} == {
+        "UniProtKB:P12345",
+        "UniProtKB:Q67890",
+    }
+    assert all(example["qualification_status"] == "QUALIFIED" for example in examples)
+    assert {example["taxon_id"] for example in examples} == {
+        "NCBITaxon:83333",
+        "NCBITaxon:9606",
+    }
+    durable_evidence = [
+        json.loads(line) for line in local_sources["durable_evidence"].read_text().splitlines()
+    ]
+    assert {row["protein_id"] for row in durable_evidence} == {
+        "UniProtKB:P12345",
+        "UniProtKB:Q67890",
+    }
 
 
 @pytest.mark.parametrize("undecided", [None, "", "SKIP"])
