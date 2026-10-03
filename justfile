@@ -1295,15 +1295,18 @@ promote-uniprot-review-batch batch_id *args:
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
       "$@"
 
-# Build per-protein trait PROFILES from Swiss-Prot (issue #7): for each entry,
+# Build per-protein discovery PROFILES from UniProtKB (reviewed by default): for each entry,
 # which corpus trait classes it carries (matched via Pfam/InterPro/CATH/PROSITE/
 # SMART/CDD/NCBIfam/EC/GO) + its GO/EC — the protein×trait matrix for trait↔GO
 # correlation + multi-trait-family clustering. --query / --limit bound the slice;
-# --apply writes data/profiles/<acc>.yaml (ProteinProfile) + profiles.jsonl.
-#   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --apply
+# --apply publishes profiles.jsonl, optional YAMLs, trait_index.json and acquisition.json
+# together in a NEW directory. Existing outputs and the index cache are never replaced.
+#   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --out-dir reports/profiles-human-sample --apply
 # --query repeats for a multi-organism matrix; --organisms is shorthand for the
-# standard four (human / mouse / yeast / E. coli K-12) and --limit caps per query.
-#   just build-profiles --organisms --limit 25000 --jsonl-only --apply
+# standard ten reviewed exact taxa and --limit caps per query (0 explicitly uncaps).
+# --expect-release pins the release; --require-complete refuses a capped query.
+# Broader discovery requires a reviewed acquisition plan; these are not qualified examples.
+#   just build-profiles --organisms --limit 25000 --require-complete --jsonl-only --out-dir reports/profiles-ten-taxa --apply
 build-profiles *args:
     python3 scripts/build_swissprot_profiles.py {{args}}
 
