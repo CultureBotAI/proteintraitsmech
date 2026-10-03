@@ -499,7 +499,7 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
     }
     payload = {key: identity[key] for key in _CANDIDATE_ID_FIELDS}
     if identity["mapping_method"] == "SIFTS_RESIDUE_MAPPING":
-        # One ECOD trait/protein pair can have several independently reviewable
+        # One SIFTS-bound trait/protein pair can have several independently reviewable
         # structure occurrences.  Their exact structure, chain, and content-addressed
         # mapping must therefore remain distinct producer rows.
         payload.update(
@@ -1056,18 +1056,10 @@ def _provider_context(
     if "sifts-mapping" in providers:
         if sifts_path is None:
             raise GroundingError("provider sifts-mapping requires --sifts-registry")
-        try:
-            from build_ecod_sifts_candidates import (
-                EcodSiftsError,
-                load_mapping_registry,
-            )
-
-            sifts_mappings = load_mapping_registry(
-                sifts_path,
-                allow_offline_fixtures=args.allow_offline_sifts_fixtures,
-            )
-        except (EcodSiftsError, OSError) as exc:
-            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+        sifts_mappings = _load_sifts_mapping_registry(
+            sifts_path,
+            allow_offline_fixtures=args.allow_offline_sifts_fixtures,
+        )
     prints_manifest_path: Path | None = None
     prints_manifest: dict[str, Any] | None = None
     prints_release: PrintsRelease | None = None
@@ -1474,6 +1466,117 @@ def _sifts_provider_release(mapping: dict[str, Any]) -> str | None:
     return f"SIFTS {entry_date}; UniProt {release}"
 
 
+def _sifts_mapping_family(mapping: dict[str, Any]) -> str | None:
+    mapping_id = _clean_text(mapping.get("mapping_id")) or ""
+    if mapping_id.startswith("ecod-sifts:"):
+        return "ecod"
+    if mapping_id.startswith("biolip-sifts:") or mapping.get(
+        "kind"
+    ) == "BIOLIP_SIFTS_MAPPING_REGISTRY_ROW":
+        return "biolip"
+    if mapping.get("ecod_domain_id"):
+        return "ecod"
+    return None
+
+
+def _load_sifts_mapping_registry(
+    path: Path, *, allow_offline_fixtures: bool = False
+) -> dict[str, dict[str, Any]]:
+    try:
+        first_row: dict[str, Any] | None = None
+        with path.open(encoding="utf-8") as handle:
+            for line_number, raw in enumerate(handle, 1):
+                if not raw.strip():
+                    continue
+                try:
+                    value = json.loads(raw)
+                except json.JSONDecodeError as exc:
+                    raise GroundingError(
+                        f"invalid SIFTS mapping registry: {path}:{line_number}: "
+                        f"invalid mapping JSON: {exc}"
+                    ) from exc
+                if not isinstance(value, dict):
+                    raise GroundingError(
+                        f"invalid SIFTS mapping registry: {path}:{line_number}: "
+                        "mapping row is not an object"
+                    )
+                first_row = value
+                break
+    except OSError as exc:
+        raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+
+    if first_row is None:
+        return {}
+
+    family = _sifts_mapping_family(first_row)
+    if family == "ecod":
+        try:
+            from build_ecod_sifts_candidates import (
+                EcodSiftsError,
+                load_mapping_registry,
+            )
+
+            return load_mapping_registry(
+                path,
+                allow_offline_fixtures=allow_offline_fixtures,
+            )
+        except (EcodSiftsError, OSError) as exc:
+            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+    if family == "biolip":
+        try:
+            from fetch_biolip_sifts_uniprot_references import (
+                RegistryBuildError as BioLipSiftsError,
+                load_mapping_registry,
+            )
+
+            return load_mapping_registry(path)
+        except (BioLipSiftsError, OSError) as exc:
+            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+    raise GroundingError(
+        f"invalid SIFTS mapping registry: {path}: unsupported mapping row type"
+    )
+
+
+def _sifts_mapping_entry_sha256(mapping: dict[str, Any]) -> str:
+    family = _sifts_mapping_family(mapping)
+    if family == "ecod":
+        from build_ecod_sifts_candidates import mapping_entry_sha256
+
+        return mapping_entry_sha256(mapping)
+    if family == "biolip":
+        from fetch_biolip_sifts_uniprot_references import mapping_entry_sha256
+
+        return mapping_entry_sha256(mapping)
+    raise GroundingError("unsupported SIFTS mapping row type")
+
+
+def _sifts_expected_mapping_id(mapping: dict[str, Any], entry_sha: str) -> str | None:
+    family = _sifts_mapping_family(mapping)
+    if family == "ecod":
+        return f"ecod-sifts:{entry_sha}"
+    if family == "biolip":
+        return _clean_text(mapping.get("mapping_id"))
+    return None
+
+
+def _sifts_expected_chain(mapping: dict[str, Any]) -> str | None:
+    if _sifts_mapping_family(mapping) == "ecod":
+        return _clean_text(mapping.get("ecod_chain"))
+    return _clean_text(mapping.get("chain_id"))
+
+
+def _sifts_evidence_source(mapping: dict[str, Any]) -> str:
+    if _sifts_mapping_family(mapping) == "biolip":
+        return "BioLiP via PDBe SIFTS"
+    return "ECOD via PDBe SIFTS"
+
+
+def _sifts_authoritative_source_release(mapping: dict[str, Any]) -> str | None:
+    if _sifts_mapping_family(mapping) == "ecod":
+        return _clean_text(mapping.get("ecod_release"))
+    return None
+
+
 def _resolve_occurrence(
     candidate: dict[str, Any],
     record: dict,
@@ -1668,10 +1771,8 @@ def _resolve_occurrence(
         if mapping is None:
             reasons.append("missing:exact_sifts_mapping")
         else:
-            from build_ecod_sifts_candidates import mapping_entry_sha256
-
-            entry_sha = mapping_entry_sha256(mapping)
-            expected_mapping_id = f"ecod-sifts:{entry_sha}"
+            entry_sha = _sifts_mapping_entry_sha256(mapping)
+            expected_mapping_id = _sifts_expected_mapping_id(mapping, entry_sha)
             if (
                 mapping_id != expected_mapping_id
                 or mapping.get("mapping_id") != expected_mapping_id
@@ -1694,7 +1795,7 @@ def _resolve_occurrence(
                 reasons.append("invalid:sifts_structure_id")
             if not chain_id:
                 reasons.append("missing:sifts_chain_id")
-            elif chain_id != mapping.get("ecod_chain"):
+            elif chain_id != _sifts_expected_chain(mapping):
                 reasons.append("mismatch:sifts_mapping_chain")
             mapped_residues = mapping.get("mapped_residues")
             mapped_by_position: dict[int, str] = {}
@@ -1760,9 +1861,10 @@ def _resolve_occurrence(
             provider_release = _sifts_provider_release(mapping)
             if provider_release is None:
                 reasons.append("missing:sifts_provider_release")
-            authoritative_source_release = _clean_text(mapping.get("ecod_release"))
+            authoritative_source_release = _sifts_authoritative_source_release(mapping)
             if not authoritative_source_release:
                 reasons.append("missing:sifts_source_release")
+            sifts_evidence_source = _sifts_evidence_source(mapping)
             expected_occurrence: dict[str, Any] = {
                 "trait_id": trait_id,
                 "protein_id": protein_id,
@@ -1776,7 +1878,7 @@ def _resolve_occurrence(
                 "expected_residues": mapped_expected,
                 "source_trait_id": trait_id,
                 "mapping_method": "SIFTS_RESIDUE_MAPPING",
-                "evidence_source": "ECOD via PDBe SIFTS",
+                "evidence_source": sifts_evidence_source,
                 "source_release": authoritative_source_release,
                 "sequence_sha256": (reference or {}).get("sequence_sha256"),
                 "structure_id": structure_id,
@@ -1871,7 +1973,7 @@ def _resolve_occurrence(
             mapping_evidence["entry_sha256"] = entry_sha
             evidence.append(mapping_evidence)
             source_trait_id = trait_id
-            evidence_source = "ECOD via PDBe SIFTS"
+            evidence_source = sifts_evidence_source
             source_release = authoritative_source_release
             scope = "LOCALIZED"
             intervals = copy.deepcopy(mapped_intervals)
@@ -2641,15 +2743,7 @@ def _provider_cache(
                 {},
             )
         elif kind == "sifts_mapping":
-            try:
-                from build_ecod_sifts_candidates import (
-                    EcodSiftsError,
-                    load_mapping_registry,
-                )
-
-                mappings = load_mapping_registry(path)
-            except (EcodSiftsError, OSError) as exc:
-                raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+            mappings = _load_sifts_mapping_registry(path)
             cache[(kind, path)] = (
                 {key: mappings[key] for key in keys if key in mappings},
                 {},
@@ -2693,9 +2787,7 @@ def _verify_provider_evidence(
 
             observed_digest = membership_entry_sha256(current)
         elif kind == "sifts_mapping":
-            from build_ecod_sifts_candidates import mapping_entry_sha256
-
-            observed_digest = mapping_entry_sha256(current)
+            observed_digest = _sifts_mapping_entry_sha256(current)
         else:
             observed_digest = _value_digest(current)
         if observed_digest != evidence.get("entry_sha256"):

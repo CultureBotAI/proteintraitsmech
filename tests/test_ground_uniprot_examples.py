@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import csv
+import gzip
 import hashlib
 import importlib
 import json
@@ -24,6 +25,8 @@ grounding_validator = importlib.import_module("validate_uniprot_grounding")
 layout = importlib.import_module("grounding_registry_layout")
 membership_snapshot = importlib.import_module("uniprot_membership_snapshot")
 ecod_sifts = importlib.import_module("build_ecod_sifts_candidates")
+biolip_mapper = importlib.import_module("stage_biolip_sifts_mappings")
+biolip_sifts = importlib.import_module("fetch_biolip_sifts_uniprot_references")
 fetch_registry = importlib.import_module("fetch_uniprot_registry")
 
 
@@ -877,6 +880,280 @@ def _prepare_sifts_candidate(fixture: dict) -> tuple[dict, dict, dict, dict]:
     return candidate, mapping, occurrence, evidence
 
 
+def _prepare_biolip_sifts_candidate(fixture: dict, tmp_path: pathlib.Path) -> tuple[dict, dict]:
+    trait_id = "proteintraitsmech:BIOLIP_ATP"
+    fixture["record"].write_text(_record(trait_id, axis="STRUCTURE"), encoding="utf-8")
+
+    stage = tmp_path / "biolip-stage.jsonl"
+    snapshot = tmp_path / "biolip-sifts-snapshot"
+    snapshot.mkdir()
+    occurrence = {
+        "schema_version": 1,
+        "kind": biolip_mapper.INPUT_OCCURRENCE_KIND,
+        "stage_status": "READY_FOR_RESIDUE_LEVEL_SIFTS",
+        "qualification_claimed": False,
+        "protein_identity_claimed": False,
+        "uniprot_coordinates_claimed": False,
+        "source_residue_count": 1,
+        "binding_residue_pairs": [
+            {
+                "author_insertion_code": "",
+                "author_residue_number": 1,
+                "author_residue_token": "A1",
+                "biolip_receptor_sequence_position": 1,
+                "ordinal": 1,
+                "receptor_sequence_residue_token": "A1",
+                "source_amino_acid": "A",
+            }
+        ],
+        "source_binding": {
+            "binding_residues_pdb_author_text": "A1",
+            "binding_residues_receptor_sequence_text": "A1",
+            "binding_site_code": "BS01",
+            "ligand_chain_id": "X",
+            "ligand_id": "ATP",
+            "ligand_serial_number_text": "1",
+            "receptor_chain_id": "A",
+            "receptor_sequence_length": 1,
+            "receptor_sequence_sha256": "3" * 64,
+            "resolution_text": "1.0",
+            "source_field_projection_sha256": "4" * 64,
+            "source_line_numbers": [1],
+            "source_occurrence_key": {
+                "binding_site_code": "BS01",
+                "ligand_chain": "X",
+                "ligand_id": "ATP",
+                "ligand_serial_number": "1",
+                "pdb_id": "1abc",
+                "receptor_chain": "A",
+            },
+            "source_physical_line_count": 1,
+            "source_raw_line_sha256": "0" * 64,
+            "source_raw_line_sha256_basis": "RAW_UTF8_PHYSICAL_LINE_INCLUDING_LF",
+            "source_uniprot_accession_claims": [],
+            "source_uniprot_claim_status": "MISSING",
+            "source_uniprot_field_text": "",
+            "structure_id": "PDB:1abc",
+        },
+        "trait_binding": {
+            "ligand_id": "ATP",
+            "trait_id": trait_id,
+            "trait_record_has_canonical_examples": False,
+            "trait_record_path": str(fixture["record"]),
+            "trait_record_sha256": "1" * 64,
+            "trait_source_xref_status": "EXACT_SEEDER_SOURCE_XREFS",
+            "trait_source_xrefs": ["pdb.ligand:ATP"],
+        },
+        "source_occurrence_id": "biolip-missing-protein-source-occurrence:ok",
+        "source_occurrence_row_sha256": "2" * 64,
+    }
+    stage_summary = {
+        "schema_version": 1,
+        "kind": biolip_mapper.INPUT_SUMMARY_KIND,
+        "stage_id": "biolip-missing-protein-stage:fixture",
+        "combined_non_summary_rows_sha256": "fixture",
+        "ready_for_residue_level_sifts_count": 1,
+    }
+    stage.write_text(
+        "".join(
+            biolip_mapper.canonical_json(row) + "\n"
+            for row in (occurrence, stage_summary)
+        ),
+        encoding="utf-8",
+    )
+
+    xml = gzip.compress(
+        b"""<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.ebi.ac.uk/pdbe/docs/sifts/eFamily.xsd"
+       xmlns:dc="http://purl.org/dc/elements/1.1/"
+       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       dbSource="PDBe"
+       dbCoordSys="PDBe"
+       dbAccessionId="1abc"
+       date="2026-09-27">
+  <listDB><db dbSource="UniProt" dbVersion="2026.03"/></listDB>
+  <entity>
+    <segment>
+      <listResidue>
+        <residue dbSource="PDBe" dbCoordSys="PDBe" dbResNum="1">
+          <crossRefDb dbSource="PDB" dbCoordSys="PDBresnum"
+                      dbAccessionId="1abc" dbChainId="A"
+                      dbResNum="1" dbResName="ALA"/>
+          <crossRefDb dbSource="UniProt" dbCoordSys="UniProt"
+                      dbAccessionId="P12345" dbResNum="10" dbResName="A"/>
+        </residue>
+      </listResidue>
+    </segment>
+  </entity>
+  <dc:rights rdf:resource="http://pdbe.org/sifts">PDBe SIFTS terms</dc:rights>
+</entry>
+"""
+    )
+    sifts_xml = snapshot / "1abc.xml.gz"
+    sifts_xml.write_bytes(xml)
+    manifest_entry = {
+        "path": sifts_xml.name,
+        "pdb_id": "1abc",
+        "sha256": hashlib.sha256(xml).hexdigest(),
+        "sifts_entry_date": "2026-09-27",
+        "sifts_uniprot_release": "2026_03",
+        "sifts_uniprot_version": "2026.03",
+        "size_bytes": len(xml),
+        "url": f"{biolip_mapper.SIFTS_XML_ROOT}/{sifts_xml.name}",
+    }
+    manifest = {
+        "schema_version": 1,
+        "kind": biolip_mapper.SNAPSHOT_KIND,
+        "complete": True,
+        "entries": [manifest_entry],
+        "failures": [],
+        "fetch_request_count": 1,
+        "requested_pdb_count": 1,
+        "snapshot_id": "fixture",
+        "source": "PDBe SIFTS residue-level XML",
+        "source_root": biolip_mapper.SIFTS_XML_ROOT,
+        "stage_combined_non_summary_rows_sha256": "fixture",
+        "stage_id": "biolip-missing-protein-stage:fixture",
+        "stage_path": "biolip-stage.jsonl",
+        "stage_sha256": hashlib.sha256(stage.read_bytes()).hexdigest(),
+    }
+    (snapshot / "manifest.json").write_text(
+        biolip_mapper.canonical_json(manifest) + "\n",
+        encoding="utf-8",
+    )
+
+    responses = tmp_path / "biolip-uniprot-responses.json"
+    responses.write_text(
+        json.dumps(
+            {
+                "release": "2026_03",
+                "responses": [
+                    {
+                        "requested": ["P12345"],
+                        "results": [
+                            {
+                                "primaryAccession": "P12345",
+                                "uniProtkbId": "P12345_FIXTURE",
+                                "entryType": "UniProtKB reviewed (Swiss-Prot)",
+                                "proteinDescription": {
+                                    "recommendedName": {
+                                        "fullName": {"value": "Fixture protein"}
+                                    }
+                                },
+                                "organism": {
+                                    "taxonId": 562,
+                                    "scientificName": "Escherichia coli",
+                                },
+                                "sequence": {"value": "CCCCCCCCCA", "length": 10},
+                                "entryAudit": {"sequenceVersion": 3},
+                                "uniProtKBCrossReferences": [
+                                    {"database": "Pfam", "id": "PF00001", "properties": []}
+                                ],
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    registry = tmp_path / "biolip-registry.jsonl"
+    memberships = tmp_path / "biolip-memberships.jsonl"
+    mappings = tmp_path / "biolip-mappings.jsonl"
+    blocked = tmp_path / "biolip-blocked.tsv"
+    receipt = tmp_path / "biolip-receipt.json"
+    plan = tmp_path / "biolip-plan.json"
+    args = [
+        "--stage",
+        str(stage),
+        "--sifts-snapshot",
+        str(snapshot),
+        "--expect-release",
+        "2026_03",
+        "--out",
+        str(registry),
+        "--membership-out",
+        str(memberships),
+        "--mapping-out",
+        str(mappings),
+        "--blocked",
+        str(blocked),
+        "--receipt",
+        str(receipt),
+        "--offline-responses",
+        str(responses),
+    ]
+    namespace = biolip_sifts.parser().parse_args(args)
+    prepared = biolip_sifts._derive_request_plan(namespace)
+    plan.write_text(biolip_sifts.render_request_plan(prepared.plan), encoding="utf-8")
+    assert biolip_sifts.main([*args, "--request-plan", str(plan), "--apply"]) == 0
+
+    [reference] = _jsonl_rows(registry)
+    [mapping] = _jsonl_rows(mappings)
+    fixture["source_registry"].write_bytes(registry.read_bytes())
+    _sidecar(
+        fixture["residue"],
+        "UniProt",
+        reference["uniprot_release"],
+        {"P12345": {"seq": reference["sequence"], "ft": []}},
+    )
+    _jsonl(fixture["profiles"], [])
+    fixture["sifts"] = mappings
+
+    provider_release = ground._sifts_provider_release(mapping)
+    mapping_sha = biolip_sifts.mapping_entry_sha256(mapping)
+    candidate = {
+        "batch": "ready-sifts",
+        "candidate_status": "LOCATION_VERIFIED",
+        "qualification_status": "CANDIDATE_PROTEIN",
+        "trait_id": trait_id,
+        "record_path": str(fixture["record"]),
+        "source_namespace": "BioLiP",
+        "trait_axis": "STRUCTURE",
+        "trait_category": "STRUCT_FOLD",
+        "protein_id": reference["protein_id"],
+        "protein_label": reference["protein_label"],
+        "taxon_id": reference["taxon_id"],
+        "taxon_label": reference["taxon_label"],
+        "sequence_length": reference["sequence_length"],
+        "sequence_sha256": reference["sequence_sha256"],
+        "sequence_release": reference["uniprot_release"],
+        "reviewed": reference["reviewed"],
+        "scope": mapping["scope"],
+        "coordinate_frame": mapping["coordinate_frame"],
+        "intervals": [{"start": 10, "end": 10}],
+        "residue_positions": mapping["residue_positions"],
+        "expected_residues": mapping["expected_residues"],
+        "source_trait_id": trait_id,
+        "mapping_method": "SIFTS_RESIDUE_MAPPING",
+        "evidence_source": "BioLiP via PDBe SIFTS",
+        "source_release": None,
+        "evidence_tier": "B",
+        "mapping_completeness": mapping["mapping_completeness"],
+        "source_residue_count": mapping["source_residue_count"],
+        "mapped_residue_count": mapping["mapped_residue_count"],
+        "structure_id": mapping["structure_id"],
+        "chain_id": mapping["chain_id"],
+        "sifts_mapping_id": mapping["mapping_id"],
+        "sifts_release": provider_release,
+        "reasons": [],
+        "provider_evidence": [
+            {
+                "kind": "sifts_mapping",
+                "path": ground._display_path(mappings),
+                "key": mapping["mapping_id"],
+                "source": "PDBe SIFTS",
+                "release": provider_release,
+                "entry_sha256": mapping_sha,
+                "trait_id": trait_id,
+            }
+        ],
+    }
+    candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+    _jsonl(fixture["queue"], [candidate])
+    return candidate, mapping
+
+
 def test_candidate_id_covers_sequence_release_coordinates_and_positions(local_sources):
     row = local_sources["candidate"]
     candidate_id = ground.derive_candidate_id(row)
@@ -1723,6 +2000,55 @@ def test_sifts_mapping_stays_candidate_only_without_provider_receipt(local_sourc
     assert sifts_provider["entry_sha256"] == ecod_sifts.mapping_entry_sha256(mapping)
     assert local_sources["registry"].read_text(encoding="utf-8") == ""
     assert local_sources["evidence"].read_text(encoding="utf-8") == ""
+
+
+def test_biolip_sifts_mapping_loads_and_resolves_fail_closed_without_source_release(
+    local_sources, tmp_path
+):
+    candidate, mapping = _prepare_biolip_sifts_candidate(local_sources, tmp_path)
+
+    loaded = ground._load_sifts_mapping_registry(local_sources["sifts"])
+
+    assert loaded == {mapping["mapping_id"]: mapping}
+    assert ground._sifts_mapping_entry_sha256(mapping) == biolip_sifts.mapping_entry_sha256(
+        mapping
+    )
+    assert ground._sifts_expected_mapping_id(
+        mapping,
+        biolip_sifts.mapping_entry_sha256(mapping),
+    ) == mapping["mapping_id"]
+    assert ground._sifts_expected_chain(mapping) == "A"
+    assert ground._sifts_evidence_source(mapping) == "BioLiP via PDBe SIFTS"
+    assert ground._sifts_authoritative_source_release(mapping) is None
+
+    assert ground.main(_sifts_resolve_args(local_sources)) == 0
+
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert row["reasons"] == ["missing:sifts_source_release", "missing:source_release"]
+    assert row["intervals"] == candidate["intervals"]
+    assert row["residue_positions"] == candidate["residue_positions"]
+    assert "trait_occurrence" not in row
+    assert "grounding_evidence" not in row
+    sifts_provider = next(
+        item for item in row["provider_evidence"] if item["kind"] == "sifts_mapping"
+    )
+    assert sifts_provider["key"] == mapping["mapping_id"]
+    assert sifts_provider["entry_sha256"] == biolip_sifts.mapping_entry_sha256(mapping)
+    assert local_sources["registry"].read_text(encoding="utf-8") == ""
+    assert local_sources["evidence"].read_text(encoding="utf-8") == ""
+
+
+def test_biolip_sifts_mapping_loader_rejects_tampered_content_address(
+    local_sources, tmp_path, capsys
+):
+    _candidate, mapping = _prepare_biolip_sifts_candidate(local_sources, tmp_path)
+    mapping["mapping_row_sha256"] = "0" * 64
+    _jsonl(local_sources["sifts"], [mapping])
+
+    assert ground.main(_sifts_resolve_args(local_sources)) == 2
+    assert "BioLiP/SIFTS mapping_row_sha256 mismatch" in capsys.readouterr().err
+    assert not local_sources["resolved"].exists()
 
 
 def test_sifts_provider_requires_explicit_registry(local_sources, capsys):
