@@ -2686,6 +2686,39 @@ found.
   blocker for target-organism completion while keeping complete record-group review
   decisions as the boundary for durable promotion and reviewed-history exclusion.
 
+### 2026-10-03 — first target-alternative promotion after representative review
+
+- Starting from `011085a811d3d09e24c174071eca5f9cb2dd5274`, the guarded promoter
+  installed the re-reviewed target-organism alternatives from
+  `human-ecoli-yeast-repair-mixed-041`, using the isolated
+  `-target-preserve-durable-2026-10-03.approved.tsv` ledger. The finalized ledger
+  contains 140 approved and 191 rejected candidate rows; promotion recognized 80
+  approvals as already installed and wrote 27 trait records. Historical staging
+  ledgers were retained rather than overwritten.
+- The durable delta is 57 new record/protein examples and 60 new localized
+  occurrences: 43 human, seven E. coli K-12, and ten yeast S288c occurrence rows.
+  Repeated non-overlapping locations are retained separately. The protein registry
+  grows from 12,326 to 12,369 references (43 new full sequences); evidence and
+  qualified-record bindings grow from 20,398 to 20,458 rows each. Exact comparison
+  with the pre-promotion Git snapshot confirms preservation of all existing protein
+  references, examples, occurrences, and non-example record content.
+- These are direct InterPro 110.0 assertions for the containing trait, with exact
+  source coordinates checked against release-pinned, checksummed UniProt sequences.
+  Thirty replacement proposals differing only by grouped-location evidence identity
+  were retained as already-satisfied durable claims, not interpreted as biological
+  rejection. The separate definition holds for IPR063614, IPR063586, and IPR063694
+  remain unresolved; this promotion does not add their held alternatives.
+- The dependent biophysical pilot was regenerated through its calculator: only its
+  registry-input checksum changed, and its complete bundle check passes. The
+  InterPro fetcher now refuses unavailable or malformed release metadata before
+  reading or mutating sidecars, including when `--allow-stale` is supplied.
+- This is incremental coverage, not target-proteome completion. Full sequences
+  reside in `ProteinReference`; trait-specific annotations reside in
+  `trait_occurrences`. It does not add generic UniProt feature tracks or remove
+  existing browser display limits. The separate, ignored target-profile InterPro
+  acquisition is not part of this durable promotion, and incomplete source staging
+  must not be treated as evidence of biological absence.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,
