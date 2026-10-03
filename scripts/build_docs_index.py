@@ -57,6 +57,9 @@ Record shape:
         "fams":  ["Pfam:PF00244", ...],
         "src":   "UNIPROTKB_API",
         "seq":   "MDDREDLVYQAK...",          # full amino-acid sequence
+        # QUALIFIED examples load seq from the validated registry and also have:
+        "seqsrc": "ProteinReference",
+        "seqsha": "<sha256>", "rel": "2026_03", "sv": 2,
         "feats": [                           # [start, end, ft_type, axis, note]
           [1, 255, "CHAIN", "SEQUENCE", "14-3-3 protein epsilon"],
           [234, 255, "REGION", "SEQUENCE", "Disordered"],
@@ -80,6 +83,9 @@ from typing import Any
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from docs_protein_sequences import ProteinSequenceRegistry  # noqa: E402
+
 # The bucket count is calculated from serialized detail size. This target sits below the
 # post-build 1 MB hard budget so a successful build cannot require a multi-megabyte fetch.
 DETAIL_BUCKET_TARGET_BYTES = 900_000
@@ -96,6 +102,7 @@ MAX_CUBE_ROWS = 50_000
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 OUT_DIR = REPO_ROOT / "docs" / "data"
+PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
 DEF_TRUNC = 500
 
 
@@ -339,9 +346,16 @@ def _docs_examples(examples: list) -> list:
     return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
 
 
-def _project_example(ex: dict) -> dict:
+def _project_example(ex: dict, trait_id: str = "", *,
+                     protein_sequences: ProteinSequenceRegistry | None = None,
+                     record_path: str = "<memory>") -> dict:
     """Lean projection of a CanonicalExample suitable for the browser
     detail view. Skips empty fields to keep records.json small."""
+    sequence_payload = {}
+    if ex.get("qualification_status") == "QUALIFIED":
+        if protein_sequences is None:
+            raise ValueError(f"{record_path}: QUALIFIED example requires a protein sequence registry")
+        sequence_payload = protein_sequences.project(ex, trait_id=trait_id, record_path=record_path)
     proj: dict = {}
     if ex.get("protein_id"):
         proj["id"] = ex["protein_id"]
@@ -375,6 +389,7 @@ def _project_example(ex: dict) -> dict:
              f.get("trait_axis") or "", f.get("note") or ""]
             for f in feats
         ]
+    proj.update(sequence_payload)
     return proj
 
 
@@ -403,7 +418,8 @@ def _chem_fields(data: dict) -> dict:
     return out
 
 
-def load_record(path: Path) -> dict[str, Any] | None:
+def load_record(path: Path, *,
+                protein_sequences: ProteinSequenceRegistry | None = None) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
             data = yaml.safe_load(fh)
@@ -456,7 +472,8 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # of them took canonical_examples from 28% to 58% of every detail bucket.
         # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
         # which are first because they are rank-ordered.
-        "ex": [_project_example(e)
+        "ex": [_project_example(e, identifier, protein_sequences=protein_sequences,
+                                record_path=str(path))
                for e in _docs_examples(data.get("canonical_examples") or [])],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
@@ -648,6 +665,7 @@ def write_shards(records: list[dict]) -> list[dict]:
 
 
 def main() -> int:
+    protein_sequences = ProteinSequenceRegistry(PROTEIN_REGISTRY)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     load_equivalence()
     load_chebi_names()
@@ -656,7 +674,7 @@ def main() -> int:
     records: list[dict] = []
     skipped = 0
     for path in sorted(TRAITS_DIR.rglob("*.yaml")):
-        rec = load_record(path)
+        rec = load_record(path, protein_sequences=protein_sequences)
         if rec is None:
             skipped += 1
             continue

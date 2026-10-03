@@ -85,6 +85,37 @@ def test_complete_pagination(monkeypatch):
     assert "xref_prints" in calls[0]
 
 
+@pytest.mark.parametrize("require_complete", [False, True])
+def test_page_budget_stops_short_pages_before_next_request(monkeypatch, require_complete):
+    calls = mock_pages(monkeypatch, [
+        page([entry()], total=3, next_url=next_link()),
+        page([entry("Q54321")], total=3, next_url=next_link(cursor="third")),
+    ])
+    receipt = {}
+    with pytest.raises(F.AcquisitionError, match="page budget exhausted"):
+        list(F.stream_swissprot(QUERY, 0, max_pages=1, receipt=receipt,
+                               require_complete=require_complete))
+    assert len(calls) == len(receipt["pages"]) == 1
+    assert receipt["returned_rows"] == 1 and not receipt["complete"]
+    assert receipt["max_pages"] == 1
+
+
+@pytest.mark.parametrize("empty", [False, True])
+def test_page_budget_accepts_completion_on_last_allowed_page(monkeypatch, empty):
+    calls = mock_pages(monkeypatch, [page([] if empty else [entry()])])
+    receipt = {}
+    assert len(list(F.stream_swissprot(QUERY, 0, max_pages=1, receipt=receipt))) == (0 if empty else 1)
+    assert len(calls) == 1 and receipt["complete"]
+
+
+@pytest.mark.parametrize("budget", [0, -1, True, 1.5, "2"])
+def test_invalid_page_budget_rejected_before_network(monkeypatch, budget):
+    calls = mock_pages(monkeypatch, [])
+    with pytest.raises(F.AcquisitionError, match="max_pages must be a positive integer"):
+        list(F.stream_swissprot(QUERY, 0, max_pages=budget))
+    assert calls == []
+
+
 @pytest.mark.parametrize("key,value,match", [
     ("release", None, "release header"), ("release", "bad", "release header"),
     ("release", "2026_02", "release changed"), ("total", None, "total-results header"),
@@ -189,6 +220,17 @@ def test_fetch_exhaustion_raises(monkeypatch):
         F._get(F.SEARCH_URL, tries=2)
 
 
+def test_default_fetch_attempt_bound(monkeypatch):
+    calls = []
+    def failed(*args, **kwargs):
+        calls.append(args)
+        raise OSError("connection closed")
+    monkeypatch.setattr(F.urllib.request, "urlopen", failed)
+    with pytest.raises(F.AcquisitionError, match="connection closed"):
+        list(F.stream_swissprot(QUERY, 0, max_pages=1))
+    assert len(calls) == 4
+
+
 @pytest.mark.parametrize("name", ["yes", "null", "a\nb", 'a"b', "x: β", "001"])
 def test_yaml_strings_round_trip(name):
     e = entry(reviewed=False)
@@ -263,6 +305,40 @@ def test_mid_fetch_failure_does_not_publish(monkeypatch, acquisition):
         page([entry()], total=2, next_url=next_link()), F.AcquisitionError("offline")
     ])
     assert F.main(args + ["--apply"]) == 2
+    assert not out.exists() and cache.read_bytes() == original
+    assert not list(out.parent.glob(".protein-profiles-*"))
+
+
+@pytest.mark.parametrize("apply", [False, True])
+def test_page_budget_exhaustion_never_publishes_partial_bundle(monkeypatch, acquisition, apply):
+    cache, out, args = acquisition
+    original = cache.read_bytes()
+    calls = mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link())])
+    assert F.main(args + ["--max-pages", "1"] + (["--apply"] if apply else [])) == 2
+    assert len(calls) == 1
+    assert not out.exists() and cache.read_bytes() == original
+    assert not list(out.parent.glob(".protein-profiles-*"))
+
+
+def test_page_budget_is_per_query_and_is_recorded(monkeypatch, acquisition):
+    _, out, args = acquisition
+    calls = mock_pages(monkeypatch, [page([entry()]), page([entry("Q54321")])])
+    assert F.main(args + ["--query", "second query", "--max-pages", "1", "--apply"]) == 0
+    receipt = json.loads((out / "acquisition.json").read_text())
+    assert len(calls) == 2 and receipt["complete"]
+    assert receipt["max_pages_per_query"] == 1
+    assert [q["max_pages"] for q in receipt["queries"]] == [1, 1]
+
+
+def test_later_query_page_budget_failure_rolls_back_entire_bundle(monkeypatch, acquisition):
+    cache, out, args = acquisition
+    original = cache.read_bytes()
+    calls = mock_pages(monkeypatch, [
+        page([entry()]),
+        page([entry("Q54321")], total=2, next_url=next_link("second query")),
+    ])
+    assert F.main(args + ["--query", "second query", "--max-pages", "1", "--apply"]) == 2
+    assert len(calls) == 2
     assert not out.exists() and cache.read_bytes() == original
     assert not list(out.parent.glob(".protein-profiles-*"))
 
@@ -377,7 +453,10 @@ def test_corrupt_cache_rejected_not_overwritten(tmp_path, monkeypatch):
     assert cache.read_text() == "bad"
 
 
-@pytest.mark.parametrize("args", [["--limit", "-1"], ["--expect-release", "latest"]])
+@pytest.mark.parametrize("args", [
+    ["--limit", "-1"], ["--expect-release", "latest"],
+    ["--max-pages", "0"], ["--max-pages", "-1"],
+])
 def test_invalid_cli_options(args):
     with pytest.raises(SystemExit):
         F.main(args)

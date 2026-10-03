@@ -203,6 +203,14 @@ supports them, and can also be added by curators:
   Generic UniProt feature tracks or discovery-query hits remain useful for display but
   do not prove that the record's exact trait occurs on that protein.
 
+  `just build-docs` loads qualified examples' sequences from that registry into the
+  lazy detail payload and displays their release, sequence version (when present), and
+  checksum. Missing or mismatched exact references stop the build before publishing
+  record shards. Legacy examples are unchanged. Existing generic feature tracks are
+  retained only with their matching inline sequence frame; no annotations or trait
+  positions are inferred. A sequence without a stored feature track is labelled as
+  such, not as evidence that the protein has no annotated features.
+
   Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
   signature cross-references and `just suggest-examples` ranks carriers from the
   Swiss-Prot profile matrix; neither command writes trait records, and both reject the
