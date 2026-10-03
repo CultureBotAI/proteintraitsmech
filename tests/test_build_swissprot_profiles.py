@@ -7,6 +7,7 @@ import importlib.util
 import json
 from email.message import Message
 from pathlib import Path
+from types import SimpleNamespace
 from urllib.parse import urlencode
 
 import pytest
@@ -275,6 +276,61 @@ def test_output_appearing_during_fetch_is_preserved(monkeypatch, acquisition):
     monkeypatch.setattr(F, "_get", get)
     assert F.main(args + ["--apply"]) == 2
     assert [p.name for p in out.iterdir()] == ["sentinel"]
+
+
+def test_output_appearing_at_rename_is_not_replaced(monkeypatch, acquisition):
+    _, out, args = acquisition
+    mock_pages(monkeypatch, [page([entry()])])
+    original_exists, checks, created_inode = Path.exists, [], []
+
+    def racing_exists(path):
+        result = original_exists(path)
+        if path == out:
+            checks.append(path)
+            if len(checks) == 2:
+                # Another writer claims even an empty directory after our final check.
+                out.mkdir()
+                created_inode.append(out.stat().st_ino)
+        return result
+
+    monkeypatch.setattr(Path, "exists", racing_exists)
+    assert F.main(args + ["--apply"]) == 2
+    assert out.stat().st_ino == created_inode[0]
+    assert not list(out.iterdir())
+
+
+@pytest.mark.parametrize("kind", ["empty-directory", "nonempty-directory", "file", "symlink"])
+def test_native_publication_never_replaces(tmp_path, kind):
+    staged, destination = tmp_path / "stage", tmp_path / "destination"
+    staged.mkdir()
+    (staged / "payload").write_text("new")
+    if kind.endswith("directory"):
+        destination.mkdir()
+        if kind == "nonempty-directory":
+            (destination / "old").write_text("old")
+    elif kind == "file":
+        destination.write_text("old")
+    else:
+        destination.symlink_to(tmp_path / "absent")
+    inode = destination.lstat().st_ino
+    with pytest.raises(OSError):
+        F.publish_directory(staged, destination)
+    assert destination.lstat().st_ino == inode
+    assert (staged / "payload").read_text() == "new"
+
+
+@pytest.mark.skipif(F.os.name == "nt", reason="Windows uses its native no-replace rename")
+def test_unsupported_publication_fails_closed(monkeypatch, tmp_path):
+    monkeypatch.setattr(F, "sys", SimpleNamespace(platform="unsupported"))
+    with pytest.raises(F.AcquisitionError, match="unsupported"):
+        F.publish_directory(tmp_path / "stage", tmp_path / "destination")
+
+
+@pytest.mark.skipif(F.os.name == "nt", reason="Windows does not use libc publication")
+def test_missing_native_rename_fails_closed(monkeypatch, tmp_path):
+    monkeypatch.setattr(F.ctypes, "CDLL", lambda *a, **kw: SimpleNamespace())
+    with pytest.raises(F.AcquisitionError, match="unavailable"):
+        F.publish_directory(tmp_path / "stage", tmp_path / "destination")
 
 
 @pytest.mark.parametrize("conflict", [False, True])

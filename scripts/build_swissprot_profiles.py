@@ -31,8 +31,10 @@ Stdlib-only; no broad crawl should run without a reviewed acquisition plan.
 from __future__ import annotations
 
 import argparse
+import ctypes
 import hashlib
 import json
+import os
 import re
 import sys
 import tempfile
@@ -379,6 +381,39 @@ def matrix_row(p: dict) -> dict:
             "axes": {t["trait"]: t["trait_axis"] for t in p["traits"]}}
 
 
+def publish_directory(staged: Path, destination: Path) -> None:
+    """Atomically publish without replacing even a concurrently created empty directory.
+
+    Path.rename is overwrite-capable on POSIX. Use the native exclusive variant
+    on macOS/Linux, and Windows' no-replace os.rename. Unsupported platforms or
+    filesystems fail closed; there is deliberately no unsafe fallback.
+    """
+    if os.name == "nt":
+        os.rename(staged, destination)
+        return
+    src, dst = os.fsencode(staged.absolute()), os.fsencode(destination.absolute())
+    libc = ctypes.CDLL(None, use_errno=True)
+    try:
+        if sys.platform == "darwin":
+            rename = libc.renamex_np
+            rename.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint]
+            args = (src, dst, 0x00000004)  # RENAME_EXCL (sys/stdio.h)
+        elif sys.platform.startswith("linux"):
+            rename = libc.renameat2
+            rename.argtypes = [ctypes.c_int, ctypes.c_char_p, ctypes.c_int,
+                               ctypes.c_char_p, ctypes.c_uint]
+            # Absolute paths make both dirfds irrelevant. RENAME_NOREPLACE = 1.
+            args = (0, src, 0, dst, 1)
+        else:
+            raise AcquisitionError("atomic no-replace publication is unsupported on this platform")
+    except AttributeError as exc:
+        raise AcquisitionError("native no-replace rename is unavailable; refusing publication") from exc
+    rename.restype = ctypes.c_int
+    if rename(*args) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(destination))
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--query", action="append", metavar="Q",
@@ -476,7 +511,7 @@ def main(argv: list[str] | None = None) -> int:
                     json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
                 if args.out_dir.exists() or args.out_dir.is_symlink():
                     raise AcquisitionError("output appeared during acquisition; refusing replacement")
-                staged.rename(args.out_dir)
+                publish_directory(staged, args.out_dir)
     except (AcquisitionError, OSError) as exc:
         print(f"ERROR: {exc}; no acquisition published", file=sys.stderr)
         return 2
