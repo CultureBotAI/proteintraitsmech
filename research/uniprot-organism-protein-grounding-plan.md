@@ -2784,6 +2784,127 @@ found.
   not an input to this promotion. Neither staging activity establishes completion
   of the overall target-organism goal.
 
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 1 of 8
+
+- From base `828c03457158fb1b81ed9c8969d45cda994c1def`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-001of008`. All 114 candidate
+  alternatives across 62 records have explicit decisions: 56 approvals across
+  52 records, 57 non-target scope deferrals, and one already-satisfied ITPR1
+  assertion deliberately left unchanged. Every resolved record preimage still
+  matched the current record before application.
+- The promoter installed 56 existing-example qualifications with localized trait
+  coordinates: 42 human, 11 yeast S288c, and three E. coli K-12 assertions. The
+  selected exact taxa are `9606`, `559292`, and `83333`. This is not an addition
+  of new example accession IDs. Thirty-four full-sequence references increase the
+  protein registry from 12,391 to 12,425; evidence and binding registries each
+  increase from 20,502 to 20,558 rows.
+- Each selected assertion names its exact CDD model directly, without hierarchy
+  inference, using InterPro `110.0` coordinates in the canonical UniProt frame.
+  Full sequences, lengths, and checksums are pinned to UniProt `2026_03`.
+  Qualification establishes this source-asserted domain occurrence, not all
+  functional claims in the source-derived definition. No generic feature tracks,
+  new isoforms, local alignments, or computed motif coordinates are introduced.
+- The local replay basename is
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-001of008`.
+  Retained ignored staging is identified by SHA-256:
+
+  | Suffix | SHA-256 |
+  | --- | --- |
+  | `.candidates.jsonl` | `b6965e2bf26f6503cce338f93a9f5cab534c52f3957ae7891de50d1fafd52b3d` |
+  | `.resolved.jsonl` | `c6e16a69bb8035ce0f6cb0940a3db2e7dee75ef467873d591a331a58d32eb539` |
+  | `.target-review.jsonl` | `d0787300e8f48033756bd7e634f236c6afcf7ecd02aa17ca3cd0d0b0ee043838` |
+  | `.review-decisions.jsonl` | `aa962df7520c39705844aa7cc00bba7b2edd6cbf7dfb46d7ad02539eaa202bb3` |
+  | `.approved.tsv` | `ad311130ddb748931bf79d831d7e01fe7d98a9f25c02ddcca3892e8066c04472` |
+  | `.uniprot_fetch_receipt.json` | `e499cf737076dccfd35ac67be0b5ba674736b94fad1b4d23b9edc83865d8ef69` |
+
+  These hashes identify local replay inputs, not artifacts downloadable from a
+  clean checkout. Durable records and sequence/evidence/binding registries are
+  the installed claim objects. The selected UniProt acquisition covered 113 exact
+  accessions; only the approved target assertions are promoted.
+- The registered calculator refreshed the biophysical pilot's registry pin to
+  `88846a6ecb1195f5aba5f011cf1341c57f5aa28c7e5445ca2c4edeb10a9a44bc`.
+  The observation digest remains
+  `1d2221a3bfe40aa1f76420276f7a100276bac54cec88321c3f8b942bb9313362`.
+  Pilot replay and registry-layout checks pass. The evidence logical digest is
+  `b20e82b89b53ff03f3d0722f18a5f523097d2f8c204c54d6f1d2a362220098d9`;
+  the binding logical digest is
+  `231528d9fc144fed1b5d5e5bf2f72729b7901f948c85251f5058a80e1224209a`.
+  Independent Git-base replay confirms exactly 56 upgrades, 56 new occurrences,
+  34 new sequence references, and zero new example IDs. All old protein references,
+  evidence, bindings, example fields, occurrences, and non-example record content
+  are preserved; all ten excluded record groups remain byte-identical, including
+  ITPR1. All 56 selected-example projections pass `require_qualified=True`.
+  This is not a require-qualified pass for other legacy examples in those files.
+  The writer and append-only history audits pass, as do all 389 focused grounding,
+  registry, pilot, and browser regression tests (97.28 seconds). Scoped
+  `validate-all` completed for all 52 changed records with zero semantic
+  findings. Fresh adversarial replay also checks all 114 provider assertions,
+  including exact intervals, releases, sequence lengths, checksums, and taxa.
+  Fourteen approved assertions use grouped-location identity and 42 use a
+  single flat location. Full `validate-all` also completed: 429,293 files,
+  zero strict errors, and zero semantic findings. The full regression suite
+  and browser rebuild remain in progress at this checkpoint; their terminal
+  outcomes belong in the PR before merge and must not be inferred from
+  successful promotion or registry-layout checks.
+  The [tracked shard-1 review](cdd-cnp020-shard1-target-grounding-review-2026-10-03.md)
+  publishes all member paths, selected coordinates, exclusions, and scientific
+  scope notes, addressing review issue #943 without committing ignored staging.
+- Adversarial review #944 expanded the completeness check from the 53
+  target-candidate-bearing groups to all 62 selected record groups, including
+  all ten excluded groups. The full cohort has 55 target-bearing records with
+  57 qualified and five legacy-unverified target examples. The five unqueued
+  legacy examples are CPLX4 `UniProtKB:Q7Z7G2` on `CDD:cd22809`, PMT6
+  `UniProtKB:P42934` on `CDD:cd23284`, UBE2H `UniProtKB:P62256` on
+  `CDD:cd23797`, FGF14 `UniProtKB:Q92915` on `CDD:cd23330`, and PPP1R3C
+  `UniProtKB:Q9UQK1` on `CDD:cd22815`. The last two are in excluded groups
+  whose queued candidates are non-target, not records lacking target proteins.
+  All five accessions are retained in the separate acquisition list for later
+  source-backed review. The scan includes every example in all 62 records and
+  the full ignored shard ledger. No biological absence or complete coverage
+  follows. ITPR1 `UniProtKB:Q14643` on `CDD:cd23287`, residues
+  224–445, retains its existing evidence identity instead of replacing it with a
+  different grouped-location identity for the same assertion.
+- Scientific scope caveats remain: the [ST6GAL2 source model](https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=467714)
+  contains inconsistent alpha-2,3 wording despite its alpha-2,6 label and stated
+  linkage. The Q96JF0 245–514 domain assignment does not certify that prose.
+  The [PanK4 source model](https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=cd24123)
+  distinguishes the human pseudo-kinase domain from the C-terminal phosphatase;
+  the yeast CAB1 assignment must not imply the animal fusion architecture.
+  Definitions and mapping status are unchanged in this promotion.
+- Shard `human-ecoli-yeast-target-cnp020-002of008` is staged separately after
+  excluding the 93 approved record groups from shards 0 and 1. Its 112 alternatives
+  span 68 records; 61 alternatives on 56 records belong to the three selected
+  taxa. The exact-accession fetch returned all 111 requested canonical proteins
+  at UniProt `2026_03`, 1,773 membership facts, and zero blocked accessions.
+  All 68 records have now been read and all 112 provider assertions replayed.
+  Finalization records 61 approvals and 51 non-target scope deferrals, with
+  56 approved record groups and 12 all-deferred groups. Two approved assertions
+  already exist exactly (FSCN1 Q16658/CDD:cd23356 and VRTN Q9H8Y1/CDD:cd22791).
+  The separate dry promotion preflight passed: 61 approvals, 54 planned writes,
+  two already present, and prospective totals of 12,462 protein references
+  and 20,617 evidence/binding rows. No shard-2 assertion is promoted
+  by this checkpoint or included in the shard-1 PR. Extra isoform responses are
+  not admission evidence. Its resolved SHA-256 is
+  `7dd593a7a4e17d5fd64e2e039541dc7b2cdc0a30c09c4a13f2c5d032f99bca07`;
+  finalized decisions SHA-256 is
+  `96deeab32a3b645af590645dc7e0be4112aa5d0dc58d183bdece4188ce5187f6`;
+  approved TSV SHA-256 is
+  `1c8b6e7118754829e0590dad66369ac71998583ee7f29bca2ef9b02443b88401`.
+  Eleven existing target examples are absent from that queue and remain
+  legacy-unverified: Q8N2G4/cd23559, Q8N961/cd22913, Q13952/cd22908,
+  P17709/cd24088, P61758 and P48363/cd23156, P29340/cd23812,
+  P51668 and P62837/cd23792, A0A1B0GUS4/cd23801, and Q5JXB2/cd23813.
+  These are UniProt accession/CDD model pairs. The comparison includes all
+  examples in all 68 records and ignored staging; all eleven accessions are
+  in the separate acquisition list. Four of the all-deferred groups contain
+  existing target examples, so queue-level deferral is not a non-target-only
+  biological classification. Definition-named yeast HAP5 on cd22908 needs
+  separate accession/source verification; it is not added by this pass.
+- The isolated target-profile InterPro acquisition remains separate and unfinished;
+  mutable partial snapshots are not promotion inputs. Other strains, unreviewed
+  proteins, isoforms, unqueued examples, and traits unsupported by these provider
+  routes remain coverage work. This batch does not complete the all-protein goal.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,
