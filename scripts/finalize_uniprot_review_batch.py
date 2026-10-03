@@ -5,8 +5,8 @@ This command joins curator decision partitions to one immutable resolved-candida
 snapshot and its blank review TSV.  Every decision must carry the exact
 ``resolution_digest`` of its resolved evidence row.  It fails closed unless every
 candidate has exactly one explicit decision and every trait-record group has either one
-approved primary candidate or no approved candidate.  The command never opens a trait
-record and refuses artifact paths inside ``data/traits``.
+or more approved primary candidates or no approved candidate.  The command never opens a
+trait record and refuses artifact paths inside ``data/traits``.
 
 Dry-run validation is the default.  Pass ``--apply`` to atomically replace the canonical
 decision JSONL and completed approval TSV after every input and cross-file invariant has
@@ -291,10 +291,6 @@ def _validate_record_groups(
             for candidate_id in candidate_ids
             if decisions[candidate_id].decision == "APPROVED"
         )
-        if len(approved) > 1:
-            raise FinalizationError(
-                f"record {record_key!r} has multiple approved candidates: {', '.join(approved)}"
-            )
         if approved:
             expected_primary = approved[0]
             bad_primary = sorted(

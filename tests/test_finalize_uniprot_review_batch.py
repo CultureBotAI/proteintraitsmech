@@ -304,13 +304,36 @@ def test_recomputed_altered_resolved_row_rejects_old_decision_digest(tmp_path, c
     assert "stale resolution_digest" in capsys.readouterr().err
 
 
-def test_multiple_approvals_for_one_record_are_rejected(tmp_path, capsys):
+def test_multiple_approvals_for_one_record_are_finalized(tmp_path):
     case = _case(tmp_path)
     rows = _rows(case["parts"][0])
     rows[0] = _decision(case["a1"], "APPROVED", case["a1"]["candidate_id"])
+    rows[1]["primary_review_candidate_id"] = case["b1"]["candidate_id"]
+    rows[2:] = []
     _jsonl(case["parts"][0], rows)
-    assert finalizer.main(_args(case)) == 2
-    assert "multiple approved candidates" in capsys.readouterr().err
+    _jsonl(
+        case["parts"][1],
+        [
+            _decision(case["a2"], "APPROVED", case["a1"]["candidate_id"]),
+        ],
+    )
+
+    assert finalizer.main(_args(case, apply=True)) == 0
+    decision_rows = _rows(case["decisions_out"])
+    assert [row["candidate_id"] for row in decision_rows] == [
+        "candidate-a-1",
+        "candidate-a-2",
+        "candidate-b-1",
+    ]
+    assert [row["decision"] for row in decision_rows] == [
+        "APPROVED",
+        "APPROVED",
+        "REJECTED",
+    ]
+    assert [row["primary_review_candidate_id"] for row in decision_rows[:2]] == [
+        "candidate-a-1",
+        "candidate-a-1",
+    ]
 
 
 def test_bad_primary_candidate_binding_is_rejected(tmp_path, capsys):

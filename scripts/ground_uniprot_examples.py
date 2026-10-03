@@ -4205,19 +4205,6 @@ def promote(args: argparse.Namespace) -> int:
         candidates_by_record[record_key].add(candidate_id)
         if candidate_id in approved:
             approved_by_record[record_key].add(candidate_id)
-    multiply_approved = {
-        record_key: candidate_ids
-        for record_key, candidate_ids in approved_by_record.items()
-        if len(candidate_ids) > 1
-    }
-    if multiply_approved:
-        detail = "; ".join(
-            f"{_review_record_label(record_key)}=[{', '.join(sorted(candidate_ids))}]"
-            for record_key, candidate_ids in sorted(multiply_approved.items())[:5]
-        )
-        raise GroundingError(
-            "review protocol approves multiple alternatives for one trait record: " + detail
-        )
     undecided_approved_alternatives: dict[tuple[str, str], list[str]] = {}
     for record_key in approved_by_record:
         undecided = sorted(

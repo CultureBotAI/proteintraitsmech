@@ -90,6 +90,7 @@ def _manifest(
     batch: str = "ready-local",
     count: int | None = None,
     queue_sha256: str | None = None,
+    schema_version: int = registry.SELECTOR_MANIFEST_SCHEMA_VERSION,
 ) -> None:
     rows = queue.read_text(encoding="utf-8").splitlines()
     parsed_rows = [json.loads(row) for row in rows]
@@ -97,7 +98,7 @@ def _manifest(
     path.write_text(
         json.dumps(
             {
-                "schema_version": 6,
+                "schema_version": schema_version,
                 "batch_id": batch,
                 "source_batch": "ready-local",
                 "candidate_jsonl_sha256": queue_sha256
@@ -106,7 +107,10 @@ def _manifest(
                 "shard_selected_trait_records": record_count,
                 "invariants": {key: True for key in sorted(registry.SELECTOR_V6_INVARIANTS)},
                 "downstream_requirements": {
-                    key: True for key in sorted(registry.SELECTOR_DOWNSTREAM_REQUIREMENTS)
+                    key: True
+                    for key in sorted(
+                        registry._selector_downstream_requirements(schema_version)
+                    )
                 },
             },
             indent=2,
@@ -608,7 +612,7 @@ def test_offline_fixture_must_match_generated_batch_and_is_not_partially_install
     assert not blocked.exists()
 
 
-@pytest.mark.parametrize("schema_version", [6, 7])
+@pytest.mark.parametrize("schema_version", [6, 7, 8])
 @pytest.mark.parametrize("defect", ["queue_sha", "row_count", "batch", "duplicate_key"])
 def test_selector_manifest_exactly_binds_queue_count_and_batch(
     tmp_path, capsys, defect, schema_version
@@ -668,10 +672,11 @@ def test_selector_manifest_exactly_binds_queue_count_and_batch(
         "missing_invariant",
         "false_invariant",
         "missing_exhaustive",
-        "false_one_approved",
+        "false_multi_approved",
+        "wrong_downstream_schema",
     ],
 )
-@pytest.mark.parametrize("schema_version", [6, 7])
+@pytest.mark.parametrize("schema_version", [6, 7, 8])
 def test_selector_shape_and_review_contract_are_fail_closed(
     tmp_path, capsys, defect, schema_version
 ):
@@ -686,6 +691,9 @@ def test_selector_shape_and_review_contract_are_fail_closed(
     _manifest(manifest, queue)
     value = json.loads(manifest.read_text())
     value["schema_version"] = schema_version
+    value["downstream_requirements"] = {
+        key: True for key in registry._selector_downstream_requirements(schema_version)
+    }
     if defect == "schema":
         value["schema_version"] = 5
     elif defect == "source_batch":
@@ -700,8 +708,18 @@ def test_selector_shape_and_review_contract_are_fail_closed(
         value["downstream_requirements"].pop(
             "all_alternatives_must_receive_an_explicit_review_decision"
         )
-    elif defect == "false_one_approved":
-        value["downstream_requirements"]["at_most_one_approved_candidate_per_record"] = False
+    elif defect == "false_multi_approved":
+        key = (
+            "approved_adjudications_may_include_multiple_candidates"
+            if schema_version >= 8
+            else "at_most_one_approved_candidate_per_record"
+        )
+        value["downstream_requirements"][key] = False
+    elif defect == "wrong_downstream_schema":
+        wrong_schema_version = 7 if schema_version >= 8 else 8
+        value["downstream_requirements"] = {
+            key: True for key in registry._selector_downstream_requirements(wrong_schema_version)
+        }
     manifest.write_text(json.dumps(value, sort_keys=True) + "\n", encoding="utf-8")
     paths = [tmp_path / name for name in ("registry", "blocked", "membership", "receipt")]
     assert (
@@ -1741,7 +1759,7 @@ def test_registry_builder_has_no_trait_record_write_route():
     assert "write_record(" not in source
 
 
-@pytest.mark.parametrize("schema_version", [5, 8, "7", 7.0, True, None])
+@pytest.mark.parametrize("schema_version", [5, 9, "8", 8.0, True, None])
 def test_selector_manifest_rejects_unsupported_or_noninteger_versions(tmp_path, schema_version):
     queue = tmp_path / "candidates.jsonl"
     _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
@@ -1798,7 +1816,7 @@ def test_current_selector_output_completes_offline_registry_fetch(
     assert selector.main(args) == 0
     capsys.readouterr()
     selection = json.loads(manifest.read_text())
-    assert selection["schema_version"] == 7
+    assert selection["schema_version"] == 8
     assert selection["preferred_taxon_ids"] == (["NCBITaxon:83333"] if prefer_taxon else [])
     rows = _registry_rows(selected)
     assert len(rows) == 3
