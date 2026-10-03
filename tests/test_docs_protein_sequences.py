@@ -183,6 +183,18 @@ def test_bad_binding_fails_before_existing_site_files_are_replaced(tmp_path, mon
     assert [p.name for p in out.iterdir()] == ["labels.json"]
 
 
+@pytest.mark.parametrize("input_path", [
+    "data/grounding/protein_registry.jsonl",
+    "scripts/docs_protein_sequences.py",
+    "scripts/validate_uniprot_grounding.py",
+    "scripts/grounding_registry_layout.py",
+])
+def test_pages_rebuilds_when_sequence_projection_inputs_change(input_path):
+    # BaseLoader preserves GitHub's `on` key instead of YAML 1.1 boolean coercion.
+    workflow = yaml.load((ROOT / ".github/workflows/pages.yml").read_text(), Loader=yaml.BaseLoader)
+    assert input_path in workflow["on"]["push"]["paths"]
+
+
 @pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
 def test_browser_shows_pinned_sequence_provenance_without_inventing_annotations(tmp_path, reference, example):
     projected = BUILD._project_example(example, protein_sequences=registry(tmp_path, reference))
