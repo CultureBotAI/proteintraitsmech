@@ -2616,11 +2616,11 @@ found.
   independent gates. This checkpoint performed no network request, trait write, durable
   grounding write, evidence qualification, review decision, commit, or pull request.
 
-### 2026-10-03 — human/E. coli/yeast repair queue review exhaustion
+### 2026-10-03 — representative repair queue exhaustion, not target-protein completeness
 
 - The local ignored `repair-existing-local` queue covers 292,934 candidates for 59,714
-  trait records after exact source-bound resolution of the Swiss-Prot human,
-  *E. coli*, and *S. cerevisiae* profile candidates. The CDD/NCBIfam/PROSITE phase is
+  trait records. Despite the human/E. coli/yeast batch names, it includes candidates
+  from other taxa as well as the three target organisms. The CDD/NCBIfam/PROSITE phase is
   finalized through `human-ecoli-yeast-repair-cnp-020`; that final CNP selector
   retained all 970 remaining candidate rows across 542 records. The subsequent mixed
   CATH/HAMAP/InterPro/PANTHER/Pfam phase is finalized through
@@ -2638,20 +2638,39 @@ found.
   for the CATH/HAMAP/InterPro/PANTHER/Pfam slice.
 - Those 61 finalized ledgers bind an explicit decision to every one of the 292,934
   selected alternatives: 50,311 rows are `APPROVED` and 242,623 are `REJECTED`. The
-  approved set covers 50,311 one-approved trait records and leaves 9,403 fully reviewed
-  all-rejected record groups. Comparing each approved row's resolved
+  approved set covers 50,311 one-approved trait records and leaves 9,403 record groups
+  with all alternatives marked rejected under the historical representative-selection
+  policy. These decision totals do not establish biological rejection of every omitted
+  protein. Comparing each approved row's resolved
   `grounding_evidence.evidence_id` with the current durable
   `data/grounding/occurrence_evidence.jsonl.d/` registry found 13,828 exact approvals
   already installed and 36,483 reviewed approvals still staging-only. The durable
   registry held 20,398 evidence rows at that checkpoint.
+- An adversarial recount at base commit `a616dbb6fe80c458797941bbe33d6133b8c563ea`
+  joined each batch's `.review-decisions.jsonl` to its `.candidates.jsonl` by
+  `candidate_id`, explicitly including the ignored staging files. Of the approved
+  candidate rows, 19,561 are human (`NCBITaxon:9606`), 11,680 are *E. coli* K-12
+  (`NCBITaxon:83333`), 6,016 are *S. cerevisiae* S288c (`NCBITaxon:559292`), and
+  13,054 belong to other taxa. Among the rejected rows, 126,392 from those three exact
+  target taxon IDs carry an `unselected alternative` review note: 94,607 human, 15,555
+  *E. coli* K-12, and 16,230 yeast S288c. These are candidate-row counts, not unique
+  proteins or independently established eligible examples. For example, CNP batch 001
+  rejects human `UniProtKB:P46934` for `CDD:cd00201` solely because another candidate
+  was selected. Terminal selectors therefore establish exhaustion of this historical
+  representative ledger only, not complete target-organism coverage. Multi-approval
+  support does not retroactively reconsider those decisions: otherwise eligible target
+  alternatives still need evidence review, and source/proteome coverage, isoforms, and
+  other *E. coli*/*S. cerevisiae* strains require an explicit completeness audit.
 - Current dry promotion preflights still pass at both ends of the repaired queue without
   writing durable state. `human-ecoli-yeast-repair-cnp-001` reports 1,000 approved
   candidates: 688 already present and 312 pending record writes. The tail
   `human-ecoli-yeast-repair-mixed-041` reports 151 approved candidates: 120 already
-  present and 31 pending record writes. Further progress now requires separately
-  authorized `promote --apply` runs to install the remaining approved rows into
-  `data/traits/` and the durable grounding registries.
-- Two additional dry promotion preflights on current `main` passed without durable
+  present and 31 pending record writes. Installing reviewed rows uses guarded
+  `promote --apply` runs against current record and registry preimages, within the
+  user's authorized scope. Promotion alone does not resolve the coverage gaps above;
+  this documentation checkpoint installs no rows in `data/traits/` or the durable
+  grounding registries.
+- Four additional dry promotion preflights on the same base passed without durable
   writes. `human-ecoli-yeast-repair-mixed-001` reports 236 approved candidates: 112
   already present and 124 pending record writes. `human-ecoli-yeast-repair-cnp-002`
   reports 1,000 approved candidates: 798 already present and 202 pending record writes.
