@@ -852,6 +852,12 @@ function renderExample(e, lazyPending) {
   const sequenceHtml = e.seq
     ? renderSequenceViewer(e.seq, e.feats || [])
     : "";
+  const sequenceReference = e.seq && e.seqsrc === "ProteinReference"
+    ? `<div class="ex-seq-reference">Release-pinned UniProt sequence
+        ${e.rel ? ` · ${escapeHTML(e.rel)}` : ""}
+        ${e.sv ? ` · sequence version ${escapeHTML(String(e.sv))}` : ""}
+        ${e.seqsha ? `<br>SHA-256: <code>${escapeHTML(e.seqsha)}</code>` : ""}</div>`
+    : "";
 
   return `
     <li class="ex-item">
@@ -862,6 +868,7 @@ function renderExample(e, lazyPending) {
       ${tax}
       <div class="ex-badges">${badges.join(" ")}</div>
       ${families}
+      ${sequenceReference}
       ${sequenceHtml}
     </li>`;
 }
@@ -951,9 +958,12 @@ function renderSequenceViewer(seq, feats) {
   }
 
   const legend = renderLegend(featObjs);
+  const summary = featObjs.length
+    ? `Sequence &amp; feature map (${seq.length} aa, ${featObjs.length} feature${featObjs.length === 1 ? "" : "s"})`
+    : `Sequence (${seq.length} aa; ${(feats || []).length ? "no displayable feature annotations" : "no feature annotations stored"})`;
   return `
     <details class="ex-seq" open>
-      <summary>Sequence &amp; feature map (${seq.length} aa, ${featObjs.length} feature${featObjs.length === 1 ? "" : "s"})</summary>
+      <summary>${summary}</summary>
       ${legend}
       <div class="sviewer">${rowsHtml.join("")}</div>
     </details>`;

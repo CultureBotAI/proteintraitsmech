@@ -24,6 +24,9 @@ Steps:
 Bounded by --query / --limit. Dry-run never writes. Existing output directories
 are never replaced: use --out-dir for isolated expansion. --require-complete
 rejects a query larger than --limit; --limit 0 explicitly removes the cap.
+--max-pages bounds page requests per query even when the server returns short
+pages. Exhaustion raises before the next request and never publishes a partial
+bundle; each page has at most four fetch attempts.
 These are discovery profiles, not qualified canonical examples or coordinates.
 Stdlib-only; no broad crawl should run without a reviewed acquisition plan.
 """
@@ -173,7 +176,7 @@ def _get(url: str, tries: int = 4):
 
 def stream_swissprot(query: str, limit: int, page: int = 300, *,
                      expect_release: str | None = None, require_complete: bool = False,
-                     receipt: dict | None = None):
+                     receipt: dict | None = None, max_pages: int | None = None):
     """Yield a checked query; incomplete or changing pagination raises, never stops silently.
 
     The historical function name is retained, but explicit queries may include
@@ -181,6 +184,8 @@ def stream_swissprot(query: str, limit: int, page: int = 300, *,
     """
     if limit < 0 or page < 1 or page > 500:
         raise AcquisitionError("limit must be nonnegative and page size must be 1..500")
+    if max_pages is not None and (type(max_pages) is not int or max_pages < 1):
+        raise AcquisitionError("max_pages must be a positive integer or None")
     if expect_release is not None and not RELEASE.fullmatch(expect_release):
         raise AcquisitionError("invalid expected UniProt release")
     url = (SEARCH_URL + "?"
@@ -189,13 +194,15 @@ def stream_swissprot(query: str, limit: int, page: int = 300, *,
                                      "size": min(page, limit) if limit else page}))
     expected_params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
     stats = receipt if receipt is not None else {}
-    stats.update(query=query, pages=[], returned_rows=0, complete=False)
+    stats.update(query=query, pages=[], returned_rows=0, complete=False, max_pages=max_pages)
     seen_urls: set[str] = set()
     seen_accessions: set[str] = set()
     release, total = expect_release, None
     while url:
         if url in seen_urls:
             raise AcquisitionError("repeated pagination URL")
+        if max_pages is not None and len(stats["pages"]) >= max_pages:
+            raise AcquisitionError(f"page budget exhausted ({max_pages}) before query completion")
         seen_urls.add(url)
         data, meta = _get(url)
         current = meta.get("release")
@@ -423,6 +430,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="shorthand for the ten reviewed, exact-taxon queries in ORGANISMS")
     ap.add_argument("--limit", type=int, default=500,
                     help="cap per query, not in total; 0 explicitly removes the cap")
+    ap.add_argument("--max-pages", type=int,
+                    help="hard page-request cap per query (four attempts each); "
+                         "exhaustion publishes nothing; omitted means no page cap")
     ap.add_argument("--apply", action="store_true", help="write YAML + jsonl (else dry-run)")
     ap.add_argument("--jsonl-only", action="store_true", help="write only profiles.jsonl (skip per-protein YAMLs) — for scaling the analysis matrix")
     ap.add_argument("--refresh-index", action="store_true")
@@ -435,6 +445,8 @@ def main(argv: list[str] | None = None) -> int:
     args = ap.parse_args(argv)
     if args.limit < 0:
         ap.error("--limit must be nonnegative")
+    if args.max_pages is not None and args.max_pages < 1:
+        ap.error("--max-pages must be a positive integer")
     if args.expect_release and not RELEASE.fullmatch(args.expect_release):
         ap.error("--expect-release must have the form YYYY_NN")
     if args.apply and (args.out_dir.exists() or args.out_dir.is_symlink()):
@@ -459,6 +471,7 @@ def main(argv: list[str] | None = None) -> int:
             "purpose": "discovery only; not qualified examples or residue coordinates",
             "expected_release": args.expect_release, "release": args.expect_release,
             "limit_per_query": args.limit, "require_complete": args.require_complete,
+            "max_pages_per_query": args.max_pages,
             "trait_index_sha256": hashlib.sha256(index_bytes).hexdigest(), "queries": [],
         }
         matrix_hash = hashlib.sha256()
@@ -474,6 +487,7 @@ def main(argv: list[str] | None = None) -> int:
                 for entry in stream_swissprot(query, args.limit,
                                               expect_release=manifest["release"],
                                               require_complete=args.require_complete,
+                                              max_pages=args.max_pages,
                                               receipt=stats):
                     p = profile(entry, idx)
                     digest = hashlib.sha256(json.dumps(p, sort_keys=True).encode()).hexdigest()

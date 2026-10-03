@@ -71,6 +71,11 @@ magic bytes, stable content markers, or publisher checksums.
   and acquisition receipt. Existing outputs and cached indexes are never replaced.
   Use `--expect-release` to pin a reviewed acquisition plan and `--require-complete` to
   reject query truncation; dry-run performs read-only discovery without writing files.
+  Set `--max-pages` to bound page requests **per query**, even for short server pages;
+  each page has at most four attempts. Exhaustion fails before the next request and
+  publishes no partial bundle, including when an earlier query already completed.
+  The entry and page limits are separate, and the receipt records both. Omitting
+  `--max-pages` preserves the uncapped-page behavior; acquisition plans should set it.
   Publication uses a native atomic no-replace rename on macOS/Linux (Windows rename is
   already no-replace), failing closed if the platform or filesystem cannot provide it.
 - `fetch-uniprot-registry` — exact-accession, same-response protein metadata/sequence and
