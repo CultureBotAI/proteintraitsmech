@@ -42,8 +42,10 @@ def page(entries, *, total=None, release="2026_03", next_url=None):
     }
 
 
-def next_link(query=QUERY, cursor="next"):
-    return F.SEARCH_URL + "?" + urlencode({"query": query, "cursor": cursor})
+def next_link(query=QUERY, cursor="next", **overrides):
+    params = {"query": query, "cursor": cursor, "fields": F.PROFILE_FIELDS,
+              "format": "json", "sort": "accession asc", "size": 300, **overrides}
+    return F.SEARCH_URL + "?" + urlencode({k: v for k, v in params.items() if v is not None})
 
 
 @pytest.fixture(autouse=True)
@@ -104,7 +106,7 @@ def test_reject_bad_headers(monkeypatch, key, value, match):
 def test_page_drift(monkeypatch, second, match):
     mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link()), second])
     with pytest.raises(F.AcquisitionError, match=match):
-        list(F.stream_swissprot(QUERY, 5))
+        list(F.stream_swissprot(QUERY, 0))
 
 
 @pytest.mark.parametrize("response,match", [
@@ -118,7 +120,7 @@ def test_page_drift(monkeypatch, second, match):
 def test_invalid_pagination(monkeypatch, response, match):
     mock_pages(monkeypatch, [response])
     with pytest.raises(F.AcquisitionError, match=match):
-        list(F.stream_swissprot(QUERY, 5))
+        list(F.stream_swissprot(QUERY, 0))
 
 
 def test_repeated_page_url(monkeypatch):
@@ -127,11 +129,11 @@ def test_repeated_page_url(monkeypatch):
         page([entry("Q54321")], total=3, next_url=next_link()),
     ])
     with pytest.raises(F.AcquisitionError, match="repeated pagination URL"):
-        list(F.stream_swissprot(QUERY, 5))
+        list(F.stream_swissprot(QUERY, 0))
 
 
 def test_explicit_cap_is_incomplete(monkeypatch):
-    calls = mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link())])
+    calls = mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link(size=1))])
     stats = {}
     assert len(list(F.stream_swissprot(QUERY, 1, receipt=stats))) == 1
     assert not stats["complete"] and stats["returned_rows"] == 1 and stats["total"] == 2
@@ -166,6 +168,9 @@ def test_fetch_hash_and_case_insensitive_headers(monkeypatch):
 
         def read(self):
             return body
+
+        def geturl(self):
+            return F.SEARCH_URL
 
     Response.headers = headers
     monkeypatch.setattr(F.urllib.request, "urlopen", lambda *a, **kw: Response())
@@ -320,3 +325,72 @@ def test_corrupt_cache_rejected_not_overwritten(tmp_path, monkeypatch):
 def test_invalid_cli_options(args):
     with pytest.raises(SystemExit):
         F.main(args)
+
+
+def test_next_page_cannot_drop_annotation_fields(monkeypatch):
+    changed = next_link(fields="accession,protein_name,organism_id,organism_name,length,reviewed")
+    e = entry("Q54321")
+    e.pop("uniProtKBCrossReferences")
+    mock_pages(monkeypatch, [page([entry()], total=2, next_url=changed), page([e], total=2)])
+    with pytest.raises(F.AcquisitionError, match="request parameters"):
+        list(F.stream_swissprot(QUERY, 0))
+
+
+@pytest.mark.parametrize("container", ["includes", "contains"])
+@pytest.mark.parametrize("reviewed", [True, False])
+def test_ec_numbers_in_component_names_are_retained(container, reviewed):
+    e = entry(reviewed=reviewed)
+    e["proteinDescription"][container] = [
+        {"recommendedName": {"fullName": {"value": "Domain A"},
+                             "ecNumbers": [{"value": "2.1.3.2"}]}},
+        {"recommendedName": {"fullName": {"value": "Domain B"},
+                             "ecNumbers": [{"value": "3.5.2.3"}]}},
+    ]
+    idx = {"EC:2.1.3.2": ["FUNCTION", "FUNC_CATALYTIC_ACTIVITY"]}
+    p = F.profile(e, idx)
+    assert p["ec_numbers"] == ["2.1.3.2", "3.5.2.3"]
+    assert [t["trait"] for t in p["traits"]] == ["EC:2.1.3.2"]
+
+
+@pytest.mark.parametrize("key,value", [
+    ("fields", None), ("fields", "accession"), ("format", "tsv"), ("sort", "score desc"),
+    ("size", 500), ("cursor", ""), ("cursor", None), ("new_filter", "true"),
+])
+def test_search_contract_is_fixed(monkeypatch, key, value):
+    mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link(**{key: value}))])
+    with pytest.raises(F.AcquisitionError, match="request parameters"):
+        list(F.stream_swissprot(QUERY, 0))
+
+
+def test_duplicate_search_parameter_is_rejected(monkeypatch):
+    mock_pages(monkeypatch, [page([entry()], total=2, next_url=next_link() + "&format=json")])
+    with pytest.raises(F.AcquisitionError, match="request parameters"):
+        list(F.stream_swissprot(QUERY, 0))
+
+
+@pytest.mark.parametrize("resolved", ["https://evil.example/uniprotkb/search", F.SEARCH_URL + "?fields=accession"])
+def test_redirect_mismatch_rejected_before_read(monkeypatch, resolved):
+    class Response:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def geturl(self):
+            return resolved
+
+        def read(self):
+            pytest.fail("mismatched response must not be parsed")
+
+    monkeypatch.setattr(F.urllib.request, "urlopen", lambda *a, **kw: Response())
+    with pytest.raises(F.AcquisitionError, match="changed"):
+        F._get(F.SEARCH_URL, tries=1)
+
+
+@pytest.mark.parametrize("name_type", ["recommendedName", "alternativeNames", "submissionNames"])
+def test_ec_name_containers_deduplicate_without_inference(name_type):
+    name = {"ecNumbers": [{"value": "1.1.1.1"}, {"value": "1.1.1.1"}]}
+    description = {name_type: name if name_type == "recommendedName" else [name],
+                   "evidence": {"ecNumbers": [{"value": "9.9.9.9"}]}}
+    assert F.description_ec_numbers(description) == ["1.1.1.1"]

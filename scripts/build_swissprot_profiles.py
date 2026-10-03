@@ -48,6 +48,9 @@ TRAITS = REPO_ROOT / "data" / "traits"
 OUT_DIR = REPO_ROOT / "data" / "profiles"
 CACHE = REPO_ROOT / "data" / "raw" / "profiles_cache" / "trait_index.json"
 SEARCH_URL = "https://rest.uniprot.org/uniprotkb/search"
+PROFILE_FIELDS = ("accession,protein_name,organism_name,organism_id,length,reviewed,"
+                  "xref_pfam,xref_interpro,xref_gene3d,xref_prosite,xref_smart,xref_cdd,"
+                  "xref_ncbifam,xref_supfam,xref_hamap,xref_panther,xref_pirsf,xref_prints,go_id,ec")
 ACCESSION = re.compile(r"(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})")
 RELEASE = re.compile(r"[0-9]{4}_[0-9]{2}")
 
@@ -126,15 +129,34 @@ def build_trait_index(refresh: bool = False, cache: Path | None = None) -> dict:
     return idx
 
 
+def _check_search_url(url: str, expected_params: dict, *, next_page: bool = False) -> None:
+    parsed = urllib.parse.urlsplit(url)
+    params = urllib.parse.parse_qs(parsed.query, keep_blank_values=True)
+    if (parsed.scheme != "https" or parsed.netloc != "rest.uniprot.org"
+            or parsed.path != "/uniprotkb/search" or parsed.fragment
+            or params.get("query") != expected_params.get("query")):
+        raise AcquisitionError("search URL changed origin, endpoint, or query")
+    if next_page:
+        cursor = params.pop("cursor", [])
+        if len(cursor) != 1 or not cursor[0]:
+            raise AcquisitionError("next-page request parameters lack a unique cursor")
+    if params != expected_params:
+        raise AcquisitionError("search request parameters changed during acquisition")
+
+
 def _get(url: str, tries: int = 4):
     for i in range(tries):
         try:
             req = urllib.request.Request(url, headers={"Accept": "application/json",
                                                        "User-Agent": "ProteinTraitsMech-profiles/1.0"})
             with urllib.request.urlopen(req, timeout=45) as r:
+                resolved_url = r.geturl()
+                _check_search_url(resolved_url, urllib.parse.parse_qs(
+                    urllib.parse.urlsplit(url).query, keep_blank_values=True))
                 raw = r.read()
                 return json.loads(raw), {
                     "url": url,
+                    "resolved_url": resolved_url,
                     "sha256": hashlib.sha256(raw).hexdigest(),
                     "release": r.headers.get("x-uniprot-release"),
                     "total": r.headers.get("x-total-results"),
@@ -159,13 +181,11 @@ def stream_swissprot(query: str, limit: int, page: int = 300, *,
         raise AcquisitionError("limit must be nonnegative and page size must be 1..500")
     if expect_release is not None and not RELEASE.fullmatch(expect_release):
         raise AcquisitionError("invalid expected UniProt release")
-    fields = ("accession,protein_name,organism_name,organism_id,length,reviewed,"
-              "xref_pfam,xref_interpro,xref_gene3d,xref_prosite,xref_smart,xref_cdd,"
-              "xref_ncbifam,xref_supfam,xref_hamap,xref_panther,xref_pirsf,xref_prints,go_id,ec")
     url = (SEARCH_URL + "?"
-           + urllib.parse.urlencode({"query": query, "fields": fields,
+           + urllib.parse.urlencode({"query": query, "fields": PROFILE_FIELDS,
                                      "format": "json", "sort": "accession asc",
                                      "size": min(page, limit) if limit else page}))
+    expected_params = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
     stats = receipt if receipt is not None else {}
     stats.update(query=query, pages=[], returned_rows=0, complete=False)
     seen_urls: set[str] = set()
@@ -212,12 +232,7 @@ def stream_swissprot(query: str, limit: int, page: int = 300, *,
             raise AcquisitionError("invalid next-page link")
         next_url = matches[0] if matches else None
         if next_url:
-            parsed = urllib.parse.urlsplit(next_url)
-            params = urllib.parse.parse_qs(parsed.query)
-            if (parsed.scheme != "https" or parsed.netloc != "rest.uniprot.org"
-                    or parsed.path != "/uniprotkb/search" or parsed.fragment
-                    or params.get("query") != [query]):
-                raise AcquisitionError("next-page link changed origin, endpoint, or query")
+            _check_search_url(next_url, expected_params, next_page=True)
             if len(seen_accessions) == total:
                 raise AcquisitionError("next-page link after advertised total")
         elif len(seen_accessions) != total:
@@ -236,6 +251,29 @@ def stream_swissprot(query: str, limit: int, page: int = 300, *,
         url = next_url
         if url:
             time.sleep(0.2)
+
+
+def description_ec_numbers(description: dict) -> list[str]:
+    """Collect source-asserted ECs, including multifunctional and processed components.
+
+    Stay inside proteinDescription name containers: do not mine prose, evidence
+    references, or unrelated annotations for strings resembling enzyme numbers.
+    """
+    pending, ecs = [description], set()
+    while pending:
+        part = pending.pop()
+        names = [part.get("recommendedName") or {}]
+        for key in ("alternativeNames", "submissionNames"):
+            names.extend(part.get(key) or [])
+        for name in names:
+            for ec in name.get("ecNumbers") or []:
+                value = ec.get("value")
+                if not isinstance(value, str) or not value.strip():
+                    raise AcquisitionError("invalid EC number in protein description")
+                ecs.add(value)
+        for key in ("includes", "contains"):
+            pending.extend(part.get(key) or [])
+    return sorted(ecs)
 
 
 def profile(entry: dict, idx: dict) -> dict:
@@ -276,18 +314,14 @@ def profile(entry: dict, idx: dict) -> dict:
             seen.add(cur)
             ax, cat = idx[cur]
             traits.append({"trait": cur, "trait_axis": ax, "trait_category": cat, "via": cur})
-    # EC numbers (recommendedName + comments) → trait if the EC class is in the corpus
-    ecs = []
-    for ec in (((entry.get("proteinDescription") or {}).get("recommendedName") or {})
-               .get("ecNumbers") or []):
-        v = ec.get("value")
-        if v:
-            ecs.append(v)
-            cur = f"EC:{v}"
-            if cur in idx and cur not in seen:
-                seen.add(cur)
-                ax, cat = idx[cur]
-                traits.append({"trait": cur, "trait_axis": ax, "trait_category": cat, "via": cur})
+    # EC discovery membership is not a claim of experimental evidence or coordinates.
+    ecs = description_ec_numbers(entry.get("proteinDescription") or {})
+    for v in ecs:
+        cur = f"EC:{v}"
+        if cur in idx and cur not in seen:
+            seen.add(cur)
+            ax, cat = idx[cur]
+            traits.append({"trait": cur, "trait_axis": ax, "trait_category": cat, "via": cur})
     traits.sort(key=lambda t: t["trait"])
     prof = {
         "accession": f"UniProtKB:{acc}",
