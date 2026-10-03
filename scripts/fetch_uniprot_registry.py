@@ -78,11 +78,13 @@ PLAN_ID_PREFIX = "uniprot-registry-fetch-plan:"
 RECEIPT_ID_PREFIX = "uniprot-registry-fetch-receipt:"
 PENDING_ID_PREFIX = "uniprot-registry-fetch-pending:"
 
-SELECTOR_MANIFEST_SCHEMA_VERSION = 7
-# v7 adds taxon-ordering metadata; candidate identities, digest/count bindings,
-# review invariants and downstream requirements are unchanged from v6. Retain
-# already-staged v6 batches while accepting the current selector's output.
-SUPPORTED_SELECTOR_MANIFEST_SCHEMA_VERSIONS = frozenset({6, SELECTOR_MANIFEST_SCHEMA_VERSION})
+SELECTOR_MANIFEST_SCHEMA_VERSION = 8
+# v7 adds taxon-ordering metadata, and v8 widens the review contract from at most one
+# approved candidate to one or more approved candidates per complete adjudication. Retain
+# already-staged v6/v7 batches while accepting the current selector's output.
+SUPPORTED_SELECTOR_MANIFEST_SCHEMA_VERSIONS = frozenset(
+    {6, 7, SELECTOR_MANIFEST_SCHEMA_VERSION}
+)
 SELECTOR_V6_INVARIANTS = frozenset(
     {
         "shard_is_nonempty",
@@ -104,12 +106,24 @@ SELECTOR_V6_INVARIANTS = frozenset(
         "all_shard_special_cases_selected",
     }
 )
-SELECTOR_DOWNSTREAM_REQUIREMENTS = frozenset(
+SELECTOR_LEGACY_DOWNSTREAM_REQUIREMENTS = frozenset(
     {
         "all_alternatives_must_receive_an_explicit_review_decision",
         "at_most_one_approved_candidate_per_record",
     }
 )
+SELECTOR_DOWNSTREAM_REQUIREMENTS = frozenset(
+    {
+        "approved_adjudications_may_include_multiple_candidates",
+        "all_alternatives_must_receive_an_explicit_review_decision",
+    }
+)
+
+def _selector_downstream_requirements(schema_version: int) -> frozenset[str]:
+    if schema_version < 8:
+        return SELECTOR_LEGACY_DOWNSTREAM_REQUIREMENTS
+    return SELECTOR_DOWNSTREAM_REQUIREMENTS
+
 
 UNIPROT_SEARCH = "https://rest.uniprot.org/uniprotkb/search"
 RETURN_FIELDS = (
@@ -775,7 +789,8 @@ def _read_selector_manifest(
     if any(value is not True for value in invariants.values()):
         raise RegistryBuildError("every selector manifest invariant must be literal true")
     downstream = manifest.get("downstream_requirements")
-    if not isinstance(downstream, dict) or set(downstream) != SELECTOR_DOWNSTREAM_REQUIREMENTS:
+    expected_downstream = _selector_downstream_requirements(schema_version)
+    if not isinstance(downstream, dict) or set(downstream) != expected_downstream:
         raise RegistryBuildError("selector manifest lacks the exact downstream contract")
     if any(value is not True for value in downstream.values()):
         raise RegistryBuildError("every selector downstream requirement must be literal true")

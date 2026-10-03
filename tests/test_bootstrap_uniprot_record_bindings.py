@@ -35,6 +35,26 @@ def _sha(path: pathlib.Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _profile(case: dict, *, rows: int) -> bootstrap.BootstrapProfile:
+    return bootstrap.BootstrapProfile(
+        input_sha256={
+            "resolved": _sha(case["resolved"]),
+            "decisions": _sha(case["decisions"]),
+            "staging_proteins": _sha(case["staging_proteins"]),
+            "staging_evidence": _sha(case["staging_evidence"]),
+            "durable_proteins": _sha(case["durable_proteins"]),
+            "durable_evidence": _sha(case["durable_evidence"]),
+        },
+        resolved_rows=rows,
+        decision_rows=rows,
+        approved_rows=rows,
+        staging_proteins=rows,
+        staging_evidence=rows,
+        durable_proteins=rows,
+        durable_evidence=rows,
+    )
+
+
 def _record() -> str:
     return (
         "identifier: Pfam:PF00001\n"
@@ -295,6 +315,74 @@ def test_write_staging_is_incomplete_deterministic_and_keeps_hard_rows_out_of_cl
 
     assert bootstrap.main(_args(case, write=True)) == bootstrap.INCOMPLETE_EXIT
     assert all(case[key].read_bytes() == first[key] for key in first)
+
+
+def test_multiple_approved_candidates_for_one_record_replay_one_expected_install(
+    tmp_path, monkeypatch, capsys
+):
+    case = _case(tmp_path, monkeypatch, pin_preimage=True)
+    first_row = _rows(case["resolved"])[0]
+    first_decision = _rows(case["decisions"])[0]
+    second_reference = {
+        **_rows(case["staging_proteins"])[0],
+        "protein_id": "UniProtKB:Q67890",
+        "protein_label": "Second fixture protein",
+    }
+    second_occurrence = {
+        **first_row["trait_occurrence"],
+        "protein_id": second_reference["protein_id"],
+    }
+    second_evidence = validator.build_grounding_evidence(
+        second_occurrence,
+        provider_kind="INTERPRO",
+        provider_source="InterPro",
+        provider_release="109.0",
+        provider_entry_sha256="2" * 64,
+    )
+    second_occurrence["source_evidence_id"] = second_evidence["evidence_id"]
+    second_row = {
+        **first_row,
+        "candidate_id": "",
+        "protein_id": second_reference["protein_id"],
+        "protein_label": second_reference["protein_label"],
+        "protein_reference_sha256": ground._value_digest(second_reference),
+        "trait_occurrence": second_occurrence,
+        "grounding_evidence": second_evidence,
+    }
+    second_row["candidate_id"] = ground.derive_candidate_id(second_row)
+    second_row["resolution_digest"] = ground._resolution_digest(second_row)
+    second_decision = {
+        **first_decision,
+        "candidate_id": second_row["candidate_id"],
+        "resolution_digest": second_row["resolution_digest"],
+    }
+
+    _jsonl(case["resolved"], [first_row, second_row])
+    _jsonl(case["decisions"], [first_decision, second_decision])
+    _jsonl(case["staging_proteins"], [_rows(case["staging_proteins"])[0], second_reference])
+    _jsonl(case["durable_proteins"], [_rows(case["durable_proteins"])[0], second_reference])
+    _jsonl(case["staging_evidence"], [_rows(case["staging_evidence"])[0], second_evidence])
+    _jsonl(case["durable_evidence"], [_rows(case["durable_evidence"])[0], second_evidence])
+
+    preimage = first_row["record_preimage"]
+    record_with_both = yaml.safe_load(preimage)
+    changed = False
+    for row in sorted(_rows(case["resolved"]), key=lambda row: str(row["candidate_id"])):
+        record_with_both, row_changed = ground._install_example(record_with_both, row)
+        changed = changed or row_changed
+    assert changed
+    case["record"].write_text(
+        ground._replace_examples_block(preimage, record_with_both),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(bootstrap, "EXPECTED_PROFILE", _profile(case, rows=2))
+
+    assert bootstrap.main(_args(case, write=True)) == bootstrap.INCOMPLETE_EXIT
+    assert "2 hard-blocked claim(s)" in capsys.readouterr().out
+    assert {row["evidence_id"] for row in _rows(case["blocked"])} == {
+        first_row["grounding_evidence"]["evidence_id"],
+        second_evidence["evidence_id"],
+    }
 
 
 @pytest.mark.parametrize(
