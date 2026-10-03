@@ -249,6 +249,10 @@ def main() -> int:
     outp = Path(args.out)
     grouped_outp = Path(args.grouped_out)
     release = sidecar.interpro_release()
+    if not release:
+        print("ERROR: cannot determine the current InterPro release; no matches fetched "
+              "or sidecars changed. Retry when release metadata is available.", file=sys.stderr)
+        return 2
     have, meta = sidecar.read(outp, "proteins")
     if have:
         if not sidecar.check_release(meta, release, outp, args.allow_stale):

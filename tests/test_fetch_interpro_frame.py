@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
+
+import pytest
 
 REPO = Path(__file__).resolve().parent.parent
 SCRIPT = REPO / "scripts" / "fetch_interpro_frame.py"
@@ -75,3 +78,58 @@ def test_read_accession_targets_accepts_comments_uniprot_ids_and_deduplicates(
     )
 
     assert F.read_accession_targets(targets) == ["P12345", "Q54321"]
+
+
+@pytest.mark.parametrize("cached", [False, True])
+@pytest.mark.parametrize("apply", [False, True])
+@pytest.mark.parametrize("allow_stale", [False, True])
+def test_unknown_release_stops_before_fetch_or_sidecar_change(
+    tmp_path, monkeypatch, capsys, cached, apply, allow_stale
+):
+    accessions = tmp_path / "accessions.txt"
+    accessions.write_text("P12345\n")
+    flat = tmp_path / "flat.json"
+    grouped = tmp_path / "grouped.json"
+    if cached:
+        for path in (flat, grouped):
+            path.write_text(json.dumps(F.sidecar.wrap(
+                "proteins", {"Q54321": {}}, "InterPro", "110.0")))
+    before = {p: p.read_bytes() if p.exists() else None for p in (flat, grouped)}
+    args = [str(SCRIPT), "--accessions", str(accessions), "--out", str(flat),
+            "--grouped-out", str(grouped)]
+    if apply:
+        args.append("--apply")
+    if allow_stale:
+        args.append("--allow-stale")
+    monkeypatch.setattr(sys, "argv", args)
+    monkeypatch.setattr(F.sidecar, "interpro_release", lambda: None)
+    monkeypatch.setattr(F, "fetch_protein", lambda *a: pytest.fail("must not fetch unpinned data"))
+
+    assert F.main() == 2
+    assert "cannot determine the current InterPro release" in capsys.readouterr().err
+    assert {p: p.read_bytes() if p.exists() else None for p in (flat, grouped)} == before
+
+
+def test_known_release_stamps_both_fetched_sidecars(tmp_path, monkeypatch):
+    accessions = tmp_path / "accessions.txt"
+    accessions.write_text("P12345\n")
+    flat = tmp_path / "flat.json"
+    grouped = tmp_path / "grouped.json"
+    monkeypatch.setattr(sys, "argv", [str(SCRIPT), "--accessions", str(accessions),
+                                    "--out", str(flat), "--grouped-out", str(grouped),
+                                    "--sleep", "0", "--apply"])
+    monkeypatch.setattr(F.sidecar, "interpro_release", lambda: "110.0")
+    monkeypatch.setattr(F, "fetch_protein", lambda acc: (
+        {"Pfam:PF00001": [[2, 3], [6, 7]]},
+        {"Pfam:PF00001": [[[2, 3]], [[6, 7]]]},
+    ))
+
+    assert F.main() == 0
+    for path in (flat, grouped):
+        payload = json.loads(path.read_text())
+        assert payload["_meta"]["release"] == "110.0"
+        assert payload["_meta"]["count"] == 1
+        assert set(payload["proteins"]) == {"P12345"}
+    assert json.loads(grouped.read_text())["proteins"]["P12345"]["Pfam:PF00001"] == [
+        [[2, 3]], [[6, 7]],
+    ]
