@@ -62,6 +62,10 @@ Record shape:
           [234, 255, "REGION", "SEQUENCE", "Disordered"],
           [57, 57, "SITE", "STRUCTURE", "Interaction with phosphoserine"],
           ...
+        ],
+        "occ": [                             # qualified locations for this trait
+          {"ranges": [[118, 127]], "mapping_method": "PATTERN_MATCH",
+           "source_trait_id": "IEDB:10012", "coordinate_frame": "UNIPROT_CANONICAL"}
         ]
       }, ...
     ],
@@ -79,6 +83,8 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+
+SAFE_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 
 # The bucket count is calculated from serialized detail size. This target sits below the
 # post-build 1 MB hard budget so a successful build cannot require a multi-megabyte fetch.
@@ -339,7 +345,7 @@ def _docs_examples(examples: list) -> list:
     return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
 
 
-def _project_example(ex: dict) -> dict:
+def _project_example(ex: dict, trait_id: str) -> dict:
     """Lean projection of a CanonicalExample suitable for the browser
     detail view. Skips empty fields to keep records.json small."""
     proj: dict = {}
@@ -375,6 +381,37 @@ def _project_example(ex: dict) -> dict:
              f.get("trait_axis") or "", f.get("note") or ""]
             for f in feats
         ]
+    # Trait locations are distinct from the generic feature track. Keep disjoint
+    # intervals and residue sets intact, and show only qualified assertions for
+    # this record on this exact protein. Do not overlay the optional legacy
+    # sequence: it is not the authoritative ProteinReference sequence.
+    occurrences = []
+    if ex.get("qualification_status") == "QUALIFIED":
+        for occurrence in ex.get("trait_occurrences") or []:
+            if (occurrence.get("qualification_status") != "QUALIFIED"
+                    or occurrence.get("trait_id") != trait_id
+                    or occurrence.get("protein_id") != ex.get("protein_id")
+                    or occurrence.get("scope") != "LOCALIZED"):
+                continue
+            ranges = [[r["start"], r["end"]] for r in occurrence.get("intervals") or []]
+            positions = list(occurrence.get("residue_positions") or [])
+            if not ranges and not positions:
+                continue
+            item = {key: occurrence[key] for key in (
+                "coordinate_frame", "mapping_method", "evidence_source",
+                "source_trait_id", "source_release",
+            ) if occurrence.get(key)}
+            if ranges:
+                item["ranges"] = ranges
+            if positions:
+                item["positions"] = positions
+            occurrences.append(item)
+    if occurrences:
+        proj["occ"] = occurrences
+        if ex.get("sequence_version"):
+            proj["sv"] = ex["sequence_version"]
+        if ex.get("uniprot_release"):
+            proj["rel"] = ex["uniprot_release"]
     return proj
 
 
@@ -406,7 +443,7 @@ def _chem_fields(data: dict) -> dict:
 def load_record(path: Path) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
-            data = yaml.safe_load(fh)
+            data = yaml.load(fh, Loader=SAFE_YAML_LOADER)
     except yaml.YAMLError as exc:
         print(f"WARN: {path.relative_to(REPO_ROOT)}: {exc}", file=sys.stderr)
         return None
@@ -456,7 +493,7 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # of them took canonical_examples from 28% to 58% of every detail bucket.
         # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
         # which are first because they are rank-ordered.
-        "ex": [_project_example(e)
+        "ex": [_project_example(e, identifier)
                for e in _docs_examples(data.get("canonical_examples") or [])],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
