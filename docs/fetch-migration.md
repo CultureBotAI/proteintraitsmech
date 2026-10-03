@@ -65,6 +65,12 @@ magic bytes, stable content markers, or publisher checksums.
   release-pinned grounding workflow.
 - `fetch-residue-frame` — residue-coordinate API enrichment.
 - `fetch-interpro-frame` — InterPro API enrichment.
+- `build-profiles` — bounded UniProtKB discovery matrix, not canonical-example evidence.
+  The paginated client checks a single release and advertised totals, reports deliberate
+  limits as incomplete, and publishes a new `--out-dir` bundle with a trait-index snapshot
+  and acquisition receipt. Existing outputs and cached indexes are never replaced.
+  Use `--expect-release` to pin a reviewed acquisition plan and `--require-complete` to
+  reject query truncation; dry-run performs read-only discovery without writing files.
 - `fetch-uniprot-registry` — exact-accession, same-response protein metadata/sequence and
   database-cross-reference snapshots for the grounding workflow; release-header,
   checksum, exact-membership, and content-address gates are implemented in its Python
