@@ -2719,6 +2719,71 @@ found.
   acquisition is not part of this durable promotion, and incomplete source staging
   must not be treated as evidence of biological absence.
 
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 0 of 8
+
+- At base `0b7bc5bcfae788444dfab2996ca42cbaf4be8cc5`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-000of008`. Its 96 candidate
+  alternatives cover 56 records; all received explicit decisions. The 46 approvals
+  cover 41 target records, including two already-installed assertions. The other
+  50 rows are non-target scope deferrals, not biological rejections. Selection used
+  the exact taxa human `9606`, E. coli K-12 `83333`, and yeast S288c `559292`.
+- The installed delta is **44 existing-example upgrades and 44 new localized
+  occurrences across 39 records**, not new record/protein example identifiers:
+  31 human, nine yeast S288c, and four E. coli K-12 occurrences. Twenty-two new
+  full-sequence references increase the protein registry from 12,369 to 12,391;
+  evidence and binding registries each increase from 20,458 to 20,502 rows.
+  Comparison against the Git base confirms all old references, evidence, bindings,
+  examples, occurrences, and non-example record content are preserved.
+- These are direct CDD model assignments from InterPro `110.0`, in exact canonical
+  UniProt frames checked against checksummed `2026_03` sequences. All 46 selected
+  examples pass the semantic validator with `require_qualified=True` on the
+  selected-example projection. That gate does **not** establish qualification of
+  every other example in those records or experimentally prove their background
+  functional prose. No generic UniProt feature tracks or isoforms are added.
+- Full `just validate-all` subsequently passed for all 429,293 records: zero
+  strict-schema errors and zero grounding semantic findings. Scoped validation,
+  the registry/pilot/writer/history gates, and 389 focused docs, registry, pilot,
+  and grounding-validator tests also passed. Browser-build and final GitHub gate
+  results are recorded on the associated PR rather than inferred from silence.
+- The local replay basename is
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-000of008`.
+  Its ignored artifacts are identified by SHA-256:
+
+  | Suffix | SHA-256 |
+  | --- | --- |
+  | `.candidates.jsonl` | `d59fc6f17412f6f13c1a0cde450c10886c80a618b79251396367bf08d1088dea` |
+  | `.resolved.jsonl` | `1267f08a7919c04391eb5ab815267426e40e972bc93a0791bdcffbe9db7f68ba` |
+  | `.target-review.jsonl` | `d7c36ce6cb8e8c2d23a9fdf6f5e58d20397b1b810840966bd543c551fc6eb12d` |
+  | `.review-decisions.jsonl` | `c50cd27b5cb60ada1410d9e0aa2be67fc18b43303a4d7efb51ea041391b93f92` |
+  | `.approved.tsv` | `b7fe87c8f270a923dc131fe70143203d0b0d4cd4e820e4370ba14ad32d850b9f` |
+  | `.uniprot_fetch_receipt.json` | `9cb2bf358044fe1cff541f34738db1cffc95db76808215f11684537856af8a6f` |
+
+  These hashes identify retained local staging; they do not make its bytes available
+  in a fresh checkout. The durable sequence/evidence/binding registries and trait
+  occurrences are committed together. Review handoff issue: [#940](https://github.com/CultureBotAI/proteintraitsmech/issues/940).
+  The [durable review report](cdd-cnp020-shard0-target-grounding-review-2026-10-03.md)
+  is published under `research/`; its skill-generated original remains ignored under
+  `reports/`, preserving the clean-checkout boundary checked in CI (review issue #942).
+- Two existing human examples still lack qualification in this reviewed cohort:
+  DYDC2 `UniProtKB:Q96IM9` on `CDD:cd22966` and SDF2 `UniProtKB:Q99470` on
+  `CDD:cd23293`. Both are in the separate ignored target-profile acquisition list;
+  absence from this batch is not absence of the trait. Coverage of other strains,
+  unreviewed entries, isoforms, and source locations remains unestablished.
+- The SLX4 RIM2 assertion (`UniProtKB:Q12098`, residues 535–587, `CDD:cd22869`)
+  is a domain/motif assignment, not proof that Slx4 itself catalyzes DNA cleavage.
+  Its source-derived definition still conflates subunit and complex activity and
+  needs separate source-aware curation. The RIM interaction is supported by
+  [Wan et al., DOI:10.1016/j.molcel.2019.05.035](https://pmc.ncbi.nlm.nih.gov/articles/PMC6745058/);
+  the catalytic-subunit/scaffold distinction is discussed in
+  [The SMX DNA Repair Tri-nuclease](https://pmc.ncbi.nlm.nih.gov/articles/PMC5344696/).
+  This promotion leaves definitions and mapping status unchanged.
+- Shard `human-ecoli-yeast-target-cnp020-001of008` remains staging-only: 56 approved
+  alternatives, 57 non-target scope deferrals, and one already-satisfied ITPR1
+  assertion preserved rather than replaced by a different grouped-location evidence
+  identity. The incomplete target-profile InterPro fetch is also separate and is
+  not an input to this promotion. Neither staging activity establishes completion
+  of the overall target-organism goal.
+
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
 - The exact local ELM class and instance exports are 88,298 bytes and 944,144 bytes,
