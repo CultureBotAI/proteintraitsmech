@@ -2933,6 +2933,79 @@ def test_promote_installs_multiple_approved_alternatives_for_one_trait_record(
     }
 
 
+def test_promote_preserves_distinct_grouped_locations_on_one_protein(local_sources):
+    locations = [[{"start": 2, "end": 3}], [{"start": 6, "end": 7}]]
+    _sidecar(local_sources["interpro"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": [[2, 3], [6, 7]]}})
+    _sidecar(local_sources["interpro_grouped"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": [[[2, 3]], [[6, 7]]]}})
+    candidates = []
+    for intervals in locations:
+        candidate = {**local_sources["candidate"], "intervals": intervals,
+                     "interpro_location_id": ground.derive_interpro_location_id(
+                         "UniProtKB:P12345", "Pfam:PF00001", intervals)}
+        candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+        candidates.append(candidate)
+    _jsonl(local_sources["queue"], candidates)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    assert len(rows) == 2
+    assert all(row["qualification_status"] == "QUALIFIED" for row in rows)
+    approved = local_sources["review"].with_name("repeat-locations-approved.tsv")
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    record = yaml.safe_load(local_sources["record"].read_text())
+    assert len(record["canonical_examples"]) == 1
+    occurrences = record["canonical_examples"][0]["trait_occurrences"]
+    assert sorted([o["intervals"] for o in occurrences], key=str) == sorted(locations, key=str)
+    assert len({o["source_evidence_id"] for o in occurrences}) == 2
+    assert len(_jsonl_rows(local_sources["durable_evidence"])) == 2
+    assert len(_jsonl_rows(local_sources["durable_bindings"])) == 2
+    before = local_sources["record"].read_bytes()
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert local_sources["record"].read_bytes() == before
+
+
+@pytest.mark.parametrize("mutation", [
+    {"sequence_sha256": "f" * 64},
+    {"source_release": "different"},
+    {"source_evidence_id": "ug-evidence:" + "a" * 64},
+    {"intervals": [{"start": 3, "end": 6}]},
+    {"intervals": []},
+    {"scope": "WHOLE_PROTEIN"},
+    {"mapping_method": "SOURCE_NATIVE_COORDINATES"},
+])
+def test_repeated_locations_do_not_relax_conflict_guards(mutation):
+    first = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+             "scope": "LOCALIZED", "coordinate_frame": "UNIPROT_CANONICAL",
+             "mapping_method": "INTERPRO_MATCH", "source_trait_id": "Pfam:PF00001",
+             "evidence_source": "InterPro", "source_release": "109.0",
+             "sequence_sha256": "0" * 64, "qualification_status": "QUALIFIED",
+             "source_evidence_id": "ug-evidence:" + "a" * 64,
+             "intervals": [{"start": 2, "end": 3}]}
+    second = {**first, "source_evidence_id": "ug-evidence:" + "b" * 64,
+              "intervals": [{"start": 6, "end": 7}], **mutation}
+    existing = {"sequence_sha256": first["sequence_sha256"],
+                "trait_occurrences": [first]}
+    authoritative = {"sequence_sha256": second["sequence_sha256"],
+                     "source": "UNIPROT_GROUNDING", "trait_occurrences": [second]}
+    with pytest.raises(ground.GroundingError, match="different_qualified_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
+    assert existing["trait_occurrences"] == [first]
+
+
+def test_repeated_location_replay_rejects_duplicate_evidence_identity():
+    occurrence = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+                  "qualification_status": "QUALIFIED",
+                  "source_evidence_id": "ug-evidence:" + "a" * 64,
+                  "intervals": [{"start": 2, "end": 3}]}
+    existing = {"trait_occurrences": [occurrence, dict(occurrence)]}
+    authoritative = {"source": "UNIPROT_GROUNDING", "trait_occurrences": [occurrence]}
+    with pytest.raises(ground.GroundingError, match="duplicate_existing_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
+
+
 @pytest.mark.parametrize("undecided", [None, "", "SKIP"])
 def test_promote_requires_explicit_decisions_for_every_approved_record_alternative(
     local_sources, capsys, undecided

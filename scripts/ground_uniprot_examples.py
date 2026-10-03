@@ -2862,6 +2862,39 @@ def _authoritative_example(row: dict[str, Any]) -> dict[str, Any]:
     return example
 
 
+def _distinct_interpro_occurrences(left: dict, right: dict) -> bool:
+    """Allow separate, non-overlapping source matches in one unchanged frame.
+
+    Provider/evidence replay remains mandatory in promotion. This is not permission
+    to overwrite a qualified claim, combine fragments, or change its sequence frame.
+    """
+    if any(
+        occurrence.get("qualification_status") != "QUALIFIED"
+        or occurrence.get("scope") != "LOCALIZED"
+        or occurrence.get("mapping_method") != "INTERPRO_MATCH"
+        or not occurrence.get("source_evidence_id")
+        or occurrence.get("residue_positions")
+        for occurrence in (left, right)
+    ):
+        return False
+    if left["source_evidence_id"] == right["source_evidence_id"]:
+        return False
+    context = (
+        "trait_id", "protein_id", "sequence_sha256", "coordinate_frame",
+        "source_trait_id", "inheritance_path", "evidence_source", "source_release",
+    )
+    if any(left.get(key) != right.get(key) for key in context):
+        return False
+    left_intervals, left_errors = _normalise_intervals(left.get("intervals"))
+    right_intervals, right_errors = _normalise_intervals(right.get("intervals"))
+    if left_errors or right_errors or not left_intervals or not right_intervals:
+        return False
+    return all(
+        first["end"] < second["start"] or second["end"] < first["start"]
+        for first in left_intervals for second in right_intervals
+    )
+
+
 def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict, bool]:
     if existing.get("sequence"):
         existing_sha = hashlib.sha256(str(existing["sequence"]).encode("ascii")).hexdigest()
@@ -2884,16 +2917,22 @@ def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict,
         and occurrence.get("trait_id") == wanted.get("trait_id")
         and occurrence.get("protein_id") == wanted.get("protein_id")
     ]
-    if len(matching) > 1:
+    identities = [
+        occurrences[index].get("source_evidence_id") or _value_digest(occurrences[index])
+        for index in matching
+    ]
+    if len(identities) != len(set(identities)):
         raise GroundingError("invalid:duplicate_existing_trait_occurrence")
-    if matching:
+    exact = [index for index in matching if occurrences[index] == wanted]
+    if exact:
+        pass  # Idempotent replay, including a record with several distinct matches.
+    elif len(matching) == 1 and occurrences[matching[0]].get("qualification_status") != "QUALIFIED":
         index = matching[0]
-        if (
-            occurrences[index].get("qualification_status") == "QUALIFIED"
-            and occurrences[index] != wanted
-        ):
-            raise GroundingError("conflict:different_qualified_trait_occurrence")
         occurrences[index] = wanted
+    elif matching:
+        if not all(_distinct_interpro_occurrences(occurrences[index], wanted) for index in matching):
+            raise GroundingError("conflict:different_qualified_trait_occurrence")
+        occurrences.append(wanted)
     else:
         occurrences.append(wanted)
     merged["trait_occurrences"] = occurrences
