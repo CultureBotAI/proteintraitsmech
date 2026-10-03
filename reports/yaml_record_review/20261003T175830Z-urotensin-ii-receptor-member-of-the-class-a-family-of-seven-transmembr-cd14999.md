@@ -6,6 +6,8 @@
 - Finished UTC: 2026-10-03T17:58:30Z.
 - Verdict: **needs curation** — three major findings and one minor provenance gap; no schema blocker. This is a read-only review, not promotion approval.
 
+This is a historical review of the [record at the pinned base](https://github.com/CultureBotAI/proteintraitsmech/blob/f7364a8495612517dc3887ff2d73a34f14603fdc/data/traits/sequence/domain/cdd/urotensin-ii-receptor-member-of-the-class-a-family-of-seven-transmembr-cd14999.yaml), not a claim about its latest state. The findings and original validation below describe the review finished at the timestamp above. Publication amendments are recorded under **Additional Notes**. Unresolved record curation and subsequent grounding are tracked in [issue #952](https://github.com/CultureBotAI/proteintraitsmech/issues/952), which publication of this report does not close.
+
 ## Target
 
 The complete YAML denotes `CDD:cd14999`, label `7tmA_UII-R`, a `ProteinTraitRecord` with axis `SEQUENCE`, category `SEQ_DOMAIN`, term kind `CLASS`, status `SEEDED`, and NCBI CDD provenance. Its SHA-256 is `29cb639a3bbf2158faa5680b179a1d1e4c6c392928321359db55344eb23e5df5`.
@@ -14,7 +16,7 @@ This is a source-seeded, subsequently example-enriched record, not a rendered pa
 
 ## Validation
 
-Executed against the unchanged target:
+Executed during the original review against the unchanged target at the pinned base:
 
 | Check | Result |
 | --- | --- |
@@ -42,7 +44,7 @@ Official exact-accession UniProt JSON was inspected at release `2026_03`:
 
 The distinct [CDD orexin-receptor model](https://www.ncbi.nlm.nih.gov/Structure/cdd/cd15208) also includes O43613/O43614. Therefore the hypocretin alias in cd14999 conflates distinct receptor identities; common GPCR topology or calcium signaling does not make them synonyms.
 
-The two stored exemplar identities and lengths are correct, but `reviewed: true` means Swiss-Prot review, not record-specific qualification. Both are `LEGACY_UNVERIFIED` by schema convention. The staged human occurrence is 53–326 on Q9UKP6, from pinned InterPro 110.0 in the canonical UniProt frame; the live CDD representative alignment independently displays those endpoints. The staging qualification is held for prose repair and is not installed. Its exact sequence checksum is `d087ceef1b9278da30c4e4aa15657f94a18bc54ec5dd93f52a9a349a2ce314a6`.
+The two stored exemplar identities and lengths are correct, but `reviewed: true` means Swiss-Prot review, not record-specific qualification. Both are `LEGACY_UNVERIFIED` by schema convention. The locally staged human occurrence is 53–326 on Q9UKP6, from pinned InterPro 110.0 in the canonical UniProt frame, using 1-based inclusive endpoints; the inspected CDD representative alignment independently displays those endpoints. The staging qualification is held for prose repair and is not installed. Its exact sequence checksum is `d087ceef1b9278da30c4e4aa15657f94a18bc54ec5dd93f52a9a349a2ce314a6`. The local staging identifiers and their reproducibility limits are recorded under **Additional Notes**; the report is not a promotion input.
 
 UniProt confirms the stored InterPro IPR017452, Pfam PF00001 and PROSITE PS00237/PS50262 example cross-references. [CATH 1.20.1070.10](https://www.cathdb.info/version/latest/superfamily/1.20.1070.10) resolves to the broad rhodopsin seven-helix superfamily; its historical assignment to these exact example sequences was not independently replayed. These are example classifications, not trait-level exact-equivalence claims.
 
@@ -80,7 +82,7 @@ No wrong accession, malformed YAML, broken parent reference or required-graph om
 1. Through a registered editor ending in `write_validated_record`, replace the false alias with a concise UTS2R/GPR14-specific definition and explicit evidence. Keep cd14999, label, axis/category, parent, existing example identities and source license. Do not rename the record to cd15208.
 2. Scope any retained physiology to the cited experiments; do not turn a domain match into a universal vascular phenotype. Attribute synthesized text and leave agent curation `PROPOSED`, not human `REVIEWED`.
 3. Append an LLM-assisted curation event and create history with `just new-history` only when the record is actually changed. Guard against a forced source reseed restoring the known error; raw CDD data remains immutable source evidence.
-4. Re-resolve this record inside its legitimate bounded cohort after the preimage changes, repeat scientific adjudication and dry promotion, and obtain explicit promotion approval. The other 69 approved records in cohort 066 do not include this held record.
+4. Re-resolve this record inside its legitimate bounded cohort after the preimage changes, repeat scientific adjudication and dry promotion, and obtain explicit promotion approval. AI scientific eligibility decisions for other records in the local cohort are not user authorization to promote, and do not release this record's hold.
 
 ## Follow-up Checks
 
@@ -95,4 +97,29 @@ iModulonDB was not applicable to this vertebrate receptor-identity review; no tr
 
 Exact-accession JSON response SHA-256 values at UniProt 2026_03: Q9UKP6 `3f64dcc677b3fef2511919b60d767f9fae506b350cb2a608eb25f5656c7e2581`; Q8VIH9 `a0a0f9f7605f6f263ac408edac6dae51d4507e33804c7832bc174f90f8843c15`; O43613 `212c097de381f89b613543680c644ba81b0866e4033e43b8e3eb120c5d20ccf7`; O43614 `4fa5326bcf4faf377702baef06068dfab998ea9df44e12c68c6131087679abc9`. Responses were parsed read-only; these hashes do not claim a new raw-response archive was saved.
 
-No trait, registry, review status, history entry or GitHub object was changed. This report is a new untracked local review artifact (the single-record report path is not gitignored), not a published correction or evidence of species-wide completeness.
+The original review changed no trait, registry, review status or history entry. Publishing and amending this report creates a durable review artifact and GitHub review items, not a correction to the trait or evidence of species-wide completeness.
+
+### Local staging snapshot (not distributed promotion evidence)
+
+The following identifiers were rechecked during publication review on 2026-10-03. They identify local, gitignored files under `reports/uniprot-grounding/review-batches/`; those files and their provider caches are **not included in this PR**. Digests identify bytes but do not make unavailable bytes replayable. A fresh checkout can inspect the pinned trait and linked public source entries, but cannot reproduce the exact staged InterPro assertion from this report alone. A future authorized promotion must retain and replay the original pinned inputs, or reacquire and re-resolve a new bounded batch if they are unavailable or stale. Live endpoints can change release; they are not substitutes for a frozen provider response.
+
+| Item | Snapshot value |
+| --- | --- |
+| Batch / ledger stem | `human-ecoli-yeast-complete-cdd-066of128` |
+| `.resolved.jsonl` SHA-256 | `b999dbfb12cd89e893a58184e42a976f3b5281b2196aef8b69ee9dcbd5f34bc7` |
+| `.review-decisions.jsonl` SHA-256 | `421417e436e3c441da0d7e419567686c06f6e37031cce782d67b0026bde1e557` |
+| Human candidate | `ug-9af5ca130cced9dc0751e0e34d41d2bd73ff2bd2fac4f4494ab27072e5736975` |
+| Resolution digest | `338baacb109f65bfdab48d63f876f60feccb6ee4fbcc7a4dcbb260f4690ac95b` |
+| Provider-entry SHA-256 | `91df0858315098f4eadedf44fb66ebfa491243bdd0a80ddac7976220ae6f275f` |
+| Grouped location | `interpro-location:cb648cdcf26a550ef5643c44d5d630128c2515a62533385b1f3eb96b60ec20a5` |
+| Scope / frame / source | Localized CDD:cd14999 match; Q9UKP6 canonical sequence version 1, 389 residues, UniProt `2026_03`; InterPro `110.0`; 53–326 inclusive. |
+| Formal review disposition | `REJECTED`, with review-note prefix `HOLD_PROSE_REVIEW`: resolve the conflicting hypocretin alias before promotion. This encoding is a curation deferral, not evidence that Q9UKP6 lacks the domain. |
+| Authorization / durable state | No promotion authorization is conveyed here; no occurrence or evidence binding was installed by this review. |
+
+### Publication adversarial review
+
+The report-only diff was adversarially reviewed by the same Codex agent on 2026-10-03; this is not an independent reviewer or human scientific sign-off.
+
+- [#950](https://github.com/CultureBotAI/proteintraitsmech/issues/950): identify the staging assertion, explain its formal hold, and distinguish scientific eligibility from promotion permission. Addressed by the snapshot above and the clarified recommendation; no ignored provider data or durable grounding changes are included.
+- [#951](https://github.com/CultureBotAI/proteintraitsmech/issues/951): replace ephemeral untracked/local-state claims, date the original checks, and separate unresolved curation from report publication. Addressed by the pinned-base scope and [#952](https://github.com/CultureBotAI/proteintraitsmech/issues/952) follow-up link.
+- Publication validation: the documentation consistency and landing tests passed (19 tests). The default `just build-docs` invocation could not import PyYAML from system Python; a rerun through the existing project environment was started. Its terminal result and PR CI results must be recorded before merge. These publication checks do not supersede the original record checks or qualify legacy examples.
