@@ -2933,6 +2933,158 @@ def test_promote_installs_multiple_approved_alternatives_for_one_trait_record(
     }
 
 
+def _resolve_interpro_locations(local_sources, locations):
+    groups = [[[interval["start"], interval["end"]] for interval in location]
+              for location in locations]
+    _sidecar(local_sources["interpro"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": sorted(
+                 interval for group in groups for interval in group)}})
+    _sidecar(local_sources["interpro_grouped"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": groups}})
+    candidates = []
+    for intervals in locations:
+        candidate = {**local_sources["candidate"], "intervals": intervals,
+                     "interpro_location_id": ground.derive_interpro_location_id(
+                         "UniProtKB:P12345", "Pfam:PF00001", intervals)}
+        candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+        candidates.append(candidate)
+    _jsonl(local_sources["queue"], candidates)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    assert len(rows) == len(locations)
+    assert all(row["qualification_status"] == "QUALIFIED" for row in rows)
+    return rows
+
+
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+@pytest.mark.parametrize("incremental", [False, True])
+@pytest.mark.parametrize("locations", [
+    [[{"start": 2, "end": 3}], [{"start": 6, "end": 7}]],
+    [[{"start": 2, "end": 3}, {"start": 7, "end": 8}], [{"start": 5, "end": 5}]],
+    [[{"start": 2, "end": 2}], [{"start": 4, "end": 5}], [{"start": 7, "end": 8}]],
+], ids=["two-locations", "discontinuous-with-match-in-gap", "three-locations"])
+def test_promote_preserves_distinct_grouped_locations_on_one_protein(
+    local_sources, durable_layout, incremental, locations
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
+    rows = _resolve_interpro_locations(local_sources, locations)
+    approved = local_sources["review"].with_name("repeat-locations-approved.tsv")
+    if incremental:
+        _write_decisions(approved, [(row, "APPROVED" if i == 0 else "REJECTED")
+                                    for i, row in enumerate(rows)])
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+        # A new curation must resolve against the installed record preimage.
+        assert ground.main(_resolve_args(local_sources)) == 0
+        rows = _jsonl_rows(local_sources["resolved"])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    record = yaml.safe_load(local_sources["record"].read_text())
+    assert len(record["canonical_examples"]) == 1
+    occurrences = record["canonical_examples"][0]["trait_occurrences"]
+    assert sorted([o["intervals"] for o in occurrences], key=str) == sorted(locations, key=str)
+    evidence = [json.loads(line) for line in
+                _durable_bytes(local_sources["durable_evidence"]).splitlines()]
+    bindings = [json.loads(line) for line in
+                _durable_bytes(local_sources["durable_bindings"]).splitlines()]
+    expected_ids = {row["trait_occurrence"]["source_evidence_id"] for row in rows}
+    assert len(expected_ids) == len(locations)
+    assert {o["source_evidence_id"] for o in occurrences} == expected_ids
+    assert {e["evidence_id"] for e in evidence} == expected_ids
+    assert {b["evidence_id"] for b in bindings} == expected_ids
+    assert {b["record_sha256"] for b in bindings} == {
+        hashlib.sha256(local_sources["record"].read_bytes()).hexdigest()}
+    for row in rows:
+        assert row["grounding_evidence"] in evidence
+        assert row["trait_occurrence"] in occurrences
+    protected = ("record", "durable_registry", "durable_evidence", "durable_bindings")
+    before = {key: _artifact_image(local_sources[key]) for key in protected}
+    _write_decisions(approved, [(row, "APPROVED") for row in reversed(rows)])
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert {key: _artifact_image(local_sources[key]) for key in protected} == before
+
+
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+@pytest.mark.parametrize("failure", ["overlap", "overlap-third", "provider-drift"])
+def test_repeated_location_failure_leaves_all_durable_bytes_unchanged(
+    local_sources, capsys, durable_layout, failure
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
+    locations = [[{"start": 2, "end": 3}], [{"start": 6, "end": 7}]]
+    if failure == "overlap":
+        locations[1] = [{"start": 3, "end": 5}]  # Inclusive endpoint overlap.
+    elif failure == "overlap-third":
+        locations.append([{"start": 7, "end": 8}])
+    rows = _resolve_interpro_locations(local_sources, locations)
+    approved = local_sources["review"].with_name("conflict-locations-approved.tsv")
+    _write_decisions(approved, [
+        (row, "APPROVED" if row["intervals"] in locations[:-1] else "REJECTED")
+        for row in rows
+    ])
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+    if failure == "provider-drift":
+        _sidecar(local_sources["interpro_grouped"], "InterPro", "109.0",
+                 {"P12345": {"Pfam:PF00001": [[[2, 3]]]}})
+    protected = ("record", "durable_registry", "durable_evidence", "durable_bindings")
+    before = {key: _artifact_image(local_sources[key]) for key in protected}
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    expected_error = ("conflict:different_qualified_trait_occurrence" if failure != "provider-drift"
+                      else "stale:provider_entry_missing:interpro_grouped_location")
+    assert expected_error in capsys.readouterr().err
+    assert {key: _artifact_image(local_sources[key]) for key in protected} == before
+
+
+@pytest.mark.parametrize("mutation", [
+    {"sequence_sha256": "f" * 64},
+    {"source_release": "different"},
+    {"source_evidence_id": "ug-evidence:" + "a" * 64},
+    {"source_evidence_id": None},
+    {"intervals": [{"start": 2, "end": 3}]},
+    {"intervals": [{"start": 3, "end": 6}]},
+    {"intervals": []},
+    {"scope": "WHOLE_PROTEIN"},
+    {"mapping_method": "SOURCE_NATIVE_COORDINATES"},
+    {"coordinate_frame": "UNIPROT_ISOFORM"},
+    {"source_trait_id": "Pfam:PF00002"},
+    {"inheritance_path": ["Pfam:PF00002", "Pfam:PF00001"]},
+    {"evidence_source": "other-provider"},
+    {"residue_positions": [6]},
+])
+def test_repeated_locations_do_not_relax_conflict_guards(mutation):
+    first = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+             "scope": "LOCALIZED", "coordinate_frame": "UNIPROT_CANONICAL",
+             "mapping_method": "INTERPRO_MATCH", "source_trait_id": "Pfam:PF00001",
+             "evidence_source": "InterPro", "source_release": "109.0",
+             "sequence_sha256": "0" * 64, "qualification_status": "QUALIFIED",
+             "source_evidence_id": "ug-evidence:" + "a" * 64,
+             "intervals": [{"start": 2, "end": 3}]}
+    second = {**first, "source_evidence_id": "ug-evidence:" + "b" * 64,
+              "intervals": [{"start": 6, "end": 7}], **mutation}
+    existing = {"sequence_sha256": first["sequence_sha256"],
+                "trait_occurrences": [first]}
+    authoritative = {"sequence_sha256": second["sequence_sha256"],
+                     "source": "UNIPROT_GROUNDING", "trait_occurrences": [second]}
+    with pytest.raises(ground.GroundingError, match="different_qualified_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
+    assert existing["trait_occurrences"] == [first]
+
+
+def test_repeated_location_replay_rejects_duplicate_evidence_identity():
+    occurrence = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+                  "qualification_status": "QUALIFIED",
+                  "source_evidence_id": "ug-evidence:" + "a" * 64,
+                  "intervals": [{"start": 2, "end": 3}]}
+    existing = {"trait_occurrences": [occurrence, dict(occurrence)]}
+    authoritative = {"source": "UNIPROT_GROUNDING", "trait_occurrences": [occurrence]}
+    with pytest.raises(ground.GroundingError, match="duplicate_existing_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
+
+
 @pytest.mark.parametrize("undecided", [None, "", "SKIP"])
 def test_promote_requires_explicit_decisions_for_every_approved_record_alternative(
     local_sources, capsys, undecided
