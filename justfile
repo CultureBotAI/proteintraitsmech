@@ -96,6 +96,25 @@ audit-pages *args:
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 
+# Bounded research acquisition; dry-run unless --apply, no trait/registry writes.
+fetch-slc10-pilot *args:
+    uv run python scripts/fetch_slc10_pilot.py {{args}}
+
+fetch-slc10-models *args:
+    uv run --extra molecular python scripts/fetch_slc10_models.py {{args}}
+
+validate-molecular-evidence file:
+    uv run --extra molecular python scripts/validate_molecular_evidence.py {{quote(file)}}
+
+build-slc10-pilot *args:
+    uv run --extra molecular python scripts/build_slc10_pilot.py {{args}}
+
+build-slc10-docs *args:
+    python3 scripts/build_slc10_docs.py {{args}}
+
+consume-molecular-evidence *args:
+    uv run --extra molecular python scripts/consume_molecular_evidence.py {{args}}
+
 # Validate one ProteinTraitRecord in strict closed mode. One worker reduces the
 # multiprocess startup cost to a single child rather than avoiding it -- the pool is
 # still built and the schema still parsed there. Semantics are identical to validate-all.
@@ -268,7 +287,7 @@ audit-schema:
 # -rx prints why a test was an expected failure (e.g. a stage pin tracked in an issue),
 # which plain -q reduces to an "x".
 test *args:
-    uv run pytest tests/ -rx {{args}}
+    uv run --extra molecular pytest tests/ -rx {{args}}
 
 # Static checks over the Python. Gated at ZERO rather than ratcheted from a baseline:
 # the 63 pre-existing errors were all trivial (semicolons, `l` as a variable name,
@@ -1408,6 +1427,8 @@ build-docs:
     python3 scripts/build_docs_index.py
     python3 scripts/render_docs_landing.py
     python3 scripts/render_docs_landing.py --check
+    python3 scripts/build_slc10_docs.py
+    python3 scripts/build_slc10_docs.py --check
 
 # Compose all layered definitions (GENERAL / STRUCTURAL / MECHANISTIC) across the
 # corpus, idempotently, in dependency order: base source layers first, then the

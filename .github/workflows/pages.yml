@@ -17,12 +17,14 @@ on:
       - "data/equivalence/**"
       - "data/mappings/**"
       - "data/grounding/protein_registry.jsonl"
+      - "data/molecular/slc10/pilot.json"
       - "docs/**"
       - "scripts/build_docs_index.py"
       - "scripts/docs_protein_sequences.py"
       - "scripts/validate_uniprot_grounding.py"
       - "scripts/grounding_registry_layout.py"
       - "scripts/render_docs_landing.py"
+      - "scripts/build_slc10_docs.py"
       - "conf/landing_sources.json"
       - "scripts/audit_pages_size.py"
       - "conf/pages_budgets.json"
@@ -55,6 +57,10 @@ jobs:
         run: |
           python scripts/render_docs_landing.py
           python scripts/render_docs_landing.py --check
+      - name: Publish and verify the versioned SLC10 research export
+        run: |
+          python scripts/build_slc10_docs.py
+          python scripts/build_slc10_docs.py --check
       - uses: actions/configure-pages@v5
       - name: Build Jekyll site
         uses: actions/jekyll-build-pages@v1

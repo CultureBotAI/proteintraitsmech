@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLC10 molecular evidence pilot — ProteinTraitsMech</title>
+  <link rel="stylesheet" href="slc10.css">
+  <script src="slc10.js" defer></script>
+</head>
+<body>
+<header>
+  <nav><a href="index.html">ProteinTraitsMech</a> / Molecular evidence pilot</nav>
+  <p class="eyebrow">PROPOSED · RESEARCH EVIDENCE</p>
+  <h1>What does a conserved site actually tell us?</h1>
+  <p class="intro">SLC10 is a worked example of separating molecular contacts, residue correspondence,
+    experimental results, and mechanistic explanations.</p>
+  <p id="summary" role="status">Loading the versioned evidence bundle…</p>
+  <p><a id="download" href="data/slc10-pilot-v1.json" download>Download evidence JSON</a>
+    · <a href="data/slc10-pilot-manifest.json">Export manifest</a>
+    · <a href="browse.html#q=Pfam%3APF01758">Related SBF-family trait</a></p>
+</header>
+<main>
+  <aside class="notice"><strong>This is not a function predictor.</strong> Conserved residues do not establish
+    activity; divergent residues do not establish inactivity. A negative assay is scoped to its conditions.
+    Protein-specific evidence is not transferred to the entire SBF family or promoted into GO annotations.</aside>
+  <details><summary>Panel scope and source family assignments</summary><p id="panel-scope"></p></details>
+  <section aria-labelledby="explanation-heading">
+    <h2 id="explanation-heading">Explanations we can test</h2>
+    <p>“Challenged” rejects a particular explanation, not the experimental observation.</p>
+    <div id="explanations" class="cards"></div>
+  </section>
+  <section aria-labelledby="site-heading">
+    <h2 id="site-heading">1. Observed coordinates → computed contact candidates</h2>
+    <label for="site">Experimental ligand instance</label>
+    <select id="site"></select>
+    <p id="site-context"></p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Residue correspondence table"><table id="matrix"></table></div>
+    <p class="legend"><span class="identical">Identical</span> <span class="changed">Changed</span>
+      <span class="unresolved">Unresolved</span> · Cells are sequence-derived candidates, not observed target binding sites.
+      Select a cell for its evidence. A backbone contact does not make a substitution harmless.</p>
+    <details><summary>Exact contact atoms and source context</summary><div id="site-detail"></div></details>
+  </section>
+  <section aria-labelledby="model-heading">
+    <h2 id="model-heading">2. Apo predictions are a separate comparison</h2>
+    <p>Sequence pairing comes first. The global CA fit uses all available consensus pairs with target pLDDT ≥70,
+      without outlier trimming. No experimental ion is transferred into a predicted model.</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Predicted-model comparison"><table id="models"></table></div>
+    <p>Large residuals can reflect correspondence error, conformational differences, or model error.
+      Even NTCP's own apo prediction need not match its substrate-bound conformation.
+      pLDDT is local confidence, not certainty in the alignment between proteins.</p>
+  </section>
+  <section aria-labelledby="assay-heading">
+    <h2 id="assay-heading">3. What did the experiments measure?</h2>
+    <p>Binding, uptake, inhibition, and infection are separate outcomes. Conflicting studies retain their own contexts.</p>
+    <div class="scroll" tabindex="0" role="region" aria-label="Experimental observations"><table id="assays"></table></div>
+  </section>
+  <section aria-labelledby="mechanism-heading">
+    <h2 id="mechanism-heading">4. Small, source-backed mechanisms</h2>
+    <p>Physical interaction edges describe binding. The separate drug-inhibition edge describes a measured functional consequence.</p>
+    <div id="mechanisms" class="cards"></div>
+  </section>
+  <section aria-labelledby="reuse-heading">
+    <h2 id="reuse-heading">Reuse an explanation without losing its limits</h2>
+    <p>Use a stable assertion ID together with the bundle version and SHA-256 in the export manifest.
+      Every claim has an evidence origin, review status, source references, and limitations.
+      A read-only check against the
+      <a href="https://github.com/ai4curation/ai-gene-review/blob/1d36e6d20901b617d02a69388f13dbe3c26ade96/genes/human/SLC10A4/SLC10A4-ai-review.yaml">commit-pinned SLC10A4 gene review</a>
+      matched its seven retained residue identities and correspondences. This does not endorse its
+      GO annotation decisions; the upstream repository has not been modified to adopt PTM.</p>
+    <details><summary>Source versions, hashes and licences</summary><div id="sources"></div></details>
+  </section>
+</main>
+<dialog id="detail" aria-labelledby="detail-title"><button id="close-detail" type="button">Close</button><div id="detail-body"></div></dialog>
+<footer>ProteinTraitsMech · SLC10 research pilot · Source licences remain attached to their artifacts.</footer>
+</body>
+</html>
