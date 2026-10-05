@@ -1700,6 +1700,7 @@ def candidate_rows(
                 "relations": pair["relations"],
                 "mechs": pair["mechs"],
                 "sibling_records": pair["sibling_records"],
+                "qualifiers": pair.get("qualifiers", []),
                 "snapshot_mentions_sha256": mentions_sha256,
             },
         }
