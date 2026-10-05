@@ -854,7 +854,11 @@ def test_candidates_cover_absent_and_legacy_pairs_with_a_route_only():
 
     pfam = by_trait["Pfam:PF04728"]
     assert pfam["scope"] == "LOCALIZED" and pfam["mapping_method"] == "INTERPRO_MATCH"
-    assert "source_release" not in pfam and "reasons" not in pfam
+    assert "source_release" not in pfam
+    # A localized claim needs an occurrence on a known frame: kept out of the
+    # whole-protein batch the selector draws from.
+    assert pfam["batch"] == CM.NEEDS_OCCURRENCE_BATCH
+    assert {go["batch"], by_trait["RHEA:37871"]["batch"]} == {CM.CANDIDATE_BATCH}
 
     ground = sys.modules["ground_uniprot_examples"]
     assert all(row["candidate_id"] == ground.derive_candidate_id(row) for row in rows)

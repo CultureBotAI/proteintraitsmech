@@ -85,6 +85,10 @@ MANIFEST_NAME = "manifest.json"
 REPORT_DIR = REPO_ROOT / "reports" / "cross-mech"
 CANDIDATE_QUEUE = REPO_ROOT / "reports" / "uniprot-grounding" / "cross-mech" / "candidates.jsonl"
 CANDIDATE_BATCH = "cross-mech"
+# A localized signature claim needs an InterPro occurrence on a known sequence frame,
+# which a sibling record never supplies; it stays out of the whole-protein batch the
+# way fetch_uniprot_examples separates its needs-occurrence rows.
+NEEDS_OCCURRENCE_BATCH = "cross-mech-needs-occurrence"
 # Discovery-state reasons every UniProt-fact producer attaches; the resolver discharges
 # them only through the exact release/checksum/fact replay (ground_uniprot_examples).
 CANDIDATE_RESOLUTION_REASONS = (
@@ -1554,7 +1558,7 @@ def candidate_rows(
         trait_id = pair["trait_id"]
         row: dict[str, Any] = {
             "schema_version": 1,
-            "batch": CANDIDATE_BATCH,
+            "batch": NEEDS_OCCURRENCE_BATCH if method == "INTERPRO_MATCH" else CANDIDATE_BATCH,
             "candidate_status": "CANDIDATE_PROTEIN",
             "qualification_status": "CANDIDATE_PROTEIN",
             "trait_id": trait_id,
@@ -1581,6 +1585,8 @@ def candidate_rows(
             # The exact-accession snapshot replaces this with its own release.
             row["source_release"] = uniprot_release
             row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
+        else:
+            row["reasons"] = ["record-specific occurrence coordinates require resolution"]
         row["candidate_id"] = derive_candidate_id(row)
         rows.append(row)
     rows.sort(key=lambda row: (row["trait_id"], row["protein_id"], row["candidate_id"]))
@@ -1803,7 +1809,9 @@ def cmd_candidates(args: argparse.Namespace) -> int:
     candidates = candidate_rows(
         pairs, uniprot_release=args.uniprot_release, mentions_sha256=manifest["mentions_sha256"]
     )
-    by_route = Counter(f"{row['mapping_method']}:{row['source_namespace']}" for row in candidates)
+    by_route = Counter(
+        f"{row['batch']} {row['mapping_method']}:{row['source_namespace']}" for row in candidates
+    )
     print(
         f"{len(candidates):,} candidates over {len({row['record_path'] for row in candidates}):,} "
         f"records and {len({row['protein_id'] for row in candidates}):,} proteins"
