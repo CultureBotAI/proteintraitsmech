@@ -1,7 +1,7 @@
 ---
 topic: Tracking sibling-Mech protein examples and including them on the correct trait record
 date: 2026-10-05
-status: tracking implemented; inclusion route pending (see "Inclusion")
+status: tracking and the UniProt fact lane implemented; inclusion runs as reviewed batches
 scope: data/cross_mech, reports/cross-mech, the UniProt grounding funnel
 issue: "#652"
 ---
@@ -153,26 +153,28 @@ are confirmed and that about half of the GO localization pairs are not, mostly b
 UniProt annotates a different or more specific term. The reproducible result is the
 inclusion batch's own record, which supersedes it.
 
-### What blocks inclusion today
+### The UniProt fact lane
 
-1. `scripts/validate_uniprot_grounding.py` admits ComplexPortal and Rhea evidence only
-   from their own `SOURCE_DATABASE` providers, with an unconditional receipt lock on
-   each. A UniProt lane for them is a change to the central evidence contract, which
-   the plan's priority list anticipates ("Rhea: exact Rhea-to-UniProt **or UniProt
-   catalytic-activity annotation**"; "GO: direct GOA/UniProt annotation, retaining the
-   evidence code"). It must keep the existing locks for the source-native lanes.
-2. The UniProt membership snapshot captures only signature cross-references, and the
-   registry fetch does not request GO (`go_id`), catalytic activity
-   (`cc_catalytic_activity`), or `xref_complexportal`. The REST field `xref_go` does not
-   exist.
-3. The promoter resolves `SOURCE_MEMBERSHIP` but not `SOURCE_ANNOTATION`.
+The validator used to admit ComplexPortal and Rhea evidence only from their own
+`SOURCE_DATABASE` providers, each behind an unconditional receipt lock. The UniProt
+membership snapshot captured only signature cross-references, and the promoter could
+not resolve `SOURCE_ANNOTATION`. The lane now exists (grounding plan, 2026-10-05):
 
-These are the next pull request. A promotion batch built from the audit's candidates
-follows it, through the ordinary review and authorization steps.
+- the snapshot captures `ComplexPortal` and `GO` cross-references and catalytic-activity
+  Rhea reactions, and the registry fetch requests `go_id`, `xref_complexportal`, and
+  `cc_catalytic_activity` (the REST field `xref_go` does not exist);
+- GO facts support only `SOURCE_ANNOTATION`, every other fact only `SOURCE_MEMBERSHIP`;
+- ComplexPortal and Rhea gain a UniProt lane beside their source-native lanes, which keep
+  their receipt locks. Accepting this is a change to the central evidence contract and
+  is the maintainer's call at merge.
+
+`just stage-cross-mech-candidates --apply` writes the funnel queue and
+`just select-cross-mech-review-batch <id>` selects from it; the ordinary fetch, resolve,
+finalize, and promote recipes do the rest.
 
 ## Decisions for the maintainer
 
-- Accept a UniProt exact-accession lane for Rhea and ComplexPortal traits, or wait for
+- Keep the UniProt exact-accession lane for Rhea and ComplexPortal traits, or wait for
   their source-native acquisition receipts.
 - GO evidence codes: admit electronic (`IEA`) annotations when a sibling independently
   asserts the same term, or require experimental/curated codes.

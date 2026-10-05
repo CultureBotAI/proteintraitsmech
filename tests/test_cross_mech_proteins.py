@@ -801,3 +801,69 @@ def test_local_drift_survives_a_missing_commit_and_honours_configured_roots(flee
         for item in CM.local_drift(manifest, root, environ={"TRAITMECH_ROOT": str(relocated)})
     }
     assert states == {"naturalproductmech": "UNAVAILABLE", "traitmech": "CURRENT"}
+
+
+# -------------------------------------------------------------------- candidates
+
+
+def _pair(trait_id, status, route, *, category="FUNC_LOCALIZATION", axis="FUNCTION"):
+    return {
+        "protein_id": "UniProtKB:P18776",
+        "trait_id": trait_id,
+        "status": status,
+        "route": route,
+        "trait_axis": axis,
+        "trait_category": category,
+        "record_path": f"data/traits/x/{trait_id.replace(':', '_')}.yaml",
+        "sibling_curies": [trait_id],
+        "relations": ["component_of_structure"],
+        "mechs": ["cellstructuremech"],
+        "sibling_records": ["cellstructuremech:data/structures/x.yaml"],
+        "mentions": 1,
+    }
+
+
+def test_candidates_cover_absent_and_legacy_pairs_with_a_route_only():
+    pairs = [
+        _pair("GO:0009390", "ABSENT_FROM_TRAIT", "SOURCE_ANNOTATION:UniProtKB"),
+        _pair("RHEA:37871", "LEGACY_ON_TRAIT", "SOURCE_MEMBERSHIP:UniProtKB"),
+        _pair(
+            "Pfam:PF04728",
+            "ABSENT_FROM_TRAIT",
+            "INTERPRO_MATCH:InterPro",
+            category="SEQ_DOMAIN",
+            axis="SEQUENCE",
+        ),
+        _pair("GO:0005886", "QUALIFIED_ON_TRAIT", "SOURCE_ANNOTATION:UniProtKB"),
+        _pair("GO:7770085", "TRAIT_NOT_IN_PTM", "NONE"),
+    ]
+    rows = CM.candidate_rows(pairs, uniprot_release="2026_03", mentions_sha256="a" * 64)
+    by_trait = {row["trait_id"]: row for row in rows}
+    assert sorted(by_trait) == ["GO:0009390", "Pfam:PF04728", "RHEA:37871"]
+
+    go = by_trait["GO:0009390"]
+    assert go["mapping_method"] == "SOURCE_ANNOTATION"
+    assert go["evidence_source"] == "UniProtKB"
+    assert go["scope"] == "WHOLE_PROTEIN"
+    assert go["source_release"] == "2026_03"
+    assert go["batch"] == CM.CANDIDATE_BATCH
+    assert go["cross_mech_provenance"]["snapshot_mentions_sha256"] == "a" * 64
+    # Organism and sequence never come from the sibling record.
+    assert not {"taxon_id", "taxon_label", "sequence_sha256"} & set(go)
+    assert by_trait["RHEA:37871"]["mapping_method"] == "SOURCE_MEMBERSHIP"
+
+    pfam = by_trait["Pfam:PF04728"]
+    assert pfam["scope"] == "LOCALIZED" and pfam["mapping_method"] == "INTERPRO_MATCH"
+    assert "source_release" not in pfam and "reasons" not in pfam
+
+    ground = sys.modules["ground_uniprot_examples"]
+    assert all(row["candidate_id"] == ground.derive_candidate_id(row) for row in rows)
+    again = CM.candidate_rows(
+        list(reversed(pairs)), uniprot_release="2026_03", mentions_sha256="a" * 64
+    )
+    assert again == rows
+
+
+def test_candidates_refuse_a_malformed_release():
+    with pytest.raises(CM.CrossMechError, match="uniprot-release"):
+        CM.candidate_rows([], uniprot_release="latest", mentions_sha256="a" * 64)

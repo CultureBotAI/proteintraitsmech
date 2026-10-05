@@ -6,8 +6,9 @@ deduplicates the exact UniProtKB accessions (including isoforms) in one named ba
 retrieves them from the official UniProt REST search endpoint in bounded batches, and
 captures ``x-uniprot-release`` from every response.  It writes only references whose
 accession, metadata, sequence, checksum, and sequence version validate.  From that
-same response it also writes content-addressed UniProt database-cross-reference facts;
-these are the replayable provider input for exact ``SOURCE_MEMBERSHIP`` resolution.
+same response it also writes content-addressed UniProt facts -- database cross-references
+(signatures, ComplexPortal, GO) and catalytic-activity Rhea reactions; these are the
+replayable provider input for exact ``SOURCE_MEMBERSHIP`` / ``SOURCE_ANNOTATION`` resolution.
 Every accession-specific response failure is retained in a deterministic blocked TSV.
 
 Dry-run is a no-write, no-network operation which emits one canonical, content-addressed
@@ -54,8 +55,8 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from uniprot_membership_snapshot import (
+    FACT_FIELDS,
     MembershipSnapshotError,
-    XREF_FIELDS,
     canonical_json as canonical_membership_json,
     dump_memberships,
     extract_entry_memberships,
@@ -135,7 +136,7 @@ RETURN_FIELDS = (
     "reviewed",
     "sequence",
     "sequence_version",
-    *XREF_FIELDS,
+    *FACT_FIELDS,
 )
 USER_AGENT = "ProteinTraitsMech-UniProt-registry/1.0"
 REQUEST_HEADERS = {"Accept": "application/json", "User-Agent": USER_AGENT}

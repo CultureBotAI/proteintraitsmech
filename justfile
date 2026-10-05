@@ -324,6 +324,25 @@ audit-cross-mech-proteins *args:
 check-cross-mech-proteins *args:
     uv run python scripts/cross_mech_proteins.py check {{args}}
 
+# Turn every sibling (protein, trait) pair the audit places on an existing record --
+# protein absent or unqualified there -- into one grounding-funnel candidate. Dry-run;
+# --apply writes reports/uniprot-grounding/cross-mech/candidates.jsonl (ignored).
+# Nothing here qualifies: candidates still go select -> fetch -> resolve -> review ->
+# promote, and a sibling claim is provenance, never evidence.
+stage-cross-mech-candidates *args:
+    uv run python scripts/cross_mech_proteins.py candidates \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
+# Select one bounded review batch from the cross-Mech queue with the ordinary selector;
+# the fetch/resolve/finalize/promote-uniprot-review-batch recipes then apply unchanged.
+select-cross-mech-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/select_uniprot_review_batch.py \
+      --queue reports/uniprot-grounding/cross-mech/candidates.jsonl \
+      --batch cross-mech --batch-id {{quote(batch_id)}} "$@"
+
 # Validate the data-source registry
 sources-check:
     uv run python scripts/check_sources.py

@@ -10,6 +10,21 @@ content-addressed JSONL row.
 The rows are deliberately independent of candidate IDs and rankings.  A resolver must
 look up the exact ``(protein_id, source_trait_id, uniprot_release, sequence_sha256)``
 tuple and must never infer membership from absence, a query string, or a generic hit.
+
+Three kinds of exact UniProt fact share this one snapshot (#652):
+
+* a signature cross-reference (Pfam, InterPro, ...) and a ``ComplexPortal``
+  cross-reference -- exact *membership* of the protein in the source class;
+* a ``GO`` cross-reference -- an exact *annotation* to the GO term, with UniProt's
+  ``GoEvidenceType`` preserved in the stored object so its evidence code is never lost.
+  A ``ND`` (no biological data) annotation is not a fact and is never captured;
+* a Rhea reaction cross-reference inside a ``CATALYTIC ACTIVITY`` comment -- exact
+  membership of the protein among the catalysts of that master reaction, stored as the
+  returned ``{"database": "Rhea", "id": "RHEA:n"}`` object.  Directional
+  ``physiologicalReactions`` are never captured.
+
+:func:`expected_mapping_method` names the occurrence method each fact may support, so a
+GO annotation can never be recorded as a membership or the reverse.
 """
 
 from __future__ import annotations
@@ -40,9 +55,25 @@ XREF_SPECS: tuple[tuple[str, str, str], ...] = (
     ("xref_sfld", "SFLD", "SFLD"),
     ("xref_smart", "SMART", "SMART"),
     ("xref_supfam", "SUPFAM", "SUPERFAMILY"),
+    # Functional facts for whole-protein FUNCTION records.  `go_id` is the REST field
+    # that returns GO cross-references (there is no `xref_go`).
+    ("xref_complexportal", "ComplexPortal", "ComplexPortal"),
+    ("go_id", "GO", "GO"),
 )
 XREF_FIELDS = tuple(spec[0] for spec in XREF_SPECS)
+# Rhea is not a cross-reference: UniProt states it inside CATALYTIC ACTIVITY comments.
+CATALYTIC_ACTIVITY_FIELD = "cc_catalytic_activity"
+FACT_FIELDS = (*XREF_FIELDS, CATALYTIC_ACTIVITY_FIELD)
+RHEA_DATABASE = "Rhea"
 DATABASE_TO_NAMESPACE = {database: namespace for _, database, namespace in XREF_SPECS}
+DATABASE_TO_NAMESPACE[RHEA_DATABASE] = "RHEA"
+
+# The occurrence method a UniProt fact may support.  Everything else is membership.
+UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
+ANNOTATION_NAMESPACES = frozenset({"GO"})
+_GO_ID = re.compile(r"^GO:[0-9]{7}$")
+_RHEA_ID = re.compile(r"^RHEA:[1-9][0-9]*$")
+_COMPLEXPORTAL_ID = re.compile(r"^CPX-[1-9][0-9]*$")
 
 _UNIPROT = re.compile(
     r"^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|"
@@ -82,7 +113,38 @@ def _trait_local_id(database: str, database_id: str) -> str:
         if not local_id:
             raise MembershipSnapshotError("Gene3D cross-reference has an empty G3DSA ID")
         return local_id
+    # GO and Rhea return a full CURIE as their ID; ComplexPortal a bare CPX accession.
+    if database == "GO":
+        if _GO_ID.fullmatch(database_id) is None:
+            raise MembershipSnapshotError(f"GO cross-reference has a malformed ID {database_id!r}")
+        return database_id.removeprefix("GO:")
+    if database == RHEA_DATABASE:
+        if _RHEA_ID.fullmatch(database_id) is None:
+            raise MembershipSnapshotError(f"Rhea reaction has a malformed ID {database_id!r}")
+        return database_id.removeprefix("RHEA:")
+    if database == "ComplexPortal" and _COMPLEXPORTAL_ID.fullmatch(database_id) is None:
+        raise MembershipSnapshotError(
+            f"ComplexPortal cross-reference has a malformed ID {database_id!r}"
+        )
     return database_id
+
+
+def expected_mapping_method(source_trait_id: str) -> str:
+    """The only occurrence method an exact UniProt fact for this trait may support."""
+
+    namespace = source_trait_id.split(":", 1)[0] if ":" in source_trait_id else ""
+    return "SOURCE_ANNOTATION" if namespace in ANNOTATION_NAMESPACES else "SOURCE_MEMBERSHIP"
+
+
+def _go_evidence_code(cross_reference: Mapping[str, Any]) -> str:
+    """The GO evidence code (``IDA``, ``IEA``, ...) UniProt attached to a GO xref."""
+
+    for item in cross_reference.get("properties") or []:
+        if isinstance(item, dict) and item.get("key") == "GoEvidenceType":
+            value = item.get("value")
+            if isinstance(value, str):
+                return value.split(":", 1)[0].strip()
+    return ""
 
 
 def canonical_json(value: Any) -> str:
@@ -235,7 +297,7 @@ def extract_entry_memberships(
     sequence_sha256: str,
     uniprot_release: str,
 ) -> list[dict[str, Any]]:
-    """Extract supported positive xref facts from one exact UniProt response entry."""
+    """Extract supported positive facts from one exact UniProt response entry."""
 
     if _UNIPROT.fullmatch(protein_id) is None:
         raise MembershipSnapshotError(f"invalid protein_id {protein_id!r}")
@@ -250,22 +312,19 @@ def extract_entry_memberships(
         raise MembershipSnapshotError("uniProtKBCrossReferences is not a list")
 
     by_key: dict[tuple[str, str, str, str], dict[str, Any]] = {}
-    for index, raw in enumerate(raw_cross_references):
-        if not isinstance(raw, dict):
-            raise MembershipSnapshotError(f"uniProtKBCrossReferences[{index}] is not an object")
+
+    def add(raw: dict[str, Any], location: str) -> None:
         database = raw.get("database")
         namespace = DATABASE_TO_NAMESPACE.get(database) if isinstance(database, str) else None
         if namespace is None:
-            continue
+            return
         database_id = raw.get("id")
         if not isinstance(database_id, str) or not database_id.strip():
-            raise MembershipSnapshotError(
-                f"{database} cross-reference at index {index} has no exact id"
-            )
+            raise MembershipSnapshotError(f"{database} reference at {location} has no exact id")
         if database_id != database_id.strip():
-            raise MembershipSnapshotError(
-                f"{database} cross-reference at index {index} has an untrimmed id"
-            )
+            raise MembershipSnapshotError(f"{database} reference at {location} has an untrimmed id")
+        if database == "GO" and _go_evidence_code(raw) == "ND":
+            return  # "no biological data available" is the absence of a fact
         normalized_xref = _normalise_cross_reference(raw)
         row: dict[str, Any] = {
             "schema_version": SCHEMA_VERSION,
@@ -290,6 +349,36 @@ def extract_entry_memberships(
                 f"{protein_id} / {row['source_trait_id']}"
             )
         by_key[key] = row
+
+    for index, raw in enumerate(raw_cross_references):
+        if not isinstance(raw, dict):
+            raise MembershipSnapshotError(f"uniProtKBCrossReferences[{index}] is not an object")
+        if raw.get("database") == RHEA_DATABASE:
+            continue  # Rhea is admitted only from a catalytic-activity reaction below
+        add(raw, f"uniProtKBCrossReferences[{index}]")
+
+    comments = entry.get("comments") or []
+    if not isinstance(comments, list):
+        raise MembershipSnapshotError("comments is not a list")
+    for comment_index, comment in enumerate(comments):
+        if not isinstance(comment, dict) or comment.get("commentType") != "CATALYTIC ACTIVITY":
+            continue
+        reaction = comment.get("reaction")
+        if not isinstance(reaction, dict):
+            raise MembershipSnapshotError(f"comments[{comment_index}] reaction is not an object")
+        references = reaction.get("reactionCrossReferences") or []
+        if not isinstance(references, list):
+            raise MembershipSnapshotError(
+                f"comments[{comment_index}] reactionCrossReferences is not a list"
+            )
+        for reference_index, raw in enumerate(references):
+            if not isinstance(raw, dict):
+                raise MembershipSnapshotError(
+                    f"comments[{comment_index}] reaction reference {reference_index} "
+                    "is not an object"
+                )
+            if raw.get("database") == RHEA_DATABASE:
+                add(raw, f"comments[{comment_index}].reactionCrossReferences[{reference_index}]")
     return sorted(by_key.values(), key=lambda row: (row["source_trait_id"], row["membership_id"]))
 
 

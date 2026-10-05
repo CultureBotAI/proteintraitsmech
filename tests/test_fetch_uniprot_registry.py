@@ -219,7 +219,11 @@ def test_request_uses_exact_accessions_required_fields_and_isoforms():
     assert query["query"] == ["(accession:P12345 OR accession:P21802-2)"]
     assert query["includeIsoform"] == ["true"]
     assert tuple(query["fields"][0].split(",")) == registry.RETURN_FIELDS
-    assert set(registry.XREF_FIELDS).issubset(registry.RETURN_FIELDS)
+    assert set(registry.FACT_FIELDS).issubset(registry.RETURN_FIELDS)
+    # GO and ComplexPortal cross-references and catalytic-activity Rhea reactions (#652).
+    assert {"go_id", "xref_complexportal", "cc_catalytic_activity"} <= set(
+        registry.RETURN_FIELDS
+    )
     assert query["format"] == ["json"]
 
 

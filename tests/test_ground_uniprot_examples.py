@@ -2817,6 +2817,77 @@ def test_resolve_qualifies_only_an_exact_release_pinned_uniprot_membership(local
     assert row["family_classifications"] == candidate["family_classifications"]
 
 
+_GO_FACT = {
+    "database": "GO",
+    "id": "GO:0009390",
+    "properties": [
+        {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+        {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+    ],
+}
+_CATALYTIC_ACTIVITY = {
+    "commentType": "CATALYTIC ACTIVITY",
+    "reaction": {"reactionCrossReferences": [{"database": "Rhea", "id": "RHEA:37871"}]},
+}
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method", "entry"),
+    [
+        ("GO:0009390", "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [_GO_FACT]}),
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_MEMBERSHIP",
+            {"uniProtKBCrossReferences": [{"database": "ComplexPortal", "id": "CPX-320"}]},
+        ),
+        ("RHEA:37871", "SOURCE_MEMBERSHIP", {"comments": [_CATALYTIC_ACTIVITY]}),
+    ],
+)
+def test_functional_uniprot_facts_qualify_only_under_their_own_method(
+    local_sources, trait_id, method, entry
+):
+    """#652: a GO annotation is SOURCE_ANNOTATION; a CPX/Rhea fact is SOURCE_MEMBERSHIP."""
+
+    candidate, _ = _prepare_membership_candidate(local_sources)
+    local_sources["record"].write_text(_record(trait_id, axis="FUNCTION"), encoding="utf-8")
+    facts = membership_snapshot.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=local_sources["candidate"]["sequence_sha256"],
+        uniprot_release="2026_02",
+    )
+    assert [fact["source_trait_id"] for fact in facts] == [trait_id]
+    _write_memberships(local_sources["membership"], facts)
+    good = {
+        **candidate,
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "source_namespace": trait_id.split(":", 1)[0],
+        "mapping_method": method,
+    }
+    good["candidate_id"] = ground.derive_candidate_id(good)
+    _jsonl(local_sources["queue"], [good])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["trait_occurrence"]["mapping_method"] == method
+    assert row["trait_occurrence"]["evidence_source"] == "UniProtKB"
+    assert row["grounding_evidence"]["provider_kind"] == "UNIPROT"
+
+    wrong = {
+        **good,
+        "mapping_method": (
+            "SOURCE_MEMBERSHIP" if method == "SOURCE_ANNOTATION" else "SOURCE_ANNOTATION"
+        ),
+    }
+    wrong["candidate_id"] = ground.derive_candidate_id(wrong)
+    _jsonl(local_sources["queue"], [wrong])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "mismatch:uniprot_fact_mapping_method" in row["reasons"]
+
+
 def test_exact_membership_release_supersedes_stale_discovery_release(local_sources):
     candidate, _ = _prepare_membership_candidate(local_sources)
     reference = json.loads(local_sources["source_registry"].read_text(encoding="utf-8"))

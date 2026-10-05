@@ -135,7 +135,7 @@ def test_extract_preserves_exact_xrefs_and_namespace_mappings():
                 },
                 {"database": "Gene3D", "id": "G3DSA:1.10.10.10"},
                 {"database": "SUPFAM", "id": "SSF12345"},
-                {"database": "GO", "id": "GO:0000001"},
+                {"database": "EMBL", "id": "X00001"},
             ]
         },
         protein_id="UniProtKB:P12345",
@@ -143,6 +143,7 @@ def test_extract_preserves_exact_xrefs_and_namespace_mappings():
         uniprot_release="2026_03",
     )
 
+    # An unsupported database (EMBL) is never captured.
     assert [row["source_trait_id"] for row in rows] == [
         "CATH:1.10.10.10",
         "PANTHER:PTHR12345",
@@ -345,3 +346,118 @@ def test_registry_malformed_membership_preserves_all_previous_outputs(tmp_path, 
     assert membership_out.read_text() == "old memberships\n"
     assert blocked.read_text() == "old blocks\n"
     assert receipt.read_text() == "old receipt\n"
+
+
+GO_XREF = {
+    "database": "GO",
+    "id": "GO:0009390",
+    "properties": [
+        {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+        {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+    ],
+    "evidences": [{"evidenceCode": "ECO:0000314", "source": "PubMed", "id": "3280546"}],
+}
+CATALYTIC = {
+    "commentType": "CATALYTIC ACTIVITY",
+    "reaction": {
+        "name": "2-heptyl-4(1H)-quinolone + NADH + O2 + H(+) = ...",
+        "reactionCrossReferences": [
+            {"database": "Rhea", "id": "RHEA:37871"},
+            {"database": "ChEBI", "id": "CHEBI:15377"},
+        ],
+        "ecNumber": "1.14.13.182",
+    },
+    "physiologicalReactions": [
+        {
+            "directionType": "left-to-right",
+            "reactionCrossReference": {"database": "Rhea", "id": "RHEA:37872"},
+        }
+    ],
+}
+
+
+def _functional_rows(entry: dict) -> list[dict]:
+    return membership.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P18776",
+        sequence_sha256=hashlib.sha256(b"ACDE").hexdigest(),
+        uniprot_release="2026_03",
+    )
+
+
+def test_functional_facts_are_captured_with_exact_trait_ids_and_evidence_codes():
+    rows = _functional_rows(
+        {
+            "uniProtKBCrossReferences": [
+                GO_XREF,
+                {"database": "ComplexPortal", "id": "CPX-320", "properties": []},
+                # A Rhea cross-reference outside a catalytic-activity reaction is ignored.
+                {"database": "Rhea", "id": "RHEA:99999"},
+            ],
+            "comments": [CATALYTIC, {"commentType": "FUNCTION", "texts": []}],
+        }
+    )
+    by_trait = {row["source_trait_id"]: row for row in rows}
+    assert sorted(by_trait) == ["ComplexPortal:CPX-320", "GO:0009390", "RHEA:37871"]
+    go = by_trait["GO:0009390"]
+    assert go["database"] == "GO" and go["database_id"] == "GO:0009390"
+    assert {"key": "GoEvidenceType", "value": "IDA:EcoCyc"} in (
+        go["database_cross_reference"]["properties"]
+    )
+    rhea = by_trait["RHEA:37871"]
+    assert rhea["database_cross_reference"] == {"database": "Rhea", "id": "RHEA:37871"}
+    # The directional physiological reaction is never a fact here.
+    assert "RHEA:37872" not in by_trait
+    assert membership.load_memberships  # rows are valid snapshot rows
+    assert membership.merge_memberships(rows) == sorted(
+        rows,
+        key=lambda row: (
+            row["protein_id"],
+            row["source_trait_id"],
+            row["uniprot_release"],
+            row["sequence_sha256"],
+            row["membership_id"],
+        ),
+    )
+
+
+def test_go_no_data_annotations_are_not_facts():
+    nd = {
+        "database": "GO",
+        "id": "GO:0005575",
+        "properties": [
+            {"key": "GoTerm", "value": "C:cellular_component"},
+            {"key": "GoEvidenceType", "value": "ND:UniProtKB"},
+        ],
+    }
+    assert _functional_rows({"uniProtKBCrossReferences": [nd]}) == []
+
+
+@pytest.mark.parametrize(
+    "entry",
+    [
+        {"uniProtKBCrossReferences": [{"database": "GO", "id": "GO:123"}]},
+        {"uniProtKBCrossReferences": [{"database": "ComplexPortal", "id": "CPX-0"}]},
+        {
+            "comments": [
+                {
+                    "commentType": "CATALYTIC ACTIVITY",
+                    "reaction": {"reactionCrossReferences": [{"database": "Rhea", "id": "37871"}]},
+                }
+            ]
+        },
+        {"comments": [{"commentType": "CATALYTIC ACTIVITY", "reaction": "not an object"}]},
+    ],
+)
+def test_malformed_functional_facts_fail_closed(entry):
+    with pytest.raises(membership.MembershipSnapshotError):
+        _functional_rows(entry)
+
+
+def test_expected_mapping_method_separates_annotation_from_membership():
+    assert membership.expected_mapping_method("GO:0009390") == "SOURCE_ANNOTATION"
+    for trait in ("RHEA:37871", "ComplexPortal:CPX-320", "Pfam:PF00001", "CATH:1.10.10.10"):
+        assert membership.expected_mapping_method(trait) == "SOURCE_MEMBERSHIP"
+    assert membership.UNIPROT_FACT_METHODS == {"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"}
+    assert membership.CATALYTIC_ACTIVITY_FIELD in membership.FACT_FIELDS
+    assert "go_id" in membership.FACT_FIELDS and "xref_complexportal" in membership.FACT_FIELDS

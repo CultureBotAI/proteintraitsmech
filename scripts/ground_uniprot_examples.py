@@ -139,6 +139,11 @@ _CONTENT_GATE_CANDIDATE_FIELDS = (
     "intervals",
 )
 
+# Exact UniProt exact-accession facts (`uniprot_membership_snapshot`): a cross-reference
+# or catalytic-activity reaction is membership, a GO cross-reference is an annotation.
+# Both are replayed from the same content-addressed snapshot (#652).
+_UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
+
 _MEMBERSHIP_RESOLUTION_REASONS = {
     "full release-pinned sequence and checksum require resolution",
     "exact membership must be replayed from a same-response UniProt xref snapshot",
@@ -1702,7 +1707,11 @@ def _resolve_occurrence(
         if evidence_source and evidence_source.lower() != "interpro":
             reasons.append("mismatch:evidence_source")
         evidence_source = "InterPro"
-    elif mapping_method == "SOURCE_MEMBERSHIP":
+    elif mapping_method in _UNIPROT_FACT_METHODS:
+        from uniprot_membership_snapshot import expected_mapping_method
+
+        if mapping_method != expected_mapping_method(str(source_trait_id or "")):
+            reasons.append("mismatch:uniprot_fact_mapping_method")
         if scope != "WHOLE_PROTEIN":
             reasons.append("invalid:membership_requires_whole_protein")
         if not _whole_protein_allowed(record):
@@ -1985,7 +1994,9 @@ def _resolve_occurrence(
     if not source_release:
         reasons.append("missing:source_release")
     evidence_tier = _clean_text(candidate.get("evidence_tier"))
-    if mapping_method in {"INTERPRO_MATCH", "SOURCE_MEMBERSHIP"} and not evidence_tier:
+    if (mapping_method == "INTERPRO_MATCH" or mapping_method in _UNIPROT_FACT_METHODS) and (
+        not evidence_tier
+    ):
         evidence_tier = "A"
     if evidence_tier not in {"A", "B"}:
         reasons.append(f"unqualifiable:evidence_tier:{evidence_tier or 'NONE'}")
@@ -2018,7 +2029,7 @@ def _resolve_occurrence(
     else:
         if coordinate_frame is not None:
             reasons.append("invalid:whole_protein_coordinate_frame")
-        if mapping_method == "SOURCE_MEMBERSHIP" and intervals:
+        if mapping_method in _UNIPROT_FACT_METHODS and intervals:
             reasons.append("invalid:membership_coordinates")
         if positions:
             reasons.append("invalid:whole_protein_residue_positions")
@@ -2086,7 +2097,7 @@ def _resolve_occurrence(
     ):
         if candidate.get(key) is not None:
             occurrence[key] = candidate[key]
-    if mapping_method == "SOURCE_MEMBERSHIP":
+    if mapping_method in _UNIPROT_FACT_METHODS:
         source_kind = "uniprot_membership"
     elif _clean_text(candidate.get("interpro_location_id")):
         source_kind = "interpro_grouped_location"
@@ -2101,10 +2112,10 @@ def _resolve_occurrence(
         validate_grounding_evidence,
     )
 
-    provider_kind = "UNIPROT" if mapping_method == "SOURCE_MEMBERSHIP" else "INTERPRO"
+    provider_kind = "UNIPROT" if mapping_method in _UNIPROT_FACT_METHODS else "INTERPRO"
     provider_source = (
         _display_path(context.durable_membership_path)
-        if mapping_method == "SOURCE_MEMBERSHIP"
+        if mapping_method in _UNIPROT_FACT_METHODS
         else str(source_evidence.get("source") or "InterPro")
     )
     evidence_occurrence = dict(occurrence)
@@ -2156,7 +2167,7 @@ def _resolve_candidate(
             for reason in producer_reasons:
                 normalized_reason = reason.strip()
                 if (
-                    candidate.get("mapping_method") == "SOURCE_MEMBERSHIP"
+                    candidate.get("mapping_method") in _UNIPROT_FACT_METHODS
                     and normalized_reason in _MEMBERSHIP_RESOLUTION_REASONS
                 ):
                     # These two discovery-state reasons are discharged only by the
@@ -2833,7 +2844,7 @@ def _verify_provider_evidence(
         reasons.append("missing:protein_registry_evidence")
     if row.get("mapping_method") == "INTERPRO_MATCH" and "interpro_frame" not in kinds:
         reasons.append("missing:interpro_evidence")
-    if row.get("mapping_method") == "SOURCE_MEMBERSHIP" and "uniprot_membership" not in kinds:
+    if row.get("mapping_method") in _UNIPROT_FACT_METHODS and "uniprot_membership" not in kinds:
         reasons.append("missing:uniprot_membership_evidence")
     if row.get("mapping_method") == "SIFTS_RESIDUE_MAPPING" and "sifts_mapping" not in kinds:
         reasons.append("missing:sifts_mapping_evidence")
@@ -3530,7 +3541,7 @@ def _selected_membership_rows(
 
     selected_memberships: list[dict[str, Any]] = []
     for row in selected:
-        if row.get("mapping_method") != "SOURCE_MEMBERSHIP":
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
             continue
         candidate_id = str(row["candidate_id"])
         protein_id = str(row["protein_id"])
@@ -3557,7 +3568,7 @@ def _selected_membership_rows(
         expected_entry_sha = membership_entry_sha256(membership)
         if not isinstance(grounding_evidence, dict) or any(
             (
-                grounding_evidence.get("mapping_method") != "SOURCE_MEMBERSHIP",
+                grounding_evidence.get("mapping_method") != row.get("mapping_method"),
                 grounding_evidence.get("scope") != "WHOLE_PROTEIN",
                 grounding_evidence.get("evidence_source") != "UniProtKB",
                 grounding_evidence.get("source_release") != membership["uniprot_release"],
@@ -3608,7 +3619,7 @@ def _same_protein_reference_except_release(
 def _requires_same_release_protein_reference(row: dict[str, Any]) -> bool:
     """Whether promotion must keep the selected ProteinReference release byte-exact."""
 
-    return row.get("mapping_method") == "SOURCE_MEMBERSHIP"
+    return row.get("mapping_method") in _UNIPROT_FACT_METHODS
 
 
 def _merge_protein_reference_rows(
@@ -3658,7 +3669,7 @@ def _selected_rows_for_merged_protein_references(
             continue
         if _requires_same_release_protein_reference(row):
             raise GroundingError(
-                f"{row['candidate_id']}: SOURCE_MEMBERSHIP ProteinReference changed "
+                f"{row['candidate_id']}: {row.get('mapping_method')} ProteinReference changed "
                 "uniprot_release"
             )
         if not _same_protein_reference_except_release(durable_reference, selected_reference):
@@ -4388,7 +4399,9 @@ def promote(args: argparse.Namespace) -> int:
     selected_references, selected_evidence = _selected_registry_rows(
         selected, staging_registry, staging_evidence
     )
-    membership_selected = any(row.get("mapping_method") == "SOURCE_MEMBERSHIP" for row in selected)
+    membership_selected = any(
+        row.get("mapping_method") in _UNIPROT_FACT_METHODS for row in selected
+    )
     merged_memberships: list[dict[str, Any]] = []
     durable_membership_digest: str | None = None
     membership_text = ""

@@ -28,7 +28,11 @@ THREE LAYERS, THREE TRUST LEVELS
    ``rhea-directions.tsv``), joined with that record's canonical examples, and given
    exactly one status: QUALIFIED_ON_TRAIT, LEGACY_ON_TRAIT, ABSENT_FROM_TRAIT,
    TRAIT_NOT_IN_PTM, or NOT_A_PTM_NAMESPACE.
-3. INCLUSION -- not here. A sibling assertion is discovery provenance, never
+3. CANDIDATES (``candidates``, ignored ``reports/uniprot-grounding/cross-mech/``) -- one
+   grounding-funnel candidate per ABSENT or LEGACY pair that has a route, carrying the
+   sibling provenance. The ordinary selector, fetch, resolver, review, and promoter
+   take it from there.
+4. INCLUSION -- not here. A sibling assertion is discovery provenance, never
    qualification evidence: CellStructureMech says in its own records that a protein
    example "is not itself evidence that the protein is part of this structure". An
    ABSENT or LEGACY pair becomes a grounding-funnel candidate, and qualifies only
@@ -79,6 +83,14 @@ SNAPSHOT_DIR = REPO_ROOT / "data" / "cross_mech"
 MENTIONS_NAME = "protein_mentions.jsonl"
 MANIFEST_NAME = "manifest.json"
 REPORT_DIR = REPO_ROOT / "reports" / "cross-mech"
+CANDIDATE_QUEUE = REPO_ROOT / "reports" / "uniprot-grounding" / "cross-mech" / "candidates.jsonl"
+CANDIDATE_BATCH = "cross-mech"
+# Discovery-state reasons every UniProt-fact producer attaches; the resolver discharges
+# them only through the exact release/checksum/fact replay (ground_uniprot_examples).
+CANDIDATE_RESOLUTION_REASONS = (
+    "exact membership must be replayed from a same-response UniProt xref snapshot",
+    "full release-pinned sequence and checksum require resolution",
+)
 RHEA_DIRECTIONS = REPO_ROOT / "data" / "raw" / "rhea" / "rhea-directions.tsv"
 # The release-141-compatible bytes stage_rhea_uniprot_grounding.py already pins;
 # tests/test_cross_mech_proteins.py asserts the two pins stay equal.
@@ -1507,6 +1519,76 @@ def render_summary_markdown(report: Mapping[str, Any], manifest: Mapping[str, An
     return "\n".join(lines) + "\n"
 
 
+# -------------------------------------------------------------------- candidates
+
+
+def candidate_rows(
+    pairs: Sequence[Mapping[str, Any]],
+    *,
+    uniprot_release: str,
+    mentions_sha256: str,
+) -> list[dict[str, Any]]:
+    """Funnel candidates for every absent or legacy pair that has a qualification route.
+
+    A row says only "the sibling claims this protein carries this exact trait". It names
+    the route that could prove it (an exact UniProt fact, or an exact InterPro match),
+    and nothing else: sequence, organism, and the fact itself come from the release-
+    pinned fetch, never from the sibling record.
+    """
+
+    if re.fullmatch(r"[0-9]{4}_[0-9]{2}", uniprot_release) is None:
+        raise CrossMechError(f"--uniprot-release must look like 2026_03, got {uniprot_release!r}")
+    scripts = str(Path(__file__).resolve().parent)
+    if scripts not in sys.path:
+        sys.path.insert(0, scripts)
+    from ground_uniprot_examples import derive_candidate_id  # noqa: PLC0415
+
+    rows: list[dict[str, Any]] = []
+    for pair in pairs:
+        if (
+            pair["status"] not in {"ABSENT_FROM_TRAIT", "LEGACY_ON_TRAIT"}
+            or pair["route"] == "NONE"
+        ):
+            continue
+        method, _, evidence_source = pair["route"].partition(":")
+        trait_id = pair["trait_id"]
+        row: dict[str, Any] = {
+            "schema_version": 1,
+            "batch": CANDIDATE_BATCH,
+            "candidate_status": "CANDIDATE_PROTEIN",
+            "qualification_status": "CANDIDATE_PROTEIN",
+            "trait_id": trait_id,
+            "record_path": pair["record_path"],
+            "trait_axis": pair["trait_axis"],
+            "trait_category": pair["trait_category"],
+            "source_namespace": trait_id.split(":", 1)[0],
+            "protein_id": pair["protein_id"],
+            "scope": "LOCALIZED" if method == "INTERPRO_MATCH" else "WHOLE_PROTEIN",
+            "source_trait_id": trait_id,
+            "mapping_method": method,
+            "evidence_source": evidence_source,
+            "evidence_tier": "A",
+            "cross_mech_provenance": {
+                "status": pair["status"],
+                "sibling_curies": pair["sibling_curies"],
+                "relations": pair["relations"],
+                "mechs": pair["mechs"],
+                "sibling_records": pair["sibling_records"],
+                "snapshot_mentions_sha256": mentions_sha256,
+            },
+        }
+        if method != "INTERPRO_MATCH":
+            # The exact-accession snapshot replaces this with its own release.
+            row["source_release"] = uniprot_release
+            row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
+        row["candidate_id"] = derive_candidate_id(row)
+        rows.append(row)
+    rows.sort(key=lambda row: (row["trait_id"], row["protein_id"], row["candidate_id"]))
+    if len({row["candidate_id"] for row in rows}) != len(rows):
+        raise CrossMechError("internal error: duplicate candidate IDs")
+    return rows
+
+
 # ------------------------------------------------------------------------- check
 
 
@@ -1708,6 +1790,34 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_candidates(args: argparse.Namespace) -> int:
+    rows, manifest = load_snapshot(Path(args.snapshot))
+    if args.pairs:
+        pairs = [
+            json.loads(line) for line in Path(args.pairs).read_text(encoding="utf-8").splitlines()
+        ]
+    else:
+        pairs = audit(
+            rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
+        )["pairs"]
+    candidates = candidate_rows(
+        pairs, uniprot_release=args.uniprot_release, mentions_sha256=manifest["mentions_sha256"]
+    )
+    by_route = Counter(f"{row['mapping_method']}:{row['source_namespace']}" for row in candidates)
+    print(
+        f"{len(candidates):,} candidates over {len({row['record_path'] for row in candidates}):,} "
+        f"records and {len({row['protein_id'] for row in candidates}):,} proteins"
+    )
+    for route, count in sorted(by_route.items()):
+        print(f"  {route}: {count:,}")
+    if not args.apply:
+        print(f"dry run: pass --apply to write {args.out}")
+        return 0
+    _atomic_write(Path(args.out), "".join(canonical_json(row) + "\n" for row in candidates))
+    print(f"WROTE {args.out}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
@@ -1735,6 +1845,18 @@ def build_parser() -> argparse.ArgumentParser:
     audit_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
     audit_parser.add_argument("--out", default=str(REPORT_DIR))
     audit_parser.set_defaults(func=cmd_audit)
+
+    candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
+    candidates_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
+    candidates_parser.add_argument("--traits", default=str(TRAITS_ROOT))
+    candidates_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
+    candidates_parser.add_argument(
+        "--pairs", help="reuse an audit pairs.jsonl instead of re-auditing"
+    )
+    candidates_parser.add_argument("--uniprot-release", required=True)
+    candidates_parser.add_argument("--out", default=str(CANDIDATE_QUEUE))
+    candidates_parser.add_argument("--apply", action="store_true")
+    candidates_parser.set_defaults(func=cmd_candidates)
 
     check_parser = sub.add_parser("check", help="verify the snapshot; optionally report drift")
     check_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))

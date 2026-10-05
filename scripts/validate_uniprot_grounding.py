@@ -45,6 +45,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import yaml
 
 import grounding_registry_layout as layout
+from uniprot_membership_snapshot import UNIPROT_FACT_METHODS, expected_mapping_method
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRAITS = ROOT / "data" / "traits"
@@ -898,9 +899,17 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                 "represented and verified by the grounding boundary",
             )
         )
+    # ComplexPortal and Rhea each have two lanes (#652). The source-native lane
+    # (provider_kind SOURCE_DATABASE) keeps its unconditional receipt lock. The UniProt
+    # lane (provider_kind UNIPROT, evidence_source UniProtKB) is the exact-accession fact
+    # UniProt itself states -- a ComplexPortal cross-reference, or a Rhea reaction inside a
+    # CATALYTIC ACTIVITY comment -- and is replayed against the content-addressed
+    # membership snapshot by the generic UNIPROT fact contract below and
+    # validate_membership_replay; its receipt is the verified UniProt fetch receipt.
     if source == "ComplexPortal" or "ComplexPortal" in namespaces:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
+        uniprot_lane = kind == "UNIPROT"
         if method != "SOURCE_MEMBERSHIP":
             errors.append(
                 (
@@ -908,7 +917,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "ComplexPortal evidence requires SOURCE_MEMBERSHIP",
                 )
             )
-        if source != "ComplexPortal":
+        if uniprot_lane:
+            if source != "UniProtKB":
+                errors.append(
+                    (
+                        "complexportal_uniprot_source_mismatch",
+                        "UniProt-lane ComplexPortal evidence requires evidence_source "
+                        "exactly 'UniProtKB'",
+                    )
+                )
+        elif source != "ComplexPortal":
             errors.append(
                 (
                     "complexportal_source_mismatch",
@@ -929,11 +947,12 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "matching ComplexPortal:CPX-<positive decimal integer>",
                 )
             )
-        if kind != "SOURCE_DATABASE":
+        if kind not in {"SOURCE_DATABASE", "UNIPROT"}:
             errors.append(
                 (
                     "complexportal_provider_mismatch",
-                    "ComplexPortal evidence requires provider_kind='SOURCE_DATABASE'",
+                    "ComplexPortal evidence requires provider_kind 'SOURCE_DATABASE' "
+                    "(source-native lane) or 'UNIPROT' (UniProt cross-reference lane)",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
@@ -950,16 +969,18 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "ComplexPortal provider_release must equal source_release",
                 )
             )
-        errors.append(
-            (
-                "complexportal_provider_receipt_required",
-                "ComplexPortal evidence cannot qualify until a provider acquisition receipt "
-                "is represented and verified by the grounding boundary",
+        if not uniprot_lane:
+            errors.append(
+                (
+                    "complexportal_provider_receipt_required",
+                    "ComplexPortal evidence cannot qualify until a provider acquisition "
+                    "receipt is represented and verified by the grounding boundary",
+                )
             )
-        )
     if source == "Rhea" or "RHEA" in namespaces:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
+        uniprot_lane = kind == "UNIPROT"
         if method != "SOURCE_MEMBERSHIP":
             errors.append(
                 (
@@ -967,7 +988,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "Rhea evidence requires direct SOURCE_MEMBERSHIP",
                 )
             )
-        if source != "Rhea":
+        if uniprot_lane:
+            if source != "UniProtKB":
+                errors.append(
+                    (
+                        "rhea_uniprot_source_mismatch",
+                        "UniProt-lane Rhea evidence requires evidence_source exactly "
+                        "'UniProtKB'",
+                    )
+                )
+        elif source != "Rhea":
             errors.append(
                 (
                     "rhea_source_mismatch",
@@ -988,11 +1018,12 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "RHEA:<positive decimal integer>",
                 )
             )
-        if kind != "SOURCE_DATABASE":
+        if kind not in {"SOURCE_DATABASE", "UNIPROT"}:
             errors.append(
                 (
                     "rhea_provider_mismatch",
-                    "Rhea evidence requires provider_kind='SOURCE_DATABASE'",
+                    "Rhea evidence requires provider_kind 'SOURCE_DATABASE' (rhea2uniprot "
+                    "lane) or 'UNIPROT' (UniProt catalytic-activity lane)",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
@@ -1002,24 +1033,26 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "Rhea evidence requires WHOLE_PROTEIN scope",
                 )
             )
-        if (
-            evidence.get("source_release") != RHEA_RELEASE
-            or evidence.get("provider_release") != RHEA_RELEASE
-        ):
-            errors.append(
-                (
-                    "rhea_release_mismatch",
-                    "Rhea evidence requires source_release and provider_release exactly '141'",
+        if not uniprot_lane:
+            if (
+                evidence.get("source_release") != RHEA_RELEASE
+                or evidence.get("provider_release") != RHEA_RELEASE
+            ):
+                errors.append(
+                    (
+                        "rhea_release_mismatch",
+                        "Rhea evidence requires source_release and provider_release exactly "
+                        "'141'",
+                    )
                 )
-            )
-        if evidence.get("provider_source") != RHEA_PROVIDER_SOURCE:
-            errors.append(
-                (
-                    "rhea_provider_source_mismatch",
-                    "Rhea evidence requires the canonical direct "
-                    "data/raw/rhea/rhea2uniprot_sprot.tsv source artifact",
+            if evidence.get("provider_source") != RHEA_PROVIDER_SOURCE:
+                errors.append(
+                    (
+                        "rhea_provider_source_mismatch",
+                        "Rhea evidence requires the canonical direct "
+                        "data/raw/rhea/rhea2uniprot_sprot.tsv source artifact",
+                    )
                 )
-            )
         if evidence.get("inheritance_path") is not None:
             errors.append(
                 (
@@ -1044,15 +1077,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "mapping provenance",
                 )
             )
-        errors.append(
-            (
-                "rhea_provider_receipt_required",
-                "Rhea evidence cannot qualify until the authentic release-141 provider "
-                "acquisition receipt, exact mapping-row replay, verified ProteinReference "
-                "fetch receipt, and receipt verifier are represented and verified by the "
-                "grounding boundary",
+        if not uniprot_lane:
+            errors.append(
+                (
+                    "rhea_provider_receipt_required",
+                    "Rhea evidence cannot qualify until the authentic release-141 provider "
+                    "acquisition receipt, exact mapping-row replay, verified ProteinReference "
+                    "fetch receipt, and receipt verifier are represented and verified by the "
+                    "grounding boundary",
+                )
             )
-        )
     if source == "SCOPe" or namespaces & {"SCOP", "SCOPe"}:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
@@ -1257,40 +1291,51 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "grounding boundary",
                 )
             )
-    if method == "SOURCE_MEMBERSHIP" and (kind == "UNIPROT" or source == "UniProtKB"):
+    if method in UNIPROT_FACT_METHODS and (kind == "UNIPROT" or source == "UniProtKB"):
+        # One exact UniProt fact lane for both methods; the namespace decides which
+        # method the fact may support (a GO annotation is never a "membership").
+        expected_method = expected_mapping_method(str(evidence.get("source_trait_id") or ""))
+        if method != expected_method:
+            errors.append(
+                (
+                    "uniprot_fact_method_mismatch",
+                    f"a UniProt {_namespace(evidence.get('source_trait_id'))!s} fact supports "
+                    f"{expected_method}, not {method}",
+                )
+            )
         if kind != "UNIPROT":
             errors.append(
                 (
                     "uniprot_membership_provider_mismatch",
-                    "UniProtKB SOURCE_MEMBERSHIP requires provider_kind='UNIPROT'",
+                    f"UniProtKB {method} requires provider_kind='UNIPROT'",
                 )
             )
         if source != "UniProtKB":
             errors.append(
                 (
                     "uniprot_membership_source_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires evidence_source exactly 'UniProtKB'",
+                    f"UNIPROT {method} requires evidence_source exactly 'UniProtKB'",
                 )
             )
         if evidence.get("provider_release") != evidence.get("source_release"):
             errors.append(
                 (
                     "uniprot_membership_release_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP provider_release must equal source_release",
+                    f"UNIPROT {method} provider_release must equal source_release",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
             errors.append(
                 (
                     "uniprot_membership_scope_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires WHOLE_PROTEIN scope",
+                    f"UNIPROT {method} requires WHOLE_PROTEIN scope",
                 )
             )
         if evidence.get("source_trait_id") != evidence.get("trait_id"):
             errors.append(
                 (
                     "uniprot_membership_trait_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires exact source_trait_id == trait_id",
+                    f"UNIPROT {method} requires exact source_trait_id == trait_id",
                 )
             )
 
@@ -2319,7 +2364,7 @@ def _qualified_membership_uses(value: object, *, file: str) -> list[MembershipUs
                 continue
             if occurrence.get("qualification_status") != QUALIFIED:
                 continue
-            if occurrence.get("mapping_method") != "SOURCE_MEMBERSHIP":
+            if occurrence.get("mapping_method") not in UNIPROT_FACT_METHODS:
                 continue
             uses.append(
                 MembershipUse(
@@ -2371,7 +2416,7 @@ def validate_membership_replay(
         if not isinstance(evidence, Mapping):
             # The ordinary evidence dereference reports the missing or malformed row.
             continue
-        if evidence.get("mapping_method") != "SOURCE_MEMBERSHIP":
+        if evidence.get("mapping_method") not in UNIPROT_FACT_METHODS:
             continue
         is_uniprot = (
             evidence.get("provider_kind") == "UNIPROT"
