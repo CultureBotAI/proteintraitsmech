@@ -71,6 +71,13 @@ jobs:
       # pull request here.
       - run: just audit-cross-mech-categories --check-remote
 
+      # The tracked sibling-Mech protein snapshot (#652): integrity and channel-rule
+      # currency fail the job, because both are this repository's own files. --remote
+      # compares each pinned sibling commit and the pinned claw fleet manifest with the
+      # live default branches; that drift is a NOTICE, since siblings move daily and an
+      # unreachable network must not fail a pull request here.
+      - run: just check-cross-mech-proteins --remote
+
       # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
       # of the repo pointing at a script that was never written, and because nothing ran
       # it, nothing was ever red. A recipe nobody runs is indistinguishable from a passing

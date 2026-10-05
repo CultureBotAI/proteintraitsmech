@@ -50,6 +50,7 @@ just validate-all             # closed LinkML + UniProt grounding semantics
 ProteinTraitsMech/
 ├── data/
 │   ├── raw/                                     # gitignored, regenerable upstream downloads
+│   ├── cross_mech/                              # pinned snapshot of sibling-Mech protein mentions
 │   └── traits/
 │       ├── sequence/<category>/<slug>.yaml
 │       ├── structure/<category>/<slug>.yaml
@@ -210,6 +211,11 @@ supports them, and can also be added by curators:
   retained only with their matching inline sequence frame; no annotations or trait
   positions are inferred. A sequence without a stored feature track is labelled as
   such, not as evidence that the protein has no annotated features.
+
+  Proteins the sibling Mechs tie to a trait are tracked in `data/cross_mech/`
+  (`just scan-cross-mech-proteins`, `just audit-cross-mech-proteins`); they are
+  candidates for the exact record the audit resolves, never evidence. See
+  [research/cross-mech-protein-examples.md](research/cross-mech-protein-examples.md).
 
   Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
   signature cross-references and `just suggest-examples` ranks carriers from the
