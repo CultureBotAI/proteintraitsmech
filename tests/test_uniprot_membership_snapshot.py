@@ -364,6 +364,8 @@ CATALYTIC = {
         "reactionCrossReferences": [
             {"database": "Rhea", "id": "RHEA:37871"},
             {"database": "ChEBI", "id": "CHEBI:15377"},
+            # Seen in UniProt 2026_03 (O34351): a polymer participant, not a reaction.
+            {"database": "Rhea", "id": "RHEA-COMP:9613"},
         ],
         "ecNumber": "1.14.13.182",
     },

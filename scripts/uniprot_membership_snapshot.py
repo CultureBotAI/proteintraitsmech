@@ -21,7 +21,7 @@ Three kinds of exact UniProt fact share this one snapshot (#652):
 * a Rhea reaction cross-reference inside a ``CATALYTIC ACTIVITY`` comment -- exact
   membership of the protein among the catalysts of that master reaction, stored as the
   returned ``{"database": "Rhea", "id": "RHEA:n"}`` object.  Directional
-  ``physiologicalReactions`` are never captured.
+  ``physiologicalReactions`` and ``RHEA-COMP:`` participant compounds are never captured.
 
 :func:`expected_mapping_method` names the occurrence method each fact may support, so a
 GO annotation can never be recorded as a membership or the reverse.
@@ -65,6 +65,7 @@ XREF_FIELDS = tuple(spec[0] for spec in XREF_SPECS)
 CATALYTIC_ACTIVITY_FIELD = "cc_catalytic_activity"
 FACT_FIELDS = (*XREF_FIELDS, CATALYTIC_ACTIVITY_FIELD)
 RHEA_DATABASE = "Rhea"
+RHEA_COMPOUND_PREFIX = "RHEA-COMP:"
 DATABASE_TO_NAMESPACE = {database: namespace for _, database, namespace in XREF_SPECS}
 DATABASE_TO_NAMESPACE[RHEA_DATABASE] = "RHEA"
 
@@ -377,8 +378,14 @@ def extract_entry_memberships(
                     f"comments[{comment_index}] reaction reference {reference_index} "
                     "is not an object"
                 )
-            if raw.get("database") == RHEA_DATABASE:
-                add(raw, f"comments[{comment_index}].reactionCrossReferences[{reference_index}]")
+            if raw.get("database") != RHEA_DATABASE:
+                continue
+            raw_id = raw.get("id")
+            if isinstance(raw_id, str) and raw_id.startswith(RHEA_COMPOUND_PREFIX):
+                # A Rhea generic/polymer compound is a reaction *participant*, which
+                # UniProt lists under the Rhea database too; it is never a reaction.
+                continue
+            add(raw, f"comments[{comment_index}].reactionCrossReferences[{reference_index}]")
     return sorted(by_key.values(), key=lambda row: (row["source_trait_id"], row["membership_id"]))
 
 
