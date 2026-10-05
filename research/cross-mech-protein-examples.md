@@ -53,6 +53,11 @@ and `data/cross_mech/manifest.json`.
   GRAPH_NODE, TARGET, SUBSTRATE, REFERENCE, CROSSWALK), a relation, and where the
   trait CURIE is read. A path no rule knows is kept as **UNCLASSIFIED** and reported
   by `check`, so sibling schema growth surfaces as drift. Today there are none.
+- **Qualifiers**: a channel can copy declared keys that hedge a claim onto each
+  annotation. NaturalProductMech's `proposed` ("inferred rather than demonstrated") is
+  one; the audit carries qualifiers to every pair and counts the pairs whose every
+  supporting claim is only a proposal, so a reviewer never mistakes a restated
+  prediction for independent support.
 
 The channels that carry a trait:
 
@@ -142,11 +147,11 @@ release-pinned exact-accession response:
 | ComplexPortal | `SOURCE_MEMBERSHIP`, provider `UNIPROT` | `ComplexPortal` cross-reference with the exact `CPX-n` |
 | Pfam, InterPro, NCBIfam, ... | `INTERPRO_MATCH` (localized) or existing `SOURCE_MEMBERSHIP` (whole-protein records) | existing routes |
 
-An exploratory exact-accession probe (UniProt `2026_03`; not durable evidence — the
-funnel's fetch stage re-acquires everything under its own receipt) confirmed **361 of
-the 506**: Rhea 93/96, ComplexPortal 112/112, GO localization 132/270, GO molecular
-function 20/24, and all four signature pairs. Most unconfirmed localization pairs are
-proteins UniProt annotates to a different or more specific GO term.
+An exploratory exact-accession probe during design (UniProt `2026_03`; not retained and
+not evidence) suggested that most Rhea, ComplexPortal, and GO molecular-function pairs
+are confirmed and that about half of the GO localization pairs are not, mostly because
+UniProt annotates a different or more specific term. The reproducible result is the
+inclusion batch's own record, which supersedes it.
 
 ### What blocks inclusion today
 
@@ -179,15 +184,20 @@ follows it, through the ordinary review and authorization steps.
 
 ## Keeping it current
 
-- `just check-cross-mech-proteins` (CI, offline) verifies the snapshot's integrity and
-  that its channel rules are the current ones.
-- `--remote` (CI notice) compares every pinned commit with the live default branch and
-  the pinned fleet manifest with the live one (a new Mech or changed globs is reported).
+- CI runs `just check-cross-mech-proteins --remote`. Snapshot integrity (bytes, sort
+  order, per-row classification under the current rules, per-Mech counts) and rule
+  currency fail the job.
+- `--remote` adds notices only: every pinned commit against the live default branch, and
+  the pinned fleet manifest against the live one (a new Mech or changed globs). An
+  unreachable network, a timeout, or an HTTP error is reported as `UNAVAILABLE`.
 - `--local` compares sibling checkouts and separates `STALE` (record files changed)
   from `MOVED_RECORDS_UNCHANGED`.
 - Refresh with `just scan-cross-mech-proteins --fetch --apply` before each cross-Mech
   grounding batch, or when the notice reports `STALE`, and commit the diff: the git
   history of `data/cross_mech/` is the history of what the siblings claimed.
+- After a rules change, `just scan-cross-mech-proteins --at-manifest
+  data/cross_mech/manifest.json --apply` re-derives the snapshot at the same pinned
+  sibling and fleet commits, so the diff shows only what the rules changed.
 
 ## Fleet observations
 

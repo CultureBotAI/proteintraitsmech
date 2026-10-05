@@ -12,6 +12,7 @@ import json
 import pathlib
 import subprocess
 import sys
+import urllib.error
 from types import SimpleNamespace
 
 import pytest
@@ -192,7 +193,6 @@ def test_channel_rules_are_unique_and_well_formed():
         assert channel.role in CM.ROLES and channel.role != "UNCLASSIFIED"
         for source in channel.annotations:
             assert source.scope in {"self", "parent", "record", "list"}
-    assert CM.rules_sha256() == CM.rules_sha256()
 
 
 # ------------------------------------------------------------------ extraction
@@ -590,3 +590,214 @@ def test_tracked_snapshot_verifies_when_present():
     raw = (CM.SNAPSHOT_DIR / CM.MENTIONS_NAME).read_bytes()
     assert CM.verify_snapshot(raw, manifest) == []
     assert manifest["rules_sha256"] == CM.rules_sha256(), "rescan: channel rules changed"
+
+
+# ------------------------------------------------------------- review fixes (#962-#969)
+
+
+def test_rule_digest_tracks_extraction_constants(monkeypatch):
+    before = CM.rules_sha256()
+    monkeypatch.setattr(CM, "_NON_CURIE_SCHEMES", CM._NON_CURIE_SCHEMES | {"doi"})
+    assert CM.rules_sha256() != before
+    monkeypatch.undo()
+    monkeypatch.setattr(CM, "EXTRACTION_VERSION", CM.EXTRACTION_VERSION + 1)
+    assert CM.rules_sha256() != before
+
+
+@pytest.mark.parametrize(
+    "error",
+    [subprocess.TimeoutExpired(cmd="git ls-remote", timeout=60), OSError("no git")],
+)
+def test_remote_head_turns_runner_failures_into_notices(error):
+    def runner(*args, **kwargs):
+        raise error
+
+    with pytest.raises(CM.CrossMechError, match="did not complete"):
+        CM.remote_head("CultureBotAI/TraitMech", runner=runner)
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        urllib.error.HTTPError("https://raw.githubusercontent.com/x", 503, "busy", {}, None),
+        urllib.error.URLError("unreachable"),
+        TimeoutError("read timed out"),
+    ],
+)
+def test_guarded_fetch_turns_network_failures_into_notices(error):
+    def opener(request, timeout):
+        raise error
+
+    with pytest.raises(CM.CrossMechError, match="could not be fetched"):
+        CM._guarded_fetch("https://raw.githubusercontent.com/x", opener=opener, host=CM.RAW_HOST)
+
+
+def _pinned_manifest():
+    return {
+        "fleet_manifest": {"commit": FLEET_COMMIT, "sha256": "0" * 64},
+        "mechs": [
+            {
+                "key": "traitmech",
+                "github": "CultureBotAI/TraitMech",
+                "record_globs": ["data/traits/**/*.yaml"],
+                "commit": "b" * 40,
+            }
+        ],
+    }
+
+
+def test_remote_drift_reports_an_unreachable_network_without_raising():
+    def runner(*args, **kwargs):
+        raise subprocess.TimeoutExpired(cmd="git ls-remote", timeout=60)
+
+    def opener(request, timeout):
+        raise urllib.error.URLError("down")
+
+    report = CM.remote_drift(_pinned_manifest(), runner=runner, opener=opener)
+    assert {item["key"]: item["state"] for item in report} == {
+        "traitmech": "UNAVAILABLE",
+        "fleet-manifest": "UNAVAILABLE",
+    }
+
+
+def test_remote_drift_reports_fleet_membership_changes():
+    head = "c" * 40
+
+    def runner(cmd, **kwargs):
+        return SimpleNamespace(returncode=0, stdout=f"{head}\tHEAD\n", stderr="")
+
+    live = yaml.safe_dump(
+        {
+            "version": 1,
+            "mechs": {
+                "proteintraitsmech": {
+                    "github": "CultureBotAI/proteintraitsmech",
+                    "record_globs": ["data/traits/**/*.yaml"],
+                },
+                "traitmech": {
+                    "github": "CultureBotAI/TraitMech",
+                    "record_globs": ["data/traits/**/*.yaml"],
+                },
+                "dufmech": {"github": "CultureBotAI/DUFMech", "record_globs": ["data/x/*.yaml"]},
+            },
+        }
+    ).encode()
+
+    class Response:
+        status = 200
+
+        def __init__(self, url):
+            self.url = url
+
+        def geturl(self):
+            return self.url
+
+        def read(self, limit):
+            return live
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    report = {
+        item["key"]: item
+        for item in CM.remote_drift(
+            _pinned_manifest(), runner=runner, opener=lambda req, timeout: Response(req.full_url)
+        )
+    }
+    assert report["traitmech"]["state"] == "MOVED"
+    assert report["fleet-manifest"]["state"] == "STALE"
+    assert report["fleet-manifest"]["added"] == ["dufmech CultureBotAI/DUFMech"]
+
+
+def test_identifier_index_sees_edits_deletions_and_renames_under_hostile_config(tmp_path):
+    traits = _trait_tree(tmp_path)
+    repo = traits.parent.parent
+    _git(repo, "config", "color.ui", "always")
+    _git(repo, "config", "grep.fullName", "true")
+    rhea = traits / "function/enzymatic_activity/rhea/r37871.yaml"
+    rhea.write_text(rhea.read_text().replace("RHEA:37871", "RHEA:99999"), encoding="utf-8")
+    (traits / "sequence/domain/pfam/lpp.yaml").unlink()
+    _git(
+        repo,
+        "mv",
+        "data/traits/function/molecular_function/go/dgc.yaml",
+        "data/traits/function/molecular_function/go/renamed.yaml",
+    )
+    index = CM.build_identifier_index(traits)
+    assert index["RHEA:99999"] == ["function/enzymatic_activity/rhea/r37871.yaml"]
+    assert "RHEA:37871" not in index
+    assert "Pfam:PF04728" not in index
+    assert index["GO:0052621"] == ["function/molecular_function/go/renamed.yaml"]
+    assert index["ComplexPortal:CPX-320"] == [
+        "function/interaction_partner/complexportal/cpx320.yaml"
+    ]
+
+
+def test_glob_character_classes_follow_fnmatch():
+    regex = CM.glob_to_regex("data/[ab]*/[!x]*.yaml")
+    assert regex.match("data/alpha/y.yaml")
+    assert not regex.match("data/gamma/y.yaml")
+    assert not regex.match("data/alpha/x.yaml")
+
+
+def test_strings_in_nested_and_root_lists_are_never_dropped():
+    nested = CM.mention_rows("traitmech", "data/x.yaml", {"pairs": [["UniProtKB:P12345"]]})
+    assert [(row["pointer"], row["role"]) for row in nested] == [("/pairs/0/0", "UNCLASSIFIED")]
+    root = CM.mention_rows("traitmech", "data/x.yaml", ["UniProtKB:P12345"])
+    assert [row["pointer"] for row in root] == ["/0"]
+
+
+def test_proposed_steps_keep_their_qualifier_into_the_audit(tmp_path):
+    document = {
+        "biosynthetic_pathway": [
+            {"enzyme_id": "UniProtKB:Q8GRA0", "reaction_id": "RHEA:37871", "proposed": True},
+            {"enzyme_id": "UniProtKB:Q9I0Q0", "reaction_id": "RHEA:37871"},
+        ]
+    }
+    rows = CM.mention_rows("naturalproductmech", "data/natural_products/a.yaml", document)
+    by_protein = {row["protein_id"]: row for row in rows}
+    assert by_protein["UniProtKB:Q8GRA0"]["annotations"][0]["qualifiers"] == {"proposed": True}
+    assert "qualifiers" not in by_protein["UniProtKB:Q9I0Q0"]["annotations"][0]
+    report = CM.audit(rows, traits_root=_trait_tree(tmp_path), rhea_directions=tmp_path / "x.tsv")
+    pairs = {pair["protein_id"]: pair for pair in report["pairs"]}
+    assert pairs["UniProtKB:Q8GRA0"]["qualifiers"] == [{"proposed": True}]
+    assert pairs["UniProtKB:Q9I0Q0"]["qualifiers"] == [{}]
+    assert report["summary"]["pairs_resting_only_on_proposed_claims"] == 1
+
+
+def test_verification_refuses_relabelled_rows_and_wrong_mech_counts(fleet_root, tmp_path):
+    root, fleet = fleet_root
+    result = CM.scan(fleet, root, environ={})
+    target = next(index for index, row in enumerate(result.rows) if row["role"] == "TARGET")
+    result.rows[target] = {**result.rows[target], "role": "EXAMPLE"}
+    text = CM.render_mentions(result.rows)
+    manifest = CM.build_manifest(result, fleet, text)
+    assert any("disagree with the rules" in e for e in CM.verify_snapshot(text.encode(), manifest))
+
+    clean = CM.scan(fleet, root, environ={})
+    text = CM.render_mentions(clean.rows)
+    manifest = CM.build_manifest(clean, fleet, text)
+    manifest["mechs"][0]["mentions"] += 1
+    assert any(
+        "counts do not match its rows" in e for e in CM.verify_snapshot(text.encode(), manifest)
+    )
+
+
+def test_local_drift_survives_a_missing_commit_and_honours_configured_roots(fleet_root, tmp_path):
+    root, fleet = fleet_root
+    manifest = CM.build_manifest(CM.scan(fleet, root, environ={}), fleet, "")
+    relocated = tmp_path / "elsewhere"
+    (root / "TraitMech").rename(relocated)
+    for mech in manifest["mechs"]:
+        if mech["key"] == "traitmech":
+            mech["environment_variable"] = "TRAITMECH_ROOT"
+        if mech["key"] == "naturalproductmech":
+            mech["commit"] = "d" * 40  # not in the clone
+    states = {
+        item["key"]: item["state"]
+        for item in CM.local_drift(manifest, root, environ={"TRAITMECH_ROOT": str(relocated)})
+    }
+    assert states == {"naturalproductmech": "UNAVAILABLE", "traitmech": "CURRENT"}

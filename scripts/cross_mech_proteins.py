@@ -61,8 +61,10 @@ import re
 import subprocess
 import sys
 import tempfile
+import urllib.error
 import urllib.parse
 import urllib.request
+from http.client import HTTPException
 from collections import Counter, defaultdict
 from collections.abc import Callable, Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
@@ -105,6 +107,9 @@ BARE_PROTEIN_KEYS = frozenset(
 # only bare-accession key without it is protein_accession, so a blob matching neither
 # cannot hold a mention and is not parsed (TaxonMech alone has ~626k records).
 PROTEIN_PREFILTER = re.compile(rb"(?i)niprot|protein_accession")
+# Bump whenever iter_mentions/annotations_for/mention_rows change what a row says, so the
+# rule digest (and `check`) notices code that hashing the declared tables cannot (#967).
+EXTRACTION_VERSION = 2
 CURIE = re.compile(r"^([A-Za-z][A-Za-z0-9_.-]*):(\S+)$")
 _NON_CURIE_SCHEMES = frozenset({"http", "https", "ftp", "file", "mailto", "urn"})
 SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
@@ -186,6 +191,10 @@ class Channel:
     relation: str
     annotations: tuple[AnnotationSource, ...] = ()
     label_key: str | None = None
+    # Keys on an annotation's scope object that qualify the claim (NaturalProductMech's
+    # `proposed`: "inferred rather than demonstrated"). Copied onto each annotation so a
+    # sibling's own hedge is never lost (#965).
+    qualifier_keys: tuple[str, ...] = ()
     note: str = ""
 
     def projection(self) -> dict[str, Any]:
@@ -197,6 +206,7 @@ class Channel:
             "relation": self.relation,
             "annotations": [source.projection() for source in self.annotations],
             "label_key": self.label_key,
+            "qualifier_keys": list(self.qualifier_keys),
         }
 
 
@@ -287,6 +297,7 @@ CHANNELS: tuple[Channel, ...] = (
         "catalyzes",
         (_src("self", "reaction_id", "catalyzes"),),
         label_key="enzyme_label",
+        qualifier_keys=("proposed",),
     ),
     Channel(
         "naturalproductmech.biosynthetic_substrate",
@@ -386,6 +397,10 @@ def rules_projection() -> dict[str, Any]:
         "bare_protein": BARE_PROTEIN.pattern,
         "bare_protein_keys": sorted(BARE_PROTEIN_KEYS),
         "curie": CURIE.pattern,
+        "non_curie_schemes": sorted(_NON_CURIE_SCHEMES),
+        "protein_prefilter": PROTEIN_PREFILTER.pattern.decode("ascii"),
+        "generalize": _GENERALIZE.pattern,
+        "extraction_version": EXTRACTION_VERSION,
     }
 
 
@@ -438,6 +453,15 @@ def glob_to_regex(pattern: str) -> re.Pattern[str]:
         elif pattern[index] == "?":
             out.append("[^/]")
             index += 1
+        elif pattern[index] == "[" and "]" in pattern[index + 2 :]:
+            # fnmatch-style class, as pathlib and claw's validator accept: [abc], [!abc].
+            close = pattern.index("]", index + 2)
+            body = pattern[index + 1 : close]
+            negate = body.startswith("!")
+            body = body[1:] if negate else body
+            escaped = body.replace("\\", "\\\\").replace("^", "\\^").replace("]", "\\]")
+            out.append(("[^/" if negate else "[") + escaped + "]")
+            index = close + 1
         else:
             out.append(re.escape(pattern[index]))
             index += 1
@@ -448,10 +472,13 @@ def _pointer_token(key: Any) -> str:
     return str(key).replace("~", "~0").replace("/", "~1")
 
 
+_GENERALIZE = re.compile(r"/\d+(?=/|$)")
+
+
 def generalize(pointer: str) -> str:
     """Replace list indices with ``[]`` so one rule covers every element."""
 
-    return re.sub(r"/\d+(?=/|$)", "/[]", pointer)
+    return _GENERALIZE.sub("/[]", pointer)
 
 
 def _is_curie(value: Any) -> bool:
@@ -560,13 +587,18 @@ def parse_fleet_manifest(text: str, *, commit: str) -> FleetManifest:
 
 def _guarded_fetch(url: str, *, opener: Callable[..., Any], host: str) -> bytes:
     request = urllib.request.Request(url, headers={"User-Agent": "ProteinTraitsMech-cross-mech/1"})
-    with opener(request, timeout=_FETCH_TIMEOUT_SECONDS) as response:
-        final = urllib.parse.urlparse(response.geturl())
-        if final.scheme != "https" or final.hostname != host:
-            raise CrossMechError(f"fetch redirected off {host}: {final.geturl()}")
-        if response.status != 200:
-            raise CrossMechError(f"{url} returned HTTP {response.status}")
-        raw = response.read(_FETCH_MAX_BYTES + 1)
+    try:
+        with opener(request, timeout=_FETCH_TIMEOUT_SECONDS) as response:
+            final = urllib.parse.urlparse(response.geturl())
+            if final.scheme != "https" or final.hostname != host:
+                raise CrossMechError(f"fetch redirected off {host}: {final.geturl()}")
+            if response.status != 200:
+                raise CrossMechError(f"{url} returned HTTP {response.status}")
+            raw = response.read(_FETCH_MAX_BYTES + 1)
+    except (urllib.error.URLError, HTTPException, OSError) as error:
+        # HTTPError (an error status urlopen raises), URLError, timeouts and resets all
+        # mean "the network said no": a notice for the caller, never a crash (#962).
+        raise CrossMechError(f"{url} could not be fetched: {error}") from error
     if len(raw) > _FETCH_MAX_BYTES:
         raise CrossMechError(f"{url} exceeds {_FETCH_MAX_BYTES} bytes")
     return raw
@@ -575,13 +607,16 @@ def _guarded_fetch(url: str, *, opener: Callable[..., Any], host: str) -> bytes:
 def remote_head(github: str, *, runner: Callable[..., Any] = subprocess.run) -> str:
     """The live default-branch commit of one GitHub repository, anonymously."""
 
-    completed = runner(
-        ["git", "ls-remote", f"https://{GITHUB_HOST}/{github}.git", "HEAD"],
-        capture_output=True,
-        text=True,
-        check=False,
-        timeout=60,
-    )
+    try:
+        completed = runner(
+            ["git", "ls-remote", f"https://{GITHUB_HOST}/{github}.git", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=60,
+        )
+    except (subprocess.TimeoutExpired, OSError) as error:
+        raise CrossMechError(f"git ls-remote {github} did not complete: {error}") from error
     if completed.returncode:
         raise CrossMechError(f"git ls-remote {github} failed: {completed.stderr.strip()}")
     head = completed.stdout.split()[0] if completed.stdout.split() else ""
@@ -710,9 +745,29 @@ class Mention:
 
 
 def iter_mentions(document: Any) -> list[Mention]:
-    """Every UniProtKB protein value in a parsed record, with its enclosing objects."""
+    """Every UniProtKB protein value in a parsed record, with its enclosing objects.
+
+    Strings are found at any list depth, including a root-level list (#968); a value in
+    a list carries that list as ``container`` for ``list``-scope annotations.
+    """
 
     found: list[Mention] = []
+
+    def walk_list(
+        values: list[Any], pointer: str, key: str, chain: list[tuple[str, Mapping[str, Any]]]
+    ) -> None:
+        for index, item in enumerate(values):
+            item_pointer = f"{pointer}/{index}"
+            if isinstance(item, str):
+                accession = _protein_value(key, item)
+                if accession:
+                    found.append(
+                        Mention(item_pointer, key, item, f"UniProtKB:{accession}", chain, values)
+                    )
+            elif isinstance(item, list):
+                walk_list(item, item_pointer, key, chain)
+            else:
+                walk(item, item_pointer, chain)
 
     def walk(node: Any, pointer: str, chain: list[tuple[str, Mapping[str, Any]]]) -> None:
         if isinstance(node, Mapping):
@@ -726,34 +781,19 @@ def iter_mentions(document: Any) -> list[Mention]:
                             Mention(child, str(key), value, f"UniProtKB:{accession}", here)
                         )
                 elif isinstance(value, list):
-                    for index, item in enumerate(value):
-                        item_pointer = f"{child}/{index}"
-                        if isinstance(item, str):
-                            accession = _protein_value(str(key), item)
-                            if accession:
-                                found.append(
-                                    Mention(
-                                        item_pointer,
-                                        str(key),
-                                        item,
-                                        f"UniProtKB:{accession}",
-                                        here,
-                                        value,
-                                    )
-                                )
-                        else:
-                            walk(item, item_pointer, here)
+                    walk_list(value, child, str(key), here)
                 elif isinstance(value, Mapping):
                     walk(value, child, here)
         elif isinstance(node, list):
-            for index, item in enumerate(node):
-                walk(item, f"{pointer}/{index}", chain)
+            walk_list(node, pointer, "", chain)
 
     walk(document, "", [])
     return found
 
 
 def _scope_object(mention: Mention, scope: str) -> Mapping[str, Any] | None:
+    if not mention.chain:
+        return None
     if scope == "self":
         return mention.chain[-1][1]
     if scope == "parent":
@@ -763,10 +803,10 @@ def _scope_object(mention: Mention, scope: str) -> Mapping[str, Any] | None:
     raise CrossMechError(f"unknown annotation scope {scope!r}")
 
 
-def annotations_for(mention: Mention, channel: Channel | None) -> list[dict[str, str]]:
+def annotations_for(mention: Mention, channel: Channel | None) -> list[dict[str, Any]]:
     if channel is None:
         return []
-    out: list[dict[str, str]] = []
+    out: list[dict[str, Any]] = []
     for source in channel.annotations:
         if source.scope == "list":
             values = [
@@ -780,16 +820,22 @@ def annotations_for(mention: Mention, channel: Channel | None) -> list[dict[str,
             values = _curies(obj.get(source.key)) if obj is not None else []
         if obj is None or any(obj.get(key) not in allowed for key, allowed in source.when):
             continue
+        qualifiers = {
+            key: obj[key]
+            for key in channel.qualifier_keys
+            if isinstance(obj.get(key), (str, bool, int, float))
+        }
         for value in values:
             if PREFIXED_PROTEIN.match(value):
                 continue  # the protein itself, or another protein: not a trait
-            out.append(
-                {
-                    "curie": value,
-                    "relation": source.relation,
-                    "source": f"{source.scope}.{source.key}",
-                }
-            )
+            annotation: dict[str, Any] = {
+                "curie": value,
+                "relation": source.relation,
+                "source": f"{source.scope}.{source.key}",
+            }
+            if qualifiers:
+                annotation["qualifiers"] = qualifiers
+            out.append(annotation)
     unique = {canonical_json(item): item for item in out}
     return [unique[key] for key in sorted(unique)]
 
@@ -811,7 +857,7 @@ def mention_rows(mech: str, record_path: str, document: Any) -> list[dict[str, A
     for mention in iter_mentions(document):
         pattern = generalize(mention.pointer)
         channel, role, relation = classify(mech, pattern)
-        holder = mention.chain[-1][1]
+        holder = mention.chain[-1][1] if mention.chain else {}
         label_value = holder.get(channel.label_key) if channel and channel.label_key else None
         label = (
             label_value.strip() if isinstance(label_value, str) and label_value.strip() else None
@@ -868,6 +914,7 @@ def scan_mech(target: MechTarget, repo: Path, ref: str) -> tuple[list[dict[str, 
     summary = {
         "key": target.key,
         "github": target.github,
+        "environment_variable": target.environment_variable,
         "ref": ref,
         "commit": commit,
         "record_globs": list(target.record_globs),
@@ -883,16 +930,21 @@ def scan(
     mechs_root: Path,
     *,
     ref: str = DEFAULT_REF,
+    refs: Mapping[str, str] | None = None,
     environ: Mapping[str, str] | None = None,
     fetch: bool = False,
 ) -> ScanResult:
+    """Scan every fleet Mech at ``ref``, or at its own commit in ``refs`` when given."""
+
     result = ScanResult()
     env = os.environ if environ is None else environ
     for target in fleet.targets:
         repo = resolve_checkout(target, mechs_root, env)
         if fetch:
             _git(repo, "fetch", "--quiet", "origin")
-        rows, summary = scan_mech(target, repo, ref)
+        if refs is not None and target.key not in refs:
+            raise CrossMechError(f"{target.key} has no pinned commit to rescan at")
+        rows, summary = scan_mech(target, repo, refs[target.key] if refs else ref)
         result.rows.extend(rows)
         result.mechs.append(summary)
     result.rows.sort(key=lambda row: (row["mech"], row["record_path"], row["pointer"]))
@@ -1042,6 +1094,31 @@ def verify_snapshot(raw: bytes, manifest: Mapping[str, Any]) -> list[str]:
         rows.append(row)
     if manifest.get("counts") != snapshot_counts(rows):
         errors.append("manifest counts do not match the mentions")
+    by_mech = Counter(row["mech"] for row in rows)
+    records_by_mech = Counter(
+        mech for mech, _ in {(row["mech"], row["record_path"]) for row in rows}
+    )
+    for mech in manifest.get("mechs") or []:
+        if mech.get("mentions") != by_mech.get(mech.get("key"), 0) or mech.get(
+            "records_with_proteins"
+        ) != records_by_mech.get(mech.get("key"), 0):
+            errors.append(f"mech {mech.get('key')!r} counts do not match its rows")
+    if manifest.get("rules_sha256") != rules_sha256():
+        errors.append("channel rules changed since the snapshot: rescan with `scan --apply`")
+        return errors
+    # Under the current rules every row's classification is a function of its own
+    # pointer, so a relabelled role, channel or relation cannot verify (#967).
+    for number, row in enumerate(rows, 1):
+        if generalize(row["pointer"]) != row["pattern"]:
+            errors.append(f"row {number}: pattern is not the generalized pointer")
+            continue
+        channel, role, relation = classify(row["mech"], row["pattern"])
+        if (channel.key if channel else None, role, relation) != (
+            row["channel"],
+            row["role"],
+            row["relation"],
+        ):
+            errors.append(f"row {number}: channel/role/relation disagree with the rules")
     return errors
 
 
@@ -1103,9 +1180,17 @@ def normalize_annotation(curie: str, rhea_masters: Mapping[str, str]) -> str:
 IDENTIFIER_LINE = re.compile(r"^identifier:[ \t]*(['\"]?)([^'\"\s]+)\1[ \t]*$")
 
 
+# User configuration must not change what is parsed: colour codes or full names would
+# silently empty the index or double its paths (#963).
+_GIT_OUTPUT_CONFIG = ("-c", "color.ui=never", "-c", "grep.fullName=false")
+
+
 def _git_lines(traits_root: Path, args: Sequence[str], runner: Callable[..., Any]) -> str:
     completed = runner(
-        ["git", "-C", str(traits_root), *args], capture_output=True, text=True, check=False
+        ["git", *_GIT_OUTPUT_CONFIG, "-C", str(traits_root), *args],
+        capture_output=True,
+        text=True,
+        check=False,
     )
     # git grep exits 1 for "no match"; anything else non-zero is a real failure.
     if completed.returncode not in (0, 1) or (completed.returncode == 1 and completed.stderr):
@@ -1136,15 +1221,18 @@ def build_identifier_index(
 
     by_path: dict[str, list[str]] = defaultdict(list)
     committed = _git_lines(
-        traits_root, ["grep", "-I", "-E", "^identifier:", "HEAD", "--", "."], runner
+        traits_root, ["grep", "-z", "-I", "-E", "^identifier:", "HEAD", "--", "."], runner
     )
-    for line in committed.splitlines():
-        remainder = line.removeprefix("HEAD:")
-        path, _, text = remainder.partition(":")
+    for line in committed.split("\n"):
+        head, separator, text = line.partition("\0")
+        if not separator:
+            continue
         match = IDENTIFIER_LINE.match(text)
         if match:
-            by_path[path].append(match.group(2))
-    changed = _git_lines(traits_root, ["diff", "--name-only", "-z", "HEAD", "--", "."], runner)
+            by_path[head.removeprefix("HEAD:")].append(match.group(2))
+    changed = _git_lines(
+        traits_root, ["diff", "--no-renames", "--name-only", "-z", "HEAD", "--", "."], runner
+    )
     untracked = _git_lines(
         traits_root, ["ls-files", "-z", "--others", "--exclude-standard", "--", "."], runner
     )
@@ -1239,6 +1327,7 @@ def audit(
                     "channels": set(),
                     "relations": set(),
                     "sibling_records": set(),
+                    "qualifiers": set(),
                     "mentions": 0,
                 },
             )
@@ -1247,6 +1336,7 @@ def audit(
             pair["channels"].add(row["channel"])
             pair["relations"].add(annotation["relation"])
             pair["sibling_records"].add(f"{row['mech']}:{row['record_path']}")
+            pair["qualifiers"].add(canonical_json(annotation.get("qualifiers") or {}))
             pair["mentions"] += 1
     index = build_identifier_index(traits_root, runner=runner)
     namespaces = {identifier.split(":", 1)[0] for identifier in index if ":" in identifier}
@@ -1282,6 +1372,8 @@ def audit(
                 "channels": sorted(pair["channels"]),
                 "relations": sorted(pair["relations"]),
                 "sibling_records": sorted(pair["sibling_records"]),
+                # Every distinct qualifier set the supporting claims carry ({} = none).
+                "qualifiers": [json.loads(item) for item in sorted(pair["qualifiers"])],
                 "mentions": pair["mentions"],
             }
         )
@@ -1334,6 +1426,13 @@ def audit_summary(rows: Sequence[Mapping[str, Any]], pairs: Sequence[Mapping[str
             if pair["status"] in {"ABSENT_FROM_TRAIT", "LEGACY_ON_TRAIT"}
             and pair["route"] != "NONE"
         ),
+        # Pairs whose every supporting sibling claim calls itself a proposal (#965).
+        "pairs_resting_only_on_proposed_claims": sum(
+            1
+            for pair in pairs
+            if pair["qualifiers"]
+            and all(item.get("proposed") is True for item in pair["qualifiers"])
+        ),
     }
 
 
@@ -1350,6 +1449,7 @@ PAIR_COLUMNS = (
     "relations",
     "mentions",
     "sibling_records",
+    "qualifiers",
 )
 
 
@@ -1360,8 +1460,12 @@ def render_pairs_tsv(pairs: Iterable[Mapping[str, Any]]) -> str:
     for pair in pairs:
         writer.writerow(
             [
-                ";".join(value) if isinstance(value, list) else ("" if value is None else value)
-                for value in (pair[column] for column in PAIR_COLUMNS)
+                canonical_json(pair[column])
+                if column == "qualifiers"
+                else ";".join(pair[column])
+                if isinstance(pair[column], list)
+                else ("" if pair[column] is None else pair[column])
+                for column in PAIR_COLUMNS
             ]
         )
     return out.getvalue()
@@ -1418,20 +1522,27 @@ def local_drift(
     env = os.environ if environ is None else environ
     report: list[dict[str, Any]] = []
     for mech in manifest["mechs"]:
-        target = MechTarget(mech["key"], mech["github"], tuple(mech["record_globs"]))
+        target = MechTarget(
+            mech["key"],
+            mech["github"],
+            tuple(mech["record_globs"]),
+            str(mech.get("environment_variable") or ""),
+        )
+        compiled = [glob_to_regex(glob) for glob in target.record_globs]
         try:
             repo = resolve_checkout(target, mechs_root, env)
             head = _git(repo, "rev-parse", "--verify", f"{ref}^{{commit}}").strip()
+            if head == mech["commit"]:
+                report.append({"key": mech["key"], "state": "CURRENT", "head": head, "changed": 0})
+                continue
+            # --no-renames: a record moved out of the globs is a change (#964).
+            diff = _git(repo, "diff", "--no-renames", "--name-only", "-z", mech["commit"], head)
         except CrossMechError as error:
             report.append({"key": mech["key"], "state": "UNAVAILABLE", "detail": str(error)})
             continue
-        if head == mech["commit"]:
-            report.append({"key": mech["key"], "state": "CURRENT", "head": head, "changed": 0})
-            continue
-        compiled = [glob_to_regex(glob) for glob in target.record_globs]
         changed = [
             path
-            for path in _git(repo, "diff", "--name-only", "-z", mech["commit"], head).split("\0")
+            for path in diff.split("\0")
             if path and any(regex.match(path) for regex in compiled)
         ]
         report.append(
@@ -1519,6 +1630,13 @@ def _print_scan_summary(manifest: Mapping[str, Any]) -> None:
 
 
 def cmd_scan(args: argparse.Namespace) -> int:
+    refs: dict[str, str] | None = None
+    if args.at_manifest:
+        # Re-derive under the current rules at exactly the pinned sibling and fleet commits,
+        # so a rules change shows in the diff without unrelated sibling drift.
+        pinned = json.loads(Path(args.at_manifest).read_text(encoding="utf-8"))
+        refs = {mech["key"]: mech["commit"] for mech in pinned["mechs"]}
+        args.fleet_commit = args.fleet_commit or pinned["fleet_manifest"]["commit"]
     if args.fleet_manifest:
         text = Path(args.fleet_manifest).read_text(encoding="utf-8")
         if not args.fleet_commit:
@@ -1528,7 +1646,7 @@ def cmd_scan(args: argparse.Namespace) -> int:
         fleet = parse_fleet_manifest(text, commit=args.fleet_commit)
     else:
         fleet = fetch_fleet_manifest(args.fleet_commit)
-    result = scan(fleet, Path(args.mechs_root), ref=args.ref, fetch=args.fetch)
+    result = scan(fleet, Path(args.mechs_root), ref=args.ref, refs=refs, fetch=args.fetch)
     mentions_text = render_mentions(result.rows)
     manifest = build_manifest(result, fleet, mentions_text)
     _print_scan_summary(manifest)
@@ -1563,8 +1681,6 @@ def cmd_check(args: argparse.Namespace) -> int:
     except json.JSONDecodeError as error:
         raise CrossMechError(f"{directory / MANIFEST_NAME} is not JSON: {error}") from error
     errors = verify_snapshot((directory / MENTIONS_NAME).read_bytes(), manifest)
-    if manifest.get("rules_sha256") != rules_sha256():
-        errors.append("channel rules changed since the snapshot: rescan with `scan --apply`")
     for error in errors:
         print(f"ERROR: {error}")
     unclassified = manifest.get("counts", {}).get("unclassified_patterns") or []
@@ -1606,6 +1722,9 @@ def build_parser() -> argparse.ArgumentParser:
         "--fleet-commit", help="claw commit of the fleet manifest (default: live)"
     )
     scan_parser.add_argument("--fleet-manifest", help="local fleet.yaml bytes for --fleet-commit")
+    scan_parser.add_argument(
+        "--at-manifest", help="rescan at the sibling and fleet commits pinned in this manifest"
+    )
     scan_parser.add_argument("--out", default=str(SNAPSHOT_DIR))
     scan_parser.add_argument("--apply", action="store_true")
     scan_parser.set_defaults(func=cmd_scan)
