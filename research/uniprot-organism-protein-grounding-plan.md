@@ -4477,6 +4477,13 @@ found.
   and the ComplexPortal and Rhea contracts gain a UniProt lane: `provider_kind: UNIPROT`,
   `evidence_source: UniProtKB`, exact trait, whole protein. Their source-native lanes keep
   every requirement and the unconditional receipt lock.
+- Review of the lane (#973-#979) added a promote-time receipt gate (a ComplexPortal,
+  Rhea, or GO fact is installed only from a verified network UniProt fetch receipt that
+  binds the exact membership bytes) and a default-deny evidence policy shared by the
+  resolver and the validator: GO needs an experimental or curator code, and a catalytic
+  activity needs experimental, curator-inference, or traceable-author evidence, which the
+  stored Rhea fact now keeps. Isoform-scoped catalytic activities are skipped, a
+  malformed fact blocks only its accession, and promote checks each installed fact.
 - No trait or durable grounding write occurred in this change. Inclusion of the sibling
   candidates is a separate, reviewed promotion batch.
 

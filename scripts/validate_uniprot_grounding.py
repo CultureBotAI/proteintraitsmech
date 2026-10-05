@@ -45,7 +45,11 @@ from typing import Any, Iterable, Mapping, Sequence
 import yaml
 
 import grounding_registry_layout as layout
-from uniprot_membership_snapshot import UNIPROT_FACT_METHODS, expected_mapping_method
+from uniprot_membership_snapshot import (
+    UNIPROT_FACT_METHODS,
+    expected_mapping_method,
+    fact_evidence_failure,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRAITS = ROOT / "data" / "traits"
@@ -903,9 +907,10 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
     # (provider_kind SOURCE_DATABASE) keeps its unconditional receipt lock. The UniProt
     # lane (provider_kind UNIPROT, evidence_source UniProtKB) is the exact-accession fact
     # UniProt itself states -- a ComplexPortal cross-reference, or a Rhea reaction inside a
-    # CATALYTIC ACTIVITY comment -- and is replayed against the content-addressed
-    # membership snapshot by the generic UNIPROT fact contract below and
-    # validate_membership_replay; its receipt is the verified UniProt fetch receipt.
+    # CATALYTIC ACTIVITY comment. The promoter installs it only after verifying the batch's
+    # network UniProt fetch receipt binds the exact membership bytes
+    # (ground_uniprot_examples._verify_uniprot_fact_receipt, #973), and
+    # validate_membership_replay re-checks the installed fact and its evidence policy.
     if source == "ComplexPortal" or "ComplexPortal" in namespaces:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
@@ -2469,6 +2474,17 @@ def validate_membership_replay(
                     "membership_provider_entry_mismatch",
                     "GroundingEvidence provider_entry_sha256 does not match the exact "
                     "UniProt membership row",
+                    **context,
+                )
+            )
+        evidence_failure = fact_evidence_failure(membership)
+        if evidence_failure:
+            # The same default-deny policy the resolver applies (#974): an exact fact
+            # with homology-only, EC-only, or automatic evidence stays a candidate.
+            findings.append(
+                _finding(
+                    "uniprot_fact_evidence_not_qualifying",
+                    f"the exact UniProt fact's evidence does not qualify ({evidence_failure})",
                     **context,
                 )
             )

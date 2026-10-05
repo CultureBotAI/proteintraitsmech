@@ -2223,6 +2223,43 @@ def test_cli_replays_a_go_source_annotation_against_the_exact_uniprot_fact(tmp_p
     assert "exact_uniprot_membership_not_found" in report
 
 
+def test_cli_replay_refuses_an_installed_fact_with_non_qualifying_evidence(tmp_path):
+    """#974: the validator applies the resolver's evidence policy to durable facts."""
+
+    electronic = {
+        "database": "GO",
+        "id": "GO:0009390",
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": "IEA:InterPro"},
+        ],
+    }
+    fixture = membership_cli_fixture(
+        tmp_path,
+        trait_id="GO:0009390",
+        method="SOURCE_ANNOTATION",
+        category="FUNC_LOCALIZATION",
+        entry={"uniProtKBCrossReferences": [electronic]},
+    )
+    output = tmp_path / "validation.tsv"
+    status = V.main(
+        [
+            str(fixture["trait_path"]),
+            "--registry",
+            str(fixture["registry_path"]),
+            "--evidence-registry",
+            str(fixture["evidence_path"]),
+            "--membership-registry",
+            str(fixture["membership_path"]),
+            "--out",
+            str(output),
+            "--quiet",
+        ]
+    )
+    assert status == 1
+    assert "uniprot_fact_evidence_not_qualifying" in output.read_text(encoding="utf-8")
+
+
 def test_cli_membership_replay_rejects_forged_provider_digest(tmp_path):
     fixture = membership_cli_fixture(tmp_path)
     evidence = dict(fixture["evidence"])

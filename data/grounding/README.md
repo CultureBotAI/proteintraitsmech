@@ -26,8 +26,12 @@ canonical example:
   evidence. A fact is a signature or `ComplexPortal` cross-reference (`SOURCE_MEMBERSHIP`),
   a Rhea reaction inside a `CATALYTIC ACTIVITY` comment (`SOURCE_MEMBERSHIP`), or a `GO`
   cross-reference (`SOURCE_ANNOTATION`; UniProt's `GoEvidenceType` is kept in the stored
-  object, and `ND` annotations are never captured). The UniProt lane for ComplexPortal and
-  Rhea records sits beside their source-native lanes, which stay receipt-locked; see
+  object, and `ND` annotations are never captured). A Rhea fact keeps that reaction's
+  `evidences`. Only facts with experimental or curator evidence qualify (the shared
+  default-deny policy in `uniprot_membership_snapshot.fact_evidence_failure`), and a
+  ComplexPortal, Rhea, or GO fact is installed only from a verified network UniProt fetch
+  receipt. The UniProt lane for ComplexPortal and Rhea records sits beside their
+  source-native lanes, which stay receipt-locked; see
   [cross-Mech protein examples](../../research/cross-mech-protein-examples.md) (#652).
 - `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
   explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.

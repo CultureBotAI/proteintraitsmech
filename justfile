@@ -1352,12 +1352,22 @@ promote-uniprot-review-batch batch_id *args:
     #!/usr/bin/env bash
     set -euo pipefail
     shift
+    for argument in "$@"; do
+      case "$argument" in
+        --fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--allow-offline-uniprot-fixture)
+          echo "ERROR: the batch's fetch receipt is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
     uv run python scripts/ground_uniprot_examples.py promote \
       --resolved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
       --approved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.approved.tsv \
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
       --evidence-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
+      --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
       "$@"
 
 # Build per-protein discovery PROFILES from UniProtKB (reviewed by default): for each entry,

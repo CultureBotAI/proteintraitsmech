@@ -20,8 +20,17 @@ Three kinds of exact UniProt fact share this one snapshot (#652):
   A ``ND`` (no biological data) annotation is not a fact and is never captured;
 * a Rhea reaction cross-reference inside a ``CATALYTIC ACTIVITY`` comment -- exact
   membership of the protein among the catalysts of that master reaction, stored as the
-  returned ``{"database": "Rhea", "id": "RHEA:n"}`` object.  Directional
-  ``physiologicalReactions`` and ``RHEA-COMP:`` participant compounds are never captured.
+  returned ``{"database": "Rhea", "id": "RHEA:n"}`` object plus that reaction's own
+  returned ``evidences``, so its evidence strength stays auditable.  Directional
+  ``physiologicalReactions``, ``RHEA-COMP:`` participant compounds, and a comment scoped
+  to an isoform or chain (``molecule``) are never captured.
+
+Capturing a fact is not qualifying it. :func:`fact_evidence_failure` is the default-deny
+evidence policy the resolver and the validator share (#974): the plan keeps "EC-only,
+textual, homology-only, or generic pathway inference" as candidate evidence, so a GO
+annotation qualifies only with an experimental or curator code and a catalytic activity
+only with experimental or curator-inference evidence. Widening it is a maintainer
+decision.
 
 :func:`expected_mapping_method` names the occurrence method each fact may support, so a
 GO annotation can never be recorded as a membership or the reverse.
@@ -68,6 +77,17 @@ RHEA_DATABASE = "Rhea"
 RHEA_COMPOUND_PREFIX = "RHEA-COMP:"
 DATABASE_TO_NAMESPACE = {database: namespace for _, database, namespace in XREF_SPECS}
 DATABASE_TO_NAMESPACE[RHEA_DATABASE] = "RHEA"
+
+# Default-deny evidence policy for the functional facts (#974). GO codes: experimental
+# (EXP IDA IPI IMP IGI IEP and the high-throughput HTP HDA HMP HGI HEP) and curator (IC,
+# TAS). ECO for catalytic activities: experimental (0000269), curator inference
+# (0000305), and traceable author statement (0000304). Excluded on purpose: IEA, IBA and
+# the ISS family (homology), NAS (untraceable text), RCA, and ECO 0000250/0000255/0000256
+# (similarity, sequence model, automatic).
+GO_QUALIFYING_EVIDENCE = frozenset(
+    {"EXP", "IDA", "IPI", "IMP", "IGI", "IEP", "HTP", "HDA", "HMP", "HGI", "HEP", "IC", "TAS"}
+)
+RHEA_QUALIFYING_ECO = frozenset({"ECO:0000269", "ECO:0000304", "ECO:0000305"})
 
 # The occurrence method a UniProt fact may support.  Everything else is membership.
 UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
@@ -137,6 +157,33 @@ def expected_mapping_method(source_trait_id: str) -> str:
     return "SOURCE_ANNOTATION" if namespace in ANNOTATION_NAMESPACES else "SOURCE_MEMBERSHIP"
 
 
+def fact_evidence_failure(row: Mapping[str, Any]) -> str | None:
+    """Why a captured UniProt fact may not qualify on its evidence, or None (#974).
+
+    Signature and ComplexPortal facts carry no per-entry evidence and are governed by
+    their existing contracts; ComplexPortal is itself manually curated.
+    """
+
+    database = row.get("database")
+    xref = row.get("database_cross_reference")
+    xref = xref if isinstance(xref, Mapping) else {}
+    if database == "GO":
+        code = _go_evidence_code(xref)
+        if code not in GO_QUALIFYING_EVIDENCE:
+            return f"go_evidence_{code or 'missing'}"
+    elif database == RHEA_DATABASE:
+        codes = sorted(
+            {
+                str(item.get("evidenceCode"))
+                for item in xref.get("evidences") or []
+                if isinstance(item, Mapping) and item.get("evidenceCode")
+            }
+        )
+        if not set(codes) & RHEA_QUALIFYING_ECO:
+            return "rhea_evidence_" + ("+".join(codes) if codes else "missing")
+    return None
+
+
 def _go_evidence_code(cross_reference: Mapping[str, Any]) -> str:
     """The GO evidence code (``IDA``, ``IEA``, ...) UniProt attached to a GO xref."""
 
@@ -184,15 +231,17 @@ def _normalise_cross_reference(value: Mapping[str, Any]) -> dict[str, Any]:
     """Preserve the exact returned object while stabilizing property ordering."""
 
     normalized = _canonical_value(dict(value))
-    properties = normalized.get("properties")
-    if properties is not None:
-        if not isinstance(properties, list) or any(
-            not isinstance(item, dict) for item in properties
-        ):
+    # Properties and evidences are sets in UniProt's model; sort them so equal facts
+    # always serialize, and therefore content-address, identically.
+    for key in ("properties", "evidences"):
+        items = normalized.get(key)
+        if items is None:
+            continue
+        if not isinstance(items, list) or any(not isinstance(item, dict) for item in items):
             raise MembershipSnapshotError(
-                "database cross-reference properties must be a list of objects"
+                f"database cross-reference {key} must be a list of objects"
             )
-        normalized["properties"] = sorted(properties, key=canonical_json)
+        normalized[key] = sorted(items, key=canonical_json)
     return normalized
 
 
@@ -364,6 +413,9 @@ def extract_entry_memberships(
     for comment_index, comment in enumerate(comments):
         if not isinstance(comment, dict) or comment.get("commentType") != "CATALYTIC ACTIVITY":
             continue
+        if comment.get("molecule"):
+            # "[Isoform 2]:" or a chain: not a fact about the whole canonical protein (#975).
+            continue
         reaction = comment.get("reaction")
         if not isinstance(reaction, dict):
             raise MembershipSnapshotError(f"comments[{comment_index}] reaction is not an object")
@@ -385,7 +437,15 @@ def extract_entry_memberships(
                 # A Rhea generic/polymer compound is a reaction *participant*, which
                 # UniProt lists under the Rhea database too; it is never a reaction.
                 continue
-            add(raw, f"comments[{comment_index}].reactionCrossReferences[{reference_index}]")
+            evidences = reaction.get("evidences") or []
+            if not isinstance(evidences, list):
+                raise MembershipSnapshotError(f"comments[{comment_index}] evidences is not a list")
+            # The reaction's own evidence travels with the fact so its strength is
+            # replayable (#974); everything else in the comment stays out.
+            add(
+                {**raw, "evidences": evidences},
+                f"comments[{comment_index}].reactionCrossReferences[{reference_index}]",
+            )
     return sorted(by_key.values(), key=lambda row: (row["source_trait_id"], row["membership_id"]))
 
 

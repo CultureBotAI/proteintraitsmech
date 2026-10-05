@@ -294,7 +294,13 @@ def test_registry_offline_response_writes_same_release_membership_not_query_clai
     )
 
 
-def test_registry_malformed_membership_preserves_all_previous_outputs(tmp_path, capsys):
+def test_registry_malformed_membership_blocks_only_its_accession(tmp_path, capsys):
+    """#978: a malformed fact is an accession failure for the blocked TSV, not a crash.
+
+    (This used to abort the whole fetch and preserve the previous outputs; abort paths that
+    remain keep their own no-partial-write tests.)
+    """
+
     sequence = "ACDE"
     queue = tmp_path / "candidates.jsonl"
     responses = tmp_path / "responses.json"
@@ -323,14 +329,6 @@ def test_registry_malformed_membership_preserves_all_previous_outputs(tmp_path, 
         ),
         encoding="utf-8",
     )
-    for path, value in (
-        (protein_out, "old proteins\n"),
-        (membership_out, "old memberships\n"),
-        (blocked, "old blocks\n"),
-        (receipt, "old receipt\n"),
-    ):
-        path.write_text(value, encoding="utf-8")
-
     args = _registry_apply_args(
         queue=queue,
         responses=responses,
@@ -340,12 +338,12 @@ def test_registry_malformed_membership_preserves_all_previous_outputs(tmp_path, 
         receipt=receipt,
     )
 
-    assert registry.main(args) == 2
-    assert "cannot snapshot UniProt memberships" in capsys.readouterr().err
-    assert protein_out.read_text() == "old proteins\n"
-    assert membership_out.read_text() == "old memberships\n"
-    assert blocked.read_text() == "old blocks\n"
-    assert receipt.read_text() == "old receipt\n"
+    assert registry.main(args) == 0
+    assert protein_out.read_text() == ""
+    assert membership_out.read_text() == ""
+    rows = blocked.read_text().splitlines()
+    assert len(rows) == 2 and "FACT_SNAPSHOT_FAILED" in rows[1] and "UniProtKB:P12345" in rows[1]
+    assert receipt.is_file()
 
 
 GO_XREF = {
@@ -407,7 +405,12 @@ def test_functional_facts_are_captured_with_exact_trait_ids_and_evidence_codes()
         go["database_cross_reference"]["properties"]
     )
     rhea = by_trait["RHEA:37871"]
-    assert rhea["database_cross_reference"] == {"database": "Rhea", "id": "RHEA:37871"}
+    # The reaction's own evidence list travels with the fact (#974); none in this fixture.
+    assert rhea["database_cross_reference"] == {
+        "database": "Rhea",
+        "evidences": [],
+        "id": "RHEA:37871",
+    }
     # The directional physiological reaction is never a fact here.
     assert "RHEA:37872" not in by_trait
     assert membership.load_memberships  # rows are valid snapshot rows
@@ -463,3 +466,65 @@ def test_expected_mapping_method_separates_annotation_from_membership():
     assert membership.UNIPROT_FACT_METHODS == {"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"}
     assert membership.CATALYTIC_ACTIVITY_FIELD in membership.FACT_FIELDS
     assert "go_id" in membership.FACT_FIELDS and "xref_complexportal" in membership.FACT_FIELDS
+
+
+def test_rhea_facts_keep_their_reaction_evidence_sorted_and_skip_isoform_scope():
+    evidences = [
+        {"evidenceCode": "ECO:0000269", "source": "PubMed", "id": "20662781"},
+        {"evidenceCode": "ECO:0000250", "source": "UniProtKB", "id": "P00001"},
+    ]
+    scoped = {**CATALYTIC, "molecule": "Isoform 2"}
+    rows = _functional_rows(
+        {
+            "comments": [
+                {**CATALYTIC, "reaction": {**CATALYTIC["reaction"], "evidences": evidences}},
+                scoped,
+            ]
+        }
+    )
+    (rhea,) = rows
+    assert rhea["database_cross_reference"]["evidences"] == sorted(
+        evidences, key=membership.canonical_json
+    )
+    only_scoped = _functional_rows({"comments": [scoped]})
+    assert only_scoped == []
+
+
+@pytest.mark.parametrize(
+    ("xref_or_reaction", "expected"),
+    [
+        ({"GoEvidenceType": "IDA:EcoCyc"}, None),
+        ({"GoEvidenceType": "TAS:Reactome"}, None),
+        ({"GoEvidenceType": "IEA:InterPro"}, "go_evidence_IEA"),
+        ({"GoEvidenceType": "IBA:GO_Central"}, "go_evidence_IBA"),
+        ({"GoEvidenceType": "NAS:ComplexPortal"}, "go_evidence_NAS"),
+        ({}, "go_evidence_missing"),
+        (["ECO:0000269"], None),
+        (["ECO:0000256", "ECO:0000305"], None),
+        (["ECO:0000256"], "rhea_evidence_ECO:0000256"),
+        (["ECO:0000250"], "rhea_evidence_ECO:0000250"),
+        ([], "rhea_evidence_missing"),
+    ],
+)
+def test_fact_evidence_policy_is_default_deny(xref_or_reaction, expected):
+    if isinstance(xref_or_reaction, dict):
+        row = {
+            "database": "GO",
+            "database_cross_reference": {
+                "database": "GO",
+                "id": "GO:0009390",
+                "properties": [{"key": k, "value": v} for k, v in xref_or_reaction.items()],
+            },
+        }
+    else:
+        row = {
+            "database": "Rhea",
+            "database_cross_reference": {
+                "database": "Rhea",
+                "id": "RHEA:37871",
+                "evidences": [{"evidenceCode": code} for code in xref_or_reaction],
+            },
+        }
+    assert membership.fact_evidence_failure(row) == expected
+    # Signature and ComplexPortal facts are governed by their own contracts.
+    assert membership.fact_evidence_failure({"database": "ComplexPortal"}) is None

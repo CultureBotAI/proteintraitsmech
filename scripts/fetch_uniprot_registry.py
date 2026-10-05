@@ -2259,20 +2259,26 @@ def _execute_apply(
                     )
                 )
             elif reference:
-                references.append(reference)
                 try:
-                    memberships.extend(
-                        extract_entry_memberships(
-                            matches[0],
-                            protein_id=reference["protein_id"],
-                            sequence_sha256=reference["sequence_sha256"],
-                            uniprot_release=reference["uniprot_release"],
-                        )
+                    facts = extract_entry_memberships(
+                        matches[0],
+                        protein_id=reference["protein_id"],
+                        sequence_sha256=reference["sequence_sha256"],
+                        uniprot_release=reference["uniprot_release"],
                     )
                 except MembershipSnapshotError as exc:
-                    raise RegistryBuildError(
-                        f"cannot snapshot UniProt memberships for {target.protein_id}: {exc}"
-                    ) from exc
+                    # One malformed fact blocks that accession, never the batch (#978).
+                    blocked.append(
+                        _blocked_row(
+                            target.protein_id,
+                            target.candidates,
+                            "FACT_SNAPSHOT_FAILED",
+                            str(exc),
+                        )
+                    )
+                    continue
+                references.append(reference)
+                memberships.extend(facts)
     client.finish()
     references.sort(key=lambda row: row["protein_id"])
     if len({row["protein_id"] for row in references}) != len(references):

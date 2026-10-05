@@ -188,6 +188,7 @@ def test_bad_binding_fails_before_existing_site_files_are_replaced(tmp_path, mon
     "scripts/docs_protein_sequences.py",
     "scripts/validate_uniprot_grounding.py",
     "scripts/grounding_registry_layout.py",
+    "scripts/uniprot_membership_snapshot.py",
 ])
 def test_pages_rebuilds_when_sequence_projection_inputs_change(input_path):
     # BaseLoader preserves GitHub's `on` key instead of YAML 1.1 boolean coercion.

@@ -143,6 +143,10 @@ _CONTENT_GATE_CANDIDATE_FIELDS = (
 # or catalytic-activity reaction is membership, a GO cross-reference is an annotation.
 # Both are replayed from the same content-addressed snapshot (#652).
 _UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
+# The validator keeps ComplexPortal and Rhea's source-native lanes receipt-locked. The
+# UniProt lane opened for them (and for GO) is admitted only from a verified UniProt
+# fetch receipt that binds the exact staging membership bytes (#973).
+_UNIPROT_RECEIPT_REQUIRED_NAMESPACES = frozenset({"ComplexPortal", "RHEA", "GO"})
 
 _MEMBERSHIP_RESOLUTION_REASONS = {
     "full release-pinned sequence and checksum require resolution",
@@ -1742,6 +1746,12 @@ def _resolve_occurrence(
             if membership is None:
                 reasons.append("missing:exact_uniprot_membership")
             else:
+                from uniprot_membership_snapshot import fact_evidence_failure
+
+                evidence_failure = fact_evidence_failure(membership)
+                if evidence_failure:
+                    # Captured, exact, and still only candidate evidence (#974).
+                    reasons.append(f"unqualifiable:uniprot_evidence:{evidence_failure}")
                 provider_release = membership["uniprot_release"]
                 # The producer's source_release may describe the earlier discovery
                 # search.  The exact-accession snapshot is self-contained and bound to
@@ -3524,6 +3534,77 @@ def _selected_registry_rows(
     return references, evidence_rows
 
 
+def _verify_uniprot_fact_receipt(args: argparse.Namespace, selected: list[dict[str, Any]]) -> None:
+    """Admit UniProt-lane ComplexPortal/Rhea/GO facts only from a verified fetch receipt."""
+
+    needing = sorted(
+        str(row["candidate_id"])
+        for row in selected
+        if row.get("mapping_method") in _UNIPROT_FACT_METHODS
+        and str(row.get("source_trait_id") or "").split(":", 1)[0]
+        in _UNIPROT_RECEIPT_REQUIRED_NAMESPACES
+    )
+    if not needing:
+        return
+    if args.fetch_request_plan is None or args.fetch_receipt is None:
+        raise GroundingError(
+            f"{len(needing)} UniProt-lane ComplexPortal/Rhea/GO fact(s) need "
+            "--fetch-request-plan and --fetch-receipt: the lane is admitted only from a "
+            "verified UniProt fetch receipt"
+        )
+    from fetch_uniprot_registry import RegistryBuildError, verify_fetch_receipt
+
+    try:
+        verified = verify_fetch_receipt(
+            receipt_path=args.fetch_receipt.resolve(),
+            request_plan_path=args.fetch_request_plan.resolve(),
+        )
+    except (RegistryBuildError, OSError) as exc:
+        raise GroundingError(f"UniProt fetch receipt does not verify: {exc}") from exc
+    mode = verified.request_plan.get("acquisition_mode")
+    if mode != "UNIPROT_REST" and not args.allow_offline_uniprot_fixture:
+        raise GroundingError(
+            f"UniProt-lane facts need a network UNIPROT_REST fetch receipt, not {mode!r}"
+        )
+    if args.membership_registry.resolve().read_bytes() != verified.membership_registry_jsonl_bytes:
+        raise GroundingError(
+            "staging membership registry is not the fetch output its receipt binds"
+        )
+
+
+def _require_installed_uniprot_facts(
+    selected: list[dict[str, Any]],
+    references: dict[str, dict[str, Any]],
+    merged_memberships: list[dict[str, Any]],
+) -> None:
+    """Every UniProt-fact occurrence must find its exact fact in what is installed (#976)."""
+
+    from uniprot_membership_snapshot import MembershipSnapshotError, find_exact_membership
+
+    for row in selected:
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
+            continue
+        reference = references.get(str(row["protein_id"]))
+        try:
+            fact = (
+                find_exact_membership(
+                    merged_memberships,
+                    protein_id=str(row["protein_id"]),
+                    source_trait_id=str(row.get("source_trait_id") or ""),
+                    uniprot_release=reference["uniprot_release"],
+                    sequence_sha256=reference["sequence_sha256"],
+                )
+                if reference
+                else None
+            )
+        except MembershipSnapshotError as exc:
+            raise GroundingError(f"{row['candidate_id']}: ambiguous installed fact: {exc}") from exc
+        if fact is None:
+            raise GroundingError(
+                f"{row['candidate_id']}: no exact UniProt fact in the merged membership registry"
+            )
+
+
 def _selected_membership_rows(
     selected: list[dict[str, Any]],
     references: dict[str, dict[str, Any]],
@@ -4407,6 +4488,7 @@ def promote(args: argparse.Namespace) -> int:
     membership_text = ""
     membership_changed = False
     if membership_selected:
+        _verify_uniprot_fact_receipt(args, selected)
         staging_memberships = _load_membership_rows(
             args.membership_registry.resolve(), required=True
         )
@@ -4430,6 +4512,7 @@ def promote(args: argparse.Namespace) -> int:
             membership_text = dump_memberships(merged_memberships)
         except MembershipSnapshotError as exc:
             raise GroundingError(f"durable membership merge conflict: {exc}") from exc
+        _require_installed_uniprot_facts(selected, selected_references, merged_memberships)
         membership_changed = durable_membership_digest != _text_digest(membership_text)
     registry = _merge_protein_reference_rows(existing_registry, selected_references, selected)
     effective_selected = _selected_rows_for_merged_protein_references(
@@ -4789,6 +4872,21 @@ def _parser() -> argparse.ArgumentParser:
         "--sifts-registry",
         type=Path,
         help="reviewed ECOD/PDBe SIFTS mapping provider (default: beside --resolved)",
+    )
+    promoter.add_argument(
+        "--fetch-request-plan",
+        type=Path,
+        help="the batch's UniProt fetch request plan (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--fetch-receipt",
+        type=Path,
+        help="the batch's UniProt fetch receipt (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--allow-offline-uniprot-fixture",
+        action="store_true",
+        help="tests only: accept an OFFLINE_FIXTURE fetch receipt for UniProt-lane facts",
     )
     promoter.add_argument(
         "--durable-protein-registry",

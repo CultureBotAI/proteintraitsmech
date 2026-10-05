@@ -165,19 +165,39 @@ not resolve `SOURCE_ANNOTATION`. The lane now exists (grounding plan, 2026-10-05
   `cc_catalytic_activity` (the REST field `xref_go` does not exist);
 - GO facts support only `SOURCE_ANNOTATION`, every other fact only `SOURCE_MEMBERSHIP`;
 - ComplexPortal and Rhea gain a UniProt lane beside their source-native lanes, which keep
-  their receipt locks. Accepting this is a change to the central evidence contract and
-  is the maintainer's call at merge.
+  their receipt locks. The promoter installs a ComplexPortal, Rhea, or GO fact only after
+  verifying the batch's network UniProt fetch receipt binds the exact membership bytes it
+  installs from. Accepting this is a change to the central evidence contract and is the
+  maintainer's call at merge.
+- Capturing a fact is not qualifying it. The resolver and the validator share one
+  default-deny evidence policy, because the plan keeps "EC-only, textual, homology-only,
+  or generic pathway inference" as candidate evidence. A GO fact qualifies only with an
+  experimental code (EXP, IDA, IPI, IMP, IGI, IEP, and the HT variants) or a curator code
+  (IC, TAS). IEA, IBA, the ISS family, NAS, and RCA stay candidates. A catalytic activity
+  qualifies only with experimental (`ECO:0000269`), curator-inference (`ECO:0000305`), or
+  traceable author-statement (`ECO:0000304`) evidence. The stored Rhea fact keeps the
+  reaction's evidence list so this stays auditable. A catalytic activity scoped to an
+  isoform or chain is never a whole-protein fact.
 
-`just stage-cross-mech-candidates --apply` writes the funnel queue and
-`just select-cross-mech-review-batch <id>` selects from it; the ordinary fetch, resolve,
-finalize, and promote recipes do the rest.
+The sequence, in order:
+
+```bash
+just audit-cross-mech-proteins                      # statuses -> reports/cross-mech/
+just discover-cross-mech-sequences --apply          # exact sequence identity, pinned release
+just stage-cross-mech-candidates --apply            # the funnel queue
+just select-cross-mech-review-batch <id> --apply    # a bounded batch
+```
+
+The ordinary fetch, resolve, review, and promote recipes do the rest.
 
 ## Decisions for the maintainer
 
 - Keep the UniProt exact-accession lane for Rhea and ComplexPortal traits, or wait for
   their source-native acquisition receipts.
-- GO evidence codes: admit electronic (`IEA`) annotations when a sibling independently
-  asserts the same term, or require experimental/curated codes.
+- Widen the evidence policy, for example to admit IEA GO annotations derived from a
+  curated EC number, or curated "by similarity" (`ECO:0000250`) catalytic activities.
+  A sibling claim never counts toward qualification, so any widening has to stand on
+  UniProt's evidence alone.
 - GO true-path inheritance for the unconfirmed localization pairs (UniProt annotates a
   descendant term): an explicit `inheritance_path` is supported for signatures but not
   yet for GO.

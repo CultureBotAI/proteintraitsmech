@@ -1270,6 +1270,17 @@ def _fetch_outputs(
                     )
                 )
                 continue
+            try:
+                facts = extract_entry_memberships(
+                    matches[0],
+                    protein_id=reference["protein_id"],
+                    sequence_sha256=reference["sequence_sha256"],
+                    uniprot_release=reference["uniprot_release"],
+                )
+            except MembershipSnapshotError as exc:
+                # One malformed fact blocks that accession, never the batch (#978).
+                blocked.append(_blocked_row(target, "FACT_SNAPSHOT_FAILED", str(exc)))
+                continue
             references.append(reference)
             for candidate_id in target.candidates[0]["mapping_candidate_ids"]:
                 mapping_registry.append(
@@ -1279,19 +1290,7 @@ def _fetch_outputs(
                         plan=supplied_plan,
                     )
                 )
-            try:
-                memberships.extend(
-                    extract_entry_memberships(
-                        matches[0],
-                        protein_id=reference["protein_id"],
-                        sequence_sha256=reference["sequence_sha256"],
-                        uniprot_release=reference["uniprot_release"],
-                    )
-                )
-            except MembershipSnapshotError as exc:
-                raise RegistryBuildError(
-                    f"cannot snapshot UniProt memberships for {target.protein_id}: {exc}"
-                ) from exc
+            memberships.extend(facts)
     client.finish()
 
     if pinned_release is None:
