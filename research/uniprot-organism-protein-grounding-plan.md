@@ -4485,3 +4485,94 @@ found.
 - The one-shot receipt repair (`repair_uniprot_durable_receipts.py`) refuses sharded
   registries as retired. The data migration is a separate commit in the same pull
   request: the new default paths are unusable until it has run.
+
+### 2026-10-04 — native CDD parser prerequisite, not a grounding provider
+
+- `scripts/cdd_native_alignment.py` now parses immutable captures of the CDD
+  viewer's nested hierarchy JSON and source-numbered full Hypertext alignment.
+  Direct parents come from nested `children`, not the hierarchy root or a
+  superfamily link. Accessions, PSSM IDs, ordered paths, printed sequence bounds,
+  alignment case/gaps, native protein links, taxonomy IDs, and repeated domain
+  row identities are retained. Capture hashes are not acquisition receipts or
+  release identifiers. The module has no network, writer, or promotion route.
+- The parser refuses malformed/duplicate hierarchy identities, wrong requested
+  models, collapsed trees, missing/reordered alignment rows, discontinuous chunks,
+  compact omitted-residue displays, unsupported markup, and inconsistent bounds.
+  It compares explicitly printed UniProt accessions only to the exact validated
+  ProteinReference and taxon, at the printed positions. It never searches for a
+  fragment, shifts coordinates, falls back from an isoform, or treats PDB/RefSeq/GI
+  frames as UniProt. All-gap chunks and unfamiliar display formats remain explicit
+  parser limitations rather than silently dropped rows.
+- A bounded, in-memory public-source smoke check parsed 75 nodes under `cd00060`
+  (requested `cd22708`) and 41 under `cd22744` (requested `cd22749`). Native direct
+  edges include `cd22731`/`cd22732` to `cd22708` and `cd22763`/`cd22764` to `cd22749`.
+  The full FHA viewer display parsed as 15 ordered rows; its separate
+  `totalSequences` value is 14. These fields are retained without inventing an
+  exhaustive carrier count. Neither this source display nor the older frozen
+  three-taxon queue establishes complete human/E. coli/S. cerevisiae coverage.
+- Printed FHA parent spans are STARD9/Q9P2P6 471–579 and KIF16B/Q96L93 446–554,
+  each 109 residues and both exactly matching the existing release-2026_03 residue
+  cache. KIF16B also passes the parser's exact validated-reference comparison
+  against the existing CNP020 staging registry. This comparison does not rebind
+  that registry's receipt or authorize its reuse in a new batch. STARD9's cache
+  comparison is not a verified ProteinReference acquisition. Longer child-model
+  intervals are not substituted for either parent interval.
+- `tests/test_cdd_native_alignment.py` contains 82 passing offline tests using
+  explicitly synthetic/minimal source-format fixtures, not release snapshots.
+  Live smoke checking exposed duplicated cosmetic attributes outside the source
+  alignment; those unrelated page attributes are ignored while duplicate
+  alignment attributes remain rejected. `just lint` and `just audit-writers`
+  pass (593 scripts examined by the latter). `just test -q` finished at exit 0:
+  **7,533 passed, 46 skipped, one expected failure, two warnings**, in 2,703.87
+  seconds. The expected failure is the CATH production-stage golden test's stale
+  protein-registry pin (#734); the warnings concern LinkML and pandas deprecations.
+  The parser/test bytes remained identical throughout the suite. This is code
+  verification, not evidence of complete protein coverage or a new qualification.
+  The ignored `reports/uniprot-grounding/cdd-native-parser-2026-10-04.smoke.json`
+  records the inspected URLs, UTC times, response and local-input hashes, and
+  comparison results. Original HTTP bodies were not retained; this is research
+  evidence, not a reproducible acquisition bundle.
+- A regression confirms that the central `SOURCE_DATABASE` gate still rejects
+  native NCBICDD evidence without its source-specific contract. No record,
+  hierarchy, durable registry, source-faithful feature annotation, or qualification
+  was installed. Next: define and test the release-bound native-source acquisition
+  and replay contract before integrating candidate discovery/resolution; acquire
+  missing sequence/annotation inputs only under the reviewed authorization boundary.
+  All strains, unreviewed proteins, fragments/fusions, explicitly resolved isoforms,
+  and applicable non-reference/UniParc routes remain in the goal's scope.
+
+#### CDD release-binding follow-up (2026-10-04 UTC)
+
+- The [default search-set marker](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/cdd.info)
+  read on this date declares **3.21**, while the
+  [hiMSA family-export directory](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/hiMSA/v3.22/)
+  is labelled **v3.22**. These are different source channels, not proof that either
+  label applies to the inspected viewer captures. Neither label has been assigned
+  to those captures. The exact marker digest is
+  `4656c3d4b668a75826373883ee228e89fff00b65fdd964a6975aa81e4c8f7547`.
+- The [publisher README](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/README) explains
+  that a model's description/annotations can change without changing its PSSM ID;
+  its separate model version increases. A provider contract must therefore bind
+  the relevant model version, hierarchy and source content, not just the PSSM ID.
+  The [hiMSA README](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/hiMSA/README) describes
+  mFASTA inputs and a separate search/filtering workflow for older exports; it does
+  not establish the newer archives' contents or the targets' UniProt coordinates.
+  No MAPGAPS search, alignment, fragment filter, or coordinate inference is planned.
+- Ignored `cdd-native-release-binding-2026-10-04.json` records these observations.
+  `cdd-native-acquisition-canary-2026-10-04.plan.json` records three successful
+  **no-network** `fetch_source.py --dry-run` contracts: the default marker and only
+  the `cd00060`/`cd22744` v3.22 family archives, at exact ignored, absent destinations.
+  This is a research canary, not a production provider receipt. Execute only after
+  explicit approval, beginning with the marker and FHA archive, inspecting members
+  without extraction or program execution before continuing. Each transfer has a
+  60-second total deadline; the current helper does not impose a byte ceiling.
+  No archive was acquired, gate relaxed, or record promoted. Raw metadata bodies
+  were inspected in memory, not retained as an acquisition bundle.
+
+- Execution handoff: parser implementation and full-suite verification are finished;
+  the three-file acquisition plan remains explicitly unapproved after successive
+  goal continuations. Its six artifact/sidecar targets remain absent. Broader protein
+  acquisition and durable promotion are not authorized by a continuation or a passing
+  test suite either. The goal is paused as **blocked on acquisition authorization**,
+  not achieved. Resume the reviewed canary only after an explicit response; retain
+  the separate scientific/release, registry-receipt, and promotion gates afterward.
