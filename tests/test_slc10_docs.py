@@ -20,7 +20,7 @@ def test_committed_pilot_is_closed_schema_and_semantically_valid(pilot):
     assert validate_bundle(pilot) == []
     assert len(pilot["protein_references"]) == 7
     assert len(pilot["model_comparisons"]) == 3
-    assert len(pilot["mechanisms"]) == 4
+    assert len(pilot["mechanisms"]) == 5
     assert "Pfam:PF13593" in pilot["trait_refs"]
     assert "Q0GE19: PANTHER:PTHR18640, Pfam:PF13593" in pilot["scope_note"]
 
@@ -55,6 +55,12 @@ def test_experimental_and_interpretive_statuses_are_not_collapsed(pilot):
     assert assertions["slc10-assessment:a7-assay-identity-unresolved"]["outcome"] == "NOT_ASSESSED"
     assert assertions["slc10-assay:a4-thrombin-associated-uptake-2013"]["activity"] != "Taurocholate uptake"
     assert all(s["review_status"] == "PROPOSED" for s in pilot["sites"])
+    mutant = assertions["slc10-assay:ntcp-e257a-uptake-reduction-2014"]
+    assert mutant["outcome"] == "DETECTED" and mutant["activity"].startswith("Reduction")
+    assert mutant["sequence_substitutions"] == [{"position": 257, "residue": "E", "substituted_residue": "A"}]
+    assert "not complete absence" in mutant["limitations"]
+    mechanism = next(m for m in pilot["mechanisms"] if m["mechanism_id"] == "slc10-mechanism:ntcp-e257a-uptake-reduction")
+    assert mechanism["residue_bindings"][0]["substituted_residue"] == "A"
 
 
 def test_export_preserves_exact_payload_and_checksum():
@@ -64,6 +70,15 @@ def test_export_preserves_exact_payload_and_checksum():
     assert result[manifest["file"]] == raw
     assert manifest["sha256"] == hashlib.sha256(raw).hexdigest()
     assert manifest["bytes"] == len(raw)
+
+
+def test_unresolved_case_preserves_assay_and_correspondence_gaps(pilot):
+    explanation = next(e for e in pilot["explanations"] if e["assertion_id"] == "slc10-explanation:a7-site-divergence")
+    assert explanation["assessment"] == "UNRESOLVED"
+    assert not explanation.get("supporting_assertions") and not explanation.get("challenging_assertions")
+    assert "slc10-assessment:a7-assay-identity-unresolved" in explanation["context_assertions"]
+    assert "slc10-model:Q0GE19-v6-7ZYI" in explanation["context_assertions"]
+    assert "no general lack" in explanation["limitations"]
 
 
 @pytest.mark.parametrize("version", ["../escape", "1/../../other", "", 1])

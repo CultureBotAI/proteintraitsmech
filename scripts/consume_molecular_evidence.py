@@ -116,6 +116,7 @@ def resolve(raw, request, upstream_raw=None):
     result = {"request": deepcopy(request), "annotation_action": "NONE",
               "scope_note": bundle["scope_note"], "claim": deepcopy(claim),
               "basis": [deepcopy(assertions[key]) for key in sorted(basis)],
+              "context": [deepcopy(assertions[key]) for key in sorted(set(claim.get("context_assertions", [])))],
               "sources": deepcopy(bundle["sources"])}
     if "upstream_review" in request:
         result["upstream_review"] = verify_upstream(upstream_raw, request["upstream_review"], bundle,

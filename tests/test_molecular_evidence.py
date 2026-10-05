@@ -173,6 +173,47 @@ def test_computational_function_claim_rejected(bundle):
 
 
 @pytest.fixture
+def explanation_bundle(bundle):
+    explanation = {k: bundle["sites"][0][k] for k in (
+        "protein_id", "sequence_sha256", "review_status", "limitations", "evidence")}
+    explanation.update({"assertion_id": "test:explanation-a", "claim": "Synthetic interpretation",
+                        "evidence_origin": "CURATOR_INTERPRETATION", "assessment": "SUPPORTED",
+                        "supporting_assertions": ["test:site"], "unresolved_questions": ["Synthetic question"]})
+    second = deepcopy(explanation)
+    second.update(assertion_id="test:explanation-b", supporting_assertions=["test:explanation-a"])
+    bundle["explanations"] = [explanation, second]
+    return bundle
+
+
+def test_acyclic_explanation_dependencies_allowed(explanation_bundle):
+    assert validate_bundle(explanation_bundle) == []
+
+
+@pytest.mark.parametrize("field", ["supporting_assertions", "challenging_assertions"])
+def test_indirect_explanation_self_justification_rejected(explanation_bundle, field):
+    explanation_bundle["explanations"][0][field] = ["test:explanation-b"]
+    assert any("explanation dependency cycle" in e for e in validate_bundle(explanation_bundle))
+
+
+def test_context_does_not_establish_explanation_support(explanation_bundle):
+    e = explanation_bundle["explanations"][0]
+    e["context_assertions"] = e.pop("supporting_assertions")
+    assert any("requires supporting assertions" in error for error in validate_bundle(explanation_bundle))
+    e["assessment"] = "UNRESOLVED"
+    assert validate_bundle(explanation_bundle) == []
+
+
+@pytest.mark.parametrize("refs,expected", [
+    (["missing"], "does not resolve"),
+    (["test:explanation-b"], "cannot reference another explanation"),
+    (["test:site"], "context-only assertions"),
+])
+def test_explanation_context_scope(explanation_bundle, refs, expected):
+    explanation_bundle["explanations"][0]["context_assertions"] = refs
+    assert any(expected in error for error in validate_bundle(explanation_bundle))
+
+
+@pytest.fixture
 def mechanism_bundle(bundle):
     bundle["mechanisms"] = [{
         "mechanism_id": "test:mechanism", "review_status": "PROPOSED",
@@ -215,6 +256,55 @@ def test_adversarial_mechanism_mutations(mechanism_bundle, mutation, expected):
     mutation(mechanism_bundle["mechanisms"][0])
     errors = validate_bundle(mechanism_bundle)
     assert errors and expected.lower() in " ".join(errors).lower()
+
+
+@pytest.fixture
+def substitution_bundle(mechanism_bundle):
+    b = mechanism_bundle
+    observation = {k: b["sites"][0][k] for k in ("protein_id", "sequence_sha256", "review_status", "limitations")}
+    observation.update({"assertion_id": "test:substitution", "evidence_origin": "EXPERIMENTAL_ASSAY",
+                        "activity": "Synthetic reduction", "substrate": "synthetic", "outcome": "DETECTED",
+                        "assay": "synthetic", "conditions": "synthetic", "construct": "Reference with C2A",
+                        "expression_localization_controls": "synthetic", "source_locator": "synthetic",
+                        "evidence": [{"reference": "https://example.org/fixture", "snippet": "Synthetic fixture."}],
+                        "sequence_substitutions": [{"position": 2, "residue": "C", "substituted_residue": "A"}]})
+    b["functional_observations"] = [observation]
+    b["mechanisms"][0]["assertion_refs"].append("test:substitution")
+    b["mechanisms"][0]["residue_bindings"][0]["substituted_residue"] = "A"
+    return b
+
+
+def test_substitution_binds_reference_without_mutating_it(substitution_bundle):
+    assert validate_bundle(substitution_bundle) == []
+    assert substitution_bundle["protein_references"][0]["sequence"] == "ACD"
+
+
+@pytest.mark.parametrize("mutation,expected", [
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(residue="S"), "reference sequence"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(position=99), "reference sequence"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(substituted_residue="C"), "change"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"].append(
+        deepcopy(b["functional_observations"][0]["sequence_substitutions"][0])), "duplicate"),
+    (lambda b: b["functional_observations"][0].pop("sequence_substitutions"), "matching scoped assay"),
+    (lambda b: b["functional_observations"][0].update(outcome="NOT_ASSESSED"), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0].update(assertion_refs=["test:site"]), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0]["residue_bindings"][0].update(substituted_residue="S"), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0]["residue_bindings"][0].update(substituted_residue="C"), "change"),
+])
+def test_substitution_scope_is_enforced(substitution_bundle, mutation, expected):
+    mutation(substitution_bundle)
+    assert any(expected in error for error in validate_bundle(substitution_bundle))
+
+
+def test_double_mutant_does_not_support_an_individual_effect(substitution_bundle):
+    b = substitution_bundle
+    second = {"position": 3, "residue": "D", "substituted_residue": "G"}
+    b["functional_observations"][0]["sequence_substitutions"].append(second)
+    assert any("matching scoped assay" in error for error in validate_bundle(b))
+    binding = deepcopy(b["mechanisms"][0]["residue_bindings"][0])
+    binding.update(second)
+    b["mechanisms"][0]["residue_bindings"].append(binding)
+    assert validate_bundle(b) == []
 
 
 @pytest.fixture

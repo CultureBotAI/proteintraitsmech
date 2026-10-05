@@ -180,6 +180,25 @@ functional_observations:
       - reference: https://doi.org/10.1038/s41467-024-46706-w
         snippet: BLV fully abolished transport
     limitations: Inhibition by the complete drug does not prove that one myristoyl contact is individually necessary, or that binding predicts viral entry.
+  - assertion_id: slc10-assay:ntcp-e257a-uptake-reduction-2014
+    protein_id: UniProtKB:Q14973
+    evidence_origin: EXPERIMENTAL_ASSAY
+    review_status: PROPOSED
+    activity: Reduction of taurocholate uptake with NTCP E257A
+    substrate: Taurocholate
+    outcome: DETECTED
+    assay: Radiotracer uptake in HepG2 cells
+    conditions: 1 micromolar taurocholate, 15 minutes, 37 degrees Celsius, sodium-containing buffer; wild-type comparator. E257A belongs to the reported 95-99 percent reduction group; no individual point estimate assigned.
+    construct: Human NTCP E257A with C-terminal C-9 tag; complete historical construct not independently reconciled.
+    sequence_substitutions:
+      - {position: 257, residue: E, substituted_residue: A}
+    expression_localization_controls: Mutant and wild-type total and surface expression were largely comparable (Figure 6B).
+    source_locator: Results, sodium-site mutants; Figure 6A/B; Methods, taurocholate uptake assay
+    evidence:
+      - reference: https://doi.org/10.1128/JVI.03478-13
+        snippet: 95 to 99% reduction
+        notes: The sentence explicitly lists E257A among the tested mutants.
+    limitations: DETECTED describes the reduction, not normal transport. Reduced uptake is not complete absence. This does not isolate sodium binding from folding, gating or coupling effects, or explain SLC10A4.
 explanations:
   - assertion_id: slc10-explanation:a4-residue-loss
     protein_id: UniProtKB:Q96EP9
@@ -190,6 +209,9 @@ explanations:
     challenging_assertions:
       - slc10-comparison:7ZYI-I-705-NA-4.5A-Q96EP9
       - slc10-comparison:7ZYI-J-706-NA-4.5A-Q96EP9
+    context_assertions:
+      - slc10-assay:a4-taurocholate-oocytes-2015
+      - slc10-assay:a4-thrombin-associated-uptake-2013
     evidence:
       - reference: https://doi.org/10.2210/pdb7ZYI/pdb
         notes: Structural contact source; cross-protein correspondence is computed, not experimentally observed.
@@ -200,6 +222,29 @@ explanations:
       - Which substrates, localization requirements, gating steps, or coupling mechanisms apply?
       - How should the 2013 and 2015 assay contexts and disputed attribution be reconciled?
     limitations: Challenges loss of residue identities, not every possible defect in site geometry. Does not establish sodium binding or transport.
+  - assertion_id: slc10-explanation:a7-site-divergence
+    protein_id: UniProtKB:Q0GE19
+    evidence_origin: CURATOR_INTERPRETATION
+    review_status: PROPOSED
+    claim: Differences at mapped NTCP sites are sufficient to explain an absence of NTCP-like bile-acid transport by human SLC10A7.
+    assessment: UNRESOLVED
+    context_assertions:
+      - slc10-assessment:a7-assay-identity-unresolved
+      - slc10-comparison:7ZYI-I-705-NA-4.5A-Q0GE19
+      - slc10-comparison:7ZYI-J-706-NA-4.5A-Q0GE19
+      - slc10-model:Q0GE19-v6-7ZYI
+    evidence:
+      - reference: https://doi.org/10.1016/j.ejcb.2007.06.001
+        notes: The abstract reports transport screens; assignment to the exact human construct remains unresolved in this pilot.
+      - reference: https://doi.org/10.2210/pdb7ZYI/pdb
+        notes: Experimental NTCP anchor, not experimental SLC10A7 binding.
+      - reference: https://www.uniprot.org/uniprotkb/Q0GE19/entry
+        notes: Pinned human reference for computational correspondence.
+    unresolved_questions:
+      - Which full-text assay results and expression controls apply to the exact human SLC10A7 construct?
+      - Is the proposed residue correspondence valid in the divergent C-terminal region?
+      - Does any perturbation isolate the functional consequence of these site differences?
+    limitations: Context is not causal support. Neither a negative assay assigned to another species nor an uncertain mapping establishes this explanation. Model residuals are not measured molecular movements; no general lack of SLC10A7 function is asserted.
   - assertion_id: slc10-explanation:mouse-binding-not-infection
     protein_id: UniProtKB:O08705
     evidence_origin: CURATOR_INTERPRETATION
@@ -358,3 +403,37 @@ mechanisms:
             - reference: https://doi.org/10.1038/s41467-024-46706-w
               snippet: BLV fully abolished transport
               notes: Results, Figure 3a; the result applies to complete drug exposure, not to a residue mutation.
+  - mechanism_id: slc10-mechanism:ntcp-e257a-uptake-reduction
+    review_status: PROPOSED
+    trait_ref: Pfam:PF01758
+    protein_ids: [UniProtKB:Q14973]
+    assertion_refs: [slc10-assay:ntcp-e257a-uptake-reduction-2014]
+    limitations: Perturbation-backed functional effect, not proof of a unique microscopic mechanism or a universal residue requirement.
+    residue_bindings:
+      - {node_id: e257a, protein_id: UniProtKB:Q14973, position: 257, residue: E, substituted_residue: A}
+    graph:
+      graph_id: ntcp_e257a_uptake_reduction
+      title: NTCP E257A reduces taurocholate uptake
+      description: The reference coordinate frame and substituted assay construct remain distinct.
+      nodes:
+        - node_id: e257a
+          label: Human NTCP E257A substitution
+          node_type: RESIDUE
+          local: true
+          xrefs: [UniProtKB:Q14973]
+          description: Mutation locus; the binding identifies reference E257 and explicitly records its replacement by alanine.
+        - node_id: uptake
+          label: NTCP-mediated taurocholate uptake
+          node_type: MOLECULAR_FUNCTION
+          grounding: GO:0008508
+          description: Assayed transport, not activity assigned to the whole protein family.
+      edges:
+        - subject: e257a
+          predicate: negatively regulates
+          predicate_id: RO:0002212
+          object: uptake
+          description: Uptake decreases relative to wild type with comparable expression controls; no complete transport loss is asserted.
+          evidence:
+            - reference: https://doi.org/10.1128/JVI.03478-13
+              snippet: 95 to 99% reduction
+              notes: Figure 6A/B; this range covers the reported mutant group, not an exact E257A-specific estimate.

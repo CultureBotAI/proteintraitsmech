@@ -63,8 +63,19 @@ Local residue sets and cavities are explicitly local, not new ontology classes.
   A7's exact human assay assignment remains unverified in this extraction; that
   is an evidence gap, not a claim that no experiments exist. Historical assay
   constructs are not silently equated to present-day reference sequences.
+- **Perturbations:** E257A is a typed substitution relative to the human NTCP
+  reference, with a linked uptake-reduction observation and graph. The checksum
+  pins reference coordinates, not a complete mutant or tagged assay construct.
+  The 2014 study reports comparable expression controls and a 95-99% uptake
+  reduction across a group including E257A; the pilot does not invent an exact
+  E257A-specific estimate or turn reduced uptake into complete absence. This
+  tests a functional consequence without assigning a unique microscopic cause.
 - **Explanations:** the A4 residue-loss explanation and the sufficiency of mouse
   preS1 binding for infection are assessed independently of the assay outcomes.
+  A7's site-divergence explanation is explicitly UNRESOLVED. `context_assertions`
+  connect assay and computational context without counting as arguments for an
+  explanation; the consumer returns these separately from its supporting/challenging
+  `basis`. Interpretation dependencies cannot justify themselves through cycles.
   Disputed A4 uptake studies retain their different cell systems and attribution
   limits. Partial contacts do not become an invented complete transport cycle.
 
@@ -170,11 +181,33 @@ node scripts/check_slc10_page.mjs /path/to/chrome http://127.0.0.1:8765/slc10.ht
 
 ## Review and release gates
 
+### Scientific claim audit (author self-review, not independent sign-off)
+
+The supplied report motivates questions; it does not replace primary evidence.
+The following boundaries were checked against the bundle and original sources:
+
+| Claim or shortcut | Pilot disposition |
+| --- | --- |
+| A4 negative transport implies loss of the NTCP sodium-site identities | CHALLENGED by sequence-derived comparisons; the [2015 assay](https://doi.org/10.1186/s12868-015-0174-2), Figure 4, remains a separate, condition-specific observation. The 2013 cellular-accumulation report is retained with disputed attribution, not erased. |
+| A contact shell establishes residues required for function | Not accepted. [7ZYI](https://doi.org/10.2210/pdb7ZYI/pdb) supplies coordinates; proximity is not an intervention or a universal necessity test. |
+| Main-chain contact makes a substitution harmless | Not accepted. Atom role is recorded; no functional-neutrality verdict is derived from it. |
+| A7 sequence/model differences explain a human negative assay | UNRESOLVED. The [2007 study](https://doi.org/10.1016/j.ejcb.2007.06.001) needs full-text species/construct reconciliation; correspondence candidates and model residuals cannot supply that missing experiment. |
+| SOAT is a generic bile-acid transport control | Not accepted. The [original study](https://doi.org/10.1074/jbc.M702663200) distinguishes sulfated substrates, including taurolithocholic acid-3-sulfate, from the tested nonsulfated bile acids. |
+| E257A proves complete loss or one unique microscopic mechanism | Not accepted. The [2014 study](https://doi.org/10.1128/JVI.03478-13), Figure 6A/B, supports reduced uptake with expression controls, not a unique explanation of the reduction. |
+
+The next reviewer should check source-to-claim fidelity, full assay constructs,
+ambiguous A7 correspondence, and whether the displayed evidence boundaries are
+clear to a gene curator. None of this self-review upgrades PROPOSED assertions.
+
+### Software and publication gates
+
 Focused offline tests cover coordinate identity, ambiguous alignment, exhaustive
 small-alignment equivalence, self-mapping, missing ligands, contact chemistry,
 model transforms/confidence/least-squares optimality, contact atom identity,
+reference/substitution consistency and matching mutant-assay graph bindings,
 graph residue scope, consumer pin drift, upstream residue claims, export
-checksums and unsafe rendering. Raw downloads are not required for those tests.
+checksums, explanation dependency cycles, context/argument separation and unsafe
+rendering. Raw downloads are not required for those tests.
 The `--check` replay is a separate integration test requiring the original inputs.
 
 ```bash
@@ -204,6 +237,9 @@ the corresponding screenshots were visually inspected. Local adversarial review
 found and fixed contact-residue/fit-optimality gaps
 ([#1005](https://github.com/CultureBotAI/proteintraitsmech/issues/1005)) and unnamed
 graph dialogs ([#1006](https://github.com/CultureBotAI/proteintraitsmech/issues/1006)).
+An additional reproduced gap allowed indirect explanation self-justification
+([#1008](https://github.com/CultureBotAI/proteintraitsmech/issues/1008)); the validator
+now rejects evidence-dependency cycles without banning biological feedback loops.
 These findings remain open until their fixes are integrated.
 
 Still required before calling the pilot complete: independent scientific review,

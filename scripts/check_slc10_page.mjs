@@ -65,6 +65,10 @@ try {
     const result=await call('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true},sessionId);
     if(result.exceptionDetails)throw new Error(JSON.stringify(result.exceptionDetails));return result.result.value;
   };
+  const screenshot=async name=>{
+    const result=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
+    const path=join(directory,name);await writeFile(path,Buffer.from(result.data,'base64'));return path;
+  };
   await call('Emulation.setDeviceMetricsOverride',{width:1440,height:1100,deviceScaleFactor:1,mobile:false},sessionId);
   assert.equal(await run('1+1'),2);
   console.log('JavaScript execution context ready');
@@ -76,8 +80,13 @@ try {
   assert.equal(await run('document.querySelectorAll("#site option").length'),7);
   assert.equal(await run('document.querySelectorAll("#matrix tbody tr").length'),7);
   assert.equal(await run('document.querySelectorAll("#models tbody tr").length'),3);
-  assert.equal(await run('document.querySelectorAll("#mechanisms article").length'),4);
-  assert.equal(await run('document.querySelectorAll("#assays tbody tr").length'),11);
+  assert.equal(await run('document.querySelectorAll("#mechanisms article").length'),5);
+  assert.equal(await run('document.querySelectorAll("#assays tbody tr").length'),12);
+  assert.equal(await run('document.querySelectorAll("#explanations article").length'),3);
+  assert.match(await run('document.getElementById("slc10-explanation:a7-site-divergence").textContent'),/UNRESOLVED/);
+  await run('[...document.getElementById("slc10-explanation:a4-residue-loss").querySelectorAll("button")].find(b=>b.textContent==="Taurocholate uptake").click()');
+  assert.match(await run('document.getElementById("detail-body").textContent'),/NOT_DETECTED/);
+  await run('document.getElementById("close-detail").click()');
   await run('document.querySelector("#matrix .cell").click()');
   assert.equal(await run('document.getElementById("detail").open'),true);
   assert.match(await run('document.getElementById("detail-body").textContent'),/sequence_sha256/);
@@ -87,13 +96,14 @@ try {
   assert.equal(await run('document.getElementById("detail-title").textContent'),graphTitle);
   assert.equal(await run('document.getElementById("detail").getAttribute("aria-labelledby")'),'detail-title');
   await run('document.getElementById("close-detail").click()');
+  await run('[...document.querySelectorAll("#assays tbody tr")].find(r=>r.textContent.includes("E257A")).querySelector("button").click()');
+  assert.match(await run('document.getElementById("assay-substitutions").textContent'),/E257/);
+  assert.equal(await run('document.querySelector("#assay-substitutions tbody td").textContent'),'A');
+  const substitution=await screenshot('substitution.png');
+  await run('document.getElementById("close-detail").click()');
   await run('document.getElementById("site").selectedIndex=0; document.getElementById("site").dispatchEvent(new Event("change"))');
   assert.equal(await run('document.querySelectorAll("#matrix .cell").length'),91);
   await run('document.getElementById("site").selectedIndex=3; document.getElementById("site").dispatchEvent(new Event("change"))');
-  const screenshot=async name=>{
-    const result=await call('Page.captureScreenshot',{format:'png',captureBeyondViewport:false},sessionId);
-    const path=join(directory,name);await writeFile(path,Buffer.from(result.data,'base64'));return path;
-  };
   await run('window.scrollTo(0,0)');
   const desktop=await screenshot('desktop.png');
   await run('document.getElementById("site-heading").scrollIntoView()');
@@ -107,7 +117,7 @@ try {
   await run('setTimeout(()=>{location.href='+JSON.stringify(url+'#'+encodeURIComponent('slc10-assay:mouse-pres1-binding-2013'))+';location.reload()},0); true');
   await until(()=>run('document.getElementById("detail")?.open'),'stable assertion deep link');
   assert.match(await run('document.getElementById("detail-body").textContent'),/HBV preS1 peptide binding/);
-  console.log(JSON.stringify({status:'passed',desktop,matrix,mechanisms,mobile,checks:['verified export','matrix','site switching','assay evidence dialog','model table','accessible graph dialog','mechanisms','mobile overflow','stable assertion deep link']},null,2));
+  console.log(JSON.stringify({status:'passed',desktop,matrix,mechanisms,mobile,substitution,checks:['verified export','matrix','site switching','separate assay context','unresolved explanation','typed substitution dialog','model table','accessible graph dialog','mechanisms','mobile overflow','stable assertion deep link']},null,2));
 } catch(error) {
   console.error('Isolated browser diagnostics:',browserErrors);
   throw error;

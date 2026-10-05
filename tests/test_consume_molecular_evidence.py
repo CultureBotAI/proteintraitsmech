@@ -27,6 +27,8 @@ def test_fixture_resolves_without_an_annotation_action(inputs):
     assert result["claim"]["review_status"] == "PROPOSED"
     assert len(result["basis"]) == 2
     assert all(row["evidence_origin"] == "COMPUTED_COMPARISON" for row in result["basis"])
+    assert {row["outcome"] for row in result["context"]} == {"DETECTED", "NOT_DETECTED"}
+    assert all(row["evidence_origin"] == "EXPERIMENTAL_ASSAY" for row in result["context"])
     assert result["claim"]["limitations"] and result["claim"]["unresolved_questions"]
 
 

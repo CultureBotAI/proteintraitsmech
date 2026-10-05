@@ -18,6 +18,9 @@ function details(row) {
   const heading=el("h2",row.label||row.title||row.graph?.title||row.activity||row.assertion_id||row.source_id||row.mechanism_id);
   heading.id="detail-title"; const body=$("detail-body"); body.replaceChildren(heading);
   if(row.limitations)body.append(el("p",row.limitations,"notice")); evidence(body,row.evidence);
+  if(row.sequence_substitutions?.length){const t=el("table");t.id="assay-substitutions";
+    table(t,["Reference residue","Reported replacement"],row.sequence_substitutions.map(s=>[s.residue+s.position,s.substituted_residue]),
+      "Reference coordinates; the checksum does not certify the complete assay construct");body.append(t,el("p",row.construct));}
   body.append(el("pre",JSON.stringify(row,null,2))); $("detail").showModal();
 }
 function action(text,row,cls) {const b=el("button",text,cls); b.type="button"; b.addEventListener("click",()=>details(row)); return b;}
@@ -41,7 +44,8 @@ async function main() {
   const indexed=new Map([...(b.sites||[]),...(b.comparisons||[]),...(b.model_comparisons||[]),...(b.functional_observations||[]),...(b.explanations||[])].map(r=>[r.assertion_id,r]));
   for(const e of b.explanations){const c=el("article",undefined,"card");c.id=e.assertion_id;c.append(el("span",e.assessment+" · "+e.review_status,"badge"),el("h3",e.claim),el("p",e.limitations));
     const ul=el("ul");for(const q of e.unresolved_questions)ul.append(el("li",q));c.append(ul);
-    for(const ref of [...(e.supporting_assertions||[]),...(e.challenging_assertions||[])])c.append(action(ref,indexed.get(ref)));
+    for(const [field,label] of [["supporting_assertions","Supports this explanation"],["challenging_assertions","Challenges this explanation"],["context_assertions","Context only — not evidence for the explanation"]]){
+      if(e[field]?.length){c.append(el("h4",label));for(const ref of e[field])c.append(action(indexed.get(ref).activity||ref,indexed.get(ref)));}}
     evidence(c,e.evidence);$("explanations").append(c);}
   function matrix(){const site=b.sites.find(s=>s.assertion_id===$("site").value);
     const positions=[...new Set(site.contacts.map(c=>c.protein_position))].sort((a,z)=>a-z);

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 from functools import lru_cache
+from graphlib import CycleError, TopologicalSorter
 import json
 import math
 from pathlib import Path
@@ -276,16 +277,34 @@ def validate_bundle(bundle):
         for field in ("conditions", "construct", "expression_localization_controls", "source_locator"):
             if not observation[field].strip():
                 errors.append(f"functional observation requires explicit {field}")
+        protein = proteins[observation["protein_id"]]
+        substituted_positions = set()
+        for change in observation.get("sequence_substitutions", []):
+            position = change["position"]
+            if position in substituted_positions:
+                errors.append("duplicate assay substitution position")
+            substituted_positions.add(position)
+            if (not 1 <= position <= protein["sequence_length"] or
+                    protein["sequence"][position - 1] != change["residue"]):
+                errors.append("assay substitution does not match reference sequence")
+            if change["residue"] == change["substituted_residue"]:
+                errors.append("assay substitution must change the reference residue")
 
     for explanation in bundle.get("explanations", []):
         if explanation["evidence_origin"] != "CURATOR_INTERPRETATION":
             errors.append("explanation must remain CURATOR_INTERPRETATION")
         supporting = set(explanation.get("supporting_assertions", []))
         challenging = set(explanation.get("challenging_assertions", []))
+        context = set(explanation.get("context_assertions", []))
         if supporting & challenging:
             errors.append("same assertion both supports and challenges one claim")
-        if (supporting | challenging) - assertions.keys():
+        if (supporting | challenging | context) - assertions.keys():
             errors.append("explanation assertion reference does not resolve")
+        if any(assertions[ref]["evidence_origin"] == "CURATOR_INTERPRETATION" and "claim" in assertions[ref]
+               for ref in context if ref in assertions):
+            errors.append("explanation context cannot reference another explanation")
+        if context & (supporting | challenging):
+            errors.append("context-only assertions cannot also serve as explanation arguments")
         if explanation["assertion_id"] in supporting | challenging:
             errors.append("explanation cannot support itself")
         if explanation["assessment"] == "SUPPORTED" and not supporting:
@@ -294,6 +313,18 @@ def validate_bundle(bundle):
             errors.append("challenged explanation requires challenging assertions")
         if not explanation["unresolved_questions"]:
             errors.append("explanation must preserve open questions")
+
+    # This is the evidence-dependency graph, not a biological mechanism graph:
+    # biological feedback is allowed, but interpretations cannot justify themselves
+    # indirectly through other interpretations (regardless of edge polarity).
+    explanations = {e["assertion_id"]: e for e in bundle.get("explanations", [])}
+    dependencies = {key: (set(e.get("supporting_assertions", [])) |
+                          set(e.get("challenging_assertions", []))) & explanations.keys()
+                    for key, e in explanations.items()}
+    try:
+        TopologicalSorter(dependencies).prepare()
+    except CycleError:
+        errors.append("explanation dependency cycle cannot justify an interpretation")
 
     mechanisms = bundle.get("mechanisms", [])
     index(mechanisms, "mechanism_id", "mechanism")
@@ -331,6 +362,22 @@ def validate_bundle(bundle):
                     not 1 <= position <= protein["sequence_length"] or
                     protein["sequence"][position - 1] != binding["residue"]):
                 errors.append("mechanism residue binding does not match scoped sequence")
+            if "substituted_residue" in binding:
+                change = {k: binding[k] for k in ("position", "residue", "substituted_residue")}
+                if change["residue"] == change["substituted_residue"]:
+                    errors.append("mechanism substitution must change the reference residue")
+                # A double-mutant assay cannot justify one constituent mutation's
+                # effect in isolation. Preserve the complete tested combination.
+                fields = ("position", "residue", "substituted_residue")
+                node_changes = {tuple(b[k] for k in fields) for b in bindings
+                                if b["node_id"] == binding["node_id"] and b["protein_id"] == binding["protein_id"]
+                                and "substituted_residue" in b}
+                if not any(o["assertion_id"] in mechanism["assertion_refs"] and
+                           o["protein_id"] == binding["protein_id"] and o["evidence_origin"] == "EXPERIMENTAL_ASSAY" and
+                           o["outcome"] != "NOT_ASSESSED" and
+                           node_changes == {tuple(c[k] for k in fields) for c in o.get("sequence_substitutions", [])}
+                           for o in bundle.get("functional_observations", [])):
+                    errors.append("mechanism substitution requires a matching scoped assay observation")
         for node in mechanism["graph"]["nodes"]:
             if not node.get("grounding") and not (node.get("local") and node.get("description")):
                 errors.append("ungrounded mechanism nodes require local scope and description")

@@ -192,8 +192,10 @@ classes:
   MolecularAssertion:
     abstract: true
     description: >-
-      An assertion about one exact sequence. Review status and evidence origin
-      are orthogonal; even a reviewed computation is not an experiment.
+      An assertion anchored to one exact reference sequence. An assay construct
+      is described separately and can carry explicit substitutions; the reference
+      checksum does not certify the complete historical construct sequence.
+      Review status and evidence origin are orthogonal; a computation is not an experiment.
     attributes:
       assertion_id:
         range: string
@@ -202,6 +204,7 @@ classes:
         range: string
         required: true
       sequence_sha256:
+        description: Checksum of the reference coordinate frame, not of a substituted or tagged assay construct.
         range: string
         required: true
         pattern: ^[0-9a-f]{64}$
@@ -512,11 +515,37 @@ classes:
       construct:
         range: string
         required: true
+      sequence_substitutions:
+        description: >-
+          Source-reported substitutions relative to the pinned reference sequence.
+          Absence means no substitutions curated, not a verified full construct match.
+          Tags, deletions and other unresolved construct differences remain in construct.
+        range: MolecularSequenceSubstitution
+        multivalued: true
+        inlined_as_list: true
       expression_localization_controls:
         range: string
         required: true
       source_locator:
         range: string
+        required: true
+
+  MolecularSequenceSubstitution:
+    description: One source-reported substitution in the exact reference coordinate frame; not a full construct sequence.
+    attributes:
+      position:
+        range: integer
+        minimum_value: 1
+        required: true
+      residue:
+        description: Residue in the pinned reference, before substitution.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      substituted_residue:
+        description: Different residue reported for the assay construct.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
         required: true
 
   MolecularExplanation:
@@ -535,6 +564,13 @@ classes:
         range: string
         multivalued: true
       challenging_assertions:
+        range: string
+        multivalued: true
+      context_assertions:
+        description: >-
+          Observations or computations needed to understand the question, without
+          counting as support for or a challenge to this explanation. Cannot refer
+          to another explanation or establish the assessment by themselves.
         range: string
         multivalued: true
       unresolved_questions:
@@ -576,7 +612,7 @@ classes:
         inlined_as_list: true
 
   MolecularResidueBinding:
-    description: One member of a graph residue node, in pinned full-protein coordinates.
+    description: One member of a graph residue node, in pinned reference coordinates, optionally identifying a tested substitution.
     attributes:
       node_id:
         range: string
@@ -593,9 +629,14 @@ classes:
         minimum_value: 1
         required: true
       residue:
+        description: Residue in the pinned reference, not the altered construct.
         range: string
         pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
         required: true
+      substituted_residue:
+        description: When present, the node denotes a substitution supported by a linked assay observation.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
 
   BiophysicalDescriptorCatalog:
     tree_root: true
