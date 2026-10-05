@@ -28,9 +28,14 @@ THREE LAYERS, THREE TRUST LEVELS
    ``rhea-directions.tsv``), joined with that record's canonical examples, and given
    exactly one status: QUALIFIED_ON_TRAIT, LEGACY_ON_TRAIT, ABSENT_FROM_TRAIT,
    TRAIT_NOT_IN_PTM, or NOT_A_PTM_NAMESPACE.
-3. CANDIDATES (``candidates``, ignored ``reports/uniprot-grounding/cross-mech/``) -- one
-   grounding-funnel candidate per ABSENT or LEGACY pair that has a route, carrying the
-   sibling provenance. The ordinary selector, fetch, resolver, review, and promoter
+3. CANDIDATES (``discover`` then ``candidates``, ignored
+   ``reports/uniprot-grounding/cross-mech/``) -- one grounding-funnel candidate per
+   ABSENT or LEGACY pair that has a route, carrying the sibling provenance. A funnel
+   candidate is a complete scientific identity, including the exact sequence checksum
+   and UniProt release, so ``discover`` first reads each protein's sequence from one
+   pinned UniProt release. That read is identity, not evidence: the selector-bound
+   registry fetch re-acquires every protein under its own receipt and refuses a
+   sequence that differs. The ordinary selector, fetch, resolver, review, and promoter
    take it from there.
 4. INCLUSION -- not here. A sibling assertion is discovery provenance, never
    qualification evidence: CellStructureMech says in its own records that a protein
@@ -84,6 +89,10 @@ MENTIONS_NAME = "protein_mentions.jsonl"
 MANIFEST_NAME = "manifest.json"
 REPORT_DIR = REPO_ROOT / "reports" / "cross-mech"
 CANDIDATE_QUEUE = REPO_ROOT / "reports" / "uniprot-grounding" / "cross-mech" / "candidates.jsonl"
+DISCOVERY_PATH = REPO_ROOT / "reports" / "uniprot-grounding" / "cross-mech" / "discovery.jsonl"
+UNIPROT_HOST = "rest.uniprot.org"
+UNIPROT_SEARCH = f"https://{UNIPROT_HOST}/uniprotkb/search"
+_SEQUENCE = re.compile(r"^[A-Z]+$")
 CANDIDATE_BATCH = "cross-mech"
 # A localized signature claim needs an InterPro occurrence on a known sequence frame,
 # which a sibling record never supplies; it stays out of the whole-protein batch the
@@ -1523,6 +1532,106 @@ def render_summary_markdown(report: Mapping[str, Any], manifest: Mapping[str, An
     return "\n".join(lines) + "\n"
 
 
+# --------------------------------------------------------------------- discovery
+
+
+def discovery_url(accessions: Sequence[str]) -> str:
+    query = (
+        "(" + " OR ".join(f"accession:{accession}" for accession in sorted(set(accessions))) + ")"
+    )
+    params = {
+        "query": query,
+        "format": "json",
+        "size": "500",
+        "includeIsoform": "true",
+        "fields": "accession,sequence",
+    }
+    return f"{UNIPROT_SEARCH}?{urllib.parse.urlencode(params)}"
+
+
+def discover_sequences(
+    protein_ids: Iterable[str],
+    *,
+    expected_release: str,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+    batch_size: int = 100,
+) -> dict[str, Any]:
+    """Exact sequence identity of each protein from one pinned UniProt release.
+
+    Anonymous exact-accession requests only; every response must carry
+    ``x-uniprot-release`` equal to ``expected_release``. An accession UniProt does not
+    return (obsolete, merged, or demerged) is reported, never guessed.
+    """
+
+    accessions = sorted({protein.removeprefix("UniProtKB:") for protein in protein_ids})
+    rows: dict[str, dict[str, Any]] = {}
+    responses: list[dict[str, Any]] = []
+    for offset in range(0, len(accessions), batch_size):
+        batch = accessions[offset : offset + batch_size]
+        url = discovery_url(batch)
+        request = urllib.request.Request(
+            url,
+            headers={"Accept": "application/json", "User-Agent": "ProteinTraitsMech-cross-mech/1"},
+        )
+        with opener(request, timeout=120) as response:
+            final = urllib.parse.urlparse(response.geturl())
+            if final.scheme != "https" or final.hostname != UNIPROT_HOST:
+                raise CrossMechError(f"discovery redirected off {UNIPROT_HOST}: {final.geturl()}")
+            if response.status != 200:
+                raise CrossMechError(f"UniProt discovery returned HTTP {response.status}")
+            release = response.headers.get("x-uniprot-release")
+            link = response.headers.get("link") or ""
+            body = response.read()
+        if release != expected_release:
+            raise CrossMechError(
+                f"UniProt release {release!r} is not the pinned {expected_release!r}"
+            )
+        if 'rel="next"' in link:
+            raise CrossMechError("an exact-accession discovery batch paginated; lower batch_size")
+        responses.append(
+            {"request_url": url, "release": release, "response_sha256": sha256_bytes(body)}
+        )
+        wanted = set(batch)
+        for entry in json.loads(body).get("results") or []:
+            accession = entry.get("primaryAccession")
+            if accession not in wanted:
+                continue
+            sequence_object = entry.get("sequence") or {}
+            sequence = str(sequence_object.get("value") or "").strip()
+            length = sequence_object.get("length")
+            if not _SEQUENCE.fullmatch(sequence) or length != len(sequence):
+                raise CrossMechError(f"UniProt returned an invalid sequence for {accession}")
+            row = {
+                "protein_id": f"UniProtKB:{accession}",
+                "sequence_length": length,
+                "sequence_sha256": sha256_bytes(sequence.encode("ascii")),
+                "uniprot_release": release,
+            }
+            if rows.get(accession, row) != row:
+                raise CrossMechError(f"UniProt returned two different sequences for {accession}")
+            rows[accession] = row
+    missing = sorted(set(accessions) - set(rows))
+    return {
+        "rows": [rows[accession] for accession in sorted(rows)],
+        "missing": [f"UniProtKB:{accession}" for accession in missing],
+        "responses": responses,
+    }
+
+
+def load_discovery(path: Path) -> dict[str, dict[str, Any]]:
+    if not path.is_file():
+        raise CrossMechError(f"no discovery file at {path}; run `discover --apply` first")
+    facts: dict[str, dict[str, Any]] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        row = json.loads(line)
+        if set(row) != {"protein_id", "sequence_length", "sequence_sha256", "uniprot_release"}:
+            raise CrossMechError(f"{path}: unexpected discovery row fields {sorted(row)}")
+        if not SHA256_HEX.fullmatch(str(row["sequence_sha256"])):
+            raise CrossMechError(f"{path}: invalid sequence_sha256 for {row['protein_id']}")
+        facts[row["protein_id"]] = row
+    return facts
+
+
 # -------------------------------------------------------------------- candidates
 
 
@@ -1531,13 +1640,15 @@ def candidate_rows(
     *,
     uniprot_release: str,
     mentions_sha256: str,
+    sequences: Mapping[str, Mapping[str, Any]],
 ) -> list[dict[str, Any]]:
     """Funnel candidates for every absent or legacy pair that has a qualification route.
 
-    A row says only "the sibling claims this protein carries this exact trait". It names
-    the route that could prove it (an exact UniProt fact, or an exact InterPro match),
-    and nothing else: sequence, organism, and the fact itself come from the release-
-    pinned fetch, never from the sibling record.
+    A row says only "the sibling claims this protein carries this exact trait", the
+    route that could prove it (an exact UniProt fact, or an exact InterPro match), and
+    the protein's discovered sequence identity. Organism and the fact itself come from
+    the release-pinned fetch, never from the sibling record; a protein the pinned
+    release did not return gets no candidate.
     """
 
     if re.fullmatch(r"[0-9]{4}_[0-9]{2}", uniprot_release) is None:
@@ -1554,6 +1665,14 @@ def candidate_rows(
             or pair["route"] == "NONE"
         ):
             continue
+        identity = sequences.get(pair["protein_id"])
+        if identity is None:
+            continue  # not returned by the pinned release: reported by `discover`
+        if identity["uniprot_release"] != uniprot_release:
+            raise CrossMechError(
+                f"{pair['protein_id']} was discovered in {identity['uniprot_release']}, "
+                f"not the pinned {uniprot_release}"
+            )
         method, _, evidence_source = pair["route"].partition(":")
         trait_id = pair["trait_id"]
         row: dict[str, Any] = {
@@ -1567,6 +1686,9 @@ def candidate_rows(
             "trait_category": pair["trait_category"],
             "source_namespace": trait_id.split(":", 1)[0],
             "protein_id": pair["protein_id"],
+            "sequence_length": identity["sequence_length"],
+            "sequence_sha256": identity["sequence_sha256"],
+            "sequence_release": identity["uniprot_release"],
             "scope": "LOCALIZED" if method == "INTERPRO_MATCH" else "WHOLE_PROTEIN",
             "source_trait_id": trait_id,
             "mapping_method": method,
@@ -1796,6 +1918,53 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _candidate_proteins(args: argparse.Namespace) -> list[str]:
+    rows, _ = load_snapshot(Path(args.snapshot))
+    if args.pairs:
+        pairs = [
+            json.loads(line) for line in Path(args.pairs).read_text(encoding="utf-8").splitlines()
+        ]
+    else:
+        pairs = audit(
+            rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
+        )["pairs"]
+    return sorted(
+        {
+            pair["protein_id"]
+            for pair in pairs
+            if pair["status"] in {"ABSENT_FROM_TRAIT", "LEGACY_ON_TRAIT"}
+            and pair["route"] != "NONE"
+        }
+    )
+
+
+def cmd_discover(args: argparse.Namespace) -> int:
+    proteins = _candidate_proteins(args)
+    requests = (len(proteins) + 99) // 100
+    print(f"{len(proteins):,} candidate proteins -> {requests} exact-accession UniProt request(s)")
+    if not args.apply:
+        print("dry run: no network access; pass --apply to read UniProt and write discovery")
+        return 0
+    result = discover_sequences(proteins, expected_release=args.uniprot_release)
+    out = Path(args.out)
+    _atomic_write(out, "".join(canonical_json(row) + "\n" for row in result["rows"]))
+    receipt = {
+        "expected_release": args.uniprot_release,
+        "responses": result["responses"],
+        "missing": result["missing"],
+        "discovered": len(result["rows"]),
+    }
+    _atomic_write(
+        out.with_name(out.stem + ".receipt.json"),
+        json.dumps(receipt, indent=2, sort_keys=True) + "\n",
+    )
+    print(f"discovered {len(result['rows']):,}; missing {len(result['missing']):,}")
+    for protein in result["missing"]:
+        print(f"  missing: {protein}")
+    print(f"WROTE {out}")
+    return 0
+
+
 def cmd_candidates(args: argparse.Namespace) -> int:
     rows, manifest = load_snapshot(Path(args.snapshot))
     if args.pairs:
@@ -1806,9 +1975,26 @@ def cmd_candidates(args: argparse.Namespace) -> int:
         pairs = audit(
             rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
         )["pairs"]
+    sequences = load_discovery(Path(args.discovery))
     candidates = candidate_rows(
-        pairs, uniprot_release=args.uniprot_release, mentions_sha256=manifest["mentions_sha256"]
+        pairs,
+        uniprot_release=args.uniprot_release,
+        mentions_sha256=manifest["mentions_sha256"],
+        sequences=sequences,
     )
+    undiscovered = sorted(
+        {
+            pair["protein_id"]
+            for pair in pairs
+            if pair["status"] in {"ABSENT_FROM_TRAIT", "LEGACY_ON_TRAIT"}
+            and pair["route"] != "NONE"
+        }
+        - set(sequences)
+    )
+    if undiscovered:
+        print(f"{len(undiscovered):,} proteins have no discovered sequence and get no candidate:")
+        for protein in undiscovered[:20]:
+            print(f"  {protein}")
     by_route = Counter(
         f"{row['batch']} {row['mapping_method']}:{row['source_namespace']}" for row in candidates
     )
@@ -1854,6 +2040,18 @@ def build_parser() -> argparse.ArgumentParser:
     audit_parser.add_argument("--out", default=str(REPORT_DIR))
     audit_parser.set_defaults(func=cmd_audit)
 
+    discover_parser = sub.add_parser("discover", help="read candidate proteins' sequence identity")
+    discover_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
+    discover_parser.add_argument("--traits", default=str(TRAITS_ROOT))
+    discover_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
+    discover_parser.add_argument(
+        "--pairs", help="reuse an audit pairs.jsonl instead of re-auditing"
+    )
+    discover_parser.add_argument("--uniprot-release", required=True)
+    discover_parser.add_argument("--out", default=str(DISCOVERY_PATH))
+    discover_parser.add_argument("--apply", action="store_true")
+    discover_parser.set_defaults(func=cmd_discover)
+
     candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
     candidates_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     candidates_parser.add_argument("--traits", default=str(TRAITS_ROOT))
@@ -1862,6 +2060,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--pairs", help="reuse an audit pairs.jsonl instead of re-auditing"
     )
     candidates_parser.add_argument("--uniprot-release", required=True)
+    candidates_parser.add_argument("--discovery", default=str(DISCOVERY_PATH))
     candidates_parser.add_argument("--out", default=str(CANDIDATE_QUEUE))
     candidates_parser.add_argument("--apply", action="store_true")
     candidates_parser.set_defaults(func=cmd_candidates)

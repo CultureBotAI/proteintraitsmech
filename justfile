@@ -324,6 +324,14 @@ audit-cross-mech-proteins *args:
 check-cross-mech-proteins *args:
     uv run python scripts/cross_mech_proteins.py check {{args}}
 
+# Read each cross-Mech candidate protein's exact sequence identity from the pinned
+# UniProt release (anonymous exact-accession requests). Dry-run plans only; --apply
+# reads UniProt and writes reports/uniprot-grounding/cross-mech/discovery.jsonl. This
+# is identity, not evidence: the selector-bound registry fetch re-verifies it.
+discover-cross-mech-sequences *args:
+    uv run python scripts/cross_mech_proteins.py discover \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
 # Turn every sibling (protein, trait) pair the audit places on an existing record --
 # protein absent or unqualified there -- into one grounding-funnel candidate. Dry-run;
 # --apply writes reports/uniprot-grounding/cross-mech/candidates.jsonl (ignored).
