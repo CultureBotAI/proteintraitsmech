@@ -339,7 +339,9 @@ def test_the_page_offers_the_sequence_map_and_deep_links_it():
     html = (ROOT / "docs" / "map.html").read_text(encoding="utf-8")
     assert 'data-map="sequence_map.json"' in html
     assert re.search(r'"#sequences":\s*"sequence_map.json"', html)
-    assert "just sequence-map" in html, "the not-built hint must name the recipe"
+    assert "This map could not be loaded" in html
+    assert 'retry.textContent="Retry map"' in html
+    assert "not been built" not in html, "a request failure must not claim the map is unbuilt"
 
 
 def test_third_party_labels_are_credited_on_the_page_not_only_in_the_json():
