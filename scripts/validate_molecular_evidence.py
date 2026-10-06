@@ -42,17 +42,74 @@ def finite(value):
     return True
 
 
+def null_errors(value, path=""):
+    """Reject explicit nulls before schema validation, with JSON Pointer paths."""
+    if value is None:
+        yield f"{path or '<root>'}: explicit null is not permitted; omit optional fields"
+    elif isinstance(value, dict):
+        for key, child in value.items():
+            token = str(key).replace("~", "~0").replace("/", "~1")
+            yield from null_errors(child, f"{path}/{token}")
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from null_errors(child, f"{path}/{index}")
+
+
+def source_binding_errors(sources, source_id, kind, identity_field, identity, label):
+    source = sources.get(source_id)
+    if source is None:
+        return [f"{label}: source {source_id} does not resolve"]
+    errors = []
+    if source["artifact_kind"] != kind:
+        errors.append(f"{label}: source {source_id} requires artifact_kind {kind}")
+    if source.get(identity_field) != identity:
+        errors.append(f"{label}: source {source_id} {identity_field} must match {identity}")
+    return errors
+
+
+def target_order_errors(rows, label):
+    targets = [row["target_position"] for row in rows
+               if row["status"] != "UNRESOLVED" and "target_position" in row]
+    if any(second <= first for first, second in zip(targets, targets[1:])):
+        return [f"{label}: resolved target positions must be unique and strictly increasing"]
+    return []
+
+
+def explanation_closure(assertion_refs, explanations):
+    """Follow evidence dependencies, not explicit comparison anchor relationships.
+
+    A comparison owns its target assertion; site_ref/anchor_protein_id describe
+    its anchor separately. They do not relabel an anchor assay as target evidence.
+    The visited set also makes malformed cyclic dependencies safe to inspect.
+    """
+    pending, reached = list(assertion_refs), set()
+    while pending:
+        ref = pending.pop()
+        if ref in reached:
+            continue
+        reached.add(ref)
+        if ref in explanations:
+            for field in ("supporting_assertions", "challenging_assertions", "context_assertions"):
+                pending.extend(explanations[ref].get(field, []))
+    return reached
+
+
 def validate_model_comparison(model, proteins, sources):
     errors = []
     if model["evidence_origin"] != "COMPUTED_COMPARISON":
         errors.append("predicted model comparison must remain COMPUTED_COMPARISON")
-    if any(model[k] not in sources for k in ("anchor_structure_source", "model_source", "mapping_source")):
-        errors.append("model comparison source does not resolve")
+    for field, kind in (("anchor_structure_source", "EXPERIMENTAL_STRUCTURE"),
+                        ("mapping_source", "RESIDUE_MAPPING")):
+        errors.extend(source_binding_errors(sources, model[field], kind, "structure_id",
+                                            model["anchor_structure_id"], f"{model['assertion_id']}.{field}"))
+    errors.extend(source_binding_errors(sources, model["model_source"], "PREDICTED_STRUCTURE", "protein_id",
+                                        model["protein_id"], f"{model['assertion_id']}.model_source"))
     anchor = proteins.get(model["anchor_protein_id"])
     target = proteins[model["protein_id"]]
     if not anchor:
         return [*errors, "model anchor protein does not resolve"]
     pairs = model["pairs"]
+    errors.extend(target_order_errors(pairs, f"model comparison {model['assertion_id']}"))
     if [p["anchor_position"] for p in pairs] != list(range(1, anchor["sequence_length"] + 1)):
         errors.append("model pairs must cover every anchor position exactly once in order")
     selected = []
@@ -133,6 +190,9 @@ def validate_model_comparison(model, proteins, sources):
 
 
 def validate_bundle(bundle):
+    errors = list(null_errors(bundle))
+    if errors:
+        return errors
     errors = [r.message for r in validator().validate(
         bundle, target_class="MolecularEvidenceBundle").results if r.severity == Severity.ERROR]
     if errors:
@@ -153,6 +213,14 @@ def validate_bundle(bundle):
     sites = index(bundle["sites"], "assertion_id", "site")
     if not proteins or not sources or not sites or not bundle["trait_refs"]:
         errors.append("bundle requires nonempty proteins, sources, sites, and trait references")
+    for source in sources.values():
+        kind = source["artifact_kind"]
+        if kind in {"PROTEIN_SEQUENCE", "PREDICTED_STRUCTURE"}:
+            if source.get("protein_id") not in proteins:
+                errors.append(f"source {source['source_id']}: {kind} requires protein_id that resolves in the bundle")
+        elif kind in {"EXPERIMENTAL_STRUCTURE", "RESIDUE_MAPPING"}:
+            if not source.get("structure_id"):
+                errors.append(f"source {source['source_id']}: {kind} requires structure_id")
     for protein in proteins.values():
         if sha256(protein["sequence"]) != protein["sequence_sha256"]:
             errors.append("protein sequence checksum mismatch")
@@ -182,8 +250,9 @@ def validate_bundle(bundle):
         protein = proteins[site["protein_id"]]
         if site["evidence_origin"] != "COMPUTED_CONTACTS":
             errors.append("geometry site must remain COMPUTED_CONTACTS")
-        if site["structure_source"] not in sources or site["mapping_source"] not in sources:
-            errors.append("site source/mapping does not resolve")
+        for field, kind in (("structure_source", "EXPERIMENTAL_STRUCTURE"), ("mapping_source", "RESIDUE_MAPPING")):
+            errors.extend(source_binding_errors(sources, site[field], kind, "structure_id",
+                                                site["structure_id"], f"{site['assertion_id']}.{field}"))
         if not site["contacts"] or site["distance_cutoff_angstrom"] <= 0:
             errors.append("site requires contacts and a positive cutoff")
         seen = set()
@@ -246,6 +315,7 @@ def validate_bundle(bundle):
             errors.append("derived correspondence must remain COMPUTED_COMPARISON")
         anchor, target = proteins[site["protein_id"]], proteins[comparison["protein_id"]]
         rows = comparison["residues"]
+        errors.extend(target_order_errors(rows, f"site comparison {comparison['assertion_id']}"))
         positions = [r["anchor_position"] for r in rows]
         if positions != sorted({c["protein_position"] for c in site["contacts"]}):
             errors.append("comparison must cover each site residue exactly once, in order")
@@ -339,9 +409,10 @@ def validate_bundle(bundle):
             errors.append("mechanism requires exact protein scope")
         if not mechanism["assertion_refs"] or set(mechanism["assertion_refs"]) - assertions.keys():
             errors.append("mechanism assertion scope does not resolve")
-        if any(assertions[ref]["protein_id"] not in mechanism["protein_ids"]
-               for ref in mechanism["assertion_refs"] if ref in assertions):
-            errors.append("mechanism references an assertion outside its protein scope")
+        for ref in sorted(explanation_closure(mechanism["assertion_refs"], explanations)):
+            if ref in assertions and assertions[ref]["protein_id"] not in mechanism["protein_ids"]:
+                errors.append(f"mechanism {mechanism['mechanism_id']}: assertion {ref} "
+                              f"({assertions[ref]['protein_id']}) is outside its protein scope")
         if not mechanism["limitations"].strip():
             errors.append("mechanism requires explicit limitations")
         nodes = {n["node_id"]: n for n in mechanism["graph"]["nodes"]}

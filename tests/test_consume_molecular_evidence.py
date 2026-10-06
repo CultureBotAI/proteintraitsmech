@@ -74,6 +74,69 @@ def encode_review(request, review):
     return raw
 
 
+def nest_comparison_arguments(raw, request):
+    """Put the original comparison arguments behind a same-protein subclaim."""
+    bundle = json.loads(raw)
+    claim = next(e for e in bundle["explanations"] if e["assertion_id"] == request["assertion_id"])
+    nested = deepcopy(claim)
+    nested["assertion_id"] += "-nested"
+    nested["assessment"] = "SUPPORTED"
+    comparisons = nested.pop("challenging_assertions")
+    nested["supporting_assertions"] = comparisons
+    # Exercise context collection from a non-root explanation as well.
+    nested["context_assertions"] = [claim["context_assertions"].pop()]
+    claim["challenging_assertions"] = [nested["assertion_id"]]
+    bundle["explanations"].append(nested)
+    return bundle, claim, nested, comparisons
+
+
+def encode_bundle(bundle, request):
+    raw = json.dumps(bundle).encode()
+    request["bundle_sha256"] = hashlib.sha256(raw).hexdigest()
+    return raw
+
+
+def test_nested_argument_closure_preserves_edge_polarity_and_context(upstream_inputs):
+    raw, request, review = upstream_inputs
+    bundle, claim, nested, comparisons = nest_comparison_arguments(raw, request)
+    result = resolve(encode_bundle(bundle, request), request, encode_review(request, review))
+    assert {r["assertion_id"] for r in result["basis"]} == {*comparisons, nested["assertion_id"]}
+    assert {r["outcome"] for r in result["context"]} == {"DETECTED", "NOT_DETECTED"}
+    assert {tuple(e.values()) for e in result["argument_edges"]} == {
+        (claim["assertion_id"], "CHALLENGES", nested["assertion_id"]),
+        *((nested["assertion_id"], "SUPPORTS", ref) for ref in comparisons),
+    }
+    assert {e["explanation_id"] for e in result["context_edges"]} == {
+        claim["assertion_id"], nested["assertion_id"]}
+    assert len(result["upstream_review"]["checked_claims"]) == 7
+    assert result["annotation_action"] == "NONE"
+
+
+def test_shared_argument_dag_deduplicates_objects_not_edges(inputs):
+    raw, original = inputs
+    request = deepcopy(original)
+    bundle, claim, nested, comparisons = nest_comparison_arguments(raw, request)
+    second = deepcopy(nested)
+    second["assertion_id"] += "-shared"
+    bundle["explanations"].append(second)
+    claim["challenging_assertions"].append(second["assertion_id"])
+    result = resolve(encode_bundle(bundle, request), request)
+    assert len(result["basis"]) == 4  # two wrappers, two shared terminal comparisons
+    assert len(result["argument_edges"]) == 6
+    assert len(result["context"]) == 2
+    assert len(result["context_edges"]) == 3
+    assert {r["assertion_id"] for r in result["basis"]} == {
+        *comparisons, nested["assertion_id"], second["assertion_id"]}
+
+
+def test_nested_context_cannot_supply_upstream_argument_evidence(upstream_inputs):
+    raw, request, review = upstream_inputs
+    bundle, _, nested, _ = nest_comparison_arguments(raw, request)
+    nested["context_assertions"].append(nested["supporting_assertions"].pop())
+    with pytest.raises(ValueError, match="matching PTM comparison evidence"):
+        resolve(encode_bundle(bundle, request), request, encode_review(request, review))
+
+
 def test_read_only_upstream_claim_integration(upstream_inputs):
     raw, request, review = upstream_inputs
     upstream_raw = encode_review(request, review)

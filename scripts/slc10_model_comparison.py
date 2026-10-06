@@ -138,7 +138,10 @@ def build_model_comparisons(snapshot, model_snapshot, proteins):
     lookup = {p["protein_id"].split(":", 1)[1]: p for p in proteins}
     anchor = lookup["Q14973"]
     anchor_ca = experimental_ca(snapshot, anchor)
+    model_owners = {f"AF-{accession}-F1-model_v{MODEL_VERSION}.cif": f"UniProtKB:{accession}"
+                    for accession in MODEL_PANEL}
     artifacts = [{"source_id": a["path"], "reference": a["requested_url"], "sha256": a["sha256"],
+                  "artifact_kind": "PREDICTED_STRUCTURE", "protein_id": model_owners[a["path"]],
                   "source_version": f"AlphaFold DB file version {MODEL_VERSION}", "license": a["license"],
                   "license_url": a["license_url"]} for a in manifest["artifacts"]]
     comparisons = []
@@ -169,7 +172,8 @@ def build_model_comparisons(snapshot, model_snapshot, proteins):
             "assertion_id": f"slc10-model:{accession}-v{MODEL_VERSION}-7ZYI",
             "protein_id": protein["protein_id"], "sequence_sha256": protein["sequence_sha256"],
             "evidence_origin": "COMPUTED_COMPARISON", "review_status": "PROPOSED",
-            "anchor_protein_id": anchor["protein_id"], "anchor_structure_source": "7ZYI.cif",
+            "anchor_protein_id": anchor["protein_id"], "anchor_structure_id": "PDB:7ZYI",
+            "anchor_structure_source": "7ZYI.cif",
             "mapping_source": "7zyi.xml.gz", "model_source": name,
             "method": METHOD + "; untrimmed least-squares CA fit of all consensus pairs with target pLDDT>=70; "
                       "reference altloc: highest occupancy, then lexical altloc; no remapping after superposition",

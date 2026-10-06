@@ -112,11 +112,33 @@ def resolve(raw, request, upstream_raw=None):
     claim = assertions.get(request["assertion_id"])
     if not claim or claim["protein_id"] != request["protein_id"] or claim["sequence_sha256"] != request["sequence_sha256"]:
         raise ValueError("consumer claim/protein/sequence mismatch")
-    basis = set(claim.get("supporting_assertions", [])) | set(claim.get("challenging_assertions", []))
+    # Preserve the complete argument DAG, not just its first layer. Edge polarity
+    # belongs to each explanation: do not flatten a challenge of a supported
+    # subclaim into direct support for (or against) the requested claim.
+    basis, context, visited = set(), set(), set()
+    argument_edges, context_edges = [], []
+    pending = [claim["assertion_id"]]
+    while pending:
+        key = pending.pop()
+        if key in visited:
+            continue
+        visited.add(key)
+        assertion = assertions[key]
+        for field, relation in (("supporting_assertions", "SUPPORTS"),
+                                ("challenging_assertions", "CHALLENGES")):
+            for ref in sorted(set(assertion.get(field, []))):
+                basis.add(ref)
+                argument_edges.append({"explanation_id": key, "relation": relation, "assertion_id": ref})
+                pending.append(ref)
+        for ref in sorted(set(assertion.get("context_assertions", []))):
+            context.add(ref)
+            context_edges.append({"explanation_id": key, "assertion_id": ref})
     result = {"request": deepcopy(request), "annotation_action": "NONE",
               "scope_note": bundle["scope_note"], "claim": deepcopy(claim),
               "basis": [deepcopy(assertions[key]) for key in sorted(basis)],
-              "context": [deepcopy(assertions[key]) for key in sorted(set(claim.get("context_assertions", [])))],
+              "argument_edges": sorted(argument_edges, key=lambda e: (e["explanation_id"], e["relation"], e["assertion_id"])),
+              "context": [deepcopy(assertions[key]) for key in sorted(context)],
+              "context_edges": sorted(context_edges, key=lambda e: (e["explanation_id"], e["assertion_id"])),
               "sources": deepcopy(bundle["sources"])}
     if "upstream_review" in request:
         result["upstream_review"] = verify_upstream(upstream_raw, request["upstream_review"], bundle,

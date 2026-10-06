@@ -76,6 +76,8 @@ Local residue sets and cavities are explicitly local, not new ontology classes.
   connect assay and computational context without counting as arguments for an
   explanation; the consumer returns these separately from its supporting/challenging
   `basis`. Interpretation dependencies cannot justify themselves through cycles.
+  Nested explanations retain their complete argument closure and per-edge
+  SUPPORTS/CHALLENGES polarity; context is collected separately at every level.
   Disputed A4 uptake studies retain their different cell systems and attribution
   limits. Partial contacts do not become an invented complete transport cycle.
 
@@ -108,6 +110,12 @@ Add `--apply` to acquire the reviewed plan. Public raw files stay ignored under
 are written last; builders reject partial snapshots, changed hashes and mixed
 identity/version frames. UniProt is CC-BY-4.0, PDB/SIFTS inputs are CC0-1.0,
 and AlphaFold predictions are CC-BY-4.0; source-specific licence URLs are retained.
+Each source artifact declares its role and protein or structure identity. Sites
+and model comparisons must reference the matching structure, residue-mapping and
+prediction roles; an arbitrary existing source ID is not sufficient. Resolved
+sequence correspondences must have unique, strictly increasing target positions.
+Optional fields are omitted when unavailable: explicit JSON nulls are rejected
+with their object paths rather than accepted as missing values.
 
 With the original snapshots available:
 
@@ -136,6 +144,10 @@ identity/version, exact protein and sequence, and claim ID. It returns evidence,
 supporting/challenging assertions, open questions, limitations and
 `annotation_action: NONE`. Any changed bundle bytes require an explicit new
 consumer pin, even while v1 remains a draft.
+The `basis` includes intermediate explanations and terminal arguments once each;
+`argument_edges` preserves which explanation each assertion supports or
+challenges. `context_edges` similarly preserves attribution without using context
+to justify upstream residue claims. No flattened net polarity is inferred.
 
 ### Read-only check against the actual gene review
 
@@ -195,9 +207,15 @@ The following boundaries were checked against the bundle and original sources:
 | SOAT is a generic bile-acid transport control | Not accepted. The [original study](https://doi.org/10.1074/jbc.M702663200) distinguishes sulfated substrates, including taurolithocholic acid-3-sulfate, from the tested nonsulfated bile acids. |
 | E257A proves complete loss or one unique microscopic mechanism | Not accepted. The [2014 study](https://doi.org/10.1128/JVI.03478-13), Figure 6A/B, supports reduced uptake with expression controls, not a unique explanation of the reduction. |
 
-The next reviewer should check source-to-claim fidelity, full assay constructs,
-ambiguous A7 correspondence, and whether the displayed evidence boundaries are
-clear to a gene curator. None of this self-review upgrades PROPOSED assertions.
+Separate scientific-agent review of commit `05730841aaf46f4578095c3ddb1fcfa20435e0f4`
+checked source-to-claim fidelity, assay boundaries and the original coordinate
+snapshots. It found an incorrect sodium-coordination figure locator, corrected
+to Figure 1i and Supplementary Figure S7
+([#1011](https://github.com/CultureBotAI/proteintraitsmech/issues/1011)), and no
+substantive scientific blocker within that review's scope. This is separate agent
+review, not human expert sign-off or experimental verification. Full historical
+construct reconciliation and A7's exact human assay assignment remain unresolved;
+neither author nor separate-agent review upgrades PROPOSED assertions.
 
 ### Software and publication gates
 
@@ -242,9 +260,20 @@ An additional reproduced gap allowed indirect explanation self-justification
 now rejects evidence-dependency cycles without banning biological feedback loops.
 These findings remain open until their fixes are integrated.
 
-Still required before calling the pilot complete: independent scientific review,
-resolution of remaining review issues, final full-tree gates, Pages size audit,
-and PR integration. Exact assay-construct reconciliation and A7's human assay
+Separate technical-agent review also reproduced and prompted fixes for
+many-to-one or reversed correspondences
+([#1012](https://github.com/CultureBotAI/proteintraitsmech/issues/1012)), mismatched
+source roles/identities ([#1013](https://github.com/CultureBotAI/proteintraitsmech/issues/1013)),
+foreign-protein evidence hidden in explanation dependencies
+([#1014](https://github.com/CultureBotAI/proteintraitsmech/issues/1014)), dropped
+nested consumer arguments ([#1016](https://github.com/CultureBotAI/proteintraitsmech/issues/1016)),
+and null-triggered validator crashes
+([#1018](https://github.com/CultureBotAI/proteintraitsmech/issues/1018)). Each has
+targeted regression coverage; these findings concern enforcement, not observed
+corruption of the pilot's source coordinates.
+
+Release requires resolution of review issues, final full-tree gates, Pages size
+audit and PR integration. Exact assay-construct reconciliation and A7's human assay
 assignment remain explicit scientific gaps; neither can be filled by an alignment
 or a model. Generalizing beyond this panel should follow review of this example,
 not automatic propagation across protein families.

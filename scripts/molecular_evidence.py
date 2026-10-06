@@ -329,14 +329,17 @@ def build_structural_bundle(directory):
     for artifact in manifest["artifacts"]:
         name = artifact["path"]
         if name.endswith(".cif"):
+            identity = {"artifact_kind": "EXPERIMENTAL_STRUCTURE", "structure_id": f"PDB:{name.removesuffix('.cif').upper()}"}
             block = gemmi.cif.read_file(str(directory / name)).sole_block()
             history = block.get_mmcif_category("_pdbx_audit_revision_history.")
             version = f"{history['major_revision'][-1]}.{history['minor_revision'][-1]} ({history['revision_date'][-1]})"
         elif name.endswith(".xml.gz"):
+            identity = {"artifact_kind": "RESIDUE_MAPPING", "structure_id": f"PDB:{name.removesuffix('.xml.gz').upper()}"}
             version = load_sifts_xml(directory / name).entry_date
         else:
+            identity = {"artifact_kind": "PROTEIN_SEQUENCE", "protein_id": f"UniProtKB:{name.removesuffix('.json')}"}
             version = manifest["uniprot_release"]
-        artifacts.append({"source_id": name, "reference": artifact["requested_url"],
+        artifacts.append({"source_id": name, **identity, "reference": artifact["requested_url"],
                           "sha256": artifact["sha256"], "source_version": version,
                           "license": contracts[name]["license"],
                           "license_url": contracts[name]["license_url"]})

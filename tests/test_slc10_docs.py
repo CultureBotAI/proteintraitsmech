@@ -48,6 +48,15 @@ def test_production_contact_carbon_is_not_sodium_oxygen_coordination(pilot):
     assert 257 not in middle["sidechain_heteroatom_positions"]
 
 
+def test_sodium_mechanism_points_to_the_original_coordination_figure(pilot):
+    mechanism = next(m for m in pilot["mechanisms"] if m["mechanism_id"] == "slc10-mechanism:ntcp-sodium-coordination")
+    citation = next(e for e in mechanism["graph"]["edges"][0]["evidence"]
+                    if e["reference"] == "https://doi.org/10.1038/s41422-022-00680-4")
+    assert citation["notes"] == (
+        "Original substrate-bound structure; Figure 1i, Supplementary Figure S7, and sodium-site discussion."
+    )
+
+
 def test_experimental_and_interpretive_statuses_are_not_collapsed(pilot):
     assertions = {a["assertion_id"]: a for a in pilot["functional_observations"]}
     assert assertions["slc10-assay:mouse-pres1-binding-2013"]["outcome"] == "DETECTED"

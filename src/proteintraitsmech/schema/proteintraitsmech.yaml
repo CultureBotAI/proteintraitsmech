@@ -114,6 +114,8 @@ classes:
       Observations, derived comparisons, and mechanistic interpretations are
       distinct. This bundle is not a trait record, a grounding registry, or an
       authorization to qualify an occurrence or assign a GO annotation.
+      Explicit null values are not supported by semantic validation; omit an
+      optional field instead of assigning null.
     attributes:
       bundle_id:
         range: string
@@ -167,11 +169,22 @@ classes:
         inlined_as_list: true
 
   MolecularSourceArtifact:
-    description: Immutable identity of an upstream input; raw downloads remain outside git.
+    description: Immutable identity and role of an upstream input; raw downloads remain outside git.
     attributes:
       source_id:
         range: string
         required: true
+      artifact_kind:
+        range: MolecularArtifactKindEnum
+        required: true
+      protein_id:
+        description: Exact protein owner, required for sequence and predicted-structure artifacts.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      structure_id:
+        description: Deposited structure identity, required for experimental structures and residue mappings.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
       reference:
         range: string
         required: true
@@ -445,6 +458,11 @@ classes:
     attributes:
       anchor_protein_id:
         range: string
+        required: true
+      anchor_structure_id:
+        description: Explicit deposited reference identity shared by the structure and mapping sources.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
         required: true
       anchor_structure_source:
         range: string
@@ -2578,6 +2596,18 @@ classes:
 # ================================================================
 
 enums:
+
+  MolecularArtifactKindEnum:
+    description: Role used to validate cross-assertion source bindings, independently of a source's filename.
+    permissible_values:
+      PROTEIN_SEQUENCE:
+        description: Reference sequence source for an exact protein.
+      EXPERIMENTAL_STRUCTURE:
+        description: Deposited experimental coordinates for an identified structure.
+      RESIDUE_MAPPING:
+        description: Mapping from residues in an identified structure to protein sequences.
+      PREDICTED_STRUCTURE:
+        description: Predicted coordinates for an exact protein, not an experimental structure.
 
   MolecularEvidenceOriginEnum:
     permissible_values:
