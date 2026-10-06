@@ -94,6 +94,7 @@ let QUERY = "";
 let PAGE = 0;
 let FILTERED_CACHE = null;
 let LAST_RESULTS_HASH = "#";
+let LIST_RENDER_GENERATION = 0;
 
 /* ------------------------------------------------------------------ */
 /* Boot                                                               */
@@ -222,14 +223,8 @@ function syncResultsHash() {
 // accumulate, e.g. "#cat=A&cat=B" → { cat: ["A", "B"], … }.
 function parseHashParams(h) {
   const out = { axis: [], src: [], cat: [], sta: [] };
-  const body = (h || "").replace(/^#/, "");
-  if (!body) return out;
-  for (const pair of body.split("&")) {
-    const eq = pair.indexOf("=");
-    if (eq < 0) continue;
-    const k = pair.slice(0, eq);
-    if (!(k in out)) continue;
-    out[k].push(decodeURIComponent(pair.slice(eq + 1)));
+  for (const [key, value] of new URLSearchParams((h || "").replace(/^#/, ""))) {
+    if (Object.prototype.hasOwnProperty.call(out, key)) out[key].push(value);
   }
   return out;
 }
@@ -443,6 +438,9 @@ function filterRecords() {
 /* ------------------------------------------------------------------ */
 
 async function renderList() {
+  const generation = ++LIST_RENDER_GENERATION;
+  const hash = window.location.hash;
+  const isCurrent = () => generation === LIST_RENDER_GENERATION && window.location.hash === hash;
   const results = document.getElementById("results");
   const need = neededShards();
   const hasSelection = QUERY || Object.values(SELECTED).some(values => values.size > 0);
@@ -469,8 +467,10 @@ async function renderList() {
     try {
       await loadShards(need);
     } catch (error) {
+      if (!isCurrent()) return;
       return renderShardLoadFailure(error);
     }
+    if (!isCurrent()) return;
     refreshFacetCounts();
   }
 

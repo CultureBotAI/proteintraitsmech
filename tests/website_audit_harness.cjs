@@ -5,12 +5,12 @@ const vm = require('node:vm');
 const crypto = require('node:crypto').webcrypto;
 const nodes = new Map();
 const node = id => { if (!nodes.has(id)) nodes.set(id, {innerHTML:'',textContent:''}); return nodes.get(id); };
-let reject = false, payload = {}, calls = [];
+let reject = false, payload = {}, calls = [], shardLoad = async()=>{};
 const context = vm.createContext({console, Map, Set, TextEncoder, crypto, Uint8Array, URLSearchParams, Response, DecompressionStream, Blob,
   history:{replaceState:(_s,_t,hash)=>{context.window.location.hash=hash;}},
   window:{location:{hash:'#record=test%3A1'}},
   document:{getElementById:node,querySelectorAll:()=>[]},
-  BrowseShards:{createLoader:()=>({load:async()=>{}})},
+  BrowseShards:{createLoader:()=>({loaded:new Set(),loadMany:files=>shardLoad(files)})},
   fetch:async url=>{calls.push(url);if(reject) throw new Error('offline');return {ok:true,json:async()=>payload,body:new Blob([gzipSync(JSON.stringify(payload))]).stream()};}});
 let source=fs.readFileSync('docs/browse.js','utf8').replace(/boot\(\);\s*$/, '');
 vm.runInContext(source,context);
@@ -56,6 +56,29 @@ const run=code=>vm.runInContext(code,context);
  assert.match(html,/href="#">← back to results/);
  run('LAST_RESULTS_HASH="#src=PROSITE"');await run('renderDetail(r)');assert.match(node('results').innerHTML,/#src=PROSITE/);
  run('RECORDS=[{id:"a",syn:["aacCA2"]},{id:"b",syn:["aacCA2"]}]; QUERY="aacca2"; FILTERED_CACHE=null');assert.equal(run('filterRecords().length'),2);
+ // Old list requests must not replace a newer record, either on failure or success.
+ run('neededShards=()=>["slow.json"]; refreshFacetCounts=()=>{};');
+ for (const fail of [false,true]) {
+  let finish;
+  shardLoad=()=>new Promise((resolve,reject)=>{finish=fail?()=>reject(new Error("offline")):resolve;});
+  context.window.location.hash='#src=PROSITE';
+  const oldList=run('renderList()');
+  context.window.location.hash='#record=MCSA%3A1'; node('results').innerHTML='current record';
+  finish(); await oldList;
+  assert.equal(node('results').innerHTML,'current record');
+ }
+ // A newer render with the same hash also wins; the active failure still offers retry.
+ let finishOld;
+ shardLoad=()=>new Promise(resolve=>{finishOld=resolve;});
+ context.window.location.hash='#src=PROSITE'; const oldList=run('renderList()');
+ shardLoad=async()=>{throw new Error('offline');};
+ await run('renderList()'); const retry=node('results').innerHTML;
+ assert.match(retry,/Records could not be loaded/); assert.match(retry,/_retryShardLoad/);
+ finishOld(); await oldList; assert.equal(node('results').innerHTML,retry);
+ shardLoad=async()=>{}; await run('renderList()'); assert.match(node('results').innerHTML,/2 records/);
+ assert.deepEqual(JSON.parse(run('JSON.stringify(parseHashParams("#src=LinkML+LSF&src=A%2BB&cat=A&cat=B"))')),
+  {axis:[],src:['LinkML LSF','A+B'],cat:['A','B'],sta:[]});
+ assert.equal(run('parseHashParams("#src=bad%escape&__proto__=ignored").src[0]'),'bad%escape');
  run('SELECTED={axis:new Set(),cat:new Set(["B"]),src:new Set(["Source"]),sta:new Set()}; PAGE=2;');
  node('q').value='aacCA2'; context.window.location.hash='#cat=A';
  run('syncResultsHash()'); const saved=context.window.location.hash;
@@ -63,6 +86,12 @@ const run=code=>vm.runInContext(code,context);
  run('SELECTED.cat.clear(); QUERY=""; PAGE=0; refreshFacetCounts=()=>{}; renderList=()=>{};');
  await run('route()');
  assert.equal(run('[...SELECTED.cat][0]'),'B'); assert.equal(run('QUERY'),'aacca2'); assert.equal(run('PAGE'),2);
+ run('SELECTED.src=new Set(["LinkML LSF","A+B"]);'); node('q').value='malformed % query';
+ run('syncResultsHash(); SELECTED.src.clear();'); await run('route()');
+ assert.equal(run('[...SELECTED.src].join("|")'),'LinkML LSF|A+B');
+ assert.equal(run('QUERY'),'malformed % query');
+ context.window.location.hash='#src=bad%escape&q=bad%escape'; await run('route()');
+ assert.equal(run('[...SELECTED.src][0]'),'bad%escape'); assert.equal(run('QUERY'),'bad%escape');
  run('let rejectOld; exactRecord=()=>new Promise((_, reject)=>{rejectOld=reject;});');
  context.window.location.hash='#record=slow%3Aold'; const old=run('route()');
  context.window.location.hash='#record=new%3Arecord'; node('results').innerHTML='new record remains';
