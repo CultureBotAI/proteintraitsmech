@@ -107,6 +107,555 @@ imports:
 
 classes:
 
+  MolecularEvidenceBundle:
+    tree_root: true
+    description: >-
+      Versioned research evidence about exact proteins, linked to trait classes.
+      Observations, derived comparisons, and mechanistic interpretations are
+      distinct. This bundle is not a trait record, a grounding registry, or an
+      authorization to qualify an occurrence or assign a GO annotation.
+      Explicit null values are not supported by semantic validation; omit an
+      optional field instead of assigning null.
+    attributes:
+      bundle_id:
+        range: string
+        required: true
+      version:
+        range: string
+        required: true
+      trait_refs:
+        description: Related trait classes, not a declaration that every panel protein instantiates every class.
+        range: string
+        multivalued: true
+        required: true
+      scope_note:
+        description: Explicit panel boundaries and source-classification caveats; no occurrence qualification.
+        range: string
+        required: true
+      protein_references:
+        range: ProteinReference
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      sources:
+        range: MolecularSourceArtifact
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      sites:
+        range: MolecularSite
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      comparisons:
+        range: MolecularSiteComparison
+        multivalued: true
+        inlined_as_list: true
+      model_comparisons:
+        range: MolecularModelComparison
+        multivalued: true
+        inlined_as_list: true
+      functional_observations:
+        range: MolecularFunctionalObservation
+        multivalued: true
+        inlined_as_list: true
+      explanations:
+        range: MolecularExplanation
+        multivalued: true
+        inlined_as_list: true
+      mechanisms:
+        range: MolecularMechanism
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularSourceArtifact:
+    description: Immutable identity and role of an upstream input; raw downloads remain outside git.
+    attributes:
+      source_id:
+        range: string
+        required: true
+      artifact_kind:
+        range: MolecularArtifactKindEnum
+        required: true
+      protein_id:
+        description: Exact protein owner, required for sequence and predicted-structure artifacts.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      structure_id:
+        description: Deposited structure identity, required for experimental structures and residue mappings.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
+      reference:
+        range: string
+        required: true
+      sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      source_version:
+        range: string
+        required: true
+      license:
+        range: string
+        required: true
+      license_url:
+        range: string
+        required: true
+
+  MolecularAssertion:
+    abstract: true
+    description: >-
+      An assertion anchored to one exact reference sequence. An assay construct
+      is described separately and can carry explicit substitutions; the reference
+      checksum does not certify the complete historical construct sequence.
+      Review status and evidence origin are orthogonal; a computation is not an experiment.
+    attributes:
+      assertion_id:
+        range: string
+        required: true
+      protein_id:
+        range: string
+        required: true
+      sequence_sha256:
+        description: Checksum of the reference coordinate frame, not of a substituted or tagged assay construct.
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      evidence_origin:
+        range: MolecularEvidenceOriginEnum
+        required: true
+      review_status:
+        range: MolecularReviewStatusEnum
+        required: true
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      limitations:
+        range: string
+        required: true
+
+  MolecularAtom:
+    description: Exact deposited atom identity and coordinates, before any model superposition.
+    attributes:
+      atom_id:
+        range: string
+        required: true
+      atom_name:
+        range: string
+        required: true
+      element:
+        range: string
+        required: true
+      residue_name:
+        range: string
+        required: true
+      auth_chain:
+        range: string
+        required: true
+      label_chain:
+        range: string
+        required: true
+      auth_seq_id:
+        range: string
+        required: true
+      label_seq_id:
+        range: integer
+      insertion_code:
+        range: string
+      altloc:
+        range: string
+      occupancy:
+        range: float
+        required: true
+        minimum_value: 0
+        maximum_value: 1
+      x:
+        range: float
+        required: true
+      y:
+        range: float
+        required: true
+      z:
+        range: float
+        required: true
+
+  MolecularAtomContact:
+    description: >-
+      A heavy-atom distance candidate, not proof of bonding, coordination,
+      necessity, or sufficiency. UniProt coordinates require a source mapping.
+    attributes:
+      protein_position:
+        range: integer
+        minimum_value: 1
+        required: true
+      protein_residue:
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      protein_atom:
+        range: MolecularAtom
+        required: true
+      ligand_atom:
+        range: MolecularAtom
+        required: true
+      atom_role:
+        range: MolecularAtomRoleEnum
+        required: true
+      distance_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+
+  MolecularSite:
+    is_a: MolecularAssertion
+    description: >-
+      A reusable, state-specific site definition on a reference protein.
+      Distinct ligand instances and conformations never silently merge.
+      There is deliberately no geometry-derived required_for assertion.
+    attributes:
+      label:
+        range: string
+        required: true
+      structure_id:
+        range: string
+        required: true
+      structure_source:
+        range: string
+        required: true
+      mapping_source:
+        range: string
+        required: true
+      structure_state:
+        range: string
+        required: true
+      model_number:
+        range: integer
+        minimum_value: 1
+        required: true
+      assembly_scope:
+        range: string
+        required: true
+        description: Exact assembly or asymmetric unit used; no unstated symmetry expansion.
+      conformer_policy:
+        range: string
+        required: true
+        description: How alternate atoms are represented; no implicit joint-conformer assertion.
+      ligand_id:
+        range: string
+        required: true
+      ligand_instance:
+        range: string
+        required: true
+      distance_cutoff_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+      contacts:
+        range: MolecularAtomContact
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      cutoff_sensitivity:
+        range: MolecularContactThreshold
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularContactThreshold:
+    description: Recomputed shell size at an alternate cutoff, with the same source and ligand instance as its parent site.
+    attributes:
+      cutoff_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+      atom_pair_count:
+        range: integer
+        minimum_value: 0
+        required: true
+      residue_positions:
+        range: integer
+        minimum_value: 1
+        multivalued: true
+        required: true
+      sidechain_heteroatom_positions:
+        description: Residues with a side-chain N/O/S atom in the shell; proximity alone still does not prove coordination.
+        range: integer
+        minimum_value: 1
+        multivalued: true
+
+  MolecularResidueComparison:
+    description: >-
+      Correspondence is a derived hypothesis. Unresolved mappings must not
+      assert a definitive target residue, even if one alignment supplies one.
+    attributes:
+      anchor_position:
+        range: integer
+        minimum_value: 1
+        required: true
+      anchor_residue:
+        range: string
+        required: true
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+      target_position:
+        range: integer
+        minimum_value: 1
+      target_residue:
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+      status:
+        range: MolecularResidueComparisonStatusEnum
+        required: true
+      mapping_note:
+        range: string
+        required: true
+
+  MolecularSiteComparison:
+    is_a: MolecularAssertion
+    description: >-
+      A protein-specific comparison against one site. Neither identical nor
+      changed residues automatically establish an activity or its absence.
+    attributes:
+      site_ref:
+        range: string
+        required: true
+      method:
+        range: string
+        required: true
+      residues:
+        range: MolecularResidueComparison
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularModelPair:
+    is_a: MolecularResidueComparison
+    description: Sequence-selected CA pair; fitted displacement does not establish biological correspondence or activity.
+    attributes:
+      anchor_ca:
+        range: MolecularAtom
+        inlined: true
+      target_ca:
+        range: MolecularAtom
+        inlined: true
+      target_plddt:
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+      used_in_fit:
+        range: boolean
+        required: true
+      ca_displacement_angstrom:
+        range: float
+        minimum_value: 0
+      geometry_note:
+        range: string
+        required: true
+
+  MolecularModelComparison:
+    is_a: MolecularAssertion
+    description: Apo predicted model compared with an experimental reference; contains no inferred target ligand occupancy.
+    attributes:
+      anchor_protein_id:
+        range: string
+        required: true
+      anchor_structure_id:
+        description: Explicit deposited reference identity shared by the structure and mapping sources.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
+        required: true
+      anchor_structure_source:
+        range: string
+        required: true
+      mapping_source:
+        range: string
+        required: true
+      model_source:
+        range: string
+        required: true
+      method:
+        range: string
+        required: true
+      confidence_threshold:
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+        required: true
+      minimum_fit_pairs:
+        range: integer
+        minimum_value: 3
+        required: true
+      fit_status:
+        range: string
+        pattern: ^(ALIGNED|INSUFFICIENT_PAIRS)$
+        required: true
+      fit_residue_count:
+        range: integer
+        minimum_value: 0
+        required: true
+      rotation:
+        description: Nine row-major entries; transformed row coordinate equals target times rotation plus translation.
+        range: float
+        multivalued: true
+      translation:
+        range: float
+        multivalued: true
+      fit_rmsd_angstrom:
+        range: float
+        minimum_value: 0
+      pairs:
+        range: MolecularModelPair
+        multivalued: true
+        inlined_as_list: true
+        required: true
+
+  MolecularFunctionalObservation:
+    is_a: MolecularAssertion
+    description: A scoped assay result; not detected is not universal lack of function.
+    attributes:
+      activity:
+        range: string
+        required: true
+      activity_id:
+        range: string
+      substrate:
+        range: string
+        required: true
+      outcome:
+        range: MolecularOutcomeEnum
+        required: true
+      assay:
+        range: string
+        required: true
+      conditions:
+        range: string
+        required: true
+      construct:
+        range: string
+        required: true
+      sequence_substitutions:
+        description: >-
+          Source-reported substitutions relative to the pinned reference sequence.
+          Absence means no substitutions curated, not a verified full construct match.
+          Tags, deletions and other unresolved construct differences remain in construct.
+        range: MolecularSequenceSubstitution
+        multivalued: true
+        inlined_as_list: true
+      expression_localization_controls:
+        range: string
+        required: true
+      source_locator:
+        range: string
+        required: true
+
+  MolecularSequenceSubstitution:
+    description: One source-reported substitution in the exact reference coordinate frame; not a full construct sequence.
+    attributes:
+      position:
+        range: integer
+        minimum_value: 1
+        required: true
+      residue:
+        description: Residue in the pinned reference, before substitution.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      substituted_residue:
+        description: Different residue reported for the assay construct.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+
+  MolecularExplanation:
+    is_a: MolecularAssertion
+    description: >-
+      An explicit interpretation, referencing observations without confusing
+      contradiction of one mechanism with demonstration of another.
+    attributes:
+      claim:
+        range: string
+        required: true
+      assessment:
+        range: MolecularClaimAssessmentEnum
+        required: true
+      supporting_assertions:
+        range: string
+        multivalued: true
+      challenging_assertions:
+        range: string
+        multivalued: true
+      context_assertions:
+        description: >-
+          Observations or computations needed to understand the question, without
+          counting as support for or a challenge to this explanation. Cannot refer
+          to another explanation or establish the assessment by themselves.
+        range: string
+        multivalued: true
+      unresolved_questions:
+        range: string
+        required: true
+        multivalued: true
+
+  MolecularMechanism:
+    description: An existing CausalGraph with explicit instance and site scope.
+    attributes:
+      mechanism_id:
+        range: string
+        required: true
+      review_status:
+        range: MolecularReviewStatusEnum
+        required: true
+      limitations:
+        range: string
+        required: true
+      trait_ref:
+        range: string
+        required: true
+      protein_ids:
+        range: string
+        multivalued: true
+        required: true
+      assertion_refs:
+        range: string
+        multivalued: true
+        required: true
+      graph:
+        range: CausalGraph
+        inlined: true
+        required: true
+      residue_bindings:
+        description: Exact sequence addresses for every RESIDUE node; labels alone are insufficient.
+        range: MolecularResidueBinding
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularResidueBinding:
+    description: One member of a graph residue node, in pinned reference coordinates, optionally identifying a tested substitution.
+    attributes:
+      node_id:
+        range: string
+        required: true
+      protein_id:
+        range: string
+        required: true
+      sequence_sha256:
+        range: string
+        pattern: ^[0-9a-f]{64}$
+        required: true
+      position:
+        range: integer
+        minimum_value: 1
+        required: true
+      residue:
+        description: Residue in the pinned reference, not the altered construct.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      substituted_residue:
+        description: When present, the node denotes a substitution supported by a linked assay observation.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+
   BiophysicalDescriptorCatalog:
     tree_root: true
     description: Operational descriptors independent of the five trait axes. Quality anchors remain
@@ -2047,6 +2596,57 @@ classes:
 # ================================================================
 
 enums:
+
+  MolecularArtifactKindEnum:
+    description: Role used to validate cross-assertion source bindings, independently of a source's filename.
+    permissible_values:
+      PROTEIN_SEQUENCE:
+        description: Reference sequence source for an exact protein.
+      EXPERIMENTAL_STRUCTURE:
+        description: Deposited experimental coordinates for an identified structure.
+      RESIDUE_MAPPING:
+        description: Mapping from residues in an identified structure to protein sequences.
+      PREDICTED_STRUCTURE:
+        description: Predicted coordinates for an exact protein, not an experimental structure.
+
+  MolecularEvidenceOriginEnum:
+    permissible_values:
+      COMPUTED_CONTACTS:
+        description: Distances calculated from experimental coordinates, not an assay.
+      COMPUTED_COMPARISON:
+        description: Derived correspondence between pinned sequences or models.
+      EXPERIMENTAL_ASSAY:
+        description: Functional measurement in the stated experimental context.
+      CURATOR_INTERPRETATION:
+        description: Reasoned synthesis with explicit supporting/challenging assertions.
+
+  MolecularReviewStatusEnum:
+    permissible_values:
+      PROPOSED:
+      REVIEWED:
+
+  MolecularAtomRoleEnum:
+    permissible_values:
+      MAINCHAIN:
+      SIDECHAIN:
+
+  MolecularResidueComparisonStatusEnum:
+    permissible_values:
+      IDENTICAL:
+      CHANGED:
+      UNRESOLVED:
+
+  MolecularOutcomeEnum:
+    permissible_values:
+      DETECTED:
+      NOT_DETECTED:
+      NOT_ASSESSED:
+
+  MolecularClaimAssessmentEnum:
+    permissible_values:
+      SUPPORTED:
+      CHALLENGED:
+      UNRESOLVED:
 
   BiophysicalValueKindEnum:
     description: Allowed result shapes.

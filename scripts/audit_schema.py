@@ -62,6 +62,7 @@ ROOT_CLASSES = (
     "GroundingEvidence",
     "BiophysicalDescriptorCatalog",
     "BiophysicalObservation",
+    "MolecularEvidenceBundle",
 )
 
 # Categories deliberately NOT bound to an axis. README: "`UPPER` / `OTHER` are

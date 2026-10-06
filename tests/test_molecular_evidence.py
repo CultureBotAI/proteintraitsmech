@@ -1,0 +1,653 @@
+"""Offline adversarial tests for the molecular evidence interpretation boundary."""
+from copy import deepcopy
+from collections import defaultdict
+from itertools import product
+import json
+from pathlib import Path
+import sys
+
+import gemmi
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from molecular_evidence import (atoms_from_block, compare_site, correspondence, distance,
+                                optimal_correspondences, read_snapshot, sha256)
+from validate_molecular_evidence import validate_bundle
+
+
+def atom(number, name, residue, x, chain="A", sequence_id="1"):
+    return {"atom_id": str(number), "atom_name": name, "element": "O" if name == "O" else "C",
+            "residue_name": residue, "auth_chain": chain, "label_chain": chain,
+            "auth_seq_id": sequence_id, "occupancy": 1.0, "x": x, "y": 0.0, "z": 0.0}
+
+
+def source_artifact(name, kind, **identity):
+    return {"source_id": name, "artifact_kind": kind, **identity,
+            "reference": "https://example.org/fixture", "source_version": "synthetic",
+            "sha256": "a" * 64, "license": "CC0-1.0",
+            "license_url": "https://creativecommons.org/publicdomain/zero/1.0/"}
+
+
+@pytest.fixture
+def bundle():
+    # Explicitly synthetic coordinates and sequences: not a source snapshot.
+    proteins = []
+    for accession, sequence in (("Q14973", "ACD"), ("Q96EP9", "ASD")):
+        proteins.append({"protein_id": f"UniProtKB:{accession}", "protein_label": "synthetic",
+                         "taxon_id": "NCBITaxon:9606", "taxon_label": "Homo sapiens",
+                         "sequence": sequence, "sequence_length": len(sequence),
+                         "sequence_sha256": sha256(sequence), "reviewed": True,
+                         "uniprot_release": "2026_03", "sequence_version": 1})
+    first, second = atom(1, "O", "CYS", 0, sequence_id="2"), atom(2, "NA", "NA", 2.5, "I", "705")
+    second["element"] = "NA"
+    site = {"assertion_id": "test:site", "protein_id": proteins[0]["protein_id"],
+            "sequence_sha256": proteins[0]["sequence_sha256"], "label": "synthetic site",
+            "evidence_origin": "COMPUTED_CONTACTS", "review_status": "PROPOSED",
+            "structure_id": "PDB:7ZYI", "structure_source": "7ZYI.cif", "mapping_source": "7zyi.xml.gz",
+            "structure_state": "synthetic state", "model_number": 1,
+            "assembly_scope": "DEPOSITED_ASYMMETRIC_UNIT",
+            "conformer_policy": "INDEPENDENT_ATOM_PROXIMITIES_NO_JOINT_CONFORMER_ASSERTION",
+            "ligand_id": "PDBCCD:NA", "ligand_instance": "I:I:705:NA", "distance_cutoff_angstrom": 4.5,
+            "contacts": [{"protein_position": 2, "protein_residue": "C", "protein_atom": first,
+                          "ligand_atom": second, "atom_role": "MAINCHAIN", "distance_angstrom": 2.5}],
+            "evidence": [{"reference": "https://doi.org/10.2210/pdb7ZYI/pdb"}],
+            "limitations": "Synthetic test; not biological evidence."}
+    comparison = compare_site(site, proteins[0], proteins[1], {2: 2})
+    return {"bundle_id": "test:synthetic", "version": "1", "trait_refs": ["Pfam:PF01758"],
+            "scope_note": "Synthetic test panel; no biological membership claim.",
+            "protein_references": proteins,
+            "sources": [source_artifact("7ZYI.cif", "EXPERIMENTAL_STRUCTURE", structure_id="PDB:7ZYI"),
+                        source_artifact("7zyi.xml.gz", "RESIDUE_MAPPING", structure_id="PDB:7ZYI"),
+                        *[source_artifact(p["protein_id"] + ".json", "PROTEIN_SEQUENCE", protein_id=p["protein_id"])
+                          for p in proteins]],
+            "sites": [site], "comparisons": [comparison]}
+
+
+def test_valid_synthetic_bundle(bundle):
+    assert validate_bundle(bundle) == []
+    assert bundle["comparisons"][0]["residues"][0]["status"] == "CHANGED"
+    # Backbone identity changes are recorded; never automatically called neutral.
+    assert bundle["sites"][0]["contacts"][0]["atom_role"] == "MAINCHAIN"
+
+
+@pytest.mark.parametrize("sequence", ["ACDEFGHIKLMNPQRSTVWY", "MFFFFGGGGAAAA", "A"])
+def test_self_alignment_exact(sequence):
+    assert correspondence(sequence, sequence) == {i: i for i in range(1, len(sequence) + 1)}
+
+
+@pytest.mark.parametrize("gaps", [(-10, -0.5), (-12, -1), (-1, -0.5)])
+def test_optimal_path_dag_matches_exhaustive_biopython(gaps):
+    from Bio import Align
+    from Bio.Align import substitution_matrices
+    aligner = Align.PairwiseAligner(mode="global", substitution_matrix=substitution_matrices.load("BLOSUM62"),
+                                  open_gap_score=gaps[0], extend_gap_score=gaps[1])
+    sequences = ["".join(s) for n in range(1, 4) for s in product("AC", repeat=n)]
+    for anchor, target in product(sequences, repeat=2):
+        expected = defaultdict(set)
+        for alignment in aligner.align(anchor, target):
+            for a, t in zip(*alignment.indices, strict=True):
+                if a >= 0:
+                    expected[int(a) + 1].add(int(t) + 1 if t >= 0 else None)
+        assert optimal_correspondences(anchor, target, *gaps) == expected
+
+
+def test_many_optimal_paths_preserve_stable_columns():
+    anchor, target = "W" + "AC" * 12 + "Y", "W" + "AC" * 6 + "Y"
+    partners = optimal_correspondences(anchor, target, -1, -1)
+    assert partners[1] == {1} and partners[len(anchor)] == {len(target)}
+    assert any(len(p) > 1 for p in partners.values())
+
+
+@pytest.mark.parametrize("mutation,expected", [
+    (lambda b: b["protein_references"][0].update(sequence="AAA"), "checksum"),
+    (lambda b: b["protein_references"][0].update(sequence_length=4), "length"),
+    (lambda b: b["sites"][0].update(sequence_sha256="f" * 64), "sequence"),
+    (lambda b: b["sites"][0].update(mapping_source="missing"), "source"),
+    (lambda b: b["sites"][0].update(evidence_origin="EXPERIMENTAL_ASSAY"), "COMPUTED_CONTACTS"),
+    (lambda b: b["sites"][0].update(evidence=[]), "evidence"),
+    (lambda b: b["sites"][0].update(required_for="GO:0008508"), "required_for"),
+    (lambda b: b["sites"][0].update(distance_cutoff_angstrom=2.0), "cutoff"),
+    (lambda b: b["sites"][0]["contacts"][0].update(protein_position=20), "residue"),
+    (lambda b: b["sites"][0]["contacts"][0].update(protein_residue="S"), "residue"),
+    (lambda b: b["sites"][0]["contacts"][0]["protein_atom"].update(residue_name="GLU"), "atom residue"),
+    (lambda b: b["sites"][0]["contacts"][0].update(atom_role="SIDECHAIN"), "role"),
+    (lambda b: b["sites"][0]["contacts"][0].update(distance_angstrom=2.4), "distance"),
+    (lambda b: b["sites"][0]["contacts"][0]["ligand_atom"].update(auth_seq_id="706"), "ligand"),
+    (lambda b: b["sites"][0]["contacts"][0]["ligand_atom"].update(element="H"), "heavy-atom"),
+    (lambda b: b["sites"][0]["contacts"][0]["ligand_atom"].update(occupancy=0), "occupancy"),
+    (lambda b: b["sites"][0]["contacts"].append(deepcopy(b["sites"][0]["contacts"][0])), "duplicate"),
+    (lambda b: b["comparisons"][0].update(evidence_origin="EXPERIMENTAL_ASSAY"), "COMPUTED_COMPARISON"),
+    (lambda b: b["comparisons"][0].update(site_ref="missing"), "site"),
+    (lambda b: b["comparisons"][0].update(residues=[]), "cover"),
+    (lambda b: b["comparisons"][0].update(qualification_status="QUALIFIED"), "qualification_status"),
+    (lambda b: b["comparisons"][0]["residues"][0].update(status="IDENTICAL"), "identity"),
+    (lambda b: b["comparisons"][0]["residues"][0].update(target_position=3), "target"),
+    (lambda b: b["comparisons"][0]["residues"][0].update(status="UNRESOLVED"), "unresolved"),
+])
+def test_adversarial_mutations_fail(bundle, mutation, expected):
+    mutation(bundle)
+    errors = validate_bundle(bundle)
+    assert errors and expected.lower() in " ".join(errors).lower()
+
+
+def test_unresolved_does_not_assert_residue(bundle):
+    comparison = compare_site(bundle["sites"][0], *bundle["protein_references"], {2: None})
+    row = comparison["residues"][0]
+    assert row["status"] == "UNRESOLVED"
+    assert "target_position" not in row and "target_residue" not in row
+    bundle["comparisons"] = [comparison]
+    assert validate_bundle(bundle) == []
+
+
+def test_nonfinite_geometry_rejected(bundle):
+    bundle["sites"][0]["contacts"][0]["protein_atom"]["x"] = float("nan")
+    assert validate_bundle(bundle)
+
+
+def test_incomplete_snapshot_refused(tmp_path):
+    (tmp_path / "manifest.json").write_text(json.dumps({"kind": "SLC10_RESEARCH_SNAPSHOT",
+                                                      "schema_version": 1, "artifacts": []}))
+    with pytest.raises(ValueError, match="incomplete"):
+        read_snapshot(tmp_path)
+
+
+def test_atom_parser_preserves_author_label_insertion_altloc():
+    block = gemmi.cif.Block("synthetic")
+    block.set_mmcif_category("_atom_site.", {
+        "group_PDB": ["ATOM"], "id": ["1"], "type_symbol": ["O"], "label_atom_id": ["O"],
+        "label_alt_id": ["B"], "label_comp_id": ["GLU"], "label_asym_id": ["Z"],
+        "label_seq_id": ["5"], "pdbx_PDB_ins_code": ["A"], "Cartn_x": ["1"],
+        "Cartn_y": ["2"], "Cartn_z": ["3"], "occupancy": ["0.5"],
+        "auth_seq_id": ["257"], "auth_asym_id": ["A"], "pdbx_PDB_model_num": ["1"],
+    })
+    atom = atoms_from_block(block)[0]
+    assert atom["label_chain"] == "Z" and atom["auth_chain"] == "A"
+    assert atom["label_seq_id"] == 5 and atom["auth_seq_id"] == "257"
+    assert atom["insertion_code"] == "A" and atom["altloc"] == "B"
+    assert atom["occupancy"] == 0.5
+    assert distance(atom, atom) == 0
+
+
+def test_computational_function_claim_rejected(bundle):
+    observation = {k: bundle["sites"][0][k] for k in (
+        "protein_id", "sequence_sha256", "review_status", "limitations", "evidence")}
+    observation.update({"assertion_id": "test:activity", "evidence_origin": "COMPUTED_COMPARISON",
+                        "activity": "transport", "substrate": "taurocholate", "outcome": "DETECTED",
+                        "assay": "none", "conditions": "none", "construct": "reference",
+                        "expression_localization_controls": "none", "source_locator": "none"})
+    bundle["functional_observations"] = [observation]
+    assert any("experimental assay" in e for e in validate_bundle(bundle))
+
+
+@pytest.fixture
+def explanation_bundle(bundle):
+    explanation = {k: bundle["sites"][0][k] for k in (
+        "protein_id", "sequence_sha256", "review_status", "limitations", "evidence")}
+    explanation.update({"assertion_id": "test:explanation-a", "claim": "Synthetic interpretation",
+                        "evidence_origin": "CURATOR_INTERPRETATION", "assessment": "SUPPORTED",
+                        "supporting_assertions": ["test:site"], "unresolved_questions": ["Synthetic question"]})
+    second = deepcopy(explanation)
+    second.update(assertion_id="test:explanation-b", supporting_assertions=["test:explanation-a"])
+    bundle["explanations"] = [explanation, second]
+    return bundle
+
+
+def test_acyclic_explanation_dependencies_allowed(explanation_bundle):
+    assert validate_bundle(explanation_bundle) == []
+
+
+@pytest.mark.parametrize("field", ["supporting_assertions", "challenging_assertions"])
+def test_indirect_explanation_self_justification_rejected(explanation_bundle, field):
+    explanation_bundle["explanations"][0][field] = ["test:explanation-b"]
+    assert any("explanation dependency cycle" in e for e in validate_bundle(explanation_bundle))
+
+
+def test_context_does_not_establish_explanation_support(explanation_bundle):
+    e = explanation_bundle["explanations"][0]
+    e["context_assertions"] = e.pop("supporting_assertions")
+    assert any("requires supporting assertions" in error for error in validate_bundle(explanation_bundle))
+    e["assessment"] = "UNRESOLVED"
+    assert validate_bundle(explanation_bundle) == []
+
+
+@pytest.mark.parametrize("refs,expected", [
+    (["missing"], "does not resolve"),
+    (["test:explanation-b"], "cannot reference another explanation"),
+    (["test:site"], "context-only assertions"),
+])
+def test_explanation_context_scope(explanation_bundle, refs, expected):
+    explanation_bundle["explanations"][0]["context_assertions"] = refs
+    assert any(expected in error for error in validate_bundle(explanation_bundle))
+
+
+@pytest.fixture
+def mechanism_bundle(bundle):
+    bundle["mechanisms"] = [{
+        "mechanism_id": "test:mechanism", "review_status": "PROPOSED",
+        "trait_ref": "Pfam:PF01758", "protein_ids": ["UniProtKB:Q14973"],
+        "assertion_refs": ["test:site"], "limitations": "Synthetic, not biological evidence.",
+        "residue_bindings": [{"node_id": "residue", "protein_id": "UniProtKB:Q14973",
+                              "sequence_sha256": bundle["protein_references"][0]["sequence_sha256"],
+                              "position": 2, "residue": "C"}],
+        "graph": {"graph_id": "test_graph", "title": "Synthetic graph",
+                  "nodes": [{"node_id": "residue", "label": "synthetic C2", "node_type": "RESIDUE",
+                             "local": True, "description": "Synthetic residue, exact binding supplied."},
+                            {"node_id": "sodium", "label": "sodium", "node_type": "LIGAND",
+                             "grounding": "CHEBI:29101"}],
+                  "edges": [{"subject": "residue", "object": "sodium", "predicate": "physically interacts with",
+                             "predicate_id": "RO:0002436", "evidence": [{
+                                 "reference": "https://example.org/synthetic",
+                                 "snippet": "Synthetic test fixture, not a biological claim."}]}]}}]
+    return bundle
+
+
+def test_typed_mechanism_graph_validates(mechanism_bundle):
+    assert validate_bundle(mechanism_bundle) == []
+
+
+@pytest.mark.parametrize("mutation,expected", [
+    (lambda m: m.update(residue_bindings=[]), "sequence bindings"),
+    (lambda m: m["residue_bindings"][0].update(position=99), "scoped sequence"),
+    (lambda m: m["residue_bindings"][0].update(residue="S"), "scoped sequence"),
+    (lambda m: m["residue_bindings"][0].update(sequence_sha256="f" * 64), "scoped sequence"),
+    (lambda m: m["residue_bindings"][0].update(node_id="sodium"), "sequence bindings"),
+    (lambda m: m["residue_bindings"].append(deepcopy(m["residue_bindings"][0])), "duplicate"),
+    (lambda m: m.update(protein_ids=["UniProtKB:Q96EP9"]), "scope"),
+    (lambda m: m.update(assertion_refs=["unknown"]), "resolve"),
+    (lambda m: m.update(limitations=""), "limitations"),
+    (lambda m: m["graph"]["edges"][0]["evidence"][0].pop("snippet"), "excerpt"),
+    (lambda m: m["graph"]["edges"][0]["evidence"][0].update(reference="PMID:123"), "stable URL"),
+    (lambda m: m["graph"]["edges"][0].update(object="absent"), "absent"),
+])
+def test_adversarial_mechanism_mutations(mechanism_bundle, mutation, expected):
+    mutation(mechanism_bundle["mechanisms"][0])
+    errors = validate_bundle(mechanism_bundle)
+    assert errors and expected.lower() in " ".join(errors).lower()
+
+
+@pytest.fixture
+def substitution_bundle(mechanism_bundle):
+    b = mechanism_bundle
+    observation = {k: b["sites"][0][k] for k in ("protein_id", "sequence_sha256", "review_status", "limitations")}
+    observation.update({"assertion_id": "test:substitution", "evidence_origin": "EXPERIMENTAL_ASSAY",
+                        "activity": "Synthetic reduction", "substrate": "synthetic", "outcome": "DETECTED",
+                        "assay": "synthetic", "conditions": "synthetic", "construct": "Reference with C2A",
+                        "expression_localization_controls": "synthetic", "source_locator": "synthetic",
+                        "evidence": [{"reference": "https://example.org/fixture", "snippet": "Synthetic fixture."}],
+                        "sequence_substitutions": [{"position": 2, "residue": "C", "substituted_residue": "A"}]})
+    b["functional_observations"] = [observation]
+    b["mechanisms"][0]["assertion_refs"].append("test:substitution")
+    b["mechanisms"][0]["residue_bindings"][0]["substituted_residue"] = "A"
+    return b
+
+
+def test_substitution_binds_reference_without_mutating_it(substitution_bundle):
+    assert validate_bundle(substitution_bundle) == []
+    assert substitution_bundle["protein_references"][0]["sequence"] == "ACD"
+
+
+@pytest.mark.parametrize("mutation,expected", [
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(residue="S"), "reference sequence"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(position=99), "reference sequence"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"][0].update(substituted_residue="C"), "change"),
+    (lambda b: b["functional_observations"][0]["sequence_substitutions"].append(
+        deepcopy(b["functional_observations"][0]["sequence_substitutions"][0])), "duplicate"),
+    (lambda b: b["functional_observations"][0].pop("sequence_substitutions"), "matching scoped assay"),
+    (lambda b: b["functional_observations"][0].update(outcome="NOT_ASSESSED"), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0].update(assertion_refs=["test:site"]), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0]["residue_bindings"][0].update(substituted_residue="S"), "matching scoped assay"),
+    (lambda b: b["mechanisms"][0]["residue_bindings"][0].update(substituted_residue="C"), "change"),
+])
+def test_substitution_scope_is_enforced(substitution_bundle, mutation, expected):
+    mutation(substitution_bundle)
+    assert any(expected in error for error in validate_bundle(substitution_bundle))
+
+
+def test_double_mutant_does_not_support_an_individual_effect(substitution_bundle):
+    b = substitution_bundle
+    second = {"position": 3, "residue": "D", "substituted_residue": "G"}
+    b["functional_observations"][0]["sequence_substitutions"].append(second)
+    assert any("matching scoped assay" in error for error in validate_bundle(b))
+    binding = deepcopy(b["mechanisms"][0]["residue_bindings"][0])
+    binding.update(second)
+    b["mechanisms"][0]["residue_bindings"].append(binding)
+    assert validate_bundle(b) == []
+
+
+@pytest.fixture
+def model_bundle(bundle):
+    from slc10_model_comparison import fit_pairs
+    anchor, target = bundle["protein_references"]
+    pairs = []
+    for i, (x, y) in enumerate(((0, 0), (2, 0), (0, 2)), 1):
+        first = atom(i, "CA", ["ALA", "CYS", "ASP"][i - 1], x, sequence_id=str(i))
+        first.update(y=y, label_seq_id=i)
+        second = deepcopy(first)
+        second.update(x=x + 5, y=y - 2, residue_name=["ALA", "SER", "ASP"][i - 1])
+        pairs.append({"anchor_position": i, "anchor_residue": anchor["sequence"][i - 1],
+                      "target_position": i, "target_residue": target["sequence"][i - 1],
+                      "status": "CHANGED" if i == 2 else "IDENTICAL", "mapping_note": "Synthetic",
+                      "anchor_ca": first, "target_ca": second, "target_plddt": 90,
+                      "used_in_fit": True, "geometry_note": "Synthetic"})
+    fit = fit_pairs(pairs, minimum=3)
+    bundle["sources"].extend(source_artifact(p["protein_id"] + "-model.cif", "PREDICTED_STRUCTURE",
+                                             protein_id=p["protein_id"]) for p in (anchor, target))
+    bundle["model_comparisons"] = [{
+        "assertion_id": "test:model", "protein_id": target["protein_id"],
+        "sequence_sha256": target["sequence_sha256"], "evidence_origin": "COMPUTED_COMPARISON",
+        "review_status": "PROPOSED", "evidence": [{"reference": "https://example.org/model"}],
+        "limitations": "Synthetic; no biology.", "anchor_protein_id": anchor["protein_id"],
+        "anchor_structure_id": "PDB:7ZYI", "anchor_structure_source": "7ZYI.cif",
+        "mapping_source": "7zyi.xml.gz", "model_source": target["protein_id"] + "-model.cif",
+        "method": "Synthetic rigid transform", "confidence_threshold": 70, "pairs": pairs, **fit}]
+    return bundle
+
+
+def test_predicted_model_rigid_transform_validates(model_bundle):
+    assert validate_bundle(model_bundle) == []
+    model = model_bundle["model_comparisons"][0]
+    assert model["fit_rmsd_angstrom"] < 1e-10
+    assert model["translation"] == pytest.approx([-5, 2, 0])
+
+
+@pytest.mark.parametrize("mutation,expected", [
+    (lambda m: m.update(evidence_origin="EXPERIMENTAL_ASSAY"), "COMPUTED_COMPARISON"),
+    (lambda m: m.update(model_source="missing"), "source"),
+    (lambda m: m.update(anchor_protein_id="missing"), "anchor protein"),
+    (lambda m: m.update(rotation=[1] * 9), "rigid transform"),
+    (lambda m: m.update(rotation=[]), "complete transform"),
+    (lambda m: m.update(translation=[0, 0, 0]), "displacement"),
+    (lambda m: m.update(fit_rmsd_angstrom=3), "RMSD"),
+    (lambda m: m.update(fit_residue_count=50), "count"),
+    (lambda m: m["pairs"][0].update(status="UNRESOLVED"), "unresolved"),
+    (lambda m: m["pairs"][0].update(target_position=9), "target residue"),
+    (lambda m: m["pairs"][0].update(target_plddt=60), "confidence"),
+    (lambda m: m["pairs"][0]["target_ca"].update(label_seq_id=3), "numbering"),
+    (lambda m: m["pairs"][0]["target_ca"].update(atom_name="CB"), "CA identity"),
+    (lambda m: m["pairs"][0].update(ca_displacement_angstrom=5), "displacement"),
+    (lambda m: m.update(predicted_ligand="NA"), "predicted_ligand"),
+])
+def test_model_interpretation_boundary(model_bundle, mutation, expected):
+    mutation(model_bundle["model_comparisons"][0])
+    errors = validate_bundle(model_bundle)
+    assert errors and expected.lower() in " ".join(errors).lower()
+
+
+def test_insufficient_model_pairs_no_transform(model_bundle):
+    from slc10_model_comparison import fit_pairs
+    model = model_bundle["model_comparisons"][0]
+    assert fit_pairs(model["pairs"], minimum=20) == {
+        "fit_residue_count": 3, "minimum_fit_pairs": 20, "fit_status": "INSUFFICIENT_PAIRS"}
+
+
+def test_self_consistent_but_nonoptimal_model_fit_is_rejected(model_bundle):
+    import numpy as np
+    from slc10_model_comparison import coords
+    model = model_bundle["model_comparisons"][0]
+    # A translation error can be hidden by rewriting every residual and RMSD.
+    model["translation"][0] += 10
+    rotation = np.array(model["rotation"]).reshape(3, 3)
+    for pair in model["pairs"]:
+        pair["ca_displacement_angstrom"] = float(np.linalg.norm(
+            np.array(coords(pair["target_ca"])) @ rotation + model["translation"] - coords(pair["anchor_ca"])))
+    model["fit_rmsd_angstrom"] = float(np.sqrt(np.mean([
+        p["ca_displacement_angstrom"] ** 2 for p in model["pairs"] if p["used_in_fit"]])))
+    assert any("least-squares" in error for error in validate_bundle(model_bundle))
+
+
+def test_collinear_model_fit_is_rejected(model_bundle):
+    model = model_bundle["model_comparisons"][0]
+    model["pairs"][2]["anchor_ca"].update(x=4, y=0)
+    model["pairs"][2]["target_ca"].update(x=9, y=-2)
+    for pair in model["pairs"]:
+        pair["ca_displacement_angstrom"] = 0
+    model["fit_rmsd_angstrom"] = 0
+    assert any("degenerate" in error for error in validate_bundle(model_bundle))
+
+
+def test_cutoff_summary_is_recomputed_not_trusted(bundle):
+    site = bundle["sites"][0]
+    site["cutoff_sensitivity"] = [{"cutoff_angstrom": 2.5, "atom_pair_count": 1,
+                                   "residue_positions": [2], "sidechain_heteroatom_positions": []}]
+    assert validate_bundle(bundle) == []
+    site["cutoff_sensitivity"][0]["sidechain_heteroatom_positions"] = [2]
+    assert any("threshold summary disagrees" in e for e in validate_bundle(bundle))
+
+
+def test_missing_selected_ligand_component_fails_closed(bundle, monkeypatch, tmp_path):
+    from types import SimpleNamespace
+    import molecular_evidence as module
+    protein = bundle["protein_references"][0]
+    first, ion = deepcopy(bundle["sites"][0]["contacts"][0]["protein_atom"]), deepcopy(bundle["sites"][0]["contacts"][0]["ligand_atom"])
+    first["label_seq_id"] = 2
+    # Valid synthetic protein mapping and one NA, but the expected CHO is absent.
+    monkeypatch.setattr(module.gemmi.cif, "read_file", lambda path: SimpleNamespace(sole_block=lambda: SimpleNamespace(name="7ZYI")))
+    monkeypatch.setattr(module, "load_sifts_xml", lambda path: SimpleNamespace(pdb_id="7ZYI", uniprot_release=protein["uniprot_release"]))
+    monkeypatch.setattr(module, "source_residue_map", lambda *a: {("2", ""): (2, "C")})
+    monkeypatch.setattr(module, "atoms_from_block", lambda block: [first, ion])
+    with pytest.raises(ValueError, match="expected ligand"):
+        module.extract_sites(tmp_path, "7ZYI", protein)
+
+
+@pytest.fixture
+def mapping_bundle(model_bundle):
+    """Repeated target identities make wrong mappings individually plausible."""
+    b = model_bundle
+    target = b["protein_references"][1]
+    target.update(sequence="ASA", sequence_sha256=sha256("ASA"))
+    site = b["sites"][0]
+    template = site["contacts"][0]
+    site["contacts"] = []
+    for position, residue, name in ((1, "A", "ALA"), (2, "C", "CYS"), (3, "D", "ASP")):
+        contact = deepcopy(template)
+        contact.update(protein_position=position, protein_residue=residue)
+        contact["protein_atom"].update(atom_id=str(position + 10), auth_seq_id=str(position), residue_name=name)
+        site["contacts"].append(contact)
+    b["comparisons"] = [compare_site(site, *b["protein_references"], {1: 1, 2: 2, 3: 3})]
+    model = b["model_comparisons"][0]
+    model.update(sequence_sha256=target["sequence_sha256"], fit_status="INSUFFICIENT_PAIRS", fit_residue_count=0)
+    for key in ("rotation", "translation", "fit_rmsd_angstrom"):
+        model.pop(key)
+    for pair, residue, name in zip(model["pairs"], "ASA", ("ALA", "SER", "ALA"), strict=True):
+        pair.update(target_residue=residue, target_plddt=60, used_in_fit=False,
+                    status="IDENTICAL" if residue == pair["anchor_residue"] else "CHANGED")
+        pair["target_ca"]["residue_name"] = name
+        pair.pop("ca_displacement_angstrom")
+    return b
+
+
+def remap_test_rows(bundle, kind, targets):
+    """Keep residue identities and model coordinates coherent while changing pairs."""
+    comparison = bundle[kind][0]
+    rows = comparison["residues" if kind == "comparisons" else "pairs"]
+    target_rows = {r["target_position"]: deepcopy(r) for r in rows}
+    sequence = bundle["protein_references"][1]["sequence"]
+    for row, position in zip(rows, targets, strict=True):
+        if position is None:
+            row["status"] = "UNRESOLVED"
+            for key in ("target_position", "target_residue", "target_ca", "target_plddt"):
+                row.pop(key, None)
+        else:
+            residue = sequence[position - 1]
+            row.update(target_position=position, target_residue=residue,
+                       status="IDENTICAL" if residue == row["anchor_residue"] else "CHANGED")
+            if kind == "model_comparisons":
+                row["target_ca"] = deepcopy(target_rows[position]["target_ca"])
+
+
+@pytest.mark.parametrize("kind", ["comparisons", "model_comparisons"])
+@pytest.mark.parametrize("targets", [(1, 2, 1), (3, 2, 1), (3, None, 1)])
+def test_resolved_targets_must_be_unique_and_increasing(mapping_bundle, kind, targets):
+    assert validate_bundle(mapping_bundle) == []
+    remap_test_rows(mapping_bundle, kind, targets)
+    assert any("unique and strictly increasing" in error for error in validate_bundle(mapping_bundle))
+
+
+@pytest.mark.parametrize("kind", ["comparisons", "model_comparisons"])
+@pytest.mark.parametrize("targets", [(1, 2, 3), (1, None, 3), (None, None, None)])
+def test_ordered_targets_allow_unresolved_gaps(mapping_bundle, kind, targets):
+    remap_test_rows(mapping_bundle, kind, targets)
+    assert validate_bundle(mapping_bundle) == []
+
+
+@pytest.fixture
+def scoped_explanation_bundle(mechanism_bundle):
+    b = mechanism_bundle
+    owner, foreign = b["protein_references"]
+    assay = {k: b["sites"][0][k] for k in ("review_status", "limitations")}
+    assay.update(assertion_id="test:foreign-assay", protein_id=foreign["protein_id"],
+                 sequence_sha256=foreign["sequence_sha256"], evidence_origin="EXPERIMENTAL_ASSAY",
+                 activity="Synthetic uptake", substrate="synthetic", outcome="DETECTED",
+                 assay="synthetic", conditions="synthetic", construct="synthetic",
+                 expression_localization_controls="synthetic", source_locator="synthetic",
+                 evidence=[{"reference": "https://example.org/fixture", "snippet": "Synthetic fixture."}])
+    b["functional_observations"] = [assay]
+    explanation = {k: b["sites"][0][k] for k in (
+        "protein_id", "sequence_sha256", "review_status", "limitations", "evidence")}
+    explanation.update(assertion_id="test:scope-a", claim="Synthetic interpretation",
+                       evidence_origin="CURATOR_INTERPRETATION", assessment="UNRESOLVED",
+                       unresolved_questions=["Synthetic question"])
+    second = deepcopy(explanation)
+    second["assertion_id"] = "test:scope-b"
+    b["explanations"] = [explanation, second]
+    b["mechanisms"][0]["assertion_refs"] = [explanation["assertion_id"]]
+    assert b["mechanisms"][0]["protein_ids"] == [owner["protein_id"]]
+    return b
+
+
+@pytest.mark.parametrize("field", ["supporting_assertions", "challenging_assertions", "context_assertions"])
+@pytest.mark.parametrize("indirect", [False, True])
+def test_mechanism_scope_includes_explanation_dependencies(scoped_explanation_bundle, field, indirect):
+    b = scoped_explanation_bundle
+    root, child = b["explanations"]
+    leaf = root
+    if indirect:
+        root["supporting_assertions"] = [child["assertion_id"]]
+        leaf = child
+    leaf[field] = ["test:foreign-assay"]
+    assert any("outside its protein scope" in error for error in validate_bundle(b))
+    b["mechanisms"][0]["protein_ids"].append(b["protein_references"][1]["protein_id"])
+    assert validate_bundle(b) == []
+
+
+def test_mechanism_scope_checks_intermediate_explanation_owner(scoped_explanation_bundle):
+    b = scoped_explanation_bundle
+    root, child = b["explanations"]
+    foreign = b["protein_references"][1]
+    root["supporting_assertions"] = [child["assertion_id"]]
+    child.update(protein_id=foreign["protein_id"], sequence_sha256=foreign["sequence_sha256"],
+                 supporting_assertions=["test:site"])
+    assert any("outside its protein scope" in error for error in validate_bundle(b))
+    b["mechanisms"][0]["protein_ids"].append(foreign["protein_id"])
+    assert validate_bundle(b) == []
+
+
+def test_cyclic_scope_walk_still_checks_foreign_leaves(scoped_explanation_bundle):
+    b = scoped_explanation_bundle
+    root, child = b["explanations"]
+    root["supporting_assertions"] = [child["assertion_id"]]
+    child["challenging_assertions"] = [root["assertion_id"]]
+    child["context_assertions"] = ["test:foreign-assay"]
+    errors = validate_bundle(b)
+    assert any("dependency cycle" in error for error in errors)
+    assert any("outside its protein scope" in error for error in errors)
+
+
+def test_explicit_cross_protein_comparison_preserves_anchor_relationship(scoped_explanation_bundle):
+    b = scoped_explanation_bundle
+    comparison = b["comparisons"][0]
+    b["explanations"][0]["supporting_assertions"] = [comparison["assertion_id"]]
+    b["mechanisms"][0]["protein_ids"].append(comparison["protein_id"])
+    assert validate_bundle(b) == []
+    # The comparison owns a target assertion and explicitly identifies its anchor
+    # through site_ref. It does not silently relabel an anchor assay as target data.
+    target = b["protein_references"][1]
+    b["mechanisms"][0]["protein_ids"] = [target["protein_id"]]
+    b["mechanisms"][0]["assertion_refs"] = [comparison["assertion_id"]]
+    b["mechanisms"][0]["residue_bindings"][0].update(
+        protein_id=target["protein_id"], sequence_sha256=target["sequence_sha256"], residue="S")
+    assert validate_bundle(b) == []
+
+
+@pytest.mark.parametrize("path", [
+    (), ("comparisons",), ("sites", 0), ("protein_references", 0, "isoform"),
+    ("comparisons", 0, "residues", 0, "target_position"),
+    ("sites", 0, "contacts", 0, "protein_atom", "x"),
+    ("sites", 0, "evidence", 0, "snippet"), ("sites", 0, "cutoff_sensitivity"),
+    ("model_comparisons", 0, "rotation"), ("model_comparisons", 0, "pairs", 0, "target_ca"),
+    ("model_comparisons", 0, "pairs", 0, "target_plddt"),
+])
+def test_explicit_null_is_rejected_with_its_path(model_bundle, path):
+    b = model_bundle
+    if path:
+        parent = b
+        for key in path[:-1]:
+            parent = parent[key]
+        parent[path[-1]] = None
+    else:
+        b = None
+    expected_path = "/" + "/".join(map(str, path)) if path else "<root>"
+    errors = validate_bundle(b)
+    assert any("explicit null" in error and expected_path in error for error in errors)
+
+
+@pytest.mark.parametrize("kind,identity", [
+    ("PROTEIN_SEQUENCE", "protein_id"), ("PREDICTED_STRUCTURE", "protein_id"),
+    ("EXPERIMENTAL_STRUCTURE", "structure_id"), ("RESIDUE_MAPPING", "structure_id"),
+])
+def test_artifact_kind_requires_its_identity(model_bundle, kind, identity):
+    source = next(s for s in model_bundle["sources"] if s["artifact_kind"] == kind)
+    source.pop(identity)
+    assert any(identity in error for error in validate_bundle(model_bundle))
+
+
+@pytest.mark.parametrize("kind", ["PROTEIN_SEQUENCE", "PREDICTED_STRUCTURE"])
+def test_artifact_protein_owner_must_resolve(model_bundle, kind):
+    source = next(s for s in model_bundle["sources"] if s["artifact_kind"] == kind)
+    source["protein_id"] = "UniProtKB:P26435"
+    assert any("protein_id" in error and "resolve" in error for error in validate_bundle(model_bundle))
+
+
+@pytest.mark.parametrize("field,source_id", [
+    ("structure_source", "7zyi.xml.gz"), ("mapping_source", "7ZYI.cif"),
+    ("structure_source", "UniProtKB:Q14973.json"), ("mapping_source", "UniProtKB:Q14973.json"),
+])
+def test_site_source_roles_are_checked(bundle, field, source_id):
+    bundle["sites"][0][field] = source_id
+    assert any("artifact_kind" in error for error in validate_bundle(bundle))
+
+
+@pytest.mark.parametrize("source_id", ["7ZYI.cif", "7zyi.xml.gz"])
+def test_site_sources_must_match_declared_structure(bundle, source_id):
+    next(s for s in bundle["sources"] if s["source_id"] == source_id)["structure_id"] = "PDB:9QZQ"
+    assert any("structure_id" in error for error in validate_bundle(bundle))
+
+
+@pytest.mark.parametrize("field,source_id", [
+    ("anchor_structure_source", "7zyi.xml.gz"), ("mapping_source", "7ZYI.cif"),
+    ("model_source", "7ZYI.cif"), ("model_source", "UniProtKB:Q96EP9.json"),
+])
+def test_model_source_roles_are_checked(model_bundle, field, source_id):
+    model_bundle["model_comparisons"][0][field] = source_id
+    assert any("artifact_kind" in error for error in validate_bundle(model_bundle))
+
+
+@pytest.mark.parametrize("source_id", ["7ZYI.cif", "7zyi.xml.gz"])
+def test_model_sources_must_match_declared_anchor_structure(model_bundle, source_id):
+    # Preserve the original site source identities to isolate the model check.
+    source = deepcopy(next(s for s in model_bundle["sources"] if s["source_id"] == source_id))
+    source.update(source_id="other-" + source_id, structure_id="PDB:9QZQ")
+    model_bundle["sources"].append(source)
+    field = "anchor_structure_source" if source_id.endswith(".cif") else "mapping_source"
+    model_bundle["model_comparisons"][0][field] = source["source_id"]
+    assert any("structure_id" in error for error in validate_bundle(model_bundle))
+
+
+def test_model_prediction_source_must_belong_to_target(model_bundle):
+    model_bundle["model_comparisons"][0]["model_source"] = "UniProtKB:Q14973-model.cif"
+    assert any("protein_id" in error for error in validate_bundle(model_bundle))
+
+
+def test_matching_model_sources_cannot_override_declared_structure(model_bundle):
+    model_bundle["model_comparisons"][0]["anchor_structure_id"] = "PDB:9QZQ"
+    assert any("structure_id" in error for error in validate_bundle(model_bundle))

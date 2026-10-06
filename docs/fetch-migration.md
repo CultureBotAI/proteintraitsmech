@@ -55,6 +55,17 @@ magic bytes, stable content markers, or publisher checksums.
 
 ## Dynamic/API fetchers requiring source-specific design
 
+- `fetch-slc10-models` — bounded three-file AlphaFold v6 snapshot, with every
+  download routed through `fetch_source.py`. New ignored directories only;
+  completion manifest written after all three predictions pass format checks.
+  Separate from experimental PDB/SIFTS acquisition and never a trait writer.
+
+- `fetch-slc10-pilot` — seven exact UniProt accessions (original response bytes,
+  accession and single-release checks), plus three PDB mmCIF and three residue-level
+  SIFTS files through `fetch_source.py`. Dry-run by default; only a new ignored
+  research snapshot is written. No trait, canonical-example, or grounding promotion.
+  Partial snapshots lack the completion manifest and must not be consumed.
+
 - `fetch-complexportal` — discovers a changing server-side file list in shell.
 - `fetch-opm` — fetches an index, then dynamically enumerates class identifiers.
 - `fetch-repeatsdb-annotations` — paginated API script.
