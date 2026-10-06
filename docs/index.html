@@ -138,7 +138,7 @@
         <div class="actions"><a class="btn" href="browse.html">Browse records &rarr;</a><a class="btn" href="map.html">Corpus map &rarr;</a><a class="btn" href="map.html#proteins">Protein map &rarr;</a><a class="btn" href="map.html#sequences">Sequence map &rarr;</a></div>
         <h2>Record browser</h2>
         <p>Faceted, client-side browser over all protein-trait records — search by label, identifier, or definition; filter by axis, category, and source. Each record shows semantically <em>related traits</em> from a local text-embedding model.</p>
-        <p style="margin-top:.6em">Three 2-D maps sit alongside it: the <strong>corpus map</strong> projects every record's text embedding (full-record or definition-only), the <strong>protein map</strong> lays out 68,657 Swiss-Prot proteins by the traits they carry, coloured by domain of life, and the <strong>sequence map</strong> lays out the canonical-example proteins by their ESM-2 protein-language-model embedding — sequence only, no annotation in the input — coloured by domain of life and filterable by sequence length and, for the half of them that carry one, by CATH class.</p>
+        <p style="margin-top:.6em">Three 2-D maps sit alongside it: the <strong>corpus map</strong> projects a retained subset of record text embeddings (full-record or definition-only), the <strong>protein map</strong> lays out 68,657 Swiss-Prot proteins by the traits they carry, coloured by domain of life, and the <strong>sequence map</strong> lays out the canonical-example proteins by their ESM-2 protein-language-model embedding — sequence only, no annotation in the input — coloured by domain of life and filterable by sequence length and, for the half of them that carry one, by CATH class.</p>
       </div>
       <div class="card">
         <div class="actions"><a class="btn" href="schema.html">View schema &rarr;</a><a class="btn" href="example.html">Example &rarr;</a></div>
@@ -249,7 +249,7 @@
 <tr><th scope="row">PSI-MI</th><td><a href="browse.html#src=PSI-MI">147</a></td><td><dl class="source-notes"><dt>PSI-MI interaction types (CC-BY-4.0)</dt><dd><code>data/traits/function/interaction_partner/psi_mi/</code></dd></dl></td></tr>
 <tr><th scope="row">METPO</th><td><a href="browse.html#src=METPO">119</a></td><td><dl class="source-notes"><dt>METPO ecophysiological traits (growth preferences, tolerances, metabolism; CC-BY-4.0)</dt><dd><code>data/traits/function/{environmental_response,enzymatic_activity}/metpo/</code></dd></dl></td></tr>
 <tr><th scope="row">PATO</th><td><a href="browse.html#src=PATO">37</a></td><td><dl class="source-notes"><dt>PATO physicochemical qualities (CC-BY-4.0)</dt><dd><code>data/traits/structure/{stability,dynamics,surface}/pato/</code></dd></dl></td></tr>
-<tr><th scope="row">curated</th><td><a href="browse.html#src=curated">62</a></td><td><dl class="source-notes"><dt>Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (CC0-1.0)</dt><dd><code>data/traits/structure/stability/conditions/</code></dd><dt>Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (CC0-1.0)</dt><dd><code>data/traits/evolution/{conservation,pangenome}/</code></dd><dt>Curated RiPP leader-peptide classes — lanthipeptide/lasso/sactipeptide/… (CC0)</dt><dd><code>data/traits/sequence/leader_peptide/</code></dd></dl></td></tr>
+<tr><th scope="row">curated</th><td><a href="browse.html#src=curated">62</a></td><td><dl class="source-notes"><dt>Curated stability taxonomy — per-condition (thermal, oxidative, saline, pH, osmotic, pressure, desiccation, chemical, proteolytic, mechanical) × increased/decreased (historical records retain CC0; current project contributions: CC BY 4.0)</dt><dd><code>data/traits/structure/stability/conditions/</code></dd><dt>Curated evolutionary / pangenome traits — conserved, clade-specific, variable; pangenome core/soft-core/shell/cloud/persistent/singleton (historical records retain CC0; current project contributions: CC BY 4.0)</dt><dd><code>data/traits/evolution/{conservation,pangenome}/</code></dd><dt>Curated RiPP leader-peptide classes — lanthipeptide/lasso/sactipeptide/… (historical records retain CC0; current project contributions: CC BY 4.0)</dt><dd><code>data/traits/sequence/leader_peptide/</code></dd></dl></td></tr>
 <tr><th scope="row">InterPro</th><td><a href="browse.html#src=InterPro">26,264</a></td><td><dl class="source-notes"><dt>InterPro entries — Domain / Homologous-superfamily / Repeat / Conserved-/Active-/Binding-site / PTM (public domain; GO via interpro2go → mapped_xrefs)</dt><dd><code>data/traits/{structure,sequence}/…/interpro/</code></dd></dl></td></tr>
 <tr><th scope="row">Pfam</th><td><a href="browse.html#src=Pfam">31,025</a></td><td><dl class="source-notes"><dt>Pfam-A families — Domain/Family→domain, Repeat, Coiled-coil, Disordered, Motif (public domain; GO+InterPro via pfam2go/pfam2interpro → mapped_xrefs)</dt><dd><code>data/traits/{structure/domain,sequence/repeat,mixed/coiled_coil,sequence/disorder,sequence/motif}/pfam/</code></dd></dl></td></tr>
 <tr><th scope="row">CATH</th><td><a href="browse.html#src=CATH">8,151</a></td><td><dl class="source-notes"><dt>CATH-Gene3D hierarchy — Class/Architecture/Topology/Homologous-superfamily (CC-BY 4.0)</dt><dd><code>data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/</code></dd></dl></td></tr>
@@ -289,10 +289,17 @@
       <a href="https://culturebotai.github.io/CultureMech/">CultureMech</a>&middot;<a href="https://culturebotai.github.io/MediaIngredientMech/">MediaIngredientMech</a>&middot;<a href="https://culturebotai.github.io/CommunityMech/">CommunityMech</a>&middot;<a href="https://culturebotai.github.io/TraitMech/">TraitMech</a>&middot;<span class="self" aria-current="page">ProteinTraitsMech</span>
     </div>
     <div class="fam">
-      <a href="https://github.com/Knowledge-Graph-Hub/kg-microbe">kg-microbe</a>&middot;<a href="https://bioportal.bioontology.org/ontologies/METPO">METPO</a>&middot;CC0-1.0
+      <a href="https://github.com/Knowledge-Graph-Hub/kg-microbe">kg-microbe</a>&middot;<a href="https://bioportal.bioontology.org/ontologies/METPO">METPO</a>&middot;Project data: <a href="https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE-DATA">CC BY 4.0</a>; code: <a href="https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE-CODE">BSD-3-Clause</a>. Third-party terms and attribution apply.
     </div>
     <p><a href="https://culturebotai.github.io/mechs/">All Mech projects</a></p>
   </footer>
+  <p id="map-coverage" style="padding:1rem">Map coverage is recorded with the published embedding snapshot.</p>
+  <script src="map-coverage.js"></script>
+  <script>
+    fetch("data/map-coverage.json").then(response => { if (!response.ok) throw new Error(); return response.json(); })
+      .then(data => { document.getElementById("map-coverage").textContent = MapCoverage.describe(data["corpus_map.json"]); })
+      .catch(() => { document.getElementById("map-coverage").textContent = "Map coverage could not be loaded. Open the corpus map to retry."; });
+  </script>
   <script src="theme-toggle.js"></script>
 </body>
 </html>

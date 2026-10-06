@@ -60,9 +60,11 @@
 <body>
   <header class="site">
     <h1 id="map-title">Corpus map</h1>
-    <p><span id="map-description">2-D map of every record's text embedding, colored by trait axis</span> ·
+    <p><span id="map-description">2-D map of the published embedding snapshot, colored by trait axis</span> ·
        <a href="index.html">home</a> · <a href="browse.html">browse</a> · <a href="https://culturebotai.github.io/mechs/">All Mech projects</a></p>
   </header>
+  <p id="map-coverage" style="padding:0 1rem" aria-live="polite"></p>
+  <script src="map-coverage.js"></script>
   <main class="wrap">
     <div class="controls">
       <div class="stats">
@@ -211,9 +213,30 @@
   // Load (or reload) a map file — "corpus_map.json" (full-record embedding),
   // "corpus_map_definitions.json" (definition-only), "protein_map.json"
   // (proteins by trait) or "sequence_map.json" (proteins by ESM-2 sequence).
+  function clearMapData() {
+    DATA=null; VF=new Uint8Array(0); ctx.clearRect(0,0,W,H);
+    tip.style.opacity=0; tip.textContent="";
+    activeAxes.clear(); document.getElementById("legend").replaceChildren();
+    for (const id of ["s-total", "s-visible"]) document.getElementById(id).textContent="—";
+    document.getElementById("cat-filter").replaceChildren();
+    document.getElementById("depth-filter").replaceChildren();
+    document.getElementById("depth-wrap").hidden=true;
+    const download=document.getElementById("csv-dl");
+    if(download.href.startsWith("blob:")) URL.revokeObjectURL(download.href);
+    download.removeAttribute("href"); download.setAttribute("aria-disabled", "true");
+  }
   function loadMap(file){
-    document.getElementById("hint").textContent="Loading corpus map…";
+    clearMapData();
+    document.getElementById("map-description").textContent="Loading selected map…";
+    document.getElementById("hint").textContent="Loading selected map…";
     CURRENT_MAP=file;
+    const coverageNode = document.getElementById("map-coverage");
+    coverageNode.textContent = "";
+    if (file.startsWith("corpus_map")) {
+      fetch("data/map-coverage.json").then(response => { if (!response.ok) throw new Error(); return response.json(); })
+        .then(data => { if (CURRENT_MAP === file) coverageNode.textContent = MapCoverage.describe(data[file]); })
+        .catch(() => { if (CURRENT_MAP === file) coverageNode.textContent = "Current browser coverage could not be loaded. Retry the map to reload coverage."; });
+    }
     const serial=++loadSerial; resetBiophysical();
     fetch("data/"+file).then(r=>{if(!r.ok) throw 0; return r.text();}).then(rawMap=>{
       if(serial!==loadSerial) return;
@@ -275,14 +298,15 @@
       baseHint=document.getElementById("hint").textContent;
       update(); buildCsv();
       if(file==="sequence_map.json") loadBiophysical(rawMap,serial);
-    }).catch(()=>{if(serial!==loadSerial) return; document.getElementById("hint").textContent=
-      file.includes("sequence")
-        ? "Sequence map not built yet (run `just embed-sequences`, then `just sequence-map`)."
-        : file.includes("protein")
-        ? "Protein map not built yet (run `just protein-map`)."
-        : file.includes("definition")
-        ? "Definition-only map not built yet (embed_records --text-mode definition → embed-map --emb-dir data/embeddings/definition --out corpus_map_definitions.json)."
-        : "Corpus map not built yet (run `just embed-map`).";});
+    }).catch(()=>{
+      if(serial!==loadSerial) return;
+      clearMapData();
+      document.getElementById("map-description").textContent="Selected map could not be loaded.";
+      const hint=document.getElementById("hint");
+      hint.textContent="This map could not be loaded. Check your connection and try again. ";
+      const retry=document.createElement("button"); retry.type="button"; retry.textContent="Retry map";
+      retry.addEventListener("click",()=>loadMap(file)); hint.append(retry);
+    });
   }
   // Wire the controls once; loadMap rebuilds the data each switch.
   document.getElementById("cat-filter").addEventListener("change",e=>{catFilter=e.target.value; update();});
@@ -319,13 +343,14 @@
   }
   window.addEventListener("hashchange", () => {
     const f = MAP_BY_HASH[location.hash];
-    if (f && DATA && f !== CURRENT_MAP) selectMap(f);
+    if (f && f !== CURRENT_MAP) selectMap(f);
   });
   selectMap(MAP_BY_HASH[location.hash] || "corpus_map.json");
 
   // Accessible data-table fallback for this dense canvas scatter: a CSV built from
   // the SAME points the plot renders (identifier, axis, category, x, y).
   function buildCsv(){
+    if(!DATA) return;
     const q=v=>{const s=String(v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
     const hasOrg=!!DATA.orgs;
     const hasDepth=!!DATA.depths;
@@ -370,6 +395,7 @@
 
   // Recompute the visible mask, redraw, refresh the counts.
   function update(){
+    if(!DATA) return;
     const pts=DATA.points; let vis=0;
     for(let i=0;i<pts.length;i++){
       const p=pts[i];
@@ -442,7 +468,9 @@
     if(!DATA) return; pending={x:e.clientX,y:e.clientY};
     if(rafQueued) return; rafQueued=true;
     requestAnimationFrame(()=>{
-      rafQueued=false; const ev=pending;
+      rafQueued=false;
+      if(!DATA || !pending) return;
+      const ev=pending;
       const r=cv.getBoundingClientRect(), sx=cv.width/r.width, sy=cv.height/r.height;
       const mx=(ev.x-r.left)*sx, my=(ev.y-r.top)*sy;
       const p=nearest(mx,my);
@@ -470,6 +498,7 @@
                          : "browse.html#record="+encodeURIComponent(p[3]);
   });
   </script>
+  <footer style="padding:1rem;overflow-wrap:anywhere">Project data: <a href="https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE-DATA">CC BY 4.0</a>; code: <a href="https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE-CODE">BSD-3-Clause</a>. Third-party terms and attribution apply. <a href="https://culturebotai.github.io/mechs/">All Mech projects</a></footer>
   <script src="theme-toggle.js"></script>
 </body>
 </html>
