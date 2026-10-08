@@ -28,6 +28,7 @@ families, including the broader SBF/BASS/ACR3 membership.
 | `pilot.json` | Generated, closed-schema `MolecularEvidenceBundle`; exact sequences, source hashes, contacts, correspondence, model comparisons, observations and explanations. |
 | `gene-review-fixture.json` | Explicitly labelled consumer test, **not Chris's repository**; pins the complete bundle bytes and target sequence. |
 | `gene-review-integration.json` | Read-only integration pin for the actual `ai4curation/ai-gene-review` SLC10A4 review; exact upstream commit, file hash, annotation locator and expected claim count. Not upstream adoption. |
+| `residue-query-s267f.json`, `residue-query-r252h.json` | Executable consumer requests for exact NTCP substitutions; return curated mechanisms and evidence, not predicted effects or upstream annotations. |
 | `docs/slc10.html` | Comparison page, loaded separately from the main corpus browser. |
 | `docs/data/slc10-pilot-v1.json` | Generated, ignored, byte-identical export built for Pages. Its sibling manifest records SHA-256 and byte count. |
 
@@ -180,6 +181,69 @@ The `basis` includes intermediate explanations and terminal arguments once each;
 challenges. `context_edges` similarly preserves attribution without using context
 to justify upstream residue claims. No flattened net polarity is inferred.
 
+### Residue-level mechanism retrieval
+
+The same consumer can start from an exact residue/variant rather than requiring
+the caller to know an explanation ID:
+
+```bash
+just consume-molecular-evidence \
+  --bundle data/molecular/slc10/pilot.json \
+  --request data/molecular/slc10/residue-query-s267f.json
+
+just consume-molecular-evidence \
+  --bundle data/molecular/slc10/pilot.json \
+  --request data/molecular/slc10/residue-query-r252h.json
+```
+
+A residue request replaces `assertion_id` with `residue_query`, retaining all
+other bundle, protein, sequence, usage and fixture fields. For example:
+
+```json
+"residue_query": {"position": 267, "residue": "S", "substituted_residue": "F"}
+```
+
+Positions are one-based in the pinned **reference** sequence. `residue` must
+match that sequence; a supplied `substituted_residue` must differ. Omitting
+`substituted_residue` selects only unsubstituted graph bindings, **not all
+variants at that position** and not a verified wild-type assay construct.
+For example, E257 retrieves the curated sodium-coordination residue set, while
+E257A retrieves the tested uptake-reduction mechanism. A single-substitution
+query does not match one component of a multi-substitution residue node.
+Residue requests cannot also select an assertion or an upstream review.
+
+The response includes:
+
+- `retrieval_status`: `MATCHED_CURATED_MECHANISMS` or `NO_CURATED_MECHANISM`.
+  The latter means no matching curated graph binding in this pinned bundle,
+  **not** no biological effect, no literature, or no other evidence in the bundle.
+- `mechanisms`: complete, unchanged graph fields, including all residue bindings,
+  protein/trait scope, per-edge DOI/URL references and excerpts, review status and
+  limitations. `matched_residue_bindings` identifies the exact query matches
+  without reducing a residue-set claim to an individual-residue claim.
+- Each mechanism's `assertions`: its explicitly referenced assertions plus the
+  complete supporting/challenging and context closure. Assay conditions,
+  constructs, localization controls, evidence origin, claim assessment and open
+  questions remain attached. `argument_edges` and `context_edges` preserve their
+  attribution; context is not silently counted as support.
+- `retrieval_limitations`, the original request, bundle scope and source metadata,
+  with `annotation_action: NONE` unchanged.
+
+Existing assertion requests now also return `mechanisms`, but only where the
+graph explicitly lists the requested assertion in `assertion_refs`. Shared
+citations, supporting assertions, family membership or sequence correspondence
+do not select or transfer a graph. The additional consumer response fields are
+not new fields in the stored `MolecularEvidenceBundle`.
+
+This is evidence-preserving retrieval, not automatic causal-path composition or
+variant-effect prediction. S267F's two substrate branches stay separate; R252H's
+author-interpreted mediation edge does not become an isolated experimental result.
+Existing assertion-level evidence types are preserved; machine-readable
+edge-level evidence assessments remain follow-up work, coordinated with
+[PR #714](https://github.com/CultureBotAI/proteintraitsmech/pull/714).
+No bundle bytes, scientific claims or review statuses change for this consumer
+extension, and no new simulation result is incorporated.
+
 ### Read-only check against the actual gene review
 
 The public SLC10A4 review at commit
@@ -256,7 +320,10 @@ model transforms/confidence/least-squares optimality, contact atom identity,
 reference/substitution consistency and matching mutant-assay graph bindings,
 graph residue scope, consumer pin drift, upstream residue claims, export
 checksums, explanation dependency cycles, context/argument separation and unsafe
-rendering. Raw downloads are not required for those tests.
+rendering. Consumer tests also cover exact residue/variant retrieval, full graph
+and evidence preservation, grouped residue scope, partial multi-mutant refusal,
+no-match abstention, A4/A7 non-transfer, and the executable query examples.
+Raw downloads are not required for those tests.
 The `--check` replay is a separate integration test requiring the original inputs.
 
 ```bash
