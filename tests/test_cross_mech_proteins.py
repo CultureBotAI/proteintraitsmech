@@ -801,3 +801,171 @@ def test_local_drift_survives_a_missing_commit_and_honours_configured_roots(flee
         for item in CM.local_drift(manifest, root, environ={"TRAITMECH_ROOT": str(relocated)})
     }
     assert states == {"naturalproductmech": "UNAVAILABLE", "traitmech": "CURRENT"}
+
+
+# -------------------------------------------------------------------- candidates
+
+
+SEQUENCES = {
+    "UniProtKB:P18776": {
+        "protein_id": "UniProtKB:P18776",
+        "sequence_length": 10,
+        "sequence_sha256": hashlib.sha256(b"MTTQYGFFID").hexdigest(),
+        "uniprot_release": "2026_03",
+    }
+}
+
+
+def _pair(trait_id, status, route, *, category="FUNC_LOCALIZATION", axis="FUNCTION"):
+    return {
+        "protein_id": "UniProtKB:P18776",
+        "trait_id": trait_id,
+        "status": status,
+        "route": route,
+        "trait_axis": axis,
+        "trait_category": category,
+        "record_path": f"data/traits/x/{trait_id.replace(':', '_')}.yaml",
+        "sibling_curies": [trait_id],
+        "relations": ["component_of_structure"],
+        "mechs": ["cellstructuremech"],
+        "sibling_records": ["cellstructuremech:data/structures/x.yaml"],
+        "mentions": 1,
+    }
+
+
+def test_candidates_cover_absent_and_legacy_pairs_with_a_route_only():
+    pairs = [
+        _pair("GO:0009390", "ABSENT_FROM_TRAIT", "SOURCE_ANNOTATION:UniProtKB"),
+        _pair("RHEA:37871", "LEGACY_ON_TRAIT", "SOURCE_MEMBERSHIP:UniProtKB"),
+        _pair(
+            "Pfam:PF04728",
+            "ABSENT_FROM_TRAIT",
+            "INTERPRO_MATCH:InterPro",
+            category="SEQ_DOMAIN",
+            axis="SEQUENCE",
+        ),
+        _pair("GO:0005886", "QUALIFIED_ON_TRAIT", "SOURCE_ANNOTATION:UniProtKB"),
+        _pair("GO:7770085", "TRAIT_NOT_IN_PTM", "NONE"),
+    ]
+    rows = CM.candidate_rows(
+        pairs, uniprot_release="2026_03", mentions_sha256="a" * 64, sequences=SEQUENCES
+    )
+    by_trait = {row["trait_id"]: row for row in rows}
+    assert sorted(by_trait) == ["GO:0009390", "Pfam:PF04728", "RHEA:37871"]
+
+    go = by_trait["GO:0009390"]
+    assert go["mapping_method"] == "SOURCE_ANNOTATION"
+    assert go["evidence_source"] == "UniProtKB"
+    assert go["scope"] == "WHOLE_PROTEIN"
+    assert go["source_release"] == "2026_03"
+    assert go["batch"] == CM.CANDIDATE_BATCH
+    assert go["cross_mech_provenance"]["snapshot_mentions_sha256"] == "a" * 64
+    # Organism never comes from the sibling record; sequence identity from discovery.
+    assert not {"taxon_id", "taxon_label"} & set(go)
+    assert go["sequence_sha256"] == SEQUENCES["UniProtKB:P18776"]["sequence_sha256"]
+    assert go["sequence_release"] == "2026_03" and go["sequence_length"] == 10
+    assert by_trait["RHEA:37871"]["mapping_method"] == "SOURCE_MEMBERSHIP"
+
+    pfam = by_trait["Pfam:PF04728"]
+    assert pfam["scope"] == "LOCALIZED" and pfam["mapping_method"] == "INTERPRO_MATCH"
+    assert "source_release" not in pfam
+    # A localized claim needs an occurrence on a known frame: kept out of the
+    # whole-protein batch the selector draws from.
+    assert pfam["batch"] == CM.NEEDS_OCCURRENCE_BATCH
+    assert {go["batch"], by_trait["RHEA:37871"]["batch"]} == {CM.CANDIDATE_BATCH}
+
+    ground = sys.modules["ground_uniprot_examples"]
+    assert all(row["candidate_id"] == ground.derive_candidate_id(row) for row in rows)
+    again = CM.candidate_rows(
+        list(reversed(pairs)),
+        uniprot_release="2026_03",
+        mentions_sha256="a" * 64,
+        sequences=SEQUENCES,
+    )
+    assert again == rows
+    # A protein the pinned release did not return gets no candidate.
+    assert (
+        CM.candidate_rows(pairs, uniprot_release="2026_03", mentions_sha256="a" * 64, sequences={})
+        == []
+    )
+    stale = {"UniProtKB:P18776": {**SEQUENCES["UniProtKB:P18776"], "uniprot_release": "2026_02"}}
+    with pytest.raises(CM.CrossMechError, match="not the pinned 2026_03"):
+        CM.candidate_rows(
+            pairs, uniprot_release="2026_03", mentions_sha256="a" * 64, sequences=stale
+        )
+
+
+def test_candidates_refuse_a_malformed_release():
+    with pytest.raises(CM.CrossMechError, match="uniprot-release"):
+        CM.candidate_rows([], uniprot_release="latest", mentions_sha256="a" * 64, sequences={})
+
+
+# --------------------------------------------------------------------- discovery
+
+
+class _Response:
+    def __init__(self, url, body, *, release="2026_03", status=200, link=""):
+        self.url, self.body, self.status = url, body, status
+        self.headers = {"x-uniprot-release": release, "link": link}
+
+    def geturl(self):
+        return self.url
+
+    def read(self):
+        return self.body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def _opener(results, **response):
+    def opener(request, timeout):
+        return _Response(request.full_url, json.dumps({"results": results}).encode(), **response)
+
+    return opener
+
+
+def test_discovery_records_exact_sequence_identity_and_reports_missing():
+    results = [
+        {"primaryAccession": "P18776", "sequence": {"value": "MTTQYGFFID", "length": 10}},
+        {"primaryAccession": "Q00000", "sequence": {"value": "AAAA", "length": 4}},  # unasked
+    ]
+    found = CM.discover_sequences(
+        ["UniProtKB:P18776", "UniProtKB:P99999"],
+        expected_release="2026_03",
+        opener=_opener(results),
+    )
+    assert found["rows"] == [SEQUENCES["UniProtKB:P18776"]]
+    assert found["missing"] == ["UniProtKB:P99999"]
+    (response,) = found["responses"]
+    assert response["release"] == "2026_03" and "accession%3AP18776" in response["request_url"]
+
+
+@pytest.mark.parametrize(
+    ("results", "response", "message"),
+    [
+        ([], {"release": "2026_02"}, "not the pinned"),
+        ([], {"link": '<https://rest.uniprot.org/next>; rel="next"'}, "paginated"),
+        (
+            [{"primaryAccession": "P18776", "sequence": {"value": "MTTQ", "length": 9}}],
+            {},
+            "invalid sequence",
+        ),
+    ],
+)
+def test_discovery_fails_closed(results, response, message):
+    with pytest.raises(CM.CrossMechError, match=message):
+        CM.discover_sequences(
+            ["UniProtKB:P18776"], expected_release="2026_03", opener=_opener(results, **response)
+        )
+
+
+def test_discovery_refuses_an_off_host_redirect():
+    def opener(request, timeout):
+        return _Response("https://evil.example/x", b'{"results": []}')
+
+    with pytest.raises(CM.CrossMechError, match="redirected off"):
+        CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03", opener=opener)

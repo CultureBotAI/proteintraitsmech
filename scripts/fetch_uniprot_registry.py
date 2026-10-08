@@ -6,8 +6,9 @@ deduplicates the exact UniProtKB accessions (including isoforms) in one named ba
 retrieves them from the official UniProt REST search endpoint in bounded batches, and
 captures ``x-uniprot-release`` from every response.  It writes only references whose
 accession, metadata, sequence, checksum, and sequence version validate.  From that
-same response it also writes content-addressed UniProt database-cross-reference facts;
-these are the replayable provider input for exact ``SOURCE_MEMBERSHIP`` resolution.
+same response it also writes content-addressed UniProt facts -- database cross-references
+(signatures, ComplexPortal, GO) and catalytic-activity Rhea reactions; these are the
+replayable provider input for exact ``SOURCE_MEMBERSHIP`` / ``SOURCE_ANNOTATION`` resolution.
 Every accession-specific response failure is retained in a deterministic blocked TSV.
 
 Dry-run is a no-write, no-network operation which emits one canonical, content-addressed
@@ -54,8 +55,8 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Mapping, Sequence
 
 from uniprot_membership_snapshot import (
+    FACT_FIELDS,
     MembershipSnapshotError,
-    XREF_FIELDS,
     canonical_json as canonical_membership_json,
     dump_memberships,
     extract_entry_memberships,
@@ -135,7 +136,7 @@ RETURN_FIELDS = (
     "reviewed",
     "sequence",
     "sequence_version",
-    *XREF_FIELDS,
+    *FACT_FIELDS,
 )
 USER_AGENT = "ProteinTraitsMech-UniProt-registry/1.0"
 REQUEST_HEADERS = {"Accept": "application/json", "User-Agent": USER_AGENT}
@@ -2258,20 +2259,26 @@ def _execute_apply(
                     )
                 )
             elif reference:
-                references.append(reference)
                 try:
-                    memberships.extend(
-                        extract_entry_memberships(
-                            matches[0],
-                            protein_id=reference["protein_id"],
-                            sequence_sha256=reference["sequence_sha256"],
-                            uniprot_release=reference["uniprot_release"],
-                        )
+                    facts = extract_entry_memberships(
+                        matches[0],
+                        protein_id=reference["protein_id"],
+                        sequence_sha256=reference["sequence_sha256"],
+                        uniprot_release=reference["uniprot_release"],
                     )
                 except MembershipSnapshotError as exc:
-                    raise RegistryBuildError(
-                        f"cannot snapshot UniProt memberships for {target.protein_id}: {exc}"
-                    ) from exc
+                    # One malformed fact blocks that accession, never the batch (#978).
+                    blocked.append(
+                        _blocked_row(
+                            target.protein_id,
+                            target.candidates,
+                            "FACT_SNAPSHOT_FAILED",
+                            str(exc),
+                        )
+                    )
+                    continue
+                references.append(reference)
+                memberships.extend(facts)
     client.finish()
     references.sort(key=lambda row: row["protein_id"])
     if len({row["protein_id"] for row in references}) != len(references):
