@@ -162,14 +162,13 @@ def matching_bindings(mechanism, request):
                 any(binding.get(key) != query.get(key)
                     for key in ("position", "residue", "substituted_residue"))):
             continue
-        # A single-substitution query must not retrieve a multi-mutant node as
-        # evidence for the isolated substitution. Such queries need a future,
-        # explicit combination selector, not an implicit partial match.
-        if "substituted_residue" in query and any(
+        # The complete node can span proteins with independent numbering frames.
+        # A single-substitution query must not select a partial compound mutant;
+        # unmodified partner residues do not add a second substitution.
+        if "substituted_residue" in query and sum(
                 other["node_id"] == binding["node_id"] and
-                other["protein_id"] == binding["protein_id"] and
-                "substituted_residue" in other and other["position"] != binding["position"]
-                for other in mechanism["residue_bindings"]):
+                "substituted_residue" in other
+                for other in mechanism["residue_bindings"]) != 1:
             continue
         matches.append(deepcopy(binding))
     return matches

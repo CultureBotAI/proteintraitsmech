@@ -401,6 +401,46 @@ def test_partial_multi_mutant_query_does_not_claim_single_mutant_effect(inputs):
     assert result["retrieval_status"] == "NO_CURATED_MECHANISM"
 
 
+@pytest.mark.parametrize("partner_position", [1, 267], ids=["different-position", "same-position"])
+@pytest.mark.parametrize("partner_mutated", [True, False], ids=["mutated-partner", "unmodified-partner"])
+def test_partial_multi_protein_mutant_node_is_not_an_exact_variant_match(inputs, partner_position, partner_mutated):
+    """Synthetic interaction, not a biological claim about either panel protein."""
+    raw, _ = inputs
+    bundle = json.loads(raw)
+    request = json.loads((ROOT / "data/molecular/slc10/residue-query-s267f.json").read_text())
+    mechanism = next(m for m in bundle["mechanisms"] if m["mechanism_id"].endswith("s267f-substrate-selectivity"))
+    partner = next(p for p in bundle["protein_references"] if p["protein_id"] == "UniProtKB:Q96EP9")
+    residue = partner["sequence"][partner_position - 1]
+    change = {"position": partner_position, "residue": residue,
+              "substituted_residue": "A" if residue != "A" else "G"}
+    mechanism["protein_ids"].append(partner["protein_id"])
+    partner_binding = {
+        **mechanism["residue_bindings"][0], **change,
+        "protein_id": partner["protein_id"], "sequence_sha256": partner["sequence_sha256"],
+    }
+    if not partner_mutated:
+        partner_binding.pop("substituted_residue")
+    mechanism["residue_bindings"].append(partner_binding)
+    observation = deepcopy(next(o for o in bundle["functional_observations"]
+                                if o["assertion_id"] in mechanism["assertion_refs"]))
+    observation.update(assertion_id="synthetic:partner-substitution-assay",
+                       protein_id=partner["protein_id"], sequence_sha256=partner["sequence_sha256"],
+                       sequence_substitutions=[change] if partner_mutated else [],
+                       construct="Synthetic multi-protein mutant-node regression fixture.")
+    bundle["functional_observations"].append(observation)
+    mechanism["assertion_refs"].append(observation["assertion_id"])
+    # resolve validates the entire bundle before matching. This is therefore a
+    # valid multi-protein node, not a malformed-input rejection test.
+    result = resolve(encode_bundle(bundle, request), request)
+    if partner_mutated:
+        assert result["retrieval_status"] == "NO_CURATED_MECHANISM"
+        assert result["mechanisms"] == []
+    else:
+        assert result["retrieval_status"] == "MATCHED_CURATED_MECHANISMS"
+        assert result["mechanisms"][0]["matched_residue_bindings"] == [mechanism["residue_bindings"][0]]
+        assert result["mechanisms"][0]["residue_bindings"] == mechanism["residue_bindings"]
+
+
 def test_mechanism_response_preserves_nested_arguments_and_context(inputs):
     raw, _ = inputs
     bundle = json.loads(raw)

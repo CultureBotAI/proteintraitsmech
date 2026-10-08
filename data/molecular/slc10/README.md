@@ -209,7 +209,9 @@ match that sequence; a supplied `substituted_residue` must differ. Omitting
 variants at that position** and not a verified wild-type assay construct.
 For example, E257 retrieves the curated sodium-coordination residue set, while
 E257A retrieves the tested uptake-reduction mechanism. A single-substitution
-query does not match one component of a multi-substitution residue node.
+query does not match one component of a multi-substitution residue node, including
+mutations in different proteins or at the same number in independent coordinate
+frames. Unmodified partner bindings remain valid context, not extra substitutions.
 Residue requests cannot also select an assertion or an upstream review.
 
 The response includes:
@@ -321,7 +323,8 @@ reference/substitution consistency and matching mutant-assay graph bindings,
 graph residue scope, consumer pin drift, upstream residue claims, export
 checksums, explanation dependency cycles, context/argument separation and unsafe
 rendering. Consumer tests also cover exact residue/variant retrieval, full graph
-and evidence preservation, grouped residue scope, partial multi-mutant refusal,
+and evidence preservation, grouped residue scope, same- and cross-protein partial
+multi-mutant refusal (including equal position numbers and unmodified partners),
 no-match abstention, A4/A7 non-transfer, and the executable query examples.
 Raw downloads are not required for those tests.
 The `--check` replay is a separate integration test requiring the original inputs.
