@@ -4487,6 +4487,24 @@ found.
 - No trait or durable grounding write occurred in this change. Inclusion of the sibling
   candidates is a separate, reviewed promotion batch.
 
+### 2026-10-05 — cross-Mech examples, batch 001 (#652)
+
+- The first promotion through the UniProt exact-accession fact lane: 281 sibling-Mech
+  (protein, trait) claims are now `QUALIFIED` whole-protein examples on 133 records
+  (112 ComplexPortal, 83 GO localization, 80 Rhea, 5 GO molecular function, 1 NCBIfam).
+  This appends 253 examples and upgrades 28 existing legacy examples. All are Swiss-Prot
+  entries: GO uses IDA/IPI/EXP/IMP and every catalytic activity uses `ECO:0000269`;
+  ComplexPortal and NCBIfam use their exact membership contracts. This creates the first durable
+  `uniprot_memberships.jsonl` (281 facts). Full record:
+  [batch 001 review](cross-mech-examples-batch-001-review-2026-10-05.md).
+- 222 pairs were rejected: 145 with no exact UniProt fact and 77 by the evidence policy.
+  Three localized pairs wait for an InterPro occurrence.
+- A first attempt admitted electronic, phylogenetic, and automatic evidence, against this
+  plan's priority 4. Review caught it, and it was rolled back unmerged and redone under
+  the default-deny policy from a fresh canary. AI review, not curator sign-off.
+- Full `just validate-all` passed over 429,293 records with 0 strict errors and 0 semantic
+  findings. Follow-up audit verified both fetch receipts and the complete batch diff.
+
 ### 2026-09-26 — sharded durable evidence and bindings registries (#801)
 
 - The durable `occurrence_evidence` and `qualified_record_bindings` registries move from
