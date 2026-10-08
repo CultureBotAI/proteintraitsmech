@@ -73,6 +73,10 @@ The five paths and axes are:
   candidate ledgers only. Add a new canonical example solely through the release-pinned
   candidate → resolve → semantic validate → reviewed promote workflow documented in
   `research/uniprot-organism-protein-grounding-plan.md`.
+- Proteins a sibling Mech ties to a trait (`data/cross_mech/`) are discovery leads,
+  never qualification evidence: they reach `canonical_examples` only through the same
+  grounding funnel, on the exact record the audit resolves. See
+  `research/cross-mech-protein-examples.md`.
 - Do not assume the project licenses overrides upstream terms. Preserve per-record
   provenance/license metadata, treat restrictive or missing terms as a release blocker,
   and escalate unresolved source dispositions under issue #517.
@@ -93,6 +97,9 @@ just audit-graphs [path]
 just audit-text
 just audit-prose
 just audit-writers
+just scan-cross-mech-proteins --fetch    # sibling-Mech protein snapshot; --apply to write
+just audit-cross-mech-proteins           # sibling (protein, trait) statuses -> reports/cross-mech/
+just check-cross-mech-proteins --local   # snapshot integrity + sibling drift
 just sources-check
 just test
 just lint

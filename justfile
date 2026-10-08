@@ -305,6 +305,25 @@ lint *args:
 audit-cross-mech-categories *args:
     uv run python scripts/audit_cross_mech_categories.py {{args}}
 
+# Track the protein examples sibling Mechs carry (#652). The fleet comes from claw's
+# manifest; each sibling is read from git objects at origin/main, never its working
+# tree. Dry-run by default; --apply replaces the tracked data/cross_mech/ snapshot.
+# Pass --fetch to `git fetch` every sibling first. See research/cross-mech-protein-examples.md.
+scan-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py scan {{args}}
+
+# Resolve the snapshot against data/traits: one status per (protein, trait) pair
+# (QUALIFIED / LEGACY / ABSENT on the exact record, trait absent, or not a corpus
+# namespace) -> reports/cross-mech/. Read-only; writes no trait record.
+audit-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py audit {{args}}
+
+# Verify the tracked snapshot offline. --local compares sibling checkouts and
+# --remote the live default branches and fleet manifest; drift is a NOTICE unless
+# --fail-on-drift.
+check-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py check {{args}}
+
 # Validate the data-source registry
 sources-check:
     uv run python scripts/check_sources.py
