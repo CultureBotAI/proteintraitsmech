@@ -80,9 +80,17 @@ try {
   assert.equal(await run('document.querySelectorAll("#site option").length'),7);
   assert.equal(await run('document.querySelectorAll("#matrix tbody tr").length'),7);
   assert.equal(await run('document.querySelectorAll("#models tbody tr").length'),3);
-  assert.equal(await run('document.querySelectorAll("#mechanisms article").length'),5);
-  assert.equal(await run('document.querySelectorAll("#assays tbody tr").length'),12);
-  assert.equal(await run('document.querySelectorAll("#explanations article").length'),3);
+  assert.equal(await run('document.querySelectorAll("#mechanisms article").length'),7);
+  assert.equal(await run('document.querySelectorAll("#assays tbody tr").length'),16);
+  assert.equal(await run('document.querySelectorAll("#explanations article").length'),5);
+  assert.match(await run('document.getElementById("slc10-explanation:ntcp-r252h-surface-availability").textContent'),/SUPPORTED.*PROPOSED/);
+  assert.match(await run('document.getElementById("slc10-mechanism:ntcp-r252h-surface-availability").textContent'),/AUTHOR INTERPRETATION/);
+  assert.equal(await run('document.getElementById("slc10-mechanism:ntcp-s267f-substrate-selectivity").querySelectorAll(".edge").length'),2);
+  await run('[...document.querySelectorAll("#assays tbody tr")].find(r=>r.textContent.includes("Cell-surface detection of NTCP R252H")).querySelector("button").click()');
+  assert.match(await run('document.getElementById("detail-body").textContent'),/NOT_DETECTED/);
+  assert.match(await run('document.getElementById("assay-substitutions").textContent'),/R252/);
+  assert.equal(await run('document.querySelector("#assay-substitutions tbody td").textContent'),'H');
+  await run('document.getElementById("close-detail").click()');
   assert.match(await run('document.getElementById("slc10-explanation:a7-site-divergence").textContent'),/UNRESOLVED/);
   await run('[...document.getElementById("slc10-explanation:a4-residue-loss").querySelectorAll("button")].find(b=>b.textContent==="Taurocholate uptake").click()');
   assert.match(await run('document.getElementById("detail-body").textContent'),/NOT_DETECTED/);
@@ -110,6 +118,8 @@ try {
   const matrix=await screenshot('matrix.png');
   await run('document.getElementById("mechanism-heading").scrollIntoView()');
   const mechanisms=await screenshot('mechanisms.png');
+  await run('document.getElementById("slc10-mechanism:ntcp-r252h-surface-availability").scrollIntoView()');
+  const residueChain=await screenshot('residue-chain.png');
   await call('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true},sessionId);
   assert.equal(await run('document.documentElement.scrollWidth <= window.innerWidth'),true);
   await run('window.scrollTo(0,0)');
@@ -117,7 +127,7 @@ try {
   await run('setTimeout(()=>{location.href='+JSON.stringify(url+'#'+encodeURIComponent('slc10-assay:mouse-pres1-binding-2013'))+';location.reload()},0); true');
   await until(()=>run('document.getElementById("detail")?.open'),'stable assertion deep link');
   assert.match(await run('document.getElementById("detail-body").textContent'),/HBV preS1 peptide binding/);
-  console.log(JSON.stringify({status:'passed',desktop,matrix,mechanisms,mobile,substitution,checks:['verified export','matrix','site switching','separate assay context','unresolved explanation','typed substitution dialog','model table','accessible graph dialog','mechanisms','mobile overflow','stable assertion deep link']},null,2));
+  console.log(JSON.stringify({status:'passed',desktop,matrix,mechanisms,residueChain,mobile,substitution,checks:['verified export','matrix','site switching','separate assay context','unresolved explanation','typed substitution dialog','R252H localization and interpreted mediation','S267F substrate-specific branches','model table','accessible graph dialog','mechanisms','mobile overflow','stable assertion deep link']},null,2));
 } catch(error) {
   console.error('Isolated browser diagnostics:',browserErrors);
   throw error;

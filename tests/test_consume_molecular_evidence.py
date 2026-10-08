@@ -32,6 +32,70 @@ def test_fixture_resolves_without_an_annotation_action(inputs):
     assert result["claim"]["limitations"] and result["claim"]["unresolved_questions"]
 
 
+@pytest.fixture(params=[
+    ("ntcp-r252h-surface-availability",
+     ("ntcp-r252h-surface-depletion-2015", "ntcp-r252h-uptake-reduction-2015"),
+     {"position": 252, "residue": "R", "substituted_residue": "H"}),
+    ("ntcp-s267f-substrate-selectivity",
+     ("ntcp-s267f-taurocholate-reduction-2021", "ntcp-s267f-estrone-sulfate-increase-2021"),
+     {"position": 267, "residue": "S", "substituted_residue": "F"}),
+], ids=["R252H", "S267F"])
+def residue_inputs(inputs, request):
+    raw, original = inputs
+    case, support_names, substitution = request.param
+    bundle = json.loads(raw)
+    protein = next(p for p in bundle["protein_references"] if p["protein_id"] == "UniProtKB:Q14973")
+    consumer_request = deepcopy(original)
+    consumer_request.update(
+        protein_id=protein["protein_id"], sequence_sha256=protein["sequence_sha256"],
+        assertion_id="slc10-explanation:" + case,
+        fixture="PRODUCTION_RESIDUE_CONSUMER_TEST_NOT_UPSTREAM_ADOPTION",
+    )
+    support_ids = {"slc10-assay:" + name for name in support_names}
+    return raw, consumer_request, bundle, support_ids, substitution
+
+
+def test_production_residue_claim_resolves_with_exact_experimental_support(residue_inputs):
+    raw, request, bundle, support_ids, substitution = residue_inputs
+    before = deepcopy(request)
+    result = resolve(raw, request)
+    assert request == before
+    assert result["annotation_action"] == "NONE"
+    claim = next(e for e in bundle["explanations"] if e["assertion_id"] == request["assertion_id"])
+    assert result["claim"] == claim
+    assert claim["assessment"] == "SUPPORTED" and claim["review_status"] == "PROPOSED"
+    assert claim["limitations"] and claim["unresolved_questions"]
+    assert {row["assertion_id"] for row in result["basis"]} == support_ids
+    observations = {row["assertion_id"]: row for row in bundle["functional_observations"]}
+    for row in result["basis"]:
+        assert row == observations[row["assertion_id"]]  # including source snippets and assay limits
+        assert row["protein_id"] == request["protein_id"]
+        assert row["sequence_sha256"] == request["sequence_sha256"]
+        assert row["evidence_origin"] == "EXPERIMENTAL_ASSAY"
+        assert row["review_status"] == "PROPOSED"
+        assert row["sequence_substitutions"] == [substitution]
+        assert row["evidence"] and row["limitations"]
+    assert result["argument_edges"] == [
+        {"explanation_id": claim["assertion_id"], "relation": "SUPPORTS", "assertion_id": ref}
+        for ref in sorted(support_ids)
+    ]
+    assert result["context"] == result["context_edges"] == []
+    assert "upstream_review" not in result
+
+
+@pytest.mark.parametrize("field,value,match", [
+    ("protein_id", "UniProtKB:Q96EP9", "claim/protein/sequence mismatch"),
+    ("sequence_sha256", "0" * 64, "claim/protein/sequence mismatch"),
+    ("usage", "ASSIGN_GO", "cannot authorize annotations"),
+])
+def test_production_residue_claim_rejects_scope_drift_and_annotation_requests(residue_inputs, field, value, match):
+    raw, original, _, _, _ = residue_inputs
+    request = deepcopy(original)
+    request[field] = value
+    with pytest.raises(ValueError, match=match):
+        resolve(raw, request)
+
+
 @pytest.mark.parametrize("field,value", [
     ("bundle_id", "different"), ("bundle_version", "2"), ("bundle_sha256", "0" * 64),
     ("protein_id", "UniProtKB:Q14973"), ("sequence_sha256", "0" * 64),

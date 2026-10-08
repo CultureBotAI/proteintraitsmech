@@ -199,7 +199,113 @@ functional_observations:
         snippet: 95 to 99% reduction
         notes: The sentence explicitly lists E257A among the tested mutants.
     limitations: DETECTED describes the reduction, not normal transport. Reduced uptake is not complete absence. This does not isolate sodium binding from folding, gating or coupling effects, or explain SLC10A4.
+  - assertion_id: slc10-assay:ntcp-r252h-surface-depletion-2015
+    protein_id: UniProtKB:Q14973
+    evidence_origin: EXPERIMENTAL_ASSAY
+    review_status: PROPOSED
+    activity: Cell-surface detection of NTCP R252H
+    substrate: NTCP protein; localization readout, not a transported substrate
+    outcome: NOT_DETECTED
+    assay: Confocal immunofluorescence and surface biotinylation in 293T cells
+    conditions: R252H compared with wild type; Figure 2B-D.
+    construct: Human NTCP R252H, C-terminal FLAG tag; full historical construct not independently reconciled.
+    sequence_substitutions:
+      - {position: 252, residue: R, substituted_residue: H}
+    expression_localization_controls: Wild-type surface signal and mutant total protein detected; calnexin control for biotinylation.
+    source_locator: Abstract; Results and Figure 2B-D
+    evidence:
+      - reference: https://doi.org/10.1002/hep.27240
+        snippet: virtually absent
+        notes: Refers to mutant NTCP at the plasma membrane, not total cellular protein.
+    limitations: Below surface-assay detection is not absolute molecular absence; folding and ER retention were inferred.
+  - assertion_id: slc10-assay:ntcp-r252h-uptake-reduction-2015
+    protein_id: UniProtKB:Q14973
+    evidence_origin: EXPERIMENTAL_ASSAY
+    review_status: PROPOSED
+    activity: Reduction of taurocholate uptake with NTCP R252H
+    substrate: Taurocholate
+    outcome: DETECTED
+    assay: Radiotracer uptake kinetics in 293T cells
+    conditions: Five-minute uptake at 37 degrees Celsius; sodium versus choline. Representative Vmax, wild type 130 versus R252H 14 pmol/mg/min; Km 15 versus 18 micromolar.
+    construct: Human NTCP R252H in 293T cells; Figure 2A does not specify the tag. Results separately introduce C-terminal FLAG-tagged constructs for localization in Figure 2B-D; full construct identity across these experiments is not independently reconciled.
+    sequence_substitutions:
+      - {position: 252, residue: R, substituted_residue: H}
+    expression_localization_controls: Separate surface-localization assays in Figure 2B-D; uptake normalized to total protein, not surface NTCP.
+    source_locator: Methods, Transport Assays and Kinetic Studies; Results, Figure 2A
+    evidence:
+      - reference: https://doi.org/10.1002/hep.27240
+        snippet: markedly reduced uptake activity
+    limitations: Residual transport remains; these are representative cell-level kinetics, not per-transporter turnover or a binding-affinity measurement. Do not assume the uptake and localization experiments used identical tagged constructs.
+  - assertion_id: slc10-assay:ntcp-s267f-taurocholate-reduction-2021
+    protein_id: UniProtKB:Q14973
+    evidence_origin: EXPERIMENTAL_ASSAY
+    review_status: PROPOSED
+    activity: Reduction of taurocholate uptake with NTCP S267F
+    substrate: Taurocholate
+    outcome: DETECTED
+    assay: Radiotracer uptake in transfected HEK293 cells
+    conditions: Initial assay, 30 nM substrate for five minutes at 37 degrees Celsius; empty-vector subtraction and wild-type comparison.
+    construct: His-tagged human NTCP S267F; Methods specify HEK293T/17 cells; full historical construct not independently reconciled.
+    sequence_substitutions:
+      - {position: 267, residue: S, substituted_residue: F}
+    expression_localization_controls: Surface biotinylation and Na+/K+-ATPase control (Figure 2); surface-normalized uptake (Figure 3) and separate kinetic analysis (Table 1).
+    source_locator: Results, Cellular substrate transport and Dissecting the composite cellular outcomes; Figures 1-3, Table 1
+    evidence:
+      - reference: https://doi.org/10.1074/jbc.RA120.014889
+        snippet: significant decrease in TCA transport
+    limitations: Reduced, not universally absent transport; initial uptake and separately measured kinetic parameters must not be interchanged.
+  - assertion_id: slc10-assay:ntcp-s267f-estrone-sulfate-increase-2021
+    protein_id: UniProtKB:Q14973
+    evidence_origin: EXPERIMENTAL_ASSAY
+    review_status: PROPOSED
+    activity: Increase of estrone-3-sulfate uptake with NTCP S267F
+    substrate: Estrone-3-sulfate
+    outcome: DETECTED
+    assay: Radiotracer uptake in transfected HEK293 cells
+    conditions: Initial assay, 5.8 nM substrate for five minutes at 37 degrees Celsius; twofold increase versus wild type before surface-expression correction.
+    construct: His-tagged human NTCP S267F; Methods specify HEK293T/17 cells; full historical construct not independently reconciled.
+    sequence_substitutions:
+      - {position: 267, residue: S, substituted_residue: F}
+    expression_localization_controls: Empty-vector subtraction; surface-normalized comparison in Figure 3 and separate kinetics in Table 1.
+    source_locator: Results, Cellular substrate transport; Figures 1-3, Table 1
+    evidence:
+      - reference: https://doi.org/10.1074/jbc.RA120.014889
+        snippet: a 2.0-fold increase
+        notes: The initial estrone-3-sulfate uptake result, not its surface-normalized fold change or Vmax/Km.
+    limitations: Earlier studies reported wild-type-like uptake; the authors discuss assay-context differences. No all-system increase is asserted.
 explanations:
+  - assertion_id: slc10-explanation:ntcp-r252h-surface-availability
+    protein_id: UniProtKB:Q14973
+    evidence_origin: CURATOR_INTERPRETATION
+    review_status: PROPOSED
+    claim: Reduced cell-surface availability is a supported explanation for the R252H taurocholate-uptake defect in the tested cells.
+    assessment: SUPPORTED
+    supporting_assertions:
+      - slc10-assay:ntcp-r252h-surface-depletion-2015
+      - slc10-assay:ntcp-r252h-uptake-reduction-2015
+    evidence:
+      - reference: https://doi.org/10.1002/hep.27240
+        notes: Figure 2; the mediation step is the authors' interpretation, not an independently isolated causal effect.
+    unresolved_questions:
+      - What atomic change accounts for the localization phenotype?
+      - Would equal surface abundance restore transport, or is an intrinsic transport defect also present?
+    limitations: Supported does not mean uniquely established. The uptake and localization experiments share the reported substitution, not a verified complete construct identity. No proven folding defect, zero residual uptake, or transfer to SLC10A4 is asserted.
+  - assertion_id: slc10-explanation:ntcp-s267f-substrate-selectivity
+    protein_id: UniProtKB:Q14973
+    evidence_origin: CURATOR_INTERPRETATION
+    review_status: PROPOSED
+    claim: S267F changes NTCP transport in a substrate-dependent way, not simply by eliminating all transporter activity or surface abundance.
+    assessment: SUPPORTED
+    supporting_assertions:
+      - slc10-assay:ntcp-s267f-taurocholate-reduction-2021
+      - slc10-assay:ntcp-s267f-estrone-sulfate-increase-2021
+    evidence:
+      - reference: https://doi.org/10.1074/jbc.RA120.014889
+        notes: Figures 1-4 and Table 1; interpretation uses substrate-specific results and surface-expression correction.
+    unresolved_questions:
+      - Which binding, gating, or coupling step produces the substrate-dependent effects?
+      - How much of the earlier estrone-sulfate discrepancy is explained by assay context?
+    limitations: This resolves a functional distinction, not an atomistic mechanism. No steric-blockade edge or explanation of SLC10A4 inactivity follows.
   - assertion_id: slc10-explanation:a4-residue-loss
     protein_id: UniProtKB:Q96EP9
     evidence_origin: CURATOR_INTERPRETATION
@@ -437,3 +543,105 @@ mechanisms:
             - reference: https://doi.org/10.1128/JVI.03478-13
               snippet: 95 to 99% reduction
               notes: Figure 6A/B; this range covers the reported mutant group, not an exact E257A-specific estimate.
+  - mechanism_id: slc10-mechanism:ntcp-r252h-surface-availability
+    review_status: PROPOSED
+    trait_ref: Pfam:PF01758
+    protein_ids: [UniProtKB:Q14973]
+    assertion_refs:
+      - slc10-assay:ntcp-r252h-surface-depletion-2015
+      - slc10-assay:ntcp-r252h-uptake-reduction-2015
+      - slc10-explanation:ntcp-r252h-surface-availability
+    limitations: Experimental perturbation and localization; downstream mediation is author interpretation. Complete construct identity across uptake and tagged localization experiments is not verified. The local state is detection-limited; residual uptake remains. No atomic folding pathway is established.
+    residue_bindings:
+      - {node_id: r252h, protein_id: UniProtKB:Q14973, position: 252, residue: R, substituted_residue: H}
+    graph:
+      graph_id: ntcp_r252h_surface_availability
+      title: NTCP R252H links deficient surface availability to reduced uptake
+      description: A residue-to-localization-to-function explanation with an explicitly interpreted second edge.
+      nodes:
+        - node_id: r252h
+          label: Human NTCP R252H substitution (UniProtKB Q14973 numbering)
+          node_type: RESIDUE
+          local: true
+          xrefs: [UniProtKB:Q14973]
+          description: Reference R252 replaced by histidine; not an inferred mutation in another protein.
+        - node_id: surface_depleted
+          label: NTCP R252H below cell-surface assay detection
+          node_type: STATE
+          local: true
+          description: Assay-specific surface-depleted state in 293T cells, not absence of total NTCP or a directly observed folding intermediate.
+        - node_id: uptake
+          label: NTCP-mediated taurocholate uptake in the tested cells
+          node_type: MOLECULAR_FUNCTION
+          grounding: GO:0008508
+          description: Cell-level transport; no new GO annotation or claim about all substrates.
+      edges:
+        - subject: r252h
+          predicate: causally upstream of
+          predicate_id: RO:0002411
+          object: surface_depleted
+          description: EXPERIMENTAL RESULT — the tested substitution produces the localization phenotype relative to wild type.
+          evidence:
+            - reference: https://doi.org/10.1002/hep.27240
+              snippet: virtually absent
+              notes: Abstract and Figure 2B-D; plasma-membrane detection, not total expression.
+        - subject: surface_depleted
+          predicate: negatively regulates
+          predicate_id: RO:0002212
+          object: uptake
+          description: AUTHOR INTERPRETATION — diminished surface availability explains reduced cellular uptake; mediation was not independently isolated by restoring equal surface abundance.
+          evidence:
+            - reference: https://doi.org/10.1002/hep.27240
+              snippet: absence of the protein at the plasma membrane causes the bile salt transport defect
+              notes: Results, discussion of Figure 2; a source-stated interpretation, not proof of an exclusive mechanism.
+  - mechanism_id: slc10-mechanism:ntcp-s267f-substrate-selectivity
+    review_status: PROPOSED
+    trait_ref: Pfam:PF01758
+    protein_ids: [UniProtKB:Q14973]
+    assertion_refs:
+      - slc10-assay:ntcp-s267f-taurocholate-reduction-2021
+      - slc10-assay:ntcp-s267f-estrone-sulfate-increase-2021
+      - slc10-explanation:ntcp-s267f-substrate-selectivity
+    limitations: Two measured functional consequences, not a completed atomistic chain. Surface-normalized results support substrate dependence; binding and gating remain unresolved. Fold changes remain assay-specific.
+    residue_bindings:
+      - {node_id: s267f, protein_id: UniProtKB:Q14973, position: 267, residue: S, substituted_residue: F}
+    graph:
+      graph_id: ntcp_s267f_substrate_selectivity
+      title: NTCP S267F has opposite effects on two assayed substrates
+      description: Preserve substrate-specific branches instead of assigning a protein-wide loss-of-function label.
+      nodes:
+        - node_id: s267f
+          label: Human NTCP S267F substitution (UniProtKB Q14973 numbering)
+          node_type: RESIDUE
+          local: true
+          xrefs: [UniProtKB:Q14973]
+          description: Reference S267 replaced by phenylalanine in the cited assay constructs.
+        - node_id: taurocholate_uptake
+          label: NTCP-mediated taurocholate uptake
+          node_type: MOLECULAR_FUNCTION
+          grounding: GO:0008508
+          description: The study's taurocholate readout, not all transport functions.
+        - node_id: estrone_sulfate_uptake
+          label: NTCP-mediated estrone-3-sulfate uptake
+          node_type: MOLECULAR_FUNCTION
+          local: true
+          description: Substrate- and assay-specific activity; no broader ontology equivalence asserted.
+      edges:
+        - subject: s267f
+          predicate: negatively regulates
+          predicate_id: RO:0002212
+          object: taurocholate_uptake
+          description: EXPERIMENTAL RESULT — reduced taurocholate uptake; no direct substrate-contact or steric-blockade intermediate was measured.
+          evidence:
+            - reference: https://doi.org/10.1074/jbc.RA120.014889
+              snippet: significant decrease in TCA transport
+              notes: Results, Figure 1; surface correction in Figure 3 and independent kinetics in Table 1.
+        - subject: s267f
+          predicate: positively regulates
+          predicate_id: RO:0002213
+          object: estrone_sulfate_uptake
+          description: EXPERIMENTAL RESULT — increased estrone-3-sulfate uptake in this study; not universal across experimental systems.
+          evidence:
+            - reference: https://doi.org/10.1074/jbc.RA120.014889
+              snippet: a 2.0-fold increase
+              notes: Initial estrone-3-sulfate uptake in Figure 1; do not use this fold change for surface-normalized uptake or kinetic efficiency.
