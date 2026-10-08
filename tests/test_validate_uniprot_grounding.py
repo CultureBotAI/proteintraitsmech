@@ -121,12 +121,20 @@ def codes(findings: list[V.Finding]) -> set[str]:
     return {finding.code for finding in findings}
 
 
-def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
-    """Write one complete, exact UniProt SOURCE_MEMBERSHIP validation fixture."""
+def membership_cli_fixture(
+    tmp_path: Path,
+    *,
+    trait_id: str = "PANTHER:PTHR12345",
+    method: str = "SOURCE_MEMBERSHIP",
+    category: str = "FUNC_PROTEIN_FAMILY",
+    entry: dict | None = None,
+) -> dict[str, object]:
+    """Write one complete, exact UniProt fact validation fixture (membership by default)."""
 
     membership_path = tmp_path / "uniprot_memberships.jsonl"
     membership = M.extract_entry_memberships(
-        {
+        entry
+        or {
             "uniProtKBCrossReferences": [
                 {
                     "database": "PANTHER",
@@ -141,12 +149,12 @@ def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
     )[0]
     membership_path.write_text(M.dump_memberships([membership]), encoding="utf-8")
     whole_occurrence = occurrence(
-        trait_id="PANTHER:PTHR12345",
-        source_trait_id="PANTHER:PTHR12345",
+        trait_id=trait_id,
+        source_trait_id=trait_id,
         scope="WHOLE_PROTEIN",
         coordinate_frame=None,
         intervals=None,
-        mapping_method="SOURCE_MEMBERSHIP",
+        mapping_method=method,
         evidence_source="UniProtKB",
         source_release="2026_02",
         provider_kind="UNIPROT",
@@ -157,9 +165,9 @@ def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
     whole_occurrence.pop("coordinate_frame")
     whole_occurrence.pop("intervals")
     whole_record = record(
-        identifier="PANTHER:PTHR12345",
+        identifier=trait_id,
         trait_axis="FUNCTION",
-        trait_category="FUNC_PROTEIN_FAMILY",
+        trait_category=category,
         residue_sequence=None,
         canonical_examples=[example(trait_occurrences=[whole_occurrence])],
     )
@@ -851,7 +859,8 @@ def test_complexportal_provider_contract_is_exact_and_receipt_closed():
     ("change", "expected_code"),
     [
         ({"mapping_method": "SOURCE_ANNOTATION"}, "complexportal_source_method_mismatch"),
-        ({"provider_kind": "UNIPROT"}, "complexportal_provider_mismatch"),
+        # UNIPROT is the exact-accession lane (#652); any other kind is still wrong.
+        ({"provider_kind": "INTERPRO"}, "complexportal_provider_mismatch"),
         ({"evidence_source": "NotComplexPortal"}, "complexportal_source_mismatch"),
         ({"provider_release": "different-snapshot"}, "complexportal_release_mismatch"),
         ({"scope": "LOCALIZED"}, "complexportal_scope_mismatch"),
@@ -990,7 +999,8 @@ def test_rhea_provider_contract_is_exact_but_receipt_verifier_closed():
     ("change", "expected_code"),
     [
         ({"mapping_method": "SOURCE_ANNOTATION"}, "rhea_source_method_mismatch"),
-        ({"provider_kind": "UNIPROT"}, "rhea_provider_mismatch"),
+        # UNIPROT is the exact-accession lane (#652); any other kind is still wrong.
+        ({"provider_kind": "INTERPRO"}, "rhea_provider_mismatch"),
         ({"evidence_source": "NotRhea"}, "rhea_source_mismatch"),
         ({"source_release": "142"}, "rhea_release_mismatch"),
         ({"provider_release": "142"}, "rhea_release_mismatch"),
@@ -1047,6 +1057,99 @@ def test_rhea_lock_triggers_from_either_namespace_or_reverse_source(
     assert "rhea_source_trait_mismatch" in observed
     if evidence_source != "Rhea":
         assert "rhea_source_mismatch" in observed
+
+
+def uniprot_fact_evidence(trait_id: str, method: str, **changes: object) -> dict:
+    """An exact UniProt exact-accession fact as the promoter would emit it (#652)."""
+
+    values = {
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "scope": "WHOLE_PROTEIN",
+        "coordinate_frame": None,
+        "intervals": None,
+        "mapping_method": method,
+        "evidence_source": "UniProtKB",
+        "source_release": "2026_03",
+        "provider_kind": "UNIPROT",
+        "provider_source": "data/grounding/uniprot_memberships.jsonl",
+        "provider_release": "2026_03",
+    }
+    values.update(changes)
+    grounded = occurrence(**values)
+    return EVIDENCE_REGISTRY[grounded["source_evidence_id"]]
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method"),
+    [
+        ("ComplexPortal:CPX-320", "SOURCE_MEMBERSHIP"),
+        ("RHEA:37871", "SOURCE_MEMBERSHIP"),
+        ("GO:0009390", "SOURCE_ANNOTATION"),
+    ],
+)
+def test_uniprot_fact_lane_is_open_for_exact_functional_facts(trait_id, method):
+    """No receipt lock: replay against the membership snapshot is the lane's gate."""
+
+    evidence = uniprot_fact_evidence(trait_id, method)
+    assert codes(V.validate_grounding_evidence(evidence, path=Path("e.jsonl"), line=1)) == set()
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method", "changes", "expected"),
+    [
+        # A GO annotation is never a membership, and a membership never an annotation.
+        ("GO:0009390", "SOURCE_MEMBERSHIP", {}, {"uniprot_fact_method_mismatch"}),
+        ("Pfam:PF00001", "SOURCE_ANNOTATION", {}, {"uniprot_fact_method_mismatch"}),
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_ANNOTATION",
+            {},
+            {"uniprot_fact_method_mismatch", "complexportal_source_method_mismatch"},
+        ),
+        (
+            "RHEA:37871",
+            "SOURCE_ANNOTATION",
+            {},
+            {"uniprot_fact_method_mismatch", "rhea_source_method_mismatch"},
+        ),
+        # The UniProt lane names UniProtKB, never the source database it mirrors.
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_MEMBERSHIP",
+            {"evidence_source": "ComplexPortal"},
+            {"complexportal_uniprot_source_mismatch", "uniprot_membership_source_mismatch"},
+        ),
+        (
+            "RHEA:37871",
+            "SOURCE_MEMBERSHIP",
+            {"evidence_source": "Rhea"},
+            {"rhea_uniprot_source_mismatch", "uniprot_membership_source_mismatch"},
+        ),
+        # Direct Rhea membership never climbs a hierarchy, on either lane.
+        (
+            "RHEA:37871",
+            "SOURCE_MEMBERSHIP",
+            {"scope": "LOCALIZED"},
+            {"rhea_scope_mismatch", "uniprot_membership_scope_mismatch"},
+        ),
+    ],
+)
+def test_uniprot_fact_lane_rejects_misuse(trait_id, method, changes, expected):
+    evidence = uniprot_fact_evidence(trait_id, method, **changes)
+    observed = codes(V.validate_grounding_evidence(evidence, path=Path("e.jsonl"), line=1))
+    assert expected <= observed
+    # Opening the UniProt lane never lifts the source-native receipt locks.
+    assert not observed & {"complexportal_provider_receipt_required", "rhea_provider_receipt_required"}
+
+
+def test_source_native_lanes_stay_receipt_locked():
+    assert "rhea_provider_receipt_required" in codes(
+        V.validate_grounding_evidence(rhea_evidence(), path=Path("e.jsonl"), line=1)
+    )
+    assert "complexportal_provider_receipt_required" in codes(
+        V.validate_grounding_evidence(complexportal_evidence(), path=Path("e.jsonl"), line=1)
+    )
 
 
 @pytest.mark.parametrize(
@@ -2065,6 +2168,96 @@ def test_cli_membership_replay_rejects_missing_tampered_or_wrong_exact_fact(tmp_
     )[0]
     membership_path.write_text(M.dump_memberships([wrong]), encoding="utf-8")
     assert "exact_uniprot_membership_not_found" in run("wrong-trait")
+
+
+def test_cli_replays_a_go_source_annotation_against_the_exact_uniprot_fact(tmp_path):
+    """#652: a UniProt SOURCE_ANNOTATION is dereferenced exactly like a membership."""
+
+    go_xref = {
+        "database": "GO",
+        "id": "GO:0009390",
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+        ],
+    }
+    fixture = membership_cli_fixture(
+        tmp_path,
+        trait_id="GO:0009390",
+        method="SOURCE_ANNOTATION",
+        category="FUNC_LOCALIZATION",
+        entry={"uniProtKBCrossReferences": [go_xref]},
+    )
+    membership_path = fixture["membership_path"]
+    assert isinstance(membership_path, Path)
+
+    def run(suffix: str) -> tuple[int, str]:
+        output = tmp_path / f"validation-{suffix}.tsv"
+        status = V.main(
+            [
+                str(fixture["trait_path"]),
+                "--registry",
+                str(fixture["registry_path"]),
+                "--evidence-registry",
+                str(fixture["evidence_path"]),
+                "--membership-registry",
+                str(membership_path),
+                "--out",
+                str(output),
+                "--quiet",
+            ]
+        )
+        return status, output.read_text(encoding="utf-8")
+
+    status, report = run("exact")
+    assert status == 0, report
+    other = M.extract_entry_memberships(
+        {"uniProtKBCrossReferences": [{**go_xref, "id": "GO:0005886"}]},
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=CHECKSUM,
+        uniprot_release="2026_02",
+    )
+    membership_path.write_text(M.dump_memberships(other), encoding="utf-8")
+    status, report = run("wrong-term")
+    assert status == 1
+    assert "exact_uniprot_membership_not_found" in report
+
+
+def test_cli_replay_refuses_an_installed_fact_with_non_qualifying_evidence(tmp_path):
+    """#974: the validator applies the resolver's evidence policy to durable facts."""
+
+    electronic = {
+        "database": "GO",
+        "id": "GO:0009390",
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": "IEA:InterPro"},
+        ],
+    }
+    fixture = membership_cli_fixture(
+        tmp_path,
+        trait_id="GO:0009390",
+        method="SOURCE_ANNOTATION",
+        category="FUNC_LOCALIZATION",
+        entry={"uniProtKBCrossReferences": [electronic]},
+    )
+    output = tmp_path / "validation.tsv"
+    status = V.main(
+        [
+            str(fixture["trait_path"]),
+            "--registry",
+            str(fixture["registry_path"]),
+            "--evidence-registry",
+            str(fixture["evidence_path"]),
+            "--membership-registry",
+            str(fixture["membership_path"]),
+            "--out",
+            str(output),
+            "--quiet",
+        ]
+    )
+    assert status == 1
+    assert "uniprot_fact_evidence_not_qualifying" in output.read_text(encoding="utf-8")
 
 
 def test_cli_membership_replay_rejects_forged_provider_digest(tmp_path):

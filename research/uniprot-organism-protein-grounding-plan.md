@@ -4454,6 +4454,39 @@ found.
   fully replayed; the next operation remains a separately authorized `--apply` against a
   saved and reviewed execution plan under explicitly permitted network access.
 
+### 2026-10-05 — UniProt exact-accession functional-fact lane (#652)
+
+- Sibling Mechs tie 406 proteins to 216 existing trait records here, almost all
+  whole-protein FUNCTION traits: GO localization and molecular function, Rhea
+  reactions, and ComplexPortal complexes
+  ([cross-Mech protein examples](cross-mech-protein-examples.md)). Priority 4 above
+  already names the routes ("Rhea: exact Rhea-to-UniProt or UniProt catalytic-activity
+  annotation"; "GO: direct GOA/UniProt annotation, retaining the evidence code"), but
+  only signature cross-references were captured, and the central contract admitted
+  ComplexPortal and Rhea only from their receipt-locked source-native providers.
+- `uniprot_membership_snapshot.py` now also captures `ComplexPortal` and `GO`
+  cross-references and catalytic-activity Rhea reactions from the same exact-accession
+  response. `expected_mapping_method` binds GO to `SOURCE_ANNOTATION` and every other fact
+  to `SOURCE_MEMBERSHIP`. Directional `physiologicalReactions` and GO `ND` annotations are
+  never facts. The registry fetch requests `go_id`, `xref_complexportal`, and
+  `cc_catalytic_activity`, which changes request URLs: a plan built before this change
+  no longer matches and fails closed.
+- The promoter resolves `SOURCE_ANNOTATION` through the same exact fact lookup and
+  rejects a fact recorded under the other method. The validator replays both methods
+  (previously a UniProt `SOURCE_ANNOTATION` claim would not have been replayed at all),
+  and the ComplexPortal and Rhea contracts gain a UniProt lane: `provider_kind: UNIPROT`,
+  `evidence_source: UniProtKB`, exact trait, whole protein. Their source-native lanes keep
+  every requirement and the unconditional receipt lock.
+- Review of the lane (#973-#979) added a promote-time receipt gate (a ComplexPortal,
+  Rhea, or GO fact is installed only from a verified network UniProt fetch receipt that
+  binds the exact membership bytes) and a default-deny evidence policy shared by the
+  resolver and the validator: GO needs an experimental or curator code, and a catalytic
+  activity needs experimental, curator-inference, or traceable-author evidence, which the
+  stored Rhea fact now keeps. Isoform-scoped catalytic activities are skipped, a
+  malformed fact blocks only its accession, and promote checks each installed fact.
+- No trait or durable grounding write occurred in this change. Inclusion of the sibling
+  candidates is a separate, reviewed promotion batch.
+
 ### 2026-09-26 — sharded durable evidence and bindings registries (#801)
 
 - The durable `occurrence_evidence` and `qualified_record_bindings` registries move from

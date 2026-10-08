@@ -2817,6 +2817,226 @@ def test_resolve_qualifies_only_an_exact_release_pinned_uniprot_membership(local
     assert row["family_classifications"] == candidate["family_classifications"]
 
 
+_GO_FACT = {
+    "database": "GO",
+    "id": "GO:0009390",
+    "properties": [
+        {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+        {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+    ],
+}
+_CATALYTIC_ACTIVITY = {
+    "commentType": "CATALYTIC ACTIVITY",
+    "reaction": {
+        "reactionCrossReferences": [{"database": "Rhea", "id": "RHEA:37871"}],
+        "evidences": [{"evidenceCode": "ECO:0000269", "source": "PubMed", "id": "20662781"}],
+    },
+}
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method", "entry"),
+    [
+        ("GO:0009390", "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [_GO_FACT]}),
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_MEMBERSHIP",
+            {"uniProtKBCrossReferences": [{"database": "ComplexPortal", "id": "CPX-320"}]},
+        ),
+        ("RHEA:37871", "SOURCE_MEMBERSHIP", {"comments": [_CATALYTIC_ACTIVITY]}),
+    ],
+)
+def test_functional_uniprot_facts_qualify_only_under_their_own_method(
+    local_sources, trait_id, method, entry
+):
+    """#652: a GO annotation is SOURCE_ANNOTATION; a CPX/Rhea fact is SOURCE_MEMBERSHIP."""
+
+    candidate, _ = _prepare_membership_candidate(local_sources)
+    local_sources["record"].write_text(_record(trait_id, axis="FUNCTION"), encoding="utf-8")
+    facts = membership_snapshot.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=local_sources["candidate"]["sequence_sha256"],
+        uniprot_release="2026_02",
+    )
+    assert [fact["source_trait_id"] for fact in facts] == [trait_id]
+    _write_memberships(local_sources["membership"], facts)
+    good = {
+        **candidate,
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "source_namespace": trait_id.split(":", 1)[0],
+        "mapping_method": method,
+    }
+    good["candidate_id"] = ground.derive_candidate_id(good)
+    _jsonl(local_sources["queue"], [good])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["trait_occurrence"]["mapping_method"] == method
+    assert row["trait_occurrence"]["evidence_source"] == "UniProtKB"
+    assert row["grounding_evidence"]["provider_kind"] == "UNIPROT"
+
+    wrong = {
+        **good,
+        "mapping_method": (
+            "SOURCE_MEMBERSHIP" if method == "SOURCE_ANNOTATION" else "SOURCE_ANNOTATION"
+        ),
+    }
+    wrong["candidate_id"] = ground.derive_candidate_id(wrong)
+    _jsonl(local_sources["queue"], [wrong])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "mismatch:uniprot_fact_mapping_method" in row["reasons"]
+
+
+def _functional_candidate(local_sources, trait_id, method, entry):
+    candidate, _ = _prepare_membership_candidate(local_sources)
+    local_sources["record"].write_text(_record(trait_id, axis="FUNCTION"), encoding="utf-8")
+    facts = membership_snapshot.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=local_sources["candidate"]["sequence_sha256"],
+        uniprot_release="2026_02",
+    )
+    _write_memberships(local_sources["membership"], facts)
+    row = {
+        **candidate,
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "source_namespace": trait_id.split(":", 1)[0],
+        "mapping_method": method,
+    }
+    # No producer ID: the resolver derives it from the complete resolved identity, which
+    # is what the promoter's scientific-identity check requires.
+    row.pop("candidate_id", None)
+    _jsonl(local_sources["queue"], [row])
+    return facts
+
+
+@pytest.mark.parametrize(
+    ("entry", "reason"),
+    [
+        (
+            {
+                "uniProtKBCrossReferences": [
+                    {
+                        **_GO_FACT,
+                        "properties": [
+                            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+                            {"key": "GoEvidenceType", "value": "IEA:InterPro"},
+                        ],
+                    }
+                ]
+            },
+            "unqualifiable:uniprot_evidence:go_evidence_IEA",
+        ),
+    ],
+)
+def test_exact_but_electronic_go_facts_stay_candidates(local_sources, entry, reason):
+    """#974: the plan keeps homology-only and EC-only inference as candidate evidence."""
+
+    _functional_candidate(local_sources, "GO:0009390", "SOURCE_ANNOTATION", entry)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert reason in row["reasons"]
+
+
+def test_automatic_only_catalytic_activity_stays_a_candidate(local_sources):
+    automatic = {
+        **_CATALYTIC_ACTIVITY,
+        "reaction": {**_CATALYTIC_ACTIVITY["reaction"], "evidences": [{"evidenceCode": "ECO:0000256"}]},
+    }
+    _functional_candidate(local_sources, "RHEA:37871", "SOURCE_MEMBERSHIP", {"comments": [automatic]})
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256" in row["reasons"]
+
+
+def _go_promotion(local_sources, monkeypatch):
+    facts = _functional_candidate(
+        local_sources, "GO:0009390", "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [_GO_FACT]}
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("go-approved.tsv")
+    _approve(local_sources["review"], approved)
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(text, encoding=encoding),
+    )
+    return facts, approved
+
+
+def _fake_receipt(local_sources, monkeypatch, *, mode="UNIPROT_REST", membership_bytes=None):
+    import fetch_uniprot_registry
+
+    def verify(*, receipt_path, request_plan_path):
+        return SimpleNamespace(
+            request_plan={"acquisition_mode": mode},
+            membership_registry_jsonl_bytes=(
+                local_sources["membership"].read_bytes()
+                if membership_bytes is None
+                else membership_bytes
+            ),
+        )
+
+    monkeypatch.setattr(fetch_uniprot_registry, "verify_fetch_receipt", verify)
+    plan = local_sources["membership"].with_name("plan.json")
+    receipt = local_sources["membership"].with_name("receipt.json")
+    return ["--fetch-request-plan", str(plan), "--fetch-receipt", str(receipt)]
+
+
+def test_go_promotion_needs_a_receipt_bound_membership_snapshot(local_sources, monkeypatch):
+    """#973: the UniProt lane is admitted only from a verified fetch receipt."""
+
+    _, approved = _go_promotion(local_sources, monkeypatch)
+    with pytest.raises(ground.GroundingError, match="need --fetch-request-plan"):
+        ground.promote(ground._parser().parse_args(_promote_args(local_sources, approved, apply=True)))
+    assert not local_sources["durable_membership"].exists()
+
+    offline = _fake_receipt(local_sources, monkeypatch, mode="OFFLINE_FIXTURE")
+    with pytest.raises(ground.GroundingError, match="network UNIPROT_REST"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + offline)
+        )
+    forged = _fake_receipt(local_sources, monkeypatch, membership_bytes=b"{}\n")
+    with pytest.raises(ground.GroundingError, match="not the fetch output"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + forged)
+        )
+    assert not local_sources["durable_membership"].exists()
+
+
+def test_go_promotion_installs_the_exact_annotation_fact(local_sources, monkeypatch):
+    """#976: SOURCE_ANNOTATION promotion end to end, with the installed-fact self-check."""
+
+    facts, approved = _go_promotion(local_sources, monkeypatch)
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    args = _promote_args(local_sources, approved, apply=True) + receipt
+    assert ground.main(args) == 0
+    assert _jsonl_rows(local_sources["durable_membership"]) == facts
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    (occurrence,) = record["canonical_examples"][0]["trait_occurrences"]
+    assert occurrence["mapping_method"] == "SOURCE_ANNOTATION"
+    assert occurrence["evidence_source"] == "UniProtKB"
+
+
+def test_promote_refuses_a_fact_missing_from_what_it_would_install(local_sources, monkeypatch):
+    _, approved = _go_promotion(local_sources, monkeypatch)
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    monkeypatch.setattr(ground, "_selected_membership_rows", lambda *args, **kwargs: [])
+    with pytest.raises(ground.GroundingError, match="no exact UniProt fact"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + receipt)
+        )
+    assert not local_sources["durable_membership"].exists()
+
+
 def test_exact_membership_release_supersedes_stale_discovery_release(local_sources):
     candidate, _ = _prepare_membership_candidate(local_sources)
     reference = json.loads(local_sources["source_registry"].read_text(encoding="utf-8"))

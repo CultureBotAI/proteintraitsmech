@@ -219,7 +219,11 @@ def test_request_uses_exact_accessions_required_fields_and_isoforms():
     assert query["query"] == ["(accession:P12345 OR accession:P21802-2)"]
     assert query["includeIsoform"] == ["true"]
     assert tuple(query["fields"][0].split(",")) == registry.RETURN_FIELDS
-    assert set(registry.XREF_FIELDS).issubset(registry.RETURN_FIELDS)
+    assert set(registry.FACT_FIELDS).issubset(registry.RETURN_FIELDS)
+    # GO and ComplexPortal cross-references and catalytic-activity Rhea reactions (#652).
+    assert {"go_id", "xref_complexportal", "cc_catalytic_activity"} <= set(
+        registry.RETURN_FIELDS
+    )
     assert query["format"] == ["json"]
 
 
@@ -1848,3 +1852,37 @@ def test_current_selector_output_completes_offline_registry_fetch(
     }
     assert _blocked_rows(blocked) == []
     assert receipt.is_file()
+
+
+def test_a_malformed_fact_blocks_only_its_accession(tmp_path, monkeypatch):
+    """#978: one bad UniProt fact goes to the blocked TSV instead of aborting the batch."""
+
+    queue = tmp_path / "candidates.jsonl"
+    responses = tmp_path / "responses.json"
+    out = tmp_path / "registry.jsonl"
+    blocked = tmp_path / "blocked.tsv"
+    _jsonl(
+        queue,
+        [_candidate("UniProtKB:P12345", "ACDE", number=1), _candidate("UniProtKB:P67890", "MNPQ", number=2)],
+    )
+    good = _entry("P12345", "ACDE")
+    bad = _entry("P67890", "MNPQ")
+    bad["uniProtKBCrossReferences"] = [{"database": "GO", "id": "GO:123"}]
+    _responses(
+        responses,
+        [{"requested": ["P12345", "P67890"], "results": [good, bad]}],
+        release="2026_02",
+    )
+    monkeypatch.setattr(
+        registry.urllib.request,
+        "urlopen",
+        lambda *args, **kwargs: pytest.fail("offline mode attempted network access"),
+    )
+    prepared = _prepare_apply(queue, responses, out, blocked)
+    assert registry.main(prepared["args"]) == 0
+    assert [row["protein_id"] for row in _registry_rows(out)] == ["UniProtKB:P12345"]
+    (row,) = _blocked_rows(blocked)
+    assert row["protein_id"] == "UniProtKB:P67890"
+    assert row["reason"] == "FACT_SNAPSHOT_FAILED"
+    assert "GO cross-reference has a malformed ID" in row["detail"]
+    registry.verify_fetch_receipt(receipt_path=prepared["receipt"], request_plan_path=prepared["plan"])

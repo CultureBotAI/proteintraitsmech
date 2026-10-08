@@ -139,6 +139,15 @@ _CONTENT_GATE_CANDIDATE_FIELDS = (
     "intervals",
 )
 
+# Exact UniProt exact-accession facts (`uniprot_membership_snapshot`): a cross-reference
+# or catalytic-activity reaction is membership, a GO cross-reference is an annotation.
+# Both are replayed from the same content-addressed snapshot (#652).
+_UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
+# The validator keeps ComplexPortal and Rhea's source-native lanes receipt-locked. The
+# UniProt lane opened for them (and for GO) is admitted only from a verified UniProt
+# fetch receipt that binds the exact staging membership bytes (#973).
+_UNIPROT_RECEIPT_REQUIRED_NAMESPACES = frozenset({"ComplexPortal", "RHEA", "GO"})
+
 _MEMBERSHIP_RESOLUTION_REASONS = {
     "full release-pinned sequence and checksum require resolution",
     "exact membership must be replayed from a same-response UniProt xref snapshot",
@@ -1702,7 +1711,11 @@ def _resolve_occurrence(
         if evidence_source and evidence_source.lower() != "interpro":
             reasons.append("mismatch:evidence_source")
         evidence_source = "InterPro"
-    elif mapping_method == "SOURCE_MEMBERSHIP":
+    elif mapping_method in _UNIPROT_FACT_METHODS:
+        from uniprot_membership_snapshot import expected_mapping_method
+
+        if mapping_method != expected_mapping_method(str(source_trait_id or "")):
+            reasons.append("mismatch:uniprot_fact_mapping_method")
         if scope != "WHOLE_PROTEIN":
             reasons.append("invalid:membership_requires_whole_protein")
         if not _whole_protein_allowed(record):
@@ -1733,6 +1746,12 @@ def _resolve_occurrence(
             if membership is None:
                 reasons.append("missing:exact_uniprot_membership")
             else:
+                from uniprot_membership_snapshot import fact_evidence_failure
+
+                evidence_failure = fact_evidence_failure(membership)
+                if evidence_failure:
+                    # Captured, exact, and still only candidate evidence (#974).
+                    reasons.append(f"unqualifiable:uniprot_evidence:{evidence_failure}")
                 provider_release = membership["uniprot_release"]
                 # The producer's source_release may describe the earlier discovery
                 # search.  The exact-accession snapshot is self-contained and bound to
@@ -1985,7 +2004,9 @@ def _resolve_occurrence(
     if not source_release:
         reasons.append("missing:source_release")
     evidence_tier = _clean_text(candidate.get("evidence_tier"))
-    if mapping_method in {"INTERPRO_MATCH", "SOURCE_MEMBERSHIP"} and not evidence_tier:
+    if (mapping_method == "INTERPRO_MATCH" or mapping_method in _UNIPROT_FACT_METHODS) and (
+        not evidence_tier
+    ):
         evidence_tier = "A"
     if evidence_tier not in {"A", "B"}:
         reasons.append(f"unqualifiable:evidence_tier:{evidence_tier or 'NONE'}")
@@ -2018,7 +2039,7 @@ def _resolve_occurrence(
     else:
         if coordinate_frame is not None:
             reasons.append("invalid:whole_protein_coordinate_frame")
-        if mapping_method == "SOURCE_MEMBERSHIP" and intervals:
+        if mapping_method in _UNIPROT_FACT_METHODS and intervals:
             reasons.append("invalid:membership_coordinates")
         if positions:
             reasons.append("invalid:whole_protein_residue_positions")
@@ -2086,7 +2107,7 @@ def _resolve_occurrence(
     ):
         if candidate.get(key) is not None:
             occurrence[key] = candidate[key]
-    if mapping_method == "SOURCE_MEMBERSHIP":
+    if mapping_method in _UNIPROT_FACT_METHODS:
         source_kind = "uniprot_membership"
     elif _clean_text(candidate.get("interpro_location_id")):
         source_kind = "interpro_grouped_location"
@@ -2101,10 +2122,10 @@ def _resolve_occurrence(
         validate_grounding_evidence,
     )
 
-    provider_kind = "UNIPROT" if mapping_method == "SOURCE_MEMBERSHIP" else "INTERPRO"
+    provider_kind = "UNIPROT" if mapping_method in _UNIPROT_FACT_METHODS else "INTERPRO"
     provider_source = (
         _display_path(context.durable_membership_path)
-        if mapping_method == "SOURCE_MEMBERSHIP"
+        if mapping_method in _UNIPROT_FACT_METHODS
         else str(source_evidence.get("source") or "InterPro")
     )
     evidence_occurrence = dict(occurrence)
@@ -2156,7 +2177,7 @@ def _resolve_candidate(
             for reason in producer_reasons:
                 normalized_reason = reason.strip()
                 if (
-                    candidate.get("mapping_method") == "SOURCE_MEMBERSHIP"
+                    candidate.get("mapping_method") in _UNIPROT_FACT_METHODS
                     and normalized_reason in _MEMBERSHIP_RESOLUTION_REASONS
                 ):
                     # These two discovery-state reasons are discharged only by the
@@ -2833,7 +2854,7 @@ def _verify_provider_evidence(
         reasons.append("missing:protein_registry_evidence")
     if row.get("mapping_method") == "INTERPRO_MATCH" and "interpro_frame" not in kinds:
         reasons.append("missing:interpro_evidence")
-    if row.get("mapping_method") == "SOURCE_MEMBERSHIP" and "uniprot_membership" not in kinds:
+    if row.get("mapping_method") in _UNIPROT_FACT_METHODS and "uniprot_membership" not in kinds:
         reasons.append("missing:uniprot_membership_evidence")
     if row.get("mapping_method") == "SIFTS_RESIDUE_MAPPING" and "sifts_mapping" not in kinds:
         reasons.append("missing:sifts_mapping_evidence")
@@ -3513,6 +3534,77 @@ def _selected_registry_rows(
     return references, evidence_rows
 
 
+def _verify_uniprot_fact_receipt(args: argparse.Namespace, selected: list[dict[str, Any]]) -> None:
+    """Admit UniProt-lane ComplexPortal/Rhea/GO facts only from a verified fetch receipt."""
+
+    needing = sorted(
+        str(row["candidate_id"])
+        for row in selected
+        if row.get("mapping_method") in _UNIPROT_FACT_METHODS
+        and str(row.get("source_trait_id") or "").split(":", 1)[0]
+        in _UNIPROT_RECEIPT_REQUIRED_NAMESPACES
+    )
+    if not needing:
+        return
+    if args.fetch_request_plan is None or args.fetch_receipt is None:
+        raise GroundingError(
+            f"{len(needing)} UniProt-lane ComplexPortal/Rhea/GO fact(s) need "
+            "--fetch-request-plan and --fetch-receipt: the lane is admitted only from a "
+            "verified UniProt fetch receipt"
+        )
+    from fetch_uniprot_registry import RegistryBuildError, verify_fetch_receipt
+
+    try:
+        verified = verify_fetch_receipt(
+            receipt_path=args.fetch_receipt.resolve(),
+            request_plan_path=args.fetch_request_plan.resolve(),
+        )
+    except (RegistryBuildError, OSError) as exc:
+        raise GroundingError(f"UniProt fetch receipt does not verify: {exc}") from exc
+    mode = verified.request_plan.get("acquisition_mode")
+    if mode != "UNIPROT_REST" and not args.allow_offline_uniprot_fixture:
+        raise GroundingError(
+            f"UniProt-lane facts need a network UNIPROT_REST fetch receipt, not {mode!r}"
+        )
+    if args.membership_registry.resolve().read_bytes() != verified.membership_registry_jsonl_bytes:
+        raise GroundingError(
+            "staging membership registry is not the fetch output its receipt binds"
+        )
+
+
+def _require_installed_uniprot_facts(
+    selected: list[dict[str, Any]],
+    references: dict[str, dict[str, Any]],
+    merged_memberships: list[dict[str, Any]],
+) -> None:
+    """Every UniProt-fact occurrence must find its exact fact in what is installed (#976)."""
+
+    from uniprot_membership_snapshot import MembershipSnapshotError, find_exact_membership
+
+    for row in selected:
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
+            continue
+        reference = references.get(str(row["protein_id"]))
+        try:
+            fact = (
+                find_exact_membership(
+                    merged_memberships,
+                    protein_id=str(row["protein_id"]),
+                    source_trait_id=str(row.get("source_trait_id") or ""),
+                    uniprot_release=reference["uniprot_release"],
+                    sequence_sha256=reference["sequence_sha256"],
+                )
+                if reference
+                else None
+            )
+        except MembershipSnapshotError as exc:
+            raise GroundingError(f"{row['candidate_id']}: ambiguous installed fact: {exc}") from exc
+        if fact is None:
+            raise GroundingError(
+                f"{row['candidate_id']}: no exact UniProt fact in the merged membership registry"
+            )
+
+
 def _selected_membership_rows(
     selected: list[dict[str, Any]],
     references: dict[str, dict[str, Any]],
@@ -3530,7 +3622,7 @@ def _selected_membership_rows(
 
     selected_memberships: list[dict[str, Any]] = []
     for row in selected:
-        if row.get("mapping_method") != "SOURCE_MEMBERSHIP":
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
             continue
         candidate_id = str(row["candidate_id"])
         protein_id = str(row["protein_id"])
@@ -3557,7 +3649,7 @@ def _selected_membership_rows(
         expected_entry_sha = membership_entry_sha256(membership)
         if not isinstance(grounding_evidence, dict) or any(
             (
-                grounding_evidence.get("mapping_method") != "SOURCE_MEMBERSHIP",
+                grounding_evidence.get("mapping_method") != row.get("mapping_method"),
                 grounding_evidence.get("scope") != "WHOLE_PROTEIN",
                 grounding_evidence.get("evidence_source") != "UniProtKB",
                 grounding_evidence.get("source_release") != membership["uniprot_release"],
@@ -3608,7 +3700,7 @@ def _same_protein_reference_except_release(
 def _requires_same_release_protein_reference(row: dict[str, Any]) -> bool:
     """Whether promotion must keep the selected ProteinReference release byte-exact."""
 
-    return row.get("mapping_method") == "SOURCE_MEMBERSHIP"
+    return row.get("mapping_method") in _UNIPROT_FACT_METHODS
 
 
 def _merge_protein_reference_rows(
@@ -3658,7 +3750,7 @@ def _selected_rows_for_merged_protein_references(
             continue
         if _requires_same_release_protein_reference(row):
             raise GroundingError(
-                f"{row['candidate_id']}: SOURCE_MEMBERSHIP ProteinReference changed "
+                f"{row['candidate_id']}: {row.get('mapping_method')} ProteinReference changed "
                 "uniprot_release"
             )
         if not _same_protein_reference_except_release(durable_reference, selected_reference):
@@ -4388,12 +4480,15 @@ def promote(args: argparse.Namespace) -> int:
     selected_references, selected_evidence = _selected_registry_rows(
         selected, staging_registry, staging_evidence
     )
-    membership_selected = any(row.get("mapping_method") == "SOURCE_MEMBERSHIP" for row in selected)
+    membership_selected = any(
+        row.get("mapping_method") in _UNIPROT_FACT_METHODS for row in selected
+    )
     merged_memberships: list[dict[str, Any]] = []
     durable_membership_digest: str | None = None
     membership_text = ""
     membership_changed = False
     if membership_selected:
+        _verify_uniprot_fact_receipt(args, selected)
         staging_memberships = _load_membership_rows(
             args.membership_registry.resolve(), required=True
         )
@@ -4417,6 +4512,7 @@ def promote(args: argparse.Namespace) -> int:
             membership_text = dump_memberships(merged_memberships)
         except MembershipSnapshotError as exc:
             raise GroundingError(f"durable membership merge conflict: {exc}") from exc
+        _require_installed_uniprot_facts(selected, selected_references, merged_memberships)
         membership_changed = durable_membership_digest != _text_digest(membership_text)
     registry = _merge_protein_reference_rows(existing_registry, selected_references, selected)
     effective_selected = _selected_rows_for_merged_protein_references(
@@ -4776,6 +4872,21 @@ def _parser() -> argparse.ArgumentParser:
         "--sifts-registry",
         type=Path,
         help="reviewed ECOD/PDBe SIFTS mapping provider (default: beside --resolved)",
+    )
+    promoter.add_argument(
+        "--fetch-request-plan",
+        type=Path,
+        help="the batch's UniProt fetch request plan (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--fetch-receipt",
+        type=Path,
+        help="the batch's UniProt fetch receipt (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--allow-offline-uniprot-fixture",
+        action="store_true",
+        help="tests only: accept an OFFLINE_FIXTURE fetch receipt for UniProt-lane facts",
     )
     promoter.add_argument(
         "--durable-protein-registry",
