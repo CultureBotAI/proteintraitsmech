@@ -87,6 +87,35 @@ identities. Author-described M133 contact is retained in the graph with an
 explicit note that it is outside the pilot's 4.5 angstrom shell. Similarly, a
 9QZQ E257 side-chain carbon contact is not treated as a carboxylate ligand.
 
+## Residue-to-function development cases
+
+The second development pass adds two **SUPPORTED / PROPOSED** explanations.
+`SUPPORTED` assesses the bounded claim; it does not mean expert review or a
+complete atomistic mechanism. Sequence-bound substitutions, assay context,
+source excerpts and unresolved questions remain attached.
+
+| Case | Graph | Evidence boundary |
+| --- | --- | --- |
+| NTCP R252H | Substitution → surface-depleted state → reduced taurocholate uptake | Localization and uptake were measured; the second edge is the authors' mediation interpretation, not an independently isolated effect. [Vaz et al., Figure 2](https://doi.org/10.1002/hep.27240). |
+| NTCP S267F | Substitution → decreased taurocholate uptake; substitution → increased estrone-3-sulfate uptake | Substrate-specific assay branches, with surface-expression controls; no invented binding/gating intermediate. [Ruggiero et al., Figures 1–4 and Table 1](https://doi.org/10.1074/jbc.RA120.014889). |
+
+The R252H surface assay's negative result is not zero residual transport. S267F's
+twofold estrone-sulfate result belongs to the initial uptake assay, not the
+surface-normalized comparison or kinetic efficiency. Neither mechanism explains
+SLC10A4 or SLC10A7 by analogy. Their previous challenged/unresolved explanations
+remain unchanged. These cases advance the explanatory goal but do not finish it.
+
+The molecular-causal-graphs skill informed the node/edge inventory and required
+unsupported intermediates to remain questions. The existing external bundle
+retains protein-instance scope; no broad-family trait graph or GO annotation was
+promoted. New edges distinguish experimental results from author interpretation
+in their descriptions. Evidence type at edge level is currently descriptive,
+not a separate schema enum.
+
+Next research target: assess the [Lu and Huang simulation study](https://doi.org/10.1016/j.bpj.2024.03.033)
+for candidate S267F molecular steps. Its simulations have not been curated or
+replayed here; they must remain distinct from the measured uptake evidence.
+
 ## Reproduce
 
 Install the project's development and molecular extras:
@@ -258,7 +287,6 @@ graph dialogs ([#1006](https://github.com/CultureBotAI/proteintraitsmech/issues/
 An additional reproduced gap allowed indirect explanation self-justification
 ([#1008](https://github.com/CultureBotAI/proteintraitsmech/issues/1008)); the validator
 now rejects evidence-dependency cycles without banning biological feedback loops.
-These findings remain open until their fixes are integrated.
 
 Separate technical-agent review also reproduced and prompted fixes for
 many-to-one or reversed correspondences

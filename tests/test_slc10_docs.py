@@ -20,7 +20,9 @@ def test_committed_pilot_is_closed_schema_and_semantically_valid(pilot):
     assert validate_bundle(pilot) == []
     assert len(pilot["protein_references"]) == 7
     assert len(pilot["model_comparisons"]) == 3
-    assert len(pilot["mechanisms"]) == 5
+    assert len(pilot["mechanisms"]) == 7
+    assert len(pilot["functional_observations"]) == 16
+    assert len(pilot["explanations"]) == 5
     assert "Pfam:PF13593" in pilot["trait_refs"]
     assert "Q0GE19: PANTHER:PTHR18640, Pfam:PF13593" in pilot["scope_note"]
 
@@ -79,6 +81,60 @@ def test_export_preserves_exact_payload_and_checksum():
     assert result[manifest["file"]] == raw
     assert manifest["sha256"] == hashlib.sha256(raw).hexdigest()
     assert manifest["bytes"] == len(raw)
+
+
+def test_r252h_chain_preserves_measured_localization_and_interpreted_mediation(pilot):
+    observations = {o["assertion_id"]: o for o in pilot["functional_observations"]}
+    surface = observations["slc10-assay:ntcp-r252h-surface-depletion-2015"]
+    uptake = observations["slc10-assay:ntcp-r252h-uptake-reduction-2015"]
+    assert surface["outcome"] == "NOT_DETECTED"
+    assert uptake["outcome"] == "DETECTED" and uptake["activity"].startswith("Reduction")
+    assert surface["sequence_substitutions"] == uptake["sequence_substitutions"] == [
+        {"position": 252, "residue": "R", "substituted_residue": "H"}
+    ]
+    assert "Residual transport" in uptake["limitations"]
+    mechanism = next(m for m in pilot["mechanisms"]
+                     if m["mechanism_id"] == "slc10-mechanism:ntcp-r252h-surface-availability")
+    first, second = mechanism["graph"]["edges"]
+    assert (first["subject"], first["object"]) == ("r252h", "surface_depleted")
+    assert (second["subject"], second["object"]) == ("surface_depleted", "uptake")
+    assert first["description"].startswith("EXPERIMENTAL RESULT")
+    assert second["description"].startswith("AUTHOR INTERPRETATION")
+    assert "not independently isolated" in second["description"]
+    assert all(e["evidence"][0]["reference"] == "https://doi.org/10.1002/hep.27240"
+               for e in (first, second))
+
+
+def test_s267f_retains_substrate_specific_opposite_effects_without_invented_intermediate(pilot):
+    mechanism = next(m for m in pilot["mechanisms"]
+                     if m["mechanism_id"] == "slc10-mechanism:ntcp-s267f-substrate-selectivity")
+    assert {n["node_type"] for n in mechanism["graph"]["nodes"]} == {"RESIDUE", "MOLECULAR_FUNCTION"}
+    assert {(e["subject"], e["predicate_id"], e["object"]) for e in mechanism["graph"]["edges"]} == {
+        ("s267f", "RO:0002212", "taurocholate_uptake"),
+        ("s267f", "RO:0002213", "estrone_sulfate_uptake"),
+    }
+    observations = {o["assertion_id"]: o for o in pilot["functional_observations"]}
+    estrone = observations["slc10-assay:ntcp-s267f-estrone-sulfate-increase-2021"]
+    assert "before surface-expression correction" in estrone["conditions"]
+    assert "Earlier studies" in estrone["limitations"]
+    for ref in mechanism["assertion_refs"]:
+        if ref in observations:
+            assert observations[ref]["sequence_substitutions"] == [
+                {"position": 267, "residue": "S", "substituted_residue": "F"}
+            ]
+
+
+@pytest.mark.parametrize("case", ["ntcp-r252h-surface-availability", "ntcp-s267f-substrate-selectivity"])
+def test_supported_residue_explanations_remain_proposed_and_assay_backed(pilot, case):
+    explanation = next(e for e in pilot["explanations"] if e["assertion_id"] == "slc10-explanation:" + case)
+    assert explanation["assessment"] == "SUPPORTED"
+    assert explanation["review_status"] == "PROPOSED"
+    assert explanation["evidence_origin"] == "CURATOR_INTERPRETATION"
+    assert len(explanation["supporting_assertions"]) == 2
+    observations = {o["assertion_id"]: o for o in pilot["functional_observations"]}
+    assert all(observations[ref]["evidence_origin"] == "EXPERIMENTAL_ASSAY"
+               for ref in explanation["supporting_assertions"])
+    assert explanation["unresolved_questions"]
 
 
 def test_unresolved_case_preserves_assay_and_correspondence_gaps(pilot):
