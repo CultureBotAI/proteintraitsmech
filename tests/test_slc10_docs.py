@@ -93,8 +93,12 @@ def test_r252h_chain_preserves_measured_localization_and_interpreted_mediation(p
         {"position": 252, "residue": "R", "substituted_residue": "H"}
     ]
     assert "Residual transport" in uptake["limitations"]
+    assert "C-terminal FLAG tag" in surface["construct"]
+    assert "Figure 2A does not specify the tag" in uptake["construct"]
+    assert "Do not assume" in uptake["limitations"]
     mechanism = next(m for m in pilot["mechanisms"]
                      if m["mechanism_id"] == "slc10-mechanism:ntcp-r252h-surface-availability")
+    assert "construct identity" in mechanism["limitations"]
     first, second = mechanism["graph"]["edges"]
     assert (first["subject"], first["object"]) == ("r252h", "surface_depleted")
     assert (second["subject"], second["object"]) == ("surface_depleted", "uptake")

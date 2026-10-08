@@ -99,7 +99,9 @@ source excerpts and unresolved questions remain attached.
 | NTCP R252H | Substitution → surface-depleted state → reduced taurocholate uptake | Localization and uptake were measured; the second edge is the authors' mediation interpretation, not an independently isolated effect. [Vaz et al., Figure 2](https://doi.org/10.1002/hep.27240). |
 | NTCP S267F | Substitution → decreased taurocholate uptake; substitution → increased estrone-3-sulfate uptake | Substrate-specific assay branches, with surface-expression controls; no invented binding/gating intermediate. [Ruggiero et al., Figures 1–4 and Table 1](https://doi.org/10.1074/jbc.RA120.014889). |
 
-The R252H surface assay's negative result is not zero residual transport. S267F's
+The R252H surface assay's negative result is not zero residual transport. Its
+FLAG-tagged localization construct is not assumed identical to the Figure 2A
+uptake construct, whose tag is not specified in that panel. S267F's
 twofold estrone-sulfate result belongs to the initial uptake assay, not the
 surface-normalized comparison or kinetic efficiency. Neither mechanism explains
 SLC10A4 or SLC10A7 by analogy. Their previous challenged/unresolved explanations
