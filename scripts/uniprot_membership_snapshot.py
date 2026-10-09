@@ -249,35 +249,53 @@ def _entry_ec_evidence(entry: Mapping[str, Any]) -> list[dict[str, Any]]:
 
     found: dict[str, set[str]] = {}
 
-    def add(value: object, evidences: object) -> None:
-        if not isinstance(value, str) or not value.strip():
+    def objects(value: object, where: str) -> list[Mapping[str, Any]]:
+        # A malformed container must not hide a weak EC (#1055): fail the accession.
+        if value is None:
+            return []
+        if not isinstance(value, list) or any(not isinstance(item, Mapping) for item in value):
+            raise MembershipSnapshotError(f"{where} is not a list of objects")
+        return value
+
+    def add(value: object, evidences: object, where: str) -> None:
+        if value is None:
             return
+        if not isinstance(value, str) or not value.strip():
+            raise MembershipSnapshotError(f"{where} has a malformed EC number")
         codes = found.setdefault(value.strip(), set())
-        for item in evidences if isinstance(evidences, list) else []:
-            if isinstance(item, Mapping) and isinstance(item.get("evidenceCode"), str):
-                codes.add(item["evidenceCode"])
+        for item in objects(evidences, f"{where} evidences"):
+            code = item.get("evidenceCode")
+            if not isinstance(code, str):
+                raise MembershipSnapshotError(f"{where} has an evidence without evidenceCode")
+            codes.add(code)
 
     description = entry.get("proteinDescription")
+    if description is not None and not isinstance(description, Mapping):
+        raise MembershipSnapshotError("proteinDescription is not an object")
     blocks: list[Mapping[str, Any]] = []
     if isinstance(description, Mapping):
         blocks.append(description)
         for key in ("includes", "contains"):
-            blocks += [b for b in description.get(key) or [] if isinstance(b, Mapping)]
+            blocks += objects(description.get(key), f"proteinDescription.{key}")
     for block in blocks:
-        names = [block.get("recommendedName")]
-        names += list(block.get("alternativeNames") or [])
-        names += list(block.get("submissionNames") or [])
+        recommended = block.get("recommendedName")
+        if recommended is not None and not isinstance(recommended, Mapping):
+            raise MembershipSnapshotError("recommendedName is not an object")
+        names = [recommended] if recommended is not None else []
+        names += objects(block.get("alternativeNames"), "alternativeNames")
+        names += objects(block.get("submissionNames"), "submissionNames")
         for name in names:
-            if not isinstance(name, Mapping):
-                continue
-            for ec in name.get("ecNumbers") or []:
-                if isinstance(ec, Mapping):
-                    add(ec.get("value"), ec.get("evidences"))
-    for comment in entry.get("comments") or []:
-        if isinstance(comment, Mapping) and comment.get("commentType") == "CATALYTIC ACTIVITY":
-            reaction = comment.get("reaction")
-            if isinstance(reaction, Mapping):
-                add(reaction.get("ecNumber"), reaction.get("evidences"))
+            for ec in objects(name.get("ecNumbers"), "ecNumbers"):
+                add(ec.get("value"), ec.get("evidences"), "ecNumbers")
+    for comment in objects(entry.get("comments"), "comments"):
+        if comment.get("commentType") != "CATALYTIC ACTIVITY":
+            continue
+        reaction = comment.get("reaction")
+        if reaction is None:
+            continue
+        if not isinstance(reaction, Mapping):
+            raise MembershipSnapshotError("catalytic-activity reaction is not an object")
+        add(reaction.get("ecNumber"), reaction.get("evidences"), "catalytic-activity reaction")
     return [
         {"ec_number": ec, "evidence_codes": sorted(codes)} for ec, codes in sorted(found.items())
     ]
@@ -534,7 +552,8 @@ def extract_entry_memberships(
     if _RELEASE.fullmatch(uniprot_release) is None:
         raise MembershipSnapshotError("invalid uniprot_release")
     entry_type = entry.get("entryType")
-    ec_evidence = _entry_ec_evidence(entry)
+    # Read only for an entry that has an EC-derived GO fact to stamp (#1048, #1055).
+    ec_evidence: list[list[dict[str, Any]]] = []
     raw_cross_references = entry.get("uniProtKBCrossReferences", [])
     if raw_cross_references is None:
         raw_cross_references = []
@@ -572,7 +591,9 @@ def extract_entry_memberships(
             row["uniprot_entry_type"] = entry_type
             if database == "GO":
                 # The EC assignment an EC-derived GO term rests on, for replay (#1048).
-                row["uniprot_ec_evidence"] = ec_evidence
+                if not ec_evidence:
+                    ec_evidence.append(_entry_ec_evidence(entry))
+                row["uniprot_ec_evidence"] = ec_evidence[0]
         row["membership_id"] = compute_membership_id(row)
         errors = _validate_membership(row)
         if errors:

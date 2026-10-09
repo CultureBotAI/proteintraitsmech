@@ -3358,6 +3358,23 @@ def test_go_true_path_prefers_stronger_evidence_over_a_lower_go_id(local_sources
     assert row["inheritance_path"] == ["GO:0009391", "GO:0009389", "GO:0009388"]
 
 
+def test_go_true_path_prefers_stronger_evidence_over_a_shorter_path(local_sources):
+    """#1050: a curator-backed longer path beats an EC-rule shorter one."""
+
+    _go_true_path_candidate(
+        local_sources,
+        evidence="IEA:UniProtKB-EC",
+        fact_term="GO:0009389",
+        entry_type="UniProtKB reviewed (Swiss-Prot)",
+        ec_codes=[],
+        extra_facts=[("GO:0009391", "TAS:Reactome")],
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["inheritance_path"] == ["GO:0009391", "GO:0009389", "GO:0009388"]
+
+
 def test_inherited_go_row_keeps_its_staged_candidate_id_through_promotion(
     local_sources, monkeypatch
 ):

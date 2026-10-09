@@ -631,13 +631,27 @@ def test_entry_ec_evidence_unions_names_and_catalytic_activities():
     ]
 
 
-def test_evidence_rank_prefers_direct_experimental_evidence():
-    ranks = {
-        evidence: membership.fact_evidence_rank(_go_row(evidence))
-        for evidence in ("IDA:EcoCyc", "EXP:UniProtKB", "IMP:CAFA", "TAS:Reactome", "IEA:UniProtKB-EC")
-    }
-    assert ranks["IDA:EcoCyc"] == ranks["EXP:UniProtKB"] < ranks["IMP:CAFA"]
-    assert ranks["IMP:CAFA"] < ranks["TAS:Reactome"] < ranks["IEA:UniProtKB-EC"]
+@pytest.mark.parametrize(
+    ("code", "rank"),
+    [
+        *[(code, 0) for code in ("EXP", "IDA", "IPI", "HTP", "HDA")],
+        *[(code, 1) for code in ("IMP", "IGI", "IEP", "HMP", "HGI", "HEP")],
+        *[(code, 2) for code in ("IC", "TAS")],
+        ("IEA", 3),
+    ],
+)
+def test_evidence_rank_covers_every_qualifying_code(code, rank):
+    """#1050: direct experimental, then indirect, then curator, then the EC rule."""
+
+    assert membership.fact_evidence_rank(_go_row(f"{code}:Source")) == rank
+    if code != "IEA":
+        assert code in membership.GO_QUALIFYING_EVIDENCE
+
+
+def test_every_qualifying_go_code_is_ranked():
+    ranked = {code for code in membership.GO_QUALIFYING_EVIDENCE
+              if membership.fact_evidence_rank(_go_row(f"{code}:Source")) < 3}
+    assert ranked == set(membership.GO_QUALIFYING_EVIDENCE)
 
 
 @pytest.mark.parametrize(
@@ -749,3 +763,52 @@ def test_ec_evidence_is_recorded_only_on_a_stamped_ec_derived_go_fact():
     # The EC record is part of the content address.
     stripped = {k: v for k, v in fact.items() if k != "uniprot_ec_evidence"}
     assert membership.compute_membership_id(stripped) != fact["membership_id"]
+
+
+def test_entry_ec_evidence_reads_submission_names_null_lists_and_isoform_activities():
+    entry = {
+        "proteinDescription": {
+            "recommendedName": None,
+            "alternativeNames": None,
+            "submissionNames": [
+                {"ecNumbers": [{"value": "1.1.1.1", "evidences": None}]},
+            ],
+            "includes": None,
+        },
+        "comments": [
+            {
+                "commentType": "CATALYTIC ACTIVITY",
+                "molecule": "Isoform 2",
+                "reaction": {"ecNumber": "1.1.1.1", "evidences": [{"evidenceCode": "ECO:0000250"}]},
+            },
+            {"commentType": "CATALYTIC ACTIVITY", "reaction": None},
+        ],
+    }
+    # An isoform-scoped activity is counted: a weak tag there withholds the EC-derived term.
+    assert membership._entry_ec_evidence(entry) == [
+        {"ec_number": "1.1.1.1", "evidence_codes": ["ECO:0000250"]}
+    ]
+    assert membership._entry_ec_evidence({}) == []
+
+
+@pytest.mark.parametrize(
+    "entry",
+    [
+        # #1055: a malformed container must fail the accession, not hide a weak EC.
+        {"proteinDescription": {"recommendedName": {"ecNumbers": [
+            {"value": "1.2.7.4", "evidences": {"evidenceCode": "ECO:0000250"}}]}}},
+        {"proteinDescription": {"alternativeNames": {"ecNumbers": [{"value": "1.2.7.4"}]}}},
+        {"proteinDescription": {"submissionNames": {"ecNumbers": []}}},
+        {"proteinDescription": {"includes": {"recommendedName": {}}}},
+        {"proteinDescription": {"contains": [["not", "an", "object"]]}},
+        {"proteinDescription": {"recommendedName": {"ecNumbers": {"value": "1.2.7.4"}}}},
+        {"proteinDescription": {"recommendedName": {"ecNumbers": [{"value": 1.2}]}}},
+        {"proteinDescription": {"recommendedName": {"ecNumbers": [
+            {"value": "1.2.7.4", "evidences": [{"source": "PubMed"}]}]}}},
+        {"proteinDescription": "a string"},
+        {"comments": [{"commentType": "CATALYTIC ACTIVITY", "reaction": "RHEA:1"}]},
+    ],
+)
+def test_entry_ec_evidence_refuses_malformed_shapes(entry):
+    with pytest.raises(membership.MembershipSnapshotError):
+        membership._entry_ec_evidence(entry)
