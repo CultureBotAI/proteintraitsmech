@@ -434,13 +434,57 @@ def test_vendored_sync_unexpected_exit_fails_closed_without_retry_offline(tmp_pa
     assert sleeps == []
 
 
-def test_vendored_sync_sparse_checkout_carries_every_governed_directory():
-    """A governed file omitted by sparse checkout looks missing only in CI."""
-    wf = yaml.safe_load(
-        (REPO / ".github" / "workflows" / "history-and-vendored.yaml").read_text()
-    )
-    checkout = wf["jobs"]["vendored-sync"]["steps"][0]["with"]["sparse-checkout"]
-    assert set(checkout.split()) >= {"scripts", "src", "tests", "prompts"}
+def test_vendored_sync_sparse_checkout_materializes_review_payloads(tmp_path):
+    """Use real Git patterns: #1057 passed locally but omitted two CI payloads."""
+    wf = _vendored_sync_workflow()
+    checkout = wf["jobs"]["vendored-sync"]["steps"][0]["with"]
+    assert "ref" not in checkout, "keep the event's combined commit"
+    assert checkout["sparse-checkout-cone-mode"] is False
+    required = {
+        "README.md",
+        ".gitignore",
+        "scripts/.vendored_canon_ref",
+        "scripts/check_vendored_sync.py",
+        "src/proteintraitsmech/schema/mech_shared.yaml",
+        "tests/test_record_review_contract.py",
+        "prompts/backlog-loop-goal.md",
+        ".github/workflows/pr-shepherd.yml",
+        "schema/record_review.yaml",
+        "docs/record-reviews.md",
+    }
+    excluded = {
+        "data/traits/function/example.yaml",
+        "docs/data/corpus_map.json",
+        "docs/index.html",
+        "schema/unrelated.yaml",
+    }
+    root = tmp_path / "sparse-consumer"
+    root.mkdir()
+    for relative in required | excluded:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("# fixture\n")
+    env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
+    env.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull)
+
+    def git(*args, input=None):
+        return subprocess.run(
+            ["git", "-c", "core.hooksPath=" + os.devnull,
+             "-c", "init.templateDir=", *args],
+            cwd=root, env=env, input=input, text=True,
+            capture_output=True, check=True,
+        )
+
+    git("init", "-q")
+    git("add", ".")
+    git("-c", "user.name=Sparse fixture", "-c", "user.email=fixture@example.invalid",
+        "-c", "commit.gpgsign=false", "commit", "-qm", "Fixture")
+    git("sparse-checkout", "set", "--no-cone", "--stdin",
+        input=checkout["sparse-checkout"])
+    missing = sorted(path for path in required if not (root / path).is_file())
+    assert not missing, f"governed checkout paths missing: {missing}"
+    materialized = sorted(path for path in excluded if (root / path).exists())
+    assert not materialized, f"bounded checkout expanded unnecessarily: {materialized}"
 
 
 def _session_id():

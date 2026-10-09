@@ -35,15 +35,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            scripts
-            src
-            tests
-            prompts
-            .github
-          sparse-checkout-cone-mode: true
+            /*
+            !/*/
+            /scripts/
+            /src/
+            /tests/
+            /prompts/
+            /.github/
+            /schema/record_review.yaml
+            /docs/record-reviews.md
+          sparse-checkout-cone-mode: false
       # `.github` is in the sparse list because claw now governs a workflow
       # (.github/workflows/pr-shepherd.yml); a target the checkout omits is
       # reported MISSING, not skipped (culturebotai-claw#391).
+      # Exact review payload paths fix #1057 without checking out docs/data or
+      # the trait corpus. Non-cone patterns retain the previous root files/trees.
       # Keep retry policy in the workflow rather than forking the byte-governed launcher.
       # Exit 1 is the checker's retryable class; exit 2 is a local governance precondition
       # failure, so another network attempt cannot change its outcome.
