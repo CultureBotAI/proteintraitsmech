@@ -28,11 +28,21 @@ canonical example:
   cross-reference (`SOURCE_ANNOTATION`; UniProt's `GoEvidenceType` is kept in the stored
   object, and `ND` annotations are never captured). A Rhea fact keeps that reaction's
   `evidences`. Only facts with experimental or curator evidence qualify (the shared
-  default-deny policy in `uniprot_membership_snapshot.fact_evidence_failure`), and a
-  ComplexPortal, Rhea, or GO fact is installed only from a verified network UniProt fetch
-  receipt. The UniProt lane for ComplexPortal and Rhea records sits beside their
+  default-deny policy in `uniprot_membership_snapshot.fact_evidence_failure`), plus one
+  narrow Swiss-Prot rule (#1004): on a reviewed entry, a GO term inferred from the
+  curated EC number (`IEA:UniProtKB-EC`) and a catalytic activity curated without an
+  evidence tag also qualify; such a fact records `uniprot_entry_type`. An EC-derived GO
+  fact also records the entry's EC assignments (`uniprot_ec_evidence`) and qualifies only
+  when none is inferred by similarity, sequence model, or automatic annotation (#1048). A ComplexPortal,
+  Rhea, or GO fact is installed only from a verified network UniProt fetch receipt. The UniProt lane for ComplexPortal and Rhea records sits beside their
   source-native lanes, which stay receipt-locked; see
   [cross-Mech protein examples](../../research/cross-mech-protein-examples.md) (#652).
+- `go_true_path_edges.jsonl` is present when a qualified GO occurrence inherits its
+  record's term from an exact annotation to a descendant term (#1002). Each row is one
+  `is_a` or `part_of` edge between live terms of one GO namespace, with the
+  `go-basic.obo` release that proved it. The validator reads only this file, so every
+  step of an `inheritance_path` must be a row here or a `parent_traits` edge;
+  `just check-go-true-path` replays the rows against the local GO release.
 - `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
   explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.
   `elife109154_acquisition_receipt.json` binds those assertions to source archive and

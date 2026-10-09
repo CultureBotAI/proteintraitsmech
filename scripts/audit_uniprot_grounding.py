@@ -593,6 +593,7 @@ def scan_records(
                                     evidence_lookup,
                                     memberships,
                                     membership_path=membership_registry_path,
+                                    registry=protein_registry or {},
                                 )
                             )
                     if semantic_findings:
