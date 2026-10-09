@@ -219,6 +219,9 @@ def local_sources(tmp_path):
         "durable_evidence": tmp_path / "durable" / "occurrence_evidence.jsonl",
         "durable_membership": tmp_path / "durable" / "uniprot_memberships.jsonl",
         "durable_bindings": tmp_path / "durable" / "qualified_record_bindings.jsonl",
+        # Absent unless a test writes it: GO true-path inheritance is then not attempted.
+        "go_obo": tmp_path / "go-basic.obo",
+        "durable_go_edges": tmp_path / "durable" / "go_true_path_edges.jsonl",
     }
 
 
@@ -546,6 +549,10 @@ def _promote_args(fixture: dict, approved: pathlib.Path, apply: bool = False) ->
         str(fixture["durable_membership"]),
         "--durable-qualified-record-bindings",
         str(fixture["durable_bindings"]),
+        "--durable-go-edges",
+        str(fixture["durable_go_edges"]),
+        "--go-obo",
+        str(fixture["go_obo"]),
         "--panther-classifications",
         str(fixture["panther"]),
         "--panther-classifications-sha256",
@@ -603,6 +610,7 @@ def _membership_resolve_args(fixture: dict) -> list[str]:
     args = _resolve_args(fixture)
     args[1:1] = ["--providers", "protein-registry,uniprot-membership"]
     args.extend(["--membership-registry", str(fixture["membership"])])
+    args.extend(["--go-obo", str(fixture["go_obo"])])
     args[args.index("--batch") + 1] = "ready-uniprot-membership"
     return args
 
@@ -3024,6 +3032,160 @@ def test_go_promotion_installs_the_exact_annotation_fact(local_sources, monkeypa
     (occurrence,) = record["canonical_examples"][0]["trait_occurrences"]
     assert occurrence["mapping_method"] == "SOURCE_ANNOTATION"
     assert occurrence["evidence_source"] == "UniProtKB"
+
+
+# A two-release-free GO fixture: GO:0009390 is part_of GO:0009389, which is_a
+# GO:0009388; GO:0009399 is an unrelated term in another namespace.
+_GO_OBO_FIXTURE = """format-version: 1.2
+data-version: releases/2026-06-15
+
+[Term]
+id: GO:0009388
+name: fixture ancestor
+namespace: cellular_component
+
+[Term]
+id: GO:0009389
+name: fixture parent
+namespace: cellular_component
+is_a: GO:0009388 ! fixture ancestor
+
+[Term]
+id: GO:0009390
+name: dimethyl sulfoxide reductase complex
+namespace: cellular_component
+relationship: part_of GO:0009389 ! fixture parent
+
+[Term]
+id: GO:0009399
+name: fixture function
+namespace: molecular_function
+"""
+
+
+def _go_true_path_candidate(local_sources, record_term="GO:0009388", evidence="IDA:EcoCyc"):
+    local_sources["go_obo"].write_text(_GO_OBO_FIXTURE, encoding="utf-8")
+    fact = {
+        **_GO_FACT,
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": evidence},
+        ],
+    }
+    return _functional_candidate(
+        local_sources, record_term, "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [fact]}
+    )
+
+
+def test_go_record_qualifies_on_a_descendants_exact_annotation(local_sources):
+    """#1002: GO true-path inheritance from an exact, qualifying descendant fact."""
+
+    (fact,) = _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["trait_id"] == "GO:0009388"
+    assert row["source_trait_id"] == fact["source_trait_id"] == "GO:0009390"
+    occurrence = row["trait_occurrence"]
+    assert occurrence["inheritance_path"] == ["GO:0009390", "GO:0009389", "GO:0009388"]
+    assert row["grounding_evidence"]["inheritance_path"] == occurrence["inheritance_path"]
+    # The inherited case is sampled exhaustively in review.
+    assert "ANCESTOR_INHERITANCE" in ground._review_flags(row)
+
+
+@pytest.mark.parametrize(
+    ("record_term", "evidence", "reason"),
+    [
+        # A weak descendant annotation is no better than a weak exact one.
+        ("GO:0009388", "IEA:InterPro", "missing:exact_uniprot_membership"),
+        # Inheritance runs only upward and only within one GO namespace.
+        ("GO:0009399", "IDA:EcoCyc", "missing:exact_uniprot_membership"),
+    ],
+)
+def test_go_true_path_needs_a_qualifying_descendant(local_sources, record_term, evidence, reason):
+    _go_true_path_candidate(local_sources, record_term, evidence)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert reason in row["reasons"]
+    assert "inheritance_path" not in row or not row["inheritance_path"]
+
+
+def test_go_true_path_is_not_attempted_without_the_pinned_release(local_sources):
+    _go_true_path_candidate(local_sources)
+    local_sources["go_obo"].unlink()
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:exact_uniprot_membership" in row["reasons"]
+
+
+def test_a_producer_inheritance_path_must_be_proven_in_the_release(local_sources):
+    _go_true_path_candidate(local_sources)
+    (queued,) = _jsonl_rows(local_sources["queue"])
+    # GO:0009390 -> GO:0009388 skips the part_of step: not a direct edge.
+    queued.update(source_trait_id="GO:0009390", inheritance_path=["GO:0009390", "GO:0009388"])
+    _jsonl(local_sources["queue"], [queued])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "invalid:go_true_path_edge" in row["reasons"]
+
+
+def test_go_true_path_promotion_installs_its_proven_edges(local_sources, monkeypatch):
+    _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("go-approved.tsv")
+    _approve(local_sources["review"], approved)
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(text, encoding=encoding),
+    )
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    assert ground.main(_promote_args(local_sources, approved, apply=True) + receipt) == 0
+    edges = _jsonl_rows(local_sources["durable_go_edges"])
+    assert [(edge["child"], edge["parent"], edge["relation"]) for edge in edges] == [
+        ("GO:0009389", "GO:0009388", "is_a"),
+        ("GO:0009390", "GO:0009389", "part_of"),
+    ]
+    assert {edge["go_release"] for edge in edges} == {"releases/2026-06-15"}
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    (occurrence,) = record["canonical_examples"][0]["trait_occurrences"]
+    assert occurrence["source_trait_id"] == "GO:0009390"
+    assert occurrence["inheritance_path"] == ["GO:0009390", "GO:0009389", "GO:0009388"]
+
+    # The standalone validator replays the path from the tracked edges alone.
+    def validate(edges):
+        return grounding_validator.main(
+            [
+                str(local_sources["record"]),
+                "--registry",
+                str(local_sources["durable_registry"]),
+                "--evidence-registry",
+                str(local_sources["durable_evidence"]),
+                "--membership-registry",
+                str(local_sources["durable_membership"]),
+                "--go-edges",
+                str(edges),
+                "--out",
+                str(local_sources["review"].with_name("validation.tsv")),
+                "--quiet",
+            ]
+        )
+
+    assert validate(local_sources["durable_go_edges"]) == 0
+    missing_edges = local_sources["review"].with_name("no-edges.jsonl")
+    assert validate(missing_edges) != 0
+    report = local_sources["review"].with_name("validation.tsv").read_text(encoding="utf-8")
+    assert "unproven_trait_inheritance_edge" in report
+    # Without the release the promoter cannot prove the edges, and refuses.
+    local_sources["go_obo"].unlink()
+    with pytest.raises(ground.GroundingError, match="GO true-path edges rejected"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + receipt)
+        )
 
 
 def test_promote_refuses_a_fact_missing_from_what_it_would_install(local_sources, monkeypatch):

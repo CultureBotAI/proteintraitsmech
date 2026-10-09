@@ -88,6 +88,14 @@ GO_QUALIFYING_EVIDENCE = frozenset(
     {"EXP", "IDA", "IPI", "IMP", "IGI", "IEP", "HTP", "HDA", "HMP", "HGI", "HEP", "IC", "TAS"}
 )
 RHEA_QUALIFYING_ECO = frozenset({"ECO:0000269", "ECO:0000304", "ECO:0000305"})
+# Narrow, maintainer-approved widening (#1004): on a reviewed Swiss-Prot entry, a GO
+# term inferred from the entry's curated EC number (IEA:UniProtKB-EC) and a catalytic
+# activity curated without an evidence tag also qualify. Neither holds on TrEMBL, and
+# every other IEA source, IBA, NAS and automatic ECO stays excluded.
+SWISSPROT_ENTRY_TYPE = "UniProtKB reviewed (Swiss-Prot)"
+TREMBL_ENTRY_TYPE = "UniProtKB unreviewed (TrEMBL)"
+ENTRY_TYPES = frozenset({SWISSPROT_ENTRY_TYPE, TREMBL_ENTRY_TYPE})
+SWISSPROT_ONLY_GO_EVIDENCE = frozenset({"IEA:UniProtKB-EC"})
 
 # The occurrence method a UniProt fact may support.  Everything else is membership.
 UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
@@ -114,7 +122,10 @@ _PAYLOAD_FIELDS = (
     "api_endpoint",
     "database_cross_reference",
 )
-_ALLOWED_FIELDS = {"membership_id", *_PAYLOAD_FIELDS}
+# Recorded only on a fact whose evidence the Swiss-Prot rule decides (#1004), so every
+# fact captured before that rule keeps its content address.
+_OPTIONAL_PAYLOAD_FIELDS = ("uniprot_entry_type",)
+_ALLOWED_FIELDS = {"membership_id", *_PAYLOAD_FIELDS, *_OPTIONAL_PAYLOAD_FIELDS}
 
 
 class MembershipSnapshotError(ValueError):
@@ -169,29 +180,66 @@ def fact_evidence_failure(row: Mapping[str, Any]) -> str | None:
     xref = xref if isinstance(xref, Mapping) else {}
     if database == "GO":
         code = _go_evidence_code(xref)
-        if code not in GO_QUALIFYING_EVIDENCE:
-            return f"go_evidence_{code or 'missing'}"
-    elif database == RHEA_DATABASE:
-        codes = sorted(
-            {
-                str(item.get("evidenceCode"))
-                for item in xref.get("evidences") or []
-                if isinstance(item, Mapping) and item.get("evidenceCode")
-            }
-        )
-        if not set(codes) & RHEA_QUALIFYING_ECO:
-            return "rhea_evidence_" + ("+".join(codes) if codes else "missing")
+        if code in GO_QUALIFYING_EVIDENCE:
+            return None
+        if _swissprot_conditional(row):
+            return _swissprot_failure(row, f"go_evidence_{_go_evidence_value(xref)}")
+        return f"go_evidence_{code or 'missing'}"
+    if database == RHEA_DATABASE:
+        codes = _rhea_evidence_codes(xref)
+        if set(codes) & RHEA_QUALIFYING_ECO:
+            return None
+        if _swissprot_conditional(row):
+            return _swissprot_failure(row, "rhea_evidence_missing")
+        return "rhea_evidence_" + ("+".join(codes) if codes else "missing")
     return None
+
+
+def _rhea_evidence_codes(cross_reference: Mapping[str, Any]) -> list[str]:
+    return sorted(
+        {
+            str(item.get("evidenceCode"))
+            for item in cross_reference.get("evidences") or []
+            if isinstance(item, Mapping) and item.get("evidenceCode")
+        }
+    )
+
+
+def _swissprot_conditional(row: Mapping[str, Any]) -> bool:
+    """Whether the fact's evidence qualifies only on a Swiss-Prot entry (#1004)."""
+
+    xref = row.get("database_cross_reference")
+    xref = xref if isinstance(xref, Mapping) else {}
+    if row.get("database") == "GO":
+        return _go_evidence_value(xref) in SWISSPROT_ONLY_GO_EVIDENCE
+    if row.get("database") == RHEA_DATABASE:
+        return not (xref.get("evidences") or [])
+    return False
+
+
+def _swissprot_failure(row: Mapping[str, Any], label: str) -> str | None:
+    entry_type = row.get("uniprot_entry_type")
+    if entry_type == SWISSPROT_ENTRY_TYPE:
+        return None
+    if entry_type == TREMBL_ENTRY_TYPE:
+        return f"{label}_on_trembl"
+    return f"{label}_entry_type_missing"
 
 
 def _go_evidence_code(cross_reference: Mapping[str, Any]) -> str:
     """The GO evidence code (``IDA``, ``IEA``, ...) UniProt attached to a GO xref."""
 
+    return _go_evidence_value(cross_reference).split(":", 1)[0].strip()
+
+
+def _go_evidence_value(cross_reference: Mapping[str, Any]) -> str:
+    """The full GO evidence (``IEA:UniProtKB-EC``), code plus assigning source."""
+
     for item in cross_reference.get("properties") or []:
         if isinstance(item, dict) and item.get("key") == "GoEvidenceType":
             value = item.get("value")
             if isinstance(value, str):
-                return value.split(":", 1)[0].strip()
+                return value.strip()
     return ""
 
 
@@ -248,7 +296,9 @@ def _normalise_cross_reference(value: Mapping[str, Any]) -> dict[str, Any]:
 def canonical_membership_payload(value: Mapping[str, Any]) -> dict[str, Any]:
     """Return the complete projection addressed by ``membership_id``."""
 
-    return {field: value.get(field) for field in _PAYLOAD_FIELDS}
+    payload = {field: value.get(field) for field in _PAYLOAD_FIELDS}
+    payload.update({field: value[field] for field in _OPTIONAL_PAYLOAD_FIELDS if field in value})
+    return payload
 
 
 def membership_entry_sha256(value: Mapping[str, Any]) -> str:
@@ -268,7 +318,7 @@ def _validate_membership(value: object) -> list[str]:
     if not isinstance(value, dict):
         return ["membership row is not an object"]
     errors: list[str] = []
-    missing = sorted(_ALLOWED_FIELDS - set(value))
+    missing = sorted(_ALLOWED_FIELDS - set(_OPTIONAL_PAYLOAD_FIELDS) - set(value))
     unknown = sorted(set(value) - _ALLOWED_FIELDS)
     if missing:
         errors.append(f"missing fields {missing}")
@@ -287,6 +337,11 @@ def _validate_membership(value: object) -> list[str]:
         errors.append("sequence_sha256 must be 64 lower-case hex digits")
     if value.get("api_endpoint") != UNIPROT_SEARCH:
         errors.append("api_endpoint is not the official UniProtKB search endpoint")
+    if "uniprot_entry_type" in value:
+        if value["uniprot_entry_type"] not in ENTRY_TYPES:
+            errors.append(f"uniprot_entry_type must be one of {sorted(ENTRY_TYPES)}")
+        elif not _swissprot_conditional(value):
+            errors.append("uniprot_entry_type is recorded only where the Swiss-Prot rule applies")
 
     database = value.get("database")
     database_id = value.get("database_id")
@@ -355,6 +410,7 @@ def extract_entry_memberships(
         raise MembershipSnapshotError("invalid sequence_sha256")
     if _RELEASE.fullmatch(uniprot_release) is None:
         raise MembershipSnapshotError("invalid uniprot_release")
+    entry_type = entry.get("entryType")
     raw_cross_references = entry.get("uniProtKBCrossReferences", [])
     if raw_cross_references is None:
         raw_cross_references = []
@@ -387,6 +443,9 @@ def extract_entry_memberships(
             "api_endpoint": UNIPROT_SEARCH,
             "database_cross_reference": normalized_xref,
         }
+        if _swissprot_conditional(row) and entry_type in ENTRY_TYPES:
+            # Without a recognized entryType the fact stays captured but cannot qualify.
+            row["uniprot_entry_type"] = entry_type
         row["membership_id"] = compute_membership_id(row)
         errors = _validate_membership(row)
         if errors:

@@ -178,6 +178,23 @@ not resolve `SOURCE_ANNOTATION`. The lane now exists (grounding plan, 2026-10-05
   traceable author-statement (`ECO:0000304`) evidence. The stored Rhea fact keeps the
   reaction's evidence list so this stays auditable. A catalytic activity scoped to an
   isoform or chain is never a whole-protein fact.
+- One narrow widening, the maintainer's decision on #1004: on a reviewed Swiss-Prot entry,
+  a GO term inferred from the entry's curated EC number (`IEA:UniProtKB-EC`) and a
+  catalytic activity curated with no evidence tag also qualify. Neither qualifies on
+  TrEMBL. Every other IEA source (InterPro2GO, ARBA, UniRule, SubCell), IBA, NAS, curated
+  similarity (`ECO:0000250`), automatic (`ECO:0000256`), and untraceable author statements
+  (`ECO:0000303`) stay candidates. The fact row records `uniprot_entry_type` only where
+  this rule decides it, so every earlier fact keeps its content address.
+- GO true-path inheritance (#1002). When a GO record's own term has no exact qualifying
+  fact, the resolver looks for one of the protein's qualifying GO facts whose term reaches
+  the record's term by `is_a` or `part_of` within one GO namespace in the pinned
+  `go-basic.obo`. The shortest path wins, then the lowest GO ID. The occurrence records
+  the descendant as `source_trait_id` with an explicit `inheritance_path`, and review
+  samples every such row (`ANCESTOR_INHERITANCE`). The promoter proves each edge in the
+  release and installs it in `data/grounding/go_true_path_edges.jsonl`, which the
+  validator replays without the OBO file. `just check-go-true-path` replays that file
+  against the local release. An annotation to a less specific term never supports a more
+  specific record.
 
 The sequence, in order:
 
@@ -194,13 +211,10 @@ The ordinary fetch, resolve, review, and promote recipes do the rest.
 
 - Keep the UniProt exact-accession lane for Rhea and ComplexPortal traits, or wait for
   their source-native acquisition receipts.
-- Widen the evidence policy, for example to admit IEA GO annotations derived from a
-  curated EC number, or curated "by similarity" (`ECO:0000250`) catalytic activities.
-  A sibling claim never counts toward qualification, so any widening has to stand on
-  UniProt's evidence alone.
-- GO true-path inheritance for the unconfirmed localization pairs (UniProt annotates a
-  descendant term): an explicit `inheritance_path` is supported for signatures but not
-  yet for GO.
+- Any further widening of the evidence policy beyond the narrow Swiss-Prot rule above
+  (decided on #1004), for example curated "by similarity" (`ECO:0000250`) catalytic
+  activities. A sibling claim never counts toward qualification, so any widening has to
+  stand on UniProt's evidence alone.
 - InterPro `Family` groundings used by TraitMech and CellStructureMech: map through the
   family's member signatures, or leave them `TRAIT_NOT_IN_PTM`.
 

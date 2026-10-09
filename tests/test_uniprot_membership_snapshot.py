@@ -503,7 +503,7 @@ def test_rhea_facts_keep_their_reaction_evidence_sorted_and_skip_isoform_scope()
         (["ECO:0000256", "ECO:0000305"], None),
         (["ECO:0000256"], "rhea_evidence_ECO:0000256"),
         (["ECO:0000250"], "rhea_evidence_ECO:0000250"),
-        ([], "rhea_evidence_missing"),
+        ([], "rhea_evidence_missing_entry_type_missing"),
     ],
 )
 def test_fact_evidence_policy_is_default_deny(xref_or_reaction, expected):
@@ -528,3 +528,89 @@ def test_fact_evidence_policy_is_default_deny(xref_or_reaction, expected):
     assert membership.fact_evidence_failure(row) == expected
     # Signature and ComplexPortal facts are governed by their own contracts.
     assert membership.fact_evidence_failure({"database": "ComplexPortal"}) is None
+
+
+def _go_row(evidence, entry_type=None):
+    row = {
+        "database": "GO",
+        "database_cross_reference": {
+            "database": "GO",
+            "id": "GO:0008800",
+            "properties": [{"key": "GoEvidenceType", "value": evidence}],
+        },
+    }
+    if entry_type is not None:
+        row["uniprot_entry_type"] = entry_type
+    return row
+
+
+@pytest.mark.parametrize(
+    ("evidence", "entry_type", "expected"),
+    [
+        ("IEA:UniProtKB-EC", membership.SWISSPROT_ENTRY_TYPE, None),
+        ("IEA:UniProtKB-EC", membership.TREMBL_ENTRY_TYPE, "go_evidence_IEA:UniProtKB-EC_on_trembl"),
+        ("IEA:UniProtKB-EC", None, "go_evidence_IEA:UniProtKB-EC_entry_type_missing"),
+        # Every other automatic source stays excluded, even on Swiss-Prot.
+        ("IEA:InterPro", membership.SWISSPROT_ENTRY_TYPE, "go_evidence_IEA"),
+        ("IEA:UniProtKB-UniRule", membership.SWISSPROT_ENTRY_TYPE, "go_evidence_IEA"),
+        ("IEA:UniProtKB-ARBA", membership.SWISSPROT_ENTRY_TYPE, "go_evidence_IEA"),
+        ("IEA:UniProtKB-SubCell", membership.SWISSPROT_ENTRY_TYPE, "go_evidence_IEA"),
+        ("IBA:GO_Central", membership.SWISSPROT_ENTRY_TYPE, "go_evidence_IBA"),
+    ],
+)
+def test_swissprot_ec_inference_is_the_only_admitted_go_iea(evidence, entry_type, expected):
+    assert membership.fact_evidence_failure(_go_row(evidence, entry_type)) == expected
+
+
+@pytest.mark.parametrize(
+    ("codes", "entry_type", "expected"),
+    [
+        ([], membership.SWISSPROT_ENTRY_TYPE, None),
+        ([], membership.TREMBL_ENTRY_TYPE, "rhea_evidence_missing_on_trembl"),
+        # A tagged-but-weak reaction is not "untagged": Swiss-Prot does not rescue it.
+        (["ECO:0000250"], membership.SWISSPROT_ENTRY_TYPE, "rhea_evidence_ECO:0000250"),
+        (["ECO:0000256"], membership.SWISSPROT_ENTRY_TYPE, "rhea_evidence_ECO:0000256"),
+        (["ECO:0000303"], membership.SWISSPROT_ENTRY_TYPE, "rhea_evidence_ECO:0000303"),
+    ],
+)
+def test_untagged_swissprot_reactions_qualify(codes, entry_type, expected):
+    row = {
+        "database": "Rhea",
+        "database_cross_reference": {
+            "database": "Rhea",
+            "id": "RHEA:37871",
+            "evidences": [{"evidenceCode": code} for code in codes],
+        },
+        "uniprot_entry_type": entry_type,
+    }
+    assert membership.fact_evidence_failure(row) == expected
+
+
+def test_entry_type_is_recorded_only_where_the_swissprot_rule_decides():
+    ec_xref = {
+        "database": "GO",
+        "id": "GO:0008800",
+        "properties": [{"key": "GoEvidenceType", "value": "IEA:UniProtKB-EC"}],
+    }
+    rows = _functional_rows(
+        {
+            "entryType": membership.SWISSPROT_ENTRY_TYPE,
+            "uniProtKBCrossReferences": [GO_XREF, ec_xref],
+            "comments": [CATALYTIC],
+        }
+    )
+    by_trait = {row["source_trait_id"]: row for row in rows}
+    # The IDA fact keeps the pre-#1004 payload, and therefore its content address.
+    assert "uniprot_entry_type" not in by_trait["GO:0009390"]
+    assert by_trait["GO:0008800"]["uniprot_entry_type"] == membership.SWISSPROT_ENTRY_TYPE
+    assert by_trait["RHEA:37871"]["uniprot_entry_type"] == membership.SWISSPROT_ENTRY_TYPE
+    assert all(membership.fact_evidence_failure(row) is None for row in rows)
+    assert membership.merge_memberships(rows)  # stamped rows are valid snapshot rows
+    # An entry type on a fact the rule does not decide is rejected, not ignored.
+    stray = {**by_trait["GO:0009390"], "uniprot_entry_type": membership.SWISSPROT_ENTRY_TYPE}
+    stray["membership_id"] = membership.compute_membership_id(stray)
+    with pytest.raises(membership.MembershipSnapshotError, match="only where"):
+        membership.merge_memberships([stray])
+    # The stamp is part of the content address.
+    unstamped = {k: v for k, v in by_trait["GO:0008800"].items() if k != "uniprot_entry_type"}
+    assert membership.compute_membership_id(unstamped) != by_trait["GO:0008800"]["membership_id"]

@@ -45,6 +45,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import yaml
 
 import grounding_registry_layout as layout
+from go_true_path import DEFAULT_GO_EDGES, GoTruePathError, load_edges, union_index
 from uniprot_membership_snapshot import (
     UNIPROT_FACT_METHODS,
     expected_mapping_method,
@@ -1336,11 +1337,14 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     f"UNIPROT {method} requires WHOLE_PROTEIN scope",
                 )
             )
-        if evidence.get("source_trait_id") != evidence.get("trait_id"):
+        if evidence.get("source_trait_id") != evidence.get("trait_id") and not (
+            _is_go_true_path_claim(evidence)
+        ):
             errors.append(
                 (
                     "uniprot_membership_trait_mismatch",
-                    f"UNIPROT {method} requires exact source_trait_id == trait_id",
+                    f"UNIPROT {method} requires exact source_trait_id == trait_id, or a "
+                    "GO annotation inherited along an explicit inheritance_path",
                 )
             )
 
@@ -2491,13 +2495,38 @@ def validate_membership_replay(
     return findings
 
 
+def _is_go_true_path_claim(value: Mapping[str, Any]) -> bool:
+    """A GO annotation on a descendant term claimed for a GO record (#1002).
+
+    Only the shape is decided here; each step of the path must still be a tracked
+    GO edge or a ``parent_traits`` edge in the authoritative hierarchy index.
+    """
+
+    source, target = value.get("source_trait_id"), value.get("trait_id")
+    path = value.get("inheritance_path")
+    return (
+        value.get("mapping_method") == "SOURCE_ANNOTATION"
+        and isinstance(source, str)
+        and isinstance(target, str)
+        and source.startswith("GO:")
+        and target.startswith("GO:")
+        and isinstance(path, list)
+        and len(path) >= 2
+        and path[0] == source
+        and path[-1] == target
+        and all(isinstance(term, str) and term.startswith("GO:") for term in path)
+    )
+
+
 def build_hierarchy_index(
     paths: Iterable[Path],
+    go_edges: Path | None = DEFAULT_GO_EDGES,
 ) -> tuple[dict[str, frozenset[str]], list[Finding]]:
     """Build an authoritative child-to-direct-parent index from trait YAML.
 
     Every claimed inheritance step must correspond to one explicit
-    ``parent_traits`` edge. Duplicate record identifiers make the index
+    ``parent_traits`` edge, or to a tracked GO ``is_a``/``part_of`` edge from a
+    pinned GO release (#1002). Duplicate record identifiers make the index
     ambiguous and are reported rather than silently merged.
     """
 
@@ -2556,6 +2585,11 @@ def build_hierarchy_index(
             )
             continue
         hierarchy[trait_id] = frozenset(parents)
+    if go_edges is not None:
+        try:
+            hierarchy = union_index(hierarchy, load_edges(go_edges))
+        except GoTruePathError as error:
+            findings.append(_finding("go_true_path_edges_invalid", str(error), file=str(go_edges)))
     return hierarchy, findings
 
 
@@ -3766,6 +3800,12 @@ def main(argv: list[str] | None = None) -> int:
         type=Path,
         help="Authoritative trait YAML roots for inheritance edges; default input paths",
     )
+    parser.add_argument(
+        "--go-edges",
+        type=Path,
+        default=DEFAULT_GO_EDGES,
+        help="Tracked GO true-path edges that inheritance steps may also use (#1002)",
+    )
     parser.add_argument("--out", type=Path, default=DEFAULT_REPORT, help="Finding TSV")
     parser.add_argument(
         "--require-qualified",
@@ -3891,7 +3931,9 @@ def main(argv: list[str] | None = None) -> int:
         findings.extend(membership_findings)
     if qualified_inheritance_input or args.hierarchy_traits:
         hierarchy_roots = args.hierarchy_traits or roots
-        hierarchy_index, hierarchy_findings = build_hierarchy_index(hierarchy_roots)
+        hierarchy_index, hierarchy_findings = build_hierarchy_index(
+            hierarchy_roots, go_edges=args.go_edges
+        )
         findings.extend(hierarchy_findings)
 
     for path, record in parsed_records.items():

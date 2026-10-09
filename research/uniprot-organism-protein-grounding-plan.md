@@ -4487,6 +4487,20 @@ found.
 - No trait or durable grounding write occurred in this change. Inclusion of the sibling
   candidates is a separate, reviewed promotion batch.
 
+### 2026-10-08 — GO true-path inheritance and the Swiss-Prot evidence rule (#1002, #1004)
+
+- Priority 4's "GO: direct GOA/UniProt annotation, retaining the evidence code" now also
+  covers an exact annotation to a descendant term, inherited along an explicit
+  `inheritance_path` of `is_a`/`part_of` edges in the pinned GO release. The edges a
+  qualified example uses are tracked in `data/grounding/go_true_path_edges.jsonl` and
+  replayed by the validator; corpus `parent_traits` alone could prove only 1 of 62 such
+  paths in the cross-Mech queue.
+- Priority 4 keeps "EC-only, textual, homology-only, or generic pathway inference" as
+  candidate evidence, with one maintainer-approved exception (#1004): on a reviewed
+  Swiss-Prot entry, GO terms inferred from the curated EC number (`IEA:UniProtKB-EC`)
+  and catalytic activities curated without an evidence tag qualify. Neither does on
+  TrEMBL; every other automatic, phylogenetic, or textual source stays a candidate.
+
 ### 2026-10-05 — cross-Mech examples, batch 001 (#652)
 
 - The first promotion through the UniProt exact-accession fact lane: 281 sibling-Mech

@@ -326,6 +326,12 @@ scan-cross-mech-proteins *args:
 audit-cross-mech-proteins *args:
     uv run python scripts/cross_mech_proteins.py audit {{args}}
 
+# LOCAL ONLY -- reads data/raw/go-basic.obo. Replay every tracked GO true-path edge
+# (data/grounding/go_true_path_edges.jsonl) against the local GO release it names, so a
+# re-fetched or edited OBO cannot silently disagree with a qualified inheritance (#1002).
+check-go-true-path *args:
+    uv run python scripts/go_true_path.py check {{args}}
+
 # Verify the tracked snapshot offline. --local compares sibling checkouts and
 # --remote the live default branches and fleet manifest; drift is a NOTICE unless
 # --fail-on-drift.

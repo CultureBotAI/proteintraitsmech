@@ -50,6 +50,13 @@ from typing import Any, Iterable, Iterator
 import yaml
 
 import grounding_registry_layout as layout
+from go_true_path import (
+    DEFAULT_GO_EDGES,
+    DEFAULT_GO_OBO,
+    GoRelease,
+    GoTruePathError,
+    load_go_obo,
+)
 from fetch_uniprot_registry import (
     RegistryBuildError as FetchReceiptError,
     VerifiedFetchReceipt,
@@ -925,6 +932,7 @@ class ProviderContext:
     prints_manifest: dict[str, Any] | None = None
     prints_release: PrintsRelease | None = None
     durable_membership_path: Path = DEFAULT_DURABLE_MEMBERSHIP_REGISTRY
+    go_release: GoRelease | None = None
     record_cache: dict[Path, tuple[dict, str, str]] = field(default_factory=dict)
     content_gate: RecordContentGate | None = None
 
@@ -1090,6 +1098,15 @@ def _provider_context(
             prints_release = parse_prints_kdat(prints_kdat_path, PRINTS_42_0_SHA256)
         except (PrintsSnapshotError, ValueError, OSError) as exc:
             raise GroundingError(f"invalid PRINTS snapshot provider: {exc}") from exc
+    go_release: GoRelease | None = None
+    go_obo = getattr(args, "go_obo", None)
+    if "uniprot-membership" in providers and isinstance(go_obo, Path) and go_obo.is_file():
+        # GO true-path inheritance (#1002) is attempted only with the pinned release
+        # present; without it a GO record still needs an exact annotation.
+        try:
+            go_release = load_go_obo(go_obo.resolve())
+        except GoTruePathError as exc:
+            raise GroundingError(f"invalid GO release for true-path inheritance: {exc}") from exc
     return ProviderContext(
         providers=providers,
         residue_path=residue_path,
@@ -1115,6 +1132,7 @@ def _provider_context(
         prints_manifest=prints_manifest,
         prints_release=prints_release,
         durable_membership_path=args.durable_membership_registry.resolve(),
+        go_release=go_release,
     )
 
 
@@ -1234,6 +1252,7 @@ def _validate_resolve_output_paths(args: argparse.Namespace) -> None:
         "registry_blocked",
         "sifts_registry",
         "durable_membership_registry",
+        "go_obo",
     )
     protected_input_keys = {
         _physical_path_key(value)
@@ -1586,6 +1605,86 @@ def _sifts_authoritative_source_release(mapping: dict[str, Any]) -> str | None:
     return None
 
 
+def _go_true_path_failure(
+    mapping_method: str | None,
+    source_trait_id: str,
+    trait_id: str,
+    inheritance: object,
+    context: ProviderContext,
+) -> str | None:
+    """Why a UniProt fact on another term may not ground this record, or None (#1002)."""
+
+    if not (
+        mapping_method == "SOURCE_ANNOTATION"
+        and source_trait_id.startswith("GO:")
+        and trait_id.startswith("GO:")
+    ):
+        return "mismatch:membership_requires_exact_trait_id"
+    if context.go_release is None:
+        return "missing:go_release_for_true_path"
+    if not (
+        isinstance(inheritance, list)
+        and len(inheritance) >= 2
+        and inheritance[0] == source_trait_id
+        and inheritance[-1] == trait_id
+    ):
+        return "mismatch:source_trait_id_without_inheritance_path"
+    try:
+        context.go_release.edge_rows([str(term) for term in inheritance])
+    except GoTruePathError:
+        return "invalid:go_true_path_edge"
+    return None
+
+
+def _apply_go_true_path(
+    row: dict[str, Any], reference: dict[str, Any] | None, context: ProviderContext
+) -> None:
+    """Ground a GO record on a descendant's qualifying UniProt annotation (#1002).
+
+    Only when the record's own term has no exact, evidence-qualifying fact. Among the
+    protein's qualifying GO facts whose term reaches the record's term by ``is_a`` or
+    ``part_of`` in the pinned release, the shortest path wins, then the lowest GO ID.
+    The rewritten candidate still passes every exact-fact, receipt and review check.
+    """
+
+    trait_id = _clean_text(row.get("trait_id")) or ""
+    source_trait_id = _clean_text(row.get("source_trait_id")) or trait_id
+    if (
+        row.get("mapping_method") != "SOURCE_ANNOTATION"
+        or not trait_id.startswith("GO:")
+        or source_trait_id != trait_id
+        or row.get("inheritance_path")
+        or context.go_release is None
+        or reference is None
+    ):
+        return
+    from uniprot_membership_snapshot import fact_evidence_failure
+
+    protein_id = _clean_text(row.get("protein_id"))
+    facts = [
+        fact
+        for fact in context.memberships
+        if fact.get("protein_id") == protein_id
+        and fact.get("database") == "GO"
+        and fact.get("uniprot_release") == reference.get("uniprot_release")
+        and fact.get("sequence_sha256") == reference.get("sequence_sha256")
+        and fact_evidence_failure(fact) is None
+    ]
+    if any(fact.get("source_trait_id") == trait_id for fact in facts):
+        return
+    options: list[tuple[int, str, list[str]]] = []
+    for fact in facts:
+        descendant = str(fact.get("source_trait_id"))
+        path = context.go_release.path(descendant, trait_id)
+        if path:
+            options.append((len(path), descendant, path))
+    if not options:
+        return
+    _, descendant, path = min(options)
+    row["source_trait_id"] = descendant
+    row["inheritance_path"] = path
+
+
 def _resolve_occurrence(
     candidate: dict[str, Any],
     record: dict,
@@ -1721,7 +1820,11 @@ def _resolve_occurrence(
         if not _whole_protein_allowed(record):
             reasons.append("invalid:whole_protein_membership_not_permitted")
         if source_trait_id != trait_id:
-            reasons.append("mismatch:membership_requires_exact_trait_id")
+            go_reason = _go_true_path_failure(
+                mapping_method, str(source_trait_id or ""), str(trait_id or ""), inheritance, context
+            )
+            if go_reason:
+                reasons.append(go_reason)
         if "uniprot-membership" not in context.providers:
             reasons.append("missing:uniprot_membership_provider")
         if reference is None:
@@ -2229,6 +2332,8 @@ def _resolve_candidate(
         reference, sequence_evidence = _build_protein_reference(row, protein_id, context, reasons)
         provider_evidence.extend(sequence_evidence)
     if record and protein_id and _UNIPROT.fullmatch(protein_id):
+        row["trait_id"] = trait_id
+        _apply_go_true_path(row, reference, context)
         occurrence_candidate = row
         if producer_occurrence is not None or producer_grounding_evidence is not None:
             occurrence_candidate = {
@@ -3534,6 +3639,34 @@ def _selected_registry_rows(
     return references, evidence_rows
 
 
+def _merged_go_edges(
+    selected: list[dict[str, Any]], edges_path: Path, obo_path: Path
+) -> tuple[list[dict[str, str]], str, str | None, bool]:
+    """Prove each selected GO true-path edge in the pinned release and merge it (#1002)."""
+
+    from go_true_path import dump_edges, load_edges, merge_edges
+
+    paths = [
+        [str(term) for term in row["inheritance_path"]]
+        for row in selected
+        if row.get("mapping_method") == "SOURCE_ANNOTATION"
+        and str(row.get("trait_id") or "").startswith("GO:")
+        and row.get("source_trait_id") != row.get("trait_id")
+        and isinstance(row.get("inheritance_path"), list)
+    ]
+    if not paths:
+        return [], "", None, False
+    try:
+        existing = load_edges(edges_path)
+        release = load_go_obo(obo_path.resolve())
+        merged = merge_edges(existing, [edge for path in paths for edge in release.edge_rows(path)])
+        text = dump_edges(merged)
+    except GoTruePathError as exc:
+        raise GroundingError(f"GO true-path edges rejected preflight: {exc}") from exc
+    digest = _artifact_digest(edges_path)
+    return merged, text, digest, digest != _text_digest(text)
+
+
 def _verify_uniprot_fact_receipt(args: argparse.Namespace, selected: list[dict[str, Any]]) -> None:
     """Admit UniProt-lane ComplexPortal/Rhea/GO facts only from a verified fetch receipt."""
 
@@ -3774,6 +3907,7 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         "durable protein registry": args.durable_protein_registry,
         "durable evidence registry": args.durable_evidence_registry,
         "durable membership registry": args.durable_membership_registry,
+        "durable GO true-path edges": args.durable_go_edges,
         "durable qualified-record bindings": args.durable_qualified_record_bindings,
     }
     output_keys = {name: _physical_path_key(path) for name, path in outputs.items()}
@@ -3797,6 +3931,7 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         args.interpro_xml,
         args.pfam_clans,
         args.pfam_types,
+        args.go_obo,
     ):
         if optional is not None:
             protected_input_keys.add(_physical_path_key(optional))
@@ -4528,18 +4663,25 @@ def promote(args: argparse.Namespace) -> int:
     evidence_text = _registry_text(evidence_registry)
     registry_changed = durable_registry_digest != _text_digest(registry_text)
     evidence_changed = durable_evidence_digest != _text_digest(evidence_text)
+    go_edges_path = args.durable_go_edges.resolve()
+    go_edges, go_edges_text, go_edges_digest, go_edges_changed = _merged_go_edges(
+        effective_selected, go_edges_path, args.go_obo
+    )
     hierarchy_index: dict[str, frozenset[str]] = {}
     if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected):
+        from go_true_path import union_index
         from validate_uniprot_grounding import build_hierarchy_index
 
         hierarchy_index, hierarchy_findings = build_hierarchy_index(
-            sorted(traits_root.rglob("*.yaml"))
+            sorted(traits_root.rglob("*.yaml")), go_edges=go_edges_path
         )
         if hierarchy_findings:
             detail = "; ".join(
                 f"{finding.code}: {finding.message}" for finding in hierarchy_findings[:3]
             )
             raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
+        # The edges this batch installs, so its own paths validate before the write.
+        hierarchy_index = union_index(hierarchy_index, go_edges)
     grouped: dict[Path, list[dict[str, Any]]] = defaultdict(list)
     for row in effective_selected:
         path = _safe_record_path(row["record_path"], traits_root)
@@ -4656,6 +4798,8 @@ def promote(args: argparse.Namespace) -> int:
                 durable_membership_digest,
             )
         )
+    if go_edges_changed:
+        durable_expectations.append((go_edges_path, go_edges_digest))
     for path, expected_digest in durable_expectations:
         if _artifact_digest(path) != expected_digest:
             durable_changed_during_preflight.append(path)
@@ -4681,6 +4825,8 @@ def promote(args: argparse.Namespace) -> int:
     # Install normalized registries and their receipt generation before trait mutation.
     # The transaction helper restores exact preimages after any in-process failure.
     artifact_updates: list[tuple[Path, str]] = []
+    if go_edges_changed:
+        artifact_updates.append((args.durable_go_edges, go_edges_text))
     if membership_changed:
         artifact_updates.append((args.durable_membership_registry, membership_text))
     if registry_changed:
@@ -4694,7 +4840,7 @@ def promote(args: argparse.Namespace) -> int:
         {path: candidate_text for path, (_sha, candidate_text) in candidates_to_write.items()},
     )
     print(
-        f"WROTE {int(membership_changed) + int(registry_changed) + int(evidence_changed) + int(bindings_changed):,} "
+        f"WROTE {int(go_edges_changed) + int(membership_changed) + int(registry_changed) + int(evidence_changed) + int(bindings_changed):,} "
         "durable registry "
         "artifact(s) before trait mutation"
     )
@@ -4840,6 +4986,12 @@ def _parser() -> argparse.ArgumentParser:
         default=DEFAULT_DURABLE_MEMBERSHIP_REGISTRY,
         help="future durable provider path recorded in membership GroundingEvidence",
     )
+    resolver.add_argument(
+        "--go-obo",
+        type=Path,
+        default=DEFAULT_GO_OBO,
+        help="pinned go-basic.obo for GO true-path inheritance; skipped if absent (#1002)",
+    )
     resolver.add_argument("--out", type=Path, default=DEFAULT_OUT_DIR / "resolved.jsonl")
     resolver.add_argument("--review", type=Path, default=DEFAULT_OUT_DIR / "review.tsv")
     resolver.add_argument(
@@ -4908,6 +5060,18 @@ def _parser() -> argparse.ArgumentParser:
             "durable approved UniProt membership output "
             f"(default: {DEFAULT_DURABLE_MEMBERSHIP_REGISTRY})"
         ),
+    )
+    promoter.add_argument(
+        "--durable-go-edges",
+        type=Path,
+        default=DEFAULT_GO_EDGES,
+        help=f"tracked GO true-path edges (default: {DEFAULT_GO_EDGES})",
+    )
+    promoter.add_argument(
+        "--go-obo",
+        type=Path,
+        default=DEFAULT_GO_OBO,
+        help="pinned go-basic.obo that proves each GO true-path edge before install",
     )
     promoter.add_argument(
         "--durable-qualified-record-bindings",

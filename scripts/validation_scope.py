@@ -35,6 +35,9 @@ FULL_VALIDATION_PATHS = frozenset(
         # The grounding validator imports its UniProt fact method and evidence policy
         # from here (#977).
         "scripts/uniprot_membership_snapshot.py",
+        # GO true-path edges for inherited GO annotations, and its OBO reader (#1002).
+        "scripts/go_true_path.py",
+        "scripts/obo_syntax.py",
         "scripts/elife_metallophore_grounding.py",
         "scripts/elife_metallophores.py",
         "data/curation/elife109154_traits.yaml",
