@@ -1,7 +1,11 @@
 # Residue chemistry to protein-trait reasoning: implementation plan
 
 Started: 2026-10-08. Baseline: `9c563d320b0b39548daf119812a5e25298236b63`.
-Status: implementation in progress; no completion or scientific sign-off claimed.
+Status: implementation published in [PR #1036](https://github.com/CultureBotAI/proteintraitsmech/pull/1036);
+final gates and release pending at this pre-merge checkpoint. The PR's check runs,
+merge event and final closeout comment are the authoritative release audit; this
+file cannot certify a future merge or branch deletion. No human scientific
+sign-off is claimed.
 
 ## Objective and acceptance contract
 
@@ -70,7 +74,7 @@ the diagram. The deliverable is not just another property table or a prose repor
   and unresolved microscopic steps.
 - [x] Extend the production consumer, executable pinned requests, and documentation
   so the complete chain is inspectable without manually joining separate files.
-- [ ] Add positive, negative, mutation, and end-to-end tests, including native
+- [x] Add positive, negative, mutation, and end-to-end tests, including native
   residues, wrong variants, equal coordinates in different proteins, partial
   compound mutants, missing local evidence, and source/citation preservation.
 
@@ -78,9 +82,9 @@ the diagram. The deliverable is not just another property table or a prose repor
 
 - [ ] Run applicable schema, catalog, molecular, source, writer, focused/full-test,
   and documentation gates. Check generated outputs for stale hashes or omissions.
-- [ ] Commit and push using explicit branch refspecs; open PR(s). Prefer one
+- [x] Commit and push using explicit branch refspecs; open PR(s). Prefer one
   coherent integration PR unless independently useful boundaries warrant a split.
-- [ ] Perform an adversarial scientific/implementation review; file concrete
+- [x] Perform an adversarial scientific/implementation review; file concrete
   reproduced findings as GitHub issues, fix them, and test the failure modes.
   Identify self-review honestly; do not imply independent human sign-off.
 - [ ] Wait for required PR and merge-queue checks, confirm actual merge and issue
@@ -171,3 +175,29 @@ required check results, merge SHA and verified source-branch deletion.
 - Committed integration as `9f2f310635d` and merged the concurrent main adoption
   without conflicts (`5e3f83d31f2`). Added catalog validation and offline DOM
   contracts to the existing required checks workflow; no checks bypassed.
+
+### Pre-merge requirement audit (2026-10-08)
+
+| Requirement | Implementing evidence and verification |
+| --- | --- |
+| Reviewed structured reference chemistry | `data/molecular/amino_acids/catalog.json` contains 20 unique standard residue entries, eight operational properties and 22 versioned/hash-pinned source references. `review.yaml` pins the exact catalog content and explicitly identifies AI source-transcription self-review, not independent approval. `NOTICE.txt` retains source terms. |
+| Existing trait identities, not duplicate records | Each catalog entry links MOD:00010–00029 and its residue ChEBI identity. Existing `data/traits/` records are unchanged and remain SEEDED; the catalog review is not a record-status promotion. |
+| Reproducible acquisition and projection | `fetch_amino_acid_properties.py` uses the shared fetch helper and a bounded new-snapshot contract. `build_amino_acid_properties.py` verifies all 22 receipts, parses downloaded Python as literal data, and requires explicit reviewed content for publication. Snapshot, mutation, symlink and non-execution tests cover these boundaries. |
+| Exact residue to chemistry | `consume_molecular_evidence.resolve` validates bundle/sequence pins and residue identity before returning `residue_context`; `residue_reasoning.query_chemistry` and `residue_evidence` return the catalog contrast and complete scoped evidence ledger. Unsupported residues are not imputed. |
+| Chemistry to local molecular context | Closed-schema environments retain source/mapping identity and heavy-atom coordinates/distances; the builder uses unrounded cutoffs. Published simulation has a separate evidence type and exact variant/partner scope. Eleven coordinate-generation tests cover source identity/release, mapping/residue mismatches, missing focus coordinates, invalid positions and cutoff boundaries. |
+| S267F acceptance case | The production pinned CLI returns `MATCHED_CURATED_MECHANISMS`, S/F property contrasts, reference neighborhood, exact CHO ligand context, and separately labeled taurocholate simulation. Two independent measured branches are retained; neither has proven molecular mediation. |
+| R252H acceptance case | The production pinned CLI returns `MATCHED_CURATED_MECHANISMS`, R/H property contrasts and the reference R252 neighborhood. Surface depletion and uptake reduction remain separate assay observations. No R252H simulation or mutant contact is fabricated. |
+| Generic chemistry never becomes mechanism proof | Both production responses retain `annotation_action: NONE`; all four context-to-assay links are `UNRESOLVED`. Tests cover stale pins, wrong protein/position/variant, partial compound mutants, missing context, source preservation, evidence-type promotion and cross-substrate transfer. Original seven mechanism graphs are unchanged. |
+| User-facing inspection | Full project-environment `just build-docs` completed successfully for 429,293 records. SLC10 export replay checked 1,267,193 bundle bytes and the 244-byte manifest. Offline DOM contract passed for both cases, properties, gaps, provenance and detail actions. Real-browser visual QA remains unavailable, not claimed. |
+| Generated-size impact | `audit_pages_size.py --site docs` passed: 804,023,113 total bytes, 1,355 files, 138,822,582 browse bytes, 12,569,919 largest browse shard, 499,363,526 detail bytes, 800,312 largest detail bucket. Total size and largest detail bucket have the existing 80%-budget warning; no limit was relaxed. |
+| Adversarial review and fixes | PR #1036 closes #1033 (simulation/assay molecule mismatch), #1034 (chemical-group classifier), and #1035 (CHO identity prose). Each finding has a documented reproduction or primary-source check and regression coverage. Review is transparently AI self-review. |
+| Release | Commit/push and PR creation are complete. Current-head required checks, full local tests/semantic validation, actual merge, issue closure and scoped branch cleanup remain release conditions, recorded in the PR closeout audit only after verification. |
+
+The full strict-record scan completed with zero errors. At this checkpoint the
+semantic grounding phase and full local test run are still live; a passing
+narrow test or green preliminary CI step does not certify either. The required
+CI `checks` workflow runs the full tests and DOM contract; `validate-strict`
+runs closed-schema validation, semantic grounding and graph structural audit
+over the full corpus for this schema change. History and vendored-sync checks
+are also required. Final completion must inspect all four checks on the final
+head and any required merge-group checks, not a superseded run.
