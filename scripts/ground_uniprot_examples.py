@@ -2456,6 +2456,20 @@ def _resolve_candidate(
     return row, reference if row["qualification_status"] == "QUALIFIED" else None
 
 
+def _review_inheritance_path(value: Any) -> str:
+    """Readable path for a well-formed list of terms, canonical JSON for anything else.
+
+    A malformed producer path is already REJECTED by the resolver; showing it must not
+    abort the run after half its staging outputs are written (#1045).
+    """
+
+    if not value:
+        return ""
+    if isinstance(value, list) and all(isinstance(term, str) for term in value):
+        return " > ".join(value)
+    return _canonical_json(value)
+
+
 def _review_flags(row: dict[str, Any]) -> list[str]:
     """Return deterministic flags whose cases the review protocol samples exhaustively."""
 
@@ -2703,7 +2717,7 @@ def resolve(args: argparse.Namespace) -> int:
                 "mapping_method": row.get("mapping_method") or "",
                 # What an inherited row actually rests on (#1042).
                 "source_trait_id": row.get("source_trait_id") or "",
-                "inheritance_path": " > ".join(row.get("inheritance_path") or []),
+                "inheritance_path": _review_inheritance_path(row.get("inheritance_path")),
                 "evidence_source": row.get("evidence_source") or "",
                 "source_release": row.get("source_release") or "",
                 "uniprot_release": row.get("uniprot_release") or "",

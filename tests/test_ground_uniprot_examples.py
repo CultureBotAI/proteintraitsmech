@@ -3239,6 +3239,28 @@ def test_a_producer_inheritance_path_must_be_proven_in_the_release(local_sources
     assert "invalid:go_true_path_edge" in row["reasons"]
 
 
+def test_a_malformed_producer_path_is_rejected_without_aborting_the_run(local_sources):
+    """#1045: the review TSV cell cannot crash resolve after its outputs are written."""
+
+    _go_true_path_candidate(local_sources)
+    (queued,) = _jsonl_rows(local_sources["queue"])
+    queued.update(
+        source_trait_id="GO:0009390", inheritance_path=["GO:0009390", 9389, "GO:0009388"]
+    )
+    _jsonl(local_sources["queue"], [queued])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "invalid:inheritance_path" in row["reasons"]
+    (review,) = list(
+        csv.DictReader(
+            local_sources["review"].read_text(encoding="utf-8").splitlines(), delimiter="\t"
+        )
+    )
+    assert review["candidate_id"] == row["candidate_id"]
+    assert review["inheritance_path"] == '["GO:0009390",9389,"GO:0009388"]'
+
+
 def test_go_true_path_promotion_installs_its_proven_edges(local_sources, monkeypatch):
     _go_true_path_candidate(local_sources)
     assert ground.main(_membership_resolve_args(local_sources)) == 0
