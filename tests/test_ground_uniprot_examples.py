@@ -3059,11 +3059,28 @@ namespace: cellular_component
 relationship: part_of GO:0009389 ! fixture parent
 
 [Term]
+id: GO:0009391
+name: fixture sibling component
+namespace: cellular_component
+relationship: part_of GO:0009389 ! fixture parent
+
+[Term]
 id: GO:0009399
 name: fixture function
 namespace: molecular_function
 relationship: part_of GO:0009388 ! a cross-namespace edge never inherits
 """
+
+
+def _go_xref(term, evidence):
+    return {
+        **_GO_FACT,
+        "id": term,
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": evidence},
+        ],
+    }
 
 
 def _go_true_path_candidate(
@@ -3072,19 +3089,27 @@ def _go_true_path_candidate(
     evidence="IDA:EcoCyc",
     fact_term="GO:0009390",
     entry_type=None,
+    ec_codes=None,
+    extra_facts=(),
 ):
     local_sources["go_obo"].write_text(_GO_OBO_FIXTURE, encoding="utf-8")
-    fact = {
-        **_GO_FACT,
-        "id": fact_term,
-        "properties": [
-            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
-            {"key": "GoEvidenceType", "value": evidence},
-        ],
+    entry = {
+        "uniProtKBCrossReferences": [
+            _go_xref(fact_term, evidence),
+            *(_go_xref(term, code) for term, code in extra_facts),
+        ]
     }
-    entry = {"uniProtKBCrossReferences": [fact]}
     if entry_type is not None:
         entry["entryType"] = entry_type
+    if ec_codes is not None:
+        # The entry's EC assignment, whose own evidence the #1048 rule reads.
+        entry["proteinDescription"] = {
+            "recommendedName": {
+                "ecNumbers": [
+                    {"value": "1.8.5.3", "evidences": [{"evidenceCode": c} for c in ec_codes]}
+                ]
+            }
+        }
     return _functional_candidate(local_sources, record_term, "SOURCE_ANNOTATION", entry)
 
 
@@ -3317,6 +3342,22 @@ def test_go_true_path_promotion_installs_its_proven_edges(local_sources, monkeyp
         )
 
 
+def test_go_true_path_prefers_stronger_evidence_over_a_lower_go_id(local_sources):
+    """#1050: of two equally short paths, direct experimental evidence beats IMP."""
+
+    _go_true_path_candidate(
+        local_sources,
+        evidence="IMP:CAFA",
+        fact_term="GO:0009390",
+        extra_facts=[("GO:0009391", "IDA:EcoCyc")],
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["source_trait_id"] == "GO:0009391"
+    assert row["inheritance_path"] == ["GO:0009391", "GO:0009389", "GO:0009388"]
+
+
 def test_inherited_go_row_keeps_its_staged_candidate_id_through_promotion(
     local_sources, monkeypatch
 ):
@@ -3408,29 +3449,48 @@ def test_concurrent_edge_install_during_the_obo_parse_is_refused(local_sources, 
 
 
 @pytest.mark.parametrize(
-    ("entry_type", "status", "reason"),
+    ("entry_type", "ec_codes", "status", "reason"),
     [
-        ("UniProtKB reviewed (Swiss-Prot)", "QUALIFIED", None),
+        ("UniProtKB reviewed (Swiss-Prot)", [], "QUALIFIED", None),
+        ("UniProtKB reviewed (Swiss-Prot)", ["ECO:0000269"], "QUALIFIED", None),
         (
             "UniProtKB unreviewed (TrEMBL)",
+            [],
             "REJECTED",
             "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_on_trembl",
         ),
         (
             None,
+            [],
             "REJECTED",
             "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_entry_type_missing",
         ),
+        # #1048: an EC number assigned by similarity is not a curated EC.
+        (
+            "UniProtKB reviewed (Swiss-Prot)",
+            ["ECO:0000250"],
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_ec_evidence_ECO:0000250",
+        ),
+        (
+            "UniProtKB reviewed (Swiss-Prot)",
+            None,
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_ec_evidence_missing",
+        ),
     ],
 )
-def test_ec_derived_go_qualifies_only_on_swissprot(local_sources, entry_type, status, reason):
-    """#1004: IEA:UniProtKB-EC qualifies on a reviewed entry and nowhere else."""
+def test_ec_derived_go_qualifies_only_on_swissprot(
+    local_sources, entry_type, ec_codes, status, reason
+):
+    """#1004, #1048: IEA:UniProtKB-EC qualifies on a reviewed entry with a curated EC."""
 
     _go_true_path_candidate(
         local_sources,
         record_term="GO:0009390",
         evidence="IEA:UniProtKB-EC",
         entry_type=entry_type,
+        ec_codes=ec_codes,
     )
     assert ground.main(_membership_resolve_args(local_sources)) == 0
     row = _resolved(local_sources)
@@ -3447,6 +3507,7 @@ def test_validator_replay_cross_checks_the_swissprot_stamp(local_sources, monkey
         record_term="GO:0009390",
         evidence="IEA:UniProtKB-EC",
         entry_type="UniProtKB reviewed (Swiss-Prot)",
+        ec_codes=[],
     )
     assert ground.main(_membership_resolve_args(local_sources)) == 0
     assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"

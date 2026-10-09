@@ -31,7 +31,9 @@ canonical example:
   default-deny policy in `uniprot_membership_snapshot.fact_evidence_failure`), plus one
   narrow Swiss-Prot rule (#1004): on a reviewed entry, a GO term inferred from the
   curated EC number (`IEA:UniProtKB-EC`) and a catalytic activity curated without an
-  evidence tag also qualify; such a fact records `uniprot_entry_type`. A ComplexPortal,
+  evidence tag also qualify; such a fact records `uniprot_entry_type`. An EC-derived GO
+  fact also records the entry's EC assignments (`uniprot_ec_evidence`) and qualifies only
+  when none is inferred by similarity, sequence model, or automatic annotation (#1048). A ComplexPortal,
   Rhea, or GO fact is installed only from a verified network UniProt fetch receipt. The UniProt lane for ComplexPortal and Rhea records sits beside their
   source-native lanes, which stay receipt-locked; see
   [cross-Mech protein examples](../../research/cross-mech-protein-examples.md) (#652).

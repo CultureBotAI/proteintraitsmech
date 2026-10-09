@@ -530,7 +530,10 @@ def test_fact_evidence_policy_is_default_deny(xref_or_reaction, expected):
     assert membership.fact_evidence_failure({"database": "ComplexPortal"}) is None
 
 
-def _go_row(evidence, entry_type=None):
+_CURATED_EC = [{"ec_number": "3.5.2.6", "evidence_codes": []}]
+
+
+def _go_row(evidence, entry_type=None, ec_evidence=_CURATED_EC):
     row = {
         "database": "GO",
         "database_cross_reference": {
@@ -541,6 +544,8 @@ def _go_row(evidence, entry_type=None):
     }
     if entry_type is not None:
         row["uniprot_entry_type"] = entry_type
+    if ec_evidence is not None:
+        row["uniprot_ec_evidence"] = ec_evidence
     return row
 
 
@@ -560,6 +565,79 @@ def _go_row(evidence, entry_type=None):
 )
 def test_swissprot_ec_inference_is_the_only_admitted_go_iea(evidence, entry_type, expected):
     assert membership.fact_evidence_failure(_go_row(evidence, entry_type)) == expected
+
+
+@pytest.mark.parametrize(
+    ("ec_evidence", "expected"),
+    [
+        # A curated EC: untagged, or experimental / curator evidence (the Rhea standard).
+        ([{"ec_number": "2.3.1.169", "evidence_codes": []}], None),
+        ([{"ec_number": "2.3.1.169", "evidence_codes": ["ECO:0000269"]}], None),
+        ([{"ec_number": "2.3.1.169", "evidence_codes": ["ECO:0000305"]}], None),
+        # An EC inferred by similarity (P31896) or a sequence model (P00807) is not (#1048).
+        (
+            [{"ec_number": "1.2.7.4", "evidence_codes": ["ECO:0000250"]}],
+            "go_evidence_IEA:UniProtKB-EC_ec_evidence_ECO:0000250",
+        ),
+        (
+            [{"ec_number": "3.5.2.6", "evidence_codes": ["ECO:0000255"]}],
+            "go_evidence_IEA:UniProtKB-EC_ec_evidence_ECO:0000255",
+        ),
+        # One weak EC withholds every EC-derived term: which EC a term came from is unknown.
+        (
+            [
+                {"ec_number": "1.1.1.1", "evidence_codes": []},
+                {"ec_number": "2.7.1.1", "evidence_codes": ["ECO:0000256"]},
+            ],
+            "go_evidence_IEA:UniProtKB-EC_ec_evidence_ECO:0000256",
+        ),
+        ([], "go_evidence_IEA:UniProtKB-EC_ec_evidence_missing"),
+        (None, "go_evidence_IEA:UniProtKB-EC_ec_evidence_missing"),
+    ],
+)
+def test_ec_derived_go_needs_a_curated_ec_assignment(ec_evidence, expected):
+    row = _go_row("IEA:UniProtKB-EC", membership.SWISSPROT_ENTRY_TYPE, ec_evidence)
+    assert membership.fact_evidence_failure(row) == expected
+
+
+def test_entry_ec_evidence_unions_names_and_catalytic_activities():
+    entry = {
+        "proteinDescription": {
+            "recommendedName": {"ecNumbers": [{"value": "3.5.2.6"}]},
+            "alternativeNames": [
+                {"ecNumbers": [{"value": "1.1.1.1", "evidences": [{"evidenceCode": "ECO:0000305"}]}]}
+            ],
+            "includes": [
+                {"recommendedName": {"ecNumbers": [{"value": "2.7.1.1"}]}},
+            ],
+            "contains": [
+                {"recommendedName": {"ecNumbers": [{"value": "3.4.21.-"}]}},
+            ],
+        },
+        "comments": [
+            {
+                "commentType": "CATALYTIC ACTIVITY",
+                "reaction": {"ecNumber": "3.5.2.6", "evidences": [{"evidenceCode": "ECO:0000255"}]},
+            },
+            {"commentType": "FUNCTION", "texts": []},
+        ],
+    }
+    assert membership._entry_ec_evidence(entry) == [
+        {"ec_number": "1.1.1.1", "evidence_codes": ["ECO:0000305"]},
+        {"ec_number": "2.7.1.1", "evidence_codes": []},
+        {"ec_number": "3.4.21.-", "evidence_codes": []},
+        # An untagged name and a sequence-model reaction for one EC: the weak tag is kept.
+        {"ec_number": "3.5.2.6", "evidence_codes": ["ECO:0000255"]},
+    ]
+
+
+def test_evidence_rank_prefers_direct_experimental_evidence():
+    ranks = {
+        evidence: membership.fact_evidence_rank(_go_row(evidence))
+        for evidence in ("IDA:EcoCyc", "EXP:UniProtKB", "IMP:CAFA", "TAS:Reactome", "IEA:UniProtKB-EC")
+    }
+    assert ranks["IDA:EcoCyc"] == ranks["EXP:UniProtKB"] < ranks["IMP:CAFA"]
+    assert ranks["IMP:CAFA"] < ranks["TAS:Reactome"] < ranks["IEA:UniProtKB-EC"]
 
 
 @pytest.mark.parametrize(
@@ -595,6 +673,7 @@ def test_entry_type_is_recorded_only_where_the_swissprot_rule_decides():
     rows = _functional_rows(
         {
             "entryType": membership.SWISSPROT_ENTRY_TYPE,
+            "proteinDescription": {"recommendedName": {"ecNumbers": [{"value": "3.5.2.6"}]}},
             "uniProtKBCrossReferences": [GO_XREF, ec_xref],
             "comments": [CATALYTIC],
         }
@@ -602,8 +681,16 @@ def test_entry_type_is_recorded_only_where_the_swissprot_rule_decides():
     by_trait = {row["source_trait_id"]: row for row in rows}
     # The IDA fact keeps the pre-#1004 payload, and therefore its content address.
     assert "uniprot_entry_type" not in by_trait["GO:0009390"]
+    assert "uniprot_ec_evidence" not in by_trait["GO:0009390"]
     assert by_trait["GO:0008800"]["uniprot_entry_type"] == membership.SWISSPROT_ENTRY_TYPE
+    # Every EC on the entry, from the protein name and the catalytic activity.
+    assert by_trait["GO:0008800"]["uniprot_ec_evidence"] == [
+        {"ec_number": "1.14.13.182", "evidence_codes": []},
+        {"ec_number": "3.5.2.6", "evidence_codes": []},
+    ]
     assert by_trait["RHEA:37871"]["uniprot_entry_type"] == membership.SWISSPROT_ENTRY_TYPE
+    # The reaction stamp carries no EC record: the Rhea rule reads its own evidences.
+    assert "uniprot_ec_evidence" not in by_trait["RHEA:37871"]
     assert all(membership.fact_evidence_failure(row) is None for row in rows)
     assert membership.merge_memberships(rows)  # stamped rows are valid snapshot rows
     # An entry type on a fact the rule does not decide is rejected, not ignored.
@@ -614,3 +701,51 @@ def test_entry_type_is_recorded_only_where_the_swissprot_rule_decides():
     # The stamp is part of the content address.
     unstamped = {k: v for k, v in by_trait["GO:0008800"].items() if k != "uniprot_entry_type"}
     assert membership.compute_membership_id(unstamped) != by_trait["GO:0008800"]["membership_id"]
+
+
+def test_ec_evidence_is_recorded_only_on_a_stamped_ec_derived_go_fact():
+    ec_xref = {
+        "database": "GO",
+        "id": "GO:0008800",
+        "properties": [{"key": "GoEvidenceType", "value": "IEA:UniProtKB-EC"}],
+    }
+    (fact,) = _functional_rows(
+        {
+            "entryType": membership.SWISSPROT_ENTRY_TYPE,
+            "proteinDescription": {"recommendedName": {"ecNumbers": [{"value": "3.5.2.6"}]}},
+            "uniProtKBCrossReferences": [ec_xref],
+        }
+    )
+    assert membership.merge_memberships([fact])
+    for broken, message in [
+        ({**fact, "uniprot_ec_evidence": [{"ec_number": "3.5.2.6"}]}, "items must be"),
+        (
+            {
+                **fact,
+                "uniprot_ec_evidence": [
+                    {"ec_number": "3.5.2.6", "evidence_codes": ["ECO:0000255", "ECO:0000250"]}
+                ],
+            },
+            "items must be",
+        ),
+        (
+            {
+                **fact,
+                "uniprot_ec_evidence": [
+                    {"ec_number": "3.5.2.6", "evidence_codes": []},
+                    {"ec_number": "1.1.1.1", "evidence_codes": []},
+                ],
+            },
+            "once, sorted",
+        ),
+        (
+            {k: v for k, v in fact.items() if k != "uniprot_entry_type"},
+            "only on a stamped",
+        ),
+    ]:
+        broken["membership_id"] = membership.compute_membership_id(broken)
+        with pytest.raises(membership.MembershipSnapshotError, match=message):
+            membership.merge_memberships([broken])
+    # The EC record is part of the content address.
+    stripped = {k: v for k, v in fact.items() if k != "uniprot_ec_evidence"}
+    assert membership.compute_membership_id(stripped) != fact["membership_id"]

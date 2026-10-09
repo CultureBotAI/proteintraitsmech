@@ -183,12 +183,19 @@ not resolve `SOURCE_ANNOTATION`. The lane now exists (grounding plan, 2026-10-05
   catalytic activity curated with no evidence tag also qualify. Neither qualifies on
   TrEMBL. Every other IEA source (InterPro2GO, ARBA, UniRule, SubCell), IBA, NAS, curated
   similarity (`ECO:0000250`), automatic (`ECO:0000256`), and untraceable author statements
-  (`ECO:0000303`) stay candidates. The fact row records `uniprot_entry_type` only where
-  this rule decides it, so every earlier fact keeps its content address.
+  (`ECO:0000303`) stay candidates. The EC number must itself be curated (#1048): every
+  evidence code on the entry's EC assignments, in its protein names and catalytic
+  activities, must be absent or experimental/curator (`ECO:0000269`, `0000304`,
+  `0000305`), so a GO term derived from a by-similarity or sequence-model EC stays a
+  candidate. The fact row records `uniprot_entry_type`, and for an EC-derived GO term
+  `uniprot_ec_evidence`, only where this rule decides it, so every earlier fact keeps its
+  content address.
 - GO true-path inheritance (#1002). When a GO record's own term has no exact qualifying
   fact, the resolver looks for one of the protein's qualifying GO facts whose term reaches
   the record's term by `is_a` or `part_of` within one GO namespace in the local
-  `go-basic.obo`. The shortest path wins, then the lowest GO ID. The occurrence records
+  `go-basic.obo`. The strongest evidence wins (direct experimental, then mutant
+  phenotype or expression, then curator, then the EC rule; #1050), then the shortest
+  path, then the lowest GO ID. The occurrence records
   the descendant as `source_trait_id` with an explicit `inheritance_path`; the review
   TSV shows both, and review samples every such row (`ANCESTOR_INHERITANCE`). The
   promoter proves each edge in that release and installs it, with the release that proved

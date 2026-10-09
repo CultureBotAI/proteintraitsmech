@@ -1655,7 +1655,9 @@ def _apply_go_true_path(
 
     Only when the record's own term has no exact, evidence-qualifying fact. Among the
     protein's qualifying GO facts whose term reaches the record's term by ``is_a`` or
-    ``part_of`` in the local GO release, the shortest path wins, then the lowest GO ID.
+    ``part_of`` in the local GO release, the strongest evidence wins (direct experimental
+    before mutant phenotype or expression, then curator, then the Swiss-Prot EC rule;
+    #1050), then the shortest path, then the lowest GO ID.
     The rewritten candidate still passes every exact-fact, receipt and review check.
     """
 
@@ -1670,7 +1672,7 @@ def _apply_go_true_path(
         or reference is None
     ):
         return
-    from uniprot_membership_snapshot import fact_evidence_failure
+    from uniprot_membership_snapshot import fact_evidence_failure, fact_evidence_rank
 
     protein_id = _clean_text(row.get("protein_id"))
     facts = [
@@ -1684,15 +1686,15 @@ def _apply_go_true_path(
     ]
     if any(fact.get("source_trait_id") == trait_id for fact in facts):
         return
-    options: list[tuple[int, str, list[str]]] = []
+    options: list[tuple[int, int, str, list[str]]] = []
     for fact in facts:
         descendant = str(fact.get("source_trait_id"))
         path = context.go_release.path(descendant, trait_id)
         if path:
-            options.append((len(path), descendant, path))
+            options.append((fact_evidence_rank(fact), len(path), descendant, path))
     if not options:
         return
-    _, descendant, path = min(options)
+    _, _, descendant, path = min(options)
     row["source_trait_id"] = descendant
     row["inheritance_path"] = path
 

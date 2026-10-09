@@ -32,7 +32,10 @@ annotation qualifies only with an experimental or curator code and a catalytic a
 only with experimental or curator-inference evidence. One narrow widening is the
 maintainer's decision on #1004: on a reviewed Swiss-Prot entry, ``IEA:UniProtKB-EC`` GO
 terms and catalytic activities curated without an evidence tag qualify; such facts
-record ``uniprot_entry_type``. Any further widening is again a maintainer decision.
+record ``uniprot_entry_type``. An EC-derived GO fact also records the entry's EC
+assignments (``uniprot_ec_evidence``) and qualifies only when none of them is inferred
+by similarity, sequence model, or automatic annotation (#1048). Any further widening is
+again a maintainer decision.
 
 :func:`expected_mapping_method` names the occurrence method each fact may support, so a
 GO annotation can never be recorded as a membership or the reverse.
@@ -93,7 +96,10 @@ RHEA_QUALIFYING_ECO = frozenset({"ECO:0000269", "ECO:0000304", "ECO:0000305"})
 # Narrow, maintainer-approved widening (#1004): on a reviewed Swiss-Prot entry, a GO
 # term inferred from the entry's curated EC number (IEA:UniProtKB-EC) and a catalytic
 # activity curated without an evidence tag also qualify. Neither holds on TrEMBL, and
-# every other IEA source, IBA, NAS and automatic ECO stays excluded.
+# every other IEA source, IBA, NAS and automatic ECO stays excluded. The EC number must
+# itself be curated, not inferred (#1048): every evidence code on the entry's EC
+# assignments (protein names and catalytic activities) must be absent or one of
+# RHEA_QUALIFYING_ECO, so a by-similarity or sequence-model EC does not qualify.
 SWISSPROT_ENTRY_TYPE = "UniProtKB reviewed (Swiss-Prot)"
 TREMBL_ENTRY_TYPE = "UniProtKB unreviewed (TrEMBL)"
 ENTRY_TYPES = frozenset({SWISSPROT_ENTRY_TYPE, TREMBL_ENTRY_TYPE})
@@ -105,6 +111,7 @@ ANNOTATION_NAMESPACES = frozenset({"GO"})
 _GO_ID = re.compile(r"^GO:[0-9]{7}$")
 _RHEA_ID = re.compile(r"^RHEA:[1-9][0-9]*$")
 _COMPLEXPORTAL_ID = re.compile(r"^CPX-[1-9][0-9]*$")
+_ECO_ID = re.compile(r"^ECO:[0-9]{7}$")
 
 _UNIPROT = re.compile(
     r"^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|"
@@ -126,7 +133,7 @@ _PAYLOAD_FIELDS = (
 )
 # Recorded only on a fact whose evidence the Swiss-Prot rule decides (#1004), so every
 # fact captured before that rule keeps its content address.
-_OPTIONAL_PAYLOAD_FIELDS = ("uniprot_entry_type",)
+_OPTIONAL_PAYLOAD_FIELDS = ("uniprot_entry_type", "uniprot_ec_evidence")
 _ALLOWED_FIELDS = {"membership_id", *_PAYLOAD_FIELDS, *_OPTIONAL_PAYLOAD_FIELDS}
 
 
@@ -185,7 +192,8 @@ def fact_evidence_failure(row: Mapping[str, Any]) -> str | None:
         if code in GO_QUALIFYING_EVIDENCE:
             return None
         if _swissprot_conditional(row):
-            return _swissprot_failure(row, f"go_evidence_{_go_evidence_value(xref)}")
+            label = f"go_evidence_{_go_evidence_value(xref)}"
+            return _swissprot_failure(row, label) or _ec_evidence_failure(row, label)
         return f"go_evidence_{code or 'missing'}"
     if database == RHEA_DATABASE:
         codes = _rhea_evidence_codes(xref)
@@ -195,6 +203,110 @@ def fact_evidence_failure(row: Mapping[str, Any]) -> str | None:
             return _swissprot_failure(row, "rhea_evidence_missing")
         return "rhea_evidence_" + ("+".join(codes) if codes else "missing")
     return None
+
+
+# Strength order among qualifying GO evidence, for choosing between facts (#1050):
+# direct experimental, then indirect experimental, then curator, then the EC rule.
+_GO_EVIDENCE_RANK = {
+    **{code: 0 for code in ("EXP", "IDA", "IPI", "HTP", "HDA")},
+    **{code: 1 for code in ("IMP", "IGI", "IEP", "HMP", "HGI", "HEP")},
+    **{code: 2 for code in ("IC", "TAS")},
+}
+
+
+def fact_evidence_rank(row: Mapping[str, Any]) -> int:
+    """Lower is stronger: the order in which qualifying GO facts are preferred."""
+
+    xref = row.get("database_cross_reference")
+    code = _go_evidence_code(xref if isinstance(xref, Mapping) else {})
+    return _GO_EVIDENCE_RANK.get(code, 3)
+
+
+def _ec_evidence_failure(row: Mapping[str, Any], label: str) -> str | None:
+    """The #1048 condition on an EC-derived GO term: its EC must itself be curated."""
+
+    evidence = row.get("uniprot_ec_evidence")
+    if not evidence:
+        return f"{label}_ec_evidence_missing"
+    weak = sorted(
+        {code for item in evidence for code in item.get("evidence_codes", [])}
+        - RHEA_QUALIFYING_ECO
+    )
+    if weak:
+        return f"{label}_ec_evidence_" + "+".join(weak)
+    return None
+
+
+def _entry_ec_evidence(entry: Mapping[str, Any]) -> list[dict[str, Any]]:
+    """Every EC assignment on an entry, with the union of its evidence codes (#1048).
+
+    EC numbers come from the protein names (recommended, alternative and submission
+    names, including those of included domains and contained chains) and from
+    catalytic-activity reactions, so a weak tag on either statement of an EC is kept.
+    Every EC on the entry is listed: which one an EC-derived GO term came from is not in
+    the response, so one weak EC withholds them all.
+    """
+
+    found: dict[str, set[str]] = {}
+
+    def add(value: object, evidences: object) -> None:
+        if not isinstance(value, str) or not value.strip():
+            return
+        codes = found.setdefault(value.strip(), set())
+        for item in evidences if isinstance(evidences, list) else []:
+            if isinstance(item, Mapping) and isinstance(item.get("evidenceCode"), str):
+                codes.add(item["evidenceCode"])
+
+    description = entry.get("proteinDescription")
+    blocks: list[Mapping[str, Any]] = []
+    if isinstance(description, Mapping):
+        blocks.append(description)
+        for key in ("includes", "contains"):
+            blocks += [b for b in description.get(key) or [] if isinstance(b, Mapping)]
+    for block in blocks:
+        names = [block.get("recommendedName")]
+        names += list(block.get("alternativeNames") or [])
+        names += list(block.get("submissionNames") or [])
+        for name in names:
+            if not isinstance(name, Mapping):
+                continue
+            for ec in name.get("ecNumbers") or []:
+                if isinstance(ec, Mapping):
+                    add(ec.get("value"), ec.get("evidences"))
+    for comment in entry.get("comments") or []:
+        if isinstance(comment, Mapping) and comment.get("commentType") == "CATALYTIC ACTIVITY":
+            reaction = comment.get("reaction")
+            if isinstance(reaction, Mapping):
+                add(reaction.get("ecNumber"), reaction.get("evidences"))
+    return [
+        {"ec_number": ec, "evidence_codes": sorted(codes)} for ec, codes in sorted(found.items())
+    ]
+
+
+def _ec_evidence_errors(value: object) -> list[str]:
+    if not isinstance(value, list):
+        return ["uniprot_ec_evidence must be a list"]
+    errors: list[str] = []
+    numbers = []
+    for item in value:
+        if (
+            not isinstance(item, dict)
+            or set(item) != {"ec_number", "evidence_codes"}
+            or not isinstance(item["ec_number"], str)
+            or not item["ec_number"]
+            or item["ec_number"] != item["ec_number"].strip()
+            or not isinstance(item["evidence_codes"], list)
+            or any(
+                not isinstance(code, str) or _ECO_ID.fullmatch(code) is None
+                for code in item["evidence_codes"]
+            )
+            or item["evidence_codes"] != sorted(set(item["evidence_codes"]))
+        ):
+            return ["uniprot_ec_evidence items must be {ec_number, sorted unique ECO codes}"]
+        numbers.append(item["ec_number"])
+    if numbers != sorted(set(numbers)):
+        errors.append("uniprot_ec_evidence must list each EC number once, sorted")
+    return errors
 
 
 def _rhea_evidence_codes(cross_reference: Mapping[str, Any]) -> list[str]:
@@ -344,6 +456,15 @@ def _validate_membership(value: object) -> list[str]:
             errors.append(f"uniprot_entry_type must be one of {sorted(ENTRY_TYPES)}")
         elif not _swissprot_conditional(value):
             errors.append("uniprot_entry_type is recorded only where the Swiss-Prot rule applies")
+    if "uniprot_ec_evidence" in value:
+        if not (
+            value.get("database") == "GO"
+            and _swissprot_conditional(value)
+            and "uniprot_entry_type" in value
+        ):
+            errors.append("uniprot_ec_evidence is recorded only on a stamped EC-derived GO fact")
+        else:
+            errors.extend(_ec_evidence_errors(value["uniprot_ec_evidence"]))
 
     database = value.get("database")
     database_id = value.get("database_id")
@@ -413,6 +534,7 @@ def extract_entry_memberships(
     if _RELEASE.fullmatch(uniprot_release) is None:
         raise MembershipSnapshotError("invalid uniprot_release")
     entry_type = entry.get("entryType")
+    ec_evidence = _entry_ec_evidence(entry)
     raw_cross_references = entry.get("uniProtKBCrossReferences", [])
     if raw_cross_references is None:
         raw_cross_references = []
@@ -448,6 +570,9 @@ def extract_entry_memberships(
         if _swissprot_conditional(row) and entry_type in ENTRY_TYPES:
             # Without a recognized entryType the fact stays captured but cannot qualify.
             row["uniprot_entry_type"] = entry_type
+            if database == "GO":
+                # The EC assignment an EC-derived GO term rests on, for replay (#1048).
+                row["uniprot_ec_evidence"] = ec_evidence
         row["membership_id"] = compute_membership_id(row)
         errors = _validate_membership(row)
         if errors:

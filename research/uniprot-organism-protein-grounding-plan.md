@@ -4500,7 +4500,9 @@ found.
   candidate evidence, with one maintainer-approved exception (#1004): on a reviewed
   Swiss-Prot entry, GO terms inferred from the curated EC number (`IEA:UniProtKB-EC`)
   and catalytic activities curated without an evidence tag qualify. Neither does on
-  TrEMBL; every other automatic, phylogenetic, or textual source stays a candidate.
+  TrEMBL; every other automatic, phylogenetic, or textual source stays a candidate. The
+  EC number must itself be curated: an EC assignment inferred by similarity, sequence
+  model, or automatic annotation does not qualify the GO terms derived from it (#1048).
 
 ### 2026-10-05 — cross-Mech examples, batch 001 (#652)
 
