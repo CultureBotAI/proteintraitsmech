@@ -104,4 +104,10 @@ jobs:
       # Validate the external observation store and every derived pilot artifact.
       - run: just check-biophysical-pilot
 
+      # Reference chemistry is reviewed/pinned data, not a mechanism predictor.
+      - run: just check-amino-acid-properties
+
       - run: just test
+
+      # Offline DOM contract; this does not claim real-browser visual inspection.
+      - run: node tests/slc10_dom_test.cjs

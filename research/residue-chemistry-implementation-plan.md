@@ -168,3 +168,6 @@ required check results, merge SHA and verified source-branch deletion.
   (structured record-review adoption #1032); integration must preserve it. That
   review profile concerns native trait-record routes; this catalog self-review
   neither promotes nor certifies the existing 20 SEEDED records.
+- Committed integration as `9f2f310635d` and merged the concurrent main adoption
+  without conflicts (`5e3f83d31f2`). Added catalog validation and offline DOM
+  contracts to the existing required checks workflow; no checks bypassed.
