@@ -4487,6 +4487,28 @@ found.
 - No trait or durable grounding write occurred in this change. Inclusion of the sibling
   candidates is a separate, reviewed promotion batch.
 
+### 2026-10-09 — cross-Mech examples, batch 002 (#652, #1002, #1004)
+
+- 78 more sibling-Mech (protein, trait) claims are `QUALIFIED` whole-protein examples on
+  19 records: 64 GO localization, 8 GO molecular function, and 6 Rhea. 65 are inherited
+  from a descendant GO annotation; 14 rest on the narrow Swiss-Prot rule (8 EC-derived
+  GO with a curated EC, 6 untagged reactions). All are Swiss-Prot. 77 examples were
+  appended and 1 legacy example was upgraded. The batch created
+  `go_true_path_edges.jsonl` (12 edges) and grows `uniprot_memberships.jsonl` to 359
+  facts. Full record:
+  [batch 002 review](cross-mech-examples-batch-002-review-2026-10-09.md).
+- 144 selected pairs were rejected: 142 by the resolver and 2 on review. The review
+  rejections are P08306, a cytochrome c oxidase subunit without the catalytic site
+  (#983), and SpoIVA, whose only fact is a mutant phenotype (#1049). Three localized pairs
+  still wait for an InterPro occurrence (#1003).
+- A first promotion was redone after review found three problems (#1048–#1050), all
+  fixed in #1031 and followed by a fresh canary:
+  - EC-derived GO from by-similarity and sequence-model ECs;
+  - SpoIVA;
+  - an evidence-blind tie-break.
+
+  AI review, not curator sign-off.
+
 ### 2026-10-08 — GO true-path inheritance and the Swiss-Prot evidence rule (#1002, #1004)
 
 - Priority 4's "GO: direct GOA/UniProt annotation, retaining the evidence code" now also
