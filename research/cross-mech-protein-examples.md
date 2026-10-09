@@ -187,14 +187,16 @@ not resolve `SOURCE_ANNOTATION`. The lane now exists (grounding plan, 2026-10-05
   this rule decides it, so every earlier fact keeps its content address.
 - GO true-path inheritance (#1002). When a GO record's own term has no exact qualifying
   fact, the resolver looks for one of the protein's qualifying GO facts whose term reaches
-  the record's term by `is_a` or `part_of` within one GO namespace in the pinned
+  the record's term by `is_a` or `part_of` within one GO namespace in the local
   `go-basic.obo`. The shortest path wins, then the lowest GO ID. The occurrence records
-  the descendant as `source_trait_id` with an explicit `inheritance_path`, and review
-  samples every such row (`ANCESTOR_INHERITANCE`). The promoter proves each edge in the
-  release and installs it in `data/grounding/go_true_path_edges.jsonl`, which the
-  validator replays without the OBO file. `just check-go-true-path` replays that file
-  against the local release. An annotation to a less specific term never supports a more
-  specific record.
+  the descendant as `source_trait_id` with an explicit `inheritance_path`; the review
+  TSV shows both, and review samples every such row (`ANCESTOR_INHERITANCE`). The
+  promoter proves each edge in that release and installs it, with the release that proved
+  it, in `data/grounding/go_true_path_edges.jsonl`, which the validator replays without
+  the OBO file. The GO release itself is not pinned (#1039): a tracked edge stays valid
+  while a later release keeps it, and `just check-go-true-path` reports any tracked edge
+  the local release no longer has. An annotation to a less specific term never supports
+  a more specific record.
 
 The sequence, in order:
 

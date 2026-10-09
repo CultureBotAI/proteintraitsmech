@@ -201,6 +201,8 @@ _REVIEW_COLUMNS = (
     "scope",
     "evidence_tier",
     "mapping_method",
+    "source_trait_id",
+    "inheritance_path",
     "evidence_source",
     "source_release",
     "uniprot_release",
@@ -513,6 +515,16 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
         "intervals": intervals,
         "residue_positions": positions,
     }
+    if (
+        identity["mapping_method"] == "SOURCE_ANNOTATION"
+        and str(identity["trait_id"] or "").startswith("GO:")
+        and str(identity["source_trait_id"] or "").startswith("GO:")
+    ):
+        # A GO annotation candidate is the claim (protein, record term). The descendant
+        # annotation a true-path inheritance resolves to is evidence, bound by the
+        # resolution digest and the evidence row, so the candidate keeps its staging ID
+        # through review, promotion, and durable replay (#1002, #1037).
+        identity["source_trait_id"] = identity["trait_id"]
     payload = {key: identity[key] for key in _CANDIDATE_ID_FIELDS}
     if identity["mapping_method"] == "SIFTS_RESIDUE_MAPPING":
         # One SIFTS-bound trait/protein pair can have several independently reviewable
@@ -1101,7 +1113,7 @@ def _provider_context(
     go_release: GoRelease | None = None
     go_obo = getattr(args, "go_obo", None)
     if "uniprot-membership" in providers and isinstance(go_obo, Path) and go_obo.is_file():
-        # GO true-path inheritance (#1002) is attempted only with the pinned release
+        # GO true-path inheritance (#1002) is attempted only with a local GO release
         # present; without it a GO record still needs an exact annotation.
         try:
             go_release = load_go_obo(go_obo.resolve())
@@ -1643,7 +1655,7 @@ def _apply_go_true_path(
 
     Only when the record's own term has no exact, evidence-qualifying fact. Among the
     protein's qualifying GO facts whose term reaches the record's term by ``is_a`` or
-    ``part_of`` in the pinned release, the shortest path wins, then the lowest GO ID.
+    ``part_of`` in the local GO release, the shortest path wins, then the lowest GO ID.
     The rewritten candidate still passes every exact-fact, receipt and review check.
     """
 
@@ -2689,6 +2701,9 @@ def resolve(args: argparse.Namespace) -> int:
                 "scope": row.get("scope") or "",
                 "evidence_tier": row.get("evidence_tier") or "",
                 "mapping_method": row.get("mapping_method") or "",
+                # What an inherited row actually rests on (#1042).
+                "source_trait_id": row.get("source_trait_id") or "",
+                "inheritance_path": " > ".join(row.get("inheritance_path") or []),
                 "evidence_source": row.get("evidence_source") or "",
                 "source_release": row.get("source_release") or "",
                 "uniprot_release": row.get("uniprot_release") or "",
@@ -3639,10 +3654,22 @@ def _selected_registry_rows(
     return references, evidence_rows
 
 
+def _record_has_inheritance(record: dict[str, Any]) -> bool:
+    """Whether any example occurrence in a record claims an inheritance_path."""
+
+    for example in record.get("canonical_examples") or []:
+        if not isinstance(example, dict):
+            continue
+        for occurrence in example.get("trait_occurrences") or []:
+            if isinstance(occurrence, dict) and occurrence.get("inheritance_path"):
+                return True
+    return False
+
+
 def _merged_go_edges(
     selected: list[dict[str, Any]], edges_path: Path, obo_path: Path
 ) -> tuple[list[dict[str, str]], str, str | None, bool]:
-    """Prove each selected GO true-path edge in the pinned release and merge it (#1002)."""
+    """Prove each selected GO true-path edge in the local GO release and merge it (#1002)."""
 
     from go_true_path import dump_edges, load_edges, merge_edges
 
@@ -3656,14 +3683,31 @@ def _merged_go_edges(
     ]
     if not paths:
         return [], "", None, False
+    # Digest before reading and re-check after the slow OBO parse, like the other
+    # durable registries, so a concurrent install is never silently overwritten (#1040).
+    digest = _artifact_digest(edges_path)
     try:
         existing = load_edges(edges_path)
         release = load_go_obo(obo_path.resolve())
-        merged = merge_edges(existing, [edge for path in paths for edge in release.edge_rows(path)])
+        tracked = {(row["child"], row["parent"]): row for row in existing}
+        new_rows = []
+        for edge in (edge for path in paths for edge in release.edge_rows(path)):
+            kept = tracked.get((edge["child"], edge["parent"]))
+            if kept is None:
+                new_rows.append(edge)
+            elif kept["relation"] != edge["relation"]:
+                raise GoTruePathError(
+                    f"tracked {kept['relation']} edge {edge['child']} -> {edge['parent']} "
+                    f"({kept['go_release']}) is {edge['relation']} in {release.release}"
+                )
+            # Otherwise the tracked row, proven by its own release, still holds in this
+            # one; it keeps its provenance rather than conflicting on a re-fetch (#1039).
+        merged = merge_edges(existing, new_rows)
         text = dump_edges(merged)
     except GoTruePathError as exc:
         raise GroundingError(f"GO true-path edges rejected preflight: {exc}") from exc
-    digest = _artifact_digest(edges_path)
+    if _artifact_digest(edges_path) != digest:
+        raise GroundingError(f"durable GO true-path edges changed during preflight: {edges_path}")
     return merged, text, digest, digest != _text_digest(text)
 
 
@@ -4667,21 +4711,6 @@ def promote(args: argparse.Namespace) -> int:
     go_edges, go_edges_text, go_edges_digest, go_edges_changed = _merged_go_edges(
         effective_selected, go_edges_path, args.go_obo
     )
-    hierarchy_index: dict[str, frozenset[str]] = {}
-    if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected):
-        from go_true_path import union_index
-        from validate_uniprot_grounding import build_hierarchy_index
-
-        hierarchy_index, hierarchy_findings = build_hierarchy_index(
-            sorted(traits_root.rglob("*.yaml")), go_edges=go_edges_path
-        )
-        if hierarchy_findings:
-            detail = "; ".join(
-                f"{finding.code}: {finding.message}" for finding in hierarchy_findings[:3]
-            )
-            raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
-        # The edges this batch installs, so its own paths validate before the write.
-        hierarchy_index = union_index(hierarchy_index, go_edges)
     grouped: dict[Path, list[dict[str, Any]]] = defaultdict(list)
     for row in effective_selected:
         path = _safe_record_path(row["record_path"], traits_root)
@@ -4738,6 +4767,25 @@ def promote(args: argparse.Namespace) -> int:
     )
     if stale_selected_preimages:
         raise GroundingError("\n".join(stale_selected_preimages))
+    hierarchy_index: dict[str, frozenset[str]] = {}
+    if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected) or any(
+        _record_has_inheritance(record) for record in prospective_records.values()
+    ):
+        # Whole records are validated below, so an example inherited in an earlier batch
+        # needs the index even when this batch's own rows are exact (#1038).
+        from go_true_path import union_index
+        from validate_uniprot_grounding import build_hierarchy_index
+
+        hierarchy_index, hierarchy_findings = build_hierarchy_index(
+            sorted(traits_root.rglob("*.yaml")), go_edges=go_edges_path
+        )
+        if hierarchy_findings:
+            detail = "; ".join(
+                f"{finding.code}: {finding.message}" for finding in hierarchy_findings[:3]
+            )
+            raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
+        # The edges this batch installs, so its own paths validate before the write.
+        hierarchy_index = union_index(hierarchy_index, go_edges)
     for path in sorted(prospective_records):
         semantic_errors = _semantic_errors_for_record(
             prospective_records[path],
@@ -4990,7 +5038,7 @@ def _parser() -> argparse.ArgumentParser:
         "--go-obo",
         type=Path,
         default=DEFAULT_GO_OBO,
-        help="pinned go-basic.obo for GO true-path inheritance; skipped if absent (#1002)",
+        help="local go-basic.obo for GO true-path inheritance; skipped if absent (#1002)",
     )
     resolver.add_argument("--out", type=Path, default=DEFAULT_OUT_DIR / "resolved.jsonl")
     resolver.add_argument("--review", type=Path, default=DEFAULT_OUT_DIR / "review.tsv")
@@ -5071,7 +5119,7 @@ def _parser() -> argparse.ArgumentParser:
         "--go-obo",
         type=Path,
         default=DEFAULT_GO_OBO,
-        help="pinned go-basic.obo that proves each GO true-path edge before install",
+        help="local go-basic.obo that proves each GO true-path edge before install",
     )
     promoter.add_argument(
         "--durable-qualified-record-bindings",

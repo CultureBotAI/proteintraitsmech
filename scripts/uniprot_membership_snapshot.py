@@ -29,8 +29,10 @@ Capturing a fact is not qualifying it. :func:`fact_evidence_failure` is the defa
 evidence policy the resolver and the validator share (#974): the plan keeps "EC-only,
 textual, homology-only, or generic pathway inference" as candidate evidence, so a GO
 annotation qualifies only with an experimental or curator code and a catalytic activity
-only with experimental or curator-inference evidence. Widening it is a maintainer
-decision.
+only with experimental or curator-inference evidence. One narrow widening is the
+maintainer's decision on #1004: on a reviewed Swiss-Prot entry, ``IEA:UniProtKB-EC`` GO
+terms and catalytic activities curated without an evidence tag qualify; such facts
+record ``uniprot_entry_type``. Any further widening is again a maintainer decision.
 
 :func:`expected_mapping_method` names the occurrence method each fact may support, so a
 GO annotation can never be recorded as a membership or the reverse.

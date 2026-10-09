@@ -4491,10 +4491,11 @@ found.
 
 - Priority 4's "GO: direct GOA/UniProt annotation, retaining the evidence code" now also
   covers an exact annotation to a descendant term, inherited along an explicit
-  `inheritance_path` of `is_a`/`part_of` edges in the pinned GO release. The edges a
-  qualified example uses are tracked in `data/grounding/go_true_path_edges.jsonl` and
-  replayed by the validator; corpus `parent_traits` alone could prove only 1 of 62 such
-  paths in the cross-Mech queue.
+  `inheritance_path` of `is_a`/`part_of` edges in the local GO release. The edges a
+  qualified example uses are tracked, each with the release that proved it, in
+  `data/grounding/go_true_path_edges.jsonl` and replayed by the validator; corpus
+  `parent_traits` alone could prove only 1 of 62 such paths in the cross-Mech queue.
+  The GO release is not yet pinned by a fetch receipt (#1039).
 - Priority 4 keeps "EC-only, textual, homology-only, or generic pathway inference" as
   candidate evidence, with one maintainer-approved exception (#1004): on a reviewed
   Swiss-Prot entry, GO terms inferred from the curated EC number (`IEA:UniProtKB-EC`)

@@ -7,8 +7,9 @@ descendant supports the record's term through an explicit ``inheritance_path``.
 
 Two artifacts carry the hierarchy:
 
-* the pinned ``go-basic.obo`` release (gitignored, under ``data/raw/``), which the
-  resolver and promoter read to find and prove a path; and
+* the local ``go-basic.obo`` (gitignored, under ``data/raw/``), which the resolver and
+  promoter read to find and prove a path. It is not pinned (#1039): each tracked edge
+  records the release that proved it instead; and
 * ``data/grounding/go_true_path_edges.jsonl``, the tracked subset of edges that
   qualified examples use, which the validator replays without the OBO file.
 
@@ -259,7 +260,12 @@ def union_index(
 
 
 def check(edges_path: Path, obo_path: Path) -> list[str]:
-    """Every tracked edge must exist, with its relation, in the release it names."""
+    """Every tracked edge must still hold, with its relation, in the local release.
+
+    An edge proven by an earlier release stays valid while the current release keeps
+    it (#1039); one GO has since removed or changed means its inherited examples need
+    re-review.
+    """
 
     rows = load_edges(edges_path)
     if not rows:
@@ -267,15 +273,12 @@ def check(edges_path: Path, obo_path: Path) -> list[str]:
     release = load_go_obo(obo_path)
     problems: list[str] = []
     for row in rows:
-        if row["go_release"] != release.release:
+        relation = release.relation(row["child"], row["parent"])
+        if relation != row["relation"]:
+            found = f"a {relation} edge" if relation else "no is_a/part_of edge"
             problems.append(
-                f"{row['child']} -> {row['parent']}: pinned to {row['go_release']}, "
-                f"local OBO is {release.release}"
-            )
-        elif release.relation(row["child"], row["parent"]) != row["relation"]:
-            problems.append(
-                f"{row['child']} -> {row['parent']}: not a {row['relation']} edge in "
-                f"{release.release}"
+                f"{row['child']} -> {row['parent']}: tracked {row['relation']} edge "
+                f"({row['go_release']}) is {found} in {release.release}"
             )
     return problems
 
@@ -296,7 +299,12 @@ def main(argv: list[str] | None = None) -> int:
         print(f"ERROR: {problem}", file=sys.stderr)
     if problems:
         return 1
-    print(f"OK: {len(load_edges(args.edges)):,} GO edge(s) replay against {args.obo}")
+    rows = load_edges(args.edges)
+    releases = sorted({row["go_release"] for row in rows})
+    print(
+        f"OK: {len(rows):,} GO edge(s), proven by {', '.join(releases) or 'no release'}, "
+        f"still hold in {args.obo}"
+    )
     return 0
 
 

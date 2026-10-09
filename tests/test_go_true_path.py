@@ -107,9 +107,16 @@ def test_edge_snapshot_round_trips_canonically_and_checks_against_release(releas
     obo.write_text(OBO, encoding="utf-8")
     assert G.check(edges, obo) == []
     assert G.main(["check", "--edges", str(edges), "--obo", str(obo)]) == 0
-    # A newer local release, or an edge that is not in it, is reported.
+    # A newer release that keeps every edge passes; the rows keep their own release.
     obo.write_text(OBO.replace("2026-06-15", "2026-09-01"), encoding="utf-8")
-    assert G.check(edges, obo) and G.main(["check", "--edges", str(edges), "--obo", str(obo)]) == 1
+    assert G.check(edges, obo) == []
+    # One that drops or changes a tracked edge is reported (#1039).
+    obo.write_text(
+        OBO.replace("relationship: part_of GO:0000002 ! middle\n", ""), encoding="utf-8"
+    )
+    (problem,) = G.check(edges, obo)
+    assert "GO:0000003 -> GO:0000002" in problem
+    assert G.main(["check", "--edges", str(edges), "--obo", str(obo)]) == 1
 
 
 @pytest.mark.parametrize(

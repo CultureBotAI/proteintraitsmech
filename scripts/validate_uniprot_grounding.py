@@ -47,6 +47,7 @@ import yaml
 import grounding_registry_layout as layout
 from go_true_path import DEFAULT_GO_EDGES, GoTruePathError, load_edges, union_index
 from uniprot_membership_snapshot import (
+    SWISSPROT_ENTRY_TYPE,
     UNIPROT_FACT_METHODS,
     expected_mapping_method,
     fact_evidence_failure,
@@ -2402,8 +2403,13 @@ def validate_membership_replay(
     memberships: Sequence[Mapping[str, Any]],
     *,
     membership_path: Path,
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> list[Finding]:
-    """Replay each qualified UniProt membership claim against one exact provider fact."""
+    """Replay each qualified UniProt membership claim against one exact provider fact.
+
+    With ``registry``, a fact's Swiss-Prot/TrEMBL stamp must agree with the protein's
+    ProteinReference ``reviewed`` flag, so CI need not trust the stamp alone (#1043).
+    """
 
     from uniprot_membership_snapshot import (
         MembershipSnapshotError,
@@ -2481,10 +2487,24 @@ def validate_membership_replay(
                     **context,
                 )
             )
+        entry_type = membership.get("uniprot_entry_type")
+        if entry_type is not None and registry is not None:
+            reference = registry.get(str(membership.get("protein_id") or ""))
+            reviewed = reference.get("reviewed") if isinstance(reference, Mapping) else None
+            if reviewed is not (entry_type == SWISSPROT_ENTRY_TYPE):
+                findings.append(
+                    _finding(
+                        "uniprot_entry_type_reviewed_mismatch",
+                        f"fact stamped {entry_type!r} but the ProteinReference has "
+                        f"reviewed={reviewed!r}",
+                        **context,
+                    )
+                )
         evidence_failure = fact_evidence_failure(membership)
         if evidence_failure:
-            # The same default-deny policy the resolver applies (#974): an exact fact
-            # with homology-only, EC-only, or automatic evidence stays a candidate.
+            # The same default-deny policy the resolver applies (#974): homology-only,
+            # textual, or automatic evidence stays a candidate, except the narrow
+            # Swiss-Prot EC-number and untagged-reaction rule (#1004).
             findings.append(
                 _finding(
                     "uniprot_fact_evidence_not_qualifying",
@@ -3954,6 +3974,7 @@ def main(argv: list[str] | None = None) -> int:
                 evidence_lookup,
                 memberships,
                 membership_path=args.membership_registry,
+                registry=registry,
             )
         )
     findings.sort(
