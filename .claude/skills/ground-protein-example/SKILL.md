@@ -56,7 +56,8 @@ which durable claims are hard debt, and what is blocked.
   is a registered validated writer; nothing else may touch `canonical_examples`.
 - **This skill stops at the review artifact.** Its toolset is deliberately
   read-only, so it carries the workflow through step 6 and hands back a
-  `.review.tsv` plus a plain statement of what it found. Steps 7 and 8 document
+  `.review.tsv` as unresolved staging plus a structured observation of what
+  was actually assessed (see Report below). Steps 7 and 8 document
   what happens next; performing them takes a human, or a follow-up run
   explicitly authorized to write. Say this at the hand-off rather than letting
   the reader discover it mid-batch, after the expensive fetch has run.
@@ -252,6 +253,28 @@ content-addressed evidence object. If it passes for the target and the durable
 registries grew by the expected number of rows, the example is grounded.
 
 ## Report
+
+Use [docs/record-reviews.md](../../../docs/record-reviews.md) and
+[the native profile](../../../docs/record-review-profile.md) for the final
+review. `resolve` emits deterministic, unadjudicated input ledgers, not a
+completed scientific review. Preserve `.review.tsv`, approval/decision ledgers,
+release receipts, resolution digests and all native promotion gates.
+
+Before judging, use `uv run python scripts/record_review.py inspect --targets
+<targets.yaml>` with `--input` for the inspected manifest, resolved rows,
+source snapshots, receipts and schemas. Use exact row selectors and
+algorithm-labelled semantic digests for native digest-bound targets. Persist
+record/candidate membership, population, source strata, actually reviewed IDs,
+rejected alternatives and limits. Record accession, taxon, release, coordinate
+frame and evidence tier as evidence-linked dimensions. Proposed changes name
+the maintained seeder/overlay or registered promoter, never generated Pages.
+
+After source inspection, validate the `record` or `batch` observation with
+`uv run python scripts/record_review.py validate <review.yaml>` and save it with
+`uv run python scripts/record_review.py save --content <review.yaml>`. Link both
+files under `reviews/structured/<timestamp>-<slug>/`. A resolver-only
+observation uses `scientific_review: false`; missing scientific checks remain
+partial/blocked. Valid structured output grants no approval or promotion.
 
 Name the record, the accession and organism, the mapping method and the source
 that asserted the coordinates, the pinned release, and the gate output. State

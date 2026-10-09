@@ -6,14 +6,16 @@ description: Run a Codex review of the ProteinTraitsMech schema, protein-trait c
 # Codex schema & trait-hierarchy review
 
 Hands the review below to **Codex** (via the `codex:codex-rescue` agent, or a
-codex plugin) as a read-only analysis, and saves the report under `research/`.
+codex plugin) as a read-only analysis, and persists a structured review using
+[docs/record-reviews.md](../../../docs/record-reviews.md).
 
 ## How to run
 
 1. Launch the `codex:codex-rescue` agent with the **prompt** below verbatim.
-2. Tell it to write its report to
-   `research/schema-hierarchy-review-<N>.md` (increment N per run; never
-   overwrite a prior review).
+2. Tell it to inspect exact targets and inputs, author a `kind: repository`
+   review, then validate/save it with `uv run python scripts/record_review.py
+   save --content <review.yaml>`. Link both generated files under
+   `reviews/structured/<timestamp>-<slug>/`; never overwrite an earlier review.
 3. It is read-only: Codex must not edit the schema, run seeders, or modify data
    — it proposes and reports.
 
@@ -53,7 +55,8 @@ covering the whole trait space, with every edge typed by a **Biolink Model
 predicate** (RO only for gaps). The proposed hierarchy need not be perfect —
 **explicitly report oddities, tensions, and uncertainties.**
 
-Read-only: do not edit files, run seeders, or modify the schema. Cite concrete
+Read-only except for the new review bundle: do not run seeders or modify the
+schema or records. Cite concrete
 paths / record identifiers for every claim. Ground **node** alignments in
 standard ontologies (SO, GO, PATO, EDAM, ChEBI); type **edges** with Biolink
 (RO fallback) — see the edge-typing policy above.
@@ -133,7 +136,15 @@ feature) is the right unit vs "annotation". Tag each {cosmetic | real problem |
 open question}.
 
 ### Deliverable
-One markdown report at `research/schema-hierarchy-review-<N>.md`:
+One structured YAML and derived Markdown pair following
+[docs/record-reviews.md](../../../docs/record-reviews.md) and
+[the native profile](../../../docs/record-review-profile.md). Capture inputs
+with `scripts/record_review.py inspect` before judging. Persist exact sampled
+record IDs/paths, population/strata, actual selection, exclusions and limits;
+a schema proposal over sampled records is not full-corpus review. Deterministic
+category scans are input evidence only. Include schema, source registry and
+inspected seeders as hashed inputs; identify maintained owners of future fixes.
+Retain the following native questions in assessments/details and actions:
 1. **Concept-model assessment.**
 2. **Relationship & hierarchy assessment** — a table of every `parent_traits`
    usage pattern with its correct Biolink predicate (or RO, flagged).

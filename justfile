@@ -79,6 +79,14 @@ default:
 install:
     uv sync --extra dev
 
+# Validate immutable review bundles, including hidden/ignored ones.
+check-record-reviews:
+    uv run python scripts/record_review.py check
+
+# Check native routes and the shared synthetic save/validation contract.
+test-record-reviews:
+    uv run pytest tests/test_record_review_contract.py -q
+
 # Deterministic machine-readable corpus + generated-site metrics. Does not depend on a
 # current Pages build; missing docs/data artifacts are reported as zero.
 # Pass flags straight through. A leading positional bound the first flag to
