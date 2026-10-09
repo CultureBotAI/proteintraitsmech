@@ -27,6 +27,9 @@ on:
 permissions:
   contents: read
 
+env:
+  RECORD_REVIEW_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event_name == 'merge_group' && github.event.merge_group.base_sha || github.event_name == 'push' && github.event.before || github.event_name == 'workflow_dispatch' && 'HEAD' }}
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
@@ -36,6 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -53,6 +58,9 @@ jobs:
       # line runs, so the import-time test added in #108 passes over it — exactly how
       # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
       - run: just lint
+
+      - name: Structured record review contract
+        run: just test-record-reviews
 
       # Enforce download.yaml's script roles and fail on unclassified seeders, missing
       # scripts, invalid statuses/roles, or restrictive terms lacking a review state.
