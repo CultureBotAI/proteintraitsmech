@@ -23,8 +23,10 @@
     - the weak-descendant path: P18142 and P21837 have only an `IEA:UniProtKB-SubCell`
       descendant annotation, so they are rejected;
     - five inherited magnetosome rows, approved and installed first.
-  - `cross-mech-examples-004`: the remaining 84 records (217 candidates). The canary's two
-    all-rejected records were reopened by design and decided again, identically.
+  - `cross-mech-examples-004`: 84 records, 217 candidates. That is the 82 records the
+    canary did not cover, plus the canary's two all-rejected records, which were reopened
+    by design and decided again identically. The two ledgers hold 225 decision rows for
+    222 distinct pairs; every count below takes each pair once.
 - Fetch receipts `uniprot-registry-fetch-receipt:4b7025ea…0509` and `…:25765fbd…2b29`.
   Both are network `UNIPROT_REST` acquisitions, verified by the promoter, with 0 blocked
   accessions. Staging files are local and ignored; the durable registries and trait

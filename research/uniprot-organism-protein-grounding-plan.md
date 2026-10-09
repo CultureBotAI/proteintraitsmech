@@ -4497,7 +4497,7 @@ found.
   `go_true_path_edges.jsonl` (12 edges) and grows `uniprot_memberships.jsonl` to 359
   facts. Full record:
   [batch 002 review](cross-mech-examples-batch-002-review-2026-10-09.md).
-- 144 selected pairs were rejected: 140 by the resolver and 2 on review. The review
+- 144 selected pairs were rejected: 142 by the resolver and 2 on review. The review
   rejections are P08306, a cytochrome c oxidase subunit without the catalytic site
   (#983), and SpoIVA, whose only fact is a mutant phenotype (#1049). Three localized pairs
   still wait for an InterPro occurrence (#1003).
