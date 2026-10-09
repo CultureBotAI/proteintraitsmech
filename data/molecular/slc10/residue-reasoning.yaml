@@ -1,0 +1,75 @@
+residue_simulations:
+  - assertion_id: slc10-simulation:ntcp-s267f-taurocholate-2024
+    protein_id: UniProtKB:Q14973
+    position: 267
+    residue: S
+    substituted_residue: F
+    evidence_origin: PUBLISHED_SIMULATION
+    review_status: PROPOSED
+    partner_id: CHEBI:36257
+    claim: The authors report an F267 side-chain interaction with the sterol group of taurocholate in the extracellular pocket.
+    method: Source-reported 1-microsecond mutant molecular dynamics; not independently replayed by PTM.
+    conditions: S267F hNTCP with TCA; extracellular-pocket analysis. Do not substitute estrone-3-sulfate or the 7ZYI CHO component for the simulated substrate.
+    coordinate_frame: Source hNTCP numbering matched to S267 of pinned Q14973; the reference hash does not certify the complete simulated construct or its protonation assignments.
+    source_locator: Lu and Huang 2024, Overall scheme of the hNTCP transport cycle; Figure S19b-c.
+    evidence:
+      - reference: https://doi.org/10.1016/j.bpj.2024.03.033
+        snippet: S267F mutation fosters hydrophobic stacking interactions between the side chain of F267 and the sterol group of TCA
+        notes: Published article text indexed at PMC11140467; variant result is not present in the inspected 2023 Research Square v1 preprint.
+      - reference: https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:36257
+        notes: Taurocholate molecular identity; not evidence of an NTCP interaction.
+    limitations: Published simulation hypothesis, not experimental contact or a reproduced trajectory. Does not establish the intermediate responsible for either 2021 uptake branch, explain estrone-sulfate transport, or simulate R252H.
+residue_reasoning:
+  - reasoning_id: slc10-reasoning:ntcp-s267f
+    mechanism_id: slc10-mechanism:ntcp-s267f-substrate-selectivity
+    residue_binding: {node_id: s267f, protein_id: UniProtKB:Q14973, position: 267, residue: S, substituted_residue: F}
+    property_context_links:
+      - property_ids: [SIDE_CHAIN_HEAVY_ATOM_COUNT, SIDE_CHAIN_HYDROXYL_COUNT, SIDE_CHAIN_AROMATIC_ATOM_COUNT]
+        context_ref: slc10-environment:7ZYI-A-267-4.5A
+        assessment: REFERENCE_CONTEXT_ONLY
+        description: Compare S/F reference chemistry alongside the S267 intrachain neighborhood in deposited 7ZYI.
+        limitations: No F267 coordinates or mutant contact change is inferred from the reference neighborhood.
+      - property_ids: [SIDE_CHAIN_HYDROXYL_COUNT, KYTE_DOOLITTLE_HYDROPATHY]
+        context_ref: slc10-site:7ZYI-F-702-CHO-4.5A
+        assessment: REFERENCE_CONTEXT_ONLY
+        description: S267 has heavy-atom proximity to the exact deposited CHO ligand instance; chemical differences are context for inspecting that site.
+        limitations: PDBCCD:CHO is glycochenodeoxycholic acid, not the simulated taurocholate or assayed estrone-3-sulfate. Distance alone is not a hydrogen bond or mutant effect.
+      - property_ids: [SIDE_CHAIN_AROMATIC_ATOM_COUNT, KYTE_DOOLITTLE_HYDROPATHY, SIDE_CHAIN_HEAVY_ATOM_COUNT]
+        context_ref: slc10-simulation:ntcp-s267f-taurocholate-2024
+        partner_id: CHEBI:36257
+        assessment: COMPUTATIONAL_HYPOTHESIS
+        description: F267 reference properties contextualize the source-reported interaction with taurocholate; the simulation, not the property table, supplies the local interaction claim.
+        limitations: Hydropathy and aromatic atoms do not independently prove stacking, stronger binding, blockade or transport effects.
+    context_trait_links:
+      - context_refs: [slc10-environment:7ZYI-A-267-4.5A, slc10-site:7ZYI-F-702-CHO-4.5A, slc10-simulation:ntcp-s267f-taurocholate-2024]
+        observation_ref: slc10-assay:ntcp-s267f-taurocholate-reduction-2021
+        assessment: UNRESOLVED
+        description: Taurocholate uptake reduction is measured independently; these local contexts do not isolate its molecular mediator in the 2021 assay.
+        limitations: No matched-construct causal intervention connects the reported simulation interaction to this assay; retain surface-expression controls and separate kinetic analyses.
+      - context_refs: [slc10-environment:7ZYI-A-267-4.5A, slc10-site:7ZYI-F-702-CHO-4.5A]
+        observation_ref: slc10-assay:ntcp-s267f-estrone-sulfate-increase-2021
+        assessment: UNRESOLVED
+        description: Increased estrone-3-sulfate uptake is a separate measured branch; no corresponding local estrone-sulfate interaction is established here.
+        limitations: The taurocholate simulation cannot be transferred to another substrate; the initial twofold uptake result is not a surface-normalized or kinetic-efficiency estimate.
+    limitations: A scoped evidence ledger, not a completed atomistic causal path. Source-specific constructs, ligand identities and computational versus experimental evidence remain distinct; no family-wide trait promotion.
+  - reasoning_id: slc10-reasoning:ntcp-r252h
+    mechanism_id: slc10-mechanism:ntcp-r252h-surface-availability
+    residue_binding: {node_id: r252h, protein_id: UniProtKB:Q14973, position: 252, residue: R, substituted_residue: H}
+    property_context_links:
+      - property_ids: [SIDE_CHAIN_PKA, REFERENCE_SIDE_CHAIN_CHARGE_PH7, SIDE_CHAIN_HETEROATOM_COUNT, SIDE_CHAIN_AROMATIC_ATOM_COUNT]
+        context_ref: slc10-environment:7ZYI-A-252-4.5A
+        assessment: REFERENCE_CONTEXT_ONLY
+        description: R/H ionization-model parameters and reference atom groups are shown with the exact R252 neighborhood of deposited NTCP.
+        limitations: Reference pKa/charge are not site measurements. No mutant coordinates, broken salt bridge, destabilization or altered protonation is inferred. R252H is not among the ten simulated variants in Lu and Huang 2024.
+    context_trait_links:
+      - context_refs: [slc10-environment:7ZYI-A-252-4.5A]
+        observation_ref: slc10-assay:ntcp-r252h-surface-depletion-2015
+        assessment: UNRESOLVED
+        description: Surface depletion is measured, but its microscopic connection to R/H chemistry and the reference local neighborhood is unresolved.
+        limitations: No direct demonstration of a specific folding defect, salt-bridge loss or ER-retention mechanism; below detection is not absolute absence.
+      - context_refs: [slc10-environment:7ZYI-A-252-4.5A]
+        observation_ref: slc10-assay:ntcp-r252h-uptake-reduction-2015
+        assessment: UNRESOLVED
+        description: Reduced uptake is measured; the existing graph retains surface availability as the authors' mediation interpretation, not an isolated molecular effect.
+        limitations: Uptake and FLAG-localization constructs are not verified identical; equal-surface-abundance rescue is missing. Residual transport and possible intrinsic transport changes remain distinct.
+    limitations: Generic ionization differences and static reference contacts cannot prove why R252H alters localization or uptake. Historical assay constructs are not certified by the reference-sequence hash.

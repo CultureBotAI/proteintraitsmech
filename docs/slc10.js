@@ -41,7 +41,7 @@ async function main() {
   $("download").href="data/"+receipt.file;
   $("panel-scope").textContent=b.scope_note;
   $("summary").textContent=`${b.protein_references.length} proteins · ${b.sites.length} ligand-instance shells · ${b.functional_observations.length} observations/assessments · ${b.mechanisms.length} mechanisms · bundle v${b.version}`;
-  const indexed=new Map([...(b.sites||[]),...(b.comparisons||[]),...(b.model_comparisons||[]),...(b.functional_observations||[]),...(b.explanations||[])].map(r=>[r.assertion_id,r]));
+  const indexed=new Map([...(b.sites||[]),...(b.comparisons||[]),...(b.model_comparisons||[]),...(b.functional_observations||[]),...(b.explanations||[]),...(b.residue_environments||[]),...(b.residue_simulations||[])].map(r=>[r.assertion_id,r]));
   for(const e of b.explanations){const c=el("article",undefined,"card");c.id=e.assertion_id;c.append(el("span",e.assessment+" · "+e.review_status,"badge"),el("h3",e.claim),el("p",e.limitations));
     const ul=el("ul");for(const q of e.unresolved_questions)ul.append(el("li",q));c.append(ul);
     for(const [field,label] of [["supporting_assertions","Supports this explanation"],["challenging_assertions","Challenges this explanation"],["context_assertions","Context only — not evidence for the explanation"]]){
@@ -66,6 +66,25 @@ async function main() {
   for(const m of b.mechanisms){const c=el("article",undefined,"card");c.id=m.mechanism_id;c.append(el("span",m.review_status,"badge"),el("h3",m.graph.title));
     const nodes=new Map(m.graph.nodes.map(n=>[n.node_id,n]));for(const e of m.graph.edges){const line=el("div",undefined,"edge");line.append(el("b",nodes.get(e.subject).label),el("span","↓ "+e.predicate),el("b",nodes.get(e.object).label));c.append(line,el("p",e.description));evidence(c,e.evidence);}
     c.append(el("p",m.limitations),action("Inspect graph and residue bindings",m));$("mechanisms").append(c);}
+  const catalog=b.amino_acid_catalog;
+  for(const r of b.residue_reasoning||[]){
+    const address=r.residue_binding, c=el("article",undefined,"card");c.id=r.reasoning_id;
+    c.append(el("h3",name(address.protein_id)+" "+address.residue+address.position+address.substituted_residue),el("p",r.limitations));
+    const before=catalog.amino_acids.find(a=>a.one_letter===address.residue),after=catalog.amino_acids.find(a=>a.one_letter===address.substituted_residue);
+    const selected=new Set(r.property_context_links.flatMap(l=>l.property_ids)),t=el("table");
+    table(t,["Property","Reference","Alternate","Unit"],catalog.property_definitions.filter(d=>selected.has(d.property_id)).map(d=>{
+      const value=a=>{const p=a.properties.find(p=>p.property_id===d.property_id);return p.value_status==="DEFINED"?num(p.value):p.value_status;};
+      return [action(d.label,d),value(before),value(after),d.unit];}),"Reference chemistry only; select a property for method, conditions and limits");
+    const scroll=el("div",undefined,"scroll");scroll.append(t);c.append(scroll);
+    c.append(action("Inspect reference/alternate chemistry and catalog review",{title:"Reviewed reference chemistry",reference:before,alternate:after,review:catalog.review,sources:catalog.sources,catalog_sha256:r.catalog_sha256}));
+    c.append(el("h4","Local molecular context"));
+    for(const l of r.property_context_links){const context=indexed.get(l.context_ref);c.append(el("p",l.assessment+" — "+l.description),action("Inspect "+context.evidence_origin,context),el("p",l.limitations));}
+    c.append(el("h4","Links to measured outcomes"));
+    for(const l of r.context_trait_links){const observation=indexed.get(l.observation_ref);c.append(el("p",l.assessment+" — "+l.description,"notice"),action(observation.activity,observation),el("p",l.limitations));}
+    $("residue-reasoning").append(c);
+  }
+  if(catalog){const p=el("p","Amino-acid reference sources; review is machine-assisted, not independent approval.");$("sources").append(p);
+    for(const s of catalog.sources){const p=el("p");p.append(link(s.source_id,s.reference),document.createTextNode(" · "+s.version+" · "),link(s.license,s.license_url),el("br"),el("code",s.sha256));$("sources").append(p);}}
   for(const s of b.sources){const p=el("p");p.append(link(s.source_id,s.reference),document.createTextNode(" · "+s.source_version+" · "),link(s.license,s.license_url),el("br"),el("code",s.sha256));$("sources").append(p);}
   if(location.hash){const id=decodeURIComponent(location.hash.slice(1));if(indexed.has(id))details(indexed.get(id));else document.getElementById(id)?.scrollIntoView();}
 }

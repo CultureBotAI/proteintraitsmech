@@ -162,6 +162,9 @@ def test_page_does_not_treat_untrusted_evidence_as_html():
     assert 'crypto.subtle.digest("SHA-256",raw)' in js
     assert 'receipt.sha256' in js
     assert "ligand occupancy inferred" in js
+    assert '"Local molecular context"' in js and '"Links to measured outcomes"' in js
+    assert 'catalog.property_definitions' in js and 'catalog.review' in js
+    assert 'id="residue-reasoning"' in (ROOT / "docs/slc10.html").read_text()
 
 
 def test_build_and_deployment_include_export():
