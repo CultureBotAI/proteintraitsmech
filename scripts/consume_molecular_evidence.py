@@ -15,6 +15,7 @@ import sys
 import yaml
 
 from validate_molecular_evidence import validate_bundle
+from residue_reasoning import ASSERTION_KINDS, query_chemistry, residue_evidence
 
 REQUEST_KEYS = {"bundle_id", "bundle_version", "bundle_sha256", "protein_id", "sequence_sha256",
                 "assertion_id", "usage", "fixture"}
@@ -192,8 +193,7 @@ def resolve(raw, request, upstream_raw=None):
         raise ValueError("invalid molecular bundle: " + "; ".join(errors))
     if bundle["bundle_id"] != request["bundle_id"] or bundle["version"] != request["bundle_version"]:
         raise ValueError("consumer bundle identity/version mismatch")
-    assertions = {row["assertion_id"]: row for key in (
-        "sites", "comparisons", "model_comparisons", "functional_observations", "explanations")
+    assertions = {row["assertion_id"]: row for key in ASSERTION_KINDS
         for row in bundle.get(key, [])}
     result = {"request": deepcopy(request), "annotation_action": "NONE",
               "scope_note": bundle["scope_note"], "sources": deepcopy(bundle["sources"])}
@@ -203,12 +203,14 @@ def resolve(raw, request, upstream_raw=None):
         if not protein or protein["sequence_sha256"] != request["sequence_sha256"]:
             raise ValueError("consumer protein/sequence mismatch")
         validate_residue_query(request["residue_query"], protein)
+        result["residue_context"] = query_chemistry(bundle, request["residue_query"], protein)
         result["mechanisms"] = []
         for mechanism in mechanisms:
             matches = matching_bindings(mechanism, request)
             if matches:
                 result["mechanisms"].append({**mechanism_evidence(mechanism, assertions),
-                                             "matched_residue_bindings": matches})
+                                             "matched_residue_bindings": matches,
+                                             "residue_evidence": residue_evidence(bundle, mechanism, matches)})
         result["retrieval_status"] = "MATCHED_CURATED_MECHANISMS" if result["mechanisms"] else "NO_CURATED_MECHANISM"
         result["retrieval_limitations"] = RESIDUE_QUERY_LIMITS
         return result
@@ -219,7 +221,9 @@ def resolve(raw, request, upstream_raw=None):
     result.update(claim=deepcopy(claim), **argument_closure(assertions, [claim["assertion_id"]]))
     # Only an explicit direct link selects a graph. Shared citations, supporting
     # assertions, sequence correspondence or a trait class do not transfer it.
-    result["mechanisms"] = [mechanism_evidence(m, assertions) for m in mechanisms
+    result["mechanisms"] = [{**mechanism_evidence(m, assertions),
+                              "residue_evidence": residue_evidence(bundle, m, m.get("residue_bindings", []))}
+                            for m in mechanisms
                             if claim["assertion_id"] in m["assertion_refs"] and
                             request["protein_id"] in m["protein_ids"]]
     if "upstream_review" in request:

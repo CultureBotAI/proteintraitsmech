@@ -390,6 +390,9 @@ def test_residue_request_pin_and_mode_boundaries(inputs, field, value, match):
 def test_partial_multi_mutant_query_does_not_claim_single_mutant_effect(inputs):
     raw, _ = inputs
     bundle = json.loads(raw)
+    # This synthetic compound mutant has no curated chemistry-to-effect ledger.
+    # Keeping the real single-mutant ledger would correctly make it invalid.
+    bundle.pop("residue_reasoning", None)
     request = json.loads((ROOT / "data/molecular/slc10/residue-query-s267f.json").read_text())
     mechanism = next(m for m in bundle["mechanisms"] if m["mechanism_id"].endswith("s267f-substrate-selectivity"))
     additional = {"position": 252, "residue": "R", "substituted_residue": "H"}
@@ -407,6 +410,9 @@ def test_partial_multi_protein_mutant_node_is_not_an_exact_variant_match(inputs,
     """Synthetic interaction, not a biological claim about either panel protein."""
     raw, _ = inputs
     bundle = json.loads(raw)
+    # Preserve the regression's valid synthetic multi-protein graph, without
+    # misrepresenting the production single-mutant ledger as compound evidence.
+    bundle.pop("residue_reasoning", None)
     request = json.loads((ROOT / "data/molecular/slc10/residue-query-s267f.json").read_text())
     mechanism = next(m for m in bundle["mechanisms"] if m["mechanism_id"].endswith("s267f-substrate-selectivity"))
     partner = next(p for p in bundle["protein_references"] if p["protein_id"] == "UniProtKB:Q96EP9")

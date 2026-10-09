@@ -25,6 +25,8 @@ families, including the broader SBF/BASS/ACR3 membership.
 | Artifact | Meaning |
 | --- | --- |
 | `curation.yaml` | Authored assay observations, interpretations, and local mechanism graphs; DOI/URL evidence and limitations remain attached. |
+| `residue-reasoning.yaml` | Authored S267F/R252H property/context/consequence links and the source-reported S267F simulation; unresolved mediation is explicit. |
+| `../amino_acids/catalog.json`, `../amino_acids/review.yaml` | Twenty standard residue reference chemistries and exact-content machine-assisted source review; embedded in the bundle and linked to existing MOD/ChEBI/PATO identities. |
 | `pilot.json` | Generated, closed-schema `MolecularEvidenceBundle`; exact sequences, source hashes, contacts, correspondence, model comparisons, observations and explanations. |
 | `gene-review-fixture.json` | Explicitly labelled consumer test, **not Chris's repository**; pins the complete bundle bytes and target sequence. |
 | `gene-review-integration.json` | Read-only integration pin for the actual `ai4curation/ai-gene-review` SLC10A4 review; exact upstream commit, file hash, annotation locator and expected claim count. Not upstream adoption. |
@@ -115,9 +117,71 @@ promoted. New edges distinguish experimental results from author interpretation
 in their descriptions. Evidence type at edge level is currently descriptive,
 not a separate schema enum.
 
-Next research target: assess the [Lu and Huang simulation study](https://doi.org/10.1016/j.bpj.2024.03.033)
-for candidate S267F molecular steps. Its simulations have not been curated or
-replayed here; they must remain distinct from the measured uptake evidence.
+The [Lu and Huang simulation study](https://doi.org/10.1016/j.bpj.2024.03.033)
+now supplies a separately typed `PUBLISHED_SIMULATION` assertion: its S267F
+analysis reports an F267 interaction with the taurocholate sterol group in the
+extracellular pocket (Figure S19c). This is not an experimentally observed contact
+or a trajectory independently replayed here. R252H is not one of that paper's
+ten simulated variants. The simulation is not transferred to estrone-sulfate.
+
+## Reference chemistry connected to exact residues
+
+`AminoAcidPropertyCatalog` contains all 20 standard residues, CCD atom/bond
+projections, explicit chemical groups and eight operational properties:
+side-chain heavy-atom, aromatic-atom and N/O/S counts; non-carboxyl hydroxyl
+count; proline-type backbone ring closure; Kyte-Doolittle hydropathy; reference
+side-chain pKa; and modeled side-chain charge at pH 7. Each value identifies its
+source, method, units, conditions and limitations. A missing pKa in the selected
+model is `NOT_APPLICABLE`, never a fabricated zero pKa. Modified, ambiguous and
+nonstandard residues are not replaced by their parents.
+
+The CCD references are CC0-1.0; Biopython 1.85 parameter tables use the offered
+BSD-3-Clause terms, preserved in `../amino_acids/NOTICE.txt`. Raw downloads remain
+ignored. Existing MOD residue records stay `SEEDED`; the catalog does not recast
+their PSI-MOD definitions or promote whole-protein traits. PATO quality links are
+ontology anchors, not claims that a protein has a particular measured charge.
+`review.yaml` records source-transcription and chemical-rule **self-review with
+`llm_assisted: true`**, not independent human scientific approval.
+
+The two executable cases return this evidence chain:
+
+| Case | Reference-chemistry contrast | Local context | Measured consequence and remaining gap |
+| --- | --- | --- | --- |
+| S267F | Hydroxyl count 1→0, aromatic atoms 0→6, hydropathy −0.8→2.8 | Exact 7ZYI S267 intrachain neighborhood; distinct deposited CHO (glycochenodeoxycholic acid) ligand contacts; separately typed taurocholate simulation | Separate reduced taurocholate and increased estrone-sulfate uptake branches. Which molecular intermediate mediates either assay remains unresolved. |
+| R252H | Reference pKa 12→5.98; modeled pH-7 side-chain charge about +1.00→+0.087 | Exact 7ZYI R252 intrachain neighborhood, not an H252 mutant structure | Surface depletion and reduced uptake remain separate observations; no inferred broken salt bridge or proven folding defect. |
+
+These numerical contrasts are catalog/model results, not site measurements.
+The deposited [CHO component identity](https://www.rcsb.org/ligand/CHO) is not
+cholate or taurocholate; chemical names are not inferred from three-letter codes.
+`residue_environments` project all intrachain heavy-atom pairs within 4.5 Å,
+including covalent sequence neighbors, from model 1 and SIFTS-mapped chain A.
+Atom identities, alternate locations, occupancies, coordinates, partner positions,
+cutoff and source hashes are retained. Other chains, water and ligands are outside
+this neighborhood calculation; ligand sites are separate objects. Proximity is
+not a bond assignment, and reference geometry cannot establish mutant changes.
+
+`residue_reasoning` keeps typed property/context links and context/assay links
+outside the causal graph. Static reference contexts must remain
+`REFERENCE_CONTEXT_ONLY`; source-reported variant simulations must remain
+`COMPUTATIONAL_HYPOTHESIS`. The four current context-to-assay links are
+`UNRESOLVED`. A source-proposed mediation hypothesis needs its own citation and
+excerpt. The contract does not offer experimentally proven mediation without an
+intervention-evidence model. Exact catalog pins, residue/variant/sequence scope,
+and simulation-partner versus assay-substrate identity are validated.
+
+To replay the chemistry catalog from its preserved source snapshot:
+
+```bash
+just build-amino-acid-properties \
+  --snapshot data/raw/amino_acid_properties/chemistry-2026-10-08 \
+  --review data/molecular/amino_acids/review.yaml --check
+just check-amino-acid-properties
+```
+
+Acquiring a future snapshot uses `just fetch-amino-acid-properties --snapshot
+<new-name>` (dry-run), followed by `--apply`. A changed source projection needs a
+new explicit content review; do not update the review digest just to pass a gate.
+The SLC10 builder embeds the reviewed catalog and regenerates both neighborhoods.
 
 ## Reproduce
 
@@ -216,6 +280,10 @@ Residue requests cannot also select an assertion or an upstream review.
 
 The response includes:
 
+- `residue_context`: exact query address, reference/alternate chemistry, property
+  contrasts, sources and catalog review, plus matching local context. This is
+  returned even when no curated mechanism matches; it never predicts a function.
+  Native or other-substitution queries cannot borrow the S267F simulation.
 - `retrieval_status`: `MATCHED_CURATED_MECHANISMS` or `NO_CURATED_MECHANISM`.
   The latter means no matching curated graph binding in this pinned bundle,
   **not** no biological effect, no literature, or no other evidence in the bundle.
@@ -228,6 +296,11 @@ The response includes:
   constructs, localization controls, evidence origin, claim assessment and open
   questions remain attached. `argument_edges` and `context_edges` preserve their
   attribution; context is not silently counted as support.
+- Each mechanism's `residue_evidence`: chemistry for its selected exact bindings
+  and any curated evidence ledgers, including the full referenced context and assay
+  assertions. Missing ledgers are explicit. The original graph is unchanged;
+  chemistry does not insert causal edges. Older bundles without a catalog return
+  `CATALOG_NOT_INCLUDED`, preserving existing mechanism retrieval.
 - `retrieval_limitations`, the original request, bundle scope and source metadata,
   with `annotation_action: NONE` unchanged.
 

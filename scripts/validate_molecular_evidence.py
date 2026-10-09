@@ -21,6 +21,7 @@ from audit_causal_graphs import audit_record, node_type_enum
 from molecular_evidence import BACKBONE, distance, sha256
 from build_ecod_sifts_candidates import AA3_TO_1
 from slc10_model_comparison import coords
+from residue_reasoning import ASSERTION_KINDS, validate_reasoning
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "src/proteintraitsmech/schema/proteintraitsmech.yaml"
@@ -230,10 +231,7 @@ def validate_bundle(bundle):
         isoform = int(pid.rsplit("-", 1)[1]) if "-" in pid else None
         if protein.get("isoform") != isoform:
             errors.append("protein isoform metadata mismatch")
-    assertions = index([*sites.values(), *bundle.get("comparisons", []),
-                        *bundle.get("model_comparisons", []),
-                        *bundle.get("functional_observations", []),
-                        *bundle.get("explanations", [])], "assertion_id", "assertion")
+    assertions = index([r for kind in ASSERTION_KINDS for r in bundle.get(kind, [])], "assertion_id", "assertion")
     for assertion in assertions.values():
         protein = proteins.get(assertion["protein_id"])
         if not protein or assertion["sequence_sha256"] != protein["sequence_sha256"]:
@@ -458,6 +456,7 @@ def validate_bundle(bundle):
             for evidence in edge["evidence"]:
                 if not re.match(r"^(https?://\S+|DOI:10\.\S+)$", evidence["reference"]):
                     errors.append("molecular mechanism requires DOI or stable URL reference")
+    errors.extend(validate_reasoning(bundle))
     return errors
 
 

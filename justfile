@@ -97,6 +97,15 @@ gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 
 # Bounded research acquisition; dry-run unless --apply, no trait/registry writes.
+fetch-amino-acid-properties *args:
+    uv run python scripts/fetch_amino_acid_properties.py {{args}}
+
+build-amino-acid-properties *args:
+    uv run --extra molecular python scripts/build_amino_acid_properties.py {{args}}
+
+check-amino-acid-properties:
+    uv run --extra molecular python scripts/amino_acid_properties.py
+
 fetch-slc10-pilot *args:
     uv run python scripts/fetch_slc10_pilot.py {{args}}
 

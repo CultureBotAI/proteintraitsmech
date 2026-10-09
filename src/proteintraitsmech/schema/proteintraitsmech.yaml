@@ -107,6 +107,139 @@ imports:
 
 classes:
 
+  AminoAcidPropertyCatalog:
+    tree_root: true
+    description: >-
+      Source-pinned reference chemistry for the 20 standard peptide residues.
+      Links existing residue/quality trait classes without assigning a protein
+      trait or proving a molecular mechanism. Modified and ambiguous residues
+      are outside this catalog, not equivalent to their unmodified parents.
+    attributes:
+      catalog_id: {range: string, required: true}
+      version: {range: string, required: true}
+      scope: {range: string, required: true}
+      sources:
+        range: ResiduePropertySource
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      property_definitions:
+        range: ResiduePropertyDefinition
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      amino_acids:
+        range: AminoAcidChemistry
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      review:
+        range: ResidueCatalogReview
+        inlined: true
+
+  ResiduePropertySource:
+    description: Hash and reuse terms of the exact primary reference file.
+    attributes:
+      source_id: {range: string, required: true}
+      reference: {range: string, required: true, pattern: '^https://\S+$'}
+      sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      version: {range: string, required: true}
+      license: {range: string, required: true}
+      license_url: {range: string, required: true, pattern: '^https://\S+$'}
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  ResiduePropertyDefinition:
+    description: Operational meaning of a residue property; not a causal relation.
+    attributes:
+      property_id: {range: ResiduePropertyEnum, required: true}
+      label: {range: string, required: true}
+      unit: {range: string, required: true}
+      method: {range: string, required: true}
+      conditions: {range: string, required: true}
+      limitations: {range: string, required: true}
+      quality_trait_refs: {range: string, multivalued: true}
+
+  AminoAcidChemistry:
+    description: >-
+      Chemical-component projection plus reference parameters, not a free-amino-acid
+      measurement or an observed state at a protein position. CCD hydrogens/formal
+      charges are a reference representation, not physiological protonation.
+    attributes:
+      one_letter: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      three_letter: {range: string, required: true, pattern: '^[A-Z]{3}$'}
+      label: {range: string, required: true}
+      residue_trait_ref: {range: string, required: true, pattern: '^MOD:[0-9]{5}$'}
+      residue_chemical_ref: {range: string, required: true, pattern: '^CHEBI:[0-9]+$'}
+      trait_record_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      structure_source_id: {range: string, required: true}
+      atoms:
+        range: ResidueReferenceAtom
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      bonds:
+        range: ResidueReferenceBond
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      chemical_groups:
+        range: ResidueChemicalGroup
+        multivalued: true
+        inlined_as_list: true
+      ionization_type: {range: ResidueIonizationTypeEnum, required: true}
+      properties:
+        range: ResiduePropertyValue
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  ResidueReferenceAtom:
+    description: CCD atom flags in a reference component, not protein coordinates.
+    attributes:
+      atom_name: {range: string, required: true}
+      element: {range: string, required: true, pattern: '^[CHNOS]$'}
+      aromatic: {range: boolean, required: true}
+      backbone: {range: boolean, required: true}
+      leaving: {range: boolean, required: true}
+
+  ResidueReferenceBond:
+    attributes:
+      atom_1: {range: string, required: true}
+      atom_2: {range: string, required: true}
+      bond_order: {range: ResidueReferenceBondOrderEnum, required: true}
+
+  ResidueChemicalGroup:
+    description: Explicit atom set derived from reference bonds; not a protein interaction.
+    attributes:
+      group_type: {range: ResidueChemicalGroupEnum, required: true}
+      atom_names: {range: string, required: true, multivalued: true}
+
+  ResiduePropertyValue:
+    attributes:
+      property_id: {range: ResiduePropertyEnum, required: true}
+      value: {range: double}
+      value_status: {range: ResiduePropertyValueStatusEnum, required: true}
+      source_id: {range: string, required: true}
+      evidence_origin: {range: ResiduePropertyEvidenceEnum, required: true}
+
+  ResidueCatalogReview:
+    description: >-
+      Source-transcription/chemical-rule review of an exact catalog content digest.
+      Does not certify clinical use or an experimentally established mechanism.
+      An LLM-assisted review must say so; it is not independent human approval.
+    attributes:
+      content_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      reviewed_on: {range: string, required: true, pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'}
+      reviewer: {range: string, required: true}
+      llm_assisted: {range: boolean, required: true}
+      scope: {range: string, required: true}
+      checks: {range: string, required: true, multivalued: true}
+      limitations: {range: string, required: true}
+
   MolecularEvidenceBundle:
     tree_root: true
     description: >-
@@ -117,6 +250,22 @@ classes:
       Explicit null values are not supported by semantic validation; omit an
       optional field instead of assigning null.
     attributes:
+      amino_acid_catalog:
+        description: Reviewed reference chemistry embedded in the immutable bundle; never mechanism evidence by itself.
+        range: AminoAcidPropertyCatalog
+        inlined: true
+      residue_environments:
+        range: MolecularResidueEnvironment
+        multivalued: true
+        inlined_as_list: true
+      residue_simulations:
+        range: MolecularResidueSimulation
+        multivalued: true
+        inlined_as_list: true
+      residue_reasoning:
+        range: MolecularResidueReasoning
+        multivalued: true
+        inlined_as_list: true
       bundle_id:
         range: string
         required: true
@@ -167,6 +316,109 @@ classes:
         range: MolecularMechanism
         multivalued: true
         inlined_as_list: true
+
+  MolecularResidueEnvironment:
+    is_a: MolecularAssertion
+    description: >-
+      Computed intrachain heavy-atom neighborhood in one deposited reference
+      conformation. Includes covalently adjacent residues; not a hydrogen-bond
+      assignment, variant structure, conformational ensemble or causal effect.
+    attributes:
+      position: {range: integer, required: true, minimum_value: 1}
+      residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      structure_id: {range: string, required: true}
+      structure_source: {range: string, required: true}
+      mapping_source: {range: string, required: true}
+      structure_state: {range: string, required: true}
+      model_number: {range: integer, required: true, minimum_value: 1}
+      auth_chain: {range: string, required: true}
+      distance_cutoff_angstrom: {range: double, required: true, minimum_value: 0, maximum_value: 10}
+      method: {range: string, required: true}
+      focus_atoms:
+        range: MolecularAtom
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      neighbors:
+        range: MolecularResidueNeighbor
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularResidueNeighbor:
+    description: One atom pair with a second residue of the same pinned protein and deposited chain.
+    attributes:
+      partner_position: {range: integer, required: true, minimum_value: 1}
+      partner_residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      focus_atom_id: {range: string, required: true}
+      partner_atom: {range: MolecularAtom, required: true, inlined: true}
+      distance_angstrom: {range: double, required: true, minimum_value: 0}
+
+  MolecularResidueSimulation:
+    is_a: MolecularAssertion
+    description: >-
+      A source-reported variant-specific molecular interaction from simulation,
+      not a simulation independently replayed here or an experimental result.
+    attributes:
+      position: {range: integer, required: true, minimum_value: 1}
+      residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      substituted_residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      partner_id: {range: string, required: true}
+      claim: {range: string, required: true}
+      method: {range: string, required: true}
+      conditions: {range: string, required: true}
+      coordinate_frame: {range: string, required: true}
+      source_locator: {range: string, required: true}
+
+  MolecularResidueReasoning:
+    description: >-
+      Explicit evidence ledger connecting an exact graph residue binding to
+      reference properties, local context and measured outcomes. This is not
+      automatic causal-path composition; unresolved links remain unresolved.
+    attributes:
+      reasoning_id: {range: string, required: true}
+      mechanism_id: {range: string, required: true}
+      residue_binding: {range: MolecularResidueBinding, required: true, inlined: true}
+      catalog_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      property_context_links:
+        range: ResiduePropertyContextLink
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      context_trait_links:
+        range: ResidueContextTraitLink
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      limitations: {range: string, required: true}
+
+  ResiduePropertyContextLink:
+    attributes:
+      property_ids: {range: ResiduePropertyEnum, required: true, multivalued: true}
+      context_ref: {range: string, required: true}
+      partner_id:
+        description: Required for simulation context, must match its exact molecular partner.
+        range: string
+      assessment: {range: ResiduePropertyContextAssessmentEnum, required: true}
+      description: {range: string, required: true}
+      limitations: {range: string, required: true}
+
+  ResidueContextTraitLink:
+    description: >-
+      The measured consequence is independently supported by its assay. A
+      molecular mediation hypothesis needs its own source; context alone does
+      not establish it. No experimentally-proven mediation value is offered
+      until an explicit intervention-evidence model is supported.
+    attributes:
+      context_refs: {range: string, required: true, multivalued: true}
+      observation_ref: {range: string, required: true}
+      assessment: {range: ResidueContextTraitAssessmentEnum, required: true}
+      description: {range: string, required: true}
+      evidence:
+        range: EvidenceItem
+        multivalued: true
+        inlined_as_list: true
+      limitations: {range: string, required: true}
 
   MolecularSourceArtifact:
     description: Immutable identity and role of an upstream input; raw downloads remain outside git.
@@ -521,6 +773,10 @@ classes:
       substrate:
         range: string
         required: true
+      substrate_id:
+        description: Explicit curated molecular identity, required when a simulation partner is linked to this assay; no automatic name/protonation normalization.
+        range: string
+        pattern: '^(CHEBI|UniProtKB|PR|RNAcentral|PDBCCD):\S+$'
       outcome:
         range: MolecularOutcomeEnum
         required: true
@@ -2597,6 +2853,53 @@ classes:
 
 enums:
 
+  ResiduePropertyEnum:
+    permissible_values:
+      SIDE_CHAIN_HEAVY_ATOM_COUNT:
+      SIDE_CHAIN_AROMATIC_ATOM_COUNT:
+      SIDE_CHAIN_HETEROATOM_COUNT:
+      SIDE_CHAIN_HYDROXYL_COUNT:
+      BACKBONE_RING_CLOSURE:
+      KYTE_DOOLITTLE_HYDROPATHY:
+      SIDE_CHAIN_PKA:
+      REFERENCE_SIDE_CHAIN_CHARGE_PH7:
+
+  ResiduePropertyValueStatusEnum:
+    permissible_values:
+      DEFINED:
+      NOT_APPLICABLE:
+
+  ResiduePropertyEvidenceEnum:
+    permissible_values:
+      CHEMICAL_GRAPH_DERIVATION:
+      PUBLISHED_PARAMETER:
+      REFERENCE_IONIZATION_MODEL:
+
+  ResidueIonizationTypeEnum:
+    permissible_values:
+      ACID:
+      BASE:
+      NO_TITRATABLE_GROUP_IN_MODEL:
+
+  ResidueReferenceBondOrderEnum:
+    permissible_values:
+      SING:
+      DOUB:
+      TRIP:
+
+  ResidueChemicalGroupEnum:
+    permissible_values:
+      AROMATIC_ATOMS:
+      HYDROXYL:
+      CARBOXYL:
+      CARBOXAMIDE:
+      GUANIDINO:
+      PRIMARY_AMINO_GROUP:
+        description: Aliphatic primary amino group, including neutral amine and protonated ammonium representations; excludes amide and guanidino nitrogens.
+      THIOL:
+      THIOETHER:
+      BACKBONE_RING_CLOSURE:
+
   MolecularArtifactKindEnum:
     description: Role used to validate cross-assertion source bindings, independently of a source's filename.
     permissible_values:
@@ -2611,6 +2914,8 @@ enums:
 
   MolecularEvidenceOriginEnum:
     permissible_values:
+      PUBLISHED_SIMULATION:
+        description: Source-reported computation; neither independently replayed here nor experimental evidence.
       COMPUTED_CONTACTS:
         description: Distances calculated from experimental coordinates, not an assay.
       COMPUTED_COMPARISON:
@@ -2619,6 +2924,20 @@ enums:
         description: Functional measurement in the stated experimental context.
       CURATOR_INTERPRETATION:
         description: Reasoned synthesis with explicit supporting/challenging assertions.
+
+  ResiduePropertyContextAssessmentEnum:
+    permissible_values:
+      REFERENCE_CONTEXT_ONLY:
+        description: Chemistry and reference coordinates juxtaposed without a variant-effect claim.
+      COMPUTATIONAL_HYPOTHESIS:
+        description: A published variant simulation, not generic chemistry, supports the local interaction hypothesis.
+
+  ResidueContextTraitAssessmentEnum:
+    permissible_values:
+      UNRESOLVED:
+        description: Measured outcome does not isolate the proposed molecular intermediate.
+      SOURCE_PROPOSED_HYPOTHESIS:
+        description: A cited source proposes this specific mediation; not experimentally established.
 
   MolecularReviewStatusEnum:
     permissible_values:

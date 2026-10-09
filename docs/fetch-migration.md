@@ -112,6 +112,14 @@ magic bytes, stable content markers, or publisher checksums.
 These should reuse the helper only for any fixed bulk sub-download. Their pagination,
 checkpointing, authentication, and partial-result rules belong in their Python clients.
 
+## Bounded chemistry acquisition
+
+`fetch-amino-acid-properties` is a bounded 22-file chemistry acquisition using
+the shared fetcher for every CCD/parameter file. It writes only a new ignored
+snapshot, hashes all inputs, and publishes a completion manifest only after all
+transfers succeed. Downloaded Biopython source files are parsed as literal data,
+never imported or executed. It does not write trait or grounding records.
+
 ## Non-network route
 
 - `fetch-traitontomap` — copies from a local sibling checkout; the HTTP helper does not

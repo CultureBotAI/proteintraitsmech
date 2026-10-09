@@ -18,12 +18,15 @@ import yaml
 from molecular_evidence import build_structural_bundle, canonical, sha256
 from slc10_model_comparison import build_model_comparisons
 from validate_molecular_evidence import ROOT, validate_bundle
+from amino_acid_properties import CATALOG, digest, validate_catalog
+from residue_reasoning import build_environment
 
 CURATION = ROOT / "data/molecular/slc10/curation.yaml"
 OUTPUT = ROOT / "data/molecular/slc10/pilot.json"
+REASONING = ROOT / "data/molecular/slc10/residue-reasoning.yaml"
 
 
-def build(snapshot, curation_path=CURATION, model_snapshot=None):
+def build(snapshot, curation_path=CURATION, model_snapshot=None, reasoning_path=REASONING, catalog_path=CATALOG):
     bundle = build_structural_bundle(snapshot)
     if model_snapshot is not None:
         artifacts, comparisons = build_model_comparisons(snapshot, model_snapshot, bundle["protein_references"])
@@ -50,6 +53,28 @@ def build(snapshot, curation_path=CURATION, model_snapshot=None):
                         raise ValueError("curation must not override a residue sequence binding")
                     binding["sequence_sha256"] = proteins[binding["protein_id"]]["sequence_sha256"]
         bundle[kind] = rows
+    catalog = json.loads(catalog_path.read_text())
+    errors = validate_catalog(catalog)
+    if errors:
+        raise ValueError("invalid chemistry catalog: " + "; ".join(errors))
+    bundle["amino_acid_catalog"] = catalog
+    reasoning = yaml.safe_load(reasoning_path.read_text())
+    if not isinstance(reasoning, dict) or set(reasoning) != {"residue_simulations", "residue_reasoning"}:
+        raise ValueError("reasoning curation requires exactly residue_simulations and residue_reasoning")
+    bundle["residue_simulations"] = deepcopy(reasoning["residue_simulations"])
+    for row in bundle["residue_simulations"]:
+        if "sequence_sha256" in row:
+            raise ValueError("simulation curation must not override calculated sequence binding")
+        row["sequence_sha256"] = proteins[row["protein_id"]]["sequence_sha256"]
+    bundle["residue_reasoning"] = deepcopy(reasoning["residue_reasoning"])
+    for row in bundle["residue_reasoning"]:
+        if "catalog_sha256" in row or "sequence_sha256" in row["residue_binding"]:
+            raise ValueError("reasoning curation must not override calculated content/sequence bindings")
+        row["catalog_sha256"] = digest(catalog)
+        binding = row["residue_binding"]
+        binding["sequence_sha256"] = proteins[binding["protein_id"]]["sequence_sha256"]
+    bundle["residue_environments"] = [build_environment(snapshot, proteins["UniProtKB:Q14973"], pos)
+                                      for pos in (252, 267)]
     errors = validate_bundle(bundle)
     if errors:
         raise ValueError("\n".join(errors))
