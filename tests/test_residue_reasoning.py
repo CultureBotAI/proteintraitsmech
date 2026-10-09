@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -11,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from consume_molecular_evidence import resolve
 from molecular_evidence import canonical
 from residue_reasoning import validate_reasoning
+import residue_reasoning as reasoning
 from validate_molecular_evidence import validate_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,7 +57,7 @@ def test_complete_case_has_properties_exact_context_and_independent_measured_bra
         assert simulation["evidence"][0]["reference"] == "https://doi.org/10.1016/j.bpj.2024.03.033"
         estrone = next(link for link in ledger["context_trait_links"] if "estrone" in link["observation_ref"])
         assert simulation["assertion_id"] not in estrone["context_refs"]
-        deposited = next(l for l in ledger["property_context_links"] if "CHO" in l["context_ref"])
+        deposited = next(link for link in ledger["property_context_links"] if "CHO" in link["context_ref"])
         assert "glycochenodeoxycholic acid" in deposited["limitations"]
     else:
         assert not any(c["evidence_origin"] == "PUBLISHED_SIMULATION" for c in contexts)
@@ -152,3 +154,53 @@ def test_input_objects_not_mutated(bundle):
     assert validate_reasoning(bundle) == []
     resolve(*request_for("s267f", bundle))
     assert bundle == before
+
+
+@pytest.fixture
+def environment_inputs(tmp_path, monkeypatch):
+    protein = dict(protein_id="UniProtKB:Q14973", sequence="SAC", sequence_length=3,
+                   sequence_sha256=hashlib.sha256(b"SAC").hexdigest(), uniprot_release="2026_03")
+    atoms = [dict(atom_id=str(i), atom_name="CA", element="C", residue_name=aa,
+                  auth_chain="A", label_chain="A", auth_seq_id=str(i + 9), label_seq_id=i,
+                  occupancy=1.0, x=x, y=0.0, z=0.0)
+             for i, (aa, x) in enumerate((("SER", 0), ("ALA", 4.5), ("CYS", 4.5000004)), 1)]
+    block = SimpleNamespace(name="7ZYI")
+    sifts = SimpleNamespace(pdb_id="7ZYI", uniprot_release="2026_03")
+    monkeypatch.setattr(reasoning.gemmi.cif, "read_file", lambda path: SimpleNamespace(sole_block=lambda: block))
+    monkeypatch.setattr(reasoning, "load_sifts_xml", lambda path: sifts)
+    monkeypatch.setattr(reasoning, "source_residue_map", lambda *args: {
+        ("10", ""): (1, "S"), ("11", ""): (2, "A"), ("12", ""): (3, "C")})
+    monkeypatch.setattr(reasoning, "atoms_from_block", lambda *args: atoms)
+    return tmp_path, protein, atoms, block, sifts
+
+
+def test_environment_uses_unrounded_cutoff_and_exact_reference_mapping(environment_inputs):
+    snapshot, protein, atoms, _, _ = environment_inputs
+    result = reasoning.build_environment(snapshot, protein, 1)
+    assert result["position"] == 1 and result["residue"] == "S"
+    assert result["focus_atoms"] == atoms[:1]
+    assert [(n["partner_position"], n["partner_residue"]) for n in result["neighbors"]] == [(2, "A")]
+    assert result["neighbors"][0]["distance_angstrom"] == 4.5
+    assert result["evidence_origin"] == "COMPUTED_CONTACTS"
+    assert "not a mutant structure" in result["limitations"]
+
+
+@pytest.mark.parametrize("mutation", [
+    lambda atoms, block, sifts: setattr(block, "name", "OTHER"),
+    lambda atoms, block, sifts: setattr(sifts, "uniprot_release", "2025_01"),
+    lambda atoms, block, sifts: atoms[0].update(residue_name="PHE"),
+    lambda atoms, block, sifts: atoms[0].update(auth_seq_id="999"),
+    lambda atoms, block, sifts: atoms.pop(0),
+])
+def test_environment_generation_rejects_unreconciled_coordinates(environment_inputs, mutation):
+    snapshot, protein, atoms, block, sifts = environment_inputs
+    mutation(atoms, block, sifts)
+    with pytest.raises(ValueError):
+        reasoning.build_environment(snapshot, protein, 1)
+
+
+@pytest.mark.parametrize("position,cutoff", [(True, 4.5), (0, 4.5), (4, 4.5), (1, 0), (1, float("nan"))])
+def test_environment_rejects_invalid_coordinate_or_cutoff(environment_inputs, position, cutoff):
+    snapshot, protein, *_ = environment_inputs
+    with pytest.raises(ValueError):
+        reasoning.build_environment(snapshot, protein, position, cutoff=cutoff)
