@@ -2072,6 +2072,142 @@ def cmd_candidates(args: argparse.Namespace) -> int:
     print(f"WROTE {args.out}")
     return 0
 
+# ---------------------------------------------------------------- review notes (#1060)
+
+LOCALIZATION_INHERITED_CONCLUSION = (
+    "The protein is a component or subtype instance of what the record names."
+)
+ACTIVITY_INHERITED_CONCLUSION = (
+    "The protein performs the activity named by the record."
+)
+
+
+def inherited_review_conclusion(
+    trait_category: str | None = None,
+    trait_axis: str | None = None,
+) -> str:
+    """Return the conclusion sentence for an inherited review note (#1060).
+
+    Molecular-function and enzymatic-activity records assert that the protein
+    performs the activity named by the record. Localization records assert
+    that the protein is a component or subtype instance of what the record names.
+    """
+    category_norm = (trait_category or "").strip().upper()
+    axis_norm = (trait_axis or "").strip().upper()
+    if (
+        category_norm
+        in {
+            "FUNC_MOLECULAR_FUNCTION",
+            "MOLECULAR_FUNCTION",
+            "FUNC_ENZYMATIC_ACTIVITY",
+            "ENZYMATIC_ACTIVITY",
+            "ACTIVITY",
+        }
+        or axis_norm in {"FUNCTION", "FUNC"}
+    ):
+        return ACTIVITY_INHERITED_CONCLUSION
+    return LOCALIZATION_INHERITED_CONCLUSION
+
+
+def format_inherited_review_note(
+    *,
+    trait_category: str | None = None,
+    trait_axis: str | None = None,
+    source_trait_id: str | None = None,
+    trait_id: str | None = None,
+    edges: Sequence[Mapping[str, str] | tuple[str, str, str]] | None = None,
+    evidence: str | None = None,
+    references: Sequence[str] | None = None,
+    conclusion: str | None = None,
+    row: Mapping[str, Any] | None = None,
+) -> str:
+    """Format a review note for an inherited cross-Mech candidate row (#1060).
+
+    Inherited rows record the evidence, the references, and every edge with its
+    relation, concluding with category-specific wording:
+    - Localization records: 'The protein is a component or subtype instance of what the record names.'
+    - Molecular-function records: 'The protein performs the activity named by the record.'
+    """
+    if row is not None:
+        if trait_category is None:
+            trait_category = row.get("trait_category")
+        if trait_axis is None:
+            trait_axis = row.get("trait_axis")
+        if source_trait_id is None:
+            source_trait_id = row.get("source_trait_id")
+        if trait_id is None:
+            trait_id = row.get("trait_id")
+        if evidence is None:
+            evidence = (
+                row.get("evidence")
+                or row.get("evidence_code")
+                or row.get("evidence_type")
+                or row.get("evidence_source")
+            )
+        if edges is None:
+            edges = row.get("edges") or row.get("inheritance_edges")
+
+    parts: list[str] = []
+
+    # Path / edges description
+    if edges:
+        edge_strs: list[str] = []
+        for edge in edges:
+            if isinstance(edge, Mapping):
+                c = edge.get("child")
+                r = edge.get("relation")
+                p = edge.get("parent")
+                if c and r and p:
+                    edge_strs.append(f"{c} {r} {p}")
+            elif isinstance(edge, (list, tuple)) and len(edge) == 3:
+                edge_strs.append(f"{edge[0]} {edge[1]} {edge[2]}")
+        if edge_strs:
+            parts.append(f"Inherited via {', '.join(edge_strs)}.")
+    elif source_trait_id and trait_id and source_trait_id != trait_id:
+        parts.append(f"Inherited from {source_trait_id} to {trait_id}.")
+
+    # Evidence and references
+    ev_parts: list[str] = []
+    if evidence:
+        ev_parts.append(str(evidence))
+    if references:
+        ev_parts.append(f"refs: {', '.join(str(r) for r in references)}")
+    if ev_parts:
+        parts.append(f"Evidence: {'; '.join(ev_parts)}.")
+
+    # Concluding sentence
+    final_sentence = conclusion or inherited_review_conclusion(trait_category, trait_axis)
+    parts.append(final_sentence)
+
+    return " ".join(parts)
+
+
+generate_cross_mech_review_note = format_inherited_review_note
+
+
+def cmd_review_note(args: argparse.Namespace) -> int:
+    edges = []
+    if args.edges:
+        for item in args.edges:
+            parts = item.strip().split()
+            if len(parts) == 3:
+                edges.append((parts[0], parts[1], parts[2]))
+            else:
+                raise CrossMechError(
+                    f"--edge must have three tokens 'CHILD RELATION PARENT', got {item!r}"
+                )
+    note = format_inherited_review_note(
+        trait_category=args.trait_category,
+        trait_axis=args.trait_axis,
+        source_trait_id=args.source_trait_id,
+        trait_id=args.trait_id,
+        edges=edges,
+        evidence=args.evidence,
+        references=args.references,
+    )
+    print(note)
+    return 0
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -2139,6 +2275,29 @@ def build_parser() -> argparse.ArgumentParser:
     check_parser.add_argument("--ref", default=DEFAULT_REF)
     check_parser.add_argument("--fail-on-drift", action="store_true")
     check_parser.set_defaults(func=cmd_check)
+
+    review_note_parser = sub.add_parser(
+        "review-note",
+        help="template a review note for an inherited cross-Mech candidate row (#1060)",
+    )
+    review_note_parser.add_argument("--trait-category", help="record trait category")
+    review_note_parser.add_argument("--trait-axis", help="record trait axis")
+    review_note_parser.add_argument("--source-trait-id", help="descendant source trait ID")
+    review_note_parser.add_argument("--trait-id", help="record trait ID")
+    review_note_parser.add_argument(
+        "--edge",
+        action="append",
+        dest="edges",
+        help="inheritance edge formatted as 'CHILD RELATION PARENT' (can be repeated)",
+    )
+    review_note_parser.add_argument("--evidence", help="evidence string or code")
+    review_note_parser.add_argument(
+        "--reference",
+        action="append",
+        dest="references",
+        help="reference identifier (can be repeated)",
+    )
+    review_note_parser.set_defaults(func=cmd_review_note)
     return parser
 
 

@@ -1021,3 +1021,103 @@ def test_discovery_refuses_an_off_host_redirect():
 
     with pytest.raises(CM.CrossMechError, match="redirected off"):
         CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03", opener=opener)
+
+
+def test_inherited_review_conclusion():
+    # Molecular function and enzymatic activity -> activity conclusion (#1060)
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_MOLECULAR_FUNCTION")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_ENZYMATIC_ACTIVITY")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_axis="FUNCTION")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+
+    # Localization -> component / subtype conclusion
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_LOCALIZATION")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_axis="LOCATION")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_category="OTHER")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+
+
+def test_format_inherited_review_note_molecular_function():
+    # P07254 on GO:0004568 (chitinase activity), inherited from GO:0008843 (#1060)
+    note = CM.format_inherited_review_note(
+        trait_category="FUNC_MOLECULAR_FUNCTION",
+        source_trait_id="GO:0008843",
+        trait_id="GO:0004568",
+        edges=[("GO:0008843", "is_a", "GO:0004568")],
+        evidence="IEA:UniProtKB-EC (EC 3.2.1.14)",
+    )
+    assert "GO:0008843 is_a GO:0004568" in note
+    assert "IEA:UniProtKB-EC (EC 3.2.1.14)" in note
+    assert note.endswith(CM.ACTIVITY_INHERITED_CONCLUSION)
+    assert "The protein performs the activity" in note
+    assert "component or subtype" not in note
+
+
+def test_format_inherited_review_note_localization():
+    note = CM.format_inherited_review_note(
+        trait_category="FUNC_LOCALIZATION",
+        source_trait_id="GO:0022625",
+        trait_id="GO:0005840",
+        edges=[
+            {"child": "GO:0022625", "relation": "part_of", "parent": "GO:0022626"},
+            {"child": "GO:0022626", "relation": "is_a", "parent": "GO:0005840"},
+        ],
+        evidence="IDA",
+        references=["PubMed:12345"],
+    )
+    assert "GO:0022625 part_of GO:0022626, GO:0022626 is_a GO:0005840" in note
+    assert "IDA; refs: PubMed:12345" in note
+    assert note.endswith(CM.LOCALIZATION_INHERITED_CONCLUSION)
+    assert "component or subtype" in note
+    assert "performs the activity" not in note
+
+
+def test_format_inherited_review_note_from_row():
+    row = {
+        "protein_id": "UniProtKB:P07254",
+        "trait_id": "GO:0004568",
+        "source_trait_id": "GO:0008843",
+        "trait_category": "FUNC_MOLECULAR_FUNCTION",
+        "trait_axis": "FUNCTION",
+        "inheritance_edges": [("GO:0008843", "is_a", "GO:0004568")],
+        "evidence_source": "UniProtKB",
+    }
+    note = CM.format_inherited_review_note(row=row)
+    assert note.endswith(CM.ACTIVITY_INHERITED_CONCLUSION)
+
+
+def test_cmd_review_note_cli(capsys):
+    ret = CM.main(
+        [
+            "review-note",
+            "--trait-category",
+            "FUNC_MOLECULAR_FUNCTION",
+            "--source-trait-id",
+            "GO:0008843",
+            "--trait-id",
+            "GO:0004568",
+            "--edge",
+            "GO:0008843 is_a GO:0004568",
+            "--evidence",
+            "IEA:UniProtKB-EC",
+        ]
+    )
+    assert ret == 0
+    captured = capsys.readouterr().out
+    assert "The protein performs the activity named by the record." in captured
