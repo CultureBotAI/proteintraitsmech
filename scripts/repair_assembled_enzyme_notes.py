@@ -17,6 +17,8 @@ Dry-run by default; --apply writes in place.
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import sys
 from pathlib import Path
 
@@ -24,11 +26,17 @@ import yaml
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_ROOT = REPO_ROOT / "data" / "traits"
+BINDINGS_ROOT = REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
+
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import grounding_registry_layout as layout
 
 CAVEAT_NOTES = {
     "GO:0047154": {
         "rel_path": "function/molecular_function/go/methylmalonyl-coa-carboxytransferase-activity-go0047154.yaml",
         "protein_id": "UniProtKB:Q8GBW6",
+        "shard": "c9.jsonl",
+        "evidence_id": "ug-evidence:c96c63450c96bb20093b9a8e9909226f40504e3075aece9539241d6e68eb841f",
         "note": (
             "Assembled-enzyme context: recombinant 12S subunit catalyses the carboxyl-transfer "
             "partial reaction (PMID:8366018), not the complete transcarboxylase reaction independently."
@@ -42,6 +50,8 @@ CAVEAT_NOTES = {
     "GO:0018597": {
         "rel_path": "function/molecular_function/go/ammonia-monooxygenase-activity-go0018597.yaml",
         "protein_id": "UniProtKB:Q04507",
+        "shard": "62.jsonl",
+        "evidence_id": "ug-evidence:6276754b86bfaeace8689767ddb0502d528c4da7aa2baf713957b3ae41e85726",
         "note": (
             "Assembled-enzyme context: experimental evidence (PMID:19453274) measures an active "
             "multi-subunit AMO preparation rather than isolated AmoA; preserves experimental "
@@ -128,6 +138,78 @@ def repair_record_text(text: str, trait_id: str) -> tuple[str | None, str]:
     return new_text, "repaired"
 
 
+def repair_bindings(apply: bool) -> tuple[int, int, int]:
+    """Sync record_sha256 in qualified_record_bindings.jsonl.d shards and rebuild manifest.json.
+
+    Returns (repaired, already_correct, errors).
+    """
+    if not BINDINGS_ROOT.is_dir():
+        return 0, 0, 0
+
+    repaired = 0
+    already = 0
+    errors = 0
+    dirty_shards = False
+
+    for trait_id, cfg in sorted(CAVEAT_NOTES.items()):
+        yaml_path = TRAITS_ROOT / cfg["rel_path"]
+        if not yaml_path.is_file():
+            print(f"ERROR: trait file missing: {yaml_path}", file=sys.stderr)
+            errors += 1
+            continue
+
+        target_sha256 = hashlib.sha256(yaml_path.read_bytes()).hexdigest()
+        shard_path = BINDINGS_ROOT / cfg["shard"]
+        if not shard_path.is_file():
+            print(f"ERROR: shard file missing: {shard_path}", file=sys.stderr)
+            errors += 1
+            continue
+
+        lines = shard_path.read_text(encoding="utf-8").splitlines(keepends=True)
+        evidence_id = cfg["evidence_id"]
+        found = False
+        new_lines = []
+
+        for line in lines:
+            if evidence_id in line:
+                found = True
+                row = json.loads(line)
+                if row.get("evidence_id") == evidence_id:
+                    if row.get("record_sha256") == target_sha256:
+                        already += 1
+                        new_lines.append(line)
+                        print(f"  binding {cfg['shard']} ({trait_id}): already correct")
+                    else:
+                        row["record_sha256"] = target_sha256
+                        dumped = json.dumps(row, separators=(",", ":"), ensure_ascii=False) + "\n"
+                        new_lines.append(dumped)
+                        repaired += 1
+                        verb = "wrote" if apply else "would write"
+                        print(f"  {verb} binding {cfg['shard']} ({trait_id}): updated record_sha256 to {target_sha256}")
+                        dirty_shards = True
+                else:
+                    new_lines.append(line)
+            else:
+                new_lines.append(line)
+
+        if not found:
+            print(f"ERROR: evidence_id {evidence_id} not found in {shard_path}", file=sys.stderr)
+            errors += 1
+        elif dirty_shards and apply:
+            shard_path.write_text("".join(new_lines), encoding="utf-8")
+
+    if dirty_shards:
+        if apply:
+            shards = {p.name: p.read_bytes() for p in BINDINGS_ROOT.glob("*.jsonl")}
+            manifest_text = layout.build_manifest_text(shards)
+            (BINDINGS_ROOT / "manifest.json").write_text(manifest_text, encoding="utf-8")
+            print("  wrote updated manifest.json for qualified_record_bindings.jsonl.d")
+        else:
+            print("  would rebuild manifest.json for qualified_record_bindings.jsonl.d")
+
+    return repaired, already, errors
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -144,6 +226,7 @@ def main(argv: list[str] | None = None) -> int:
     already = 0
     errors = 0
 
+    print("Checking trait YAML files:")
     for path in paths:
         rel = str(path.relative_to(TRAITS_ROOT))
         if rel not in target_rel_paths:
@@ -165,6 +248,12 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(f"ERROR {path.name}: {status}", file=sys.stderr)
             errors += 1
+
+    print("\nChecking qualified-record bindings:")
+    b_repaired, b_already, b_errors = repair_bindings(args.apply)
+    repaired += b_repaired
+    already += b_already
+    errors += b_errors
 
     print(f"\nSummary: {repaired} to write, {already} already correct, {errors} errors")
     if not args.apply and repaired > 0:
