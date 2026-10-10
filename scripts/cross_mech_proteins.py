@@ -108,6 +108,7 @@ RHEA_DIRECTIONS = REPO_ROOT / "data" / "raw" / "rhea" / "rhea-directions.tsv"
 # The release-141-compatible bytes stage_rhea_uniprot_grounding.py already pins;
 # tests/test_cross_mech_proteins.py asserts the two pins stay equal.
 RHEA_DIRECTIONS_SHA256 = "0b62f0cd92991b89e7b6e05707e671e80787527c30192b3d44cf7fc05a5c748f"
+DEFAULT_INTERPRO_FRAME = REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_frame.json"
 
 SNAPSHOT_KIND = "proteintraitsmech-cross-mech-protein-snapshot"
 SNAPSHOT_SCHEMA_VERSION = 1
@@ -1632,6 +1633,22 @@ def load_discovery(path: Path) -> dict[str, dict[str, Any]]:
     return facts
 
 
+def load_interpro_frame(path: Path | str) -> dict[str, Any]:
+    frame_path = Path(path)
+    if not frame_path.is_file():
+        raise CrossMechError(f"no InterPro frame cache at {frame_path}")
+    try:
+        blob = json.loads(frame_path.read_text(encoding="utf-8"))
+    except Exception as error:
+        raise CrossMechError(
+            f"failed to read InterPro frame cache from {frame_path}: {error}"
+        ) from error
+    proteins = blob.get("proteins", blob)
+    if not isinstance(proteins, dict):
+        raise CrossMechError(f"{frame_path}: expected proteins dict in InterPro frame cache")
+    return proteins
+
+
 # -------------------------------------------------------------------- candidates
 
 
@@ -1641,6 +1658,7 @@ def candidate_rows(
     uniprot_release: str,
     mentions_sha256: str,
     sequences: Mapping[str, Mapping[str, Any]],
+    coordinates: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Funnel candidates for every absent or legacy pair that has a qualification route.
 
@@ -1709,13 +1727,47 @@ def candidate_rows(
             row["source_release"] = uniprot_release
             row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
         else:
-            row["reasons"] = ["record-specific occurrence coordinates require resolution"]
+            intervals_raw = None
+            if coordinates is not None:
+                bare_acc = (
+                    pair["protein_id"].split(":", 1)[1]
+                    if ":" in pair["protein_id"]
+                    else pair["protein_id"]
+                )
+                protein_coords = coordinates.get(pair["protein_id"]) or coordinates.get(bare_acc)
+                if isinstance(protein_coords, Mapping):
+                    intervals_raw = protein_coords.get(trait_id) or protein_coords.get(
+                        trait_id.split(":", 1)[-1]
+                    )
+            formatted_intervals: list[dict[str, int]] = []
+            if intervals_raw:
+                for item in intervals_raw:
+                    if isinstance(item, dict):
+                        s, e = item.get("start"), item.get("end")
+                    elif isinstance(item, (list, tuple)) and len(item) == 2:
+                        s, e = item[0], item[1]
+                    else:
+                        continue
+                    if s is not None and e is not None:
+                        try:
+                            formatted_intervals.append({"start": int(s), "end": int(e)})
+                        except (TypeError, ValueError):
+                            continue
+                formatted_intervals.sort(key=lambda x: (x["start"], x["end"]))
+            if formatted_intervals:
+                row["intervals"] = formatted_intervals
+                row["coordinate_frame"] = "UNIPROT_CANONICAL"
+                row["batch"] = CANDIDATE_BATCH
+                row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
+            else:
+                row["reasons"] = ["record-specific occurrence coordinates require resolution"]
         row["candidate_id"] = derive_candidate_id(row)
         rows.append(row)
     rows.sort(key=lambda row: (row["trait_id"], row["protein_id"], row["candidate_id"]))
     if len({row["candidate_id"] for row in rows}) != len(rows):
         raise CrossMechError("internal error: duplicate candidate IDs")
     return rows
+
 
 
 # ------------------------------------------------------------------------- check
@@ -1977,11 +2029,19 @@ def cmd_candidates(args: argparse.Namespace) -> int:
             rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
         )["pairs"]
     sequences = load_discovery(Path(args.discovery))
+    coordinates = None
+    if getattr(args, "interpro_frame", None):
+        frame_path = Path(args.interpro_frame)
+        if frame_path.is_file():
+            coordinates = load_interpro_frame(frame_path)
+        elif args.interpro_frame != str(DEFAULT_INTERPRO_FRAME):
+            raise CrossMechError(f"no InterPro frame cache at {frame_path}")
     candidates = candidate_rows(
         pairs,
         uniprot_release=args.uniprot_release,
         mentions_sha256=manifest["mentions_sha256"],
         sequences=sequences,
+        coordinates=coordinates,
     )
     undiscovered = sorted(
         {
@@ -2062,6 +2122,11 @@ def build_parser() -> argparse.ArgumentParser:
     )
     candidates_parser.add_argument("--uniprot-release", required=True)
     candidates_parser.add_argument("--discovery", default=str(DISCOVERY_PATH))
+    candidates_parser.add_argument(
+        "--interpro-frame",
+        default=str(DEFAULT_INTERPRO_FRAME),
+        help="InterPro coordinate cache for localized candidates (default: %(default)s)",
+    )
     candidates_parser.add_argument("--out", default=str(CANDIDATE_QUEUE))
     candidates_parser.add_argument("--apply", action="store_true")
     candidates_parser.set_defaults(func=cmd_candidates)

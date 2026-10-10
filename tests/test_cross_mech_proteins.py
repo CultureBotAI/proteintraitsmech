@@ -900,6 +900,58 @@ def test_candidates_refuse_a_malformed_release():
         CM.candidate_rows([], uniprot_release="latest", mentions_sha256="a" * 64, sequences={})
 
 
+def test_candidate_rows_with_coordinates_promotes_localized_candidate(tmp_path):
+    pairs = [
+        _pair(
+            "Pfam:PF04728",
+            "LEGACY_ON_TRAIT",
+            "INTERPRO_MATCH:InterPro",
+            axis="SEQUENCE",
+        ),
+    ]
+    coords = {
+        "P18776": {
+            "Pfam:PF04728": [[20, 50], [5, 15]],
+        }
+    }
+    rows = CM.candidate_rows(
+        pairs,
+        uniprot_release="2026_03",
+        mentions_sha256="a" * 64,
+        sequences=SEQUENCES,
+        coordinates=coords,
+    )
+    (pfam,) = rows
+    assert pfam["batch"] == CM.CANDIDATE_BATCH
+    assert pfam["scope"] == "LOCALIZED"
+    assert pfam["mapping_method"] == "INTERPRO_MATCH"
+    assert pfam["coordinate_frame"] == "UNIPROT_CANONICAL"
+    assert pfam["intervals"] == [{"start": 5, "end": 15}, {"start": 20, "end": 50}]
+    assert pfam["reasons"] == list(CM.CANDIDATE_RESOLUTION_REASONS)
+    ground = sys.modules["ground_uniprot_examples"]
+    assert pfam["candidate_id"] == ground.derive_candidate_id(pfam)
+
+    # Without coordinates, it remains in NEEDS_OCCURRENCE_BATCH
+    rows_no_coords = CM.candidate_rows(
+        pairs,
+        uniprot_release="2026_03",
+        mentions_sha256="a" * 64,
+        sequences=SEQUENCES,
+    )
+    (pfam_no_coords,) = rows_no_coords
+    assert pfam_no_coords["batch"] == CM.NEEDS_OCCURRENCE_BATCH
+    assert "intervals" not in pfam_no_coords
+    assert pfam_no_coords["candidate_id"] != pfam["candidate_id"]
+
+    # Test load_interpro_frame from json file
+    frame_file = tmp_path / "interpro_frame.json"
+    frame_file.write_text(
+        json.dumps({"_meta": {"schema": 1}, "proteins": coords}), encoding="utf-8"
+    )
+    loaded = CM.load_interpro_frame(frame_file)
+    assert loaded == coords
+
+
 # --------------------------------------------------------------------- discovery
 
 
