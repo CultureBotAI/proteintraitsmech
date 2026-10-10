@@ -341,6 +341,11 @@ audit-cross-mech-proteins *args:
 check-go-true-path *args:
     uv run python scripts/go_true_path.py check {{args}}
 
+# LOCAL ONLY -- update tracked GO true-path edges whose relation changed in the
+# local GO release (e.g. part_of -> is_a). Dry-run by default; pass --apply to write (#1046).
+update-go-true-path *args:
+    uv run python scripts/go_true_path.py update {{args}}
+
 # Verify the tracked snapshot offline. --local compares sibling checkouts and
 # --remote the live default branches and fleet manifest; drift is a NOTICE unless
 # --fail-on-drift.

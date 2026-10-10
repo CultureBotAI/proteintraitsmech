@@ -42,7 +42,8 @@ canonical example:
   `is_a` or `part_of` edge between live terms of one GO namespace, with the
   `go-basic.obo` release that proved it. The validator reads only this file, so every
   step of an `inheritance_path` must be a row here or a `parent_traits` edge;
-  `just check-go-true-path` replays the rows against the local GO release.
+  `just check-go-true-path` replays the rows against the local GO release;
+  `just update-go-true-path` updates edges if GO changes an inheriting relation (#1046).
 - `elife109154_source_assertions.jsonl` records reviewed seed-alignment membership or
   explicit reference-BGC profile annotations from the pinned Zenodo 18866949 deposit.
   `elife109154_acquisition_receipt.json` binds those assertions to source archive and
