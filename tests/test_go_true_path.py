@@ -159,3 +159,10 @@ def test_union_index_adds_go_edges_to_trait_edges():
         }
     ]
     assert G.union_index(trait, rows) == {"GO:0000002": frozenset({"GO:0000099", "GO:0000001"})}
+
+
+def test_pinned_release_constants():
+    assert G.PINNED_GO_RELEASE == "releases/2026-06-15"
+    assert G.PINNED_GO_URL == "https://release.geneontology.org/2026-06-19/ontology/go-basic.obo"
+    assert G.PINNED_GO_SHA256 == "c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c"
+    assert G.PINNED_GO_MIN_BYTES == 32_000_000

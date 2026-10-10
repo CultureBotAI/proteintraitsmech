@@ -8,8 +8,9 @@ descendant supports the record's term through an explicit ``inheritance_path``.
 Two artifacts carry the hierarchy:
 
 * the local ``go-basic.obo`` (gitignored, under ``data/raw/``), which the resolver and
-  promoter read to find and prove a path. It is not pinned (#1039): each tracked edge
-  records the release that proved it instead; and
+  promoter read to find and prove a path. It is pinned to release 2026-06-19
+  (data-version releases/2026-06-15) with recorded SHA-256 (#1039); each tracked edge
+  records the release that proved it; and
 * ``data/grounding/go_true_path_edges.jsonl``, the tracked subset of edges that
   qualified examples use, which the validator replays without the OBO file.
 
@@ -40,6 +41,10 @@ from obo_syntax import strip_comment  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_GO_OBO = REPO_ROOT / "data" / "raw" / "go-basic.obo"
 DEFAULT_GO_EDGES = REPO_ROOT / "data" / "grounding" / "go_true_path_edges.jsonl"
+PINNED_GO_RELEASE = "releases/2026-06-15"
+PINNED_GO_URL = "https://release.geneontology.org/2026-06-19/ontology/go-basic.obo"
+PINNED_GO_SHA256 = "c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c"
+PINNED_GO_MIN_BYTES = 32_000_000
 GO_BASIC_SOURCE = "http://purl.obolibrary.org/obo/go/go-basic.obo"
 INHERITING_RELATIONS = frozenset({"is_a", "part_of"})
 
