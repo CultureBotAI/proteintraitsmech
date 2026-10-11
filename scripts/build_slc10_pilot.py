@@ -19,7 +19,7 @@ from molecular_evidence import build_structural_bundle, canonical, sha256
 from slc10_model_comparison import build_model_comparisons
 from validate_molecular_evidence import ROOT, validate_bundle
 from amino_acid_properties import CATALOG, digest, validate_catalog
-from residue_reasoning import build_environment
+from residue_reasoning import build_environments
 
 CURATION = ROOT / "data/molecular/slc10/curation.yaml"
 OUTPUT = ROOT / "data/molecular/slc10/pilot.json"
@@ -59,8 +59,11 @@ def build(snapshot, curation_path=CURATION, model_snapshot=None, reasoning_path=
         raise ValueError("invalid chemistry catalog: " + "; ".join(errors))
     bundle["amino_acid_catalog"] = catalog
     reasoning = yaml.safe_load(reasoning_path.read_text())
-    if not isinstance(reasoning, dict) or set(reasoning) != {"residue_simulations", "residue_reasoning"}:
-        raise ValueError("reasoning curation requires exactly residue_simulations and residue_reasoning")
+    allowed_reasoning = {"environment_requests", "residue_simulations", "residue_reasoning"}
+    if not isinstance(reasoning, dict) or set(reasoning) != allowed_reasoning:
+        raise ValueError("reasoning curation requires exactly " + ", ".join(sorted(allowed_reasoning)))
+    if any(not isinstance(reasoning[kind], list) for kind in allowed_reasoning):
+        raise ValueError("reasoning curation sections must be lists")
     bundle["residue_simulations"] = deepcopy(reasoning["residue_simulations"])
     for row in bundle["residue_simulations"]:
         if "sequence_sha256" in row:
@@ -73,8 +76,8 @@ def build(snapshot, curation_path=CURATION, model_snapshot=None, reasoning_path=
         row["catalog_sha256"] = digest(catalog)
         binding = row["residue_binding"]
         binding["sequence_sha256"] = proteins[binding["protein_id"]]["sequence_sha256"]
-    bundle["residue_environments"] = [build_environment(snapshot, proteins["UniProtKB:Q14973"], pos)
-                                      for pos in (252, 267)]
+    bundle["residue_environments"] = build_environments(
+        snapshot, proteins, bundle["sources"], reasoning["environment_requests"])
     errors = validate_bundle(bundle)
     if errors:
         raise ValueError("\n".join(errors))

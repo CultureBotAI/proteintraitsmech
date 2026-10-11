@@ -38,7 +38,10 @@ The 666-protein remainder below refers to the recorded historical priority
 cohort; future staging includes independently supported overlaps as well.
 The PR's required CI runs full-corpus validation and the full test suite. Local
 duplicate full runs were stopped, not counted as passes; final CI status is on
-the PR. Older unrelated SLC10 E257A edits are excluded from this publication.
+the PR. Following explicit user approval, this publication also includes the
+previously separate SLC10 E257A evidence-ledger and configurable-neighborhood
+work, with its own molecular replay, consumer and browser checks. It does not
+promote E257A into a family-wide trait claim.
 
 ## Protein-first continuation — 2026-10-10
 

@@ -57,6 +57,14 @@ def test_sodium_mechanism_points_to_the_original_coordination_figure(pilot):
     assert citation["notes"] == (
         "Original substrate-bound structure; Figure 1i, Supplementary Figure S7, and sodium-site discussion."
     )
+    residue_node = next(n for n in mechanism["graph"]["nodes"] if n["node_type"] == "RESIDUE")
+    assert "E257 at Na1 (7ZYI J:A:706:NA)" in residue_node["description"]
+    assert "Q261 at Na2 (7ZYI I:A:705:NA)" in residue_node["description"]
+    for instance, position in (("J:A:706:NA", 257), ("I:A:705:NA", 261)):
+        site = next(s for s in pilot["sites"] if s["structure_id"] == "PDB:7ZYI"
+                    and s["ligand_instance"] == instance)
+        assert any(c["protein_position"] == position and c["atom_role"] == "SIDECHAIN"
+                   and c["protein_atom"]["element"] == "O" for c in site["contacts"])
 
 
 def test_experimental_and_interpretive_statuses_are_not_collapsed(pilot):
