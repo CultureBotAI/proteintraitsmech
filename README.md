@@ -224,6 +224,25 @@ supports them, and can also be added by curators:
   [cross-Mech protein skill](.claude/skills/proteintraitsmech-cross-mech-proteins/SKILL.md)
   documents refresh and reviewed inclusion.
 
+  Pfam DUF (domain of unknown function) records are mostly carried by proteins outside
+  the organism panel the provider frames cover, so the ordinary audit finds no local
+  match for them. The DUF discovery-lead lane reads DUFMech's frozen UniProt candidates
+  (`uniprot-duf-example-candidates-2026-10-07`, pinned by DUFMech commit and SHA-256)
+  as leads only. A lead becomes a funnel candidate only where a release-pinned InterPro
+  crawl of that accession asserts an exact match of the record's Pfam signature; it
+  then goes through the ordinary review batch. See
+  [research/duf-discovery-leads.md](research/duf-discovery-leads.md).
+
+  ```bash
+  just audit-duf-leads --apply                       # leads -> exact Pfam records
+  just discover-duf-leads --max-records 120 --apply  # bounded plan + UniProt identity
+  just fetch-duf-interpro-frame --limit 1 --apply    # canary, then without --limit
+  just stage-duf-candidates --apply                  # exact InterPro matches only
+  just select-duf-review-batch <id> --max-records 100 --apply
+  just fetch-uniprot-review-batch <id> ...           # as below
+  just resolve-duf-review-batch <id>                 # binds the lane's InterPro sidecar
+  ```
+
   Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
   signature cross-references and `just suggest-examples` ranks carriers from the
   Swiss-Prot profile matrix; neither command writes trait records, and both reject the

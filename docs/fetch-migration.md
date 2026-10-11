@@ -76,6 +76,8 @@ magic bytes, stable content markers, or publisher checksums.
   release-pinned grounding workflow.
 - `fetch-residue-frame` — residue-coordinate API enrichment.
 - `fetch-interpro-frame` — InterPro API enrichment.
+- `fetch-duf-interpro-frame` — the same InterPro API crawler, bounded to the DUF
+  discovery-lead accessions and written to its own `align_cache/duf-leads/` sidecar.
 - `build-profiles` — bounded UniProtKB discovery matrix, not canonical-example evidence.
   The paginated client checks a single release and advertised totals, reports deliberate
   limits as incomplete, and publishes a new `--out-dir` bundle with a trait-index snapshot
