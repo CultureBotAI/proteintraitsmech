@@ -1081,6 +1081,36 @@ def test_coverage_priority_is_deterministic_and_never_approval():
     assert rows[2]["qualification_status"] == "CANDIDATE_PROTEIN"
 
 
+def test_coverage_priority_accepts_independently_supported_sibling_pair():
+    row = {"protein_id": "UniProtKB:P18776", "source_namespace": "GO",
+           "trait_id": "GO:0009390", "candidate_id": "ug-test",
+           "qualification_status": "CANDIDATE_PROTEIN",
+           "cross_mech_provenance": {
+               "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}}
+    assert CM.protein_coverage_candidates([row], []) == [row]
+    assert row["qualification_status"] == "CANDIDATE_PROTEIN"
+    assert CM.protein_coverage_candidates([row], [{
+        "protein_id": row["protein_id"], "status": "HAS_QUALIFIED_PTM_EXAMPLE"}]) == []
+
+
+def test_merge_candidate_pairs_preserves_both_sources_without_mutating_inputs():
+    sibling = {"protein_id": "UniProtKB:P18776", "trait_id": "GO:0009390",
+               "sibling_curies": ["GO:0009390"], "relations": ["component_of_structure"],
+               "qualifiers": [{"proposed": True}]}
+    annotation = {**sibling, "sibling_curies": [], "relations": ["uniprot_annotation_discovery"],
+                  "qualifiers": [], "trait_link_origin": "UNIPROT_EXACT_ENTRY_DISCOVERY"}
+    untouched = {**sibling, "protein_id": "UniProtKB:P99999"}
+    independent = {**annotation, "protein_id": "UniProtKB:Q99999"}
+    before = json.dumps([sibling, annotation, untouched, independent], sort_keys=True)
+    result = CM.merge_candidate_pairs([untouched, sibling], [independent, annotation])
+    assert result == CM.merge_candidate_pairs([sibling, untouched], [annotation, independent])
+    combined = next(row for row in result if row["protein_id"] == sibling["protein_id"])
+    assert combined == {**sibling, "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
+    assert untouched in result and independent in result
+    assert json.dumps([sibling, annotation, untouched, independent], sort_keys=True) == before
+    assert CM.merge_candidate_pairs([sibling, sibling], []) == [sibling]
+
+
 def test_ambiguous_entry_annotation_facts_remain_blocked(tmp_path, monkeypatch):
     import uniprot_membership_snapshot as membership
 

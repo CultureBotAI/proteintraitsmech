@@ -113,6 +113,17 @@ def test_search_includes_ignored_and_hidden_records(tmp_path):
     assert inventory.matching_records(tmp_path, {"UniProtKB:P12345"}) == sorted(paths)
 
 
+def test_search_ignores_user_ripgrep_configuration(tmp_path, monkeypatch):
+    records = tmp_path / "traits"
+    records.mkdir()
+    record = records / "example.yaml"
+    record.write_text("protein_id: UniProtKB:P12345\n")
+    config = tmp_path / "ripgrep.conf"
+    config.write_text("--max-filesize=1\n")
+    monkeypatch.setenv("RIPGREP_CONFIG_PATH", str(config))
+    assert inventory.matching_records(records, {"UniProtKB:P12345"}) == [record]
+
+
 def test_inventory_keeps_targets_and_legacy_separate(tmp_path, monkeypatch, reference):
     snapshot = tmp_path / "snapshot"
     snapshot.mkdir()

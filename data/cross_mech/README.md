@@ -76,6 +76,11 @@ retained; a generic active-site feature is not proof of any particular PTM trait
 resolution digests. `--review-batch` is repeatable; contradictory history is
 retained, not silently overwritten. Review approval alone is not installation:
 only `ptm_examples` projects what is actually present in the canonical records.
+New staging runs preserve overlapping sibling and exact-entry discovery as
+`SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY`, so retaining sibling
+context cannot exclude an independently supported candidate from coverage
+planning. Previously finalized snapshots retain their original provenance;
+reproduction does not rewrite their decisions or grant a new qualification.
 The inventory is uncapped. Browser trait pages display at most five examples,
 prioritizing qualified examples; an accession missing from that page sample may
 still be installed and present here.

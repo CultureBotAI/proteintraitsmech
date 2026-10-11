@@ -44,7 +44,7 @@ def matching_records(traits: Path, proteins: set[str]) -> list[Path]:
     if not proteins:
         return []
     result = subprocess.run(
-        ["rg", "--hidden", "--no-ignore", "-l", "-0", "-F", "-f", "-",
+        ["rg", "--no-config", "--hidden", "--no-ignore", "-l", "-0", "-F", "-f", "-",
          "-g", "*.yaml", "-g", "*.yml", str(traits)],
         input="\n".join(sorted(proteins)) + "\n", text=True, capture_output=True,
     )

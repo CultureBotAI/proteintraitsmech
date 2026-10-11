@@ -8,6 +8,32 @@ issue: "#652"
 
 # Cross-Mech protein examples
 
+## Publication review — 2026-10-10
+
+[PR #1064](https://github.com/CultureBotAI/proteintraitsmech/pull/1064) publishes
+the two reviewed batches and the protein-first inventory. An adversarial code
+and provenance self-review (not independent human review) reproduced two
+completeness defects with failing regression tests:
+
+- [#1063](https://github.com/CultureBotAI/proteintraitsmech/issues/1063): the
+  inventory search inherited caller ripgrep configuration. It now uses
+  `--no-config` as well as `--hidden --no-ignore`; a real-subprocess test proves
+  a caller's size limit cannot silently hide a trait record.
+- [#1062](https://github.com/CultureBotAI/proteintraitsmech/issues/1062): overlap
+  with a sibling pair discarded independently supported UniProt discovery during
+  coverage planning. The merge now preserves dual provenance, and the priority
+  filter retains these candidates. Sibling-only claims remain ineligible for
+  this independent lane; duplicate sibling rows cannot manufacture support.
+
+The focused inventory/extraction/sequence tests pass (107 tests), with a separate
+three-test confirmation of the final regression cases. These fixes do not
+rewrite finalized staging snapshots, review bundles or installed examples.
+The 666-protein remainder below refers to the recorded historical priority
+cohort; future staging includes independently supported overlaps as well.
+The PR's required CI runs full-corpus validation and the full test suite. Local
+duplicate full runs were stopped, not counted as passes; final CI status is on
+the PR. Older unrelated SLC10 E257A edits are excluded from this publication.
+
 ## Protein-first continuation — 2026-10-10
 
 The coverage-priority queue was restaged without replacing the original

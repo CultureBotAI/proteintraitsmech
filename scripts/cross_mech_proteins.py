@@ -1859,6 +1859,24 @@ def entry_annotation_pairs(entries: Mapping[str, Mapping[str, Any]], mentions: S
     return pairs
 
 
+def merge_candidate_pairs(sibling_pairs: Sequence[dict[str, Any]],
+                          annotation_pairs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Retain sibling context and independent discovery when both name a pair.
+
+    Annotation pairs have already passed entry_annotation_pairs' exact-fact
+    discovery policy. This provenance is still not approval or installation.
+    Never mutate either input collection (including finalized staging inputs).
+    """
+    by_pair = {(pair["protein_id"], pair["trait_id"]): pair for pair in annotation_pairs}
+    independently_supported = set(by_pair)
+    for pair in sibling_pairs:
+        key = pair["protein_id"], pair["trait_id"]
+        if key in independently_supported:
+            pair = {**pair, "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
+        by_pair[key] = pair
+    return [by_pair[key] for key in sorted(by_pair)]
+
+
 def protein_coverage_candidates(candidates: Sequence[dict[str, Any]], inventory: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
     """Plan one new exact functional example per currently unqualified protein.
 
@@ -1869,8 +1887,10 @@ def protein_coverage_candidates(candidates: Sequence[dict[str, Any]], inventory:
     """
     covered = {row["protein_id"] for row in inventory if row["status"] == "HAS_QUALIFIED_PTM_EXAMPLE"}
     preference = {"ComplexPortal": 0, "RHEA": 1, "GO": 2}
+    independent_origins = {"UNIPROT_EXACT_ENTRY_DISCOVERY",
+                           "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
     eligible = [row for row in candidates if row["protein_id"] not in covered
-                and row.get("cross_mech_provenance", {}).get("trait_link_origin") == "UNIPROT_EXACT_ENTRY_DISCOVERY"
+                and row.get("cross_mech_provenance", {}).get("trait_link_origin") in independent_origins
                 and row["source_namespace"] in preference]
     chosen = {}
     for row in sorted(eligible, key=lambda row: (preference[row["source_namespace"]], row["trait_id"], row["candidate_id"])):
@@ -2168,11 +2188,7 @@ def cmd_candidates(args: argparse.Namespace) -> int:
         entries = load_discovery_entries(Path(args.entry_annotations))
         extra = entry_annotation_pairs(entries, rows, traits_root=Path(args.traits),
                                        blocked=annotation_blocked)
-        # Preserve sibling provenance where it exists; never relabel a UniProt fact
-        # as a trait assertion made by the sibling.
-        by_pair = {(pair["protein_id"], pair["trait_id"]): pair for pair in extra}
-        by_pair.update({(pair["protein_id"], pair["trait_id"]): pair for pair in pairs})
-        pairs = [by_pair[key] for key in sorted(by_pair)]
+        pairs = merge_candidate_pairs(pairs, extra)
         print(f"{len(extra):,} exact-entry functional candidates (independent of sibling trait links)")
         print(f"{len(annotation_blocked):,} accessions blocked by ambiguous/malformed annotation facts")
     candidates = candidate_rows(
