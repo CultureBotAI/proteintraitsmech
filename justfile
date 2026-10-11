@@ -389,7 +389,7 @@ select-cross-mech-review-batch batch_id *args:
 audit-duf-leads *args:
     uv run python scripts/duf_leads.py audit {{args}}
 
-# Choose a bounded, deterministic set of target records (--max-records, default 150) and
+# Choose a bounded, deterministic set of target records (--max-records, default 100; keep it equal to the batch bound) and
 # read each lead's exact sequence identity from the pinned UniProt release (anonymous
 # exact-accession requests). Dry-run plans only; --apply also writes accessions.txt for
 # the InterPro crawl below.

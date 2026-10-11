@@ -437,3 +437,24 @@ def test_pinned_input_is_a_full_commit_and_sha256():
     assert re.fullmatch(r"[0-9a-f]{40}", DL.PINNED_COMMIT)
     assert re.fullmatch(r"[0-9a-f]{64}", DL.SNAPSHOT_SHA256)
     assert re.fullmatch(r"[0-9a-f]{64}", DL.MANIFEST_SHA256)
+
+
+def test_discovery_receipt_must_bind_the_plan_and_cover_it(tmp_path):
+    leads = _fixture_audit(tmp_path)["leads"]
+    plan = DL.discovery_plan(leads, max_records=1, snapshot={})
+    raw = json.dumps(plan).encode()
+    sequences = {f"UniProtKB:{a}": _identity(f"UniProtKB:{a}") for a in plan["accessions"]}
+    receipt = {
+        "plan_sha256": hashlib.sha256(raw).hexdigest(),
+        "expected_release": "2026_03",
+        "missing": [],
+        "discovered": len(sequences),
+    }
+    DL.verify_discovery_receipt(receipt, raw, plan, sequences, uniprot_release="2026_03")
+    with pytest.raises(DL.DufLeadError, match="does not bind"):
+        DL.verify_discovery_receipt(receipt, raw + b" ", plan, sequences, uniprot_release="2026_03")
+    with pytest.raises(DL.DufLeadError, match="another UniProt release"):
+        DL.verify_discovery_receipt(receipt, raw, plan, sequences, uniprot_release="2026_04")
+    short = dict(list(sequences.items())[:-1])
+    with pytest.raises(DL.DufLeadError, match="cover exactly"):
+        DL.verify_discovery_receipt(receipt, raw, plan, short, uniprot_release="2026_03")

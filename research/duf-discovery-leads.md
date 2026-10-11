@@ -128,7 +128,7 @@ the sidecar path in each row's provider evidence, so a later promotion can re-ch
 
 ### Bounds
 
-`discover-duf-leads --max-records` (default 150) decides which target records are
+`discover-duf-leads --max-records` (default 100) decides which target records are
 crawled. Records with a reviewed (Swiss-Prot) lead come first, then the rest in
 `trait_id` order, and every target lead of a chosen record is included. The batch
 itself goes through the ordinary selector, with its existing limits: at most 1,000

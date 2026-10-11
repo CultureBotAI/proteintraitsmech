@@ -465,6 +465,28 @@ def discovery_plan(
 # ----------------------------------------------------------------- candidates
 
 
+def verify_discovery_receipt(
+    receipt: Mapping[str, Any],
+    plan_raw: bytes,
+    plan: Mapping[str, Any],
+    sequences: Mapping[str, Mapping[str, Any]],
+    *,
+    uniprot_release: str,
+) -> None:
+    """The discovery receipt must bind these exact plan bytes and cover the plan."""
+
+    if receipt.get("plan_sha256") != sha256_bytes(plan_raw):
+        raise DufLeadError("discovery receipt does not bind the current discovery-plan.json")
+    if receipt.get("expected_release") != uniprot_release:
+        raise DufLeadError("discovery receipt was made for another UniProt release")
+    planned = {f"UniProtKB:{accession}" for accession in plan["accessions"]}
+    covered = set(sequences) | set(receipt.get("missing") or [])
+    if covered != planned or receipt.get("discovered") != len(sequences):
+        raise DufLeadError("discovery rows and receipt do not cover exactly the planned accessions")
+
+
+
+
 def _intervals(value: Any) -> list[list[int]] | None:
     if not isinstance(value, list) or not value:
         return None
@@ -708,8 +730,16 @@ def cmd_discover(args: argparse.Namespace) -> int:
 def cmd_candidates(args: argparse.Namespace) -> int:
     out = Path(args.out)
     leads = _read_jsonl(out / "leads.jsonl")
-    plan = json.loads((out / "discovery-plan.json").read_text(encoding="utf-8"))
+    plan_raw = (out / "discovery-plan.json").read_bytes()
+    plan = json.loads(plan_raw)
     sequences = cm.load_discovery(out / "discovery.jsonl")
+    verify_discovery_receipt(
+        json.loads((out / "discovery.receipt.json").read_text(encoding="utf-8")),
+        plan_raw,
+        plan,
+        sequences,
+        uniprot_release=args.uniprot_release,
+    )
     frame, meta = _load_frame(Path(args.interpro_frame), "DUF InterPro frame")
     grouped, grouped_meta = _load_frame(Path(args.interpro_grouped_frame), "grouped DUF frame")
     if grouped_meta.get("release") != meta.get("release"):
@@ -767,7 +797,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     discover_parser = sub.add_parser("discover", help="bounded plan + pinned sequence identity")
     discover_parser.add_argument("--uniprot-release", required=True)
-    discover_parser.add_argument("--max-records", type=int, default=150)
+    discover_parser.add_argument(
+        "--max-records",
+        type=int,
+        default=100,
+        help="target records to crawl; keep it equal to the review batch's --max-records, "
+        "because the selector draws records in hash order and would drop the "
+        "reviewed-lead preference from a larger set",
+    )
     discover_parser.add_argument("--out", default=str(OUT_DIR))
     discover_parser.add_argument("--apply", action="store_true")
     discover_parser.set_defaults(func=cmd_discover)
