@@ -110,7 +110,7 @@ RHEA_DIRECTIONS = REPO_ROOT / "data" / "raw" / "rhea" / "rhea-directions.tsv"
 RHEA_DIRECTIONS_SHA256 = "0b62f0cd92991b89e7b6e05707e671e80787527c30192b3d44cf7fc05a5c748f"
 
 SNAPSHOT_KIND = "proteintraitsmech-cross-mech-protein-snapshot"
-SNAPSHOT_SCHEMA_VERSION = 1
+SNAPSHOT_SCHEMA_VERSION = 2
 SELF_KEY = "proteintraitsmech"
 DEFAULT_REF = "origin/main"
 FLEET_REPOSITORY = "CultureBotAI/culturebotai-claw"
@@ -124,6 +124,16 @@ _ACCESSION = r"(?:[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-
 # Prefixed forms are recognised under any key; a bare accession only under a key whose
 # name already says it holds one, so a coincidental six-character token stays text.
 PREFIXED_PROTEIN = re.compile(rf"^(?:UniProtKB|UniProt|uniprot|uniprotkb):({_ACCESSION}(?:-\d+)?)$")
+# Explicit identifiers embedded in prose/URLs are discovery references only. Never
+# interpret another protein mentioned in a family description as a family member.
+TEXT_PROTEIN = re.compile(
+    rf"(?<![A-Za-z0-9_])(?:"
+    rf"(?:UniProtKB|UniProt|uniprot|uniprotkb):(?P<prefixed>{_ACCESSION}(?:-\d+)?)"
+    rf"|(?P<reversed>{_ACCESSION}(?:-\d+)?):(?:UniProtKB|UniProt)"
+    rf"|https?://(?:www\.)?uniprot\.org/(?:uniprotkb|uniprot)/"
+    rf"(?P<url>{_ACCESSION}(?:-\d+)?)"
+    rf")(?![A-Za-z0-9_-])"
+)
 BARE_PROTEIN = re.compile(rf"^({_ACCESSION}(?:-\d+)?)$")
 BARE_PROTEIN_KEYS = frozenset(
     {"uniprot_id", "uniprot_accession", "protein_accession", "uniprot", "uniprotkb"}
@@ -134,7 +144,7 @@ BARE_PROTEIN_KEYS = frozenset(
 PROTEIN_PREFILTER = re.compile(rb"(?i)niprot|protein_accession")
 # Bump whenever iter_mentions/annotations_for/mention_rows change what a row says, so the
 # rule digest (and `check`) notices code that hashing the declared tables cannot (#967).
-EXTRACTION_VERSION = 2
+EXTRACTION_VERSION = 3
 CURIE = re.compile(r"^([A-Za-z][A-Za-z0-9_.-]*):(\S+)$")
 _NON_CURIE_SCHEMES = frozenset({"http", "https", "ftp", "file", "mailto", "urn"})
 SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
@@ -308,6 +318,14 @@ CHANNELS: tuple[Channel, ...] = (
         (_src("list", "xrefs", "node_xref"), _src("self", "grounding", "node_grounding")),
     ),
     Channel(
+        "cellstructuremech.causal_node_grounding",
+        "cellstructuremech",
+        "/causal_graphs/[]/nodes/[]/grounding",
+        "GRAPH_NODE",
+        "node_grounding",
+        (_src("self", "xrefs", "node_xref"),),
+    ),
+    Channel(
         "cellstructuremech.canonical_example_reference",
         "cellstructuremech",
         "/canonical_examples/[]/reference",
@@ -359,6 +377,14 @@ CHANNELS: tuple[Channel, ...] = (
         "EXAMPLE",
         "edge_subject",
         (_src("self", "object", "catalyzes", predicate=("catalyzes",)),),
+    ),
+    Channel(
+        "pathwaymech.edge_object",
+        "pathwaymech",
+        "/mechanistic_edges/[]/object",
+        "GRAPH_NODE",
+        "edge_object",
+        note="An edge endpoint is not an assertion that its protein carries the subject's trait.",
     ),
     Channel(
         "pathwaymech.pathway_participant",
@@ -767,6 +793,7 @@ class Mention:
     protein_id: str
     chain: list[tuple[str, Mapping[str, Any]]]
     container: list[Any] | None = None
+    text_span: list[int] | None = None
 
 
 def iter_mentions(document: Any) -> list[Mention]:
@@ -778,17 +805,25 @@ def iter_mentions(document: Any) -> list[Mention]:
 
     found: list[Mention] = []
 
+    def add_string(value, pointer, key, chain, container=None):
+        accession = _protein_value(key, value)
+        if accession:
+            found.append(Mention(pointer, key, value, f"UniProtKB:{accession}", chain, container))
+            return
+        for match in TEXT_PROTEIN.finditer(value):
+            accession = next(item for item in match.groups() if item is not None)
+            found.append(Mention(
+                pointer, key, value, f"UniProtKB:{accession}", chain, container,
+                [match.start(), match.end()],
+            ))
+
     def walk_list(
         values: list[Any], pointer: str, key: str, chain: list[tuple[str, Mapping[str, Any]]]
     ) -> None:
         for index, item in enumerate(values):
             item_pointer = f"{pointer}/{index}"
             if isinstance(item, str):
-                accession = _protein_value(key, item)
-                if accession:
-                    found.append(
-                        Mention(item_pointer, key, item, f"UniProtKB:{accession}", chain, values)
-                    )
+                add_string(item, item_pointer, key, chain, values)
             elif isinstance(item, list):
                 walk_list(item, item_pointer, key, chain)
             else:
@@ -800,11 +835,7 @@ def iter_mentions(document: Any) -> list[Mention]:
             for key, value in node.items():
                 child = f"{pointer}/{_pointer_token(key)}"
                 if isinstance(value, str):
-                    accession = _protein_value(str(key), value)
-                    if accession:
-                        found.append(
-                            Mention(child, str(key), value, f"UniProtKB:{accession}", here)
-                        )
+                    add_string(value, child, str(key), here)
                 elif isinstance(value, list):
                     walk_list(value, child, str(key), here)
                 elif isinstance(value, Mapping):
@@ -882,6 +913,8 @@ def mention_rows(mech: str, record_path: str, document: Any) -> list[dict[str, A
     for mention in iter_mentions(document):
         pattern = generalize(mention.pointer)
         channel, role, relation = classify(mech, pattern)
+        if mention.text_span is not None:
+            channel, role, relation = None, "REFERENCE", "text_reference"
         holder = mention.chain[-1][1] if mention.chain else {}
         label_value = holder.get(channel.label_key) if channel and channel.label_key else None
         label = (
@@ -897,6 +930,7 @@ def mention_rows(mech: str, record_path: str, document: Any) -> list[dict[str, A
                 "pattern": pattern,
                 "protein_id": mention.protein_id,
                 "raw_value": mention.raw_value,
+                "text_span": mention.text_span,
                 "channel": channel.key if channel else None,
                 "role": role,
                 "relation": relation,
@@ -906,6 +940,12 @@ def mention_rows(mech: str, record_path: str, document: Any) -> list[dict[str, A
             }
         )
     return rows
+
+
+def mention_key(row: Mapping[str, Any]) -> tuple[str, str, str, int]:
+    """A JSON pointer plus optional zero-based, end-exclusive text offset."""
+    span = row.get("text_span")
+    return row["mech"], row["record_path"], row["pointer"], span[0] if span else -1
 
 
 # -------------------------------------------------------------------------- scan
@@ -964,6 +1004,7 @@ def scan(
     result = ScanResult()
     env = os.environ if environ is None else environ
     for target in fleet.targets:
+        print(f"Scanning {target.key} ...", file=sys.stderr, flush=True)
         repo = resolve_checkout(target, mechs_root, env)
         if fetch:
             _git(repo, "fetch", "--quiet", "origin")
@@ -972,8 +1013,8 @@ def scan(
         rows, summary = scan_mech(target, repo, refs[target.key] if refs else ref)
         result.rows.extend(rows)
         result.mechs.append(summary)
-    result.rows.sort(key=lambda row: (row["mech"], row["record_path"], row["pointer"]))
-    keys = [(row["mech"], row["record_path"], row["pointer"]) for row in result.rows]
+    result.rows.sort(key=mention_key)
+    keys = [mention_key(row) for row in result.rows]
     if len(set(keys)) != len(keys):
         raise CrossMechError("internal error: duplicate mention keys")
     return result
@@ -1043,6 +1084,7 @@ ROW_FIELDS = frozenset(
         "pattern",
         "protein_id",
         "raw_value",
+        "text_span",
         "channel",
         "role",
         "relation",
@@ -1095,7 +1137,7 @@ def verify_snapshot(raw: bytes, manifest: Mapping[str, Any]) -> list[str]:
         return errors + ["mentions file is not UTF-8"]
     if text and not text.endswith("\n"):
         errors.append("mentions file must end with a newline")
-    previous: tuple[str, str, str] | None = None
+    previous: tuple[str, str, str, int] | None = None
     rows: list[dict[str, Any]] = []
     for number, line in enumerate(text.splitlines(), 1):
         try:
@@ -1112,7 +1154,22 @@ def verify_snapshot(raw: bytes, manifest: Mapping[str, Any]) -> list[str]:
             errors.append(f"line {number}: unknown role {row['role']!r}")
         if row["mech"] not in pinned_mechs:
             errors.append(f"line {number}: mech {row['mech']!r} is not pinned in the manifest")
-        key = (row["mech"], row["record_path"], row["pointer"])
+        span = row["text_span"]
+        if span is not None:
+            if (not isinstance(row["raw_value"], str)
+                    or not isinstance(span, list) or len(span) != 2
+                    or any(type(value) is not int for value in span)
+                    or not 0 <= span[0] < span[1] <= len(row["raw_value"])):
+                errors.append(f"line {number}: invalid text_span")
+                continue
+            # Keep original token boundaries; slicing would accept a forged span
+            # inside a longer, invalid accession such as UniProtKB:P12345_BAD.
+            match = next((item for item in TEXT_PROTEIN.finditer(row["raw_value"])
+                          if list(item.span()) == span), None)
+            accession = next((item for item in match.groups() if item), None) if match else None
+            if row["protein_id"] != f"UniProtKB:{accession}" or row["annotations"]:
+                errors.append(f"line {number}: text reference identity or annotations invalid")
+        key = mention_key(row)
         if previous is not None and key <= previous:
             errors.append(f"line {number}: rows are not strictly sorted and unique")
         previous = key
@@ -1138,6 +1195,8 @@ def verify_snapshot(raw: bytes, manifest: Mapping[str, Any]) -> list[str]:
             errors.append(f"row {number}: pattern is not the generalized pointer")
             continue
         channel, role, relation = classify(row["mech"], row["pattern"])
+        if row["text_span"] is not None:
+            channel, role, relation = None, "REFERENCE", "text_reference"
         if (channel.key if channel else None, role, relation) != (
             row["channel"],
             row["role"],
@@ -1240,7 +1299,7 @@ def build_identifier_index(
 
     The committed tree is read with one ``git grep`` (object reads, no 2 GB working-tree
     scan), then patched with every working-tree difference: a modified or deleted
-    tracked record and an untracked, non-ignored one are re-read from disk. A promotion
+    tracked record and every untracked one (including ignored) are re-read from disk. A promotion
     rewrites ``canonical_examples``, never ``identifier``, so the patch is usually empty.
     """
 
@@ -1259,7 +1318,7 @@ def build_identifier_index(
         traits_root, ["diff", "--no-renames", "--name-only", "-z", "HEAD", "--", "."], runner
     )
     untracked = _git_lines(
-        traits_root, ["ls-files", "-z", "--others", "--exclude-standard", "--", "."], runner
+        traits_root, ["ls-files", "-z", "--others", "--", "."], runner
     )
     prefix = _git_lines(traits_root, ["rev-parse", "--show-prefix"], runner).strip()
     for entry in (changed + untracked).split("\0"):
@@ -1535,7 +1594,7 @@ def render_summary_markdown(report: Mapping[str, Any], manifest: Mapping[str, An
 # --------------------------------------------------------------------- discovery
 
 
-def discovery_url(accessions: Sequence[str]) -> str:
+def discovery_url(accessions: Sequence[str], *, include_annotations: bool = False) -> str:
     query = (
         "(" + " OR ".join(f"accession:{accession}" for accession in sorted(set(accessions))) + ")"
     )
@@ -1544,8 +1603,9 @@ def discovery_url(accessions: Sequence[str]) -> str:
         "format": "json",
         "size": "500",
         "includeIsoform": "true",
-        "fields": "accession,sequence",
     }
+    if not include_annotations:
+        params["fields"] = "accession,sequence"
     return f"{UNIPROT_SEARCH}?{urllib.parse.urlencode(params)}"
 
 
@@ -1555,6 +1615,7 @@ def discover_sequences(
     expected_release: str,
     opener: Callable[..., Any] = urllib.request.urlopen,
     batch_size: int = 100,
+    include_annotations: bool = False,
 ) -> dict[str, Any]:
     """Exact sequence identity of each protein from one pinned UniProt release.
 
@@ -1566,9 +1627,12 @@ def discover_sequences(
     accessions = sorted({protein.removeprefix("UniProtKB:") for protein in protein_ids})
     rows: dict[str, dict[str, Any]] = {}
     responses: list[dict[str, Any]] = []
+    entries: dict[str, dict[str, Any]] = {}
+    unavailable: dict[str, dict[str, Any]] = {}
+    seen_accessions: set[str] = set()
     for offset in range(0, len(accessions), batch_size):
         batch = accessions[offset : offset + batch_size]
-        url = discovery_url(batch)
+        url = discovery_url(batch, include_annotations=include_annotations)
         request = urllib.request.Request(
             url,
             headers={"Accept": "application/json", "User-Agent": "ProteinTraitsMech-cross-mech/1"},
@@ -1596,6 +1660,15 @@ def discover_sequences(
             accession = entry.get("primaryAccession")
             if accession not in wanted:
                 continue
+            if accession in seen_accessions:
+                raise CrossMechError(f"UniProt returned a duplicate exact accession: {accession}")
+            seen_accessions.add(accession)
+            if entry.get("entryType") == "Inactive":
+                unavailable[accession] = {
+                    "protein_id": f"UniProtKB:{accession}", "reason": "INACTIVE_ACCESSION",
+                    "inactive_reason": entry.get("inactiveReason"),
+                }
+                continue  # retain the exact retired identity; never substitute a replacement
             sequence_object = entry.get("sequence") or {}
             sequence = str(sequence_object.get("value") or "").strip()
             length = sequence_object.get("length")
@@ -1610,11 +1683,15 @@ def discover_sequences(
             if rows.get(accession, row) != row:
                 raise CrossMechError(f"UniProt returned two different sequences for {accession}")
             rows[accession] = row
+            if include_annotations:
+                entries[accession] = {**row, "entry": entry}
     missing = sorted(set(accessions) - set(rows))
     return {
         "rows": [rows[accession] for accession in sorted(rows)],
         "missing": [f"UniProtKB:{accession}" for accession in missing],
         "responses": responses,
+        "entries": [entries[accession] for accession in sorted(entries)],
+        "unavailable": [unavailable[accession] for accession in sorted(unavailable)],
     }
 
 
@@ -1711,11 +1788,114 @@ def candidate_rows(
         else:
             row["reasons"] = ["record-specific occurrence coordinates require resolution"]
         row["candidate_id"] = derive_candidate_id(row)
+        if pair.get("trait_link_origin"):
+            row["cross_mech_provenance"]["trait_link_origin"] = pair["trait_link_origin"]
         rows.append(row)
     rows.sort(key=lambda row: (row["trait_id"], row["protein_id"], row["candidate_id"]))
     if len({row["candidate_id"] for row in rows}) != len(rows):
         raise CrossMechError("internal error: duplicate candidate IDs")
     return rows
+
+
+def entry_annotation_pairs(entries: Mapping[str, Mapping[str, Any]], mentions: Sequence[Mapping[str, Any]],
+                           *, traits_root: Path = TRAITS_ROOT,
+                           exclude_proteins: set[str] | None = None,
+                           blocked: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
+    """Exact qualifying UniProt functional facts as *candidates*, not sibling assertions.
+
+    This protein-first lane also reaches targets and prose references for which the
+    sibling never named a PTM trait. Signature membership still needs coordinates,
+    so it is intentionally not turned into a whole-protein functional assertion.
+    All rows must be independently fetched, resolved, and scientifically reviewed.
+    """
+    from uniprot_membership_snapshot import (
+        MembershipSnapshotError, extract_entry_memberships, fact_evidence_failure,
+    )
+
+    index = build_identifier_index(traits_root)
+    provenance: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
+    for mention in mentions:
+        provenance[mention["protein_id"]].append(mention)
+    records = {}
+    pairs = []
+    for protein, entry in sorted(entries.items()):
+        if protein not in provenance or protein in (exclude_proteins or set()):
+            continue
+        try:
+            facts = extract_entry_memberships(entry["entry"], protein_id=protein,
+                sequence_sha256=entry["sequence_sha256"], uniprot_release=entry["uniprot_release"])
+        except MembershipSnapshotError as error:
+            if blocked is None:
+                raise
+            blocked.append({"protein_id": protein, "reason": str(error)})
+            continue  # ambiguous provider facts never qualify; the accession stays visible
+        for fact in facts:
+            trait = fact["source_trait_id"]
+            namespace = trait.split(":", 1)[0]
+            if namespace not in UNIPROT_ANNOTATION_NAMESPACES or fact_evidence_failure(fact):
+                continue
+            paths = index.get(trait) or []
+            if len(paths) > 1:
+                raise CrossMechError(f"ambiguous trait identifier: {trait}")
+            if not paths:
+                continue
+            if trait not in records:
+                records[trait] = load_record_examples(traits_root / paths[0])
+            record = records[trait]
+            status = _example_status(protein, record["examples"])
+            if status == "QUALIFIED_ON_TRAIT":
+                continue
+            origin = provenance[protein]
+            pairs.append({
+                "protein_id": protein, "trait_id": trait, "status": status,
+                "record_path": "data/traits/" + paths[0], "trait_axis": record["trait_axis"],
+                "trait_category": record["trait_category"],
+                "route": route_for(namespace, record["trait_axis"], record["trait_category"]),
+                "sibling_curies": [], "relations": ["uniprot_annotation_discovery"],
+                "mechs": sorted({row["mech"] for row in origin}),
+                "sibling_records": sorted({f"{row['mech']}:{row['record_path']}" for row in origin}),
+                "qualifiers": [], "trait_link_origin": "UNIPROT_EXACT_ENTRY_DISCOVERY",
+            })
+    return pairs
+
+
+def merge_candidate_pairs(sibling_pairs: Sequence[dict[str, Any]],
+                          annotation_pairs: Sequence[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Retain sibling context and independent discovery when both name a pair.
+
+    Annotation pairs have already passed entry_annotation_pairs' exact-fact
+    discovery policy. This provenance is still not approval or installation.
+    Never mutate either input collection (including finalized staging inputs).
+    """
+    by_pair = {(pair["protein_id"], pair["trait_id"]): pair for pair in annotation_pairs}
+    independently_supported = set(by_pair)
+    for pair in sibling_pairs:
+        key = pair["protein_id"], pair["trait_id"]
+        if key in independently_supported:
+            pair = {**pair, "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
+        by_pair[key] = pair
+    return [by_pair[key] for key in sorted(by_pair)]
+
+
+def protein_coverage_candidates(candidates: Sequence[dict[str, Any]], inventory: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    """Plan one new exact functional example per currently unqualified protein.
+
+    This is a transparent coverage priority, not scientific adjudication. Exact
+    complex membership, then reaction, then GO ID breaks ties deterministically.
+    Keep the unabridged queue separately; a rejected choice needs a new review of
+    its alternatives rather than being counted as successful protein coverage.
+    """
+    covered = {row["protein_id"] for row in inventory if row["status"] == "HAS_QUALIFIED_PTM_EXAMPLE"}
+    preference = {"ComplexPortal": 0, "RHEA": 1, "GO": 2}
+    independent_origins = {"UNIPROT_EXACT_ENTRY_DISCOVERY",
+                           "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
+    eligible = [row for row in candidates if row["protein_id"] not in covered
+                and row.get("cross_mech_provenance", {}).get("trait_link_origin") in independent_origins
+                and row["source_namespace"] in preference]
+    chosen = {}
+    for row in sorted(eligible, key=lambda row: (preference[row["source_namespace"]], row["trait_id"], row["candidate_id"])):
+        chosen.setdefault(row["protein_id"], row)
+    return sorted(chosen.values(), key=lambda row: (row["trait_id"], row["protein_id"]))
 
 
 # ------------------------------------------------------------------------- check
@@ -1940,13 +2120,23 @@ def _candidate_proteins(args: argparse.Namespace) -> list[str]:
 
 
 def cmd_discover(args: argparse.Namespace) -> int:
-    proteins = _candidate_proteins(args)
+    if args.all_proteins:
+        rows, _ = load_snapshot(Path(args.snapshot))
+        proteins = sorted({row["protein_id"] for row in rows})
+    else:
+        proteins = _candidate_proteins(args)
+    if args.protein:
+        unknown = set(args.protein) - set(proteins)
+        if unknown:
+            raise CrossMechError(f"requested canary proteins outside discovery scope: {sorted(unknown)}")
+        proteins = sorted(set(args.protein))
     requests = (len(proteins) + 99) // 100
     print(f"{len(proteins):,} candidate proteins -> {requests} exact-accession UniProt request(s)")
     if not args.apply:
         print("dry run: no network access; pass --apply to read UniProt and write discovery")
         return 0
-    result = discover_sequences(proteins, expected_release=args.uniprot_release)
+    result = discover_sequences(proteins, expected_release=args.uniprot_release,
+                                include_annotations=args.include_annotations)
     out = Path(args.out)
     _atomic_write(out, "".join(canonical_json(row) + "\n" for row in result["rows"]))
     receipt = {
@@ -1954,7 +2144,21 @@ def cmd_discover(args: argparse.Namespace) -> int:
         "responses": result["responses"],
         "missing": result["missing"],
         "discovered": len(result["rows"]),
+        "requested": proteins,
+        "discovery_sha256": sha256_bytes(out.read_bytes()),
+        "unavailable": result["unavailable"],
     }
+    if args.include_annotations:
+        entries_path = out.with_name(out.stem + ".entries.json")
+        entries_text = canonical_json({
+            "kind": "cross-mech-uniprot-discovery-entries", "schema_version": 1,
+            "uniprot_release": args.uniprot_release, "entries": result["entries"],
+            "responses": result["responses"], "missing": result["missing"],
+            "requested": proteins,
+            "unavailable": result["unavailable"],
+        }) + "\n"
+        _atomic_write(entries_path, entries_text)
+        receipt["entries_sha256"] = sha256_text(entries_text)
     _atomic_write(
         out.with_name(out.stem + ".receipt.json"),
         json.dumps(receipt, indent=2, sort_keys=True) + "\n",
@@ -1977,12 +2181,27 @@ def cmd_candidates(args: argparse.Namespace) -> int:
             rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
         )["pairs"]
     sequences = load_discovery(Path(args.discovery))
+    annotation_blocked: list[dict[str, Any]] = []
+    if args.entry_annotations:
+        from build_cross_mech_inventory import load_discovery_entries
+
+        entries = load_discovery_entries(Path(args.entry_annotations))
+        extra = entry_annotation_pairs(entries, rows, traits_root=Path(args.traits),
+                                       blocked=annotation_blocked)
+        pairs = merge_candidate_pairs(pairs, extra)
+        print(f"{len(extra):,} exact-entry functional candidates (independent of sibling trait links)")
+        print(f"{len(annotation_blocked):,} accessions blocked by ambiguous/malformed annotation facts")
     candidates = candidate_rows(
         pairs,
         uniprot_release=args.uniprot_release,
         mentions_sha256=manifest["mentions_sha256"],
         sequences=sequences,
     )
+    if args.coverage_inventory:
+        if not args.entry_annotations:
+            raise CrossMechError("--coverage-inventory requires --entry-annotations")
+        inventory = [json.loads(line) for line in Path(args.coverage_inventory).read_text().splitlines()]
+        candidates = protein_coverage_candidates(candidates, inventory)
     undiscovered = sorted(
         {
             pair["protein_id"]
@@ -2009,6 +2228,9 @@ def cmd_candidates(args: argparse.Namespace) -> int:
         print(f"dry run: pass --apply to write {args.out}")
         return 0
     _atomic_write(Path(args.out), "".join(canonical_json(row) + "\n" for row in candidates))
+    if args.entry_annotations:
+        blocked_path = Path(args.out).with_suffix(".annotation_blocked.jsonl")
+        _atomic_write(blocked_path, "".join(canonical_json(row) + "\n" for row in annotation_blocked))
     print(f"WROTE {args.out}")
     return 0
 
@@ -2051,6 +2273,11 @@ def build_parser() -> argparse.ArgumentParser:
     discover_parser.add_argument("--uniprot-release", required=True)
     discover_parser.add_argument("--out", default=str(DISCOVERY_PATH))
     discover_parser.add_argument("--apply", action="store_true")
+    discover_parser.add_argument("--all-proteins", action="store_true",
+                                 help="include every snapshot protein, not only sibling trait pairs")
+    discover_parser.add_argument("--include-annotations", action="store_true",
+                                 help="retain exact-entry discovery snapshots for sequence display")
+    discover_parser.add_argument("--protein", action="append", help="bounded canary accession CURIE")
     discover_parser.set_defaults(func=cmd_discover)
 
     candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
@@ -2062,6 +2289,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
     candidates_parser.add_argument("--uniprot-release", required=True)
     candidates_parser.add_argument("--discovery", default=str(DISCOVERY_PATH))
+    candidates_parser.add_argument("--entry-annotations", help="include exact-entry functional discovery candidates")
+    candidates_parser.add_argument("--coverage-inventory", help="plan one exact functional candidate per protein without a qualified example")
     candidates_parser.add_argument("--out", default=str(CANDIDATE_QUEUE))
     candidates_parser.add_argument("--apply", action="store_true")
     candidates_parser.set_defaults(func=cmd_candidates)

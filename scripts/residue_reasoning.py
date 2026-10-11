@@ -8,7 +8,7 @@ import re
 import gemmi
 
 from amino_acid_properties import compare_residues, digest, validate_catalog, PROPERTY_IDS
-from molecular_evidence import (AA3_TO_1, STATES, atoms_from_block, distance,
+from molecular_evidence import (AA3_TO_1, atoms_from_block, distance,
                                 load_sifts_xml, source_residue_map)
 
 ASSERTION_KINDS = ("sites", "comparisons", "model_comparisons", "functional_observations",
@@ -20,12 +20,62 @@ ENVIRONMENT_METHOD = (
 )
 
 
-def build_environment(snapshot, protein, position, pdb="7ZYI", chain="A", cutoff=4.5):
+def build_environments(snapshot, proteins, sources, requests):
+    """Build explicit curated requests from an already verified source snapshot.
+
+    These are builder inputs, not additional MolecularEvidenceBundle fields.
+    Neither a variant nor a contact is sufficient to select a conformation;
+    the curator must identify the reference residue, structure and chain.
+    """
+    fields = {"assertion_id", "protein_id", "position", "residue", "structure_id",
+              "auth_chain", "distance_cutoff_angstrom", "structure_state"}
+    if not isinstance(requests, list):
+        raise ValueError("environment_requests must be a list")
+    source_index = {s["source_id"]: s for s in sources}
+    planned, ids, addresses = [], set(), set()
+    for request in requests:
+        if not isinstance(request, dict) or set(request) != fields:
+            raise ValueError("environment request requires exactly " + ", ".join(sorted(fields)))
+        if any(not isinstance(request[k], str) or not request[k].strip()
+               for k in fields - {"position", "distance_cutoff_angstrom"}):
+            raise ValueError("environment request metadata must be nonempty strings")
+        protein = proteins.get(request["protein_id"])
+        position, cutoff = request["position"], request["distance_cutoff_angstrom"]
+        if (not protein or type(position) is not int or not 1 <= position <= protein["sequence_length"]
+                or protein["sequence"][position - 1] != request["residue"]):
+            raise ValueError("environment request residue does not match pinned protein")
+        if not re.fullmatch(r"PDB:[0-9][A-Z0-9]{3}", request["structure_id"]):
+            raise ValueError("environment request requires a four-character PDB structure ID")
+        if type(cutoff) not in (int, float) or not math.isfinite(cutoff) or not 0 < cutoff <= 10:
+            raise ValueError("invalid environment cutoff")
+        pdb = request["structure_id"].split(":")[1]
+        for name, kind in ((f"{pdb}.cif", "EXPERIMENTAL_STRUCTURE"),
+                           (f"{pdb.lower()}.xml.gz", "RESIDUE_MAPPING")):
+            source = source_index.get(name, {})
+            if source.get("artifact_kind") != kind or source.get("structure_id") != request["structure_id"]:
+                raise ValueError("environment request source must resolve with matching identity/role")
+        address = (request["protein_id"], pdb, request["auth_chain"], position, cutoff)
+        if request["assertion_id"] in ids or address in addresses:
+            raise ValueError("duplicate environment request ID or coordinate selection")
+        ids.add(request["assertion_id"])
+        addresses.add(address)
+        planned.append((protein, request, pdb))
+    return [build_environment(snapshot, protein, request["position"],
+                              assertion_id=request["assertion_id"], pdb=pdb,
+                              chain=request["auth_chain"], structure_state=request["structure_state"],
+                              cutoff=request["distance_cutoff_angstrom"])
+            for protein, request, pdb in planned]
+
+
+def build_environment(snapshot, protein, position, *, assertion_id, pdb, chain, structure_state, cutoff=4.5):
     """Call only after the builder verifies the complete source snapshot."""
     if type(position) is not int or not 1 <= position <= protein["sequence_length"]:
         raise ValueError("environment position outside reference")
-    if not math.isfinite(cutoff) or not 0 < cutoff <= 10:
+    if type(cutoff) not in (int, float) or not math.isfinite(cutoff) or not 0 < cutoff <= 10:
         raise ValueError("invalid environment cutoff")
+    if (not isinstance(pdb, str) or not re.fullmatch(r"[0-9][A-Z0-9]{3}", pdb) or
+            any(not isinstance(value, str) or not value.strip() for value in (assertion_id, chain, structure_state))):
+        raise ValueError("environment requires explicit structure, chain, assertion ID and state")
     block = gemmi.cif.read_file(str(snapshot / f"{pdb}.cif")).sole_block()
     mapping_file = load_sifts_xml(snapshot / f"{pdb.lower()}.xml.gz")
     if (block.name.upper() != pdb or mapping_file.pdb_id.upper() != pdb or
@@ -49,12 +99,12 @@ def build_environment(snapshot, protein, position, pdb="7ZYI", chain="A", cutoff
             if p != position and d <= cutoff:
                 neighbors.append(dict(partner_position=p, partner_residue=aa, focus_atom_id=a["atom_id"],
                                       partner_atom=b, distance_angstrom=round(d, 6)))
-    return dict(assertion_id=f"slc10-environment:{pdb}-{chain}-{position}-{cutoff:g}A",
+    return dict(assertion_id=assertion_id,
                 protein_id=protein["protein_id"], sequence_sha256=protein["sequence_sha256"],
                 position=position, residue=protein["sequence"][position - 1],
                 evidence_origin="COMPUTED_CONTACTS", review_status="PROPOSED",
                 structure_id=f"PDB:{pdb}", structure_source=f"{pdb}.cif", mapping_source=f"{pdb.lower()}.xml.gz",
-                structure_state=STATES[pdb], model_number=1, auth_chain=chain,
+                structure_state=structure_state, model_number=1, auth_chain=chain,
                 distance_cutoff_angstrom=cutoff, method=ENVIRONMENT_METHOD,
                 focus_atoms=focus, neighbors=neighbors,
                 evidence=[dict(reference=f"https://doi.org/10.2210/pdb{pdb}/pdb",

@@ -7,6 +7,7 @@ import sys
 from types import SimpleNamespace
 
 import pytest
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from consume_molecular_evidence import resolve
@@ -16,6 +17,8 @@ import residue_reasoning as reasoning
 from validate_molecular_evidence import validate_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
+ENVIRONMENT = dict(assertion_id="test-environment:7ZYI-A-1", pdb="7ZYI", chain="A",
+                   structure_state="Explicit test reference conformation")
 
 
 @pytest.fixture
@@ -143,8 +146,9 @@ def test_simulation_requires_explicit_matching_assay_substrate(bundle):
     assert any("simulation/assay substrate mismatch" in e for e in validate_reasoning(bundle))
 
 
-def test_single_variant_ledger_cannot_survive_compound_node_mutation(bundle):
-    m = next(m for m in bundle["mechanisms"] if m["mechanism_id"].endswith("s267f-substrate-selectivity"))
+@pytest.mark.parametrize("mechanism_suffix", ["s267f-substrate-selectivity", "e257a-uptake-reduction"])
+def test_single_variant_ledger_cannot_survive_compound_node_mutation(bundle, mechanism_suffix):
+    m = next(m for m in bundle["mechanisms"] if m["mechanism_id"].endswith(mechanism_suffix))
     m["residue_bindings"].append({**m["residue_bindings"][0], "position": 252, "residue": "R", "substituted_residue": "H"})
     assert any("isolated single substitution" in e for e in validate_reasoning(bundle))
 
@@ -154,6 +158,81 @@ def test_input_objects_not_mutated(bundle):
     assert validate_reasoning(bundle) == []
     resolve(*request_for("s267f", bundle))
     assert bundle == before
+
+
+def test_e257a_links_chemistry_and_exact_na1_context_without_inventing_mediation(bundle):
+    result = resolve(*request_for("e257a"))
+    assert result["annotation_action"] == "NONE"
+    assert len(result["mechanisms"]) == 1
+    mechanism = result["mechanisms"][0]
+    assert mechanism["mechanism_id"] == "slc10-mechanism:ntcp-e257a-uptake-reduction"
+    entry = mechanism["residue_evidence"]["entries"][0]
+    assert entry["reasoning_status"] == "CURATED_EVIDENCE_LEDGER"
+    assert entry["chemistry"]["causal_inference"] == "NONE"
+    assert entry["chemistry"]["reference"]["entry"]["one_letter"] == "E"
+    assert entry["chemistry"]["alternate"]["entry"]["one_letter"] == "A"
+    differences = {d["property_id"]: d for d in entry["chemistry"]["differences"]}
+    assert differences["SIDE_CHAIN_HEAVY_ATOM_COUNT"]["delta_alternate_minus_reference"] == -4
+    assert differences["SIDE_CHAIN_HETEROATOM_COUNT"]["delta_alternate_minus_reference"] == -2
+    assert differences["SIDE_CHAIN_PKA"]["alternate"]["value_status"] == "NOT_APPLICABLE"
+    assert "delta_alternate_minus_reference" not in differences["SIDE_CHAIN_PKA"]
+    ledger, = entry["reasoning"]
+    assert {link["assessment"] for link in ledger["property_context_links"]} == {"REFERENCE_CONTEXT_ONLY"}
+    link, = ledger["context_trait_links"]
+    assert link["assessment"] == "UNRESOLVED"
+    assertions = {a["assertion_id"]: a for a in ledger["assertions"]}
+    site = assertions["slc10-site:7ZYI-J-706-NA-4.5A"]
+    assert site["ligand_id"] == "PDBCCD:NA"
+    assert site["ligand_instance"] == "J:A:706:NA"
+    oxygen_contacts = [c for c in site["contacts"] if c["protein_position"] == 257
+                       and c["protein_atom"]["atom_name"] in {"OE1", "OE2"}]
+    assert len(oxygen_contacts) == 2
+    assert all(c["protein_residue"] == "E" and c["atom_role"] == "SIDECHAIN" for c in oxygen_contacts)
+    environment = assertions["slc10-environment:7ZYI-A-257-4.5A"]
+    assert environment["position"] == 257 and environment["residue"] == "E"
+    assert environment["evidence_origin"] == "COMPUTED_CONTACTS"
+    assert "not a mutant structure" in environment["limitations"]
+    assay = assertions[link["observation_ref"]]
+    assert assay["sequence_substitutions"] == [{"position": 257, "residue": "E", "substituted_residue": "A"}]
+    assert assay["evidence_origin"] == "EXPERIMENTAL_ASSAY" and assay["outcome"] == "DETECTED"
+    assert assay["evidence"][0]["reference"] == "https://doi.org/10.1128/JVI.03478-13"
+    assert assay["evidence"][0]["snippet"] and "95-99" in assay["conditions"]
+    assert "no individual point estimate" in assay["conditions"]
+    assert "largely comparable" in assay["expression_localization_controls"]
+    assert "C-9" in assay["construct"]
+    assert not any(a["evidence_origin"] == "PUBLISHED_SIMULATION" for a in result["residue_context"]["local_context"])
+    original = next(m for m in bundle["mechanisms"] if m["mechanism_id"] == mechanism["mechanism_id"])
+    assert mechanism["graph"] == original["graph"]
+
+
+@pytest.mark.parametrize("alternate", [None, "Q", "X"])
+def test_native_and_other_e257_queries_cannot_borrow_e257a_assay_or_ledger(alternate):
+    raw, request = request_for("e257a")
+    if alternate is None:
+        request["residue_query"].pop("substituted_residue")
+    else:
+        request["residue_query"]["substituted_residue"] = alternate
+    result = resolve(raw, request)
+    assert result["residue_context"]["causal_inference"] == "NONE"
+    assert any(c["assertion_id"] == "slc10-environment:7ZYI-A-257-4.5A"
+               for c in result["residue_context"]["local_context"])
+    if alternate is None:
+        mechanism, = result["mechanisms"]
+        assert mechanism["mechanism_id"] == "slc10-mechanism:ntcp-sodium-coordination"
+        assert len(mechanism["residue_bindings"]) == 2  # Preserve the E257/Q261 group.
+        assert all(not e["reasoning"] for e in mechanism["residue_evidence"]["entries"])
+        assert not any(a["evidence_origin"] == "EXPERIMENTAL_ASSAY" for a in mechanism["assertions"])
+    else:
+        assert result["mechanisms"] == []
+        assert result["retrieval_status"] == "NO_CURATED_MECHANISM"
+
+
+@pytest.mark.parametrize("context_ref", ["slc10-site:7ZYI-I-705-NA-4.5A", "slc10-environment:7ZYI-A-267-4.5A"])
+def test_e257a_rejects_other_residue_site_or_environment(bundle, context_ref):
+    ledger = next(r for r in bundle["residue_reasoning"] if r["reasoning_id"].endswith("e257a"))
+    ledger["property_context_links"][0]["context_ref"] = context_ref
+    with pytest.raises(ValueError, match="context residue/variant"):
+        resolve(*request_for("e257a", bundle))
 
 
 @pytest.fixture
@@ -176,7 +255,7 @@ def environment_inputs(tmp_path, monkeypatch):
 
 def test_environment_uses_unrounded_cutoff_and_exact_reference_mapping(environment_inputs):
     snapshot, protein, atoms, _, _ = environment_inputs
-    result = reasoning.build_environment(snapshot, protein, 1)
+    result = reasoning.build_environment(snapshot, protein, 1, **ENVIRONMENT)
     assert result["position"] == 1 and result["residue"] == "S"
     assert result["focus_atoms"] == atoms[:1]
     assert [(n["partner_position"], n["partner_residue"]) for n in result["neighbors"]] == [(2, "A")]
@@ -196,11 +275,105 @@ def test_environment_generation_rejects_unreconciled_coordinates(environment_inp
     snapshot, protein, atoms, block, sifts = environment_inputs
     mutation(atoms, block, sifts)
     with pytest.raises(ValueError):
-        reasoning.build_environment(snapshot, protein, 1)
+        reasoning.build_environment(snapshot, protein, 1, **ENVIRONMENT)
 
 
-@pytest.mark.parametrize("position,cutoff", [(True, 4.5), (0, 4.5), (4, 4.5), (1, 0), (1, float("nan"))])
+@pytest.mark.parametrize("position,cutoff", [(True, 4.5), (0, 4.5), (4, 4.5), (1, 0), (1, float("nan")), (1, True)])
 def test_environment_rejects_invalid_coordinate_or_cutoff(environment_inputs, position, cutoff):
     snapshot, protein, *_ = environment_inputs
     with pytest.raises(ValueError):
-        reasoning.build_environment(snapshot, protein, position, cutoff=cutoff)
+        reasoning.build_environment(snapshot, protein, position, cutoff=cutoff, **ENVIRONMENT)
+
+
+def test_environment_has_no_implicit_slc10_structure_chain_or_protein(environment_inputs):
+    snapshot, protein, atoms, block, sifts = environment_inputs
+    protein["protein_id"] = "UniProtKB:P00533"
+    block.name = sifts.pdb_id = "1ABC"
+    for atom in atoms:
+        atom["auth_chain"] = "B"
+    result = reasoning.build_environment(snapshot, protein, 2, assertion_id="test:other-protein",
+                                          pdb="1ABC", chain="B", structure_state="Other reference state", cutoff=3)
+    assert result["protein_id"] == protein["protein_id"]
+    assert result["position"] == 2 and result["residue"] == "A"
+    assert result["assertion_id"] == "test:other-protein"
+    assert result["structure_id"] == "PDB:1ABC" and result["auth_chain"] == "B"
+    assert result["structure_state"] == "Other reference state"
+    assert result["distance_cutoff_angstrom"] == 3
+
+
+@pytest.fixture
+def environment_plan(environment_inputs):
+    snapshot, protein, *_ = environment_inputs
+    sources = [dict(source_id=name, artifact_kind=kind, structure_id="PDB:7ZYI") for name, kind in
+               (("7ZYI.cif", "EXPERIMENTAL_STRUCTURE"), ("7zyi.xml.gz", "RESIDUE_MAPPING"))]
+    request = dict(assertion_id="test:neighborhood", protein_id=protein["protein_id"], position=1,
+                   residue="S", structure_id="PDB:7ZYI", auth_chain="A", distance_cutoff_angstrom=4.5,
+                   structure_state=ENVIRONMENT["structure_state"])
+    return snapshot, {protein["protein_id"]: protein}, sources, [request]
+
+
+def test_environment_requests_are_explicit_deterministic_and_nonmutating(environment_plan):
+    before = deepcopy(environment_plan)
+    result = reasoning.build_environments(*environment_plan)
+    assert result == reasoning.build_environments(*environment_plan)
+    assert result[0]["assertion_id"] == "test:neighborhood"
+    assert result[0]["residue"] == "S"
+    assert environment_plan == before
+
+
+@pytest.mark.parametrize("requests", [None, {}, "not-a-list", [None], ["not-a-request"]])
+def test_environment_request_container_must_be_a_list_of_mappings(environment_plan, requests):
+    with pytest.raises(ValueError):
+        reasoning.build_environments(*environment_plan[:3], requests)
+
+
+def test_empty_environment_plan_has_no_implicit_defaults(environment_plan):
+    assert reasoning.build_environments(*environment_plan[:3], []) == []
+
+
+@pytest.mark.parametrize("field,value", [
+    ("position", True), ("position", 0), ("position", 4), ("position", "1"), ("residue", "E"),
+    ("protein_id", "UniProtKB:Q12908"), ("structure_id", "PDB:../7ZYI"),
+    ("structure_id", "PDB:8RQF"), ("auth_chain", "B"), ("auth_chain", ""),
+    ("assertion_id", ""), ("structure_state", None), ("distance_cutoff_angstrom", True),
+    ("distance_cutoff_angstrom", "4.5"), ("distance_cutoff_angstrom", float("inf")),
+    ("distance_cutoff_angstrom", 0), ("distance_cutoff_angstrom", 11),
+    ("substituted_residue", "F"), ("sequence_sha256", "0" * 64), ("neighbors", []),
+])
+def test_environment_requests_fail_closed(environment_plan, field, value):
+    environment_plan[3][0][field] = value
+    with pytest.raises(ValueError):
+        reasoning.build_environments(*environment_plan)
+
+
+@pytest.mark.parametrize("change", [
+    lambda plan: plan[3].append(deepcopy(plan[3][0])),
+    lambda plan: plan[3].append({**plan[3][0], "assertion_id": "other:id"}),
+    lambda plan: plan[3].append({**plan[3][0], "position": 2, "residue": "A"}),
+    lambda plan: plan[3][0].pop("residue"),
+    lambda plan: plan[2].pop(),
+    lambda plan: plan[2][0].update(artifact_kind="PREDICTED_STRUCTURE"),
+    lambda plan: plan[2][1].update(structure_id="PDB:8RQF"),
+])
+def test_environment_plan_rejects_duplicates_missing_fields_and_wrong_source_roles(environment_plan, change):
+    change(environment_plan)
+    with pytest.raises(ValueError):
+        reasoning.build_environments(*environment_plan)
+
+
+def test_pilot_builder_uses_curated_requests_not_a_fixed_position_list(bundle, monkeypatch, tmp_path):
+    import build_slc10_pilot as builder
+
+    monkeypatch.setattr(builder, "build_structural_bundle", lambda snapshot: deepcopy(bundle))
+    seen = []
+
+    def existing_environment(snapshot, protein, position, **kwargs):
+        seen.append((protein["protein_id"], position, kwargs))
+        return deepcopy(next(e for e in bundle["residue_environments"] if e["assertion_id"] == kwargs["assertion_id"]))
+
+    monkeypatch.setattr(reasoning, "build_environment", existing_environment)
+    result = builder.build(tmp_path)
+    requests = yaml.safe_load(builder.REASONING.read_text())["environment_requests"]
+    assert [(p, pos) for p, pos, _ in seen] == [(r["protein_id"], r["position"]) for r in requests]
+    assert {pos for _, pos, _ in seen} == {252, 257, 267}
+    assert result == bundle
