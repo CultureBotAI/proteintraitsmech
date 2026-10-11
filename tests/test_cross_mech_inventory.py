@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import sys
 
 import pytest
@@ -113,6 +114,7 @@ def test_search_includes_ignored_and_hidden_records(tmp_path):
     assert inventory.matching_records(tmp_path, {"UniProtKB:P12345"}) == sorted(paths)
 
 
+@pytest.mark.skipif(shutil.which("rg") is None, reason="real ripgrep configuration test")
 def test_search_ignores_user_ripgrep_configuration(tmp_path, monkeypatch):
     records = tmp_path / "traits"
     records.mkdir()
@@ -122,6 +124,38 @@ def test_search_ignores_user_ripgrep_configuration(tmp_path, monkeypatch):
     config.write_text("--max-filesize=1\n")
     monkeypatch.setenv("RIPGREP_CONFIG_PATH", str(config))
     assert inventory.matching_records(records, {"UniProtKB:P12345"}) == [record]
+
+
+def test_search_without_ripgrep_includes_hidden_ignored_yaml(tmp_path, monkeypatch):
+    monkeypatch.setenv("PATH", "")
+    (tmp_path / ".gitignore").write_text("ignored.yaml\n.hidden/\n")
+    (tmp_path / ".hidden").mkdir()
+    paths = [tmp_path / "ignored.yaml", tmp_path / ".hidden/a.yml"]
+    for path in paths:
+        path.write_text("protein_id: UniProtKB:P12345\n")
+    (tmp_path / "other.yaml").write_text("protein_id: UniProtKB:Q54321\n")
+    (tmp_path / "not-a-record.txt").write_text("protein_id: UniProtKB:P12345\n")
+    (tmp_path / "linked.yaml").symlink_to(paths[0])
+    assert inventory.matching_records(tmp_path, {"UniProtKB:P12345"}) == sorted(paths)
+    assert inventory.matching_records(tmp_path, set()) == []
+
+
+def test_search_without_ripgrep_reports_missing_input(tmp_path, monkeypatch):
+    monkeypatch.setenv("PATH", "")
+    with pytest.raises(inventory.cm.CrossMechError, match="trait search failed"):
+        inventory.matching_records(tmp_path / "missing", {"UniProtKB:P12345"})
+
+
+def test_search_without_ripgrep_reports_unreadable_record(tmp_path, monkeypatch):
+    monkeypatch.setenv("PATH", "")
+    (tmp_path / "example.yaml").write_text("protein_id: UniProtKB:P12345\n")
+
+    def denied(path):
+        raise PermissionError("record is not readable")
+
+    monkeypatch.setattr(Path, "read_bytes", denied)
+    with pytest.raises(inventory.cm.CrossMechError, match="record is not readable"):
+        inventory.matching_records(tmp_path, {"UniProtKB:P12345"})
 
 
 def test_inventory_keeps_targets_and_legacy_separate(tmp_path, monkeypatch, reference):

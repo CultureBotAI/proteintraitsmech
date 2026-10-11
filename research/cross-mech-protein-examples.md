@@ -24,6 +24,12 @@ completeness defects with failing regression tests:
   coverage planning. The merge now preserves dual provenance, and the priority
   filter retains these candidates. Sibling-only claims remain ineligible for
   this independent lane; duplicate sibling rows cannot manufacture support.
+- [#1065](https://github.com/CultureBotAI/proteintraitsmech/issues/1065): CI
+  exposed an undeclared hard dependency on ripgrep. The builder now discovers
+  it with `shutil.which` and otherwise scans YAML using the standard library,
+  including hidden and ignored paths. Three forced-no-ripgrep regressions were
+  observed failing before the fix and passing afterward; unreadable inputs fail
+  explicitly rather than silently reducing coverage.
 
 The focused inventory/extraction/sequence tests pass (107 tests), with a separate
 three-test confirmation of the final regression cases. These fixes do not

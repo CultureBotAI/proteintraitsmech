@@ -12,7 +12,10 @@ import argparse
 from collections import Counter, defaultdict
 import hashlib
 import json
+import os
 from pathlib import Path
+import re
+import shutil
 import subprocess
 from urllib.parse import quote
 
@@ -43,8 +46,27 @@ def matching_records(traits: Path, proteins: set[str]) -> list[Path]:
     """
     if not proteins:
         return []
+    executable = shutil.which("rg")
+    if executable is None:
+        # os.walk includes hidden/ignored paths. Do not silently treat an
+        # unreadable directory or file as evidence that no example exists.
+        def fail(error: OSError) -> None:
+            raise error
+
+        pattern = re.compile(b"|".join(re.escape(p.encode("utf-8")) for p in sorted(proteins)))
+        matches = []
+        try:
+            for directory, _, filenames in os.walk(traits, onerror=fail, followlinks=False):
+                for filename in filenames:
+                    path = Path(directory) / filename
+                    if path.suffix in {".yaml", ".yml"} and not path.is_symlink():
+                        if pattern.search(path.read_bytes()):
+                            matches.append(path)
+        except OSError as error:
+            raise cm.CrossMechError(f"trait search failed: {error}") from error
+        return sorted(matches)
     result = subprocess.run(
-        ["rg", "--no-config", "--hidden", "--no-ignore", "-l", "-0", "-F", "-f", "-",
+        [executable, "--no-config", "--hidden", "--no-ignore", "-l", "-0", "-F", "-f", "-",
          "-g", "*.yaml", "-g", "*.yml", str(traits)],
         input="\n".join(sorted(proteins)) + "\n", text=True, capture_output=True,
     )
