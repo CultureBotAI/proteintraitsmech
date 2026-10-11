@@ -401,18 +401,38 @@ discover-duf-leads *args:
 # (data/raw/align_cache/duf-leads/, ignored), never into the organism-panel frame.
 # Dry-run unless --apply; resumable; canary with --limit 1 --apply first.
 fetch-duf-interpro-frame *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --accessions|--accessions=*|--out|--out=*|--grouped-out|--grouped-out=*)
+          echo "ERROR: DUF crawl argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
     python3 scripts/fetch_interpro_frame.py \
       --accessions reports/uniprot-grounding/duf-leads/accessions.txt \
       --out data/raw/align_cache/duf-leads/interpro_frame.json \
-      --grouped-out data/raw/align_cache/duf-leads/interpro_grouped_locations.json {{args}}
+      --grouped-out data/raw/align_cache/duf-leads/interpro_grouped_locations.json "$@"
 
 # Turn each planned lead into a funnel candidate only where the pinned InterPro sidecar
 # asserts an exact match of the record's own Pfam signature; everything else is a
 # reported rejection. Dry-run; --apply writes candidates.jsonl and rejected.jsonl.
 stage-duf-candidates *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --interpro-frame|--interpro-frame=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--interpro-release|--interpro-release=*|--uniprot-release|--uniprot-release=*|--out|--out=*)
+          echo "ERROR: DUF staging argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
     uv run python scripts/duf_leads.py candidates \
       --uniprot-release {{uniprot_grounding_release}} \
-      --interpro-release {{interpro_grounding_release}} {{args}}
+      --interpro-release {{interpro_grounding_release}} "$@"
 
 # Select one bounded review batch from the DUF queue with the ordinary selector; then
 # fetch-uniprot-review-batch, resolve-duf-review-batch, and the ordinary review,

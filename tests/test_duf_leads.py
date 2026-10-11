@@ -11,6 +11,7 @@ import importlib.util
 import json
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 
@@ -236,7 +237,9 @@ class _Gate:
         _Gate.seen = sorted(document["identifier"] for document in documents)
 
     def evaluate(self, document):
-        return [_Finding("source_scope_conflict")] if document["identifier"] == "Pfam:PF00004" else []
+        return (
+            [_Finding("source_scope_conflict")] if document["identifier"] == "Pfam:PF00004" else []
+        )
 
 
 def test_audit_gives_every_lead_exactly_one_status(tmp_path):
@@ -254,9 +257,7 @@ def test_audit_gives_every_lead_exactly_one_status(tmp_path):
     # A record that already has a QUALIFIED example is never sent to the content gate.
     assert "Pfam:PF00003" not in _Gate.seen
     blocked = next(lead for lead in result["leads"] if lead["status"] == "RECORD_CONTENT_BLOCKED")
-    assert blocked["content_gate_reasons"] == [
-        "unqualifiable:record_content:source_scope_conflict"
-    ]
+    assert blocked["content_gate_reasons"] == ["unqualifiable:record_content:source_scope_conflict"]
     summary = result["summary"]
     assert summary["target_records"] == 2
     assert summary["target_records_by_scope"] == {"LOCALIZED": 1, "WHOLE_PROTEIN": 1}
@@ -311,6 +312,7 @@ def test_whole_protein_candidates_copy_frame_coordinates_and_never_lead_identity
         "A0A000AAA1": {"Pfam:PF00001": [[10, 50], [70, 90]], "Pfam:PF99999": [[1, 5]]},
         "P12345": {"Pfam:PF00001": [[5, 100]]},
         "A0A000AAA2": {"Pfam:PF00002": [[20, 60]]},
+        "A0A000AAA4": {},  # crawled, no matches
     }
     candidates, rejected = _stage(tmp_path, frame=frame)
     by_protein = {row["protein_id"]: row for row in candidates}
@@ -330,13 +332,15 @@ def test_whole_protein_candidates_copy_frame_coordinates_and_never_lead_identity
     assert localized["scope"] == "LOCALIZED"
     assert localized["coordinate_frame"] == "UNIPROT_CANONICAL"
     assert "interpro_location_id" not in localized
-    assert [row["reason"] for row in rejected] == ["ACCESSION_NOT_IN_INTERPRO_FRAME"]  # AAA4
+    assert [row["reason"] for row in rejected] == ["NO_EXACT_INTERPRO_MATCH"]  # AAA4
 
 
 def test_localized_leads_need_one_grouped_location_or_a_single_interval(tmp_path):
     frame = {
         "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
         "A0A000AAA4": {"Pfam:PF00004": [[1, 30], [40, 70]]},
+        "A0A000AAA1": {},
+        "P12345": {},
     }
     grouped = {"A0A000AAA2": {"Pfam:PF00002": [[[20, 60]], [[80, 120]]]}}
     candidates, rejected = _stage(tmp_path, frame=frame, grouped=grouped)
@@ -360,6 +364,7 @@ def test_rejections_are_reported_not_guessed(tmp_path):
         "A0A000AAA1": {"Pfam:PF12345": [[1, 10]]},  # another signature only
         "P12345": {"Pfam:PF00001": [[150, 260]]},  # past the 200-residue sequence
         "A0A000AAA2": {"Pfam:PF00002": [[20, 60]]},
+        "A0A000AAA4": {"Pfam:PF00002": [[1, 10]]},  # another record's signature
     }
     sequences = {
         protein: _identity(protein)
@@ -371,8 +376,50 @@ def test_rejections_are_reported_not_guessed(tmp_path):
         ("UniProtKB:A0A000AAA1", "NO_EXACT_INTERPRO_MATCH"),
         ("UniProtKB:P12345", "INTERPRO_INTERVAL_OUT_OF_BOUNDS"),
         ("UniProtKB:A0A000AAA2", "NOT_RETURNED_BY_PINNED_UNIPROT"),
-        ("UniProtKB:A0A000AAA4", "ACCESSION_NOT_IN_INTERPRO_FRAME"),
+        ("UniProtKB:A0A000AAA4", "NO_EXACT_INTERPRO_MATCH"),
     }
+
+
+def test_an_incomplete_sidecar_fails_closed_instead_of_rejecting(tmp_path):
+    # A canary (--limit 1) or failed crawl leaves planned accessions out of the sidecar.
+    frame = {"A0A000AAA1": {"Pfam:PF00001": [[10, 50]]}}
+    with pytest.raises(DL.DufLeadError, match=r"does not cover 3 planned accession"):
+        _stage(tmp_path, frame=frame)
+
+
+def test_staging_refuses_leads_changed_since_discovery(tmp_path):
+    leads = _fixture_audit(tmp_path)["leads"]
+    plan = DL.discovery_plan(leads, max_records=10, snapshot={})
+    planned = {(lead["trait_id"], lead["protein_id"]) for lead in plan["leads"]}
+    index = next(
+        i for i, lead in enumerate(leads) if (lead["trait_id"], lead["protein_id"]) in planned
+    )
+    leads[index] = dict(leads[index], lead_rank=leads[index]["lead_rank"] + 1)
+    with pytest.raises(DL.DufLeadError, match="changed since discovery"):
+        DL.candidate_rows(
+            leads,
+            plan,
+            {},
+            {},
+            {},
+            uniprot_release="2026_03",
+            interpro_release="110.0",
+            frame_release="110.0",
+        )
+
+
+def test_later_stages_refuse_an_ungated_or_unpinned_audit(tmp_path):
+    def write(summary):
+        (tmp_path / "summary.json").write_text(json.dumps(summary), encoding="utf-8")
+
+    write({"content_gate": True, "snapshot": DL.pinned_provenance()})
+    assert DL.read_gated_summary(tmp_path)["snapshot"]["commit"] == DL.PINNED_COMMIT
+    write({"content_gate": False, "snapshot": DL.pinned_provenance()})
+    with pytest.raises(DL.DufLeadError, match="no-content-gate"):
+        DL.read_gated_summary(tmp_path)
+    write({"content_gate": True, "snapshot": dict(DL.pinned_provenance(), commit="0" * 40)})
+    with pytest.raises(DL.DufLeadError, match="pinned DUFMech snapshot"):
+        DL.read_gated_summary(tmp_path)
 
 
 def test_release_mismatches_fail_closed(tmp_path):
@@ -431,6 +478,34 @@ def test_duf_crawl_never_writes_the_organism_panel_frame():
     body = _recipe("fetch-duf-interpro-frame")
     assert "--out data/raw/align_cache/duf-leads/interpro_frame.json" in body
     assert "--grouped-out data/raw/align_cache/duf-leads/interpro_grouped_locations.json" in body
+
+
+@pytest.mark.parametrize(
+    ("recipe", "argument"),
+    [
+        ("fetch-duf-interpro-frame", "--out=data/raw/align_cache/interpro_frame.json"),
+        ("fetch-duf-interpro-frame", "--grouped-out"),
+        ("fetch-duf-interpro-frame", "--accessions"),
+        ("stage-duf-candidates", "--interpro-frame=data/raw/align_cache/interpro_frame.json"),
+        ("stage-duf-candidates", "--interpro-release"),
+        ("stage-duf-candidates", "--uniprot-release=2026_02"),
+    ],
+)
+def test_duf_crawl_and_staging_recipes_refuse_fixed_path_overrides(recipe, argument):
+    if shutil.which("just") is None:
+        pytest.skip("just is not installed")
+    completed = subprocess.run(
+        ["just", recipe, argument], cwd=REPO, capture_output=True, text=True, check=False
+    )
+    assert completed.returncode == 2
+    assert "is fixed by the recipe" in completed.stderr
+
+
+def test_duf_parsers_refuse_abbreviated_flags():
+    with pytest.raises(SystemExit):
+        DL.build_parser().parse_args(
+            ["candidates", "--uniprot-release", "x", "--interpro-release", "y", "--interpro-f", "z"]
+        )
 
 
 def test_pinned_input_is_a_full_commit_and_sha256():

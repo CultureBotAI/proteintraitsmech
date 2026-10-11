@@ -190,7 +190,9 @@ def verify_snapshot(
     """Check both pinned digests, the manifest's own claims, and every row's shape."""
 
     if sha256_bytes(raw) != expected_sha256:
-        raise DufLeadError(f"snapshot SHA-256 {sha256_bytes(raw)} is not the pinned {expected_sha256}")
+        raise DufLeadError(
+            f"snapshot SHA-256 {sha256_bytes(raw)} is not the pinned {expected_sha256}"
+        )
     if sha256_bytes(manifest_raw) != expected_manifest_sha256:
         raise DufLeadError(
             f"manifest SHA-256 {sha256_bytes(manifest_raw)} is not the pinned "
@@ -485,8 +487,6 @@ def verify_discovery_receipt(
         raise DufLeadError("discovery rows and receipt do not cover exactly the planned accessions")
 
 
-
-
 def _intervals(value: Any) -> list[list[int]] | None:
     if not isinstance(value, list) or not value:
         return None
@@ -544,6 +544,9 @@ def candidate_rows(
     planned = [lead for lead in leads if (lead["trait_id"], lead["protein_id"]) in wanted]
     if len(planned) != len(wanted):
         raise DufLeadError("the discovery plan names leads the current audit does not have")
+    if plan.get("leads_sha256") != sha256_bytes(canonical_json(planned).encode()):
+        raise DufLeadError("leads.jsonl changed since discovery: re-run discover-duf-leads")
+    uncovered: set[str] = set()
     candidates: list[dict[str, Any]] = []
     rejected: list[dict[str, Any]] = []
 
@@ -575,7 +578,9 @@ def candidate_rows(
         accession = lead["protein_id"].removeprefix("UniProtKB:")
         matches = frame.get(accession)
         if not isinstance(matches, dict):
-            reject(lead, "ACCESSION_NOT_IN_INTERPRO_FRAME", interpro_release)
+            # The crawler stores a protein without matches as {}, so absence means the
+            # crawl did not reach it (canary, failure, interruption): never a rejection.
+            uncovered.add(accession)
             continue
         flat = matches.get(lead["trait_id"])
         if flat is None:
@@ -656,6 +661,12 @@ def candidate_rows(
                 row["interpro_location_id"] = location_id
             row["candidate_id"] = derive_candidate_id(row)
             candidates.append(row)
+    if uncovered:
+        sample = ", ".join(sorted(uncovered)[:5])
+        raise DufLeadError(
+            f"the DUF InterPro sidecar does not cover {len(uncovered):,} planned "
+            f"accession(s) ({sample}); finish fetch-duf-interpro-frame before staging"
+        )
     candidates.sort(key=lambda row: (row["trait_id"], row["protein_id"], row["candidate_id"]))
     if len({row["candidate_id"] for row in candidates}) != len(candidates):
         raise DufLeadError("internal error: duplicate candidate IDs")
@@ -668,6 +679,32 @@ def candidate_rows(
 
 def _snapshot_from_args(args: argparse.Namespace) -> Snapshot:
     return load_snapshot(Path(args.dufmech_repo))
+
+
+def pinned_provenance() -> dict[str, Any]:
+    return {
+        "repository": DUFMECH_REPOSITORY,
+        "commit": PINNED_COMMIT,
+        "snapshot_id": SNAPSHOT_ID,
+        "snapshot_path": SNAPSHOT_PATH,
+        "snapshot_sha256": SNAPSHOT_SHA256,
+        "manifest_path": MANIFEST_PATH,
+        "manifest_sha256": MANIFEST_SHA256,
+    }
+
+
+def read_gated_summary(out: Path) -> dict[str, Any]:
+    """Later stages consume only an audit that ran the content gate on the pinned input."""
+
+    summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
+    if summary.get("content_gate") is not True:
+        raise DufLeadError(
+            "the audit ran with --no-content-gate (diagnostics only); "
+            "re-run audit-duf-leads --apply before discovery or staging"
+        )
+    if summary.get("snapshot") != pinned_provenance():
+        raise DufLeadError("summary.json does not record the pinned DUFMech snapshot")
+    return summary
 
 
 def cmd_audit(args: argparse.Namespace) -> int:
@@ -693,7 +730,7 @@ def cmd_audit(args: argparse.Namespace) -> int:
 def cmd_discover(args: argparse.Namespace) -> int:
     out = Path(args.out)
     leads = _read_jsonl(out / "leads.jsonl")
-    summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
+    summary = read_gated_summary(out)
     plan = discovery_plan(leads, max_records=args.max_records, snapshot=summary["snapshot"])
     requests = (len(plan["accessions"]) + 99) // 100
     print(
@@ -730,8 +767,11 @@ def cmd_discover(args: argparse.Namespace) -> int:
 def cmd_candidates(args: argparse.Namespace) -> int:
     out = Path(args.out)
     leads = _read_jsonl(out / "leads.jsonl")
+    summary = read_gated_summary(out)
     plan_raw = (out / "discovery-plan.json").read_bytes()
     plan = json.loads(plan_raw)
+    if plan.get("snapshot") != summary["snapshot"]:
+        raise DufLeadError("discovery-plan.json does not record the pinned DUFMech snapshot")
     sequences = cm.load_discovery(out / "discovery.jsonl")
     verify_discovery_receipt(
         json.loads((out / "discovery.receipt.json").read_text(encoding="utf-8")),
@@ -779,11 +819,15 @@ def cmd_candidates(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,  # recipes forbid fixed flags by exact name
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    audit_parser = sub.add_parser("audit", help="join the pinned DUFMech leads to data/traits")
+    audit_parser = sub.add_parser(
+        "audit", help="join the pinned DUFMech leads to data/traits", allow_abbrev=False
+    )
     audit_parser.add_argument("--dufmech-repo", default=str(REPO_ROOT.parent / "DUFMech"))
     audit_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     audit_parser.add_argument(
@@ -795,7 +839,9 @@ def build_parser() -> argparse.ArgumentParser:
     audit_parser.add_argument("--apply", action="store_true")
     audit_parser.set_defaults(func=cmd_audit)
 
-    discover_parser = sub.add_parser("discover", help="bounded plan + pinned sequence identity")
+    discover_parser = sub.add_parser(
+        "discover", help="bounded plan + pinned sequence identity", allow_abbrev=False
+    )
     discover_parser.add_argument("--uniprot-release", required=True)
     discover_parser.add_argument(
         "--max-records",
@@ -809,7 +855,9 @@ def build_parser() -> argparse.ArgumentParser:
     discover_parser.add_argument("--apply", action="store_true")
     discover_parser.set_defaults(func=cmd_discover)
 
-    candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
+    candidates_parser = sub.add_parser(
+        "candidates", help="emit grounding-funnel candidates", allow_abbrev=False
+    )
     candidates_parser.add_argument("--uniprot-release", required=True)
     candidates_parser.add_argument("--interpro-release", required=True)
     candidates_parser.add_argument("--interpro-frame", default=str(DUF_INTERPRO_FRAME))

@@ -110,14 +110,23 @@ Sequence length, checksum and release come from the pinned UniProt discovery. Or
 label and review status are never taken from the DUFMech row: the selector-bound
 registry fetch supplies them. Rejections are reported with a reason:
 
+- `NOT_A_TARGET:<status>`
 - `NOT_RETURNED_BY_PINNED_UNIPROT`
-- `ACCESSION_NOT_IN_INTERPRO_FRAME`
 - `NO_EXACT_INTERPRO_MATCH`
 - `MALFORMED_INTERPRO_INTERVAL`
 - `INTERPRO_INTERVAL_OUT_OF_BOUNDS`
+- `MALFORMED_INTERPRO_GROUPED_LOCATION`
 - `UNGROUPED_INTERPRO_LOCATIONS`
 
-A release mismatch in either provider is a hard error, not a rejection.
+These are hard errors, not rejections:
+
+- a release mismatch in either provider;
+- a planned accession missing from the DUF sidecar. The crawler stores a protein
+  without matches as `{}`, so absence means the crawl has not reached it (a canary, a
+  failure or an interruption). Finish `fetch-duf-interpro-frame` before staging;
+- an audit run with `--no-content-gate`, or a `summary.json` or `discovery-plan.json`
+  that does not record the pinned DUFMech snapshot;
+- a `leads.jsonl` that changed after discovery (its `leads_sha256` no longer matches).
 
 The lane's InterPro sidecar is separate from the organism-panel frame
 (`data/raw/align_cache/interpro_frame.json`). Lead accessions are not panel proteins,

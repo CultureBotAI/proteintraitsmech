@@ -235,7 +235,7 @@ supports them, and can also be added by curators:
 
   ```bash
   just audit-duf-leads --apply                       # leads -> exact Pfam records
-  just discover-duf-leads --max-records 120 --apply  # bounded plan + UniProt identity
+  just discover-duf-leads --max-records 100 --apply  # bounded plan + UniProt identity
   just fetch-duf-interpro-frame --limit 1 --apply    # canary, then without --limit
   just stage-duf-candidates --apply                  # exact InterPro matches only
   just select-duf-review-batch <id> --max-records 100 --apply
