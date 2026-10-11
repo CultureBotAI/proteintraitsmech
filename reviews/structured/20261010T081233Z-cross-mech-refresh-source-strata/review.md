@@ -1,0 +1,7505 @@
+# Cross-Mech refresh: source-stratified rejection and record-scope addendum
+
+- Review: 20261010T081233Z-cross-mech-refresh-source-strata
+- Repository: culturebotai/proteintraitsmech
+- Started UTC: 2026-10-10T08:04:09Z
+- Finished UTC: 2026-10-10T08:12:33Z
+- Reviewer: Codex (self_review)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Full record reads cover 25 GO records and all 16 available Rhea records. The original 35 approvals and 179 rejections are unchanged; no additional examples are approved.
+
+## Scope And Provenance
+
+Candidate promotion scope and exact-fact rejection review across 41 full target records; not re-certification of every existing graph or legacy example.
+
+Selection: All 15 mechanically eligible target records, plus the 17 shortest remaining GO records (byte length then trait ID) and all remaining Rhea records.
+Coverage: sampled; 103 reviewed / 214 in the declared population.
+Source: working_tree at Git base cc7f295f9801d596d45dcb1738aaf065cb0e4f11.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5 | snapshot_row | UniProtKB:O13601 on GO:0000923 |
+| ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a | snapshot_row | UniProtKB:O94488 on GO:0000923 |
+| ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038 | snapshot_row | UniProtKB:O94534 on GO:0000923 |
+| ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8 | snapshot_row | UniProtKB:Q9URY2 on GO:0000923 |
+| ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537 | snapshot_row | UniProtKB:Q9USP7 on GO:0000923 |
+| ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934 | snapshot_row | UniProtKB:Q9Y705 on GO:0000923 |
+| ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7 | snapshot_row | UniProtKB:P08306 on GO:0004129 |
+| ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26 | snapshot_row | UniProtKB:P0AFI2 on GO:0009340 |
+| ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339 | snapshot_row | UniProtKB:P20083 on GO:0009340 |
+| ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa | snapshot_row | UniProtKB:P16326 on GO:0009422 |
+| ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c | snapshot_row | UniProtKB:G1UBD1 on GO:0015050 |
+| ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391 | snapshot_row | UniProtKB:P0A7Y8 on GO:0030680 |
+| ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3 | snapshot_row | UniProtKB:P26971 on GO:0030700 |
+| ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec | snapshot_row | UniProtKB:O13601 on GO:0031021 |
+| ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0 | snapshot_row | UniProtKB:O94488 on GO:0031021 |
+| ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0 | snapshot_row | UniProtKB:O94534 on GO:0031021 |
+| ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c | snapshot_row | UniProtKB:Q9URY2 on GO:0031021 |
+| ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730 | snapshot_row | UniProtKB:Q9USP7 on GO:0031021 |
+| ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d | snapshot_row | UniProtKB:Q9Y705 on GO:0031021 |
+| ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5 | snapshot_row | UniProtKB:P04689 on GO:0032117 |
+| ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35 | snapshot_row | UniProtKB:P18142 on GO:0033117 |
+| ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24 | snapshot_row | UniProtKB:P21837 on GO:0033117 |
+| ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0 | snapshot_row | UniProtKB:P0CG63 on GO:0034515 |
+| ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92 | snapshot_row | UniProtKB:P43583 on GO:0034515 |
+| ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423 | snapshot_row | UniProtKB:P43593 on GO:0034515 |
+| ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512 | snapshot_row | UniProtKB:O77206 on GO:0036007 |
+| ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4 | snapshot_row | UniProtKB:P0C2S2 on GO:0043263 |
+| ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2 | snapshot_row | UniProtKB:P0C2S5 on GO:0043263 |
+| ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59 | snapshot_row | UniProtKB:Q06851 on GO:0043263 |
+| ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c | snapshot_row | UniProtKB:A0A284VQI9 on GO:0044674 |
+| ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0 | snapshot_row | UniProtKB:Q58256 on GO:0044674 |
+| ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad | snapshot_row | UniProtKB:P0A988 on GO:0044775 |
+| ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0 | snapshot_row | UniProtKB:O94534 on GO:0070850 |
+| ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460 | snapshot_row | UniProtKB:Q9URY2 on GO:0070850 |
+| ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140 | snapshot_row | UniProtKB:B3STN6 on GO:0090641 |
+| ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01 | snapshot_row | UniProtKB:Q8SWI4 on GO:0090641 |
+| ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0 | snapshot_row | UniProtKB:Q8SWL3 on GO:0090641 |
+| ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c | snapshot_row | UniProtKB:B3STN7 on GO:0090642 |
+| ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4 | snapshot_row | UniProtKB:Q9XZV1 on GO:0090642 |
+| ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635 | snapshot_row | UniProtKB:O59945 on GO:0099079 |
+| ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22 | snapshot_row | UniProtKB:P13517 on GO:0099079 |
+| ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028 | snapshot_row | UniProtKB:P15891 on GO:0099079 |
+| ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a | snapshot_row | UniProtKB:P17555 on GO:0099079 |
+| ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde | snapshot_row | UniProtKB:P28495 on GO:0099079 |
+| ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f | snapshot_row | UniProtKB:P32381 on GO:0099079 |
+| ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2 | snapshot_row | UniProtKB:P32599 on GO:0099079 |
+| ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c | snapshot_row | UniProtKB:P40518 on GO:0099079 |
+| ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6 | snapshot_row | UniProtKB:P53731 on GO:0099079 |
+| ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511 | snapshot_row | UniProtKB:P60010 on GO:0099079 |
+| ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d | snapshot_row | UniProtKB:Q05933 on GO:0099079 |
+| ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1 | snapshot_row | UniProtKB:Q06440 on GO:0099079 |
+| ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92 | snapshot_row | UniProtKB:Q08641 on GO:0099079 |
+| ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77 | snapshot_row | UniProtKB:Q9HGP5 on GO:0099079 |
+| ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef | snapshot_row | UniProtKB:P69681 on GO:0110067 |
+| ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08 | snapshot_row | UniProtKB:A0A0H3C8I9 on GO:0140365 |
+| ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef | snapshot_row | UniProtKB:A0A0H3CAR6 on GO:0140365 |
+| ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee | snapshot_row | UniProtKB:A0A0H3CE29 on GO:0140365 |
+| ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef | snapshot_row | UniProtKB:P31539 on GO:0140453 |
+| ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc | snapshot_row | UniProtKB:P53286 on GO:0140453 |
+| ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f | snapshot_row | UniProtKB:Q12329 on GO:0140453 |
+| ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8 | snapshot_row | UniProtKB:O59855 on GO:0140602 |
+| ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9 | snapshot_row | UniProtKB:O74752 on GO:0140602 |
+| ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f | snapshot_row | UniProtKB:O94641 on GO:0140602 |
+| ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26 | snapshot_row | UniProtKB:Q10265 on GO:0140602 |
+| ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1 | snapshot_row | UniProtKB:Q9UUE5 on GO:0140602 |
+| ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230 | snapshot_row | UniProtKB:Q9Y8G3 on GO:0140602 |
+| ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc | snapshot_row | UniProtKB:Q8SWL3 on GO:0160202 |
+| ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9 | snapshot_row | UniProtKB:P04689 on GO:1990295 |
+| ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8 | snapshot_row | UniProtKB:Q9HDY1 on GO:1990295 |
+| ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0 | snapshot_row | UniProtKB:Q8GR98 on RHEA:11112 |
+| ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32 | snapshot_row | UniProtKB:Q8GRA0 on RHEA:18985 |
+| ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555 | snapshot_row | UniProtKB:A6N339 on RHEA:23196 |
+| ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a | snapshot_row | UniProtKB:Q8GR97 on RHEA:23824 |
+| ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62 | snapshot_row | UniProtKB:P9WJN3 on RHEA:26180 |
+| ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2 | snapshot_row | UniProtKB:B3SGL0 on RHEA:30331 |
+| ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a | snapshot_row | UniProtKB:C3VEQ1 on RHEA:30331 |
+| ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e | snapshot_row | UniProtKB:O49814 on RHEA:30331 |
+| ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23 | snapshot_row | UniProtKB:O49815 on RHEA:30331 |
+| ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118 | snapshot_row | UniProtKB:P21688 on RHEA:30331 |
+| ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf | snapshot_row | UniProtKB:P54973 on RHEA:30331 |
+| ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6 | snapshot_row | UniProtKB:Q44262 on RHEA:30331 |
+| ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87 | snapshot_row | UniProtKB:Q9LTG0 on RHEA:30331 |
+| ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272 | snapshot_row | UniProtKB:Q9SPK6 on RHEA:30331 |
+| ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb | snapshot_row | UniProtKB:Q9SZZ8 on RHEA:30331 |
+| ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb | snapshot_row | UniProtKB:B0R753 on RHEA:32239 |
+| ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219 | snapshot_row | UniProtKB:P21687 on RHEA:32239 |
+| ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89 | snapshot_row | UniProtKB:P54974 on RHEA:32239 |
+| ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22 | snapshot_row | UniProtKB:Q01331 on RHEA:32239 |
+| ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b | snapshot_row | UniProtKB:Q55276 on RHEA:32239 |
+| ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9 | snapshot_row | UniProtKB:Q67GH9 on RHEA:32239 |
+| ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc | snapshot_row | UniProtKB:Q9HNE5 on RHEA:32239 |
+| ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528 | snapshot_row | UniProtKB:Q9P854 on RHEA:32239 |
+| ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495 | snapshot_row | UniProtKB:Q9UUQ6 on RHEA:32239 |
+| ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db | snapshot_row | UniProtKB:A0A7U3MPB9 on RHEA:34695 |
+| ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec | snapshot_row | UniProtKB:B0CN31 on RHEA:41428 |
+| ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674 | snapshot_row | UniProtKB:Q5JCL5 on RHEA:41428 |
+| ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469 | snapshot_row | UniProtKB:Q51725 on RHEA:50380 |
+| ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f | snapshot_row | UniProtKB:Q2G1M6 on RHEA:59120 |
+| ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff | snapshot_row | UniProtKB:Q2G1M9 on RHEA:59124 |
+| ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96 | snapshot_row | UniProtKB:Q2G1M8 on RHEA:59128 |
+| ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26 | snapshot_row | UniProtKB:Q2FW70 on RHEA:59136 |
+| ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953 | snapshot_row | UniProtKB:Q2UA48 on RHEA:62652 |
+| ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl # candidate_id=ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb | snapshot_row | UniProtKB:K4MP98 on RHEA:81499 |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Exact-accession release/sequence/evidence resolution | passed | True | ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8, ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934, ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62, ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1, ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f, ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635, ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f, ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9, ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495, ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff, ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0, ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec, ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23, ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7, ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0, ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92, ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d, ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b, ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a, ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460, ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9, ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8, ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb, ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26, ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537, ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96, ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730, ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528, ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26, ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219, ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5, ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230, ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb, ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77, ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8, ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e | 214 resolved, 36 mechanically eligible, 178 rejected. Independent fetch receipt returned 195 references with 0 blocked accessions. |
+
+## Scientific And Domain Assessments
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5.
+
+Exact IDA localization to the equatorial MTOC; a localization example, not the entire organizing center represented as one protein. Exact fact ug-membership:1cd1e86b52d7f9b7456c42f1791a6a4965f2b2290577598f3632ffdce3529d59; references: PubMed:15068790.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a.
+
+Exact IDA localization to the equatorial MTOC; a localization example, not the entire organizing center represented as one protein. Exact fact ug-membership:74eb3d738bb09afdb4daea2495061cf5cb813c96c1b41b3aa6a19ffc479354bb; references: PubMed:15004232, PubMed:15120067, PubMed:15772152, PubMed:19001497.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8.
+
+Exact IDA localization to the equatorial MTOC; a localization example, not the entire organizing center represented as one protein. Exact fact ug-membership:a42898a364abcbfd3530c947aaa0363ff049d496f6e0011a32b75447d0ea82ca; references: PubMed:16481403.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537.
+
+Exact IDA localization to the equatorial MTOC; a localization example, not the entire organizing center represented as one protein. Exact fact ug-membership:18ddef2b6e1154b7eb5adeaa936ef617b5cd779ea814397e6e324ff29224fe9a; references: PubMed:15800064, PubMed:15837798.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934.
+
+Exact IDA localization to the equatorial MTOC; a localization example, not the entire organizing center represented as one protein. Exact fact ug-membership:8b5594ceeffd22f72637fce82883e73e5665c07d345ca921148db1a58c77b148; references: PubMed:11080156, PubMed:15772152.
+
+### Exact protein–trait promotion decision
+
+grounding: concern. Targets: ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7.
+
+Rejected on scientific review: subunit II provides the CuA electron-entry site; the heme a3/CuB catalytic site is not on this subunit. The whole complex activity must not be assigned to this single subunit by an EC-derived GO annotation. Retains the prior batch-002 rejection; no contrary evidence was found in the inspected exact UniProt entry (not a literature-wide absence claim). Exact fact ug-membership:ae91bfccd202a2e2fbbdde833f0c4466b6dde36b855ef1734a166261da336372; references: curated Swiss-Prot fact without an experimental tag.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec.
+
+Exact IDA localization to the interphase MTOC. Association with other MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:66c696b2db8fce1e03ce74bf19e95d8edc7732ea57ec077865aa1f39abe12700; references: PubMed:15068790.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0.
+
+Exact IDA localization to the interphase MTOC. Association with other MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:d3d996b147f041e9e98d7038d240518c05fbfd9fc19951738404aec0b6f9e7d2; references: PubMed:19001497.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730.
+
+Exact IDA localization to the interphase MTOC. Association with other MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:1fa1a0290a8207c7babd17526f67032088d486177c7354a41c61c6d7b5f315a9; references: PubMed:15837798.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d.
+
+Exact IDA localization to the interphase MTOC. Association with other MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:149aab404986ba783fa88c3efb8f185d5b6eb7e8d4f0746d110359448e7a262f; references: PubMed:15068790, PubMed:24943839.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92.
+
+BLM10 has an exact SGD IDA annotation to proteasome storage granules. This is conditional localization, not constitutive residence or catalytic proteasome activity. Exact fact ug-membership:d7425769fc884bcb87d9a2b24698c4edf38d5645585988684c496ffc043fabbc; references: PubMed:23982732.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0.
+
+Alp7/Alp14 has exact IDA membership/localization in the TACC/TOG complex. The example is a component, not the whole complex. Exact fact ug-membership:f4ab5e00212d6f4ea7998a15d2a54427a07d59c7498005fa5f340258d14997c3; references: PubMed:14742702, PubMed:19606211.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460.
+
+Alp7/Alp14 has exact IDA membership/localization in the TACC/TOG complex. The example is a component, not the whole complex. Exact fact ug-membership:42d2f1bc18353f344c3ae24a525eff0587b895f877653e576edd6272f01dd750; references: PubMed:14742702, PubMed:19606211.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635.
+
+Exact PomBase IDA localization to actin bodies. Other actin-associated locations are not used as proof of this particular structure. Exact fact ug-membership:7a40cb45d2ff9e90813582b2112672f908c4630e807de28bb9e6a65637326d5e; references: PubMed:26124291.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77.
+
+Exact PomBase IDA localization to actin bodies. Other actin-associated locations are not used as proof of this particular structure. Exact fact ug-membership:445c4a788d636372d401a2646e5d020084b865572f06efffba80b590139ee885; references: PubMed:26124291.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:58c28af4323ec6a1cb07d1138df8bd56dbced397e5d0848df211b2cbea9e4367; references: PubMed:33176152, PubMed:37446379.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:b5404ba6ade1d57d03d3ecd700479fd15728b8e2156ff9c4c7284c5949cf189a; references: PubMed:37446379.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:10e342559e01eabdb7531e19a9257840749de929a95c36fe2dea4c22837ae875; references: PubMed:33176152.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:2241b46d7652b6c6dc3ca12c3b52fa612cb17539ffa6c14a0fa2cb08bf97f47b; references: PubMed:33176152.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:e376a392a9906ce976bfa439994f78f79ca5dfbcee4af303ea9540350179d1dc; references: PubMed:33176152.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230.
+
+Exact PomBase IDA localization to the nucleolar peripheral inclusion body; the generic cytoplasmic/nuclear comments do not replace this specific annotation. No constitutive localization is claimed. Exact fact ug-membership:ea55b00f5661c4807d621a30229af198ada621281eb981c546b50c51f5bf4f3b; references: PubMed:33176152.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8.
+
+Ase1 has an exact EXP annotation to the post-anaphase microtubule array, consistent with its microtubule-overlap localization. No residue-level location is inferred. Exact fact ug-membership:a4644e8e505d5e20aef29fb41ddea187f8e0a050cf998f10593f7c05316aec8e; references: PubMed:36980258.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62.
+
+MshB itself performs the GlcNAc-Ins deacetylation. Exact Rhea catalytic-activity fact on reviewed Swiss-Prot has no evidence tag, permitted by the narrow existing rule; its function comment separately cites PMID:11092856. Do not describe the untagged reaction fact as direct experimental evidence. Exact fact ug-membership:705584b467c6776de9656953af3a3a1ba834590269f62db583316ff6b08c0b49; references: curated Swiss-Prot fact without an experimental tag.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e.
+
+Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:dd0805beeef55bf36881f8e08b9e56a119e1129c5302779f734f197d7321fea3; references: PubMed:9555077.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23.
+
+Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:f6e5101e13edeeeae525423769dc28e96fac18264d109a82905f614b5de3e2d1; references: PubMed:9555077.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb.
+
+Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:d0e74d971e9d623f08c2b20480460bfbf654d60ed49f8a5c9a3c33bc314a4dce; references: PubMed:8798688.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:dc8e49ba0e55284d0ff84de5d606351354e893ed19d0f7ca615a21a336e39651; references: PubMed:12003928.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:5a031f0c09bcaf6ff2ee7b7d92cc08d89a057ff283233390ccbb5d3c3d5c71e8; references: PubMed:20178989.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:0a1435bb0ab72356cec88ac2bc7c4a14f2761b9c65bc51b27da9cae31fc46126; references: PubMed:7919981, PubMed:8344419.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:cd3098e4ef37764a0fef47bcc83c8c6550eb0c9d1c73b28119e2e7eab679b430; references: PubMed:15345447.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:49d5e5a90f5ec906a80888dc2fe3c222d1cc47fda10c014ebd330ac8fc3ed801; references: PubMed:11172012.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495.
+
+The exact experimentally annotated reaction is gamma-carotene to beta-carotene, the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries retain whole-protein scope; no cyclase-domain interval is invented. Exact fact ug-membership:4aa3614dc621251cca2a9137e3683ab7997294390a7629c2ea7d304bd29c5e1a; references: PubMed:10951210.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f.
+
+SbnH directly decarboxylates citryl-L-Dap to citryl-diaminoethane in staphyloferrin B biosynthesis; the exact reaction fact cites PMID:19775248. Exact fact ug-membership:305be300e62f34c800709603344702d9723837ecbc082bfaa4a6d215efa6afea; references: PubMed:19775248.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff.
+
+SbnE directly ligates L-Dap and citrate for the first staphyloferrin B step; the exact reaction fact cites PMID:19775248. Exact fact ug-membership:6e35d787b7c922e081c8d8d19cb9c05b4313ed54f92817bf17eab2d9e4cd50a0; references: PubMed:19775248.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96.
+
+SbnF directly condenses L-Dap with citryl-diaminoethane; the exact reaction fact cites PMID:19775248. Pathway membership alone was not the basis. Exact fact ug-membership:654b2c687b69ed997f3ee75af02e6f9ead32dcd093ec15df8fd1a4b7d99b8a0a; references: PubMed:19775248.
+
+### Exact protein–trait promotion decision
+
+grounding: supported. Targets: ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26.
+
+The D-ornithine--citrate ligase directly catalyzes the ATP-dependent first condensation in staphyloferrin A biosynthesis; exact reaction evidence cites PMID:19138128. Exact fact ug-membership:d00b04d2b1b200b407fabef252ed4b2c3fe93a77366339361f7739a6db13fb29; references: PubMed:19138128.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:go_evidence_IEA. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000303. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953.
+
+REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+### Retain exact-fact rejection
+
+grounding: supported. Targets: ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb.
+
+REJECTED for promotion: missing:exact_uniprot_membership. Target record read in full. A protein label, EC class, existing graph exemplar or sibling assertion does not repair missing/weak exact-accession evidence. This is not a biological absence assertion.
+
+## Findings
+
+No findings recorded within this review's declared scope.
+
+## Recommended Actions And Acceptance Checks
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| fact-0 | https://www.uniprot.org/uniprotkb/O13601/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:1cd1e86b52d7f9b7456c42f1791a6a4965f2b2290577598f3632ffdce3529d59 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15068790", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]} |
+| fact-1 | https://www.uniprot.org/uniprotkb/O94488/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:74eb3d738bb09afdb4daea2495061cf5cb813c96c1b41b3aa6a19ffc479354bb | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15004232", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15120067", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15772152", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19001497", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]} |
+| fact-3 | https://www.uniprot.org/uniprotkb/Q9URY2/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:a42898a364abcbfd3530c947aaa0363ff049d496f6e0011a32b75447d0ea82ca | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "16481403", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]} |
+| fact-4 | https://www.uniprot.org/uniprotkb/Q9USP7/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:18ddef2b6e1154b7eb5adeaa936ef617b5cd779ea814397e6e324ff29224fe9a | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15800064", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15837798", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]} |
+| fact-5 | https://www.uniprot.org/uniprotkb/Q9Y705/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:8b5594ceeffd22f72637fce82883e73e5665c07d345ca921148db1a58c77b148 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "11080156", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15772152", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]} |
+| fact-8 | https://www.uniprot.org/uniprotkb/P08306/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:ae91bfccd202a2e2fbbdde833f0c4466b6dde36b855ef1734a166261da336372 | partial | {"database": "GO", "id": "GO:0004129", "properties": [{"key": "GoEvidenceType", "value": "IEA:UniProtKB-EC"}, {"key": "GoTerm", "value": "F:cytochrome-c oxidase activity"}]} |
+| fact-78 | https://www.uniprot.org/uniprotkb/O13601/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:66c696b2db8fce1e03ce74bf19e95d8edc7732ea57ec077865aa1f39abe12700 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15068790", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule organizing center"}]} |
+| fact-79 | https://www.uniprot.org/uniprotkb/O94488/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:d3d996b147f041e9e98d7038d240518c05fbfd9fc19951738404aec0b6f9e7d2 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "19001497", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule organizing center"}]} |
+| fact-82 | https://www.uniprot.org/uniprotkb/Q9USP7/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:1fa1a0290a8207c7babd17526f67032088d486177c7354a41c61c6d7b5f315a9 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15837798", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule organizing center"}]} |
+| fact-83 | https://www.uniprot.org/uniprotkb/Q9Y705/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:149aab404986ba783fa88c3efb8f185d5b6eb7e8d4f0746d110359448e7a262f | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "15068790", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "24943839", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule organizing center"}]} |
+| fact-92 | https://www.uniprot.org/uniprotkb/P43583/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:d7425769fc884bcb87d9a2b24698c4edf38d5645585988684c496ffc043fabbc | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "23982732", "source": "PubMed"}], "id": "GO:0034515", "properties": [{"key": "GoEvidenceType", "value": "IDA:SGD"}, {"key": "GoTerm", "value": "C:proteasome storage granule"}]} |
+| fact-120 | https://www.uniprot.org/uniprotkb/O94534/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:f4ab5e00212d6f4ea7998a15d2a54427a07d59c7498005fa5f340258d14997c3 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "14742702", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19606211", "source": "PubMed"}], "id": "GO:0070850", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:TACC/TOG complex"}]} |
+| fact-121 | https://www.uniprot.org/uniprotkb/Q9URY2/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:42d2f1bc18353f344c3ae24a525eff0587b895f877653e576edd6272f01dd750 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "14742702", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19606211", "source": "PubMed"}], "id": "GO:0070850", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:TACC/TOG complex"}]} |
+| fact-132 | https://www.uniprot.org/uniprotkb/O59945/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:7a40cb45d2ff9e90813582b2112672f908c4630e807de28bb9e6a65637326d5e | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "26124291", "source": "PubMed"}], "id": "GO:0099079", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:actin body"}]} |
+| fact-145 | https://www.uniprot.org/uniprotkb/Q9HGP5/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:445c4a788d636372d401a2646e5d020084b865572f06efffba80b590139ee885 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "26124291", "source": "PubMed"}], "id": "GO:0099079", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:actin body"}]} |
+| fact-161 | https://www.uniprot.org/uniprotkb/O59855/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:58c28af4323ec6a1cb07d1138df8bd56dbced397e5d0848df211b2cbea9e4367 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "33176152", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "37446379", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-162 | https://www.uniprot.org/uniprotkb/O74752/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:b5404ba6ade1d57d03d3ecd700479fd15728b8e2156ff9c4c7284c5949cf189a | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "37446379", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-163 | https://www.uniprot.org/uniprotkb/O94641/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:10e342559e01eabdb7531e19a9257840749de929a95c36fe2dea4c22837ae875 | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-164 | https://www.uniprot.org/uniprotkb/Q10265/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:2241b46d7652b6c6dc3ca12c3b52fa612cb17539ffa6c14a0fa2cb08bf97f47b | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-165 | https://www.uniprot.org/uniprotkb/Q9UUE5/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:e376a392a9906ce976bfa439994f78f79ca5dfbcee4af303ea9540350179d1dc | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-166 | https://www.uniprot.org/uniprotkb/Q9Y8G3/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:ea55b00f5661c4807d621a30229af198ada621281eb981c546b50c51f5bf4f3b | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id": "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion body"}]} |
+| fact-173 | https://www.uniprot.org/uniprotkb/Q9HDY1/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:a4644e8e505d5e20aef29fb41ddea187f8e0a050cf998f10593f7c05316aec8e | supports | {"database": "GO", "evidences": [{"evidenceCode": "ECO:0000269", "id": "36980258", "source": "PubMed"}], "id": "GO:1990295", "properties": [{"key": "GoEvidenceType", "value": "EXP:PomBase"}, {"key": "GoTerm", "value": "C:post-anaphase microtubule array"}]} |
+| fact-184 | https://www.uniprot.org/uniprotkb/P9WJN3/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:705584b467c6776de9656953af3a3a1ba834590269f62db583316ff6b08c0b49 | supports | {"database": "Rhea", "evidences": [], "id": "RHEA:26180"} |
+| fact-187 | https://www.uniprot.org/uniprotkb/O49814/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:dd0805beeef55bf36881f8e08b9e56a119e1129c5302779f734f197d7321fea3 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "9555077", "source": "PubMed"}], "id": "RHEA:30331"} |
+| fact-188 | https://www.uniprot.org/uniprotkb/O49815/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:f6e5101e13edeeeae525423769dc28e96fac18264d109a82905f614b5de3e2d1 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "9555077", "source": "PubMed"}], "id": "RHEA:30331"} |
+| fact-194 | https://www.uniprot.org/uniprotkb/Q9SZZ8/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:d0e74d971e9d623f08c2b20480460bfbf654d60ed49f8a5c9a3c33bc314a4dce | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "8798688", "source": "PubMed"}], "id": "RHEA:30331"} |
+| fact-195 | https://www.uniprot.org/uniprotkb/B0R753/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:dc8e49ba0e55284d0ff84de5d606351354e893ed19d0f7ca615a21a336e39651 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "12003928", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-196 | https://www.uniprot.org/uniprotkb/P21687/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:5a031f0c09bcaf6ff2ee7b7d92cc08d89a057ff283233390ccbb5d3c3d5c71e8 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "20178989", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-199 | https://www.uniprot.org/uniprotkb/Q55276/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:0a1435bb0ab72356cec88ac2bc7c4a14f2761b9c65bc51b27da9cae31fc46126 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "7919981", "source": "PubMed"}, {"evidenceCode": "ECO:0000269", "id": "8344419", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-200 | https://www.uniprot.org/uniprotkb/Q67GH9/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:cd3098e4ef37764a0fef47bcc83c8c6550eb0c9d1c73b28119e2e7eab679b430 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "15345447", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-202 | https://www.uniprot.org/uniprotkb/Q9P854/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:49d5e5a90f5ec906a80888dc2fe3c222d1cc47fda10c014ebd330ac8fc3ed801 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "11172012", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-203 | https://www.uniprot.org/uniprotkb/Q9UUQ6/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:4aa3614dc621251cca2a9137e3683ab7997294390a7629c2ea7d304bd29c5e1a | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "10951210", "source": "PubMed"}], "id": "RHEA:32239"} |
+| fact-208 | https://www.uniprot.org/uniprotkb/Q2G1M6/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:305be300e62f34c800709603344702d9723837ecbc082bfaa4a6d215efa6afea | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "19775248", "source": "PubMed"}], "id": "RHEA:59120"} |
+| fact-209 | https://www.uniprot.org/uniprotkb/Q2G1M9/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:6e35d787b7c922e081c8d8d19cb9c05b4313ed54f92817bf17eab2d9e4cd50a0 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "19775248", "source": "PubMed"}], "id": "RHEA:59124"} |
+| fact-210 | https://www.uniprot.org/uniprotkb/Q2G1M8/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:654b2c687b69ed997f3ee75af02e6f9ead32dcd093ec15df8fd1a4b7d99b8a0a | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "19775248", "source": "PubMed"}], "id": "RHEA:59128"} |
+| fact-211 | https://www.uniprot.org/uniprotkb/Q2FW70/entry; reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl: membership_id=ug-membership:d00b04d2b1b200b407fabef252ed4b2c3fe93a77366339361f7739a6db13fb29 | supports | {"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id": "19138128", "source": "PubMed"}], "id": "RHEA:59136"} |
+| rejection-source-2 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:O94534; source_trait_id=GO:0000923 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-41 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0AFI2; source_trait_id=GO:0009340 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-42 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P20083; source_trait_id=GO:0009340 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-46 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P16326; source_trait_id=GO:0009422 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-59 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:G1UBD1; source_trait_id=GO:0015050 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-71 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0A7Y8; source_trait_id=GO:0030680 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-77 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P26971; source_trait_id=GO:0030700 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "GO", "id": "GO:0030700", "properties": [{"key": "GoEvidenceType", "value": "IEA:InterPro"}, {"key": "GoTerm", "value": "C:glycine reductase complex"}]}] |
+| rejection-source-80 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:O94534; source_trait_id=GO:0031021 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-81 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q9URY2; source_trait_id=GO:0031021 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-85 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P04689; source_trait_id=GO:0032117 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-89 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P18142; source_trait_id=GO:0033117 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-90 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P21837; source_trait_id=GO:0033117 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-91 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0CG63; source_trait_id=GO:0034515 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-93 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P43593; source_trait_id=GO:0034515 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-94 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:O77206; source_trait_id=GO:0036007 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-95 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0C2S2; source_trait_id=GO:0043263 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-96 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0C2S5; source_trait_id=GO:0043263 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-97 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q06851; source_trait_id=GO:0043263 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-107 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A0A284VQI9; source_trait_id=GO:0044674 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-108 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q58256; source_trait_id=GO:0044674 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-109 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P0A988; source_trait_id=GO:0044775 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-122 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:B3STN6; source_trait_id=GO:0090641 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-123 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8SWI4; source_trait_id=GO:0090641 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-124 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8SWL3; source_trait_id=GO:0090641 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-125 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:B3STN7; source_trait_id=GO:0090642 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-126 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q9XZV1; source_trait_id=GO:0090642 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-133 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P13517; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-134 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P15891; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-135 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P17555; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-136 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P28495; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-137 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P32381; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-138 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P32599; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-139 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P40518; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-140 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P53731; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-141 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P60010; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-142 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q05933; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-143 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q06440; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-144 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q08641; source_trait_id=GO:0099079 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-146 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P69681; source_trait_id=GO:0110067 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-155 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A0A0H3C8I9; source_trait_id=GO:0140365 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-156 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A0A0H3CAR6; source_trait_id=GO:0140365 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-157 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A0A0H3CE29; source_trait_id=GO:0140365 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-158 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P31539; source_trait_id=GO:0140453 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-159 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P53286; source_trait_id=GO:0140453 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-160 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q12329; source_trait_id=GO:0140453 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-167 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8SWL3; source_trait_id=GO:0160202 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-172 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P04689; source_trait_id=GO:1990295 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-180 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8GR98; source_trait_id=RHEA:11112 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00048590", "source": "ARBA"}], "id": "RHEA:11112"}] |
+| rejection-source-181 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8GRA0; source_trait_id=RHEA:18985 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00000799", "source": "ARBA"}], "id": "RHEA:18985"}] |
+| rejection-source-182 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A6N339; source_trait_id=RHEA:23196 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052291", "source": "ARBA"}], "id": "RHEA:23196"}] |
+| rejection-source-183 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q8GR97; source_trait_id=RHEA:23824 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052874", "source": "ARBA"}], "id": "RHEA:23824"}] |
+| rejection-source-185 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:B3SGL0; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-186 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:C3VEQ1; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-189 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P21688; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-190 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P54973; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-191 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q44262; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-192 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q9LTG0; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-193 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q9SPK6; source_trait_id=RHEA:30331 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8", "source": "UniProtKB"}], "id": "RHEA:30331"}] |
+| rejection-source-197 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:P54974; source_trait_id=RHEA:32239 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "P21687", "source": "UniProtKB"}], "id": "RHEA:32239"}] |
+| rejection-source-198 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q01331; source_trait_id=RHEA:32239 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "P21687", "source": "UniProtKB"}], "id": "RHEA:32239"}] |
+| rejection-source-201 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q9HNE5; source_trait_id=RHEA:32239 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "B0R753", "source": "UniProtKB"}], "id": "RHEA:32239"}] |
+| rejection-source-204 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:A0A7U3MPB9; source_trait_id=RHEA:34695 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-205 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:B0CN31; source_trait_id=RHEA:41428 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000303", "id": "22187429", "source": "PubMed"}], "id": "RHEA:41428"}] |
+| rejection-source-206 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q5JCL5; source_trait_id=RHEA:41428 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+| rejection-source-207 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q51725; source_trait_id=RHEA:50380 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q4K418", "source": "UniProtKB"}], "id": "RHEA:50380"}] |
+| rejection-source-212 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:Q2UA48; source_trait_id=RHEA:62652 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052269", "source": "ARBA"}], "id": "RHEA:62652"}] |
+| rejection-source-213 | reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl; protein_id=UniProtKB:K4MP98; source_trait_id=RHEA:81499 | supports | Bounded exact-fact check in the complete release-pinned batch acquisition: [] |
+
+## Limits And Additional Notes
+
+- AI database-level review, not full-paper verification or human sign-off. PMID links are source-provided; primary articles were not independently re-read.
+- No mapping_status, definitions, existing examples, or molecular causal graphs are scientifically re-certified by this review.
+- All approved occurrences are whole-protein; no amino-acid positions or generic features establish these specific traits.
+- This exact-fact batch did not traverse GO descendants; missing exact facts do not establish a biological absence.
+- P08306 is rejected despite mechanical eligibility; needs_curation records the mixed candidate verdict, not a request to alter the trait definition.
+- Other exact-entry protein-first candidates remain discovery, not approved examples.
+- The 41 full-record reads satisfy the source-stratified record count; previously embedded catalytic graphs and their literature were not re-certified or used to override exact-fact rejection. Missing exact GO facts may have stronger descendant annotations outside this batch.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261010T081233Z-cross-mech-refresh-source-strata
+kind: batch
+repository: culturebotai/proteintraitsmech
+title: 'Cross-Mech refresh: source-stratified rejection and record-scope addendum'
+started_at: '2026-10-10T08:04:09Z'
+finished_at: '2026-10-10T08:12:33Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: self_review
+  independence_basis: Same agent expanded discovery and reviewed these source facts;
+    not an independent adversarial or human review.
+skill: ground-protein-example; proteintraitsmech-cross-mech-proteins
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Full record reads cover 25 GO records and all 16 available Rhea records.
+  The original 35 approvals and 179 rejections are unchanged; no additional examples
+  are approved.
+source:
+  git_revision: cc7f295f9801d596d45dcb1738aaf065cb0e4f11
+  state: working_tree
+  inputs:
+  - path: data/cross_mech/manifest.json
+    sha256: 169379dcb27ce61c22f4341f49a82ba39271e991c6668e33fa9e7a0087299994
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/1d-myo-inositol-2-acetamido-2-deoxy-alpha-d-glucopyranoside-h2o-1d-myo-rhea26180.yaml
+    sha256: 91e11e3b5cf092a62dcfcb90133d26d34f961ea9cab96c0d33c733a3248f49b7
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/2-2-aminoethylcarbamoyl-methyl-2-hydroxybutanedioate-s-2-3-diaminoprop-rhea59128.yaml
+    sha256: 0a06bc52589946923a8105421bb6a77b393d15f379601df81ae38f70f44552f0
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/2-fmn-2-l-glutamine-2-atp-o2-indigoidine-2-fmnh2-2-amp-2-diphosphate-2-rhea81499.yaml
+    sha256: 2feeb1dc0481780b139b2be07ff6d53a3c366241ab38c3e9b84c08a6dfaded08
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/2-l-alanin-3-ylcarbamoyl-methyl-2-hydroxybutanedioate-h-2-2-aminoethyl-rhea59120.yaml
+    sha256: 475ce81b02d47c6b34612f51141b5aa0fde42421fe1026d73d5dfab39872e179
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/2e-6e-farnesyl-diphosphate-delta-6-protoilludene-diphosphate-rhea34695.yaml
+    sha256: 027b416932ed696e42585d45a128899b864bd8082948e3c007a0944220099460
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/2s-3s-2-3-dihydroxy-2-3-dihydrobenzoate-nad-2-3-dihydroxybenzoate-nadh-rhea23824.yaml
+    sha256: 7e9e7f6f98cdf351aa05bf8a2ea2a1090dd68f8fb155c92b49f5dcbfc31659e6
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/3-malonyl-coa-3-h-1-3-5-trihydroxybenzene-3-co2-3-coa-rhea50380.yaml
+    sha256: aec0cd5df5cce32d0db801efc2dd4c8c198f717e8944b6dea5add8a44de3dea6
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/6-malonyl-coa-acetyl-coa-6-h-naphtopyrone-ywa1-6-co2-7-coa-h2o-rhea62652.yaml
+    sha256: 5aec6047651d3c1a4bfe4e07919068d7984f28e1ac540e9dfa5ecef0050ae9d6
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    sha256: 3863fe94d6f6f175fb6f98fe7c0a3d33bf2df6981a4a113885a171caa4b3c765
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/chorismate-isochorismate-rhea18985.yaml
+    sha256: 5ec04ee8d2798a0fb0d9f1520050a104444135bf576bfc99f399d3f4387f6f47
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/d-ornithine-citrate-atp-n-5-s-citryl-d-ornithine-amp-diphosphate-h-rhea59136.yaml
+    sha256: b66d4c005ad3690e6b99c029a8551f6a2df071e9c1d83646d1bea5731adcdf4e
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    sha256: c933cea4aa2d30ee195c890abcc8c2be7d63767c32138b9328b96c581ef28e94
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/isochorismate-h2o-2s-3s-2-3-dihydroxy-2-3-dihydrobenzoate-pyruvate-rhea11112.yaml
+    sha256: 10d524fae5fef23ff548ad2cce371dcbcb946db5636ff38ae48d5a6ca6255013
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/l-2-aminoadipate-l-valine-l-cysteine-3-atp-h2o-n-5s-5-amino-5-carboxyp-rhea23196.yaml
+    sha256: 2fce2e96ab3d5b682bff12efe719559229796237f8a07c1a01bd3498f1a5ff88
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/l-tyrosine-s-adenosyl-l-methionine-3-methyl-l-tyrosine-s-adenosyl-l-ho-rhea41428.yaml
+    sha256: cb7068e39ecbf187ae52a32a9c708816e71bec3b3105c20dd42155ffe39a4b18
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/s-2-3-diaminopropanoate-citrate-atp-2-l-alanin-3-ylcarbamoyl-methyl-2--rhea59124.yaml
+    sha256: f2ce41af915ed9745f2d10d0e5b3ac7937380efda4d76e71c2d726204facd970
+    role: context
+  - path: data/traits/function/localization/go/3-phenylpropionate-dioxygenase-complex-go0009334.yaml
+    sha256: e549066581bc24aaa8fa6bbeb51cf0a880c22eec0861c2b3589c0839ea5c6c7d
+    role: context
+  - path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    sha256: e759226e3685898b36c237084ba896f8289414058bcfc1a483fdaadf00ba2cdf
+    role: context
+  - path: data/traits/function/localization/go/ammonium-transmembrane-transporter-complex-go0110067.yaml
+    sha256: a993e99a9b12d43c79517adbca289d8b782ade5b15571117e3dad081d33acf1e
+    role: context
+  - path: data/traits/function/localization/go/attachment-organelle-go0033099.yaml
+    sha256: 1ab6bc4ca891cbddd0af5e67e524f6e555898c24bd922c5f721c20e17268ee51
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-c-ring-go0009433.yaml
+    sha256: c880f940810257f866b237087dc3be99fef5c4b0549c1f7264d718434687583f
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-distal-rod-go0009426.yaml
+    sha256: 881ea341d01e0aed2e35fbd45362f5a5d127595bdf8ec51a4c2d58bd9ef389ee
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-distal-rod-l-ring-go0009427.yaml
+    sha256: faa0c76f7e2901de72c9022316850be49b620209fc8d3942e32ed6f8114872e3
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-distal-rod-p-ring-go0009428.yaml
+    sha256: a2726da5a6d1d004c49c059228efd951940a8bf37a587eeaf905715a95960078
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-ms-ring-go0009431.yaml
+    sha256: 13a539b21d2ec867e6ac96e6df5fa4e4a2a73ac592e4fd97d7ed6839797650c4
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-proximal-rod-go0009429.yaml
+    sha256: ee9c6c8c28c76877eece6b70f111db043f98a827312c3154086a892f729e5400
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-basal-body-rod-go0030694.yaml
+    sha256: a3327df65724dc70a60d279e104daed7c60e3c1308f93908ed776dcc42f85e21
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-filament-cap-go0009421.yaml
+    sha256: 2cb883736bb1c48f921cd47276550f86d20ee6bd2084987a7596321eaf1ef872
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-filament-go0009420.yaml
+    sha256: b2c46662ff0f01d75f2f5aeec382e8714ab5e1a4017223a64a4eef5d0408cf36
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-go0009288.yaml
+    sha256: 432df37bd75330dd26dbdaff357b31f930121a216182459e3330db470205c318
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-hook-filament-junction-go0009422.yaml
+    sha256: fc419585f9d0484b6708266587519324d558d982f75b818f9bec40b20279eee8
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-hook-go0009424.yaml
+    sha256: 9f00230c5304870efe0b3df5fe66a7177cab637a964eb6e0d5074168297d107c
+    role: context
+  - path: data/traits/function/localization/go/bacterial-type-flagellum-secretion-apparatus-go0120102.yaml
+    sha256: 52fb92d1cc0b1d281df309b89d84e570da1d3414678f7636ce9e94e33b606453
+    role: context
+  - path: data/traits/function/localization/go/cellulosome-go0043263.yaml
+    sha256: 4fba36d4fc1c474fba6ed55a4cbe82d4968aea56e71c3312b3c90d684185d3c3
+    role: context
+  - path: data/traits/function/localization/go/chlorosome-go0046858.yaml
+    sha256: b63b74389355803185c8e35369001bcce025e201774f995c90eb0404b4993992
+    role: context
+  - path: data/traits/function/localization/go/cytoophidium-go0097268.yaml
+    sha256: d14e432d4ba288d73a250515f9c3184c0061dba77323f15a166935b03affa0ec
+    role: context
+  - path: data/traits/function/localization/go/dimeric-ribonuclease-p-complex-go0030680.yaml
+    sha256: 4dedad8835e6a0ee967d4cc56016cfbf1a3cfd25a1fe23f19ff2db7b90545fa3
+    role: context
+  - path: data/traits/function/localization/go/divisome-complex-go1990586.yaml
+    sha256: 20660b69e8d0cf3f19ca827645f483bca87cd3919a78acdd681b5b2205ef7656
+    role: context
+  - path: data/traits/function/localization/go/dna-polymerase-iii-beta-sliding-clamp-processivity-factor-complex-go0044775.yaml
+    sha256: 1b0e8fd199fed44fd93c4405d67e6a2398a2ce9e22ffa3b74f7a1835e460274f
+    role: context
+  - path: data/traits/function/localization/go/dna-polymerase-iii-clamp-loader-chi-psi-subcomplex-go0043847.yaml
+    sha256: 2b1286c671bf69eeb165adcdf1b895dc7e54ebb1cccd46391596bd2cc1798487
+    role: context
+  - path: data/traits/function/localization/go/dna-topoisomerase-iv-complex-go0009340.yaml
+    sha256: d8fff93a689a8bb522125b304d59fe7205fa57bf16fd0de9932fa690443461d6
+    role: context
+  - path: data/traits/function/localization/go/endospore-external-encapsulating-structure-go0043591.yaml
+    sha256: 4257bba26516dc5b335fe4b1073c52dc90f6409880ac296e1c80872f8dcbb996
+    role: context
+  - path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    sha256: 737a04e161f9d479797557b3ffe24594f5fad19ed0ec945b871ed3e989eaf0f0
+    role: context
+  - path: data/traits/function/localization/go/esterosome-go0033117.yaml
+    sha256: 00c2b103ed0ba9940583c61f0d8225c2c79819748702d82d05cdaa3045139b1e
+    role: context
+  - path: data/traits/function/localization/go/ethanolamine-degradation-polyhedral-organelle-go0031471.yaml
+    sha256: 51164e86bc1feaa2907576ce9f51023a94417f30ed623a492ffc22abf292f958
+    role: context
+  - path: data/traits/function/localization/go/gamma-tubulin-complex-go0000930.yaml
+    sha256: f24f461c7e6ffc3b8bda14e702a4f6e0debdcae34f101093a0277a708df539a5
+    role: context
+  - path: data/traits/function/localization/go/glycine-cleavage-complex-go0005960.yaml
+    sha256: 807c6aeb86bc8a5521e2f4b8dd81c59aa7980f191895794d4e668d29bd59fe84
+    role: context
+  - path: data/traits/function/localization/go/glycine-reductase-complex-go0030700.yaml
+    sha256: 74b21c5edba1249dc562217885d753d78fbd46997f601e73c8b70e11cf755192
+    role: context
+  - path: data/traits/function/localization/go/horsetail-astral-microtubule-array-go0032117.yaml
+    sha256: 080bf8d070aa74dfc49de58b237d50502d135c05f33219c8fe94aa503d311df9
+    role: context
+  - path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    sha256: 7fa9ba845e7192146151e619d51f947a824325d07d4198c0019eae3ac4112957
+    role: context
+  - path: data/traits/function/localization/go/mdtbc-complex-go1990203.yaml
+    sha256: baf75612597290662cb46a31071bf120cabf2f4af9a6bb714972db20d21e7733
+    role: context
+  - path: data/traits/function/localization/go/methane-monooxygenase-complex-go0015050.yaml
+    sha256: 6c32a8f1e527b04ca72c3ae96df9cd2f6ba479a21b2ca2fb32926cab1209bb71
+    role: context
+  - path: data/traits/function/localization/go/methyl-accepting-chemotaxis-protein-complex-go0098561.yaml
+    sha256: 456719c2a4f1547c956fd35d010ded170b3a237d107405bc6c3c6435131979e6
+    role: context
+  - path: data/traits/function/localization/go/methyl-coenzyme-m-reductase-complex-go0044674.yaml
+    sha256: 78bc86be077031d573f6eabc0ec3fcd792e3a9ada9c036b15a1cc0b5556788e3
+    role: context
+  - path: data/traits/function/localization/go/microsporidian-type-endospore-go0090641.yaml
+    sha256: d9fa3991db325189faa8f1aa4515b737c8f66f8ec9a295cb0cf520899f4ded08
+    role: context
+  - path: data/traits/function/localization/go/microsporidian-type-exospore-go0090642.yaml
+    sha256: 75042c8aea7a67b9a3f2ec2aaaa4e471b971cd0827e8db58504cf42e39733e0a
+    role: context
+  - path: data/traits/function/localization/go/ni-fe-hydrogenase-complex-go0044569.yaml
+    sha256: d1ad24b63d3cc150531b24e5854c107c6526983858362c27341973237f3c868e
+    role: context
+  - path: data/traits/function/localization/go/nitrogenase-complex-go0016610.yaml
+    sha256: 1339d4d247d3410b58ad955a325b4688c446abf8bfcf146272bbd4be6b2bc762
+    role: context
+  - path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    sha256: b0ad772acce562a25ea409f544768bd572667df62799f979a3d5658fefc48a7a
+    role: context
+  - path: data/traits/function/localization/go/paraflagellar-rod-go0097740.yaml
+    sha256: 36cc0d69cbb55ea8f8829b37057ce171a6df6dbb12bb9485a44600968bb42c26
+    role: context
+  - path: data/traits/function/localization/go/periplasmic-flagellum-go0055040.yaml
+    sha256: 4ac519315d39ff429646aab4a84cf5ba7b66bf5fe3f8ee59b458d6ecd9713308
+    role: context
+  - path: data/traits/function/localization/go/phycobilisome-go0030089.yaml
+    sha256: ae665bc421a0c19949e7d8c877cd6ae254fa330f9c41b795bb3280ab882ea963
+    role: context
+  - path: data/traits/function/localization/go/polar-tube-anchoring-disc-go0160202.yaml
+    sha256: 61d5aaf4fe7a6a276b685c7a57b6df7eebd90e50b869eb732e56720c4f4acfff
+    role: context
+  - path: data/traits/function/localization/go/post-anaphase-microtubule-array-go1990295.yaml
+    sha256: 7c3fd5f8cc847c739f551cb8de5ad65f6ba4195c1df66e890a5db9619699471e
+    role: context
+  - path: data/traits/function/localization/go/proteasome-storage-granule-go0034515.yaml
+    sha256: 4a73a963362f0fe307e762b65c300e68b3a6d8cb570687b8b6d622376344b148
+    role: context
+  - path: data/traits/function/localization/go/protein-aggregate-center-go0140453.yaml
+    sha256: 56a7730b91433458ee75eb43571a49a690969d7beceb6d884777d2ac9c9a159a
+    role: context
+  - path: data/traits/function/localization/go/rnp-body-go0140365.yaml
+    sha256: d724f5dd62e25f2dc66afd93c5c3ca405ca8bf76ab35fc281880fc3bdad3014b
+    role: context
+  - path: data/traits/function/localization/go/scintillon-go0036007.yaml
+    sha256: e49775e7c7dd2488f48c8fdca441835616c9dc8cc3ca31f37819b80f60df73d2
+    role: context
+  - path: data/traits/function/localization/go/ssud-ssue-complex-go1990200.yaml
+    sha256: 2dee0f089c97e092cbf54f83631c28c978d1f83ffbede73f999394d9f1e78925
+    role: context
+  - path: data/traits/function/localization/go/tacc-tog-complex-go0070850.yaml
+    sha256: a8c866971e77efd7b387fbbc7f9a180d07e3cfb84167558ad208d6b23d8dbb03
+    role: context
+  - path: data/traits/function/localization/go/type-ii-protein-secretion-system-complex-go0015627.yaml
+    sha256: 39dfd9050df9c077540bce3645d2da89537ebdb0b2d6be5ff1347d44cc661cf8
+    role: context
+  - path: data/traits/function/localization/go/type-iii-protein-secretion-system-complex-go0030257.yaml
+    sha256: 8736f950a77219ac80c5fb10cc8cb78055ffa415e6197dc9e63cd38000e1b358
+    role: context
+  - path: data/traits/function/localization/go/type-iv-secretion-system-complex-go0043684.yaml
+    sha256: 32ebf61c996c6fd2955cb90381fb3a19bf5e0d10c4852b0cc2e7555a68dbdfcd
+    role: context
+  - path: data/traits/function/molecular_function/go/4-hydroxyphenylpyruvate-dioxygenase-activity-go0003868.yaml
+    sha256: e0191db7286cf8e5fe5fd192ed30778c06e7ba8f7c823bcc97711afc4e07f235
+    role: context
+  - path: data/traits/function/molecular_function/go/anaerobic-carbon-monoxide-dehydrogenase-activity-go0043885.yaml
+    sha256: d90efbaeb8bd85107704ea682534b9bea9d514323eaf2f53313dc068fbc37250
+    role: context
+  - path: data/traits/function/molecular_function/go/beta-lactamase-activity-go0008800.yaml
+    sha256: b14ebaa0a68ff9503a1c5d978df8f4bdb75cf14c1b388527a8a1953fa029905d
+    role: context
+  - path: data/traits/function/molecular_function/go/carbamate-kinase-activity-go0008804.yaml
+    sha256: 732a1af7cf48f244c708497e9b59ee3d559ceb77b862141200892503da1af3d0
+    role: context
+  - path: data/traits/function/molecular_function/go/cytochrome-c-oxidase-activity-go0004129.yaml
+    sha256: cc93d01d5cb48b5d45c07f50243fcfa79f8d12155dbbd213c6614f57b25dbf00
+    role: context
+  - path: data/traits/function/molecular_function/go/hydroquinone-oxygen-oxidoreductase-activity-go0052716.yaml
+    sha256: d78f8fcc62253bab7595a5f92322acdaea6ead075c469f5da6706b8c59cb2139
+    role: context
+  - path: data/traits/function/molecular_function/go/lactate-dehydrogenase-activity-go0004457.yaml
+    sha256: 643026f110e4d447721f19a9143b8cfb2a7835591ca5dd6dbb292ba31e607f1a
+    role: context
+  - path: data/traits/function/molecular_function/go/nitrous-oxide-reductase-activity-go0050304.yaml
+    sha256: 0d5a28546617b1bd59d274fc0cf3917a8b71b48491e17ace47fe3a850e01c89f
+    role: context
+  - path: data/traits/function/molecular_function/go/phosphoenolpyruvate-carboxylase-activity-go0008964.yaml
+    sha256: 3fda14cc116565dc576955e73de583dbabd3a31e2182f698848bf7e4b347ac75
+    role: context
+  - path: data/traits/function/molecular_function/go/polyphosphate-kinase-activity-go0008976.yaml
+    sha256: 3f1954081b3d9e1047ef20edc33a89a08ab3ecf79a183289427e1cda8df465a2
+    role: context
+  - path: data/traits/function/molecular_function/go/sulfide-quinone-oxidoreductase-activity-go0070224.yaml
+    sha256: 473315d0b641ef0829a51f65580bb72242705959ca61d4ddd88cdd9a1ea1b150
+    role: context
+  - path: reports/uniprot-grounding/cross-mech/discovery.entries.json
+    sha256: ad4e720d62a7b0db8f5c5b0a4723e35189d65b9555991fcb12de3974e7a6e602
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.manifest.json
+    sha256: 93423c61fdd78aa7cc2f977899aff1cd17f43878e90c9d1c691a46118fa05010
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+    sha256: 735af1f23de024aed36bb545179c565d1ee0471a4487ea89de886d8a9d90a628
+    role: target
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_fetch_receipt.json
+    sha256: 11bab19af93c141748b430bb5688e9f5cbd982a9375aa1974fd152c733257087
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+    sha256: dc48fb912e36a998020ced5fe45037c57f66d7b166ffbe30a750af59d9b5a03c
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_registry.jsonl
+    sha256: 30b5e7f17ff741559d1abda9ba646db4dccf32654230451da5740a64b570fef3
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: b2ecb451e29ea4caec33105523bfddcc12f966936399042178566f3fae83b4f2
+    role: context
+targets:
+- target_id: ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O13601 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 13fc459173e7da5618b12e5d43bc0cd3251dda3fc36ce3398948385fbd56f47d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94488 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 861a17338399614ba1ad5588787a02152b1e40a3999fba9aeeb7365c90088f74
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94534 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: df9447d3bda81f25f0ceacc1272d5a4ea444d4dd42705bd359fa76c850b11dbd
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9URY2 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 96c058cff8f453d99bb3361d982fb09b6a90681789bfbbaab2f54363e349d16d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9USP7 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 2204c81ef15edeedd3085c46fcbe7e372bbfa4c0878ac6d5379e8f9f9680eb66
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9Y705 on GO:0000923
+  kind: snapshot_row
+  selector: candidate_id=ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7dcbf837c4f03a473893304124117cc2e4362c358671161c7860a7f5b673ac44
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/equatorial-microtubule-organizing-center-go0000923.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P08306 on GO:0004129
+  kind: snapshot_row
+  selector: candidate_id=ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ab847a3b95d9bae70ca9f2f0064352481c062ece8b0372320a2371513626e89d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/molecular_function/go/cytochrome-c-oxidase-activity-go0004129.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0AFI2 on GO:0009340
+  kind: snapshot_row
+  selector: candidate_id=ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 31fdb1e976d415a6bdec3efa25b86e6b8091da2c90cb2290b8d62fa0c4358735
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/dna-topoisomerase-iv-complex-go0009340.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P20083 on GO:0009340
+  kind: snapshot_row
+  selector: candidate_id=ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 86a1df6fc067659315a0d8f592a0dc11d0d5c88bce99120c0816d4b16bd052bd
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/dna-topoisomerase-iv-complex-go0009340.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P16326 on GO:0009422
+  kind: snapshot_row
+  selector: candidate_id=ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 0da6fbc76d32abb1356efe4c820c11597ffe702a1e2b438670550c5e1bbe9e2a
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/bacterial-type-flagellum-hook-filament-junction-go0009422.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:G1UBD1 on GO:0015050
+  kind: snapshot_row
+  selector: candidate_id=ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7714c9a58276371f7c0d33dc73d0da8cfbbcbd07a1524a6036c79824fec6212e
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/methane-monooxygenase-complex-go0015050.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0A7Y8 on GO:0030680
+  kind: snapshot_row
+  selector: candidate_id=ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: da832c885d88ea416d9aff0f57395c7e1073bcf855c23e466e8fc9859f3f9156
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/dimeric-ribonuclease-p-complex-go0030680.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P26971 on GO:0030700
+  kind: snapshot_row
+  selector: candidate_id=ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 6dfe003bd4e612a3a21a6125f8e0737bc2c934f0e4848ad03ba2b40cad9fbc5f
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/glycine-reductase-complex-go0030700.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O13601 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 6ea31479ed348046725350bc92504f84b4b9bc96d84b05f09c9df819bab9c6cc
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94488 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7655ddd7275b1e1c0b6a1abd538958ce4a4039e6b555c9a8f032133ef5e222f0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94534 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 99b1424e9d58a5248b8f8e598491adc638ed52cd06c47595005af8d1cf8b1264
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9URY2 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: a14e425f5fd0477f8064ddb90204cbeeb0f889e36c67e4e6557b0195e6ed6c09
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9USP7 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7f9fc8c27b2937d6c413dc44f9abfabbdd12e9e5fd7f03a3a988bc8bd8ff9026
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9Y705 on GO:0031021
+  kind: snapshot_row
+  selector: candidate_id=ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 737ce54d6f4c83bcf2b4b2258ec6733e9fd56bea1463e1a99a11254318f6f88d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/interphase-microtubule-organizing-center-go0031021.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P04689 on GO:0032117
+  kind: snapshot_row
+  selector: candidate_id=ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7c9903eddf8edc4fa2d027e9195799a79390526b8c7703e1a283a62d19da6e53
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/horsetail-astral-microtubule-array-go0032117.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P18142 on GO:0033117
+  kind: snapshot_row
+  selector: candidate_id=ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 99be414f6b0618f471cec261c3e229d5982fea54e1a7f78ee808e0599cbd0e94
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/esterosome-go0033117.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P21837 on GO:0033117
+  kind: snapshot_row
+  selector: candidate_id=ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ecfe51e069c3aa01fc4b197299a599ca865199d1fed29e0d659b4eb1b7de2589
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/esterosome-go0033117.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0CG63 on GO:0034515
+  kind: snapshot_row
+  selector: candidate_id=ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 0c0256340b18250d37a2298966833e4bb0b73486671daff2150d9084ce98fdaf
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/proteasome-storage-granule-go0034515.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P43583 on GO:0034515
+  kind: snapshot_row
+  selector: candidate_id=ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 3c7bf68709ea94117ceb0f1cd7ef833e4314df07c1f9dfa0b44ed457d8ebfc73
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/proteasome-storage-granule-go0034515.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P43593 on GO:0034515
+  kind: snapshot_row
+  selector: candidate_id=ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 9df24499bdb8393a7133f73f2374282bb6278fc234ab55abfc81fc0dc2c6b9c2
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/proteasome-storage-granule-go0034515.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O77206 on GO:0036007
+  kind: snapshot_row
+  selector: candidate_id=ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ad77af1719cfb391fcd90e17c0341b119f72b04542fb1c610252788456aabd88
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/scintillon-go0036007.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0C2S2 on GO:0043263
+  kind: snapshot_row
+  selector: candidate_id=ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 4a714c8ae0e440d9fe6f4305bde525a7267212847d3c4c9533a717298a3d4d47
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/cellulosome-go0043263.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0C2S5 on GO:0043263
+  kind: snapshot_row
+  selector: candidate_id=ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 525515e85466e536da734ac79c0d2bc8b73f34933b76d738c5a585e0a777298b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/cellulosome-go0043263.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q06851 on GO:0043263
+  kind: snapshot_row
+  selector: candidate_id=ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 178c24840aed3680a20f05c70835047354f2f177d3403948a9fa8b89d03f93f7
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/cellulosome-go0043263.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A0A284VQI9 on GO:0044674
+  kind: snapshot_row
+  selector: candidate_id=ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 3af61945ea00ec84824a24fdb234d745613625a9a2fc3743967793d1c58116a0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/methyl-coenzyme-m-reductase-complex-go0044674.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q58256 on GO:0044674
+  kind: snapshot_row
+  selector: candidate_id=ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: d4ec85e10d3b3efc328cbc56100aa7491e1c8d24413db46130eba866423f327b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/methyl-coenzyme-m-reductase-complex-go0044674.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P0A988 on GO:0044775
+  kind: snapshot_row
+  selector: candidate_id=ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: f24642b4ae229ce1cacc97bbc022cbdb6defc630a42b552fec3bdac990f4a986
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/dna-polymerase-iii-beta-sliding-clamp-processivity-factor-complex-go0044775.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94534 on GO:0070850
+  kind: snapshot_row
+  selector: candidate_id=ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ecd249bab79ac8a132672ce1b490d4efd60ee1fb4f48ba93f7024be449706a43
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/tacc-tog-complex-go0070850.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9URY2 on GO:0070850
+  kind: snapshot_row
+  selector: candidate_id=ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 8be79f536059d6aff03354149d2b1b5f58c4fe3b9610ecadeb7304dfd448e323
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/tacc-tog-complex-go0070850.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:B3STN6 on GO:0090641
+  kind: snapshot_row
+  selector: candidate_id=ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 6846cc6427b77d2e556446b4d348621e651d13bbeeec6162f9c854257c20cd66
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/microsporidian-type-endospore-go0090641.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8SWI4 on GO:0090641
+  kind: snapshot_row
+  selector: candidate_id=ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 0a9499f1d9c9e848dbbe64af85608afe4f756f0bfaf4384b29a2b3eaa062b02d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/microsporidian-type-endospore-go0090641.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8SWL3 on GO:0090641
+  kind: snapshot_row
+  selector: candidate_id=ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 23c8f5ddd3f591ea4ecfb5de27210ea9dcf2b5c5b1d38b67db71764769926dcd
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/microsporidian-type-endospore-go0090641.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:B3STN7 on GO:0090642
+  kind: snapshot_row
+  selector: candidate_id=ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: e7cfece3a89df613f2762be6d7d32044cf17e55ab5a068b13a393cf4d09f9801
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/microsporidian-type-exospore-go0090642.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9XZV1 on GO:0090642
+  kind: snapshot_row
+  selector: candidate_id=ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 336e12a44ace2fa9d7c5e15f23c03478426e29ce61424fc2de8e721cfdc9e72d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/microsporidian-type-exospore-go0090642.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O59945 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: dc72a5d50146c8c6ca3c15a11c954d99aff7948fe71dbaa563fffeaf7b4d9b7c
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P13517 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 6feb5d4fcb6764b4b4c82562345d07bf017b3f0e378c57e4d18be16740d38d1e
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P15891 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: d15be776f02cc8792ae83e4e3012354ee9c4e3bd535f55b39ab9d88b22e89b17
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P17555 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: f6e339782a32a9e4ba7f7a87bad675ac18e33f9a94737311f07f16fddcf6272b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P28495 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 6382379e8b466a6d2bb658d1d50a91be5dd58dc8d75ee404fa7d6a4316e88570
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P32381 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 820bf5e03418232d7e13ef3c9bb25d2369969e0e8f4db85b855cd7f443d639a3
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P32599 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ccb865e6268092fb184961409bd5b134789b99dff38759b3df7f50a318b51a67
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P40518 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: efdf70eca58d15d4194990c4921b4190c8035559a2b3e3c0a7a593dcaa46f538
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P53731 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 68930bb0485f65f38d5d075dd2fdaef966feb40f4f4a42590b8e05ff487eac10
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P60010 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: df56b411db46551a839025ae29a08b13dd576963961b64a190e80f783c3d137a
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q05933 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: fe1247b6d2dc1d74e065c3b5fc5caea8eeb529dfd3cfaf578dde803ef3dd7ee2
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q06440 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 16188627ffd719023a0e51e3f3ce5d47edac4e50219d8a539e8be95304139e6b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q08641 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 9e9e837c696e76feb75bf0dba7f811a6c2b63413a52e8e2011b24771b5a1300d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9HGP5 on GO:0099079
+  kind: snapshot_row
+  selector: candidate_id=ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 4296f7fffb24e2eb0068b06b7c26afcf19c6312d78710629b810dea7439331e8
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/actin-body-go0099079.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P69681 on GO:0110067
+  kind: snapshot_row
+  selector: candidate_id=ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 984e92c03d2702dcda6a2404690d8a8cf7407fbc22a972b77c12716934aaefb4
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/ammonium-transmembrane-transporter-complex-go0110067.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A0A0H3C8I9 on GO:0140365
+  kind: snapshot_row
+  selector: candidate_id=ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 37302a920995a6808950cee7722a0ca866280c2b0cadba77ad4c20c1ac5c1d3d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/rnp-body-go0140365.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A0A0H3CAR6 on GO:0140365
+  kind: snapshot_row
+  selector: candidate_id=ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 32ca59c2406ffade797cee57703c73b2134ecf13d9faca36d7cede7cc3824ec1
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/rnp-body-go0140365.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A0A0H3CE29 on GO:0140365
+  kind: snapshot_row
+  selector: candidate_id=ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ec8070675e31cdac52da1e7a39408896a6e77d37861686c5e4cb30d59d748a4b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/rnp-body-go0140365.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P31539 on GO:0140453
+  kind: snapshot_row
+  selector: candidate_id=ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: be76ca68e035c526bf4064ea61312b63fc2913a06cb8fc5c1e746fbe02a94b48
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/protein-aggregate-center-go0140453.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P53286 on GO:0140453
+  kind: snapshot_row
+  selector: candidate_id=ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 33c39011fc0de1f318874fc25bfcf474c8aac7854f56c1cd44f49111ccaf7c22
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/protein-aggregate-center-go0140453.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q12329 on GO:0140453
+  kind: snapshot_row
+  selector: candidate_id=ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 89259cdb1a13e8d3f49a21cb7b07747c860ee962f949c336c5a6de7a193d3bce
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/protein-aggregate-center-go0140453.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O59855 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: f4fd073ba32b280b5b822d2598726ec4372bc6e7c9d1978250b441ae9e561b3c
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O74752 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 046d7eac83df00066c69dcc843d228ed8b0c181c8b52fcb454d4ca3e93c52ea8
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O94641 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: d6ee5a83a080c7e9ec43f65fe9dad5a6f764a9168db3f1ad3869f663a766f9c4
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q10265 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7808efb7b430d4a8234ff7775b12885d14cf2eed99d90ed86db37534fb974da0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9UUE5 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 346720c8759622fc1b6038e03097c40669cffcc189404eb218266e9e0c6f6181
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9Y8G3 on GO:0140602
+  kind: snapshot_row
+  selector: candidate_id=ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: e8f763cde786a2575f84e528e25a3e251f01dd1034c76fa3272c90ba11fc6bae
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/nucleolar-peripheral-inclusion-body-go0140602.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8SWL3 on GO:0160202
+  kind: snapshot_row
+  selector: candidate_id=ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 657c1f4fe3ebd9d4a7a7b3034c4e88709b3faaef226fab436bf64e5f16892602
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/polar-tube-anchoring-disc-go0160202.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P04689 on GO:1990295
+  kind: snapshot_row
+  selector: candidate_id=ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 843143bc7e670218090b86a6bf90b3268be8640051aec27f2b7129bf9c84ea1d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/post-anaphase-microtubule-array-go1990295.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9HDY1 on GO:1990295
+  kind: snapshot_row
+  selector: candidate_id=ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 96433bf577215e86e0507e111486de55ef8a24093b7ce546528ed2be1d2f46f8
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/localization/go/post-anaphase-microtubule-array-go1990295.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8GR98 on RHEA:11112
+  kind: snapshot_row
+  selector: candidate_id=ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: bbfa6d98e9e50de88df6c97a70a74a55815b3f0f00b379c2efa81009acd12300
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/isochorismate-h2o-2s-3s-2-3-dihydroxy-2-3-dihydrobenzoate-pyruvate-rhea11112.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8GRA0 on RHEA:18985
+  kind: snapshot_row
+  selector: candidate_id=ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 5332ea1deb2bb91cefd388b6d7fb07dbb9820122b4f990c2ff7619dd9d7fd595
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/chorismate-isochorismate-rhea18985.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A6N339 on RHEA:23196
+  kind: snapshot_row
+  selector: candidate_id=ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: d7ce76440a9615fe411a4c16dd4b42c22809e18e129978e54eff7b6252d3e1ba
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/l-2-aminoadipate-l-valine-l-cysteine-3-atp-h2o-n-5s-5-amino-5-carboxyp-rhea23196.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q8GR97 on RHEA:23824
+  kind: snapshot_row
+  selector: candidate_id=ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 109dbf3ce4ef336c1803a170c0c88f522e443da1a25a5f2d1b12616906a0a5c0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/2s-3s-2-3-dihydroxy-2-3-dihydrobenzoate-nad-2-3-dihydroxybenzoate-nadh-rhea23824.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P9WJN3 on RHEA:26180
+  kind: snapshot_row
+  selector: candidate_id=ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: afd3cd13375233c6b63a2d299794b5783ac8dab2e68312c0305cb886744ea89d
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/1d-myo-inositol-2-acetamido-2-deoxy-alpha-d-glucopyranoside-h2o-1d-myo-rhea26180.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:B3SGL0 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 95c1932b00630179a713193d035ea96e071ec578f3b4fdc4c7b7443e3a848bb7
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:C3VEQ1 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: b4fd895bb625758976f1b2da4b4b0def19182670f5f62c4b0b196cce647ef358
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O49814 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: a8c0d3655606c9fe070f6bf2bf5220159bc6d5c9ee7b93bc54e81c2f087788f4
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:O49815 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: b051f2b0228f900ce7a5661bf2fe09a8f62b33d9d64476589e12da7f81b8d017
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P21688 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 744a765a2eb71d15cd27895571de171ff7a36b62f9d4e8a3fe03ad0c72b7b4c0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P54973 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 1006deec919558c875b52f63d6f589db6d4d8151ef8827a6ca8cc3acd3ddc346
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q44262 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 04feb91c06766f656062f3c8a23a8d097443700d627b5c5217caea2d433e2cf0
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9LTG0 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: be44f0c50eadc6c6d9942b76ae5be763460b7e24256f62432ffbd5803112353b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9SPK6 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 9cd6607eb93baece1ffcf0a37333c13a59476c3714d2cd3bc37b1897edd76f55
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9SZZ8 on RHEA:30331
+  kind: snapshot_row
+  selector: candidate_id=ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 2a37b11db75a5aeefac571a425fe3bc011eee167bac46dbe9f792f3ed76a2b6c
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/all-trans-beta-carotene-4-reduced-2fe-2s-ferredoxin-2-o2-4-h-all-trans-rhea30331.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:B0R753 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 75330696d9c292089da5320ae95a6d591d7ac04135864cc601a4b5385a02b29b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P21687 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 679aeef02a952c65c609dcc11e2f1280c82dc3a8d8a1248b19ab3e954bf4c3c4
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:P54974 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: b5e45d87a55358dbf50b994c00b7be7293359784577a9b69af371fad65573446
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q01331 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 571fe20bd05b8ec91f6b88699f4372c2dd871f81b1f65e9122c57f873c702021
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q55276 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: c8119384a76ed26a11644db228b57ec46625dd6c9eb00ced16f6691bd1436cd9
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q67GH9 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 361e05fbc35f9c075ffb8e852788533d2461c60a74f6b45b3e5e902ae41bdfe6
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9HNE5 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 7b93da96045224ee465ec70b9fc7187df7941c32b299ef9960a82c3c68fcaaee
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9P854 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: c018c96eff82eb2242bc33d203ec2b086b457388e43a309d1b940a799befdacc
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q9UUQ6 on RHEA:32239
+  kind: snapshot_row
+  selector: candidate_id=ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: ca16514080d472e1abc1b218445b9e3fbc1d10bf354b9ab9d3c209dfcc9b2a63
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/gamma-carotene-all-trans-beta-carotene-rhea32239.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:A0A7U3MPB9 on RHEA:34695
+  kind: snapshot_row
+  selector: candidate_id=ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 203e747c09af1881df17c4c33310ef8e7bb177ea958d7649bcef3173cc88168b
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/2e-6e-farnesyl-diphosphate-delta-6-protoilludene-diphosphate-rhea34695.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:B0CN31 on RHEA:41428
+  kind: snapshot_row
+  selector: candidate_id=ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 10a1c9083f8bb52a54b6e039e0a226f64a09319239cd8e1ae117b1d43be24350
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/l-tyrosine-s-adenosyl-l-methionine-3-methyl-l-tyrosine-s-adenosyl-l-ho-rhea41428.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q5JCL5 on RHEA:41428
+  kind: snapshot_row
+  selector: candidate_id=ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 166bf899587b58817add0b918be42ccf6645b55f9ca211ac1d86a7fb93ea3a06
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/l-tyrosine-s-adenosyl-l-methionine-3-methyl-l-tyrosine-s-adenosyl-l-ho-rhea41428.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q51725 on RHEA:50380
+  kind: snapshot_row
+  selector: candidate_id=ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: f3564a2747eee1f1706439d81f7a793fd0a30b8e8f4f28e1b80264a9e3a7a25a
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/3-malonyl-coa-3-h-1-3-5-trihydroxybenzene-3-co2-3-coa-rhea50380.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q2G1M6 on RHEA:59120
+  kind: snapshot_row
+  selector: candidate_id=ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 23b8b70e97a7f631e897aaa4ddafdf0b4e6d660371357bf1d9059c6a6d284cad
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/2-l-alanin-3-ylcarbamoyl-methyl-2-hydroxybutanedioate-h-2-2-aminoethyl-rhea59120.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q2G1M9 on RHEA:59124
+  kind: snapshot_row
+  selector: candidate_id=ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 785c7345089dbb12a7e600496948b6fb3b2c4b8b7502fb1e06dfe0ff01ff9cfe
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/s-2-3-diaminopropanoate-citrate-atp-2-l-alanin-3-ylcarbamoyl-methyl-2--rhea59124.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q2G1M8 on RHEA:59128
+  kind: snapshot_row
+  selector: candidate_id=ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: dc2f29ea7813cc138ebc4e8c761d87e3961ec24a5e052a6618c69fd415b348e3
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/2-2-aminoethylcarbamoyl-methyl-2-hydroxybutanedioate-s-2-3-diaminoprop-rhea59128.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q2FW70 on RHEA:59136
+  kind: snapshot_row
+  selector: candidate_id=ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: cecc901b30b5b908ac6c7e93afd755c4d183e2a793b7ce12855bcf23c11f2739
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/d-ornithine-citrate-atp-n-5-s-citryl-d-ornithine-amp-diphosphate-h-rhea59136.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:Q2UA48 on RHEA:62652
+  kind: snapshot_row
+  selector: candidate_id=ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 8dfd8e1c3d9ae29385f7f94d412e64e74ea73f902660b288dad5366eaf14e823
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/6-malonyl-coa-acetyl-coa-6-h-naphtopyrone-ywa1-6-co2-7-coa-h2o-rhea62652.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+- target_id: ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb
+  path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.resolved.jsonl
+  label: UniProtKB:K4MP98 on RHEA:81499
+  kind: snapshot_row
+  selector: candidate_id=ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest (SHA-256 canonical JSON)
+    sha256: 2c14db1029f9d46677310c5955707ad2f66128f51d0849bea13f899128f27bdc
+    description: Native digest of the immutable resolved candidate, excluding record_preimage
+      and resolution_digest.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/traits/function/enzymatic_activity/rhea/2-fmn-2-l-glutamine-2-atp-o2-indigoidine-2-fmnh2-2-amp-2-diphosphate-2-rhea81499.yaml
+    role: authoritative recipient trait record
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: registered grounding promoter
+scope:
+  description: Candidate promotion scope and exact-fact rejection review across 41
+    full target records; not re-certification of every existing graph or legacy example.
+  selection: All 15 mechanically eligible target records, plus the 17 shortest remaining
+    GO records (byte length then trait ID) and all remaining Rhea records.
+  coverage: sampled
+  population_size: 214
+  reviewed_target_ids:
+  - ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4
+  - ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a
+  - ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8
+  - ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934
+  - ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59
+  - ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf
+  - ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5
+  - ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62
+  - ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26
+  - ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c
+  - ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118
+  - ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35
+  - ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f
+  - ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c
+  - ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038
+  - ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9
+  - ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1
+  - ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08
+  - ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f
+  - ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f
+  - ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635
+  - ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc
+  - ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f
+  - ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0
+  - ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a
+  - ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc
+  - ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9
+  - ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0
+  - ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495
+  - ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff
+  - ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0
+  - ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0
+  - ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec
+  - ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23
+  - ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140
+  - ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef
+  - ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674
+  - ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6
+  - ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d
+  - ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423
+  - ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1
+  - ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db
+  - ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339
+  - ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7
+  - ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272
+  - ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c
+  - ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391
+  - ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0
+  - ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4
+  - ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c
+  - ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92
+  - ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2
+  - ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953
+  - ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22
+  - ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d
+  - ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef
+  - ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555
+  - ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01
+  - ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b
+  - ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef
+  - ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a
+  - ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460
+  - ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a
+  - ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9
+  - ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32
+  - ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb
+  - ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87
+  - ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8
+  - ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb
+  - ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc
+  - ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c
+  - ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec
+  - ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2
+  - ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26
+  - ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee
+  - ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad
+  - ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512
+  - ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0
+  - ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537
+  - ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3
+  - ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028
+  - ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde
+  - ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96
+  - ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469
+  - ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730
+  - ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528
+  - ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26
+  - ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219
+  - ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22
+  - ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5
+  - ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92
+  - ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230
+  - ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa
+  - ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24
+  - ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb
+  - ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2
+  - ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89
+  - ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511
+  - ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6
+  - ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77
+  - ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0
+  - ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8
+  - ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e
+  sampling_method: 'Source-stratified: 25 of 68 GO records, all 16 Rhea records; every
+    eligible candidate included. Length-ranked GO additions are an explicit convenience
+    sample, not representative.'
+checks:
+- check_id: resolve
+  name: Exact-accession release/sequence/evidence resolution
+  required: true
+  status: passed
+  command: just resolve-uniprot-review-batch cross-mech-refresh-20261010
+  exit_code: 0
+  summary: 214 resolved, 36 mechanically eligible, 178 rejected. Independent fetch
+    receipt returned 195 references with 0 blocked accessions.
+  target_ids:
+  - ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8
+  - ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934
+  - ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62
+  - ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1
+  - ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f
+  - ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635
+  - ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f
+  - ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9
+  - ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495
+  - ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff
+  - ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0
+  - ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec
+  - ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23
+  - ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7
+  - ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0
+  - ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92
+  - ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d
+  - ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b
+  - ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a
+  - ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460
+  - ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9
+  - ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8
+  - ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb
+  - ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26
+  - ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537
+  - ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96
+  - ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730
+  - ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528
+  - ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26
+  - ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219
+  - ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5
+  - ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230
+  - ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb
+  - ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77
+  - ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8
+  - ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e
+  evidence_ids:
+  - fact-0
+  - fact-1
+  - fact-3
+  - fact-4
+  - fact-5
+  - fact-8
+  - fact-78
+  - fact-79
+  - fact-82
+  - fact-83
+  - fact-92
+  - fact-120
+  - fact-121
+  - fact-132
+  - fact-145
+  - fact-161
+  - fact-162
+  - fact-163
+  - fact-164
+  - fact-165
+  - fact-166
+  - fact-173
+  - fact-184
+  - fact-187
+  - fact-188
+  - fact-194
+  - fact-195
+  - fact-196
+  - fact-199
+  - fact-200
+  - fact-202
+  - fact-203
+  - fact-208
+  - fact-209
+  - fact-210
+  - fact-211
+evidence:
+- evidence_id: fact-0
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O13601/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:1cd1e86b52d7f9b7456c42f1791a6a4965f2b2290577598f3632ffdce3529d59'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15068790", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule
+    organizing center"}]}'
+- evidence_id: fact-1
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O94488/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:74eb3d738bb09afdb4daea2495061cf5cb813c96c1b41b3aa6a19ffc479354bb'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15004232", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15120067",
+    "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15772152", "source":
+    "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19001497", "source": "PubMed"}],
+    "id": "GO:0000923", "properties": [{"key": "GoEvidenceType", "value": "IDA:PomBase"},
+    {"key": "GoTerm", "value": "C:equatorial microtubule organizing center"}]}'
+- evidence_id: fact-3
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9URY2/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:a42898a364abcbfd3530c947aaa0363ff049d496f6e0011a32b75447d0ea82ca'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "16481403", "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule
+    organizing center"}]}'
+- evidence_id: fact-4
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9USP7/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:18ddef2b6e1154b7eb5adeaa936ef617b5cd779ea814397e6e324ff29224fe9a'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15800064", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15837798",
+    "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule
+    organizing center"}]}'
+- evidence_id: fact-5
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9Y705/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:8b5594ceeffd22f72637fce82883e73e5665c07d345ca921148db1a58c77b148'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "11080156", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "15772152",
+    "source": "PubMed"}], "id": "GO:0000923", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:equatorial microtubule
+    organizing center"}]}'
+- evidence_id: fact-8
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P08306/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:ae91bfccd202a2e2fbbdde833f0c4466b6dde36b855ef1734a166261da336372'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: partial
+  summary: '{"database": "GO", "id": "GO:0004129", "properties": [{"key": "GoEvidenceType",
+    "value": "IEA:UniProtKB-EC"}, {"key": "GoTerm", "value": "F:cytochrome-c oxidase
+    activity"}]}'
+- evidence_id: fact-78
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O13601/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:66c696b2db8fce1e03ce74bf19e95d8edc7732ea57ec077865aa1f39abe12700'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15068790", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule
+    organizing center"}]}'
+- evidence_id: fact-79
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O94488/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:d3d996b147f041e9e98d7038d240518c05fbfd9fc19951738404aec0b6f9e7d2'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "19001497", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule
+    organizing center"}]}'
+- evidence_id: fact-82
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9USP7/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:1fa1a0290a8207c7babd17526f67032088d486177c7354a41c61c6d7b5f315a9'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15837798", "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule
+    organizing center"}]}'
+- evidence_id: fact-83
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9Y705/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:149aab404986ba783fa88c3efb8f185d5b6eb7e8d4f0746d110359448e7a262f'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "15068790", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "24943839",
+    "source": "PubMed"}], "id": "GO:0031021", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:interphase microtubule
+    organizing center"}]}'
+- evidence_id: fact-92
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P43583/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:d7425769fc884bcb87d9a2b24698c4edf38d5645585988684c496ffc043fabbc'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "23982732", "source": "PubMed"}], "id": "GO:0034515", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:SGD"}, {"key": "GoTerm", "value": "C:proteasome storage granule"}]}'
+- evidence_id: fact-120
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O94534/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:f4ab5e00212d6f4ea7998a15d2a54427a07d59c7498005fa5f340258d14997c3'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "14742702", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19606211",
+    "source": "PubMed"}], "id": "GO:0070850", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:TACC/TOG complex"}]}'
+- evidence_id: fact-121
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9URY2/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:42d2f1bc18353f344c3ae24a525eff0587b895f877653e576edd6272f01dd750'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "14742702", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "19606211",
+    "source": "PubMed"}], "id": "GO:0070850", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:TACC/TOG complex"}]}'
+- evidence_id: fact-132
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O59945/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:7a40cb45d2ff9e90813582b2112672f908c4630e807de28bb9e6a65637326d5e'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "26124291", "source": "PubMed"}], "id": "GO:0099079", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:actin body"}]}'
+- evidence_id: fact-145
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9HGP5/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:445c4a788d636372d401a2646e5d020084b865572f06efffba80b590139ee885'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "26124291", "source": "PubMed"}], "id": "GO:0099079", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:actin body"}]}'
+- evidence_id: fact-161
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O59855/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:58c28af4323ec6a1cb07d1138df8bd56dbced397e5d0848df211b2cbea9e4367'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "33176152", "source": "PubMed"}, {"evidenceCode": "ECO:0000314", "id": "37446379",
+    "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-162
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O74752/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:b5404ba6ade1d57d03d3ecd700479fd15728b8e2156ff9c4c7284c5949cf189a'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "37446379", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-163
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O94641/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:10e342559e01eabdb7531e19a9257840749de929a95c36fe2dea4c22837ae875'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-164
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q10265/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:2241b46d7652b6c6dc3ca12c3b52fa612cb17539ffa6c14a0fa2cb08bf97f47b'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-165
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9UUE5/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:e376a392a9906ce976bfa439994f78f79ca5dfbcee4af303ea9540350179d1dc'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-166
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9Y8G3/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:ea55b00f5661c4807d621a30229af198ada621281eb981c546b50c51f5bf4f3b'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000314", "id":
+    "33176152", "source": "PubMed"}], "id": "GO:0140602", "properties": [{"key": "GoEvidenceType",
+    "value": "IDA:PomBase"}, {"key": "GoTerm", "value": "C:nucleolar peripheral inclusion
+    body"}]}'
+- evidence_id: fact-173
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9HDY1/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:a4644e8e505d5e20aef29fb41ddea187f8e0a050cf998f10593f7c05316aec8e'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "GO", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "36980258", "source": "PubMed"}], "id": "GO:1990295", "properties": [{"key": "GoEvidenceType",
+    "value": "EXP:PomBase"}, {"key": "GoTerm", "value": "C:post-anaphase microtubule
+    array"}]}'
+- evidence_id: fact-184
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P9WJN3/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:705584b467c6776de9656953af3a3a1ba834590269f62db583316ff6b08c0b49'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [], "id": "RHEA:26180"}'
+- evidence_id: fact-187
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O49814/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:dd0805beeef55bf36881f8e08b9e56a119e1129c5302779f734f197d7321fea3'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "9555077", "source": "PubMed"}], "id": "RHEA:30331"}'
+- evidence_id: fact-188
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O49815/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:f6e5101e13edeeeae525423769dc28e96fac18264d109a82905f614b5de3e2d1'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "9555077", "source": "PubMed"}], "id": "RHEA:30331"}'
+- evidence_id: fact-194
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9SZZ8/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:d0e74d971e9d623f08c2b20480460bfbf654d60ed49f8a5c9a3c33bc314a4dce'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "8798688", "source": "PubMed"}], "id": "RHEA:30331"}'
+- evidence_id: fact-195
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/B0R753/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:dc8e49ba0e55284d0ff84de5d606351354e893ed19d0f7ca615a21a336e39651'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "12003928", "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-196
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P21687/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:5a031f0c09bcaf6ff2ee7b7d92cc08d89a057ff283233390ccbb5d3c3d5c71e8'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "20178989", "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-199
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q55276/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:0a1435bb0ab72356cec88ac2bc7c4a14f2761b9c65bc51b27da9cae31fc46126'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "7919981", "source": "PubMed"}, {"evidenceCode": "ECO:0000269", "id": "8344419",
+    "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-200
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q67GH9/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:cd3098e4ef37764a0fef47bcc83c8c6550eb0c9d1c73b28119e2e7eab679b430'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "15345447", "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-202
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9P854/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:49d5e5a90f5ec906a80888dc2fe3c222d1cc47fda10c014ebd330ac8fc3ed801'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "11172012", "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-203
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q9UUQ6/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:4aa3614dc621251cca2a9137e3683ab7997294390a7629c2ea7d304bd29c5e1a'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "10951210", "source": "PubMed"}], "id": "RHEA:32239"}'
+- evidence_id: fact-208
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q2G1M6/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:305be300e62f34c800709603344702d9723837ecbc082bfaa4a6d215efa6afea'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "19775248", "source": "PubMed"}], "id": "RHEA:59120"}'
+- evidence_id: fact-209
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q2G1M9/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:6e35d787b7c922e081c8d8d19cb9c05b4313ed54f92817bf17eab2d9e4cd50a0'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "19775248", "source": "PubMed"}], "id": "RHEA:59124"}'
+- evidence_id: fact-210
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q2G1M8/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:654b2c687b69ed997f3ee75af02e6f9ead32dcd093ec15df8fd1a4b7d99b8a0a'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "19775248", "source": "PubMed"}], "id": "RHEA:59128"}'
+- evidence_id: fact-211
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q2FW70/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl:
+    membership_id=ug-membership:d00b04d2b1b200b407fabef252ed4b2c3fe93a77366339361f7739a6db13fb29'
+  accessed_at: '2026-10-10T08:05:19Z'
+  support: supports
+  summary: '{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000269", "id":
+    "19138128", "source": "PubMed"}], "id": "RHEA:59136"}'
+- evidence_id: rejection-source-2
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:O94534; source_trait_id=GO:0000923
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-41
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0AFI2; source_trait_id=GO:0009340
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-42
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P20083; source_trait_id=GO:0009340
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-46
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P16326; source_trait_id=GO:0009422
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-59
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:G1UBD1; source_trait_id=GO:0015050
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-71
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0A7Y8; source_trait_id=GO:0030680
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-77
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P26971; source_trait_id=GO:0030700
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "GO", "id": "GO:0030700", "properties": [{"key": "GoEvidenceType",
+    "value": "IEA:InterPro"}, {"key": "GoTerm", "value": "C:glycine reductase complex"}]}]'
+- evidence_id: rejection-source-80
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:O94534; source_trait_id=GO:0031021
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-81
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q9URY2; source_trait_id=GO:0031021
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-85
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P04689; source_trait_id=GO:0032117
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-89
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P18142; source_trait_id=GO:0033117
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-90
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P21837; source_trait_id=GO:0033117
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-91
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0CG63; source_trait_id=GO:0034515
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-93
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P43593; source_trait_id=GO:0034515
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-94
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:O77206; source_trait_id=GO:0036007
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-95
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0C2S2; source_trait_id=GO:0043263
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-96
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0C2S5; source_trait_id=GO:0043263
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-97
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q06851; source_trait_id=GO:0043263
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-107
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A0A284VQI9; source_trait_id=GO:0044674
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-108
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q58256; source_trait_id=GO:0044674
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-109
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P0A988; source_trait_id=GO:0044775
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-122
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:B3STN6; source_trait_id=GO:0090641
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-123
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8SWI4; source_trait_id=GO:0090641
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-124
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8SWL3; source_trait_id=GO:0090641
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-125
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:B3STN7; source_trait_id=GO:0090642
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-126
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q9XZV1; source_trait_id=GO:0090642
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-133
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P13517; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-134
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P15891; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-135
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P17555; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-136
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P28495; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-137
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P32381; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-138
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P32599; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-139
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P40518; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-140
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P53731; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-141
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P60010; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-142
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q05933; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-143
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q06440; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-144
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q08641; source_trait_id=GO:0099079
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-146
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P69681; source_trait_id=GO:0110067
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-155
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A0A0H3C8I9; source_trait_id=GO:0140365
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-156
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A0A0H3CAR6; source_trait_id=GO:0140365
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-157
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A0A0H3CE29; source_trait_id=GO:0140365
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-158
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P31539; source_trait_id=GO:0140453
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-159
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P53286; source_trait_id=GO:0140453
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-160
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q12329; source_trait_id=GO:0140453
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-167
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8SWL3; source_trait_id=GO:0160202
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-172
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P04689; source_trait_id=GO:1990295
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-180
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8GR98; source_trait_id=RHEA:11112
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00048590",
+    "source": "ARBA"}], "id": "RHEA:11112"}]'
+- evidence_id: rejection-source-181
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8GRA0; source_trait_id=RHEA:18985
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00000799",
+    "source": "ARBA"}], "id": "RHEA:18985"}]'
+- evidence_id: rejection-source-182
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A6N339; source_trait_id=RHEA:23196
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052291",
+    "source": "ARBA"}], "id": "RHEA:23196"}]'
+- evidence_id: rejection-source-183
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q8GR97; source_trait_id=RHEA:23824
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052874",
+    "source": "ARBA"}], "id": "RHEA:23824"}]'
+- evidence_id: rejection-source-185
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:B3SGL0; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-186
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:C3VEQ1; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-189
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P21688; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-190
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P54973; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-191
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q44262; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-192
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q9LTG0; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-193
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q9SPK6; source_trait_id=RHEA:30331
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q9SZZ8",
+    "source": "UniProtKB"}], "id": "RHEA:30331"}]'
+- evidence_id: rejection-source-197
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:P54974; source_trait_id=RHEA:32239
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "P21687",
+    "source": "UniProtKB"}], "id": "RHEA:32239"}]'
+- evidence_id: rejection-source-198
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q01331; source_trait_id=RHEA:32239
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "P21687",
+    "source": "UniProtKB"}], "id": "RHEA:32239"}]'
+- evidence_id: rejection-source-201
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q9HNE5; source_trait_id=RHEA:32239
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "B0R753",
+    "source": "UniProtKB"}], "id": "RHEA:32239"}]'
+- evidence_id: rejection-source-204
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:A0A7U3MPB9; source_trait_id=RHEA:34695
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-205
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:B0CN31; source_trait_id=RHEA:41428
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000303", "id": "22187429",
+    "source": "PubMed"}], "id": "RHEA:41428"}]'
+- evidence_id: rejection-source-206
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q5JCL5; source_trait_id=RHEA:41428
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+- evidence_id: rejection-source-207
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q51725; source_trait_id=RHEA:50380
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000250", "id": "Q4K418",
+    "source": "UniProtKB"}], "id": "RHEA:50380"}]'
+- evidence_id: rejection-source-212
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:Q2UA48; source_trait_id=RHEA:62652
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    [{"database": "Rhea", "evidences": [{"evidenceCode": "ECO:0000256", "id": "ARBA00052269",
+    "source": "ARBA"}], "id": "RHEA:62652"}]'
+- evidence_id: rejection-source-213
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.uniprot_memberships.jsonl
+  locator: protein_id=UniProtKB:K4MP98; source_trait_id=RHEA:81499
+  accessed_at: '2026-10-10T08:12:33Z'
+  support: supports
+  summary: 'Bounded exact-fact check in the complete release-pinned batch acquisition:
+    []'
+assessments:
+- assessment_id: candidate-0
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the equatorial MTOC; a localization example,
+    not the entire organizing center represented as one protein. Exact fact ug-membership:1cd1e86b52d7f9b7456c42f1791a6a4965f2b2290577598f3632ffdce3529d59;
+    references: PubMed:15068790.'
+  target_ids:
+  - ug-d7c0cbe112529bfad76e3e9c1d7b1514d6ad7f4d9284e4918d7b9eb6182ec1b5
+  evidence_ids:
+  - fact-0
+  dimensions:
+  - name: accession
+    value: UniProtKB:O13601
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-0
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-0
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-0
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-0
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-0
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-0
+- assessment_id: candidate-1
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the equatorial MTOC; a localization example,
+    not the entire organizing center represented as one protein. Exact fact ug-membership:74eb3d738bb09afdb4daea2495061cf5cb813c96c1b41b3aa6a19ffc479354bb;
+    references: PubMed:15004232, PubMed:15120067, PubMed:15772152, PubMed:19001497.'
+  target_ids:
+  - ug-907172db2dacd1fd06b4905771557ec2d91dcc9271f6fed65e2d12881eddf66a
+  evidence_ids:
+  - fact-1
+  dimensions:
+  - name: accession
+    value: UniProtKB:O94488
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-1
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-1
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-1
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-1
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-1
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-1
+- assessment_id: candidate-3
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the equatorial MTOC; a localization example,
+    not the entire organizing center represented as one protein. Exact fact ug-membership:a42898a364abcbfd3530c947aaa0363ff049d496f6e0011a32b75447d0ea82ca;
+    references: PubMed:16481403.'
+  target_ids:
+  - ug-09ddc1ed354ff8b017b62625510e0b6e8f7f6329b000c5477aad40da432044a8
+  evidence_ids:
+  - fact-3
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9URY2
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-3
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-3
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-3
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-3
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-3
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-3
+- assessment_id: candidate-4
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the equatorial MTOC; a localization example,
+    not the entire organizing center represented as one protein. Exact fact ug-membership:18ddef2b6e1154b7eb5adeaa936ef617b5cd779ea814397e6e324ff29224fe9a;
+    references: PubMed:15800064, PubMed:15837798.'
+  target_ids:
+  - ug-ba2aa2f792deb1ed037e4bdc645ca90981137be187b367c5f39092d60c8b3537
+  evidence_ids:
+  - fact-4
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9USP7
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-4
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-4
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-4
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-4
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-4
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-4
+- assessment_id: candidate-5
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the equatorial MTOC; a localization example,
+    not the entire organizing center represented as one protein. Exact fact ug-membership:8b5594ceeffd22f72637fce82883e73e5665c07d345ca921148db1a58c77b148;
+    references: PubMed:11080156, PubMed:15772152.'
+  target_ids:
+  - ug-0a949b1504aa53107108c927e939ba750cc614e01efca6628214a709d6686934
+  evidence_ids:
+  - fact-5
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9Y705
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-5
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-5
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-5
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-5
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-5
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-5
+- assessment_id: candidate-8
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: concern
+  summary: 'Rejected on scientific review: subunit II provides the CuA electron-entry
+    site; the heme a3/CuB catalytic site is not on this subunit. The whole complex
+    activity must not be assigned to this single subunit by an EC-derived GO annotation.
+    Retains the prior batch-002 rejection; no contrary evidence was found in the inspected
+    exact UniProt entry (not a literature-wide absence claim). Exact fact ug-membership:ae91bfccd202a2e2fbbdde833f0c4466b6dde36b855ef1734a166261da336372;
+    references: curated Swiss-Prot fact without an experimental tag.'
+  target_ids:
+  - ug-67445cc6966be5e11cc7bcfbf7dbe7b7ce69f807f97e367df2cb061606d696a7
+  evidence_ids:
+  - fact-8
+  dimensions:
+  - name: accession
+    value: UniProtKB:P08306
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-8
+  - name: taxon
+    value: NCBITaxon:266 Paracoccus denitrificans
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-8
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-8
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-8
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-8
+  - name: decision
+    value: REJECTED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-8
+- assessment_id: candidate-78
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the interphase MTOC. Association with other
+    MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:66c696b2db8fce1e03ce74bf19e95d8edc7732ea57ec077865aa1f39abe12700;
+    references: PubMed:15068790.'
+  target_ids:
+  - ug-4f9352eb001cf42cb49291b6c86331c6e8791f575d562c40095343d6248228ec
+  evidence_ids:
+  - fact-78
+  dimensions:
+  - name: accession
+    value: UniProtKB:O13601
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-78
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-78
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-78
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-78
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-78
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-78
+- assessment_id: candidate-79
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the interphase MTOC. Association with other
+    MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:d3d996b147f041e9e98d7038d240518c05fbfd9fc19951738404aec0b6f9e7d2;
+    references: PubMed:19001497.'
+  target_ids:
+  - ug-6c2395f4ff303b57d6424bfc58edfdafcd0e812413870f7b532fd6e7ff2b3ab0
+  evidence_ids:
+  - fact-79
+  dimensions:
+  - name: accession
+    value: UniProtKB:O94488
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-79
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-79
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-79
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-79
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-79
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-79
+- assessment_id: candidate-82
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the interphase MTOC. Association with other
+    MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:1fa1a0290a8207c7babd17526f67032088d486177c7354a41c61c6d7b5f315a9;
+    references: PubMed:15837798.'
+  target_ids:
+  - ug-c9e2b405b91e6494a87398c9b417bccd7d9c39aaaa02e1b270bff5f661b9b730
+  evidence_ids:
+  - fact-82
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9USP7
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-82
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-82
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-82
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-82
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-82
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-82
+- assessment_id: candidate-83
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact IDA localization to the interphase MTOC. Association with other
+    MTOCs does not invalidate the experimentally annotated location. Exact fact ug-membership:149aab404986ba783fa88c3efb8f185d5b6eb7e8d4f0746d110359448e7a262f;
+    references: PubMed:15068790, PubMed:24943839.'
+  target_ids:
+  - ug-7f2d8545128016bf9b4a70dd975ea1991d3cb84308b439e739725c0c08303f2d
+  evidence_ids:
+  - fact-83
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9Y705
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-83
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-83
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-83
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-83
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-83
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-83
+- assessment_id: candidate-92
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'BLM10 has an exact SGD IDA annotation to proteasome storage granules.
+    This is conditional localization, not constitutive residence or catalytic proteasome
+    activity. Exact fact ug-membership:d7425769fc884bcb87d9a2b24698c4edf38d5645585988684c496ffc043fabbc;
+    references: PubMed:23982732.'
+  target_ids:
+  - ug-7090db2b642cc1f8fe0bfd4e6b06930a715b2b88520289a260cc58f56e730c92
+  evidence_ids:
+  - fact-92
+  dimensions:
+  - name: accession
+    value: UniProtKB:P43583
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-92
+  - name: taxon
+    value: NCBITaxon:559292 Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-92
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-92
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-92
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-92
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-92
+- assessment_id: candidate-120
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Alp7/Alp14 has exact IDA membership/localization in the TACC/TOG complex.
+    The example is a component, not the whole complex. Exact fact ug-membership:f4ab5e00212d6f4ea7998a15d2a54427a07d59c7498005fa5f340258d14997c3;
+    references: PubMed:14742702, PubMed:19606211.'
+  target_ids:
+  - ug-4cc2145e31233652c3a11441ced296b9f1e7901b5d1e905cef9c801e9a56fcd0
+  evidence_ids:
+  - fact-120
+  dimensions:
+  - name: accession
+    value: UniProtKB:O94534
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-120
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-120
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-120
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-120
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-120
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-120
+- assessment_id: candidate-121
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Alp7/Alp14 has exact IDA membership/localization in the TACC/TOG complex.
+    The example is a component, not the whole complex. Exact fact ug-membership:42d2f1bc18353f344c3ae24a525eff0587b895f877653e576edd6272f01dd750;
+    references: PubMed:14742702, PubMed:19606211.'
+  target_ids:
+  - ug-90a365788a2d45a32b878e2ef4f057f5c3cfcf5317db3c3742e1662fc5d17460
+  evidence_ids:
+  - fact-121
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9URY2
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-121
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-121
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-121
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-121
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-121
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-121
+- assessment_id: candidate-132
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to actin bodies. Other actin-associated
+    locations are not used as proof of this particular structure. Exact fact ug-membership:7a40cb45d2ff9e90813582b2112672f908c4630e807de28bb9e6a65637326d5e;
+    references: PubMed:26124291.'
+  target_ids:
+  - ug-38bbc22574799d666e0f31a80c10f5552cca5c72b167aa1d07bd065ea7f39635
+  evidence_ids:
+  - fact-132
+  dimensions:
+  - name: accession
+    value: UniProtKB:O59945
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-132
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-132
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-132
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-132
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-132
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-132
+- assessment_id: candidate-145
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to actin bodies. Other actin-associated
+    locations are not used as proof of this particular structure. Exact fact ug-membership:445c4a788d636372d401a2646e5d020084b865572f06efffba80b590139ee885;
+    references: PubMed:26124291.'
+  target_ids:
+  - ug-ed37e1e342f6c94db7fd0062b780bc7bfafe9e484e802d152acdec9190b94f77
+  evidence_ids:
+  - fact-145
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9HGP5
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-145
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-145
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-145
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-145
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-145
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-145
+- assessment_id: candidate-161
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:58c28af4323ec6a1cb07d1138df8bd56dbced397e5d0848df211b2cbea9e4367;
+    references: PubMed:33176152, PubMed:37446379.'
+  target_ids:
+  - ug-9bc09e2a0dc450dee2a08837e24208f7e17b99680c3e293e2be6f7fe13872ac8
+  evidence_ids:
+  - fact-161
+  dimensions:
+  - name: accession
+    value: UniProtKB:O59855
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-161
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-161
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-161
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-161
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-161
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-161
+- assessment_id: candidate-162
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:b5404ba6ade1d57d03d3ecd700479fd15728b8e2156ff9c4c7284c5949cf189a;
+    references: PubMed:37446379.'
+  target_ids:
+  - ug-94a10475e3fc6c4374f0cb11b3328e8be1dfcf46a861b51b5ecbaeffa1be79a9
+  evidence_ids:
+  - fact-162
+  dimensions:
+  - name: accession
+    value: UniProtKB:O74752
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-162
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-162
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-162
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-162
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-162
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-162
+- assessment_id: candidate-163
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:10e342559e01eabdb7531e19a9257840749de929a95c36fe2dea4c22837ae875;
+    references: PubMed:33176152.'
+  target_ids:
+  - ug-29bf865520eee97e1f5966354da9ab309663f6d94bb914a77f49bf32f663560f
+  evidence_ids:
+  - fact-163
+  dimensions:
+  - name: accession
+    value: UniProtKB:O94641
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-163
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-163
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-163
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-163
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-163
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-163
+- assessment_id: candidate-164
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:2241b46d7652b6c6dc3ca12c3b52fa612cb17539ffa6c14a0fa2cb08bf97f47b;
+    references: PubMed:33176152.'
+  target_ids:
+  - ug-ce8cbf7e957a8a384fc4bfbc7d8addb7cf7337cc1ec7b17da7f6eb27de356c26
+  evidence_ids:
+  - fact-164
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q10265
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-164
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-164
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-164
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-164
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-164
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-164
+- assessment_id: candidate-165
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:e376a392a9906ce976bfa439994f78f79ca5dfbcee4af303ea9540350179d1dc;
+    references: PubMed:33176152.'
+  target_ids:
+  - ug-2578bd1af71253d449ca4c8e92d61aa3ca82d24150ffa16d8ea5d841219ae2b1
+  evidence_ids:
+  - fact-165
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9UUE5
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-165
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-165
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-165
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-165
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-165
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-165
+- assessment_id: candidate-166
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Exact PomBase IDA localization to the nucleolar peripheral inclusion body;
+    the generic cytoplasmic/nuclear comments do not replace this specific annotation.
+    No constitutive localization is claimed. Exact fact ug-membership:ea55b00f5661c4807d621a30229af198ada621281eb981c546b50c51f5bf4f3b;
+    references: PubMed:33176152.'
+  target_ids:
+  - ug-de2f276a9c2db03ff5c151906d4f510d256fa35f1443d7f36cc1a5feed4a4230
+  evidence_ids:
+  - fact-166
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9Y8G3
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-166
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-166
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-166
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-166
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-166
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-166
+- assessment_id: candidate-173
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Ase1 has an exact EXP annotation to the post-anaphase microtubule array,
+    consistent with its microtubule-overlap localization. No residue-level location
+    is inferred. Exact fact ug-membership:a4644e8e505d5e20aef29fb41ddea187f8e0a050cf998f10593f7c05316aec8e;
+    references: PubMed:36980258.'
+  target_ids:
+  - ug-ee4a3d575fd9fdb457d9ed5c12273e4cecde9df63b8f56fb1356fd3391804fa8
+  evidence_ids:
+  - fact-173
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9HDY1
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-173
+  - name: taxon
+    value: NCBITaxon:284812 Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-173
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-173
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-173
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-173
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-173
+- assessment_id: candidate-184
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'MshB itself performs the GlcNAc-Ins deacetylation. Exact Rhea catalytic-activity
+    fact on reviewed Swiss-Prot has no evidence tag, permitted by the narrow existing
+    rule; its function comment separately cites PMID:11092856. Do not describe the
+    untagged reaction fact as direct experimental evidence. Exact fact ug-membership:705584b467c6776de9656953af3a3a1ba834590269f62db583316ff6b08c0b49;
+    references: curated Swiss-Prot fact without an experimental tag.'
+  target_ids:
+  - ug-10b87b68fd6974848680c93e53987cf08f41bff334d529daaa014733a881aa62
+  evidence_ids:
+  - fact-184
+  dimensions:
+  - name: accession
+    value: UniProtKB:P9WJN3
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-184
+  - name: taxon
+    value: NCBITaxon:83332 Mycobacterium tuberculosis (strain ATCC 25618 / H37Rv)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-184
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-184
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-184
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-184
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-184
+- assessment_id: candidate-187
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea
+    reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin
+    is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:dd0805beeef55bf36881f8e08b9e56a119e1129c5302779f734f197d7321fea3;
+    references: PubMed:9555077.'
+  target_ids:
+  - ug-f075b6a494309817b9a69ebddd79d6b3bca2e28bb39f6621b16d0d4c7d9a387e
+  evidence_ids:
+  - fact-187
+  dimensions:
+  - name: accession
+    value: UniProtKB:O49814
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-187
+  - name: taxon
+    value: NCBITaxon:4072 Capsicum annuum
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-187
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-187
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-187
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-187
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-187
+- assessment_id: candidate-188
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea
+    reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin
+    is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:f6e5101e13edeeeae525423769dc28e96fac18264d109a82905f614b5de3e2d1;
+    references: PubMed:9555077.'
+  target_ids:
+  - ug-5107f31d738b4af7eff99b36ce394ec6de969f39cb5845192246933fe4ca2b23
+  evidence_ids:
+  - fact-188
+  dimensions:
+  - name: accession
+    value: UniProtKB:O49815
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-188
+  - name: taxon
+    value: NCBITaxon:4072 Capsicum annuum
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-188
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-188
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-188
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-188
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-188
+- assessment_id: candidate-194
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'Beta-carotene hydroxylase carries the exact ferredoxin-dependent Rhea
+    reaction with experimental evidence. The enzyme performs hydroxylation; ferredoxin
+    is the electron donor, not a substituted catalytic subunit. Exact fact ug-membership:d0e74d971e9d623f08c2b20480460bfbf654d60ed49f8a5c9a3c33bc314a4dce;
+    references: PubMed:8798688.'
+  target_ids:
+  - ug-9d091ab75b18ede591d4899735c2ae36263b0de0dae9e205b62ff824d09a83cb
+  evidence_ids:
+  - fact-194
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9SZZ8
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-194
+  - name: taxon
+    value: NCBITaxon:3702 Arabidopsis thaliana
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-194
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-194
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-194
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-194
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-194
+- assessment_id: candidate-195
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:dc8e49ba0e55284d0ff84de5d606351354e893ed19d0f7ca615a21a336e39651;
+    references: PubMed:12003928.'
+  target_ids:
+  - ug-e4714db8355fcf36df2c9dc0e430bc9e07b9895606cd27350d318cdbf57805fb
+  evidence_ids:
+  - fact-195
+  dimensions:
+  - name: accession
+    value: UniProtKB:B0R753
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-195
+  - name: taxon
+    value: NCBITaxon:478009 Halobacterium salinarum (strain ATCC 29341 / DSM 671 /
+      R1)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-195
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-195
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-195
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-195
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-195
+- assessment_id: candidate-196
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:5a031f0c09bcaf6ff2ee7b7d92cc08d89a057ff283233390ccbb5d3c3d5c71e8;
+    references: PubMed:20178989.'
+  target_ids:
+  - ug-d1b4ab517816e5e5e6163c91e52180e41d7da1982b52a66f5555e5db2b66c219
+  evidence_ids:
+  - fact-196
+  dimensions:
+  - name: accession
+    value: UniProtKB:P21687
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-196
+  - name: taxon
+    value: NCBITaxon:553 Pantoea ananas
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-196
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-196
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-196
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-196
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-196
+- assessment_id: candidate-199
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:0a1435bb0ab72356cec88ac2bc7c4a14f2761b9c65bc51b27da9cae31fc46126;
+    references: PubMed:7919981, PubMed:8344419.'
+  target_ids:
+  - ug-8bd2a84a3b17674379fe09bdf0d5f99b8d17b3798fd9ef83a5a78fc98196fa2b
+  evidence_ids:
+  - fact-199
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q55276
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-199
+  - name: taxon
+    value: NCBITaxon:1140 Synechococcus elongatus (strain ATCC 33912 / PCC 7942 /
+      FACHB-805)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-199
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-199
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-199
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-199
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-199
+- assessment_id: candidate-200
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:cd3098e4ef37764a0fef47bcc83c8c6550eb0c9d1c73b28119e2e7eab679b430;
+    references: PubMed:15345447.'
+  target_ids:
+  - ug-41a6d140ba1a4ce5c836369ad6b026bb3d5e8048524e560754de9b5f87388ce9
+  evidence_ids:
+  - fact-200
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q67GH9
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-200
+  - name: taxon
+    value: NCBITaxon:4850 Blakeslea trispora
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-200
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-200
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-200
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-200
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-200
+- assessment_id: candidate-202
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:49d5e5a90f5ec906a80888dc2fe3c222d1cc47fda10c014ebd330ac8fc3ed801;
+    references: PubMed:11172012.'
+  target_ids:
+  - ug-ca8f922f7a1cc943b458cc14dee92e9a891d9cfe552785ab83d4e2036c3e2528
+  evidence_ids:
+  - fact-202
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9P854
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-202
+  - name: taxon
+    value: NCBITaxon:763407 Phycomyces blakesleeanus (strain ATCC 8743b / DSM 1359
+      / FGSC 10004 / NBRC 33097 / NRRL 1555)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-202
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-202
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-202
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-202
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-202
+- assessment_id: candidate-203
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The exact experimentally annotated reaction is gamma-carotene to beta-carotene,
+    the second cyclization in lycopene conversion. Bifunctional cyclase/synthase entries
+    retain whole-protein scope; no cyclase-domain interval is invented. Exact fact
+    ug-membership:4aa3614dc621251cca2a9137e3683ab7997294390a7629c2ea7d304bd29c5e1a;
+    references: PubMed:10951210.'
+  target_ids:
+  - ug-44097ed772f9d88bd13a513b23aba2c3b5c7e5d44a1c29d77e7f8568cffa1495
+  evidence_ids:
+  - fact-203
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q9UUQ6
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-203
+  - name: taxon
+    value: NCBITaxon:29924 Mucor circinelloides f. lusitanicus
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-203
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-203
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-203
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-203
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-203
+- assessment_id: candidate-208
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'SbnH directly decarboxylates citryl-L-Dap to citryl-diaminoethane in staphyloferrin
+    B biosynthesis; the exact reaction fact cites PMID:19775248. Exact fact ug-membership:305be300e62f34c800709603344702d9723837ecbc082bfaa4a6d215efa6afea;
+    references: PubMed:19775248.'
+  target_ids:
+  - ug-3a1125d13253f9f843dd1222cef1fec454614e60b84a26ff1078f2c657c36c2f
+  evidence_ids:
+  - fact-208
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q2G1M6
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-208
+  - name: taxon
+    value: NCBITaxon:93061 Staphylococcus aureus (strain NCTC 8325 / PS 47)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-208
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-208
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-208
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-208
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-208
+- assessment_id: candidate-209
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'SbnE directly ligates L-Dap and citrate for the first staphyloferrin B
+    step; the exact reaction fact cites PMID:19775248. Exact fact ug-membership:6e35d787b7c922e081c8d8d19cb9c05b4313ed54f92817bf17eab2d9e4cd50a0;
+    references: PubMed:19775248.'
+  target_ids:
+  - ug-48cfe14dd055bbc62319d0f13d4fc47936177abbc4b72a4d2d0d9895283c32ff
+  evidence_ids:
+  - fact-209
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q2G1M9
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-209
+  - name: taxon
+    value: NCBITaxon:93061 Staphylococcus aureus (strain NCTC 8325 / PS 47)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-209
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-209
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-209
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-209
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-209
+- assessment_id: candidate-210
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'SbnF directly condenses L-Dap with citryl-diaminoethane; the exact reaction
+    fact cites PMID:19775248. Pathway membership alone was not the basis. Exact fact
+    ug-membership:654b2c687b69ed997f3ee75af02e6f9ead32dcd093ec15df8fd1a4b7d99b8a0a;
+    references: PubMed:19775248.'
+  target_ids:
+  - ug-c2dda7e2a9008bb646314a48449e960f359d44021693c157a3f204a8a0756d96
+  evidence_ids:
+  - fact-210
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q2G1M8
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-210
+  - name: taxon
+    value: NCBITaxon:93061 Staphylococcus aureus (strain NCTC 8325 / PS 47)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-210
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-210
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-210
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-210
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-210
+- assessment_id: candidate-211
+  area: grounding
+  topic: Exact protein–trait promotion decision
+  outcome: supported
+  summary: 'The D-ornithine--citrate ligase directly catalyzes the ATP-dependent first
+    condensation in staphyloferrin A biosynthesis; exact reaction evidence cites PMID:19138128.
+    Exact fact ug-membership:d00b04d2b1b200b407fabef252ed4b2c3fe93a77366339361f7739a6db13fb29;
+    references: PubMed:19138128.'
+  target_ids:
+  - ug-ac05e3cac64870234b975e2dacc6e6d5d4e7bbcc7c4eb7c95da97b754b9beb26
+  evidence_ids:
+  - fact-211
+  dimensions:
+  - name: accession
+    value: UniProtKB:Q2FW70
+    definition: accession of this resolved candidate
+    evidence_ids:
+    - fact-211
+  - name: taxon
+    value: NCBITaxon:93061 Staphylococcus aureus (strain NCTC 8325 / PS 47)
+    definition: taxon of this resolved candidate
+    evidence_ids:
+    - fact-211
+  - name: release
+    value: '2026_03'
+    definition: release of this resolved candidate
+    evidence_ids:
+    - fact-211
+  - name: coordinate-frame
+    value: WHOLE_PROTEIN; no residue coordinates
+    definition: coordinate-frame of this resolved candidate
+    evidence_ids:
+    - fact-211
+  - name: evidence-tier
+    value: A
+    definition: evidence-tier of this resolved candidate
+    evidence_ids:
+    - fact-211
+  - name: decision
+    value: APPROVED
+    definition: decision of this resolved candidate
+    evidence_ids:
+    - fact-211
+- assessment_id: rejection-2
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-1e3f57b59c15a03a89c450927f0214003bf6b839de88139deca12d797672a038
+  evidence_ids:
+  - rejection-source-2
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-2
+  - name: accession
+    value: UniProtKB:O94534
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-2
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-2
+- assessment_id: rejection-41
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-11d8c1af54e6a805278f19c19b8ff76f64e06ba16b016a1d626f340a1b797a26
+  evidence_ids:
+  - rejection-source-41
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-41
+  - name: accession
+    value: UniProtKB:P0AFI2
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-41
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-41
+- assessment_id: rejection-42
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-62a4c7a0b827e1e1f53f3712bce85ed85f2c61469df707d888097defc0453339
+  evidence_ids:
+  - rejection-source-42
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-42
+  - name: accession
+    value: UniProtKB:P20083
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-42
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-42
+- assessment_id: rejection-46
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-df8d65afc1a0d0beb88c2faeb1fc12cf572c57838c74682304c6ad5d361db9fa
+  evidence_ids:
+  - rejection-source-46
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-46
+  - name: accession
+    value: UniProtKB:P16326
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-46
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-46
+- assessment_id: rejection-59
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-1e118e6bd906d32150370de0d5e31a72e331508cb3ee931a12b655e39a07009c
+  evidence_ids:
+  - rejection-source-59
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-59
+  - name: accession
+    value: UniProtKB:G1UBD1
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-59
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-59
+- assessment_id: rejection-71
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6b6bc8cd513cfc64fd6d3cc61afafeee5d3e0ecfa9dad07d8625bcca3e623391
+  evidence_ids:
+  - rejection-source-71
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-71
+  - name: accession
+    value: UniProtKB:P0A7Y8
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-71
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-71
+- assessment_id: rejection-77
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-bb3c8a12fb038a9647546d336ba7fee163b72533297cdd442638d94029b41df3
+  evidence_ids:
+  - rejection-source-77
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:go_evidence_IEA.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-77
+  - name: accession
+    value: UniProtKB:P26971
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-77
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-77
+- assessment_id: rejection-80
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-b7e0364ce6090999a8a46746a626411a0da4e827a47e97b8195a907b7a2011d0
+  evidence_ids:
+  - rejection-source-80
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-80
+  - name: accession
+    value: UniProtKB:O94534
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-80
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-80
+- assessment_id: rejection-81
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6e411ef3d1a08f8c86cc56ac7cb29cf8bb8df29abff166e3a503e19f11c8a17c
+  evidence_ids:
+  - rejection-source-81
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-81
+  - name: accession
+    value: UniProtKB:Q9URY2
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-81
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-81
+- assessment_id: rejection-85
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-10007cb53a425d2430f866c44df65363eeac7370c6f14f9be8188ccef7794da5
+  evidence_ids:
+  - rejection-source-85
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-85
+  - name: accession
+    value: UniProtKB:P04689
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-85
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-85
+- assessment_id: rejection-89
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-1d4f91e1f175171e5c2452dc9bd33682ea5e3defeffdeab97fc043969b9a1d35
+  evidence_ids:
+  - rejection-source-89
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-89
+  - name: accession
+    value: UniProtKB:P18142
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-89
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-89
+- assessment_id: rejection-90
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-e2636a6d28f490499c613a71c7b35fbab99f3e56f6dae7ebcf7d6fad93461d24
+  evidence_ids:
+  - rejection-source-90
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-90
+  - name: accession
+    value: UniProtKB:P21837
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-90
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-90
+- assessment_id: rejection-91
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-3c0acb00ca479d3df83f17b8fb56668596740ef7fe8974743f30bfc8ad4d71e0
+  evidence_ids:
+  - rejection-source-91
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-91
+  - name: accession
+    value: UniProtKB:P0CG63
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-91
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-91
+- assessment_id: rejection-93
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-5c47219f3740ae1587e26f804354856b744548ae79e0e2546a4d162fa9325423
+  evidence_ids:
+  - rejection-source-93
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-93
+  - name: accession
+    value: UniProtKB:P43593
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-93
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-93
+- assessment_id: rejection-94
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-b2892ad592391c6705b60bdc0f42bc114e2524dca394764909ffbceba0ac4512
+  evidence_ids:
+  - rejection-source-94
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-94
+  - name: accession
+    value: UniProtKB:O77206
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-94
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-94
+- assessment_id: rejection-95
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6db6cdcdff30f2e62fc19ffbe252b2b0de5e37432feff7674a64916e470165d4
+  evidence_ids:
+  - rejection-source-95
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-95
+  - name: accession
+    value: UniProtKB:P0C2S2
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-95
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-95
+- assessment_id: rejection-96
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-a24180f22383bb6bf940440ea4a307494d92329bc2553b2bab552c065634d8e2
+  evidence_ids:
+  - rejection-source-96
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-96
+  - name: accession
+    value: UniProtKB:P0C2S5
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-96
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-96
+- assessment_id: rejection-97
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-0d26bf13bb7558b0a2597f324daebc6c06fc8cfd91f2dc2049d197ae85c48e59
+  evidence_ids:
+  - rejection-source-97
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-97
+  - name: accession
+    value: UniProtKB:Q06851
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-97
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-97
+- assessment_id: rejection-107
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6b321a2821ef5f85970da4b711ab3d52ac1fb98ed15a0ee2da00c086a5c34a5c
+  evidence_ids:
+  - rejection-source-107
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-107
+  - name: accession
+    value: UniProtKB:A0A284VQI9
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-107
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-107
+- assessment_id: rejection-108
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-492ee76f8393dac19bb842d35931dd85e5c90f1444ec77f9cec0c7c9c7a836a0
+  evidence_ids:
+  - rejection-source-108
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-108
+  - name: accession
+    value: UniProtKB:Q58256
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-108
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-108
+- assessment_id: rejection-109
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-b07747bfcb3cd1b013bd1d932926b4a30d682ac3bbc82207b641b846c98d5fad
+  evidence_ids:
+  - rejection-source-109
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-109
+  - name: accession
+    value: UniProtKB:P0A988
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-109
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-109
+- assessment_id: rejection-122
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-516ede7fbd6ebc205f9b406cb2fb8f4eff4a5cb0e37448feb789e2c3ec2f7140
+  evidence_ids:
+  - rejection-source-122
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-122
+  - name: accession
+    value: UniProtKB:B3STN6
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-122
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-122
+- assessment_id: rejection-123
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-89e72f44fc1bd30ced175707bb420a26b5b5a8dcf2e9b1c2cfbd05455f5cdf01
+  evidence_ids:
+  - rejection-source-123
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-123
+  - name: accession
+    value: UniProtKB:Q8SWI4
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-123
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-123
+- assessment_id: rejection-124
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-ed8abb63d128e36be12e168eb2320d3ca512ce44cd6c79b52327376daa6094c0
+  evidence_ids:
+  - rejection-source-124
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-124
+  - name: accession
+    value: UniProtKB:Q8SWL3
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-124
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-124
+- assessment_id: rejection-125
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-9ff144f61e7721cdd7ef2913c242635f7e9c7da6aff2aec2ab0fbd63edfb451c
+  evidence_ids:
+  - rejection-source-125
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-125
+  - name: accession
+    value: UniProtKB:B3STN7
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-125
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-125
+- assessment_id: rejection-126
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-01583cc9e633c6ecd51f42e6fce53e56806e8ce635a13a6014dcb46f883480e4
+  evidence_ids:
+  - rejection-source-126
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-126
+  - name: accession
+    value: UniProtKB:Q9XZV1
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-126
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-126
+- assessment_id: rejection-133
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-d652a5c00ff5e2532633ee97c6d065282e00de8be519d87a8467bd4bcb70ef22
+  evidence_ids:
+  - rejection-source-133
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-133
+  - name: accession
+    value: UniProtKB:P13517
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-133
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-133
+- assessment_id: rejection-134
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-be90278544cce8517d0037f2aa3090c12f8b2d9054f904f1764a089986a06028
+  evidence_ids:
+  - rejection-source-134
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-134
+  - name: accession
+    value: UniProtKB:P15891
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-134
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-134
+- assessment_id: rejection-135
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-3c0fd47d1a8abcdde08f6e74dfe540582f0d5b3f3426d83a7a11ad256030381a
+  evidence_ids:
+  - rejection-source-135
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-135
+  - name: accession
+    value: UniProtKB:P17555
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-135
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-135
+- assessment_id: rejection-136
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-c1197435f5da19ae7a62264d5e4e71e461c649712e5fc35a2aa9a8247f0e1bde
+  evidence_ids:
+  - rejection-source-136
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-136
+  - name: accession
+    value: UniProtKB:P28495
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-136
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-136
+- assessment_id: rejection-137
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-32fd3a03d7308e31a8b92f501d0bf779b3d6eb4e2f396c17d925e39dfc15e22f
+  evidence_ids:
+  - rejection-source-137
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-137
+  - name: accession
+    value: UniProtKB:P32381
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-137
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-137
+- assessment_id: rejection-138
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-e50e3e368ed166f58ae1805bf8951db09d260317ea8b05615687c25bd42a65b2
+  evidence_ids:
+  - rejection-source-138
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-138
+  - name: accession
+    value: UniProtKB:P32599
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-138
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-138
+- assessment_id: rejection-139
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-16f2968c9634bc68fe2b9be45764ac843430d0706bfb55b5ce834f323a1bd22c
+  evidence_ids:
+  - rejection-source-139
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-139
+  - name: accession
+    value: UniProtKB:P40518
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-139
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-139
+- assessment_id: rejection-140
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-59732a571efe0a09852cd6419cadd48d73af4d4cdb41ba06497ec7ab355731b6
+  evidence_ids:
+  - rejection-source-140
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-140
+  - name: accession
+    value: UniProtKB:P53731
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-140
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-140
+- assessment_id: rejection-141
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-e5ee2c7d66952700b3456c6319619718bd332252e54abe17e7fe072bbeb1e511
+  evidence_ids:
+  - rejection-source-141
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-141
+  - name: accession
+    value: UniProtKB:P60010
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-141
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-141
+- assessment_id: rejection-142
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-5973762aa87aa5e74927ffa501a3f38748323986f58fcf4093884971eebf8c5d
+  evidence_ids:
+  - rejection-source-142
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-142
+  - name: accession
+    value: UniProtKB:Q05933
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-142
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-142
+- assessment_id: rejection-143
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-5dea18a0e22af621a94740d8eadc8da47c4b6576e0be3e58ea4e3d5cac7126b1
+  evidence_ids:
+  - rejection-source-143
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-143
+  - name: accession
+    value: UniProtKB:Q06440
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-143
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-143
+- assessment_id: rejection-144
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-ddf731e81d00f08b43de0c8c1daafbd798b78c0d787d3bfedd25eaf4c6c78d92
+  evidence_ids:
+  - rejection-source-144
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-144
+  - name: accession
+    value: UniProtKB:Q08641
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-144
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-144
+- assessment_id: rejection-146
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-853d6005efed7584bcc6334827d3c23a2dd610b8329f8d7081c457a49b3c41ef
+  evidence_ids:
+  - rejection-source-146
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-146
+  - name: accession
+    value: UniProtKB:P69681
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-146
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-146
+- assessment_id: rejection-155
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-28f2bde9348947f6f66172005a99d558b9cdb707d979283038724151d8105f08
+  evidence_ids:
+  - rejection-source-155
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-155
+  - name: accession
+    value: UniProtKB:A0A0H3C8I9
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-155
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-155
+- assessment_id: rejection-156
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-573cfc5ab907ea9f12e717cefe3bb6da281865e9063d458cd0335c47587a98ef
+  evidence_ids:
+  - rejection-source-156
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-156
+  - name: accession
+    value: UniProtKB:A0A0H3CAR6
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-156
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-156
+- assessment_id: rejection-157
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-ad9bc2c29a8462681479699bee37a71443e4cff575974c6ddbc65f8728f64cee
+  evidence_ids:
+  - rejection-source-157
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-157
+  - name: accession
+    value: UniProtKB:A0A0H3CE29
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-157
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-157
+- assessment_id: rejection-158
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-8c5eb2905728841bc04172716c251bf2a84506d2ca45db9f6875dfcd270b43ef
+  evidence_ids:
+  - rejection-source-158
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-158
+  - name: accession
+    value: UniProtKB:P31539
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-158
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-158
+- assessment_id: rejection-159
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-9e636b5da4e909e804c1ea3d164002688a9c864be034f63068f3b3674dee28bc
+  evidence_ids:
+  - rejection-source-159
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-159
+  - name: accession
+    value: UniProtKB:P53286
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-159
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-159
+- assessment_id: rejection-160
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-1de79420d2b743d53bfd188b89fa2ee6e0c88d7883929c57b010b686c16a759f
+  evidence_ids:
+  - rejection-source-160
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-160
+  - name: accession
+    value: UniProtKB:Q12329
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-160
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-160
+- assessment_id: rejection-167
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-3ed0c3f8ab1dc797180120c5b989fe541d435dc046ec2bf7a610e93efe4f06cc
+  evidence_ids:
+  - rejection-source-167
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-167
+  - name: accession
+    value: UniProtKB:Q8SWL3
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-167
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-167
+- assessment_id: rejection-172
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-24052f1e25f008d61c89eabca4b6530bdb4ffd65abd7bdc05b3166dc3ab9aaa9
+  evidence_ids:
+  - rejection-source-172
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-172
+  - name: accession
+    value: UniProtKB:P04689
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-172
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-172
+- assessment_id: rejection-180
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-4236d9e2164a0260dfcdde98b96b1c45d6ac83df984a598028fb30d4529088c0
+  evidence_ids:
+  - rejection-source-180
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-180
+  - name: accession
+    value: UniProtKB:Q8GR98
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-180
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-180
+- assessment_id: rejection-181
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-951255c1501249f4cacf5f67d7138714d1a993f2bedffee69ff21ae5e7714c32
+  evidence_ids:
+  - rejection-source-181
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-181
+  - name: accession
+    value: UniProtKB:Q8GRA0
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-181
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-181
+- assessment_id: rejection-182
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-86926adb23f8458749f02f860ef8e9a2a09ca7b4af78873e245082078b0c8555
+  evidence_ids:
+  - rejection-source-182
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-182
+  - name: accession
+    value: UniProtKB:A6N339
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-182
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-182
+- assessment_id: rejection-183
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-04369c4e9a641f34e0290d7eca24e2c96a31ad3321b46eafa607348db752a17a
+  evidence_ids:
+  - rejection-source-183
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-183
+  - name: accession
+    value: UniProtKB:Q8GR97
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-183
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-183
+- assessment_id: rejection-185
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-75566738619abd5b8bb32b2e8312bd83f52d9b7b747e97eabb91c422c0c3d8e2
+  evidence_ids:
+  - rejection-source-185
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-185
+  - name: accession
+    value: UniProtKB:B3SGL0
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-185
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-185
+- assessment_id: rejection-186
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-90f012460c16980448f2b5fd8b00fa6eb7add003aa266506f7986096a9e4dc7a
+  evidence_ids:
+  - rejection-source-186
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-186
+  - name: accession
+    value: UniProtKB:C3VEQ1
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-186
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-186
+- assessment_id: rejection-189
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-1b9fd4ba0dd59737974411b67bd6a089532757be3e2b3429902984d1679bc118
+  evidence_ids:
+  - rejection-source-189
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-189
+  - name: accession
+    value: UniProtKB:P21688
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-189
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-189
+- assessment_id: rejection-190
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-0ffac1f4205bf8962fd37de783b959088dfff2309675230437d44bacbfd992cf
+  evidence_ids:
+  - rejection-source-190
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-190
+  - name: accession
+    value: UniProtKB:P54973
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-190
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-190
+- assessment_id: rejection-191
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-ea853ef1b46998ef7d2aec60128c4187eabf13f2b409973cbcab7293c5cce7c6
+  evidence_ids:
+  - rejection-source-191
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-191
+  - name: accession
+    value: UniProtKB:Q44262
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-191
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-191
+- assessment_id: rejection-192
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-9b9b9e30ea6eb317e064b58ed871fe6184a15fa281295789a79a7cb7a9555f87
+  evidence_ids:
+  - rejection-source-192
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-192
+  - name: accession
+    value: UniProtKB:Q9LTG0
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-192
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-192
+- assessment_id: rejection-193
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6ad0cb5e0e1883518f5a22a08b2e5037e6f53e4e8091ae0a7213146a5bf0b272
+  evidence_ids:
+  - rejection-source-193
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-193
+  - name: accession
+    value: UniProtKB:Q9SPK6
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-193
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-193
+- assessment_id: rejection-197
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-e5890fa6e35456fe0947924f1f1c38cea9545738a5773261c3a1c0f32742da89
+  evidence_ids:
+  - rejection-source-197
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-197
+  - name: accession
+    value: UniProtKB:P54974
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-197
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-197
+- assessment_id: rejection-198
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-7edd3254b9a143876187018c1f9bc3a6ed3be38e784d626d7855146340064a22
+  evidence_ids:
+  - rejection-source-198
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-198
+  - name: accession
+    value: UniProtKB:Q01331
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-198
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-198
+- assessment_id: rejection-201
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-38ec1fa954e914b1e9be740a7770ad43938dba8b7043f82c69f5b1b8bed17ebc
+  evidence_ids:
+  - rejection-source-201
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-201
+  - name: accession
+    value: UniProtKB:Q9HNE5
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-201
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-201
+- assessment_id: rejection-204
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-6012c1326ed40eb84c358dfc1d31e1c37510fe6e0fadbb5b4cb0cfc2f8e230db
+  evidence_ids:
+  - rejection-source-204
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-204
+  - name: accession
+    value: UniProtKB:A0A7U3MPB9
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-204
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-204
+- assessment_id: rejection-205
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-a2392ed24119b4824b4afc21c380337eaa61fa4a021d701ff861494a4ade67ec
+  evidence_ids:
+  - rejection-source-205
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000303.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-205
+  - name: accession
+    value: UniProtKB:B0CN31
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-205
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-205
+- assessment_id: rejection-206
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-58fd6ebb50d8e4e502bfb79d2200cbe33ba64aae12b7e6a28ba82fb7aa512674
+  evidence_ids:
+  - rejection-source-206
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-206
+  - name: accession
+    value: UniProtKB:Q5JCL5
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-206
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-206
+- assessment_id: rejection-207
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-c3d538e5ae91e73aab7afe4e71f6df68cc7f9476964848fdcd29e27266df4469
+  evidence_ids:
+  - rejection-source-207
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000250.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-207
+  - name: accession
+    value: UniProtKB:Q51725
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-207
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-207
+- assessment_id: rejection-212
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-7b2d178e3c2f714e24c7c7451b58a91a96d44f6c5c8ef60339815fc06af87953
+  evidence_ids:
+  - rejection-source-212
+  summary: 'REJECTED for promotion: unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256.
+    Target record read in full. A protein label, EC class, existing graph exemplar
+    or sibling assertion does not repair missing/weak exact-accession evidence. This
+    is not a biological absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-212
+  - name: accession
+    value: UniProtKB:Q2UA48
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-212
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-212
+- assessment_id: rejection-213
+  area: grounding
+  topic: Retain exact-fact rejection
+  outcome: supported
+  target_ids:
+  - ug-998a57ab66efa478dc35d599a0e23239eaa40c57dd8f90c64166a901667d60cb
+  evidence_ids:
+  - rejection-source-213
+  summary: 'REJECTED for promotion: missing:exact_uniprot_membership. Target record
+    read in full. A protein label, EC class, existing graph exemplar or sibling assertion
+    does not repair missing/weak exact-accession evidence. This is not a biological
+    absence assertion.'
+  dimensions:
+  - name: release
+    value: '2026_03'
+    definition: UniProt acquisition release
+    evidence_ids:
+    - rejection-source-213
+  - name: accession
+    value: UniProtKB:K4MP98
+    definition: Exact rejected accession, without substitution
+    evidence_ids:
+    - rejection-source-213
+  - name: decision
+    value: REJECTED
+    definition: Unchanged promotion disposition
+    evidence_ids:
+    - rejection-source-213
+findings: []
+actions: []
+limitations:
+- AI database-level review, not full-paper verification or human sign-off. PMID links
+  are source-provided; primary articles were not independently re-read.
+- No mapping_status, definitions, existing examples, or molecular causal graphs are
+  scientifically re-certified by this review.
+- All approved occurrences are whole-protein; no amino-acid positions or generic features
+  establish these specific traits.
+- This exact-fact batch did not traverse GO descendants; missing exact facts do not
+  establish a biological absence.
+- P08306 is rejected despite mechanical eligibility; needs_curation records the mixed
+  candidate verdict, not a request to alter the trait definition.
+- Other exact-entry protein-first candidates remain discovery, not approved examples.
+- The 41 full-record reads satisfy the source-stratified record count; previously
+  embedded catalytic graphs and their literature were not re-certified or used to
+  override exact-fact rejection. Missing exact GO facts may have stronger descendant
+  annotations outside this batch.
+links:
+- reviews/structured/20261010T080519Z-cross-mech-refresh-examples/review.yaml
+```

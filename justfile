@@ -335,6 +335,11 @@ scan-cross-mech-proteins *args:
 audit-cross-mech-proteins *args:
     uv run python scripts/cross_mech_proteins.py audit {{args}}
 
+# Protein-first linked examples and available annotated sequences. Includes ignored
+# trait records. Projection only: never qualifies proteins or mutates trait YAML.
+build-cross-mech-inventory *args:
+    uv run python scripts/build_cross_mech_inventory.py {{args}}
+
 # LOCAL ONLY -- reads data/raw/go-basic.obo. Replay every tracked GO true-path edge
 # (data/grounding/go_true_path_edges.jsonl) against the local GO release it names, so a
 # re-fetched or edited OBO cannot silently disagree with a qualified inheritance (#1002).
@@ -352,7 +357,7 @@ check-cross-mech-proteins *args:
 # reads UniProt and writes reports/uniprot-grounding/cross-mech/discovery.jsonl. This
 # is identity, not evidence: the selector-bound registry fetch re-verifies it.
 discover-cross-mech-sequences *args:
-    uv run python scripts/cross_mech_proteins.py discover \
+    uv run python scripts/fetch_cross_mech_proteins.py \
       --uniprot-release {{uniprot_grounding_release}} {{args}}
 
 # Turn every sibling (protein, trait) pair the audit places on an existing record --

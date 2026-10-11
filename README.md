@@ -216,6 +216,13 @@ supports them, and can also be added by curators:
   (`just scan-cross-mech-proteins`, `just audit-cross-mech-proteins`); they are
   candidates for the exact record the audit resolves, never evidence. See
   [research/cross-mech-protein-examples.md](research/cross-mech-protein-examples.md).
+  The [protein-first coverage table](data/cross_mech/coverage.md) also includes
+  targets and references, links every detected accession to its sibling records
+  and existing PTM examples, and distinguishes qualified, legacy and discovery
+  claims. [Normalized annotated sequences and an Lpp example](data/cross_mech/README.md)
+  retain exact accession/release frames; the
+  [cross-Mech protein skill](.claude/skills/proteintraitsmech-cross-mech-proteins/SKILL.md)
+  documents refresh and reviewed inclusion.
 
   Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
   signature cross-references and `just suggest-examples` ranks carriers from the
