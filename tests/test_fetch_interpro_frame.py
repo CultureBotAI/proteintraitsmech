@@ -154,7 +154,32 @@ def test_known_release_stamps_both_fetched_sidecars(tmp_path, monkeypatch):
         payload = json.loads(path.read_text())
         assert payload["_meta"]["release"] == "110.0"
         assert payload["_meta"]["count"] == 1
+        assert payload["_meta"]["targets"] == 1
+        assert payload["_meta"]["complete"] is True
         assert set(payload["proteins"]) == {"P12345"}
     assert json.loads(grouped.read_text())["proteins"]["P12345"]["Pfam:PF00001"] == [
         [[2, 3]], [[6, 7]],
     ]
+
+
+def test_limit_stamps_incomplete_sidecars(tmp_path, monkeypatch):
+    accessions = tmp_path / "accessions.txt"
+    accessions.write_text("P12345\nP67890\n")
+    flat = tmp_path / "flat.json"
+    grouped = tmp_path / "grouped.json"
+    monkeypatch.setattr(sys, "argv", [str(SCRIPT), "--accessions", str(accessions),
+                                    "--out", str(flat), "--grouped-out", str(grouped),
+                                    "--limit", "1", "--sleep", "0", "--apply"])
+    monkeypatch.setattr(F.sidecar, "interpro_release", lambda: "110.0")
+    monkeypatch.setattr(F, "fetch_protein", lambda acc: (
+        {"Pfam:PF00001": [[2, 3]]},
+        {"Pfam:PF00001": [[[2, 3]]]},
+    ))
+
+    assert F.main() == 0
+    for path in (flat, grouped):
+        payload = json.loads(path.read_text())
+        assert payload["_meta"]["release"] == "110.0"
+        assert payload["_meta"]["count"] == 1
+        assert payload["_meta"]["targets"] == 2
+        assert payload["_meta"]["complete"] is False

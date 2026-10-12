@@ -35,6 +35,7 @@ import sys
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 SCHEMA = 1
 
@@ -67,13 +68,27 @@ def interpro_release() -> str | None:
         return None
 
 
-def wrap(payload_key: str, data: dict, source: str, release: str | None) -> dict:
-    return {"_meta": {"schema": SCHEMA,
-                      "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-                      "source": source,
-                      "release": release,
-                      "count": len(data)},
-            payload_key: data}
+def wrap(
+    payload_key: str,
+    data: dict,
+    source: str,
+    release: str | None,
+    *,
+    targets: int | None = None,
+    complete: bool | None = None,
+) -> dict:
+    meta: dict[str, Any] = {
+        "schema": SCHEMA,
+        "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "source": source,
+        "release": release,
+        "count": len(data),
+    }
+    if targets is not None:
+        meta["targets"] = targets
+    if complete is not None:
+        meta["complete"] = bool(complete)
+    return {"_meta": meta, payload_key: data}
 
 
 def read(path: Path, payload_key: str) -> tuple:

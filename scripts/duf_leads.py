@@ -53,6 +53,7 @@ import json
 import re
 import subprocess
 import sys
+import urllib.request
 from collections import Counter, defaultdict
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
@@ -511,6 +512,16 @@ def _load_frame(path: Path, label: str) -> tuple[dict[str, Any], dict[str, Any]]
     meta = blob.get("_meta") or {}
     if meta.get("source") != "InterPro":
         raise DufLeadError(f"{path} is not an InterPro sidecar")
+    if meta.get("complete") is False or (
+        isinstance(meta.get("targets"), int)
+        and meta.get("count", len(blob["proteins"])) < meta["targets"]
+    ):
+        count = meta.get("count", len(blob["proteins"]))
+        targets = meta.get("targets", "?")
+        raise DufLeadError(
+            f"{label} at {path} is incomplete ({count} of {targets} targets); "
+            "re-run fetch-duf-interpro-frame --apply"
+        )
     return blob["proteins"], meta
 
 
@@ -594,17 +605,36 @@ def candidate_rows(
         if any(not (1 <= start <= end <= length) for start, end in intervals):
             reject(lead, "INTERPRO_INTERVAL_OUT_OF_BOUNDS", f"length {length}")
             continue
+        raw_entry = grouped.get(accession)
+        if raw_entry is not None and not isinstance(raw_entry, dict):
+            raise DufLeadError(
+                f"grouped DUF InterPro frame entry for {accession} must be an object, "
+                f"got {type(raw_entry).__name__}"
+            )
         groups: list[tuple[str | None, list[list[int]]]] = []
         if lead["scope"] == "WHOLE_PROTEIN":
             groups.append((None, intervals))
         else:
-            raw_groups = (grouped.get(accession) or {}).get(lead["trait_id"])
+            raw_groups = raw_entry.get(lead["trait_id"]) if raw_entry else None
+            if raw_groups is not None and not isinstance(raw_groups, list):
+                reject(lead, "MALFORMED_INTERPRO_GROUPED_LOCATION")
+                continue
             if isinstance(raw_groups, list) and raw_groups:
                 seen: set[str] = set()
+                malformed = False
                 for raw in raw_groups:
                     group = _intervals(raw)
                     if group is None:
-                        groups = []
+                        malformed = True
+                        break
+                    if any(not (1 <= start <= end <= length) for start, end in group):
+                        malformed = True
+                        break
+                    if any(
+                        not any(i_start <= g_start and g_end <= i_end for i_start, i_end in intervals)
+                        for g_start, g_end in group
+                    ):
+                        malformed = True
                         break
                     location_id = derive_interpro_location_id(
                         lead["protein_id"],
@@ -614,7 +644,7 @@ def candidate_rows(
                     if location_id not in seen:
                         seen.add(location_id)
                         groups.append((location_id, group))
-                if not groups:
+                if malformed or not groups:
                     reject(lead, "MALFORMED_INTERPRO_GROUPED_LOCATION")
                     continue
             elif len(intervals) == 1:
@@ -622,6 +652,7 @@ def candidate_rows(
             else:
                 reject(lead, "UNGROUPED_INTERPRO_LOCATIONS", f"{len(intervals)} ranges")
                 continue
+        other_signatures = sorted(sig for sig in matches if sig != lead["trait_id"])
         for location_id, group in groups:
             row: dict[str, Any] = {
                 "schema_version": 1,
@@ -654,6 +685,7 @@ def candidate_rows(
                     "lead_reviewed": lead["lead_reviewed"],
                     "lead_selection_reasons": lead["lead_selection_reasons"],
                 },
+                "other_interpro_signatures": other_signatures,
             }
             if lead["scope"] == "LOCALIZED":
                 row["coordinate_frame"] = "UNIPROT_CANONICAL"
@@ -727,7 +759,11 @@ def cmd_audit(args: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_discover(args: argparse.Namespace) -> int:
+def cmd_discover(
+    args: argparse.Namespace,
+    *,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+) -> int:
     out = Path(args.out)
     leads = _read_jsonl(out / "leads.jsonl")
     summary = read_gated_summary(out)
@@ -742,9 +778,11 @@ def cmd_discover(args: argparse.Namespace) -> int:
     if not args.apply:
         print("dry run: no network access; pass --apply to read UniProt and write the plan")
         return 0
+    active_opener = getattr(args, "opener", opener)
     result = cm.discover_sequences(
         [f"UniProtKB:{accession}" for accession in plan["accessions"]],
         expected_release=args.uniprot_release,
+        opener=active_opener,
     )
     _write_json(out / "discovery-plan.json", plan)
     cm._atomic_write(out / "accessions.txt", "".join(f"{a}\n" for a in plan["accessions"]))
@@ -870,8 +908,13 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(
+    argv: Sequence[str] | None = None,
+    *,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+) -> int:
     args = build_parser().parse_args(argv)
+    args.opener = opener
     try:
         return args.func(args)
     except (DufLeadError, cm.CrossMechError) as error:
