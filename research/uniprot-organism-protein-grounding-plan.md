@@ -4507,6 +4507,29 @@ found.
   fully replayed; the next operation remains a separately authorized `--apply` against a
   saved and reviewed execution plan under explicitly permitted network access.
 
+### 2026-10-11 — pinned provider frames rebuilt and the DUF discovery-lead lane
+
+- The UniProt residue frame was rebuilt at the pinned `2026_03` (`just
+  fetch-residue-frame --organisms --top-up --apply`, after a 5-protein canary through
+  the same recipe). It holds 113,695 proteins: 80,090 from the ten panel proteomes and
+  33,605 from the corpus exemplar top-up, with 10,243 confirmed absent. Its SHA-256 is
+  `69edb24bad2535929a6654b53e5d748760552271bf9869b36739504ca1ff81b1`. The run made
+  roughly 850 UniProt requests in 42 minutes. It does not reproduce the 2026-09-24 pin
+  `4fc4d2fb…`, because the sidecar embeds its build date and corpus-dependent top-up.
+- The organism-panel InterPro 110.0 frame was only canaried: 1 of 41,598 target
+  proteins, through `just fetch-interpro-frame --limit 1 --apply`. At the measured
+  rate (about 1.7 proteins/s with 6 workers), a full crawl is at least 41,598 requests
+  and about 6–7 hours. That exceeds the authorized bound, so the crawl was stopped.
+  The local panel frame is a resumable 1-protein partial and must not be audited as
+  complete.
+- The DUF discovery-lead lane routes DUFMech's frozen UniProt candidates onto Pfam DUF
+  records as leads only. Each candidate must still match the record's Pfam signature
+  exactly in a release-pinned InterPro crawl
+  ([duf-discovery leads](duf-discovery-leads.md)). First batch
+  `duf-leads-review-001`: 100 records and 335 alternatives, resolved to 334 QUALIFIED
+  and 1 REJECTED. It is unreviewed, and there is no approval ledger. No trait or durable
+  grounding write occurred.
+
 ### 2026-10-05 — UniProt exact-accession functional-fact lane (#652)
 
 - Sibling Mechs tie 406 proteins to 216 existing trait records here, almost all

@@ -529,6 +529,9 @@ The ordinary fetch, resolve, review, and promote recipes do the rest.
 
 - On 2026-10-05, DUFMech was not yet in the fleet manifest. It is included in the
   2026-10-10 checkpoint above; this historical exclusion no longer applies.
+- DUFMech's frozen UniProt candidates for Pfam DUF families enter separately, through
+  the DUF discovery-lead lane ([duf-discovery-leads.md](duf-discovery-leads.md)). The
+  lead-only policy is the same, and the input is pinned by DUFMech commit and SHA-256.
 - On 2026-10-05, DUFMech and PathwayMech work trees were running their own cross-Mech
   protein scans. One fleet-level extractor (claw), consumed by each Mech for its own
   inclusion question, would avoid three diverging rule sets.

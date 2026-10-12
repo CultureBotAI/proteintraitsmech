@@ -227,8 +227,10 @@ def read_accession_targets(path: Path) -> list[str]:
 
 
 def main() -> int:
+    # allow_abbrev=False: fetch-duf-interpro-frame forbids its fixed flags by exact name.
     ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+                                 formatter_class=argparse.RawDescriptionHelpFormatter,
+                                 allow_abbrev=False)
     ap.add_argument("--apply", action="store_true", help="write the sidecar")
     ap.add_argument("--limit", type=int, default=0, help="cap proteins fetched (debug)")
     ap.add_argument("--sleep", type=float, default=0.15, help="delay between calls")
