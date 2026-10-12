@@ -335,19 +335,18 @@ def truncate(text: str, limit: int = DEF_TRUNC) -> str:
 DOCS_MAX_EXAMPLES = 5
 
 
-# CURATOR picks outrank API-fetched ones, which outrank machine suggestions, so
-# the cap can only ever drop the lowest-standing entries. This is a guard, not a
-# repair: measured against the corpus, no record today has a curated pick hidden
-# while a suggestion is shown (--rerank skips records holding curated examples).
-# But that protection is incidental rather than enforced, and a cap sliced by
-# file position would silently invert the moment it stopped holding (#66).
+# Qualified examples precede legacy examples, even when appended by the guarded
+# promoter after older profile suggestions. Within each qualification stratum,
+# preserve the existing curator/API/profile preference and stable file order.
+# This changes display priority only; it never qualifies an example.
 _EXAMPLE_RANK = {"CURATOR": 0, "UNIPROTKB_API": 1, "SWISSPROT_PROFILE": 2}
 
 
 def _docs_examples(examples: list) -> list:
-    """The exemplars the browser shows: highest-standing first, then capped."""
+    """Verified exemplars first, then existing source rank; retain the display cap."""
     ordered = sorted(enumerate(examples),
-                     key=lambda p: (_EXAMPLE_RANK.get(p[1].get("source"), 3), p[0]))
+                     key=lambda p: (p[1].get("qualification_status") != "QUALIFIED",
+                                    _EXAMPLE_RANK.get(p[1].get("source"), 3), p[0]))
     return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
 
 

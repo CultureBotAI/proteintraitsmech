@@ -10,6 +10,8 @@ set dotenv-load := true
 set positional-arguments := true
 
 uniprot_grounding_release := "2026_03"
+# InterPro release the DUF discovery-lead lane requires of its own InterPro sidecar.
+interpro_grounding_release := "110.0"
 
 # ============== Deep Research ==============
 
@@ -335,6 +337,11 @@ scan-cross-mech-proteins *args:
 audit-cross-mech-proteins *args:
     uv run python scripts/cross_mech_proteins.py audit {{args}}
 
+# Protein-first linked examples and available annotated sequences. Includes ignored
+# trait records. Projection only: never qualifies proteins or mutates trait YAML.
+build-cross-mech-inventory *args:
+    uv run python scripts/build_cross_mech_inventory.py {{args}}
+
 # LOCAL ONLY -- reads data/raw/go-basic.obo. Replay every tracked GO true-path edge
 # (data/grounding/go_true_path_edges.jsonl) against the local GO release it names, so a
 # re-fetched or edited OBO cannot silently disagree with a qualified inheritance (#1002).
@@ -357,7 +364,7 @@ check-cross-mech-proteins *args:
 # reads UniProt and writes reports/uniprot-grounding/cross-mech/discovery.jsonl. This
 # is identity, not evidence: the selector-bound registry fetch re-verifies it.
 discover-cross-mech-sequences *args:
-    uv run python scripts/cross_mech_proteins.py discover \
+    uv run python scripts/fetch_cross_mech_proteins.py \
       --uniprot-release {{uniprot_grounding_release}} {{args}}
 
 # Turn every sibling (protein, trait) pair the audit places on an existing record --
@@ -378,6 +385,70 @@ select-cross-mech-review-batch batch_id *args:
     uv run python scripts/select_uniprot_review_batch.py \
       --queue reports/uniprot-grounding/cross-mech/candidates.jsonl \
       --batch cross-mech --batch-id {{quote(batch_id)}} "$@"
+
+# DUF discovery-lead lane (research/duf-discovery-leads.md). DUFMech's frozen UniProt
+# candidates for Pfam DUF families, pinned by commit and SHA-256 and read from git objects
+# in the sibling DUFMech checkout, are discovery leads -- never evidence. Join them to the
+# exact Pfam trait records that lack a QUALIFIED example (with the pinned record-content
+# gate). Dry-run; --apply writes reports/uniprot-grounding/duf-leads/ (ignored).
+audit-duf-leads *args:
+    uv run python scripts/duf_leads.py audit {{args}}
+
+# Choose a bounded, deterministic set of target records (--max-records, default 100; keep it equal to the batch bound) and
+# read each lead's exact sequence identity from the pinned UniProt release (anonymous
+# exact-accession requests). Dry-run plans only; --apply also writes accessions.txt for
+# the InterPro crawl below.
+discover-duf-leads *args:
+    uv run python scripts/duf_leads.py discover \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
+# Crawl InterPro for exactly the planned lead accessions into the lane's own sidecar
+# (data/raw/align_cache/duf-leads/, ignored), never into the organism-panel frame.
+# Dry-run unless --apply; resumable; canary with --limit 1 --apply first.
+fetch-duf-interpro-frame *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --accessions|--accessions=*|--out|--out=*|--grouped-out|--grouped-out=*)
+          echo "ERROR: DUF crawl argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    python3 scripts/fetch_interpro_frame.py \
+      --accessions reports/uniprot-grounding/duf-leads/accessions.txt \
+      --out data/raw/align_cache/duf-leads/interpro_frame.json \
+      --grouped-out data/raw/align_cache/duf-leads/interpro_grouped_locations.json "$@"
+
+# Turn each planned lead into a funnel candidate only where the pinned InterPro sidecar
+# asserts an exact match of the record's own Pfam signature; everything else is a
+# reported rejection. Dry-run; --apply writes candidates.jsonl and rejected.jsonl.
+stage-duf-candidates *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --interpro-frame|--interpro-frame=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--interpro-release|--interpro-release=*|--uniprot-release|--uniprot-release=*|--out|--out=*)
+          echo "ERROR: DUF staging argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    uv run python scripts/duf_leads.py candidates \
+      --uniprot-release {{uniprot_grounding_release}} \
+      --interpro-release {{interpro_grounding_release}} "$@"
+
+# Select one bounded review batch from the DUF queue with the ordinary selector; then
+# fetch-uniprot-review-batch, resolve-duf-review-batch, and the ordinary review,
+# finalize and promote recipes. Keep the first batches modest (--max-records 100).
+select-duf-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/select_uniprot_review_batch.py \
+      --queue reports/uniprot-grounding/duf-leads/candidates.jsonl \
+      --batch duf-leads --batch-id {{quote(batch_id)}} "$@"
 
 # Validate the data-source registry
 sources-check:
@@ -1349,6 +1420,42 @@ resolve-uniprot-review-batch batch_id *args:
       --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
       --providers protein-registry,interpro,uniprot-membership \
       --interpro-grouped-frame data/raw/align_cache/interpro_grouped_locations.json \
+      --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
+      --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
+      --expect-uniprot-release {{uniprot_grounding_release}} \
+      --batch {{quote(batch_id)}} \
+      --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
+      --review reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \
+      --registry-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
+      --evidence-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
+      --replace-staging-outputs \
+      "$@"
+
+# Resolve one DUF discovery-lead review batch exactly like resolve-uniprot-review-batch,
+# except that the InterPro evidence comes from the lane's own release-stamped sidecar
+# (just fetch-duf-interpro-frame), not the organism-panel frame. Never modifies
+# data/traits or the durable registries. See research/duf-discovery-leads.md.
+resolve-duf-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    for argument in "$@"; do
+      case "$argument" in
+        --queue|--queue=*|--selector-manifest|--selector-manifest=*|--fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--providers|--providers=*|--protein-registry|--protein-registry=*|--membership-registry|--membership-registry=*|--sifts-registry|--sifts-registry=*|--durable-membership-registry|--durable-membership-registry=*|--registry-blocked|--registry-blocked=*|--expect-uniprot-release|--expect-uniprot-release=*|--batch|--batch=*|--out|--out=*|--review|--review=*|--registry-out|--registry-out=*|--evidence-out|--evidence-out=*|--replace-staging-outputs|--replace-staging-outputs=*|--limit|--limit=*|--interpro-frame|--interpro-frame=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--allow-unreceipted-inputs|--allow-unreceipted-inputs=*|--allow-offline-uniprot-fixture|--allow-offline-uniprot-fixture=*|--allow-offline-sifts-fixtures|--allow-offline-sifts-fixtures=*)
+          echo "ERROR: bounded review resolver argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    uv run python scripts/ground_uniprot_examples.py resolve \
+      --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
+      --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
+      --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
+      --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
+      --providers protein-registry,interpro,uniprot-membership \
+      --interpro-frame data/raw/align_cache/duf-leads/interpro_frame.json \
+      --interpro-grouped-frame data/raw/align_cache/duf-leads/interpro_grouped_locations.json \
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
       --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \

@@ -40,9 +40,13 @@ async function run(){
   await context.finished;
   assert(!text(ids.get("summary")).includes("Cannot display"));
   const cards=ids.get("residue-reasoning").children;
-  assert.equal(cards.length,2);
+  assert.equal(cards.length,3);
   assert(text(cards[0]).includes("S267F"));
   assert(text(cards[1]).includes("R252H"));
+  assert(text(cards[2]).includes("E257A"));
+  assert(text(cards[2]).includes("UNRESOLVED"));
+  assert(text(cards[2]).includes("deposited Na1 instance"));
+  assert(text(cards[2]).includes("not an individual point estimate"));
   assert(text(cards[0]).includes("UNRESOLVED"));
   assert(text(cards[0]).includes("glycochenodeoxycholic acid"));
   assert(text(cards[1]).includes("Reference side-chain pKa"));
@@ -55,6 +59,10 @@ async function run(){
   chemistry.events.click();
   assert(text(ids.get("detail-body")).includes('"llm_assisted": true'));
   assert(text(ids.get("detail-body")).includes("NOT_APPLICABLE")===false); // R/H have defined pKa.
-  console.log("SLC10 DOM contract passed: two cases, properties, gaps, provenance and detail actions");
+  const assay=all(cards[2]).find(n=>n.tag==="button"&&text(n)==="Reduction of taurocholate uptake with NTCP E257A");
+  assay.events.click();
+  assert(text(ids.get("detail-body")).includes("10.1128/JVI.03478-13"));
+  assert(text(ids.get("detail-body")).includes("C-9"));
+  console.log("SLC10 DOM contract passed: three cases, properties, gaps, provenance and detail actions");
 }
 run().catch(error=>{console.error(error);process.exitCode=1;});

@@ -98,6 +98,7 @@ just audit-text
 just audit-prose
 just audit-writers
 just scan-cross-mech-proteins --fetch    # sibling-Mech protein snapshot; --apply to write
+just build-cross-mech-inventory         # protein IDs, links, examples and sequence coverage
 just audit-cross-mech-proteins           # sibling (protein, trait) statuses -> reports/cross-mech/
 just check-cross-mech-proteins --local   # snapshot integrity + sibling drift
 just sources-check
@@ -125,6 +126,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Review a record category/cohort | [review-yaml-category](.claude/skills/review-yaml-category/SKILL.md) |
 | Curate one named record | [curate-yaml-record](.claude/skills/curate-yaml-record/SKILL.md) |
 | Ground a protein example onto a record | [ground-protein-example](.claude/skills/ground-protein-example/SKILL.md) |
+| Synchronize sibling-Mech protein IDs, examples and annotated sequences | [proteintraitsmech-cross-mech-proteins](.claude/skills/proteintraitsmech-cross-mech-proteins/SKILL.md) |
 | Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
 | Curate definitions | [edison-trait-definitions](.claude/skills/edison-trait-definitions/SKILL.md) |
 | Curate mechanism graphs | [edison-causal-graphs](.claude/skills/edison-causal-graphs/SKILL.md) |

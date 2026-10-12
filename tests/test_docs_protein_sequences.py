@@ -160,6 +160,28 @@ def test_load_record_delivers_registry_sequence_in_detail_only(tmp_path, monkeyp
     assert "ex" not in lean and detail["ex"][0]["seq"] == reference["sequence"]
 
 
+def test_appended_qualified_example_is_not_hidden_by_legacy_suggestions(example):
+    legacy = [{"protein_id": f"legacy-{i}", "source": "SWISSPROT_PROFILE"}
+              for i in range(8)]
+    examples = legacy + [example]
+    before = copy.deepcopy(examples)
+    shown = BUILD._docs_examples(examples)
+    assert shown == [example, *legacy[:4]]
+    assert examples == before
+
+
+def test_legacy_display_rank_is_preserved_and_does_not_qualify_examples():
+    examples = [{"protein_id": str(i), "source": source} for i, source in enumerate(
+        ["SWISSPROT_PROFILE", "UNIPROTKB_API", "CURATOR", "CURATOR", "SWISSPROT_PROFILE", "OTHER"])]
+    assert [e["protein_id"] for e in BUILD._docs_examples(examples)] == ["2", "3", "1", "0", "4"]
+    assert all("qualification_status" not in e for e in examples)
+
+
+def test_qualified_display_still_caps_at_five_and_breaks_ties_stably(example):
+    examples = [{**example, "protein_id": f"synthetic-{i}"} for i in range(6)]
+    assert BUILD._docs_examples(examples) == examples[:5]
+
+
 def test_bad_binding_fails_before_existing_site_files_are_replaced(tmp_path, monkeypatch, reference, example):
     refs = tmp_path / "protein_registry.jsonl"
     refs.write_text(json.dumps(reference) + "\n")

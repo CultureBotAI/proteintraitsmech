@@ -157,6 +157,60 @@ def test_glob_translation_matches_fleet_semantics():
     assert not flat.match("kb/communities/x/a.yaml")
 
 
+def test_embedded_proteins_are_references_not_family_members():
+    description = (
+        "UniProtKB:P00533 binds UniProt:Q9HXT9. Compare Q96FZ2:UniProtKB and "
+        "https://www.uniprot.org/uniprotkb/P00533/entry; not UniProtKB:P00533_BAD."
+    )
+    rows = CM.mention_rows("dufmech", "data/families/x.yaml", {
+        "id": "Pfam:PF00001", "description": description,
+    })
+    assert [row["protein_id"] for row in rows] == [
+        "UniProtKB:P00533", "UniProtKB:Q9HXT9", "UniProtKB:Q96FZ2", "UniProtKB:P00533",
+    ]
+    assert all(row["role"] == "REFERENCE" and row["annotations"] == [] for row in rows)
+    assert all(row["pointer"] == "/description" for row in rows)
+    assert len({CM.mention_key(row) for row in rows}) == 4
+    for row in rows:
+        start, end = row["text_span"]
+        assert CM.TEXT_PROTEIN.fullmatch(description[start:end])
+
+
+def test_embedded_reference_does_not_inherit_a_structured_channel():
+    record = {"biosynthetic_pathway": [{
+        "enzyme_id": "see UniProtKB:P00533", "reaction_id": "RHEA:12345",
+    }]}
+    row, = CM.mention_rows("naturalproductmech", "x.yaml", record)
+    assert row["relation"] == "text_reference"
+    assert row["annotations"] == []
+
+
+@pytest.mark.parametrize("tamper", ["bounds", "suffix", "annotations"])
+def test_embedded_snapshot_rejects_forged_spans_and_traits(tamper):
+    fleet = _fleet(("dufmech", "CultureBotAI/DUFMech", ["data/families/*.yaml"]))
+    rows = CM.mention_rows("dufmech", "data/families/x.yaml", {"description": "see UniProtKB:P00533"})
+    if tamper == "bounds":
+        rows[0]["text_span"][0] = -1
+    elif tamper == "suffix":
+        rows[0]["raw_value"] += "_BAD"
+    else:
+        rows[0]["annotations"] = [{"curie": "Pfam:PF00001", "relation": "family"}]
+    result = CM.ScanResult(rows=rows, mechs=[{
+        "key": "dufmech", "commit": "a" * 40, "mentions": 1, "records_with_proteins": 1}])
+    raw = CM.canonical_json(rows[0]) + "\n"
+    manifest = CM.build_manifest(result, fleet, raw)
+    assert any("text" in error for error in CM.verify_snapshot(raw.encode(), manifest))
+
+
+def test_ignored_trait_is_in_identifier_index(tmp_path):
+    repo = _sibling(tmp_path, "ProteinTraitsMech", {"data/traits/a.yaml": {
+        "identifier": "GO:0000001",
+    }})
+    (repo / ".gitignore").write_text("data/traits/ignored.yaml\n")
+    _write(repo / "data/traits/ignored.yaml", {"identifier": "GO:0000002"})
+    assert CM.build_identifier_index(repo / "data/traits")["GO:0000002"] == ["ignored.yaml"]
+
+
 def test_remote_urls_normalize_to_owner_repo():
     assert CM.normalize_remote("https://github.com/CultureBotAI/TraitMech.git") == (
         "culturebotai/traitmech"
@@ -1121,3 +1175,103 @@ def test_cmd_review_note_cli(capsys):
     assert ret == 0
     captured = capsys.readouterr().out
     assert "The protein performs the activity named by the record." in captured
+
+def test_discovery_retains_inactive_accessions_without_substitution():
+    result = CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03",
+        include_annotations=True, opener=_opener([{
+            "primaryAccession": "P18776", "entryType": "Inactive",
+            "inactiveReason": {"inactiveReasonType": "MERGED", "mergeDemergeTo": ["P99999"]},
+        }]))
+    assert result["rows"] == [] and result["entries"] == []
+    assert result["missing"] == ["UniProtKB:P18776"]
+    assert result["unavailable"][0]["reason"] == "INACTIVE_ACCESSION"
+
+
+def test_discovery_does_not_silently_replace_duplicate_entry_annotations():
+    entry = {"primaryAccession": "P18776", "sequence": {"value": "MTTQ", "length": 4}}
+    with pytest.raises(CM.CrossMechError, match="duplicate exact accession"):
+        CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03",
+                              include_annotations=True, opener=_opener([entry, entry]))
+
+
+def test_protein_first_annotation_candidates_never_claim_sibling_trait_support(tmp_path, monkeypatch):
+    sys.path.insert(0, str(REPO / "scripts"))
+    import uniprot_membership_snapshot as membership
+
+    _write(tmp_path / "go.yaml", {"identifier": "GO:0009390", "trait_axis": "FUNCTION",
+                                "trait_category": "FUNC_LOCALIZATION"})
+    monkeypatch.setattr(CM, "build_identifier_index", lambda root: {"GO:0009390": ["go.yaml"]})
+    monkeypatch.setattr(membership, "extract_entry_memberships", lambda *a, **k: [
+        {"source_trait_id": "GO:0009390"}, {"source_trait_id": "Pfam:PF00001"}])
+    monkeypatch.setattr(membership, "fact_evidence_failure", lambda fact: None)
+    entries = {"UniProtKB:P18776": {**SEQUENCES["UniProtKB:P18776"], "entry": {}}}
+    mentions = [{"protein_id": "UniProtKB:P18776", "mech": "dufmech", "record_path": "x.yaml"}]
+    pairs = CM.entry_annotation_pairs(entries, mentions, traits_root=tmp_path)
+    assert len(pairs) == 1
+    assert pairs[0]["sibling_curies"] == []
+    assert pairs[0]["trait_link_origin"] == "UNIPROT_EXACT_ENTRY_DISCOVERY"
+    assert pairs[0]["status"] == "ABSENT_FROM_TRAIT"
+    assert not CM.entry_annotation_pairs(entries, mentions, traits_root=tmp_path,
+                                         exclude_proteins={"UniProtKB:P18776"})
+
+
+def test_coverage_priority_is_deterministic_and_never_approval():
+    def candidate(protein, namespace, suffix, origin="UNIPROT_EXACT_ENTRY_DISCOVERY"):
+        return {"protein_id": protein, "source_namespace": namespace,
+                "trait_id": namespace + ":" + suffix, "candidate_id": suffix,
+                "qualification_status": "CANDIDATE_PROTEIN",
+                "cross_mech_provenance": {"trait_link_origin": origin}}
+    rows = [candidate("UniProtKB:P18776", "GO", "1"),
+            candidate("UniProtKB:P18776", "RHEA", "2"),
+            candidate("UniProtKB:P18776", "ComplexPortal", "3"),
+            candidate("UniProtKB:P99999", "GO", "4"),
+            candidate("UniProtKB:Q99999", "GO", "5", "SIBLING_ASSERTION")]
+    inventory = [{"protein_id": "UniProtKB:P99999", "status": "HAS_QUALIFIED_PTM_EXAMPLE"}]
+    assert CM.protein_coverage_candidates(rows, inventory) == [rows[2]]
+    assert CM.protein_coverage_candidates(list(reversed(rows)), inventory) == [rows[2]]
+    assert rows[2]["qualification_status"] == "CANDIDATE_PROTEIN"
+
+
+def test_coverage_priority_accepts_independently_supported_sibling_pair():
+    row = {"protein_id": "UniProtKB:P18776", "source_namespace": "GO",
+           "trait_id": "GO:0009390", "candidate_id": "ug-test",
+           "qualification_status": "CANDIDATE_PROTEIN",
+           "cross_mech_provenance": {
+               "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}}
+    assert CM.protein_coverage_candidates([row], []) == [row]
+    assert row["qualification_status"] == "CANDIDATE_PROTEIN"
+    assert CM.protein_coverage_candidates([row], [{
+        "protein_id": row["protein_id"], "status": "HAS_QUALIFIED_PTM_EXAMPLE"}]) == []
+
+
+def test_merge_candidate_pairs_preserves_both_sources_without_mutating_inputs():
+    sibling = {"protein_id": "UniProtKB:P18776", "trait_id": "GO:0009390",
+               "sibling_curies": ["GO:0009390"], "relations": ["component_of_structure"],
+               "qualifiers": [{"proposed": True}]}
+    annotation = {**sibling, "sibling_curies": [], "relations": ["uniprot_annotation_discovery"],
+                  "qualifiers": [], "trait_link_origin": "UNIPROT_EXACT_ENTRY_DISCOVERY"}
+    untouched = {**sibling, "protein_id": "UniProtKB:P99999"}
+    independent = {**annotation, "protein_id": "UniProtKB:Q99999"}
+    before = json.dumps([sibling, annotation, untouched, independent], sort_keys=True)
+    result = CM.merge_candidate_pairs([untouched, sibling], [independent, annotation])
+    assert result == CM.merge_candidate_pairs([sibling, untouched], [annotation, independent])
+    combined = next(row for row in result if row["protein_id"] == sibling["protein_id"])
+    assert combined == {**sibling, "trait_link_origin": "SIBLING_ASSERTION_AND_UNIPROT_EXACT_ENTRY_DISCOVERY"}
+    assert untouched in result and independent in result
+    assert json.dumps([sibling, annotation, untouched, independent], sort_keys=True) == before
+    assert CM.merge_candidate_pairs([sibling, sibling], []) == [sibling]
+
+
+def test_ambiguous_entry_annotation_facts_remain_blocked(tmp_path, monkeypatch):
+    import uniprot_membership_snapshot as membership
+
+    monkeypatch.setattr(CM, "build_identifier_index", lambda root: {})
+    def ambiguous(*args, **kwargs):
+        raise membership.MembershipSnapshotError("ambiguous exact fact")
+    monkeypatch.setattr(membership, "extract_entry_memberships", ambiguous)
+    entries = {"UniProtKB:P18776": {**SEQUENCES["UniProtKB:P18776"], "entry": {}}}
+    mentions = [{"protein_id": "UniProtKB:P18776", "mech": "dufmech", "record_path": "x.yaml"}]
+    blocked = []
+    assert CM.entry_annotation_pairs(entries, mentions, traits_root=tmp_path, blocked=blocked) == []
+    assert blocked == [{"protein_id": "UniProtKB:P18776", "reason": "ambiguous exact fact"}]
+

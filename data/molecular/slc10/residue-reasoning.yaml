@@ -1,3 +1,28 @@
+environment_requests:
+  - assertion_id: slc10-environment:7ZYI-A-252-4.5A
+    protein_id: UniProtKB:Q14973
+    position: 252
+    residue: R
+    structure_id: PDB:7ZYI
+    auth_chain: A
+    structure_state: Bile-salt-bound NTCP with Fab and nanobody; deposited cryo-EM conformation
+    distance_cutoff_angstrom: 4.5
+  - assertion_id: slc10-environment:7ZYI-A-267-4.5A
+    protein_id: UniProtKB:Q14973
+    position: 267
+    residue: S
+    structure_id: PDB:7ZYI
+    auth_chain: A
+    structure_state: Bile-salt-bound NTCP with Fab and nanobody; deposited cryo-EM conformation
+    distance_cutoff_angstrom: 4.5
+  - assertion_id: slc10-environment:7ZYI-A-257-4.5A
+    protein_id: UniProtKB:Q14973
+    position: 257
+    residue: E
+    structure_id: PDB:7ZYI
+    auth_chain: A
+    structure_state: Bile-salt-bound NTCP with Fab and nanobody; deposited cryo-EM conformation
+    distance_cutoff_angstrom: 4.5
 residue_simulations:
   - assertion_id: slc10-simulation:ntcp-s267f-taurocholate-2024
     protein_id: UniProtKB:Q14973
@@ -73,3 +98,24 @@ residue_reasoning:
         description: Reduced uptake is measured; the existing graph retains surface availability as the authors' mediation interpretation, not an isolated molecular effect.
         limitations: Uptake and FLAG-localization constructs are not verified identical; equal-surface-abundance rescue is missing. Residual transport and possible intrinsic transport changes remain distinct.
     limitations: Generic ionization differences and static reference contacts cannot prove why R252H alters localization or uptake. Historical assay constructs are not certified by the reference-sequence hash.
+  - reasoning_id: slc10-reasoning:ntcp-e257a
+    mechanism_id: slc10-mechanism:ntcp-e257a-uptake-reduction
+    residue_binding: {node_id: e257a, protein_id: UniProtKB:Q14973, position: 257, residue: E, substituted_residue: A}
+    property_context_links:
+      - property_ids: [SIDE_CHAIN_HEAVY_ATOM_COUNT, SIDE_CHAIN_HETEROATOM_COUNT, SIDE_CHAIN_PKA, REFERENCE_SIDE_CHAIN_CHARGE_PH7]
+        context_ref: slc10-environment:7ZYI-A-257-4.5A
+        assessment: REFERENCE_CONTEXT_ONLY
+        description: Compare E/A reference atom groups and ionization-model properties alongside the exact E257 intrachain neighborhood in deposited 7ZYI.
+        limitations: Alanine lacks glutamate's side-chain carboxyl group, but reference pKa and modeled charge are not measurements at residue 257. No A257 coordinates, mutant contact changes, folding defect or altered local protonation are inferred.
+      - property_ids: [SIDE_CHAIN_HETEROATOM_COUNT, REFERENCE_SIDE_CHAIN_CHARGE_PH7]
+        context_ref: slc10-site:7ZYI-J-706-NA-4.5A
+        assessment: REFERENCE_CONTEXT_ONLY
+        description: The deposited Na1 instance (Liu et al. 2022 Figure 1i) has heavy-atom proximity to E257 side-chain oxygens; the exact contact atoms and distances are retained separately from the E/A chemistry contrast.
+        limitations: This is reference-structure context, not a measured E257A sodium affinity or ion occupancy. Do not substitute the distinct Na2 site or equate carbon proximity in another conformation with carboxylate coordination.
+    context_trait_links:
+      - context_refs: [slc10-environment:7ZYI-A-257-4.5A, slc10-site:7ZYI-J-706-NA-4.5A]
+        observation_ref: slc10-assay:ntcp-e257a-uptake-reduction-2014
+        assessment: UNRESOLVED
+        description: Reduced taurocholate uptake is measured with largely comparable total and surface expression controls; its microscopic connection to E/A chemistry and the reference sodium-site context is unresolved.
+        limitations: The reported 95-99 percent reduction covers a group including E257A, not an individual point estimate or complete absence of transport. These contexts do not isolate altered sodium binding from gating, coupling or other effects; the reference structure is not the historical C-9-tagged assay construct.
+    limitations: Perturbation-backed uptake reduction with reference chemistry and structural context, not a proven sodium-binding-loss mechanism. No E257A mutant structure, simulation, family-wide trait promotion or clinical interpretation is supplied.

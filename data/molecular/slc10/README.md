@@ -25,12 +25,12 @@ families, including the broader SBF/BASS/ACR3 membership.
 | Artifact | Meaning |
 | --- | --- |
 | `curation.yaml` | Authored assay observations, interpretations, and local mechanism graphs; DOI/URL evidence and limitations remain attached. |
-| `residue-reasoning.yaml` | Authored S267F/R252H property/context/consequence links and the source-reported S267F simulation; unresolved mediation is explicit. |
+| `residue-reasoning.yaml` | Explicit reference-neighborhood requests; authored S267F/R252H/E257A property/context/consequence links and the source-reported S267F simulation; unresolved mediation is explicit. |
 | `../amino_acids/catalog.json`, `../amino_acids/review.yaml` | Twenty standard residue reference chemistries and exact-content machine-assisted source review; embedded in the bundle and linked to existing MOD/ChEBI/PATO identities. |
 | `pilot.json` | Generated, closed-schema `MolecularEvidenceBundle`; exact sequences, source hashes, contacts, correspondence, model comparisons, observations and explanations. |
 | `gene-review-fixture.json` | Explicitly labelled consumer test, **not Chris's repository**; pins the complete bundle bytes and target sequence. |
 | `gene-review-integration.json` | Read-only integration pin for the actual `ai4curation/ai-gene-review` SLC10A4 review; exact upstream commit, file hash, annotation locator and expected claim count. Not upstream adoption. |
-| `residue-query-s267f.json`, `residue-query-r252h.json` | Executable consumer requests for exact NTCP substitutions; return curated mechanisms and evidence, not predicted effects or upstream annotations. |
+| `residue-query-s267f.json`, `residue-query-r252h.json`, `residue-query-e257a.json` | Executable consumer requests for exact NTCP substitutions; return curated mechanisms and evidence, not predicted effects or upstream annotations. |
 | `docs/slc10.html` | Comparison page, loaded separately from the main corpus browser. |
 | `docs/data/slc10-pilot-v1.json` | Generated, ignored, byte-identical export built for Pages. Its sibling manifest records SHA-256 and byte count. |
 
@@ -143,12 +143,13 @@ ontology anchors, not claims that a protein has a particular measured charge.
 `review.yaml` records source-transcription and chemical-rule **self-review with
 `llm_assisted: true`**, not independent human scientific approval.
 
-The two executable cases return this evidence chain:
+The three executable cases return this evidence chain:
 
 | Case | Reference-chemistry contrast | Local context | Measured consequence and remaining gap |
 | --- | --- | --- | --- |
 | S267F | Hydroxyl count 1→0, aromatic atoms 0→6, hydropathy −0.8→2.8 | Exact 7ZYI S267 intrachain neighborhood; distinct deposited CHO (glycochenodeoxycholic acid) ligand contacts; separately typed taurocholate simulation | Separate reduced taurocholate and increased estrone-sulfate uptake branches. Which molecular intermediate mediates either assay remains unresolved. |
 | R252H | Reference pKa 12→5.98; modeled pH-7 side-chain charge about +1.00→+0.087 | Exact 7ZYI R252 intrachain neighborhood, not an H252 mutant structure | Surface depletion and reduced uptake remain separate observations; no inferred broken salt bridge or proven folding defect. |
+| E257A | Side-chain heavy atoms 5→1, N/O/S atoms 2→0; modeled pH-7 side-chain charge about −0.997→0; alanine side-chain pKa is not applicable | Exact 7ZYI E257 intrachain neighborhood and the distinct Na1 instance J:A:706:NA, including E257 oxygen proximity | Reduced taurocholate uptake with largely comparable total/surface expression ([Yan et al., Figure 6A/B](https://doi.org/10.1128/JVI.03478-13)). The 95–99% range covers a mutant group, not an E257A-specific estimate; no isolated sodium-binding-loss mechanism is established. |
 
 These numerical contrasts are catalog/model results, not site measurements.
 The deposited [CHO component identity](https://www.rcsb.org/ligand/CHO) is not
@@ -163,7 +164,7 @@ not a bond assignment, and reference geometry cannot establish mutant changes.
 `residue_reasoning` keeps typed property/context links and context/assay links
 outside the causal graph. Static reference contexts must remain
 `REFERENCE_CONTEXT_ONLY`; source-reported variant simulations must remain
-`COMPUTATIONAL_HYPOTHESIS`. The four current context-to-assay links are
+`COMPUTATIONAL_HYPOTHESIS`. The five current context-to-assay links are
 `UNRESOLVED`. A source-proposed mediation hypothesis needs its own citation and
 excerpt. The contract does not offer experimentally proven mediation without an
 intervention-evidence model. Exact catalog pins, residue/variant/sequence scope,
@@ -181,7 +182,26 @@ just check-amino-acid-properties
 Acquiring a future snapshot uses `just fetch-amino-acid-properties --snapshot
 <new-name>` (dry-run), followed by `--apply`. A changed source projection needs a
 new explicit content review; do not update the review digest just to pass a gate.
-The SLC10 builder embeds the reviewed catalog and regenerates both neighborhoods.
+The SLC10 builder embeds the reviewed catalog and regenerates the requested
+neighborhoods. `environment_requests` in `residue-reasoning.yaml` is a closed
+builder-input format: each request specifies `assertion_id`, `protein_id`,
+`position`, reference `residue`, `structure_id`, `auth_chain`, `structure_state`
+and `distance_cutoff_angstrom`. The state description is explicitly curated;
+it is not inferred from geometry. The builder checks the exact reference residue,
+matching experimental-structure and SIFTS source roles/identities, unique IDs
+and coordinate selections, and a finite cutoff greater than zero and at most
+10 Å. Unknown fields, including proposed mutant coordinates or hash overrides,
+are rejected. Current input filenames use four-character PDB IDs (`7ZYI.cif`,
+`7zyi.xml.gz`) inside the verified snapshot; the output remains the existing
+`MolecularResidueEnvironment` schema.
+
+Adding another observed residue to an already verified structure now requires a
+curated request and evidence ledger rather than a Python position-list edit.
+Adding a new structure or protein still requires the source acquisition and
+sequence-mapping workflow; this does not automatically acquire arbitrary sources
+or establish mechanisms for other proteins. Native/grouped residue mechanisms
+retain their existing retrieval behavior; curated consequence ledgers still
+require isolated, assay-backed substitutions.
 
 ## Reproduce
 
@@ -258,6 +278,10 @@ just consume-molecular-evidence \
 just consume-molecular-evidence \
   --bundle data/molecular/slc10/pilot.json \
   --request data/molecular/slc10/residue-query-r252h.json
+
+just consume-molecular-evidence \
+  --bundle data/molecular/slc10/pilot.json \
+  --request data/molecular/slc10/residue-query-e257a.json
 ```
 
 A residue request replaces `assertion_id` with `residue_query`, retaining all
@@ -316,8 +340,14 @@ author-interpreted mediation edge does not become an isolated experimental resul
 Existing assertion-level evidence types are preserved; machine-readable
 edge-level evidence assessments remain follow-up work, coordinated with
 [PR #714](https://github.com/CultureBotAI/proteintraitsmech/pull/714).
-No bundle bytes, scientific claims or review statuses change for this consumer
-extension, and no new simulation result is incorporated.
+The E257A extension adds a reference neighborhood and an explicit evidence ledger;
+existing assay observations, causal edges, simulation and review statuses are unchanged.
+Source review corrected previously reversed sodium-site names in the native
+coordination graph: [Liu et al., Figure 1i](https://doi.org/10.1038/s41422-022-00680-4)
+labels the E257-containing site Na1 (J:A:706:NA) and the Q261-containing site Na2
+(I:A:705:NA). Deposited atom identities and contact coordinates were unchanged.
+Consumer fixtures pin the rebuilt bundle bytes. It supplies no new simulation
+result or clinical variant-effect interpretation.
 
 ### Read-only check against the actual gene review
 

@@ -22,7 +22,60 @@ until promotion is gated on the same-example presence of:
 Current `canonical_examples` that lack this evidence should be treated as
 `LEGACY_UNVERIFIED`, not as proof that the record has a qualified example.
 
-## Current execution checkpoint (2026-09-15)
+## Cross-Mech execution checkpoint (2026-10-10)
+
+The second explicitly authorized batch, `cross-mech-complex-20261010`, appended
+**36 qualified complex-membership examples on 24 records**, covering 36 distinct
+proteins. All 25 selected records and 37 alternatives were scientifically reviewed.
+One mechanically eligible ARG82/P07250 pairing with CPX-1152 was withheld because
+membership in the mature DNA-bound complex is ambiguous; five alternative Rhea
+candidates remain unreviewed. No catalytic function or residue interface was
+inferred from membership. All 36 added proteins have full, release-pinned sequences
+and generic annotations in the cross-Mech store. See the
+[latest checkpoint](cross-mech-protein-examples.md#protein-first-continuation--2026-10-10),
+[structured self-review](../reviews/structured/20261010T203945Z-cross-mech-complex-membership/review.md)
+and [authoritative YAML](../reviews/structured/20261010T203945Z-cross-mech-complex-membership/review.yaml).
+
+The durable registries now hold **12,699 ProteinReferences, 21,047 evidence objects
+and matching record bindings, and 430 UniProt membership facts**. Protein-first
+inventory coverage is **714 qualified / 537 legacy-only / 796 discovery-only**
+among 2,047 detected accessions. Both batches' 71 approvals and 180 rejections are
+preserved. This is a scoped addition, not corpus-wide completion; the three
+localized sibling pairs still require reviewed source-asserted occurrences.
+Existing provider restrictions and prior rejection dispositions remain in force.
+The coverage-priority cohort still has **666 proteins without a qualified example**
+(77 ComplexPortal, 400 Rhea, 189 GO candidates), including the held ARG82 choice.
+All 71 installed pairs retain exact matching sequence frames in the inventory.
+All 24 newly changed records pass closed-schema and whole-record qualification
+completion checks with zero findings; all non-example fields and the rejected
+record are preserved. Registry integrity, inventory reproducibility, the complete
+23-protein biophysical pilot bundle and 140 focused regression tests pass.
+The full browser rebuild, landing-page/SLC10 checks and all 75 post-build
+documentation tests pass. All 36 new examples are visible with exact sequence
+checksums; the inventory remains uncapped. No full-suite or full-corpus scientific
+completion is claimed.
+
+The first explicitly authorized `cross-mech-refresh-20261010` promotion appended 35
+qualified examples on 14 records: 21 GO localization and 14 Rhea enzymatic
+examples, covering 30 distinct proteins. No legacy example was upgraded. All
+use exact release-2026_03 whole-protein facts, not inferred residue positions.
+The review rejected P08306/GO:0004129 on subunit-versus-complex scope despite
+mechanical eligibility; 178 other alternatives failed the exact-fact gate.
+
+After that first batch the registries held 12,663 ProteinReferences, 21,011 evidence
+objects and matching record bindings, and 394 UniProt membership facts. That
+reviewed batch and the broader 2,047-accession sibling inventory are documented in the
+[cross-Mech checkpoint](cross-mech-protein-examples.md#current-protein-first-checkpoint--2026-10-10),
+including the [structured review](../reviews/structured/20261010T080519Z-cross-mech-refresh-examples/review.md)
+and its [authoritative YAML](../reviews/structured/20261010T080519Z-cross-mech-refresh-examples/review.yaml).
+At that first checkpoint, 702 proteins in the independent coverage-priority cohort
+still lacked a qualified example. Closed-schema validation passed for all 14
+modified records, and semantic replay had no new-claim or other findings beyond
+the 16 preserved legacy examples on
+GO:0031021 and GO:0034515. All 35 new examples pass the bounded qualification
+completion check. This does not recertify those legacy claims or existing graphs.
+
+## Historical execution checkpoint (2026-09-15)
 
 The historical Batch-001 durable blocker has been repaired. The one-off repair
 restored four exact InterPro head-slice definitions from the pinned InterPro 109.0
@@ -4453,6 +4506,29 @@ found.
   at this checkpoint. The controlled Rhea acquisition-runner boundary is complete and
   fully replayed; the next operation remains a separately authorized `--apply` against a
   saved and reviewed execution plan under explicitly permitted network access.
+
+### 2026-10-11 — pinned provider frames rebuilt and the DUF discovery-lead lane
+
+- The UniProt residue frame was rebuilt at the pinned `2026_03` (`just
+  fetch-residue-frame --organisms --top-up --apply`, after a 5-protein canary through
+  the same recipe). It holds 113,695 proteins: 80,090 from the ten panel proteomes and
+  33,605 from the corpus exemplar top-up, with 10,243 confirmed absent. Its SHA-256 is
+  `69edb24bad2535929a6654b53e5d748760552271bf9869b36739504ca1ff81b1`. The run made
+  roughly 850 UniProt requests in 42 minutes. It does not reproduce the 2026-09-24 pin
+  `4fc4d2fb…`, because the sidecar embeds its build date and corpus-dependent top-up.
+- The organism-panel InterPro 110.0 frame was only canaried: 1 of 41,598 target
+  proteins, through `just fetch-interpro-frame --limit 1 --apply`. At the measured
+  rate (about 1.7 proteins/s with 6 workers), a full crawl is at least 41,598 requests
+  and about 6–7 hours. That exceeds the authorized bound, so the crawl was stopped.
+  The local panel frame is a resumable 1-protein partial and must not be audited as
+  complete.
+- The DUF discovery-lead lane routes DUFMech's frozen UniProt candidates onto Pfam DUF
+  records as leads only. Each candidate must still match the record's Pfam signature
+  exactly in a release-pinned InterPro crawl
+  ([duf-discovery leads](duf-discovery-leads.md)). First batch
+  `duf-leads-review-001`: 100 records and 335 alternatives, resolved to 334 QUALIFIED
+  and 1 REJECTED. It is unreviewed, and there is no approval ledger. No trait or durable
+  grounding write occurred.
 
 ### 2026-10-05 — UniProt exact-accession functional-fact lane (#652)
 
