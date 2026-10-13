@@ -183,3 +183,15 @@ def test_limit_stamps_incomplete_sidecars(tmp_path, monkeypatch):
         assert payload["_meta"]["count"] == 1
         assert payload["_meta"]["targets"] == 2
         assert payload["_meta"]["complete"] is False
+
+
+def test_fetch_residue_frame_parser_refuses_abbreviations(monkeypatch):
+    spec = importlib.util.spec_from_file_location(
+        "fetch_residue_frame", REPO / "scripts" / "fetch_residue_frame.py"
+    )
+    assert spec and spec.loader
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    monkeypatch.setattr(sys, "argv", ["fetch_residue_frame.py", "--app"])
+    with pytest.raises(SystemExit):
+        mod.main()

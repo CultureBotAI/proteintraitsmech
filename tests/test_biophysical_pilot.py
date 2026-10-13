@@ -244,7 +244,6 @@ def test_unselected_registry_append_leaves_pilot_valid(pilot):
     assert main(["--root", str(pilot)]) == 0
 
     # But mutating a selected cohort protein in the registry fails verification
-    selected_id = first["protein_id"]
     mutated = {**first, "protein_label": "Changed label"}
     registry_path.write_text(canonical_json(mutated) + "\n" + canonical_json(unrelated) + "\n")
     errors = check_pilot(pilot)

@@ -5,6 +5,8 @@ from __future__ import annotations
 import importlib.util
 import pathlib
 import sys
+
+import pytest
 import yaml
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
@@ -97,3 +99,8 @@ canonical_examples:
     repaired, status = R.repair_record_text(sample_text, "GO:0018597")
     assert repaired is None
     assert "not found" in status
+
+
+def test_repair_assembled_enzyme_notes_parser_refuses_abbreviated_flags():
+    with pytest.raises(SystemExit):
+        R.main(["--app"])

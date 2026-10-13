@@ -29,7 +29,7 @@ TRAITS_ROOT = REPO_ROOT / "data" / "traits"
 BINDINGS_ROOT = REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
 
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
-import grounding_registry_layout as layout
+import grounding_registry_layout as layout  # noqa: E402
 
 CAVEAT_NOTES = {
     "GO:0047154": {
@@ -211,7 +211,7 @@ def repair_bindings(apply: bool) -> tuple[int, int, int]:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     parser.add_argument(
         "--apply",
         action="store_true",

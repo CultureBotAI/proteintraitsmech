@@ -2231,6 +2231,7 @@ def cmd_candidates(args: argparse.Namespace) -> int:
         pairs = audit(
             rows, traits_root=Path(args.traits), rhea_directions=Path(args.rhea_directions)
         )["pairs"]
+    sequences = load_discovery(Path(args.discovery))
     annotation_blocked: list[dict[str, Any]] = []
     if args.entry_annotations:
         from build_cross_mech_inventory import load_discovery_entries
@@ -2431,11 +2432,15 @@ def cmd_review_note(args: argparse.Namespace) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    scan_parser = sub.add_parser("scan", help="read sibling Mechs into the snapshot")
+    scan_parser = sub.add_parser(
+        "scan", help="read sibling Mechs into the snapshot", allow_abbrev=False
+    )
     scan_parser.add_argument("--mechs-root", default=str(REPO_ROOT.parent))
     scan_parser.add_argument("--ref", default=DEFAULT_REF)
     scan_parser.add_argument("--fetch", action="store_true", help="git fetch each sibling first")
@@ -2450,14 +2455,18 @@ def build_parser() -> argparse.ArgumentParser:
     scan_parser.add_argument("--apply", action="store_true")
     scan_parser.set_defaults(func=cmd_scan)
 
-    audit_parser = sub.add_parser("audit", help="resolve the snapshot against data/traits")
+    audit_parser = sub.add_parser(
+        "audit", help="resolve the snapshot against data/traits", allow_abbrev=False
+    )
     audit_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     audit_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     audit_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
     audit_parser.add_argument("--out", default=str(REPORT_DIR))
     audit_parser.set_defaults(func=cmd_audit)
 
-    discover_parser = sub.add_parser("discover", help="read candidate proteins' sequence identity")
+    discover_parser = sub.add_parser(
+        "discover", help="read candidate proteins' sequence identity", allow_abbrev=False
+    )
     discover_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     discover_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     discover_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
@@ -2474,7 +2483,9 @@ def build_parser() -> argparse.ArgumentParser:
     discover_parser.add_argument("--protein", action="append", help="bounded canary accession CURIE")
     discover_parser.set_defaults(func=cmd_discover)
 
-    candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
+    candidates_parser = sub.add_parser(
+        "candidates", help="emit grounding-funnel candidates", allow_abbrev=False
+    )
     candidates_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     candidates_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     candidates_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
@@ -2494,7 +2505,9 @@ def build_parser() -> argparse.ArgumentParser:
     candidates_parser.add_argument("--apply", action="store_true")
     candidates_parser.set_defaults(func=cmd_candidates)
 
-    check_parser = sub.add_parser("check", help="verify the snapshot; optionally report drift")
+    check_parser = sub.add_parser(
+        "check", help="verify the snapshot; optionally report drift", allow_abbrev=False
+    )
     check_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     check_parser.add_argument("--local", action="store_true", help="compare sibling checkouts")
     check_parser.add_argument("--remote", action="store_true", help="compare live default branches")
@@ -2506,6 +2519,7 @@ def build_parser() -> argparse.ArgumentParser:
     review_note_parser = sub.add_parser(
         "review-note",
         help="template a review note for an inherited cross-Mech candidate row (#1060)",
+        allow_abbrev=False,
     )
     review_note_parser.add_argument("--trait-category", help="record trait category")
     review_note_parser.add_argument("--trait-axis", help="record trait axis")

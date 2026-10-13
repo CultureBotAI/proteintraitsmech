@@ -225,3 +225,10 @@ def test_update_edges_filtering_and_errors(release, tmp_path):
     obo.write_text(dropped_obo, encoding="utf-8")
     with pytest.raises(G.GoTruePathError, match="edge does not exist"):
         G.update(edges, obo, child="GO:0000003", parent="GO:0000002")
+
+
+def test_go_true_path_parser_refuses_abbreviated_flags():
+    with pytest.raises(SystemExit):
+        G.main(["check", "--ed", "foo"])
+    with pytest.raises(SystemExit):
+        G.main(["update", "--ap"])

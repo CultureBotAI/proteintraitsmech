@@ -1275,3 +1275,19 @@ def test_ambiguous_entry_annotation_facts_remain_blocked(tmp_path, monkeypatch):
     assert CM.entry_annotation_pairs(entries, mentions, traits_root=tmp_path, blocked=blocked) == []
     assert blocked == [{"protein_id": "UniProtKB:P18776", "reason": "ambiguous exact fact"}]
 
+
+def test_cross_mech_parser_refuses_abbreviated_flags():
+    parser = CM.build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["scan", "--fe"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["audit", "--sn", "foo"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["discover", "--uniprot-release", "2026_03", "--ap"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["candidates", "--uniprot-release", "2026_03", "--ap"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["check", "--loc"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["review-note", "--trait-cat", "foo"])
+

@@ -371,15 +371,19 @@ def update(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0], allow_abbrev=False)
     sub = parser.add_subparsers(dest="command", required=True)
 
-    check_parser = sub.add_parser("check", help="replay tracked edges against the OBO release")
+    check_parser = sub.add_parser(
+        "check", help="replay tracked edges against the OBO release", allow_abbrev=False
+    )
     check_parser.add_argument("--edges", type=Path, default=DEFAULT_GO_EDGES)
     check_parser.add_argument("--obo", type=Path, default=DEFAULT_GO_OBO)
 
     update_parser = sub.add_parser(
-        "update", help="update tracked edges whose relation changed in the local GO release"
+        "update",
+        help="update tracked edges whose relation changed in the local GO release",
+        allow_abbrev=False,
     )
     update_parser.add_argument("--edges", type=Path, default=DEFAULT_GO_EDGES)
     update_parser.add_argument("--obo", type=Path, default=DEFAULT_GO_OBO)

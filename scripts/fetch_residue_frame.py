@@ -255,8 +255,11 @@ def entry_intervals(entry: dict) -> list:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,
+    )
     ap.add_argument("--query", action="append", metavar="Q")
     ap.add_argument("--organisms", action="store_true",
                     help="the ten proteomes of the standard matrix")
