@@ -163,7 +163,7 @@ def test_load_snapshot_refuses_a_foreign_origin_and_an_unpublished_commit(tmp_pa
     _git(repo, "add", "-A")
     _git(repo, "commit", "-q", "-m", "local only")
     local = _git(repo, "rev-parse", "HEAD")
-    with pytest.raises(DL.DufLeadError, match="not on"):
+    with pytest.raises(DL.DufLeadError, match="not an ancestor of the local origin/main"):
         DL.load_snapshot(repo, local, **pins)
     with pytest.raises(DL.DufLeadError, match="not in"):
         DL.load_snapshot(repo, "0" * 40, **pins)
@@ -322,8 +322,6 @@ def test_whole_protein_candidates_copy_frame_coordinates_and_never_lead_identity
     assert whole["mapping_method"] == "INTERPRO_MATCH" and whole["source_release"] == "110.0"
     assert whole["candidate_id"] == derive_candidate_id(whole)
     assert whole["duf_lead_provenance"]["lead_status"] == "TARGET_ABSENT_FROM_TRAIT"
-    assert whole["other_interpro_signatures"] == ["Pfam:PF99999"]
-    assert by_protein["UniProtKB:P12345"]["other_interpro_signatures"] == []
     assert by_protein["UniProtKB:P12345"]["duf_lead_provenance"]["lead_status"] == (
         "TARGET_LEGACY_ON_TRAIT"
     )
@@ -359,62 +357,6 @@ def test_localized_leads_need_one_grouped_location_or_a_single_interval(tmp_path
     assert {row["interpro_location_id"] for row in located} == expected
     reasons = {(row["protein_id"], row["reason"]) for row in rejected}
     assert ("UniProtKB:A0A000AAA4", "UNGROUPED_INTERPRO_LOCATIONS") in reasons
-
-
-def test_grouped_interpro_locations_bounds_and_containment(tmp_path):
-    frame = {
-        "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
-        "A0A000AAA1": {},
-        "P12345": {},
-        "A0A000AAA4": {},
-    }
-    # Out of bounds: start < 1
-    grouped_bad_start = {"A0A000AAA2": {"Pfam:PF00002": [[[0, 50]]]}}
-    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_bad_start)
-    assert any(
-        row["protein_id"] == "UniProtKB:A0A000AAA2"
-        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
-        for row in rejected
-    )
-
-    # Out of bounds: end > length (sequence length is 120)
-    grouped_bad_end = {"A0A000AAA2": {"Pfam:PF00002": [[[20, 150]]]}}
-    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_bad_end)
-    assert any(
-        row["protein_id"] == "UniProtKB:A0A000AAA2"
-        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
-        for row in rejected
-    )
-
-    # Not contained in flat intervals (1 to 15 is outside [[20, 60], [80, 120]])
-    grouped_not_contained = {"A0A000AAA2": {"Pfam:PF00002": [[[1, 15]]]}}
-    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_not_contained)
-    assert any(
-        row["protein_id"] == "UniProtKB:A0A000AAA2"
-        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
-        for row in rejected
-    )
-
-    # Non-list raw groups
-    grouped_non_list = {"A0A000AAA2": {"Pfam:PF00002": "not-a-list"}}
-    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_non_list)
-    assert any(
-        row["protein_id"] == "UniProtKB:A0A000AAA2"
-        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
-        for row in rejected
-    )
-
-
-def test_grouped_interpro_non_dict_entry_raises_duf_lead_error(tmp_path):
-    frame = {
-        "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
-        "A0A000AAA1": {},
-        "P12345": {},
-        "A0A000AAA4": {},
-    }
-    grouped = {"A0A000AAA2": "not-a-dict"}
-    with pytest.raises(DL.DufLeadError, match="must be an object"):
-        _stage(tmp_path, frame=frame, grouped=grouped)
 
 
 def test_rejections_are_reported_not_guessed(tmp_path):
@@ -593,206 +535,237 @@ def test_discovery_receipt_must_bind_the_plan_and_cover_it(tmp_path):
         DL.verify_discovery_receipt(receipt, raw, plan, short, uniprot_release="2026_03")
 
 
-class _FakeResponse:
-    def __init__(self, url: str, body: bytes, *, release: str = "2026_03", link: str = ""):
-        self.url = url
-        self.body = body
-        self.status = 200
-        self.headers = {"x-uniprot-release": release, "link": link}
+# ------------------------------------------------- grouped InterPro locations (#1078)
 
-    def geturl(self) -> str:
-        return self.url
 
-    def read(self) -> bytes:
-        return self.body
+def _localized_frame(**overrides):
+    frame = {
+        "A0A000AAA1": {},
+        "P12345": {},
+        "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
+        "A0A000AAA4": {},
+    }
+    frame.update(overrides)
+    return frame
+
+
+@pytest.mark.parametrize(
+    ("groups", "reason"),
+    [
+        ([[[20, 60]], [[80, 260]]], "INTERPRO_GROUPED_LOCATION_OUT_OF_BOUNDS"),  # past 200
+        ([[[0, 60]], [[80, 120]]], "INTERPRO_GROUPED_LOCATION_OUT_OF_BOUNDS"),
+        ([[[20, 60]], [[80, 121]]], "INTERPRO_GROUPED_LOCATION_NOT_IN_FLAT_MATCH"),
+        ([[[20, 60], [81, 120]]], "INTERPRO_GROUPED_LOCATION_NOT_IN_FLAT_MATCH"),
+        ([[[20, 60]], [["80", 120]]], "MALFORMED_INTERPRO_GROUPED_LOCATION"),
+        ({"not": "a list"}, "MALFORMED_INTERPRO_GROUPED_LOCATION"),
+    ],
+)
+def test_grouped_locations_get_flat_bounds_and_containment_checks(tmp_path, groups, reason):
+    grouped = {"A0A000AAA2": {"Pfam:PF00002": groups}}
+    candidates, rejected = _stage(tmp_path, frame=_localized_frame(), grouped=grouped)
+    assert not [row for row in candidates if row["trait_id"] == "Pfam:PF00002"]
+    assert ("UniProtKB:A0A000AAA2", reason) in {
+        (row["protein_id"], row["reason"]) for row in rejected
+    }
+
+
+def test_a_discontinuous_grouped_location_inside_the_flat_match_is_one_candidate(tmp_path):
+    grouped = {"A0A000AAA2": {"Pfam:PF00002": [[[20, 60], [80, 120]]]}}
+    candidates, _ = _stage(tmp_path, frame=_localized_frame(), grouped=grouped)
+    located = [row for row in candidates if row["trait_id"] == "Pfam:PF00002"]
+    assert len(located) == 1
+    assert located[0]["intervals"] == [{"start": 20, "end": 60}, {"start": 80, "end": 120}]
+
+
+@pytest.mark.parametrize(
+    ("frame", "grouped", "message"),
+    [
+        ({"A0A000AAA2": [[20, 60]]}, {}, "DUF InterPro frame entry for A0A000AAA2"),
+        ({}, {"A0A000AAA2": [[[20, 60]]]}, "grouped DUF InterPro frame entry for A0A000AAA2"),
+    ],
+)
+def test_non_object_frame_entries_are_errors_not_attribute_errors(
+    tmp_path, frame, grouped, message
+):
+    with pytest.raises(DL.DufLeadError, match=message):
+        _stage(tmp_path, frame=_localized_frame(**frame), grouped=grouped)
+
+
+# ------------------------------------------------------------- command line (#1069)
+
+
+def _traits_repo(tmp_path):
+    """The audit fixture's records in a git work tree, as build_identifier_index reads."""
+    traits = tmp_path / "traits"
+    _fixture_audit(tmp_path)  # writes the records under tmp_path / "traits"
+    _git(traits, "init", "-q")
+    _git(traits, "add", "-A")
+    _git(traits, "commit", "-q", "-m", "traits")
+    return traits
+
+
+class _Response:
+    def __init__(self, url, body, release="2026_03"):
+        self._url, self._body, self.status = url, body, 200
+        self.headers = {"x-uniprot-release": release}
 
     def __enter__(self):
         return self
 
-    def __exit__(self, *exc):
+    def __exit__(self, *args):
         return False
 
+    def geturl(self):
+        return self._url
 
-def test_cli_subcommands_dry_run_apply_and_error_codes(tmp_path, monkeypatch):
-    traits = tmp_path / "traits"
-    _record(
-        traits,
-        "sequence/family/pfam/a.yaml",
-        "Pfam:PF00001",
-        "SEQ_FAMILY",
-        [{"protein_id": "UniProtKB:P12345"}],
-    )
-    _record(traits, "sequence/domain/pfam/b.yaml", "Pfam:PF00002", "SEQ_DOMAIN")
+    def read(self):
+        return self._body
 
-    snapshot = DL.Snapshot(ROWS, {}, DL.PINNED_COMMIT, DL.SNAPSHOT_SHA256, DL.MANIFEST_SHA256)
-    monkeypatch.setattr(DL, "load_snapshot", lambda repo, commit=None, **kwargs: snapshot)
-    monkeypatch.setattr(DL, "default_content_gate", lambda records: _Gate(records))
-    monkeypatch.setattr(
-        DL.cm,
-        "build_identifier_index",
-        lambda root: {
-            "Pfam:PF00001": ["sequence/family/pfam/a.yaml"],
-            "Pfam:PF00002": ["sequence/domain/pfam/b.yaml"],
-        },
-    )
 
-    out_dir = tmp_path / "out"
-    out_dir.mkdir()
+def _uniprot_opener(calls, *, release="2026_03", length=200):
+    accessions = sorted({row["uniprot_accession"] for row in ROWS})
 
-    # 1. Audit dry-run: returns 0, writes nothing
-    exit_code = DL.main(["audit", "--traits", str(traits), "--out", str(out_dir)])
-    assert exit_code == 0
-    assert not (out_dir / "leads.jsonl").exists()
-    assert not (out_dir / "summary.json").exists()
-
-    # 2. Audit apply: returns 0, writes leads.jsonl and summary.json
-    exit_code = DL.main(["audit", "--traits", str(traits), "--out", str(out_dir), "--apply"])
-    assert exit_code == 0
-    assert (out_dir / "leads.jsonl").exists()
-    assert (out_dir / "summary.json").exists()
-    summary = json.loads((out_dir / "summary.json").read_text(encoding="utf-8"))
-    assert summary["content_gate"] is True
-
-    # 3. Discover dry-run: returns 0, opener not called, writes nothing
-    opener_called = []
-
-    def fake_opener(request, timeout=120):
-        opener_called.append(request)
-        return _FakeResponse(request.full_url, b"{}")
-
-    exit_code = DL.main(
-        ["discover", "--uniprot-release", "2026_03", "--out", str(out_dir)],
-        opener=fake_opener,
-    )
-    assert exit_code == 0
-    assert not opener_called
-    assert not (out_dir / "discovery-plan.json").exists()
-
-    # 4. Discover apply: returns 0, opener called, writes expected files
-    def fake_opener_results(request, timeout=120):
-        opener_called.append(request)
+    def opener(request, timeout):
+        calls.append(request.full_url)
         results = [
-            {"primaryAccession": "A0A000AAA1", "sequence": {"value": "M" * 120, "length": 120}},
-            {"primaryAccession": "P12345", "sequence": {"value": "M" * 120, "length": 120}},
-            {"primaryAccession": "A0A000AAA2", "sequence": {"value": "M" * 120, "length": 120}},
+            {"primaryAccession": accession, "sequence": {"value": "M" * length, "length": length}}
+            for accession in accessions
         ]
-        return _FakeResponse(request.full_url, json.dumps({"results": results}).encode())
+        return _Response(request.full_url, json.dumps({"results": results}).encode(), release)
 
-    exit_code = DL.main(
-        ["discover", "--uniprot-release", "2026_03", "--out", str(out_dir), "--apply"],
-        opener=fake_opener_results,
-    )
-    assert exit_code == 0
-    assert opener_called
-    assert (out_dir / "discovery-plan.json").exists()
-    assert (out_dir / "accessions.txt").exists()
-    assert (out_dir / "discovery.jsonl").exists()
-    assert (out_dir / "discovery.receipt.json").exists()
+    return opener
 
-    # Prepare InterPro frames for candidates
-    frame_path = tmp_path / "interpro_frame.json"
-    frame_data = {
-        "_meta": {"source": "InterPro", "release": "110.0"},
-        "proteins": {
-            "A0A000AAA1": {"Pfam:PF00001": [[10, 50]]},
-            "P12345": {"Pfam:PF00001": [[5, 50]]},
-            "A0A000AAA2": {"Pfam:PF00002": [[20, 60]]},
-        },
+
+def _no_network(request, timeout):
+    raise AssertionError(f"unexpected network request: {request.full_url}")
+
+
+@pytest.fixture
+def cli(tmp_path, monkeypatch):
+    repo, commit, pins = _dufmech(tmp_path, ROWS)
+    monkeypatch.setattr(DL, "PINNED_COMMIT", commit)
+    monkeypatch.setattr(DL, "SNAPSHOT_SHA256", pins["expected_sha256"])
+    monkeypatch.setattr(DL, "MANIFEST_SHA256", pins["expected_manifest_sha256"])
+    monkeypatch.setattr(DL, "default_content_gate", _Gate)
+    out = tmp_path / "out"
+    return {
+        "repo": repo,
+        "traits": _traits_repo(tmp_path),
+        "out": out,
+        "frame": tmp_path / "frames" / "interpro_frame.json",
+        "grouped": tmp_path / "frames" / "interpro_grouped_locations.json",
     }
-    frame_path.write_text(json.dumps(frame_data), encoding="utf-8")
 
-    grouped_path = tmp_path / "interpro_grouped_locations.json"
-    grouped_data = {
-        "_meta": {"source": "InterPro", "release": "110.0"},
-        "proteins": {
-            "A0A000AAA2": {"Pfam:PF00002": [[[20, 60]]]},
-        },
+
+def _audit_argv(cli, *extra):
+    return ["audit", "--dufmech-repo", str(cli["repo"]), "--traits", str(cli["traits"]),
+            "--out", str(cli["out"]), *extra]
+
+
+def _candidates_argv(cli, *extra, interpro_release="110.0"):
+    return ["candidates", "--uniprot-release", "2026_03", "--interpro-release",
+            interpro_release, "--interpro-frame", str(cli["frame"]),
+            "--interpro-grouped-frame", str(cli["grouped"]), "--out", str(cli["out"]), *extra]
+
+
+def _write_frames(cli, frame, grouped, release="110.0"):
+    sidecar = _load("sidecar", REPO / "scripts" / "sidecar.py")
+    cli["frame"].parent.mkdir(parents=True, exist_ok=True)
+    cli["frame"].write_text(json.dumps(sidecar.wrap("proteins", frame, "InterPro", release)))
+    cli["grouped"].write_text(json.dumps(sidecar.wrap("proteins", grouped, "InterPro", release)))
+
+
+def test_cli_audit_is_a_dry_run_until_apply(cli, capsys):
+    assert DL.main(_audit_argv(cli), opener=_no_network) == 0
+    assert not cli["out"].exists()
+    assert "dry run" in capsys.readouterr().out
+    assert DL.main(_audit_argv(cli, "--apply"), opener=_no_network) == 0
+    summary = json.loads((cli["out"] / "summary.json").read_text())
+    assert summary["content_gate"] is True
+    assert summary["snapshot"] == DL.pinned_provenance()
+    assert summary["leads_by_status"]["RECORD_CONTENT_BLOCKED"] == 1
+    leads = DL._read_jsonl(cli["out"] / "leads.jsonl")
+    assert len(leads) == len(ROWS)
+
+
+def test_cli_audit_fails_closed_with_exit_2_on_a_changed_snapshot(cli, monkeypatch, capsys):
+    monkeypatch.setattr(DL, "SNAPSHOT_SHA256", "0" * 64)
+    assert DL.main(_audit_argv(cli, "--apply"), opener=_no_network) == 2
+    assert "ERROR: snapshot SHA-256" in capsys.readouterr().err
+    assert not cli["out"].exists()
+
+
+def test_cli_end_to_end_audit_discover_candidates_with_stubbed_uniprot(cli, capsys):
+    assert DL.main(_audit_argv(cli, "--apply"), opener=_no_network) == 0
+
+    # discover: the dry run plans without any request
+    assert DL.main(["discover", "--uniprot-release", "2026_03", "--max-records", "10",
+                    "--out", str(cli["out"])], opener=_no_network) == 0
+    assert not (cli["out"] / "discovery-plan.json").exists()
+    calls: list[str] = []
+    assert DL.main(["discover", "--uniprot-release", "2026_03", "--max-records", "10",
+                    "--out", str(cli["out"]), "--apply"], opener=_uniprot_opener(calls)) == 0
+    assert len(calls) == 1 and calls[0].startswith("https://rest.uniprot.org/")
+    plan = json.loads((cli["out"] / "discovery-plan.json").read_text())
+    assert (cli["out"] / "accessions.txt").read_text().split() == plan["accessions"]
+    receipt = json.loads((cli["out"] / "discovery.receipt.json").read_text())
+    assert receipt["discovered"] == len(plan["accessions"]) and receipt["missing"] == []
+
+    frame = {accession: {} for accession in plan["accessions"]}
+    frame["A0A000AAA1"] = {"Pfam:PF00001": [[10, 50]]}
+    frame["A0A000AAA2"] = {"Pfam:PF00002": [[20, 60]]}
+    _write_frames(cli, frame, {})
+    capsys.readouterr()
+    assert DL.main(_candidates_argv(cli), opener=_no_network) == 0
+    assert not (cli["out"] / "candidates.jsonl").exists()
+    report = json.loads(capsys.readouterr().out.split("\ndry run")[0])
+    assert report["candidates"] == 2 and report["interpro_release"] == "110.0"
+
+    assert DL.main(_candidates_argv(cli, "--apply"), opener=_no_network) == 0
+    candidates = DL._read_jsonl(cli["out"] / "candidates.jsonl")
+    assert {row["protein_id"] for row in candidates} == {
+        "UniProtKB:A0A000AAA1", "UniProtKB:A0A000AAA2",
     }
-    grouped_path.write_text(json.dumps(grouped_data), encoding="utf-8")
-
-    # 5. Candidates dry-run: returns 0, writes nothing
-    exit_code = DL.main([
-        "candidates",
-        "--uniprot-release",
-        "2026_03",
-        "--interpro-release",
-        "110.0",
-        "--interpro-frame",
-        str(frame_path),
-        "--interpro-grouped-frame",
-        str(grouped_path),
-        "--out",
-        str(out_dir),
-    ])
-    assert exit_code == 0
-    assert not (out_dir / "candidates.jsonl").exists()
-
-    # 6. Candidates apply: returns 0, writes candidates.jsonl, rejected.jsonl, candidates.summary.json
-    exit_code = DL.main([
-        "candidates",
-        "--uniprot-release",
-        "2026_03",
-        "--interpro-release",
-        "110.0",
-        "--interpro-frame",
-        str(frame_path),
-        "--interpro-grouped-frame",
-        str(grouped_path),
-        "--out",
-        str(out_dir),
-        "--apply",
-    ])
-    assert exit_code == 0
-    assert (out_dir / "candidates.jsonl").exists()
-    assert (out_dir / "rejected.jsonl").exists()
-    assert (out_dir / "candidates.summary.json").exists()
-
-    # 7. Error cases return exit code 2
-    # Missing repo for audit
-    monkeypatch.undo()
-    err_code = DL.main(["audit", "--dufmech-repo", str(tmp_path / "nonexistent")])
-    assert err_code == 2
-
-    # Ungated summary for discover
-    (out_dir / "summary.json").write_text(json.dumps({"content_gate": False}), encoding="utf-8")
-    err_code = DL.main(["discover", "--uniprot-release", "2026_03", "--out", str(out_dir)])
-    assert err_code == 2
-
-    # Frame release mismatch for candidates
-    frame_data["_meta"]["release"] = "109.0"
-    frame_path.write_text(json.dumps(frame_data), encoding="utf-8")
-    err_code = DL.main([
-        "candidates",
-        "--uniprot-release",
-        "2026_03",
-        "--interpro-release",
-        "110.0",
-        "--interpro-frame",
-        str(frame_path),
-        "--interpro-grouped-frame",
-        str(grouped_path),
-        "--out",
-        str(out_dir),
-    ])
-    assert err_code == 2
+    assert all(row["sequence_length"] == 200 for row in candidates)
+    rejected = DL._read_jsonl(cli["out"] / "rejected.jsonl")
+    assert {row["reason"] for row in rejected} == {"NO_EXACT_INTERPRO_MATCH"}
+    written = json.loads((cli["out"] / "candidates.summary.json").read_text())
+    assert written == report
 
 
-def test_load_frame_rejects_incomplete_sidecars(tmp_path: pathlib.Path):
-    p = tmp_path / "frame.json"
-    # complete: False
-    p.write_text(json.dumps({
-        "_meta": {"source": "InterPro", "complete": False, "count": 1, "targets": 10},
-        "proteins": {"P12345": {}},
-    }), encoding="utf-8")
-    with pytest.raises(DL.DufLeadError, match="incomplete"):
-        DL._load_frame(p, "InterPro frame")
-
-    # count < targets
-    p.write_text(json.dumps({
-        "_meta": {"source": "InterPro", "complete": True, "count": 1, "targets": 2},
-        "proteins": {"P12345": {}},
-    }), encoding="utf-8")
-    with pytest.raises(DL.DufLeadError, match="incomplete"):
-        DL._load_frame(p, "InterPro frame")
+def test_cli_discover_and_candidates_refuse_an_ungated_audit(cli, capsys):
+    assert DL.main(_audit_argv(cli, "--no-content-gate", "--apply"), opener=_no_network) == 0
+    assert DL.main(["discover", "--uniprot-release", "2026_03", "--out", str(cli["out"]),
+                    "--apply"], opener=_no_network) == 2
+    assert "no-content-gate" in capsys.readouterr().err
 
 
+def test_cli_discover_fails_closed_on_another_uniprot_release(cli, capsys):
+    assert DL.main(_audit_argv(cli, "--apply"), opener=_no_network) == 0
+    calls: list[str] = []
+    assert DL.main(["discover", "--uniprot-release", "2026_03", "--out", str(cli["out"]),
+                    "--apply"], opener=_uniprot_opener(calls, release="2026_04")) == 2
+    assert "is not the pinned '2026_03'" in capsys.readouterr().err
+    assert not (cli["out"] / "discovery-plan.json").exists()
+
+
+@pytest.mark.parametrize("case", ["frame_release", "pinned_release", "uncovered"])
+def test_cli_candidates_exit_2_on_release_or_coverage_failures(cli, capsys, case):
+    assert DL.main(_audit_argv(cli, "--apply"), opener=_no_network) == 0
+    assert DL.main(["discover", "--uniprot-release", "2026_03", "--out", str(cli["out"]),
+                    "--apply"], opener=_uniprot_opener([])) == 0
+    plan = json.loads((cli["out"] / "discovery-plan.json").read_text())
+    frame = {accession: {} for accession in plan["accessions"]}
+    if case == "uncovered":
+        frame.pop(plan["accessions"][0])
+    _write_frames(cli, frame, {}, release="109.0" if case == "frame_release" else "110.0")
+    argv = _candidates_argv(cli, "--apply",
+                            interpro_release="1.0" if case == "pinned_release" else "110.0")
+    assert DL.main(argv, opener=_no_network) == 2
+    expected = {
+        "frame_release": "is not the pinned '110.0'",
+        "pinned_release": "DUF InterPro frame release '110.0' is not the pinned '1.0'",
+        "uncovered": "does not cover 1 planned accession",
+    }[case]
+    assert expected in capsys.readouterr().err
+    assert not (cli["out"] / "candidates.jsonl").exists()

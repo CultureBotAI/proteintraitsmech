@@ -1,0 +1,49 @@
+history_version: 1
+target:
+  kind: other
+  path: scripts/duf_leads.py
+  slug: duf-discovery-lead-lane
+session:
+  id: 2026-10-12T202436789173Z-claude-code-5970d2
+  timestamp: '2026-10-12T20:24:36.789173Z'
+  actors:
+  - type: ai_agent
+    name: claude-code
+    model: claude-opus-5-5
+    agent_tool: Claude Code
+links:
+  issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1069
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1070
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1071
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1072
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1077
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1078
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1080
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1097
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1098
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1102
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1106
+events:
+- type: EDIT
+  outcome: changed
+  summary: 'Close the DUF lane review follow-ups: frame completeness, content pins, review provenance,
+    input checks'
+  details: 'InterPro frames now carry _meta.completeness (complete only when every target is in both frames);
+    audit-uniprot-grounding refuses a frame not stamped complete unless --allow-incomplete-interpro-frame,
+    and just certify-interpro-frame stamps a finished pre-marker crawl offline after re-deriving its target
+    set and checking coverage. The resolver reports an accession absent from the bound frame as missing:interpro_frame_entry.
+    Residue frames record query completeness. sidecar.content_sha256 hashes a frame without built/completeness;
+    the CATH stage keeps its 4fc4d2fb residue byte pin and also accepts the content digest a640a2ea...
+    of the retained 2026-10-11 UniProt 2026_03 rebuild (bytes 69edb24b...), not re-run against it. DUF
+    review TSVs gain lead provenance and other Pfam signature columns, with a documented review rule for
+    multi-domain WHOLE_PROTEIN carriers; other lanes keep their columns. Grouped InterPro locations get
+    bounds and flat-containment checks; non-object entries are DufLeadError. ground_uniprot_examples.py
+    parsers refuse abbreviated flags. The DUFMech publication check is documented as a local-ref consistency
+    check. CLI tests cover the duf_leads.py commands offline. No trait, durable registry, approval or
+    network write. Reconciled with #1095 on main: one completeness design (_meta.completeness with target_set
+    and targets_sha256); frames with only #1095''s interim top-level complete/targets marker are refused
+    by the audit until certified, and certification drops those keys; panel completeness requires matching
+    compact and grouped stamps and certify-interpro-frame refuses --accessions (#1097); the CATH stage
+    names the needed repin for a certified panel frame (#1098); non-DUF review TSVs keep the pre-#1095
+    columns.'

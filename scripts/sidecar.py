@@ -25,19 +25,50 @@ Wrapped shape:
 an existing cache keeps working and simply cannot be release-checked until it is
 rebuilt.
 
+COMPLETENESS (issue #1070). A resumable crawl writes checkpoints, and a `--limit`
+canary writes a few proteins, in exactly the shape of a finished crawl. A consumer
+that reads *absence* from a frame (the grounding audit's NO_LOCAL_EXACT_TRAIT_MATCH)
+must know the difference, so `_meta.completeness` records the target set and
+whether every target was fetched:
+
+    "completeness": {"complete": true, "basis": "crawl", "target_set": "…",
+                     "targets": 41598, "targets_sha256": "…", "missing": 0}
+
+`complete` is true only when every target is present. A frame without the key
+predates the marker and counts as NOT complete, and so does a frame carrying only
+the interim top-level `complete`/`targets` keys (no target-set identity); `fetch_interpro_frame.py --certify`
+stamps such a frame offline after re-deriving its target set and checking coverage.
+
+CONTENT DIGEST (issue #1071). The bytes embed `built` (the build date), so no
+rebuild reproduces a byte pin. `content_sha256()` hashes the canonical JSON with
+the volatile `_meta` keys (`built`, `completeness`, and the interim `complete`,
+`targets`) removed: two frames with the
+same payload, release and absent list have the same content digest whatever day
+they were built or certified. It does not hide a different payload, so a rebuild
+whose corpus-dependent top-up differs still has a different digest.
+
+  python3 scripts/sidecar.py content-sha256 data/raw/align_cache/residue_frame.json
+
 Stdlib-only.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 import sys
+import tempfile
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 SCHEMA = 1
+# `_meta` keys that describe *when* or *how* a frame was made, not what it holds.
+# `complete` and `targets` are the interim top-level marker #1095's fetchers wrote
+# briefly; it records no target-set identity and is superseded by `completeness`.
+INTERIM_COMPLETENESS_KEYS = frozenset({"complete", "targets"})
+VOLATILE_META_KEYS = frozenset({"built", "completeness"}) | INTERIM_COMPLETENESS_KEYS
 
 
 def uniprot_release() -> str | None:
@@ -68,27 +99,66 @@ def interpro_release() -> str | None:
         return None
 
 
-def wrap(
-    payload_key: str,
-    data: dict,
-    source: str,
-    release: str | None,
-    *,
-    targets: int | None = None,
-    complete: bool | None = None,
-) -> dict:
-    meta: dict[str, Any] = {
-        "schema": SCHEMA,
-        "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
-        "source": source,
-        "release": release,
-        "count": len(data),
-    }
-    if targets is not None:
-        meta["targets"] = targets
-    if complete is not None:
-        meta["complete"] = bool(complete)
+def wrap(payload_key: str, data: dict, source: str, release: str | None,
+         completeness: dict | None = None) -> dict:
+    meta = {"schema": SCHEMA,
+            "built": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "source": source,
+            "release": release,
+            "count": len(data)}
+    if completeness is not None:
+        meta["completeness"] = completeness
     return {"_meta": meta, payload_key: data}
+
+
+def targets_sha256(targets) -> str:
+    """Digest of a target set: sorted unique accessions, one per line."""
+    return hashlib.sha256("".join(f"{a}\n" for a in sorted(set(targets))).encode()).hexdigest()
+
+
+def completeness(targets, present, *, target_set: str, basis: str = "crawl",
+                 failed: int = 0) -> dict:
+    """`_meta.completeness` for a frame meant to hold one entry per target.
+
+    `present` is every container the targets must be in (a crawl writes the compact
+    and grouped InterPro frames together, so a target counts only if it is in both).
+    """
+    targets = sorted(set(targets))
+    missing = [a for a in targets if not all(a in container for container in present)]
+    return {"complete": not missing and not failed,
+            "basis": basis,
+            "target_set": target_set,
+            "targets": len(targets),
+            "targets_sha256": targets_sha256(targets),
+            "missing": len(missing)}
+
+
+def is_complete(meta: dict | None) -> bool:
+    """True only for a frame stamped complete. Unmarked (pre-#1070) frames are not."""
+    stamp = (meta or {}).get("completeness")
+    return isinstance(stamp, dict) and stamp.get("complete") is True
+
+
+def content_sha256(blob) -> str:
+    """SHA-256 of a frame's canonical JSON without the volatile `_meta` keys."""
+    if isinstance(blob, dict) and isinstance(blob.get("_meta"), dict):
+        blob = {**blob, "_meta": {key: value for key, value in blob["_meta"].items()
+                                  if key not in VOLATILE_META_KEYS}}
+    text = json.dumps(blob, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def write_atomic(path: Path, blob: dict) -> None:
+    """Write compact JSON through a same-directory temporary file and replace."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    handle, temporary = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
+    try:
+        with os.fdopen(handle, "w", encoding="utf-8") as stream:
+            json.dump(blob, stream, separators=(",", ":"))
+        os.replace(temporary, path)
+    except BaseException:
+        Path(temporary).unlink(missing_ok=True)
+        raise
 
 
 def read(path: Path, payload_key: str) -> tuple:
@@ -133,3 +203,21 @@ def check_release(meta: dict, current: str | None, path: Path,
               file=sys.stderr)
         return allow_stale
     return True
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
+    ap = argparse.ArgumentParser(description="Print a sidecar's content digest.",
+                                 allow_abbrev=False)
+    ap.add_argument("command", choices=["content-sha256"])
+    ap.add_argument("paths", nargs="+", type=Path)
+    args = ap.parse_args(argv)
+    for path in args.paths:
+        blob = json.loads(path.read_text(encoding="utf-8"))
+        print(f"{content_sha256(blob)}  {path}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

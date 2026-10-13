@@ -4530,6 +4530,25 @@ found.
   and 1 REJECTED. It is unreviewed, and there is no approval ledger. No trait or durable
   grounding write occurred.
 
+### 2026-10-12 — frame completeness and content pins (#1070, #1071)
+
+- InterPro frame writes now record `_meta.completeness`, which is `complete: true`
+  only when every target protein is in both frames. `audit-uniprot-grounding` refuses
+  a frame that is not stamped complete for the organism-panel target set (and a
+  grouped frame with a different stamp), so a canary, checkpoint or accession-list
+  stamp can no longer turn "not crawled" into `NO_LOCAL_EXACT_TRAIT_MATCH`.
+  Certifying changes the panel frame's bytes, so the CATH stage's `bc2d66…`
+  InterPro byte pin needs a reviewed repin afterwards (#1098). A crawl finished by an older script
+  is stamped offline with `just certify-interpro-frame --apply`, after its target set
+  is re-derived and its coverage checked. The resolver rejects a candidate whose
+  accession the bound frame never reached as `missing:interpro_frame_entry`.
+- The CATH stage keeps the `4fc4d2fb…` residue-frame byte pin and also accepts the
+  content digest (canonical JSON without `built`/`completeness`) of the 2026-10-11
+  rebuild, `a640a2ea9f8d1f6a552f583531c50e2d98a38642534a2c028aea96878886dcc2`.
+  It was not re-run against the rebuild; see
+  [duf-discovery leads](duf-discovery-leads.md) for what the content pin does and does
+  not guarantee.
+
 ### 2026-10-05 — UniProt exact-accession functional-fact lane (#652)
 
 - Sibling Mechs tie 406 proteins to 216 existing trait records here, almost all

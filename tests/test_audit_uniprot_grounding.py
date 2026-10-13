@@ -24,6 +24,16 @@ SPEC.loader.exec_module(A)
 
 import validate_uniprot_grounding as V  # noqa: E402
 import uniprot_membership_snapshot as M  # noqa: E402
+import sidecar  # noqa: E402
+
+# A finished crawl's stamp (#1070); fixtures model a complete InterPro frame.
+COMPLETE = {
+    "completeness": sidecar.completeness(
+        ["P12345", "Q54321", "Q11111", "P99999"],
+        [{"P12345", "Q54321", "Q11111", "P99999"}],
+        target_set="organism-panel-exemplars",
+    )
+}
 
 
 def _record(traits: Path, name: str, text: str) -> None:
@@ -342,7 +352,7 @@ def _inputs(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
     _json(
         interpro,
         {
-            "_meta": {"schema": 1, "source": "InterPro", "release": "109.0"},
+            "_meta": {"schema": 1, "source": "InterPro", "release": "109.0", **COMPLETE},
             "proteins": {
                 "P12345": {"Pfam:PF00001": [[2, 4]], "Pfam:PF00002": [[1, 6]]},
                 "Q54321": {"Pfam:PF00001": [[1, 3], [5, 6]]},
@@ -655,7 +665,7 @@ def test_grouped_interpro_sidecar_discharges_multi_fragment_location(tmp_path):
     _json(
         grouped,
         {
-            "_meta": {"schema": 1, "source": "InterPro", "release": "109.0"},
+            "_meta": {"schema": 1, "source": "InterPro", "release": "109.0", **COMPLETE},
             "proteins": {
                 "Q54321": {
                     "Pfam:PF00001": [
@@ -976,46 +986,167 @@ def test_scope_policy_matches_the_semantic_validator():
     assert A._scope(record("SEQUENCE", "SEQ_DOMAIN")) == "LOCALIZED"
 
 
-def test_discover_candidates_fails_on_incomplete_frames(tmp_path: Path):
-    traits, residue, interpro, profiles = _inputs(tmp_path)
-    records, _ = A.scan_records(
+# ------------------------------------------------- InterPro frame completeness (#1070)
+
+
+def _restamp(path: Path, completeness: object) -> None:
+    blob = json.loads(path.read_text(encoding="utf-8"))
+    if completeness is None:
+        blob["_meta"].pop("completeness", None)
+    else:
+        blob["_meta"]["completeness"] = completeness
+    _json(path, blob)
+
+
+def _audit(tmp_path, traits, residue, interpro, profiles, **kwargs):
+    return A.run_audit(
         traits,
-        protein_registry_path=tmp_path / "proteins.jsonl",
-        evidence_registry_path=tmp_path / "evidence.jsonl",
-        membership_registry_path=tmp_path / "memberships.jsonl",
+        residue,
+        interpro,
+        profiles,
+        tmp_path / "out",
+        protein_registry_path=tmp_path / "missing-proteins.jsonl",
+        evidence_registry_path=tmp_path / "missing-evidence.jsonl",
+        **kwargs,
     )
 
-    # 1. Incomplete InterPro frame
-    incomplete_interpro = tmp_path / "incomplete_interpro.json"
-    _json(
-        incomplete_interpro,
-        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
-    )
-    with pytest.raises(A.AuditInputError, match="InterPro frame is incomplete"):
-        A.discover_candidates(records, residue, incomplete_interpro, profiles, 3)
 
-    # 2. Incomplete grouped InterPro frame
-    incomplete_grouped = tmp_path / "incomplete_grouped.json"
-    _json(
-        incomplete_grouped,
-        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
-    )
-    with pytest.raises(A.AuditInputError, match="grouped InterPro frame is incomplete"):
-        A.discover_candidates(
-            records,
-            residue,
-            interpro,
-            profiles,
-            3,
-            interpro_grouped_frame_path=incomplete_grouped,
-        )
+@pytest.mark.parametrize(
+    "stamp",
+    [
+        None,  # written before the marker existed
+        {"complete": False, "targets": 41598, "missing": 41597},  # a --limit 1 canary
+        {"complete": "true"},  # only the boolean true counts
+    ],
+)
+def test_audit_refuses_an_interpro_frame_not_stamped_complete(tmp_path, stamp):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    _restamp(interpro, stamp)
+    with pytest.raises(A.AuditInputError, match="not stamped complete"):
+        _audit(tmp_path, traits, residue, interpro, profiles)
 
-    # 3. Incomplete residue frame
-    incomplete_residue = tmp_path / "incomplete_residue.json"
-    _json(
-        incomplete_residue,
-        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
+
+def test_audit_refuses_an_incomplete_grouped_frame_beside_a_complete_one(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    grouped = tmp_path / "grouped.json"
+    _json(grouped, {"_meta": {"schema": 1, "source": "InterPro", "release": "109.0"},
+                    "proteins": {}})
+    with pytest.raises(A.AuditInputError, match="grouped InterPro frame .* not stamped"):
+        _audit(tmp_path, traits, residue, interpro, profiles, interpro_grouped_frame=grouped)
+
+
+def test_incomplete_frame_override_marks_absence_uninformative(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    _, _, complete_blocked = _audit(tmp_path, traits, residue, interpro, profiles)
+    _restamp(interpro, None)
+    _, _, blocked = _audit(
+        tmp_path, traits, residue, interpro, profiles, allow_incomplete_interpro=True
     )
-    with pytest.raises(A.AuditInputError, match="residue frame is incomplete"):
-        A.discover_candidates(records, incomplete_residue, interpro, profiles, 3)
+    complete_details = {row.detail for row in complete_blocked
+                        if row.reason == "NO_LOCAL_EXACT_TRAIT_MATCH"}
+    details = {row.detail for row in blocked if row.reason == "NO_LOCAL_EXACT_TRAIT_MATCH"}
+    assert complete_details == {"No exact identifier in the supplied InterPro frame"}
+    assert len(details) == 1 and "INCOMPLETE InterPro frame" in details.pop()
+
+
+def test_cli_refuses_an_unstamped_frame_unless_explicitly_allowed(tmp_path, capsys):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    _restamp(interpro, None)
+    argv = [
+        "--traits", str(traits), "--residue-frame", str(residue),
+        "--interpro-frame", str(interpro), "--profiles", str(profiles),
+        "--out", str(tmp_path / "out"),
+        "--protein-registry", str(tmp_path / "missing-proteins.jsonl"),
+        "--evidence-registry", str(tmp_path / "missing-evidence.jsonl"),
+    ]
+    assert A.main(argv) == 2
+    assert "not stamped complete" in capsys.readouterr().err
+    assert A.main([*argv, "--allow-incomplete-interpro-frame"]) == 0
+
+
+def _certify_canary_with_accessions(tmp_path, frame: Path, grouped: Path) -> None:
+    """The #1097 reproduction: a 1-protein canary stamped against a 1-line list."""
+    accessions = tmp_path / "one.txt"
+    accessions.write_text("P12345\n")
+    stamp = sidecar.completeness(
+        ["P12345"], [{"P12345"}], target_set="accession-list", basis="offline-certification"
+    )
+    for path in (frame, grouped):
+        blob = {"_meta": {"schema": 1, "source": "InterPro", "release": "109.0",
+                          "completeness": stamp},
+                "proteins": {"P12345": {"Pfam:PF00001": [[2, 4]]}}}
+        _json(path, blob)
+
+
+def test_audit_refuses_a_canary_certified_against_an_accession_list(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    grouped = tmp_path / "grouped.json"
+    _certify_canary_with_accessions(tmp_path, interpro, grouped)
+    with pytest.raises(A.AuditInputError, match="target set 'accession-list'"):
+        _audit(tmp_path, traits, residue, interpro, profiles, interpro_grouped_frame=grouped)
+
+
+def test_audit_refuses_a_grouped_frame_with_a_different_stamp(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    grouped = tmp_path / "grouped.json"
+    other = sidecar.completeness(["P12345"], [{"P12345"}], target_set="organism-panel-exemplars")
+    _json(grouped, {"_meta": {"schema": 1, "source": "InterPro", "release": "109.0",
+                              "completeness": other}, "proteins": {}})
+    with pytest.raises(A.AuditInputError, match="different completeness stamp"):
+        _audit(tmp_path, traits, residue, interpro, profiles, interpro_grouped_frame=grouped)
+
+
+def test_audit_skips_a_grouped_frame_path_that_does_not_exist(tmp_path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    _audit(tmp_path, traits, residue, interpro, profiles,
+           interpro_grouped_frame=tmp_path / "absent-grouped.json")
+
+
+def test_audit_warns_when_the_corpus_targets_differ_from_the_stamp(tmp_path, capsys):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    expected = sidecar.targets_sha256(A.panel_target_proteins(traits))
+    _restamp(interpro, {**COMPLETE["completeness"], "targets_sha256": expected})
+    _audit(tmp_path, traits, residue, interpro, profiles)
+    assert "WARNING" not in capsys.readouterr().err
+    _restamp(interpro, {**COMPLETE["completeness"], "targets_sha256": "0" * 64})
+    _audit(tmp_path, traits, residue, interpro, profiles)  # warns, does not refuse
+    assert "exemplars changed since the crawl" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize(
+    "meta",
+    [
+        {"complete": True, "targets": 4},  # the interim #1095 marker: no target-set identity
+        {"complete": False, "targets": 10},
+    ],
+)
+def test_audit_refuses_a_frame_with_only_the_interim_top_level_marker(tmp_path, meta):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    blob = json.loads(interpro.read_text(encoding="utf-8"))
+    blob["_meta"].pop("completeness")
+    blob["_meta"].update(meta)
+    _json(interpro, blob)
+    with pytest.raises(A.AuditInputError, match="interim top-level complete/targets marker"):
+        _audit(tmp_path, traits, residue, interpro, profiles)
+
+
+@pytest.mark.parametrize(
+    ("meta", "refused"),
+    [
+        ({"completeness": {"complete": False, "truncated_queries": ["q"]}}, True),
+        ({"complete": False}, True),  # interim marker
+        ({"completeness": {"complete": True}}, False),
+        ({}, False),  # unstamped: a missing protein is reported, never read as negative
+    ],
+)
+def test_audit_refuses_a_residue_frame_stamped_incomplete(tmp_path, meta, refused):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    blob = json.loads(residue.read_text(encoding="utf-8"))
+    blob["_meta"].update(meta)
+    _json(residue, blob)
+    if refused:
+        with pytest.raises(A.AuditInputError, match="residue frame is stamped incomplete"):
+            _audit(tmp_path, traits, residue, interpro, profiles)
+    else:
+        _audit(tmp_path, traits, residue, interpro, profiles)
 

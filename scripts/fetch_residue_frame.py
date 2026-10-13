@@ -29,6 +29,12 @@ category match on them localizes falsely.
 Bounded by --query / --organisms (same shorthand as build_swissprot_profiles).
 Dry-run unless --apply. Stdlib-only.
 
+`_meta.completeness` (issue #1070) records the queries and whether each paginated
+to its end: a query cut short by --limit or by a failed page makes it
+`complete: false`. A top-up-only run inherits the stamp of the frame it extends.
+The printed content digest (`sidecar.content_sha256`, issue #1071) ignores the
+build date, so it is what a byte-pinned consumer can pin across rebuilds.
+
   just fetch-residue-frame --organisms --apply
 """
 
@@ -206,7 +212,7 @@ def stream(query: str, limit: int, page: int = 200, status: dict | None = None):
                                      "format": "json", "size": min(page, 500)}))
     got = 0
     if status is not None:
-        status.update({"complete": True, "expected": None})
+        status.update({"complete": True, "expected": None, "truncated": False})
     while url and got < limit:
         data, link = _get(url)
         if not data:
@@ -219,6 +225,10 @@ def stream(query: str, limit: int, page: int = 200, status: dict | None = None):
             yield e
             got += 1
             if got >= limit:
+                if status is not None:
+                    # Stopped by the cap: complete only if the source says this was all.
+                    expected = status.get("expected")
+                    status["truncated"] = not (isinstance(expected, int) and expected <= got)
                 return
         m = re.search(r'<([^>]+)>;\s*rel="next"', link)
         url = m.group(1) if m else None
@@ -317,6 +327,7 @@ def main() -> int:
         return 0
 
     incomplete = []
+    truncated = []
     for q in queries:
         before = len(frame)
         st: dict = {}
@@ -330,6 +341,8 @@ def main() -> int:
             frame[acc] = {"seq": seq, "ft": ft}
         if not st.get("complete", True):
             incomplete.append(q)
+        if st.get("truncated"):
+            truncated.append(q)
         print(f"  {q!r}: +{len(frame)-before:,}"
               + ("  ** INCOMPLETE — pagination aborted **" if not st.get("complete", True) else ""),
               file=sys.stderr)
@@ -384,19 +397,36 @@ def main() -> int:
                   "--allow-partial to accept it.", file=sys.stderr)
             return 1
         print("--allow-partial given; writing anyway.", file=sys.stderr)
+    if truncated:
+        print(f"{len(truncated)} of {len(queries)} queries stopped at --limit "
+              f"{args.limit:,}; the frame is stamped incomplete.", file=sys.stderr)
+    stamp_queries = list(queries)
+    inherited_complete = True
+    if not queries:
+        # top-up alone extends an existing frame: it keeps that frame's query record
+        previous = meta.get("completeness") if isinstance(meta, dict) else None
+        stamp_queries = list((previous or {}).get("queries") or [])
+        inherited_complete = isinstance(previous, dict) and previous.get("complete") is True
+    stamp = {"complete": inherited_complete and not incomplete and not truncated,
+             "basis": "crawl",
+             "target_set": "uniprot-queries" + ("+corpus-exemplars" if args.top_up else ""),
+             "queries": stamp_queries,
+             "incomplete_queries": incomplete,
+             "truncated_queries": truncated}
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
-    is_complete = not bool(args.limit) and not bool(incomplete)
-    payload = sidecar.wrap("proteins", frame, "UniProt", release, complete=is_complete)
+    payload = sidecar.wrap("proteins", frame, "UniProt", release, stamp)
     known_absent = sorted(absent) if args.top_up else sorted(meta.get("absent") or [])
     if known_absent:
         payload["_meta"]["absent"] = known_absent
-    outp.write_text(json.dumps(payload, separators=(",", ":")), encoding="utf-8")
+    sidecar.write_atomic(outp, payload)
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:
         shown = outp
-    print(f"WROTE {shown} ({outp.stat().st_size/1e6:.1f} MB)")
+    print(f"WROTE {shown} ({outp.stat().st_size/1e6:.1f} MB); "
+          f"completeness: {'COMPLETE' if stamp['complete'] else 'INCOMPLETE'}; "
+          f"content sha256 {sidecar.content_sha256(payload)}")
     return 0
 
 

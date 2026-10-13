@@ -22,6 +22,37 @@ which keeps a full-corpus audit practical.  Candidate discovery is also
 read-only: it joins exact trait identifiers in the InterPro frame to protein
 metadata in profiles.jsonl and sequences in the UniProt residue frame.
 
+``NO_LOCAL_EXACT_TRAIT_MATCH`` reads absence from the InterPro frame, which means
+something only if the crawl reached every target protein. The audit therefore
+refuses an InterPro frame whose ``_meta.completeness`` is not stamped complete
+*for the organism-panel target set*. A frame carrying only the interim top-level
+``_meta.complete`` / ``_meta.targets`` marker (written briefly by #1095's fetcher) has
+no target-set identity and is refused like an unstamped one until certified (``target_set: organism-panel-exemplars``;
+issues #1070, #1097; see ``sidecar.py``). A stamp for an accession list (a DUF
+lane sidecar, or a canary certified against a hand-made list) is refused.
+
+"Complete" is narrow. The panel target set is the exemplar proteins that carry a
+member-database record and records of two or more trait categories
+(``fetch_interpro_frame.target_proteins``), not every carrier of every signature.
+A complete frame means each of *those* proteins was crawled; absence of a match
+still says nothing about proteins outside that set.
+
+The grouped frame is optional. When its path exists it must carry the same panel
+stamp (target set, target count and ``targets_sha256``) as the compact frame;
+when the path does not exist it is skipped, which only means multi-location
+localized matches are reported as ungrouped. It never drives
+``NO_LOCAL_EXACT_TRAIT_MATCH``.
+
+The audit also re-derives the panel target set from ``--traits`` and compares its
+digest with the stamp's ``targets_sha256``. A mismatch (exemplars added or removed
+since the crawl or certification) is a stderr WARNING, not a refusal: the stamp
+still proves the stamped set was crawled, but proteins new to the corpus were not,
+so re-run ``just fetch-interpro-frame --apply`` (it fetches only the new targets)
+before relying on absence for records that gained exemplars.
+
+``--allow-incomplete-interpro-frame`` overrides the refusal for diagnostics, and
+every such absence is then reported as uninformative.
+
 The four outputs are deterministic and atomically replaced:
 
 * summary.tsv       counts by state, axis, category, and identifier namespace
@@ -47,6 +78,9 @@ from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator, Mapping, Sequence
 
 import yaml
+from fetch_interpro_frame import PANEL_TARGET_SET, target_proteins as panel_target_proteins
+from sidecar import is_complete as interpro_frame_is_complete
+from sidecar import targets_sha256 as panel_targets_digest
 from uniprot_record_content_gate import (
     DEFAULT_INTERPRO_XML as DEFAULT_CONTENT_GATE_INTERPRO_XML,
     DEFAULT_PANTHER_CLASSIFICATIONS as DEFAULT_CONTENT_GATE_PANTHER_CLASSIFICATIONS,
@@ -884,6 +918,27 @@ def _record_content_blocked_records(
     return blocked_paths, blocks
 
 
+_STAMP_IDENTITY = ("target_set", "targets", "targets_sha256")
+
+
+def _panel_stamp_problem(meta: Mapping[str, Any]) -> str | None:
+    """Why this frame's stamp does not certify the organism-panel target set."""
+    if "completeness" not in meta and ("complete" in meta or "targets" in meta):
+        return (
+            "carries only the interim top-level complete/targets marker, which records "
+            "no target-set identity"
+        )
+    if not interpro_frame_is_complete(dict(meta)):
+        return "is not stamped complete (a canary, checkpoint, failed or pre-marker crawl)"
+    target_set = meta["completeness"].get("target_set")
+    if target_set != PANEL_TARGET_SET:
+        return (
+            f"is stamped complete for target set {target_set!r}, not "
+            f"{PANEL_TARGET_SET!r} (a DUF sidecar or an accession-list certification)"
+        )
+    return None
+
+
 def discover_candidates(
     records: list[RecordAudit],
     residue_frame_path: Path,
@@ -894,6 +949,9 @@ def discover_candidates(
     include_taxa: set[str] | None = None,
     record_content_config: SourceConfig | None = None,
     make_record_content_gate: ContentGateFactory = RecordContentGate,
+    *,
+    allow_incomplete_interpro: bool = False,
+    panel_targets_sha256: str | None = None,
 ) -> tuple[list[dict], list[Blocked]]:
     """Join exact local source matches and return candidate/blocked ledgers."""
     include_taxa = include_taxa or set()
@@ -903,33 +961,44 @@ def discover_candidates(
             target_records[record.trait_id].append(record)
 
     interpro, interpro_meta = _load_sidecar(interpro_frame_path, "proteins")
-    if interpro_meta.get("complete") is False or (
-        isinstance(interpro_meta.get("targets"), int)
-        and interpro_meta.get("count", len(interpro)) < interpro_meta["targets"]
-    ):
-        count = interpro_meta.get("count", len(interpro))
-        targets = interpro_meta.get("targets", "?")
-        raise AuditInputError(
-            f"InterPro frame is incomplete: {interpro_frame_path} "
-            f"({count} of {targets} targets); re-run fetch-interpro-frame --apply"
-        )
     interpro_release = interpro_meta.get("release")
+    problem = _panel_stamp_problem(interpro_meta)
+    interpro_complete = problem is None
+    if problem and not allow_incomplete_interpro:
+        raise AuditInputError(
+            f"InterPro frame {interpro_frame_path} {problem}, so a missing match "
+            "would be misread as NO_LOCAL_EXACT_TRAIT_MATCH. Finish the panel crawl, or "
+            "certify a finished pre-marker panel crawl with `just certify-interpro-frame "
+            "--apply`; --allow-incomplete-interpro-frame is for diagnostics only"
+        )
+    if interpro_complete and panel_targets_sha256 is not None:
+        stamped = interpro_meta["completeness"].get("targets_sha256")
+        if stamped != panel_targets_sha256:
+            print(
+                f"WARNING: InterPro frame {interpro_frame_path} was stamped for panel "
+                f"targets {stamped}, but --traits now yields {panel_targets_sha256}: "
+                "exemplars changed since the crawl, and proteins new to the corpus were "
+                "not crawled. Run `just fetch-interpro-frame --apply` to fetch them.",
+                file=sys.stderr,
+            )
     exact: dict[str, list[CandidateEvidence]] = collections.defaultdict(list)
     wanted_accessions: set[str] = set()
     malformed_matches: list[tuple[str, str]] = []
     grouped_pairs: set[tuple[str, str]] = set()
     if interpro_grouped_frame_path is not None and interpro_grouped_frame_path.is_file():
         grouped, grouped_meta = _load_sidecar(interpro_grouped_frame_path, "proteins")
-        if grouped_meta.get("complete") is False or (
-            isinstance(grouped_meta.get("targets"), int)
-            and grouped_meta.get("count", len(grouped)) < grouped_meta["targets"]
-        ):
-            count = grouped_meta.get("count", len(grouped))
-            targets = grouped_meta.get("targets", "?")
-            raise AuditInputError(
-                f"grouped InterPro frame is incomplete: {interpro_grouped_frame_path} "
-                f"({count} of {targets} targets); re-run fetch-interpro-frame --apply"
-            )
+        grouped_problem = _panel_stamp_problem(grouped_meta)
+        if grouped_problem is None and interpro_complete:
+            stamps = (interpro_meta["completeness"], grouped_meta["completeness"])
+            if any(stamps[0].get(key) != stamps[1].get(key) for key in _STAMP_IDENTITY):
+                grouped_problem = "carries a different completeness stamp than the compact frame"
+        if grouped_problem:
+            interpro_complete = False
+            if not allow_incomplete_interpro:
+                raise AuditInputError(
+                    f"grouped InterPro frame {interpro_grouped_frame_path} {grouped_problem}; "
+                    "certify or finish it together with its compact frame"
+                )
         grouped_release = grouped_meta.get("release")
         if interpro_release and grouped_release and interpro_release != grouped_release:
             raise AuditInputError(
@@ -989,15 +1058,18 @@ def discover_candidates(
 
     profiles, duplicate_profiles = _load_profiles(profiles_path, wanted_accessions)
     residue, residue_meta = _load_sidecar(residue_frame_path, "proteins")
-    if residue_meta.get("complete") is False or (
-        isinstance(residue_meta.get("targets"), int)
-        and residue_meta.get("count", len(residue)) < residue_meta["targets"]
+    residue_stamp = residue_meta.get("completeness")
+    if (isinstance(residue_stamp, dict) and residue_stamp.get("complete") is not True) or (
+        residue_stamp is None and residue_meta.get("complete") is False
     ):
-        count = residue_meta.get("count", len(residue))
-        targets = residue_meta.get("targets", "?")
+        # A residue frame stamped incomplete (a truncated or aborted query) is refused.
+        # An unstamped frame is accepted: a protein missing from it is reported as
+        # ACCESSION_MISSING_FROM_RESIDUE_FRAME, never read as negative evidence. The
+        # interim top-level `complete: false` marker is refused too, since it carries
+        # no query record to say what was missed.
         raise AuditInputError(
-            f"residue frame is incomplete: {residue_frame_path} "
-            f"({count} of {targets} targets); re-run fetch-residue-frame --apply"
+            f"residue frame is stamped incomplete: {residue_frame_path}; "
+            "re-run fetch-residue-frame --apply without --allow-partial"
         )
     uniprot_release = residue_meta.get("release")
     absent = set(residue_meta.get("absent") or [])
@@ -1049,7 +1121,10 @@ def discover_candidates(
                     record.record_path,
                     "",
                     "NO_LOCAL_EXACT_TRAIT_MATCH",
-                    "No exact identifier in the supplied InterPro frame",
+                    "No exact identifier in the supplied InterPro frame"
+                    if interpro_complete
+                    else "No exact identifier in an INCOMPLETE InterPro frame "
+                    "(uninformative: the crawl may not have reached the carrier)",
                 )
             )
             continue
@@ -1324,6 +1399,8 @@ def run_audit(
     include_taxa: set[str] | None = None,
     record_content_config: SourceConfig | None = None,
     make_record_content_gate: ContentGateFactory = RecordContentGate,
+    allow_incomplete_interpro: bool = False,
+    check_panel_targets: bool = True,
 ) -> tuple[list[RecordAudit], list[dict], list[Blocked]]:
     if max_candidates_per_record < 0:
         raise AuditInputError("--max-candidates-per-record must be >= 0")
@@ -1344,6 +1421,10 @@ def run_audit(
         include_taxa,
         record_content_config,
         make_record_content_gate,
+        allow_incomplete_interpro=allow_incomplete_interpro,
+        panel_targets_sha256=(
+            panel_targets_digest(panel_target_proteins(traits)) if check_panel_targets else None
+        ),
     )
     blocked.extend(candidate_blocks)
     write_outputs(out, records, candidates, blocked)
@@ -1358,6 +1439,14 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--residue-frame", type=Path, required=True)
     ap.add_argument("--interpro-frame", type=Path, required=True)
     ap.add_argument("--interpro-grouped-frame", type=Path)
+    ap.add_argument(
+        "--allow-incomplete-interpro-frame",
+        action="store_true",
+        help=(
+            "diagnostics only: audit an InterPro frame that is not stamped complete; "
+            "its NO_LOCAL_EXACT_TRAIT_MATCH rows are then marked uninformative"
+        ),
+    )
     ap.add_argument("--profiles", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument(
@@ -1482,6 +1571,7 @@ def main(argv: list[str] | None = None) -> int:
             record_content_config=(
                 _content_gate_config(args) if args.record_content_gate else None
             ),
+            allow_incomplete_interpro=args.allow_incomplete_interpro_frame,
         )
     except AuditInputError as exc:
         print(f"audit input error: {exc}", file=sys.stderr)
