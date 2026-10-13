@@ -4770,9 +4770,10 @@ found.
   `duf-leads-review-001`, whose 221 qualified whole-protein alternatives carry no
   fragment status) cannot install a whole-protein claim. Re-fetch and re-resolve the
   batch to recover them. `LOCALIZED` rows are unaffected. Fragment status is a
-  qualification input only: staged and durable ProteinReference rows do not copy it,
-  so durable rows written earlier still merge unchanged, and trait records do not
-  change.
+  qualification input only: it exists only on fetch-staging registry rows. Staged and
+  durable ProteinReference rows never carry it, and the grounding validator rejects it
+  there (#1087), so durable rows written earlier still merge unchanged, and trait
+  records do not change.
 - **Relocatable generations (#1082).** Fetch request plans and receipts are now
   schema v2. They bind every artifact by SHA-256 and size and by its
   repository-relative path; a path outside the checkout stays absolute. They record no

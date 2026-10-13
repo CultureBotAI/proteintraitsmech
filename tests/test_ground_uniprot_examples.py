@@ -2389,6 +2389,27 @@ def test_promotion_rejects_whole_protein_rows_without_complete_fragment_status(
     assert ground._validate_resolved_row(row, approval) == [reason]
 
 
+def test_durable_registry_refuses_fetch_staging_fragment_status(tmp_path):
+    """#1087: fragment status never reaches a merged durable ProteinReference."""
+
+    sequence = "ACDEFGHIK"
+    row = {
+        "protein_id": "UniProtKB:P12345",
+        "protein_label": "Fixture protein",
+        "taxon_id": "NCBITaxon:9606",
+        "taxon_label": "Homo sapiens",
+        "sequence": sequence,
+        "sequence_length": len(sequence),
+        "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
+        "reviewed": True,
+        "uniprot_release": "2026_02",
+    }
+    path = tmp_path / "protein_registry.jsonl"
+    ground._validate_registry_mapping({row["protein_id"]: row}, path)
+    with pytest.raises(ground.GroundingError, match="registry_fetch_staging_only_field"):
+        ground._validate_registry_mapping({row["protein_id"]: {**row, "fragment": False}}, path)
+
+
 def _prepare_panther_content_gate_fixture(
     local_sources, *, template_only: bool, redundant_class: bool = False
 ) -> None:

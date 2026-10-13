@@ -89,8 +89,14 @@ PLAN_SCHEMA_VERSION = 2
 LEGACY_PLAN_SCHEMA_VERSION = 1
 SUPPORTED_PLAN_SCHEMA_VERSIONS = frozenset({LEGACY_PLAN_SCHEMA_VERSION, PLAN_SCHEMA_VERSION})
 PLAN_KIND = "UNIPROT_REGISTRY_FETCH_REQUEST_PLAN"
-# A receipt's schema version always equals its request plan's.
-RECEIPT_SCHEMA_VERSION = PLAN_SCHEMA_VERSION
+# Receipts are written only for current plans; a legacy v1 plan verifies only with the v1
+# receipt it produced. Both receipt versions share one field set; v2 paths are
+# repository-relative.
+RECEIPT_SCHEMA_VERSION = 2
+RECEIPT_SCHEMA_FOR_PLAN = {
+    LEGACY_PLAN_SCHEMA_VERSION: 1,
+    PLAN_SCHEMA_VERSION: RECEIPT_SCHEMA_VERSION,
+}
 RECEIPT_KIND = "UNIPROT_REGISTRY_FETCH_RECEIPT"
 PENDING_KIND = "UNIPROT_REGISTRY_FETCH_GENERATION_PENDING"
 PLAN_ID_PREFIX = "uniprot-registry-fetch-plan:"
@@ -1731,7 +1737,7 @@ def _build_receipt(
 ) -> dict[str, Any]:
     output_paths = plan["output_paths"]
     receipt: dict[str, Any] = {
-        "schema_version": plan["schema_version"],
+        "schema_version": RECEIPT_SCHEMA_FOR_PLAN[plan["schema_version"]],
         "kind": RECEIPT_KIND,
         "generation_boundary": True,
         "generation_pending": False,
@@ -2003,10 +2009,10 @@ def _verify_fetch_receipt_bound(
         "receipt_id",
     }
     if set(receipt) != expected_receipt_keys:
-        raise RegistryBuildError("fetch receipt does not have the exact v1 field set")
+        raise RegistryBuildError("fetch receipt does not have the exact receipt field set")
     if (
         type(receipt.get("schema_version")) is not int
-        or receipt.get("schema_version") != schema_version
+        or receipt.get("schema_version") != RECEIPT_SCHEMA_FOR_PLAN[schema_version]
         or receipt.get("kind") != RECEIPT_KIND
         or receipt.get("generation_boundary") is not True
         or receipt.get("generation_pending") is not False
@@ -2093,7 +2099,7 @@ def _verify_fetch_receipt_bound(
             "unexpected_accessions",
         }:
             raise RegistryBuildError(
-                f"fetch receipt response {index} does not have the exact v1 field set"
+                f"fetch receipt response {index} does not have the exact response field set"
             )
         headers = response.get("response_header_projection")
         if (
@@ -2204,7 +2210,10 @@ def _verify_fetch_receipt_bound(
     references: dict[str, dict[str, Any]] = {}
     for line_number, row in enumerate(registry_rows, 1):
         findings = validate_protein_reference(
-            row, path=Path(request_plan["output_paths"]["protein_registry"]), line=line_number
+            row,
+            path=Path(request_plan["output_paths"]["protein_registry"]),
+            line=line_number,
+            fetch_staging=True,
         )
         if findings:
             raise RegistryBuildError("installed protein registry fails strict validation")

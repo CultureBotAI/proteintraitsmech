@@ -1838,10 +1838,13 @@ classes:
         range: boolean
       fragment:
         description: >-
-          True when the pinned UniProt entry is flagged Fragment or Fragments
-          (proteinDescription.flag), false when it is not. Absent when the
-          registry fetch predates fragment capture; absence means unknown, never
-          complete, so such a reference cannot qualify a WHOLE_PROTEIN occurrence.
+          Fetch-staging only. True when the pinned UniProt entry is flagged
+          Fragment or Fragments (proteinDescription.flag), false when it is not.
+          Written on every row of a schema-v2 UniProt registry fetch and read by
+          the resolver as a WHOLE_PROTEIN qualification input. Staged and durable
+          ProteinReference rows never carry it, and the grounding validator
+          rejects it there. On a fetch-staging row from an older (v1) fetch it is
+          absent, which means unknown, never complete.
         range: boolean
       uniprot_release:
         required: true

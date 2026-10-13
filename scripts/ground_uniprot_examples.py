@@ -1013,7 +1013,8 @@ def _provider_context(
                     raise GroundingError(
                         f"explicit protein registry does not exist: {registry_path}"
                     )
-                validated_registry = _semantic_registry(registry_path)
+                # The resolver's --protein-registry input is a fetched registry.
+                validated_registry = _semantic_registry(registry_path, fetch_staging=True)
             registry = {
                 protein_id: reference
                 for protein_id, reference in validated_registry.items()
@@ -3173,11 +3174,11 @@ def _strict_errors_for_text(text: str) -> list[dict]:
         temporary.unlink(missing_ok=True)
 
 
-def _semantic_registry(path: Path) -> dict[str, dict[str, Any]]:
+def _semantic_registry(path: Path, *, fetch_staging: bool = False) -> dict[str, dict[str, Any]]:
     """Load the registry through the grounding validator, refusing registry findings."""
     from validate_uniprot_grounding import load_registry
 
-    registry, findings = load_registry(path)
+    registry, findings = load_registry(path, fetch_staging=fetch_staging)
     if findings:
         detail = "; ".join(f"{finding.code}: {finding.message}" for finding in findings[:3])
         raise GroundingError(f"semantic registry validation rejected preflight: {detail}")
@@ -3192,7 +3193,9 @@ def _semantic_registry_bytes(raw: bytes, path: Path) -> dict[str, dict[str, Any]
     registry: dict[str, dict[str, Any]] = {}
     findings = []
     for line_number, row in enumerate(_read_verified_jsonl(raw, source=path), 1):
-        findings.extend(validate_protein_reference(row, path=path, line=line_number))
+        findings.extend(
+            validate_protein_reference(row, path=path, line=line_number, fetch_staging=True)
+        )
         protein_id = row.get("protein_id")
         if not isinstance(protein_id, str):
             continue

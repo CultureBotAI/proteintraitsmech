@@ -2027,7 +2027,7 @@ def test_v2_plan_and_receipt_bind_repository_relative_paths_and_no_inodes(tmp_pa
     assert plan["output_paths"]["fetch_receipt"] == str(_BATCH / "fetch-receipt.json")
     assert plan["candidate_artifact"]["path"] == str(_BATCH / "B.candidates.jsonl")
     receipt = json.loads(receipt_text)
-    assert receipt["schema_version"] == 2
+    assert receipt["schema_version"] == registry.RECEIPT_SCHEMA_VERSION == 2
     assert receipt["request_plan_artifact"]["path"] == str(_BATCH / "fetch-plan.json")
 
 
@@ -2117,6 +2117,7 @@ def test_legacy_v1_batch_verifies_in_place_and_after_relocation(tmp_path, monkey
     _downgrade_to_v1(prepared, old)
     plan = json.loads(prepared["plan"].read_text(encoding="utf-8"))
     assert plan["schema_version"] == 1 and "output_parent_bindings" in plan
+    assert json.loads(prepared["receipt"].read_text(encoding="utf-8"))["schema_version"] == 1
     assert "fragment" not in plan["request_policy"]["return_fields"]
     registry.verify_fetch_receipt(
         receipt_path=prepared["receipt"], request_plan_path=prepared["plan"]
