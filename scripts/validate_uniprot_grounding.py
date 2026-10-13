@@ -101,7 +101,13 @@ REGISTRY_REQUIRED_FIELDS = (
     "reviewed",
     "uniprot_release",
 )
-REGISTRY_ALLOWED_FIELDS = set(REGISTRY_REQUIRED_FIELDS) | {"isoform", "sequence_version"}
+# ``fragment`` is UniProt fragment status, recorded by registry fetches from #1081 on;
+# its absence means "not recorded", never "not a fragment".
+REGISTRY_ALLOWED_FIELDS = set(REGISTRY_REQUIRED_FIELDS) | {
+    "isoform",
+    "sequence_version",
+    "fragment",
+}
 
 EVIDENCE_PREFIX = "ug-evidence:"
 EVIDENCE_REQUIRED_FIELDS = (
@@ -506,6 +512,12 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
         findings.append(
             _registry_finding(
                 "registry_invalid_reviewed", "reviewed must be true or false", path, line, pid
+            )
+        )
+    if "fragment" in reference and not isinstance(reference["fragment"], bool):
+        findings.append(
+            _registry_finding(
+                "registry_invalid_fragment", "fragment must be true or false", path, line, pid
             )
         )
     release = reference.get("uniprot_release")

@@ -1,0 +1,30 @@
+history_version: 1
+target:
+  kind: other
+  path: scripts/fetch_uniprot_registry.py
+  slug: uniprot-fetch-fragments-relocation
+session:
+  id: 2026-10-13T004020843552Z-claude-code-fd4fbf
+  timestamp: '2026-10-13T00:40:20.843552Z'
+  actors:
+  - type: ai_agent
+    name: claude-code
+    model: claude-opus-5-5
+    agent_tool: Claude Code
+links:
+  issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1081
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1082
+events:
+- type: EDIT
+  outcome: changed
+  summary: Capture UniProt fragment status and make fetch generations relocatable
+  details: Registry fetches record fragment status from proteinDescription.flag (UniProt 2026_03;
+    Q8I6R7 and A0A0C2C3L1 confirmed by anonymous REST). The resolver refuses WHOLE_PROTEIN
+    qualification for fragments and for registries without recorded status; promotion re-applies
+    the rule; LOCALIZED fragments stay admissible and are flagged UNIPROT_FRAGMENT. Fetch
+    plans/receipts are schema v2, bound by content digest and repository-relative path, not
+    inode. v1 pairs verify read-only after re-anchoring and cannot be applied. Preserved batch
+    duf-leads-review-001 failed to verify from a relocated copy before the change and verifies
+    after it; its 221 whole-protein alternatives need a re-fetch before promotion. No trait,
+    durable grounding or review-decision write.

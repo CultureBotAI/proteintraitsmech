@@ -170,6 +170,7 @@ def local_sources(tmp_path):
                 "sequence_length": len(sequence),
                 "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
                 "reviewed": True,
+                "fragment": False,
                 "uniprot_release": "2026_02",
             }
         ],
@@ -280,6 +281,7 @@ def _add_second_interpro_candidate(fixture: dict) -> None:
             "sequence_length": len(sequence),
             "sequence_sha256": sequence_sha256,
             "reviewed": True,
+            "fragment": False,
             "uniprot_release": "2026_02",
         },
     )
@@ -2266,6 +2268,127 @@ def test_whole_protein_keeps_real_match_footprint_out_of_occurrence(local_source
     assert "coordinate_frame" not in row["trait_occurrence"]
 
 
+def _set_registry_fragment(local_sources, fragment: bool | None) -> None:
+    """Rewrite the fixture registry row; ``None`` removes the field (a pre-#1081 fetch)."""
+
+    path = local_sources["source_registry"]
+    (row,) = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    row.pop("fragment", None)
+    if fragment is not None:
+        row["fragment"] = fragment
+    _jsonl(path, [row])
+
+
+def _whole_protein_panther_candidate(local_sources) -> dict:
+    local_sources["record"].write_text(
+        _record("PANTHER:PTHR12345", axis="FUNCTION"), encoding="utf-8"
+    )
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"PANTHER:PTHR12345": [[1, 9]]}},
+    )
+    return {
+        **local_sources["candidate"],
+        "trait_id": "PANTHER:PTHR12345",
+        "source_trait_id": "PANTHER:PTHR12345",
+        "trait_axis": "FUNCTION",
+        "trait_category": "FUNC_PROTEIN_FAMILY",
+        "scope": "WHOLE_PROTEIN",
+        "coordinate_frame": None,
+        "intervals": [{"start": 1, "end": 9}],
+    }
+
+
+def _review_row(local_sources) -> dict:
+    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
+        (row,) = list(csv.DictReader(handle, delimiter="\t"))
+    return row
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason", "review_value"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment", "true"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein", ""),
+    ],
+)
+def test_fragment_or_unrecorded_fragment_status_cannot_qualify_whole_protein(
+    local_sources, fragment, reason, review_value
+):
+    """#1081: a UniProt fragment cannot exemplify a whole-protein claim, and a registry
+    fetched before fragment capture fails closed rather than passing as complete."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _set_registry_fragment(local_sources, fragment)
+    # A producer cannot vouch for completeness; the registry value always wins.
+    _jsonl(local_sources["queue"], [{**candidate, "uniprot_fragment": False}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert row["reasons"] == [reason]
+    assert row["uniprot_fragment"] is fragment
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == review_value
+    assert review["reasons"] == reason
+
+
+def test_fragment_keeps_localized_qualification_but_is_flagged_for_review(local_sources):
+    _set_registry_fragment(local_sources, True)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["trait_occurrence"]["scope"] == "LOCALIZED"
+    assert row["uniprot_fragment"] is True
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == "true"
+    assert "UNIPROT_FRAGMENT" in review["review_flags"].split(";")
+    # Fragment status is a qualification input, not a staged ProteinReference field.
+    (staged,) = [
+        json.loads(line)
+        for line in local_sources["registry"].read_text(encoding="utf-8").splitlines()
+    ]
+    assert "fragment" not in staged
+
+
+def test_unrecorded_fragment_status_leaves_localized_rows_qualified(local_sources):
+    _set_registry_fragment(local_sources, None)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["uniprot_fragment"] is None
+    assert _review_row(local_sources)["uniprot_fragment"] == ""
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein"),
+    ],
+)
+def test_promotion_rejects_whole_protein_rows_without_complete_fragment_status(
+    local_sources, fragment, reason
+):
+    """A row resolved before #1081 never recorded fragment status; promotion re-checks."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _jsonl(local_sources["queue"], [candidate])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == []
+    if fragment is None:
+        row.pop("uniprot_fragment")
+    else:
+        row["uniprot_fragment"] = fragment
+    row["resolution_digest"] = ground._resolution_digest(row)
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == [reason]
+
+
 def _prepare_panther_content_gate_fixture(
     local_sources, *, template_only: bool, redundant_class: bool = False
 ) -> None:
@@ -3160,6 +3283,7 @@ def _queue_second_protein(local_sources, *, go_term, evidence="IDA:EcoCyc"):
             "sequence_length": len(_SECOND_SEQUENCE),
             "sequence_sha256": _SECOND_SHA,
             "reviewed": True,
+            "fragment": False,
             "uniprot_release": "2026_02",
         },
     )
