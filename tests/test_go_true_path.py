@@ -159,3 +159,76 @@ def test_union_index_adds_go_edges_to_trait_edges():
         }
     ]
     assert G.union_index(trait, rows) == {"GO:0000002": frozenset({"GO:0000099", "GO:0000001"})}
+
+
+def test_pinned_release_constants():
+    assert G.PINNED_GO_RELEASE == "releases/2026-06-15"
+    assert G.PINNED_GO_URL == "https://release.geneontology.org/2026-06-19/ontology/go-basic.obo"
+    assert G.PINNED_GO_SHA256 == "c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c"
+    assert G.PINNED_GO_MIN_BYTES == 32_000_000
+
+
+def test_update_edges_no_change(release, tmp_path):
+    rows = release.edge_rows(["GO:0000003", "GO:0000002", "GO:0000001"])
+    edges = tmp_path / "edges.jsonl"
+    edges.write_text(G.dump_edges(rows), encoding="utf-8")
+    obo = tmp_path / "go-basic.obo"
+    obo.write_text(OBO, encoding="utf-8")
+
+    updated, messages = G.update(edges, obo, apply=False)
+    assert messages == []
+    assert updated == sorted(rows, key=lambda r: (r["child"], r["parent"]))
+    assert G.main(["update", "--edges", str(edges), "--obo", str(obo)]) == 0
+
+
+def test_update_edges_relation_changed(release, tmp_path):
+    rows = release.edge_rows(["GO:0000003", "GO:0000002"])
+    assert rows[0]["relation"] == "part_of"
+    edges = tmp_path / "edges.jsonl"
+    edges.write_text(G.dump_edges(rows), encoding="utf-8")
+
+    # In new release, relation changes to is_a and date advances
+    new_obo = OBO.replace(
+        "relationship: part_of GO:0000002 ! middle", "is_a: GO:0000002 ! middle"
+    ).replace("releases/2026-06-15", "releases/2026-08-01")
+    obo = tmp_path / "go-basic.obo"
+    obo.write_text(new_obo, encoding="utf-8")
+
+    # Dry-run: messages generated but disk file untouched
+    updated, messages = G.update(edges, obo, apply=False)
+    assert len(messages) == 1
+    assert "updated GO:0000003 -> GO:0000002: part_of (releases/2026-06-15) -> is_a (releases/2026-08-01)" in messages[0]
+    on_disk = G.load_edges(edges)
+    assert on_disk[0]["relation"] == "part_of"
+
+    # Apply: disk file updated
+    updated, messages = G.update(edges, obo, apply=True)
+    assert len(messages) == 1
+    on_disk = G.load_edges(edges)
+    assert on_disk[0]["relation"] == "is_a"
+    assert on_disk[0]["go_release"] == "releases/2026-08-01"
+
+
+def test_update_edges_filtering_and_errors(release, tmp_path):
+    rows = release.edge_rows(["GO:0000003", "GO:0000002", "GO:0000001"])
+    edges = tmp_path / "edges.jsonl"
+    edges.write_text(G.dump_edges(rows), encoding="utf-8")
+    obo = tmp_path / "go-basic.obo"
+    obo.write_text(OBO, encoding="utf-8")
+
+    # Filter by non-existent edge raises GoTruePathError
+    with pytest.raises(G.GoTruePathError, match="no tracked edge matched"):
+        G.update(edges, obo, child="GO:0000999")
+
+    # If edge does not exist in release, targeted filter raises GoTruePathError
+    dropped_obo = OBO.replace("relationship: part_of GO:0000002 ! middle\n", "")
+    obo.write_text(dropped_obo, encoding="utf-8")
+    with pytest.raises(G.GoTruePathError, match="edge does not exist"):
+        G.update(edges, obo, child="GO:0000003", parent="GO:0000002")
+
+
+def test_go_true_path_parser_refuses_abbreviated_flags():
+    with pytest.raises(SystemExit):
+        G.main(["check", "--ed", "foo"])
+    with pytest.raises(SystemExit):
+        G.main(["update", "--ap"])

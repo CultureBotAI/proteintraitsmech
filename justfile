@@ -348,6 +348,11 @@ build-cross-mech-inventory *args:
 check-go-true-path *args:
     uv run python scripts/go_true_path.py check {{args}}
 
+# LOCAL ONLY -- update tracked GO true-path edges whose relation changed in the
+# local GO release (e.g. part_of -> is_a). Dry-run by default; pass --apply to write (#1046).
+update-go-true-path *args:
+    uv run python scripts/go_true_path.py update {{args}}
+
 # Verify the tracked snapshot offline. --local compares sibling checkouts and
 # --remote the live default branches and fleet manifest; drift is a NOTICE unless
 # --fail-on-drift.
@@ -1135,7 +1140,20 @@ fetch-psimod:
 seed-psimod *args:
     python3 scripts/seed_psi_mod.py {{args}}
 
-# Download the OBO ontologies consumed by seed-obo (PSI-MI, PATO, METPO;
+# Download the pinned Gene Ontology release consumed by seed-obo and go_true_path.
+# Pinned to release 2026-06-19 (data-version releases/2026-06-15) with recorded SHA-256 (#1039).
+fetch-go:
+    mkdir -p data/raw
+    python3 scripts/fetch_source.py \
+      https://release.geneontology.org/2026-06-19/ontology/go-basic.obo \
+      data/raw/go-basic.obo \
+      --min-bytes 32000000 \
+      --sha256 c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c \
+      --contains 'data-version: releases/2026-06-15' \
+      --max-time 300
+    @ls -la data/raw/go-basic.obo
+
+# Download the OBO ontologies consumed by seed-obo (PSI-MI, PATO, METPO, GO;
 # all CC-BY-4.0). Files land gitignored in data/raw/.
 fetch-obo:
     mkdir -p data/raw
@@ -1145,8 +1163,7 @@ fetch-obo:
       https://raw.githubusercontent.com/pato-ontology/pato/master/pato.obo
     curl -sSLf --max-time 120 -o data/raw/METPO.obo \
       https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo
-    curl -sSLf --max-time 300 -o data/raw/go-basic.obo \
-      http://purl.obolibrary.org/obo/go/go-basic.obo
+    @just fetch-go
     @ls -la data/raw/PSI-MI.obo data/raw/PATO.obo data/raw/METPO.obo data/raw/go-basic.obo
 
 # Seed ProteinTraitRecords from branch-scoped OBO ontologies. Requires

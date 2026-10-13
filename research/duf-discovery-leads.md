@@ -64,15 +64,18 @@ path. `scripts/duf_leads.py` pins:
 
 - repository `CultureBotAI/DUFMech`. The checkout's `origin` must be this repository.
 - commit `217c2cc5cfc2fc43b7196e46fac57ee2a71efe0b`, which must be an ancestor of
-  `origin/main`. This is DUFMech PR #137, which froze the snapshot.
+  the local remote-tracking ref `origin/main`. This is DUFMech PR #137, which froze the snapshot.
+  (Checking `origin/main` locally guards against unmerged scratch branch work in the
+  sibling checkout; true online publication would require a network check, while cryptographic
+  content integrity is guaranteed by the immutable commit SHA and SHA-256 hashes.)
 - `data/worklists/uniprot-duf-example-candidates-2026-10-07.json`, SHA-256
   `0c9e637106357244f3b70f34b14c29e034e9bfdd4fec6b977b5f323174d55cbe`.
 - its manifest, SHA-256
   `1004848bc569d67505929c529fcf7e7012537b3053d4c423e22dd7abb84aa45f`. The manifest's
   own byte count, digest, row total and single release (`2026_03`) are also checked.
 
-Every row's shape is validated. A changed byte, a different origin, an unpublished
-commit, or a duplicated lead fails closed. Every candidate row carries this provenance
+Every row's shape is validated. A changed byte, a different origin, a commit disconnected from
+the local tracking ref, or a duplicated lead fails closed. Every candidate row carries this provenance
 under `duf_lead_provenance`, outside the candidate identity.
 
 ### Audit statuses
@@ -218,8 +221,26 @@ explicit authorization.
 
 The rebuilt residue frame does not reproduce the plan's 2026-09-24 pin
 (`4fc4d2fb…`). The sidecar embeds its build date, and its top-up set depends on the
-corpus at build time. Byte-pinned consumers such as
-`stage_cath_grounding_candidates.py` will therefore not accept it.
+corpus at build time. For byte-pinned historical consumers such as
+`stage_cath_grounding_candidates.py`, the original 2026-09-24 frame bytes are retained
+as a pinned baseline artifact; for new consumers and regenerable workflows, consumers
+should pin a content projection (e.g. per-protein sequence length, sequence SHA-256,
+and UniProt release) rather than a whole-file sidecar byte digest (#1071).
+
+## Reviewer protocol and rules
+
+When reviewing DUF candidate batches (`.review.tsv`), reviewers must evaluate each candidate against the following rules (#1072):
+
+1. **Prefer single-domain carriers over multi-domain passenger proteins.**
+   - For `SEQ_FAMILY` records grounded `WHOLE_PROTEIN`, consult the `other_interpro_signatures` column in `.review.tsv`.
+   - If the protein carries other characterized InterPro family or domain signatures and its primary biological identity belongs to another family (i.e. the DUF is merely an ancillary passenger domain), the candidate should be **REJECTED** or deferred.
+   - Reviewers must prefer proteins that are dedicated single-domain carriers or where the DUF family constitutes the defining architecture of the protein.
+2. **Review lead provenance.**
+   - Inspect the `lead_provenance` column in `.review.tsv` (`rank`, `reviewed`, and `reasons`).
+   - Strongly prefer reviewed Swiss-Prot leads (`reviewed=True`) over unreviewed TrEMBL leads (`reviewed=False`) when available.
+   - For unreviewed TrEMBL leads, rank 1 candidates with standard DUF selection reasons should be prioritized over lower-ranked candidates unless disqualified by multi-domain architecture.
+3. **Refuse poor candidates.**
+   - DUF leads are candidates for review, not certified exemplars. If all candidate alternatives for a record are low-quality, fragments, or dubious multi-domain carriers, the reviewer should leave `decision` empty or reject them, rather than forcing a low-quality exemplar onto the record.
 
 ## Limits and open questions
 
@@ -229,11 +250,8 @@ corpus at build time. Byte-pinned consumers such as
   Qualifying through the lane establishes that the protein *carries the family at a
   pinned release*, with source coordinates. It establishes nothing about function,
   and nothing about whether the family defines the protein.
-- **Whole-protein scope on multi-domain proteins.** DUFMech notes that large
-  multi-domain families surface proteins whose main identity is another domain. A
-  `SEQ_FAMILY` record grounded `WHOLE_PROTEIN` on such a protein is technically
-  correct under the current contract, but a poor exemplar. Reviewers should prefer
-  single-domain carriers, and reject or defer the rest.
+- **Whole-protein scope on multi-domain proteins.** Addressed by the reviewer
+  protocol above: reviewers must reject or defer multi-domain passenger proteins.
 - **Arbitrary picks.** Most leads are minimum-annotation-score TrEMBL entries. A
   record whose three leads are all poor should be rejected, not forced to an exemplar.
 - **Panel frames are not complete.** The pinned-release residue frame was rebuilt.

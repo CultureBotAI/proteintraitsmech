@@ -5581,3 +5581,49 @@ def test_every_caller_of_the_digest_uses_the_shared_helper():
     for name in ("finalize_uniprot_review_batch.py", "select_uniprot_review_batch.py"):
         text = (REPO / "scripts" / name).read_text(encoding="utf-8")
         assert "ground._resolution_digest(row)" in text, f"{name} no longer verifies the digest"
+
+
+def test_ground_uniprot_examples_parser_refuses_abbreviated_flags():
+    with pytest.raises(SystemExit):
+        ground._parser().parse_args(
+            ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "z"]
+        )
+    with pytest.raises(SystemExit):
+        ground._parser().parse_args(
+            ["promote", "--resolved", "r", "--approved", "a", "--interpro-f", "z"]
+        )
+
+
+def test_review_lead_provenance_formatting_and_columns(local_sources):
+    assert ground._review_lead_provenance(None) == ""
+    assert ground._review_lead_provenance("") == ""
+    assert ground._review_lead_provenance("direct-string") == "direct-string"
+    assert (
+        ground._review_lead_provenance(
+            {
+                "lead_rank": 1,
+                "lead_reviewed": True,
+                "lead_selection_reasons": ["single_domain", "curated"],
+            }
+        )
+        == "rank=1;reviewed=True;reasons=single_domain,curated"
+    )
+
+    candidate = {
+        **local_sources["candidate"],
+        "duf_lead_provenance": {
+            "lead_rank": 2,
+            "lead_reviewed": False,
+            "lead_selection_reasons": ["unreviewed_lead"],
+        },
+        "other_interpro_signatures": ["Pfam:PF99999", "Pfam:PF88888"],
+    }
+    local_sources["queue"].write_text(json.dumps(candidate) + "\n", encoding="utf-8")
+    assert ground.main(_resolve_args(local_sources)) == 0
+
+    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
+        review = next(csv.DictReader(handle, delimiter="\t"))
+    assert review["lead_provenance"] == "rank=2;reviewed=False;reasons=unreviewed_lead"
+    assert review["other_interpro_signatures"] == "Pfam:PF99999;Pfam:PF88888"
+
+

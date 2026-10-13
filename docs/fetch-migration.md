@@ -24,6 +24,7 @@ recipe is added, removed, or migrated.
 - `fetch-elife-metallophores` (immutable Zenodo release, article and tables; publisher
   MD5 and pinned SHA-256 verified by the source parser before ingest)
 - `fetch-cath`
+- `fetch-go`
 
 These are the first measured batch: the common CLAUDE.md examples plus the largest or
 most fragile multi-file releases. Each call supplies a source-specific timeout and at

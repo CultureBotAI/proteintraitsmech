@@ -89,8 +89,13 @@ def main(argv=None):
         if errors:
             raise ValueError("\n".join(errors[:20]))
         text = "".join(canonical_json(obs) + "\n" for obs in observations)
+        registry_sha256 = (
+            hashlib.sha256("".join(canonical_json(registry[key]) + "\n" for key in sorted(ids)).encode()).hexdigest()
+            if args.proteins
+            else digest(args.registry)
+        )
         manifest = {"calculator_version": VERSION, "options": options,
-                    "registry_sha256": digest(args.registry), "catalog_sha256": digest(args.catalog),
+                    "registry_sha256": registry_sha256, "catalog_sha256": digest(args.catalog),
                     "observation_file_sha256": hashlib.sha256(text.encode()).hexdigest(),
                     "protein_ids": sorted(ids), "observation_count": len(observations),
                     "statuses": dict(Counter(o["status"] for o in observations)),

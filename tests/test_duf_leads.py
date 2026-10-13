@@ -322,6 +322,8 @@ def test_whole_protein_candidates_copy_frame_coordinates_and_never_lead_identity
     assert whole["mapping_method"] == "INTERPRO_MATCH" and whole["source_release"] == "110.0"
     assert whole["candidate_id"] == derive_candidate_id(whole)
     assert whole["duf_lead_provenance"]["lead_status"] == "TARGET_ABSENT_FROM_TRAIT"
+    assert whole["other_interpro_signatures"] == ["Pfam:PF99999"]
+    assert by_protein["UniProtKB:P12345"]["other_interpro_signatures"] == []
     assert by_protein["UniProtKB:P12345"]["duf_lead_provenance"]["lead_status"] == (
         "TARGET_LEGACY_ON_TRAIT"
     )
@@ -357,6 +359,62 @@ def test_localized_leads_need_one_grouped_location_or_a_single_interval(tmp_path
     assert {row["interpro_location_id"] for row in located} == expected
     reasons = {(row["protein_id"], row["reason"]) for row in rejected}
     assert ("UniProtKB:A0A000AAA4", "UNGROUPED_INTERPRO_LOCATIONS") in reasons
+
+
+def test_grouped_interpro_locations_bounds_and_containment(tmp_path):
+    frame = {
+        "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
+        "A0A000AAA1": {},
+        "P12345": {},
+        "A0A000AAA4": {},
+    }
+    # Out of bounds: start < 1
+    grouped_bad_start = {"A0A000AAA2": {"Pfam:PF00002": [[[0, 50]]]}}
+    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_bad_start)
+    assert any(
+        row["protein_id"] == "UniProtKB:A0A000AAA2"
+        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
+        for row in rejected
+    )
+
+    # Out of bounds: end > length (sequence length is 120)
+    grouped_bad_end = {"A0A000AAA2": {"Pfam:PF00002": [[[20, 150]]]}}
+    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_bad_end)
+    assert any(
+        row["protein_id"] == "UniProtKB:A0A000AAA2"
+        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
+        for row in rejected
+    )
+
+    # Not contained in flat intervals (1 to 15 is outside [[20, 60], [80, 120]])
+    grouped_not_contained = {"A0A000AAA2": {"Pfam:PF00002": [[[1, 15]]]}}
+    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_not_contained)
+    assert any(
+        row["protein_id"] == "UniProtKB:A0A000AAA2"
+        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
+        for row in rejected
+    )
+
+    # Non-list raw groups
+    grouped_non_list = {"A0A000AAA2": {"Pfam:PF00002": "not-a-list"}}
+    _, rejected = _stage(tmp_path, frame=frame, grouped=grouped_non_list)
+    assert any(
+        row["protein_id"] == "UniProtKB:A0A000AAA2"
+        and row["reason"] == "MALFORMED_INTERPRO_GROUPED_LOCATION"
+        for row in rejected
+    )
+
+
+def test_grouped_interpro_non_dict_entry_raises_duf_lead_error(tmp_path):
+    frame = {
+        "A0A000AAA2": {"Pfam:PF00002": [[20, 60], [80, 120]]},
+        "A0A000AAA1": {},
+        "P12345": {},
+        "A0A000AAA4": {},
+    }
+    grouped = {"A0A000AAA2": "not-a-dict"}
+    with pytest.raises(DL.DufLeadError, match="must be an object"):
+        _stage(tmp_path, frame=frame, grouped=grouped)
 
 
 def test_rejections_are_reported_not_guessed(tmp_path):
@@ -533,3 +591,208 @@ def test_discovery_receipt_must_bind_the_plan_and_cover_it(tmp_path):
     short = dict(list(sequences.items())[:-1])
     with pytest.raises(DL.DufLeadError, match="cover exactly"):
         DL.verify_discovery_receipt(receipt, raw, plan, short, uniprot_release="2026_03")
+
+
+class _FakeResponse:
+    def __init__(self, url: str, body: bytes, *, release: str = "2026_03", link: str = ""):
+        self.url = url
+        self.body = body
+        self.status = 200
+        self.headers = {"x-uniprot-release": release, "link": link}
+
+    def geturl(self) -> str:
+        return self.url
+
+    def read(self) -> bytes:
+        return self.body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def test_cli_subcommands_dry_run_apply_and_error_codes(tmp_path, monkeypatch):
+    traits = tmp_path / "traits"
+    _record(
+        traits,
+        "sequence/family/pfam/a.yaml",
+        "Pfam:PF00001",
+        "SEQ_FAMILY",
+        [{"protein_id": "UniProtKB:P12345"}],
+    )
+    _record(traits, "sequence/domain/pfam/b.yaml", "Pfam:PF00002", "SEQ_DOMAIN")
+
+    snapshot = DL.Snapshot(ROWS, {}, DL.PINNED_COMMIT, DL.SNAPSHOT_SHA256, DL.MANIFEST_SHA256)
+    monkeypatch.setattr(DL, "load_snapshot", lambda repo, commit=None, **kwargs: snapshot)
+    monkeypatch.setattr(DL, "default_content_gate", lambda records: _Gate(records))
+    monkeypatch.setattr(
+        DL.cm,
+        "build_identifier_index",
+        lambda root: {
+            "Pfam:PF00001": ["sequence/family/pfam/a.yaml"],
+            "Pfam:PF00002": ["sequence/domain/pfam/b.yaml"],
+        },
+    )
+
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+
+    # 1. Audit dry-run: returns 0, writes nothing
+    exit_code = DL.main(["audit", "--traits", str(traits), "--out", str(out_dir)])
+    assert exit_code == 0
+    assert not (out_dir / "leads.jsonl").exists()
+    assert not (out_dir / "summary.json").exists()
+
+    # 2. Audit apply: returns 0, writes leads.jsonl and summary.json
+    exit_code = DL.main(["audit", "--traits", str(traits), "--out", str(out_dir), "--apply"])
+    assert exit_code == 0
+    assert (out_dir / "leads.jsonl").exists()
+    assert (out_dir / "summary.json").exists()
+    summary = json.loads((out_dir / "summary.json").read_text(encoding="utf-8"))
+    assert summary["content_gate"] is True
+
+    # 3. Discover dry-run: returns 0, opener not called, writes nothing
+    opener_called = []
+
+    def fake_opener(request, timeout=120):
+        opener_called.append(request)
+        return _FakeResponse(request.full_url, b"{}")
+
+    exit_code = DL.main(
+        ["discover", "--uniprot-release", "2026_03", "--out", str(out_dir)],
+        opener=fake_opener,
+    )
+    assert exit_code == 0
+    assert not opener_called
+    assert not (out_dir / "discovery-plan.json").exists()
+
+    # 4. Discover apply: returns 0, opener called, writes expected files
+    def fake_opener_results(request, timeout=120):
+        opener_called.append(request)
+        results = [
+            {"primaryAccession": "A0A000AAA1", "sequence": {"value": "M" * 120, "length": 120}},
+            {"primaryAccession": "P12345", "sequence": {"value": "M" * 120, "length": 120}},
+            {"primaryAccession": "A0A000AAA2", "sequence": {"value": "M" * 120, "length": 120}},
+        ]
+        return _FakeResponse(request.full_url, json.dumps({"results": results}).encode())
+
+    exit_code = DL.main(
+        ["discover", "--uniprot-release", "2026_03", "--out", str(out_dir), "--apply"],
+        opener=fake_opener_results,
+    )
+    assert exit_code == 0
+    assert opener_called
+    assert (out_dir / "discovery-plan.json").exists()
+    assert (out_dir / "accessions.txt").exists()
+    assert (out_dir / "discovery.jsonl").exists()
+    assert (out_dir / "discovery.receipt.json").exists()
+
+    # Prepare InterPro frames for candidates
+    frame_path = tmp_path / "interpro_frame.json"
+    frame_data = {
+        "_meta": {"source": "InterPro", "release": "110.0"},
+        "proteins": {
+            "A0A000AAA1": {"Pfam:PF00001": [[10, 50]]},
+            "P12345": {"Pfam:PF00001": [[5, 50]]},
+            "A0A000AAA2": {"Pfam:PF00002": [[20, 60]]},
+        },
+    }
+    frame_path.write_text(json.dumps(frame_data), encoding="utf-8")
+
+    grouped_path = tmp_path / "interpro_grouped_locations.json"
+    grouped_data = {
+        "_meta": {"source": "InterPro", "release": "110.0"},
+        "proteins": {
+            "A0A000AAA2": {"Pfam:PF00002": [[[20, 60]]]},
+        },
+    }
+    grouped_path.write_text(json.dumps(grouped_data), encoding="utf-8")
+
+    # 5. Candidates dry-run: returns 0, writes nothing
+    exit_code = DL.main([
+        "candidates",
+        "--uniprot-release",
+        "2026_03",
+        "--interpro-release",
+        "110.0",
+        "--interpro-frame",
+        str(frame_path),
+        "--interpro-grouped-frame",
+        str(grouped_path),
+        "--out",
+        str(out_dir),
+    ])
+    assert exit_code == 0
+    assert not (out_dir / "candidates.jsonl").exists()
+
+    # 6. Candidates apply: returns 0, writes candidates.jsonl, rejected.jsonl, candidates.summary.json
+    exit_code = DL.main([
+        "candidates",
+        "--uniprot-release",
+        "2026_03",
+        "--interpro-release",
+        "110.0",
+        "--interpro-frame",
+        str(frame_path),
+        "--interpro-grouped-frame",
+        str(grouped_path),
+        "--out",
+        str(out_dir),
+        "--apply",
+    ])
+    assert exit_code == 0
+    assert (out_dir / "candidates.jsonl").exists()
+    assert (out_dir / "rejected.jsonl").exists()
+    assert (out_dir / "candidates.summary.json").exists()
+
+    # 7. Error cases return exit code 2
+    # Missing repo for audit
+    monkeypatch.undo()
+    err_code = DL.main(["audit", "--dufmech-repo", str(tmp_path / "nonexistent")])
+    assert err_code == 2
+
+    # Ungated summary for discover
+    (out_dir / "summary.json").write_text(json.dumps({"content_gate": False}), encoding="utf-8")
+    err_code = DL.main(["discover", "--uniprot-release", "2026_03", "--out", str(out_dir)])
+    assert err_code == 2
+
+    # Frame release mismatch for candidates
+    frame_data["_meta"]["release"] = "109.0"
+    frame_path.write_text(json.dumps(frame_data), encoding="utf-8")
+    err_code = DL.main([
+        "candidates",
+        "--uniprot-release",
+        "2026_03",
+        "--interpro-release",
+        "110.0",
+        "--interpro-frame",
+        str(frame_path),
+        "--interpro-grouped-frame",
+        str(grouped_path),
+        "--out",
+        str(out_dir),
+    ])
+    assert err_code == 2
+
+
+def test_load_frame_rejects_incomplete_sidecars(tmp_path: pathlib.Path):
+    p = tmp_path / "frame.json"
+    # complete: False
+    p.write_text(json.dumps({
+        "_meta": {"source": "InterPro", "complete": False, "count": 1, "targets": 10},
+        "proteins": {"P12345": {}},
+    }), encoding="utf-8")
+    with pytest.raises(DL.DufLeadError, match="incomplete"):
+        DL._load_frame(p, "InterPro frame")
+
+    # count < targets
+    p.write_text(json.dumps({
+        "_meta": {"source": "InterPro", "complete": True, "count": 1, "targets": 2},
+        "proteins": {"P12345": {}},
+    }), encoding="utf-8")
+    with pytest.raises(DL.DufLeadError, match="incomplete"):
+        DL._load_frame(p, "InterPro frame")
+
+

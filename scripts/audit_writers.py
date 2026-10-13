@@ -72,6 +72,7 @@ BYPASS = {
     "promote_family_drafts": "writes causal_graphs in place; the merge would revert the "
                              "graph it just built (#204 guards the same path)",
     "repair_self_referential_notes": "in-place note rewrite (#364)",
+    "repair_assembled_enzyme_notes": "assembled-enzyme caveat note on Q8GBW6 and Q04507 (#1026)",
     "repair_misattributed_snippets": "in-place snippet rewrite (#422/#425)",
     "repair_beta_lactam_notes": "in-place note rewrite (#466)",
     "repair_interpro_abstracts": "in-place definition restore (#159); its docstring "

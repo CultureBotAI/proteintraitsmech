@@ -255,8 +255,11 @@ def entry_intervals(entry: dict) -> list:
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,
+    )
     ap.add_argument("--query", action="append", metavar="Q")
     ap.add_argument("--organisms", action="store_true",
                     help="the ten proteomes of the standard matrix")
@@ -383,7 +386,8 @@ def main() -> int:
         print("--allow-partial given; writing anyway.", file=sys.stderr)
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
-    payload = sidecar.wrap("proteins", frame, "UniProt", release)
+    is_complete = not bool(args.limit) and not bool(incomplete)
+    payload = sidecar.wrap("proteins", frame, "UniProt", release, complete=is_complete)
     known_absent = sorted(absent) if args.top_up else sorted(meta.get("absent") or [])
     if known_absent:
         payload["_meta"]["absent"] = known_absent

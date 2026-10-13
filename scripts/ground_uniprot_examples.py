@@ -209,6 +209,8 @@ _REVIEW_COLUMNS = (
     "intervals",
     "review_flags",
     "reasons",
+    "lead_provenance",
+    "other_interpro_signatures",
     "reviewer",
     "reviewed_at",
     "review_notes",
@@ -2472,6 +2474,30 @@ def _review_inheritance_path(value: Any) -> str:
     return _canonical_json(value)
 
 
+def _review_lead_provenance(value: Any) -> str:
+    """Compact summary of discovery-lead provenance for the review TSV (#1072)."""
+
+    if not value:
+        return ""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict):
+        parts: list[str] = []
+        if "lead_rank" in value:
+            parts.append(f"rank={value['lead_rank']}")
+        if "lead_reviewed" in value:
+            parts.append(f"reviewed={value['lead_reviewed']}")
+        reasons = value.get("lead_selection_reasons")
+        if reasons:
+            if isinstance(reasons, list):
+                parts.append(f"reasons={','.join(str(r) for r in reasons)}")
+            else:
+                parts.append(f"reasons={reasons}")
+        if parts:
+            return ";".join(parts)
+    return _canonical_json(value)
+
+
 def _review_flags(row: dict[str, Any]) -> list[str]:
     """Return deterministic flags whose cases the review protocol samples exhaustively."""
 
@@ -2726,6 +2752,14 @@ def resolve(args: argparse.Namespace) -> int:
                 "intervals": _canonical_json(row.get("intervals") or []),
                 "review_flags": ";".join(_review_flags(row)),
                 "reasons": ";".join(row.get("reasons") or []),
+                "lead_provenance": _review_lead_provenance(
+                    row.get("duf_lead_provenance") or row.get("lead_provenance")
+                ),
+                "other_interpro_signatures": (
+                    ";".join(str(s) for s in row["other_interpro_signatures"])
+                    if isinstance(row.get("other_interpro_signatures"), list)
+                    else str(row.get("other_interpro_signatures") or "")
+                ),
                 "reviewer": "",
                 "reviewed_at": "",
                 "review_notes": "",
@@ -4913,9 +4947,11 @@ def promote(args: argparse.Namespace) -> int:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    resolver = subparsers.add_parser("resolve", help="resolve candidates without writing traits")
+    resolver = subparsers.add_parser(
+        "resolve", help="resolve candidates without writing traits", allow_abbrev=False
+    )
     resolver.add_argument("--queue", type=Path, required=True, help="candidate JSONL ledger")
     resolver.add_argument("--providers", default="protein-registry,interpro")
     resolver.add_argument(
@@ -5065,7 +5101,9 @@ def _parser() -> argparse.ArgumentParser:
     resolver.add_argument("--fail-on-rejected", action="store_true")
     resolver.set_defaults(func=resolve)
 
-    promoter = subparsers.add_parser("promote", help="promote explicitly approved rows")
+    promoter = subparsers.add_parser(
+        "promote", help="promote explicitly approved rows", allow_abbrev=False
+    )
     promoter.add_argument("--resolved", type=Path, required=True)
     promoter.add_argument("--approved", type=Path, required=True)
     promoter.add_argument("--traits", type=Path, default=DEFAULT_TRAITS)
