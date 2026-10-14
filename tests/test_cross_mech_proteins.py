@@ -976,6 +976,58 @@ def test_candidates_refuse_a_malformed_release():
         CM.candidate_rows([], uniprot_release="latest", mentions_sha256="a" * 64, sequences={})
 
 
+def test_candidate_rows_with_coordinates_promotes_localized_candidate(tmp_path):
+    pairs = [
+        _pair(
+            "Pfam:PF04728",
+            "LEGACY_ON_TRAIT",
+            "INTERPRO_MATCH:InterPro",
+            axis="SEQUENCE",
+        ),
+    ]
+    coords = {
+        "P18776": {
+            "Pfam:PF04728": [[20, 50], [5, 15]],
+        }
+    }
+    rows = CM.candidate_rows(
+        pairs,
+        uniprot_release="2026_03",
+        mentions_sha256="a" * 64,
+        sequences=SEQUENCES,
+        coordinates=coords,
+    )
+    (pfam,) = rows
+    assert pfam["batch"] == CM.CANDIDATE_BATCH
+    assert pfam["scope"] == "LOCALIZED"
+    assert pfam["mapping_method"] == "INTERPRO_MATCH"
+    assert pfam["coordinate_frame"] == "UNIPROT_CANONICAL"
+    assert pfam["intervals"] == [{"start": 5, "end": 15}, {"start": 20, "end": 50}]
+    assert pfam["reasons"] == list(CM.CANDIDATE_RESOLUTION_REASONS)
+    ground = sys.modules["ground_uniprot_examples"]
+    assert pfam["candidate_id"] == ground.derive_candidate_id(pfam)
+
+    # Without coordinates, it remains in NEEDS_OCCURRENCE_BATCH
+    rows_no_coords = CM.candidate_rows(
+        pairs,
+        uniprot_release="2026_03",
+        mentions_sha256="a" * 64,
+        sequences=SEQUENCES,
+    )
+    (pfam_no_coords,) = rows_no_coords
+    assert pfam_no_coords["batch"] == CM.NEEDS_OCCURRENCE_BATCH
+    assert "intervals" not in pfam_no_coords
+    assert pfam_no_coords["candidate_id"] != pfam["candidate_id"]
+
+    # Test load_interpro_frame from json file
+    frame_file = tmp_path / "interpro_frame.json"
+    frame_file.write_text(
+        json.dumps({"_meta": {"schema": 1}, "proteins": coords}), encoding="utf-8"
+    )
+    loaded = CM.load_interpro_frame(frame_file)
+    assert loaded == coords
+
+
 # --------------------------------------------------------------------- discovery
 
 
@@ -1046,6 +1098,105 @@ def test_discovery_refuses_an_off_host_redirect():
     with pytest.raises(CM.CrossMechError, match="redirected off"):
         CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03", opener=opener)
 
+
+def test_inherited_review_conclusion():
+    # Molecular function and enzymatic activity -> activity conclusion (#1060)
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_MOLECULAR_FUNCTION")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_ENZYMATIC_ACTIVITY")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_axis="FUNCTION")
+        == CM.ACTIVITY_INHERITED_CONCLUSION
+    )
+
+    # Localization -> component / subtype conclusion
+    assert (
+        CM.inherited_review_conclusion(trait_category="FUNC_LOCALIZATION")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_axis="LOCATION")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+    assert (
+        CM.inherited_review_conclusion(trait_category="OTHER")
+        == CM.LOCALIZATION_INHERITED_CONCLUSION
+    )
+
+
+def test_format_inherited_review_note_molecular_function():
+    # P07254 on GO:0004568 (chitinase activity), inherited from GO:0008843 (#1060)
+    note = CM.format_inherited_review_note(
+        trait_category="FUNC_MOLECULAR_FUNCTION",
+        source_trait_id="GO:0008843",
+        trait_id="GO:0004568",
+        edges=[("GO:0008843", "is_a", "GO:0004568")],
+        evidence="IEA:UniProtKB-EC (EC 3.2.1.14)",
+    )
+    assert "GO:0008843 is_a GO:0004568" in note
+    assert "IEA:UniProtKB-EC (EC 3.2.1.14)" in note
+    assert note.endswith(CM.ACTIVITY_INHERITED_CONCLUSION)
+    assert "The protein performs the activity" in note
+    assert "component or subtype" not in note
+
+
+def test_format_inherited_review_note_localization():
+    note = CM.format_inherited_review_note(
+        trait_category="FUNC_LOCALIZATION",
+        source_trait_id="GO:0022625",
+        trait_id="GO:0005840",
+        edges=[
+            {"child": "GO:0022625", "relation": "part_of", "parent": "GO:0022626"},
+            {"child": "GO:0022626", "relation": "is_a", "parent": "GO:0005840"},
+        ],
+        evidence="IDA",
+        references=["PubMed:12345"],
+    )
+    assert "GO:0022625 part_of GO:0022626, GO:0022626 is_a GO:0005840" in note
+    assert "IDA; refs: PubMed:12345" in note
+    assert note.endswith(CM.LOCALIZATION_INHERITED_CONCLUSION)
+    assert "component or subtype" in note
+    assert "performs the activity" not in note
+
+
+def test_format_inherited_review_note_from_row():
+    row = {
+        "protein_id": "UniProtKB:P07254",
+        "trait_id": "GO:0004568",
+        "source_trait_id": "GO:0008843",
+        "trait_category": "FUNC_MOLECULAR_FUNCTION",
+        "trait_axis": "FUNCTION",
+        "inheritance_edges": [("GO:0008843", "is_a", "GO:0004568")],
+        "evidence_source": "UniProtKB",
+    }
+    note = CM.format_inherited_review_note(row=row)
+    assert note.endswith(CM.ACTIVITY_INHERITED_CONCLUSION)
+
+
+def test_cmd_review_note_cli(capsys):
+    ret = CM.main(
+        [
+            "review-note",
+            "--trait-category",
+            "FUNC_MOLECULAR_FUNCTION",
+            "--source-trait-id",
+            "GO:0008843",
+            "--trait-id",
+            "GO:0004568",
+            "--edge",
+            "GO:0008843 is_a GO:0004568",
+            "--evidence",
+            "IEA:UniProtKB-EC",
+        ]
+    )
+    assert ret == 0
+    captured = capsys.readouterr().out
+    assert "The protein performs the activity named by the record." in captured
 
 def test_discovery_retains_inactive_accessions_without_substitution():
     result = CM.discover_sequences(["UniProtKB:P18776"], expected_release="2026_03",
@@ -1145,3 +1296,20 @@ def test_ambiguous_entry_annotation_facts_remain_blocked(tmp_path, monkeypatch):
     blocked = []
     assert CM.entry_annotation_pairs(entries, mentions, traits_root=tmp_path, blocked=blocked) == []
     assert blocked == [{"protein_id": "UniProtKB:P18776", "reason": "ambiguous exact fact"}]
+
+
+def test_cross_mech_parser_refuses_abbreviated_flags():
+    parser = CM.build_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["scan", "--fe"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["audit", "--sn", "foo"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["discover", "--uniprot-release", "2026_03", "--ap"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["candidates", "--uniprot-release", "2026_03", "--ap"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["check", "--loc"])
+    with pytest.raises(SystemExit):
+        parser.parse_args(["review-note", "--trait-cat", "foo"])
+

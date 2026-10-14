@@ -108,6 +108,7 @@ RHEA_DIRECTIONS = REPO_ROOT / "data" / "raw" / "rhea" / "rhea-directions.tsv"
 # The release-141-compatible bytes stage_rhea_uniprot_grounding.py already pins;
 # tests/test_cross_mech_proteins.py asserts the two pins stay equal.
 RHEA_DIRECTIONS_SHA256 = "0b62f0cd92991b89e7b6e05707e671e80787527c30192b3d44cf7fc05a5c748f"
+DEFAULT_INTERPRO_FRAME = REPO_ROOT / "data" / "raw" / "align_cache" / "interpro_frame.json"
 
 SNAPSHOT_KIND = "proteintraitsmech-cross-mech-protein-snapshot"
 SNAPSHOT_SCHEMA_VERSION = 2
@@ -1716,6 +1717,22 @@ def load_discovery(path: Path) -> dict[str, dict[str, Any]]:
     return facts
 
 
+def load_interpro_frame(path: Path | str) -> dict[str, Any]:
+    frame_path = Path(path)
+    if not frame_path.is_file():
+        raise CrossMechError(f"no InterPro frame cache at {frame_path}")
+    try:
+        blob = json.loads(frame_path.read_text(encoding="utf-8"))
+    except Exception as error:
+        raise CrossMechError(
+            f"failed to read InterPro frame cache from {frame_path}: {error}"
+        ) from error
+    proteins = blob.get("proteins", blob)
+    if not isinstance(proteins, dict):
+        raise CrossMechError(f"{frame_path}: expected proteins dict in InterPro frame cache")
+    return proteins
+
+
 # -------------------------------------------------------------------- candidates
 
 
@@ -1725,6 +1742,7 @@ def candidate_rows(
     uniprot_release: str,
     mentions_sha256: str,
     sequences: Mapping[str, Mapping[str, Any]],
+    coordinates: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
     """Funnel candidates for every absent or legacy pair that has a qualification route.
 
@@ -1793,7 +1811,40 @@ def candidate_rows(
             row["source_release"] = uniprot_release
             row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
         else:
-            row["reasons"] = ["record-specific occurrence coordinates require resolution"]
+            intervals_raw = None
+            if coordinates is not None:
+                bare_acc = (
+                    pair["protein_id"].split(":", 1)[1]
+                    if ":" in pair["protein_id"]
+                    else pair["protein_id"]
+                )
+                protein_coords = coordinates.get(pair["protein_id"]) or coordinates.get(bare_acc)
+                if isinstance(protein_coords, Mapping):
+                    intervals_raw = protein_coords.get(trait_id) or protein_coords.get(
+                        trait_id.split(":", 1)[-1]
+                    )
+            formatted_intervals: list[dict[str, int]] = []
+            if intervals_raw:
+                for item in intervals_raw:
+                    if isinstance(item, dict):
+                        s, e = item.get("start"), item.get("end")
+                    elif isinstance(item, (list, tuple)) and len(item) == 2:
+                        s, e = item[0], item[1]
+                    else:
+                        continue
+                    if s is not None and e is not None:
+                        try:
+                            formatted_intervals.append({"start": int(s), "end": int(e)})
+                        except (TypeError, ValueError):
+                            continue
+                formatted_intervals.sort(key=lambda x: (x["start"], x["end"]))
+            if formatted_intervals:
+                row["intervals"] = formatted_intervals
+                row["coordinate_frame"] = "UNIPROT_CANONICAL"
+                row["batch"] = CANDIDATE_BATCH
+                row["reasons"] = list(CANDIDATE_RESOLUTION_REASONS)
+            else:
+                row["reasons"] = ["record-specific occurrence coordinates require resolution"]
         row["candidate_id"] = derive_candidate_id(row)
         if pair.get("trait_link_origin"):
             row["cross_mech_provenance"]["trait_link_origin"] = pair["trait_link_origin"]
@@ -2198,11 +2249,19 @@ def cmd_candidates(args: argparse.Namespace) -> int:
         pairs = merge_candidate_pairs(pairs, extra)
         print(f"{len(extra):,} exact-entry functional candidates (independent of sibling trait links)")
         print(f"{len(annotation_blocked):,} accessions blocked by ambiguous/malformed annotation facts")
+    coordinates = None
+    if getattr(args, "interpro_frame", None):
+        frame_path = Path(args.interpro_frame)
+        if frame_path.is_file():
+            coordinates = load_interpro_frame(frame_path)
+        elif args.interpro_frame != str(DEFAULT_INTERPRO_FRAME):
+            raise CrossMechError(f"no InterPro frame cache at {frame_path}")
     candidates = candidate_rows(
         pairs,
         uniprot_release=args.uniprot_release,
         mentions_sha256=manifest["mentions_sha256"],
         sequences=sequences,
+        coordinates=coordinates,
     )
     if args.coverage_inventory:
         if not args.entry_annotations:
@@ -2241,14 +2300,154 @@ def cmd_candidates(args: argparse.Namespace) -> int:
     print(f"WROTE {args.out}")
     return 0
 
+# ---------------------------------------------------------------- review notes (#1060)
+
+LOCALIZATION_INHERITED_CONCLUSION = (
+    "The protein is a component or subtype instance of what the record names."
+)
+ACTIVITY_INHERITED_CONCLUSION = (
+    "The protein performs the activity named by the record."
+)
+
+
+def inherited_review_conclusion(
+    trait_category: str | None = None,
+    trait_axis: str | None = None,
+) -> str:
+    """Return the conclusion sentence for an inherited review note (#1060).
+
+    Molecular-function and enzymatic-activity records assert that the protein
+    performs the activity named by the record. Localization records assert
+    that the protein is a component or subtype instance of what the record names.
+    """
+    category_norm = (trait_category or "").strip().upper()
+    axis_norm = (trait_axis or "").strip().upper()
+    if (
+        category_norm
+        in {
+            "FUNC_MOLECULAR_FUNCTION",
+            "MOLECULAR_FUNCTION",
+            "FUNC_ENZYMATIC_ACTIVITY",
+            "ENZYMATIC_ACTIVITY",
+            "ACTIVITY",
+        }
+        or axis_norm in {"FUNCTION", "FUNC"}
+    ):
+        return ACTIVITY_INHERITED_CONCLUSION
+    return LOCALIZATION_INHERITED_CONCLUSION
+
+
+def format_inherited_review_note(
+    *,
+    trait_category: str | None = None,
+    trait_axis: str | None = None,
+    source_trait_id: str | None = None,
+    trait_id: str | None = None,
+    edges: Sequence[Mapping[str, str] | tuple[str, str, str]] | None = None,
+    evidence: str | None = None,
+    references: Sequence[str] | None = None,
+    conclusion: str | None = None,
+    row: Mapping[str, Any] | None = None,
+) -> str:
+    """Format a review note for an inherited cross-Mech candidate row (#1060).
+
+    Inherited rows record the evidence, the references, and every edge with its
+    relation, concluding with category-specific wording:
+    - Localization records: 'The protein is a component or subtype instance of what the record names.'
+    - Molecular-function records: 'The protein performs the activity named by the record.'
+    """
+    if row is not None:
+        if trait_category is None:
+            trait_category = row.get("trait_category")
+        if trait_axis is None:
+            trait_axis = row.get("trait_axis")
+        if source_trait_id is None:
+            source_trait_id = row.get("source_trait_id")
+        if trait_id is None:
+            trait_id = row.get("trait_id")
+        if evidence is None:
+            evidence = (
+                row.get("evidence")
+                or row.get("evidence_code")
+                or row.get("evidence_type")
+                or row.get("evidence_source")
+            )
+        if edges is None:
+            edges = row.get("edges") or row.get("inheritance_edges")
+
+    parts: list[str] = []
+
+    # Path / edges description
+    if edges:
+        edge_strs: list[str] = []
+        for edge in edges:
+            if isinstance(edge, Mapping):
+                c = edge.get("child")
+                r = edge.get("relation")
+                p = edge.get("parent")
+                if c and r and p:
+                    edge_strs.append(f"{c} {r} {p}")
+            elif isinstance(edge, (list, tuple)) and len(edge) == 3:
+                edge_strs.append(f"{edge[0]} {edge[1]} {edge[2]}")
+        if edge_strs:
+            parts.append(f"Inherited via {', '.join(edge_strs)}.")
+    elif source_trait_id and trait_id and source_trait_id != trait_id:
+        parts.append(f"Inherited from {source_trait_id} to {trait_id}.")
+
+    # Evidence and references
+    ev_parts: list[str] = []
+    if evidence:
+        ev_parts.append(str(evidence))
+    if references:
+        ev_parts.append(f"refs: {', '.join(str(r) for r in references)}")
+    if ev_parts:
+        parts.append(f"Evidence: {'; '.join(ev_parts)}.")
+
+    # Concluding sentence
+    final_sentence = conclusion or inherited_review_conclusion(trait_category, trait_axis)
+    parts.append(final_sentence)
+
+    return " ".join(parts)
+
+
+generate_cross_mech_review_note = format_inherited_review_note
+
+
+def cmd_review_note(args: argparse.Namespace) -> int:
+    edges = []
+    if args.edges:
+        for item in args.edges:
+            parts = item.strip().split()
+            if len(parts) == 3:
+                edges.append((parts[0], parts[1], parts[2]))
+            else:
+                raise CrossMechError(
+                    f"--edge must have three tokens 'CHILD RELATION PARENT', got {item!r}"
+                )
+    note = format_inherited_review_note(
+        trait_category=args.trait_category,
+        trait_axis=args.trait_axis,
+        source_trait_id=args.source_trait_id,
+        trait_id=args.trait_id,
+        edges=edges,
+        evidence=args.evidence,
+        references=args.references,
+    )
+    print(note)
+    return 0
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        allow_abbrev=False,
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    scan_parser = sub.add_parser("scan", help="read sibling Mechs into the snapshot")
+    scan_parser = sub.add_parser(
+        "scan", help="read sibling Mechs into the snapshot", allow_abbrev=False
+    )
     scan_parser.add_argument("--mechs-root", default=str(REPO_ROOT.parent))
     scan_parser.add_argument("--ref", default=DEFAULT_REF)
     scan_parser.add_argument("--fetch", action="store_true", help="git fetch each sibling first")
@@ -2263,14 +2462,18 @@ def build_parser() -> argparse.ArgumentParser:
     scan_parser.add_argument("--apply", action="store_true")
     scan_parser.set_defaults(func=cmd_scan)
 
-    audit_parser = sub.add_parser("audit", help="resolve the snapshot against data/traits")
+    audit_parser = sub.add_parser(
+        "audit", help="resolve the snapshot against data/traits", allow_abbrev=False
+    )
     audit_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     audit_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     audit_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
     audit_parser.add_argument("--out", default=str(REPORT_DIR))
     audit_parser.set_defaults(func=cmd_audit)
 
-    discover_parser = sub.add_parser("discover", help="read candidate proteins' sequence identity")
+    discover_parser = sub.add_parser(
+        "discover", help="read candidate proteins' sequence identity", allow_abbrev=False
+    )
     discover_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     discover_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     discover_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
@@ -2287,7 +2490,9 @@ def build_parser() -> argparse.ArgumentParser:
     discover_parser.add_argument("--protein", action="append", help="bounded canary accession CURIE")
     discover_parser.set_defaults(func=cmd_discover)
 
-    candidates_parser = sub.add_parser("candidates", help="emit grounding-funnel candidates")
+    candidates_parser = sub.add_parser(
+        "candidates", help="emit grounding-funnel candidates", allow_abbrev=False
+    )
     candidates_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     candidates_parser.add_argument("--traits", default=str(TRAITS_ROOT))
     candidates_parser.add_argument("--rhea-directions", default=str(RHEA_DIRECTIONS))
@@ -2296,13 +2501,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     candidates_parser.add_argument("--uniprot-release", required=True)
     candidates_parser.add_argument("--discovery", default=str(DISCOVERY_PATH))
+    candidates_parser.add_argument(
+        "--interpro-frame",
+        default=str(DEFAULT_INTERPRO_FRAME),
+        help="InterPro coordinate cache for localized candidates (default: %(default)s)",
+    )
     candidates_parser.add_argument("--entry-annotations", help="include exact-entry functional discovery candidates")
     candidates_parser.add_argument("--coverage-inventory", help="plan one exact functional candidate per protein without a qualified example")
     candidates_parser.add_argument("--out", default=str(CANDIDATE_QUEUE))
     candidates_parser.add_argument("--apply", action="store_true")
     candidates_parser.set_defaults(func=cmd_candidates)
 
-    check_parser = sub.add_parser("check", help="verify the snapshot; optionally report drift")
+    check_parser = sub.add_parser(
+        "check", help="verify the snapshot; optionally report drift", allow_abbrev=False
+    )
     check_parser.add_argument("--snapshot", default=str(SNAPSHOT_DIR))
     check_parser.add_argument("--local", action="store_true", help="compare sibling checkouts")
     check_parser.add_argument("--remote", action="store_true", help="compare live default branches")
@@ -2310,6 +2522,30 @@ def build_parser() -> argparse.ArgumentParser:
     check_parser.add_argument("--ref", default=DEFAULT_REF)
     check_parser.add_argument("--fail-on-drift", action="store_true")
     check_parser.set_defaults(func=cmd_check)
+
+    review_note_parser = sub.add_parser(
+        "review-note",
+        help="template a review note for an inherited cross-Mech candidate row (#1060)",
+        allow_abbrev=False,
+    )
+    review_note_parser.add_argument("--trait-category", help="record trait category")
+    review_note_parser.add_argument("--trait-axis", help="record trait axis")
+    review_note_parser.add_argument("--source-trait-id", help="descendant source trait ID")
+    review_note_parser.add_argument("--trait-id", help="record trait ID")
+    review_note_parser.add_argument(
+        "--edge",
+        action="append",
+        dest="edges",
+        help="inheritance edge formatted as 'CHILD RELATION PARENT' (can be repeated)",
+    )
+    review_note_parser.add_argument("--evidence", help="evidence string or code")
+    review_note_parser.add_argument(
+        "--reference",
+        action="append",
+        dest="references",
+        help="reference identifier (can be repeated)",
+    )
+    review_note_parser.set_defaults(func=cmd_review_note)
     return parser
 
 

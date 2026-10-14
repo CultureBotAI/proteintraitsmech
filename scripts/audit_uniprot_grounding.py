@@ -903,6 +903,16 @@ def discover_candidates(
             target_records[record.trait_id].append(record)
 
     interpro, interpro_meta = _load_sidecar(interpro_frame_path, "proteins")
+    if interpro_meta.get("complete") is False or (
+        isinstance(interpro_meta.get("targets"), int)
+        and interpro_meta.get("count", len(interpro)) < interpro_meta["targets"]
+    ):
+        count = interpro_meta.get("count", len(interpro))
+        targets = interpro_meta.get("targets", "?")
+        raise AuditInputError(
+            f"InterPro frame is incomplete: {interpro_frame_path} "
+            f"({count} of {targets} targets); re-run fetch-interpro-frame --apply"
+        )
     interpro_release = interpro_meta.get("release")
     exact: dict[str, list[CandidateEvidence]] = collections.defaultdict(list)
     wanted_accessions: set[str] = set()
@@ -910,6 +920,16 @@ def discover_candidates(
     grouped_pairs: set[tuple[str, str]] = set()
     if interpro_grouped_frame_path is not None and interpro_grouped_frame_path.is_file():
         grouped, grouped_meta = _load_sidecar(interpro_grouped_frame_path, "proteins")
+        if grouped_meta.get("complete") is False or (
+            isinstance(grouped_meta.get("targets"), int)
+            and grouped_meta.get("count", len(grouped)) < grouped_meta["targets"]
+        ):
+            count = grouped_meta.get("count", len(grouped))
+            targets = grouped_meta.get("targets", "?")
+            raise AuditInputError(
+                f"grouped InterPro frame is incomplete: {interpro_grouped_frame_path} "
+                f"({count} of {targets} targets); re-run fetch-interpro-frame --apply"
+            )
         grouped_release = grouped_meta.get("release")
         if interpro_release and grouped_release and interpro_release != grouped_release:
             raise AuditInputError(
@@ -969,6 +989,16 @@ def discover_candidates(
 
     profiles, duplicate_profiles = _load_profiles(profiles_path, wanted_accessions)
     residue, residue_meta = _load_sidecar(residue_frame_path, "proteins")
+    if residue_meta.get("complete") is False or (
+        isinstance(residue_meta.get("targets"), int)
+        and residue_meta.get("count", len(residue)) < residue_meta["targets"]
+    ):
+        count = residue_meta.get("count", len(residue))
+        targets = residue_meta.get("targets", "?")
+        raise AuditInputError(
+            f"residue frame is incomplete: {residue_frame_path} "
+            f"({count} of {targets} targets); re-run fetch-residue-frame --apply"
+        )
     uniprot_release = residue_meta.get("release")
     absent = set(residue_meta.get("absent") or [])
     candidates: list[dict] = []

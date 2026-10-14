@@ -418,10 +418,14 @@ def _promote(args: argparse.Namespace) -> int:
 
 
 def add_subcommands(subparsers) -> None:
-    resolver = subparsers.add_parser("elife-resolve", help="resolve immutable eLife seed members")
+    resolver = subparsers.add_parser(
+        "elife-resolve", help="resolve immutable eLife seed members", allow_abbrev=False
+    )
     resolver.add_argument("--apply", action="store_true", help="write ignored review staging")
     resolver.set_defaults(func=resolve)
-    promoter = subparsers.add_parser("elife-promote", help="promote reviewed eLife seed memberships")
+    promoter = subparsers.add_parser(
+        "elife-promote", help="promote reviewed eLife seed memberships", allow_abbrev=False
+    )
     promoter.add_argument("--decisions", type=Path, required=True)
     promoter.add_argument("--apply", action="store_true")
     promoter.set_defaults(func=promote)

@@ -27,6 +27,7 @@ recipe is added, removed, or migrated.
 - `fetch-rhea-directions` (shared fetcher for the official release-141 archive;
   bounded regular-member extraction and the existing direction-table SHA-256
   in `fetch_rhea_directions.py`; direction normalization only)
+- `fetch-go`
 
 These are the first measured batch: the common CLAUDE.md examples plus the largest or
 most fragile multi-file releases. Each call supplies a source-specific timeout and at

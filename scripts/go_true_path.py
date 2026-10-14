@@ -8,8 +8,9 @@ descendant supports the record's term through an explicit ``inheritance_path``.
 Two artifacts carry the hierarchy:
 
 * the local ``go-basic.obo`` (gitignored, under ``data/raw/``), which the resolver and
-  promoter read to find and prove a path. It is not pinned (#1039): each tracked edge
-  records the release that proved it instead; and
+  promoter read to find and prove a path. It is pinned to release 2026-06-19
+  (data-version releases/2026-06-15) with recorded SHA-256 (#1039); each tracked edge
+  records the release that proved it; and
 * ``data/grounding/go_true_path_edges.jsonl``, the tracked subset of edges that
   qualified examples use, which the validator replays without the OBO file.
 
@@ -19,14 +20,17 @@ go-basic keeps those relations acyclic and true-path safe; ``regulates`` and
 terms in composed definitions and follows ``is_a`` alone.)
 
     uv run python scripts/go_true_path.py check [--obo data/raw/go-basic.obo]
+    uv run python scripts/go_true_path.py update [--obo data/raw/go-basic.obo] [--apply]
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
+import tempfile
 from collections import deque
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass, field
@@ -40,6 +44,10 @@ from obo_syntax import strip_comment  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_GO_OBO = REPO_ROOT / "data" / "raw" / "go-basic.obo"
 DEFAULT_GO_EDGES = REPO_ROOT / "data" / "grounding" / "go_true_path_edges.jsonl"
+PINNED_GO_RELEASE = "releases/2026-06-15"
+PINNED_GO_URL = "https://release.geneontology.org/2026-06-19/ontology/go-basic.obo"
+PINNED_GO_SHA256 = "c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c"
+PINNED_GO_MIN_BYTES = 32_000_000
 GO_BASIC_SOURCE = "http://purl.obolibrary.org/obo/go/go-basic.obo"
 INHERITING_RELATIONS = frozenset({"is_a", "part_of"})
 
@@ -283,28 +291,155 @@ def check(edges_path: Path, obo_path: Path) -> list[str]:
     return problems
 
 
+def _atomic_write(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    tmp_path = Path(tmp)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            handle.write(text)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp_path, path)
+    finally:
+        tmp_path.unlink(missing_ok=True)
+
+
+def update(
+    edges_path: Path = DEFAULT_GO_EDGES,
+    obo_path: Path = DEFAULT_GO_OBO,
+    apply: bool = False,
+    child: str | None = None,
+    parent: str | None = None,
+) -> tuple[list[dict[str, str]], list[str]]:
+    """Update tracked edges whose relation changed in the local GO release (#1046).
+
+    Re-proves direct edges against the given release. If an edge's relation
+    changed in the OBO release (e.g. part_of -> is_a), updates the relation and
+    go_release to the new release. When apply=True, atomically rewrites
+    edges_path with the canonical dump.
+
+    Returns:
+        (updated_rows, change_messages)
+    """
+
+    existing = load_edges(edges_path)
+    if not existing:
+        return [], []
+    release = load_go_obo(obo_path)
+
+    matched = False
+    updated_rows: list[dict[str, str]] = []
+    messages: list[str] = []
+
+    for row in existing:
+        c, p = row["child"], row["parent"]
+        if (child is not None and c != child) or (parent is not None and p != parent):
+            updated_rows.append(dict(row))
+            continue
+
+        matched = True
+        new_rel = release.relation(c, p)
+        if new_rel is None:
+            if child is not None or parent is not None:
+                raise GoTruePathError(
+                    f"{c} -> {p}: edge does not exist in {release.release}; cannot update relation"
+                )
+            updated_rows.append(dict(row))
+            continue
+
+        if new_rel != row["relation"]:
+            updated = dict(row)
+            updated["relation"] = new_rel
+            updated["go_release"] = release.release
+            updated_rows.append(updated)
+            messages.append(
+                f"updated {c} -> {p}: {row['relation']} ({row['go_release']}) "
+                f"-> {new_rel} ({release.release})"
+            )
+        else:
+            updated_rows.append(dict(row))
+
+    if (child is not None or parent is not None) and not matched:
+        target = f"child={child or '*'} parent={parent or '*'}"
+        raise GoTruePathError(f"no tracked edge matched {target}")
+
+    if apply and messages:
+        _atomic_write(edges_path, dump_edges(updated_rows))
+
+    return updated_rows, messages
+
+
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0], allow_abbrev=False)
     sub = parser.add_subparsers(dest="command", required=True)
-    check_parser = sub.add_parser("check", help="replay tracked edges against the OBO release")
+
+    check_parser = sub.add_parser(
+        "check", help="replay tracked edges against the OBO release", allow_abbrev=False
+    )
     check_parser.add_argument("--edges", type=Path, default=DEFAULT_GO_EDGES)
     check_parser.add_argument("--obo", type=Path, default=DEFAULT_GO_OBO)
-    args = parser.parse_args(argv)
-    try:
-        problems = check(args.edges, args.obo)
-    except GoTruePathError as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 1
-    for problem in problems:
-        print(f"ERROR: {problem}", file=sys.stderr)
-    if problems:
-        return 1
-    rows = load_edges(args.edges)
-    releases = sorted({row["go_release"] for row in rows})
-    print(
-        f"OK: {len(rows):,} GO edge(s), proven by {', '.join(releases) or 'no release'}, "
-        f"still hold in {args.obo}"
+
+    update_parser = sub.add_parser(
+        "update",
+        help="update tracked edges whose relation changed in the local GO release",
+        allow_abbrev=False,
     )
+    update_parser.add_argument("--edges", type=Path, default=DEFAULT_GO_EDGES)
+    update_parser.add_argument("--obo", type=Path, default=DEFAULT_GO_OBO)
+    update_parser.add_argument(
+        "--child", type=str, default=None, help="limit update to this child GO ID"
+    )
+    update_parser.add_argument(
+        "--parent", type=str, default=None, help="limit update to this parent GO ID"
+    )
+    update_parser.add_argument(
+        "--apply", action="store_true", help="rewrite edges file (dry-run by default)"
+    )
+
+    args = parser.parse_args(argv)
+    if args.command == "check":
+        try:
+            problems = check(args.edges, args.obo)
+        except GoTruePathError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
+        for problem in problems:
+            print(f"ERROR: {problem}", file=sys.stderr)
+        if problems:
+            return 1
+        rows = load_edges(args.edges)
+        releases = sorted({row["go_release"] for row in rows})
+        print(
+            f"OK: {len(rows):,} GO edge(s), proven by {', '.join(releases) or 'no release'}, "
+            f"still hold in {args.obo}"
+        )
+        return 0
+
+    if args.command == "update":
+        try:
+            updated_rows, messages = update(
+                edges_path=args.edges,
+                obo_path=args.obo,
+                apply=args.apply,
+                child=args.child,
+                parent=args.parent,
+            )
+        except GoTruePathError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
+        for msg in messages:
+            print(f"  {msg}")
+        mode = "applied" if args.apply else "dry-run"
+        if not messages:
+            print(f"OK: no tracked GO edge relations changed in {args.obo} ({mode})")
+        else:
+            print(
+                f"OK: {len(messages)} GO edge(s) updated ({mode})"
+                + ("" if args.apply else "; pass --apply to write")
+            )
+        return 0
+
     return 0
 
 

@@ -309,11 +309,13 @@ def main() -> int:
                       file=sys.stderr)
                 outp.parent.mkdir(parents=True, exist_ok=True)
                 outp.write_text(json.dumps(
-                    sidecar.wrap("proteins", have, "InterPro", release),
+                    sidecar.wrap("proteins", have, "InterPro", release,
+                                 targets=len(targets), complete=False),
                     separators=(",", ":")), encoding="utf-8")
                 grouped_outp.parent.mkdir(parents=True, exist_ok=True)
                 grouped_outp.write_text(json.dumps(
-                    sidecar.wrap("proteins", grouped_have, "InterPro", release),
+                    sidecar.wrap("proteins", grouped_have, "InterPro", release,
+                                 targets=len(targets), complete=False),
                     separators=(",", ":")), encoding="utf-8")
 
     n_sig = sum(len(v) for v in have.values())
@@ -324,12 +326,19 @@ def main() -> int:
         print("some proteins failed after retries — the sidecar was still "
               "checkpointed and the run is resumable; re-run to fill the gaps, "
               "or pass --allow-partial to accept it as final.", file=sys.stderr)
+    is_complete = not bool(args.limit) and failed == 0 and all(a in have for a in targets)
+    is_grouped_complete = (
+        not bool(args.limit) and failed == 0 and all(a in grouped_have for a in targets)
+    )
     outp.parent.mkdir(parents=True, exist_ok=True)
-    outp.write_text(json.dumps(sidecar.wrap("proteins", have, "InterPro", release),
-                               separators=(",", ":")), encoding="utf-8")
+    outp.write_text(json.dumps(
+        sidecar.wrap("proteins", have, "InterPro", release,
+                     targets=len(targets), complete=is_complete),
+        separators=(",", ":")), encoding="utf-8")
     grouped_outp.parent.mkdir(parents=True, exist_ok=True)
     grouped_outp.write_text(json.dumps(
-        sidecar.wrap("proteins", grouped_have, "InterPro", release),
+        sidecar.wrap("proteins", grouped_have, "InterPro", release,
+                     targets=len(targets), complete=is_grouped_complete),
         separators=(",", ":")), encoding="utf-8")
     try:
         shown = outp.relative_to(REPO_ROOT)

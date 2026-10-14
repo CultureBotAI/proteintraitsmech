@@ -974,3 +974,48 @@ def test_scope_policy_matches_the_semantic_validator():
     assert A._scope(record("SEQUENCE", "SEQ_FAMILY")) == "WHOLE_PROTEIN"
     assert A._scope(record("SEQUENCE", "SEQ_HOMOLOGOUS_SUPERFAMILY")) == "WHOLE_PROTEIN"
     assert A._scope(record("SEQUENCE", "SEQ_DOMAIN")) == "LOCALIZED"
+
+
+def test_discover_candidates_fails_on_incomplete_frames(tmp_path: Path):
+    traits, residue, interpro, profiles = _inputs(tmp_path)
+    records, _ = A.scan_records(
+        traits,
+        protein_registry_path=tmp_path / "proteins.jsonl",
+        evidence_registry_path=tmp_path / "evidence.jsonl",
+        membership_registry_path=tmp_path / "memberships.jsonl",
+    )
+
+    # 1. Incomplete InterPro frame
+    incomplete_interpro = tmp_path / "incomplete_interpro.json"
+    _json(
+        incomplete_interpro,
+        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
+    )
+    with pytest.raises(A.AuditInputError, match="InterPro frame is incomplete"):
+        A.discover_candidates(records, residue, incomplete_interpro, profiles, 3)
+
+    # 2. Incomplete grouped InterPro frame
+    incomplete_grouped = tmp_path / "incomplete_grouped.json"
+    _json(
+        incomplete_grouped,
+        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
+    )
+    with pytest.raises(A.AuditInputError, match="grouped InterPro frame is incomplete"):
+        A.discover_candidates(
+            records,
+            residue,
+            interpro,
+            profiles,
+            3,
+            interpro_grouped_frame_path=incomplete_grouped,
+        )
+
+    # 3. Incomplete residue frame
+    incomplete_residue = tmp_path / "incomplete_residue.json"
+    _json(
+        incomplete_residue,
+        {"_meta": {"complete": False, "targets": 10, "count": 1}, "proteins": {}},
+    )
+    with pytest.raises(A.AuditInputError, match="residue frame is incomplete"):
+        A.discover_candidates(records, incomplete_residue, interpro, profiles, 3)
+
