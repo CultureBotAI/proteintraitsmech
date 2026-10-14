@@ -2069,6 +2069,8 @@ found.
   each output-parent device/inode. Because output directories are deliberately bound,
   replacing the review-batches directory invalidates a saved plan rather than silently
   retargeting it.
+  (Superseded 2026-10-12, #1082: v2 plans bind content digests and repository-relative
+  paths, not device/inode; see the dated section below.)
 - The fetcher now validates the complete selector-v6 contract rather than only three
   correlated fields: exact schema 6, `batch_id`, `source_batch`, queue SHA-256, 201
   candidate rows, 100 one-to-one trait/record identities, per-record alternative counts,
@@ -4742,3 +4744,55 @@ found.
   test suite either. The goal is paused as **blocked on acquisition authorization**,
   not achieved. Resume the reviewed canary only after an explicit response; retain
   the separate scientific/release, registry-receipt, and promotion gates afterward.
+
+### 2026-10-12 — UniProt fragment status and relocatable fetch generations (#1081, #1082)
+
+- **Fragment status (#1081).** Registry fetches now request UniProt's `fragment` return
+  field and record `fragment: true|false` on every ProteinReference row, from
+  `proteinDescription.flag` (`Fragment`/`Fragments`; `Precursor` alone is not a
+  fragment). An entry without a protein description, or with an unrecognized flag
+  value, is blocked as `REFERENCE_VALIDATION_FAILED`. Verified against UniProt
+  `2026_03` with anonymous REST requests: Q8I6R7 carries `Fragment,Precursor` and
+  A0A0C2C3L1 carries `Fragment`.
+- The resolver carries the registry's value onto every resolved row as
+  `uniprot_fragment` and into the review TSV's `uniprot_fragment` column (`true`,
+  `false`, or empty when not recorded). Producers cannot supply it. A fragment cannot
+  qualify a `WHOLE_PROTEIN` occurrence (`invalid:whole_protein_scope_for_uniprot_fragment`):
+  the entry lacks part of the protein, so it cannot exemplify a full-length family or
+  function claim. A `LOCALIZED` occurrence stays admissible because its intervals are
+  provider coordinates on residues the entry does contain; it is flagged
+  `UNIPROT_FRAGMENT`, so the review protocol decides every such row. This applies to
+  every lane that uses `ground_uniprot_examples.py resolve`.
+- **Registries fetched before this change fail closed for `WHOLE_PROTEIN`.** No
+  `fragment` field means unknown, not complete:
+  `missing:uniprot_fragment_status_for_whole_protein`. Promotion re-applies the same
+  rule to resolved rows, so a ledger resolved earlier (for example DUF batch
+  `duf-leads-review-001`, whose 221 qualified whole-protein alternatives carry no
+  fragment status) cannot install a whole-protein claim. Re-fetch and re-resolve the
+  batch to recover them. `LOCALIZED` rows are unaffected. Fragment status is a
+  qualification input only: it exists only on fetch-staging registry rows. Staged and
+  durable ProteinReference rows never carry it, and the grounding validator rejects it
+  there (#1087), so durable rows written earlier still merge unchanged, and trait
+  records do not change.
+- **Relocatable generations (#1082).** Fetch request plans and receipts are now
+  schema v2. They bind every artifact by SHA-256 and size and by its
+  repository-relative path; a path outside the checkout stays absolute. They record no
+  device or inode. A finished batch can be moved to another checkout or worktree at
+  the same repository-relative location and still verify there. Any byte difference
+  in the candidate ledger, selector manifest, plan, receipt or an output still fails
+  closed. Descriptor binding still guards the outputs inside the one process that
+  writes or verifies them. Replacing an output directory between dry run and apply is
+  no longer drift.
+- **v1 plans and receipts stay readable.** `verify_fetch_receipt` accepts a v1
+  plan/receipt pair read-only. If the receipt sits at its recorded absolute path, the
+  recorded paths are used as they are. Otherwise the producing checkout's root is
+  recovered from the supplied receipt's repository-relative location, every recorded
+  path under it is re-anchored on this checkout, and recorded parent inodes are
+  ignored. The plan's content (everything except locations and its content address)
+  must still equal a fresh rederivation, and every digest must still match. A v1 plan
+  can no longer be applied: re-plan. The preserved `duf-leads-review-001` generation
+  (produced in a since-removed worktree) failed before this change with
+  `cannot bind candidate ledger path without following symlinks
+  (/…/ProteinTraitsMech-duf-lane/…candidates.jsonl): [Errno 2] No such file or
+  directory`, and now verifies from a copy in another worktree.
+

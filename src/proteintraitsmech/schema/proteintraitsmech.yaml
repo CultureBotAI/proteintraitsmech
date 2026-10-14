@@ -1836,6 +1836,16 @@ classes:
         required: true
         description: True for a Swiss-Prot reviewed entry; false for TrEMBL.
         range: boolean
+      fragment:
+        description: >-
+          Fetch-staging only. True when the pinned UniProt entry is flagged
+          Fragment or Fragments (proteinDescription.flag), false when it is not.
+          Written on every row of a schema-v2 UniProt registry fetch and read by
+          the resolver as a WHOLE_PROTEIN qualification input. Staged and durable
+          ProteinReference rows never carry it, and the grounding validator
+          rejects it there. On a fetch-staging row from an older (v1) fetch it is
+          absent, which means unknown, never complete.
+        range: boolean
       uniprot_release:
         required: true
         description: UniProt release used to resolve this registry object.

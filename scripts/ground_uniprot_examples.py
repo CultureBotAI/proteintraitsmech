@@ -206,6 +206,7 @@ _REVIEW_COLUMNS = (
     "evidence_source",
     "source_release",
     "uniprot_release",
+    "uniprot_fragment",
     "intervals",
     "review_flags",
     "reasons",
@@ -709,34 +710,21 @@ def _verify_resolve_fetch_boundary(args: argparse.Namespace) -> VerifiedFetchRec
 
     plan = verified.request_plan
     receipt = verified.receipt
+    # Where the verified generation is in this checkout, not where it was fetched (#1082).
+    located = verified.artifact_paths
     path_bindings = {
-        "candidate queue": (args.queue, plan["candidate_artifact"]["path"]),
-        "selector manifest": (
-            args.selector_manifest,
-            plan["selector_manifest_artifact"]["path"],
-        ),
-        "request plan": (
-            args.fetch_request_plan,
-            receipt["request_plan_artifact"]["path"],
-        ),
-        "fetch receipt": (args.fetch_receipt, plan["output_paths"]["fetch_receipt"]),
-        "protein registry": (
-            args.protein_registry,
-            receipt["outputs"]["protein_registry"]["path"],
-        ),
-        "membership registry": (
-            args.membership_registry,
-            receipt["outputs"]["membership_registry"]["path"],
-        ),
-        "blocked registry": (
-            args.registry_blocked,
-            receipt["outputs"]["blocked_registry"]["path"],
-        ),
+        "candidate queue": (args.queue, located["candidate_queue"]),
+        "selector manifest": (args.selector_manifest, located["selector_manifest"]),
+        "request plan": (args.fetch_request_plan, located["request_plan"]),
+        "fetch receipt": (args.fetch_receipt, located["fetch_receipt"]),
+        "protein registry": (args.protein_registry, located["protein_registry"]),
+        "membership registry": (args.membership_registry, located["membership_registry"]),
+        "blocked registry": (args.registry_blocked, located["blocked_registry"]),
     }
     mismatches = [
         f"{role}: {_lexical_absolute(path)} != {expected}"
         for role, (path, expected) in path_bindings.items()
-        if _lexical_absolute(path) != expected
+        if _lexical_absolute(path) != str(expected)
     ]
     if mismatches:
         raise GroundingError(
@@ -1005,12 +993,12 @@ def _provider_context(
     profiles: dict[str, dict] = {}
     registry: dict[str, dict] = {}
     registry_path = (
-        Path(verified_fetch.request_plan["output_paths"]["protein_registry"])
+        verified_fetch.artifact_paths["protein_registry"]
         if verified_fetch is not None
         else (args.protein_registry.resolve() if args.protein_registry else None)
     )
     registry_evidence_path = (
-        _lexical_display_path(verified_fetch.request_plan["output_paths"]["protein_registry"])
+        _lexical_display_path(verified_fetch.artifact_paths["protein_registry"])
         if verified_fetch is not None
         else None
     )
@@ -1027,7 +1015,8 @@ def _provider_context(
                     raise GroundingError(
                         f"explicit protein registry does not exist: {registry_path}"
                     )
-                validated_registry = _semantic_registry(registry_path)
+                # The resolver's --protein-registry input is a fetched registry.
+                validated_registry = _semantic_registry(registry_path, fetch_staging=True)
             registry = {
                 protein_id: reference
                 for protein_id, reference in validated_registry.items()
@@ -1046,12 +1035,12 @@ def _provider_context(
         if interpro_grouped_path.is_file():
             interpro_grouped, interpro_grouped_meta = _load_sidecar(interpro_grouped_path)
     membership_path = (
-        Path(verified_fetch.request_plan["output_paths"]["membership_registry"])
+        verified_fetch.artifact_paths["membership_registry"]
         if verified_fetch is not None
         else (args.membership_registry.resolve() if args.membership_registry is not None else None)
     )
     membership_evidence_path = (
-        _lexical_display_path(verified_fetch.request_plan["output_paths"]["membership_registry"])
+        _lexical_display_path(verified_fetch.artifact_paths["membership_registry"])
         if verified_fetch is not None
         else None
     )
@@ -1480,6 +1469,28 @@ def _build_protein_reference(
     return reference, evidence
 
 
+def _staged_reference(registry_row: dict[str, Any]) -> dict[str, Any]:
+    """A fetched registry row as the staged ProteinReference it resolves to.
+
+    Fragment status is a qualification input carried on the resolved row
+    (``uniprot_fragment``), not copied into staged or durable ProteinReference rows,
+    so durable rows written before #1081 still merge with new ones.
+    """
+
+    return {key: value for key, value in registry_row.items() if key != "fragment"}
+
+
+def _registry_fragment_status(context: ProviderContext, protein_id: str | None) -> bool | None:
+    """UniProt fragment status from the release-pinned registry row, or None if unrecorded.
+
+    Registries fetched before #1081 carry no ``fragment`` field; that is unknown, not
+    complete.  The registry validator has already rejected any non-boolean value.
+    """
+
+    value = (context.registry.get(protein_id) or {}).get("fragment") if protein_id else None
+    return value if isinstance(value, bool) else None
+
+
 def _whole_protein_allowed(record: dict[str, Any]) -> bool:
     """Mirror the semantic validator's explicit whole-protein category boundary."""
 
@@ -1900,7 +1911,7 @@ def _resolve_occurrence(
         registry_reference = context.registry.get(protein_id)
         if registry_reference is None:
             reasons.append("missing:exact_protein_reference_for_sifts")
-        elif reference is not None and registry_reference != reference:
+        elif reference is not None and _staged_reference(registry_reference) != reference:
             reasons.append("mismatch:exact_protein_reference_for_sifts")
         mapping_id = _clean_text(candidate.get("sifts_mapping_id"))
         if not mapping_id:
@@ -2368,6 +2379,16 @@ def _resolve_candidate(
         provider_evidence.extend(occurrence_evidence)
     else:
         ledger_intervals = []
+    # A fragment entry cannot exemplify a whole-protein claim; a LOCALIZED occurrence
+    # rests only on residues the entry has, so it stays admissible but flagged (#1081).
+    # Producers cannot supply this field: it is always the registry's value.
+    fragment = _registry_fragment_status(context, protein_id)
+    row["uniprot_fragment"] = fragment
+    if occurrence is not None and occurrence.get("scope") == "WHOLE_PROTEIN":
+        if fragment is True:
+            reasons.append("invalid:whole_protein_scope_for_uniprot_fragment")
+        elif fragment is None:
+            reasons.append("missing:uniprot_fragment_status_for_whole_protein")
     if record_path:
         row["record_path"] = _display_path(record_path)
     row["trait_id"] = trait_id
@@ -2518,6 +2539,8 @@ def _review_flags(row: dict[str, Any]) -> list[str]:
         flags.append("SIFTS")
     if row.get("mapping_completeness") == "PARTIAL":
         flags.append("PARTIAL_SIFTS")
+    if row.get("uniprot_fragment") is True:
+        flags.append("UNIPROT_FRAGMENT")
     if row.get("candidate_state") == "AMBIGUOUS_LOCAL_EXACT_CANDIDATES":
         flags.append("MULTI_CANDIDATE")
     for finding in row.get("record_content_findings") or []:
@@ -2528,6 +2551,12 @@ def _review_flags(row: dict[str, Any]) -> list[str]:
         ):
             flags.append(f"RECORD_CONTENT:{finding['code']}")
     return sorted(set(flags))
+
+
+def _review_fragment(value: Any) -> str:
+    """Review-TSV spelling of UniProt fragment status; empty means not recorded."""
+
+    return "" if value is None else ("true" if value is True else "false")
 
 
 def _select_batch(candidates: list[dict], batch: str | None) -> list[dict]:
@@ -2749,6 +2778,7 @@ def resolve(args: argparse.Namespace) -> int:
                 "evidence_source": row.get("evidence_source") or "",
                 "source_release": row.get("source_release") or "",
                 "uniprot_release": row.get("uniprot_release") or "",
+                "uniprot_fragment": _review_fragment(row.get("uniprot_fragment")),
                 "intervals": _canonical_json(row.get("intervals") or []),
                 "review_flags": ";".join(_review_flags(row)),
                 "reasons": ";".join(row.get("reasons") or []),
@@ -3178,11 +3208,11 @@ def _strict_errors_for_text(text: str) -> list[dict]:
         temporary.unlink(missing_ok=True)
 
 
-def _semantic_registry(path: Path) -> dict[str, dict[str, Any]]:
+def _semantic_registry(path: Path, *, fetch_staging: bool = False) -> dict[str, dict[str, Any]]:
     """Load the registry through the grounding validator, refusing registry findings."""
     from validate_uniprot_grounding import load_registry
 
-    registry, findings = load_registry(path)
+    registry, findings = load_registry(path, fetch_staging=fetch_staging)
     if findings:
         detail = "; ".join(f"{finding.code}: {finding.message}" for finding in findings[:3])
         raise GroundingError(f"semantic registry validation rejected preflight: {detail}")
@@ -3197,7 +3227,9 @@ def _semantic_registry_bytes(raw: bytes, path: Path) -> dict[str, dict[str, Any]
     registry: dict[str, dict[str, Any]] = {}
     findings = []
     for line_number, row in enumerate(_read_verified_jsonl(raw, source=path), 1):
-        findings.extend(validate_protein_reference(row, path=path, line=line_number))
+        findings.extend(
+            validate_protein_reference(row, path=path, line=line_number, fetch_staging=True)
+        )
         protein_id = row.get("protein_id")
         if not isinstance(protein_id, str):
             continue
@@ -4144,6 +4176,13 @@ def _validate_resolved_row(row: dict[str, Any], approval: dict[str, str]) -> lis
             reasons.append(f"missing:{key}")
     if row.get("evidence_tier") not in {"A", "B"}:
         reasons.append("unqualifiable:evidence_tier")
+    # Re-applied at promotion so a row resolved before #1081, which never recorded
+    # fragment status, cannot install a WHOLE_PROTEIN claim; re-fetch and re-resolve.
+    if isinstance(occurrence, dict) and occurrence.get("scope") == "WHOLE_PROTEIN":
+        if row.get("uniprot_fragment") is True:
+            reasons.append("invalid:whole_protein_scope_for_uniprot_fragment")
+        elif row.get("uniprot_fragment") is not False:
+            reasons.append("missing:uniprot_fragment_status_for_whole_protein")
     return sorted(set(reasons))
 
 

@@ -102,6 +102,10 @@ REGISTRY_REQUIRED_FIELDS = (
     "uniprot_release",
 )
 REGISTRY_ALLOWED_FIELDS = set(REGISTRY_REQUIRED_FIELDS) | {"isoform", "sequence_version"}
+# UniProt fragment status (#1081) exists only on fetch-staging rows written by a v2
+# registry fetch.  The resolver reads it as a qualification input; staged and durable
+# ProteinReference rows never carry it, so it is refused there (#1087).
+FETCH_STAGING_ONLY_FIELDS = frozenset({"fragment"})
 
 EVIDENCE_PREFIX = "ug-evidence:"
 EVIDENCE_REQUIRED_FIELDS = (
@@ -384,8 +388,14 @@ def _registry_finding(code: str, message: str, path: Path, line: int, pid: objec
     )
 
 
-def validate_protein_reference(reference: object, *, path: Path, line: int) -> list[Finding]:
-    """Validate one registry object independently of whether a record uses it."""
+def validate_protein_reference(
+    reference: object, *, path: Path, line: int, fetch_staging: bool = False
+) -> list[Finding]:
+    """Validate one registry object independently of whether a record uses it.
+
+    ``fetch_staging`` admits the fields only a registry fetch writes; every staged or
+    durable registry is validated without it.
+    """
 
     if not isinstance(reference, dict):
         return [
@@ -403,7 +413,18 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
                     "registry_missing_field", f"missing required field {field!r}", path, line, pid
                 )
             )
-    for field in sorted(set(reference) - REGISTRY_ALLOWED_FIELDS):
+    allowed = REGISTRY_ALLOWED_FIELDS | (FETCH_STAGING_ONLY_FIELDS if fetch_staging else set())
+    for field in sorted((set(reference) & FETCH_STAGING_ONLY_FIELDS) - allowed):
+        findings.append(
+            _registry_finding(
+                "registry_fetch_staging_only_field",
+                f"{field!r} belongs only on fetch-staging registry rows",
+                path,
+                line,
+                pid,
+            )
+        )
+    for field in sorted(set(reference) - allowed - FETCH_STAGING_ONLY_FIELDS):
         findings.append(
             _registry_finding(
                 "registry_unknown_field",
@@ -508,6 +529,12 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
                 "registry_invalid_reviewed", "reviewed must be true or false", path, line, pid
             )
         )
+    if "fragment" in reference and not isinstance(reference["fragment"], bool):
+        findings.append(
+            _registry_finding(
+                "registry_invalid_fragment", "fragment must be true or false", path, line, pid
+            )
+        )
     release = reference.get("uniprot_release")
     if "uniprot_release" in reference and (
         not isinstance(release, str) or RELEASE_RE.fullmatch(release) is None
@@ -557,7 +584,9 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
     return findings
 
 
-def load_registry(path: Path) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
+def load_registry(
+    path: Path, *, fetch_staging: bool = False
+) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
     """Load and strictly validate a ProteinReference JSONL registry."""
 
     registry: dict[str, dict[str, Any]] = {}
@@ -579,7 +608,11 @@ def load_registry(path: Path) -> tuple[dict[str, dict[str, Any]], list[Finding]]
                     )
                 )
                 continue
-            findings.extend(validate_protein_reference(value, path=path, line=line_number))
+            findings.extend(
+                validate_protein_reference(
+                    value, path=path, line=line_number, fetch_staging=fetch_staging
+                )
+            )
             if not isinstance(value, dict) or not isinstance(value.get("protein_id"), str):
                 continue
             pid = value["protein_id"]

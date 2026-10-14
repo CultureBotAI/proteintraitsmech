@@ -405,6 +405,28 @@ def test_registry_checks_length_checksum_required_fields_and_unknown_fields(tmp_
     } <= codes(findings)
 
 
+def test_fragment_status_is_admitted_only_on_fetch_staging_rows(tmp_path):
+    """#1087: fragment status is a fetch-staging qualification input, never durable."""
+
+    path = tmp_path / "registry.jsonl"
+    for value in (True, False):
+        row = reference(fragment=value)
+        assert V.validate_protein_reference(row, path=path, line=1, fetch_staging=True) == []
+        assert codes(V.validate_protein_reference(row, path=path, line=1)) == {
+            "registry_fetch_staging_only_field"
+        }
+    assert "registry_invalid_fragment" in codes(
+        V.validate_protein_reference(
+            reference(fragment="no"), path=path, line=1, fetch_staging=True
+        )
+    )
+    path.write_text(json.dumps(reference(fragment=False)) + "\n", encoding="utf-8")
+    _registry, findings = V.load_registry(path)
+    assert codes(findings) == {"registry_fetch_staging_only_field"}
+    _registry, findings = V.load_registry(path, fetch_staging=True)
+    assert findings == []
+
+
 def test_registry_isoform_suffix_and_coordinate_frame_are_exact(tmp_path):
     canonical_with_isoform = reference(isoform=2)
     assert "canonical_has_isoform" in codes(
