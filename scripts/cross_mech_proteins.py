@@ -417,6 +417,13 @@ CHANNELS: tuple[Channel, ...] = (
         "reference",
     ),
     Channel(
+        "pathwaymech.reference_title",
+        "pathwaymech",
+        "/references/[]/title",
+        "REFERENCE",
+        "reference",
+    ),
+    Channel(
         "traitmech.node_protein_example",
         "traitmech",
         "/causal_graphs/[]/nodes/[]/protein_examples/[]/uniprot_id",

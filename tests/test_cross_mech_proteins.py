@@ -256,6 +256,28 @@ def _rows(mech, document, path="data/x.yaml"):
     return {row["pattern"]: row for row in CM.mention_rows(mech, path, document)}
 
 
+def test_pathway_reference_title_is_reference_only():
+    document = {
+        "id": "MetaCyc:SALVADEHYPOX-PWY",
+        "references": [{
+            "id": "UniProtKB:P23841",
+            "title": "UniProtKB:P23841",
+            "url": "https://rest.uniprot.org/uniprotkb/P23841.json",
+        }],
+    }
+    rows = _rows("pathwaymech", document)
+    title = rows["/references/[]/title"]
+    assert title["channel"] == "pathwaymech.reference_title"
+    assert title["role"] == "REFERENCE"
+    assert title["relation"] == "reference"
+    assert title["protein_id"] == "UniProtKB:P23841"
+    assert title["annotations"] == []
+    assert rows["/references/[]/id"]["role"] == "REFERENCE"
+    # An identical value elsewhere must still expose schema drift.
+    unknown, = CM.mention_rows("pathwaymech", "x.yaml", {"novel_field": "UniProtKB:P23841"})
+    assert unknown["role"] == "UNCLASSIFIED"
+
+
 def test_biosynthetic_enzyme_carries_its_rhea_reaction_and_label():
     rows = _rows("naturalproductmech", NATURAL_PRODUCT)
     step = rows["/biosynthetic_pathway/[]/enzyme_id"]

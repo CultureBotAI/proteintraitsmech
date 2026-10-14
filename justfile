@@ -664,6 +664,11 @@ fetch-rhea:
     mkdir -p data/raw/rhea
     curl -sSLf --max-time 300 -o data/raw/rhea/rhea-reactions.tsv "https://www.rhea-db.org/rhea?query=&columns=rhea-id,equation,chebi-id,ec&format=tsv"
 
+# Exact release-141 direction quartet used by cross-Mech and native Rhea grounding.
+# Recover from the historical archive; a changed live export cannot replace the pin.
+fetch-rhea-directions:
+    python3 scripts/fetch_rhea_directions.py
+
 seed-rhea *args:
     python3 scripts/seed_rhea.py {{args}}
 

@@ -21,6 +21,11 @@ just check-cross-mech-proteins --local          # integrity + drift against chec
 just audit-cross-mech-proteins                  # statuses -> reports/cross-mech/ (ignored)
 ```
 
+If the raw Rhea directions table is missing, run `just fetch-rhea-directions`
+before auditing or rebuilding the inventory. It restores the existing release-141
+checksum from the official historical archive, not the newer live table. This is
+direction-to-master normalization only, never protein-trait qualification.
+
 A sibling assertion recorded here is discovery provenance only. Nothing in this
 directory qualifies a canonical example; that happens only through the UniProt
 grounding funnel.
@@ -48,12 +53,15 @@ For available generic UniProt tracks, supply
 sequences/annotations for the entire accession cohort, canary and then run:
 
 ```bash
-just discover-cross-mech-sequences --all-proteins --include-annotations --apply
+just discover-cross-mech-sequences --all-proteins --include-annotations \
+  --out reports/uniprot-grounding/cross-mech/refresh-20261013/discovery.jsonl --apply
 just stage-cross-mech-candidates \
-  --entry-annotations reports/uniprot-grounding/cross-mech/discovery.entries.json --apply
+  --discovery reports/uniprot-grounding/cross-mech/refresh-20261013/discovery.jsonl \
+  --entry-annotations reports/uniprot-grounding/cross-mech/refresh-20261013/discovery.entries.json \
+  --out reports/uniprot-grounding/cross-mech/refresh-20261013/candidates.jsonl --apply
 just build-cross-mech-inventory --residue-frame data/raw/align_cache/residue_frame.json \
-  --uniprot-discovery reports/uniprot-grounding/cross-mech/discovery.entries.json \
-  --candidate-queue reports/uniprot-grounding/cross-mech/candidates.jsonl \
+  --uniprot-discovery reports/uniprot-grounding/cross-mech/refresh-20261013/discovery.entries.json \
+  --candidate-queue reports/uniprot-grounding/cross-mech/refresh-20261013/candidates.jsonl \
   --review-batch reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010 \
   --review-batch reports/uniprot-grounding/review-batches/cross-mech-complex-20261010 --apply
 ```
@@ -85,16 +93,29 @@ The inventory is uncapped. Browser trait pages display at most five examples,
 prioritizing qualified examples; an accession missing from that page sample may
 still be installed and present here.
 
-The 2026-10-10 snapshot covers 12 sibling repositories, 655,410 declared records,
-12,420 mentions and 2,047 distinct accessions. UniProt release `2026_03` returned
-1,932 active sequences; 115 accessions were inactive (114 deleted, one split).
+The 2026-10-13 snapshot covers 13 sibling repositories, 656,222 declared records,
+16,082 mentions and 2,602 distinct accessions. All 2,047 previous accessions remain;
+555 were added to the inventory, not promoted to new canonical examples. Of the
+2,602 proteins, 939 have existing qualified examples, 667 have only legacy
+examples and 996 remain discovery-only. UniProt release `2026_03` returned
+2,484 active sequences; 118 accessions were inactive (115 deleted, two merged,
+one split). No replacement accession was substituted.
 The normalized store preserves five existing `2026_02` ProteinReferences
-(P00909, P02918, P11446, P17443, P42858), alongside 1,927 `2026_03` sequences.
+(P00909, P02918, P11446, P17443, P42858), alongside 2,479 `2026_03` sequences.
 Their release mismatch is explicit; current-release annotations are not grafted
-onto these older references. 1,876 sequences have usable generic annotations
-in the combined inputs. Full
+onto these older references. 2,419 sequences have usable generic annotations
+in the combined inputs; 306 proteins have existing localized qualified traits,
+which are not necessarily residue-level causal explanations. Both prior batches'
+71 approvals and 180 rejections remain in the inventory. Full
 refresh scope, qualifications, review limits and follow-up are recorded in the
 [cross-Mech research checkpoint](../../research/cross-mech-protein-examples.md).
+
+The subsequent [36-candidate scientific self-review](../../reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.md)
+recommends 33 approvals and three holds. These are **not finalized or installed**;
+the finalizer was run only in dry-run mode pending independent review. They do
+not change this inventory's disposition or qualification counts. The holds cover
+an incorrect SOD1 reaction description and unresolved TRX2-LMA1 / mixed-CK2
+variant evidence. See the review for exact claims, sources and limitations.
 
 "All" is bounded by the fleet's declared record globs and explicit UniProt
 accession recognition. Gene names, other identifier namespaces, family IDs and

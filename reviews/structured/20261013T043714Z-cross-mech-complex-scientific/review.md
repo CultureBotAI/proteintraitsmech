@@ -1,0 +1,4762 @@
+# Scientific self-review of 36 cross-Mech protein-complex candidates
+
+- Review: 20261013T043714Z-cross-mech-complex-scientific
+- Repository: culturebotai/proteintraitsmech
+- Started UTC: 2026-10-13T04:18:55Z
+- Finished UTC: 2026-10-13T04:37:14Z
+- Reviewer: Codex (self_review)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+All 36 candidates on 25 complete records were assessed for exact protein-complex membership, source evidence tier, assembly state and subunit-function scope. Recommend 33 approvals on 22 records and hold three candidates: one confirmed SOD1 chemistry error, two provisional variant-evidence gaps (TRX2-LMA1 and mixed CK2). The 36-row proposed partition passes native dry-run finalization. Independent review, finalized disposition installation and canonical promotion have not occurred.
+
+## Scope And Provenance
+
+All selected rows in cross-mech-complex-20261013, bounded to 25 ComplexPortal records. The eligible source slice has 94 rows on 63 records; the broader priority queue has 839 uncovered proteins (95 ComplexPortal, 516 Rhea, 228 GO candidates). Scientific scope is the proposed membership example, not certification of every functional sentence in each complex record.
+
+Selection: Native reviewed-exclusion record-group selector, ComplexPortal only, max_records=25, one shard; all candidate alternatives for each chosen record retained. Both prior review ledgers supplied. Unchanged all-rejected cases deferred; zero changed-evidence groups reopened.
+Coverage: sampled; 36 reviewed / 94 in the declared population.
+Source: working_tree at Git base 70edd6f8458845f7d7783ac4f416df519f5e1de6.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f | snapshot_row | UniProtKB:P22217 / ComplexPortal:CPX-1278 |
+| ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216 | snapshot_row | UniProtKB:P22803 / ComplexPortal:CPX-1279 |
+| ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12 | snapshot_row | UniProtKB:P38283 / ComplexPortal:CPX-1900 |
+| ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590 | snapshot_row | UniProtKB:P47134 / ComplexPortal:CPX-1900 |
+| ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd | snapshot_row | UniProtKB:P16685 / ComplexPortal:CPX-1929 |
+| ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1 | snapshot_row | UniProtKB:P16686 / ComplexPortal:CPX-1929 |
+| ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a | snapshot_row | UniProtKB:P16687 / ComplexPortal:CPX-1929 |
+| ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4 | snapshot_row | UniProtKB:P16688 / ComplexPortal:CPX-1929 |
+| ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f | snapshot_row | UniProtKB:P06493 / ComplexPortal:CPX-2003 |
+| ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568 | snapshot_row | UniProtKB:P24941 / ComplexPortal:CPX-2005 |
+| ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62 | snapshot_row | UniProtKB:P11802 / ComplexPortal:CPX-2010 |
+| ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec | snapshot_row | UniProtKB:P24385 / ComplexPortal:CPX-2010 |
+| ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc | snapshot_row | UniProtKB:P24864 / ComplexPortal:CPX-2015 |
+| ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2 | snapshot_row | UniProtKB:P60010 / ComplexPortal:CPX-2122 |
+| ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa | snapshot_row | UniProtKB:P30138 / ComplexPortal:CPX-2134 |
+| ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604 | snapshot_row | UniProtKB:P77718 / ComplexPortal:CPX-2140 |
+| ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1 | snapshot_row | UniProtKB:Q13547 / ComplexPortal:CPX-2184 |
+| ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0 | snapshot_row | UniProtKB:P50456 / ComplexPortal:CPX-2242 |
+| ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51 | snapshot_row | UniProtKB:P25043 / ComplexPortal:CPX-2262 |
+| ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924 | snapshot_row | UniProtKB:P30656 / ComplexPortal:CPX-2262 |
+| ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167 | snapshot_row | UniProtKB:P30657 / ComplexPortal:CPX-2262 |
+| ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9 | snapshot_row | UniProtKB:P38624 / ComplexPortal:CPX-2262 |
+| ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | snapshot_row | UniProtKB:P00445 / ComplexPortal:CPX-2267 |
+| ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c | snapshot_row | UniProtKB:P68400 / ComplexPortal:CPX-2437 |
+| ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98 | snapshot_row | UniProtKB:P79005 / ComplexPortal:CPX-25757 |
+| ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005 | snapshot_row | UniProtKB:Q96TL7 / ComplexPortal:CPX-25757 |
+| ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0 | snapshot_row | UniProtKB:P40487 / ComplexPortal:CPX-2581 |
+| ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41 | snapshot_row | UniProtKB:Q96QE3 / ComplexPortal:CPX-26030 |
+| ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac | snapshot_row | UniProtKB:O42667 / ComplexPortal:CPX-26387 |
+| ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c | snapshot_row | UniProtKB:P87061 / ComplexPortal:CPX-26645 |
+| ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa | snapshot_row | UniProtKB:Q14694 / ComplexPortal:CPX-26721 |
+| ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c | snapshot_row | UniProtKB:P53045 / ComplexPortal:CPX-26731 |
+| ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb | snapshot_row | UniProtKB:P53199 / ComplexPortal:CPX-26731 |
+| ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962 | snapshot_row | UniProtKB:Q12452 / ComplexPortal:CPX-26731 |
+| ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2 | snapshot_row | UniProtKB:P56100 / ComplexPortal:CPX-268 |
+| ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | snapshot_row | UniProtKB:P16234 / ComplexPortal:CPX-2881 |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed-mode validation of all selected records | passed | True | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | 25 records scanned, zero errors. |
+| Exact release, receipt, digest, preimage and sequence checks | passed | True | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | 36 exact-accession facts / 25 record preimages verified; 2026_03 receipt, sequence checksums and taxa agree. Current Complex Portal participant and species fields also agree for all 36 candidates. |
+| Record, source and literature adjudication | passed | True | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | Every selected record and current official source entry inspected, with focused primary literature/authority checks for inference, variant and assembly caveats. Scientific findings are retained, not erased by a passed procedure check. |
+| Native decision-partition integrity | passed | True | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | 36 decisions; 22 records with approved alternatives, three all rejected; no output files written. |
+| Independent review and finalizer application | skipped | False | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | Not performed: this is an AI self-review. The native instructions reserve --apply for after independent review. |
+| Canonical example promotion | not_applicable | False | ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f, ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216, ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12, ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590, ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd, ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1, ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a, ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4, ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f, ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568, ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62, ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec, ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc, ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2, ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa, ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604, ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1, ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0, ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51, ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924, ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167, ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179, ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c, ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98, ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005, ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0, ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41, ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac, ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c, ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa, ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c, ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb, ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962, ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2, ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f | No promotion command run, no target records or durable grounding registries changed. |
+
+## Scientific And Domain Assessments
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f.
+
+Proposed APPROVED: UniProtKB:P22217 / ComplexPortal:CPX-1278. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: concern. Targets: ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216.
+
+Hold / proposed REJECTED: UniProtKB:P22803 / ComplexPortal:CPX-1279. The specific unresolved record or evidence issue is described in the linked source assessment and finding.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12.
+
+Proposed APPROVED: UniProtKB:P38283 / ComplexPortal:CPX-1900. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590.
+
+Proposed APPROVED: UniProtKB:P47134 / ComplexPortal:CPX-1900. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd.
+
+Proposed APPROVED: UniProtKB:P16685 / ComplexPortal:CPX-1929. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1.
+
+Proposed APPROVED: UniProtKB:P16686 / ComplexPortal:CPX-1929. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a.
+
+Proposed APPROVED: UniProtKB:P16687 / ComplexPortal:CPX-1929. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4.
+
+Proposed APPROVED: UniProtKB:P16688 / ComplexPortal:CPX-1929. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f.
+
+Proposed APPROVED: UniProtKB:P06493 / ComplexPortal:CPX-2003. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568.
+
+Proposed APPROVED: UniProtKB:P24941 / ComplexPortal:CPX-2005. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62.
+
+Proposed APPROVED: UniProtKB:P11802 / ComplexPortal:CPX-2010. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec.
+
+Proposed APPROVED: UniProtKB:P24385 / ComplexPortal:CPX-2010. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc.
+
+Proposed APPROVED: UniProtKB:P24864 / ComplexPortal:CPX-2015. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2.
+
+Proposed APPROVED: UniProtKB:P60010 / ComplexPortal:CPX-2122. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa.
+
+Proposed APPROVED: UniProtKB:P30138 / ComplexPortal:CPX-2134. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604.
+
+Proposed APPROVED: UniProtKB:P77718 / ComplexPortal:CPX-2140. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1.
+
+Proposed APPROVED: UniProtKB:Q13547 / ComplexPortal:CPX-2184. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0.
+
+Proposed APPROVED: UniProtKB:P50456 / ComplexPortal:CPX-2242. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51.
+
+Proposed APPROVED: UniProtKB:P25043 / ComplexPortal:CPX-2262. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924.
+
+Proposed APPROVED: UniProtKB:P30656 / ComplexPortal:CPX-2262. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167.
+
+Proposed APPROVED: UniProtKB:P30657 / ComplexPortal:CPX-2262. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9.
+
+Proposed APPROVED: UniProtKB:P38624 / ComplexPortal:CPX-2262. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: concern. Targets: ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179.
+
+Hold / proposed REJECTED: UniProtKB:P00445 / ComplexPortal:CPX-2267. The specific unresolved record or evidence issue is described in the linked source assessment and finding.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: concern. Targets: ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c.
+
+Hold / proposed REJECTED: UniProtKB:P68400 / ComplexPortal:CPX-2437. The specific unresolved record or evidence issue is described in the linked source assessment and finding.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98.
+
+Proposed APPROVED: UniProtKB:P79005 / ComplexPortal:CPX-25757. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005.
+
+Proposed APPROVED: UniProtKB:Q96TL7 / ComplexPortal:CPX-25757. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0.
+
+Proposed APPROVED: UniProtKB:P40487 / ComplexPortal:CPX-2581. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41.
+
+Proposed APPROVED: UniProtKB:Q96QE3 / ComplexPortal:CPX-26030. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac.
+
+Proposed APPROVED: UniProtKB:O42667 / ComplexPortal:CPX-26387. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c.
+
+Proposed APPROVED: UniProtKB:P87061 / ComplexPortal:CPX-26645. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa.
+
+Proposed APPROVED: UniProtKB:Q14694 / ComplexPortal:CPX-26721. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c.
+
+Proposed APPROVED: UniProtKB:P53045 / ComplexPortal:CPX-26731. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb.
+
+Proposed APPROVED: UniProtKB:P53199 / ComplexPortal:CPX-26731. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962.
+
+Proposed APPROVED: UniProtKB:Q12452 / ComplexPortal:CPX-26731. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2.
+
+Proposed APPROVED: UniProtKB:P56100 / ComplexPortal:CPX-268. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+### Exact protein-complex membership and assembly/activity scope
+
+grounding: supported. Targets: ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f.
+
+Proposed APPROVED: UniProtKB:P16234 / ComplexPortal:CPX-2881. Exact whole-protein membership is supported at the stated evidence tier; the linked source assessment records assembly and subunit-activity limits.
+
+## Findings
+
+### F1: Incorrect superoxide-dismutation products in the record definition
+
+major / open / confirmed; issue key: cpx-2267-reaction-products.
+
+Hold this digest until the target definition is repaired: superoxide dismutation produces O2 and H2O2, not water and H2O2 (EC 1.15.1.1). The error is also present in the inspected upstream function text. Yeast SOD1-CCS1 heterodimer membership itself is directly supported by the primary structure; rejection is for the current misleading record definition, not absence of membership or equivalence to mature SOD1 homodimer.
+
+### F2: TRX2-specific LMA1 membership remains insufficiently resolved
+
+major / open / provisional; issue key: cpx-1279-trx2-evidence.
+
+Hold this digest pending TRX2-specific evidence review. The exact curated membership exists (ECO:0005547), but the inspected 1997 study uses TRX1 for the biochemical rescue, while the 1996 abstract reports a double deletion without distinguishing the two isoenzymes. These inspected sources do not independently resolve TRX2-Pbi2 membership. This is a provisional evidence-gap decision, not evidence that TRX2 cannot participate; the 1996 full PDF was not read.
+
+### F3: Exact mixed CK2 catalytic-subunit assembly requires evidence review
+
+major / open / provisional; issue key: cpx-2437-mixed-assembly.
+
+Hold this digest for the exact mixed CSNK2A1-CSNK2A2-beta2 assembly. The Portal entry is inferred by paralogy (ECO:0005546). The inspected CK2 crystal abstract concerns two catalytic subunits without establishing this mixed variant, and the cross-linking abstract supports alpha/beta or alpha-prime/beta contacts, not co-residence of both catalytic paralogs in the same tetramer. This is a provisional evidence gap, not proof the mixed complex does not exist; the cited review is not independent experimental confirmation.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Correct the inherited SOD1 reaction products through a maintained guarded curation route, preserving supported SOD1-CCS1 membership; then re-resolve and review a fresh digest.
+
+- The maintained definition names O2 and H2O2, with stable reaction evidence and no blanket function attribution to CCS1.
+- Regeneration/guarded curation preserves the correction; strict validation and a newly resolved digest pass.
+- A successor structured review explicitly reassesses F1 before any authorized promotion.
+
+### A2
+
+Obtain and inspect primary evidence distinguishing the exact variant (including the relevant full-text methods/assembly composition); either support a new explicit approval or retain the reasoned hold.
+
+- Evidence names the exact species and isoenzyme/assembly, not only a paralog or mixed population.
+- Preserve current rejection history; any successor cites changed evidence and current native digests.
+- Independent review precedes finalization; canonical promotion requires separate authorization.
+
+### A3
+
+Obtain and inspect primary evidence distinguishing the exact variant (including the relevant full-text methods/assembly composition); either support a new explicit approval or retain the reasoned hold.
+
+- Evidence names the exact species and isoenzyme/assembly, not only a paralog or mixed population.
+- Preserve current rejection history; any successor cites changed evidence and current native digests.
+- Independent review precedes finalization; canonical promotion requires separate authorization.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| selector | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.manifest.json; shard_selected_*, global_source_slice_*, reviewed_exclusions | supports | Deterministic 25-record cap retains all 36 alternatives from 94 candidate rows / 63 records after excluding the unchanged ARG82/CPX-1152 choice. Source slice: ComplexPortal only. Priority queue has 839 proteins / 589 records, not a census of all PTM biology. |
+| fetch | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_receipt.json; receipt_id=uniprot-registry-fetch-receipt:96bd20d3787be29fe23ddcff4fe5702fbbf6677c8e31b3e012a6d8d05a8fe8fa; outputs; response_rows | supports | One UniProt REST request at 2026_03 accounts for all 36 exact primary accessions. Eleven returned isoform accessions were logged as unexpected and not substituted. Bound outputs contain 36 protein rows, 1261 membership facts and zero blocked targets. |
+| resolver | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl; all 36 candidate_id rows | supports | The immutable resolver snapshot contains 36 mechanically QUALIFIED candidates. Fresh integrity checks recomputed all native digests, receipt hashes and record preimages. All claims are SOURCE_MEMBERSHIP / WHOLE_PROTEIN with no intervals or residue sets; eligibility alone is not scientific approval. |
+| membership-1 | https://www.uniprot.org/uniprotkb/P22217/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P22217, source_trait_id=ComplexPortal:CPX-1278; matching has_part in data/traits/function/interaction_partner/complexportal/lma1-complex-trx1-variant-cpx-1278.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-2 | https://www.uniprot.org/uniprotkb/P22803/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P22803, source_trait_id=ComplexPortal:CPX-1279; matching has_part in data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-3 | https://www.uniprot.org/uniprotkb/P38283/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P38283, source_trait_id=ComplexPortal:CPX-1900; matching has_part in data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-4 | https://www.uniprot.org/uniprotkb/P47134/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P47134, source_trait_id=ComplexPortal:CPX-1900; matching has_part in data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-5 | https://www.uniprot.org/uniprotkb/P16685/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P16685, source_trait_id=ComplexPortal:CPX-1929; matching has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-6 | https://www.uniprot.org/uniprotkb/P16686/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P16686, source_trait_id=ComplexPortal:CPX-1929; matching has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-7 | https://www.uniprot.org/uniprotkb/P16687/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P16687, source_trait_id=ComplexPortal:CPX-1929; matching has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-8 | https://www.uniprot.org/uniprotkb/P16688/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P16688, source_trait_id=ComplexPortal:CPX-1929; matching has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-9 | https://www.uniprot.org/uniprotkb/P06493/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P06493, source_trait_id=ComplexPortal:CPX-2003; matching has_part in data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk1-complex-cpx-2003.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-10 | https://www.uniprot.org/uniprotkb/P24941/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P24941, source_trait_id=ComplexPortal:CPX-2005; matching has_part in data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk2-complex-cpx-2005.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-11 | https://www.uniprot.org/uniprotkb/P11802/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P11802, source_trait_id=ComplexPortal:CPX-2010; matching has_part in data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-12 | https://www.uniprot.org/uniprotkb/P24385/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P24385, source_trait_id=ComplexPortal:CPX-2010; matching has_part in data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-13 | https://www.uniprot.org/uniprotkb/P24864/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P24864, source_trait_id=ComplexPortal:CPX-2015; matching has_part in data/traits/function/interaction_partner/complexportal/cyclin-e1-cdk2-complex-cpx-2015.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-14 | https://www.uniprot.org/uniprotkb/P60010/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P60010, source_trait_id=ComplexPortal:CPX-2122; matching has_part in data/traits/function/interaction_partner/complexportal/swr1-chromatin-remodelling-complex-cpx-2122.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-15 | https://www.uniprot.org/uniprotkb/P30138/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P30138, source_trait_id=ComplexPortal:CPX-2134; matching has_part in data/traits/function/interaction_partner/complexportal/thif-this-complex-cpx-2134.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-16 | https://www.uniprot.org/uniprotkb/P77718/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P77718, source_trait_id=ComplexPortal:CPX-2140; matching has_part in data/traits/function/interaction_partner/complexportal/iscs-thii-sulfurtransferase-complex-cpx-2140.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-17 | https://www.uniprot.org/uniprotkb/Q13547/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:Q13547, source_trait_id=ComplexPortal:CPX-2184; matching has_part in data/traits/function/interaction_partner/complexportal/mier1-histone-deacetylase-complex-hdac1-variant-cpx-2184.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-18 | https://www.uniprot.org/uniprotkb/P50456/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P50456, source_trait_id=ComplexPortal:CPX-2242; matching has_part in data/traits/function/interaction_partner/complexportal/mlc-eiib-transcriptional-regulator-complex-cpx-2242.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-19 | https://www.uniprot.org/uniprotkb/P25043/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P25043, source_trait_id=ComplexPortal:CPX-2262; matching has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-20 | https://www.uniprot.org/uniprotkb/P30656/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P30656, source_trait_id=ComplexPortal:CPX-2262; matching has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-21 | https://www.uniprot.org/uniprotkb/P30657/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P30657, source_trait_id=ComplexPortal:CPX-2262; matching has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-22 | https://www.uniprot.org/uniprotkb/P38624/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P38624, source_trait_id=ComplexPortal:CPX-2262; matching has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-23 | https://www.uniprot.org/uniprotkb/P00445/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P00445, source_trait_id=ComplexPortal:CPX-2267; matching has_part in data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-24 | https://www.uniprot.org/uniprotkb/P68400/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P68400, source_trait_id=ComplexPortal:CPX-2437; matching has_part in data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-25 | https://www.uniprot.org/uniprotkb/P79005/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P79005, source_trait_id=ComplexPortal:CPX-25757; matching has_part in data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-26 | https://www.uniprot.org/uniprotkb/Q96TL7/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:Q96TL7, source_trait_id=ComplexPortal:CPX-25757; matching has_part in data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-27 | https://www.uniprot.org/uniprotkb/P40487/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P40487, source_trait_id=ComplexPortal:CPX-2581; matching has_part in data/traits/function/interaction_partner/complexportal/2-3-amino-3-carboxypropyl-histidine-synthase-complex-cpx-2581.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-28 | https://www.uniprot.org/uniprotkb/Q96QE3/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:Q96QE3, source_trait_id=ComplexPortal:CPX-26030; matching has_part in data/traits/function/interaction_partner/complexportal/dna-replication-factor-c-complex-atad5-variant-cpx-26030.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-29 | https://www.uniprot.org/uniprotkb/O42667/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:O42667, source_trait_id=ComplexPortal:CPX-26387; matching has_part in data/traits/function/interaction_partner/complexportal/dynactin-complex-cpx-26387.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-30 | https://www.uniprot.org/uniprotkb/P87061/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P87061, source_trait_id=ComplexPortal:CPX-26645; matching has_part in data/traits/function/interaction_partner/complexportal/tea1-tea4-signaling-complex-cpx-26645.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-31 | https://www.uniprot.org/uniprotkb/Q14694/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:Q14694, source_trait_id=ComplexPortal:CPX-26721; matching has_part in data/traits/function/interaction_partner/complexportal/g3bp1-usp10-deubiquitinase-complex-cpx-26721.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-32 | https://www.uniprot.org/uniprotkb/P53045/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P53045, source_trait_id=ComplexPortal:CPX-26731; matching has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-33 | https://www.uniprot.org/uniprotkb/P53199/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P53199, source_trait_id=ComplexPortal:CPX-26731; matching has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-34 | https://www.uniprot.org/uniprotkb/Q12452/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:Q12452, source_trait_id=ComplexPortal:CPX-26731; matching has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-35 | https://www.uniprot.org/uniprotkb/P56100/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P56100, source_trait_id=ComplexPortal:CPX-268; matching has_part in data/traits/function/interaction_partner/complexportal/cytochrome-bd-i-ubiquinol-oxidase-complex-cpx-268.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| membership-36 | https://www.uniprot.org/uniprotkb/P16234/entry; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl: protein_id=UniProtKB:P16234, source_trait_id=ComplexPortal:CPX-2881; matching has_part in data/traits/function/interaction_partner/complexportal/pdgf-receptor-alpha-pdgf-aa-complex-cpx-2881.yaml | supports | Inspected the exact 2026_03 ComplexPortal cross-reference and full target record. The accession is explicitly listed as a complex member. Taxon and sequence identity match the fetched registry; no source coordinates were asserted. |
+| cpx-1278 | https://www.ebi.ac.uk/complexportal/complex/CPX-1278; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1278.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1278 | supports | Inspected current official entry for CPX-1278; Saccharomyces cerevisiae; 559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. TRX1 membership is supported by the curated exact-accession assertion and the primary LMA1 purification/rescue study. The thioredoxin redox activity is not required for the tested fusion function. The current API assembly label 'Heteropentamer' conflicts with the paper's heterodimer description; do not import that stoichiometry or infer redox catalysis for this membership example. |
+| cpx-1279 | https://www.ebi.ac.uk/complexportal/complex/CPX-1279; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1279.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1279 | supports | Inspected current official entry for CPX-1279; Saccharomyces cerevisiae; 559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Hold this digest pending TRX2-specific evidence review. The exact curated membership exists (ECO:0005547), but the inspected 1997 study uses TRX1 for the biochemical rescue, while the 1996 abstract reports a double deletion without distinguishing the two isoenzymes. These inspected sources do not independently resolve TRX2-Pbi2 membership. This is a provisional evidence-gap decision, not evidence that TRX2 cannot participate; the 1996 full PDF was not read. |
+| cpx-1900 | https://www.ebi.ac.uk/complexportal/complex/CPX-1900; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1900.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1900 | supports | Inspected current official entry for CPX-1900; Saccharomyces cerevisiae; 559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact budding-yeast SLI15/BIR1 membership in the chromosomal passenger complex is supported by the curated physical-interaction entry. These are regulatory/scaffolding components; this example does not assign Ipl1 kinase catalysis to either chain. |
+| cpx-1929 | https://www.ebi.ac.uk/complexportal/complex/CPX-1929; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1929.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1929 | supports | Inspected current official entry for CPX-1929; Escherichia coli (strain K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact PhnG/H/I/J membership is supported by the curated complex entry and isolation of the PhnGHIJK core. The primary study does not establish an active complete PhnGHIJKL assembly, and the source explicitly notes loss of activity without PhnL. Approve membership only, without treating every subunit as the C-P-cleaving enzyme or inferring the full assembly's catalytic competence from that experiment. |
+| cpx-2003 | https://www.ebi.ac.uk/complexportal/complex/CPX-2003; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2003.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2003 | supports | Inspected current official entry for CPX-2003; Homo sapiens; 9606; evidence tier ECO:0005610 (inferred by homology). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The Portal entry is homology-inferred, but an inspected primary study directly produced and tested human cyclin A1/CDK1 complexes. This supports the human membership independently of the inference flag; recombinant assays do not establish every proposed in-vivo meiotic role or a residue mechanism. |
+| cpx-2005 | https://www.ebi.ac.uk/complexportal/complex/CPX-2005; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2005.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2005 | supports | Inspected current official entry for CPX-2005; Homo sapiens; 9606; evidence tier ECO:0005546 (inferred by paralogy ). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The Portal entry is paralogy-inferred, but the inspected primary study directly produced and tested human cyclin A1/CDK2 complexes. Approve exact human membership, not transfer of cyclin A2-specific properties, coordinates or an untested in-vivo role. |
+| cpx-2010 | https://www.ebi.ac.uk/complexportal/complex/CPX-2010; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2010.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2010 | supports | Inspected current official entry for CPX-2010; Homo sapiens; 9606; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact human CDK4 and cyclin D1 membership is supported by the curated physical-interaction entry. Distinguish catalytic CDK4 from regulatory cyclin D1; membership does not make CCND1 an independent kinase or establish activity without the relevant activation context. |
+| cpx-2015 | https://www.ebi.ac.uk/complexportal/complex/CPX-2015; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2015.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2015 | supports | Inspected current official entry for CPX-2015; Homo sapiens; 9606; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact human cyclin E1 membership is supported by the curated physical-interaction entry. CCNE1 is the cyclin component, not catalytic CDK2. No independent kinase activity, residue interval or constitutive activity is assigned to CCNE1. |
+| cpx-2122 | https://www.ebi.ac.uk/complexportal/complex/CPX-2122; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2122.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2122 | supports | Inspected current official entry for CPX-2122; Saccharomyces cerevisiae; 559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact budding-yeast ACT1 membership in SWR1 is supported by the curated physical-interaction entry. Nuclear complex membership is distinct from cytoskeletal polymerization, and does not assign Swr1's ATP-dependent histone-exchange activity to actin. |
+| cpx-2134 | https://www.ebi.ac.uk/complexportal/complex/CPX-2134; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2134.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2134 | supports | Inspected current official entry for CPX-2134; Escherichia coli (strain K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact E. coli ThiF membership in ThiF-ThiS is supported by the curated physical-interaction entry, whose assembly is ThiF2-ThiS2. Preserve the sulfur-carrier activation context; no particular interface residue or standalone sulfur-donor chemistry is inferred here. |
+| cpx-2140 | https://www.ebi.ac.uk/complexportal/complex/CPX-2140; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2140.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2140 | supports | Inspected current official entry for CPX-2140; Escherichia coli (strain K12); 83333; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The source explicitly curator-infers the ThiI-IscS complex. The primary biochemical study supports sequential IscS-to-ThiI sulfur transfer. Approve curated membership with that inference tier retained; an interprotein persulfide bridge and an exact binding interface remain unproven by the inspected evidence. |
+| cpx-2184 | https://www.ebi.ac.uk/complexportal/complex/CPX-2184; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2184.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2184 | supports | Inspected current official entry for CPX-2184; Homo sapiens; 9606; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact human HDAC1 membership in the MIER1-HDAC1 variant is supported by the curated physical-interaction entry. Keep HDAC1/HDAC2 variants distinct; this membership does not localize an interaction site or establish all downstream transcriptional effects. |
+| cpx-2242 | https://www.ebi.ac.uk/complexportal/complex/CPX-2242; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2242.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2242 | supports | Inspected current official entry for CPX-2242; Escherichia coli (strain K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact E. coli Mlc membership is supported in the PtsG/EIIB sequestration assembly. Membrane capture by dephosphorylated transporter is distinguished from DNA-bound transcriptional repression; the example does not assert these mutually different states simultaneously. |
+| cpx-2262 | https://www.ebi.ac.uk/complexportal/complex/CPX-2262; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2262.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2262 | supports | Inspected current official entry for CPX-2262; Saccharomyces cerevisiae; 559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact budding-yeast proteasome beta-chain membership is supported by the curated physical-interaction entry. The proteasome's ATP-dependent substrate handling and proteolytic activities are properties of the assembled machinery and particular catalytic chains, not interchangeable activities of all selected beta subunits. |
+| cpx-2267 | https://www.ebi.ac.uk/complexportal/complex/CPX-2267; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2267 | supports | Inspected current official entry for CPX-2267; Saccharomyces cerevisiae; 559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Hold this digest until the target definition is repaired: superoxide dismutation produces O2 and H2O2, not water and H2O2 (EC 1.15.1.1). The error is also present in the inspected upstream function text. Yeast SOD1-CCS1 heterodimer membership itself is directly supported by the primary structure; rejection is for the current misleading record definition, not absence of membership or equivalence to mature SOD1 homodimer. |
+| cpx-2437 | https://www.ebi.ac.uk/complexportal/complex/CPX-2437; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2437.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2437 | supports | Inspected current official entry for CPX-2437; Homo sapiens; 9606; evidence tier ECO:0005546 (inferred by paralogy ). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Hold this digest for the exact mixed CSNK2A1-CSNK2A2-beta2 assembly. The Portal entry is inferred by paralogy (ECO:0005546). The inspected CK2 crystal abstract concerns two catalytic subunits without establishing this mixed variant, and the cross-linking abstract supports alpha/beta or alpha-prime/beta contacts, not co-residence of both catalytic paralogs in the same tetramer. This is a provisional evidence gap, not proof the mixed complex does not exist; the cited review is not independent experimental confirmation. |
+| cpx-25757 | https://www.ebi.ac.uk/complexportal/complex/CPX-25757; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-25757.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-25757 | supports | Inspected current official entry for CPX-25757; Schizosaccharomyces pombe (strain ATCC 38366 / 972); 284812; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The source curator-infers the S. pombe shelterin complex, with primary structural/interaction studies supporting Rap1-mediated connections to Taz1 and the bridging machinery. Approve exact Taz1/Rap1 membership, without importing human shelterin composition, exact residue coordinates, or an assumed single rigid stoichiometry. |
+| cpx-2581 | https://www.ebi.ac.uk/complexportal/complex/CPX-2581; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2581.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2581 | supports | Inspected current official entry for CPX-2581; Saccharomyces cerevisiae; 559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The source curator-infers Dph1-Dph2 membership; primary mutant/reconstitution work supports the asymmetric heterodimer. Dph1's catalytic cluster and Dph2's facilitating reductive role must not be conflated, nor replaced by the archaeal Dph2 homodimer model. No cysteine position is assigned without a sequence-frame review. |
+| cpx-26030 | https://www.ebi.ac.uk/complexportal/complex/CPX-26030; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26030.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26030 | supports | Inspected current official entry for CPX-26030; Homo sapiens; 9606; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Human ATAD5 membership is supported by the curated entry and a primary cryo-EM study of ATAD5-RFC. The complex is a PCNA unloader, not an assumption of the canonical RFC1 clamp-loading activity. Structural loops described in the paper are not promoted to residue occurrences in this batch. |
+| cpx-26387 | https://www.ebi.ac.uk/complexportal/complex/CPX-26387; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26387.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26387 | supports | Inspected current official entry for CPX-26387; Schizosaccharomyces pombe (strain ATCC 38366 / 972); 284812; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. The source curator-infers S. pombe dynactin membership. Primary work independently supports Ssm4 as the p150-Glued-related dynein-associated factor involved in nuclear movement. Accept that curated membership, but the inspected study does not establish every subunit or the stoichiometry of the complete four-component source model. |
+| cpx-26645 | https://www.ebi.ac.uk/complexportal/complex/CPX-26645; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26645.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26645 | supports | Inspected current official entry for CPX-26645; Schizosaccharomyces pombe (strain ATCC 38366 / 972); 284812; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact fission-yeast Tea1 membership is supported by the curated Tea1-Tea4 physical-interaction entry. This polarity/signaling assembly is not a standalone catalytic reaction; no transfer from metazoan polarity proteins or residue-level binding assertion is made. |
+| cpx-26721 | https://www.ebi.ac.uk/complexportal/complex/CPX-26721; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26721.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26721 | supports | Inspected current official entry for CPX-26721; Homo sapiens; 9606; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact human USP10 membership in G3BP1-USP10 is supported by the curated physical-interaction entry. Keep this partner state distinct from alternative G3BP1-CAPRIN1 complexes and stress-granule states. No simultaneous CAPRIN1 occupancy or particular deubiquitination substrate is inferred from membership. |
+| cpx-26731 | https://www.ebi.ac.uk/complexportal/complex/CPX-26731; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26731.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26731 | supports | Inspected current official entry for CPX-26731; Saccharomyces cerevisiae; 559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Curated Erg25/26/27 membership is supported by primary affinity-isolation evidence for an Erg25/26/27/28 assembly. Erg26 did not coimmunoprecipitate in one assay but was detected in the affinity-column complex. Approve membership, not an exclusive three-chain stoichiometry, absence of Erg28 scaffold, or transfer of each distinct C4-demethylation step to all three proteins. |
+| cpx-268 | https://www.ebi.ac.uk/complexportal/complex/CPX-268; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-268.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-268 | supports | Inspected current official entry for CPX-268; Escherichia coli (strain K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact E. coli CydX membership is supported by two primary biochemical studies, including copurification and effects on cytochrome bd assembly/stability. The 37-residue CydX is an accessory subunit, not an independently catalytic quinol oxidase. No overexpression result is generalized to an unreviewed residue mechanism. |
+| cpx-2881 | https://www.ebi.ac.uk/complexportal/complex/CPX-2881; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2881.json: complexAc, species, participants, functions, properties, complexAssemblies, evidenceType; acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2881 | supports | Inspected current official entry for CPX-2881; Homo sapiens; 9606; evidence tier ECO:0000353 (physical interaction evidence). Exact selected accession(s) appear among participants. This contextual API fetch does not replace the release-pinned UniProt qualification receipt. Exact human PDGFRA membership is supported by the curated physical-interaction entry for the ligand-bound PDGF-AA/receptor assembly. Distinguish the receptor/ligand heterotetramer from unliganded receptor monomers and other PDGF ligand/receptor combinations; do not infer constitutive signaling. |
+| paper-38871854 | https://doi.org/10.1038/s41594-024-01332-4; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=38871854].abstractText; PMID:38871854 | partial | Primary abstract reports human ATAD5-RFC cryo-EM and PCNA unloading; supports the specific ATAD5-containing assembly and distinguishes it from RFC1 loading. |
+| paper-31463593 | https://doi.org/10.1007/s00775-019-01702-0; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=31463593].abstractText; PMID:31463593 | partial | Primary abstract reports Dph1-Dph2 mutant/reconstitution experiments and asymmetric cluster roles. It supports the heterodimer but is not a sequence-coordinate review. |
+| paper-29160296 | https://doi.org/10.1038/cr.2017.145; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=29160296].abstractText; PMID:29160296 | partial | Primary abstract reports the S. pombe Tpz1-Poz1-Rap1 structure and bridging relationships connecting shelterin subcomplexes. |
+| paper-24681096 | https://doi.org/10.1016/j.febslet.2014.03.036; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=24681096].abstractText; PMID:24681096 | partial | Primary biochemical study identifies E. coli CydX in cytochrome bd and tests its contribution to assembly/stability of the di-heme site. |
+| paper-23749980 | https://doi.org/10.1128/jb.00324-13; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=23749980].abstractText; PMID:23749980 | partial | Primary study reports CydX copurification with CydAB and oxidase activity phenotypes; supports accessory-subunit membership, not autonomous oxidase activity. |
+| paper-21705661 | https://doi.org/10.1073/pnas.1104922108; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=21705661].abstractText; PMID:21705661 | partial | Primary study isolates a PhnGHIJK complex. It supports the selected core members, not by itself the PhnL-containing full assembly or individual catalytic roles. |
+| paper-18535244 | https://doi.org/10.1126/science.1154819; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=18535244].abstractText; PMID:18535244 | partial | Primary study identifies fission-yeast telomere bridging relationships involving Tpz1, Poz1, Rap1 and Taz1; species-specific shelterin context. |
+| paper-15509865 | https://doi.org/10.1242/jcs.01475; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=15509865].abstractText; PMID:15509865 | partial | Primary study reports Ssm4/dynein association and a nuclear-movement phenotype in S. pombe. This is not a complete reconstitution of the four-subunit dynactin model. |
+| paper-15159402 | https://doi.org/10.1074/jbc.m401708200; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=15159402].abstractText; PMID:15159402 | partial | Primary study examines human cyclin A1-CDK2 interaction partners and substrates; supporting context, not an independent check of all record functions. |
+| background-12914955 | https://doi.org/10.1016/s0167-4889(03)00086-7; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=12914955].abstractText; PMID:12914955 | context_only | Review article on LMA1/GATE-16; read as background only, not independent experimental evidence or proof of a TRX2-specific assembly. |
+| background-12396231 | https://doi.org/10.1042/bj20021469; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=12396231].abstractText; PMID:12396231 | context_only | CK2 review article; the general description of alpha and/or alpha-prime plus beta subunits is background, not independent experimental proof of co-resident catalytic paralogs. |
+| paper-11524675 | https://doi.org/10.1038/nsb0901-751; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=11524675].abstractText; PMID:11524675 | partial | Primary X-ray study reports a yeast SOD1-CCS1 heterodimer with one chain of each. Membership is supported even though the PTM definition contains an incorrect dismutation product. |
+| paper-12119386 | https://doi.org/10.1073/pnas.112202799; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=12119386].abstractText; PMID:12119386 | partial | Primary study reports affinity-isolated Erg25/26/27/28 assemblies. Erg26 was not detected in one coimmunoprecipitation assay but was present in the affinity-column complex; no exclusive three-chain model is proven. |
+| paper-11160377 | https://doi.org/10.1016/s0022-2275(20)32347-6; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=11160377].abstractText; PMID:11160377 | context_only | ERG28 disruption/sterol-intermediate study suggests interactions with Erg26/27; insufficient by itself to prove complex membership. Used as context for the later direct isolation. |
+| paper-10753862 | https://doi.org/10.1074/jbc.275.15.10727; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=10753862].abstractText; PMID:10753862 | partial | Primary biochemical study supports sequential sulfur transfer from IscS to ThiI and tRNA. It does not directly establish a particular interprotein persulfide-bridge structure. |
+| paper-11574463 | https://doi.org/10.1093/emboj/20.19.5320; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json: resultList.result[id=11574463].abstractText; PMID:11574463 | partial | Primary CK2 crystal-structure abstract describes a human catalytic/regulatory tetramer. The inspected abstract does not establish the exact mixed alpha/alpha-prime variant; full-text experimental composition was not independently reanalyzed. |
+| paper-19056339 | https://doi.org/10.1016/j.bbrc.2008.11.077; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json: resultList.result[id=19056339].abstractText; PMID:19056339; https://pmc.ncbi.nlm.nih.gov/articles/PMC4039035/ Methods and Results (web-rendered text) | partial | Primary study compares recombinant human cyclin A1/A2 complexes with CDK1/CDK2. Abstract and full-text methods/results identify human constructs, purified complexes and kinase assays; direct support for human A1-CDK1 and A1-CDK2 membership, not every in-vivo role. |
+| paper-9015301 | https://doi.org/10.1083/jcb.136.2.299; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json: resultList.result[id=9015301].abstractText; PMID:9015301; https://pmc.ncbi.nlm.nih.gov/articles/PMC2134815/ Results: Small Subunit; Mechanism of LMA1 Action | partial | Primary full-text Results identify Pbi2 and detect LMA1 with anti-TRX1; TRX1 rescue and redox-inactive TRX1 rescue distinguish assembly function from redox chemistry. This inspected experiment does not establish TRX2-specific physical membership. |
+| paper-8664289 | https://doi.org/10.1021/bi951989i; reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json: resultList.result[id=8664289].abstractText; PMID:8664289 | partial | Primary cross-linking abstract supports alpha/beta and alpha-prime/beta contacts. It does not by itself resolve whether both catalytic paralogs were present in the same individual CK2 tetramer. |
+| paper-8603912 | https://doi.org/10.1083/jcb.132.5.787; https://pmc.ncbi.nlm.nih.gov/articles/PMC2120747/ Abstract; 1996 study; PDF not inspected | partial | The accessible abstract reports LMA1 purification with a thioredoxin subunit and a double thioredoxin-gene deletion phenotype. It does not distinguish TRX1 from TRX2 for this review. No claim is made about evidence that may occur in the uninspected PDF. |
+| enzyme-1.15.1.1 | https://enzyme.expasy.org/EC/1.15.1.1; Catalytic activity; cross-reference P00445 | refutes | The authoritative reaction lists molecular oxygen and hydrogen peroxide as the products of superoxide dismutation, contradicting water as a product in CPX-2267's definition. |
+| baseline | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.baseline-validation.tsv; 25 selected record paths, zero validation errors | supports | Closed-mode validation passed for every selected record. This checks representation, not scientific accuracy; in particular it cannot catch the wrong SOD1 reaction product. |
+| decision-partition | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl; 36 digest-bound proposed decisions; 33 APPROVED and 3 REJECTED | supports | Scientific self-review recommendations only. Native finalizer dry-run passed: 22 records have approved alternatives, three records have only a held/rejected alternative. No finalized outputs or canonical examples were written. |
+| prior-mechanical-review | reviews/structured/20261013T022832Z-cross-mech-complex-staging/review.yaml; scientific_review=false; all 36 targets | context_only | Earlier append-only observation established mechanical readiness only. This scientific observation adds adjudication without rewriting that earlier scope or claiming its checks were scientific. |
+| review-boundary | justfile; finalize-uniprot-review-batch instructions, lines 1460-1464; .claude/skills/ground-protein-example/SKILL.md steps 7-8 | supports | The finalizer instructions require independent review before --apply. This author also prepared staging, so this observation is self_review. Only dry-run finalization is run; installation is a separate authorized action. |
+
+## Limits And Additional Notes
+
+- This is a scientific self-review of membership candidates, not independent sign-off, a complete functional audit of the 25 records, or a review of all 2602 inventory proteins.
+- Current Portal evidence tiers for the 36 rows: 22 physical-interaction, 11 curator-inferred, two paralogy-inferred and one homology-inferred. They are not all experimentally established assemblies. Human A1-CDK1/A1-CDK2 have supplementary primary support despite the Portal inference flags.
+- The TRX2 and mixed CK2 holds describe unresolved scope in the inspected sources, not proof of biological absence. Most papers were checked through primary abstracts; the 1996 LMA1 PDF and full CK2 experimental methods were not inspected. A failed Europe PMC fullTextXML request for PMC4039035 did not install a raw file; its web-rendered methods/results and a separately acquired abstract were inspected.
+- An upstream LMA1 assembly label says Heteropentamer while the inspected primary report describes a heterodimer. This conflicting stoichiometry was not imported; TRX1 approval is only for membership.
+- Whole-protein SOURCE_MEMBERSHIP does not establish an independently active subunit, exact stoichiometry, binding-interface coordinates or residue-level causality. No new residue explanation or canonical example was installed.
+- The proposed partition remains ignored staging, not a finalized decision ledger. The published inventory still preserves only the two prior batches (71 approvals, 180 rejections). Current qualification counts remain unchanged.
+- Raw source downloads and acquisition sidecars were moved into the existing ignored reports/uniprot-grounding review-batch source directory before final inspection. Their bytes and URLs are hashed here; the acquisition sidecars retain their original download destinations.
+- Selected primary abstracts are locally hashed; web-rendered full text and the enzyme authority are located by stable URLs and access times without claiming a local content hash. No source-native qualification gate was bypassed.
+- No trait/status edits, durable registry updates, commits, PRs, external issues, merges or branch deletions were performed.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261013T043714Z-cross-mech-complex-scientific
+kind: batch
+repository: culturebotai/proteintraitsmech
+title: Scientific self-review of 36 cross-Mech protein-complex candidates
+started_at: '2026-10-13T04:18:55Z'
+finished_at: '2026-10-13T04:37:14Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: self_review
+  independence_basis: The same agent prepared the refreshed inventory and staging
+    batch. Primary-source checking is scientific adjudication, not independent adversarial
+    review or human sign-off.
+skill: proteintraitsmech-cross-mech-proteins; ground-protein-example; fetch-source
+completion: completed
+verdict: needs_curation
+native_verdict: 33_RECOMMENDED_APPROVALS_3_HOLDS_PENDING_INDEPENDENT_REVIEW
+scientific_review: true
+summary: 'All 36 candidates on 25 complete records were assessed for exact protein-complex
+  membership, source evidence tier, assembly state and subunit-function scope. Recommend
+  33 approvals on 22 records and hold three candidates: one confirmed SOD1 chemistry
+  error, two provisional variant-evidence gaps (TRX2-LMA1 and mixed CK2). The 36-row
+  proposed partition passes native dry-run finalization. Independent review, finalized
+  disposition installation and canonical promotion have not occurred.'
+source:
+  git_revision: 70edd6f8458845f7d7783ac4f416df519f5e1de6
+  state: working_tree
+  inputs:
+  - path: data/cross_mech/manifest.json
+    sha256: 9e414ee09cd05a7ac74b09c49f3d0e295fc5a4f1b1a5f4f6ebb6fee66d15ae8f
+    role: context
+  - path: data/grounding/README.md
+    sha256: 33260fb0a38c98e21f833f910517c1439d9da0b64e1573a855d5c4f954a51900
+    role: context
+  - path: data/profiles/profiles.jsonl
+    sha256: 57b2f433eb82bfd9f59a8da5155a4aee6f98a6dcb7391b89c5166e4ceef89fc5
+    role: context
+  - path: data/raw/align_cache/residue_frame.json
+    sha256: 4fc4d2fb435f0358d0b194475b60076b1c2f0b5bad6fa48d4461ab02c6d1f130
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/2-3-amino-3-carboxypropyl-histidine-synthase-complex-cpx-2581.yaml
+    sha256: a554d4b075ec6ba9bfb2e57ed307e3466fe3518dd100746fb556e2bf23b26f26
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml
+    sha256: 51a2c0fb94fba804286e8749f95f433c7353cc3a197b5fdfe5e6bfc0321b8e6c
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml
+    sha256: fb503e0eac536f0a8c5ded20110e657a24d34275763883d16e7091ea5b7e786a
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml
+    sha256: 643d1b1610d23be9e14c10ff7b55f8d6399a9d663595076e39ae79b6a79fd0e0
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk1-complex-cpx-2003.yaml
+    sha256: 4cf5f2c8816f47ad522eec217955845f88a07c9bac5a81c28e6b453ddeb38392
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk2-complex-cpx-2005.yaml
+    sha256: 3dbc2db463a862b05dfcd7e3edd98b09a3edf74922c1e2e7b2c9af3ec381a236
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml
+    sha256: de8935a70326e237b35b5575a003e985097fc61f9de9c26c5cb388cf7e1400ab
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/cyclin-e1-cdk2-complex-cpx-2015.yaml
+    sha256: 34171ff8dce69eee1d389c5522b302438f68ca9d6c87561e7cbf8669c91e2e3f
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/cytochrome-bd-i-ubiquinol-oxidase-complex-cpx-268.yaml
+    sha256: 78adca3a06c49cea9b8a833eb535ef4922dd515069bb10922600811ff31ee0f9
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/dna-replication-factor-c-complex-atad5-variant-cpx-26030.yaml
+    sha256: f7262d493a23fe72a61ff6ff75373cd036ac2471e48c8344bc71c4c12d2adf11
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/dynactin-complex-cpx-26387.yaml
+    sha256: 3f69c25ae28fe3cab73b142f33c59514a8e110ed08826909b75c832618c08d2f
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml
+    sha256: 2c545472a0c77636fa823bf54c05a80c241547968db6308e9718f0a3da106454
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/g3bp1-usp10-deubiquitinase-complex-cpx-26721.yaml
+    sha256: d9efb45ac08f7805962f749f0aeb2ba7415a8d5b515ffa3b2fb2fd88b5ca3ccd
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/iscs-thii-sulfurtransferase-complex-cpx-2140.yaml
+    sha256: 2f0fa4a7611f89333fb3067e52f2c68010fad6f19eaf865c075b3b40f3a00bb8
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/lma1-complex-trx1-variant-cpx-1278.yaml
+    sha256: 81b65fdbab2db713049e91f9a91b45fad8079545c243d271247bcbca9e9f2bac
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml
+    sha256: f05a59fc3621122f87be95d7d26ea2cec8e5b9e3c996f8aa6291d7ce17f3027e
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/mier1-histone-deacetylase-complex-hdac1-variant-cpx-2184.yaml
+    sha256: e5d2e85cc72457f067be65c32e577033384e564a08bc6e4de262c21ab6c942c8
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/mlc-eiib-transcriptional-regulator-complex-cpx-2242.yaml
+    sha256: 1cc6de44b8f2d04fde98756c225a66a8f489d07f601151302f3b723eba4d0e71
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/pdgf-receptor-alpha-pdgf-aa-complex-cpx-2881.yaml
+    sha256: 1ea1a8f4870fe7dc580bfa9089e2f705afa755d57d2b8c38e039cb5e9fe28160
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml
+    sha256: 1f7b184385cc2f089f9bffa635ed8c164e4dd2b68f1ea121b38eedda0154abb5
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml
+    sha256: 4c5ea029a6ae3a8841f211d191d6bbd655754b92dd39926105f5529df384ddca
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+    sha256: d62248f087addd4aad0be31776115ad930d4c22fe67dc90dc7afab3c31e164e1
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/swr1-chromatin-remodelling-complex-cpx-2122.yaml
+    sha256: a0316f683e4654fb8a29c4cbcc910f653c944bfbc71a45dbc7242c4a673324c4
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/tea1-tea4-signaling-complex-cpx-26645.yaml
+    sha256: 0373b2b45680918ac23e9c89b0fd9b97f77d7b2c996f48d788a01d3517e0c44d
+    role: context
+  - path: data/traits/function/interaction_partner/complexportal/thif-this-complex-cpx-2134.yaml
+    sha256: 52d504175fcbf15436f956451d3391826f18cbaf7634de2d31de62ced206ff22
+    role: context
+  - path: justfile
+    sha256: 795b1a2f24c672d1be6927dce139fd985af3b2ec23fc8a10b75738f3f7dfc8cc
+    role: context
+  - path: reports/uniprot-grounding/cross-mech/refresh-20261013/protein-coverage-candidates.jsonl
+    sha256: 9f6e6adb014c93790540d2046725ae99873aef46a9781c3d4f25f166e5e92b14
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261010.review-decisions.jsonl
+    sha256: a9099ae014c34fa0a6f143efe199f37fca95083350d40ef427639bdae19b9a0e
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.baseline-validation.tsv
+    sha256: b184ed5450b968070bb6c75648407e388f41a1eaf7017890723cf560999fc3f7
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.candidates.jsonl
+    sha256: 88e685f9b2a7a910981c269d5c6ef632a787662dbbdbb8ce480cefcfff4e5df0
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.manifest.json
+    sha256: 12c72c1e04dace71b5d553a20589632ec2498152762ed2777be0127756ea5b3f
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.occurrence_evidence.jsonl
+    sha256: 149e6066b2f2a1ae8df7cf078058fb29617166049d92a232e588311bf7bb3a5f
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.protein_registry.jsonl
+    sha256: c5adfd383ba46b2784e4eb535a1f3c6bef09dea39e0e8c1d90aa1954c731ad38
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.registry_blocked.tsv
+    sha256: 2d4a91a7c04e3e4f1b85500104ff1322ae6334c36b6ec5f488d969425fa7a8d6
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+    sha256: 97a4612c183c3d92b2b54f371e43abfe23e24731e3722bbea4053d193f5af4eb
+    role: target
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl
+    sha256: b736cb56a904f4198e0690ef5b3af2bb9ec153f7c689db1757e63b543d107fbe
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1278.json
+    sha256: 36f62bceaf42cfdd8a303768198793a5d2d02391778950f711534d248a094b7a
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1278.json.fetch.json
+    sha256: 8b99c5a27fa21efc46a1e4137e0eb4dd5e2a53036365fb0de539aefba1e23c28
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1279.json
+    sha256: 9d745948442ba181895bc72819f6173bb75025aa982bd2f4d2020c1110be056a
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1279.json.fetch.json
+    sha256: 6bd67995a7b6a8f72e72763b331c11242ba40623ed148cef471e167673f34cd4
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1900.json
+    sha256: 0b86decd79ae178b3f20186453b6702713d25a7ab707cb417457b61aeeb69201
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1900.json.fetch.json
+    sha256: 7a897efa666ad502b1dba8f5f7b37a519472fb3ae57b334beacde7a97ba32532
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1929.json
+    sha256: 284cc99ce4d8e9555442eaf0661dae86569f54a35c1ca9c5c69ef3e2db721b57
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1929.json.fetch.json
+    sha256: bafb2b3163f6b0f165b30aae784ef1cf108df486c6c63cebc7fe2ed8e93283be
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2003.json
+    sha256: 5cd4b8bdc7db92411136c8694de18955b2f785b66b0b86f813dfa031fa4aa8d8
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2003.json.fetch.json
+    sha256: 192ac7e2359a46e5083f357d127ec9d817d21af2d3e737b8c67e8ffe8ebd75da
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2005.json
+    sha256: d28dcb3c9f18636efc11c28be77b48c2f541e7419e309abab7345ee6889e8298
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2005.json.fetch.json
+    sha256: 5d50f6c0691b2c6233226e112637fb3f2d265f1cddb84fabd2533f0ee4a6fbae
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2010.json
+    sha256: 144f139b53b4e988dcf9c77b75124f88a46a5bc1490638ed12aca5dbdaecae1b
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2010.json.fetch.json
+    sha256: 966ce2f5be495f7a39df604613045dcb415d38ce84d4a59b1f3f221dda20f82f
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2015.json
+    sha256: 655dbe4ce5f534fe5b091d23fc07506ddfc64e059054a6a2e468c53e52bba44a
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2015.json.fetch.json
+    sha256: fcc02312af85875d41e32f012d2f3176b3e182756305bead6e34451c02fef5a7
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2122.json
+    sha256: 6edf5dc6721be3bfd4ae3a4eaf8ba8a23c9b019ec773f263c48b8d2d8ffd3a3d
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2122.json.fetch.json
+    sha256: c4d31f4bcc0269a09ddd4b47d99e71cbecb25d03767a13db90b239fb4cf94a32
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2134.json
+    sha256: d21ec4fa03fe96ff47bdc68d0aef313dcefe835597c52b087fbea2de2d0ef385
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2134.json.fetch.json
+    sha256: 0867fd4e87353f7cb90f41eaaa78ef58b568240e43ff4ed957ac65f7334272d7
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2140.json
+    sha256: 178941de784b309d7395e0ab9fd4115b53aaf37e833fcd43c8ba6950b28c67b1
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2140.json.fetch.json
+    sha256: aa925506dbcfdc210f0168d10015eee196b5e45348163a510f1ff7552d6ec625
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2184.json
+    sha256: 074e1ff9c1b714da905fce293e068e5f25f2e92b4ccbee667d6ed8e9e963c694
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2184.json.fetch.json
+    sha256: 0056b9611197ae43b2e82dae1d704b956f0fc93950490f813fc8820a971539cf
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2242.json
+    sha256: 070e4de6169f7be140ed620afefa439ea4d13650b06d9d9d4a90335761126584
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2242.json.fetch.json
+    sha256: a3b568b99fd4a85ddc40eba288c6127073d9d34d0635f99ba3874095300ceca3
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2262.json
+    sha256: 4e1abffbf61fa838c21d5bb82c66a76a1f62d9479cc6c9cb5d5140b81be125c6
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2262.json.fetch.json
+    sha256: a01ba78f994d1ea263be494c8ef521a3e55aa9f7d75eb23ae602d6cab850284c
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json
+    sha256: e264491510c1bc2d750f24322a21016dffff55bfdb2488e002d0fa09b7045f31
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json.fetch.json
+    sha256: a5cf4b6bb056154ac77334e54c2b07f5458c089aac2c96eb56d85e91d7a02674
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2437.json
+    sha256: 5a54dc3ef10ed920d0327c5b2009fc7e98c6b1e6eaafda06b646432ae8fd5e10
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2437.json.fetch.json
+    sha256: 9f402c08f6801ffdc456779fbaea334247c479856c5d3aa46ccab8c900484a77
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-25757.json
+    sha256: 51aa753614cc02c8e8b7e43513799e57c1da9fd4f12f487e13d00ee4b658c2ff
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-25757.json.fetch.json
+    sha256: c5ee9f58c88063d02f3c65f04049e76603c166a5e53555b8bd611f682ba5ed82
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2581.json
+    sha256: 23ea4e3e1c051cbf7c95e3a66438616e203caac1b11d8486b5c62450e81c5e07
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2581.json.fetch.json
+    sha256: 09c869546c11e54cfe840c5bcab3a2f7120e0b684cbfbffa0b5e516e108de128
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26030.json
+    sha256: fd979bf83033ab7bbcb1071e8986dfc73e13f49284a980d7976c1ec8a9378a0e
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26030.json.fetch.json
+    sha256: 10e055dc450f30ec56ff369f75d4805ca97cf74907b89ca402f366a8eb2781a7
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26387.json
+    sha256: 900a0046907c62989c39c2020f5f870b7b421033aef396f268194c1b2004ca26
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26387.json.fetch.json
+    sha256: 58d1b872fc5333a0fae6f63c2441a8cb602abac367429d8b136673d41f54331e
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26645.json
+    sha256: b13787a5590a473cd9e19b169abefd9b630777ce83644527bba3d565ea2c6b30
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26645.json.fetch.json
+    sha256: a78c032b6e08b1e8e997d67ff3b294ec976686825352b3c802344c0bab0294ab
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26721.json
+    sha256: 58803cee58b3baa72ff94c4544f70d4aedb05b37e96dd6bb35b8ac316e82e348
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26721.json.fetch.json
+    sha256: 9167a4052fe3b5af94f074df9239137e0396d2d389608cff32fb5b84c406cef1
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26731.json
+    sha256: cbe1cc0260124c9aa9011d33287ad93f7df00f6abe318fe9fa3deef3df36d3a8
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26731.json.fetch.json
+    sha256: 004e16d412eb4e7077eb3a6654cd9b21f551c2e43a2b08907d3d070ed34a3432
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-268.json
+    sha256: ba61cfee2f533cb94728492ebe8d623a9c6b8bd254dcaef2e077e847b4508db4
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-268.json.fetch.json
+    sha256: 385249406f9b215367a0aafdc592aa1ccde09c85d173558ae1196c56ffe0ee7d
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2881.json
+    sha256: 97042f5a87f4de0bb76e7547f1fbbc69995a3e19b13a4daf784237032d3e609b
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2881.json.fetch.json
+    sha256: b07291ce2c409151d662813b019727466380127c34d8b8dbce032d2d970862a4
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json
+    sha256: 8841d4aaad9ffc0c7dc09ce05ca6d7b2a993f8a76c3ad86b62d697d3ff231761
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json.fetch.json
+    sha256: 0dee177ec142b5a2ed4df7e7ef9e53332741954d2e8b5aa23de0c4d5c7ba2f8d
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json
+    sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json.fetch.json
+    sha256: bc8b1d559477ccc4319b00daadce0d224798360717b43faf6d599f3b8e219862
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_plan.json
+    sha256: b92a1ef3e96545cfd56fb5e31af4cd43421a0e5a3e254539d6f889cfd0446dc2
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_receipt.json
+    sha256: 1bef7f3ead02cce3d0a6d0714a7fced3fb0f8bf0c1d46dd8dbb556b5cedfb779
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl
+    sha256: 2b3d958d65528ee88613e986b6123830beab02b2c69696969d78522e61458df6
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_registry.jsonl
+    sha256: c5adfd383ba46b2784e4eb535a1f3c6bef09dea39e0e8c1d90aa1954c731ad38
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-refresh-20261010.review-decisions.jsonl
+    sha256: 02a66f64036a99718f495c5dd750a35533cdf6bf0cf09ccd32c259abcde5f49e
+    role: context
+  - path: reviews/structured/20261013T022832Z-cross-mech-complex-staging/review.yaml
+    sha256: f6e0c80639a8dd01aeb7b7364673ac47174ba6784ead091568501e1a35ad2909
+    role: context
+  - path: scripts/fetch_uniprot_registry.py
+    sha256: 012937f84897db05a24697e8ccfd2866bee980ff6792eefcc8353049f538222b
+    role: context
+  - path: scripts/finalize_uniprot_review_batch.py
+    sha256: 4a74ad8bdd5e94acc31558e586ecffe8c75b2740af91f1c5eac37c9b3c4bbc24
+    role: context
+  - path: scripts/ground_uniprot_examples.py
+    sha256: df22a1fcf962657bbe0fdfbfd268a40335a264fe2d7956885421dd2d5a70eec4
+    role: context
+  - path: scripts/seed_complexportal.py
+    sha256: 59d40b99d189c0927b5a59d4d9fe9eb71c127f732ee341be325cb31eb0379f46
+    role: context
+  - path: scripts/select_uniprot_review_batch.py
+    sha256: bc656af34ecedd60013580ae4753b639d11e6ace34e29c1bec500c2dfefd90cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: b2ecb451e29ea4caec33105523bfddcc12f966936399042178566f3fae83b4f2
+    role: context
+scope:
+  description: All selected rows in cross-mech-complex-20261013, bounded to 25 ComplexPortal
+    records. The eligible source slice has 94 rows on 63 records; the broader priority
+    queue has 839 uncovered proteins (95 ComplexPortal, 516 Rhea, 228 GO candidates).
+    Scientific scope is the proposed membership example, not certification of every
+    functional sentence in each complex record.
+  selection: Native reviewed-exclusion record-group selector, ComplexPortal only,
+    max_records=25, one shard; all candidate alternatives for each chosen record retained.
+    Both prior review ledgers supplied. Unchanged all-rejected cases deferred; zero
+    changed-evidence groups reopened.
+  coverage: sampled
+  population_size: 94
+  reviewed_target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  sampling_method: Deterministic native record-group cap, not random sampling and
+    not evidence ranking. 25/63 eligible records and 36/94 candidate rows inspected;
+    seed not applicable.
+  exclusions:
+  - target: UniProtKB:P07250 / ComplexPortal:CPX-1152
+    reason: Prior scientific rejection retained. Normalized UniProt entry and target
+      record remain unchanged; no new evidence was claimed to overturn assembly-state
+      ambiguity.
+  - target: Other GO/Rhea priority candidates and 58 unselected eligible ComplexPortal
+      alternatives
+    reason: Outside this bounded ComplexPortal scientific batch.
+targets:
+- target_id: ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  label: UniProtKB:P22217 / ComplexPortal:CPX-1278
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 4377fd09cc5d7016f2942c6f9d86921d7246773f438c4629adb8c202847d3f24
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  label: UniProtKB:P22803 / ComplexPortal:CPX-1279
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: b3fdd9b398b46836235f8b7809bf83334d5c171ea572cdf70d31c6d99c44b7bc
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  label: UniProtKB:P38283 / ComplexPortal:CPX-1900
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 4669ddcf341a03d587caff2abccd85a090ecd557b55368451432a5ae44a3a8b5
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  label: UniProtKB:P47134 / ComplexPortal:CPX-1900
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 05e134b0398d660c1a6d281e2d6d2b70ddb1c8bfaae64e503303bf4deeba2db8
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  label: UniProtKB:P16685 / ComplexPortal:CPX-1929
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: c548f09c107b7dfd6c12f5a97d6cce242c6a4b670fde58ac44ff114da8cf2ef4
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  label: UniProtKB:P16686 / ComplexPortal:CPX-1929
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 6d0e8b38679544a749b8cd750af4b71ed55c75d0d597385a7588d17555dc2a48
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  label: UniProtKB:P16687 / ComplexPortal:CPX-1929
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 9816e15bf0f6385cddb34d74e47542f66603fb4179aa9a774119863a0b9f9d56
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  label: UniProtKB:P16688 / ComplexPortal:CPX-1929
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 4a7ee12a462853357d220ecafb265149732af2ef78098a56da6ecb1f7ffd7f6e
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  label: UniProtKB:P06493 / ComplexPortal:CPX-2003
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: d34df7d9b6ecd4740f8298cfce27ffe9f4746d822b3327fdf5caf98cdc2a399f
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  label: UniProtKB:P24941 / ComplexPortal:CPX-2005
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 7e294ac1ea0b08ae402e4c3f118d4c2683dd653e07ba4a5b093cc4a4b5cb9cce
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  label: UniProtKB:P11802 / ComplexPortal:CPX-2010
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 0f319ef992da7d2f068945d76d9de864393b20bf803c1350c3235e004a991fe9
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  label: UniProtKB:P24385 / ComplexPortal:CPX-2010
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 5b70fdabbe388362c1e1d69179a436853f2a879c4a57bf7180f3e36eba9ab46d
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  label: UniProtKB:P24864 / ComplexPortal:CPX-2015
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 8b9b3c681380030648a84ea1c8997dfb592da9d1a93be94b739bbe634ce74a7e
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  label: UniProtKB:P60010 / ComplexPortal:CPX-2122
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 686e7c5855e852650f1f1130ca1440e714fbbe501d23d02680faf4d93979ed1a
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  label: UniProtKB:P30138 / ComplexPortal:CPX-2134
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 2babdc839059877dceb4d654d0c7274c7835f2a852d55a68ecf172b1c496cc67
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  label: UniProtKB:P77718 / ComplexPortal:CPX-2140
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: a44946889ec27ee1d564aea285c29998184f1694b19079c782817b64ad71c90f
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  label: UniProtKB:Q13547 / ComplexPortal:CPX-2184
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 39c063e91a67803328aa9a0028e1cf83cc31bef501b7d1ed505773539aa45898
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  label: UniProtKB:P50456 / ComplexPortal:CPX-2242
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 8fd7b2424e8cf1dac58a74d8032f35e5481814c64fb1afe32286bba6852a39d9
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  label: UniProtKB:P25043 / ComplexPortal:CPX-2262
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 22f765abac4b5c16006848d8fcf3e0378f2800ab63b9c1c1deaa0341915dcb0e
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  label: UniProtKB:P30656 / ComplexPortal:CPX-2262
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: ef452e09a26b5c969f8c802edd92314bac6b428bc898b3a995043a8e0f890c0b
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  label: UniProtKB:P30657 / ComplexPortal:CPX-2262
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: f80e3602eb45346941f9a7e851894d16a3bb6fd0cfb033194ead2a75a1d5704e
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  label: UniProtKB:P38624 / ComplexPortal:CPX-2262
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: b62caf103afb14ac85e5a4961c799549d81690bdb0c2a380803868a79e204d75
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  label: UniProtKB:P00445 / ComplexPortal:CPX-2267
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 2922ae9a08a6c04a81e0ee3ab86375f718f63b3866c06f59aaaa3f7854e307a5
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  label: UniProtKB:P68400 / ComplexPortal:CPX-2437
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 175f39b630db888be2303a2b4034b76c9d7a4218920675ccf8dd2198033641fb
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  label: UniProtKB:P79005 / ComplexPortal:CPX-25757
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 8f2cb7af5a21421a9296e6a0d10bccd32a1df0c0d6c41ba46becec8a5454c2dd
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  label: UniProtKB:Q96TL7 / ComplexPortal:CPX-25757
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 663e1ab468df845bd0f0d2ce68d15d53a2765b7cd60f2d48b8f6ecea860a0149
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  label: UniProtKB:P40487 / ComplexPortal:CPX-2581
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: e6dd7299fb2d76855c92f8acf027ab7e2690bf4fd63a286f1049296ef29f89d0
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  label: UniProtKB:Q96QE3 / ComplexPortal:CPX-26030
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 1b813edf2abcaaa657829cd51418b7af57482f521a2c4683042fc3c61d2f6381
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  label: UniProtKB:O42667 / ComplexPortal:CPX-26387
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: d7102807ff2a2e37bb047effcc0c888d4797cada6d9ebb9521354b6b11f8d427
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  label: UniProtKB:P87061 / ComplexPortal:CPX-26645
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: f70d6420b01c6fdd07f765407fe9b053ac73b445e79dca2a19cd570dc91c0863
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  label: UniProtKB:Q14694 / ComplexPortal:CPX-26721
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: abbf66515a194b444bc65934039414435ec62a21ebafff8e0b1bd49e4ef04ac1
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  label: UniProtKB:P53045 / ComplexPortal:CPX-26731
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 8c6f22d05f96e6730d22a548abf66f810d8b4c92dcb34eacd009af7315caa1c0
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  label: UniProtKB:P53199 / ComplexPortal:CPX-26731
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 9b64571f8b4202283e4bda790c4a2009a4e63047e9426c8f4ba59cd90500040c
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  label: UniProtKB:Q12452 / ComplexPortal:CPX-26731
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: a9e1a62d15b33fc7598d2c798754fb10b249ccb67828e65cf482553eab313cc7
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  label: UniProtKB:P56100 / ComplexPortal:CPX-268
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 6c3ae49c0781a4620c555d6355a4b42aa5e031fb442eb52f01aa7b3b22c83e53
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+- target_id: ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  label: UniProtKB:P16234 / ComplexPortal:CPX-2881
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 6977c35ea5aad1ea9ca2f4d290bda3fa7eef017b9418901fae187867a8346c26
+    description: SHA-256 of sorted compact canonical JSON for the resolved row excluding
+      resolution_digest and record_preimage; record_sha256 remains included.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter. This review does not authorize
+      canonical promotion.
+checks:
+- check_id: baseline
+  name: Closed-mode validation of all selected records
+  status: passed
+  required: true
+  summary: 25 records scanned, zero errors.
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  command: .venv/bin/python scripts/validate_strict.py --workers 2 --out reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.baseline-validation.tsv
+    data/traits/function/interaction_partner/complexportal/lma1-complex-trx1-variant-cpx-1278.yaml
+    data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml
+    data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml
+    data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml
+    data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk1-complex-cpx-2003.yaml
+    data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk2-complex-cpx-2005.yaml
+    data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml
+    data/traits/function/interaction_partner/complexportal/cyclin-e1-cdk2-complex-cpx-2015.yaml
+    data/traits/function/interaction_partner/complexportal/swr1-chromatin-remodelling-complex-cpx-2122.yaml
+    data/traits/function/interaction_partner/complexportal/thif-this-complex-cpx-2134.yaml
+    data/traits/function/interaction_partner/complexportal/iscs-thii-sulfurtransferase-complex-cpx-2140.yaml
+    data/traits/function/interaction_partner/complexportal/mier1-histone-deacetylase-complex-hdac1-variant-cpx-2184.yaml
+    data/traits/function/interaction_partner/complexportal/mlc-eiib-transcriptional-regulator-complex-cpx-2242.yaml
+    data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml
+    data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+    data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml
+    data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml
+    data/traits/function/interaction_partner/complexportal/2-3-amino-3-carboxypropyl-histidine-synthase-complex-cpx-2581.yaml
+    data/traits/function/interaction_partner/complexportal/dna-replication-factor-c-complex-atad5-variant-cpx-26030.yaml
+    data/traits/function/interaction_partner/complexportal/dynactin-complex-cpx-26387.yaml
+    data/traits/function/interaction_partner/complexportal/tea1-tea4-signaling-complex-cpx-26645.yaml
+    data/traits/function/interaction_partner/complexportal/g3bp1-usp10-deubiquitinase-complex-cpx-26721.yaml
+    data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml
+    data/traits/function/interaction_partner/complexportal/cytochrome-bd-i-ubiquinol-oxidase-complex-cpx-268.yaml
+    data/traits/function/interaction_partner/complexportal/pdgf-receptor-alpha-pdgf-aa-complex-cpx-2881.yaml
+  exit_code: 0
+  expected_exit_code: 0
+  evidence_ids:
+  - baseline
+- check_id: identity-integrity
+  name: Exact release, receipt, digest, preimage and sequence checks
+  status: passed
+  required: true
+  summary: 36 exact-accession facts / 25 record preimages verified; 2026_03 receipt,
+    sequence checksums and taxa agree. Current Complex Portal participant and species
+    fields also agree for all 36 candidates.
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  command: .venv/bin/python /private/tmp/ptm-cross-mech-review.3Zw9BE/check_batch.py
+  exit_code: 0
+  expected_exit_code: 0
+  evidence_ids:
+  - fetch
+  - resolver
+  scope_note: The local diagnostic recomputes mechanical joins; current Portal JSON
+    membership/taxon comparisons were also evaluated separately against all 36 rows.
+    Neither operation alone establishes a scientific mechanism.
+- check_id: scientific-assessment
+  name: Record, source and literature adjudication
+  status: passed
+  required: true
+  summary: Every selected record and current official source entry inspected, with
+    focused primary literature/authority checks for inference, variant and assembly
+    caveats. Scientific findings are retained, not erased by a passed procedure check.
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  evidence_ids:
+  - decision-partition
+  - enzyme-1.15.1.1
+  - paper-19056339
+  - paper-9015301
+  scope_note: Not all underlying experiments were reanalyzed; curated database evidence
+    is accepted at its stated tier where no specific unresolved ambiguity was found.
+- check_id: finalizer-dry-run
+  name: Native decision-partition integrity
+  status: passed
+  required: true
+  summary: 36 decisions; 22 records with approved alternatives, three all rejected;
+    no output files written.
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  command: just finalize-uniprot-review-batch cross-mech-complex-20261013 --decisions
+    reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl
+  exit_code: 0
+  expected_exit_code: 0
+  evidence_ids:
+  - decision-partition
+- check_id: independent-finalization
+  name: Independent review and finalizer application
+  status: skipped
+  required: false
+  summary: 'Not performed: this is an AI self-review. The native instructions reserve
+    --apply for after independent review.'
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  evidence_ids:
+  - review-boundary
+  scope_note: Not required to save this completed self-review; remains required before
+    applying the proposed partition.
+- check_id: promotion
+  name: Canonical example promotion
+  status: not_applicable
+  required: false
+  summary: No promotion command run, no target records or durable grounding registries
+    changed.
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  evidence_ids:
+  - review-boundary
+evidence:
+- evidence_id: selector
+  kind: record_content
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.manifest.json
+  locator: shard_selected_*, global_source_slice_*, reviewed_exclusions
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: 'Deterministic 25-record cap retains all 36 alternatives from 94 candidate
+    rows / 63 records after excluding the unchanged ARG82/CPX-1152 choice. Source
+    slice: ComplexPortal only. Priority queue has 839 proteins / 589 records, not
+    a census of all PTM biology.'
+- evidence_id: fetch
+  kind: database
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_receipt.json
+  locator: receipt_id=uniprot-registry-fetch-receipt:96bd20d3787be29fe23ddcff4fe5702fbbf6677c8e31b3e012a6d8d05a8fe8fa;
+    outputs; response_rows
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: One UniProt REST request at 2026_03 accounts for all 36 exact primary accessions.
+    Eleven returned isoform accessions were logged as unexpected and not substituted.
+    Bound outputs contain 36 protein rows, 1261 membership facts and zero blocked
+    targets.
+- evidence_id: resolver
+  kind: validation
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  locator: all 36 candidate_id rows
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: The immutable resolver snapshot contains 36 mechanically QUALIFIED candidates.
+    Fresh integrity checks recomputed all native digests, receipt hashes and record
+    preimages. All claims are SOURCE_MEMBERSHIP / WHOLE_PROTEIN with no intervals
+    or residue sets; eligibility alone is not scientific approval.
+- evidence_id: membership-1
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P22217/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P22217, source_trait_id=ComplexPortal:CPX-1278; matching
+    has_part in data/traits/function/interaction_partner/complexportal/lma1-complex-trx1-variant-cpx-1278.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-2
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P22803/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P22803, source_trait_id=ComplexPortal:CPX-1279; matching
+    has_part in data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-3
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P38283/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P38283, source_trait_id=ComplexPortal:CPX-1900; matching
+    has_part in data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-4
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P47134/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P47134, source_trait_id=ComplexPortal:CPX-1900; matching
+    has_part in data/traits/function/interaction_partner/complexportal/chromosomal-passenger-complex-cpx-1900.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-5
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P16685/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P16685, source_trait_id=ComplexPortal:CPX-1929; matching
+    has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-6
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P16686/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P16686, source_trait_id=ComplexPortal:CPX-1929; matching
+    has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-7
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P16687/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P16687, source_trait_id=ComplexPortal:CPX-1929; matching
+    has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-8
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P16688/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P16688, source_trait_id=ComplexPortal:CPX-1929; matching
+    has_part in data/traits/function/interaction_partner/complexportal/phnghijkl-complex-cpx-1929.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-9
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P06493/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P06493, source_trait_id=ComplexPortal:CPX-2003; matching
+    has_part in data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk1-complex-cpx-2003.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-10
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P24941/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P24941, source_trait_id=ComplexPortal:CPX-2005; matching
+    has_part in data/traits/function/interaction_partner/complexportal/cyclin-a1-cdk2-complex-cpx-2005.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-11
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P11802/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P11802, source_trait_id=ComplexPortal:CPX-2010; matching
+    has_part in data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-12
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P24385/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P24385, source_trait_id=ComplexPortal:CPX-2010; matching
+    has_part in data/traits/function/interaction_partner/complexportal/cyclin-d1-cdk4-complex-cpx-2010.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-13
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P24864/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P24864, source_trait_id=ComplexPortal:CPX-2015; matching
+    has_part in data/traits/function/interaction_partner/complexportal/cyclin-e1-cdk2-complex-cpx-2015.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-14
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P60010/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P60010, source_trait_id=ComplexPortal:CPX-2122; matching
+    has_part in data/traits/function/interaction_partner/complexportal/swr1-chromatin-remodelling-complex-cpx-2122.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-15
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P30138/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P30138, source_trait_id=ComplexPortal:CPX-2134; matching
+    has_part in data/traits/function/interaction_partner/complexportal/thif-this-complex-cpx-2134.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-16
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P77718/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P77718, source_trait_id=ComplexPortal:CPX-2140; matching
+    has_part in data/traits/function/interaction_partner/complexportal/iscs-thii-sulfurtransferase-complex-cpx-2140.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-17
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q13547/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:Q13547, source_trait_id=ComplexPortal:CPX-2184; matching
+    has_part in data/traits/function/interaction_partner/complexportal/mier1-histone-deacetylase-complex-hdac1-variant-cpx-2184.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-18
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P50456/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P50456, source_trait_id=ComplexPortal:CPX-2242; matching
+    has_part in data/traits/function/interaction_partner/complexportal/mlc-eiib-transcriptional-regulator-complex-cpx-2242.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-19
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P25043/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P25043, source_trait_id=ComplexPortal:CPX-2262; matching
+    has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-20
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P30656/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P30656, source_trait_id=ComplexPortal:CPX-2262; matching
+    has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-21
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P30657/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P30657, source_trait_id=ComplexPortal:CPX-2262; matching
+    has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-22
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P38624/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P38624, source_trait_id=ComplexPortal:CPX-2262; matching
+    has_part in data/traits/function/interaction_partner/complexportal/26s-proteasome-complex-cpx-2262.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-23
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P00445/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P00445, source_trait_id=ComplexPortal:CPX-2267; matching
+    has_part in data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-24
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P68400/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P68400, source_trait_id=ComplexPortal:CPX-2437; matching
+    has_part in data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-25
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P79005/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P79005, source_trait_id=ComplexPortal:CPX-25757; matching
+    has_part in data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-26
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q96TL7/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:Q96TL7, source_trait_id=ComplexPortal:CPX-25757; matching
+    has_part in data/traits/function/interaction_partner/complexportal/shelterin-complex-cpx-25757.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-27
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P40487/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P40487, source_trait_id=ComplexPortal:CPX-2581; matching
+    has_part in data/traits/function/interaction_partner/complexportal/2-3-amino-3-carboxypropyl-histidine-synthase-complex-cpx-2581.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-28
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q96QE3/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:Q96QE3, source_trait_id=ComplexPortal:CPX-26030; matching
+    has_part in data/traits/function/interaction_partner/complexportal/dna-replication-factor-c-complex-atad5-variant-cpx-26030.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-29
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/O42667/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:O42667, source_trait_id=ComplexPortal:CPX-26387; matching
+    has_part in data/traits/function/interaction_partner/complexportal/dynactin-complex-cpx-26387.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-30
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P87061/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P87061, source_trait_id=ComplexPortal:CPX-26645; matching
+    has_part in data/traits/function/interaction_partner/complexportal/tea1-tea4-signaling-complex-cpx-26645.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-31
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q14694/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:Q14694, source_trait_id=ComplexPortal:CPX-26721; matching
+    has_part in data/traits/function/interaction_partner/complexportal/g3bp1-usp10-deubiquitinase-complex-cpx-26721.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-32
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P53045/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P53045, source_trait_id=ComplexPortal:CPX-26731; matching
+    has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-33
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P53199/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P53199, source_trait_id=ComplexPortal:CPX-26731; matching
+    has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-34
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/Q12452/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:Q12452, source_trait_id=ComplexPortal:CPX-26731; matching
+    has_part in data/traits/function/interaction_partner/complexportal/erg25-erg26-erg27-ergosterol-biosynthesis-complex-cpx-26731.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-35
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P56100/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P56100, source_trait_id=ComplexPortal:CPX-268; matching has_part
+    in data/traits/function/interaction_partner/complexportal/cytochrome-bd-i-ubiquinol-oxidase-complex-cpx-268.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: membership-36
+  kind: database
+  reference: https://www.uniprot.org/uniprotkb/P16234/entry
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_memberships.jsonl:
+    protein_id=UniProtKB:P16234, source_trait_id=ComplexPortal:CPX-2881; matching
+    has_part in data/traits/function/interaction_partner/complexportal/pdgf-receptor-alpha-pdgf-aa-complex-cpx-2881.yaml'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: Inspected the exact 2026_03 ComplexPortal cross-reference and full target
+    record. The accession is explicitly listed as a complex member. Taxon and sequence
+    identity match the fetched registry; no source coordinates were asserted.
+- evidence_id: cpx-1278
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-1278
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1278.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1278'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 36f62bceaf42cfdd8a303768198793a5d2d02391778950f711534d248a094b7a
+  summary: Inspected current official entry for CPX-1278; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. TRX1 membership is supported by the curated exact-accession
+    assertion and the primary LMA1 purification/rescue study. The thioredoxin redox
+    activity is not required for the tested fusion function. The current API assembly
+    label 'Heteropentamer' conflicts with the paper's heterodimer description; do
+    not import that stoichiometry or infer redox catalysis for this membership example.
+- evidence_id: cpx-1279
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-1279
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1279.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1279'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 9d745948442ba181895bc72819f6173bb75025aa982bd2f4d2020c1110be056a
+  summary: Inspected current official entry for CPX-1279; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Hold this digest pending TRX2-specific evidence
+    review. The exact curated membership exists (ECO:0005547), but the inspected 1997
+    study uses TRX1 for the biochemical rescue, while the 1996 abstract reports a
+    double deletion without distinguishing the two isoenzymes. These inspected sources
+    do not independently resolve TRX2-Pbi2 membership. This is a provisional evidence-gap
+    decision, not evidence that TRX2 cannot participate; the 1996 full PDF was not
+    read.
+- evidence_id: cpx-1900
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-1900
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1900.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1900'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 0b86decd79ae178b3f20186453b6702713d25a7ab707cb417457b61aeeb69201
+  summary: Inspected current official entry for CPX-1900; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected
+    accession(s) appear among participants. This contextual API fetch does not replace
+    the release-pinned UniProt qualification receipt. Exact budding-yeast SLI15/BIR1
+    membership in the chromosomal passenger complex is supported by the curated physical-interaction
+    entry. These are regulatory/scaffolding components; this example does not assign
+    Ipl1 kinase catalysis to either chain.
+- evidence_id: cpx-1929
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-1929
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-1929.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-1929'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 284cc99ce4d8e9555442eaf0661dae86569f54a35c1ca9c5c69ef3e2db721b57
+  summary: Inspected current official entry for CPX-1929; Escherichia coli (strain
+    K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact
+    selected accession(s) appear among participants. This contextual API fetch does
+    not replace the release-pinned UniProt qualification receipt. Exact PhnG/H/I/J
+    membership is supported by the curated complex entry and isolation of the PhnGHIJK
+    core. The primary study does not establish an active complete PhnGHIJKL assembly,
+    and the source explicitly notes loss of activity without PhnL. Approve membership
+    only, without treating every subunit as the C-P-cleaving enzyme or inferring the
+    full assembly's catalytic competence from that experiment.
+- evidence_id: cpx-2003
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2003
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2003.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2003'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 5cd4b8bdc7db92411136c8694de18955b2f785b66b0b86f813dfa031fa4aa8d8
+  summary: Inspected current official entry for CPX-2003; Homo sapiens; 9606; evidence
+    tier ECO:0005610 (inferred by homology). Exact selected accession(s) appear among
+    participants. This contextual API fetch does not replace the release-pinned UniProt
+    qualification receipt. The Portal entry is homology-inferred, but an inspected
+    primary study directly produced and tested human cyclin A1/CDK1 complexes. This
+    supports the human membership independently of the inference flag; recombinant
+    assays do not establish every proposed in-vivo meiotic role or a residue mechanism.
+- evidence_id: cpx-2005
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2005
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2005.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2005'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: d28dcb3c9f18636efc11c28be77b48c2f541e7419e309abab7345ee6889e8298
+  summary: Inspected current official entry for CPX-2005; Homo sapiens; 9606; evidence
+    tier ECO:0005546 (inferred by paralogy ). Exact selected accession(s) appear among
+    participants. This contextual API fetch does not replace the release-pinned UniProt
+    qualification receipt. The Portal entry is paralogy-inferred, but the inspected
+    primary study directly produced and tested human cyclin A1/CDK2 complexes. Approve
+    exact human membership, not transfer of cyclin A2-specific properties, coordinates
+    or an untested in-vivo role.
+- evidence_id: cpx-2010
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2010
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2010.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2010'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 144f139b53b4e988dcf9c77b75124f88a46a5bc1490638ed12aca5dbdaecae1b
+  summary: Inspected current official entry for CPX-2010; Homo sapiens; 9606; evidence
+    tier ECO:0000353 (physical interaction evidence). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Exact human CDK4 and cyclin D1 membership is supported
+    by the curated physical-interaction entry. Distinguish catalytic CDK4 from regulatory
+    cyclin D1; membership does not make CCND1 an independent kinase or establish activity
+    without the relevant activation context.
+- evidence_id: cpx-2015
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2015
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2015.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2015'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 655dbe4ce5f534fe5b091d23fc07506ddfc64e059054a6a2e468c53e52bba44a
+  summary: Inspected current official entry for CPX-2015; Homo sapiens; 9606; evidence
+    tier ECO:0000353 (physical interaction evidence). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Exact human cyclin E1 membership is supported by
+    the curated physical-interaction entry. CCNE1 is the cyclin component, not catalytic
+    CDK2. No independent kinase activity, residue interval or constitutive activity
+    is assigned to CCNE1.
+- evidence_id: cpx-2122
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2122
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2122.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2122'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 6edf5dc6721be3bfd4ae3a4eaf8ba8a23c9b019ec773f263c48b8d2d8ffd3a3d
+  summary: Inspected current official entry for CPX-2122; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected
+    accession(s) appear among participants. This contextual API fetch does not replace
+    the release-pinned UniProt qualification receipt. Exact budding-yeast ACT1 membership
+    in SWR1 is supported by the curated physical-interaction entry. Nuclear complex
+    membership is distinct from cytoskeletal polymerization, and does not assign Swr1's
+    ATP-dependent histone-exchange activity to actin.
+- evidence_id: cpx-2134
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2134
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2134.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2134'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: d21ec4fa03fe96ff47bdc68d0aef313dcefe835597c52b087fbea2de2d0ef385
+  summary: Inspected current official entry for CPX-2134; Escherichia coli (strain
+    K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact
+    selected accession(s) appear among participants. This contextual API fetch does
+    not replace the release-pinned UniProt qualification receipt. Exact E. coli ThiF
+    membership in ThiF-ThiS is supported by the curated physical-interaction entry,
+    whose assembly is ThiF2-ThiS2. Preserve the sulfur-carrier activation context;
+    no particular interface residue or standalone sulfur-donor chemistry is inferred
+    here.
+- evidence_id: cpx-2140
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2140
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2140.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2140'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 178941de784b309d7395e0ab9fd4115b53aaf37e833fcd43c8ba6950b28c67b1
+  summary: Inspected current official entry for CPX-2140; Escherichia coli (strain
+    K12); 83333; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. The source explicitly curator-infers the ThiI-IscS
+    complex. The primary biochemical study supports sequential IscS-to-ThiI sulfur
+    transfer. Approve curated membership with that inference tier retained; an interprotein
+    persulfide bridge and an exact binding interface remain unproven by the inspected
+    evidence.
+- evidence_id: cpx-2184
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2184
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2184.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2184'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 074e1ff9c1b714da905fce293e068e5f25f2e92b4ccbee667d6ed8e9e963c694
+  summary: Inspected current official entry for CPX-2184; Homo sapiens; 9606; evidence
+    tier ECO:0000353 (physical interaction evidence). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Exact human HDAC1 membership in the MIER1-HDAC1
+    variant is supported by the curated physical-interaction entry. Keep HDAC1/HDAC2
+    variants distinct; this membership does not localize an interaction site or establish
+    all downstream transcriptional effects.
+- evidence_id: cpx-2242
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2242
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2242.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2242'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 070e4de6169f7be140ed620afefa439ea4d13650b06d9d9d4a90335761126584
+  summary: Inspected current official entry for CPX-2242; Escherichia coli (strain
+    K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact
+    selected accession(s) appear among participants. This contextual API fetch does
+    not replace the release-pinned UniProt qualification receipt. Exact E. coli Mlc
+    membership is supported in the PtsG/EIIB sequestration assembly. Membrane capture
+    by dephosphorylated transporter is distinguished from DNA-bound transcriptional
+    repression; the example does not assert these mutually different states simultaneously.
+- evidence_id: cpx-2262
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2262
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2262.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2262'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 4e1abffbf61fa838c21d5bb82c66a76a1f62d9479cc6c9cb5d5140b81be125c6
+  summary: Inspected current official entry for CPX-2262; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected
+    accession(s) appear among participants. This contextual API fetch does not replace
+    the release-pinned UniProt qualification receipt. Exact budding-yeast proteasome
+    beta-chain membership is supported by the curated physical-interaction entry.
+    The proteasome's ATP-dependent substrate handling and proteolytic activities are
+    properties of the assembled machinery and particular catalytic chains, not interchangeable
+    activities of all selected beta subunits.
+- evidence_id: cpx-2267
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2267
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2267'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: e264491510c1bc2d750f24322a21016dffff55bfdb2488e002d0fa09b7045f31
+  summary: 'Inspected current official entry for CPX-2267; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0000353 (physical interaction evidence). Exact selected
+    accession(s) appear among participants. This contextual API fetch does not replace
+    the release-pinned UniProt qualification receipt. Hold this digest until the target
+    definition is repaired: superoxide dismutation produces O2 and H2O2, not water
+    and H2O2 (EC 1.15.1.1). The error is also present in the inspected upstream function
+    text. Yeast SOD1-CCS1 heterodimer membership itself is directly supported by the
+    primary structure; rejection is for the current misleading record definition,
+    not absence of membership or equivalence to mature SOD1 homodimer.'
+- evidence_id: cpx-2437
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2437
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2437.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2437'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 5a54dc3ef10ed920d0327c5b2009fc7e98c6b1e6eaafda06b646432ae8fd5e10
+  summary: Inspected current official entry for CPX-2437; Homo sapiens; 9606; evidence
+    tier ECO:0005546 (inferred by paralogy ). Exact selected accession(s) appear among
+    participants. This contextual API fetch does not replace the release-pinned UniProt
+    qualification receipt. Hold this digest for the exact mixed CSNK2A1-CSNK2A2-beta2
+    assembly. The Portal entry is inferred by paralogy (ECO:0005546). The inspected
+    CK2 crystal abstract concerns two catalytic subunits without establishing this
+    mixed variant, and the cross-linking abstract supports alpha/beta or alpha-prime/beta
+    contacts, not co-residence of both catalytic paralogs in the same tetramer. This
+    is a provisional evidence gap, not proof the mixed complex does not exist; the
+    cited review is not independent experimental confirmation.
+- evidence_id: cpx-25757
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-25757
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-25757.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-25757'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 51aa753614cc02c8e8b7e43513799e57c1da9fd4f12f487e13d00ee4b658c2ff
+  summary: Inspected current official entry for CPX-25757; Schizosaccharomyces pombe
+    (strain ATCC 38366 / 972); 284812; evidence tier ECO:0005547 (inferred by curator).
+    Exact selected accession(s) appear among participants. This contextual API fetch
+    does not replace the release-pinned UniProt qualification receipt. The source
+    curator-infers the S. pombe shelterin complex, with primary structural/interaction
+    studies supporting Rap1-mediated connections to Taz1 and the bridging machinery.
+    Approve exact Taz1/Rap1 membership, without importing human shelterin composition,
+    exact residue coordinates, or an assumed single rigid stoichiometry.
+- evidence_id: cpx-2581
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2581
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2581.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2581'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 23ea4e3e1c051cbf7c95e3a66438616e203caac1b11d8486b5c62450e81c5e07
+  summary: Inspected current official entry for CPX-2581; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. The source curator-infers Dph1-Dph2 membership;
+    primary mutant/reconstitution work supports the asymmetric heterodimer. Dph1's
+    catalytic cluster and Dph2's facilitating reductive role must not be conflated,
+    nor replaced by the archaeal Dph2 homodimer model. No cysteine position is assigned
+    without a sequence-frame review.
+- evidence_id: cpx-26030
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-26030
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26030.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26030'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: fd979bf83033ab7bbcb1071e8986dfc73e13f49284a980d7976c1ec8a9378a0e
+  summary: Inspected current official entry for CPX-26030; Homo sapiens; 9606; evidence
+    tier ECO:0005547 (inferred by curator). Exact selected accession(s) appear among
+    participants. This contextual API fetch does not replace the release-pinned UniProt
+    qualification receipt. Human ATAD5 membership is supported by the curated entry
+    and a primary cryo-EM study of ATAD5-RFC. The complex is a PCNA unloader, not
+    an assumption of the canonical RFC1 clamp-loading activity. Structural loops described
+    in the paper are not promoted to residue occurrences in this batch.
+- evidence_id: cpx-26387
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-26387
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26387.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26387'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 900a0046907c62989c39c2020f5f870b7b421033aef396f268194c1b2004ca26
+  summary: Inspected current official entry for CPX-26387; Schizosaccharomyces pombe
+    (strain ATCC 38366 / 972); 284812; evidence tier ECO:0005547 (inferred by curator).
+    Exact selected accession(s) appear among participants. This contextual API fetch
+    does not replace the release-pinned UniProt qualification receipt. The source
+    curator-infers S. pombe dynactin membership. Primary work independently supports
+    Ssm4 as the p150-Glued-related dynein-associated factor involved in nuclear movement.
+    Accept that curated membership, but the inspected study does not establish every
+    subunit or the stoichiometry of the complete four-component source model.
+- evidence_id: cpx-26645
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-26645
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26645.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26645'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: b13787a5590a473cd9e19b169abefd9b630777ce83644527bba3d565ea2c6b30
+  summary: Inspected current official entry for CPX-26645; Schizosaccharomyces pombe
+    (strain ATCC 38366 / 972); 284812; evidence tier ECO:0000353 (physical interaction
+    evidence). Exact selected accession(s) appear among participants. This contextual
+    API fetch does not replace the release-pinned UniProt qualification receipt. Exact
+    fission-yeast Tea1 membership is supported by the curated Tea1-Tea4 physical-interaction
+    entry. This polarity/signaling assembly is not a standalone catalytic reaction;
+    no transfer from metazoan polarity proteins or residue-level binding assertion
+    is made.
+- evidence_id: cpx-26721
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-26721
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26721.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26721'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 58803cee58b3baa72ff94c4544f70d4aedb05b37e96dd6bb35b8ac316e82e348
+  summary: Inspected current official entry for CPX-26721; Homo sapiens; 9606; evidence
+    tier ECO:0000353 (physical interaction evidence). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Exact human USP10 membership in G3BP1-USP10 is
+    supported by the curated physical-interaction entry. Keep this partner state distinct
+    from alternative G3BP1-CAPRIN1 complexes and stress-granule states. No simultaneous
+    CAPRIN1 occupancy or particular deubiquitination substrate is inferred from membership.
+- evidence_id: cpx-26731
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-26731
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-26731.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-26731'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: cbe1cc0260124c9aa9011d33287ad93f7df00f6abe318fe9fa3deef3df36d3a8
+  summary: Inspected current official entry for CPX-26731; Saccharomyces cerevisiae;
+    559292; evidence tier ECO:0005547 (inferred by curator). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Curated Erg25/26/27 membership is supported by
+    primary affinity-isolation evidence for an Erg25/26/27/28 assembly. Erg26 did
+    not coimmunoprecipitate in one assay but was detected in the affinity-column complex.
+    Approve membership, not an exclusive three-chain stoichiometry, absence of Erg28
+    scaffold, or transfer of each distinct C4-demethylation step to all three proteins.
+- evidence_id: cpx-268
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-268
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-268.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-268'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: ba61cfee2f533cb94728492ebe8d623a9c6b8bd254dcaef2e077e847b4508db4
+  summary: Inspected current official entry for CPX-268; Escherichia coli (strain
+    K12); 83333; evidence tier ECO:0000353 (physical interaction evidence). Exact
+    selected accession(s) appear among participants. This contextual API fetch does
+    not replace the release-pinned UniProt qualification receipt. Exact E. coli CydX
+    membership is supported by two primary biochemical studies, including copurification
+    and effects on cytochrome bd assembly/stability. The 37-residue CydX is an accessory
+    subunit, not an independently catalytic quinol oxidase. No overexpression result
+    is generalized to an unreviewed residue mechanism.
+- evidence_id: cpx-2881
+  kind: database
+  reference: https://www.ebi.ac.uk/complexportal/complex/CPX-2881
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2881.json:
+    complexAc, species, participants, functions, properties, complexAssemblies, evidenceType;
+    acquired from https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2881'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: 97042f5a87f4de0bb76e7547f1fbbc69995a3e19b13a4daf784237032d3e609b
+  summary: Inspected current official entry for CPX-2881; Homo sapiens; 9606; evidence
+    tier ECO:0000353 (physical interaction evidence). Exact selected accession(s)
+    appear among participants. This contextual API fetch does not replace the release-pinned
+    UniProt qualification receipt. Exact human PDGFRA membership is supported by the
+    curated physical-interaction entry for the ligand-bound PDGF-AA/receptor assembly.
+    Distinguish the receptor/ligand heterotetramer from unliganded receptor monomers
+    and other PDGF ligand/receptor combinations; do not infer constitutive signaling.
+- evidence_id: paper-38871854
+  kind: primary_source
+  reference: https://doi.org/10.1038/s41594-024-01332-4
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=38871854].abstractText; PMID:38871854'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary abstract reports human ATAD5-RFC cryo-EM and PCNA unloading; supports
+    the specific ATAD5-containing assembly and distinguishes it from RFC1 loading.
+- evidence_id: paper-31463593
+  kind: primary_source
+  reference: https://doi.org/10.1007/s00775-019-01702-0
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=31463593].abstractText; PMID:31463593'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary abstract reports Dph1-Dph2 mutant/reconstitution experiments and
+    asymmetric cluster roles. It supports the heterodimer but is not a sequence-coordinate
+    review.
+- evidence_id: paper-29160296
+  kind: primary_source
+  reference: https://doi.org/10.1038/cr.2017.145
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=29160296].abstractText; PMID:29160296'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary abstract reports the S. pombe Tpz1-Poz1-Rap1 structure and bridging
+    relationships connecting shelterin subcomplexes.
+- evidence_id: paper-24681096
+  kind: primary_source
+  reference: https://doi.org/10.1016/j.febslet.2014.03.036
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=24681096].abstractText; PMID:24681096'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary biochemical study identifies E. coli CydX in cytochrome bd and
+    tests its contribution to assembly/stability of the di-heme site.
+- evidence_id: paper-23749980
+  kind: primary_source
+  reference: https://doi.org/10.1128/jb.00324-13
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=23749980].abstractText; PMID:23749980'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study reports CydX copurification with CydAB and oxidase activity
+    phenotypes; supports accessory-subunit membership, not autonomous oxidase activity.
+- evidence_id: paper-21705661
+  kind: primary_source
+  reference: https://doi.org/10.1073/pnas.1104922108
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=21705661].abstractText; PMID:21705661'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study isolates a PhnGHIJK complex. It supports the selected core
+    members, not by itself the PhnL-containing full assembly or individual catalytic
+    roles.
+- evidence_id: paper-18535244
+  kind: primary_source
+  reference: https://doi.org/10.1126/science.1154819
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=18535244].abstractText; PMID:18535244'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study identifies fission-yeast telomere bridging relationships
+    involving Tpz1, Poz1, Rap1 and Taz1; species-specific shelterin context.
+- evidence_id: paper-15509865
+  kind: primary_source
+  reference: https://doi.org/10.1242/jcs.01475
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=15509865].abstractText; PMID:15509865'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study reports Ssm4/dynein association and a nuclear-movement phenotype
+    in S. pombe. This is not a complete reconstitution of the four-subunit dynactin
+    model.
+- evidence_id: paper-15159402
+  kind: primary_source
+  reference: https://doi.org/10.1074/jbc.m401708200
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=15159402].abstractText; PMID:15159402'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study examines human cyclin A1-CDK2 interaction partners and substrates;
+    supporting context, not an independent check of all record functions.
+- evidence_id: background-12914955
+  kind: database
+  reference: https://doi.org/10.1016/s0167-4889(03)00086-7
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=12914955].abstractText; PMID:12914955'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: context_only
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Review article on LMA1/GATE-16; read as background only, not independent
+    experimental evidence or proof of a TRX2-specific assembly.
+- evidence_id: background-12396231
+  kind: database
+  reference: https://doi.org/10.1042/bj20021469
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=12396231].abstractText; PMID:12396231'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: context_only
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: CK2 review article; the general description of alpha and/or alpha-prime
+    plus beta subunits is background, not independent experimental proof of co-resident
+    catalytic paralogs.
+- evidence_id: paper-11524675
+  kind: primary_source
+  reference: https://doi.org/10.1038/nsb0901-751
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=11524675].abstractText; PMID:11524675'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary X-ray study reports a yeast SOD1-CCS1 heterodimer with one chain
+    of each. Membership is supported even though the PTM definition contains an incorrect
+    dismutation product.
+- evidence_id: paper-12119386
+  kind: primary_source
+  reference: https://doi.org/10.1073/pnas.112202799
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=12119386].abstractText; PMID:12119386'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary study reports affinity-isolated Erg25/26/27/28 assemblies. Erg26
+    was not detected in one coimmunoprecipitation assay but was present in the affinity-column
+    complex; no exclusive three-chain model is proven.
+- evidence_id: paper-11160377
+  kind: primary_source
+  reference: https://doi.org/10.1016/s0022-2275(20)32347-6
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=11160377].abstractText; PMID:11160377'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: context_only
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: ERG28 disruption/sterol-intermediate study suggests interactions with Erg26/27;
+    insufficient by itself to prove complex membership. Used as context for the later
+    direct isolation.
+- evidence_id: paper-10753862
+  kind: primary_source
+  reference: https://doi.org/10.1074/jbc.275.15.10727
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=10753862].abstractText; PMID:10753862'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary biochemical study supports sequential sulfur transfer from IscS
+    to ThiI and tRNA. It does not directly establish a particular interprotein persulfide-bridge
+    structure.
+- evidence_id: paper-11574463
+  kind: primary_source
+  reference: https://doi.org/10.1093/emboj/20.19.5320
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/paper-abstracts.json:
+    resultList.result[id=11574463].abstractText; PMID:11574463'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 298c3749433c1972499a167e051661641d2a09aab32fd047521dbdc2428daa33
+  summary: Primary CK2 crystal-structure abstract describes a human catalytic/regulatory
+    tetramer. The inspected abstract does not establish the exact mixed alpha/alpha-prime
+    variant; full-text experimental composition was not independently reanalyzed.
+- evidence_id: paper-19056339
+  kind: primary_source
+  reference: https://doi.org/10.1016/j.bbrc.2008.11.077
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json:
+    resultList.result[id=19056339].abstractText; PMID:19056339; https://pmc.ncbi.nlm.nih.gov/articles/PMC4039035/
+    Methods and Results (web-rendered text)'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 8841d4aaad9ffc0c7dc09ce05ca6d7b2a993f8a76c3ad86b62d697d3ff231761
+  summary: Primary study compares recombinant human cyclin A1/A2 complexes with CDK1/CDK2.
+    Abstract and full-text methods/results identify human constructs, purified complexes
+    and kinase assays; direct support for human A1-CDK1 and A1-CDK2 membership, not
+    every in-vivo role.
+- evidence_id: paper-9015301
+  kind: primary_source
+  reference: https://doi.org/10.1083/jcb.136.2.299
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json:
+    resultList.result[id=9015301].abstractText; PMID:9015301; https://pmc.ncbi.nlm.nih.gov/articles/PMC2134815/
+    Results: Small Subunit; Mechanism of LMA1 Action'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 8841d4aaad9ffc0c7dc09ce05ca6d7b2a993f8a76c3ad86b62d697d3ff231761
+  summary: Primary full-text Results identify Pbi2 and detect LMA1 with anti-TRX1;
+    TRX1 rescue and redox-inactive TRX1 rescue distinguish assembly function from
+    redox chemistry. This inspected experiment does not establish TRX2-specific physical
+    membership.
+- evidence_id: paper-8664289
+  kind: primary_source
+  reference: https://doi.org/10.1021/bi951989i
+  locator: 'reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/additional-paper-abstracts.json:
+    resultList.result[id=8664289].abstractText; PMID:8664289'
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  snapshot_sha256: 8841d4aaad9ffc0c7dc09ce05ca6d7b2a993f8a76c3ad86b62d697d3ff231761
+  summary: Primary cross-linking abstract supports alpha/beta and alpha-prime/beta
+    contacts. It does not by itself resolve whether both catalytic paralogs were present
+    in the same individual CK2 tetramer.
+- evidence_id: paper-8603912
+  kind: primary_source
+  reference: https://doi.org/10.1083/jcb.132.5.787
+  locator: https://pmc.ncbi.nlm.nih.gov/articles/PMC2120747/ Abstract; 1996 study;
+    PDF not inspected
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: partial
+  summary: The accessible abstract reports LMA1 purification with a thioredoxin subunit
+    and a double thioredoxin-gene deletion phenotype. It does not distinguish TRX1
+    from TRX2 for this review. No claim is made about evidence that may occur in the
+    uninspected PDF.
+- evidence_id: enzyme-1.15.1.1
+  kind: authority
+  reference: https://enzyme.expasy.org/EC/1.15.1.1
+  locator: Catalytic activity; cross-reference P00445
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: refutes
+  summary: The authoritative reaction lists molecular oxygen and hydrogen peroxide
+    as the products of superoxide dismutation, contradicting water as a product in
+    CPX-2267's definition.
+  quote: 2 superoxide + 2 H(+) = H2O2 + O2
+- evidence_id: baseline
+  kind: validation
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.baseline-validation.tsv
+  locator: 25 selected record paths, zero validation errors
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  snapshot_sha256: b184ed5450b968070bb6c75648407e388f41a1eaf7017890723cf560999fc3f7
+  summary: Closed-mode validation passed for every selected record. This checks representation,
+    not scientific accuracy; in particular it cannot catch the wrong SOD1 reaction
+    product.
+- evidence_id: decision-partition
+  kind: record_content
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl
+  locator: 36 digest-bound proposed decisions; 33 APPROVED and 3 REJECTED
+  accessed_at: '2026-10-13T04:33:12Z'
+  support: supports
+  snapshot_sha256: b736cb56a904f4198e0690ef5b3af2bb9ec153f7c689db1757e63b543d107fbe
+  summary: 'Scientific self-review recommendations only. Native finalizer dry-run
+    passed: 22 records have approved alternatives, three records have only a held/rejected
+    alternative. No finalized outputs or canonical examples were written.'
+- evidence_id: prior-mechanical-review
+  kind: prior_review
+  reference: reviews/structured/20261013T022832Z-cross-mech-complex-staging/review.yaml
+  locator: scientific_review=false; all 36 targets
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: context_only
+  summary: Earlier append-only observation established mechanical readiness only.
+    This scientific observation adds adjudication without rewriting that earlier scope
+    or claiming its checks were scientific.
+- evidence_id: review-boundary
+  kind: record_content
+  reference: justfile
+  locator: finalize-uniprot-review-batch instructions, lines 1460-1464; .claude/skills/ground-protein-example/SKILL.md
+    steps 7-8
+  accessed_at: '2026-10-13T04:30:37Z'
+  support: supports
+  summary: The finalizer instructions require independent review before --apply. This
+    author also prepared staging, so this observation is self_review. Only dry-run
+    finalization is run; installation is a separate authorized action.
+assessments:
+- assessment_id: scientific-1
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P22217 / ComplexPortal:CPX-1278. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-94185e3daa704b0be09d32b50e18f6ddbd5fab66c17a54ad755e2375b16fb65f
+  evidence_ids:
+  - membership-1
+  - cpx-1278
+  - paper-9015301
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-1
+    - fetch
+  - name: sequence
+    value: length=103; version=3; sha256=3a45faf4f8bf285b70cb9e0d78be52ad7c7398885cddfcaefffa6679b345b895
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-1
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1278
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-2
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: concern
+  summary: 'Hold / proposed REJECTED: UniProtKB:P22803 / ComplexPortal:CPX-1279. The
+    specific unresolved record or evidence issue is described in the linked source
+    assessment and finding.'
+  target_ids:
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  evidence_ids:
+  - membership-2
+  - cpx-1279
+  - paper-9015301
+  - paper-8603912
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-2
+    - fetch
+  - name: sequence
+    value: length=104; version=3; sha256=2320e758485330aca59d6e45516b2123b07fea91d93a1a716ac757e1e3e2828f
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-2
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1279
+  - name: proposed-decision
+    value: REJECTED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-3
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P38283 / ComplexPortal:CPX-1900. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-3f871134e9b98b082b1ec74b57207e74e59d05a129a7a4e0263b35458736ef12
+  evidence_ids:
+  - membership-3
+  - cpx-1900
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-3
+    - fetch
+  - name: sequence
+    value: length=698; version=1; sha256=17563caf093ae4a848db3417dd89d3132f96a53317246fc770a8aa7e765a9e0f
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-3
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1900
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-4
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P47134 / ComplexPortal:CPX-1900. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-ad208d9805068a5a028b544af6280a11e176a4ad8de4df788cb2d4036baf3590
+  evidence_ids:
+  - membership-4
+  - cpx-1900
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-4
+    - fetch
+  - name: sequence
+    value: length=954; version=1; sha256=d4ad59f6b016b809d4aa4e294d9e1754070e97fd62138b9f42030b25f5f931ea
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-4
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1900
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-5
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P16685 / ComplexPortal:CPX-1929. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-e4394b6a281df3ca9c60f451643a18d8528f3511e5f2a8f9009edc40792d56dd
+  evidence_ids:
+  - membership-5
+  - cpx-1929
+  - paper-21705661
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-5
+    - fetch
+  - name: sequence
+    value: length=150; version=2; sha256=d646f7b19527e83478a6640ad13dfd9e51b78996ea8b2a8e5451915c3188c090
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-5
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1929
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-6
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P16686 / ComplexPortal:CPX-1929. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-6633f9da6578c2993d899cfa9d4ec9b9a0c9b3765d69a25b9edbc08afce4f8b1
+  evidence_ids:
+  - membership-6
+  - cpx-1929
+  - paper-21705661
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-6
+    - fetch
+  - name: sequence
+    value: length=194; version=1; sha256=cbf698759f845039107ddb9f682d638d54a6ec68f5b51bfcae96d154b1b173eb
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-6
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1929
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-7
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P16687 / ComplexPortal:CPX-1929. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-4b938a95db6716e16222b3299b2347afdb70687f2e2fab6770fd9303b378a93a
+  evidence_ids:
+  - membership-7
+  - cpx-1929
+  - paper-21705661
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-7
+    - fetch
+  - name: sequence
+    value: length=354; version=2; sha256=8cad729eda6a99e6611baf41a9b7675e56218f572aaa6a713d6f93030020527d
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-7
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1929
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-8
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P16688 / ComplexPortal:CPX-1929. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-b15ffc0a5f121b6e1868644a1ac7d42fbade9eeb5df25b14111157f77ab6e8f4
+  evidence_ids:
+  - membership-8
+  - cpx-1929
+  - paper-21705661
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-8
+    - fetch
+  - name: sequence
+    value: length=281; version=2; sha256=72aca41a45d58896ad476bb34808efadc8325384ed30e78995467d1d08f8b8b7
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-8
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-1929
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-9
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P06493 / ComplexPortal:CPX-2003. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-f26015d3be56be66c172c7d304573d2c5427405f426225ffd52a0995f3ee984f
+  evidence_ids:
+  - membership-9
+  - cpx-2003
+  - paper-19056339
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-9
+    - fetch
+  - name: sequence
+    value: length=297; version=3; sha256=1abdf9f5fe8a5ce4b11f9b7b9cbbd0bc1697da6c82615add5f03f1f0cb3a0cbf
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-9
+  - name: complex-portal-evidence-tier
+    value: ECO:0005610 — inferred by homology
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2003
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-10
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P24941 / ComplexPortal:CPX-2005. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-09064e14c696b49d176c7b65f46b60e0735e41cb2ec03622b8d692a935dec568
+  evidence_ids:
+  - membership-10
+  - cpx-2005
+  - paper-19056339
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-10
+    - fetch
+  - name: sequence
+    value: length=298; version=2; sha256=fe22d91e18cd544a85d7c768cd864172200252df906b774d890dc103224f7c8d
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-10
+  - name: complex-portal-evidence-tier
+    value: 'ECO:0005546 — inferred by paralogy '
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2005
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-11
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P11802 / ComplexPortal:CPX-2010. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-20e20781ff9df7704edc060345f915eb267f750db18835b2cd7856a1a6743b62
+  evidence_ids:
+  - membership-11
+  - cpx-2010
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-11
+    - fetch
+  - name: sequence
+    value: length=303; version=2; sha256=94f997e8d7d44225d61d08b97659620e755c3a48269a7711847ad349a9125830
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-11
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2010
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-12
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P24385 / ComplexPortal:CPX-2010. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-91a2736a494b3cc7380358eca806c5b69ea21ef2a5ec1d38d76748d0ff41a3ec
+  evidence_ids:
+  - membership-12
+  - cpx-2010
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-12
+    - fetch
+  - name: sequence
+    value: length=295; version=1; sha256=e4d347c11b0569608066e36f7f033d7acab8e314176cf69b48c011a7eb55c432
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-12
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2010
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-13
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P24864 / ComplexPortal:CPX-2015. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-a01244c4ee1132dfcba165a3d5fc7c092c04f9743b6dd475321ad3b464410dfc
+  evidence_ids:
+  - membership-13
+  - cpx-2015
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-13
+    - fetch
+  - name: sequence
+    value: length=410; version=2; sha256=5fd4f5fb97c813fcf528e4af37a4d820800deb852c28a3774919a97db1bb4822
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-13
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2015
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-14
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P60010 / ComplexPortal:CPX-2122. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-f70e6248d424f375705e4bbee207cf8e3352aa7ff0254b90dbe0e002d957eae2
+  evidence_ids:
+  - membership-14
+  - cpx-2122
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-14
+    - fetch
+  - name: sequence
+    value: length=375; version=1; sha256=16c7e46d7d232b1fae7203ffd31df01f0ef58fb5880884599ed7cb1f8d0ede19
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-14
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2122
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-15
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P30138 / ComplexPortal:CPX-2134. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-05131944a169a1ce019f5d908c7b08999c18e8a3b58bae57501a61cd75d4c1fa
+  evidence_ids:
+  - membership-15
+  - cpx-2134
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-15
+    - fetch
+  - name: sequence
+    value: length=251; version=2; sha256=e0c4bd3ed1b23852c1dd9f7dbf4bc8771a4f23a543e86e94cea9b7c45e812877
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-15
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2134
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-16
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P77718 / ComplexPortal:CPX-2140. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-aff155ee84dcacc40f96e24d3a6242f46dae8c10929907e51190f6b549cc1604
+  evidence_ids:
+  - membership-16
+  - cpx-2140
+  - paper-10753862
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-16
+    - fetch
+  - name: sequence
+    value: length=482; version=1; sha256=cddf9d90803ef84d38996ece72fc910a73a192dec91f67a9cc1cc192de3404aa
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-16
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2140
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-17
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:Q13547 / ComplexPortal:CPX-2184. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-30ea335178af0c53111632c0c5a139717afc6671b16beb1c2f9233efe0a055b1
+  evidence_ids:
+  - membership-17
+  - cpx-2184
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-17
+    - fetch
+  - name: sequence
+    value: length=482; version=1; sha256=7289cbc54521bc202bb99244e249eff3fd381af091772ac7e1cfdbd1b155c545
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-17
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2184
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-18
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P50456 / ComplexPortal:CPX-2242. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-433d5061e41295dc9f6e92524b7a38f5144c49fa0ecfefea7bc551f90e6647c0
+  evidence_ids:
+  - membership-18
+  - cpx-2242
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-18
+    - fetch
+  - name: sequence
+    value: length=406; version=2; sha256=cf9102a4fde8b1a00cf540eb5202eab2fa4609566349784c508fd8d68c01ba17
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-18
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2242
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-19
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P25043 / ComplexPortal:CPX-2262. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-effe9c391df8d2ef4b2f27f478ce0e88ab2d1eaf00158ddaba75c78c1be55b51
+  evidence_ids:
+  - membership-19
+  - cpx-2262
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-19
+    - fetch
+  - name: sequence
+    value: length=261; version=1; sha256=24b1b0509b3557e0105235ef52316a82025b8ccdf3be91a132727fc607d28af9
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-19
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2262
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-20
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P30656 / ComplexPortal:CPX-2262. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-d8591e0dad7bfe2a4af775476b7f042ecb47d10e692eb199f80b7cda14dee924
+  evidence_ids:
+  - membership-20
+  - cpx-2262
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-20
+    - fetch
+  - name: sequence
+    value: length=287; version=3; sha256=c6691056ef70f1f9336a3a75f815f4b11deb5376c37e41f0b6e247f30cad711d
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-20
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2262
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-21
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P30657 / ComplexPortal:CPX-2262. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-c20ffda7bedd9387943788abcc25b4af76ca4afecf348e1893a98a592fd99167
+  evidence_ids:
+  - membership-21
+  - cpx-2262
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-21
+    - fetch
+  - name: sequence
+    value: length=266; version=1; sha256=292d61753fa7ecbee3f0efb94c38ff1f60af8939986e7ff8d7f80dae38690957
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-21
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2262
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-22
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P38624 / ComplexPortal:CPX-2262. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-8ded8ca90171324f8579371699c0888fab2ca5b06307a579a4787cb2fe6137c9
+  evidence_ids:
+  - membership-22
+  - cpx-2262
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-22
+    - fetch
+  - name: sequence
+    value: length=215; version=2; sha256=e616b0d188ab3c46164d5b579ca8f4d7a18216f732d00500105bd551a4758fdc
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-22
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2262
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-23
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: concern
+  summary: 'Hold / proposed REJECTED: UniProtKB:P00445 / ComplexPortal:CPX-2267. The
+    specific unresolved record or evidence issue is described in the linked source
+    assessment and finding.'
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  evidence_ids:
+  - membership-23
+  - cpx-2267
+  - paper-11524675
+  - enzyme-1.15.1.1
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-23
+    - fetch
+  - name: sequence
+    value: length=154; version=2; sha256=becbb2d61fe453b059355e8ef1ab94dbcedc046f1de30f671b961ce5adeefda2
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-23
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2267
+  - name: proposed-decision
+    value: REJECTED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-24
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: concern
+  summary: 'Hold / proposed REJECTED: UniProtKB:P68400 / ComplexPortal:CPX-2437. The
+    specific unresolved record or evidence issue is described in the linked source
+    assessment and finding.'
+  target_ids:
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  evidence_ids:
+  - membership-24
+  - cpx-2437
+  - paper-11574463
+  - paper-8664289
+  - background-12396231
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-24
+    - fetch
+  - name: sequence
+    value: length=391; version=1; sha256=f76d4444f84e1144c3d580f7f6c2ccb02d021a741c16a909ae2a9e2bc90b32f3
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-24
+  - name: complex-portal-evidence-tier
+    value: 'ECO:0005546 — inferred by paralogy '
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2437
+  - name: proposed-decision
+    value: REJECTED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-25
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P79005 / ComplexPortal:CPX-25757. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-fc0d0e107a4057c589eac2576449a5624d508967c4ab9e9636ae8b0df342ad98
+  evidence_ids:
+  - membership-25
+  - cpx-25757
+  - paper-29160296
+  - paper-18535244
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:284812 — Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-25
+    - fetch
+  - name: sequence
+    value: length=663; version=1; sha256=baf52bc271a04f2b906e4bcd91260ae6eaf5d83bc4bbed77be768c985fc16b69
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-25
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-25757
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-26
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:Q96TL7 / ComplexPortal:CPX-25757. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-5cb06665068e42a24b0620112db52cc534ba71f0a4529e2a0b4df75b692a2005
+  evidence_ids:
+  - membership-26
+  - cpx-25757
+  - paper-29160296
+  - paper-18535244
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:284812 — Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-26
+    - fetch
+  - name: sequence
+    value: length=693; version=1; sha256=234830671ca4af21607727e8e8103ad366da9885cf7b250ea9b075091132d52b
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-26
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-25757
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-27
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P40487 / ComplexPortal:CPX-2581. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-ef5e6350e708d5aa1967b0694a92840f4361fee2cbb170cd9a80913521ae40c0
+  evidence_ids:
+  - membership-27
+  - cpx-2581
+  - paper-31463593
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-27
+    - fetch
+  - name: sequence
+    value: length=425; version=1; sha256=9dd4e973dc5f7bc4877cca819ae638c019f48c8778530e12f2f077fd2053d7a7
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-27
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2581
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-28
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:Q96QE3 / ComplexPortal:CPX-26030. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-7ad0bf7d7e5a32c24926ca78631bbe40a6bc135d11ff537b3a652bbca63d0c41
+  evidence_ids:
+  - membership-28
+  - cpx-26030
+  - paper-38871854
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-28
+    - fetch
+  - name: sequence
+    value: length=1844; version=4; sha256=cc7e891bba9c449b00c58faa528fc0dba007e4afaec57f3d9b299bcd73c70357
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-28
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26030
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-29
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:O42667 / ComplexPortal:CPX-26387. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-47dc34a43ab4988be90178a087b27e7542dcb90b7239b5d74c5a41210409f4ac
+  evidence_ids:
+  - membership-29
+  - cpx-26387
+  - paper-15509865
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:284812 — Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-29
+    - fetch
+  - name: sequence
+    value: length=670; version=1; sha256=b81fec02774f538fec354b22ce11d75a7fc87b8a5cf00d446a7295d2eff52d08
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-29
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26387
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-30
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P87061 / ComplexPortal:CPX-26645. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-e4d09147f8f98a6beba23bfa61395ff164216c35a5f321b35155b1735cca380c
+  evidence_ids:
+  - membership-30
+  - cpx-26645
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:284812 — Schizosaccharomyces pombe (strain 972 / ATCC 24843)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-30
+    - fetch
+  - name: sequence
+    value: length=1147; version=1; sha256=d99bc86fdf8f541aca5e4ba644dece3a2f249c88605d7755d338927b37a566fb
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-30
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26645
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-31
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:Q14694 / ComplexPortal:CPX-26721. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-538e2ae143e6bc48521a0d0f6fcd37544ce7e5808e201baf358b987815cb41fa
+  evidence_ids:
+  - membership-31
+  - cpx-26721
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-31
+    - fetch
+  - name: sequence
+    value: length=798; version=2; sha256=2d5781fce851e0a4c29f25ac81e7bf89fa25654da8e20229e01d948167022b69
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-31
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26721
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-32
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P53045 / ComplexPortal:CPX-26731. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-03a998fc9a42699020b0d0ff535e9683875177c5cfd3a315646706eeabf6f58c
+  evidence_ids:
+  - membership-32
+  - cpx-26731
+  - paper-12119386
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-32
+    - fetch
+  - name: sequence
+    value: length=309; version=1; sha256=01a84f6d1a0350349cdc85eb7fdefe95181412fa268c81b25214483baae222e0
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-32
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26731
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-33
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P53199 / ComplexPortal:CPX-26731. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-8e30243e52727f6669dd2009ed0ffdeee74e95c6ab0be66e25c27bd53f62f4fb
+  evidence_ids:
+  - membership-33
+  - cpx-26731
+  - paper-12119386
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-33
+    - fetch
+  - name: sequence
+    value: length=349; version=1; sha256=ef528e351de2765ad4b538708e7cbc03b29208d53f1caf9b5f9474ecae77a8e1
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-33
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26731
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-34
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:Q12452 / ComplexPortal:CPX-26731. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-ae02de420cdbb23a0c5698f98ee04a635e7a5fe83d5a3faf4950027023c71962
+  evidence_ids:
+  - membership-34
+  - cpx-26731
+  - paper-12119386
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:559292 — Saccharomyces cerevisiae (strain ATCC 204508 / S288c)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-34
+    - fetch
+  - name: sequence
+    value: length=347; version=1; sha256=0838af52e279555521d012fe76804246ae0c970d41b061ed8e0c0bb4b2b197a2
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-34
+  - name: complex-portal-evidence-tier
+    value: ECO:0005547 — inferred by curator
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-26731
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-35
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P56100 / ComplexPortal:CPX-268. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-119dd460e251818276684eae023e398aa07de306a53cdc700a9a637af47aaff2
+  evidence_ids:
+  - membership-35
+  - cpx-268
+  - paper-24681096
+  - paper-23749980
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:83333 — Escherichia coli (strain K12)
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-35
+    - fetch
+  - name: sequence
+    value: length=37; version=1; sha256=357973372fc5745c503aefe5406ef2e7b18cb355d1fd1ecbff2554ed85b9f9d0
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-35
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-268
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+- assessment_id: scientific-36
+  area: grounding
+  topic: Exact protein-complex membership and assembly/activity scope
+  outcome: supported
+  summary: 'Proposed APPROVED: UniProtKB:P16234 / ComplexPortal:CPX-2881. Exact whole-protein
+    membership is supported at the stated evidence tier; the linked source assessment
+    records assembly and subunit-activity limits.'
+  target_ids:
+  - ug-61053326d08ed62510f22f01d3e4309b4273f695ec3e9bc62f2d1a44a0d43c2f
+  evidence_ids:
+  - membership-36
+  - cpx-2881
+  - decision-partition
+  dimensions:
+  - name: taxon
+    value: NCBITaxon:9606 — Homo sapiens
+    definition: Exact fetched protein taxon; not inferred from the sibling mention.
+    evidence_ids:
+    - membership-36
+    - fetch
+  - name: sequence
+    value: length=1089; version=1; sha256=96a4d83a02900a0cba9954d64106f1a532b0209e0d2b86d205a98bd847335682
+    definition: Exact release-stamped source protein sequence identity.
+    evidence_ids:
+    - fetch
+    - resolver
+  - name: source-scope
+    value: UniProtKB 2026_03; ComplexPortal; SOURCE_MEMBERSHIP; WHOLE_PROTEIN; no
+      residue coordinates
+    definition: The source assertion is complex membership, not an isolated-subunit
+      catalytic or residue-mechanism claim.
+    evidence_ids:
+    - membership-36
+  - name: complex-portal-evidence-tier
+    value: ECO:0000353 — physical interaction evidence
+    definition: Tier reported by the independently fetched current Complex Portal
+      entry; physical interaction, curator inference, paralogy and homology are not
+      interchangeable.
+    evidence_ids:
+    - cpx-2881
+  - name: proposed-decision
+    value: APPROVED
+    definition: AI self-review recommendation bound to this native resolution digest;
+      not a finalized approval, human sign-off or installed canonical example.
+    evidence_ids:
+    - decision-partition
+findings:
+- finding_id: F1
+  issue_key: cpx-2267-reaction-products
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Incorrect superoxide-dismutation products in the record definition
+  description: 'Hold this digest until the target definition is repaired: superoxide
+    dismutation produces O2 and H2O2, not water and H2O2 (EC 1.15.1.1). The error
+    is also present in the inspected upstream function text. Yeast SOD1-CCS1 heterodimer
+    membership itself is directly supported by the primary structure; rejection is
+    for the current misleading record definition, not absence of membership or equivalence
+    to mature SOD1 homodimer.'
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  field_paths:
+  - data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml#/definition
+  evidence_ids:
+  - cpx-2267
+  - paper-11524675
+  - enzyme-1.15.1.1
+  - decision-partition
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  ownership_note: Current generated target is data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml.
+    Any future correction needs a maintained, evidence-backed source erratum/curation
+    route and fresh resolution; do not silently patch an emitted definition or change
+    the evidence policy.
+  normalization_reason: Wrong reaction chemistry materially misleads a structure-to-function
+    explanation.
+- finding_id: F2
+  issue_key: cpx-1279-trx2-evidence
+  category: evidence
+  severity: major
+  status: open
+  certainty: provisional
+  title: TRX2-specific LMA1 membership remains insufficiently resolved
+  description: Hold this digest pending TRX2-specific evidence review. The exact curated
+    membership exists (ECO:0005547), but the inspected 1997 study uses TRX1 for the
+    biochemical rescue, while the 1996 abstract reports a double deletion without
+    distinguishing the two isoenzymes. These inspected sources do not independently
+    resolve TRX2-Pbi2 membership. This is a provisional evidence-gap decision, not
+    evidence that TRX2 cannot participate; the 1996 full PDF was not read.
+  target_ids:
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  field_paths:
+  - data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml#/trait_relations
+  evidence_ids:
+  - cpx-1279
+  - paper-9015301
+  - paper-8603912
+  - decision-partition
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  ownership_note: Current generated target is data/traits/function/interaction_partner/complexportal/lma1-complex-trx2-variant-cpx-1279.yaml.
+    Any future correction needs a maintained, evidence-backed source erratum/curation
+    route and fresh resolution; do not silently patch an emitted definition or change
+    the evidence policy.
+  normalization_reason: Promotion of a variant-specific exemplar before resolving
+    this uncertainty would inflate the inspected evidence; provisional severity is
+    not a claim the source assertion is false.
+- finding_id: F3
+  issue_key: cpx-2437-mixed-assembly
+  category: evidence
+  severity: major
+  status: open
+  certainty: provisional
+  title: Exact mixed CK2 catalytic-subunit assembly requires evidence review
+  description: Hold this digest for the exact mixed CSNK2A1-CSNK2A2-beta2 assembly.
+    The Portal entry is inferred by paralogy (ECO:0005546). The inspected CK2 crystal
+    abstract concerns two catalytic subunits without establishing this mixed variant,
+    and the cross-linking abstract supports alpha/beta or alpha-prime/beta contacts,
+    not co-residence of both catalytic paralogs in the same tetramer. This is a provisional
+    evidence gap, not proof the mixed complex does not exist; the cited review is
+    not independent experimental confirmation.
+  target_ids:
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  field_paths:
+  - data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml#/trait_relations
+  evidence_ids:
+  - cpx-2437
+  - paper-11574463
+  - paper-8664289
+  - background-12396231
+  - decision-partition
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  ownership_note: Current generated target is data/traits/function/interaction_partner/complexportal/casein-kinase-ii-complex-csnk2a1-cnsk2a2-variant-cpx-2437.yaml.
+    Any future correction needs a maintained, evidence-backed source erratum/curation
+    route and fresh resolution; do not silently patch an emitted definition or change
+    the evidence policy.
+  normalization_reason: Promotion of a variant-specific exemplar before resolving
+    this uncertainty would inflate the inspected evidence; provisional severity is
+    not a claim the source assertion is false.
+actions:
+- action_id: A1
+  description: Correct the inherited SOD1 reaction products through a maintained guarded
+    curation route, preserving supported SOD1-CCS1 membership; then re-resolve and
+    review a fresh digest.
+  finding_ids:
+  - F1
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  acceptance_checks:
+  - The maintained definition names O2 and H2O2, with stable reaction evidence and
+    no blanket function attribution to CCS1.
+  - Regeneration/guarded curation preserves the correction; strict validation and
+    a newly resolved digest pass.
+  - A successor structured review explicitly reassesses F1 before any authorized promotion.
+- action_id: A2
+  description: Obtain and inspect primary evidence distinguishing the exact variant
+    (including the relevant full-text methods/assembly composition); either support
+    a new explicit approval or retain the reasoned hold.
+  finding_ids:
+  - F2
+  target_ids:
+  - ug-884e08c85c5490fb0a83a5e0a20ed58ef0b38c6c0d97ef9585f126efdc6b4216
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  acceptance_checks:
+  - Evidence names the exact species and isoenzyme/assembly, not only a paralog or
+    mixed population.
+  - Preserve current rejection history; any successor cites changed evidence and current
+    native digests.
+  - Independent review precedes finalization; canonical promotion requires separate
+    authorization.
+- action_id: A3
+  description: Obtain and inspect primary evidence distinguishing the exact variant
+    (including the relevant full-text methods/assembly composition); either support
+    a new explicit approval or retain the reasoned hold.
+  finding_ids:
+  - F3
+  target_ids:
+  - ug-4cc786210dea3eb99f412463dc66cbdea4e0a4ee5cd04602853d609a109edb5c
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform; inherited description/member
+      assertions originate upstream, not in generated browser pages.
+  acceptance_checks:
+  - Evidence names the exact species and isoenzyme/assembly, not only a paralog or
+    mixed population.
+  - Preserve current rejection history; any successor cites changed evidence and current
+    native digests.
+  - Independent review precedes finalization; canonical promotion requires separate
+    authorization.
+limitations:
+- This is a scientific self-review of membership candidates, not independent sign-off,
+  a complete functional audit of the 25 records, or a review of all 2602 inventory
+  proteins.
+- 'Current Portal evidence tiers for the 36 rows: 22 physical-interaction, 11 curator-inferred,
+  two paralogy-inferred and one homology-inferred. They are not all experimentally
+  established assemblies. Human A1-CDK1/A1-CDK2 have supplementary primary support
+  despite the Portal inference flags.'
+- The TRX2 and mixed CK2 holds describe unresolved scope in the inspected sources,
+  not proof of biological absence. Most papers were checked through primary abstracts;
+  the 1996 LMA1 PDF and full CK2 experimental methods were not inspected. A failed
+  Europe PMC fullTextXML request for PMC4039035 did not install a raw file; its web-rendered
+  methods/results and a separately acquired abstract were inspected.
+- An upstream LMA1 assembly label says Heteropentamer while the inspected primary
+  report describes a heterodimer. This conflicting stoichiometry was not imported;
+  TRX1 approval is only for membership.
+- Whole-protein SOURCE_MEMBERSHIP does not establish an independently active subunit,
+  exact stoichiometry, binding-interface coordinates or residue-level causality. No
+  new residue explanation or canonical example was installed.
+- The proposed partition remains ignored staging, not a finalized decision ledger.
+  The published inventory still preserves only the two prior batches (71 approvals,
+  180 rejections). Current qualification counts remain unchanged.
+- Raw source downloads and acquisition sidecars were moved into the existing ignored
+  reports/uniprot-grounding review-batch source directory before final inspection.
+  Their bytes and URLs are hashed here; the acquisition sidecars retain their original
+  download destinations.
+- Selected primary abstracts are locally hashed; web-rendered full text and the enzyme
+  authority are located by stable URLs and access times without claiming a local content
+  hash. No source-native qualification gate was bypassed.
+- No trait/status edits, durable registry updates, commits, PRs, external issues,
+  merges or branch deletions were performed.
+related_reviews:
+- repository: culturebotai/proteintraitsmech
+  review_id: 20261013T022832Z-cross-mech-complex-staging
+  relationship: Scientific follow-up to the same 36 mechanically staged targets; preserves
+    the prior observation and does not retroactively claim it adjudicated biology.
+tags:
+- cross-mech
+- scientific-self-review
+- whole-protein-membership
+- no-promotion
+links:
+- data/cross_mech/README.md
+- research/cross-mech-protein-examples.md
+- reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl
+```

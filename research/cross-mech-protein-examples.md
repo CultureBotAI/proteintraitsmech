@@ -8,6 +8,159 @@ issue: "#652"
 
 # Cross-Mech protein examples
 
+## Scientific membership self-review — 2026-10-13
+
+The [scientific review](../reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.md)
+([authoritative YAML](../reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml))
+assesses all **36 staged candidates on 25 records**. It recommends **33 approvals
+on 22 records and three holds**, with verdict `needs_curation`. This is an AI
+self-review, not independent or human sign-off. Every candidate has an explicit
+assessment, native resolution digest, source evidence tier, and stable source
+links; focused primary literature checks supplement the source assertions.
+
+The three proposed rejections preserve different reasons:
+
+- **SOD1 / CPX-2267:** confirmed definition error: superoxide dismutation yields
+  oxygen and hydrogen peroxide, not water and hydrogen peroxide. SOD1–CCS1
+  membership itself is supported; the misleading definition needs a maintained
+  correction and fresh resolution before promotion.
+- **TRX2 / CPX-1279:** provisional hold for isoenzyme-specific evidence. The
+  inspected primary LMA1 experiments use TRX1; the older abstract's double
+  deletion does not distinguish the isoenzymes. This does not establish that
+  TRX2 cannot participate, and the older full PDF was not inspected.
+- **CSNK2A1 / CPX-2437:** provisional hold for the exact mixed alpha/alpha-prime
+  CK2 assembly. The inspected abstracts establish relevant contacts, but do not
+  resolve co-residence of both catalytic paralogs in one tetramer.
+
+All 25 official Complex Portal entries were fetched with provenance sidecars.
+Their evidence tiers cover 22 physical-interaction, 11 curator-inferred, two
+paralogy-inferred and one homology-inferred candidate rows—not 36 experimentally
+proven assemblies. A primary human recombinant-complex study supports the two
+cyclin A1/CDK candidates despite the Portal inference labels. All approvals are
+limited to **whole-protein complex membership**: no catalytic activity is assigned
+indiscriminately to regulatory subunits, and no residue coordinates are invented.
+UniProt/Portal agreement is not assumed to be independent experimental evidence.
+
+The proposed partition is
+`reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl`.
+Native finalizer **dry-run passed** (36 decisions; 22 approved record groups,
+three all-rejected groups). Its instructions require independent review before
+`--apply`, so no finalized ledger or approval TSV was installed. The inventory
+still includes only the two prior finalized batches: **71 approvals and 180
+rejections**. Do not add this proposed partition as a finalized `--review-batch`.
+No examples, trait definitions, record statuses or durable registries changed;
+canonical promotion remains a separately authorized step.
+
+All 25 records passed closed-mode validation. Receipt hashes, exact membership,
+taxa, sequence hashes, record preimages and resolution digests were rechecked.
+The earlier full `just test` run completed: **8,213 passed, 46 skipped, one xfailed**
+(the known CATH source-stage registry-pin case, #734), with two warnings. Raw
+review sources remain ignored under the batch's `.sources/` directory; the saved
+review pins their bytes. Next: independent review of the proposed decisions,
+maintained SOD1 correction, and targeted evidence follow-up for the two variants.
+
+Post-save checks passed: all five immutable review bundles, 14 documentation /
+review-contract tests, all 27 relative links in this checkpoint and the inventory
+README, and `git diff --check`. The full browser build and SLC10 export checks
+also passed using the existing project virtual environment (the system Python
+lacked PyYAML). These generated artifacts do not install the proposed examples.
+
+## Inventory refresh and review staging — 2026-10-13
+
+This run refreshes discovery and prepares review inputs; it does **not** promote
+canonical examples. PTM base is `70edd6f8458845f7d7783ac4f416df519f5e1de6`.
+Fleet manifest `a5d562962c75a2ad9efd8160b548df5944315422` now includes AIMech:
+the declared scope is **13 siblings, 656,222 records, 16,082 mentions and 2,602
+explicit UniProt accessions**. All 2,047 previous accessions remain, with 555
+additions. Each sibling commit remains pinned in `data/cross_mech/manifest.json`;
+the scan says nothing about uncommitted sibling work or unidentified gene names.
+
+The only new unclassified pattern was PathwayMech `/references/[]/title`, at
+`adenosine-nucleotides-degradation-ii.yaml` reference 31. Inspection of its pinned
+record and Reference schema established that the value `UniProtKB:P23841` is a
+citation title, not a trait assertion. A narrow reference-only rule was added
+after observing the regression fail, then replayed at exactly the refreshed
+pins. It changes one mention's classification without adding any trait claim;
+no unclassified patterns remain. Unknown fields still surface as unclassified.
+
+The missing Rhea direction lookup was restored without changing its release-141
+pin. The current live export was rejected by checksum. The shared fetcher then
+acquired the [official release-141 archive](https://ftp.expasy.org/databases/rhea/old_releases/141.tar.bz2),
+SHA-256 `c2ebc7364ef8090a32e2885525afe80aa7d7760bbcd67b89d81f34579382a737`.
+Its bounded regular member `141/tsv/rhea-directions.tsv` matches the existing
+`0b62f0cd92991b89e7b6e05707e671e80787527c30192b3d44cf7fc05a5c748f` pin.
+`just fetch-rhea-directions` preserves archive and extraction provenance under
+ignored `data/raw/rhea/`. This is direction normalization, **not** a source-native
+Rhea protein-membership acquisition receipt or a relaxation of its gates.
+
+The refreshed sibling-pair audit gives **393 qualified, 6 legacy and 270 absent
+pairs on existing traits**, plus 169 pairs whose trait is absent and 919 using
+other namespaces. No Rhea IDs remain unchecked for direction normalization.
+The 276 absent/legacy pairs include the same three unresolved localized pairs:
+A0A099LW44/IPR041208, A0A099LXT1/IPR040942 and P69776/PF04728. No coordinates were
+invented to qualify them.
+
+After a one-accession canary, 27 exact-accession requests at UniProt `2026_03`
+returned **2,484 active entries and 118 inactive entries** (115 deleted, two
+merged, one split). No replacement accession was substituted. All 1,932
+previously acquired normalized entry payloads are unchanged, including ARG82;
+its held CPX-1152 interpretation has no new evidence in this refresh.
+New discovery inputs are kept separately under
+`reports/uniprot-grounding/cross-mech/refresh-20261013/`, preserving the previous
+acquisition and review inputs. The full candidate queue contains **13,635 pairs on
+5,728 records for 1,824 proteins**. It retains localized discovery candidates;
+A7EQI8's ambiguous RHEA:17989 annotations remain explicitly blocked. None of this
+queue is an approval ledger.
+
+The regenerated, uncapped inventory reports **939 qualified / 667 legacy-only /
+996 discovery-only proteins**. This increase in covered proteins comes from
+joining newly inventoried accessions to examples already installed in PTM, not
+from new promotion. Both earlier batches' 71 approvals and 180 rejections are
+retained. The sequence store contains 2,484 sequences, 2,419 with generic tracks,
+and 306 proteins with existing localized qualified traits. It preserves the
+same five `2026_02` references without overlaying current-release features;
+2,479 sequences use `2026_03`. Generic annotations are not trait-specific causal
+evidence, and no trait record or durable grounding registry was changed.
+
+The separate protein-first queue has **839 candidates for 839 uncovered
+proteins on 589 records**: 95 ComplexPortal, 516 Rhea and 228 GO choices. The
+native selector retained both prior decision ledgers and deferred unchanged
+all-rejected records. Its ComplexPortal slice excludes the held ARG82/CPX-1152
+choice, leaving **94 alternatives on 63 records**. Batch
+`cross-mech-complex-20261013` selects **25 records and all 36 of their alternatives**;
+this is a deterministic coverage priority, not evidence ranking or random sampling.
+
+A native request plan and one fresh UniProt `2026_03` request account for all
+36 exact primary accessions. Eleven additional isoform accessions returned by
+the API were recorded but not substituted. The bound outputs contain 36 protein
+rows, 1,261 source-membership facts and zero blocked fetch targets. Receipt:
+`uniprot-registry-fetch-receipt:96bd20d3787be29fe23ddcff4fe5702fbbf6677c8e31b3e012a6d8d05a8fe8fa`.
+`just resolve-uniprot-review-batch cross-mech-complex-20261013` reports
+**36 mechanically QUALIFIED, zero REJECTED**. Every selected record was read in
+full; exact source membership, target `has_part`, taxon/sequence joins, receipt
+output hashes, record preimages and native resolution digests were checked.
+All candidates remain whole-protein membership claims without invented coordinates.
+
+The saved [mechanical observation](../reviews/structured/20261013T022832Z-cross-mech-complex-staging/review.md)
+([authoritative YAML](../reviews/structured/20261013T022832Z-cross-mech-complex-staging/review.yaml))
+is `scientific_review: false`, `pass_with_limitations`, with zero findings in that
+bounded mechanical scope. **No new approvals or rejection decisions were finalized,
+and no examples were promoted.** The batch is not added to the inventory's
+finalized review-disposition inputs. Next is explicit scientific adjudication of
+all alternatives, including complex-versus-subunit activity and assembly-state
+interpretation; promotion remains a separately authorized step.
+
+Completed refresh checks: same-pin snapshot integrity and all 13 sibling pins;
+full inventory byte-for-byte reproduction; 2,484 sequence lengths/checksums and
+82,046 generic feature items checked for bounds, release and evidence role; both
+README FASTA examples matched; 106 focused extraction/inventory/fetch tests;
+four structured-review contract tests; lint, source metadata checks, writer
+audit, all four then-saved review bundles and relative documentation links. The
+full `just test` run was still in progress at the staging handoff; its completed
+result is recorded in the scientific-review checkpoint above.
+Raw acquisitions and staging artifacts remain ignored. No Git publication was
+performed in this pass.
+
 ## Publication review — 2026-10-10
 
 [PR #1064](https://github.com/CultureBotAI/proteintraitsmech/pull/1064) publishes
