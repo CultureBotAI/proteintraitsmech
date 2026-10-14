@@ -82,3 +82,39 @@ def test_fetch_residue_frame_parser_refuses_abbreviations(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["fetch_residue_frame.py", "--app"])
     with pytest.raises(SystemExit):
         R.main()
+
+
+# ------------------------------------------------ top-up-only inheritance (#1108)
+
+
+@pytest.mark.parametrize(
+    ("previous", "expected"),
+    [
+        (None, None),  # every real frame built before the marker: stays unstamped
+        ({"complete": True, "queries": ["q"], "incomplete_queries": [],
+          "truncated_queries": []}, True),
+        ({"complete": False, "queries": ["q"], "incomplete_queries": [],
+          "truncated_queries": ["q"]}, False),
+    ],
+)
+def test_top_up_alone_inherits_the_stamp_and_keeps_unstamped_frames_unstamped(
+    tmp_path, monkeypatch, previous, expected
+):
+    out = tmp_path / "residue.json"
+    blob = R.sidecar.wrap("proteins", {"P00000": {"seq": "MAAA", "ft": []}}, "UniProt",
+                          "2026_03", previous)
+    blob["_meta"]["absent"] = ["Q99999"]
+    out.write_text(json.dumps(blob))
+    monkeypatch.setattr(R.sidecar, "uniprot_release", lambda: "2026_03")
+    monkeypatch.setattr(R, "corpus_exemplars_missing", lambda frame, absent=None: [])
+    monkeypatch.setattr(R, "_get", lambda *a, **k: pytest.fail("top-up of nothing is offline"))
+    monkeypatch.setattr(sys, "argv", [str(SCRIPT), "--top-up", "--out", str(out), "--apply"])
+    assert R.main() == 0
+    meta = json.loads(out.read_text())["_meta"]
+    if expected is None:
+        assert "completeness" not in meta
+    else:
+        assert meta["completeness"]["complete"] is expected
+        assert meta["completeness"]["queries"] == ["q"]
+        assert meta["completeness"]["truncated_queries"] == previous["truncated_queries"]
+    assert meta["absent"] == ["Q99999"]

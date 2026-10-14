@@ -31,7 +31,8 @@ Dry-run unless --apply. Stdlib-only.
 
 `_meta.completeness` (issue #1070) records the queries and whether each paginated
 to its end: a query cut short by --limit or by a failed page makes it
-`complete: false`. A top-up-only run inherits the stamp of the frame it extends.
+`complete: false`. A top-up-only run inherits the stamp of the frame it extends,
+and leaves an unstamped frame unstamped (#1108).
 The printed content digest (`sidecar.content_sha256`, issue #1071) ignores the
 build date, so it is what a byte-pinned consumer can pin across rebuilds.
 
@@ -400,19 +401,27 @@ def main() -> int:
     if truncated:
         print(f"{len(truncated)} of {len(queries)} queries stopped at --limit "
               f"{args.limit:,}; the frame is stamped incomplete.", file=sys.stderr)
-    stamp_queries = list(queries)
-    inherited_complete = True
+    stamp: dict | None = {
+        "complete": not incomplete and not truncated,
+        "basis": "crawl",
+        "target_set": "uniprot-queries" + ("+corpus-exemplars" if args.top_up else ""),
+        "queries": list(queries),
+        "incomplete_queries": incomplete,
+        "truncated_queries": truncated,
+    }
     if not queries:
-        # top-up alone extends an existing frame: it keeps that frame's query record
+        # Top-up alone extends an existing frame and crawls no query, so it can only
+        # carry that frame's query record forward. An unstamped frame stays unstamped
+        # (#1108): its query record is unknown, which is not the same as incomplete.
         previous = meta.get("completeness") if isinstance(meta, dict) else None
-        stamp_queries = list((previous or {}).get("queries") or [])
-        inherited_complete = isinstance(previous, dict) and previous.get("complete") is True
-    stamp = {"complete": inherited_complete and not incomplete and not truncated,
-             "basis": "crawl",
-             "target_set": "uniprot-queries" + ("+corpus-exemplars" if args.top_up else ""),
-             "queries": stamp_queries,
-             "incomplete_queries": incomplete,
-             "truncated_queries": truncated}
+        if isinstance(previous, dict):
+            stamp = {**stamp,
+                     "complete": previous.get("complete") is True,
+                     "queries": list(previous.get("queries") or []),
+                     "incomplete_queries": list(previous.get("incomplete_queries") or []),
+                     "truncated_queries": list(previous.get("truncated_queries") or [])}
+        else:
+            stamp = None
     outp = Path(args.out)
     outp.parent.mkdir(parents=True, exist_ok=True)
     payload = sidecar.wrap("proteins", frame, "UniProt", release, stamp)
@@ -425,7 +434,8 @@ def main() -> int:
     except ValueError:
         shown = outp
     print(f"WROTE {shown} ({outp.stat().st_size/1e6:.1f} MB); "
-          f"completeness: {'COMPLETE' if stamp['complete'] else 'INCOMPLETE'}; "
+          f"completeness: "
+          f"{'UNSTAMPED' if stamp is None else 'COMPLETE' if stamp['complete'] else 'INCOMPLETE'}; "
           f"content sha256 {sidecar.content_sha256(payload)}")
     return 0
 

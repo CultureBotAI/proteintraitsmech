@@ -324,7 +324,8 @@ available to this change.
   residue frame stamped incomplete (`completeness.complete` false, or the interim
   `complete: false`) is also refused. An unstamped residue frame is accepted,
   because a protein missing from it is reported as missing and never read as a
-  negative. When the grouped frame's path
+  negative. A `--top-up` run without queries carries the extended frame's stamp
+  forward and leaves an unstamped frame unstamped (#1108). When the grouped frame's path
   exists, it must carry the same stamp (target set, count, `targets_sha256`); when it
   does not exist, the audit skips it, which only leaves multi-location localized
   matches ungrouped (#1102). The audit also re-derives the panel targets from
