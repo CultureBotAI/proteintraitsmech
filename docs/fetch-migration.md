@@ -24,6 +24,9 @@ recipe is added, removed, or migrated.
 - `fetch-elife-metallophores` (immutable Zenodo release, article and tables; publisher
   MD5 and pinned SHA-256 verified by the source parser before ingest)
 - `fetch-cath`
+- `fetch-rhea-directions` (shared fetcher for the official release-141 archive;
+  bounded regular-member extraction and the existing direction-table SHA-256
+  in `fetch_rhea_directions.py`; direction normalization only)
 - `fetch-go`
 
 These are the first measured batch: the common CLAUDE.md examples plus the largest or
