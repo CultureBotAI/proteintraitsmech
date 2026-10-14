@@ -61,17 +61,21 @@ def atomic_write(path: Path, payload: bytes) -> None:
             temporary.unlink(missing_ok=True)
 
 
-def restore(archive: Path, out: Path) -> dict:
-    receipt_path = Path(f"{archive}.fetch.json")
-    source_path = Path(f"{out}.source.json")
-    # Run before the shared fetcher can replace a missing/stale archive. Paths
-    # supplied through symlinked directories must not disguise a collision.
-    paths = [archive, receipt_path, out, source_path]
+def require_distinct_paths(paths: list[Path]) -> None:
     for index, path in enumerate(paths):
         for other in paths[:index]:
             if (path.resolve() == other.resolve()
                     or (path.exists() and other.exists() and path.samefile(other))):
                 raise fetch_source.FetchError("archive, receipts and output paths must be distinct")
+
+
+def restore(archive: Path, out: Path) -> dict:
+    receipt_path = Path(f"{archive}.fetch.json")
+    source_path = Path(f"{out}.source.json")
+    paths = [archive, receipt_path, out, source_path]
+    # Check both before acquisition and once inputs exist: a cold-cache alias
+    # differing only by case is not detectable with samefile until creation.
+    require_distinct_paths(paths)
     if archive.exists() or receipt_path.exists():
         receipt = json.loads(receipt_path.read_text())
         if not isinstance(receipt, dict):
@@ -93,6 +97,7 @@ def restore(archive: Path, out: Path) -> dict:
         receipt = fetch_source.fetch(ARCHIVE_URL, archive, min_bytes=300_000_000,
                                      prefix=b"BZh", max_time=600)
         digest = receipt["sha256"]
+    require_distinct_paths(paths)
     payload, member = read_directions(archive)
     source = {"release": "141", "archive_url": ARCHIVE_URL,
               "archive_sha256": digest, "archive_member": member,

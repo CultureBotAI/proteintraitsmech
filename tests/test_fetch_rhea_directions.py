@@ -167,3 +167,41 @@ def test_malformed_receipt_cli_has_no_traceback(tmp_path, capsys):
         fetcher.main(["--archive", str(source), "--out", str(tmp_path / "out.tsv")])
     assert error.value.code == 1
     assert "receipt must be a JSON object" in capsys.readouterr().err
+
+
+def test_cold_cache_case_alias_refused_after_acquisition(tmp_path, monkeypatch):
+    seed = archive(tmp_path)
+    if not seed.with_name(seed.name.upper()).exists():
+        pytest.skip("requires a case-insensitive filesystem")
+    original = seed.read_bytes()
+    source = tmp_path / "cold.tar.bz2"
+    out = tmp_path / "COLD.tar.bz2"
+
+    def acquire(url, destination, **kwargs):
+        destination.write_bytes(original)
+        return {"sha256": "a" * 64}
+
+    monkeypatch.setattr(fetcher.fetch_source, "fetch", acquire)
+    reader = fetcher.read_directions
+    monkeypatch.setattr(fetcher, "read_directions", lambda path: reader(path, hashlib.sha256(PAYLOAD).hexdigest()))
+    with pytest.raises(fetcher.fetch_source.FetchError, match="distinct"):
+        fetcher.restore(source, out)
+    assert source.read_bytes() == original
+
+
+def test_paths_rechecked_after_acquisition_on_all_filesystems(tmp_path, monkeypatch):
+    source = tmp_path / "cold.tar.bz2"
+    out = tmp_path / "out.tsv"
+
+    def acquire(url, destination, **kwargs):
+        destination.write_bytes(b"acquired archive")
+        # Emulate an alias whose inode identity becomes available only after
+        # acquisition; this covers the second guard on case-sensitive CI too.
+        out.hardlink_to(destination)
+        return {"sha256": "a" * 64}
+
+    monkeypatch.setattr(fetcher.fetch_source, "fetch", acquire)
+    monkeypatch.setattr(fetcher, "read_directions", lambda *a: pytest.fail("alias must be refused before member processing"))
+    with pytest.raises(fetcher.fetch_source.FetchError, match="distinct"):
+        fetcher.restore(source, out)
+    assert source.read_bytes() == out.read_bytes() == b"acquired archive"

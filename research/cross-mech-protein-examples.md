@@ -27,6 +27,14 @@ acquisition or writes and validates receipt shape, checksum syntax and size.
 Its release-141 table pin and lookup-only evidence role are unchanged. The
 focused cross-Mech, fetcher and documentation suite passed **139 tests**.
 
+A final cold-cache regression then reproduced a case-insensitive-filesystem
+alias that becomes identifiable only after acquisition. The queued PR was
+held before merge; the helper now checks path identity again after acquisition,
+before reading members or writing outputs. The actual case-folding regression
+and a portable post-acquisition inode-alias regression both pass as part of
+the **29-test** helper suite. This extends the same #1113 fix; it does not
+change the archive/table pins, inventory inputs or scientific decisions.
+
 The scientific findings remain open as separate, bounded follow-ups:
 [SOD1 chemistry #1114](https://github.com/CultureBotAI/proteintraitsmech/issues/1114),
 [TRX2-specific LMA1 evidence #1115](https://github.com/CultureBotAI/proteintraitsmech/issues/1115),
