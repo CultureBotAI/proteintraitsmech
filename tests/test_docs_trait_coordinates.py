@@ -205,6 +205,12 @@ assert.match(html2, /&lt;script&gt;alert\(&quot;xss&quot;\)&lt;\/script&gt;/);
 assert.doesNotMatch(html2, /<script>/);
 
 assert.equal(vm.runInContext('renderTraitCoordinates({feats: [[1, 19, "CHAIN", "SEQUENCE"]]})', context), '');
+
+// Fixture 3: Minimal occurrence without method/frame has no dangling interpuncts or empty spans
+const html3 = vm.runInContext('renderTraitCoordinates({occ: [{ranges: [[10, 20]]}]})', context);
+assert.match(html3, /<strong>10–20<\/strong>/);
+assert.doesNotMatch(html3, /·/);
+assert.doesNotMatch(html3, /ex-location-source/);
 """
     result = subprocess.run(
         ["node", "-e", program, str(ROOT / "docs/browse.js"), json.dumps(projected), json.dumps(fixture2)],

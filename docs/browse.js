@@ -1003,11 +1003,15 @@ function renderTraitCoordinates(e) {
     const method = methods[occurrence.mapping_method] || occurrence.mapping_method || "";
     const frame = {UNIPROT_ISOFORM: "UniProt isoform", UNIPROT_CANONICAL: "UniProt canonical"}
       [occurrence.coordinate_frame] || occurrence.coordinate_frame || "";
-    return `<li><strong>${escapeHTML(coordinates.join("; "))}</strong>
-      <span class="ex-location-source">${escapeHTML(method)} · ${escapeHTML(frame)}
-      ${occurrence.evidence_source ? ` · ${escapeHTML(occurrence.evidence_source)}` : ""}
-      ${source ? ` · ${source}` : ""}</span>
-      ${occurrence.source_release ? `<span class="ex-location-source">Source release: ${escapeHTML(occurrence.source_release)}</span>` : ""}</li>`;
+    const parts = [
+      method ? escapeHTML(method) : "",
+      frame ? escapeHTML(frame) : "",
+      occurrence.evidence_source ? escapeHTML(occurrence.evidence_source) : "",
+      source,
+    ].filter(Boolean);
+    const metaSpan = parts.length ? `\n      <span class="ex-location-source">${parts.join(" · ")}</span>` : "";
+    const releaseSpan = occurrence.source_release ? `\n      <span class="ex-location-source">Source release: ${escapeHTML(occurrence.source_release)}</span>` : "";
+    return `<li><strong>${escapeHTML(coordinates.join("; "))}</strong>${metaSpan}${releaseSpan}</li>`;
   }).join("");
   const reference = [e.sv ? `sequence version ${e.sv}` : "", e.rel ? `UniProt release ${e.rel}` : ""]
     .filter(Boolean).join(" · ");
