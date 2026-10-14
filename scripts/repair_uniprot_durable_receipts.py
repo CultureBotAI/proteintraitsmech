@@ -33,6 +33,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import ground_uniprot_examples as ground  # noqa: E402
+import grounding_registry_layout as layout  # noqa: E402
 import uniprot_record_content_gate as content_gate  # noqa: E402
 from record_io import replace_block, write_validated_record  # noqa: E402
 from uniprot_record_content_gate import _collapse, _load_interpro  # noqa: E402
@@ -485,6 +486,19 @@ def _install_transaction(
 
 
 def run(args: argparse.Namespace) -> int:
+    sharded = [
+        path
+        for path in (args.durable_evidence_registry, args.durable_qualified_record_bindings)
+        if layout.is_sharded(path)
+    ]
+    if sharded:
+        # This bridge rewrites whole flat files and predates the sharded layout; the
+        # state it repairs cannot exist in one.
+        raise RepairError(
+            "retired by #801: durable evidence/bindings are sharded ("
+            + ", ".join(str(path) for path in sharded)
+            + ")"
+        )
     traits_root = args.traits.resolve()
     protein_digest = ground._artifact_digest(args.durable_protein_registry)
     evidence_digest = ground._artifact_digest(args.durable_evidence_registry)
@@ -673,7 +687,7 @@ def main() -> int:
     args = build_parser().parse_args()
     try:
         return run(args)
-    except RepairError as exc:
+    except (RepairError, ground.GroundingError, layout.RegistryLayoutError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
 

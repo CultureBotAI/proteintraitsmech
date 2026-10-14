@@ -90,6 +90,7 @@ def _manifest(
     batch: str = "ready-local",
     count: int | None = None,
     queue_sha256: str | None = None,
+    schema_version: int = registry.SELECTOR_MANIFEST_SCHEMA_VERSION,
 ) -> None:
     rows = queue.read_text(encoding="utf-8").splitlines()
     parsed_rows = [json.loads(row) for row in rows]
@@ -97,7 +98,7 @@ def _manifest(
     path.write_text(
         json.dumps(
             {
-                "schema_version": 6,
+                "schema_version": schema_version,
                 "batch_id": batch,
                 "source_batch": "ready-local",
                 "candidate_jsonl_sha256": queue_sha256
@@ -106,7 +107,10 @@ def _manifest(
                 "shard_selected_trait_records": record_count,
                 "invariants": {key: True for key in sorted(registry.SELECTOR_V6_INVARIANTS)},
                 "downstream_requirements": {
-                    key: True for key in sorted(registry.SELECTOR_DOWNSTREAM_REQUIREMENTS)
+                    key: True
+                    for key in sorted(
+                        registry._selector_downstream_requirements(schema_version)
+                    )
                 },
             },
             indent=2,
@@ -215,7 +219,11 @@ def test_request_uses_exact_accessions_required_fields_and_isoforms():
     assert query["query"] == ["(accession:P12345 OR accession:P21802-2)"]
     assert query["includeIsoform"] == ["true"]
     assert tuple(query["fields"][0].split(",")) == registry.RETURN_FIELDS
-    assert set(registry.XREF_FIELDS).issubset(registry.RETURN_FIELDS)
+    assert set(registry.FACT_FIELDS).issubset(registry.RETURN_FIELDS)
+    # GO and ComplexPortal cross-references and catalytic-activity Rhea reactions (#652).
+    assert {"go_id", "xref_complexportal", "cc_catalytic_activity"} <= set(
+        registry.RETURN_FIELDS
+    )
     assert query["format"] == ["json"]
 
 
@@ -273,6 +281,7 @@ def test_offline_build_is_exact_deduplicated_isoform_aware_and_deterministic(tmp
         "sequence_length": len(canonical_sequence),
         "sequence_sha256": hashlib.sha256(canonical_sequence.encode()).hexdigest(),
         "reviewed": False,
+        "fragment": False,
         "uniprot_release": "2026_02",
         "sequence_version": 3,
     }
@@ -364,7 +373,7 @@ def test_dry_run_emits_canonical_offline_plan_without_network_or_output_writes(t
     )
     assert plan["target_count"] == 1
     assert plan["requests"][0]["accessions"] == ["P12345"]
-    assert plan["request_policy"]["return_fields"] == list(registry.RETURN_FIELDS)
+    assert plan["request_policy"]["return_fields"] == list(registry.REGISTRY_RETURN_FIELDS)
     assert plan["output_paths"]["fetch_receipt"] == str(receipt.resolve())
     assert not out.exists()
     assert not memberships.exists()
@@ -608,7 +617,7 @@ def test_offline_fixture_must_match_generated_batch_and_is_not_partially_install
     assert not blocked.exists()
 
 
-@pytest.mark.parametrize("schema_version", [6, 7])
+@pytest.mark.parametrize("schema_version", [6, 7, 8])
 @pytest.mark.parametrize("defect", ["queue_sha", "row_count", "batch", "duplicate_key"])
 def test_selector_manifest_exactly_binds_queue_count_and_batch(
     tmp_path, capsys, defect, schema_version
@@ -668,10 +677,11 @@ def test_selector_manifest_exactly_binds_queue_count_and_batch(
         "missing_invariant",
         "false_invariant",
         "missing_exhaustive",
-        "false_one_approved",
+        "false_multi_approved",
+        "wrong_downstream_schema",
     ],
 )
-@pytest.mark.parametrize("schema_version", [6, 7])
+@pytest.mark.parametrize("schema_version", [6, 7, 8])
 def test_selector_shape_and_review_contract_are_fail_closed(
     tmp_path, capsys, defect, schema_version
 ):
@@ -686,6 +696,9 @@ def test_selector_shape_and_review_contract_are_fail_closed(
     _manifest(manifest, queue)
     value = json.loads(manifest.read_text())
     value["schema_version"] = schema_version
+    value["downstream_requirements"] = {
+        key: True for key in registry._selector_downstream_requirements(schema_version)
+    }
     if defect == "schema":
         value["schema_version"] = 5
     elif defect == "source_batch":
@@ -700,8 +713,18 @@ def test_selector_shape_and_review_contract_are_fail_closed(
         value["downstream_requirements"].pop(
             "all_alternatives_must_receive_an_explicit_review_decision"
         )
-    elif defect == "false_one_approved":
-        value["downstream_requirements"]["at_most_one_approved_candidate_per_record"] = False
+    elif defect == "false_multi_approved":
+        key = (
+            "approved_adjudications_may_include_multiple_candidates"
+            if schema_version >= 8
+            else "at_most_one_approved_candidate_per_record"
+        )
+        value["downstream_requirements"][key] = False
+    elif defect == "wrong_downstream_schema":
+        wrong_schema_version = 7 if schema_version >= 8 else 8
+        value["downstream_requirements"] = {
+            key: True for key in registry._selector_downstream_requirements(wrong_schema_version)
+        }
     manifest.write_text(json.dumps(value, sort_keys=True) + "\n", encoding="utf-8")
     paths = [tmp_path / name for name in ("registry", "blocked", "membership", "receipt")]
     assert (
@@ -946,7 +969,9 @@ def test_request_plan_contains_exact_deterministic_chunks_and_urls(tmp_path, cap
         ["Q9H9K5"],
     ]
     for row in plan["requests"]:
-        assert row["request_url"] == registry.request_url(row["accessions"])
+        assert row["request_url"] == registry.request_url(
+            row["accessions"], return_fields=registry.REGISTRY_RETURN_FIELDS
+        )
         assert row["request_url_sha256"] == hashlib.sha256(row["request_url"].encode()).hexdigest()
     assert not any(path.exists() for path in paths)
 
@@ -1020,9 +1045,9 @@ def test_queue_and_manifest_recheck_runs_before_first_response(tmp_path, monkeyp
     )
 
 
-def test_output_parent_swap_after_plan_fails_before_response_and_writes(
-    tmp_path, monkeypatch, capsys
-):
+def test_output_parent_replaced_after_plan_is_relocation_not_drift(tmp_path):
+    """The plan binds no inode (#1082): a same-path replacement directory still applies."""
+
     queue = tmp_path / "candidates.jsonl"
     manifest = tmp_path / "manifest.json"
     responses = tmp_path / "responses.json"
@@ -1047,17 +1072,15 @@ def test_output_parent_swap_after_plan_fails_before_response_and_writes(
     prepared = registry._derive_request_plan(registry._parser().parse_args(dry_args))
     plan_path = tmp_path / "plan.json"
     plan_path.write_text(registry.render_request_plan(prepared.plan), encoding="utf-8")
+    assert "output_parent_bindings" not in prepared.plan
     detached = tmp_path / "detached-outputs"
     output_dir.rename(detached)
     output_dir.mkdir()
-    monkeypatch.setattr(
-        registry,
-        "OfflineClient",
-        lambda *_args, **_kwargs: pytest.fail("output-parent drift opened response fixture"),
+    assert registry.main([*dry_args, "--request-plan", str(plan_path), "--apply"]) == 0
+    assert list(detached.iterdir()) == []
+    registry.verify_fetch_receipt(
+        receipt_path=output_dir / "receipt.json", request_plan_path=plan_path
     )
-    assert registry.main([*dry_args, "--request-plan", str(plan_path), "--apply"]) == 2
-    assert "does not match rederived exact plan" in capsys.readouterr().err
-    assert list(output_dir.iterdir()) == []
 
 
 def test_final_queue_recheck_prevents_install_after_responses(tmp_path, monkeypatch, capsys):
@@ -1741,7 +1764,7 @@ def test_registry_builder_has_no_trait_record_write_route():
     assert "write_record(" not in source
 
 
-@pytest.mark.parametrize("schema_version", [5, 8, "7", 7.0, True, None])
+@pytest.mark.parametrize("schema_version", [5, 9, "8", 8.0, True, None])
 def test_selector_manifest_rejects_unsupported_or_noninteger_versions(tmp_path, schema_version):
     queue = tmp_path / "candidates.jsonl"
     _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
@@ -1798,7 +1821,7 @@ def test_current_selector_output_completes_offline_registry_fetch(
     assert selector.main(args) == 0
     capsys.readouterr()
     selection = json.loads(manifest.read_text())
-    assert selection["schema_version"] == 7
+    assert selection["schema_version"] == 8
     assert selection["preferred_taxon_ids"] == (["NCBITaxon:83333"] if prefer_taxon else [])
     rows = _registry_rows(selected)
     assert len(rows) == 3
@@ -1830,3 +1853,303 @@ def test_current_selector_output_completes_offline_registry_fetch(
     }
     assert _blocked_rows(blocked) == []
     assert receipt.is_file()
+
+
+def test_a_malformed_fact_blocks_only_its_accession(tmp_path, monkeypatch):
+    """#978: one bad UniProt fact goes to the blocked TSV instead of aborting the batch."""
+
+    queue = tmp_path / "candidates.jsonl"
+    responses = tmp_path / "responses.json"
+    out = tmp_path / "registry.jsonl"
+    blocked = tmp_path / "blocked.tsv"
+    _jsonl(
+        queue,
+        [_candidate("UniProtKB:P12345", "ACDE", number=1), _candidate("UniProtKB:P67890", "MNPQ", number=2)],
+    )
+    good = _entry("P12345", "ACDE")
+    bad = _entry("P67890", "MNPQ")
+    bad["uniProtKBCrossReferences"] = [{"database": "GO", "id": "GO:123"}]
+    _responses(
+        responses,
+        [{"requested": ["P12345", "P67890"], "results": [good, bad]}],
+        release="2026_02",
+    )
+    monkeypatch.setattr(
+        registry.urllib.request,
+        "urlopen",
+        lambda *args, **kwargs: pytest.fail("offline mode attempted network access"),
+    )
+    prepared = _prepare_apply(queue, responses, out, blocked)
+    assert registry.main(prepared["args"]) == 0
+    assert [row["protein_id"] for row in _registry_rows(out)] == ["UniProtKB:P12345"]
+    (row,) = _blocked_rows(blocked)
+    assert row["protein_id"] == "UniProtKB:P67890"
+    assert row["reason"] == "FACT_SNAPSHOT_FAILED"
+    assert "GO cross-reference has a malformed ID" in row["detail"]
+    registry.verify_fetch_receipt(receipt_path=prepared["receipt"], request_plan_path=prepared["plan"])
+
+
+@pytest.mark.parametrize(
+    ("description", "expected"),
+    [
+        ({"recommendedName": {"fullName": {"value": "P"}}}, (False, None)),
+        ({"flag": "Fragment"}, (True, None)),
+        ({"flag": "Fragments"}, (True, None)),
+        ({"flag": "Fragment,Precursor"}, (True, None)),
+        ({"flag": "Precursor"}, (False, None)),
+        ({"flag": "Fragment,Bogus"}, (None, "unrecognized proteinDescription.flag")),
+        ({"flag": ""}, (None, "unrecognized proteinDescription.flag")),
+        ({"flag": ["Fragment"]}, (None, "not a string")),
+        (None, (None, "fragment status unknown")),
+    ],
+)
+def test_entry_fragment_status_reads_uniprot_flag_and_fails_closed(description, expected):
+    entry = {} if description is None else {"proteinDescription": description}
+    fragment, failure = registry.entry_fragment_status(entry)
+    assert fragment is expected[0]
+    if expected[1] is None:
+        assert failure is None
+    else:
+        assert expected[1] in failure
+
+
+def test_registry_rows_record_fragment_status_and_block_unknown_flags(tmp_path):
+    """#1081: fragment status is captured from the same release-pinned response."""
+
+    queue = tmp_path / "candidates.jsonl"
+    responses = tmp_path / "responses.json"
+    out = tmp_path / "registry.jsonl"
+    blocked = tmp_path / "blocked.tsv"
+    _jsonl(
+        queue,
+        [
+            _candidate("UniProtKB:P12345", "ACDE", number=1),
+            _candidate("UniProtKB:P21802", "MNPQ", number=2),
+            _candidate("UniProtKB:Q9H9K5", "AAAA", number=3),
+        ],
+    )
+    fragment = _entry("P21802", "MNPQ")
+    fragment["proteinDescription"]["flag"] = "Fragment,Precursor"
+    unknown = _entry("Q9H9K5", "AAAA")
+    unknown["proteinDescription"]["flag"] = "Partial"
+    _responses(
+        responses,
+        [
+            {
+                "requested": ["P12345", "P21802", "Q9H9K5"],
+                "results": [_entry("P12345", "ACDE"), fragment, unknown],
+            }
+        ],
+        "2026_02",
+    )
+    prepared = _prepare_apply(queue, responses, out, blocked)
+    assert "fragment" in prepared["plan_value"]["request_policy"]["return_fields"]
+    assert registry.main(prepared["args"]) == 0
+    assert {row["protein_id"]: row["fragment"] for row in _registry_rows(out)} == {
+        "UniProtKB:P12345": False,
+        "UniProtKB:P21802": True,
+    }
+    (blocked_row,) = _blocked_rows(blocked)
+    assert blocked_row["protein_id"] == "UniProtKB:Q9H9K5"
+    assert blocked_row["reason"] == "REFERENCE_VALIDATION_FAILED"
+    assert "unrecognized proteinDescription.flag" in blocked_row["detail"]
+    registry.verify_fetch_receipt(
+        receipt_path=prepared["receipt"], request_plan_path=prepared["plan"]
+    )
+
+
+def test_v2_verifier_requires_fragment_status_on_every_reference(tmp_path):
+    queue = tmp_path / "candidates.jsonl"
+    responses = tmp_path / "responses.json"
+    out = tmp_path / "registry.jsonl"
+    blocked = tmp_path / "blocked.tsv"
+    _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "ACDE")]}],
+        "2026_02",
+    )
+    prepared = _prepare_apply(queue, responses, out, blocked)
+    assert registry.main(prepared["args"]) == 0
+    row = _registry_rows(out)[0]
+    del row["fragment"]
+    _jsonl(out, [row])
+    _rebind_receipt_output(
+        prepared["receipt"], role="protein_registry", output_path=out, row_count=1
+    )
+    with pytest.raises(registry.RegistryBuildError, match="lacks its UniProt fragment status"):
+        registry.verify_fetch_receipt(
+            receipt_path=prepared["receipt"], request_plan_path=prepared["plan"]
+        )
+
+
+_BATCH = pathlib.PurePosixPath("reports/uniprot-grounding/review-batches")
+
+
+def _use_checkout(monkeypatch, root: pathlib.Path) -> None:
+    monkeypatch.setattr(registry, "REPO_ROOT", root)
+    monkeypatch.setattr(registry, "DEFAULT_OUT_DIR", root / "reports" / "uniprot-grounding")
+
+
+def _checkout_batch(root: pathlib.Path, monkeypatch) -> dict[str, Any]:
+    """Fetch one offline batch inside a fake checkout, exactly as the just recipes lay it out."""
+
+    _use_checkout(monkeypatch, root)
+    batch = root / _BATCH
+    batch.mkdir(parents=True)
+    queue = batch / "B.candidates.jsonl"
+    responses = batch / "B.responses.json"
+    _jsonl(queue, [_candidate("UniProtKB:P12345", "ACDE")])
+    _responses(
+        responses,
+        [{"requested": ["P12345"], "results": [_entry("P12345", "ACDE")]}],
+        "2026_02",
+    )
+    prepared = _prepare_apply(queue, responses, batch / "B.registry.jsonl", batch / "B.blocked.tsv")
+    assert registry.main(prepared["args"]) == 0
+    return prepared
+
+
+def _relocated(path: pathlib.Path, old: pathlib.Path, new: pathlib.Path) -> pathlib.Path:
+    return new / path.relative_to(old)
+
+
+def test_v2_plan_and_receipt_bind_repository_relative_paths_and_no_inodes(tmp_path, monkeypatch):
+    root = tmp_path / "checkout"
+    prepared = _checkout_batch(root, monkeypatch)
+    plan_text = prepared["plan"].read_text(encoding="utf-8")
+    receipt_text = prepared["receipt"].read_text(encoding="utf-8")
+    for text in (plan_text, receipt_text):
+        assert str(root) not in text
+        assert "inode" not in text and "parent_device" not in text
+    plan = json.loads(plan_text)
+    assert plan["schema_version"] == registry.PLAN_SCHEMA_VERSION == 2
+    assert plan["output_paths"]["fetch_receipt"] == str(_BATCH / "fetch-receipt.json")
+    assert plan["candidate_artifact"]["path"] == str(_BATCH / "B.candidates.jsonl")
+    receipt = json.loads(receipt_text)
+    assert receipt["schema_version"] == registry.RECEIPT_SCHEMA_VERSION == 2
+    assert receipt["request_plan_artifact"]["path"] == str(_BATCH / "fetch-plan.json")
+
+
+def test_relocated_v2_batch_verifies_from_its_new_checkout_and_content_still_binds(
+    tmp_path, monkeypatch
+):
+    """#1082: moving a finished batch to another worktree keeps it verifiable."""
+
+    old, new = tmp_path / "worktree-a", tmp_path / "worktree-b"
+    prepared = _checkout_batch(old, monkeypatch)
+    old.rename(new)  # the producing worktree no longer exists
+    _use_checkout(monkeypatch, new)
+    receipt = _relocated(prepared["receipt"], old, new)
+    plan = _relocated(prepared["plan"], old, new)
+    verified = registry.verify_fetch_receipt(receipt_path=receipt, request_plan_path=plan)
+    assert verified.artifact_paths["fetch_receipt"] == receipt
+    assert verified.artifact_paths["candidate_queue"] == new / _BATCH / "B.candidates.jsonl"
+    assert verified.artifact_paths["protein_registry"] == new / _BATCH / "B.registry.jsonl"
+
+    registry_path = new / _BATCH / "B.registry.jsonl"
+    registry_path.write_bytes(registry_path.read_bytes().replace(b"Fixture", b"Fixturf"))
+    with pytest.raises(registry.RegistryBuildError, match="bytes do not match receipt"):
+        registry.verify_fetch_receipt(receipt_path=receipt, request_plan_path=plan)
+
+
+def test_relocated_v2_batch_with_changed_candidate_ledger_fails_closed(tmp_path, monkeypatch):
+    old, new = tmp_path / "worktree-a", tmp_path / "worktree-b"
+    prepared = _checkout_batch(old, monkeypatch)
+    old.rename(new)
+    _use_checkout(monkeypatch, new)
+    queue = new / _BATCH / "B.candidates.jsonl"
+    _jsonl(
+        queue,
+        [
+            _candidate("UniProtKB:P12345", "ACDE"),
+            _candidate("UniProtKB:P21802", "MNPQ", number=2),
+        ],
+    )
+    with pytest.raises(registry.RegistryBuildError, match="rederive|does not match"):
+        registry.verify_fetch_receipt(
+            receipt_path=_relocated(prepared["receipt"], old, new),
+            request_plan_path=_relocated(prepared["plan"], old, new),
+        )
+
+
+def _downgrade_to_v1(prepared: dict[str, Any], root: pathlib.Path) -> None:
+    """Rewrite a v2 generation as the v1 shape: absolute paths and parent inodes."""
+
+    plan_path, receipt_path = prepared["plan"], prepared["receipt"]
+    v2 = json.loads(plan_path.read_text(encoding="utf-8"))
+    namespace = registry._request_plan_args(v2)
+    plan = registry._derive_request_plan(namespace, schema_version=1).plan
+    plan.pop("request_plan_id")
+    for key in ("candidate_artifact", "selector_manifest_artifact", "offline_fixture_artifact"):
+        plan[key]["path"] = str(root / plan[key]["path"])
+    plan["output_paths"] = {role: str(root / path) for role, path in plan["output_paths"].items()}
+    plan["output_parent_bindings"] = {
+        role: {"parent_device": 1, "parent_inode": 2, "parent_path": str(root / _BATCH)}
+        for role in plan["output_paths"]
+    }
+    plan["request_plan_id"] = registry.PLAN_ID_PREFIX + registry._value_sha256(plan)
+    plan_raw = registry.render_request_plan(plan).encode("utf-8")
+    plan_path.write_bytes(plan_raw)
+
+    def mutate(value):
+        value["schema_version"] = 1
+        value["request_plan_id"] = plan["request_plan_id"]
+        value["request_plan_artifact"] = {
+            "path": str(plan_path),
+            "sha256": hashlib.sha256(plan_raw).hexdigest(),
+            "size_bytes": len(plan_raw),
+        }
+        for response, request in zip(value["response_rows"], plan["requests"], strict=True):
+            response["request_id"] = request["request_id"]
+            response["request_url"] = request["request_url"]
+        value["response_rows_sha256"] = registry._value_sha256(value["response_rows"])
+        value["offline_fixture_artifact"] = plan["offline_fixture_artifact"]
+        for role, output in value["outputs"].items():
+            output["path"] = plan["output_paths"][role]
+
+    _rewrite_receipt(receipt_path, mutate)
+
+
+def test_legacy_v1_batch_verifies_in_place_and_after_relocation(tmp_path, monkeypatch, capsys):
+    old, new = tmp_path / "worktree-a", tmp_path / "worktree-b"
+    prepared = _checkout_batch(old, monkeypatch)
+    _downgrade_to_v1(prepared, old)
+    plan = json.loads(prepared["plan"].read_text(encoding="utf-8"))
+    assert plan["schema_version"] == 1 and "output_parent_bindings" in plan
+    assert json.loads(prepared["receipt"].read_text(encoding="utf-8"))["schema_version"] == 1
+    assert "fragment" not in plan["request_policy"]["return_fields"]
+    registry.verify_fetch_receipt(
+        receipt_path=prepared["receipt"], request_plan_path=prepared["plan"]
+    )
+    # A v1 plan stays verifiable but can no longer be applied.
+    assert registry.main(prepared["args"]) == 2
+    assert "can be verified but not applied" in capsys.readouterr().err
+
+    old.rename(new)
+    _use_checkout(monkeypatch, new)
+    receipt = _relocated(prepared["receipt"], old, new)
+    plan_path = _relocated(prepared["plan"], old, new)
+    verified = registry.verify_fetch_receipt(receipt_path=receipt, request_plan_path=plan_path)
+    assert verified.artifact_paths["protein_registry"] == new / _BATCH / "B.registry.jsonl"
+    assert verified.request_plan["output_paths"]["fetch_receipt"].startswith(str(old))
+
+    selector = new / _BATCH / "selector-manifest.json"
+    selector.write_text(selector.read_text(encoding="utf-8") + " ", encoding="utf-8")
+    with pytest.raises(registry.RegistryBuildError, match="rederive"):
+        registry.verify_fetch_receipt(receipt_path=receipt, request_plan_path=plan_path)
+
+
+def test_legacy_v1_batch_must_keep_its_repository_relative_location(tmp_path, monkeypatch):
+    old, new = tmp_path / "worktree-a", tmp_path / "worktree-b"
+    prepared = _checkout_batch(old, monkeypatch)
+    _downgrade_to_v1(prepared, old)
+    elsewhere = new / "reports" / "uniprot-grounding" / "moved"
+    elsewhere.parent.mkdir(parents=True)
+    (old / _BATCH).rename(elsewhere)
+    _use_checkout(monkeypatch, new)
+    with pytest.raises(registry.RegistryBuildError, match="original repository-relative path"):
+        registry.verify_fetch_receipt(
+            receipt_path=elsewhere / "fetch-receipt.json",
+            request_plan_path=elsewhere / "fetch-plan.json",
+        )

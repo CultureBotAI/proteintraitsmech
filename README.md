@@ -50,6 +50,7 @@ just validate-all             # closed LinkML + UniProt grounding semantics
 ProteinTraitsMech/
 ├── data/
 │   ├── raw/                                     # gitignored, regenerable upstream downloads
+│   ├── cross_mech/                              # pinned snapshot of sibling-Mech protein mentions
 │   └── traits/
 │       ├── sequence/<category>/<slug>.yaml
 │       ├── structure/<category>/<slug>.yaml
@@ -203,6 +204,45 @@ supports them, and can also be added by curators:
   Generic UniProt feature tracks or discovery-query hits remain useful for display but
   do not prove that the record's exact trait occurs on that protein.
 
+  `just build-docs` loads qualified examples' sequences from that registry into the
+  lazy detail payload and displays their release, sequence version (when present), and
+  checksum. Missing or mismatched exact references stop the build before publishing
+  record shards. Legacy examples are unchanged. Existing generic feature tracks are
+  retained only with their matching inline sequence frame; no annotations or trait
+  positions are inferred. A sequence without a stored feature track is labelled as
+  such, not as evidence that the protein has no annotated features.
+
+  Proteins the sibling Mechs tie to a trait are tracked in `data/cross_mech/`
+  (`just scan-cross-mech-proteins`, `just audit-cross-mech-proteins`); they are
+  candidates for the exact record the audit resolves, never evidence. See
+  [research/cross-mech-protein-examples.md](research/cross-mech-protein-examples.md).
+  The [protein-first coverage table](data/cross_mech/coverage.md) also includes
+  targets and references, links every detected accession to its sibling records
+  and existing PTM examples, and distinguishes qualified, legacy and discovery
+  claims. [Normalized annotated sequences and an Lpp example](data/cross_mech/README.md)
+  retain exact accession/release frames; the
+  [cross-Mech protein skill](.claude/skills/proteintraitsmech-cross-mech-proteins/SKILL.md)
+  documents refresh and reviewed inclusion.
+
+  Pfam DUF (domain of unknown function) records are mostly carried by proteins outside
+  the organism panel the provider frames cover, so the ordinary audit finds no local
+  match for them. The DUF discovery-lead lane reads DUFMech's frozen UniProt candidates
+  (`uniprot-duf-example-candidates-2026-10-07`, pinned by DUFMech commit and SHA-256)
+  as leads only. A lead becomes a funnel candidate only where a release-pinned InterPro
+  crawl of that accession asserts an exact match of the record's Pfam signature; it
+  then goes through the ordinary review batch. See
+  [research/duf-discovery-leads.md](research/duf-discovery-leads.md).
+
+  ```bash
+  just audit-duf-leads --apply                       # leads -> exact Pfam records
+  just discover-duf-leads --max-records 100 --apply  # bounded plan + UniProt identity
+  just fetch-duf-interpro-frame --limit 1 --apply    # canary, then without --limit
+  just stage-duf-candidates --apply                  # exact InterPro matches only
+  just select-duf-review-batch <id> --max-records 100 --apply
+  just fetch-uniprot-review-batch <id> ...           # as below
+  just resolve-duf-review-batch <id>                 # binds the lane's InterPro sidecar
+  ```
+
   Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
   signature cross-references and `just suggest-examples` ranks carriers from the
   Swiss-Prot profile matrix; neither command writes trait records, and both reject the
@@ -272,8 +312,8 @@ supports them, and can also be added by curators:
 | [PSI-MI](https://github.com/HUPO-PSI/psi-mi-CV) (HUPO-PSI molecular-interaction CV, CC-BY-4.0) | 146 | `data/traits/function/interaction_partner/psi_mi/` (only the `interaction type` branch, MI:0190) |
 | [METPO](https://github.com/berkeleybop/metpo) (Microbial Ecophysiological Trait & Phenotype Ontology, CC-BY-4.0) | 118 | `data/traits/function/{environmental_response,enzymatic_activity}/metpo/` (growth-preference / tolerance + metabolism / enzyme-test branches) |
 | [PATO](https://github.com/pato-ontology/pato) (Phenotype And Trait Ontology, CC-BY-4.0) | 28 | `data/traits/structure/{stability,dynamics,surface}/pato/` (curated physicochemical quality whitelist) |
-| Curated stability taxonomy (`seed_stability.py`, CC0-1.0) | 33 | `data/traits/structure/stability/conditions/` (11 stressors × {base, increased, decreased}, parented to PATO stability) |
-| Curated evolutionary / pangenome taxonomy (`seed_evolution.py`, CC0-1.0) | 9 | `data/traits/evolution/{conservation,pangenome}/` (EVOLUTION axis: conserved / clade-specific / variable + pangenome core/soft-core/shell/cloud/persistent/singleton) |
+| Curated stability taxonomy (`seed_stability.py`, CC-BY-4.0) | 33 | `data/traits/structure/stability/conditions/` (11 stressors × {base, increased, decreased}, parented to PATO stability) |
+| Curated evolutionary / pangenome taxonomy (`seed_evolution.py`, CC-BY-4.0) | 9 | `data/traits/evolution/{conservation,pangenome}/` (EVOLUTION axis: conserved / clade-specific / variable + pangenome core/soft-core/shell/cloud/persistent/singleton) |
 | [TCDB](https://www.tcdb.org/) transport classification (`seed_tcdb.py`, CC-BY-SA 3.0) | 2285 | `data/traits/function/transport/tcdb/` (Class/Subclass/Family → FUNC_TRANSPORT; 946 families ChEBI-grounded) |
 | [COG 2020](https://www.ncbi.nlm.nih.gov/research/cog/) orthologous groups (`seed_cog.py`, US Gov public domain) | 4903 | `data/traits/function/ortholog_group/cog/` (4,877 COGs + 26 functional categories → FUNC_ORTHOLOG_GROUP) |
 | [Rhea](https://www.rhea-db.org/) reactions (`seed_rhea.py`, CC-BY 4.0) | 18558 | `data/traits/function/enzymatic_activity/rhea/` (master reactions → FUNC_ENZYMATIC_ACTIVITY; ChEBI participants; EC via rhea2ec) |
@@ -285,7 +325,7 @@ supports them, and can also be added by curators:
 | [IDEAL](https://www.ideal-db.org/) protean segments (`seed_ideal.py`, CC-BY 4.0) — **pivoted** | 1 | `data/traits/sequence/disorder/` (ProS trait; 1,448 IDPs as examples) |
 | [ELM](http://elm.eu.org/) linear-motif classes (`seed_elm.py`, ⚠ non-commercial) | 353 | `data/traits/sequence/{targeting_signal,cleavage_site,ptm_site,motif}/elm/` (TRG→SEQ_TARGETING_SIGNAL, CLV→SEQ_CLEAVAGE_SITE, …; regex→sequence_pattern) |
 | [MEROPS](https://www.ebi.ac.uk/merops/) peptidase families (`seed_merops.py`, academic) | 370 | `data/traits/sequence/family/merops/` (S01→chymotrypsin, …; catalytic type → SEQ_FAMILY) |
-| Curated RiPP leader classes (`seed_ripp.py`, CC0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
+| Curated RiPP leader classes (`seed_ripp.py`, CC-BY-4.0) | 20 | `data/traits/sequence/leader_peptide/` (lanthipeptide/lasso/… → SEQ_LEADER_PEPTIDE) |
 
 The last three are ingested by the generic **`seed_obo.py`** importer, which reads any OBO ontology and imports only the **branch-scoped** subset declared in its `SOURCES` config (a term is kept iff it is an `is_a` descendant of a configured root, and it inherits that root's axis/category). This is deliberately narrower than a whole-ontology dump — PSI-MI is mostly experimental methods, PATO qualities are generic modifiers, and METPO is organismal, so only the terms with genuine protein-trait analogues are seeded.
 
@@ -413,7 +453,14 @@ when queue enforcement is enabled on `main`.
 
 ## License
 
-CC0-1.0 — Public Domain Dedication.
+Project-authored data, records, annotations, mappings, data exports and narrative
+documentation are licensed under [CC BY 4.0](LICENSE-DATA). Project-authored
+code, scripts, tests, schemas and website templates are licensed under
+[BSD-3-Clause](LICENSE-CODE). See [LICENSE](LICENSE) for scope and attribution.
+
+Third-party material retains its own licenses and notices. Preserve upstream
+attribution and source-specific terms when redistributing a record or subset.
+Previously released material remains available under its original license.
 
 
 The [biophysical sequence pilot](data/biophysical/README.md) adds typed quantitative

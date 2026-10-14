@@ -36,7 +36,23 @@ reports/instance_validation_failures.tsv
 # Regenerable UniProt grounding audit, staging, and review artifacts. Durable,
 # reviewed registries live under data/grounding/ and are intentionally tracked.
 reports/uniprot-grounding/
+reports/imodulondb/
+# Regenerable cross-Mech protein audit; the tracked snapshot lives in data/cross_mech/.
+reports/cross-mech/
+# Historical ad hoc reviews remain ignored; new bundles use reviews/structured/.
+reports/yaml_category_review/
+reports/yaml_record_review/
+# New review observations are tracked separately from ignored staging/reports.
+!reviews/structured/
+!reviews/structured/**
+# The advisory flock that serializes grounding-registry writers (#801). Interrupted
+# atomic-write residue inside a .jsonl.d registry is deliberately NOT ignored: it
+# must stay visible so validation names it.
+data/grounding/.grounding-registries.lock
 data/raw/biolip-sifts-xml/
+data/raw/slc10/
+data/raw/amino_acid_properties/
+reports/slc10/
 
 # Deep-research: track the markdown reports (deliverables), ignore any bulk
 # data artifacts dropped alongside them. `!research/*.md` only un-ignores
@@ -50,7 +66,6 @@ research/*
 !research/traits/
 !research/biophysical-traits-2026-09-23/
 reports/robot/
-reports/yaml_category_review/
 
 # Vendored source releases — regenerable via `just fetch-*` recipes
 data/raw/prosite.dat
@@ -70,6 +85,7 @@ data/raw/scope/
 data/raw/mcsa.entries.jsonl
 data/raw/disprot.entries.json
 data/raw/go-basic.obo
+data/raw/go-basic.obo.fetch.json
 data/raw/reactome/go/
 data/raw/panther/
 
@@ -84,6 +100,7 @@ docs/data/records.*.json
 docs/data/facets.json
 docs/data/labels.json
 docs/data/detail/
+docs/data/slc10-pilot-*.json
 data/raw/cath/
 data/raw/reactome/
 data/raw/aro/
@@ -126,3 +143,8 @@ data/raw/elife_metallophores/
 
 # Written by scripts/validation_scope.py during a local scope check (#536).
 changed_traits.txt
+
+# Generated browser access routes and lossless causal-graph sidecars.
+docs/data/lookup/
+docs/data/graphs/
+docs/data/map-coverage.json

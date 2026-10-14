@@ -14,6 +14,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 import elife_metallophore_grounding as grounding
 import elife_metallophores as source
+import grounding_registry_layout as layout
 from validate_uniprot_grounding import validate_grounding_evidence, validate_record
 from analyze_elife_metallophores import workbook
 
@@ -210,8 +211,8 @@ def test_durable_qualification_requires_bound_approval(monkeypatch, tmp_path, mu
     assert grounding.contract_errors(row["evidence"])
 
 
-def test_partial_promotion_persists_external_reviews_and_replays_without_changes(monkeypatch, tmp_path):
-    """Temporary decision inputs must become durable, retaining earlier coverage (#691)."""
+def _two_member_promotion_fixture(monkeypatch, tmp_path):
+    """Two resolved eLife members over empty durable registries in a scratch ROOT."""
     import yaml
 
     _, _, response, fact = example_fixture()
@@ -233,8 +234,17 @@ def test_partial_promotion_persists_external_reviews_and_replays_without_changes
     monkeypatch.setattr(grounding, "resolve_current", lambda: (rows, []))
     destination = tmp_path / "data/grounding"
     destination.mkdir(parents=True)
-    for name in ["protein_registry.jsonl", "occurrence_evidence.jsonl"]:
-        (destination / name).write_text("")
+    # The durable protein registry stays flat; evidence is a sharded directory (#801).
+    (destination / "protein_registry.jsonl").write_text("")
+    evidence = destination / "occurrence_evidence.jsonl.d"
+    evidence.mkdir()
+    (evidence / layout.MANIFEST_NAME).write_text(layout.build_manifest_text({}))
+    return rows
+
+
+def test_partial_promotion_persists_external_reviews_and_replays_without_changes(monkeypatch, tmp_path):
+    """Temporary decision inputs must become durable, retaining earlier coverage (#691)."""
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
     review_input = tmp_path / "external-review.jsonl"
     for index, row in enumerate(rows, 1):
         review_input.write_text(grounding.jsonl_text([approved_decision(row)]))
@@ -243,10 +253,65 @@ def test_partial_promotion_persists_external_reviews_and_replays_without_changes
         assert len(grounding.load_assertions()) == index
         assert len(source.read_jsonl(tmp_path / DECISIONS_PATH)) == index
         assert not grounding.contract_errors(row["evidence"])
+    evidence = tmp_path / "data/grounding/occurrence_evidence.jsonl.d"
+    assert not layout.read_registry(evidence).issues
+    assert len(layout.read_registry(evidence).lines) == len(rows)
     before = {p: p.read_bytes() for p in (tmp_path / "data").rglob("*") if p.is_file()}
     args = argparse.Namespace(decisions=tmp_path / DECISIONS_PATH, apply=True)
     assert grounding.promote(args) == 0
-    assert {p: p.read_bytes() for p in before} == before
+    assert {p: p.read_bytes() for p in (tmp_path / "data").rglob("*") if p.is_file()} == before
+
+
+def test_promotion_apply_takes_the_registry_lock_but_a_dry_run_does_not(monkeypatch, tmp_path):
+    """eLife --apply holds the data/grounding writer lock the README documents (#872)."""
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
+    review_input = tmp_path / "external-review.jsonl"
+    review_input.write_text(grounding.jsonl_text([approved_decision(rows[0])]))
+    before = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+
+    with layout.registry_lock(tmp_path / "data/grounding"):
+        with pytest.raises(layout.RegistryLayoutError) as locked:
+            grounding.promote(argparse.Namespace(decisions=review_input, apply=True))
+        assert locked.value.code == "registry_locked"
+        assert grounding.promote(argparse.Namespace(decisions=review_input, apply=False)) == 0
+    after = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+    assert {p: data for p, data in after.items() if p.name != layout.LOCK_NAME} == before
+
+
+def test_an_unchanged_replay_installs_nothing(monkeypatch, tmp_path):
+    """Unchanged artifacts are filtered by digest, so a replay opens no transaction (#872)."""
+    import ground_uniprot_examples as ground
+
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
+    review_input = tmp_path / "external-review.jsonl"
+    review_input.write_text(grounding.jsonl_text([approved_decision(row) for row in rows]))
+    assert grounding.promote(argparse.Namespace(decisions=review_input, apply=True)) == 0
+    installs = []
+    monkeypatch.setattr(
+        ground, "_install_promotion_transaction", lambda *args: installs.append(args)
+    )
+
+    args = argparse.Namespace(decisions=tmp_path / DECISIONS_PATH, apply=True)
+    assert grounding.promote(args) == 0
+    assert installs == []
+
+
+def test_promotion_cannot_add_evidence_beside_a_bindings_registry(monkeypatch, tmp_path):
+    """eLife promote cannot write qualified-record receipts, so it must not add evidence
+    that the promoter and validator would then find unbound (#801)."""
+    rows = _two_member_promotion_fixture(monkeypatch, tmp_path)
+    bindings = tmp_path / "data/grounding/qualified_record_bindings.jsonl.d"
+    bindings.mkdir()
+    (bindings / layout.MANIFEST_NAME).write_text(layout.build_manifest_text({}))
+    review_input = tmp_path / "external-review.jsonl"
+    review_input.write_text(grounding.jsonl_text([approved_decision(rows[0])]))
+    before = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+
+    with pytest.raises(ValueError, match=r"would add 1 evidence row\(s\) without"):
+        grounding.promote(argparse.Namespace(decisions=review_input, apply=True))
+    after = {p: p.read_bytes() for p in tmp_path.rglob("*") if p.is_file()}
+    # Nothing was written; only the gitignored advisory lock file may have appeared.
+    assert {p: data for p, data in after.items() if p.name != layout.LOCK_NAME} == before
 
 
 def test_xlsx_cached_formulas_preserve_false_booleans_and_text(tmp_path):

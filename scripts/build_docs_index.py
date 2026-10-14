@@ -28,6 +28,10 @@ Output:
                                   "detail/023.json"). This keeps the upfront
                                   list/facet payload ~5× smaller than inlining
                                   everything.
+  docs/data/graphs/NNN.json.gz  — bounded, lossless causal-graph buckets, fetched only
+                                  for records with published causal assertions.
+  docs/data/lookup/NNNN.json    — bounded accession-to-record-shard routes.
+  docs/data/map-coverage.json  — retained map/current corpus identity comparison.
   docs/data/facets.json         — pre-computed facet counts + a `shards`
                                   manifest listing each shard's filter coverage.
 
@@ -57,6 +61,9 @@ Record shape:
         "fams":  ["Pfam:PF00244", ...],
         "src":   "UNIPROTKB_API",
         "seq":   "MDDREDLVYQAK...",          # full amino-acid sequence
+        # QUALIFIED examples load seq from the validated registry and also have:
+        "seqsrc": "ProteinReference",
+        "seqsha": "<sha256>", "rel": "2026_03", "sv": 2,
         "feats": [                           # [start, end, ft_type, axis, note]
           [1, 255, "CHAIN", "SEQUENCE", "14-3-3 protein epsilon"],
           [234, 255, "REGION", "SEQUENCE", "Disordered"],
@@ -64,8 +71,10 @@ Record shape:
           ...
         ],
         "occ": [                             # qualified locations for this trait
-          {"ranges": [[118, 127]], "mapping_method": "PATTERN_MATCH",
-           "source_trait_id": "IEDB:10012", "coordinate_frame": "UNIPROT_CANONICAL"}
+          {"ranges": [[118, 127]], "positions": [120, 122],
+           "mapping_method": "PATTERN_MATCH", "evidence_source": "IEDB",
+           "source_trait_id": "IEDB:10012", "source_release": "2026_03",
+           "coordinate_frame": "UNIPROT_CANONICAL"}
         ]
       }, ...
     ],
@@ -76,6 +85,7 @@ Record shape:
 from __future__ import annotations
 
 import hashlib
+import gzip
 import json
 import re
 import sys
@@ -85,6 +95,9 @@ from typing import Any
 import yaml
 
 SAFE_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from docs_protein_sequences import ProteinSequenceRegistry  # noqa: E402
 
 # The bucket count is calculated from serialized detail size. This target sits below the
 # post-build 1 MB hard budget so a successful build cannot require a multi-megabyte fetch.
@@ -102,6 +115,7 @@ MAX_CUBE_ROWS = 50_000
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 OUT_DIR = REPO_ROOT / "docs" / "data"
+PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
 DEF_TRUNC = 500
 
 
@@ -329,25 +343,48 @@ def truncate(text: str, limit: int = DEF_TRUNC) -> str:
 DOCS_MAX_EXAMPLES = 5
 
 
-# CURATOR picks outrank API-fetched ones, which outrank machine suggestions, so
-# the cap can only ever drop the lowest-standing entries. This is a guard, not a
-# repair: measured against the corpus, no record today has a curated pick hidden
-# while a suggestion is shown (--rerank skips records holding curated examples).
-# But that protection is incidental rather than enforced, and a cap sliced by
-# file position would silently invert the moment it stopped holding (#66).
-_EXAMPLE_RANK = {"CURATOR": 0, "UNIPROTKB_API": 1, "SWISSPROT_PROFILE": 2}
+# Qualified examples precede legacy examples, even when appended by the guarded
+# promoter after older profile suggestions. Within each qualification stratum,
+# preserve the existing curator/API/profile preference and stable file order.
+# This changes display priority only; it never qualifies an example.
+_EXAMPLE_RANK = {
+    "CURATOR": 0,
+    "UNIPROT_GROUNDING": 1,
+    "UNIPROTKB_API": 2,
+    "SWISSPROT_PROFILE": 3,
+}
 
 
-def _docs_examples(examples: list) -> list:
-    """The exemplars the browser shows: highest-standing first, then capped."""
-    ordered = sorted(enumerate(examples),
-                     key=lambda p: (_EXAMPLE_RANK.get(p[1].get("source"), 3), p[0]))
+def _docs_examples(examples: list, trait_id: str = "") -> list:
+    """Verified exemplars first (localized coordinates prioritized), then existing source rank; retain the display cap."""
+    def _rank(p: tuple[int, dict]) -> tuple:
+        idx, ex = p
+        is_qualified = ex.get("qualification_status") == "QUALIFIED"
+        has_localized = False
+        if is_qualified:
+            for occ in ex.get("trait_occurrences") or []:
+                if (occ.get("qualification_status") == "QUALIFIED"
+                        and occ.get("scope") == "LOCALIZED"
+                        and (not trait_id or occ.get("trait_id") == trait_id)
+                        and (not ex.get("protein_id") or occ.get("protein_id") == ex.get("protein_id"))):
+                    has_localized = True
+                    break
+        return (not is_qualified, not has_localized, _EXAMPLE_RANK.get(ex.get("source"), 4), idx)
+
+    ordered = sorted(enumerate(examples), key=_rank)
     return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
 
 
-def _project_example(ex: dict, trait_id: str) -> dict:
+def _project_example(ex: dict, trait_id: str = "", *,
+                     protein_sequences: ProteinSequenceRegistry | None = None,
+                     record_path: str = "<memory>") -> dict:
     """Lean projection of a CanonicalExample suitable for the browser
     detail view. Skips empty fields to keep records.json small."""
+    sequence_payload = {}
+    if ex.get("qualification_status") == "QUALIFIED":
+        if protein_sequences is None:
+            raise ValueError(f"{record_path}: QUALIFIED example requires a protein sequence registry")
+        sequence_payload = protein_sequences.project(ex, trait_id=trait_id, record_path=record_path)
     proj: dict = {}
     if ex.get("protein_id"):
         proj["id"] = ex["protein_id"]
@@ -412,6 +449,7 @@ def _project_example(ex: dict, trait_id: str) -> dict:
             proj["sv"] = ex["sequence_version"]
         if ex.get("uniprot_release"):
             proj["rel"] = ex["uniprot_release"]
+    proj.update(sequence_payload)
     return proj
 
 
@@ -440,7 +478,8 @@ def _chem_fields(data: dict) -> dict:
     return out
 
 
-def load_record(path: Path) -> dict[str, Any] | None:
+def load_record(path: Path, *,
+                protein_sequences: ProteinSequenceRegistry | None = None) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
             data = yaml.load(fh, Loader=SAFE_YAML_LOADER)
@@ -455,7 +494,8 @@ def load_record(path: Path) -> dict[str, Any] | None:
     rel = path.relative_to(REPO_ROOT).as_posix()
     return {
         "id": identifier,
-        "label": data.get("label") or identifier,
+        "label": (data.get("label") if str(data.get("label") or "").strip() not in {"", "-"}
+                  else identifier),
         "def": truncate(data.get("definition") or ""),
         "axis": data.get("trait_axis") or "",
         "cat": data.get("trait_category") or "",
@@ -493,8 +533,9 @@ def load_record(path: Path) -> dict[str, Any] | None:
         # of them took canonical_examples from 28% to 58% of every detail bucket.
         # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
         # which are first because they are rank-ordered.
-        "ex": [_project_example(e, identifier)
-               for e in _docs_examples(data.get("canonical_examples") or [])],
+        "ex": [_project_example(e, identifier, protein_sequences=protein_sequences,
+                                record_path=str(path))
+               for e in _docs_examples(data.get("canonical_examples") or [], identifier)],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
         "eq": EQUIV.get(identifier, []),
@@ -517,9 +558,11 @@ def load_record(path: Path) -> dict[str, Any] | None:
         "defs": [[d.get("kind"), d.get("text"), d.get("source")]
                  for d in (data.get("definitions") or [])
                  if isinstance(d, dict) and d.get("text")],
-        # Synonyms (alternate names) — for the embedding (embedding-field-audit).
-        "syn": [s.get("synonym_text") for s in (data.get("synonyms") or [])
-                if isinstance(s, dict) and s.get("synonym_text")][:6],
+        # Synonyms stay complete for search and record display.
+        "syn": list(dict.fromkeys(s.get("synonym_text") for s in (data.get("synonyms") or [])
+                                 if isinstance(s, dict) and s.get("synonym_text"))),
+        "cg": data.get("causal_graphs") or [],
+        "history": data.get("curation_history") or [],
         "path": rel,
     }
 
@@ -538,7 +581,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small as the corpus changes.
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "syn")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "cg", "history", "gf")
 LIST_DEF = 140
 
 
@@ -654,6 +697,7 @@ def write_shards(records: list[dict]) -> list[dict]:
 
     manifest: list[dict] = []
     written: set[str] = set()
+    routes: dict[str, str] = {}
     for axis, category in sorted(grouped, key=lambda key: (axis_key(key[0]), key[1])):
         recs = sorted(grouped[(axis, category)], key=lambda r: r["id"])
         # Chunk large categories so no single browser fetch approaches the
@@ -667,6 +711,10 @@ def write_shards(records: list[dict]) -> list[dict]:
             with path.open("w", encoding="utf-8") as fh:
                 json.dump(chunk, fh, separators=(",", ":"), ensure_ascii=False)
             written.add(fname)
+            for rec in chunk:
+                if rec["id"] in routes:
+                    raise ValueError(f"duplicate record identifier: {rec['id']}")
+                routes[rec["id"]] = fname
             manifest.append({
                 "file": fname,
                 "axis": axis,
@@ -681,10 +729,89 @@ def write_shards(records: list[dict]) -> list[dict]:
     for old in OUT_DIR.glob("records.*.json"):
         if old.name not in written:
             old.unlink()
+    write_lookup(routes)
     return manifest
 
 
+def lookup_count(total: int) -> int:
+    """About 4,000 accession-to-shard entries per small exact-lookup request."""
+    return 1 << (max(1, (total + 3999) // 4000) - 1).bit_length()
+
+
+def write_lookup(routes: dict[str, str]) -> None:
+    count = lookup_count(len(routes))
+    buckets: list[dict[str, str]] = [{} for _ in range(count)]
+    for identifier, filename in routes.items():
+        index = int(hashlib.sha256(identifier.encode("utf-8")).hexdigest()[:4], 16) % count
+        buckets[index][identifier] = filename
+    destination = OUT_DIR / "lookup"
+    destination.mkdir(exist_ok=True)
+    written = set()
+    for index, bucket in enumerate(buckets):
+        name = f"{index:04d}.json"
+        payload = json.dumps(bucket, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        if len(payload.encode("utf-8")) > 900_000:
+            raise ValueError("exact lookup bucket exceeds the 900 KB fetch budget")
+        (destination / name).write_text(payload, encoding="utf-8")
+        written.add(name)
+    for stale in destination.glob("*.json"):
+        if stale.name not in written:
+            stale.unlink()
+
+
+def write_graphs(records: list[dict]) -> None:
+    """Publish full existing causal assertions in bounded, lossless gzip sidecars.
+
+    Graphs account for hundreds of MB of repeated evidence text. They are fetched
+    only for records with a populated graph; all other details stay ordinary JSON.
+    The compressed and expanded limits bound both network and browser memory use.
+    """
+    buckets: dict[str, dict] = {}
+    for record in records:
+        graphs = record.pop("cg", [])
+        if not graphs:
+            continue
+        bucket = int(hashlib.sha256(record["id"].encode()).hexdigest()[:4], 16) % 128
+        name = f"graphs/{bucket:03d}.json.gz"
+        record["gf"] = name
+        buckets.setdefault(name, {})[record["id"]] = graphs
+    encoded = {}
+    for name, payload in buckets.items():
+        raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
+        compressed = gzip.compress(raw, mtime=0)
+        if len(raw) > 8_000_000 or len(compressed) > 900_000:
+            raise ValueError(f"Graph bucket exceeds expanded/transfer budget: {name}")
+        encoded[name] = compressed
+    destination = OUT_DIR / "graphs"
+    destination.mkdir(exist_ok=True)
+    for path in destination.glob("*.json.gz"):
+        if str(path.relative_to(OUT_DIR)) not in encoded:
+            path.unlink()
+    for name, compressed in encoded.items():
+        (OUT_DIR / name).write_bytes(compressed)
+
+
+def write_map_coverage(records: list[dict]) -> None:
+    """Compare retained map identities with the current browser, without moving points."""
+    current = {record["id"] for record in records}
+    coverage = {}
+    for path in sorted(OUT_DIR.glob("corpus_map*.json")):
+        raw = path.read_bytes()
+        data = json.loads(raw)
+        plotted = {point[3] for point in data["points"]}
+        coverage[path.name] = {
+            "plotted": len(data["points"]), "browser_total": len(current),
+            "current_plotted": len(plotted & current), "not_plotted": len(current - plotted),
+            "outside_current": len(plotted - current), "sha256": hashlib.sha256(raw).hexdigest(),
+            "embedding_date": data.get("generated_at") or data.get("date"),
+            "scope": "Retained embedding snapshot; records outside this snapshot are not plotted. "
+                     "The snapshot does not record per-record exclusion reasons.",
+        }
+    (OUT_DIR / "map-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
+    protein_sequences = ProteinSequenceRegistry(PROTEIN_REGISTRY)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     load_equivalence()
     load_chebi_names()
@@ -693,7 +820,7 @@ def main() -> int:
     records: list[dict] = []
     skipped = 0
     for path in sorted(TRAITS_DIR.rglob("*.yaml")):
-        rec = load_record(path)
+        rec = load_record(path, protein_sequences=protein_sequences)
         if rec is None:
             skipped += 1
             continue
@@ -713,7 +840,9 @@ def main() -> int:
     cube = _cube(records)
 
     write_labels(records)
+    write_map_coverage(records)
 
+    write_graphs(records)
     pairs = split_detail(records)
     det_count, det_files, det_mb, det_max = write_detail(pairs)
     shards = write_shards(records)
@@ -727,6 +856,8 @@ def main() -> int:
                 "cube": cube,
                 "shards": shards,
                 "detailDir": "detail",
+                "lookup": {"directory": "lookup", "buckets": lookup_count(len(records)),
+                           "algorithm": "sha256-first16-mod"},
             },
             fh,
             indent=2,
@@ -761,8 +892,7 @@ def write_labels(records: list[dict]) -> Path:
     with no corpus label (PDB / AlphaFoldDB structure refs, PMIDs, per-protein
     UniProtKB accessions, xref targets not seeded as their own record) is
     absent, so it renders as the bare id — correct, since no label exists."""
-    labels = {r["id"]: r["label"] for r in records
-              if r.get("label") and r["label"] != r["id"]}
+    labels = {r["id"]: r["label"] for r in records}
     path = OUT_DIR / "labels.json"
     with path.open("w", encoding="utf-8") as fh:
         json.dump(labels, fh, ensure_ascii=False, sort_keys=True,

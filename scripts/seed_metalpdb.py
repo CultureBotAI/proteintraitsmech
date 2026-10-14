@@ -44,7 +44,7 @@ LICENSE
 -------
 MetalPDB (CERM, Univ. Florence) publishes NO explicit reuse licence. Every
 record is stamped with the flag string below (mirroring how CAZy is flagged
-in this repo) rather than the corpus CC0 default. CONFIRM reuse terms with
+in this repo) rather than the project data license. CONFIRM reuse terms with
 CERM before any redistribution of MetalPDB-derived content.
 
 Inputs (fetch via `just fetch-metalpdb`, gitignored):

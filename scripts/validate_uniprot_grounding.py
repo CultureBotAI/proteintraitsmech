@@ -16,8 +16,10 @@ example.  A QUALIFIED claim is always validated strictly, with or without that
 flag.
 
 The protein, occurrence-evidence, and UniProt-membership registries are JSONL
-with one normalized object per line.  A qualified UniProt ``SOURCE_MEMBERSHIP``
-claim is replayed against the exact content-addressed database cross-reference::
+with one normalized object per line.  The durable evidence and qualified-record
+binding registries are sharded ``.jsonl.d`` directories of that JSONL (#801).
+A qualified UniProt ``SOURCE_MEMBERSHIP`` claim is replayed against the exact
+content-addressed database cross-reference::
 
     python scripts/validate_uniprot_grounding.py data/traits/sequence/domain \
       --registry reports/uniprot-grounding/protein_registry.jsonl \
@@ -42,14 +44,25 @@ from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
 
+import grounding_registry_layout as layout
+from go_true_path import DEFAULT_GO_EDGES, GoTruePathError, load_edges, union_index
+from uniprot_membership_snapshot import (
+    SWISSPROT_ENTRY_TYPE,
+    UNIPROT_FACT_METHODS,
+    expected_mapping_method,
+    fact_evidence_failure,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRAITS = ROOT / "data" / "traits"
 DEFAULT_REPORT = ROOT / "reports" / "uniprot-grounding" / "validation.tsv"
 DEFAULT_REGISTRY = ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_EVIDENCE_REGISTRY = ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Sharded ``.jsonl.d`` directories (#801); a flat path given explicitly still reads
+# as one file.
+DEFAULT_EVIDENCE_REGISTRY = ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
 DEFAULT_MEMBERSHIP_REGISTRY = ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 DEFAULT_QUALIFIED_RECORD_BINDINGS = (
-    ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl"
+    ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
 )
 
 QUALIFIED = "QUALIFIED"
@@ -89,6 +102,10 @@ REGISTRY_REQUIRED_FIELDS = (
     "uniprot_release",
 )
 REGISTRY_ALLOWED_FIELDS = set(REGISTRY_REQUIRED_FIELDS) | {"isoform", "sequence_version"}
+# UniProt fragment status (#1081) exists only on fetch-staging rows written by a v2
+# registry fetch.  The resolver reads it as a qualification input; staged and durable
+# ProteinReference rows never carry it, so it is refused there (#1087).
+FETCH_STAGING_ONLY_FIELDS = frozenset({"fragment"})
 
 EVIDENCE_PREFIX = "ug-evidence:"
 EVIDENCE_REQUIRED_FIELDS = (
@@ -371,8 +388,14 @@ def _registry_finding(code: str, message: str, path: Path, line: int, pid: objec
     )
 
 
-def validate_protein_reference(reference: object, *, path: Path, line: int) -> list[Finding]:
-    """Validate one registry object independently of whether a record uses it."""
+def validate_protein_reference(
+    reference: object, *, path: Path, line: int, fetch_staging: bool = False
+) -> list[Finding]:
+    """Validate one registry object independently of whether a record uses it.
+
+    ``fetch_staging`` admits the fields only a registry fetch writes; every staged or
+    durable registry is validated without it.
+    """
 
     if not isinstance(reference, dict):
         return [
@@ -390,7 +413,18 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
                     "registry_missing_field", f"missing required field {field!r}", path, line, pid
                 )
             )
-    for field in sorted(set(reference) - REGISTRY_ALLOWED_FIELDS):
+    allowed = REGISTRY_ALLOWED_FIELDS | (FETCH_STAGING_ONLY_FIELDS if fetch_staging else set())
+    for field in sorted((set(reference) & FETCH_STAGING_ONLY_FIELDS) - allowed):
+        findings.append(
+            _registry_finding(
+                "registry_fetch_staging_only_field",
+                f"{field!r} belongs only on fetch-staging registry rows",
+                path,
+                line,
+                pid,
+            )
+        )
+    for field in sorted(set(reference) - allowed - FETCH_STAGING_ONLY_FIELDS):
         findings.append(
             _registry_finding(
                 "registry_unknown_field",
@@ -495,6 +529,12 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
                 "registry_invalid_reviewed", "reviewed must be true or false", path, line, pid
             )
         )
+    if "fragment" in reference and not isinstance(reference["fragment"], bool):
+        findings.append(
+            _registry_finding(
+                "registry_invalid_fragment", "fragment must be true or false", path, line, pid
+            )
+        )
     release = reference.get("uniprot_release")
     if "uniprot_release" in reference and (
         not isinstance(release, str) or RELEASE_RE.fullmatch(release) is None
@@ -544,7 +584,9 @@ def validate_protein_reference(reference: object, *, path: Path, line: int) -> l
     return findings
 
 
-def load_registry(path: Path) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
+def load_registry(
+    path: Path, *, fetch_staging: bool = False
+) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
     """Load and strictly validate a ProteinReference JSONL registry."""
 
     registry: dict[str, dict[str, Any]] = {}
@@ -566,7 +608,11 @@ def load_registry(path: Path) -> tuple[dict[str, dict[str, Any]], list[Finding]]
                     )
                 )
                 continue
-            findings.extend(validate_protein_reference(value, path=path, line=line_number))
+            findings.extend(
+                validate_protein_reference(
+                    value, path=path, line=line_number, fetch_staging=fetch_staging
+                )
+            )
             if not isinstance(value, dict) or not isinstance(value.get("protein_id"), str):
                 continue
             pid = value["protein_id"]
@@ -892,9 +938,18 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                 "represented and verified by the grounding boundary",
             )
         )
+    # ComplexPortal and Rhea each have two lanes (#652). The source-native lane
+    # (provider_kind SOURCE_DATABASE) keeps its unconditional receipt lock. The UniProt
+    # lane (provider_kind UNIPROT, evidence_source UniProtKB) is the exact-accession fact
+    # UniProt itself states -- a ComplexPortal cross-reference, or a Rhea reaction inside a
+    # CATALYTIC ACTIVITY comment. The promoter installs it only after verifying the batch's
+    # network UniProt fetch receipt binds the exact membership bytes
+    # (ground_uniprot_examples._verify_uniprot_fact_receipt, #973), and
+    # validate_membership_replay re-checks the installed fact and its evidence policy.
     if source == "ComplexPortal" or "ComplexPortal" in namespaces:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
+        uniprot_lane = kind == "UNIPROT"
         if method != "SOURCE_MEMBERSHIP":
             errors.append(
                 (
@@ -902,7 +957,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "ComplexPortal evidence requires SOURCE_MEMBERSHIP",
                 )
             )
-        if source != "ComplexPortal":
+        if uniprot_lane:
+            if source != "UniProtKB":
+                errors.append(
+                    (
+                        "complexportal_uniprot_source_mismatch",
+                        "UniProt-lane ComplexPortal evidence requires evidence_source "
+                        "exactly 'UniProtKB'",
+                    )
+                )
+        elif source != "ComplexPortal":
             errors.append(
                 (
                     "complexportal_source_mismatch",
@@ -923,11 +987,12 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "matching ComplexPortal:CPX-<positive decimal integer>",
                 )
             )
-        if kind != "SOURCE_DATABASE":
+        if kind not in {"SOURCE_DATABASE", "UNIPROT"}:
             errors.append(
                 (
                     "complexportal_provider_mismatch",
-                    "ComplexPortal evidence requires provider_kind='SOURCE_DATABASE'",
+                    "ComplexPortal evidence requires provider_kind 'SOURCE_DATABASE' "
+                    "(source-native lane) or 'UNIPROT' (UniProt cross-reference lane)",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
@@ -944,16 +1009,18 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "ComplexPortal provider_release must equal source_release",
                 )
             )
-        errors.append(
-            (
-                "complexportal_provider_receipt_required",
-                "ComplexPortal evidence cannot qualify until a provider acquisition receipt "
-                "is represented and verified by the grounding boundary",
+        if not uniprot_lane:
+            errors.append(
+                (
+                    "complexportal_provider_receipt_required",
+                    "ComplexPortal evidence cannot qualify until a provider acquisition "
+                    "receipt is represented and verified by the grounding boundary",
+                )
             )
-        )
     if source == "Rhea" or "RHEA" in namespaces:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
+        uniprot_lane = kind == "UNIPROT"
         if method != "SOURCE_MEMBERSHIP":
             errors.append(
                 (
@@ -961,7 +1028,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "Rhea evidence requires direct SOURCE_MEMBERSHIP",
                 )
             )
-        if source != "Rhea":
+        if uniprot_lane:
+            if source != "UniProtKB":
+                errors.append(
+                    (
+                        "rhea_uniprot_source_mismatch",
+                        "UniProt-lane Rhea evidence requires evidence_source exactly "
+                        "'UniProtKB'",
+                    )
+                )
+        elif source != "Rhea":
             errors.append(
                 (
                     "rhea_source_mismatch",
@@ -982,11 +1058,12 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "RHEA:<positive decimal integer>",
                 )
             )
-        if kind != "SOURCE_DATABASE":
+        if kind not in {"SOURCE_DATABASE", "UNIPROT"}:
             errors.append(
                 (
                     "rhea_provider_mismatch",
-                    "Rhea evidence requires provider_kind='SOURCE_DATABASE'",
+                    "Rhea evidence requires provider_kind 'SOURCE_DATABASE' (rhea2uniprot "
+                    "lane) or 'UNIPROT' (UniProt catalytic-activity lane)",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
@@ -996,24 +1073,26 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "Rhea evidence requires WHOLE_PROTEIN scope",
                 )
             )
-        if (
-            evidence.get("source_release") != RHEA_RELEASE
-            or evidence.get("provider_release") != RHEA_RELEASE
-        ):
-            errors.append(
-                (
-                    "rhea_release_mismatch",
-                    "Rhea evidence requires source_release and provider_release exactly '141'",
+        if not uniprot_lane:
+            if (
+                evidence.get("source_release") != RHEA_RELEASE
+                or evidence.get("provider_release") != RHEA_RELEASE
+            ):
+                errors.append(
+                    (
+                        "rhea_release_mismatch",
+                        "Rhea evidence requires source_release and provider_release exactly "
+                        "'141'",
+                    )
                 )
-            )
-        if evidence.get("provider_source") != RHEA_PROVIDER_SOURCE:
-            errors.append(
-                (
-                    "rhea_provider_source_mismatch",
-                    "Rhea evidence requires the canonical direct "
-                    "data/raw/rhea/rhea2uniprot_sprot.tsv source artifact",
+            if evidence.get("provider_source") != RHEA_PROVIDER_SOURCE:
+                errors.append(
+                    (
+                        "rhea_provider_source_mismatch",
+                        "Rhea evidence requires the canonical direct "
+                        "data/raw/rhea/rhea2uniprot_sprot.tsv source artifact",
+                    )
                 )
-            )
         if evidence.get("inheritance_path") is not None:
             errors.append(
                 (
@@ -1038,15 +1117,16 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "mapping provenance",
                 )
             )
-        errors.append(
-            (
-                "rhea_provider_receipt_required",
-                "Rhea evidence cannot qualify until the authentic release-141 provider "
-                "acquisition receipt, exact mapping-row replay, verified ProteinReference "
-                "fetch receipt, and receipt verifier are represented and verified by the "
-                "grounding boundary",
+        if not uniprot_lane:
+            errors.append(
+                (
+                    "rhea_provider_receipt_required",
+                    "Rhea evidence cannot qualify until the authentic release-141 provider "
+                    "acquisition receipt, exact mapping-row replay, verified ProteinReference "
+                    "fetch receipt, and receipt verifier are represented and verified by the "
+                    "grounding boundary",
+                )
             )
-        )
     if source == "SCOPe" or namespaces & {"SCOP", "SCOPe"}:
         trait_id = evidence.get("trait_id")
         source_trait_id = evidence.get("source_trait_id")
@@ -1251,40 +1331,54 @@ def _provider_contract_errors(evidence: Mapping[str, Any]) -> list[tuple[str, st
                     "grounding boundary",
                 )
             )
-    if method == "SOURCE_MEMBERSHIP" and (kind == "UNIPROT" or source == "UniProtKB"):
+    if method in UNIPROT_FACT_METHODS and (kind == "UNIPROT" or source == "UniProtKB"):
+        # One exact UniProt fact lane for both methods; the namespace decides which
+        # method the fact may support (a GO annotation is never a "membership").
+        expected_method = expected_mapping_method(str(evidence.get("source_trait_id") or ""))
+        if method != expected_method:
+            errors.append(
+                (
+                    "uniprot_fact_method_mismatch",
+                    f"a UniProt {_namespace(evidence.get('source_trait_id'))!s} fact supports "
+                    f"{expected_method}, not {method}",
+                )
+            )
         if kind != "UNIPROT":
             errors.append(
                 (
                     "uniprot_membership_provider_mismatch",
-                    "UniProtKB SOURCE_MEMBERSHIP requires provider_kind='UNIPROT'",
+                    f"UniProtKB {method} requires provider_kind='UNIPROT'",
                 )
             )
         if source != "UniProtKB":
             errors.append(
                 (
                     "uniprot_membership_source_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires evidence_source exactly 'UniProtKB'",
+                    f"UNIPROT {method} requires evidence_source exactly 'UniProtKB'",
                 )
             )
         if evidence.get("provider_release") != evidence.get("source_release"):
             errors.append(
                 (
                     "uniprot_membership_release_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP provider_release must equal source_release",
+                    f"UNIPROT {method} provider_release must equal source_release",
                 )
             )
         if evidence.get("scope") != "WHOLE_PROTEIN":
             errors.append(
                 (
                     "uniprot_membership_scope_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires WHOLE_PROTEIN scope",
+                    f"UNIPROT {method} requires WHOLE_PROTEIN scope",
                 )
             )
-        if evidence.get("source_trait_id") != evidence.get("trait_id"):
+        if evidence.get("source_trait_id") != evidence.get("trait_id") and not (
+            _is_go_true_path_claim(evidence)
+        ):
             errors.append(
                 (
                     "uniprot_membership_trait_mismatch",
-                    "UNIPROT SOURCE_MEMBERSHIP requires exact source_trait_id == trait_id",
+                    f"UNIPROT {method} requires exact source_trait_id == trait_id, or a "
+                    "GO annotation inherited along an explicit inheritance_path",
                 )
             )
 
@@ -1806,52 +1900,58 @@ def load_evidence_registry(
     """Load a strict, content-addressed GroundingEvidence JSONL registry.
 
     Invalid rows are rejected from the returned mapping; callers can never
-    dereference an object with unknown/missing fields or a bad digest.
+    dereference an object with unknown/missing fields or a bad digest.  A
+    ``.jsonl.d`` path is a sharded registry (#801): each layout defect is a finding
+    with its own code, and row findings name the shard file and line.
     """
 
     registry: dict[str, dict[str, Any]] = {}
     findings: list[Finding] = []
-    if not path.is_file():
+    image = layout.read_registry(path)
+    if image.kind == "absent":
         return registry, [
             _evidence_finding(
                 "evidence_registry_not_found", "evidence registry does not exist", path, 0
             )
         ]
-    with path.open(encoding="utf-8") as handle:
-        for line_number, raw in enumerate(handle, 1):
-            if not raw.strip():
-                continue
-            try:
-                value = json.loads(
-                    raw,
-                    parse_constant=lambda token: (_ for _ in ()).throw(
-                        ValueError(f"non-finite JSON value {token}")
-                    ),
+    findings.extend(
+        _evidence_finding(issue.code, issue.message, issue.file, issue.line)
+        for issue in image.issues
+    )
+    for source, line_number, raw in image.lines:
+        if not raw.strip():
+            continue
+        try:
+            value = json.loads(
+                raw,
+                parse_constant=lambda token: (_ for _ in ()).throw(
+                    ValueError(f"non-finite JSON value {token}")
+                ),
+            )
+        except (json.JSONDecodeError, ValueError) as error:
+            findings.append(
+                _evidence_finding(
+                    "evidence_json_error", f"invalid JSON: {error}", source, line_number
                 )
-            except (json.JSONDecodeError, ValueError) as error:
-                findings.append(
-                    _evidence_finding(
-                        "evidence_json_error", f"invalid JSON: {error}", path, line_number
-                    )
+            )
+            continue
+        row_findings = validate_grounding_evidence(value, path=source, line=line_number)
+        findings.extend(row_findings)
+        if row_findings or not isinstance(value, dict):
+            continue
+        evidence_id = value["evidence_id"]
+        if evidence_id in registry:
+            findings.append(
+                _evidence_finding(
+                    "duplicate_evidence_key",
+                    f"duplicate evidence_id; first occurrence retained: {evidence_id}",
+                    source,
+                    line_number,
+                    value,
                 )
-                continue
-            row_findings = validate_grounding_evidence(value, path=path, line=line_number)
-            findings.extend(row_findings)
-            if row_findings or not isinstance(value, dict):
-                continue
-            evidence_id = value["evidence_id"]
-            if evidence_id in registry:
-                findings.append(
-                    _evidence_finding(
-                        "duplicate_evidence_key",
-                        f"duplicate evidence_id; first occurrence retained: {evidence_id}",
-                        path,
-                        line_number,
-                        value,
-                    )
-                )
-                continue
-            registry[evidence_id] = value
+            )
+            continue
+        registry[evidence_id] = value
     return registry, findings
 
 
@@ -2166,11 +2266,17 @@ def load_qualified_record_bindings(
     repo_root: Path = ROOT,
     traits_root: Path = DEFAULT_TRAITS,
 ) -> tuple[dict[str, dict[str, Any]], list[Finding]]:
-    """Load and validate durable evidence-to-record content-gate receipts."""
+    """Load and validate durable evidence-to-record content-gate receipts.
+
+    A ``.jsonl.d`` path is read through the sharded layout (#801): layout defects
+    become findings, row findings name the shard file and line, and coverage findings
+    name the registry directory.
+    """
 
     bindings: dict[str, dict[str, Any]] = {}
     findings: list[Finding] = []
-    if not path.is_file():
+    image = layout.read_registry(path)
+    if image.kind == "absent":
         return bindings, [
             _binding_finding(
                 "binding_registry_not_found",
@@ -2179,48 +2285,51 @@ def load_qualified_record_bindings(
                 0,
             )
         ]
+    findings.extend(
+        _binding_finding(issue.code, issue.message, issue.file, issue.line)
+        for issue in image.issues
+    )
 
     record_cache: dict[Path, tuple[object, str, list[Finding]]] = {}
-    with path.open(encoding="utf-8") as handle:
-        for line_number, raw in enumerate(handle, 1):
-            if not raw.strip():
-                continue
-            try:
-                value = json.loads(raw)
-            except json.JSONDecodeError as error:
-                findings.append(
-                    _binding_finding(
-                        "binding_json_error",
-                        f"invalid JSON: {error.msg}",
-                        path,
-                        line_number,
-                    )
+    for source, line_number, raw in image.lines:
+        if not raw.strip():
+            continue
+        try:
+            value = json.loads(raw)
+        except json.JSONDecodeError as error:
+            findings.append(
+                _binding_finding(
+                    "binding_json_error",
+                    f"invalid JSON: {error.msg}",
+                    source,
+                    line_number,
                 )
-                continue
-            evidence_id, row_findings = _validate_qualified_record_binding(
-                value,
-                path=path,
-                line=line_number,
-                evidence_registry=evidence_registry,
-                record_cache=record_cache,
-                repo_root=repo_root,
-                traits_root=traits_root,
             )
-            findings.extend(row_findings)
-            if evidence_id is None or not isinstance(value, dict):
-                continue
-            if evidence_id in bindings:
-                findings.append(
-                    _binding_finding(
-                        "duplicate_binding_key",
-                        f"duplicate qualified-record binding for {evidence_id}",
-                        path,
-                        line_number,
-                        value,
-                    )
+            continue
+        evidence_id, row_findings = _validate_qualified_record_binding(
+            value,
+            path=source,
+            line=line_number,
+            evidence_registry=evidence_registry,
+            record_cache=record_cache,
+            repo_root=repo_root,
+            traits_root=traits_root,
+        )
+        findings.extend(row_findings)
+        if evidence_id is None or not isinstance(value, dict):
+            continue
+        if evidence_id in bindings:
+            findings.append(
+                _binding_finding(
+                    "duplicate_binding_key",
+                    f"duplicate qualified-record binding for {evidence_id}",
+                    source,
+                    line_number,
+                    value,
                 )
-                continue
-            bindings[evidence_id] = value
+            )
+            continue
+        bindings[evidence_id] = value
 
     missing = sorted(set(evidence_registry) - set(bindings))
     extra = sorted(set(bindings) - set(evidence_registry))
@@ -2298,7 +2407,7 @@ def _qualified_membership_uses(value: object, *, file: str) -> list[MembershipUs
                 continue
             if occurrence.get("qualification_status") != QUALIFIED:
                 continue
-            if occurrence.get("mapping_method") != "SOURCE_MEMBERSHIP":
+            if occurrence.get("mapping_method") not in UNIPROT_FACT_METHODS:
                 continue
             uses.append(
                 MembershipUse(
@@ -2327,8 +2436,13 @@ def validate_membership_replay(
     memberships: Sequence[Mapping[str, Any]],
     *,
     membership_path: Path,
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> list[Finding]:
-    """Replay each qualified UniProt membership claim against one exact provider fact."""
+    """Replay each qualified UniProt membership claim against one exact provider fact.
+
+    With ``registry``, a fact's Swiss-Prot/TrEMBL stamp must agree with the protein's
+    ProteinReference ``reviewed`` flag, so CI need not trust the stamp alone (#1043).
+    """
 
     from uniprot_membership_snapshot import (
         MembershipSnapshotError,
@@ -2350,7 +2464,7 @@ def validate_membership_replay(
         if not isinstance(evidence, Mapping):
             # The ordinary evidence dereference reports the missing or malformed row.
             continue
-        if evidence.get("mapping_method") != "SOURCE_MEMBERSHIP":
+        if evidence.get("mapping_method") not in UNIPROT_FACT_METHODS:
             continue
         is_uniprot = (
             evidence.get("provider_kind") == "UNIPROT"
@@ -2406,16 +2520,66 @@ def validate_membership_replay(
                     **context,
                 )
             )
+        entry_type = membership.get("uniprot_entry_type")
+        if entry_type is not None and registry is not None:
+            reference = registry.get(str(membership.get("protein_id") or ""))
+            reviewed = reference.get("reviewed") if isinstance(reference, Mapping) else None
+            if reviewed is not (entry_type == SWISSPROT_ENTRY_TYPE):
+                findings.append(
+                    _finding(
+                        "uniprot_entry_type_reviewed_mismatch",
+                        f"fact stamped {entry_type!r} but the ProteinReference has "
+                        f"reviewed={reviewed!r}",
+                        **context,
+                    )
+                )
+        evidence_failure = fact_evidence_failure(membership)
+        if evidence_failure:
+            # The same default-deny policy the resolver applies (#974): homology-only,
+            # textual, or automatic evidence stays a candidate, except the narrow
+            # Swiss-Prot EC-number and untagged-reaction rule (#1004).
+            findings.append(
+                _finding(
+                    "uniprot_fact_evidence_not_qualifying",
+                    f"the exact UniProt fact's evidence does not qualify ({evidence_failure})",
+                    **context,
+                )
+            )
     return findings
+
+
+def _is_go_true_path_claim(value: Mapping[str, Any]) -> bool:
+    """A GO annotation on a descendant term claimed for a GO record (#1002).
+
+    Only the shape is decided here; each step of the path must still be a tracked
+    GO edge or a ``parent_traits`` edge in the authoritative hierarchy index.
+    """
+
+    source, target = value.get("source_trait_id"), value.get("trait_id")
+    path = value.get("inheritance_path")
+    return (
+        value.get("mapping_method") == "SOURCE_ANNOTATION"
+        and isinstance(source, str)
+        and isinstance(target, str)
+        and source.startswith("GO:")
+        and target.startswith("GO:")
+        and isinstance(path, list)
+        and len(path) >= 2
+        and path[0] == source
+        and path[-1] == target
+        and all(isinstance(term, str) and term.startswith("GO:") for term in path)
+    )
 
 
 def build_hierarchy_index(
     paths: Iterable[Path],
+    go_edges: Path | None = DEFAULT_GO_EDGES,
 ) -> tuple[dict[str, frozenset[str]], list[Finding]]:
     """Build an authoritative child-to-direct-parent index from trait YAML.
 
     Every claimed inheritance step must correspond to one explicit
-    ``parent_traits`` edge. Duplicate record identifiers make the index
+    ``parent_traits`` edge, or to a tracked GO ``is_a``/``part_of`` edge from a
+    pinned GO release (#1002). Duplicate record identifiers make the index
     ambiguous and are reported rather than silently merged.
     """
 
@@ -2474,6 +2638,11 @@ def build_hierarchy_index(
             )
             continue
         hierarchy[trait_id] = frozenset(parents)
+    if go_edges is not None:
+        try:
+            hierarchy = union_index(hierarchy, load_edges(go_edges))
+        except GoTruePathError as error:
+            findings.append(_finding("go_true_path_edges_invalid", str(error), file=str(go_edges)))
     return hierarchy, findings
 
 
@@ -2577,8 +2746,18 @@ def _prosite_atom(atom: str) -> str | None:
         base = "[ACDEFGHIKLMNPQRSTVWYUOBZJX*]"
     elif re.fullmatch(r"[ACDEFGHIKLMNPQRSTVWYUOBZJX*]", atom, re.I):
         base = re.escape(atom.upper())
-    elif re.fullmatch(r"\[[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+\]", atom, re.I):
-        base = atom.upper()
+    elif re.fullmatch(r"\[[ACDEFGHIKLMNPQRSTVWYUOBZJX*<>]+\]", atom, re.I):
+        terminal_prefix = r"\A" if "<" in atom else None
+        terminal_suffix = r"\Z" if ">" in atom else None
+        residues = atom[1:-1].replace("<", "").replace(">", "").upper()
+        if not residues or (repeat and (terminal_prefix is not None or terminal_suffix is not None)):
+            return None
+        alternatives = [f"[{residues}]"]
+        if terminal_prefix is not None:
+            alternatives.append(terminal_prefix)
+        if terminal_suffix is not None:
+            alternatives.append(terminal_suffix)
+        base = "(?:" + "|".join(alternatives) + ")"
     elif re.fullmatch(r"\{[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+\}", atom, re.I):
         base = "[^" + atom[1:-1].upper() + "]"
     else:
@@ -3624,6 +3803,10 @@ def _write_findings(path: Path, findings: Sequence[Finding]) -> None:
             writer.writerow(asdict(finding))
 
 
+def _same_path(left: Path, right: Path) -> bool:
+    return left.resolve() == right.resolve()
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -3639,7 +3822,10 @@ def main(argv: list[str] | None = None) -> int:
         "--evidence-registry",
         type=Path,
         default=DEFAULT_EVIDENCE_REGISTRY,
-        help=f"GroundingEvidence JSONL registry (default {DEFAULT_EVIDENCE_REGISTRY})",
+        help=(
+            "GroundingEvidence registry: a sharded .jsonl.d directory or a flat JSONL "
+            f"file (default {DEFAULT_EVIDENCE_REGISTRY})"
+        ),
     )
     parser.add_argument(
         "--membership-registry",
@@ -3653,7 +3839,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--qualified-record-bindings",
         type=Path,
-        default=DEFAULT_QUALIFIED_RECORD_BINDINGS,
+        # None records whether the flag was given at all: passing it, even spelled as
+        # the default directory, always checks the bindings (#864).
+        default=None,
         help=(
             "transactional evidence-to-record content-gate receipts "
             f"(default {DEFAULT_QUALIFIED_RECORD_BINDINGS})"
@@ -3664,6 +3852,12 @@ def main(argv: list[str] | None = None) -> int:
         nargs="+",
         type=Path,
         help="Authoritative trait YAML roots for inheritance edges; default input paths",
+    )
+    parser.add_argument(
+        "--go-edges",
+        type=Path,
+        default=DEFAULT_GO_EDGES,
+        help="Tracked GO true-path edges that inheritance steps may also use (#1002)",
     )
     parser.add_argument("--out", type=Path, default=DEFAULT_REPORT, help="Finding TSV")
     parser.add_argument(
@@ -3683,6 +3877,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args(argv)
+    binding_explicit = args.qualified_record_bindings is not None
+    if not binding_explicit:
+        args.qualified_record_bindings = DEFAULT_QUALIFIED_RECORD_BINDINGS
 
     roots = args.paths or [DEFAULT_TRAITS]
     files = iter_yaml_files(roots)
@@ -3740,21 +3937,36 @@ def main(argv: list[str] | None = None) -> int:
     if qualified_input or registry_explicit or args.registry.is_file():
         registry, registry_findings = load_registry(args.registry)
         findings.extend(registry_findings)
-    evidence_explicit = args.evidence_registry != DEFAULT_EVIDENCE_REGISTRY
-    if qualified_input or evidence_explicit or args.evidence_registry.is_file():
+    # Durable evidence is only ever checked together with its bindings (#801). The
+    # evidence path compares by resolved identity, so a relative spelling of the default
+    # is still the default; an explicit --qualified-record-bindings is always checked
+    # (#864). Either artifact existing in either layout loads both: a missing partner is
+    # a finding, never a silent skip.
+    evidence_explicit = not _same_path(args.evidence_registry, DEFAULT_EVIDENCE_REGISTRY)
+    if (
+        qualified_input
+        or evidence_explicit
+        or binding_explicit
+        or layout.registry_exists(args.evidence_registry)
+        or layout.registry_exists(args.qualified_record_bindings)
+    ):
         evidence_registry, evidence_findings = load_evidence_registry(args.evidence_registry)
         findings.extend(evidence_findings)
-    binding_explicit = args.qualified_record_bindings != DEFAULT_QUALIFIED_RECORD_BINDINGS
-    default_binding_visible = (
-        args.evidence_registry == DEFAULT_EVIDENCE_REGISTRY
-        and args.qualified_record_bindings.is_file()
-    )
-    if evidence_registry is not None and (binding_explicit or default_binding_visible):
+    evidence_is_durable = layout.is_sharded(args.evidence_registry) or not evidence_explicit
+    if evidence_registry is not None and (evidence_is_durable or binding_explicit):
         qualified_record_bindings, binding_findings = load_qualified_record_bindings(
             args.qualified_record_bindings,
             evidence_registry,
         )
         findings.extend(binding_findings)
+    elif evidence_registry is not None:
+        # The one remaining skip: an explicit flat staging ledger has no receipts of its
+        # own. Say so even under --quiet, so a green run never implies bindings passed.
+        print(
+            "qualified record bindings: NOT CHECKED (explicit non-durable "
+            "--evidence-registry and no --qualified-record-bindings; pass it to check them)",
+            file=sys.stderr,
+        )
     evidence_lookup = evidence_registry or {}
     uniprot_membership_uses = [
         use
@@ -3772,7 +3984,9 @@ def main(argv: list[str] | None = None) -> int:
         findings.extend(membership_findings)
     if qualified_inheritance_input or args.hierarchy_traits:
         hierarchy_roots = args.hierarchy_traits or roots
-        hierarchy_index, hierarchy_findings = build_hierarchy_index(hierarchy_roots)
+        hierarchy_index, hierarchy_findings = build_hierarchy_index(
+            hierarchy_roots, go_edges=args.go_edges
+        )
         findings.extend(hierarchy_findings)
 
     for path, record in parsed_records.items():
@@ -3793,6 +4007,7 @@ def main(argv: list[str] | None = None) -> int:
                 evidence_lookup,
                 memberships,
                 membership_path=args.membership_registry,
+                registry=registry,
             )
         )
     findings.sort(

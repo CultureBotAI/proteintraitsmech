@@ -224,3 +224,28 @@ def test_cohort_comments_reproduce_consistently(pilot):
                           "--output", str(path), "--apply"]) == 0
     assert path.read_bytes() == before
     assert check_pilot(pilot) == []
+
+
+def test_unselected_registry_append_leaves_pilot_valid(pilot):
+    registry_path = pilot / "data/grounding/protein_registry.jsonl"
+    first = json.loads(registry_path.read_text())
+    unrelated = {
+        **first,
+        "protein_id": "UniProtKB:P99999",
+        "protein_label": "Unrelated appended protein",
+        "sequence": "MTEST",
+        "sequence_length": 5,
+        "sequence_sha256": sha256("MTEST"),
+    }
+    with open(registry_path, "a", encoding="utf-8") as f:
+        f.write(canonical_json(unrelated) + "\n")
+    # check_pilot should still succeed because the cohort proteins have not changed
+    assert check_pilot(pilot) == []
+    assert main(["--root", str(pilot)]) == 0
+
+    # But mutating a selected cohort protein in the registry fails verification
+    mutated = {**first, "protein_label": "Changed label"}
+    registry_path.write_text(canonical_json(mutated) + "\n" + canonical_json(unrelated) + "\n")
+    errors = check_pilot(pilot)
+    assert any("registry_sha256" in err for err in errors)
+

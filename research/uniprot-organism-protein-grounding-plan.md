@@ -22,7 +22,60 @@ until promotion is gated on the same-example presence of:
 Current `canonical_examples` that lack this evidence should be treated as
 `LEGACY_UNVERIFIED`, not as proof that the record has a qualified example.
 
-## Current execution checkpoint (2026-09-15)
+## Cross-Mech execution checkpoint (2026-10-10)
+
+The second explicitly authorized batch, `cross-mech-complex-20261010`, appended
+**36 qualified complex-membership examples on 24 records**, covering 36 distinct
+proteins. All 25 selected records and 37 alternatives were scientifically reviewed.
+One mechanically eligible ARG82/P07250 pairing with CPX-1152 was withheld because
+membership in the mature DNA-bound complex is ambiguous; five alternative Rhea
+candidates remain unreviewed. No catalytic function or residue interface was
+inferred from membership. All 36 added proteins have full, release-pinned sequences
+and generic annotations in the cross-Mech store. See the
+[latest checkpoint](cross-mech-protein-examples.md#protein-first-continuation--2026-10-10),
+[structured self-review](../reviews/structured/20261010T203945Z-cross-mech-complex-membership/review.md)
+and [authoritative YAML](../reviews/structured/20261010T203945Z-cross-mech-complex-membership/review.yaml).
+
+The durable registries now hold **12,699 ProteinReferences, 21,047 evidence objects
+and matching record bindings, and 430 UniProt membership facts**. Protein-first
+inventory coverage is **714 qualified / 537 legacy-only / 796 discovery-only**
+among 2,047 detected accessions. Both batches' 71 approvals and 180 rejections are
+preserved. This is a scoped addition, not corpus-wide completion; the three
+localized sibling pairs still require reviewed source-asserted occurrences.
+Existing provider restrictions and prior rejection dispositions remain in force.
+The coverage-priority cohort still has **666 proteins without a qualified example**
+(77 ComplexPortal, 400 Rhea, 189 GO candidates), including the held ARG82 choice.
+All 71 installed pairs retain exact matching sequence frames in the inventory.
+All 24 newly changed records pass closed-schema and whole-record qualification
+completion checks with zero findings; all non-example fields and the rejected
+record are preserved. Registry integrity, inventory reproducibility, the complete
+23-protein biophysical pilot bundle and 140 focused regression tests pass.
+The full browser rebuild, landing-page/SLC10 checks and all 75 post-build
+documentation tests pass. All 36 new examples are visible with exact sequence
+checksums; the inventory remains uncapped. No full-suite or full-corpus scientific
+completion is claimed.
+
+The first explicitly authorized `cross-mech-refresh-20261010` promotion appended 35
+qualified examples on 14 records: 21 GO localization and 14 Rhea enzymatic
+examples, covering 30 distinct proteins. No legacy example was upgraded. All
+use exact release-2026_03 whole-protein facts, not inferred residue positions.
+The review rejected P08306/GO:0004129 on subunit-versus-complex scope despite
+mechanical eligibility; 178 other alternatives failed the exact-fact gate.
+
+After that first batch the registries held 12,663 ProteinReferences, 21,011 evidence
+objects and matching record bindings, and 394 UniProt membership facts. That
+reviewed batch and the broader 2,047-accession sibling inventory are documented in the
+[cross-Mech checkpoint](cross-mech-protein-examples.md#current-protein-first-checkpoint--2026-10-10),
+including the [structured review](../reviews/structured/20261010T080519Z-cross-mech-refresh-examples/review.md)
+and its [authoritative YAML](../reviews/structured/20261010T080519Z-cross-mech-refresh-examples/review.yaml).
+At that first checkpoint, 702 proteins in the independent coverage-priority cohort
+still lacked a qualified example. Closed-schema validation passed for all 14
+modified records, and semantic replay had no new-claim or other findings beyond
+the 16 preserved legacy examples on
+GO:0031021 and GO:0034515. All 35 new examples pass the bounded qualification
+completion check. This does not recertify those legacy claims or existing graphs.
+
+## Historical execution checkpoint (2026-09-15)
 
 The historical Batch-001 durable blocker has been repaired. The one-off repair
 restored four exact InterPro head-slice definitions from the pinned InterPro 109.0
@@ -2016,6 +2069,8 @@ found.
   each output-parent device/inode. Because output directories are deliberately bound,
   replacing the review-batches directory invalidates a saved plan rather than silently
   retargeting it.
+  (Superseded 2026-10-12, #1082: v2 plans bind content digests and repository-relative
+  paths, not device/inode; see the dated section below.)
 - The fetcher now validates the complete selector-v6 contract rather than only three
   correlated fields: exact schema 6, `batch_id`, `source_batch`, queue SHA-256, 201
   candidate rows, 100 one-to-one trait/record identities, per-record alternative counts,
@@ -2571,6 +2626,424 @@ found.
   `funowl` deprecations recorded at the prior checkpoint. The combined fast SCOPe,
   CATH, 3did, and BioLiP source-stage suite separately passed 81 tests with four
   production goldens deselected in 3.52 seconds.
+
+### 2026-10-02 — BioLiP residue-level SIFTS verification and resolver boundary
+
+- The local BioLiP source stage still replays against the live trait tree with the same
+  pinned BioLiP source hashes: `BioLiP_nr.txt` at
+  `4688b8c3c3acf68a6e3816780cc0ddbba8d2ba6aaa40a41daba741b099d33099` and
+  `readme.txt` at
+  `120b22b3e26cf0d0ce7edfde122925963cdd81e6e5a8f4165d16f3238406c161`.
+  Current exact-route binding covers all 6,020 BioLiP traits; the 445 traits without a
+  canonical example bind 641 exact no-example source rows. Pairwise residue validation
+  keeps 638 rows ready for residue-level SIFTS mapping, requests 480 PDB XML files, and
+  retains three source-residue blockers. The updated source-stage ID is
+  `biolip-missing-protein-stage:a761c8152bf2e2c95c6c566c257654fe71561e8eb159f88c97fc5a0366750192`,
+  with occurrence-row, fetch-request, and combined non-summary SHA-256 values
+  `fa3cbade422baf150da4795d87d6a4821a713c48b96d570d9bd08dde475ee635`,
+  `66012d95884e43cf5376e9c2faa615affab902f48c40b4c6afca9eab9e865547`,
+  and `11ac82b81e882cc7f835101952741a7d0277deb57e6bb51ef711c050eab2a11b`.
+- The residue-level SIFTS mapper replays that source-stage stream against the complete
+  local `biolip-missing-protein-2026-09-24-full` snapshot, whose manifest hashes to
+  `dc9ca45ee4e5c3944f407153d6304a503d10a0ebc1a2a548d36fa2b4ea06c767`. It maps
+  344 complete BioLiP/SIFTS candidates across 252 traits and 278 proteins, retains 294
+  SIFTS blockers, and emits 278 exact UniProt ProteinReference requests. The mapping
+  stage ID is
+  `biolip-sifts-mapping-stage:c100dc8f8f09cfb182f4a9392ab999cb62da01c643b9b5ee403c3f134afa3daa`,
+  with candidate-row, blocker-row, and request-row SHA-256 values
+  `db92169cb5788eaa03f6ed4bb9e65174b61c274870eacdebd6b826c3dc7ca7eb`,
+  `f76dc350b4176837eae29fc14aa5d9ecc77290fa1bf6fa05fb9389e4395af0e6`,
+  and `8d606b5e1cede46e21be85916f5b408e3b652ff3a1881d386824fba23d75e5eb`.
+- The existing BioLiP/SIFTS UniProt fetch receipt binds request plan
+  `biolip-sifts-uniprot-fetch-plan:0b3429fe2c8532eea8e1e15b91de7a3de3c8404a25286a377819c1be3e99d8cc`
+  to UniProt release `2026_03` and three exact REST requests. It staged all 278
+  `ProteinReference` rows, 4,492 exact membership rows, and 344
+  `BIOLIP_SIFTS_MAPPING_REGISTRY_ROW` rows with zero blocked accessions; the receipt ID
+  is
+  `biolip-sifts-uniprot-fetch-receipt:985b8eef34c0284f4afaf55aa39846ca5a3e6bd8ddc1b67cdfa4b25fd9c043a0`.
+- BioLiP qualification remains blocked, but the local blocker has narrowed: the missing
+  protein and residue-mapping evidence now exists in ignored staging, while the shared
+  `SIFTS_RESIDUE_MAPPING` resolver/promotion path is still ECOD-shaped and verifies
+  `ecod-sifts:` rows with ECOD source projections. It must gain an equivalent
+  BioLiP/SIFTS candidate boundary and `biolip-sifts:` provider replay before these rows
+  can enter the ordinary review queue. Provider-release evidence, the academic-use
+  rights disposition, human review, and separate durable promotion authorization remain
+  independent gates. This checkpoint performed no network request, trait write, durable
+  grounding write, evidence qualification, review decision, commit, or pull request.
+
+### 2026-10-03 — representative repair queue exhaustion, not target-protein completeness
+
+- The local ignored `repair-existing-local` queue covers 292,934 candidates for 59,714
+  trait records. Despite the human/E. coli/yeast batch names, it includes candidates
+  from other taxa as well as the three target organisms. The CDD/NCBIfam/PROSITE phase is
+  finalized through `human-ecoli-yeast-repair-cnp-020`; that final CNP selector
+  retained all 970 remaining candidate rows across 542 records. The subsequent mixed
+  CATH/HAMAP/InterPro/PANTHER/Pfam phase is finalized through
+  `human-ecoli-yeast-repair-mixed-041`; that final mixed selector retained all 331
+  remaining candidate rows across 172 records. A dry terminal selector for
+  `human-ecoli-yeast-repair-mixed-042`, pointed at all 61 finalized review batches as
+  exact reviewed-exclusion quadruples and run with unchanged-all-rejected deferral,
+  failed only with the expected terminal error: no residual trait records remain in the
+  selected source slice after excluding fully reviewed record groups.
+- A same-day replay on current `main` reproduced both terminal selector states with
+  unchanged-all-rejected deferral. `human-ecoli-yeast-repair-cnp-021`, pointed at the 20
+  CNP finalized ledgers, failed only with the expected no-residual-trait-record error
+  for the CDD/NCBIfam/PROSITE slice. `human-ecoli-yeast-repair-mixed-042`, pointed at
+  all 61 CNP and mixed finalized ledgers, failed with the same expected terminal error
+  for the CATH/HAMAP/InterPro/PANTHER/Pfam slice.
+- Those 61 finalized ledgers bind an explicit decision to every one of the 292,934
+  selected alternatives: 50,311 rows are `APPROVED` and 242,623 are `REJECTED`. The
+  approved set covers 50,311 one-approved trait records and leaves 9,403 record groups
+  with all alternatives marked rejected under the historical representative-selection
+  policy. These decision totals do not establish biological rejection of every omitted
+  protein. Comparing each approved row's resolved
+  `grounding_evidence.evidence_id` with the current durable
+  `data/grounding/occurrence_evidence.jsonl.d/` registry found 13,828 exact approvals
+  already installed and 36,483 reviewed approvals still staging-only. The durable
+  registry held 20,398 evidence rows at that checkpoint.
+- An adversarial recount at base commit `a616dbb6fe80c458797941bbe33d6133b8c563ea`
+  joined each batch's `.review-decisions.jsonl` to its `.candidates.jsonl` by
+  `candidate_id`, explicitly including the ignored staging files. Of the approved
+  candidate rows, 19,561 are human (`NCBITaxon:9606`), 11,680 are *E. coli* K-12
+  (`NCBITaxon:83333`), 6,016 are *S. cerevisiae* S288c (`NCBITaxon:559292`), and
+  13,054 belong to other taxa. Among the rejected rows, 126,392 from those three exact
+  target taxon IDs carry an `unselected alternative` review note: 94,607 human, 15,555
+  *E. coli* K-12, and 16,230 yeast S288c. These are candidate-row counts, not unique
+  proteins or independently established eligible examples. For example, CNP batch 001
+  rejects human `UniProtKB:P46934` for `CDD:cd00201` solely because another candidate
+  was selected. Terminal selectors therefore establish exhaustion of this historical
+  representative ledger only, not complete target-organism coverage. Multi-approval
+  support does not retroactively reconsider those decisions: otherwise eligible target
+  alternatives still need evidence review, and source/proteome coverage, isoforms, and
+  other *E. coli*/*S. cerevisiae* strains require an explicit completeness audit.
+- Current dry promotion preflights still pass at both ends of the repaired queue without
+  writing durable state. `human-ecoli-yeast-repair-cnp-001` reports 1,000 approved
+  candidates: 688 already present and 312 pending record writes. The tail
+  `human-ecoli-yeast-repair-mixed-041` reports 151 approved candidates: 120 already
+  present and 31 pending record writes. Installing reviewed rows uses guarded
+  `promote --apply` runs against current record and registry preimages, within the
+  user's authorized scope. Promotion alone does not resolve the coverage gaps above;
+  this documentation checkpoint installs no rows in `data/traits/` or the durable
+  grounding registries.
+- Four additional dry promotion preflights on the same base passed without durable
+  writes. `human-ecoli-yeast-repair-mixed-001` reports 236 approved candidates: 112
+  already present and 124 pending record writes. `human-ecoli-yeast-repair-cnp-002`
+  reports 1,000 approved candidates: 798 already present and 202 pending record writes.
+  `human-ecoli-yeast-repair-cnp-003` reports 1,000 approved candidates: 777 already
+  present and 223 pending record writes. `human-ecoli-yeast-repair-mixed-002` reports
+  660 approved candidates: 368 already present and 292 pending record writes.
+- The direct promotion, partition finalization, exact reviewed-exclusion selection, and
+  historical bootstrap routes now accept several explicitly `APPROVED` alternatives for
+  one trait record, provided every alternative in that record group is still explicitly
+  decided. A regression fixture resolves and approves both a human and an *E. coli*
+  protein for one Pfam trait, promotes them, and verifies that both `QUALIFIED`
+  examples and both durable evidence rows are installed. This removes the one-exemplar
+  blocker for target-organism completion while keeping complete record-group review
+  decisions as the boundary for durable promotion and reviewed-history exclusion.
+
+### 2026-10-03 — first target-alternative promotion after representative review
+
+- Starting from `011085a811d3d09e24c174071eca5f9cb2dd5274`, the guarded promoter
+  installed the re-reviewed target-organism alternatives from
+  `human-ecoli-yeast-repair-mixed-041`, using the isolated
+  `-target-preserve-durable-2026-10-03.approved.tsv` ledger. The finalized ledger
+  contains 140 approved and 191 rejected candidate rows; promotion recognized 80
+  approvals as already installed and wrote 27 trait records. Historical staging
+  ledgers were retained rather than overwritten.
+- The durable delta is 57 new record/protein examples and 60 new localized
+  occurrences: 43 human, seven E. coli K-12, and ten yeast S288c occurrence rows.
+  Repeated non-overlapping locations are retained separately. The protein registry
+  grows from 12,326 to 12,369 references (43 new full sequences); evidence and
+  qualified-record bindings grow from 20,398 to 20,458 rows each. Exact comparison
+  with the pre-promotion Git snapshot confirms preservation of all existing protein
+  references, examples, occurrences, and non-example record content.
+- These are direct InterPro 110.0 assertions for the containing trait, with exact
+  source coordinates checked against release-pinned, checksummed UniProt sequences.
+  Thirty replacement proposals differing only by grouped-location evidence identity
+  were retained as already-satisfied durable claims, not interpreted as biological
+  rejection. The separate definition holds for IPR063614, IPR063586, and IPR063694
+  remain unresolved; this promotion does not add their held alternatives.
+- The dependent biophysical pilot was regenerated through its calculator: only its
+  registry-input checksum changed, and its complete bundle check passes. The
+  InterPro fetcher now refuses unavailable or malformed release metadata before
+  reading or mutating sidecars, including when `--allow-stale` is supplied.
+- This is incremental coverage, not target-proteome completion. Full sequences
+  reside in `ProteinReference`; trait-specific annotations reside in
+  `trait_occurrences`. It does not add generic UniProt feature tracks or remove
+  existing browser display limits. The separate, ignored target-profile InterPro
+  acquisition is not part of this durable promotion, and incomplete source staging
+  must not be treated as evidence of biological absence.
+
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 0 of 8
+
+- At base `0b7bc5bcfae788444dfab2996ca42cbaf4be8cc5`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-000of008`. Its 96 candidate
+  alternatives cover 56 records; all received explicit decisions. The 46 approvals
+  cover 41 target records, including two already-installed assertions. The other
+  50 rows are non-target scope deferrals, not biological rejections. Selection used
+  the exact taxa human `9606`, E. coli K-12 `83333`, and yeast S288c `559292`.
+- The installed delta is **44 existing-example upgrades and 44 new localized
+  occurrences across 39 records**, not new record/protein example identifiers:
+  31 human, nine yeast S288c, and four E. coli K-12 occurrences. Twenty-two new
+  full-sequence references increase the protein registry from 12,369 to 12,391;
+  evidence and binding registries each increase from 20,458 to 20,502 rows.
+  Comparison against the Git base confirms all old references, evidence, bindings,
+  examples, occurrences, and non-example record content are preserved.
+- These are direct CDD model assignments from InterPro `110.0`, in exact canonical
+  UniProt frames checked against checksummed `2026_03` sequences. All 46 selected
+  examples pass the semantic validator with `require_qualified=True` on the
+  selected-example projection. That gate does **not** establish qualification of
+  every other example in those records or experimentally prove their background
+  functional prose. No generic UniProt feature tracks or isoforms are added.
+- Full `just validate-all` subsequently passed for all 429,293 records: zero
+  strict-schema errors and zero grounding semantic findings. Scoped validation,
+  the registry/pilot/writer/history gates, and 389 focused docs, registry, pilot,
+  and grounding-validator tests also passed. Browser-build and final GitHub gate
+  results are recorded on the associated PR rather than inferred from silence.
+- The local replay basename is
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-000of008`.
+  Its ignored artifacts are identified by SHA-256:
+
+  | Suffix | SHA-256 |
+  | --- | --- |
+  | `.candidates.jsonl` | `d59fc6f17412f6f13c1a0cde450c10886c80a618b79251396367bf08d1088dea` |
+  | `.resolved.jsonl` | `1267f08a7919c04391eb5ab815267426e40e972bc93a0791bdcffbe9db7f68ba` |
+  | `.target-review.jsonl` | `d7c36ce6cb8e8c2d23a9fdf6f5e58d20397b1b810840966bd543c551fc6eb12d` |
+  | `.review-decisions.jsonl` | `c50cd27b5cb60ada1410d9e0aa2be67fc18b43303a4d7efb51ea041391b93f92` |
+  | `.approved.tsv` | `b7fe87c8f270a923dc131fe70143203d0b0d4cd4e820e4370ba14ad32d850b9f` |
+  | `.uniprot_fetch_receipt.json` | `9cb2bf358044fe1cff541f34738db1cffc95db76808215f11684537856af8a6f` |
+
+  These hashes identify retained local staging; they do not make its bytes available
+  in a fresh checkout. The durable sequence/evidence/binding registries and trait
+  occurrences are committed together. Review handoff issue: [#940](https://github.com/CultureBotAI/proteintraitsmech/issues/940).
+  The [durable review report](cdd-cnp020-shard0-target-grounding-review-2026-10-03.md)
+  is published under `research/`; its skill-generated original remains ignored under
+  `reports/`, preserving the clean-checkout boundary checked in CI (review issue #942).
+- Two existing human examples still lack qualification in this reviewed cohort:
+  DYDC2 `UniProtKB:Q96IM9` on `CDD:cd22966` and SDF2 `UniProtKB:Q99470` on
+  `CDD:cd23293`. Both are in the separate ignored target-profile acquisition list;
+  absence from this batch is not absence of the trait. Coverage of other strains,
+  unreviewed entries, isoforms, and source locations remains unestablished.
+- The SLX4 RIM2 assertion (`UniProtKB:Q12098`, residues 535–587, `CDD:cd22869`)
+  is a domain/motif assignment, not proof that Slx4 itself catalyzes DNA cleavage.
+  Its source-derived definition still conflates subunit and complex activity and
+  needs separate source-aware curation. The RIM interaction is supported by
+  [Wan et al., DOI:10.1016/j.molcel.2019.05.035](https://pmc.ncbi.nlm.nih.gov/articles/PMC6745058/);
+  the catalytic-subunit/scaffold distinction is discussed in
+  [The SMX DNA Repair Tri-nuclease](https://pmc.ncbi.nlm.nih.gov/articles/PMC5344696/).
+  This promotion leaves definitions and mapping status unchanged.
+- Shard `human-ecoli-yeast-target-cnp020-001of008` remains staging-only: 56 approved
+  alternatives, 57 non-target scope deferrals, and one already-satisfied ITPR1
+  assertion preserved rather than replaced by a different grouped-location evidence
+  identity. The incomplete target-profile InterPro fetch is also separate and is
+  not an input to this promotion. Neither staging activity establishes completion
+  of the overall target-organism goal.
+
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 1 of 8
+
+- From base `828c03457158fb1b81ed9c8969d45cda994c1def`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-001of008`. All 114 candidate
+  alternatives across 62 records have explicit decisions: 56 approvals across
+  52 records, 57 non-target scope deferrals, and one already-satisfied ITPR1
+  assertion deliberately left unchanged. Every resolved record preimage still
+  matched the current record before application.
+- The promoter installed 56 existing-example qualifications with localized trait
+  coordinates: 42 human, 11 yeast S288c, and three E. coli K-12 assertions. The
+  selected exact taxa are `9606`, `559292`, and `83333`. This is not an addition
+  of new example accession IDs. Thirty-four full-sequence references increase the
+  protein registry from 12,391 to 12,425; evidence and binding registries each
+  increase from 20,502 to 20,558 rows.
+- Each selected assertion names its exact CDD model directly, without hierarchy
+  inference, using InterPro `110.0` coordinates in the canonical UniProt frame.
+  Full sequences, lengths, and checksums are pinned to UniProt `2026_03`.
+  Qualification establishes this source-asserted domain occurrence, not all
+  functional claims in the source-derived definition. No generic feature tracks,
+  new isoforms, local alignments, or computed motif coordinates are introduced.
+- The local replay basename is
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-001of008`.
+  Retained ignored staging is identified by SHA-256:
+
+  | Suffix | SHA-256 |
+  | --- | --- |
+  | `.candidates.jsonl` | `b6965e2bf26f6503cce338f93a9f5cab534c52f3957ae7891de50d1fafd52b3d` |
+  | `.resolved.jsonl` | `c6e16a69bb8035ce0f6cb0940a3db2e7dee75ef467873d591a331a58d32eb539` |
+  | `.target-review.jsonl` | `d0787300e8f48033756bd7e634f236c6afcf7ecd02aa17ca3cd0d0b0ee043838` |
+  | `.review-decisions.jsonl` | `aa962df7520c39705844aa7cc00bba7b2edd6cbf7dfb46d7ad02539eaa202bb3` |
+  | `.approved.tsv` | `ad311130ddb748931bf79d831d7e01fe7d98a9f25c02ddcca3892e8066c04472` |
+  | `.uniprot_fetch_receipt.json` | `e499cf737076dccfd35ac67be0b5ba674736b94fad1b4d23b9edc83865d8ef69` |
+
+  These hashes identify local replay inputs, not artifacts downloadable from a
+  clean checkout. Durable records and sequence/evidence/binding registries are
+  the installed claim objects. The selected UniProt acquisition covered 113 exact
+  accessions; only the approved target assertions are promoted.
+- The registered calculator refreshed the biophysical pilot's registry pin to
+  `88846a6ecb1195f5aba5f011cf1341c57f5aa28c7e5445ca2c4edeb10a9a44bc`.
+  The observation digest remains
+  `1d2221a3bfe40aa1f76420276f7a100276bac54cec88321c3f8b942bb9313362`.
+  Pilot replay and registry-layout checks pass. The evidence logical digest is
+  `b20e82b89b53ff03f3d0722f18a5f523097d2f8c204c54d6f1d2a362220098d9`;
+  the binding logical digest is
+  `231528d9fc144fed1b5d5e5bf2f72729b7901f948c85251f5058a80e1224209a`.
+  Independent Git-base replay confirms exactly 56 upgrades, 56 new occurrences,
+  34 new sequence references, and zero new example IDs. All old protein references,
+  evidence, bindings, example fields, occurrences, and non-example record content
+  are preserved; all ten excluded record groups remain byte-identical, including
+  ITPR1. All 56 selected-example projections pass `require_qualified=True`.
+  This is not a require-qualified pass for other legacy examples in those files.
+  The writer and append-only history audits pass, as do all 389 focused grounding,
+  registry, pilot, and browser regression tests (97.28 seconds). Scoped
+  `validate-all` completed for all 52 changed records with zero semantic
+  findings. Fresh adversarial replay also checks all 114 provider assertions,
+  including exact intervals, releases, sequence lengths, checksums, and taxa.
+  Fourteen approved assertions use grouped-location identity and 42 use a
+  single flat location. Full `validate-all` also completed: 429,293 files,
+  zero strict errors, and zero semantic findings. The full regression suite
+  and browser rebuild remain in progress at this checkpoint; their terminal
+  outcomes belong in the PR before merge and must not be inferred from
+  successful promotion or registry-layout checks.
+  The [tracked shard-1 review](cdd-cnp020-shard1-target-grounding-review-2026-10-03.md)
+  publishes all member paths, selected coordinates, exclusions, and scientific
+  scope notes, addressing review issue #943 without committing ignored staging.
+- Adversarial review #944 expanded the completeness check from the 53
+  target-candidate-bearing groups to all 62 selected record groups, including
+  all ten excluded groups. The full cohort has 55 target-bearing records with
+  57 qualified and five legacy-unverified target examples. The five unqueued
+  legacy examples are CPLX4 `UniProtKB:Q7Z7G2` on `CDD:cd22809`, PMT6
+  `UniProtKB:P42934` on `CDD:cd23284`, UBE2H `UniProtKB:P62256` on
+  `CDD:cd23797`, FGF14 `UniProtKB:Q92915` on `CDD:cd23330`, and PPP1R3C
+  `UniProtKB:Q9UQK1` on `CDD:cd22815`. The last two are in excluded groups
+  whose queued candidates are non-target, not records lacking target proteins.
+  All five accessions are retained in the separate acquisition list for later
+  source-backed review. The scan includes every example in all 62 records and
+  the full ignored shard ledger. No biological absence or complete coverage
+  follows. ITPR1 `UniProtKB:Q14643` on `CDD:cd23287`, residues
+  224–445, retains its existing evidence identity instead of replacing it with a
+  different grouped-location identity for the same assertion.
+- Scientific scope caveats remain: the [ST6GAL2 source model](https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=467714)
+  contains inconsistent alpha-2,3 wording despite its alpha-2,6 label and stated
+  linkage. The Q96JF0 245–514 domain assignment does not certify that prose.
+  The [PanK4 source model](https://www.ncbi.nlm.nih.gov/Structure/cdd/cddsrv.cgi?uid=cd24123)
+  distinguishes the human pseudo-kinase domain from the C-terminal phosphatase;
+  the yeast CAB1 assignment must not imply the animal fusion architecture.
+  Definitions and mapping status are unchanged in this promotion.
+- Shard `human-ecoli-yeast-target-cnp020-002of008` is staged separately after
+  excluding the 93 approved record groups from shards 0 and 1. Its 112 alternatives
+  span 68 records; 61 alternatives on 56 records belong to the three selected
+  taxa. The exact-accession fetch returned all 111 requested canonical proteins
+  at UniProt `2026_03`, 1,773 membership facts, and zero blocked accessions.
+  All 68 records have now been read and all 112 provider assertions replayed.
+  Finalization records 61 approvals and 51 non-target scope deferrals, with
+  56 approved record groups and 12 all-deferred groups. Two approved assertions
+  already exist exactly (FSCN1 Q16658/CDD:cd23356 and VRTN Q9H8Y1/CDD:cd22791).
+  The separate dry promotion preflight passed: 61 approvals, 54 planned writes,
+  two already present, and prospective totals of 12,462 protein references
+  and 20,617 evidence/binding rows. No shard-2 assertion is promoted
+  by this checkpoint or included in the shard-1 PR. Extra isoform responses are
+  not admission evidence. Its resolved SHA-256 is
+  `7dd593a7a4e17d5fd64e2e039541dc7b2cdc0a30c09c4a13f2c5d032f99bca07`;
+  finalized decisions SHA-256 is
+  `96deeab32a3b645af590645dc7e0be4112aa5d0dc58d183bdece4188ce5187f6`;
+  approved TSV SHA-256 is
+  `1c8b6e7118754829e0590dad66369ac71998583ee7f29bca2ef9b02443b88401`.
+  Eleven existing target examples are absent from that queue and remain
+  legacy-unverified: Q8N2G4/cd23559, Q8N961/cd22913, Q13952/cd22908,
+  P17709/cd24088, P61758 and P48363/cd23156, P29340/cd23812,
+  P51668 and P62837/cd23792, A0A1B0GUS4/cd23801, and Q5JXB2/cd23813.
+  These are UniProt accession/CDD model pairs. The comparison includes all
+  examples in all 68 records and ignored staging; all eleven accessions are
+  in the separate acquisition list. Four of the all-deferred groups contain
+  existing target examples, so queue-level deferral is not a non-target-only
+  biological classification. Definition-named yeast HAP5 on cd22908 needs
+  separate accession/source verification; it is not added by this pass.
+- The isolated target-profile InterPro acquisition remains separate and unfinished;
+  mutable partial snapshots are not promotion inputs. Other strains, unreviewed
+  proteins, isoforms, unqueued examples, and traits unsupported by these provider
+  routes remain coverage work. This batch does not complete the all-protein goal.
+
+### 2026-10-03 — CDD target-example qualification, CNP020 shard 2 of 8
+
+- From base `cf9adc35d5e8af97f814448fc46e7e8ec4a7062e`, the registered guarded
+  promoter applied `human-ecoli-yeast-target-cnp020-002of008`: 61 approvals,
+  54 validated record writes, and two assertions already present exactly.
+  The actual delta is 59 legacy-example qualifications and localized occurrences
+  (44 human, 11 yeast S288c, four E. coli K-12), 37 full-sequence references,
+  and **zero new example accession IDs**. All 112 alternatives across 68 record
+  groups have explicit decisions; 51 non-target alternatives are deferred in
+  this pass, not rejected as biological carriers.
+- All approved occurrences name their exact CDD model directly in the canonical
+  UniProt frame, using InterPro `110.0` coordinates and UniProt `2026_03`
+  sequences. Fresh provider replay checks all 112 assertions; 21 of the 61
+  approvals use grouped-location identity and 40 use a flat projection.
+  FSCN1 Q16658/CDD:cd23356 383–493 and VRTN Q9H8Y1/CDD:cd22791 74–241
+  are exact installed no-ops, not replacements. No local alignment, computed
+  motif coordinates, extra isoforms, or general feature tracks are admitted.
+- Git-base replay proves all prior protein references, evidence, bindings,
+  example fields, occurrences, example order, and raw bytes outside
+  `canonical_examples` are preserved. All 12 all-deferred record groups are
+  byte-identical. All 61 selected-example projections pass
+  `require_qualified=True`; this does not qualify other legacy examples.
+  The registries now contain 12,462 protein references and 20,617 evidence
+  rows with matching binding keys. Digests are:
+
+  | Durable artifact | SHA-256 |
+  | --- | --- |
+  | Protein registry | `108ef14d1f1ad5af27999e84ce12c99968ed6c42d811c7d700b34d3241b455dd` |
+  | Evidence logical image | `4cb23fa6ac38ba0d531a9da399e1fb3860234044347379c34b4f3c467670b966` |
+  | Bindings logical image | `047f1ed403932e42907ab6225ac162c73663b7b723ccd4a657e4a2e027ad6ad7` |
+
+- Adversarial issue #946 reproduced the stale biophysical pilot registry pin.
+  The registered calculator replay fixes that dependency while preserving the
+  observation JSONL and TSV bytes. The observation SHA-256 remains
+  `1d2221a3bfe40aa1f76420276f7a100276bac54cec88321c3f8b942bb9313362`.
+  The pilot checker and registry-layout gate pass, as do all 389 focused
+  grounding/registry/pilot/browser tests (105.18 seconds), the writer audit,
+  history validation, and lint. Scoped `validate-all` passes all 54 changed
+  records with zero semantic findings; full `validate-all` passes all
+  429,293 records with zero strict errors and zero semantic findings. Full CI,
+  browser rebuild, and Pages budgets remain pending at this checkpoint;
+  terminal results must be recorded before
+  merge rather than inferred from the successful promotion.
+- Adversarial issue #947 is addressed by the
+  [tracked shard-2 review](cdd-cnp020-shard2-target-grounding-review-2026-10-03.md),
+  with all 68 paths, selected intervals, scope deferrals, source caveats, and
+  immutable staging hashes. The existing staging hashes in the preceding
+  shard-1 checkpoint still match. Retained local replay basename:
+  `reports/uniprot-grounding/review-batches/human-ecoli-yeast-target-cnp020-002of008`.
+  These ignored files are not published artifacts; the durable registry and
+  trait objects are the installed claims. AI review is not human curator
+  sign-off and no mapping status or source definition is changed.
+- The full 68-group inventory has 60 target-bearing records with 61 qualified
+  and 11 legacy-unverified target examples. Four of the 12 all-deferred groups
+  contain existing target examples. The same 11 accession/model gaps listed
+  in the preceding staging checkpoint remain unqualified and are enumerated
+  in the review; none is silently counted as completed.
+- A separate full scan of the frozen profile JSONL across the 186 unique record
+  groups in CNP020 shards 0–2 found 189 exact target-profile/trait pairs and
+  three missing example accession IDs: Q9Y2X8 and P15732 on CDD:cd23792,
+  and Q02516/HAP5 on CDD:cd22908. The profile checksum is
+  `57b2f433eb82bfd9f59a8da5155a4aee6f98a6dcb7391b89c5166e4ceef89fc5`.
+  The publication pass freshly rechecks that checksum, exact record example
+  lists, and all three accessions in the separate acquisition list. These
+  discovery leads are not qualification evidence and are not added by this
+  PR. The audit route can revisit qualified records with target-taxon
+  inclusion; do not incorrectly treat it as limited to existing examples.
+- The separate InterPro crawl remains outside this promotion. Freeze and
+  verify its terminal release before using it for further admissions. Other
+  strains, unreviewed proteins, isoforms, omitted accession IDs, other sources,
+  and unsupported routes remain coverage work. The browser currently projects
+  legacy inline sequence/features, not the new registry-backed occurrence
+  coordinates. The all-protein goal remains open.
+- During publication review, that isolated crawl exited successfully: 25,573
+  proteins in the completed sidecars (including one cached canary), 256,531
+  signature matches, and zero reported failed requests. Under
+  `reports/uniprot-grounding/target-profile-interpro-completion-2026-10-03/`,
+  the flat frame is 9,148,698 bytes, SHA-256
+  `9ede3ae6454e8d50134ca92a38f577ab08b8082937f37b6f2e656ecc92bfa801`;
+  the grouped frame is 9,883,812 bytes, SHA-256
+  `3738366dac0ad8fcc43bb98e58cbe052b181ffee5f6a0ab13a10f3cf2541f25b`.
+  Both metadata blocks declare InterPro `110.0`; an end-of-crawl upstream
+  release-consistency check is still outstanding. No new assertion from these
+  sidecars is promoted or otherwise admitted by this PR.
 
 ### 2026-08-24 — ELM source-native candidate staging and receipt boundary
 
@@ -4035,3 +4508,310 @@ found.
   at this checkpoint. The controlled Rhea acquisition-runner boundary is complete and
   fully replayed; the next operation remains a separately authorized `--apply` against a
   saved and reviewed execution plan under explicitly permitted network access.
+
+### 2026-10-11 — pinned provider frames rebuilt and the DUF discovery-lead lane
+
+- The UniProt residue frame was rebuilt at the pinned `2026_03` (`just
+  fetch-residue-frame --organisms --top-up --apply`, after a 5-protein canary through
+  the same recipe). It holds 113,695 proteins: 80,090 from the ten panel proteomes and
+  33,605 from the corpus exemplar top-up, with 10,243 confirmed absent. Its SHA-256 is
+  `69edb24bad2535929a6654b53e5d748760552271bf9869b36739504ca1ff81b1`. The run made
+  roughly 850 UniProt requests in 42 minutes. It does not reproduce the 2026-09-24 pin
+  `4fc4d2fb…`, because the sidecar embeds its build date and corpus-dependent top-up.
+- The organism-panel InterPro 110.0 frame was only canaried: 1 of 41,598 target
+  proteins, through `just fetch-interpro-frame --limit 1 --apply`. At the measured
+  rate (about 1.7 proteins/s with 6 workers), a full crawl is at least 41,598 requests
+  and about 6–7 hours. That exceeds the authorized bound, so the crawl was stopped.
+  The local panel frame is a resumable 1-protein partial and must not be audited as
+  complete.
+- The DUF discovery-lead lane routes DUFMech's frozen UniProt candidates onto Pfam DUF
+  records as leads only. Each candidate must still match the record's Pfam signature
+  exactly in a release-pinned InterPro crawl
+  ([duf-discovery leads](duf-discovery-leads.md)). First batch
+  `duf-leads-review-001`: 100 records and 335 alternatives, resolved to 334 QUALIFIED
+  and 1 REJECTED. It is unreviewed, and there is no approval ledger. No trait or durable
+  grounding write occurred.
+
+### 2026-10-12 — frame completeness and content pins (#1070, #1071)
+
+- InterPro frame writes now record `_meta.completeness`, which is `complete: true`
+  only when every target protein is in both frames. `audit-uniprot-grounding` refuses
+  a frame that is not stamped complete for the organism-panel target set (and a
+  grouped frame with a different stamp), so a canary, checkpoint or accession-list
+  stamp can no longer turn "not crawled" into `NO_LOCAL_EXACT_TRAIT_MATCH`.
+  Certifying changes the panel frame's bytes, so the CATH stage's `bc2d66…`
+  InterPro byte pin needs a reviewed repin afterwards (#1098). A crawl finished by an older script
+  is stamped offline with `just certify-interpro-frame --apply`, after its target set
+  is re-derived and its coverage checked. The resolver rejects a candidate whose
+  accession the bound frame never reached as `missing:interpro_frame_entry`.
+- The CATH stage keeps the `4fc4d2fb…` residue-frame byte pin and also accepts the
+  content digest (canonical JSON without `built`/`completeness`) of the 2026-10-11
+  rebuild, `a640a2ea9f8d1f6a552f583531c50e2d98a38642534a2c028aea96878886dcc2`.
+  It was not re-run against the rebuild; see
+  [duf-discovery leads](duf-discovery-leads.md) for what the content pin does and does
+  not guarantee.
+
+### 2026-10-05 — UniProt exact-accession functional-fact lane (#652)
+
+- Sibling Mechs tie 406 proteins to 216 existing trait records here, almost all
+  whole-protein FUNCTION traits: GO localization and molecular function, Rhea
+  reactions, and ComplexPortal complexes
+  ([cross-Mech protein examples](cross-mech-protein-examples.md)). Priority 4 above
+  already names the routes ("Rhea: exact Rhea-to-UniProt or UniProt catalytic-activity
+  annotation"; "GO: direct GOA/UniProt annotation, retaining the evidence code"), but
+  only signature cross-references were captured, and the central contract admitted
+  ComplexPortal and Rhea only from their receipt-locked source-native providers.
+- `uniprot_membership_snapshot.py` now also captures `ComplexPortal` and `GO`
+  cross-references and catalytic-activity Rhea reactions from the same exact-accession
+  response. `expected_mapping_method` binds GO to `SOURCE_ANNOTATION` and every other fact
+  to `SOURCE_MEMBERSHIP`. Directional `physiologicalReactions` and GO `ND` annotations are
+  never facts. The registry fetch requests `go_id`, `xref_complexportal`, and
+  `cc_catalytic_activity`, which changes request URLs: a plan built before this change
+  no longer matches and fails closed.
+- The promoter resolves `SOURCE_ANNOTATION` through the same exact fact lookup and
+  rejects a fact recorded under the other method. The validator replays both methods
+  (previously a UniProt `SOURCE_ANNOTATION` claim would not have been replayed at all),
+  and the ComplexPortal and Rhea contracts gain a UniProt lane: `provider_kind: UNIPROT`,
+  `evidence_source: UniProtKB`, exact trait, whole protein. Their source-native lanes keep
+  every requirement and the unconditional receipt lock.
+- Review of the lane (#973-#979) added a promote-time receipt gate (a ComplexPortal,
+  Rhea, or GO fact is installed only from a verified network UniProt fetch receipt that
+  binds the exact membership bytes) and a default-deny evidence policy shared by the
+  resolver and the validator: GO needs an experimental or curator code, and a catalytic
+  activity needs experimental, curator-inference, or traceable-author evidence, which the
+  stored Rhea fact now keeps. Isoform-scoped catalytic activities are skipped, a
+  malformed fact blocks only its accession, and promote checks each installed fact.
+- No trait or durable grounding write occurred in this change. Inclusion of the sibling
+  candidates is a separate, reviewed promotion batch.
+
+### 2026-10-09 — cross-Mech examples, batch 002 (#652, #1002, #1004)
+
+- 78 more sibling-Mech (protein, trait) claims are `QUALIFIED` whole-protein examples on
+  19 records: 64 GO localization, 8 GO molecular function, and 6 Rhea. 65 are inherited
+  from a descendant GO annotation; 14 rest on the narrow Swiss-Prot rule (8 EC-derived
+  GO with a curated EC, 6 untagged reactions). All are Swiss-Prot. 77 examples were
+  appended and 1 legacy example was upgraded. The batch created
+  `go_true_path_edges.jsonl` (12 edges) and grows `uniprot_memberships.jsonl` to 359
+  facts. Full record:
+  [batch 002 review](cross-mech-examples-batch-002-review-2026-10-09.md).
+- 144 selected pairs were rejected: 142 by the resolver and 2 on review. The review
+  rejections are P08306, a cytochrome c oxidase subunit without the catalytic site
+  (#983), and SpoIVA, whose only fact is a mutant phenotype (#1049). Three localized pairs
+  still wait for an InterPro occurrence (#1003).
+- A first promotion was redone after review found three problems (#1048–#1050), all
+  fixed in #1031 and followed by a fresh canary:
+  - EC-derived GO from by-similarity and sequence-model ECs;
+  - SpoIVA;
+  - an evidence-blind tie-break.
+
+  AI review, not curator sign-off.
+
+### 2026-10-08 — GO true-path inheritance and the Swiss-Prot evidence rule (#1002, #1004)
+
+- Priority 4's "GO: direct GOA/UniProt annotation, retaining the evidence code" now also
+  covers an exact annotation to a descendant term, inherited along an explicit
+  `inheritance_path` of `is_a`/`part_of` edges in the local GO release. The edges a
+  qualified example uses are tracked, each with the release that proved it, in
+  `data/grounding/go_true_path_edges.jsonl` and replayed by the validator; corpus
+  `parent_traits` alone could prove only 1 of 62 such paths in the cross-Mech queue.
+  The GO release is not yet pinned by a fetch receipt (#1039).
+- Priority 4 keeps "EC-only, textual, homology-only, or generic pathway inference" as
+  candidate evidence, with one maintainer-approved exception (#1004): on a reviewed
+  Swiss-Prot entry, GO terms inferred from the curated EC number (`IEA:UniProtKB-EC`)
+  and catalytic activities curated without an evidence tag qualify. Neither does on
+  TrEMBL; every other automatic, phylogenetic, or textual source stays a candidate. The
+  EC number must itself be curated: an EC assignment inferred by similarity, sequence
+  model, or automatic annotation does not qualify the GO terms derived from it (#1048).
+
+### 2026-10-05 — cross-Mech examples, batch 001 (#652)
+
+- The first promotion through the UniProt exact-accession fact lane: 281 sibling-Mech
+  (protein, trait) claims are now `QUALIFIED` whole-protein examples on 133 records
+  (112 ComplexPortal, 83 GO localization, 80 Rhea, 5 GO molecular function, 1 NCBIfam).
+  This appends 253 examples and upgrades 28 existing legacy examples. All are Swiss-Prot
+  entries: GO uses IDA/IPI/EXP/IMP and every catalytic activity uses `ECO:0000269`;
+  ComplexPortal and NCBIfam use their exact membership contracts. This creates the first durable
+  `uniprot_memberships.jsonl` (281 facts). Full record:
+  [batch 001 review](cross-mech-examples-batch-001-review-2026-10-05.md).
+- 222 pairs were rejected: 145 with no exact UniProt fact and 77 by the evidence policy.
+  Three localized pairs wait for an InterPro occurrence.
+- A first attempt admitted electronic, phylogenetic, and automatic evidence, against this
+  plan's priority 4. Review caught it, and it was rolled back unmerged and redone under
+  the default-deny policy from a fresh canary. AI review, not curator sign-off.
+- Full `just validate-all` passed over 429,293 records with 0 strict errors and 0 semantic
+  findings. Follow-up audit verified both fetch receipts and the complete batch diff.
+
+### 2026-09-26 — sharded durable evidence and bindings registries (#801)
+
+- The durable `occurrence_evidence` and `qualified_record_bindings` registries move from
+  single JSONL files to `.jsonl.d` directories of up to 256 shards, keyed by the two hex
+  digits after `ug-evidence:` and committed by a `manifest.json` written last
+  (`scripts/grounding_registry_layout.py`; layout rules in `data/grounding/README.md`).
+  `protein_registry.jsonl` and `uniprot_memberships.jsonl` stay flat. Historical entries
+  above that name the flat files describe the layout of their time and are left as they
+  are.
+- Design-time measurement, taken on `5bf6e9fcb8a` while #801 was being designed: evidence
+  12,577 rows, 7,539,553 bytes, SHA-256
+  `caa9834e838ae8cb98d1cba68987157a2f832021098b8dabab5b087dc958a510`; bindings 12,577
+  rows, 19,008,589 bytes, SHA-256
+  `4a6082161da083942306813fde679caa4e097c618a5524a9b90a634e269dc310`. Each split into
+  256 shards (largest 41,203 and 104,100 bytes). These figures are not the migrated
+  data: promotions that landed before the migration added rows, so the data commit was
+  regenerated on its final base. The `history/mappings/grounding-registry-layout/`
+  record holds the authoritative migrated row counts and SHA-256 values.
+- Joining the shards in name order reproduces each flat file byte for byte, so a
+  registry's logical digest equals its former flat SHA-256.
+- The promoter, the semantic validator, the audit, and eLife promotion now default to
+  the sharded paths. The promoter's transaction plans every shard write before the
+  first one, re-verifies installed directories before trait writes, rolls back on an
+  interrupt, and runs `promote --apply` under an advisory lock. A missing evidence or
+  bindings registry under `data/grounding/` is an error rather than a fresh start. The
+  validator no longer skips bindings when durable evidence is present, and eLife
+  promotion refuses to add evidence while a bindings registry exists, because it cannot
+  write receipts yet.
+- The one-shot receipt repair (`repair_uniprot_durable_receipts.py`) refuses sharded
+  registries as retired. The data migration is a separate commit in the same pull
+  request: the new default paths are unusable until it has run.
+
+### 2026-10-04 — native CDD parser prerequisite, not a grounding provider
+
+- `scripts/cdd_native_alignment.py` now parses immutable captures of the CDD
+  viewer's nested hierarchy JSON and source-numbered full Hypertext alignment.
+  Direct parents come from nested `children`, not the hierarchy root or a
+  superfamily link. Accessions, PSSM IDs, ordered paths, printed sequence bounds,
+  alignment case/gaps, native protein links, taxonomy IDs, and repeated domain
+  row identities are retained. Capture hashes are not acquisition receipts or
+  release identifiers. The module has no network, writer, or promotion route.
+- The parser refuses malformed/duplicate hierarchy identities, wrong requested
+  models, collapsed trees, missing/reordered alignment rows, discontinuous chunks,
+  compact omitted-residue displays, unsupported markup, and inconsistent bounds.
+  It compares explicitly printed UniProt accessions only to the exact validated
+  ProteinReference and taxon, at the printed positions. It never searches for a
+  fragment, shifts coordinates, falls back from an isoform, or treats PDB/RefSeq/GI
+  frames as UniProt. All-gap chunks and unfamiliar display formats remain explicit
+  parser limitations rather than silently dropped rows.
+- A bounded, in-memory public-source smoke check parsed 75 nodes under `cd00060`
+  (requested `cd22708`) and 41 under `cd22744` (requested `cd22749`). Native direct
+  edges include `cd22731`/`cd22732` to `cd22708` and `cd22763`/`cd22764` to `cd22749`.
+  The full FHA viewer display parsed as 15 ordered rows; its separate
+  `totalSequences` value is 14. These fields are retained without inventing an
+  exhaustive carrier count. Neither this source display nor the older frozen
+  three-taxon queue establishes complete human/E. coli/S. cerevisiae coverage.
+- Printed FHA parent spans are STARD9/Q9P2P6 471–579 and KIF16B/Q96L93 446–554,
+  each 109 residues and both exactly matching the existing release-2026_03 residue
+  cache. KIF16B also passes the parser's exact validated-reference comparison
+  against the existing CNP020 staging registry. This comparison does not rebind
+  that registry's receipt or authorize its reuse in a new batch. STARD9's cache
+  comparison is not a verified ProteinReference acquisition. Longer child-model
+  intervals are not substituted for either parent interval.
+- `tests/test_cdd_native_alignment.py` contains 82 passing offline tests using
+  explicitly synthetic/minimal source-format fixtures, not release snapshots.
+  Live smoke checking exposed duplicated cosmetic attributes outside the source
+  alignment; those unrelated page attributes are ignored while duplicate
+  alignment attributes remain rejected. `just lint` and `just audit-writers`
+  pass (593 scripts examined by the latter). `just test -q` finished at exit 0:
+  **7,533 passed, 46 skipped, one expected failure, two warnings**, in 2,703.87
+  seconds. The expected failure is the CATH production-stage golden test's stale
+  protein-registry pin (#734); the warnings concern LinkML and pandas deprecations.
+  The parser/test bytes remained identical throughout the suite. This is code
+  verification, not evidence of complete protein coverage or a new qualification.
+  The ignored `reports/uniprot-grounding/cdd-native-parser-2026-10-04.smoke.json`
+  records the inspected URLs, UTC times, response and local-input hashes, and
+  comparison results. Original HTTP bodies were not retained; this is research
+  evidence, not a reproducible acquisition bundle.
+- A regression confirms that the central `SOURCE_DATABASE` gate still rejects
+  native NCBICDD evidence without its source-specific contract. No record,
+  hierarchy, durable registry, source-faithful feature annotation, or qualification
+  was installed. Next: define and test the release-bound native-source acquisition
+  and replay contract before integrating candidate discovery/resolution; acquire
+  missing sequence/annotation inputs only under the reviewed authorization boundary.
+  All strains, unreviewed proteins, fragments/fusions, explicitly resolved isoforms,
+  and applicable non-reference/UniParc routes remain in the goal's scope.
+
+#### CDD release-binding follow-up (2026-10-04 UTC)
+
+- The [default search-set marker](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/cdd.info)
+  read on this date declares **3.21**, while the
+  [hiMSA family-export directory](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/hiMSA/v3.22/)
+  is labelled **v3.22**. These are different source channels, not proof that either
+  label applies to the inspected viewer captures. Neither label has been assigned
+  to those captures. The exact marker digest is
+  `4656c3d4b668a75826373883ee228e89fff00b65fdd964a6975aa81e4c8f7547`.
+- The [publisher README](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/README) explains
+  that a model's description/annotations can change without changing its PSSM ID;
+  its separate model version increases. A provider contract must therefore bind
+  the relevant model version, hierarchy and source content, not just the PSSM ID.
+  The [hiMSA README](https://ftp.ncbi.nlm.nih.gov/pub/mmdb/cdd/hiMSA/README) describes
+  mFASTA inputs and a separate search/filtering workflow for older exports; it does
+  not establish the newer archives' contents or the targets' UniProt coordinates.
+  No MAPGAPS search, alignment, fragment filter, or coordinate inference is planned.
+- Ignored `cdd-native-release-binding-2026-10-04.json` records these observations.
+  `cdd-native-acquisition-canary-2026-10-04.plan.json` records three successful
+  **no-network** `fetch_source.py --dry-run` contracts: the default marker and only
+  the `cd00060`/`cd22744` v3.22 family archives, at exact ignored, absent destinations.
+  This is a research canary, not a production provider receipt. Execute only after
+  explicit approval, beginning with the marker and FHA archive, inspecting members
+  without extraction or program execution before continuing. Each transfer has a
+  60-second total deadline; the current helper does not impose a byte ceiling.
+  No archive was acquired, gate relaxed, or record promoted. Raw metadata bodies
+  were inspected in memory, not retained as an acquisition bundle.
+
+- Execution handoff: parser implementation and full-suite verification are finished;
+  the three-file acquisition plan remains explicitly unapproved after successive
+  goal continuations. Its six artifact/sidecar targets remain absent. Broader protein
+  acquisition and durable promotion are not authorized by a continuation or a passing
+  test suite either. The goal is paused as **blocked on acquisition authorization**,
+  not achieved. Resume the reviewed canary only after an explicit response; retain
+  the separate scientific/release, registry-receipt, and promotion gates afterward.
+
+### 2026-10-12 — UniProt fragment status and relocatable fetch generations (#1081, #1082)
+
+- **Fragment status (#1081).** Registry fetches now request UniProt's `fragment` return
+  field and record `fragment: true|false` on every ProteinReference row, from
+  `proteinDescription.flag` (`Fragment`/`Fragments`; `Precursor` alone is not a
+  fragment). An entry without a protein description, or with an unrecognized flag
+  value, is blocked as `REFERENCE_VALIDATION_FAILED`. Verified against UniProt
+  `2026_03` with anonymous REST requests: Q8I6R7 carries `Fragment,Precursor` and
+  A0A0C2C3L1 carries `Fragment`.
+- The resolver carries the registry's value onto every resolved row as
+  `uniprot_fragment` and into the review TSV's `uniprot_fragment` column (`true`,
+  `false`, or empty when not recorded). Producers cannot supply it. A fragment cannot
+  qualify a `WHOLE_PROTEIN` occurrence (`invalid:whole_protein_scope_for_uniprot_fragment`):
+  the entry lacks part of the protein, so it cannot exemplify a full-length family or
+  function claim. A `LOCALIZED` occurrence stays admissible because its intervals are
+  provider coordinates on residues the entry does contain; it is flagged
+  `UNIPROT_FRAGMENT`, so the review protocol decides every such row. This applies to
+  every lane that uses `ground_uniprot_examples.py resolve`.
+- **Registries fetched before this change fail closed for `WHOLE_PROTEIN`.** No
+  `fragment` field means unknown, not complete:
+  `missing:uniprot_fragment_status_for_whole_protein`. Promotion re-applies the same
+  rule to resolved rows, so a ledger resolved earlier (for example DUF batch
+  `duf-leads-review-001`, whose 221 qualified whole-protein alternatives carry no
+  fragment status) cannot install a whole-protein claim. Re-fetch and re-resolve the
+  batch to recover them. `LOCALIZED` rows are unaffected. Fragment status is a
+  qualification input only: it exists only on fetch-staging registry rows. Staged and
+  durable ProteinReference rows never carry it, and the grounding validator rejects it
+  there (#1087), so durable rows written earlier still merge unchanged, and trait
+  records do not change.
+- **Relocatable generations (#1082).** Fetch request plans and receipts are now
+  schema v2. They bind every artifact by SHA-256 and size and by its
+  repository-relative path; a path outside the checkout stays absolute. They record no
+  device or inode. A finished batch can be moved to another checkout or worktree at
+  the same repository-relative location and still verify there. Any byte difference
+  in the candidate ledger, selector manifest, plan, receipt or an output still fails
+  closed. Descriptor binding still guards the outputs inside the one process that
+  writes or verifies them. Replacing an output directory between dry run and apply is
+  no longer drift.
+- **v1 plans and receipts stay readable.** `verify_fetch_receipt` accepts a v1
+  plan/receipt pair read-only. If the receipt sits at its recorded absolute path, the
+  recorded paths are used as they are. Otherwise the producing checkout's root is
+  recovered from the supplied receipt's repository-relative location, every recorded
+  path under it is re-anchored on this checkout, and recorded parent inodes are
+  ignored. The plan's content (everything except locations and its content address)
+  must still equal a fresh rederivation, and every digest must still match. A v1 plan
+  can no longer be applied: re-plan. The preserved `duf-leads-review-001` generation
+  (produced in a since-removed worktree) failed before this change with
+  `cannot bind candidate ledger path without following symlinks
+  (/…/ProteinTraitsMech-duf-lane/…candidates.jsonl): [Errno 2] No such file or
+  directory`, and now verifies from a copy in another worktree.
+

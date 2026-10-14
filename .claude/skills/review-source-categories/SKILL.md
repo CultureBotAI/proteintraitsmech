@@ -23,6 +23,34 @@ just review-categories --show 10           # more example files per flag
 
 Read-only; scans `data/traits/**` and groups by the same `infer_source` the
 docs build uses. It scans the full corpus, so budget the run accordingly.
+The output is a deterministic diagnostic scan, not completed scientific review;
+read its skipped-input count and display limit before making coverage claims.
+
+## Persist the reviewed result
+
+Follow [docs/record-reviews.md](../../../docs/record-reviews.md) and
+[the native profile](../../../docs/record-review-profile.md). Resolve a bounded
+source/category cohort, read the selected records in full, and capture exact
+targets before judging with `uv run python scripts/record_review.py inspect
+--targets <targets.yaml> --input download.yaml --input scripts/review_source_categories.py
+--input scripts/build_docs_index.py`. Add inspected seeders and source tables
+as inputs. Record population, selection, actual reviewed IDs, sampling and
+exclusions; `--show N` examples do not imply the rest were read.
+
+Persist a `kind: category` review with explicit retain/lump/split/defer
+decisions, axis/category/source dimensions, and evidence-linked adjudication of
+INSTANCE_LEVEL, FAMILY_AS_PARENT, AXIS_CAT_MISMATCH and UNDECLARED_CAT. Preserve
+those native rule IDs and explain severity normalization. Generated-record
+fixes belong to their maintained seeder/routing table; declaration corrections
+belong to `download.yaml`, and source-inference corrections to
+`scripts/build_docs_index.py`. Include exact owner paths and acceptance checks.
+
+If only the scan ran, use `scientific_review: false` and describe its limited
+deterministic scope; do not claim literature or identity was reviewed. Validate
+and save assessed content with `uv run python scripts/record_review.py validate
+<review.yaml>` followed by `uv run python scripts/record_review.py save --content
+<review.yaml>`. Link both saved files under `reviews/structured/<timestamp>-<slug>/`.
+Flags and a zero scan exit code alone do not decide the scientific verdict.
 
 ## What each source report shows
 

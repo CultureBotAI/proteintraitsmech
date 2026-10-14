@@ -12,7 +12,7 @@ which does the same for TED AlphaFold reps):
 
 SCOPe seeded nodes carry no representative px/domain sid, so they get a license
 only (no geometry rep). Licenses (schema: set `license` when the source is
-tighter than the CC0-1.0 corpus default):
+preserving the source terms alongside project-authored CC-BY-4.0 data):
   SCOPe   -> CC-BY 4.0                    (download.yaml)
   ECOD    -> free for academic use (ECOD) (download.yaml: free / academic)
   PROSITE -> CC BY-NC-ND 4.0 (SIB)        (ProRule domain records; matches PROSITE)

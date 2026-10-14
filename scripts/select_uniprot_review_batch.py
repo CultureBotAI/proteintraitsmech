@@ -74,7 +74,7 @@ DEFAULT_OUTPUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding" / "review-batch
 
 MINIMUM_PER_SOURCE = 25
 MAX_REVIEW_BATCH = 1000
-MANIFEST_SCHEMA_VERSION = 7
+MANIFEST_SCHEMA_VERSION = 8
 SELECTION_ALGORITHM = "reviewed-exclusion-record-group-sha256-shard-special-first-minimum-rr-v6"
 SHARD_ALGORITHM = "sha256-canonical-json-trait-id-record-path-modulo-v1"
 DECISION_EXCLUSION_ALGORITHM = (
@@ -236,7 +236,7 @@ class RepeatedAllRejectedRecord:
 
 @dataclass(frozen=True)
 class ApprovedAdjudication:
-    """One independently complete adjudication with exactly one approved candidate."""
+    """One independently complete adjudication with one or more approved candidates."""
 
     trait_id: str
     record_path: str
@@ -248,8 +248,8 @@ class ApprovedAdjudication:
     candidate_ids: tuple[str, ...]
     resolution_digests: tuple[tuple[str, str], ...]
     record_sha256s: tuple[Any, ...]
-    approved_candidate_id: str
-    approved_resolution_digest: str
+    approved_candidate_ids: tuple[str, ...]
+    approved_resolution_digests: tuple[tuple[str, str], ...]
 
     @property
     def record_key(self) -> tuple[str, str]:
@@ -1294,7 +1294,6 @@ def _review_exclusions(
             current_source_batch=current_source_batch,
         )
         decisions_by_record: dict[tuple[str, str], set[str]] = defaultdict(set)
-        statuses_by_record: dict[tuple[str, str], list[str]] = defaultdict(list)
         decisions_by_id: dict[str, ExplicitDecision] = {}
         batch_approved_records = 0
         batch_all_rejected_records = 0
@@ -1327,7 +1326,6 @@ def _review_exclusions(
                     f"trait_id={prior_key[0]!r}, record_path={prior_key[1]!r}"
                 )
             decisions_by_record[prior_key].add(decision.candidate_id)
-            statuses_by_record[prior_key].append(decision.decision)
 
         for record_key, decided_ids in sorted(decisions_by_record.items()):
             expected_ids = prior_record_candidates[record_key]
@@ -1337,12 +1335,6 @@ def _review_exclusions(
                     f"partial decisions for trait_id={record_key[0]!r}, "
                     f"record_path={record_key[1]!r}; missing alternatives from the bound "
                     f"reviewed candidate snapshot {missing!r}"
-                )
-            approved_count = statuses_by_record[record_key].count("APPROVED")
-            if approved_count > 1:
-                raise SelectionError(
-                    f"record trait_id={record_key[0]!r}, record_path={record_key[1]!r} has "
-                    f"{approved_count} APPROVED candidates; expected at most one"
                 )
             for candidate_id in sorted(expected_ids):
                 decision = decisions_by_id[candidate_id]
@@ -1364,6 +1356,11 @@ def _review_exclusions(
                 if previous is None:
                     seen[candidate_id] = decision
             ordered_ids = tuple(sorted(expected_ids))
+            approved_candidate_ids = tuple(
+                candidate_id
+                for candidate_id in ordered_ids
+                if decisions_by_id[candidate_id].decision == "APPROVED"
+            )
             common = {
                 "trait_id": record_key[0],
                 "record_path": record_key[1],
@@ -1381,23 +1378,22 @@ def _review_exclusions(
                     resolved_by_id[candidate_id].record_sha256 for candidate_id in ordered_ids
                 ),
             }
-            if approved_count == 0:
+            if not approved_candidate_ids:
                 batch_all_rejected_records += 1
                 record_adjudications[record_key].append(AllRejectedAdjudication(**common))
             else:
                 batch_approved_records += 1
-                approved_candidate_id = next(
-                    candidate_id
-                    for candidate_id in ordered_ids
-                    if decisions_by_id[candidate_id].decision == "APPROVED"
-                )
                 record_adjudications[record_key].append(
                     ApprovedAdjudication(
                         **common,
-                        approved_candidate_id=approved_candidate_id,
-                        approved_resolution_digest=resolved_by_id[
-                            approved_candidate_id
-                        ].resolution_digest,
+                        approved_candidate_ids=approved_candidate_ids,
+                        approved_resolution_digests=tuple(
+                            (
+                                candidate_id,
+                                resolved_by_id[candidate_id].resolution_digest,
+                            )
+                            for candidate_id in approved_candidate_ids
+                        ),
                     )
                 )
 
@@ -1733,8 +1729,10 @@ def _approved_adjudication_payload(
         "candidate_ids_sha256": _identity_set_sha256(adjudication.candidate_ids),
         "resolution_bindings_sha256": _identity_set_sha256(adjudication.resolution_digests),
         "record_sha256_values_sha256": _canonical_multiset_sha256(adjudication.record_sha256s),
-        "approved_candidate_id": adjudication.approved_candidate_id,
-        "approved_resolution_digest": adjudication.approved_resolution_digest,
+        "approved_candidate_ids": list(adjudication.approved_candidate_ids),
+        "approved_resolution_bindings_sha256": _identity_set_sha256(
+            adjudication.approved_resolution_digests
+        ),
     }
 
 
@@ -2176,7 +2174,7 @@ def _manifest_json(
             "all_shard_special_cases_selected": available_special <= selected_special,
         },
         "downstream_requirements": {
-            "at_most_one_approved_candidate_per_record": True,
+            "approved_adjudications_may_include_multiple_candidates": True,
             "all_alternatives_must_receive_an_explicit_review_decision": True,
         },
         "sources": source_stats,

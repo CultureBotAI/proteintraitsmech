@@ -104,26 +104,36 @@ For each category's five, step back and judge the group:
 
 ## Findings & output
 
-Produce a markdown report. For each category:
+Persist every new review using [the shared contract](../../../docs/record-reviews.md)
+and [native profile](../../../docs/record-review-profile.md). Before judging,
+capture exact selected paths/IDs and input hashes with
+`uv run python scripts/record_review.py inspect --targets <targets.yaml>`.
+Include the schema, source tables and seeders inspected with `--input`.
 
-```
-## <CATEGORY>  (<N> records; 5 sampled)
-- <path>  — <PASS | flags>: <one-line per-record finding(s)>
-  … ×5
-- SET: <PASS | verdict> — consistency / coherence / granularity / systemic notes
-```
+Use `kind: batch` and `scope.coverage: sampled` unless the entire declared
+population was actually read. Persist the eligible population denominator,
+PER, the actual random seed, axis/category strata, per-cell population and
+sample counts, exact reviewed IDs, exclusions and limits. Use evidence-linked
+assessment dimensions for axis/category/source, and metrics with units and
+denominators for cell counts. Reading one record per cell is not full-corpus
+coverage. Retain partial coverage when selected files could not be assessed.
 
-Then a **summary**:
-- categories reviewed, clean vs flagged counts;
-- **systemic issues** (seeder bugs) ranked by blast radius — these matter most;
-- top per-record fixes;
-- any category whose granularity or coherence needs a modelling decision.
+For each selected record retain A1-A9 assessments, then B1-B6 set assessments
+where applicable. Preserve the rule IDs on findings; identify the maintained
+seeder/transform owning systemic defects and propose its acceptance checks.
+Summarize clean/flagged categories, systemic blast radius, individual defects,
+and unresolved granularity/coherence decisions within the declared sample.
 
 Severity: **blocker** (schema/identity broken, instance-as-class, wrong axis) ·
 **major** (wrong category, empty/boilerplate definition, missing required
 representation, systemic seeder defect) · **minor** (style, thin grounding,
-provenance nit). Save the report under `research/` if asked; otherwise report to
-the session.
+provenance nit). Validate and save the completed content with
+`uv run python scripts/record_review.py validate <review.yaml>` and
+`uv run python scripts/record_review.py save --content <review.yaml>`.
+The saver creates `reviews/structured/<timestamp>-<slug>/review.yaml` and its
+derived `review.md`. Link both in the final response. Session-only output is
+not a completed review; unavailable required checks require an explicit
+partial/blocked observation, not an unsupported passing verdict.
 
 ## Best practices
 

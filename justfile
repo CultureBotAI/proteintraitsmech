@@ -10,6 +10,8 @@ set dotenv-load := true
 set positional-arguments := true
 
 uniprot_grounding_release := "2026_03"
+# InterPro release the DUF discovery-lead lane requires of its own InterPro sidecar.
+interpro_grounding_release := "110.0"
 
 # ============== Deep Research ==============
 
@@ -79,6 +81,14 @@ default:
 install:
     uv sync --extra dev
 
+# Validate immutable review bundles, including hidden/ignored ones.
+check-record-reviews:
+    uv run python scripts/record_review.py check
+
+# Check native routes and the shared synthetic save/validation contract.
+test-record-reviews:
+    uv run pytest tests/test_record_review_contract.py -q
+
 # Deterministic machine-readable corpus + generated-site metrics. Does not depend on a
 # current Pages build; missing docs/data artifacts are reported as zero.
 # Pass flags straight through. A leading positional bound the first flag to
@@ -95,6 +105,34 @@ audit-pages *args:
 # Generate Python dataclasses from LinkML schema
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
+
+# Bounded research acquisition; dry-run unless --apply, no trait/registry writes.
+fetch-amino-acid-properties *args:
+    uv run python scripts/fetch_amino_acid_properties.py {{args}}
+
+build-amino-acid-properties *args:
+    uv run --extra molecular python scripts/build_amino_acid_properties.py {{args}}
+
+check-amino-acid-properties:
+    uv run --extra molecular python scripts/amino_acid_properties.py
+
+fetch-slc10-pilot *args:
+    uv run python scripts/fetch_slc10_pilot.py {{args}}
+
+fetch-slc10-models *args:
+    uv run --extra molecular python scripts/fetch_slc10_models.py {{args}}
+
+validate-molecular-evidence file:
+    uv run --extra molecular python scripts/validate_molecular_evidence.py {{quote(file)}}
+
+build-slc10-pilot *args:
+    uv run --extra molecular python scripts/build_slc10_pilot.py {{args}}
+
+build-slc10-docs *args:
+    python3 scripts/build_slc10_docs.py {{args}}
+
+consume-molecular-evidence *args:
+    uv run --extra molecular python scripts/consume_molecular_evidence.py {{args}}
 
 # Validate one ProteinTraitRecord in strict closed mode. One worker reduces the
 # multiprocess startup cost to a single child rather than avoiding it -- the pool is
@@ -131,9 +169,34 @@ validate-linkml *args:
 
 # Cross-object/sequence validation for release-pinned UniProt grounding. Legacy
 # examples remain LEGACY_UNVERIFIED during migration; --require-qualified is the
-# corpus-completion gate. Durable registries default under data/grounding/.
+# corpus-completion gate. Durable registries default under data/grounding/: the flat
+# protein_registry.jsonl plus the sharded occurrence_evidence.jsonl.d/ and
+# qualified_record_bindings.jsonl.d/ directories (#801).
 validate-uniprot-grounding *args:
     uv run python scripts/validate_uniprot_grounding.py {{args}}
+
+# Fast structural check of the two sharded grounding registries (#801): listing,
+# row placement/order/canonical form, manifests, evidence == bindings key sets, and
+# the MAX_SHARD_BYTES tripwire. Rows are not semantically validated; that is
+# validate-uniprot-grounding. --root points it at another directory.
+# Read-only; prints each registry's logical sha256 (equal to the legacy flat file's).
+check-grounding-registries *args:
+    uv run python scripts/grounding_registry_layout.py check {{args}}
+
+# One-time (#801): split the flat occurrence_evidence.jsonl and
+# qualified_record_bindings.jsonl into their .jsonl.d shard directories, byte-identical
+# in logical content. Dry-run by default: prints the JSON plan and round-trip proofs and
+# writes nothing. --apply needs a clean data/grounding, holds the registry lock, installs
+# both directories and deletes both flat files in one rolled-back transaction, re-checks
+# the result, and writes reports/uniprot-grounding/registry-layout-migration-801.json.
+# Pin the inputs with --expect-evidence-sha256 / --expect-bindings-sha256. A re-run
+# after migration reports "already migrated"; a mixed or partial state is refused.
+#
+# Shard the flat evidence and bindings registries (#801); dry-run unless --apply
+migrate-grounding-registries *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    exec uv run python scripts/migrate_grounding_registry_layout.py "$@"
 
 # ============== Curation history (#484) ==============
 
@@ -243,7 +306,7 @@ audit-schema:
 # -rx prints why a test was an expected failure (e.g. a stage pin tracked in an issue),
 # which plain -q reduces to an "x".
 test *args:
-    uv run pytest tests/ -rx {{args}}
+    uv run --extra molecular pytest tests/ -rx {{args}}
 
 # Static checks over the Python. Gated at ZERO rather than ratcheted from a baseline:
 # the 63 pre-existing errors were all trivial (semicolons, `l` as a variable name,
@@ -260,6 +323,132 @@ lint *args:
 # it reports and exits 0. Pass --fail-on any to make findings blocking.
 audit-cross-mech-categories *args:
     uv run python scripts/audit_cross_mech_categories.py {{args}}
+
+# Track the protein examples sibling Mechs carry (#652). The fleet comes from claw's
+# manifest; each sibling is read from git objects at origin/main, never its working
+# tree. Dry-run by default; --apply replaces the tracked data/cross_mech/ snapshot.
+# Pass --fetch to `git fetch` every sibling first. See research/cross-mech-protein-examples.md.
+scan-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py scan {{args}}
+
+# Resolve the snapshot against data/traits: one status per (protein, trait) pair
+# (QUALIFIED / LEGACY / ABSENT on the exact record, trait absent, or not a corpus
+# namespace) -> reports/cross-mech/. Read-only; writes no trait record.
+audit-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py audit {{args}}
+
+# Protein-first linked examples and available annotated sequences. Includes ignored
+# trait records. Projection only: never qualifies proteins or mutates trait YAML.
+build-cross-mech-inventory *args:
+    uv run python scripts/build_cross_mech_inventory.py {{args}}
+
+# LOCAL ONLY -- reads data/raw/go-basic.obo. Replay every tracked GO true-path edge
+# (data/grounding/go_true_path_edges.jsonl) against the local GO release it names, so a
+# re-fetched or edited OBO cannot silently disagree with a qualified inheritance (#1002).
+check-go-true-path *args:
+    uv run python scripts/go_true_path.py check {{args}}
+
+# LOCAL ONLY -- update tracked GO true-path edges whose relation changed in the
+# local GO release (e.g. part_of -> is_a). Dry-run by default; pass --apply to write (#1046).
+update-go-true-path *args:
+    uv run python scripts/go_true_path.py update {{args}}
+
+# Verify the tracked snapshot offline. --local compares sibling checkouts and
+# --remote the live default branches and fleet manifest; drift is a NOTICE unless
+# --fail-on-drift.
+check-cross-mech-proteins *args:
+    uv run python scripts/cross_mech_proteins.py check {{args}}
+
+# Read each cross-Mech candidate protein's exact sequence identity from the pinned
+# UniProt release (anonymous exact-accession requests). Dry-run plans only; --apply
+# reads UniProt and writes reports/uniprot-grounding/cross-mech/discovery.jsonl. This
+# is identity, not evidence: the selector-bound registry fetch re-verifies it.
+discover-cross-mech-sequences *args:
+    uv run python scripts/fetch_cross_mech_proteins.py \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
+# Turn every sibling (protein, trait) pair the audit places on an existing record --
+# protein absent or unqualified there -- into one grounding-funnel candidate. Dry-run;
+# --apply writes reports/uniprot-grounding/cross-mech/candidates.jsonl (ignored).
+# Nothing here qualifies: candidates still go select -> fetch -> resolve -> review ->
+# promote, and a sibling claim is provenance, never evidence.
+stage-cross-mech-candidates *args:
+    uv run python scripts/cross_mech_proteins.py candidates \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
+# Select one bounded review batch from the cross-Mech queue with the ordinary selector;
+# the fetch/resolve/finalize/promote-uniprot-review-batch recipes then apply unchanged.
+select-cross-mech-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/select_uniprot_review_batch.py \
+      --queue reports/uniprot-grounding/cross-mech/candidates.jsonl \
+      --batch cross-mech --batch-id {{quote(batch_id)}} "$@"
+
+# DUF discovery-lead lane (research/duf-discovery-leads.md). DUFMech's frozen UniProt
+# candidates for Pfam DUF families, pinned by commit and SHA-256 and read from git objects
+# in the sibling DUFMech checkout, are discovery leads -- never evidence. Join them to the
+# exact Pfam trait records that lack a QUALIFIED example (with the pinned record-content
+# gate). Dry-run; --apply writes reports/uniprot-grounding/duf-leads/ (ignored).
+audit-duf-leads *args:
+    uv run python scripts/duf_leads.py audit {{args}}
+
+# Choose a bounded, deterministic set of target records (--max-records, default 100; keep it equal to the batch bound) and
+# read each lead's exact sequence identity from the pinned UniProt release (anonymous
+# exact-accession requests). Dry-run plans only; --apply also writes accessions.txt for
+# the InterPro crawl below.
+discover-duf-leads *args:
+    uv run python scripts/duf_leads.py discover \
+      --uniprot-release {{uniprot_grounding_release}} {{args}}
+
+# Crawl InterPro for exactly the planned lead accessions into the lane's own sidecar
+# (data/raw/align_cache/duf-leads/, ignored), never into the organism-panel frame.
+# Dry-run unless --apply; resumable; canary with --limit 1 --apply first.
+fetch-duf-interpro-frame *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --accessions|--accessions=*|--out|--out=*|--grouped-out|--grouped-out=*)
+          echo "ERROR: DUF crawl argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    python3 scripts/fetch_interpro_frame.py \
+      --accessions reports/uniprot-grounding/duf-leads/accessions.txt \
+      --out data/raw/align_cache/duf-leads/interpro_frame.json \
+      --grouped-out data/raw/align_cache/duf-leads/interpro_grouped_locations.json "$@"
+
+# Turn each planned lead into a funnel candidate only where the pinned InterPro sidecar
+# asserts an exact match of the record's own Pfam signature; everything else is a
+# reported rejection. Dry-run; --apply writes candidates.jsonl and rejected.jsonl.
+stage-duf-candidates *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --interpro-frame|--interpro-frame=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--interpro-release|--interpro-release=*|--uniprot-release|--uniprot-release=*|--out|--out=*)
+          echo "ERROR: DUF staging argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    uv run python scripts/duf_leads.py candidates \
+      --uniprot-release {{uniprot_grounding_release}} \
+      --interpro-release {{interpro_grounding_release}} "$@"
+
+# Select one bounded review batch from the DUF queue with the ordinary selector; then
+# fetch-uniprot-review-batch, resolve-duf-review-batch, and the ordinary review,
+# finalize and promote recipes. Keep the first batches modest (--max-records 100).
+select-duf-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/select_uniprot_review_batch.py \
+      --queue reports/uniprot-grounding/duf-leads/candidates.jsonl \
+      --batch duf-leads --batch-id {{quote(batch_id)}} "$@"
 
 # Validate the data-source registry
 sources-check:
@@ -446,6 +635,15 @@ fetch-biolip:
 fetch-biolip-sifts *args:
     uv run python scripts/fetch_biolip_residue_sifts.py {{args}}
 
+# Read-only, stdout-only BioLiP source residue to SIFTS UniProt mapping stage.
+stage-biolip-sifts-mappings *args:
+    uv run python scripts/stage_biolip_sifts_mappings.py {{args}}
+
+# Fetch release-pinned UniProt references for BioLiP/SIFTS mapping candidates.
+fetch-biolip-sifts-uniprot *args:
+    uv run python scripts/fetch_biolip_sifts_uniprot_references.py \
+      --expect-release {{uniprot_grounding_release}} {{args}}
+
 # Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
 # Requires `just fetch-biolip` first. Dry-run by default; --apply to write.
 seed-biolip *args:
@@ -470,6 +668,11 @@ seed-seed-subsystems *args:
 fetch-rhea:
     mkdir -p data/raw/rhea
     curl -sSLf --max-time 300 -o data/raw/rhea/rhea-reactions.tsv "https://www.rhea-db.org/rhea?query=&columns=rhea-id,equation,chebi-id,ec&format=tsv"
+
+# Exact release-141 direction quartet used by cross-Mech and native Rhea grounding.
+# Recover from the historical archive; a changed live export cannot replace the pin.
+fetch-rhea-directions:
+    python3 scripts/fetch_rhea_directions.py
 
 seed-rhea *args:
     python3 scripts/seed_rhea.py {{args}}
@@ -942,7 +1145,20 @@ fetch-psimod:
 seed-psimod *args:
     python3 scripts/seed_psi_mod.py {{args}}
 
-# Download the OBO ontologies consumed by seed-obo (PSI-MI, PATO, METPO;
+# Download the pinned Gene Ontology release consumed by seed-obo and go_true_path.
+# Pinned to release 2026-06-19 (data-version releases/2026-06-15) with recorded SHA-256 (#1039).
+fetch-go:
+    mkdir -p data/raw
+    python3 scripts/fetch_source.py \
+      https://release.geneontology.org/2026-06-19/ontology/go-basic.obo \
+      data/raw/go-basic.obo \
+      --min-bytes 32000000 \
+      --sha256 c72fc198a86983d55e43aac585d1ffdbeb6e3601475b3f18b6045acdc0a0734c \
+      --contains 'data-version: releases/2026-06-15' \
+      --max-time 300
+    @ls -la data/raw/go-basic.obo
+
+# Download the OBO ontologies consumed by seed-obo (PSI-MI, PATO, METPO, GO;
 # all CC-BY-4.0). Files land gitignored in data/raw/.
 fetch-obo:
     mkdir -p data/raw
@@ -952,8 +1168,7 @@ fetch-obo:
       https://raw.githubusercontent.com/pato-ontology/pato/master/pato.obo
     curl -sSLf --max-time 120 -o data/raw/METPO.obo \
       https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo
-    curl -sSLf --max-time 300 -o data/raw/go-basic.obo \
-      http://purl.obolibrary.org/obo/go/go-basic.obo
+    @just fetch-go
     @ls -la data/raw/PSI-MI.obo data/raw/PATO.obo data/raw/METPO.obo data/raw/go-basic.obo
 
 # Seed ProteinTraitRecords from branch-scoped OBO ontologies. Requires
@@ -1046,6 +1261,12 @@ audit-uniprot-grounding *args:
       --interpro-grouped-frame data/raw/align_cache/interpro_grouped_locations.json \
       --profiles data/profiles/profiles.jsonl \
       --out reports/uniprot-grounding "$@"
+
+# Join normalized iModulonDB component-gene rows to the local UniProt registry
+# and canonical examples. Dry-run by default; pass --apply to write
+# reports/imodulondb/candidates.jsonl, blocked.tsv, and summary.md.
+stage-imodulondb *args:
+    uv run python scripts/stage_imodulondb_uniprot_candidates.py {{args}}
 
 # Select a deterministic source-stratified review batch (<=1,000 unique trait
 # records, >=25 per available source, and every recognized special case). Dry-run
@@ -1216,6 +1437,42 @@ resolve-uniprot-review-batch batch_id *args:
       --replace-staging-outputs \
       "$@"
 
+# Resolve one DUF discovery-lead review batch exactly like resolve-uniprot-review-batch,
+# except that the InterPro evidence comes from the lane's own release-stamped sidecar
+# (just fetch-duf-interpro-frame), not the organism-panel frame. Never modifies
+# data/traits or the durable registries. See research/duf-discovery-leads.md.
+resolve-duf-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    for argument in "$@"; do
+      case "$argument" in
+        --queue|--queue=*|--selector-manifest|--selector-manifest=*|--fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--providers|--providers=*|--protein-registry|--protein-registry=*|--membership-registry|--membership-registry=*|--sifts-registry|--sifts-registry=*|--durable-membership-registry|--durable-membership-registry=*|--registry-blocked|--registry-blocked=*|--expect-uniprot-release|--expect-uniprot-release=*|--batch|--batch=*|--out|--out=*|--review|--review=*|--registry-out|--registry-out=*|--evidence-out|--evidence-out=*|--replace-staging-outputs|--replace-staging-outputs=*|--limit|--limit=*|--interpro-frame|--interpro-frame=*|--interpro-grouped-frame|--interpro-grouped-frame=*|--allow-unreceipted-inputs|--allow-unreceipted-inputs=*|--allow-offline-uniprot-fixture|--allow-offline-uniprot-fixture=*|--allow-offline-sifts-fixtures|--allow-offline-sifts-fixtures=*)
+          echo "ERROR: bounded review resolver argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    uv run python scripts/ground_uniprot_examples.py resolve \
+      --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
+      --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
+      --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
+      --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
+      --providers protein-registry,interpro,uniprot-membership \
+      --interpro-frame data/raw/align_cache/duf-leads/interpro_frame.json \
+      --interpro-grouped-frame data/raw/align_cache/duf-leads/interpro_grouped_locations.json \
+      --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
+      --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
+      --expect-uniprot-release {{uniprot_grounding_release}} \
+      --batch {{quote(batch_id)}} \
+      --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
+      --review reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \
+      --registry-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
+      --evidence-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
+      --replace-staging-outputs \
+      "$@"
+
 # Reconcile disjoint, explicit decision ledgers with one immutable resolved batch.
 # Every partition row must copy the exact resolved-row resolution_digest. Dry-run
 # example: `just finalize-uniprot-review-batch B --decisions B.part-1.jsonl
@@ -1247,23 +1504,36 @@ promote-uniprot-review-batch batch_id *args:
     #!/usr/bin/env bash
     set -euo pipefail
     shift
+    for argument in "$@"; do
+      case "$argument" in
+        --fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--allow-offline-uniprot-fixture)
+          echo "ERROR: the batch's fetch receipt is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
     uv run python scripts/ground_uniprot_examples.py promote \
       --resolved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
       --approved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.approved.tsv \
       --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
       --evidence-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
       --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
+      --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
       "$@"
 
-# Build per-protein trait PROFILES from Swiss-Prot (issue #7): for each entry,
+# Build per-protein discovery PROFILES from UniProtKB (reviewed by default): for each entry,
 # which corpus trait classes it carries (matched via Pfam/InterPro/CATH/PROSITE/
 # SMART/CDD/NCBIfam/EC/GO) + its GO/EC — the protein×trait matrix for trait↔GO
 # correlation + multi-trait-family clustering. --query / --limit bound the slice;
-# --apply writes data/profiles/<acc>.yaml (ProteinProfile) + profiles.jsonl.
-#   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --apply
+# --apply publishes profiles.jsonl, optional YAMLs, trait_index.json and acquisition.json
+# together in a NEW directory. Existing outputs and the index cache are never replaced.
+#   just build-profiles --query "reviewed:true AND organism_id:9606" --limit 1000 --out-dir reports/profiles-human-sample --apply
 # --query repeats for a multi-organism matrix; --organisms is shorthand for the
-# standard four (human / mouse / yeast / E. coli K-12) and --limit caps per query.
-#   just build-profiles --organisms --limit 25000 --jsonl-only --apply
+# standard ten reviewed exact taxa and --limit caps per query (0 explicitly uncaps).
+# --expect-release pins the release; --require-complete refuses a capped query.
+# Broader discovery requires a reviewed acquisition plan; these are not qualified examples.
+#   just build-profiles --organisms --limit 25000 --require-complete --jsonl-only --out-dir reports/profiles-ten-taxa --apply
 build-profiles *args:
     python3 scripts/build_swissprot_profiles.py {{args}}
 
@@ -1326,6 +1596,28 @@ fetch-residue-frame *args:
 fetch-interpro-frame *args:
     python3 scripts/fetch_interpro_frame.py {{args}}
 
+# Stamp an InterPro frame pair written before the completeness marker (#1070) as
+# complete. Offline: re-derives the organism-panel target set from data/traits,
+# checks every target is in both frames, and only then records
+# `_meta.completeness` (basis offline-certification); payload and `built` are kept.
+# Dry-run unless --apply. Point --out/--grouped-out/--traits at another checkout's
+# finished crawl to certify it there. Panel only: --accessions is refused here (#1097);
+# `just fetch-duf-interpro-frame --certify` certifies the DUF lane's sidecar against
+# its accessions.txt. Certifying changes the frame's bytes, so the CATH stage's
+# interpro_frame byte pin no longer matches until it is repinned (#1098).
+certify-interpro-frame *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --accessions|--accessions=*)
+          echo "ERROR: certify-interpro-frame certifies the organism panel only: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    python3 scripts/fetch_interpro_frame.py --certify "$@"
+
 # Adjudicate the identical-residue-set links from the alignment overlay (issue #7,
 # phase 12): a CATH superfamily and an InterPro entry covering the same residues
 # are the same superfamily under two identifiers only if InterPro actually
@@ -1359,10 +1651,14 @@ trait-correlations *args:
 suggest-examples *args:
     uv run python scripts/suggest_canonical_examples.py {{args}}
 
-# Regenerate docs/data/records.json + facets.json used by the browse
-# page. Requires PyYAML; walks every data/traits/**/*.yaml.
+# Regenerate browser shards/facets and static landing counts from the same index.
+# Requires PyYAML; walks every data/traits/**/*.yaml.
 build-docs:
     python3 scripts/build_docs_index.py
+    python3 scripts/render_docs_landing.py
+    python3 scripts/render_docs_landing.py --check
+    python3 scripts/build_slc10_docs.py
+    python3 scripts/build_slc10_docs.py --check
 
 # Compose all layered definitions (GENERAL / STRUCTURAL / MECHANISTIC) across the
 # corpus, idempotently, in dependency order: base source layers first, then the

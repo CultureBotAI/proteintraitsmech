@@ -12,7 +12,12 @@ This command deliberately emits two semantically disjoint streams:
 
 Missing exact ProteinReferences become one deterministic request per full
 UniProt identity. The pinned source/frame/registry digests are local content
-bindings, not provider acquisition or frame-generation receipts. Every output
+bindings, not provider acquisition or frame-generation receipts. A frame is
+accepted by its pinned byte SHA-256 or, failing that, by a pinned *content*
+digest (``sidecar.content_sha256``: canonical JSON without the volatile ``_meta``
+keys ``built`` and ``completeness``). A rebuild at the same release with the same
+payload therefore still binds; any different payload, release or absent list
+does not (issue #1071). Every output
 row remains receipt-closed and explicitly records zero evidence, network, and
 write actions.
 
@@ -46,6 +51,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import yaml
 
 import ripgrep_prefilter
+from sidecar import content_sha256 as sidecar_content_sha256
 
 SCHEMA_VERSION = 2
 ANNOTATION_KIND = "CATH_GENE3D_ANNOTATION_DISCOVERY"
@@ -107,6 +113,25 @@ SOURCE_PINS = {
     "cath_names": EXPECTED_CATH_NAMES_SHA256,
     "interpro_frame": EXPECTED_INTERPRO_FRAME_SHA256,
     "residue_frame": EXPECTED_RESIDUE_FRAME_SHA256,
+}
+# Content digests accepted when the byte pin above does not match (#1071); the digest
+# ignores `built` and every completeness marker (sidecar.VOLATILE_META_KEYS). The
+# InterPro set is empty: the bc2d66… frame was not retained, so its content digest
+# is unknown, and certifying it (`just certify-interpro-frame --apply`, which adds
+# _meta.completeness) changes its bytes. A certified or re-crawled panel frame is
+# therefore refused here until a reviewed pin is added (#1098). The
+# residue frame rebuilt at UniProt 2026_03 on 2026-10-11 (bytes 69edb24b…, 113,695
+# proteins; research/duf-discovery-leads.md) embeds a later build date and a
+# corpus-dependent top-up, so it cannot reproduce 4fc4d2fb…. Its content digest is
+# pinned here; the count contract and per-observation sequence checks still fail
+# closed if it lacks or changes a sequence the stage consumes.
+EXPECTED_RESIDUE_FRAME_CONTENT_SHA256S = frozenset(
+    {"a640a2ea9f8d1f6a552f583531c50e2d98a38642534a2c028aea96878886dcc2"}
+)
+SOURCE_CONTENT_PINS: Mapping[str, frozenset[str]] = {
+    "cath_names": frozenset(),
+    "interpro_frame": frozenset(),
+    "residue_frame": EXPECTED_RESIDUE_FRAME_CONTENT_SHA256S,
 }
 
 PRODUCTION_COUNTS = {
@@ -434,9 +459,12 @@ def _capture(
     repo_root: Path,
     expected_sha256: str,
     bound_root: BoundDirectory,
+    accepted_content_sha256: frozenset[str] = frozenset(),
 ) -> CapturedArtifact:
     if _SHA256_RE.fullmatch(expected_sha256) is None:
         raise CathStageError(f"invalid pinned sha256 for {description}: {expected_sha256!r}")
+    if any(_SHA256_RE.fullmatch(pin) is None for pin in accepted_content_sha256):
+        raise CathStageError(f"invalid pinned content sha256 for {description}")
     relative = _relative_under(path, bound_root.path, description=description)
     raw = _read_relative_bytes(
         bound_root,
@@ -446,10 +474,26 @@ def _capture(
     )
     digest = hashlib.sha256(raw).hexdigest()
     if digest != expected_sha256:
-        raise CathStageError(
-            f"{description} sha256 mismatch for {path}: expected {expected_sha256}, "
-            f"observed {digest}"
-        )
+        content = None
+        if accepted_content_sha256:
+            try:
+                content = sidecar_content_sha256(json.loads(raw))
+            except ValueError:
+                content = None
+        if content is None or content not in accepted_content_sha256:
+            hint = ""
+            if description == "InterPro annotation frame":
+                hint = (
+                    "; a panel frame certified with `just certify-interpro-frame --apply` "
+                    "or re-crawled has new bytes and needs a reviewed byte or content pin "
+                    "here (SOURCE_PINS / SOURCE_CONTENT_PINS, #1098)"
+                )
+            raise CathStageError(
+                f"{description} sha256 mismatch for {path}: expected {expected_sha256}, "
+                f"observed {digest}"
+                + (f" (content sha256 {content} is not pinned either)" if content else "")
+                + hint
+            )
     return CapturedArtifact(
         path=_lexical_absolute(path),
         relative_path=_repo_relative(path, repo_root),
@@ -1008,7 +1052,8 @@ def _load_frame(
     expected_meta_keys = {"schema", "built", "source", "release", "count"}
     if residue:
         expected_meta_keys.add("absent")
-    if set(meta) != expected_meta_keys:
+    # `completeness` (#1070) is optional provenance about the crawl, not content.
+    if set(meta) - {"completeness"} != expected_meta_keys:
         raise CathStageError(f"{description} metadata keys mismatch: observed={sorted(meta)}")
     if meta.get("schema") != 1 or meta.get("source") != expected_source:
         raise CathStageError(f"{description} schema/source metadata mismatch")
@@ -1455,6 +1500,7 @@ def build_stage(
     expected_protein_registry_sha256: str = EXPECTED_PROTEIN_REGISTRY_SHA256,
     expected_uniprot_release: str = EXPECTED_UNIPROT_RELEASE,
     expected_counts: Mapping[str, int] = PRODUCTION_COUNTS,
+    accepted_source_content_sha256: Mapping[str, frozenset[str]] = SOURCE_CONTENT_PINS,
 ) -> StageResult:
     if set(expected_source_sha256) != set(SOURCE_PINS):
         raise CathStageError(
@@ -1480,6 +1526,9 @@ def build_stage(
                 repo_root=repo_binding.path,
                 expected_sha256=expected_source_sha256["interpro_frame"],
                 bound_root=repo_binding,
+                accepted_content_sha256=frozenset(
+                    accepted_source_content_sha256.get("interpro_frame", ())
+                ),
             ),
             "residue_frame": _capture(
                 residue_frame_path,
@@ -1487,6 +1536,9 @@ def build_stage(
                 repo_root=repo_binding.path,
                 expected_sha256=expected_source_sha256["residue_frame"],
                 bound_root=repo_binding,
+                accepted_content_sha256=frozenset(
+                    accepted_source_content_sha256.get("residue_frame", ())
+                ),
             ),
         }
         registry_artifact = _capture(

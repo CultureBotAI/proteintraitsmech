@@ -103,12 +103,19 @@
   // The sidebar note, which must describe the mode actually in force. Claiming
   // subset-aware counts while painting global ones is the failure this replaces.
   // A free-text query narrows the result list but not the cube, so say so.
-  function note(subsetAware, hasQuery) {
+  function note(subsetAware, hasQuery, hasFilters = true) {
     if (!subsetAware) {
       return {
         short: "Counts are global corpus totals; record shards load on demand.",
         long: "Facet counts are global corpus totals. Selecting a value loads only "
             + "record shards that can match all active filters.",
+      };
+    }
+    if (hasQuery && !hasFilters) {
+      return {
+        short: "Counts are global corpus totals, not search matches.",
+        long: "No facet filters are selected. Facet counts show global corpus totals; "
+            + "the search box narrows the result list only.",
       };
     }
     if (hasQuery) {
@@ -140,7 +147,7 @@
     return {
       counts: subset || globalCounts || {},
       subsetAware,
-      note: note(subsetAware, Boolean(hasQuery)),
+      note: note(subsetAware, Boolean(hasQuery), KEYS.some(key => values(selected, key).length > 0)),
     };
   }
 

@@ -21,7 +21,7 @@ Each record: identifier TCDB:<TC>, FUNCTION / FUNC_TRANSPORT, parent chained
 class → subclass → family. Idempotent; dry-run unless --apply. Stdlib-only.
 
 NB: TCDB is **CC-BY-SA 3.0** (ShareAlike), stamped per-record — distinct from
-the repo's CC0 default.
+the project data license.
 """
 
 from __future__ import annotations

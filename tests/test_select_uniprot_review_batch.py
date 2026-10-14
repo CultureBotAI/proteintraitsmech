@@ -343,7 +343,7 @@ def test_source_minima_all_special_classes_and_manifest_binding_are_deterministi
     assert manifest["shard_index"] == 0
     assert manifest["downstream_requirements"] == {
         "all_alternatives_must_receive_an_explicit_review_decision": True,
-        "at_most_one_approved_candidate_per_record": True,
+        "approved_adjudications_may_include_multiple_candidates": True,
     }
     assert all(manifest["invariants"].values())
     assert manifest["shard_available_review_flags"] == manifest["shard_selected_review_flags"]
@@ -633,7 +633,7 @@ def test_one_approved_adjudication_terminally_resolves_all_rejected_history(
         tmp_path,
         approved_name,
         [first, new_alternative],
-        [_decision(first, "APPROVED"), _decision(new_alternative)],
+        [_decision(first, "APPROVED"), _decision(new_alternative, "APPROVED")],
     )
 
     args = _args(
@@ -651,8 +651,8 @@ def test_one_approved_adjudication_terminally_resolves_all_rejected_history(
     exclusions = json.loads(paths[2].read_text(encoding="utf-8"))["reviewed_exclusions"]
     assert exclusions["decision_row_count"] == 4
     assert exclusions["unique_decided_candidate_rows"] == 3
-    assert exclusions["approved_count"] == 1
-    assert exclusions["rejected_count"] == 3
+    assert exclusions["approved_count"] == 2
+    assert exclusions["rejected_count"] == 2
     assert exclusions["repeated_all_rejected"]["trait_records"] == 0
     assert exclusions["all_rejected_not_excluded"]["trait_records"] == 0
     assert exclusions["all_rejected_deferral"]["evaluated_trait_records"] == 0
@@ -677,8 +677,11 @@ def test_one_approved_adjudication_terminally_resolves_all_rejected_history(
     ]
     approved_projection = record["approved_adjudication"]
     assert approved_projection["batch_id"] == approved_name
-    assert approved_projection["approved_candidate_id"] == first["candidate_id"]
-    assert len(approved_projection["approved_resolution_digest"]) == 64
+    assert approved_projection["approved_candidate_ids"] == [
+        first["candidate_id"],
+        new_alternative["candidate_id"],
+    ]
+    assert len(approved_projection["approved_resolution_bindings_sha256"]) == 64
     assert len(approved_projection["candidate_ids_sha256"]) == 64
     total = _tsv(paths[1])[-1]
     assert total["resolved_all_rejected_trait_records"] == "1"
@@ -842,7 +845,6 @@ def test_repeated_all_rejected_deferral_checks_every_bound_record_hash(
         ("stale_candidate", "stale candidate alternatives"),
         ("unknown_candidate", "unknown decision candidate_id"),
         ("unknown_decision", "unknown decision"),
-        ("multiple_approved", "2 APPROVED candidates"),
     ],
 )
 def test_decision_ledgers_reject_partial_duplicate_stale_and_unknown_rows(
@@ -870,9 +872,6 @@ def test_decision_ledgers_reject_partial_duplicate_stale_and_unknown_rows(
         }
     elif fault == "unknown_decision":
         decisions[0]["decision"] = "PENDING"
-    elif fault == "multiple_approved":
-        decisions[0]["decision"] = "APPROVED"
-        decisions[1]["decision"] = "APPROVED"
     prior = _review_bundle(tmp_path, "prior", [first, second], decisions)
     if fault == "stale_candidate":
         changed = dict(second)

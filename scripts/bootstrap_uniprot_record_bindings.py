@@ -296,10 +296,7 @@ def _reviewed_approvals(
             for candidate_id in candidate_ids
             if decisions[candidate_id]["decision"] == "APPROVED"
         )
-        if len(approved_ids) > 1:
-            raise BootstrapError(f"reviewed record {record_key!r} has multiple approved candidates")
-        if approved_ids:
-            approved.append(candidates[approved_ids[0]].row)
+        approved.extend(candidates[candidate_id].row for candidate_id in approved_ids)
     approved.sort(key=lambda row: str(row["candidate_id"]))
     if len(approved) != EXPECTED_PROFILE.approved_rows:
         raise BootstrapError(
@@ -536,33 +533,57 @@ def _load_installed_records(
     records: dict[Path, dict[str, Any]] = {}
     texts: dict[Path, str] = {}
     expected_paths: dict[str, Path] = {}
+    approved_by_path: dict[Path, list[dict[str, Any]]] = defaultdict(list)
     for row in approved:
-        candidate_id = str(row["candidate_id"])
-        path = ground._safe_record_path(row.get("record_path"), traits_root)
-        if path in records:
-            raise BootstrapError(f"{candidate_id}: multiple approvals target one record")
+        approved_by_path[ground._safe_record_path(row.get("record_path"), traits_root)].append(row)
+
+    for path, rows in sorted(approved_by_path.items()):
+        first_row = rows[0]
+        first_candidate_id = str(first_row["candidate_id"])
         try:
             text = path.read_text(encoding="utf-8")
             record = yaml.safe_load(text)
         except (OSError, UnicodeDecodeError, yaml.YAMLError) as exc:
             raise BootstrapError(f"{path}: cannot load installed trait record: {exc}") from exc
-        if not isinstance(record, dict) or record.get("identifier") != row.get("trait_id"):
-            raise BootstrapError(f"{candidate_id}: installed record identity changed")
-        evidence_id = str(row["grounding_evidence"]["evidence_id"])
-        expected_paths[evidence_id] = path
         records[path] = record
         texts[path] = text
 
-        preimage = _reviewed_preimage(row, candidate_id, record, evidence_id)
-        try:
-            preimage_record = yaml.safe_load(preimage)
-        except yaml.YAMLError as exc:
-            raise BootstrapError(f"{candidate_id}: historical record preimage is invalid") from exc
-        installed, changed = ground._install_example(preimage_record, row)
-        expected_text = ground._replace_examples_block(preimage, installed) if changed else preimage
+        preimage: str | None = None
+        preimage_record: dict[str, Any] | None = None
+        changed = False
+        for row in rows:
+            candidate_id = str(row["candidate_id"])
+            if not isinstance(record, dict) or record.get("identifier") != row.get("trait_id"):
+                raise BootstrapError(f"{candidate_id}: installed record identity changed")
+            evidence_id = str(row["grounding_evidence"]["evidence_id"])
+            expected_paths[evidence_id] = path
+            reviewed_preimage = _reviewed_preimage(row, candidate_id, record, evidence_id)
+            if preimage is None:
+                preimage = reviewed_preimage
+                try:
+                    loaded = yaml.safe_load(preimage)
+                except yaml.YAMLError as exc:
+                    raise BootstrapError(
+                        f"{first_candidate_id}: historical record preimage is invalid"
+                    ) from exc
+                if not isinstance(loaded, dict):
+                    raise BootstrapError(
+                        f"{first_candidate_id}: historical record preimage is invalid"
+                    )
+                preimage_record = loaded
+            elif reviewed_preimage != preimage:
+                raise BootstrapError(f"{candidate_id}: record preimage differs within record group")
+            assert preimage_record is not None
+            preimage_record, row_changed = ground._install_example(preimage_record, row)
+            changed = changed or row_changed
+
+        assert preimage is not None
+        assert preimage_record is not None
+        expected_text = ground._replace_examples_block(preimage, preimage_record) if changed else preimage
         if expected_text != text:
             raise BootstrapError(
-                f"{candidate_id}: current record differs from the deterministic Batch-001 install"
+                f"{first_candidate_id}: current record differs from the deterministic Batch-001 "
+                "install"
             )
 
     # Scan every trait once so an evidence ID copied into a different record cannot be

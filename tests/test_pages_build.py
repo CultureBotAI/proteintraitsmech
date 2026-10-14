@@ -943,8 +943,28 @@ for (const bad of [undefined, null, [], 'nope', [['A', 'B', 'C']]]) {{
 assert.deepStrictEqual(fc.sidebarState(null, {{}}, '', undefined).counts, {{}});
 
 // The query flag reaches the wording.
-assert.deepStrictEqual(fc.sidebarState(cube, {{}}, 'kinase', globals).note, fc.note(true, true));
+assert.deepStrictEqual(fc.sidebarState(cube, {{}}, 'kinase', globals).note, fc.note(true, true, false));
 assert.deepStrictEqual(fc.sidebarState(cube, {{}}, '', globals).note, fc.note(true, false));
+"""
+    out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
+    assert out.returncode == 0, out.stdout + out.stderr
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="Node.js is not installed")
+def test_unfiltered_query_discloses_global_facet_counts():
+    module = json.dumps(str(REPO / "docs" / "facet-counts.js"))
+    program = f"""
+const assert = require('assert'), fc = require({module});
+const cube = [['A', 'C', 'S', 'SEEDED', 3]];
+for (const selected of [{{}}, {{axis: new Set()}}, {{cat: []}}]) {{
+  const state = fc.sidebarState(cube, selected, 'kinase', {{}});
+  assert.match(state.note.short, /global corpus totals/);
+  assert.match(state.note.long, /search/);
+  assert.ok(!/active filters/.test(state.note.short));
+}}
+const filtered = fc.sidebarState(cube, {{axis: new Set(['A'])}}, 'kinase', {{}});
+assert.match(filtered.note.short, /active filters/);
+assert.match(filtered.note.short, /not the search text/);
 """
     out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
     assert out.returncode == 0, out.stdout + out.stderr

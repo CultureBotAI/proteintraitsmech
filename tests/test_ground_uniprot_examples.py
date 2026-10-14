@@ -4,11 +4,15 @@ from __future__ import annotations
 
 import ast
 import csv
+import gzip
 import hashlib
 import importlib
 import json
+import os
 import pathlib
+import signal
 import sys
+import threading
 from types import MappingProxyType, SimpleNamespace
 
 import pytest
@@ -18,8 +22,12 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 ground = importlib.import_module("ground_uniprot_examples")
 grounding_validator = importlib.import_module("validate_uniprot_grounding")
+layout = importlib.import_module("grounding_registry_layout")
 membership_snapshot = importlib.import_module("uniprot_membership_snapshot")
+go_true_path = importlib.import_module("go_true_path")
 ecod_sifts = importlib.import_module("build_ecod_sifts_candidates")
+biolip_mapper = importlib.import_module("stage_biolip_sifts_mappings")
+biolip_sifts = importlib.import_module("fetch_biolip_sifts_uniprot_references")
 fetch_registry = importlib.import_module("fetch_uniprot_registry")
 
 
@@ -32,6 +40,43 @@ def _jsonl(path: pathlib.Path, rows: list[dict]) -> None:
 
 def _jsonl_rows(path: pathlib.Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+
+
+def _shard_durable_outputs(fixture: dict) -> None:
+    """Point the fixture's durable evidence and bindings at sharded ``.jsonl.d`` paths."""
+
+    for key in ("durable_evidence", "durable_bindings"):
+        fixture[key] = fixture[key].with_name(fixture[key].name + ".d")
+
+
+def _durable_exists(path: pathlib.Path) -> bool:
+    return path.is_dir() if layout.is_sharded(path) else path.is_file()
+
+
+def _durable_bytes(path: pathlib.Path) -> bytes:
+    """A durable registry's logical bytes: the flat file, or its verified shards joined."""
+
+    if not layout.is_sharded(path):
+        return path.read_bytes()
+    assert layout.read_registry(path).issues == ()
+    return b"".join(shard.read_bytes() for shard in sorted(path.glob("[0-9a-f][0-9a-f].jsonl")))
+
+
+def _artifact_image(path: pathlib.Path) -> bytes | dict[str, bytes]:
+    """Exact on-disk bytes of a file, or of every entry of a sharded registry."""
+
+    if path.is_dir():
+        return {entry.name: entry.read_bytes() for entry in sorted(path.iterdir())}
+    return path.read_bytes()
+
+
+def _tree(root: pathlib.Path) -> dict[str, bytes | None]:
+    """Every file (with its bytes) and directory (``None``) under ``root``."""
+
+    return {
+        entry.relative_to(root).as_posix(): None if entry.is_dir() else entry.read_bytes()
+        for entry in sorted(root.rglob("*"))
+    }
 
 
 def _sidecar(path: pathlib.Path, source: str, release: str, proteins: dict) -> None:
@@ -125,6 +170,7 @@ def local_sources(tmp_path):
                 "sequence_length": len(sequence),
                 "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
                 "reviewed": True,
+                "fragment": False,
                 "uniprot_release": "2026_02",
             }
         ],
@@ -175,7 +221,74 @@ def local_sources(tmp_path):
         "durable_evidence": tmp_path / "durable" / "occurrence_evidence.jsonl",
         "durable_membership": tmp_path / "durable" / "uniprot_memberships.jsonl",
         "durable_bindings": tmp_path / "durable" / "qualified_record_bindings.jsonl",
+        # Absent unless a test writes it: GO true-path inheritance is then not attempted.
+        "go_obo": tmp_path / "go-basic.obo",
+        "durable_go_edges": tmp_path / "durable" / "go_true_path_edges.jsonl",
     }
+
+
+def _update_sidecar(path: pathlib.Path, accession: str, entry: dict) -> None:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["proteins"][accession] = entry
+    payload["_meta"]["count"] = len(payload["proteins"])
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+
+def _append_jsonl(path: pathlib.Path, row: dict) -> None:
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n")
+
+
+def _add_second_interpro_candidate(fixture: dict) -> None:
+    accession = "Q67890"
+    protein_id = f"UniProtKB:{accession}"
+    sequence = "ACDEFGHIK"
+    sequence_sha256 = hashlib.sha256(sequence.encode("ascii")).hexdigest()
+    _update_sidecar(
+        fixture["residue"],
+        accession,
+        {"seq": sequence, "ft": []},
+    )
+    _update_sidecar(
+        fixture["interpro"],
+        accession,
+        {"Pfam:PF00001": [[2, 5]]},
+    )
+    _update_sidecar(
+        fixture["interpro_grouped"],
+        accession,
+        {"Pfam:PF00001": [[[2, 5]]]},
+    )
+    _append_jsonl(
+        fixture["profiles"],
+        {
+            "accession": protein_id,
+            "name": "Second fixture protein",
+            "taxon": "NCBITaxon:83333",
+            "taxon_label": "Escherichia coli",
+            "length": len(sequence),
+            "reviewed": True,
+        },
+    )
+    _append_jsonl(
+        fixture["source_registry"],
+        {
+            "protein_id": protein_id,
+            "protein_label": "Second fixture protein",
+            "taxon_id": "NCBITaxon:83333",
+            "taxon_label": "Escherichia coli",
+            "sequence": sequence,
+            "sequence_length": len(sequence),
+            "sequence_sha256": sequence_sha256,
+            "reviewed": True,
+            "fragment": False,
+            "uniprot_release": "2026_02",
+        },
+    )
+    _jsonl(
+        fixture["queue"],
+        [fixture["candidate"], {**fixture["candidate"], "protein_id": protein_id}],
+    )
 
 
 def _resolve_args(fixture: dict) -> list[str]:
@@ -439,6 +552,10 @@ def _promote_args(fixture: dict, approved: pathlib.Path, apply: bool = False) ->
         str(fixture["durable_membership"]),
         "--durable-qualified-record-bindings",
         str(fixture["durable_bindings"]),
+        "--durable-go-edges",
+        str(fixture["durable_go_edges"]),
+        "--go-obo",
+        str(fixture["go_obo"]),
         "--panther-classifications",
         str(fixture["panther"]),
         "--panther-classifications-sha256",
@@ -496,6 +613,7 @@ def _membership_resolve_args(fixture: dict) -> list[str]:
     args = _resolve_args(fixture)
     args[1:1] = ["--providers", "protein-registry,uniprot-membership"]
     args.extend(["--membership-registry", str(fixture["membership"])])
+    args.extend(["--go-obo", str(fixture["go_obo"])])
     args[args.index("--batch") + 1] = "ready-uniprot-membership"
     return args
 
@@ -834,6 +952,280 @@ def _prepare_sifts_candidate(fixture: dict) -> tuple[dict, dict, dict, dict]:
     _jsonl(fixture["sifts"], [mapping])
     _jsonl(fixture["queue"], [candidate])
     return candidate, mapping, occurrence, evidence
+
+
+def _prepare_biolip_sifts_candidate(fixture: dict, tmp_path: pathlib.Path) -> tuple[dict, dict]:
+    trait_id = "proteintraitsmech:BIOLIP_ATP"
+    fixture["record"].write_text(_record(trait_id, axis="STRUCTURE"), encoding="utf-8")
+
+    stage = tmp_path / "biolip-stage.jsonl"
+    snapshot = tmp_path / "biolip-sifts-snapshot"
+    snapshot.mkdir()
+    occurrence = {
+        "schema_version": 1,
+        "kind": biolip_mapper.INPUT_OCCURRENCE_KIND,
+        "stage_status": "READY_FOR_RESIDUE_LEVEL_SIFTS",
+        "qualification_claimed": False,
+        "protein_identity_claimed": False,
+        "uniprot_coordinates_claimed": False,
+        "source_residue_count": 1,
+        "binding_residue_pairs": [
+            {
+                "author_insertion_code": "",
+                "author_residue_number": 1,
+                "author_residue_token": "A1",
+                "biolip_receptor_sequence_position": 1,
+                "ordinal": 1,
+                "receptor_sequence_residue_token": "A1",
+                "source_amino_acid": "A",
+            }
+        ],
+        "source_binding": {
+            "binding_residues_pdb_author_text": "A1",
+            "binding_residues_receptor_sequence_text": "A1",
+            "binding_site_code": "BS01",
+            "ligand_chain_id": "X",
+            "ligand_id": "ATP",
+            "ligand_serial_number_text": "1",
+            "receptor_chain_id": "A",
+            "receptor_sequence_length": 1,
+            "receptor_sequence_sha256": "3" * 64,
+            "resolution_text": "1.0",
+            "source_field_projection_sha256": "4" * 64,
+            "source_line_numbers": [1],
+            "source_occurrence_key": {
+                "binding_site_code": "BS01",
+                "ligand_chain": "X",
+                "ligand_id": "ATP",
+                "ligand_serial_number": "1",
+                "pdb_id": "1abc",
+                "receptor_chain": "A",
+            },
+            "source_physical_line_count": 1,
+            "source_raw_line_sha256": "0" * 64,
+            "source_raw_line_sha256_basis": "RAW_UTF8_PHYSICAL_LINE_INCLUDING_LF",
+            "source_uniprot_accession_claims": [],
+            "source_uniprot_claim_status": "MISSING",
+            "source_uniprot_field_text": "",
+            "structure_id": "PDB:1abc",
+        },
+        "trait_binding": {
+            "ligand_id": "ATP",
+            "trait_id": trait_id,
+            "trait_record_has_canonical_examples": False,
+            "trait_record_path": str(fixture["record"]),
+            "trait_record_sha256": "1" * 64,
+            "trait_source_xref_status": "EXACT_SEEDER_SOURCE_XREFS",
+            "trait_source_xrefs": ["pdb.ligand:ATP"],
+        },
+        "source_occurrence_id": "biolip-missing-protein-source-occurrence:ok",
+        "source_occurrence_row_sha256": "2" * 64,
+    }
+    stage_summary = {
+        "schema_version": 1,
+        "kind": biolip_mapper.INPUT_SUMMARY_KIND,
+        "stage_id": "biolip-missing-protein-stage:fixture",
+        "combined_non_summary_rows_sha256": "fixture",
+        "ready_for_residue_level_sifts_count": 1,
+    }
+    stage.write_text(
+        "".join(
+            biolip_mapper.canonical_json(row) + "\n"
+            for row in (occurrence, stage_summary)
+        ),
+        encoding="utf-8",
+    )
+
+    xml = gzip.compress(
+        b"""<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.ebi.ac.uk/pdbe/docs/sifts/eFamily.xsd"
+       xmlns:dc="http://purl.org/dc/elements/1.1/"
+       xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+       dbSource="PDBe"
+       dbCoordSys="PDBe"
+       dbAccessionId="1abc"
+       date="2026-09-27">
+  <listDB><db dbSource="UniProt" dbVersion="2026.03"/></listDB>
+  <entity>
+    <segment>
+      <listResidue>
+        <residue dbSource="PDBe" dbCoordSys="PDBe" dbResNum="1">
+          <crossRefDb dbSource="PDB" dbCoordSys="PDBresnum"
+                      dbAccessionId="1abc" dbChainId="A"
+                      dbResNum="1" dbResName="ALA"/>
+          <crossRefDb dbSource="UniProt" dbCoordSys="UniProt"
+                      dbAccessionId="P12345" dbResNum="10" dbResName="A"/>
+        </residue>
+      </listResidue>
+    </segment>
+  </entity>
+  <dc:rights rdf:resource="http://pdbe.org/sifts">PDBe SIFTS terms</dc:rights>
+</entry>
+"""
+    )
+    sifts_xml = snapshot / "1abc.xml.gz"
+    sifts_xml.write_bytes(xml)
+    manifest_entry = {
+        "path": sifts_xml.name,
+        "pdb_id": "1abc",
+        "sha256": hashlib.sha256(xml).hexdigest(),
+        "sifts_entry_date": "2026-09-27",
+        "sifts_uniprot_release": "2026_03",
+        "sifts_uniprot_version": "2026.03",
+        "size_bytes": len(xml),
+        "url": f"{biolip_mapper.SIFTS_XML_ROOT}/{sifts_xml.name}",
+    }
+    manifest = {
+        "schema_version": 1,
+        "kind": biolip_mapper.SNAPSHOT_KIND,
+        "complete": True,
+        "entries": [manifest_entry],
+        "failures": [],
+        "fetch_request_count": 1,
+        "requested_pdb_count": 1,
+        "snapshot_id": "fixture",
+        "source": "PDBe SIFTS residue-level XML",
+        "source_root": biolip_mapper.SIFTS_XML_ROOT,
+        "stage_combined_non_summary_rows_sha256": "fixture",
+        "stage_id": "biolip-missing-protein-stage:fixture",
+        "stage_path": "biolip-stage.jsonl",
+        "stage_sha256": hashlib.sha256(stage.read_bytes()).hexdigest(),
+    }
+    (snapshot / "manifest.json").write_text(
+        biolip_mapper.canonical_json(manifest) + "\n",
+        encoding="utf-8",
+    )
+
+    responses = tmp_path / "biolip-uniprot-responses.json"
+    responses.write_text(
+        json.dumps(
+            {
+                "release": "2026_03",
+                "responses": [
+                    {
+                        "requested": ["P12345"],
+                        "results": [
+                            {
+                                "primaryAccession": "P12345",
+                                "uniProtkbId": "P12345_FIXTURE",
+                                "entryType": "UniProtKB reviewed (Swiss-Prot)",
+                                "proteinDescription": {
+                                    "recommendedName": {
+                                        "fullName": {"value": "Fixture protein"}
+                                    }
+                                },
+                                "organism": {
+                                    "taxonId": 562,
+                                    "scientificName": "Escherichia coli",
+                                },
+                                "sequence": {"value": "CCCCCCCCCA", "length": 10},
+                                "entryAudit": {"sequenceVersion": 3},
+                                "uniProtKBCrossReferences": [
+                                    {"database": "Pfam", "id": "PF00001", "properties": []}
+                                ],
+                            }
+                        ],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    registry = tmp_path / "biolip-registry.jsonl"
+    memberships = tmp_path / "biolip-memberships.jsonl"
+    mappings = tmp_path / "biolip-mappings.jsonl"
+    blocked = tmp_path / "biolip-blocked.tsv"
+    receipt = tmp_path / "biolip-receipt.json"
+    plan = tmp_path / "biolip-plan.json"
+    args = [
+        "--stage",
+        str(stage),
+        "--sifts-snapshot",
+        str(snapshot),
+        "--expect-release",
+        "2026_03",
+        "--out",
+        str(registry),
+        "--membership-out",
+        str(memberships),
+        "--mapping-out",
+        str(mappings),
+        "--blocked",
+        str(blocked),
+        "--receipt",
+        str(receipt),
+        "--offline-responses",
+        str(responses),
+    ]
+    namespace = biolip_sifts.parser().parse_args(args)
+    prepared = biolip_sifts._derive_request_plan(namespace)
+    plan.write_text(biolip_sifts.render_request_plan(prepared.plan), encoding="utf-8")
+    assert biolip_sifts.main([*args, "--request-plan", str(plan), "--apply"]) == 0
+
+    [reference] = _jsonl_rows(registry)
+    [mapping] = _jsonl_rows(mappings)
+    fixture["source_registry"].write_bytes(registry.read_bytes())
+    _sidecar(
+        fixture["residue"],
+        "UniProt",
+        reference["uniprot_release"],
+        {"P12345": {"seq": reference["sequence"], "ft": []}},
+    )
+    _jsonl(fixture["profiles"], [])
+    fixture["sifts"] = mappings
+
+    provider_release = ground._sifts_provider_release(mapping)
+    mapping_sha = biolip_sifts.mapping_entry_sha256(mapping)
+    candidate = {
+        "batch": "ready-sifts",
+        "candidate_status": "LOCATION_VERIFIED",
+        "qualification_status": "CANDIDATE_PROTEIN",
+        "trait_id": trait_id,
+        "record_path": str(fixture["record"]),
+        "source_namespace": "BioLiP",
+        "trait_axis": "STRUCTURE",
+        "trait_category": "STRUCT_FOLD",
+        "protein_id": reference["protein_id"],
+        "protein_label": reference["protein_label"],
+        "taxon_id": reference["taxon_id"],
+        "taxon_label": reference["taxon_label"],
+        "sequence_length": reference["sequence_length"],
+        "sequence_sha256": reference["sequence_sha256"],
+        "sequence_release": reference["uniprot_release"],
+        "reviewed": reference["reviewed"],
+        "scope": mapping["scope"],
+        "coordinate_frame": mapping["coordinate_frame"],
+        "intervals": [{"start": 10, "end": 10}],
+        "residue_positions": mapping["residue_positions"],
+        "expected_residues": mapping["expected_residues"],
+        "source_trait_id": trait_id,
+        "mapping_method": "SIFTS_RESIDUE_MAPPING",
+        "evidence_source": "BioLiP via PDBe SIFTS",
+        "source_release": None,
+        "evidence_tier": "B",
+        "mapping_completeness": mapping["mapping_completeness"],
+        "source_residue_count": mapping["source_residue_count"],
+        "mapped_residue_count": mapping["mapped_residue_count"],
+        "structure_id": mapping["structure_id"],
+        "chain_id": mapping["chain_id"],
+        "sifts_mapping_id": mapping["mapping_id"],
+        "sifts_release": provider_release,
+        "reasons": [],
+        "provider_evidence": [
+            {
+                "kind": "sifts_mapping",
+                "path": ground._display_path(mappings),
+                "key": mapping["mapping_id"],
+                "source": "PDBe SIFTS",
+                "release": provider_release,
+                "entry_sha256": mapping_sha,
+                "trait_id": trait_id,
+            }
+        ],
+    }
+    candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+    _jsonl(fixture["queue"], [candidate])
+    return candidate, mapping
 
 
 def test_candidate_id_covers_sequence_release_coordinates_and_positions(local_sources):
@@ -1684,6 +2076,55 @@ def test_sifts_mapping_stays_candidate_only_without_provider_receipt(local_sourc
     assert local_sources["evidence"].read_text(encoding="utf-8") == ""
 
 
+def test_biolip_sifts_mapping_loads_and_resolves_fail_closed_without_source_release(
+    local_sources, tmp_path
+):
+    candidate, mapping = _prepare_biolip_sifts_candidate(local_sources, tmp_path)
+
+    loaded = ground._load_sifts_mapping_registry(local_sources["sifts"])
+
+    assert loaded == {mapping["mapping_id"]: mapping}
+    assert ground._sifts_mapping_entry_sha256(mapping) == biolip_sifts.mapping_entry_sha256(
+        mapping
+    )
+    assert ground._sifts_expected_mapping_id(
+        mapping,
+        biolip_sifts.mapping_entry_sha256(mapping),
+    ) == mapping["mapping_id"]
+    assert ground._sifts_expected_chain(mapping) == "A"
+    assert ground._sifts_evidence_source(mapping) == "BioLiP via PDBe SIFTS"
+    assert ground._sifts_authoritative_source_release(mapping) is None
+
+    assert ground.main(_sifts_resolve_args(local_sources)) == 0
+
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert row["reasons"] == ["missing:sifts_source_release", "missing:source_release"]
+    assert row["intervals"] == candidate["intervals"]
+    assert row["residue_positions"] == candidate["residue_positions"]
+    assert "trait_occurrence" not in row
+    assert "grounding_evidence" not in row
+    sifts_provider = next(
+        item for item in row["provider_evidence"] if item["kind"] == "sifts_mapping"
+    )
+    assert sifts_provider["key"] == mapping["mapping_id"]
+    assert sifts_provider["entry_sha256"] == biolip_sifts.mapping_entry_sha256(mapping)
+    assert local_sources["registry"].read_text(encoding="utf-8") == ""
+    assert local_sources["evidence"].read_text(encoding="utf-8") == ""
+
+
+def test_biolip_sifts_mapping_loader_rejects_tampered_content_address(
+    local_sources, tmp_path, capsys
+):
+    _candidate, mapping = _prepare_biolip_sifts_candidate(local_sources, tmp_path)
+    mapping["mapping_row_sha256"] = "0" * 64
+    _jsonl(local_sources["sifts"], [mapping])
+
+    assert ground.main(_sifts_resolve_args(local_sources)) == 2
+    assert "BioLiP/SIFTS mapping_row_sha256 mismatch" in capsys.readouterr().err
+    assert not local_sources["resolved"].exists()
+
+
 def test_sifts_provider_requires_explicit_registry(local_sources, capsys):
     _prepare_sifts_candidate(local_sources)
     args = _sifts_resolve_args(local_sources)
@@ -1825,6 +2266,148 @@ def test_whole_protein_keeps_real_match_footprint_out_of_occurrence(local_source
     assert row["trait_occurrence"]["scope"] == "WHOLE_PROTEIN"
     assert "intervals" not in row["trait_occurrence"]
     assert "coordinate_frame" not in row["trait_occurrence"]
+
+
+def _set_registry_fragment(local_sources, fragment: bool | None) -> None:
+    """Rewrite the fixture registry row; ``None`` removes the field (a pre-#1081 fetch)."""
+
+    path = local_sources["source_registry"]
+    (row,) = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    row.pop("fragment", None)
+    if fragment is not None:
+        row["fragment"] = fragment
+    _jsonl(path, [row])
+
+
+def _whole_protein_panther_candidate(local_sources) -> dict:
+    local_sources["record"].write_text(
+        _record("PANTHER:PTHR12345", axis="FUNCTION"), encoding="utf-8"
+    )
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"PANTHER:PTHR12345": [[1, 9]]}},
+    )
+    return {
+        **local_sources["candidate"],
+        "trait_id": "PANTHER:PTHR12345",
+        "source_trait_id": "PANTHER:PTHR12345",
+        "trait_axis": "FUNCTION",
+        "trait_category": "FUNC_PROTEIN_FAMILY",
+        "scope": "WHOLE_PROTEIN",
+        "coordinate_frame": None,
+        "intervals": [{"start": 1, "end": 9}],
+    }
+
+
+def _review_row(local_sources) -> dict:
+    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
+        (row,) = list(csv.DictReader(handle, delimiter="\t"))
+    return row
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason", "review_value"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment", "true"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein", ""),
+    ],
+)
+def test_fragment_or_unrecorded_fragment_status_cannot_qualify_whole_protein(
+    local_sources, fragment, reason, review_value
+):
+    """#1081: a UniProt fragment cannot exemplify a whole-protein claim, and a registry
+    fetched before fragment capture fails closed rather than passing as complete."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _set_registry_fragment(local_sources, fragment)
+    # A producer cannot vouch for completeness; the registry value always wins.
+    _jsonl(local_sources["queue"], [{**candidate, "uniprot_fragment": False}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert row["reasons"] == [reason]
+    assert row["uniprot_fragment"] is fragment
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == review_value
+    assert review["reasons"] == reason
+
+
+def test_fragment_keeps_localized_qualification_but_is_flagged_for_review(local_sources):
+    _set_registry_fragment(local_sources, True)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["trait_occurrence"]["scope"] == "LOCALIZED"
+    assert row["uniprot_fragment"] is True
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == "true"
+    assert "UNIPROT_FRAGMENT" in review["review_flags"].split(";")
+    # Fragment status is a qualification input, not a staged ProteinReference field.
+    (staged,) = [
+        json.loads(line)
+        for line in local_sources["registry"].read_text(encoding="utf-8").splitlines()
+    ]
+    assert "fragment" not in staged
+
+
+def test_unrecorded_fragment_status_leaves_localized_rows_qualified(local_sources):
+    _set_registry_fragment(local_sources, None)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["uniprot_fragment"] is None
+    assert _review_row(local_sources)["uniprot_fragment"] == ""
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein"),
+    ],
+)
+def test_promotion_rejects_whole_protein_rows_without_complete_fragment_status(
+    local_sources, fragment, reason
+):
+    """A row resolved before #1081 never recorded fragment status; promotion re-checks."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _jsonl(local_sources["queue"], [candidate])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == []
+    if fragment is None:
+        row.pop("uniprot_fragment")
+    else:
+        row["uniprot_fragment"] = fragment
+    row["resolution_digest"] = ground._resolution_digest(row)
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == [reason]
+
+
+def test_durable_registry_refuses_fetch_staging_fragment_status(tmp_path):
+    """#1087: fragment status never reaches a merged durable ProteinReference."""
+
+    sequence = "ACDEFGHIK"
+    row = {
+        "protein_id": "UniProtKB:P12345",
+        "protein_label": "Fixture protein",
+        "taxon_id": "NCBITaxon:9606",
+        "taxon_label": "Homo sapiens",
+        "sequence": sequence,
+        "sequence_length": len(sequence),
+        "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
+        "reviewed": True,
+        "uniprot_release": "2026_02",
+    }
+    path = tmp_path / "protein_registry.jsonl"
+    ground._validate_registry_mapping({row["protein_id"]: row}, path)
+    with pytest.raises(ground.GroundingError, match="registry_fetch_staging_only_field"):
+        ground._validate_registry_mapping({row["protein_id"]: {**row, "fragment": False}}, path)
 
 
 def _prepare_panther_content_gate_fixture(
@@ -2387,6 +2970,749 @@ def test_resolve_qualifies_only_an_exact_release_pinned_uniprot_membership(local
     assert row["family_classifications"] == candidate["family_classifications"]
 
 
+_GO_FACT = {
+    "database": "GO",
+    "id": "GO:0009390",
+    "properties": [
+        {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+        {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+    ],
+}
+_CATALYTIC_ACTIVITY = {
+    "commentType": "CATALYTIC ACTIVITY",
+    "reaction": {
+        "reactionCrossReferences": [{"database": "Rhea", "id": "RHEA:37871"}],
+        "evidences": [{"evidenceCode": "ECO:0000269", "source": "PubMed", "id": "20662781"}],
+    },
+}
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method", "entry"),
+    [
+        ("GO:0009390", "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [_GO_FACT]}),
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_MEMBERSHIP",
+            {"uniProtKBCrossReferences": [{"database": "ComplexPortal", "id": "CPX-320"}]},
+        ),
+        ("RHEA:37871", "SOURCE_MEMBERSHIP", {"comments": [_CATALYTIC_ACTIVITY]}),
+    ],
+)
+def test_functional_uniprot_facts_qualify_only_under_their_own_method(
+    local_sources, trait_id, method, entry
+):
+    """#652: a GO annotation is SOURCE_ANNOTATION; a CPX/Rhea fact is SOURCE_MEMBERSHIP."""
+
+    candidate, _ = _prepare_membership_candidate(local_sources)
+    local_sources["record"].write_text(_record(trait_id, axis="FUNCTION"), encoding="utf-8")
+    facts = membership_snapshot.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=local_sources["candidate"]["sequence_sha256"],
+        uniprot_release="2026_02",
+    )
+    assert [fact["source_trait_id"] for fact in facts] == [trait_id]
+    _write_memberships(local_sources["membership"], facts)
+    good = {
+        **candidate,
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "source_namespace": trait_id.split(":", 1)[0],
+        "mapping_method": method,
+    }
+    good["candidate_id"] = ground.derive_candidate_id(good)
+    _jsonl(local_sources["queue"], [good])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["trait_occurrence"]["mapping_method"] == method
+    assert row["trait_occurrence"]["evidence_source"] == "UniProtKB"
+    assert row["grounding_evidence"]["provider_kind"] == "UNIPROT"
+
+    wrong = {
+        **good,
+        "mapping_method": (
+            "SOURCE_MEMBERSHIP" if method == "SOURCE_ANNOTATION" else "SOURCE_ANNOTATION"
+        ),
+    }
+    wrong["candidate_id"] = ground.derive_candidate_id(wrong)
+    _jsonl(local_sources["queue"], [wrong])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "mismatch:uniprot_fact_mapping_method" in row["reasons"]
+
+
+def _functional_candidate(local_sources, trait_id, method, entry):
+    candidate, _ = _prepare_membership_candidate(local_sources)
+    local_sources["record"].write_text(_record(trait_id, axis="FUNCTION"), encoding="utf-8")
+    facts = membership_snapshot.extract_entry_memberships(
+        entry,
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=local_sources["candidate"]["sequence_sha256"],
+        uniprot_release="2026_02",
+    )
+    _write_memberships(local_sources["membership"], facts)
+    row = {
+        **candidate,
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "source_namespace": trait_id.split(":", 1)[0],
+        "mapping_method": method,
+    }
+    # No producer ID: the resolver derives it from the complete resolved identity, which
+    # is what the promoter's scientific-identity check requires.
+    row.pop("candidate_id", None)
+    _jsonl(local_sources["queue"], [row])
+    return facts
+
+
+@pytest.mark.parametrize(
+    ("entry", "reason"),
+    [
+        (
+            {
+                "uniProtKBCrossReferences": [
+                    {
+                        **_GO_FACT,
+                        "properties": [
+                            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+                            {"key": "GoEvidenceType", "value": "IEA:InterPro"},
+                        ],
+                    }
+                ]
+            },
+            "unqualifiable:uniprot_evidence:go_evidence_IEA",
+        ),
+    ],
+)
+def test_exact_but_electronic_go_facts_stay_candidates(local_sources, entry, reason):
+    """#974: the plan keeps homology-only and EC-only inference as candidate evidence."""
+
+    _functional_candidate(local_sources, "GO:0009390", "SOURCE_ANNOTATION", entry)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert reason in row["reasons"]
+
+
+def test_automatic_only_catalytic_activity_stays_a_candidate(local_sources):
+    automatic = {
+        **_CATALYTIC_ACTIVITY,
+        "reaction": {**_CATALYTIC_ACTIVITY["reaction"], "evidences": [{"evidenceCode": "ECO:0000256"}]},
+    }
+    _functional_candidate(local_sources, "RHEA:37871", "SOURCE_MEMBERSHIP", {"comments": [automatic]})
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "unqualifiable:uniprot_evidence:rhea_evidence_ECO:0000256" in row["reasons"]
+
+
+def _go_promotion(local_sources, monkeypatch):
+    facts = _functional_candidate(
+        local_sources, "GO:0009390", "SOURCE_ANNOTATION", {"uniProtKBCrossReferences": [_GO_FACT]}
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("go-approved.tsv")
+    _approve(local_sources["review"], approved)
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(text, encoding=encoding),
+    )
+    return facts, approved
+
+
+def _fake_receipt(local_sources, monkeypatch, *, mode="UNIPROT_REST", membership_bytes=None):
+    import fetch_uniprot_registry
+
+    def verify(*, receipt_path, request_plan_path):
+        return SimpleNamespace(
+            request_plan={"acquisition_mode": mode},
+            membership_registry_jsonl_bytes=(
+                local_sources["membership"].read_bytes()
+                if membership_bytes is None
+                else membership_bytes
+            ),
+        )
+
+    monkeypatch.setattr(fetch_uniprot_registry, "verify_fetch_receipt", verify)
+    plan = local_sources["membership"].with_name("plan.json")
+    receipt = local_sources["membership"].with_name("receipt.json")
+    return ["--fetch-request-plan", str(plan), "--fetch-receipt", str(receipt)]
+
+
+def test_go_promotion_needs_a_receipt_bound_membership_snapshot(local_sources, monkeypatch):
+    """#973: the UniProt lane is admitted only from a verified fetch receipt."""
+
+    _, approved = _go_promotion(local_sources, monkeypatch)
+    with pytest.raises(ground.GroundingError, match="need --fetch-request-plan"):
+        ground.promote(ground._parser().parse_args(_promote_args(local_sources, approved, apply=True)))
+    assert not local_sources["durable_membership"].exists()
+
+    offline = _fake_receipt(local_sources, monkeypatch, mode="OFFLINE_FIXTURE")
+    with pytest.raises(ground.GroundingError, match="network UNIPROT_REST"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + offline)
+        )
+    forged = _fake_receipt(local_sources, monkeypatch, membership_bytes=b"{}\n")
+    with pytest.raises(ground.GroundingError, match="not the fetch output"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + forged)
+        )
+    assert not local_sources["durable_membership"].exists()
+
+
+def test_go_promotion_installs_the_exact_annotation_fact(local_sources, monkeypatch):
+    """#976: SOURCE_ANNOTATION promotion end to end, with the installed-fact self-check."""
+
+    facts, approved = _go_promotion(local_sources, monkeypatch)
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    args = _promote_args(local_sources, approved, apply=True) + receipt
+    assert ground.main(args) == 0
+    assert _jsonl_rows(local_sources["durable_membership"]) == facts
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    (occurrence,) = record["canonical_examples"][0]["trait_occurrences"]
+    assert occurrence["mapping_method"] == "SOURCE_ANNOTATION"
+    assert occurrence["evidence_source"] == "UniProtKB"
+
+
+# A GO fixture: GO:0009390 is part_of GO:0009389, which is_a GO:0009388; GO:0009399 is a
+# molecular-function term with a cross-namespace part_of edge to GO:0009388, which must
+# never carry an annotation across namespaces.
+_GO_OBO_FIXTURE = """format-version: 1.2
+data-version: releases/2026-06-15
+
+[Term]
+id: GO:0009388
+name: fixture ancestor
+namespace: cellular_component
+
+[Term]
+id: GO:0009389
+name: fixture parent
+namespace: cellular_component
+is_a: GO:0009388 ! fixture ancestor
+
+[Term]
+id: GO:0009390
+name: dimethyl sulfoxide reductase complex
+namespace: cellular_component
+relationship: part_of GO:0009389 ! fixture parent
+
+[Term]
+id: GO:0009391
+name: fixture sibling component
+namespace: cellular_component
+relationship: part_of GO:0009389 ! fixture parent
+
+[Term]
+id: GO:0009399
+name: fixture function
+namespace: molecular_function
+relationship: part_of GO:0009388 ! a cross-namespace edge never inherits
+"""
+
+
+def _go_xref(term, evidence):
+    return {
+        **_GO_FACT,
+        "id": term,
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": evidence},
+        ],
+    }
+
+
+def _go_true_path_candidate(
+    local_sources,
+    record_term="GO:0009388",
+    evidence="IDA:EcoCyc",
+    fact_term="GO:0009390",
+    entry_type=None,
+    ec_codes=None,
+    extra_facts=(),
+):
+    local_sources["go_obo"].write_text(_GO_OBO_FIXTURE, encoding="utf-8")
+    entry = {
+        "uniProtKBCrossReferences": [
+            _go_xref(fact_term, evidence),
+            *(_go_xref(term, code) for term, code in extra_facts),
+        ]
+    }
+    if entry_type is not None:
+        entry["entryType"] = entry_type
+    if ec_codes is not None:
+        # The entry's EC assignment, whose own evidence the #1048 rule reads.
+        entry["proteinDescription"] = {
+            "recommendedName": {
+                "ecNumbers": [
+                    {"value": "1.8.5.3", "evidences": [{"evidenceCode": c} for c in ec_codes]}
+                ]
+            }
+        }
+    return _functional_candidate(local_sources, record_term, "SOURCE_ANNOTATION", entry)
+
+
+def _staged_identity(local_sources):
+    """Give the queued row the staged identity cross_mech_proteins.candidates() writes."""
+
+    (queued,) = _jsonl_rows(local_sources["queue"])
+    queued["sequence_sha256"] = local_sources["candidate"]["sequence_sha256"]
+    queued["sequence_release"] = "2026_02"
+    queued["source_release"] = "2026_02"
+    queued["evidence_source"] = "UniProtKB"
+    queued["candidate_id"] = ground.derive_candidate_id(queued)
+    _jsonl(local_sources["queue"], [queued])
+    return queued
+
+
+def _promote_go(local_sources, monkeypatch, approved_name="go-approved.tsv"):
+    approved = local_sources["review"].with_name(approved_name)
+    _approve(local_sources["review"], approved)
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(text, encoding=encoding),
+    )
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    return ground.promote(
+        ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + receipt)
+    )
+
+
+_SECOND_SEQUENCE = "MKLVAWYTR"
+_SECOND_SHA = hashlib.sha256(_SECOND_SEQUENCE.encode("ascii")).hexdigest()
+
+
+def _queue_second_protein(local_sources, *, go_term, evidence="IDA:EcoCyc"):
+    """Queue P99999 for the same GO:0009388 record, with one GO fact on ``go_term``."""
+
+    _update_sidecar(local_sources["residue"], "P99999", {"seq": _SECOND_SEQUENCE, "ft": []})
+    _append_jsonl(
+        local_sources["source_registry"],
+        {
+            "protein_id": "UniProtKB:P99999",
+            "protein_label": "Second protein",
+            "taxon_id": "NCBITaxon:562",
+            "taxon_label": "Escherichia coli",
+            "sequence": _SECOND_SEQUENCE,
+            "sequence_length": len(_SECOND_SEQUENCE),
+            "sequence_sha256": _SECOND_SHA,
+            "reviewed": True,
+            "fragment": False,
+            "uniprot_release": "2026_02",
+        },
+    )
+    facts = membership_snapshot.extract_entry_memberships(
+        {
+            "uniProtKBCrossReferences": [
+                {
+                    "database": "GO",
+                    "id": go_term,
+                    "properties": [
+                        {"key": "GoTerm", "value": "C:fixture"},
+                        {"key": "GoEvidenceType", "value": evidence},
+                    ],
+                }
+            ]
+        },
+        protein_id="UniProtKB:P99999",
+        sequence_sha256=_SECOND_SHA,
+        uniprot_release="2026_02",
+    )
+    _write_memberships(local_sources["membership"], facts)
+    (first,) = _jsonl_rows(local_sources["queue"])
+    row = {
+        **first,
+        "protein_id": "UniProtKB:P99999",
+        "trait_id": "GO:0009388",
+        "source_trait_id": "GO:0009388",
+    }
+    row.pop("candidate_id", None)
+    row.pop("inheritance_path", None)
+    _jsonl(local_sources["queue"], [row])
+
+
+def _promote_first_inherited_batch(local_sources, monkeypatch):
+    _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["inheritance_path"] == [
+        "GO:0009390",
+        "GO:0009389",
+        "GO:0009388",
+    ]
+    assert _promote_go(local_sources, monkeypatch, "approved-1.tsv") == 0
+
+
+def test_go_record_qualifies_on_a_descendants_exact_annotation(local_sources):
+    """#1002: GO true-path inheritance from an exact, qualifying descendant fact."""
+
+    (fact,) = _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["trait_id"] == "GO:0009388"
+    assert row["source_trait_id"] == fact["source_trait_id"] == "GO:0009390"
+    occurrence = row["trait_occurrence"]
+    assert occurrence["inheritance_path"] == ["GO:0009390", "GO:0009389", "GO:0009388"]
+    assert row["grounding_evidence"]["inheritance_path"] == occurrence["inheritance_path"]
+    # The inherited case is sampled exhaustively in review.
+    assert "ANCESTOR_INHERITANCE" in ground._review_flags(row)
+
+
+@pytest.mark.parametrize(
+    ("record_term", "evidence", "fact_term", "reason"),
+    [
+        # A weak descendant annotation is no better than a weak exact one.
+        ("GO:0009388", "IEA:InterPro", "GO:0009390", "missing:exact_uniprot_membership"),
+        # Inheritance runs only upward: an annotation to an ancestor term never
+        # supports a more specific record.
+        ("GO:0009390", "IDA:EcoCyc", "GO:0009388", "missing:exact_uniprot_membership"),
+        # ... and never across GO namespaces, even along a part_of edge (#1044).
+        ("GO:0009388", "IDA:EcoCyc", "GO:0009399", "missing:exact_uniprot_membership"),
+    ],
+)
+def test_go_true_path_needs_a_qualifying_descendant(
+    local_sources, record_term, evidence, fact_term, reason
+):
+    _go_true_path_candidate(local_sources, record_term, evidence, fact_term)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert reason in row["reasons"]
+    assert "inheritance_path" not in row or not row["inheritance_path"]
+
+
+def test_go_true_path_is_not_attempted_without_the_pinned_release(local_sources):
+    _go_true_path_candidate(local_sources)
+    local_sources["go_obo"].unlink()
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:exact_uniprot_membership" in row["reasons"]
+
+
+def test_a_producer_inheritance_path_must_be_proven_in_the_release(local_sources):
+    _go_true_path_candidate(local_sources)
+    (queued,) = _jsonl_rows(local_sources["queue"])
+    # GO:0009390 -> GO:0009388 skips the part_of step: not a direct edge.
+    queued.update(source_trait_id="GO:0009390", inheritance_path=["GO:0009390", "GO:0009388"])
+    _jsonl(local_sources["queue"], [queued])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "invalid:go_true_path_edge" in row["reasons"]
+
+
+def test_a_malformed_producer_path_is_rejected_without_aborting_the_run(local_sources):
+    """#1045: the review TSV cell cannot crash resolve after its outputs are written."""
+
+    _go_true_path_candidate(local_sources)
+    (queued,) = _jsonl_rows(local_sources["queue"])
+    queued.update(
+        source_trait_id="GO:0009390", inheritance_path=["GO:0009390", 9389, "GO:0009388"]
+    )
+    _jsonl(local_sources["queue"], [queued])
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "invalid:inheritance_path" in row["reasons"]
+    (review,) = list(
+        csv.DictReader(
+            local_sources["review"].read_text(encoding="utf-8").splitlines(), delimiter="\t"
+        )
+    )
+    assert review["candidate_id"] == row["candidate_id"]
+    assert review["inheritance_path"] == '["GO:0009390",9389,"GO:0009388"]'
+
+
+def test_go_true_path_promotion_installs_its_proven_edges(local_sources, monkeypatch):
+    _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("go-approved.tsv")
+    _approve(local_sources["review"], approved)
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(text, encoding=encoding),
+    )
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    assert ground.main(_promote_args(local_sources, approved, apply=True) + receipt) == 0
+    edges = _jsonl_rows(local_sources["durable_go_edges"])
+    assert [(edge["child"], edge["parent"], edge["relation"]) for edge in edges] == [
+        ("GO:0009389", "GO:0009388", "is_a"),
+        ("GO:0009390", "GO:0009389", "part_of"),
+    ]
+    assert {edge["go_release"] for edge in edges} == {"releases/2026-06-15"}
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    (occurrence,) = record["canonical_examples"][0]["trait_occurrences"]
+    assert occurrence["source_trait_id"] == "GO:0009390"
+    assert occurrence["inheritance_path"] == ["GO:0009390", "GO:0009389", "GO:0009388"]
+
+    # The standalone validator replays the path from the tracked edges alone.
+    def validate(edges):
+        return grounding_validator.main(
+            [
+                str(local_sources["record"]),
+                "--registry",
+                str(local_sources["durable_registry"]),
+                "--evidence-registry",
+                str(local_sources["durable_evidence"]),
+                "--membership-registry",
+                str(local_sources["durable_membership"]),
+                "--go-edges",
+                str(edges),
+                "--out",
+                str(local_sources["review"].with_name("validation.tsv")),
+                "--quiet",
+            ]
+        )
+
+    assert validate(local_sources["durable_go_edges"]) == 0
+    missing_edges = local_sources["review"].with_name("no-edges.jsonl")
+    assert validate(missing_edges) != 0
+    report = local_sources["review"].with_name("validation.tsv").read_text(encoding="utf-8")
+    assert "unproven_trait_inheritance_edge" in report
+    # Without the release the promoter cannot prove the edges, and refuses.
+    local_sources["go_obo"].unlink()
+    with pytest.raises(ground.GroundingError, match="GO true-path edges rejected"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + receipt)
+        )
+
+
+def test_go_true_path_prefers_stronger_evidence_over_a_lower_go_id(local_sources):
+    """#1050: of two equally short paths, direct experimental evidence beats IMP."""
+
+    _go_true_path_candidate(
+        local_sources,
+        evidence="IMP:CAFA",
+        fact_term="GO:0009390",
+        extra_facts=[("GO:0009391", "IDA:EcoCyc")],
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["source_trait_id"] == "GO:0009391"
+    assert row["inheritance_path"] == ["GO:0009391", "GO:0009389", "GO:0009388"]
+
+
+def test_go_true_path_prefers_stronger_evidence_over_a_shorter_path(local_sources):
+    """#1050: a curator-backed longer path beats an EC-rule shorter one."""
+
+    _go_true_path_candidate(
+        local_sources,
+        evidence="IEA:UniProtKB-EC",
+        fact_term="GO:0009389",
+        entry_type="UniProtKB reviewed (Swiss-Prot)",
+        ec_codes=[],
+        extra_facts=[("GO:0009391", "TAS:Reactome")],
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["inheritance_path"] == ["GO:0009391", "GO:0009389", "GO:0009388"]
+
+
+def test_inherited_go_row_keeps_its_staged_candidate_id_through_promotion(
+    local_sources, monkeypatch
+):
+    """#1037: the staged claim ID survives the resolver's descendant rewrite."""
+
+    _go_true_path_candidate(local_sources)
+    queued = _staged_identity(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["source_trait_id"] == "GO:0009390"
+    assert row["candidate_id"] == queued["candidate_id"] == ground.derive_candidate_id(row)
+    assert _promote_go(local_sources, monkeypatch) == 0
+    (binding,) = _jsonl_rows(local_sources["durable_bindings"])
+    assert binding["candidate_id"] == queued["candidate_id"]
+
+
+def test_later_exact_batch_on_a_record_with_an_inherited_example_promotes(
+    local_sources, monkeypatch
+):
+    """#1038: whole-record preflight sees the tracked edges even for exact-only rows."""
+
+    _promote_first_inherited_batch(local_sources, monkeypatch)
+    _queue_second_protein(local_sources, go_term="GO:0009388")
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED", row["reasons"]
+    assert row["source_trait_id"] == row["trait_id"] == "GO:0009388"
+    assert _promote_go(local_sources, monkeypatch, "approved-2.tsv") == 0
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    assert [example["protein_id"] for example in record["canonical_examples"]] == [
+        "UniProtKB:P12345",
+        "UniProtKB:P99999",
+    ]
+
+
+def test_tracked_edges_survive_a_refreshed_go_release(local_sources, monkeypatch):
+    """#1039: a later release that keeps an edge neither conflicts nor fails the check."""
+
+    _promote_first_inherited_batch(local_sources, monkeypatch)
+    obo = local_sources["go_obo"]
+    obo.write_text(
+        obo.read_text(encoding="utf-8").replace("releases/2026-06-15", "releases/2026-07-15"),
+        encoding="utf-8",
+    )
+    assert go_true_path.check(local_sources["durable_go_edges"], obo) == []
+    _queue_second_protein(local_sources, go_term="GO:0009390")
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
+    assert _promote_go(local_sources, monkeypatch, "approved-2.tsv") == 0
+    # The original rows keep the release that proved them.
+    edges = _jsonl_rows(local_sources["durable_go_edges"])
+    assert {edge["go_release"] for edge in edges} == {"releases/2026-06-15"}
+    # A release that drops a tracked edge is reported, not ignored.
+    obo.write_text(
+        obo.read_text(encoding="utf-8").replace(
+            "relationship: part_of GO:0009389 ! fixture parent\n", ""
+        ),
+        encoding="utf-8",
+    )
+    (problem,) = go_true_path.check(local_sources["durable_go_edges"], obo)
+    assert "GO:0009390 -> GO:0009389" in problem and "no is_a/part_of edge" in problem
+
+
+def test_concurrent_edge_install_during_the_obo_parse_is_refused(local_sources, monkeypatch):
+    """#1040: the edges digest is taken before loading and re-checked after."""
+
+    _go_true_path_candidate(local_sources)
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    edges = local_sources["durable_go_edges"]
+    edges.parent.mkdir(parents=True, exist_ok=True)
+    concurrent = {
+        "child": "GO:0001111",
+        "parent": "GO:0002222",
+        "relation": "is_a",
+        "go_release": "releases/2026-06-15",
+        "source": go_true_path.GO_BASIC_SOURCE,
+    }
+    real_load = ground.load_go_obo
+
+    def load_while_another_session_installs(path):
+        edges.write_text(go_true_path.dump_edges([concurrent]), encoding="utf-8")
+        return real_load(path)
+
+    monkeypatch.setattr(ground, "load_go_obo", load_while_another_session_installs)
+    with pytest.raises(ground.GroundingError, match="changed during preflight"):
+        _promote_go(local_sources, monkeypatch)
+    assert _jsonl_rows(edges) == [concurrent]
+
+
+@pytest.mark.parametrize(
+    ("entry_type", "ec_codes", "status", "reason"),
+    [
+        ("UniProtKB reviewed (Swiss-Prot)", [], "QUALIFIED", None),
+        ("UniProtKB reviewed (Swiss-Prot)", ["ECO:0000269"], "QUALIFIED", None),
+        (
+            "UniProtKB unreviewed (TrEMBL)",
+            [],
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_on_trembl",
+        ),
+        (
+            None,
+            [],
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_entry_type_missing",
+        ),
+        # #1048: an EC number assigned by similarity is not a curated EC.
+        (
+            "UniProtKB reviewed (Swiss-Prot)",
+            ["ECO:0000250"],
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_ec_evidence_ECO:0000250",
+        ),
+        (
+            "UniProtKB reviewed (Swiss-Prot)",
+            None,
+            "REJECTED",
+            "unqualifiable:uniprot_evidence:go_evidence_IEA:UniProtKB-EC_ec_evidence_missing",
+        ),
+    ],
+)
+def test_ec_derived_go_qualifies_only_on_swissprot(
+    local_sources, entry_type, ec_codes, status, reason
+):
+    """#1004, #1048: IEA:UniProtKB-EC qualifies on a reviewed entry with a curated EC."""
+
+    _go_true_path_candidate(
+        local_sources,
+        record_term="GO:0009390",
+        evidence="IEA:UniProtKB-EC",
+        entry_type=entry_type,
+        ec_codes=ec_codes,
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == status, row["reasons"]
+    if reason:
+        assert reason in row["reasons"]
+
+
+def test_validator_replay_cross_checks_the_swissprot_stamp(local_sources, monkeypatch):
+    """#1043: a stamped fact must agree with its ProteinReference's reviewed flag."""
+
+    _go_true_path_candidate(
+        local_sources,
+        record_term="GO:0009390",
+        evidence="IEA:UniProtKB-EC",
+        entry_type="UniProtKB reviewed (Swiss-Prot)",
+        ec_codes=[],
+    )
+    assert ground.main(_membership_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
+    assert _promote_go(local_sources, monkeypatch) == 0
+    report = local_sources["review"].with_name("validation.tsv")
+
+    def validate():
+        return grounding_validator.main(
+            [
+                str(local_sources["record"]),
+                "--registry",
+                str(local_sources["durable_registry"]),
+                "--evidence-registry",
+                str(local_sources["durable_evidence"]),
+                "--membership-registry",
+                str(local_sources["durable_membership"]),
+                "--go-edges",
+                str(local_sources["durable_go_edges"]),
+                "--out",
+                str(report),
+                "--quiet",
+            ]
+        )
+
+    assert validate() == 0
+    (reference,) = _jsonl_rows(local_sources["durable_registry"])
+    assert reference["reviewed"] is True
+    _jsonl(local_sources["durable_registry"], [{**reference, "reviewed": False}])
+    assert validate() != 0
+    assert "uniprot_entry_type_reviewed_mismatch" in report.read_text(encoding="utf-8")
+
+
+def test_promote_refuses_a_fact_missing_from_what_it_would_install(local_sources, monkeypatch):
+    _, approved = _go_promotion(local_sources, monkeypatch)
+    receipt = _fake_receipt(local_sources, monkeypatch)
+    monkeypatch.setattr(ground, "_selected_membership_rows", lambda *args, **kwargs: [])
+    with pytest.raises(ground.GroundingError, match="no exact UniProt fact"):
+        ground.promote(
+            ground._parser().parse_args(_promote_args(local_sources, approved, apply=True) + receipt)
+        )
+    assert not local_sources["durable_membership"].exists()
+
+
 def test_exact_membership_release_supersedes_stale_discovery_release(local_sources):
     candidate, _ = _prepare_membership_candidate(local_sources)
     reference = json.loads(local_sources["source_registry"].read_text(encoding="utf-8"))
@@ -2463,21 +3789,196 @@ def test_promote_review_minimum_is_capped_by_available_unique_trait_records(loca
     assert "review coverage: Pfam=1/1" in capsys.readouterr().out
 
 
-def test_promote_rejects_multiple_approved_alternatives_for_one_trait_record(local_sources, capsys):
+def test_promote_installs_multiple_approved_alternatives_for_one_trait_record(
+    local_sources, monkeypatch
+):
+    _add_second_interpro_candidate(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
-    first = _resolved(local_sources)
-    alternative = _alternative(first, "ug-" + "a" * 64)
-    _jsonl(local_sources["resolved"], [first, alternative])
+    rows = _jsonl_rows(local_sources["resolved"])
+    assert len(rows) == 2
     approved = local_sources["review"].with_name("multiple-approved-alternatives.tsv")
-    _write_decisions(approved, [(first, "APPROVED"), (alternative, "APPROVED")])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
 
-    assert ground.main(_promote_args(local_sources, approved)) == 2
-    error = capsys.readouterr().err
-    assert "approves multiple alternatives for one trait record" in error
-    assert first["candidate_id"] in error
-    assert alternative["candidate_id"] in error
-    assert not local_sources["durable_registry"].exists()
-    assert not local_sources["durable_evidence"].exists()
+    monkeypatch.setattr(ground, "_strict_errors_for_text", lambda text: [])
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": pathlib.Path(path).write_text(
+            text, encoding=encoding
+        ),
+    )
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+
+    record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
+    examples = record["canonical_examples"]
+    assert {example["protein_id"] for example in examples} == {
+        "UniProtKB:P12345",
+        "UniProtKB:Q67890",
+    }
+    assert all(example["qualification_status"] == "QUALIFIED" for example in examples)
+    assert {example["taxon_id"] for example in examples} == {
+        "NCBITaxon:83333",
+        "NCBITaxon:9606",
+    }
+    durable_evidence = [
+        json.loads(line) for line in local_sources["durable_evidence"].read_text().splitlines()
+    ]
+    assert {row["protein_id"] for row in durable_evidence} == {
+        "UniProtKB:P12345",
+        "UniProtKB:Q67890",
+    }
+
+
+def _resolve_interpro_locations(local_sources, locations):
+    groups = [[[interval["start"], interval["end"]] for interval in location]
+              for location in locations]
+    _sidecar(local_sources["interpro"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": sorted(
+                 interval for group in groups for interval in group)}})
+    _sidecar(local_sources["interpro_grouped"], "InterPro", "109.0",
+             {"P12345": {"Pfam:PF00001": groups}})
+    candidates = []
+    for intervals in locations:
+        candidate = {**local_sources["candidate"], "intervals": intervals,
+                     "interpro_location_id": ground.derive_interpro_location_id(
+                         "UniProtKB:P12345", "Pfam:PF00001", intervals)}
+        candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+        candidates.append(candidate)
+    _jsonl(local_sources["queue"], candidates)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    assert len(rows) == len(locations)
+    assert all(row["qualification_status"] == "QUALIFIED" for row in rows)
+    return rows
+
+
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+@pytest.mark.parametrize("incremental", [False, True])
+@pytest.mark.parametrize("locations", [
+    [[{"start": 2, "end": 3}], [{"start": 6, "end": 7}]],
+    [[{"start": 2, "end": 3}, {"start": 7, "end": 8}], [{"start": 5, "end": 5}]],
+    [[{"start": 2, "end": 2}], [{"start": 4, "end": 5}], [{"start": 7, "end": 8}]],
+], ids=["two-locations", "discontinuous-with-match-in-gap", "three-locations"])
+def test_promote_preserves_distinct_grouped_locations_on_one_protein(
+    local_sources, durable_layout, incremental, locations
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
+    rows = _resolve_interpro_locations(local_sources, locations)
+    approved = local_sources["review"].with_name("repeat-locations-approved.tsv")
+    if incremental:
+        _write_decisions(approved, [(row, "APPROVED" if i == 0 else "REJECTED")
+                                    for i, row in enumerate(rows)])
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+        # A new curation must resolve against the installed record preimage.
+        assert ground.main(_resolve_args(local_sources)) == 0
+        rows = _jsonl_rows(local_sources["resolved"])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    record = yaml.safe_load(local_sources["record"].read_text())
+    assert len(record["canonical_examples"]) == 1
+    occurrences = record["canonical_examples"][0]["trait_occurrences"]
+    assert sorted([o["intervals"] for o in occurrences], key=str) == sorted(locations, key=str)
+    evidence = [json.loads(line) for line in
+                _durable_bytes(local_sources["durable_evidence"]).splitlines()]
+    bindings = [json.loads(line) for line in
+                _durable_bytes(local_sources["durable_bindings"]).splitlines()]
+    expected_ids = {row["trait_occurrence"]["source_evidence_id"] for row in rows}
+    assert len(expected_ids) == len(locations)
+    assert {o["source_evidence_id"] for o in occurrences} == expected_ids
+    assert {e["evidence_id"] for e in evidence} == expected_ids
+    assert {b["evidence_id"] for b in bindings} == expected_ids
+    assert {b["record_sha256"] for b in bindings} == {
+        hashlib.sha256(local_sources["record"].read_bytes()).hexdigest()}
+    for row in rows:
+        assert row["grounding_evidence"] in evidence
+        assert row["trait_occurrence"] in occurrences
+    protected = ("record", "durable_registry", "durable_evidence", "durable_bindings")
+    before = {key: _artifact_image(local_sources[key]) for key in protected}
+    _write_decisions(approved, [(row, "APPROVED") for row in reversed(rows)])
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert {key: _artifact_image(local_sources[key]) for key in protected} == before
+
+
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+@pytest.mark.parametrize("failure", ["overlap", "overlap-third", "provider-drift"])
+def test_repeated_location_failure_leaves_all_durable_bytes_unchanged(
+    local_sources, capsys, durable_layout, failure
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
+    locations = [[{"start": 2, "end": 3}], [{"start": 6, "end": 7}]]
+    if failure == "overlap":
+        locations[1] = [{"start": 3, "end": 5}]  # Inclusive endpoint overlap.
+    elif failure == "overlap-third":
+        locations.append([{"start": 7, "end": 8}])
+    rows = _resolve_interpro_locations(local_sources, locations)
+    approved = local_sources["review"].with_name("conflict-locations-approved.tsv")
+    _write_decisions(approved, [
+        (row, "APPROVED" if row["intervals"] in locations[:-1] else "REJECTED")
+        for row in rows
+    ])
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+    if failure == "provider-drift":
+        _sidecar(local_sources["interpro_grouped"], "InterPro", "109.0",
+                 {"P12345": {"Pfam:PF00001": [[[2, 3]]]}})
+    protected = ("record", "durable_registry", "durable_evidence", "durable_bindings")
+    before = {key: _artifact_image(local_sources[key]) for key in protected}
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    expected_error = ("conflict:different_qualified_trait_occurrence" if failure != "provider-drift"
+                      else "stale:provider_entry_missing:interpro_grouped_location")
+    assert expected_error in capsys.readouterr().err
+    assert {key: _artifact_image(local_sources[key]) for key in protected} == before
+
+
+@pytest.mark.parametrize("mutation", [
+    {"sequence_sha256": "f" * 64},
+    {"source_release": "different"},
+    {"source_evidence_id": "ug-evidence:" + "a" * 64},
+    {"source_evidence_id": None},
+    {"intervals": [{"start": 2, "end": 3}]},
+    {"intervals": [{"start": 3, "end": 6}]},
+    {"intervals": []},
+    {"scope": "WHOLE_PROTEIN"},
+    {"mapping_method": "SOURCE_NATIVE_COORDINATES"},
+    {"coordinate_frame": "UNIPROT_ISOFORM"},
+    {"source_trait_id": "Pfam:PF00002"},
+    {"inheritance_path": ["Pfam:PF00002", "Pfam:PF00001"]},
+    {"evidence_source": "other-provider"},
+    {"residue_positions": [6]},
+])
+def test_repeated_locations_do_not_relax_conflict_guards(mutation):
+    first = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+             "scope": "LOCALIZED", "coordinate_frame": "UNIPROT_CANONICAL",
+             "mapping_method": "INTERPRO_MATCH", "source_trait_id": "Pfam:PF00001",
+             "evidence_source": "InterPro", "source_release": "109.0",
+             "sequence_sha256": "0" * 64, "qualification_status": "QUALIFIED",
+             "source_evidence_id": "ug-evidence:" + "a" * 64,
+             "intervals": [{"start": 2, "end": 3}]}
+    second = {**first, "source_evidence_id": "ug-evidence:" + "b" * 64,
+              "intervals": [{"start": 6, "end": 7}], **mutation}
+    existing = {"sequence_sha256": first["sequence_sha256"],
+                "trait_occurrences": [first]}
+    authoritative = {"sequence_sha256": second["sequence_sha256"],
+                     "source": "UNIPROT_GROUNDING", "trait_occurrences": [second]}
+    with pytest.raises(ground.GroundingError, match="different_qualified_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
+    assert existing["trait_occurrences"] == [first]
+
+
+def test_repeated_location_replay_rejects_duplicate_evidence_identity():
+    occurrence = {"trait_id": "Pfam:PF00001", "protein_id": "UniProtKB:P12345",
+                  "qualification_status": "QUALIFIED",
+                  "source_evidence_id": "ug-evidence:" + "a" * 64,
+                  "intervals": [{"start": 2, "end": 3}]}
+    existing = {"trait_occurrences": [occurrence, dict(occurrence)]}
+    authoritative = {"source": "UNIPROT_GROUNDING", "trait_occurrences": [occurrence]}
+    with pytest.raises(ground.GroundingError, match="duplicate_existing_trait_occurrence"):
+        ground._merge_qualified_example(existing, authoritative)
 
 
 @pytest.mark.parametrize("undecided", [None, "", "SKIP"])
@@ -2572,7 +4073,12 @@ def test_promote_rejects_small_source_when_one_available_record_is_undecided(loc
     assert not local_sources["durable_evidence"].exists()
 
 
-def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, monkeypatch):
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+def test_promote_is_dry_run_then_validated_apply_and_idempotent(
+    local_sources, monkeypatch, durable_layout
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("approved.tsv")
     _approve(local_sources["review"], approved)
@@ -2582,8 +4088,8 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
         assert encoding == "utf-8"
         # Durable references and source evidence must exist before trait mutation.
         assert local_sources["durable_registry"].is_file()
-        assert local_sources["durable_evidence"].is_file()
-        assert local_sources["durable_bindings"].is_file()
+        assert _durable_exists(local_sources["durable_evidence"])
+        assert _durable_exists(local_sources["durable_bindings"])
         writes.append(pathlib.Path(path))
         pathlib.Path(path).write_text(text, encoding=encoding)
 
@@ -2599,13 +4105,26 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
     assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
     assert writes == [local_sources["record"]]
     durable_reference = json.loads(local_sources["durable_registry"].read_text())
-    durable_evidence = json.loads(local_sources["durable_evidence"].read_text())
+    durable_evidence = json.loads(_durable_bytes(local_sources["durable_evidence"]))
     assert durable_reference == json.loads(local_sources["registry"].read_text())
     assert durable_evidence == json.loads(local_sources["evidence"].read_text())
+    if durable_layout == "sharded":
+        # One evidence row: one shard plus the manifest, whose logical digest is the
+        # sha256 the flat file would have had.
+        evidence_dir = local_sources["durable_evidence"]
+        [shard] = sorted(evidence_dir.glob("[0-9a-f][0-9a-f].jsonl"))
+        assert shard.name == layout.shard_name(durable_evidence["evidence_id"])
+        assert sorted(entry.name for entry in evidence_dir.iterdir()) == [
+            shard.name,
+            layout.MANIFEST_NAME,
+        ]
+        manifest = json.loads((evidence_dir / layout.MANIFEST_NAME).read_text())
+        assert manifest["logical_sha256"] == hashlib.sha256(shard.read_bytes()).hexdigest()
+        assert ground._artifact_digest(evidence_dir) == manifest["logical_sha256"]
     durable_bytes = (
         local_sources["durable_registry"].read_bytes(),
-        local_sources["durable_evidence"].read_bytes(),
-        local_sources["durable_bindings"].read_bytes(),
+        _artifact_image(local_sources["durable_evidence"]),
+        _artifact_image(local_sources["durable_bindings"]),
     )
     record = yaml.safe_load(local_sources["record"].read_text(encoding="utf-8"))
     example = record["canonical_examples"][0]
@@ -2619,8 +4138,8 @@ def test_promote_is_dry_run_then_validated_apply_and_idempotent(local_sources, m
     assert writes == [local_sources["record"]]
     assert (
         local_sources["durable_registry"].read_bytes(),
-        local_sources["durable_evidence"].read_bytes(),
-        local_sources["durable_bindings"].read_bytes(),
+        _artifact_image(local_sources["durable_evidence"]),
+        _artifact_image(local_sources["durable_bindings"]),
     ) == durable_bytes
     assert not local_sources["durable_membership"].exists()
 
@@ -3263,15 +4782,22 @@ def test_current_hard_debt_blocks_even_with_a_digest_valid_durable_receipt(local
     assert all(local_sources[key].read_bytes() == value for key, value in before.items())
 
 
-def test_all_clean_durable_and_selected_receipts_replay_idempotently(local_sources, capsys):
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
+def test_all_clean_durable_and_selected_receipts_replay_idempotently(
+    local_sources, capsys, durable_layout
+):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("clean-binding-approved.tsv")
     _approve(local_sources["review"], approved)
     assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
-    receipt = _jsonl_rows(local_sources["durable_bindings"])[0]
+    [receipt] = [
+        json.loads(line) for line in _durable_bytes(local_sources["durable_bindings"]).splitlines()
+    ]
     assert (
         receipt["evidence_id"]
-        == json.loads(local_sources["durable_evidence"].read_text(encoding="utf-8"))["evidence_id"]
+        == json.loads(_durable_bytes(local_sources["durable_evidence"]))["evidence_id"]
     )
     assert receipt["record_path"] == ground._display_path(local_sources["record"])
     assert (
@@ -3282,17 +4808,24 @@ def test_all_clean_durable_and_selected_receipts_replay_idempotently(local_sourc
     )
 
     before = {
-        key: local_sources[key].read_bytes()
+        key: _artifact_image(local_sources[key])
         for key in ("record", "durable_registry", "durable_evidence", "durable_bindings")
     }
     assert ground.main(_promote_args(local_sources, approved)) == 0
     assert "1 qualified-record binding(s)" in capsys.readouterr().out
-    assert all(local_sources[key].read_bytes() == value for key, value in before.items())
+    assert all(_artifact_image(local_sources[key]) == value for key, value in before.items())
+    # The applied replay rewrites nothing either: every artifact's digest is unchanged.
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert "WROTE 0 durable registry artifact(s)" in capsys.readouterr().out
+    assert all(_artifact_image(local_sources[key]) == value for key, value in before.items())
 
 
+@pytest.mark.parametrize("durable_layout", ["flat", "sharded"])
 def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_failure(
-    local_sources, monkeypatch, capsys
+    local_sources, monkeypatch, capsys, durable_layout
 ):
+    if durable_layout == "sharded":
+        _shard_durable_outputs(local_sources)
     assert ground.main(_resolve_args(local_sources)) == 0
     approved = local_sources["review"].with_name("rollback-binding-approved.tsv")
     _approve(local_sources["review"], approved)
@@ -3300,8 +4833,8 @@ def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_fai
 
     def fail_after_replace(path, text, encoding="utf-8"):
         assert local_sources["durable_registry"].is_file()
-        assert local_sources["durable_evidence"].is_file()
-        assert local_sources["durable_bindings"].is_file()
+        assert _durable_exists(local_sources["durable_evidence"])
+        assert _durable_exists(local_sources["durable_bindings"])
         pathlib.Path(path).write_text(text, encoding=encoding)
         raise OSError("injected trait install failure")
 
@@ -3314,6 +4847,635 @@ def test_promotion_transaction_rolls_back_every_artifact_after_trait_install_fai
     assert not local_sources["durable_evidence"].exists()
     assert not local_sources["durable_bindings"].exists()
     assert not local_sources["durable_membership"].exists()
+    # The directories the install created, sharded registries included, are gone too.
+    assert not local_sources["durable_registry"].parent.exists()
+
+
+@pytest.mark.parametrize(
+    ("tamper", "expected"),
+    [
+        ("edit", "registry_manifest_mismatch"),
+        ("add", "registry_manifest_mismatch"),
+        ("remove", "registry_manifest_mismatch"),
+        ("edit-and-reseal", "changed during promotion preflight"),
+    ],
+)
+def test_promoter_refuses_a_shard_changed_between_preflight_and_apply(
+    local_sources, monkeypatch, capsys, tamper, expected
+):
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("stale-shard-approved.tsv")
+    _approve(local_sources["review"], approved)
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    capsys.readouterr()
+    bindings = local_sources["durable_bindings"]
+    untouched = {
+        key: _artifact_image(local_sources[key])
+        for key in ("record", "durable_registry", "durable_evidence")
+    }
+    tampered: list[bytes | dict[str, bytes]] = []
+    preflight = ground._promotion_qualified_record_preflight
+
+    def tamper_after_preflight(*args, **kwargs):
+        result = preflight(*args, **kwargs)
+        [shard] = sorted(bindings.glob("[0-9a-f][0-9a-f].jsonl"))
+        row = json.loads(shard.read_text(encoding="utf-8"))
+        if tamper == "remove":
+            shard.unlink()
+        elif tamper == "add":
+            # A well-formed row in its correct shard; only the manifest can catch it.
+            prefix = "ff" if shard.name != "ff.jsonl" else "00"
+            added = dict(row, evidence_id=f"ug-evidence:{prefix}{row['evidence_id'][14:]}")
+            (bindings / f"{prefix}.jsonl").write_text(
+                layout.canonical_line(added), encoding="utf-8"
+            )
+        else:
+            edited = dict(row, candidate_id=row["candidate_id"] + "-edited")
+            shard.write_text(layout.canonical_line(edited), encoding="utf-8")
+            if tamper == "edit-and-reseal":
+                (bindings / layout.MANIFEST_NAME).write_text(
+                    layout.build_manifest_text({shard.name: shard.read_bytes()}),
+                    encoding="utf-8",
+                )
+        tampered.append(_artifact_image(bindings))
+        return result
+
+    writes: list[tuple] = []
+    monkeypatch.setattr(ground, "_promotion_qualified_record_preflight", tamper_after_preflight)
+    monkeypatch.setattr(
+        ground, "write_validated_record", lambda *args, **kwargs: writes.append(args)
+    )
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    assert expected in capsys.readouterr().err
+    assert writes == []
+    assert all(_artifact_image(local_sources[key]) == value for key, value in untouched.items())
+    assert tampered == [_artifact_image(bindings)]
+
+
+def _registry_row(prefix: str, value: int) -> dict:
+    """A minimal row keyed into shard ``<prefix>.jsonl``; the layout reads only the key."""
+
+    return {"evidence_id": f"ug-evidence:{prefix}{value:062x}", "value": value}
+
+
+def _sharded_text(rows: list[dict]) -> str:
+    ordered = sorted(rows, key=lambda row: row["evidence_id"])
+    return "".join(layout.canonical_line(row) for row in ordered)
+
+
+def _write_sharded(path: pathlib.Path, rows: list[dict]) -> None:
+    shards = layout.split_registry_text(_sharded_text(rows))
+    path.mkdir(parents=True)
+    for name, data in shards.items():
+        (path / name).write_bytes(data)
+    (path / layout.MANIFEST_NAME).write_text(layout.build_manifest_text(shards), encoding="utf-8")
+
+
+def _transaction_case(root: pathlib.Path) -> tuple[list, dict]:
+    """One install exercising every kind of transaction step.
+
+    An existing sharded registry gets a changed shard, a new shard, an emptied
+    (deleted) shard, and a new manifest; a flat registry migrates to its sharded twin
+    and is deleted in the same call; a verbatim JSON artifact lands in two directories
+    the install creates; and one trait record is rewritten.
+    """
+
+    grounding = root / "grounding"
+    existing = grounding / "occurrence_evidence.jsonl.d"
+    _write_sharded(existing, [_registry_row("00", 1), _registry_row("01", 2)])
+    legacy = grounding / "migrated.jsonl"
+    legacy.write_text(_sharded_text([_registry_row("0a", 3)]), encoding="utf-8")
+    record = root / "traits" / "record.yaml"
+    record.parent.mkdir(parents=True)
+    record.write_text("identifier: X\n", encoding="utf-8")
+    updates = [
+        (existing, _sharded_text([_registry_row("00", 9), _registry_row("02", 4)])),
+        (legacy.with_name("migrated.jsonl.d"), legacy.read_text(encoding="utf-8")),
+        (legacy, None),
+        (root / "new" / "deeper" / "receipt.json", '{"b": 1, "a": [2]}\n'),
+    ]
+    return updates, {record: "identifier: X\nlabel: changed\n"}
+
+
+def _plain_record_writer(path, text, encoding="utf-8"):
+    pathlib.Path(path).write_text(text, encoding=encoding)
+
+
+# 4 steps for the existing registry, 2 for the migrated one, the flat delete, the
+# verbatim receipt, and the trait write.
+TRANSACTION_STEPS = 9
+
+
+def test_transaction_installs_shards_manifests_deletes_and_verbatim_files(
+    tmp_path, monkeypatch
+):
+    updates, traits = _transaction_case(tmp_path)
+    planned, verify = ground._plan_artifact_updates(updates)
+    assert len(planned) + len(traits) == TRANSACTION_STEPS
+    existing, existing_text = updates[0]
+    migrated, migrated_text = updates[1]
+    assert [path.name for path, _payload in planned][:4] == [
+        "00.jsonl",
+        "02.jsonl",
+        "01.jsonl",
+        layout.MANIFEST_NAME,
+    ]
+    assert [payload for path, payload in planned if path.name == "01.jsonl"] == [None]
+    assert [path for path, _digest in verify] == [existing.resolve(), migrated.resolve()]
+    monkeypatch.setattr(ground, "write_validated_record", _plain_record_writer)
+
+    ground._install_promotion_transaction(updates, traits)
+
+    assert ground._artifact_digest(existing) == ground._text_digest(existing_text)
+    assert sorted(entry.name for entry in existing.iterdir()) == [
+        "00.jsonl",
+        "02.jsonl",
+        layout.MANIFEST_NAME,
+    ]
+    assert layout.plan_sharded_write(existing, existing_text) == []
+    assert ground._artifact_digest(migrated) == ground._text_digest(migrated_text)
+    assert not updates[2][0].exists()
+    receipt, receipt_text = updates[3]
+    assert receipt.read_text(encoding="utf-8") == receipt_text  # verbatim, not canonical
+    assert [path.read_text(encoding="utf-8") for path in traits] == list(traits.values())
+
+
+@pytest.mark.parametrize("failure", [OSError, KeyboardInterrupt], ids=["oserror", "interrupt"])
+@pytest.mark.parametrize("when", ["before", "after"])
+@pytest.mark.parametrize("step_index", range(TRANSACTION_STEPS))
+def test_transaction_restores_every_preimage_after_a_fault_at_any_step(
+    tmp_path, monkeypatch, failure, when, step_index
+):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    calls = 0
+    apply_operation = ground._apply_artifact_operation
+
+    def step(action):
+        nonlocal calls
+        calls += 1
+        if calls - 1 == step_index and when == "before":
+            raise failure("injected transaction fault")
+        action()
+        if calls - 1 == step_index and when == "after":
+            raise failure("injected transaction fault")
+
+    monkeypatch.setattr(
+        ground,
+        "_apply_artifact_operation",
+        lambda path, payload: step(lambda: apply_operation(path, payload)),
+    )
+    monkeypatch.setattr(
+        ground,
+        "write_validated_record",
+        lambda path, text, encoding="utf-8": step(
+            lambda: _plain_record_writer(path, text, encoding)
+        ),
+    )
+
+    if failure is KeyboardInterrupt:
+        with pytest.raises(KeyboardInterrupt):
+            ground._install_promotion_transaction(updates, traits)
+    else:
+        with pytest.raises(ground.GroundingError, match="failed and was rolled back"):
+            ground._install_promotion_transaction(updates, traits)
+    assert calls == step_index + 1
+    # Byte-identical preimages, no residue, and the created directories removed.
+    assert _tree(tmp_path) == before
+
+
+# Rollback of _transaction_case, in reverse install order: the trait restore is its 1st
+# _atomic_bytes call, 01.jsonl (deleted by the install) its 4th.
+ROLLBACK_WRITE_PATHS = {
+    1: "traits/record.yaml",
+    4: "grounding/occurrence_evidence.jsonl.d/01.jsonl",
+}
+
+
+@pytest.mark.parametrize("rollback_write", sorted(ROLLBACK_WRITE_PATHS))
+@pytest.mark.parametrize("second_interrupt", ["sigint", "raised"])
+def test_a_second_interrupt_during_the_rollback_cannot_leave_a_silent_torn_install(
+    tmp_path, monkeypatch, second_interrupt, rollback_write
+):
+    """A real Ctrl-C is held until the rollback ends; any other exception from a restore
+    lets the remaining restores run and is reported as an incomplete rollback (#865)."""
+
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    rolling_back = False
+    rollback_writes = 0
+    atomic_bytes = ground._atomic_bytes
+
+    def interrupted_trait_write(path, text, encoding="utf-8"):
+        nonlocal rolling_back
+        _plain_record_writer(path, text, encoding)
+        rolling_back = True
+        raise KeyboardInterrupt  # the first Ctrl-C, after the last install step
+
+    def restore(path, payload):
+        nonlocal rollback_writes
+        if rolling_back:
+            rollback_writes += 1
+            if rollback_writes == rollback_write:
+                if second_interrupt == "sigint":
+                    signal.raise_signal(signal.SIGINT)
+                else:
+                    raise KeyboardInterrupt
+        atomic_bytes(path, payload)
+
+    monkeypatch.setattr(ground, "write_validated_record", interrupted_trait_write)
+    monkeypatch.setattr(ground, "_atomic_bytes", restore)
+    handler = signal.getsignal(signal.SIGINT)
+
+    if second_interrupt == "sigint":
+        with pytest.raises(KeyboardInterrupt, match="the rollback completed"):
+            ground._install_promotion_transaction(updates, traits)
+        assert _tree(tmp_path) == before
+    else:
+        with pytest.raises(ground.GroundingError, match="rollback was incomplete") as caught:
+            ground._install_promotion_transaction(updates, traits)
+        skipped = ROLLBACK_WRITE_PATHS[rollback_write]
+        assert f"{skipped}: KeyboardInterrupt" in str(caught.value)
+        after = _tree(tmp_path)
+        differing = {
+            name
+            for name in before.keys() | after.keys()
+            if before.get(name, b"") != after.get(name, b"")
+        }
+        assert differing == {skipped}
+    assert rollback_writes == 5
+    assert signal.getsignal(signal.SIGINT) is handler
+
+
+def test_a_rollback_off_the_main_thread_still_restores_every_preimage(tmp_path, monkeypatch):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    outcome: list[BaseException] = []
+
+    def failing_trait_write(path, text, encoding="utf-8"):
+        raise OSError("injected trait failure")
+
+    monkeypatch.setattr(ground, "write_validated_record", failing_trait_write)
+
+    def install():
+        try:
+            ground._install_promotion_transaction(updates, traits)
+        except BaseException as exc:
+            outcome.append(exc)
+
+    worker = threading.Thread(target=install)
+    worker.start()
+    worker.join(timeout=120)
+    assert len(outcome) == 1 and isinstance(outcome[0], ground.GroundingError)
+    assert "failed and was rolled back" in str(outcome[0])
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize("failure", ["mismatch", "interrupt"])
+def test_post_install_verify_failure_rolls_back_before_any_trait_write(
+    tmp_path, monkeypatch, failure
+):
+    updates, traits = _transaction_case(tmp_path)
+    before = _tree(tmp_path)
+    writes: list[tuple] = []
+
+    def disagree(path):
+        if failure == "interrupt":
+            raise KeyboardInterrupt
+        return "0" * 64
+
+    monkeypatch.setattr(ground.layout, "sharded_digest", disagree)
+    monkeypatch.setattr(
+        ground, "write_validated_record", lambda *args, **kwargs: writes.append(args)
+    )
+    if failure == "interrupt":
+        with pytest.raises(KeyboardInterrupt):
+            ground._install_promotion_transaction(updates, traits)
+    else:
+        with pytest.raises(ground.GroundingError, match="does not verify"):
+            ground._install_promotion_transaction(updates, traits)
+    assert writes == []
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize("case", ["sharded-over-flat", "flat-over-sharded", "both-in-one-call"])
+def test_transaction_refuses_to_leave_both_registry_layouts(tmp_path, case):
+    flat = tmp_path / "occurrence_evidence.jsonl"
+    sharded = tmp_path / "occurrence_evidence.jsonl.d"
+    rows = [_registry_row("00", 1)]
+    text = _sharded_text(rows)
+    if case == "sharded-over-flat":
+        flat.write_text(text, encoding="utf-8")
+        updates = [(sharded, text)]
+    elif case == "flat-over-sharded":
+        _write_sharded(sharded, rows)
+        updates = [(flat, text)]
+    else:
+        updates = [(flat, text), (sharded, text)]
+    before = _tree(tmp_path)
+
+    with pytest.raises(ground.GroundingError, match="other registry layout"):
+        ground._install_promotion_transaction(updates, {})
+    assert _tree(tmp_path) == before
+
+
+@pytest.mark.parametrize(
+    ("payload", "message"),
+    [
+        ('{"value": 1, "evidence_id": "ug-evidence:' + "0" * 64 + '"}\n', "not canonical"),
+        (
+            _sharded_text([_registry_row("01", 1)]) + _sharded_text([_registry_row("00", 1)]),
+            "sorts",
+        ),
+        (_sharded_text([_registry_row("00", 1)]).rstrip("\n"), "final newline"),
+        ('{"evidence_id":"not-a-key"}\n', "evidence_id"),
+        (None, "cannot be deleted"),
+    ],
+    ids=["noncanonical", "unsorted", "unterminated", "bad-key", "delete"],
+)
+def test_transaction_refuses_a_malformed_sharded_image_before_any_write(
+    tmp_path, payload, message
+):
+    registry = tmp_path / "grounding" / "occurrence_evidence.jsonl.d"
+    other = tmp_path / "grounding" / "receipt.json"
+
+    with pytest.raises(ground.GroundingError, match=message):
+        ground._install_promotion_transaction([(other, "{}\n"), (registry, payload)], {})
+    assert _tree(tmp_path) == {}
+
+
+def test_flat_artifacts_are_still_written_verbatim(tmp_path):
+    # Staging-style flat JSONL keeps its lenient pre-#801 handling: no key, order, or
+    # canonical-form check, and the bytes land exactly as given.
+    flat = tmp_path / "durable" / "occurrence_evidence.jsonl"
+    receipt = tmp_path / "durable" / "receipt.json"
+    flat_text = '{"z": 1, "a": 2}\n\n{"evidence_id": "free-form"}\n'
+    receipt_text = '{\n  "b": 1\n}'
+
+    ground._install_promotion_transaction([(flat, flat_text), (receipt, receipt_text)], {})
+    assert flat.read_bytes() == flat_text.encode("utf-8")
+    assert receipt.read_bytes() == receipt_text.encode("utf-8")
+
+
+@pytest.mark.parametrize("case", ["nested-output", "input-inside", "traits-inside"])
+def test_promoter_rejects_paths_inside_a_sharded_durable_output(local_sources, case):
+    _shard_durable_outputs(local_sources)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    evidence = args.durable_evidence_registry
+    if case == "nested-output":
+        args.durable_protein_registry = evidence / "protein_registry.jsonl"
+        message = "must not nest"
+    elif case == "input-inside":
+        args.approved = evidence / "approved.tsv"
+        message = "--approved must not be inside the sharded durable registry"
+    else:
+        args.traits = evidence / "traits"
+        message = "--traits must not be inside the sharded durable registry"
+
+    with pytest.raises(ground.GroundingError, match=message):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    assert not evidence.exists()
+
+
+@pytest.mark.parametrize(
+    "attribute", ["durable_evidence_registry", "durable_qualified_record_bindings"]
+)
+def test_promoter_rejects_flat_evidence_or_bindings_output_under_protected_root(
+    local_sources, tmp_path, monkeypatch, attribute
+):
+    protected = tmp_path / "protected-grounding"
+    monkeypatch.setattr(ground, "PROTECTED_GROUNDING_ROOT", protected)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    flat = protected / getattr(args, attribute).name
+    setattr(args, attribute, flat)
+
+    with pytest.raises(ground.GroundingError, match=r"must be a sharded \.jsonl\.d registry"):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    setattr(args, attribute, flat.with_name(flat.name + ".d"))
+    ground._validate_durable_paths(args, args.traits.resolve())
+    assert not protected.exists()
+
+
+@pytest.mark.parametrize(
+    "attribute", ["durable_evidence_registry", "durable_qualified_record_bindings"]
+)
+def test_promoter_refuses_a_symlinked_sharded_durable_registry(local_sources, attribute):
+    """The promoter must not write through a symlink the validator rejects (#867)."""
+
+    _shard_durable_outputs(local_sources)
+    args = ground._parser().parse_args(
+        _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+    )
+    registry = getattr(args, attribute)
+    target = registry.with_name("elsewhere-" + registry.name)
+    target.mkdir(parents=True)
+    (target / layout.MANIFEST_NAME).write_text(layout.build_manifest_text({}), encoding="utf-8")
+    registry.symlink_to(target, target_is_directory=True)
+    target_before = sorted((path.name, path.read_bytes()) for path in target.iterdir())
+
+    with pytest.raises(ground.GroundingError, match="must not be a symlink"):
+        ground._validate_durable_paths(args, args.traits.resolve())
+    assert layout.read_registry(registry).issues[0].code == "registry_layout_conflict"
+    assert sorted((path.name, path.read_bytes()) for path in target.iterdir()) == target_before
+
+
+def test_absent_evidence_or_bindings_under_protected_root_is_not_a_fresh_start(
+    tmp_path, monkeypatch
+):
+    protected = tmp_path / "grounding"
+    protected.mkdir()
+    monkeypatch.setattr(ground, "PROTECTED_GROUNDING_ROOT", protected)
+
+    with pytest.raises(ground.GroundingError, match="evidence registry missing under"):
+        ground._load_durable_evidence_registry(protected / "occurrence_evidence.jsonl.d")
+    with pytest.raises(
+        ground.GroundingError, match="qualified-record binding registry missing under"
+    ):
+        ground._load_durable_qualified_record_bindings(
+            protected / "qualified_record_bindings.jsonl.d", {}
+        )
+    # Scratch fixture paths keep reading a missing registry as empty.
+    scratch = tmp_path / "scratch"
+    assert ground._load_durable_evidence_registry(scratch / "occurrence_evidence.jsonl.d") == (
+        {},
+        None,
+    )
+    assert ground._load_durable_qualified_record_bindings(
+        scratch / "qualified_record_bindings.jsonl.d", {}
+    ) == ({}, None)
+    assert list(protected.iterdir()) == []
+    assert not scratch.exists()
+
+
+def test_legacy_flat_path_beside_its_sharded_twin_is_refused_by_the_promoter(tmp_path):
+    sharded = tmp_path / "qualified_record_bindings.jsonl.d"
+    _write_sharded(sharded, [])
+
+    with pytest.raises(ground.GroundingError, match="registry migrated to"):
+        ground._artifact_digest(tmp_path / "qualified_record_bindings.jsonl")
+    assert ground._artifact_digest(sharded) == hashlib.sha256(b"").hexdigest()
+
+
+def test_second_promote_apply_under_a_held_lock_exits_2_and_dry_runs_take_no_lock(
+    local_sources, capsys
+):
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("locked-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable_root = local_sources["durable_bindings"].parent
+    durable_root.mkdir()
+    lock_file = durable_root / layout.LOCK_NAME
+    original = local_sources["record"].read_bytes()
+
+    assert ground.main(_promote_args(local_sources, approved)) == 0
+    assert not lock_file.exists()
+    with layout.registry_lock(durable_root) as held:
+        assert held == lock_file
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+        assert "registry_locked" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert sorted(entry.name for entry in durable_root.iterdir()) == [layout.LOCK_NAME]
+        # A dry run never contends for the lock.
+        assert ground.main(_promote_args(local_sources, approved)) == 0
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert local_sources["record"].read_bytes() != original
+
+
+def _lock_files(root: pathlib.Path) -> list[pathlib.Path]:
+    return sorted(root.rglob(layout.LOCK_NAME)) if root.exists() else []
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        "bindings-inside-traits",
+        "bindings-inside-default-traits",
+        "bindings-inside-sharded-registry",
+        "bindings-inside-case-alias-of-sharded-registry",
+        "protein-inside-another-sharded-registry",
+    ],
+)
+def test_promote_apply_never_locks_inside_a_trait_tree_or_a_sharded_registry(
+    local_sources, tmp_path, monkeypatch, capsys, case
+):
+    """Validation runs before the lock is chosen, so a refused layout leaves no lock file.
+
+    On case-insensitive APFS ``occurrence_evidence.jsonl.D`` *is* the evidence registry,
+    so a lock file created there would make every later read of it fail.
+    """
+
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("protected-approved.tsv")
+    _approve(local_sources["review"], approved)
+    evidence = local_sources["durable_evidence"]
+    _write_sharded(evidence, [])
+    default_traits = tmp_path / "default-traits"
+    default_traits.mkdir()
+    monkeypatch.setattr(ground, "DEFAULT_TRAITS", default_traits)
+    foreign = tmp_path / "other-grounding" / "occurrence_evidence.jsonl.d"
+    _write_sharded(foreign, [])
+    if case == "bindings-inside-traits":
+        local_sources["durable_bindings"] = (
+            local_sources["traits"] / "sub" / "qualified_record_bindings.jsonl.d"
+        )
+        (local_sources["traits"] / "sub").mkdir()
+    elif case == "bindings-inside-default-traits":
+        local_sources["durable_bindings"] = default_traits / "qualified_record_bindings.jsonl.d"
+    elif case == "bindings-inside-sharded-registry":
+        local_sources["durable_bindings"] = evidence / "qualified_record_bindings.jsonl.d"
+    elif case == "bindings-inside-case-alias-of-sharded-registry":
+        alias = evidence.with_name(evidence.name[: -len("d")] + "D")
+        local_sources["durable_bindings"] = alias / "qualified_record_bindings.jsonl.d"
+    else:
+        local_sources["durable_registry"] = foreign / "protein_registry.jsonl"
+    protected = [local_sources["traits"], default_traits, evidence, foreign]
+    before = {root: _tree(root) for root in protected}
+
+    for apply in (False, True):
+        assert ground.main(_promote_args(local_sources, approved, apply=apply)) == 2
+        assert "ERROR: durable registry output" in capsys.readouterr().err
+    assert {root: _tree(root) for root in protected} == before
+    for root in protected:
+        assert _lock_files(root) == []
+
+
+@pytest.mark.parametrize("held", ["bindings-directory", "other-outputs-directory"])
+def test_promote_apply_locks_every_directory_it_writes_durable_registries_into(
+    local_sources, tmp_path, capsys, held
+):
+    """Durable outputs split across two directories are both locked, so neither can be
+    written while another writer, such as eLife promote on data/grounding, holds it."""
+
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("split-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable = local_sources["durable_evidence"].parent
+    durable.mkdir()
+    scratch = tmp_path / "scratch-bindings"
+    scratch.mkdir()
+    local_sources["durable_bindings"] = scratch / "qualified_record_bindings.jsonl.d"
+    original = local_sources["record"].read_bytes()
+
+    with layout.registry_lock(scratch if held == "bindings-directory" else durable):
+        assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+        assert "registry_locked" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert not local_sources["durable_evidence"].exists()
+        assert not local_sources["durable_bindings"].exists()
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+    assert local_sources["record"].read_bytes() != original
+    assert _lock_files(durable) == [durable / layout.LOCK_NAME]
+    assert _lock_files(scratch) == [scratch / layout.LOCK_NAME]
+
+
+@pytest.mark.parametrize("lock_file", ["read-only", "symlink"])
+def test_promote_apply_handles_a_lock_file_it_cannot_write(
+    local_sources, tmp_path, capsys, lock_file
+):
+    """A lock file left by another user still locks; one that cannot be opened is a clean
+    exit 2 with registry_lock_unavailable, never a traceback."""
+
+    if lock_file == "read-only" and hasattr(os, "geteuid") and os.geteuid() == 0:
+        pytest.skip("root bypasses file modes")
+    _shard_durable_outputs(local_sources)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    approved = local_sources["review"].with_name("lock-file-approved.tsv")
+    _approve(local_sources["review"], approved)
+    durable = local_sources["durable_bindings"].parent
+    durable.mkdir()
+    lock_path = durable / layout.LOCK_NAME
+    original = local_sources["record"].read_bytes()
+    if lock_file == "read-only":
+        lock_path.write_text("4242\n")
+        lock_path.chmod(0o444)
+    else:
+        target = tmp_path / "elsewhere.txt"
+        target.write_text("not a lock\n")
+        lock_path.symlink_to(target)
+    capsys.readouterr()
+    try:
+        result = ground.main(_promote_args(local_sources, approved, apply=True))
+    finally:
+        if lock_file == "read-only":
+            lock_path.chmod(0o644)
+    if lock_file == "read-only":
+        assert result == 0
+        assert local_sources["record"].read_bytes() != original
+        assert lock_path.read_text() == "4242\n"
+    else:
+        assert result == 2
+        assert "ERROR: registry_lock_unavailable" in capsys.readouterr().err
+        assert local_sources["record"].read_bytes() == original
+        assert target.read_text() == "not a lock\n"
+        assert sorted(entry.name for entry in durable.iterdir()) == [layout.LOCK_NAME]
 
 
 def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tmp_path):
@@ -3337,11 +5499,11 @@ def test_promoter_cli_has_distinct_staging_inputs_and_durable_output_defaults(tm
         args.durable_qualified_record_bindings == ground.DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS
     )
     assert args.durable_protein_registry == REPO / "data/grounding/protein_registry.jsonl"
-    assert args.durable_evidence_registry == REPO / "data/grounding/occurrence_evidence.jsonl"
+    assert args.durable_evidence_registry == REPO / "data/grounding/occurrence_evidence.jsonl.d"
     assert args.durable_membership_registry == REPO / "data/grounding/uniprot_memberships.jsonl"
     assert (
         args.durable_qualified_record_bindings
-        == REPO / "data/grounding/qualified_record_bindings.jsonl"
+        == REPO / "data/grounding/qualified_record_bindings.jsonl.d"
     )
 
 
@@ -3564,3 +5726,117 @@ def test_every_caller_of_the_digest_uses_the_shared_helper():
     for name in ("finalize_uniprot_review_batch.py", "select_uniprot_review_batch.py"):
         text = (REPO / "scripts" / name).read_text(encoding="utf-8")
         assert "ground._resolution_digest(row)" in text, f"{name} no longer verifies the digest"
+
+
+# -------------------------------------- DUF review columns and frame coverage (#1070, #1072)
+
+
+DUF_PROVENANCE = {
+    "repository": "CultureBotAI/DUFMech",
+    "commit": "c" * 40,
+    "snapshot_id": "uniprot-duf-example-candidates-2026-10-07",
+    "lead_status": "TARGET_ABSENT_FROM_TRAIT",
+    "lead_rank": 2,
+    "lead_reviewed": False,
+    "lead_selection_reasons": ["protein_traits_trait_without_family_example"],
+}
+
+
+def _review_tsv(fixture: dict) -> tuple[list[str], list[dict]]:
+    with fixture["review"].open(encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        return list(reader.fieldnames or []), list(reader)
+
+
+def test_ordinary_review_tsv_keeps_exactly_its_columns(local_sources):
+    assert ground.main(_resolve_args(local_sources)) == 0
+    columns, _ = _review_tsv(local_sources)
+    assert columns == list(ground._REVIEW_COLUMNS)
+
+
+def test_duf_batch_review_tsv_shows_lead_provenance_and_other_pfam_signatures(local_sources):
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {
+            "P12345": {
+                "Pfam:PF00001": [[2, 5]],
+                "Pfam:PF00002": [[6, 9]],
+                "InterPro:IPR000001": [[2, 5]],  # integrates the DUF: never "another family"
+            }
+        },
+    )
+    _jsonl(local_sources["queue"], [{**local_sources["candidate"],
+                                     "duf_lead_provenance": DUF_PROVENANCE}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
+    columns, rows = _review_tsv(local_sources)
+    split = columns.index("reviewer")
+    assert columns[split - len(ground._DUF_REVIEW_COLUMNS):split] == list(
+        ground._DUF_REVIEW_COLUMNS
+    )
+    assert [c for c in columns if c not in ground._DUF_REVIEW_COLUMNS] == list(
+        ground._REVIEW_COLUMNS
+    )
+    row = rows[0]
+    assert row["duf_lead_status"] == "TARGET_ABSENT_FROM_TRAIT"
+    assert row["duf_lead_rank"] == "2" and row["duf_lead_reviewed"] == "false"
+    assert row["duf_snapshot"] == f"uniprot-duf-example-candidates-2026-10-07@{'c' * 40}"
+    assert row["other_pfam_signatures"] == "Pfam:PF00002"
+    assert row["multi_domain_whole_protein"] == ""  # LOCALIZED: the rule does not apply
+
+
+@pytest.mark.parametrize(
+    ("matches", "expected"),
+    [
+        ({"Pfam:PF00001": [[1, 9]]}, ("", "no")),
+        ({"Pfam:PF00001": [[1, 5]], "Pfam:PF00009": [[6, 9]], "Pfam:PF00003": [[7, 8]]},
+         ("Pfam:PF00003;Pfam:PF00009", "yes")),
+        (None, ("", "unknown")),
+    ],
+)
+def test_duf_review_fields_flag_multi_domain_whole_protein_carriers(matches, expected):
+    row = {
+        "trait_id": "Pfam:PF00001",
+        "source_trait_id": "Pfam:PF00001",
+        "protein_id": "UniProtKB:P12345",
+        "scope": "WHOLE_PROTEIN",
+        "duf_lead_provenance": DUF_PROVENANCE,
+    }
+    interpro = {} if matches is None else {"P12345": matches}
+    fields = ground._duf_review_fields(row, interpro)
+    assert (fields["other_pfam_signatures"], fields["multi_domain_whole_protein"]) == expected
+
+
+def test_resolver_distinguishes_an_uncrawled_protein_from_no_match(local_sources):
+    for frame in ("interpro", "interpro_grouped"):
+        _sidecar(local_sources[frame], "InterPro", "109.0", {})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:interpro_frame_entry" in row["reasons"]
+    assert "missing:exact_interpro_match" not in row["reasons"]
+
+    _sidecar(local_sources["interpro"], "InterPro", "109.0", {"P12345": {}})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:exact_interpro_match" in row["reasons"]
+    assert "missing:interpro_frame_entry" not in row["reasons"]
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "x"],
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-grouped", "x"],
+        ["resolve", "--que", "q", "--batch", "b"],
+        ["promote", "--resolved", "r", "--approved", "a", "--fetch-rec", "x"],
+        ["elife-promote", "--decisions", "d", "--app"],
+    ],
+)
+def test_resolver_parsers_refuse_abbreviated_flags(argv):
+    # The batch recipes forbid fixed flags by exact name; a prefix must not slip past (#1080).
+    with pytest.raises(SystemExit):
+        ground._parser().parse_args(argv)

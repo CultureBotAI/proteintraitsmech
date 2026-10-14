@@ -10,13 +10,14 @@ from __future__ import annotations
 
 import argparse
 from collections import Counter
+import hashlib
 import json
 import math
 from pathlib import Path
 import sys
 
 from analyze_biophysical import summarize
-from biophysical import PILOT, VERSION, calculate, descriptor_id
+from biophysical import PILOT, VERSION, calculate, canonical_json, descriptor_id
 from build_biophysical_overlay import build_overlay
 from calculate_biophysical import digest, read_protein_selection, summary_tsv
 from validate_biophysical import load_catalog, load_registry, read_jsonl, validate_collection
@@ -69,7 +70,10 @@ def check_pilot(root=ROOT, disorder_path=None):
         return errors + ["pilot requires exactly one observation per selected protein/descriptor"]
     manifest = json.loads(observations_path.with_suffix(".manifest.json").read_text())
     expected_manifest = {
-        "calculator_version": VERSION, "registry_sha256": digest(registry_path),
+        "calculator_version": VERSION,
+        "registry_sha256": hashlib.sha256(
+            "".join(canonical_json(registry[pid]) + "\n" for pid in sorted(selected)).encode()
+        ).hexdigest(),
         "catalog_sha256": digest(catalog_path), "observation_file_sha256": digest(observations_path),
         "protein_ids": sorted(selected), "observation_count": len(observations),
         "statuses": dict(Counter(o["status"] for o in observations)),

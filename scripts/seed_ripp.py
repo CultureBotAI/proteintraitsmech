@@ -10,7 +10,7 @@ RiPP consensus nomenclature (Arnison et al. 2013 and updates) as implemented in
 antiSMASH / MIBiG / BAGEL4 — a small, stable class set, so hand-curated (like
 the stability / evolution taxonomies) rather than fetched.
 
-`mapping_status: SEEDED`; CC0-1.0 (curated). Idempotent; --apply to write.
+`mapping_status: SEEDED`; CC-BY-4.0 (curated). Idempotent; --apply to write.
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "leader_peptide"
 DEF_SOURCE = "ProteinTraitsMech curated RiPP-class taxonomy (antiSMASH/MIBiG/BAGEL4 nomenclature)"
-LICENSE = "CC0-1.0"
+LICENSE = "CC-BY-4.0"
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 
 # (class, one-line description, synonyms)

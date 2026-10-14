@@ -98,3 +98,44 @@ def test_prune_invalid_examples_removes_empty_canonical_examples(tmp_path, monke
     )
 
     assert "canonical_examples" not in yaml.safe_load(texts[target])
+
+
+def test_sharded_default_registries_retire_the_repair_without_a_traceback(
+    monkeypatch, capsys
+):
+    repair = _load()
+    monkeypatch.setattr(sys, "argv", ["repair_uniprot_durable_receipts.py"])
+
+    assert repair.main() == 2
+    error = capsys.readouterr().err
+    assert error.startswith("ERROR: retired by #801: durable evidence/bindings are sharded")
+    assert "Traceback" not in error
+
+
+def test_legacy_flat_path_beside_a_sharded_registry_exits_2_without_a_traceback(
+    tmp_path, monkeypatch, capsys
+):
+    # A flat path whose .jsonl.d twin exists is refused by the promoter's digest helper
+    # with a GroundingError; main() reports it like its own errors.
+    repair = _load()
+    (tmp_path / "occurrence_evidence.jsonl.d").mkdir()
+    flat_bindings = tmp_path / "qualified_record_bindings.jsonl"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "repair_uniprot_durable_receipts.py",
+            "--durable-protein-registry",
+            str(tmp_path / "protein_registry.jsonl"),
+            "--durable-evidence-registry",
+            str(tmp_path / "occurrence_evidence.jsonl"),
+            "--durable-qualified-record-bindings",
+            str(flat_bindings),
+        ],
+    )
+
+    assert repair.main() == 2
+    error = capsys.readouterr().err
+    assert error.startswith("ERROR: durable registry layout rejected: registry_layout_conflict")
+    assert "Traceback" not in error
+    assert sorted(path.name for path in tmp_path.iterdir()) == ["occurrence_evidence.jsonl.d"]

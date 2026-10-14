@@ -22,6 +22,37 @@ which keeps a full-corpus audit practical.  Candidate discovery is also
 read-only: it joins exact trait identifiers in the InterPro frame to protein
 metadata in profiles.jsonl and sequences in the UniProt residue frame.
 
+``NO_LOCAL_EXACT_TRAIT_MATCH`` reads absence from the InterPro frame, which means
+something only if the crawl reached every target protein. The audit therefore
+refuses an InterPro frame whose ``_meta.completeness`` is not stamped complete
+*for the organism-panel target set*. A frame carrying only the interim top-level
+``_meta.complete`` / ``_meta.targets`` marker (written briefly by #1095's fetcher) has
+no target-set identity and is refused like an unstamped one until certified (``target_set: organism-panel-exemplars``;
+issues #1070, #1097; see ``sidecar.py``). A stamp for an accession list (a DUF
+lane sidecar, or a canary certified against a hand-made list) is refused.
+
+"Complete" is narrow. The panel target set is the exemplar proteins that carry a
+member-database record and records of two or more trait categories
+(``fetch_interpro_frame.target_proteins``), not every carrier of every signature.
+A complete frame means each of *those* proteins was crawled; absence of a match
+still says nothing about proteins outside that set.
+
+The grouped frame is optional. When its path exists it must carry the same panel
+stamp (target set, target count and ``targets_sha256``) as the compact frame;
+when the path does not exist it is skipped, which only means multi-location
+localized matches are reported as ungrouped. It never drives
+``NO_LOCAL_EXACT_TRAIT_MATCH``.
+
+The audit also re-derives the panel target set from ``--traits`` and compares its
+digest with the stamp's ``targets_sha256``. A mismatch (exemplars added or removed
+since the crawl or certification) is a stderr WARNING, not a refusal: the stamp
+still proves the stamped set was crawled, but proteins new to the corpus were not,
+so re-run ``just fetch-interpro-frame --apply`` (it fetches only the new targets)
+before relying on absence for records that gained exemplars.
+
+``--allow-incomplete-interpro-frame`` overrides the refusal for diagnostics, and
+every such absence is then reported as uninformative.
+
 The four outputs are deterministic and atomically replaced:
 
 * summary.tsv       counts by state, axis, category, and identifier namespace
@@ -44,13 +75,31 @@ import sys
 import tempfile
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Mapping, Sequence
+from typing import Any, Callable, Iterable, Iterator, Mapping, Sequence
 
 import yaml
+from fetch_interpro_frame import PANEL_TARGET_SET, target_proteins as panel_target_proteins
+from sidecar import is_complete as interpro_frame_is_complete
+from sidecar import targets_sha256 as panel_targets_digest
+from uniprot_record_content_gate import (
+    DEFAULT_INTERPRO_XML as DEFAULT_CONTENT_GATE_INTERPRO_XML,
+    DEFAULT_PANTHER_CLASSIFICATIONS as DEFAULT_CONTENT_GATE_PANTHER_CLASSIFICATIONS,
+    DEFAULT_PFAM_CLANS as DEFAULT_CONTENT_GATE_PFAM_CLANS,
+    DEFAULT_PFAM_TYPES as DEFAULT_CONTENT_GATE_PFAM_TYPES,
+    INTERPRO_109_XML_SHA256,
+    PANTHER_19_CLASSIFICATIONS_SHA256,
+    PFAM_A_CLANS_SHA256,
+    PFAM_TYPES_SHA256,
+    ContentGateError,
+    RecordContentGate,
+    SourceConfig,
+    hard_reasons as record_content_hard_reasons,
+)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Sharded ``.jsonl.d`` directory (#801), read through the semantic validator's loader.
+DEFAULT_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
 DEFAULT_MEMBERSHIP_REGISTRY = REPO_ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 
 UNIPROT_ID = re.compile(
@@ -58,6 +107,11 @@ UNIPROT_ID = re.compile(
     r"[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2})(?:-[0-9]+)?$"
 )
 TAXON_ID = re.compile(r"^NCBITaxon:[0-9]+$")
+MODEL_COMPLETION_TAXA = (
+    "NCBITaxon:9606",  # Homo sapiens
+    "NCBITaxon:83333",  # Escherichia coli K-12
+    "NCBITaxon:559292",  # Saccharomyces cerevisiae S288c
+)
 SEQUENCE = re.compile(r"^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 TOP_SCALAR = re.compile(r"(?m)^(identifier|trait_axis|trait_category):[ \t]*(.*?)[ \t]*$")
@@ -76,6 +130,7 @@ WHOLE_PROTEIN_CATEGORIES = {
     "SEQ_FAMILY",
     "SEQ_HOMOLOGOUS_SUPERFAMILY",
 }
+RECORD_CONTENT_GATE_NAMESPACES = frozenset({"HAMAP", "InterPro", "PANTHER", "Pfam"})
 
 RECORD_COLUMNS = (
     "trait_id",
@@ -157,12 +212,69 @@ class CandidateEvidence:
     failures: list[str] = field(default_factory=list)
 
 
+ContentGateFactory = Callable[[Sequence[Mapping[str, Any]], SourceConfig], RecordContentGate]
+
+
 def _clean_scalar(value: str) -> str:
     """Decode the simple top-level scalar spellings used for routing fields."""
     value = value.split(" #", 1)[0].strip()
     if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
         return value[1:-1]
     return value
+
+
+def select_ranked_candidates(
+    ranked: Sequence[CandidateEvidence],
+    max_candidates_per_record: int,
+    include_taxa: set[str],
+) -> list[CandidateEvidence]:
+    """Return capped exact candidates plus every candidate in completion taxa."""
+    selected: list[CandidateEvidence] = []
+    seen: set[tuple[str, str, tuple[tuple[int, int], ...]]] = set()
+    for index, candidate in enumerate(ranked):
+        profile = candidate.profile
+        if (
+            index >= max_candidates_per_record
+            and (profile is None or profile.taxon_id not in include_taxa)
+        ):
+            continue
+        key = (
+            candidate.accession,
+            candidate.interpro_location_id or "",
+            candidate.intervals,
+        )
+        if key in seen:
+            continue
+        selected.append(candidate)
+        seen.add(key)
+    return selected
+
+
+def should_discover_candidates(record: RecordAudit, include_taxa: set[str]) -> bool:
+    """Whether the audit should emit new candidate alternatives for a record."""
+    if not record.trait_id:
+        return False
+    return bool(include_taxa) or record.grounding_state != "QUALIFIED"
+
+
+def should_gate_record_content(record: RecordAudit) -> bool:
+    """Whether hard source-content gates can currently replay this source."""
+    return record.source_namespace in RECORD_CONTENT_GATE_NAMESPACES
+
+
+def _content_gate_config(args: argparse.Namespace) -> SourceConfig:
+    """Bind record-content replay to caller-selected, checksum-pinned sources."""
+
+    return SourceConfig(
+        interpro_xml=args.interpro_xml.resolve(),
+        interpro_xml_sha256=args.interpro_xml_sha256,
+        pfam_clans=args.pfam_clans.resolve(),
+        pfam_clans_sha256=args.pfam_clans_sha256,
+        pfam_types=args.pfam_types.resolve(),
+        pfam_types_sha256=args.pfam_types_sha256,
+        panther_classifications=args.panther_classifications.resolve(),
+        panther_classifications_sha256=args.panther_classifications_sha256,
+    )
 
 
 def cheap_metadata(text: str) -> tuple[str, str, str]:
@@ -515,6 +627,7 @@ def scan_records(
                                     evidence_lookup,
                                     memberships,
                                     membership_path=membership_registry_path,
+                                    registry=protein_registry or {},
                                 )
                             )
                     if semantic_findings:
@@ -720,6 +833,112 @@ def _profile_failures(profile: Profile | None, sequence: str | None) -> list[str
     return failures
 
 
+def _load_record_content_gate_record(
+    record: RecordAudit,
+) -> tuple[Mapping[str, Any] | None, Blocked | None]:
+    """YAML-load one record for source-content replay."""
+    loader = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+    try:
+        with record.path.open(encoding="utf-8") as handle:
+            blob = yaml.load(handle, Loader=loader)
+    except (OSError, yaml.YAMLError) as exc:
+        return None, Blocked(
+            record.trait_id,
+            record.record_path,
+            "",
+            "RECORD_CONTENT_GATE_YAML_ERROR",
+            str(exc),
+        )
+    if not isinstance(blob, dict):
+        return None, Blocked(
+            record.trait_id,
+            record.record_path,
+            "",
+            "RECORD_CONTENT_GATE_YAML_ERROR",
+            "record root is not a mapping",
+        )
+    return blob, None
+
+
+def _record_content_blocked_records(
+    records: Sequence[RecordAudit],
+    config: SourceConfig,
+    *,
+    make_gate: ContentGateFactory = RecordContentGate,
+) -> tuple[set[str], list[Blocked]]:
+    """Return exact-match records that source replay proves cannot be promoted."""
+    blocked_paths: set[str] = set()
+    blocks: list[Blocked] = []
+    materialized: list[tuple[RecordAudit, Mapping[str, Any]]] = []
+    for record in records:
+        blob, block = _load_record_content_gate_record(record)
+        if block is not None:
+            blocked_paths.add(record.record_path)
+            blocks.append(block)
+            continue
+        assert blob is not None
+        materialized.append((record, blob))
+
+    if not materialized:
+        return blocked_paths, blocks
+
+    try:
+        gate = make_gate([blob for _, blob in materialized], config)
+    except ContentGateError as exc:
+        raise AuditInputError(f"record-content source replay failed closed: {exc}") from exc
+
+    for record, blob in materialized:
+        try:
+            findings = gate.evaluate(blob)
+        except ContentGateError as exc:
+            raise AuditInputError(
+                f"{record.trait_id or record.record_path}: "
+                f"record-content source replay failed closed: {exc}"
+            ) from exc
+        details_by_reason: dict[str, list[str]] = collections.defaultdict(list)
+        for finding in findings:
+            detail = str(getattr(finding, "detail", "") or "")
+            for reason in record_content_hard_reasons([finding]):
+                if detail:
+                    details_by_reason[reason].append(detail)
+                else:
+                    details_by_reason.setdefault(reason, [])
+        for reason in sorted(details_by_reason):
+            blocked_paths.add(record.record_path)
+            blocks.append(
+                Blocked(
+                    record.trait_id,
+                    record.record_path,
+                    "",
+                    reason,
+                    "; ".join(sorted(set(details_by_reason[reason]))),
+                )
+            )
+
+    return blocked_paths, blocks
+
+
+_STAMP_IDENTITY = ("target_set", "targets", "targets_sha256")
+
+
+def _panel_stamp_problem(meta: Mapping[str, Any]) -> str | None:
+    """Why this frame's stamp does not certify the organism-panel target set."""
+    if "completeness" not in meta and ("complete" in meta or "targets" in meta):
+        return (
+            "carries only the interim top-level complete/targets marker, which records "
+            "no target-set identity"
+        )
+    if not interpro_frame_is_complete(dict(meta)):
+        return "is not stamped complete (a canary, checkpoint, failed or pre-marker crawl)"
+    target_set = meta["completeness"].get("target_set")
+    if target_set != PANEL_TARGET_SET:
+        return (
+            f"is stamped complete for target set {target_set!r}, not "
+            f"{PANEL_TARGET_SET!r} (a DUF sidecar or an accession-list certification)"
+        )
+    return None
+
+
 def discover_candidates(
     records: list[RecordAudit],
     residue_frame_path: Path,
@@ -727,21 +946,59 @@ def discover_candidates(
     profiles_path: Path,
     max_candidates_per_record: int,
     interpro_grouped_frame_path: Path | None = None,
+    include_taxa: set[str] | None = None,
+    record_content_config: SourceConfig | None = None,
+    make_record_content_gate: ContentGateFactory = RecordContentGate,
+    *,
+    allow_incomplete_interpro: bool = False,
+    panel_targets_sha256: str | None = None,
 ) -> tuple[list[dict], list[Blocked]]:
     """Join exact local source matches and return candidate/blocked ledgers."""
+    include_taxa = include_taxa or set()
     target_records: dict[str, list[RecordAudit]] = collections.defaultdict(list)
     for record in records:
-        if record.grounding_state != "QUALIFIED" and record.trait_id:
+        if should_discover_candidates(record, include_taxa):
             target_records[record.trait_id].append(record)
 
     interpro, interpro_meta = _load_sidecar(interpro_frame_path, "proteins")
     interpro_release = interpro_meta.get("release")
+    problem = _panel_stamp_problem(interpro_meta)
+    interpro_complete = problem is None
+    if problem and not allow_incomplete_interpro:
+        raise AuditInputError(
+            f"InterPro frame {interpro_frame_path} {problem}, so a missing match "
+            "would be misread as NO_LOCAL_EXACT_TRAIT_MATCH. Finish the panel crawl, or "
+            "certify a finished pre-marker panel crawl with `just certify-interpro-frame "
+            "--apply`; --allow-incomplete-interpro-frame is for diagnostics only"
+        )
+    if interpro_complete and panel_targets_sha256 is not None:
+        stamped = interpro_meta["completeness"].get("targets_sha256")
+        if stamped != panel_targets_sha256:
+            print(
+                f"WARNING: InterPro frame {interpro_frame_path} was stamped for panel "
+                f"targets {stamped}, but --traits now yields {panel_targets_sha256}: "
+                "exemplars changed since the crawl, and proteins new to the corpus were "
+                "not crawled. Run `just fetch-interpro-frame --apply` to fetch them.",
+                file=sys.stderr,
+            )
     exact: dict[str, list[CandidateEvidence]] = collections.defaultdict(list)
     wanted_accessions: set[str] = set()
     malformed_matches: list[tuple[str, str]] = []
     grouped_pairs: set[tuple[str, str]] = set()
     if interpro_grouped_frame_path is not None and interpro_grouped_frame_path.is_file():
         grouped, grouped_meta = _load_sidecar(interpro_grouped_frame_path, "proteins")
+        grouped_problem = _panel_stamp_problem(grouped_meta)
+        if grouped_problem is None and interpro_complete:
+            stamps = (interpro_meta["completeness"], grouped_meta["completeness"])
+            if any(stamps[0].get(key) != stamps[1].get(key) for key in _STAMP_IDENTITY):
+                grouped_problem = "carries a different completeness stamp than the compact frame"
+        if grouped_problem:
+            interpro_complete = False
+            if not allow_incomplete_interpro:
+                raise AuditInputError(
+                    f"grouped InterPro frame {interpro_grouped_frame_path} {grouped_problem}; "
+                    "certify or finish it together with its compact frame"
+                )
         grouped_release = grouped_meta.get("release")
         if interpro_release and grouped_release and interpro_release != grouped_release:
             raise AuditInputError(
@@ -780,11 +1037,42 @@ def discover_candidates(
             exact[trait_id].append(CandidateEvidence(accession, intervals))
             wanted_accessions.add(accession)
 
+    blocked: list[Blocked] = []
+    content_blocked_records: set[str] = set()
+    if record_content_config is not None:
+        exact_records = [
+            record
+            for record in records
+            if (
+                should_discover_candidates(record, include_taxa)
+                and should_gate_record_content(record)
+                and exact.get(record.trait_id)
+            )
+        ]
+        content_blocked_records, content_blocks = _record_content_blocked_records(
+            exact_records,
+            record_content_config,
+            make_gate=make_record_content_gate,
+        )
+        blocked.extend(content_blocks)
+
     profiles, duplicate_profiles = _load_profiles(profiles_path, wanted_accessions)
     residue, residue_meta = _load_sidecar(residue_frame_path, "proteins")
+    residue_stamp = residue_meta.get("completeness")
+    if (isinstance(residue_stamp, dict) and residue_stamp.get("complete") is not True) or (
+        residue_stamp is None and residue_meta.get("complete") is False
+    ):
+        # A residue frame stamped incomplete (a truncated or aborted query) is refused.
+        # An unstamped frame is accepted: a protein missing from it is reported as
+        # ACCESSION_MISSING_FROM_RESIDUE_FRAME, never read as negative evidence. The
+        # interim top-level `complete: false` marker is refused too, since it carries
+        # no query record to say what was missed.
+        raise AuditInputError(
+            f"residue frame is stamped incomplete: {residue_frame_path}; "
+            "re-run fetch-residue-frame --apply without --allow-partial"
+        )
     uniprot_release = residue_meta.get("release")
     absent = set(residue_meta.get("absent") or [])
-    blocked: list[Blocked] = []
     candidates: list[dict] = []
 
     for trait_id, accession in malformed_matches:
@@ -799,7 +1087,7 @@ def discover_candidates(
             )
 
     for record in records:
-        if record.grounding_state == "QUALIFIED":
+        if not should_discover_candidates(record, include_taxa):
             continue
         for protein_id in record.valid_protein_ids:
             accession = protein_id.split(":", 1)[1]
@@ -821,6 +1109,10 @@ def discover_candidates(
                 )
                 blocked.append(Blocked(record.trait_id, record.record_path, protein_id, reason))
 
+        if record.record_path in content_blocked_records:
+            record.candidate_state = "RECORD_CONTENT_BLOCKED"
+            continue
+
         evidence = exact.get(record.trait_id, [])
         if not evidence:
             blocked.append(
@@ -829,7 +1121,10 @@ def discover_candidates(
                     record.record_path,
                     "",
                     "NO_LOCAL_EXACT_TRAIT_MATCH",
-                    "No exact identifier in the supplied InterPro frame",
+                    "No exact identifier in the supplied InterPro frame"
+                    if interpro_complete
+                    else "No exact identifier in an INCOMPLETE InterPro frame "
+                    "(uninformative: the crawl may not have reached the carrier)",
                 )
             )
             continue
@@ -909,7 +1204,11 @@ def discover_candidates(
             record.candidate_state = "LOCAL_EXACT_CANDIDATE"
 
         ranked = valid + review_only
-        selected = ranked[:max_candidates_per_record] if max_candidates_per_record else ranked
+        selected = (
+            list(ranked)
+            if max_candidates_per_record == 0
+            else select_ranked_candidates(ranked, max_candidates_per_record, include_taxa)
+        )
         for rank, item in enumerate(selected, 1):
             profile = item.profile
             sequence = item.sequence
@@ -1097,6 +1396,11 @@ def run_audit(
     evidence_registry_path: Path = DEFAULT_EVIDENCE_REGISTRY,
     membership_registry_path: Path = DEFAULT_MEMBERSHIP_REGISTRY,
     hierarchy_traits: Sequence[Path] | None = None,
+    include_taxa: set[str] | None = None,
+    record_content_config: SourceConfig | None = None,
+    make_record_content_gate: ContentGateFactory = RecordContentGate,
+    allow_incomplete_interpro: bool = False,
+    check_panel_targets: bool = True,
 ) -> tuple[list[RecordAudit], list[dict], list[Blocked]]:
     if max_candidates_per_record < 0:
         raise AuditInputError("--max-candidates-per-record must be >= 0")
@@ -1114,6 +1418,13 @@ def run_audit(
         profiles,
         max_candidates_per_record,
         interpro_grouped_frame,
+        include_taxa,
+        record_content_config,
+        make_record_content_gate,
+        allow_incomplete_interpro=allow_incomplete_interpro,
+        panel_targets_sha256=(
+            panel_targets_digest(panel_target_proteins(traits)) if check_panel_targets else None
+        ),
     )
     blocked.extend(candidate_blocks)
     write_outputs(out, records, candidates, blocked)
@@ -1128,6 +1439,14 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--residue-frame", type=Path, required=True)
     ap.add_argument("--interpro-frame", type=Path, required=True)
     ap.add_argument("--interpro-grouped-frame", type=Path)
+    ap.add_argument(
+        "--allow-incomplete-interpro-frame",
+        action="store_true",
+        help=(
+            "diagnostics only: audit an InterPro frame that is not stamped complete; "
+            "its NO_LOCAL_EXACT_TRAIT_MATCH rows are then marked uninformative"
+        ),
+    )
     ap.add_argument("--profiles", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument(
@@ -1142,7 +1461,10 @@ def parser() -> argparse.ArgumentParser:
         "--evidence-registry",
         type=Path,
         default=DEFAULT_EVIDENCE_REGISTRY,
-        help=f"authoritative GroundingEvidence JSONL (default: {DEFAULT_EVIDENCE_REGISTRY})",
+        help=(
+            "authoritative GroundingEvidence registry, sharded .jsonl.d or flat JSONL "
+            f"(default: {DEFAULT_EVIDENCE_REGISTRY})"
+        ),
     )
     ap.add_argument(
         "--membership-registry",
@@ -1162,13 +1484,76 @@ def parser() -> argparse.ArgumentParser:
         "--max-candidates-per-record",
         type=int,
         default=3,
-        help="retain this many ranked exact matches per record; 0 retains all (default: 3)",
+        help=(
+            "retain this many ranked exact matches per record before --include-taxon "
+            "completion rows are added; 0 retains all (default: 3)"
+        ),
+    )
+    ap.add_argument(
+        "--include-taxon",
+        action="append",
+        default=[],
+        help=(
+            "also retain every exact candidate from this NCBITaxon CURIE, "
+            "even beyond --max-candidates-per-record; repeatable"
+        ),
+    )
+    ap.add_argument(
+        "--include-human-ecoli-yeast",
+        action="store_true",
+        help=(
+            "shortcut for --include-taxon NCBITaxon:9606, "
+            "NCBITaxon:83333 and NCBITaxon:559292"
+        ),
+    )
+    ap.add_argument(
+        "--record-content-gate",
+        action="store_true",
+        help=(
+            "YAML-parse exact-match HAMAP/InterPro/PANTHER/Pfam records "
+            "and replay checksum-pinned source content gates before "
+            "emitting candidates"
+        ),
+    )
+    ap.add_argument(
+        "--interpro-xml",
+        type=Path,
+        default=DEFAULT_CONTENT_GATE_INTERPRO_XML,
+        help="InterPro XML used for record-content replay",
+    )
+    ap.add_argument(
+        "--interpro-xml-sha256",
+        default=INTERPRO_109_XML_SHA256,
+        help="required SHA-256 of --interpro-xml for record-content replay",
+    )
+    ap.add_argument("--pfam-clans", type=Path, default=DEFAULT_CONTENT_GATE_PFAM_CLANS)
+    ap.add_argument("--pfam-clans-sha256", default=PFAM_A_CLANS_SHA256)
+    ap.add_argument("--pfam-types", type=Path, default=DEFAULT_CONTENT_GATE_PFAM_TYPES)
+    ap.add_argument("--pfam-types-sha256", default=PFAM_TYPES_SHA256)
+    ap.add_argument(
+        "--panther-classifications",
+        type=Path,
+        default=DEFAULT_CONTENT_GATE_PANTHER_CLASSIFICATIONS,
+    )
+    ap.add_argument(
+        "--panther-classifications-sha256",
+        default=PANTHER_19_CLASSIFICATIONS_SHA256,
     )
     return ap
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
+    include_taxa = set(args.include_taxon)
+    if args.include_human_ecoli_yeast:
+        include_taxa.update(MODEL_COMPLETION_TAXA)
+    invalid_taxa = sorted(taxon for taxon in include_taxa if not TAXON_ID.fullmatch(taxon))
+    if invalid_taxa:
+        print(
+            "--include-taxon expects NCBITaxon CURIEs, got: " + ", ".join(invalid_taxa),
+            file=sys.stderr,
+        )
+        return 2
     try:
         records, candidates, blocked = run_audit(
             args.traits,
@@ -1182,6 +1567,11 @@ def main(argv: list[str] | None = None) -> int:
             evidence_registry_path=args.evidence_registry,
             membership_registry_path=args.membership_registry,
             hierarchy_traits=args.hierarchy_traits,
+            include_taxa=include_taxa,
+            record_content_config=(
+                _content_gate_config(args) if args.record_content_gate else None
+            ),
+            allow_incomplete_interpro=args.allow_incomplete_interpro_frame,
         )
     except AuditInputError as exc:
         print(f"audit input error: {exc}", file=sys.stderr)

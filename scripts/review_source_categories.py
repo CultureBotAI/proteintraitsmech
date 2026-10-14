@@ -23,6 +23,8 @@ For every `data/traits/**/*.yaml` this groups records by source (via the same
     UNDECLARED_CAT     the record uses a category not in the source's
                        declared trait_categories (download.yaml).
 
+Deterministic scan only, not a completed scientific review. Final adjudicated
+reviews use scripts/record_review.py; see docs/record-reviews.md.
 Read-only. `--source NAME` restricts to one source; `--show N` lists up to N
 example files per flag (default 3); `--flags-only` prints just the anomalies.
 Stdlib + PyYAML.
@@ -103,12 +105,15 @@ def main() -> int:
         "flags": defaultdict(list),
     })
 
+    skipped_inputs = 0
     for path in TRAITS.rglob("*.yaml"):
         try:
             d = yaml.safe_load(path.read_text(encoding="utf-8", errors="replace"))
         except Exception:
+            skipped_inputs += 1
             continue
         if not isinstance(d, dict):
+            skipped_inputs += 1
             continue
         ident = str(d.get("identifier", ""))
         rel = str(path.relative_to(REPO_ROOT))
@@ -155,6 +160,9 @@ def main() -> int:
             s["flags"]["UNDECLARED_CAT"].append(f"{rel}  ({cat} ∉ {sorted(dset)})")
 
     # ---- report ----
+    print("Deterministic diagnostic scan; scientific_review: false.")
+    print(f"Example display limit: {args.show} per flag; skipped inputs: {skipped_inputs}.")
+    print("Adjudicate findings and save via scripts/record_review.py (docs/record-reviews.md).")
     total_flags = 0
     for src in sorted(by_src, key=lambda k: -by_src[k]["n"]):
         s = by_src[src]
@@ -179,7 +187,7 @@ def main() -> int:
                 if len(items) > args.show:
                     print(f"        … +{len(items) - args.show} more")
 
-    print(f"\n{len(by_src)} sources reviewed; {total_flags} total flagged records.")
+    print(f"\n{len(by_src)} sources scanned; {total_flags} total flag occurrences.")
     return 0
 
 

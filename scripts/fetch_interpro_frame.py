@@ -26,7 +26,16 @@ Resumable: an existing sidecar is loaded and only missing proteins are fetched,
 so an interrupted crawl costs nothing. Refuses to write a partial result unless
 --allow-partial (the lesson of #53). Stdlib-only.
 
+Completeness (issue #1070): every write records `_meta.completeness` (see
+`sidecar.py`). It says `complete: true` only when every target protein is in both
+frames, so a `--limit` canary, a checkpoint or a run with failures can never pass
+for a finished crawl. `--certify` stamps a frame written before the marker existed:
+offline, it re-derives the target set (from --traits, or --accessions), checks that
+every target is present in both frames, and only then records
+`basis: offline-certification`. It never changes the payload or `built`.
+
   just fetch-interpro-frame --apply
+  just certify-interpro-frame            # dry run; --apply stamps
 """
 
 from __future__ import annotations
@@ -34,6 +43,7 @@ from __future__ import annotations
 import argparse
 import collections
 import json
+from datetime import datetime, timezone
 import re
 import sys
 import time
@@ -82,7 +92,11 @@ _CAT = re.compile(r"(?m)^trait_category:\s*(\S+)")
 _PID = re.compile(r"(?m)^\s*-\s+protein_id:\s*(\S+)")
 
 
-def target_proteins() -> list:
+PANEL_TARGET_SET = "organism-panel-exemplars"
+ACCESSION_TARGET_SET = "accession-list"
+
+
+def target_proteins(traits: Path = TRAITS) -> list:
     """Exemplar proteins that host records of ≥2 distinct trait categories.
 
     A residue-frame edge needs two *comparable* records localized on one protein;
@@ -91,7 +105,7 @@ def target_proteins() -> list:
     """
     prot_cats: dict = collections.defaultdict(set)
     prot_member: dict = collections.defaultdict(set)
-    for p in TRAITS.rglob("*.yaml"):
+    for p in traits.rglob("*.yaml"):
         text = p.read_text(encoding="utf-8", errors="replace")
         i = text.find("\ncanonical_examples:")
         if i < 0:
@@ -226,9 +240,56 @@ def read_accession_targets(path: Path) -> list[str]:
     return sorted(accessions)
 
 
+def certify(outp: Path, grouped_outp: Path, targets: list, target_set: str,
+            apply: bool) -> int:
+    """Offline: stamp an existing frame pair complete iff it covers every target."""
+    have, meta = sidecar.read(outp, "proteins")
+    grouped_have, grouped_meta = sidecar.read(grouped_outp, "proteins")
+    for path, data, m in ((outp, have, meta), (grouped_outp, grouped_have, grouped_meta)):
+        if not path.is_file():
+            print(f"ERROR: no frame at {path}", file=sys.stderr)
+            return 2
+        if m.get("legacy") or m.get("source") != "InterPro" or not m.get("release"):
+            print(f"ERROR: {path} is not a release-stamped InterPro sidecar", file=sys.stderr)
+            return 2
+        if m.get("count") != len(data):
+            print(f"ERROR: {path} _meta.count {m.get('count')} != {len(data)} proteins",
+                  file=sys.stderr)
+            return 2
+    if meta["release"] != grouped_meta["release"]:
+        print(f"ERROR: compact ({meta['release']}) and grouped ({grouped_meta['release']}) "
+              "frames have different InterPro releases", file=sys.stderr)
+        return 2
+    stamp = sidecar.completeness(targets, (have, grouped_have), target_set=target_set,
+                                 basis="offline-certification")
+    stamp["certified"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    extra = len(set(have) - set(targets))
+    print(f"InterPro {meta['release']} frame built {meta.get('built')}: "
+          f"{len(have):,} proteins; targets ({target_set}): {stamp['targets']:,}; "
+          f"missing from either frame: {stamp['missing']:,}; outside the target set: "
+          f"{extra:,}; targets_sha256 {stamp['targets_sha256']}")
+    if not stamp["complete"]:
+        sample = [a for a in sorted(set(targets))
+                  if a not in have or a not in grouped_have][:10]
+        print(f"NOT certified: {stamp['missing']:,} target(s) are not in both frames "
+              f"(e.g. {', '.join(sample)}). Resume the crawl with --apply; it stamps the "
+              "frame itself when it finishes.", file=sys.stderr)
+        return 1
+    if not apply:
+        print("Dry-run: the frame covers its target set; pass --apply to stamp it complete.")
+        return 0
+    for path, data, m in ((outp, have, meta), (grouped_outp, grouped_have, grouped_meta)):
+        kept = {k: v for k, v in m.items() if k not in sidecar.INTERIM_COMPLETENESS_KEYS}
+        sidecar.write_atomic(path, {"_meta": {**kept, "completeness": stamp}, "proteins": data})
+        print(f"STAMPED {path} complete ({stamp['basis']}, {stamp['certified']})")
+    return 0
+
+
 def main() -> int:
+    # allow_abbrev=False: fetch-duf-interpro-frame forbids its fixed flags by exact name.
     ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+                                 formatter_class=argparse.RawDescriptionHelpFormatter,
+                                 allow_abbrev=False)
     ap.add_argument("--apply", action="store_true", help="write the sidecar")
     ap.add_argument("--limit", type=int, default=0, help="cap proteins fetched (debug)")
     ap.add_argument("--sleep", type=float, default=0.15, help="delay between calls")
@@ -244,11 +305,41 @@ def main() -> int:
                     help="newline-delimited UniProt accessions to fetch instead of scanning traits")
     ap.add_argument("--out", default=str(OUT))
     ap.add_argument("--grouped-out", default=str(GROUPED_OUT))
+    ap.add_argument("--traits", type=Path, default=TRAITS,
+                    help="trait tree that defines the organism-panel target set")
+    ap.add_argument("--certify", action="store_true",
+                    help="offline: re-derive the target set and stamp an existing frame "
+                         "complete if it covers every target (dry run unless --apply)")
     args = ap.parse_args()
 
     outp = Path(args.out)
     grouped_outp = Path(args.grouped_out)
+
+    def _targets() -> list:
+        if args.accessions is None:
+            return target_proteins(args.traits)
+        try:
+            return read_accession_targets(args.accessions)
+        except (OSError, ValueError) as exc:
+            ap.error(str(exc))
+
+    target_set = PANEL_TARGET_SET if args.accessions is None else ACCESSION_TARGET_SET
+    if args.certify:
+        if args.limit or args.allow_partial or args.allow_stale:
+            ap.error("--certify is offline and takes no crawl options")
+        if args.accessions is not None and (
+            outp.resolve() == OUT.resolve() or grouped_outp.resolve() == GROUPED_OUT.resolve()
+        ):
+            # An accession-list stamp on the panel frame would let a canary pass for a
+            # finished crawl (#1097); the panel is certified only against its own targets.
+            ap.error("--certify --accessions cannot stamp the organism-panel frame")
+        return certify(outp, grouped_outp, _targets(), target_set, args.apply)
+
     release = sidecar.interpro_release()
+    if not isinstance(release, str) or not re.fullmatch(r"[0-9]+(?:\.[0-9]+)*", release):
+        print("ERROR: cannot determine the current InterPro release; no matches fetched "
+              "or sidecars changed. Retry when release metadata is available.", file=sys.stderr)
+        return 2
     have, meta = sidecar.read(outp, "proteins")
     if have:
         if not sidecar.check_release(meta, release, outp, args.allow_stale):
@@ -263,15 +354,7 @@ def main() -> int:
               f"{grouped_outp.name} (release {grouped_meta.get('release')})",
               file=sys.stderr)
 
-    if args.accessions is None:
-        targets = target_proteins()
-    else:
-        try:
-            targets = read_accession_targets(args.accessions)
-        except OSError as exc:
-            ap.error(str(exc))
-        except ValueError as exc:
-            ap.error(str(exc))
+    targets = _targets()
     todo = [a for a in targets if a not in have or a not in grouped_have]
     if args.limit:
         todo = todo[:args.limit]
@@ -283,6 +366,14 @@ def main() -> int:
         return 0
 
     failed = 0
+
+    def _write() -> dict:
+        stamp = sidecar.completeness(targets, (have, grouped_have), target_set=target_set,
+                                     failed=failed)
+        sidecar.write_atomic(outp, sidecar.wrap("proteins", have, "InterPro", release, stamp))
+        sidecar.write_atomic(grouped_outp,
+                             sidecar.wrap("proteins", grouped_have, "InterPro", release, stamp))
+        return stamp
 
     def _one(acc):
         time.sleep(args.sleep)          # spreads the workers' request rate
@@ -301,14 +392,7 @@ def main() -> int:
             if n % 500 == 0:
                 print(f"  {n:,}/{len(todo):,} fetched ({failed} failed)",
                       file=sys.stderr)
-                outp.parent.mkdir(parents=True, exist_ok=True)
-                outp.write_text(json.dumps(
-                    sidecar.wrap("proteins", have, "InterPro", release),
-                    separators=(",", ":")), encoding="utf-8")
-                grouped_outp.parent.mkdir(parents=True, exist_ok=True)
-                grouped_outp.write_text(json.dumps(
-                    sidecar.wrap("proteins", grouped_have, "InterPro", release),
-                    separators=(",", ":")), encoding="utf-8")
+                _write()
 
     n_sig = sum(len(v) for v in have.values())
     n_grouped_sig = sum(len(v) for v in grouped_have.values())
@@ -318,13 +402,10 @@ def main() -> int:
         print("some proteins failed after retries — the sidecar was still "
               "checkpointed and the run is resumable; re-run to fill the gaps, "
               "or pass --allow-partial to accept it as final.", file=sys.stderr)
-    outp.parent.mkdir(parents=True, exist_ok=True)
-    outp.write_text(json.dumps(sidecar.wrap("proteins", have, "InterPro", release),
-                               separators=(",", ":")), encoding="utf-8")
-    grouped_outp.parent.mkdir(parents=True, exist_ok=True)
-    grouped_outp.write_text(json.dumps(
-        sidecar.wrap("proteins", grouped_have, "InterPro", release),
-        separators=(",", ":")), encoding="utf-8")
+    stamp = _write()
+    print(f"completeness: {'COMPLETE' if stamp['complete'] else 'INCOMPLETE'} "
+          f"({stamp['targets'] - stamp['missing']:,}/{stamp['targets']:,} targets, "
+          f"{target_set})")
     try:
         shown = outp.relative_to(REPO_ROOT)
     except ValueError:

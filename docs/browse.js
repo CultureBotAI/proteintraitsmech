@@ -12,7 +12,7 @@ const REPO_RAW = "https://github.com/CultureBotAI/proteintraitsmech/blob/main/";
 const PAGE_SIZE = 60;
 
 // CURIE prefix → resolver URL. Missing prefixes fall through to a
-// wikidata search URL.
+// readable accession when no verified entry route is available.
 const PREFIXES = {
   PROSITE:       "https://prosite.expasy.org/",
   GO:            "https://amigo.geneontology.org/amigo/term/GO:",
@@ -38,7 +38,8 @@ const PREFIXES = {
   HP:            "https://hpo.jax.org/browse/term/HP:",
   MONDO:         "https://www.ebi.ac.uk/ols4/ontologies/mondo/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMONDO_",
   CATH:          "https://www.cathdb.info/version/latest/superfamily/",
-  SCOP:          "http://scop.mrc-lmb.cam.ac.uk/term/",
+  SCOP:          null, // SCOPe sunids are not the newer SCOP identifier system.
+  PDB:           "https://www.rcsb.org/structure/",
   MEROPS:        "https://www.ebi.ac.uk/merops/cgi-bin/pepsum?id=",
   MOD:           "https://www.ebi.ac.uk/ols4/ontologies/mod/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMOD_",
   MI:            "https://www.ebi.ac.uk/ols4/ontologies/mi/classes/http%253A%252F%252Fpurl.obolibrary.org%252Fobo%252FMI_",
@@ -93,6 +94,8 @@ let SELECTED = { axis: new Set(), src: new Set(), cat: new Set(), sta: new Set()
 let QUERY = "";
 let PAGE = 0;
 let FILTERED_CACHE = null;
+let LAST_RESULTS_HASH = "#";
+let LIST_RENDER_GENERATION = 0;
 
 /* ------------------------------------------------------------------ */
 /* Boot                                                               */
@@ -114,7 +117,30 @@ const SHARD_LOADER = BrowseShards.createLoader(
 );
 const LOADED_SHARDS = SHARD_LOADER.loaded;
 const loadShards = files => SHARD_LOADER.loadMany(files);
-const loadAllShards = () => loadShards(BrowseShards.allShardFiles(SHARD_MANIFEST));
+async function exactRecord(id) {
+  if (ID_INDEX.has(id)) return ID_INDEX.get(id);
+  const lookup = FACETS.lookup;
+  if (!lookup || lookup.algorithm !== "sha256-first16-mod") throw new Error("Record lookup unavailable");
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(id)));
+  const bucket = ((digest[0] << 8) | digest[1]) % lookup.buckets;
+  const entries = await fetchJSON(`data/${lookup.directory}/${String(bucket).padStart(4, "0")}.json`);
+  const file = Object.prototype.hasOwnProperty.call(entries, id) ? entries[id] : null;
+  if (!file) return null;
+  if (!SHARD_MANIFEST.some(shard => shard.file === file)) throw new Error("Invalid record lookup");
+  await loadShards([file]);
+  const record = ID_INDEX.get(id);
+  if (!record) throw new Error("Record index is temporarily inconsistent");
+  return record;
+}
+async function fetchJSON(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Request failed");
+  const data = url.endsWith(".json.gz")
+    ? await new Response(response.body.pipeThrough(new DecompressionStream("gzip"))).json()
+    : await response.json();
+  if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("Invalid response");
+  return data;
+}
 
 function neededShards() {
   return BrowseShards.selectShardFiles(SHARD_MANIFEST, SELECTED, QUERY);
@@ -151,13 +177,14 @@ async function route() {
     const id = decodeURIComponent(h.slice("#record=".length));
     let rec = ID_INDEX.get(id);
     if (!rec) {
-      // Cold deep-link to a record whose axis isn't loaded — fall back to a
-      // one-time full load, then look it up.
+      // A small accession bucket identifies just the necessary record shard.
       document.getElementById("results").innerHTML =
         `<div class="empty">Loading record…</div>`;
       try {
-        await loadAllShards();
+        rec = await exactRecord(id);
+        if (window.location.hash !== h) return;
       } catch (error) {
+        if (window.location.hash !== h) return;
         return renderShardLoadFailure(error);
       }
       rec = ID_INDEX.get(id);
@@ -165,26 +192,40 @@ async function route() {
     if (rec) return renderDetail(rec);
     return renderNotFound(id);
   }
+  LAST_RESULTS_HASH = h || "#";
   // Facet deep-links (e.g. "#cat=STRUCT_FOLD", "#axis=SEQUENCE&src=PROSITE").
-  // Only applied when the hash actually carries facet params, so returning
-  // from a detail view to an empty hash preserves in-memory selections.
+  // Query, facets and page are restored from the complete results URL.
   const params = parseHashParams(h);
-  if (Object.values(params).some(a => a.length)) applyHashFacets(params);
+  const state = new URLSearchParams(h.replace(/^#/, ""));
+  const query = state.get("q") || "";
+  QUERY = query.trim().toLowerCase();
+  document.getElementById("q").value = query;
+  applyHashFacets(params);
+  PAGE = Math.max(0, Number.parseInt(state.get("page"), 10) || 0);
+  syncResultsHash();
   renderList();
+}
+
+// Keep the current history entry aligned with visible filters before any record link
+// adds a new entry. Both the local Back link and the browser Back restore it exactly.
+function syncResultsHash() {
+  const params = new URLSearchParams();
+  for (const [key, values] of Object.entries(SELECTED)) {
+    for (const value of values) params.append(key, value);
+  }
+  const query = document.getElementById("q").value.trim();
+  if (query) params.set("q", query);
+  if (PAGE) params.set("page", String(PAGE));
+  LAST_RESULTS_HASH = "#" + params.toString();
+  history.replaceState(null, "", LAST_RESULTS_HASH);
 }
 
 // Parse a facet deep-link hash into per-group value lists. Repeated keys
 // accumulate, e.g. "#cat=A&cat=B" → { cat: ["A", "B"], … }.
 function parseHashParams(h) {
   const out = { axis: [], src: [], cat: [], sta: [] };
-  const body = (h || "").replace(/^#/, "");
-  if (!body) return out;
-  for (const pair of body.split("&")) {
-    const eq = pair.indexOf("=");
-    if (eq < 0) continue;
-    const k = pair.slice(0, eq);
-    if (!(k in out)) continue;
-    out[k].push(decodeURIComponent(pair.slice(eq + 1)));
+  for (const [key, value] of new URLSearchParams((h || "").replace(/^#/, ""))) {
+    if (Object.prototype.hasOwnProperty.call(out, key)) out[key].push(value);
   }
   return out;
 }
@@ -251,6 +292,7 @@ function renderFacetSidebar() {
       PAGE = 0;
       updateActiveCount();
       refreshFacetCounts();
+      syncResultsHash();
       renderList();
     });
   });
@@ -271,6 +313,7 @@ function renderFacetSidebar() {
     PAGE = 0;
     updateActiveCount();
     refreshFacetCounts();
+    syncResultsHash();
     renderList();
   });
   updateActiveCount();
@@ -354,6 +397,7 @@ function wireInputs() {
       FILTERED_CACHE = null;
       PAGE = 0;
       refreshFacetCounts();
+      syncResultsHash();
       renderList();
     }, 120);
   });
@@ -381,6 +425,7 @@ function filterRecords() {
       (r.id && r.id.toLowerCase().includes(qs)) ||
       (r.label && r.label.toLowerCase().includes(qs)) ||
       (r.def && r.def.toLowerCase().includes(qs)) ||
+      (r.syn && r.syn.some(name => name.toLowerCase().includes(qs))) ||
       (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))) ||
       (r.chemx && r.chemx.some(n => n.toLowerCase().includes(qs)))
     );
@@ -394,6 +439,9 @@ function filterRecords() {
 /* ------------------------------------------------------------------ */
 
 async function renderList() {
+  const generation = ++LIST_RENDER_GENERATION;
+  const hash = window.location.hash;
+  const isCurrent = () => generation === LIST_RENDER_GENERATION && window.location.hash === hash;
   const results = document.getElementById("results");
   const need = neededShards();
   const hasSelection = QUERY || Object.values(SELECTED).some(values => values.size > 0);
@@ -420,8 +468,10 @@ async function renderList() {
     try {
       await loadShards(need);
     } catch (error) {
+      if (!isCurrent()) return;
       return renderShardLoadFailure(error);
     }
+    if (!isCurrent()) return;
     refreshFacetCounts();
   }
 
@@ -475,14 +525,14 @@ async function renderList() {
 // Called by inline paging buttons.
 window._go = function (delta) {
   PAGE += delta;
+  syncResultsHash();
   renderList();
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 function renderShardLoadFailure(error) {
-  const message = error && error.message ? error.message : String(error);
   document.getElementById("results").innerHTML =
-    `<div class="empty">Failed to load records: ${escapeHTML(message)}. ` +
+    `<div class="empty" role="alert">Records could not be loaded. Please try again. ` +
     `<button onclick="_retryShardLoad()">Retry</button></div>`;
 }
 
@@ -499,13 +549,17 @@ async function renderDetail(r) {
   // sidecar to keep the upfront list/facet payload small. Fetch + merge before
   // rendering; bail if the user navigated away meanwhile.
   if (!r._dl) {
-    await loadDetail(r);
+    try { await loadDetail(r); } catch (_) { /* Show lean metadata with an explicit warning below. */ }
     if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   }
+  let graphsFailed = false;
+  try { await loadGraphs(r); } catch (_) { graphsFailed = true; }
+  if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   await loadNeighbors(r);
   if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   // Labels for every id rendered below (`<CURIE> — <label>`); one cached fetch.
-  await loadLabels();
+  let labelsFailed = false;
+  try { await loadLabels(); } catch (_) { labelsFailed = true; }
   if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
   // Semantic neighbors: [neighbor_id, cosine] → internal record links.
   const relatedHtml = (r._nb || []).length
@@ -520,7 +574,7 @@ async function renderDetail(r) {
     ? `<ul class="xref-list">
         ${r.xr.map(x => `<li>${curieLink(x)}</li>`).join("")}
        </ul>`
-    : "<em>none</em>";
+    : (r._dl ? "<em>none recorded</em>" : "<em>Unavailable until record details load.</em>");
   // Mapping-derived cross-references: [object, mapping_source] pairs, shown
   // with their provenance so they read distinctly from source-direct xrefs.
   const mappedHtml = (r.mx || []).length
@@ -560,13 +614,17 @@ async function renderDetail(r) {
           `<dd class="pre">${escapeHTML(r.rs)}</dd>`, true)
     : "";
 
-  const parentHtml = (r.pt || []).length
+  const parents = [...new Map((r.pt || []).map(parent => {
+    const pair = Array.isArray(parent) ? parent : [parent, "biolink:subclass_of"];
+    return [JSON.stringify([pair[0], pair[1] || "biolink:subclass_of"]), parent];
+  })).values()];
+  const parentHtml = parents.length
     ? `<ul class="xref-list">
-        ${r.pt.map(x => {
+        ${parents.map(x => {
           const [cur, pred] = Array.isArray(x) ? x : [x, null];
           const rel = pred && pred !== "biolink:subclass_of"
             ? ` <span class="map-src">${escapeHTML(pred.replace("biolink:", ""))}</span>` : "";
-          return `<li>${curieLink(cur)}${rel}</li>`;
+          return `<li>${localTraitLink(cur)}${rel}</li>`;
         }).join("")}
        </ul>`
     : "";
@@ -588,10 +646,14 @@ async function renderDetail(r) {
   results.innerHTML = `
     <div class="detail">
       <div class="breadcrumb">
-        <a href="#" onclick="history.back(); return false;">← back to results</a>
+        <a href="${escapeAttr(LAST_RESULTS_HASH)}">← back to results</a>
       </div>
       <h1>${escapeHTML(r.label)}</h1>
       <div class="cid">${escapeHTML(r.id)}</div>
+      <p>${sourceEntry(r.id)}</p>
+      ${!r._dl ? '<p role="alert">Record details could not be loaded. Evidence, examples and other supplemental fields are unavailable. <button onclick="_retrySupplement()">Retry details</button></p>' : ""}
+      ${graphsFailed ? '<p role="alert">Causal graphs could not be loaded. <button onclick="_retrySupplement()">Retry graphs</button>, or use the repository YAML source below.</p>' : ""}
+      ${labelsFailed ? '<p role="alert">Reference labels could not be loaded. Identifiers remain available. <button onclick="_retrySupplement()">Retry labels</button></p>' : ""}
       <div class="pills">
         ${r.axis ? `<span class="pill axis">${escapeHTML(r.axis)}</span>` : ""}
         ${r.cat  ? `<span class="pill">${escapeHTML(r.cat)}</span>`      : ""}
@@ -604,6 +666,7 @@ async function renderDetail(r) {
         ${row("Category", `<dd>${escapeHTML(r.cat  || "")}</dd>`, true)}
         ${row("Source", `<dd>${escapeHTML(r.src   || "")}</dd>`, true)}
         ${row("Status", `<dd>${escapeHTML(r.sta   || "")}</dd>`, true)}
+        ${(r.syn || []).length ? row("Synonyms", `<dd>${r.syn.map(escapeHTML).join("; ")}</dd>`, true) : ""}
         ${ssRow}
         ${geoRow}
         ${patternRow}
@@ -634,7 +697,9 @@ async function renderDetail(r) {
           r.ev.map(e => `${curieLink(e[0])}${e[1] ? ` <span class="map-src">${escapeHTML(e[1])}</span>` : ""}`).join("<br>")
         }</dd>`, true) : ""}
         ${row("Detection methods", `<dd id="method-list">${METHODS ? (methodsHtml(r) || "<em>—</em>") : "<em>loading…</em>"}</dd>`, true)}
-        ${row("Source file", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true)}
+        ${(r.cg || []).length ? row("Causal graphs", `<dd><p>Asserted relations and their recorded evidence:</p>${structuredData(r.cg)}</dd>`, true) : ""}
+        ${(r.history || []).length ? row("Curation history", `<dd>${structuredData(r.history)}</dd>`, true) : ""}
+        ${r.path ? row("Repository YAML source", `<dd><a href="${escapeAttr(rawYamlLink)}" target="_blank" rel="noopener"><code>${escapeHTML(r.path)}</code></a></dd>`, true) : ""}
       </dl>
     </div>`;
   document.title = r.label + " — ProteinTraitsMech";
@@ -655,7 +720,37 @@ async function renderDetail(r) {
       const dd = document.getElementById("method-list");
       if (dd) dd.innerHTML = methodsHtml(r) || "<em>— (no catalogued method for this source/category)</em>";
     }
+  }).catch(() => {
+    if (window.location.hash !== "#record=" + encodeURIComponent(r.id)) return;
+    const dd = document.getElementById("method-list");
+    if (dd) dd.innerHTML = '<span role="alert">Detection methods could not be loaded.</span> <button onclick="_retrySupplement()">Retry methods</button>';
   });
+}
+
+window._retrySupplement = () => route();
+
+// Render all source fields, including nested edge evidence, without inventing relations.
+function structuredData(value) {
+  if (Array.isArray(value)) return `<ol>${value.map(item => `<li>${structuredData(item)}</li>`).join("")}</ol>`;
+  if (value && typeof value === "object") return `<dl class="structured-data">${Object.entries(value).map(([key, item]) =>
+    `<div><dt>${escapeHTML(key.replace(/_/g, " "))}</dt><dd>${structuredData(item)}</dd></div>`).join("")}</dl>`;
+  return escapeHTML(value);
+}
+function localTraitLink(id) {
+  const known = ID_INDEX.has(id) || (LABELS && Object.prototype.hasOwnProperty.call(LABELS, id));
+  return known ? `<a href="#record=${encodeURIComponent(id)}">${escapeHTML(id)}</a>${labelSuffix(id)}` : curieLink(id);
+}
+function sourceUrl(curie) {
+  const index = (curie || "").indexOf(":");
+  if (index < 0) return null;
+  const prefix = curie.slice(0, index), local = curie.slice(index + 1);
+  if (prefix === "PDB" && !/^[0-9][A-Za-z0-9]{3}$/.test(local) && !/^pdb_[A-Za-z0-9]{8}$/.test(local)) return null;
+  return PREFIXES[prefix] ? PREFIXES[prefix] + encodeURIComponent(local) : null;
+}
+function sourceEntry(id) {
+  const url = sourceUrl(id);
+  return url ? `<a href="${escapeAttr(url)}" target="_blank" rel="noopener">Source database entry: ${escapeHTML(id)} ↗</a>`
+    : `<span class="map-src">Source entry link unavailable for ${escapeHTML(id)}${id.startsWith("SCOP:") ? " (legacy SCOPe identifier)" : ""}.</span>`;
 }
 
 // Methods catalogue (data/methods.json): how a trait is detected/predicted,
@@ -664,10 +759,9 @@ let METHODS = null;
 let METHODS_PROMISE = null;
 function loadMethods() {
   if (!METHODS_PROMISE) {
-    METHODS_PROMISE = fetch("data/methods.json")
-      .then(res => (res.ok ? res.json() : {}))
+    METHODS_PROMISE = fetchJSON("data/methods.json")
       .then(j => { METHODS = j; return j; })
-      .catch(() => { METHODS = {}; return {}; });
+      .catch(error => { METHODS_PROMISE = null; throw error; });
   }
   return METHODS_PROMISE;
 }
@@ -723,10 +817,9 @@ let LABELS = null;
 let LABELS_PROMISE = null;
 function loadLabels() {
   if (!LABELS_PROMISE) {
-    LABELS_PROMISE = fetch("data/labels.json")
-      .then(res => (res.ok ? res.json() : {}))
+    LABELS_PROMISE = fetchJSON("data/labels.json")
       .then(j => { LABELS = j; return j; })
-      .catch(() => { LABELS = {}; return {}; });
+      .catch(error => { LABELS_PROMISE = null; throw error; });
   }
   return LABELS_PROMISE;
 }
@@ -784,9 +877,8 @@ const DETAIL_CACHE = new Map();
 function fetchDetailBucket(file) {
   if (!DETAIL_CACHE.has(file)) {
     DETAIL_CACHE.set(file,
-      fetch("data/" + file)
-        .then(res => (res.ok ? res.json() : {}))
-        .catch(() => ({})));
+      fetchJSON("data/" + file)
+        .catch(error => { DETAIL_CACHE.delete(file); throw error; }));
   }
   return DETAIL_CACHE.get(file);
 }
@@ -797,12 +889,24 @@ function fetchDetailBucket(file) {
 async function loadDetail(r) {
   if (r._dl) return;
   if (!r.df) { r._dl = true; return; }
-  try {
-    const bucket = await fetchDetailBucket(r.df);
-    const d = bucket[r.id];
-    if (d) Object.assign(r, d);   // full def, path, pt, xr, mx, cp, ex, rs, pat
-  } catch (_) { /* keep lean fields */ }
+  const bucket = await fetchDetailBucket(r.df);
+  const d = bucket && bucket[r.id];
+  if (!d || typeof d !== "object" || Array.isArray(d)) {
+    DETAIL_CACHE.delete(r.df);
+    throw new Error("Record detail unavailable");
+  }
+  Object.assign(r, d);
   r._dl = true;
+}
+
+async function loadGraphs(r) {
+  if (!r.gf || r.cg !== undefined) return;
+  const bucket = await fetchDetailBucket(r.gf);
+  if (!bucket || !Array.isArray(bucket[r.id])) {
+    DETAIL_CACHE.delete(r.gf);
+    throw new Error("Graph content unavailable");
+  }
+  r.cg = bucket[r.id];
 }
 
 // Semantic "related traits" — precomputed nearest neighbors (scripts/
@@ -853,6 +957,12 @@ function renderExample(e, lazyPending) {
   const sequenceHtml = e.seq
     ? renderSequenceViewer(e.seq, e.feats || [])
     : "";
+  const sequenceReference = e.seq && e.seqsrc === "ProteinReference"
+    ? `<div class="ex-seq-reference">Release-pinned UniProt sequence
+        ${e.rel ? ` · ${escapeHTML(e.rel)}` : ""}
+        ${e.sv ? ` · sequence version ${escapeHTML(String(e.sv))}` : ""}
+        ${e.seqsha ? `<br>SHA-256: <code>${escapeHTML(e.seqsha)}</code>` : ""}</div>`
+    : "";
 
   return `
     <li class="ex-item">
@@ -864,6 +974,7 @@ function renderExample(e, lazyPending) {
       <div class="ex-badges">${badges.join(" ")}</div>
       ${families}
       ${renderTraitCoordinates(e)}
+      ${sequenceReference}
       ${sequenceHtml}
     </li>`;
 }
@@ -876,6 +987,8 @@ function renderTraitCoordinates(e) {
     SOURCE_NATIVE_COORDINATES: "Source coordinates",
     SIFTS_RESIDUE_MAPPING: "Structure residue mapping",
     PATTERN_MATCH: "Pattern match",
+    SOURCE_MEMBERSHIP: "Source membership",
+    SOURCE_ANNOTATION: "Source annotation",
   };
   const rows = e.occ.map(occurrence => {
     const coordinates = [];
@@ -988,9 +1101,12 @@ function renderSequenceViewer(seq, feats) {
   }
 
   const legend = renderLegend(featObjs);
+  const summary = featObjs.length
+    ? `Sequence &amp; feature map (${seq.length} aa, ${featObjs.length} feature${featObjs.length === 1 ? "" : "s"})`
+    : `Sequence (${seq.length} aa; ${(feats || []).length ? "no displayable feature annotations" : "no feature annotations stored"})`;
   return `
     <details class="ex-seq" open>
-      <summary>Sequence &amp; feature map (${seq.length} aa, ${featObjs.length} feature${featObjs.length === 1 ? "" : "s"})</summary>
+      <summary>${summary}</summary>
       ${legend}
       <div class="sviewer">${rowsHtml.join("")}</div>
     </details>`;
@@ -1034,10 +1150,11 @@ function curieLink(curie) {
     if (ID_INDEX.has(curie) || (LABELS && LABELS[curie])) {
       return `<a href="#record=${encodeURIComponent(curie)}">${escapeHTML(curie)}</a>${suffix}`;
     }
-    return `<span class="mono">${escapeHTML(curie)}</span>${suffix}`;
+    return `<span class="mono">${escapeHTML(curie)}</span>${suffix}${prefix === "SCOP" ? ' <span class="map-src">(legacy SCOPe source entry unavailable)</span>' : ""}`;
   }
-  if (!base) return `<span class="mono">${escapeHTML(curie)}</span>${suffix}`;
-  return `<a href="${base}${encodeURIComponent(local)}" target="_blank" rel="noopener">${escapeHTML(curie)}</a>${suffix}`;
+  const url = sourceUrl(curie);
+  if (!url) return `<span class="mono">${escapeHTML(curie)}</span>${suffix}`;
+  return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener">${escapeHTML(curie)}</a>${suffix}`;
 }
 
 function escapeHTML(s) {

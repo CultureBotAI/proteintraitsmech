@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 import validate_uniprot_grounding as V  # noqa: E402
+import grounding_registry_layout as layout  # noqa: E402
 import uniprot_membership_snapshot as M  # noqa: E402
 from validate_strict import validate_one  # noqa: E402
 
@@ -120,12 +121,20 @@ def codes(findings: list[V.Finding]) -> set[str]:
     return {finding.code for finding in findings}
 
 
-def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
-    """Write one complete, exact UniProt SOURCE_MEMBERSHIP validation fixture."""
+def membership_cli_fixture(
+    tmp_path: Path,
+    *,
+    trait_id: str = "PANTHER:PTHR12345",
+    method: str = "SOURCE_MEMBERSHIP",
+    category: str = "FUNC_PROTEIN_FAMILY",
+    entry: dict | None = None,
+) -> dict[str, object]:
+    """Write one complete, exact UniProt fact validation fixture (membership by default)."""
 
     membership_path = tmp_path / "uniprot_memberships.jsonl"
     membership = M.extract_entry_memberships(
-        {
+        entry
+        or {
             "uniProtKBCrossReferences": [
                 {
                     "database": "PANTHER",
@@ -140,12 +149,12 @@ def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
     )[0]
     membership_path.write_text(M.dump_memberships([membership]), encoding="utf-8")
     whole_occurrence = occurrence(
-        trait_id="PANTHER:PTHR12345",
-        source_trait_id="PANTHER:PTHR12345",
+        trait_id=trait_id,
+        source_trait_id=trait_id,
         scope="WHOLE_PROTEIN",
         coordinate_frame=None,
         intervals=None,
-        mapping_method="SOURCE_MEMBERSHIP",
+        mapping_method=method,
         evidence_source="UniProtKB",
         source_release="2026_02",
         provider_kind="UNIPROT",
@@ -156,9 +165,9 @@ def membership_cli_fixture(tmp_path: Path) -> dict[str, object]:
     whole_occurrence.pop("coordinate_frame")
     whole_occurrence.pop("intervals")
     whole_record = record(
-        identifier="PANTHER:PTHR12345",
+        identifier=trait_id,
         trait_axis="FUNCTION",
-        trait_category="FUNC_PROTEIN_FAMILY",
+        trait_category=category,
         residue_sequence=None,
         canonical_examples=[example(trait_occurrences=[whole_occurrence])],
     )
@@ -394,6 +403,28 @@ def test_registry_checks_length_checksum_required_fields_and_unknown_fields(tmp_
         "registry_invalid_reviewed",
         "registry_unknown_field",
     } <= codes(findings)
+
+
+def test_fragment_status_is_admitted_only_on_fetch_staging_rows(tmp_path):
+    """#1087: fragment status is a fetch-staging qualification input, never durable."""
+
+    path = tmp_path / "registry.jsonl"
+    for value in (True, False):
+        row = reference(fragment=value)
+        assert V.validate_protein_reference(row, path=path, line=1, fetch_staging=True) == []
+        assert codes(V.validate_protein_reference(row, path=path, line=1)) == {
+            "registry_fetch_staging_only_field"
+        }
+    assert "registry_invalid_fragment" in codes(
+        V.validate_protein_reference(
+            reference(fragment="no"), path=path, line=1, fetch_staging=True
+        )
+    )
+    path.write_text(json.dumps(reference(fragment=False)) + "\n", encoding="utf-8")
+    _registry, findings = V.load_registry(path)
+    assert codes(findings) == {"registry_fetch_staging_only_field"}
+    _registry, findings = V.load_registry(path, fetch_staging=True)
+    assert findings == []
 
 
 def test_registry_isoform_suffix_and_coordinate_frame_are_exact(tmp_path):
@@ -850,7 +881,8 @@ def test_complexportal_provider_contract_is_exact_and_receipt_closed():
     ("change", "expected_code"),
     [
         ({"mapping_method": "SOURCE_ANNOTATION"}, "complexportal_source_method_mismatch"),
-        ({"provider_kind": "UNIPROT"}, "complexportal_provider_mismatch"),
+        # UNIPROT is the exact-accession lane (#652); any other kind is still wrong.
+        ({"provider_kind": "INTERPRO"}, "complexportal_provider_mismatch"),
         ({"evidence_source": "NotComplexPortal"}, "complexportal_source_mismatch"),
         ({"provider_release": "different-snapshot"}, "complexportal_release_mismatch"),
         ({"scope": "LOCALIZED"}, "complexportal_scope_mismatch"),
@@ -989,7 +1021,8 @@ def test_rhea_provider_contract_is_exact_but_receipt_verifier_closed():
     ("change", "expected_code"),
     [
         ({"mapping_method": "SOURCE_ANNOTATION"}, "rhea_source_method_mismatch"),
-        ({"provider_kind": "UNIPROT"}, "rhea_provider_mismatch"),
+        # UNIPROT is the exact-accession lane (#652); any other kind is still wrong.
+        ({"provider_kind": "INTERPRO"}, "rhea_provider_mismatch"),
         ({"evidence_source": "NotRhea"}, "rhea_source_mismatch"),
         ({"source_release": "142"}, "rhea_release_mismatch"),
         ({"provider_release": "142"}, "rhea_release_mismatch"),
@@ -1046,6 +1079,99 @@ def test_rhea_lock_triggers_from_either_namespace_or_reverse_source(
     assert "rhea_source_trait_mismatch" in observed
     if evidence_source != "Rhea":
         assert "rhea_source_mismatch" in observed
+
+
+def uniprot_fact_evidence(trait_id: str, method: str, **changes: object) -> dict:
+    """An exact UniProt exact-accession fact as the promoter would emit it (#652)."""
+
+    values = {
+        "trait_id": trait_id,
+        "source_trait_id": trait_id,
+        "scope": "WHOLE_PROTEIN",
+        "coordinate_frame": None,
+        "intervals": None,
+        "mapping_method": method,
+        "evidence_source": "UniProtKB",
+        "source_release": "2026_03",
+        "provider_kind": "UNIPROT",
+        "provider_source": "data/grounding/uniprot_memberships.jsonl",
+        "provider_release": "2026_03",
+    }
+    values.update(changes)
+    grounded = occurrence(**values)
+    return EVIDENCE_REGISTRY[grounded["source_evidence_id"]]
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method"),
+    [
+        ("ComplexPortal:CPX-320", "SOURCE_MEMBERSHIP"),
+        ("RHEA:37871", "SOURCE_MEMBERSHIP"),
+        ("GO:0009390", "SOURCE_ANNOTATION"),
+    ],
+)
+def test_uniprot_fact_lane_is_open_for_exact_functional_facts(trait_id, method):
+    """No receipt lock: replay against the membership snapshot is the lane's gate."""
+
+    evidence = uniprot_fact_evidence(trait_id, method)
+    assert codes(V.validate_grounding_evidence(evidence, path=Path("e.jsonl"), line=1)) == set()
+
+
+@pytest.mark.parametrize(
+    ("trait_id", "method", "changes", "expected"),
+    [
+        # A GO annotation is never a membership, and a membership never an annotation.
+        ("GO:0009390", "SOURCE_MEMBERSHIP", {}, {"uniprot_fact_method_mismatch"}),
+        ("Pfam:PF00001", "SOURCE_ANNOTATION", {}, {"uniprot_fact_method_mismatch"}),
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_ANNOTATION",
+            {},
+            {"uniprot_fact_method_mismatch", "complexportal_source_method_mismatch"},
+        ),
+        (
+            "RHEA:37871",
+            "SOURCE_ANNOTATION",
+            {},
+            {"uniprot_fact_method_mismatch", "rhea_source_method_mismatch"},
+        ),
+        # The UniProt lane names UniProtKB, never the source database it mirrors.
+        (
+            "ComplexPortal:CPX-320",
+            "SOURCE_MEMBERSHIP",
+            {"evidence_source": "ComplexPortal"},
+            {"complexportal_uniprot_source_mismatch", "uniprot_membership_source_mismatch"},
+        ),
+        (
+            "RHEA:37871",
+            "SOURCE_MEMBERSHIP",
+            {"evidence_source": "Rhea"},
+            {"rhea_uniprot_source_mismatch", "uniprot_membership_source_mismatch"},
+        ),
+        # Direct Rhea membership never climbs a hierarchy, on either lane.
+        (
+            "RHEA:37871",
+            "SOURCE_MEMBERSHIP",
+            {"scope": "LOCALIZED"},
+            {"rhea_scope_mismatch", "uniprot_membership_scope_mismatch"},
+        ),
+    ],
+)
+def test_uniprot_fact_lane_rejects_misuse(trait_id, method, changes, expected):
+    evidence = uniprot_fact_evidence(trait_id, method, **changes)
+    observed = codes(V.validate_grounding_evidence(evidence, path=Path("e.jsonl"), line=1))
+    assert expected <= observed
+    # Opening the UniProt lane never lifts the source-native receipt locks.
+    assert not observed & {"complexportal_provider_receipt_required", "rhea_provider_receipt_required"}
+
+
+def test_source_native_lanes_stay_receipt_locked():
+    assert "rhea_provider_receipt_required" in codes(
+        V.validate_grounding_evidence(rhea_evidence(), path=Path("e.jsonl"), line=1)
+    )
+    assert "complexportal_provider_receipt_required" in codes(
+        V.validate_grounding_evidence(complexportal_evidence(), path=Path("e.jsonl"), line=1)
+    )
 
 
 @pytest.mark.parametrize(
@@ -1762,15 +1888,13 @@ def test_pending_provider_locks_do_not_change_uniprot_feature_or_membership_cont
         assert V.validate_grounding_evidence(evidence, path=Path("evidence.jsonl"), line=1) == []
 
 
-def test_current_durable_interpro_evidence_remains_clean_when_present():
-    path = V.DEFAULT_EVIDENCE_REGISTRY
-    if not path.is_file():
-        pytest.skip("durable grounding evidence is not installed")
-
-    registry, findings = V.load_evidence_registry(path)
-    interpro = [row for row in registry.values() if row["provider_kind"] == "INTERPRO"]
-    assert len(interpro) == 12544
+def test_current_durable_interpro_evidence_remains_clean():
+    # Read-only production check. It fails rather than skips: a missing or unmigrated
+    # durable registry is exactly what it exists to catch (#801). No row count is
+    # pinned, because every promotion would have to edit it.
+    registry, findings = V.load_evidence_registry(V.DEFAULT_EVIDENCE_REGISTRY)
     assert findings == []
+    assert any(row["provider_kind"] == "INTERPRO" for row in registry.values())
 
 
 def test_interpro_location_id_must_be_canonical_when_present():
@@ -1905,6 +2029,13 @@ def test_prosite_and_literal_patterns_are_checked_against_occurrence_sequence():
     assert error is None and compiled is not None and compiled.fullmatch("STA")
     compiled, error = V.compile_sequence_pattern("S-T-{P}.")
     assert error is None and compiled is not None and compiled.fullmatch("STA")
+    compiled, error = V.compile_sequence_pattern("F-[IVFY]-G-[LM]-M-[G>].")
+    assert error is None and compiled is not None
+    assert compiled.fullmatch("FFGLMG")
+    assert compiled.fullmatch("FFGLM")
+    assert not compiled.fullmatch("FFGLMA")
+    compiled, error = V.compile_sequence_pattern("[SAG](2).")
+    assert error is None and compiled is not None and compiled.fullmatch("AS")
     compiled, error = V.compile_sequence_pattern("STA")
     assert error is None and compiled is not None and compiled.fullmatch("STA")
 
@@ -2061,6 +2192,96 @@ def test_cli_membership_replay_rejects_missing_tampered_or_wrong_exact_fact(tmp_
     assert "exact_uniprot_membership_not_found" in run("wrong-trait")
 
 
+def test_cli_replays_a_go_source_annotation_against_the_exact_uniprot_fact(tmp_path):
+    """#652: a UniProt SOURCE_ANNOTATION is dereferenced exactly like a membership."""
+
+    go_xref = {
+        "database": "GO",
+        "id": "GO:0009390",
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": "IDA:EcoCyc"},
+        ],
+    }
+    fixture = membership_cli_fixture(
+        tmp_path,
+        trait_id="GO:0009390",
+        method="SOURCE_ANNOTATION",
+        category="FUNC_LOCALIZATION",
+        entry={"uniProtKBCrossReferences": [go_xref]},
+    )
+    membership_path = fixture["membership_path"]
+    assert isinstance(membership_path, Path)
+
+    def run(suffix: str) -> tuple[int, str]:
+        output = tmp_path / f"validation-{suffix}.tsv"
+        status = V.main(
+            [
+                str(fixture["trait_path"]),
+                "--registry",
+                str(fixture["registry_path"]),
+                "--evidence-registry",
+                str(fixture["evidence_path"]),
+                "--membership-registry",
+                str(membership_path),
+                "--out",
+                str(output),
+                "--quiet",
+            ]
+        )
+        return status, output.read_text(encoding="utf-8")
+
+    status, report = run("exact")
+    assert status == 0, report
+    other = M.extract_entry_memberships(
+        {"uniProtKBCrossReferences": [{**go_xref, "id": "GO:0005886"}]},
+        protein_id="UniProtKB:P12345",
+        sequence_sha256=CHECKSUM,
+        uniprot_release="2026_02",
+    )
+    membership_path.write_text(M.dump_memberships(other), encoding="utf-8")
+    status, report = run("wrong-term")
+    assert status == 1
+    assert "exact_uniprot_membership_not_found" in report
+
+
+def test_cli_replay_refuses_an_installed_fact_with_non_qualifying_evidence(tmp_path):
+    """#974: the validator applies the resolver's evidence policy to durable facts."""
+
+    electronic = {
+        "database": "GO",
+        "id": "GO:0009390",
+        "properties": [
+            {"key": "GoTerm", "value": "C:dimethyl sulfoxide reductase complex"},
+            {"key": "GoEvidenceType", "value": "IEA:InterPro"},
+        ],
+    }
+    fixture = membership_cli_fixture(
+        tmp_path,
+        trait_id="GO:0009390",
+        method="SOURCE_ANNOTATION",
+        category="FUNC_LOCALIZATION",
+        entry={"uniProtKBCrossReferences": [electronic]},
+    )
+    output = tmp_path / "validation.tsv"
+    status = V.main(
+        [
+            str(fixture["trait_path"]),
+            "--registry",
+            str(fixture["registry_path"]),
+            "--evidence-registry",
+            str(fixture["evidence_path"]),
+            "--membership-registry",
+            str(fixture["membership_path"]),
+            "--out",
+            str(output),
+            "--quiet",
+        ]
+    )
+    assert status == 1
+    assert "uniprot_fact_evidence_not_qualifying" in output.read_text(encoding="utf-8")
+
+
 def test_cli_membership_replay_rejects_forged_provider_digest(tmp_path):
     fixture = membership_cli_fixture(tmp_path)
     evidence = dict(fixture["evidence"])
@@ -2193,8 +2414,10 @@ def test_cli_writes_deterministic_tsv_and_fails_false_qualified_claim(tmp_path):
 def test_cli_missing_default_registries_is_legacy_safe_but_qualified_fails(tmp_path, monkeypatch):
     missing_proteins = tmp_path / "missing-proteins.jsonl"
     missing_evidence = tmp_path / "missing-evidence.jsonl"
+    missing_bindings = tmp_path / "missing-bindings.jsonl.d"
     monkeypatch.setattr(V, "DEFAULT_REGISTRY", missing_proteins)
     monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", missing_evidence)
+    monkeypatch.setattr(V, "DEFAULT_QUALIFIED_RECORD_BINDINGS", missing_bindings)
 
     legacy_path = tmp_path / "legacy.yaml"
     legacy_path.write_text(
@@ -2221,6 +2444,7 @@ def test_cli_missing_default_registries_is_legacy_safe_but_qualified_fails(tmp_p
     observed = output.read_text(encoding="utf-8")
     assert "registry_not_found" in observed
     assert "evidence_registry_not_found" in observed
+    assert "binding_registry_not_found" in observed
 
 
 def test_quoted_and_escaped_qualification_keys_cannot_skip_elm_validation(tmp_path, monkeypatch):
@@ -2261,13 +2485,16 @@ def test_quoted_and_escaped_qualification_keys_cannot_skip_elm_validation(tmp_pa
 
     missing_proteins = tmp_path / "missing-proteins.jsonl"
     missing_evidence = tmp_path / "missing-evidence.jsonl"
+    missing_bindings = tmp_path / "missing-bindings.jsonl.d"
     monkeypatch.setattr(V, "DEFAULT_REGISTRY", missing_proteins)
     monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", missing_evidence)
+    monkeypatch.setattr(V, "DEFAULT_QUALIFIED_RECORD_BINDINGS", missing_bindings)
     output = tmp_path / "quoted-validation.tsv"
     assert V.main([str(tmp_path / "quoted.yaml"), "--out", str(output), "--quiet"]) == 1
     observed = output.read_text(encoding="utf-8")
     assert "registry_not_found" in observed
     assert "evidence_registry_not_found" in observed
+    assert "binding_registry_not_found" in observed
 
 
 def test_iter_yaml_files_recursively_discovers_uppercase_yml_suffix(tmp_path):
@@ -2390,3 +2617,300 @@ def test_the_flag_does_not_mask_an_empty_corpus(tmp_path, monkeypatch):
     """
     monkeypatch.setattr(V, "DEFAULT_TRAITS", tmp_path / "empty-traits")
     assert V.main(["--allow-missing"]) == 2
+
+
+# --- sharded durable registries (#801) --------------------------------------
+# Every CLI test below points all four default registries into tmp_path and runs from
+# there, so none of them reads the production data/grounding registries.
+
+
+def _write_sharded_registry(path: Path, rows: list[dict]) -> None:
+    text = "".join(
+        layout.canonical_line(row) for row in sorted(rows, key=lambda row: row["evidence_id"])
+    )
+    shards = layout.split_registry_text(text)
+    path.mkdir(parents=True)
+    for name, data in shards.items():
+        (path / name).write_bytes(data)
+    (path / layout.MANIFEST_NAME).write_text(layout.build_manifest_text(shards), encoding="utf-8")
+
+
+def _durable_evidence_rows() -> list[dict]:
+    """Two valid evidence rows (their shards follow from their content digests)."""
+
+    rows = [
+        EVIDENCE_REGISTRY[occurrence()["source_evidence_id"]],
+        EVIDENCE_REGISTRY[
+            occurrence(intervals=[{"start": 3, "end": 5, "expected_sequence": "TAC"}])[
+                "source_evidence_id"
+            ]
+        ],
+    ]
+    assert len({row["evidence_id"] for row in rows}) == 2
+    return rows
+
+
+def _sharded_cli_defaults(tmp_path: Path, monkeypatch) -> tuple[Path, Path, Path]:
+    """Point every default registry at tmp_path/data/grounding; return a legacy input."""
+
+    grounding = tmp_path / "data" / "grounding"
+    grounding.mkdir(parents=True)
+    monkeypatch.setattr(V, "DEFAULT_REGISTRY", grounding / "protein_registry.jsonl")
+    monkeypatch.setattr(V, "DEFAULT_EVIDENCE_REGISTRY", grounding / "occurrence_evidence.jsonl.d")
+    monkeypatch.setattr(
+        V, "DEFAULT_MEMBERSHIP_REGISTRY", grounding / "uniprot_memberships.jsonl"
+    )
+    monkeypatch.setattr(
+        V,
+        "DEFAULT_QUALIFIED_RECORD_BINDINGS",
+        grounding / "qualified_record_bindings.jsonl.d",
+    )
+    monkeypatch.chdir(tmp_path)
+    legacy = tmp_path / "legacy.yaml"
+    legacy.write_text(
+        yaml.safe_dump(
+            {
+                "identifier": "Pfam:PF00001",
+                "canonical_examples": [
+                    {"protein_id": "UniProtKB:P12345", "protein_label": "legacy"}
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return (
+        grounding / "occurrence_evidence.jsonl.d",
+        grounding / "qualified_record_bindings.jsonl.d",
+        legacy,
+    )
+
+
+def _finding_codes(output: Path) -> set[str]:
+    rows = output.read_text(encoding="utf-8").splitlines()[1:]
+    return {row.split("\t")[5] for row in rows}
+
+
+def test_cli_sharded_evidence_and_bindings_validate_together(tmp_path, monkeypatch, capsys):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, [])
+    _write_sharded_registry(bindings, [])
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 0
+    assert _finding_codes(output) == set()
+    assert "NOT CHECKED" not in capsys.readouterr().err
+
+
+def test_cli_sharded_evidence_without_bindings_fails_even_for_legacy_input(
+    tmp_path, monkeypatch
+):
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"binding_registry_not_found"}
+
+
+@pytest.mark.parametrize("flag", ["--evidence-registry", "--qualified-record-bindings"])
+def test_cli_relative_spelling_of_a_durable_default_still_requires_bindings(
+    tmp_path, monkeypatch, flag
+):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    relative = (evidence if flag == "--evidence-registry" else bindings).relative_to(tmp_path)
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), flag, str(relative), "--out", str(output), "--quiet"]) == 1
+    assert "binding_registry_not_found" in _finding_codes(output)
+
+
+@pytest.mark.parametrize("tamper", ["remove-shard", "edit-manifest", "edit-shard"])
+def test_cli_rejects_a_sharded_registry_that_no_longer_matches_its_manifest(
+    tmp_path, monkeypatch, tamper
+):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    _write_sharded_registry(bindings, [])
+    shard = sorted(evidence.glob("[0-9a-f][0-9a-f].jsonl"))[0]
+    if tamper == "remove-shard":
+        shard.unlink()
+    elif tamper == "edit-manifest":
+        manifest = json.loads((evidence / layout.MANIFEST_NAME).read_text(encoding="utf-8"))
+        manifest["row_count"] += 1
+        (evidence / layout.MANIFEST_NAME).write_text(
+            json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+    else:
+        shard.write_bytes(shard.read_bytes().replace(b'"scope":"LOCALIZED"', b'"scope":"LOCAL"'))
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert "registry_manifest_mismatch" in _finding_codes(output)
+
+
+@pytest.mark.parametrize(
+    ("defect", "code"),
+    [
+        ("residue", "registry_shard_unexpected"),
+        ("manifest-missing", "registry_manifest_missing"),
+        ("misplaced-row", "registry_row_misplaced"),
+    ],
+)
+def test_cli_reports_layout_defects_in_the_bindings_registry(
+    tmp_path, monkeypatch, defect, code
+):
+    """Bindings-registry layout issues become validator findings, not only evidence ones
+    (#870)."""
+
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, [])
+    _write_sharded_registry(bindings, [])
+    if defect == "residue":
+        (bindings / ".00.jsonl.abcd1234").write_text("partial\n", encoding="utf-8")
+    elif defect == "manifest-missing":
+        (bindings / layout.MANIFEST_NAME).unlink()
+    else:
+        # An "aa" key sealed into shard 00: only the placement check can catch it.
+        misplaced = layout.canonical_line({"evidence_id": "ug-evidence:" + "a" * 64})
+        (bindings / "00.jsonl").write_text(misplaced, encoding="utf-8")
+        (bindings / layout.MANIFEST_NAME).write_text(
+            layout.build_manifest_text({"00.jsonl": misplaced.encode("utf-8")}),
+            encoding="utf-8",
+        )
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert code in _finding_codes(output)
+
+
+@pytest.mark.parametrize("state", ["both-layouts", "unmigrated", "legacy-path-after-migration"])
+def test_cli_rejects_every_mixed_registry_layout(tmp_path, monkeypatch, state):
+    evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    rows = _durable_evidence_rows()
+    flat = evidence.with_name("occurrence_evidence.jsonl")
+    flat_text = "".join(
+        layout.canonical_line(row) for row in sorted(rows, key=lambda row: row["evidence_id"])
+    )
+    if state != "unmigrated":
+        _write_sharded_registry(evidence, rows)
+    if state != "legacy-path-after-migration":
+        flat.write_text(flat_text, encoding="utf-8")
+    _write_sharded_registry(bindings, [])
+    arguments = [str(legacy)]
+    if state == "legacy-path-after-migration":
+        arguments += ["--evidence-registry", str(flat)]
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([*arguments, "--out", str(output), "--quiet"]) == 1
+    assert "registry_layout_conflict" in _finding_codes(output)
+
+
+def test_cli_bindings_without_evidence_fail(tmp_path, monkeypatch):
+    _evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(bindings, [])
+    output = tmp_path / "validation.tsv"
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"evidence_registry_not_found"}
+
+
+@pytest.mark.parametrize("spelling", ["relative", "absolute"])
+def test_cli_explicit_bindings_flag_naming_the_default_is_always_checked(
+    tmp_path, monkeypatch, capsys, spelling
+):
+    """Passing --qualified-record-bindings, even as the default directory, checks it (#864)."""
+
+    _evidence, bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    staging = tmp_path / "reports" / "occurrence_evidence.jsonl"
+    staging.parent.mkdir()
+    staging.write_text(
+        "".join(json.dumps(row) + "\n" for row in _durable_evidence_rows()), encoding="utf-8"
+    )
+    named = bindings.relative_to(tmp_path) if spelling == "relative" else bindings
+    output = tmp_path / "validation.tsv"
+
+    arguments = ["--evidence-registry", str(staging), "--qualified-record-bindings", str(named)]
+    assert V.main([str(legacy), *arguments, "--out", str(output), "--quiet"]) == 1
+    assert _finding_codes(output) == {"binding_registry_not_found"}
+    assert "NOT CHECKED" not in capsys.readouterr().err
+
+
+def test_cli_relative_spelling_of_the_evidence_default_is_the_default(tmp_path, monkeypatch):
+    """With both registries absent, a relative spelling of the default evidence path is the
+    default: legacy-only input still exits 0, exactly as with no flag (#864)."""
+
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    output = tmp_path / "validation.tsv"
+    relative = str(evidence.relative_to(tmp_path))
+
+    assert V.main([str(legacy), "--out", str(output), "--quiet"]) == 0
+    assert _finding_codes(output) == set()
+    assert (
+        V.main([str(legacy), "--evidence-registry", relative, "--out", str(output), "--quiet"])
+        == 0
+    )
+    assert _finding_codes(output) == set()
+
+
+def test_cli_explicit_flat_staging_evidence_announces_unchecked_bindings(
+    tmp_path, monkeypatch, capsys
+):
+    evidence, _bindings, legacy = _sharded_cli_defaults(tmp_path, monkeypatch)
+    _write_sharded_registry(evidence, _durable_evidence_rows())
+    staging = tmp_path / "reports" / "occurrence_evidence.jsonl"
+    staging.parent.mkdir()
+    staging.write_text(
+        "".join(json.dumps(row) + "\n" for row in _durable_evidence_rows()), encoding="utf-8"
+    )
+    output = tmp_path / "validation.tsv"
+
+    assert (
+        V.main([str(legacy), "--evidence-registry", str(staging), "--out", str(output), "--quiet"])
+        == 0
+    )
+    assert _finding_codes(output) == set()
+    assert "qualified record bindings: NOT CHECKED" in capsys.readouterr().err
+
+
+def test_sharded_loaders_name_the_shard_file_and_line(tmp_path):
+    fixture = qualified_binding_fixture(tmp_path)
+    binding_dir = fixture["binding_path"].with_name("qualified_record_bindings.jsonl.d")
+    _write_sharded_registry(binding_dir, [fixture["binding"]])
+    fixture["binding_path"].unlink()
+    shard = binding_dir / layout.shard_name(fixture["evidence_id"])
+    fixture["trait_path"].write_text(
+        str(fixture["record_text"]) + "# curator edit\n", encoding="utf-8"
+    )
+
+    loaded, findings = V.load_qualified_record_bindings(
+        binding_dir,
+        {fixture["evidence_id"]: fixture["evidence"]},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    assert set(loaded) == {fixture["evidence_id"]}
+    assert [(finding.code, finding.file) for finding in findings] == [
+        ("binding_record_sha256_mismatch", f"{shard}:1")
+    ]
+
+    _loaded, findings = V.load_qualified_record_bindings(
+        binding_dir,
+        {},
+        repo_root=fixture["repo"],
+        traits_root=fixture["traits"],
+    )
+    # Coverage findings name the registry directory, not a shard.
+    assert f"{binding_dir}:0" in {
+        finding.file for finding in findings if finding.code == "binding_extra_evidence"
+    }
+
+    evidence_dir = tmp_path / "occurrence_evidence.jsonl.d"
+    tampered = dict(fixture["evidence"], source_release="110.0")
+    _write_sharded_registry(evidence_dir, [tampered])
+    registry, findings = V.load_evidence_registry(evidence_dir)
+    assert registry == {}
+    assert findings
+    assert {finding.file for finding in findings} == {
+        f"{evidence_dir / layout.shard_name(tampered['evidence_id'])}:1"
+    }

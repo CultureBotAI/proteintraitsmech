@@ -32,11 +32,14 @@ legacy examples do not suppress a candidate; only an explicitly QUALIFIED
 example does. Profile co-occurrence is evidence tier D, never promotion proof.
 
 Guards: traits carried by more than --max-prevalence of the matrix (default 25%)
-are skipped — a term that generic has no archetype. The ledger is atomically
-replaced. ``--apply`` remains only to refuse old direct-write invocations.
+are skipped — a term that generic has no archetype — unless a target
+``--include-taxon`` proteome still needs its explicit completion rows. The
+ledger is atomically replaced. ``--apply`` remains only to refuse old
+direct-write invocations.
 
 Usage:
   python3 scripts/suggest_canonical_examples.py --prefix CATH --max-examples 5
+  python3 scripts/suggest_canonical_examples.py --include-human-ecoli-yeast
   python3 scripts/suggest_canonical_examples.py --rule-backed-only \
       --candidate-out reports/uniprot-grounding/profile-candidates.jsonl
 """
@@ -80,6 +83,12 @@ _CLASSIFICATION_PREFIXES = ("CATH", "CDD", "HAMAP", "InterPro", "NCBIfam",
                             "SMART", "SUPERFAMILY")
 _MAX_CLASSIFICATIONS = 12
 _AXES = ("SEQUENCE", "STRUCTURE", "FUNCTION")
+_TAXON_ID = re.compile(r"^NCBITaxon:[0-9]+$")
+_MODEL_COMPLETION_TAXA = (
+    "NCBITaxon:9606",   # Homo sapiens
+    "NCBITaxon:83333",  # Escherichia coli K-12
+    "NCBITaxon:559292",  # Saccharomyces cerevisiae S288c
+)
 
 
 # ---------------------------------------------------------------------------
@@ -277,6 +286,49 @@ def score_carrier(prot: dict, trait: str, trait_axis: str, partners: dict) -> tu
     else:
         score = coverage + 0.20 * span + 0.15 * focus + 0.10 * depth
     return (score, coverage, len(matched), len(part))
+
+
+def select_ranked_carriers(
+    ranked: list[tuple[tuple[float, float, int, int], dict]],
+    max_examples: int,
+    include_taxa: set[str],
+) -> list[tuple[tuple[float, float, int, int], dict]]:
+    """Return top-ranked exemplars plus every carrier in completion taxa.
+
+    ``--max-examples`` keeps the review queue small by choosing a few archetypal
+    carriers. Completion audits need a different guarantee for selected
+    proteomes: if a human, E. coli K-12 or S. cerevisiae S288c carrier is in the
+    matrix, it must be queued even when it ranks below the exemplar cap.
+    """
+    selected: list[tuple[tuple[float, float, int, int], dict]] = []
+    seen: set[str] = set()
+    for index, candidate in enumerate(ranked):
+        _score, prot = candidate
+        if index >= max_examples and prot.get("taxon") not in include_taxa:
+            continue
+        accession = prot["accession"]
+        if accession in seen:
+            continue
+        selected.append(candidate)
+        seen.add(accession)
+    return selected
+
+
+def has_completion_carrier(pool: list[dict], include_taxa: set[str]) -> bool:
+    """True if the trait's carrier pool includes a taxon-completion target."""
+    return any(prot.get("taxon") in include_taxa for prot in pool)
+
+
+def skip_qualified_record(text: str, include_taxa: set[str], force: bool) -> bool:
+    """Whether an already-qualified record should be skipped.
+
+    Ordinary exemplar refreshes leave manually reviewed records alone. Taxon
+    completion runs are additive: a record that already has one qualified human
+    carrier may still be missing an E. coli or yeast carrier from the matrix.
+    """
+    if force or include_taxa:
+        return False
+    return bool(_HAS_EXAMPLES.search(text) and _HAS_QUALIFIED.search(text))
 
 
 def _candidate_scope(trait: str, trait_axis: str, trait_category: str) -> str:
@@ -511,7 +563,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--apply", action="store_true",
                     help="retired: direct record writes are refused")
     ap.add_argument("--max-examples", type=int, default=3,
-                    help="candidate carriers emitted per record (default 3)")
+                    help="profile-ranked candidate carriers emitted per record before "
+                         "--include-taxon completion rows are added (default 3)")
+    ap.add_argument("--include-taxon", action="append", default=[],
+                    help="also emit every profile carrier from this NCBITaxon CURIE, "
+                         "even beyond --max-examples; repeatable")
+    ap.add_argument("--include-human-ecoli-yeast", action="store_true",
+                    help="shortcut for --include-taxon NCBITaxon:9606, "
+                         "NCBITaxon:83333 and NCBITaxon:559292")
     ap.add_argument("--rule-backed-only", action="store_true",
                     help="only traits that participate in a mined cross-axis rule")
     ap.add_argument("--prefix", action="append",
@@ -547,6 +606,15 @@ def main(argv: list[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
+    if args.max_examples < 0:
+        ap.error("--max-examples must be non-negative")
+
+    include_taxa = set(args.include_taxon)
+    if args.include_human_ecoli_yeast:
+        include_taxa.update(_MODEL_COMPLETION_TAXA)
+    invalid_taxa = sorted(taxon for taxon in include_taxa if not _TAXON_ID.fullmatch(taxon))
+    if invalid_taxa:
+        ap.error("--include-taxon expects NCBITaxon CURIEs, got: " + ", ".join(invalid_taxa))
 
     rows = load_profiles(JSONL)
     idx = json.loads(INDEX.read_text(encoding="utf-8"))
@@ -582,6 +650,7 @@ def main(argv: list[str] | None = None) -> int:
     n_matrix = len(rows)
     stats = collections.Counter()
     per_prefix = collections.Counter()
+    per_completion_taxon = collections.Counter()
     candidate_rows: list[dict] = []
     samples: list[tuple] = []
 
@@ -598,7 +667,8 @@ def main(argv: list[str] | None = None) -> int:
         if len(pool) < args.min_carriers:
             stats["skip: too few carriers"] += 1
             continue
-        if len(pool) / n_matrix > args.max_prevalence:
+        is_too_generic = len(pool) / n_matrix > args.max_prevalence
+        if is_too_generic and not has_completion_carrier(pool, include_taxa):
             stats["skip: too generic"] += 1
             continue
         rel = paths.get(trait)
@@ -617,7 +687,7 @@ def main(argv: list[str] | None = None) -> int:
                       file=sys.stderr)
             stats["skip: unreadable"] += 1
             continue
-        if _HAS_EXAMPLES.search(text) and _HAS_QUALIFIED.search(text) and not args.force:
+        if skip_qualified_record(text, include_taxa, args.force):
             stats["skip: already qualified"] += 1
             continue
 
@@ -625,10 +695,13 @@ def main(argv: list[str] | None = None) -> int:
         ranked = list(sorted(
             ((score_carrier(p, trait, trait_axis, partners), p) for p in pool),
             key=lambda sp: (-sp[0][0], sp[1]["accession"]),
-        ))[:args.max_examples]
+        ))
+        top_ranked = ranked[:args.max_examples]
+        ranked = select_ranked_carriers(ranked, args.max_examples, include_taxa)
         if not ranked:
             stats["skip: no ranked carrier"] += 1
             continue
+        top_ranked_accessions = {prot["accession"] for _score, prot in top_ranked}
 
         for (score, coverage, matched, total), prot in ranked:
             candidate_rows.append(
@@ -644,6 +717,12 @@ def main(argv: list[str] | None = None) -> int:
                     total,
                 )
             )
+            taxon = prot.get("taxon")
+            if taxon in include_taxa:
+                stats["taxon-completion candidates"] += 1
+                per_completion_taxon[taxon] += 1
+                if prot["accession"] not in top_ranked_accessions:
+                    stats["taxon-completion beyond cap"] += 1
 
         stats["queued"] += 1
         per_prefix[trait.split(":")[0]] += 1
@@ -676,6 +755,20 @@ def main(argv: list[str] | None = None) -> int:
     L += ["", "| namespace | records |", "|---|--:|"]
     for k, v in per_prefix.most_common():
         L.append(f"| {k} | {v:,} |")
+    if include_taxa:
+        L += [
+            "",
+            (
+                f"Taxon-completion candidates emitted: "
+                f"{stats['taxon-completion candidates']:,} "
+                f"({stats['taxon-completion beyond cap']:,} beyond --max-examples)"
+            ),
+            "",
+            "| include-taxon | candidates |",
+            "|---|--:|",
+        ]
+        for taxon in sorted(include_taxa):
+            L.append(f"| {taxon} | {per_completion_taxon[taxon]:,} |")
     L += ["", "## Sample picks", "", "| trait | top exemplar | rule coverage |", "|---|---|--:|"]
     for trait, _rel, acc, name, cov in samples:
         L.append(f"| {trait} | {acc} — {name} | {cov:.2f} |")

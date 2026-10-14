@@ -36,16 +36,27 @@ import hashlib
 import json
 import os
 import re
+import signal
 import sys
 import tempfile
+import threading
 import unicodedata
 from collections import Counter, defaultdict
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 import yaml
 
+import grounding_registry_layout as layout
+from go_true_path import (
+    DEFAULT_GO_EDGES,
+    DEFAULT_GO_OBO,
+    GoRelease,
+    GoTruePathError,
+    load_go_obo,
+)
 from fetch_uniprot_registry import (
     RegistryBuildError as FetchReceiptError,
     VerifiedFetchReceipt,
@@ -100,10 +111,14 @@ DEFAULT_OUT_DIR = REPO_ROOT / "reports" / "uniprot-grounding"
 DEFAULT_EVIDENCE_REGISTRY = DEFAULT_OUT_DIR / "occurrence_evidence.jsonl"
 DEFAULT_MEMBERSHIP_REGISTRY = DEFAULT_OUT_DIR / "uniprot_memberships.jsonl"
 DEFAULT_DURABLE_PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
-DEFAULT_DURABLE_EVIDENCE_REGISTRY = REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl"
+# Evidence and bindings are sharded ``.jsonl.d`` directories (#801); see
+# grounding_registry_layout.py. The protein and membership registries stay flat.
+DEFAULT_DURABLE_EVIDENCE_REGISTRY = (
+    REPO_ROOT / "data" / "grounding" / "occurrence_evidence.jsonl.d"
+)
 DEFAULT_DURABLE_MEMBERSHIP_REGISTRY = REPO_ROOT / "data" / "grounding" / "uniprot_memberships.jsonl"
 DEFAULT_DURABLE_QUALIFIED_RECORD_BINDINGS = (
-    REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl"
+    REPO_ROOT / "data" / "grounding" / "qualified_record_bindings.jsonl.d"
 )
 PROTECTED_GROUNDING_ROOT = REPO_ROOT / "data" / "grounding"
 MAX_PROMOTION_BATCH = 1_000
@@ -130,6 +145,15 @@ _CONTENT_GATE_CANDIDATE_FIELDS = (
     "sequence_length",
     "intervals",
 )
+
+# Exact UniProt exact-accession facts (`uniprot_membership_snapshot`): a cross-reference
+# or catalytic-activity reaction is membership, a GO cross-reference is an annotation.
+# Both are replayed from the same content-addressed snapshot (#652).
+_UNIPROT_FACT_METHODS = frozenset({"SOURCE_MEMBERSHIP", "SOURCE_ANNOTATION"})
+# The validator keeps ComplexPortal and Rhea's source-native lanes receipt-locked. The
+# UniProt lane opened for them (and for GO) is admitted only from a verified UniProt
+# fetch receipt that binds the exact staging membership bytes (#973).
+_UNIPROT_RECEIPT_REQUIRED_NAMESPACES = frozenset({"ComplexPortal", "RHEA", "GO"})
 
 _MEMBERSHIP_RESOLUTION_REASONS = {
     "full release-pinned sequence and checksum require resolution",
@@ -177,15 +201,30 @@ _REVIEW_COLUMNS = (
     "scope",
     "evidence_tier",
     "mapping_method",
+    "source_trait_id",
+    "inheritance_path",
     "evidence_source",
     "source_release",
     "uniprot_release",
+    "uniprot_fragment",
     "intervals",
     "review_flags",
     "reasons",
     "reviewer",
     "reviewed_at",
     "review_notes",
+)
+
+# Appended before the reviewer columns only when the batch carries DUF discovery-lead
+# rows (duf_lead_provenance, research/duf-discovery-leads.md), so every other lane's
+# review TSV keeps exactly _REVIEW_COLUMNS (#1072).
+_DUF_REVIEW_COLUMNS = (
+    "duf_lead_status",
+    "duf_lead_rank",
+    "duf_lead_reviewed",
+    "duf_snapshot",
+    "other_pfam_signatures",
+    "multi_domain_whole_protein",
 )
 
 _REVIEW_DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
@@ -489,9 +528,19 @@ def derive_candidate_id(row: dict[str, Any]) -> str:
         "intervals": intervals,
         "residue_positions": positions,
     }
+    if (
+        identity["mapping_method"] == "SOURCE_ANNOTATION"
+        and str(identity["trait_id"] or "").startswith("GO:")
+        and str(identity["source_trait_id"] or "").startswith("GO:")
+    ):
+        # A GO annotation candidate is the claim (protein, record term). The descendant
+        # annotation a true-path inheritance resolves to is evidence, bound by the
+        # resolution digest and the evidence row, so the candidate keeps its staging ID
+        # through review, promotion, and durable replay (#1002, #1037).
+        identity["source_trait_id"] = identity["trait_id"]
     payload = {key: identity[key] for key in _CANDIDATE_ID_FIELDS}
     if identity["mapping_method"] == "SIFTS_RESIDUE_MAPPING":
-        # One ECOD trait/protein pair can have several independently reviewable
+        # One SIFTS-bound trait/protein pair can have several independently reviewable
         # structure occurrences.  Their exact structure, chain, and content-addressed
         # mapping must therefore remain distinct producer rows.
         payload.update(
@@ -671,34 +720,21 @@ def _verify_resolve_fetch_boundary(args: argparse.Namespace) -> VerifiedFetchRec
 
     plan = verified.request_plan
     receipt = verified.receipt
+    # Where the verified generation is in this checkout, not where it was fetched (#1082).
+    located = verified.artifact_paths
     path_bindings = {
-        "candidate queue": (args.queue, plan["candidate_artifact"]["path"]),
-        "selector manifest": (
-            args.selector_manifest,
-            plan["selector_manifest_artifact"]["path"],
-        ),
-        "request plan": (
-            args.fetch_request_plan,
-            receipt["request_plan_artifact"]["path"],
-        ),
-        "fetch receipt": (args.fetch_receipt, plan["output_paths"]["fetch_receipt"]),
-        "protein registry": (
-            args.protein_registry,
-            receipt["outputs"]["protein_registry"]["path"],
-        ),
-        "membership registry": (
-            args.membership_registry,
-            receipt["outputs"]["membership_registry"]["path"],
-        ),
-        "blocked registry": (
-            args.registry_blocked,
-            receipt["outputs"]["blocked_registry"]["path"],
-        ),
+        "candidate queue": (args.queue, located["candidate_queue"]),
+        "selector manifest": (args.selector_manifest, located["selector_manifest"]),
+        "request plan": (args.fetch_request_plan, located["request_plan"]),
+        "fetch receipt": (args.fetch_receipt, located["fetch_receipt"]),
+        "protein registry": (args.protein_registry, located["protein_registry"]),
+        "membership registry": (args.membership_registry, located["membership_registry"]),
+        "blocked registry": (args.registry_blocked, located["blocked_registry"]),
     }
     mismatches = [
         f"{role}: {_lexical_absolute(path)} != {expected}"
         for role, (path, expected) in path_bindings.items()
-        if _lexical_absolute(path) != expected
+        if _lexical_absolute(path) != str(expected)
     ]
     if mismatches:
         raise GroundingError(
@@ -908,6 +944,7 @@ class ProviderContext:
     prints_manifest: dict[str, Any] | None = None
     prints_release: PrintsRelease | None = None
     durable_membership_path: Path = DEFAULT_DURABLE_MEMBERSHIP_REGISTRY
+    go_release: GoRelease | None = None
     record_cache: dict[Path, tuple[dict, str, str]] = field(default_factory=dict)
     content_gate: RecordContentGate | None = None
 
@@ -966,12 +1003,12 @@ def _provider_context(
     profiles: dict[str, dict] = {}
     registry: dict[str, dict] = {}
     registry_path = (
-        Path(verified_fetch.request_plan["output_paths"]["protein_registry"])
+        verified_fetch.artifact_paths["protein_registry"]
         if verified_fetch is not None
         else (args.protein_registry.resolve() if args.protein_registry else None)
     )
     registry_evidence_path = (
-        _lexical_display_path(verified_fetch.request_plan["output_paths"]["protein_registry"])
+        _lexical_display_path(verified_fetch.artifact_paths["protein_registry"])
         if verified_fetch is not None
         else None
     )
@@ -988,7 +1025,8 @@ def _provider_context(
                     raise GroundingError(
                         f"explicit protein registry does not exist: {registry_path}"
                     )
-                validated_registry = _semantic_registry(registry_path)
+                # The resolver's --protein-registry input is a fetched registry.
+                validated_registry = _semantic_registry(registry_path, fetch_staging=True)
             registry = {
                 protein_id: reference
                 for protein_id, reference in validated_registry.items()
@@ -1007,12 +1045,12 @@ def _provider_context(
         if interpro_grouped_path.is_file():
             interpro_grouped, interpro_grouped_meta = _load_sidecar(interpro_grouped_path)
     membership_path = (
-        Path(verified_fetch.request_plan["output_paths"]["membership_registry"])
+        verified_fetch.artifact_paths["membership_registry"]
         if verified_fetch is not None
         else (args.membership_registry.resolve() if args.membership_registry is not None else None)
     )
     membership_evidence_path = (
-        _lexical_display_path(verified_fetch.request_plan["output_paths"]["membership_registry"])
+        _lexical_display_path(verified_fetch.artifact_paths["membership_registry"])
         if verified_fetch is not None
         else None
     )
@@ -1048,18 +1086,10 @@ def _provider_context(
     if "sifts-mapping" in providers:
         if sifts_path is None:
             raise GroundingError("provider sifts-mapping requires --sifts-registry")
-        try:
-            from build_ecod_sifts_candidates import (
-                EcodSiftsError,
-                load_mapping_registry,
-            )
-
-            sifts_mappings = load_mapping_registry(
-                sifts_path,
-                allow_offline_fixtures=args.allow_offline_sifts_fixtures,
-            )
-        except (EcodSiftsError, OSError) as exc:
-            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+        sifts_mappings = _load_sifts_mapping_registry(
+            sifts_path,
+            allow_offline_fixtures=args.allow_offline_sifts_fixtures,
+        )
     prints_manifest_path: Path | None = None
     prints_manifest: dict[str, Any] | None = None
     prints_release: PrintsRelease | None = None
@@ -1081,6 +1111,15 @@ def _provider_context(
             prints_release = parse_prints_kdat(prints_kdat_path, PRINTS_42_0_SHA256)
         except (PrintsSnapshotError, ValueError, OSError) as exc:
             raise GroundingError(f"invalid PRINTS snapshot provider: {exc}") from exc
+    go_release: GoRelease | None = None
+    go_obo = getattr(args, "go_obo", None)
+    if "uniprot-membership" in providers and isinstance(go_obo, Path) and go_obo.is_file():
+        # GO true-path inheritance (#1002) is attempted only with a local GO release
+        # present; without it a GO record still needs an exact annotation.
+        try:
+            go_release = load_go_obo(go_obo.resolve())
+        except GoTruePathError as exc:
+            raise GroundingError(f"invalid GO release for true-path inheritance: {exc}") from exc
     return ProviderContext(
         providers=providers,
         residue_path=residue_path,
@@ -1106,6 +1145,7 @@ def _provider_context(
         prints_manifest=prints_manifest,
         prints_release=prints_release,
         durable_membership_path=args.durable_membership_registry.resolve(),
+        go_release=go_release,
     )
 
 
@@ -1225,6 +1265,7 @@ def _validate_resolve_output_paths(args: argparse.Namespace) -> None:
         "registry_blocked",
         "sifts_registry",
         "durable_membership_registry",
+        "go_obo",
     )
     protected_input_keys = {
         _physical_path_key(value)
@@ -1438,6 +1479,28 @@ def _build_protein_reference(
     return reference, evidence
 
 
+def _staged_reference(registry_row: dict[str, Any]) -> dict[str, Any]:
+    """A fetched registry row as the staged ProteinReference it resolves to.
+
+    Fragment status is a qualification input carried on the resolved row
+    (``uniprot_fragment``), not copied into staged or durable ProteinReference rows,
+    so durable rows written before #1081 still merge with new ones.
+    """
+
+    return {key: value for key, value in registry_row.items() if key != "fragment"}
+
+
+def _registry_fragment_status(context: ProviderContext, protein_id: str | None) -> bool | None:
+    """UniProt fragment status from the release-pinned registry row, or None if unrecorded.
+
+    Registries fetched before #1081 carry no ``fragment`` field; that is unknown, not
+    complete.  The registry validator has already rejected any non-boolean value.
+    """
+
+    value = (context.registry.get(protein_id) or {}).get("fragment") if protein_id else None
+    return value if isinstance(value, bool) else None
+
+
 def _whole_protein_allowed(record: dict[str, Any]) -> bool:
     """Mirror the semantic validator's explicit whole-protein category boundary."""
 
@@ -1464,6 +1527,199 @@ def _sifts_provider_release(mapping: dict[str, Any]) -> str | None:
     if not entry_date or not release:
         return None
     return f"SIFTS {entry_date}; UniProt {release}"
+
+
+def _sifts_mapping_family(mapping: dict[str, Any]) -> str | None:
+    mapping_id = _clean_text(mapping.get("mapping_id")) or ""
+    if mapping_id.startswith("ecod-sifts:"):
+        return "ecod"
+    if mapping_id.startswith("biolip-sifts:") or mapping.get(
+        "kind"
+    ) == "BIOLIP_SIFTS_MAPPING_REGISTRY_ROW":
+        return "biolip"
+    if mapping.get("ecod_domain_id"):
+        return "ecod"
+    return None
+
+
+def _load_sifts_mapping_registry(
+    path: Path, *, allow_offline_fixtures: bool = False
+) -> dict[str, dict[str, Any]]:
+    try:
+        first_row: dict[str, Any] | None = None
+        with path.open(encoding="utf-8") as handle:
+            for line_number, raw in enumerate(handle, 1):
+                if not raw.strip():
+                    continue
+                try:
+                    value = json.loads(raw)
+                except json.JSONDecodeError as exc:
+                    raise GroundingError(
+                        f"invalid SIFTS mapping registry: {path}:{line_number}: "
+                        f"invalid mapping JSON: {exc}"
+                    ) from exc
+                if not isinstance(value, dict):
+                    raise GroundingError(
+                        f"invalid SIFTS mapping registry: {path}:{line_number}: "
+                        "mapping row is not an object"
+                    )
+                first_row = value
+                break
+    except OSError as exc:
+        raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+
+    if first_row is None:
+        return {}
+
+    family = _sifts_mapping_family(first_row)
+    if family == "ecod":
+        try:
+            from build_ecod_sifts_candidates import (
+                EcodSiftsError,
+                load_mapping_registry,
+            )
+
+            return load_mapping_registry(
+                path,
+                allow_offline_fixtures=allow_offline_fixtures,
+            )
+        except (EcodSiftsError, OSError) as exc:
+            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+    if family == "biolip":
+        try:
+            from fetch_biolip_sifts_uniprot_references import (
+                RegistryBuildError as BioLipSiftsError,
+                load_mapping_registry,
+            )
+
+            return load_mapping_registry(path)
+        except (BioLipSiftsError, OSError) as exc:
+            raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+    raise GroundingError(
+        f"invalid SIFTS mapping registry: {path}: unsupported mapping row type"
+    )
+
+
+def _sifts_mapping_entry_sha256(mapping: dict[str, Any]) -> str:
+    family = _sifts_mapping_family(mapping)
+    if family == "ecod":
+        from build_ecod_sifts_candidates import mapping_entry_sha256
+
+        return mapping_entry_sha256(mapping)
+    if family == "biolip":
+        from fetch_biolip_sifts_uniprot_references import mapping_entry_sha256
+
+        return mapping_entry_sha256(mapping)
+    raise GroundingError("unsupported SIFTS mapping row type")
+
+
+def _sifts_expected_mapping_id(mapping: dict[str, Any], entry_sha: str) -> str | None:
+    family = _sifts_mapping_family(mapping)
+    if family == "ecod":
+        return f"ecod-sifts:{entry_sha}"
+    if family == "biolip":
+        return _clean_text(mapping.get("mapping_id"))
+    return None
+
+
+def _sifts_expected_chain(mapping: dict[str, Any]) -> str | None:
+    if _sifts_mapping_family(mapping) == "ecod":
+        return _clean_text(mapping.get("ecod_chain"))
+    return _clean_text(mapping.get("chain_id"))
+
+
+def _sifts_evidence_source(mapping: dict[str, Any]) -> str:
+    if _sifts_mapping_family(mapping) == "biolip":
+        return "BioLiP via PDBe SIFTS"
+    return "ECOD via PDBe SIFTS"
+
+
+def _sifts_authoritative_source_release(mapping: dict[str, Any]) -> str | None:
+    if _sifts_mapping_family(mapping) == "ecod":
+        return _clean_text(mapping.get("ecod_release"))
+    return None
+
+
+def _go_true_path_failure(
+    mapping_method: str | None,
+    source_trait_id: str,
+    trait_id: str,
+    inheritance: object,
+    context: ProviderContext,
+) -> str | None:
+    """Why a UniProt fact on another term may not ground this record, or None (#1002)."""
+
+    if not (
+        mapping_method == "SOURCE_ANNOTATION"
+        and source_trait_id.startswith("GO:")
+        and trait_id.startswith("GO:")
+    ):
+        return "mismatch:membership_requires_exact_trait_id"
+    if context.go_release is None:
+        return "missing:go_release_for_true_path"
+    if not (
+        isinstance(inheritance, list)
+        and len(inheritance) >= 2
+        and inheritance[0] == source_trait_id
+        and inheritance[-1] == trait_id
+    ):
+        return "mismatch:source_trait_id_without_inheritance_path"
+    try:
+        context.go_release.edge_rows([str(term) for term in inheritance])
+    except GoTruePathError:
+        return "invalid:go_true_path_edge"
+    return None
+
+
+def _apply_go_true_path(
+    row: dict[str, Any], reference: dict[str, Any] | None, context: ProviderContext
+) -> None:
+    """Ground a GO record on a descendant's qualifying UniProt annotation (#1002).
+
+    Only when the record's own term has no exact, evidence-qualifying fact. Among the
+    protein's qualifying GO facts whose term reaches the record's term by ``is_a`` or
+    ``part_of`` in the local GO release, the strongest evidence wins (direct experimental
+    before mutant phenotype or expression, then curator, then the Swiss-Prot EC rule;
+    #1050), then the shortest path, then the lowest GO ID.
+    The rewritten candidate still passes every exact-fact, receipt and review check.
+    """
+
+    trait_id = _clean_text(row.get("trait_id")) or ""
+    source_trait_id = _clean_text(row.get("source_trait_id")) or trait_id
+    if (
+        row.get("mapping_method") != "SOURCE_ANNOTATION"
+        or not trait_id.startswith("GO:")
+        or source_trait_id != trait_id
+        or row.get("inheritance_path")
+        or context.go_release is None
+        or reference is None
+    ):
+        return
+    from uniprot_membership_snapshot import fact_evidence_failure, fact_evidence_rank
+
+    protein_id = _clean_text(row.get("protein_id"))
+    facts = [
+        fact
+        for fact in context.memberships
+        if fact.get("protein_id") == protein_id
+        and fact.get("database") == "GO"
+        and fact.get("uniprot_release") == reference.get("uniprot_release")
+        and fact.get("sequence_sha256") == reference.get("sequence_sha256")
+        and fact_evidence_failure(fact) is None
+    ]
+    if any(fact.get("source_trait_id") == trait_id for fact in facts):
+        return
+    options: list[tuple[int, int, str, list[str]]] = []
+    for fact in facts:
+        descendant = str(fact.get("source_trait_id"))
+        path = context.go_release.path(descendant, trait_id)
+        if path:
+            options.append((fact_evidence_rank(fact), len(path), descendant, path))
+    if not options:
+        return
+    _, _, descendant, path = min(options)
+    row["source_trait_id"] = descendant
+    row["inheritance_path"] = path
 
 
 def _resolve_occurrence(
@@ -1530,7 +1786,12 @@ def _resolve_occurrence(
         source_intervals, source_interval_reasons = _normalise_intervals(raw_source_intervals)
         reasons.extend(source_interval_reasons)
         interpro_location_id = _clean_text(candidate.get("interpro_location_id")) or ""
-        if raw_source_intervals is None:
+        if not isinstance(matches, dict):
+            # The crawler stores a protein without matches as {}; a missing key means
+            # the frame never reached this protein, which is not evidence of no match
+            # (#1070). The row still fails closed, under a reason that says so.
+            reasons.append("missing:interpro_frame_entry")
+        elif raw_source_intervals is None:
             reasons.append("missing:exact_interpro_match")
         else:
             if not interpro_location_id and intervals and intervals != source_intervals:
@@ -1591,13 +1852,21 @@ def _resolve_occurrence(
         if evidence_source and evidence_source.lower() != "interpro":
             reasons.append("mismatch:evidence_source")
         evidence_source = "InterPro"
-    elif mapping_method == "SOURCE_MEMBERSHIP":
+    elif mapping_method in _UNIPROT_FACT_METHODS:
+        from uniprot_membership_snapshot import expected_mapping_method
+
+        if mapping_method != expected_mapping_method(str(source_trait_id or "")):
+            reasons.append("mismatch:uniprot_fact_mapping_method")
         if scope != "WHOLE_PROTEIN":
             reasons.append("invalid:membership_requires_whole_protein")
         if not _whole_protein_allowed(record):
             reasons.append("invalid:whole_protein_membership_not_permitted")
         if source_trait_id != trait_id:
-            reasons.append("mismatch:membership_requires_exact_trait_id")
+            go_reason = _go_true_path_failure(
+                mapping_method, str(source_trait_id or ""), str(trait_id or ""), inheritance, context
+            )
+            if go_reason:
+                reasons.append(go_reason)
         if "uniprot-membership" not in context.providers:
             reasons.append("missing:uniprot_membership_provider")
         if reference is None:
@@ -1622,6 +1891,12 @@ def _resolve_occurrence(
             if membership is None:
                 reasons.append("missing:exact_uniprot_membership")
             else:
+                from uniprot_membership_snapshot import fact_evidence_failure
+
+                evidence_failure = fact_evidence_failure(membership)
+                if evidence_failure:
+                    # Captured, exact, and still only candidate evidence (#974).
+                    reasons.append(f"unqualifiable:uniprot_evidence:{evidence_failure}")
                 provider_release = membership["uniprot_release"]
                 # The producer's source_release may describe the earlier discovery
                 # search.  The exact-accession snapshot is self-contained and bound to
@@ -1651,7 +1926,7 @@ def _resolve_occurrence(
         registry_reference = context.registry.get(protein_id)
         if registry_reference is None:
             reasons.append("missing:exact_protein_reference_for_sifts")
-        elif reference is not None and registry_reference != reference:
+        elif reference is not None and _staged_reference(registry_reference) != reference:
             reasons.append("mismatch:exact_protein_reference_for_sifts")
         mapping_id = _clean_text(candidate.get("sifts_mapping_id"))
         if not mapping_id:
@@ -1660,10 +1935,8 @@ def _resolve_occurrence(
         if mapping is None:
             reasons.append("missing:exact_sifts_mapping")
         else:
-            from build_ecod_sifts_candidates import mapping_entry_sha256
-
-            entry_sha = mapping_entry_sha256(mapping)
-            expected_mapping_id = f"ecod-sifts:{entry_sha}"
+            entry_sha = _sifts_mapping_entry_sha256(mapping)
+            expected_mapping_id = _sifts_expected_mapping_id(mapping, entry_sha)
             if (
                 mapping_id != expected_mapping_id
                 or mapping.get("mapping_id") != expected_mapping_id
@@ -1686,7 +1959,7 @@ def _resolve_occurrence(
                 reasons.append("invalid:sifts_structure_id")
             if not chain_id:
                 reasons.append("missing:sifts_chain_id")
-            elif chain_id != mapping.get("ecod_chain"):
+            elif chain_id != _sifts_expected_chain(mapping):
                 reasons.append("mismatch:sifts_mapping_chain")
             mapped_residues = mapping.get("mapped_residues")
             mapped_by_position: dict[int, str] = {}
@@ -1752,9 +2025,10 @@ def _resolve_occurrence(
             provider_release = _sifts_provider_release(mapping)
             if provider_release is None:
                 reasons.append("missing:sifts_provider_release")
-            authoritative_source_release = _clean_text(mapping.get("ecod_release"))
+            authoritative_source_release = _sifts_authoritative_source_release(mapping)
             if not authoritative_source_release:
                 reasons.append("missing:sifts_source_release")
+            sifts_evidence_source = _sifts_evidence_source(mapping)
             expected_occurrence: dict[str, Any] = {
                 "trait_id": trait_id,
                 "protein_id": protein_id,
@@ -1768,7 +2042,7 @@ def _resolve_occurrence(
                 "expected_residues": mapped_expected,
                 "source_trait_id": trait_id,
                 "mapping_method": "SIFTS_RESIDUE_MAPPING",
-                "evidence_source": "ECOD via PDBe SIFTS",
+                "evidence_source": sifts_evidence_source,
                 "source_release": authoritative_source_release,
                 "sequence_sha256": (reference or {}).get("sequence_sha256"),
                 "structure_id": structure_id,
@@ -1863,7 +2137,7 @@ def _resolve_occurrence(
             mapping_evidence["entry_sha256"] = entry_sha
             evidence.append(mapping_evidence)
             source_trait_id = trait_id
-            evidence_source = "ECOD via PDBe SIFTS"
+            evidence_source = sifts_evidence_source
             source_release = authoritative_source_release
             scope = "LOCALIZED"
             intervals = copy.deepcopy(mapped_intervals)
@@ -1875,7 +2149,9 @@ def _resolve_occurrence(
     if not source_release:
         reasons.append("missing:source_release")
     evidence_tier = _clean_text(candidate.get("evidence_tier"))
-    if mapping_method in {"INTERPRO_MATCH", "SOURCE_MEMBERSHIP"} and not evidence_tier:
+    if (mapping_method == "INTERPRO_MATCH" or mapping_method in _UNIPROT_FACT_METHODS) and (
+        not evidence_tier
+    ):
         evidence_tier = "A"
     if evidence_tier not in {"A", "B"}:
         reasons.append(f"unqualifiable:evidence_tier:{evidence_tier or 'NONE'}")
@@ -1908,7 +2184,7 @@ def _resolve_occurrence(
     else:
         if coordinate_frame is not None:
             reasons.append("invalid:whole_protein_coordinate_frame")
-        if mapping_method == "SOURCE_MEMBERSHIP" and intervals:
+        if mapping_method in _UNIPROT_FACT_METHODS and intervals:
             reasons.append("invalid:membership_coordinates")
         if positions:
             reasons.append("invalid:whole_protein_residue_positions")
@@ -1976,7 +2252,7 @@ def _resolve_occurrence(
     ):
         if candidate.get(key) is not None:
             occurrence[key] = candidate[key]
-    if mapping_method == "SOURCE_MEMBERSHIP":
+    if mapping_method in _UNIPROT_FACT_METHODS:
         source_kind = "uniprot_membership"
     elif _clean_text(candidate.get("interpro_location_id")):
         source_kind = "interpro_grouped_location"
@@ -1991,10 +2267,10 @@ def _resolve_occurrence(
         validate_grounding_evidence,
     )
 
-    provider_kind = "UNIPROT" if mapping_method == "SOURCE_MEMBERSHIP" else "INTERPRO"
+    provider_kind = "UNIPROT" if mapping_method in _UNIPROT_FACT_METHODS else "INTERPRO"
     provider_source = (
         _display_path(context.durable_membership_path)
-        if mapping_method == "SOURCE_MEMBERSHIP"
+        if mapping_method in _UNIPROT_FACT_METHODS
         else str(source_evidence.get("source") or "InterPro")
     )
     evidence_occurrence = dict(occurrence)
@@ -2046,7 +2322,7 @@ def _resolve_candidate(
             for reason in producer_reasons:
                 normalized_reason = reason.strip()
                 if (
-                    candidate.get("mapping_method") == "SOURCE_MEMBERSHIP"
+                    candidate.get("mapping_method") in _UNIPROT_FACT_METHODS
                     and normalized_reason in _MEMBERSHIP_RESOLUTION_REASONS
                 ):
                     # These two discovery-state reasons are discharged only by the
@@ -2098,6 +2374,8 @@ def _resolve_candidate(
         reference, sequence_evidence = _build_protein_reference(row, protein_id, context, reasons)
         provider_evidence.extend(sequence_evidence)
     if record and protein_id and _UNIPROT.fullmatch(protein_id):
+        row["trait_id"] = trait_id
+        _apply_go_true_path(row, reference, context)
         occurrence_candidate = row
         if producer_occurrence is not None or producer_grounding_evidence is not None:
             occurrence_candidate = {
@@ -2116,6 +2394,16 @@ def _resolve_candidate(
         provider_evidence.extend(occurrence_evidence)
     else:
         ledger_intervals = []
+    # A fragment entry cannot exemplify a whole-protein claim; a LOCALIZED occurrence
+    # rests only on residues the entry has, so it stays admissible but flagged (#1081).
+    # Producers cannot supply this field: it is always the registry's value.
+    fragment = _registry_fragment_status(context, protein_id)
+    row["uniprot_fragment"] = fragment
+    if occurrence is not None and occurrence.get("scope") == "WHOLE_PROTEIN":
+        if fragment is True:
+            reasons.append("invalid:whole_protein_scope_for_uniprot_fragment")
+        elif fragment is None:
+            reasons.append("missing:uniprot_fragment_status_for_whole_protein")
     if record_path:
         row["record_path"] = _display_path(record_path)
     row["trait_id"] = trait_id
@@ -2208,6 +2496,20 @@ def _resolve_candidate(
     return row, reference if row["qualification_status"] == "QUALIFIED" else None
 
 
+def _review_inheritance_path(value: Any) -> str:
+    """Readable path for a well-formed list of terms, canonical JSON for anything else.
+
+    A malformed producer path is already REJECTED by the resolver; showing it must not
+    abort the run after half its staging outputs are written (#1045).
+    """
+
+    if not value:
+        return ""
+    if isinstance(value, list) and all(isinstance(term, str) for term in value):
+        return " > ".join(value)
+    return _canonical_json(value)
+
+
 def _review_flags(row: dict[str, Any]) -> list[str]:
     """Return deterministic flags whose cases the review protocol samples exhaustively."""
 
@@ -2228,6 +2530,8 @@ def _review_flags(row: dict[str, Any]) -> list[str]:
         flags.append("SIFTS")
     if row.get("mapping_completeness") == "PARTIAL":
         flags.append("PARTIAL_SIFTS")
+    if row.get("uniprot_fragment") is True:
+        flags.append("UNIPROT_FRAGMENT")
     if row.get("candidate_state") == "AMBIGUOUS_LOCAL_EXACT_CANDIDATES":
         flags.append("MULTI_CANDIDATE")
     for finding in row.get("record_content_findings") or []:
@@ -2238,6 +2542,12 @@ def _review_flags(row: dict[str, Any]) -> list[str]:
         ):
             flags.append(f"RECORD_CONTENT:{finding['code']}")
     return sorted(set(flags))
+
+
+def _review_fragment(value: Any) -> str:
+    """Review-TSV spelling of UniProt fragment status; empty means not recorded."""
+
+    return "" if value is None else ("true" if value is True else "false")
 
 
 def _select_batch(candidates: list[dict], batch: str | None) -> list[dict]:
@@ -2436,6 +2746,7 @@ def resolve(args: argparse.Namespace) -> int:
     _write_jsonl(args.evidence_out, [evidence_by_id[key] for key in sorted(evidence_by_id)])
     _write_jsonl(args.out, resolved)
     review_rows = []
+    duf_batch = any(isinstance(row.get("duf_lead_provenance"), dict) for row in resolved)
     for row in resolved:
         review_rows.append(
             {
@@ -2453,12 +2764,17 @@ def resolve(args: argparse.Namespace) -> int:
                 "scope": row.get("scope") or "",
                 "evidence_tier": row.get("evidence_tier") or "",
                 "mapping_method": row.get("mapping_method") or "",
+                # What an inherited row actually rests on (#1042).
+                "source_trait_id": row.get("source_trait_id") or "",
+                "inheritance_path": _review_inheritance_path(row.get("inheritance_path")),
                 "evidence_source": row.get("evidence_source") or "",
                 "source_release": row.get("source_release") or "",
                 "uniprot_release": row.get("uniprot_release") or "",
+                "uniprot_fragment": _review_fragment(row.get("uniprot_fragment")),
                 "intervals": _canonical_json(row.get("intervals") or []),
                 "review_flags": ";".join(_review_flags(row)),
                 "reasons": ";".join(row.get("reasons") or []),
+                **(_duf_review_fields(row, context.interpro) if duf_batch else {}),
                 "reviewer": "",
                 "reviewed_at": "",
                 "review_notes": "",
@@ -2468,7 +2784,9 @@ def resolve(args: argparse.Namespace) -> int:
     from io import StringIO
 
     buffer = StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=_REVIEW_COLUMNS, delimiter="\t", lineterminator="\n")
+    writer = csv.DictWriter(
+        buffer, fieldnames=_review_columns(duf_batch), delimiter="\t", lineterminator="\n"
+    )
     writer.writeheader()
     writer.writerows(review_rows)
     lines.append(buffer.getvalue())
@@ -2485,6 +2803,46 @@ def resolve(args: argparse.Namespace) -> int:
         f"WROTE {_display_path(args.evidence_out)} ({len(evidence_by_id):,} source-evidence rows)"
     )
     return 1 if args.fail_on_rejected and counts["REJECTED"] else 0
+
+
+def _review_columns(duf: bool) -> tuple[str, ...]:
+    if not duf:
+        return _REVIEW_COLUMNS
+    split = _REVIEW_COLUMNS.index("reviewer")
+    return _REVIEW_COLUMNS[:split] + _DUF_REVIEW_COLUMNS + _REVIEW_COLUMNS[split:]
+
+
+def _duf_review_fields(row: dict[str, Any], interpro: dict[str, Any]) -> dict[str, str]:
+    """Lead provenance and the carrier's other Pfam signatures, for the reviewer only.
+
+    ``other_pfam_signatures`` lists every other ``Pfam:`` signature the bound InterPro
+    frame places on the protein. Pfam alone, because the frame also holds InterPro
+    entries and other member databases that integrate the DUF itself and would read as
+    a second family. ``multi_domain_whole_protein`` is ``yes`` for a WHOLE_PROTEIN row
+    whose carrier has another Pfam signature: the review rule in
+    research/duf-discovery-leads.md applies. Nothing here enters the resolution digest.
+    """
+    provenance = row.get("duf_lead_provenance") or {}
+    trait_id = str(row.get("source_trait_id") or row.get("trait_id") or "")
+    matches = interpro.get(_accession(str(row.get("protein_id") or "")) or "")
+    if isinstance(matches, dict):
+        others = sorted(key for key in matches if key.startswith("Pfam:") and key != trait_id)
+        listed = ";".join(others)
+        multi = "yes" if others else "no"
+    else:
+        listed, multi = "", "unknown"
+    snapshot = provenance.get("snapshot_id") or ""
+    if snapshot and provenance.get("commit"):
+        snapshot = f"{snapshot}@{provenance['commit']}"
+    reviewed = provenance.get("lead_reviewed")
+    return {
+        "duf_lead_status": str(provenance.get("lead_status") or ""),
+        "duf_lead_rank": str(provenance.get("lead_rank") or ""),
+        "duf_lead_reviewed": "" if reviewed is None else str(bool(reviewed)).lower(),
+        "duf_snapshot": snapshot,
+        "other_pfam_signatures": listed,
+        "multi_domain_whole_protein": multi if row.get("scope") == "WHOLE_PROTEIN" else "",
+    }
 
 
 def _read_approvals(path: Path) -> dict[str, dict[str, str]]:
@@ -2633,15 +2991,7 @@ def _provider_cache(
                 {},
             )
         elif kind == "sifts_mapping":
-            try:
-                from build_ecod_sifts_candidates import (
-                    EcodSiftsError,
-                    load_mapping_registry,
-                )
-
-                mappings = load_mapping_registry(path)
-            except (EcodSiftsError, OSError) as exc:
-                raise GroundingError(f"invalid SIFTS mapping registry: {exc}") from exc
+            mappings = _load_sifts_mapping_registry(path)
             cache[(kind, path)] = (
                 {key: mappings[key] for key in keys if key in mappings},
                 {},
@@ -2685,9 +3035,7 @@ def _verify_provider_evidence(
 
             observed_digest = membership_entry_sha256(current)
         elif kind == "sifts_mapping":
-            from build_ecod_sifts_candidates import mapping_entry_sha256
-
-            observed_digest = mapping_entry_sha256(current)
+            observed_digest = _sifts_mapping_entry_sha256(current)
         else:
             observed_digest = _value_digest(current)
         if observed_digest != evidence.get("entry_sha256"):
@@ -2733,7 +3081,7 @@ def _verify_provider_evidence(
         reasons.append("missing:protein_registry_evidence")
     if row.get("mapping_method") == "INTERPRO_MATCH" and "interpro_frame" not in kinds:
         reasons.append("missing:interpro_evidence")
-    if row.get("mapping_method") == "SOURCE_MEMBERSHIP" and "uniprot_membership" not in kinds:
+    if row.get("mapping_method") in _UNIPROT_FACT_METHODS and "uniprot_membership" not in kinds:
         reasons.append("missing:uniprot_membership_evidence")
     if row.get("mapping_method") == "SIFTS_RESIDUE_MAPPING" and "sifts_mapping" not in kinds:
         reasons.append("missing:sifts_mapping_evidence")
@@ -2762,6 +3110,39 @@ def _authoritative_example(row: dict[str, Any]) -> dict[str, Any]:
     return example
 
 
+def _distinct_interpro_occurrences(left: dict, right: dict) -> bool:
+    """Allow separate, non-overlapping source matches in one unchanged frame.
+
+    Provider/evidence replay remains mandatory in promotion. This is not permission
+    to overwrite a qualified claim, combine fragments, or change its sequence frame.
+    """
+    if any(
+        occurrence.get("qualification_status") != "QUALIFIED"
+        or occurrence.get("scope") != "LOCALIZED"
+        or occurrence.get("mapping_method") != "INTERPRO_MATCH"
+        or not occurrence.get("source_evidence_id")
+        or occurrence.get("residue_positions")
+        for occurrence in (left, right)
+    ):
+        return False
+    if left["source_evidence_id"] == right["source_evidence_id"]:
+        return False
+    context = (
+        "trait_id", "protein_id", "sequence_sha256", "coordinate_frame",
+        "source_trait_id", "inheritance_path", "evidence_source", "source_release",
+    )
+    if any(left.get(key) != right.get(key) for key in context):
+        return False
+    left_intervals, left_errors = _normalise_intervals(left.get("intervals"))
+    right_intervals, right_errors = _normalise_intervals(right.get("intervals"))
+    if left_errors or right_errors or not left_intervals or not right_intervals:
+        return False
+    return all(
+        first["end"] < second["start"] or second["end"] < first["start"]
+        for first in left_intervals for second in right_intervals
+    )
+
+
 def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict, bool]:
     if existing.get("sequence"):
         existing_sha = hashlib.sha256(str(existing["sequence"]).encode("ascii")).hexdigest()
@@ -2784,16 +3165,22 @@ def _merge_qualified_example(existing: dict, authoritative: dict) -> tuple[dict,
         and occurrence.get("trait_id") == wanted.get("trait_id")
         and occurrence.get("protein_id") == wanted.get("protein_id")
     ]
-    if len(matching) > 1:
+    identities = [
+        occurrences[index].get("source_evidence_id") or _value_digest(occurrences[index])
+        for index in matching
+    ]
+    if len(identities) != len(set(identities)):
         raise GroundingError("invalid:duplicate_existing_trait_occurrence")
-    if matching:
+    exact = [index for index in matching if occurrences[index] == wanted]
+    if exact:
+        pass  # Idempotent replay, including a record with several distinct matches.
+    elif len(matching) == 1 and occurrences[matching[0]].get("qualification_status") != "QUALIFIED":
         index = matching[0]
-        if (
-            occurrences[index].get("qualification_status") == "QUALIFIED"
-            and occurrences[index] != wanted
-        ):
-            raise GroundingError("conflict:different_qualified_trait_occurrence")
         occurrences[index] = wanted
+    elif matching:
+        if not all(_distinct_interpro_occurrences(occurrences[index], wanted) for index in matching):
+            raise GroundingError("conflict:different_qualified_trait_occurrence")
+        occurrences.append(wanted)
     else:
         occurrences.append(wanted)
     merged["trait_occurrences"] = occurrences
@@ -2848,11 +3235,11 @@ def _strict_errors_for_text(text: str) -> list[dict]:
         temporary.unlink(missing_ok=True)
 
 
-def _semantic_registry(path: Path) -> dict[str, dict[str, Any]]:
+def _semantic_registry(path: Path, *, fetch_staging: bool = False) -> dict[str, dict[str, Any]]:
     """Load the registry through the grounding validator, refusing registry findings."""
     from validate_uniprot_grounding import load_registry
 
-    registry, findings = load_registry(path)
+    registry, findings = load_registry(path, fetch_staging=fetch_staging)
     if findings:
         detail = "; ".join(f"{finding.code}: {finding.message}" for finding in findings[:3])
         raise GroundingError(f"semantic registry validation rejected preflight: {detail}")
@@ -2867,7 +3254,9 @@ def _semantic_registry_bytes(raw: bytes, path: Path) -> dict[str, dict[str, Any]
     registry: dict[str, dict[str, Any]] = {}
     findings = []
     for line_number, row in enumerate(_read_verified_jsonl(raw, source=path), 1):
-        findings.extend(validate_protein_reference(row, path=path, line=line_number))
+        findings.extend(
+            validate_protein_reference(row, path=path, line=line_number, fetch_staging=True)
+        )
         protein_id = row.get("protein_id")
         if not isinstance(protein_id, str):
             continue
@@ -2909,8 +3298,24 @@ def _semantic_evidence_registry(path: Path) -> dict[str, dict[str, Any]]:
 
 
 def _artifact_digest(path: Path) -> str | None:
-    """Return a file-content digest, distinguishing a missing durable artifact."""
+    """Return a content digest, distinguishing a missing durable artifact.
 
+    A sharded ``.jsonl.d`` registry is hashed by its logical digest, the sha256 of
+    its shards joined in name order, which equals the flat file it replaced.  That
+    digest is returned only after the listing, every row's placement, order and
+    canonical form, and the manifest verify, so a torn or hand-edited directory is
+    refused rather than hashed.  A flat path whose sharded twin exists is refused the
+    same way (#801).
+    """
+
+    twin = layout.legacy_twin(path)
+    if layout.is_sharded(path) or (
+        twin is not None and layout.is_sharded(twin) and os.path.lexists(twin)
+    ):
+        try:
+            return layout.sharded_digest(path)
+        except layout.RegistryLayoutError as exc:
+            raise GroundingError(f"durable registry layout rejected: {exc}") from exc
     if not path.exists():
         return None
     if not path.is_file():
@@ -2931,6 +3336,21 @@ def _load_durable_registry(path: Path) -> tuple[dict[str, dict[str, Any]], str |
     return registry, before
 
 
+def _refuse_missing_protected_registry(path: Path, kind: str) -> None:
+    """Refuse a fresh start for a missing evidence or bindings registry in production.
+
+    Reading an absent registry as empty is only for scratch fixture paths.  Under
+    ``data/grounding`` it means a lost or unmigrated registry, and promoting over it
+    would silently drop every durable row.
+    """
+
+    if _path_is_under(path, PROTECTED_GROUNDING_ROOT):
+        raise GroundingError(
+            f"durable {kind} registry missing under data/grounding: {path}; restore it from "
+            "git -- the sharded layout is created only by just migrate-grounding-registries"
+        )
+
+
 def _load_durable_evidence_registry(
     path: Path,
 ) -> tuple[dict[str, dict[str, Any]], str | None]:
@@ -2938,6 +3358,7 @@ def _load_durable_evidence_registry(
 
     before = _artifact_digest(path)
     if before is None:
+        _refuse_missing_protected_registry(path, "evidence")
         return {}, None
     evidence = _semantic_evidence_registry(path)
     after = _artifact_digest(path)
@@ -2959,6 +3380,7 @@ def _load_durable_qualified_record_bindings(
 
     before = _artifact_digest(path)
     if before is None:
+        _refuse_missing_protected_registry(path, "qualified-record binding")
         if durable_evidence:
             raise GroundingError(
                 "durable qualified-record binding registry is missing while durable "
@@ -2967,68 +3389,76 @@ def _load_durable_qualified_record_bindings(
         return {}, None
 
     bindings: dict[str, dict[str, Any]] = {}
-    with path.open(encoding="utf-8") as handle:
-        for line_number, line in enumerate(handle, 1):
-            if not line.strip():
-                continue
-            try:
-                binding = json.loads(line)
-            except json.JSONDecodeError as exc:
+    image = layout.read_registry(path)
+    if image.issues:
+        issue = image.issues[0]
+        where = f"{issue.file}:{issue.line}" if issue.line else str(issue.file)
+        raise GroundingError(f"{where}: {issue.code}: {issue.message}")
+    if image.logical_sha256 != before:
+        raise GroundingError(
+            f"durable qualified-record binding registry changed during preflight: {path}"
+        )
+    for source, line_number, line in image.lines:
+        if not line.strip():
+            continue
+        try:
+            binding = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise GroundingError(
+                f"{source}:{line_number}: invalid qualified-record binding JSON: {exc}"
+            ) from exc
+        if not isinstance(binding, dict):
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding is not an object"
+            )
+        fields = set(binding)
+        if fields != _QUALIFIED_RECORD_BINDING_FIELDS:
+            missing = sorted(_QUALIFIED_RECORD_BINDING_FIELDS - fields)
+            extra = sorted(fields - _QUALIFIED_RECORD_BINDING_FIELDS)
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding schema mismatch; "
+                f"missing={missing}, extra={extra}"
+            )
+        if binding.get("schema_version") != 1 or isinstance(
+            binding.get("schema_version"), bool
+        ):
+            raise GroundingError(
+                f"{source}:{line_number}: qualified-record binding schema_version must be 1"
+            )
+        evidence_id = binding.get("evidence_id")
+        if (
+            not isinstance(evidence_id, str)
+            or re.fullmatch(r"ug-evidence:[0-9a-f]{64}", evidence_id) is None
+        ):
+            raise GroundingError(
+                f"{source}:{line_number}: invalid qualified-record binding evidence_id"
+            )
+        if evidence_id in bindings:
+            raise GroundingError(
+                f"{source}:{line_number}: duplicate qualified-record binding for {evidence_id}"
+            )
+        for field_name in ("candidate_id", "trait_id", "record_path"):
+            if _clean_text(binding.get(field_name)) is None:
                 raise GroundingError(
-                    f"{path}:{line_number}: invalid qualified-record binding JSON: {exc}"
-                ) from exc
-            if not isinstance(binding, dict):
-                raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding is not an object"
+                    f"{source}:{line_number}: qualified-record binding lacks {field_name}"
                 )
-            fields = set(binding)
-            if fields != _QUALIFIED_RECORD_BINDING_FIELDS:
-                missing = sorted(_QUALIFIED_RECORD_BINDING_FIELDS - fields)
-                extra = sorted(fields - _QUALIFIED_RECORD_BINDING_FIELDS)
+        for field_name in ("record_sha256", "content_gate_digest"):
+            value = binding.get(field_name)
+            if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
                 raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding schema mismatch; "
-                    f"missing={missing}, extra={extra}"
+                    f"{source}:{line_number}: qualified-record binding has invalid {field_name}"
                 )
-            if binding.get("schema_version") != 1 or isinstance(
-                binding.get("schema_version"), bool
-            ):
-                raise GroundingError(
-                    f"{path}:{line_number}: qualified-record binding schema_version must be 1"
-                )
-            evidence_id = binding.get("evidence_id")
-            if (
-                not isinstance(evidence_id, str)
-                or re.fullmatch(r"ug-evidence:[0-9a-f]{64}", evidence_id) is None
-            ):
-                raise GroundingError(
-                    f"{path}:{line_number}: invalid qualified-record binding evidence_id"
-                )
-            if evidence_id in bindings:
-                raise GroundingError(
-                    f"{path}:{line_number}: duplicate qualified-record binding for {evidence_id}"
-                )
-            for field_name in ("candidate_id", "trait_id", "record_path"):
-                if _clean_text(binding.get(field_name)) is None:
-                    raise GroundingError(
-                        f"{path}:{line_number}: qualified-record binding lacks {field_name}"
-                    )
-            for field_name in ("record_sha256", "content_gate_digest"):
-                value = binding.get(field_name)
-                if not isinstance(value, str) or _SHA256.fullmatch(value) is None:
-                    raise GroundingError(
-                        f"{path}:{line_number}: qualified-record binding has invalid {field_name}"
-                    )
-            projection = binding.get("content_gate_projection")
-            if not isinstance(projection, dict):
-                raise GroundingError(
-                    f"{path}:{line_number}: content_gate_projection is not an object"
-                )
-            if binding["content_gate_digest"] != _value_digest(projection):
-                raise GroundingError(
-                    f"{path}:{line_number}: tampered qualified-record content-gate digest "
-                    f"for {evidence_id}"
-                )
-            bindings[evidence_id] = binding
+        projection = binding.get("content_gate_projection")
+        if not isinstance(projection, dict):
+            raise GroundingError(
+                f"{source}:{line_number}: content_gate_projection is not an object"
+            )
+        if binding["content_gate_digest"] != _value_digest(projection):
+            raise GroundingError(
+                f"{source}:{line_number}: tampered qualified-record content-gate digest "
+                f"for {evidence_id}"
+            )
+        bindings[evidence_id] = binding
 
     missing = sorted(set(durable_evidence) - set(bindings))
     extra = sorted(set(bindings) - set(durable_evidence))
@@ -3333,6 +3763,134 @@ def _selected_registry_rows(
     return references, evidence_rows
 
 
+def _record_has_inheritance(record: dict[str, Any]) -> bool:
+    """Whether any example occurrence in a record claims an inheritance_path."""
+
+    for example in record.get("canonical_examples") or []:
+        if not isinstance(example, dict):
+            continue
+        for occurrence in example.get("trait_occurrences") or []:
+            if isinstance(occurrence, dict) and occurrence.get("inheritance_path"):
+                return True
+    return False
+
+
+def _merged_go_edges(
+    selected: list[dict[str, Any]], edges_path: Path, obo_path: Path
+) -> tuple[list[dict[str, str]], str, str | None, bool]:
+    """Prove each selected GO true-path edge in the local GO release and merge it (#1002)."""
+
+    from go_true_path import dump_edges, load_edges, merge_edges
+
+    paths = [
+        [str(term) for term in row["inheritance_path"]]
+        for row in selected
+        if row.get("mapping_method") == "SOURCE_ANNOTATION"
+        and str(row.get("trait_id") or "").startswith("GO:")
+        and row.get("source_trait_id") != row.get("trait_id")
+        and isinstance(row.get("inheritance_path"), list)
+    ]
+    if not paths:
+        return [], "", None, False
+    # Digest before reading and re-check after the slow OBO parse, like the other
+    # durable registries, so a concurrent install is never silently overwritten (#1040).
+    digest = _artifact_digest(edges_path)
+    try:
+        existing = load_edges(edges_path)
+        release = load_go_obo(obo_path.resolve())
+        tracked = {(row["child"], row["parent"]): row for row in existing}
+        new_rows = []
+        for edge in (edge for path in paths for edge in release.edge_rows(path)):
+            kept = tracked.get((edge["child"], edge["parent"]))
+            if kept is None:
+                new_rows.append(edge)
+            elif kept["relation"] != edge["relation"]:
+                raise GoTruePathError(
+                    f"tracked {kept['relation']} edge {edge['child']} -> {edge['parent']} "
+                    f"({kept['go_release']}) is {edge['relation']} in {release.release}"
+                )
+            # Otherwise the tracked row, proven by its own release, still holds in this
+            # one; it keeps its provenance rather than conflicting on a re-fetch (#1039).
+        merged = merge_edges(existing, new_rows)
+        text = dump_edges(merged)
+    except GoTruePathError as exc:
+        raise GroundingError(f"GO true-path edges rejected preflight: {exc}") from exc
+    if _artifact_digest(edges_path) != digest:
+        raise GroundingError(f"durable GO true-path edges changed during preflight: {edges_path}")
+    return merged, text, digest, digest != _text_digest(text)
+
+
+def _verify_uniprot_fact_receipt(args: argparse.Namespace, selected: list[dict[str, Any]]) -> None:
+    """Admit UniProt-lane ComplexPortal/Rhea/GO facts only from a verified fetch receipt."""
+
+    needing = sorted(
+        str(row["candidate_id"])
+        for row in selected
+        if row.get("mapping_method") in _UNIPROT_FACT_METHODS
+        and str(row.get("source_trait_id") or "").split(":", 1)[0]
+        in _UNIPROT_RECEIPT_REQUIRED_NAMESPACES
+    )
+    if not needing:
+        return
+    if args.fetch_request_plan is None or args.fetch_receipt is None:
+        raise GroundingError(
+            f"{len(needing)} UniProt-lane ComplexPortal/Rhea/GO fact(s) need "
+            "--fetch-request-plan and --fetch-receipt: the lane is admitted only from a "
+            "verified UniProt fetch receipt"
+        )
+    from fetch_uniprot_registry import RegistryBuildError, verify_fetch_receipt
+
+    try:
+        verified = verify_fetch_receipt(
+            receipt_path=args.fetch_receipt.resolve(),
+            request_plan_path=args.fetch_request_plan.resolve(),
+        )
+    except (RegistryBuildError, OSError) as exc:
+        raise GroundingError(f"UniProt fetch receipt does not verify: {exc}") from exc
+    mode = verified.request_plan.get("acquisition_mode")
+    if mode != "UNIPROT_REST" and not args.allow_offline_uniprot_fixture:
+        raise GroundingError(
+            f"UniProt-lane facts need a network UNIPROT_REST fetch receipt, not {mode!r}"
+        )
+    if args.membership_registry.resolve().read_bytes() != verified.membership_registry_jsonl_bytes:
+        raise GroundingError(
+            "staging membership registry is not the fetch output its receipt binds"
+        )
+
+
+def _require_installed_uniprot_facts(
+    selected: list[dict[str, Any]],
+    references: dict[str, dict[str, Any]],
+    merged_memberships: list[dict[str, Any]],
+) -> None:
+    """Every UniProt-fact occurrence must find its exact fact in what is installed (#976)."""
+
+    from uniprot_membership_snapshot import MembershipSnapshotError, find_exact_membership
+
+    for row in selected:
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
+            continue
+        reference = references.get(str(row["protein_id"]))
+        try:
+            fact = (
+                find_exact_membership(
+                    merged_memberships,
+                    protein_id=str(row["protein_id"]),
+                    source_trait_id=str(row.get("source_trait_id") or ""),
+                    uniprot_release=reference["uniprot_release"],
+                    sequence_sha256=reference["sequence_sha256"],
+                )
+                if reference
+                else None
+            )
+        except MembershipSnapshotError as exc:
+            raise GroundingError(f"{row['candidate_id']}: ambiguous installed fact: {exc}") from exc
+        if fact is None:
+            raise GroundingError(
+                f"{row['candidate_id']}: no exact UniProt fact in the merged membership registry"
+            )
+
+
 def _selected_membership_rows(
     selected: list[dict[str, Any]],
     references: dict[str, dict[str, Any]],
@@ -3350,7 +3908,7 @@ def _selected_membership_rows(
 
     selected_memberships: list[dict[str, Any]] = []
     for row in selected:
-        if row.get("mapping_method") != "SOURCE_MEMBERSHIP":
+        if row.get("mapping_method") not in _UNIPROT_FACT_METHODS:
             continue
         candidate_id = str(row["candidate_id"])
         protein_id = str(row["protein_id"])
@@ -3377,7 +3935,7 @@ def _selected_membership_rows(
         expected_entry_sha = membership_entry_sha256(membership)
         if not isinstance(grounding_evidence, dict) or any(
             (
-                grounding_evidence.get("mapping_method") != "SOURCE_MEMBERSHIP",
+                grounding_evidence.get("mapping_method") != row.get("mapping_method"),
                 grounding_evidence.get("scope") != "WHOLE_PROTEIN",
                 grounding_evidence.get("evidence_source") != "UniProtKB",
                 grounding_evidence.get("source_release") != membership["uniprot_release"],
@@ -3428,7 +3986,7 @@ def _same_protein_reference_except_release(
 def _requires_same_release_protein_reference(row: dict[str, Any]) -> bool:
     """Whether promotion must keep the selected ProteinReference release byte-exact."""
 
-    return row.get("mapping_method") == "SOURCE_MEMBERSHIP"
+    return row.get("mapping_method") in _UNIPROT_FACT_METHODS
 
 
 def _merge_protein_reference_rows(
@@ -3478,7 +4036,7 @@ def _selected_rows_for_merged_protein_references(
             continue
         if _requires_same_release_protein_reference(row):
             raise GroundingError(
-                f"{row['candidate_id']}: SOURCE_MEMBERSHIP ProteinReference changed "
+                f"{row['candidate_id']}: {row.get('mapping_method')} ProteinReference changed "
                 "uniprot_release"
             )
         if not _same_protein_reference_except_release(durable_reference, selected_reference):
@@ -3502,6 +4060,7 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         "durable protein registry": args.durable_protein_registry,
         "durable evidence registry": args.durable_evidence_registry,
         "durable membership registry": args.durable_membership_registry,
+        "durable GO true-path edges": args.durable_go_edges,
         "durable qualified-record bindings": args.durable_qualified_record_bindings,
     }
     output_keys = {name: _physical_path_key(path) for name, path in outputs.items()}
@@ -3525,6 +4084,7 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         args.interpro_xml,
         args.pfam_clans,
         args.pfam_types,
+        args.go_obo,
     ):
         if optional is not None:
             protected_input_keys.add(_physical_path_key(optional))
@@ -3535,6 +4095,56 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
             )
         if _path_is_under(output, traits_root) or _path_is_under(output, DEFAULT_TRAITS):
             raise GroundingError(f"durable registry output must be outside trait records: {output}")
+    # A sharded registry is a directory the transaction owns entry by entry (#801):
+    # nothing else may live inside one, and production evidence and bindings are
+    # always sharded, so a flat path there can never shadow the real registry.
+    for name, output in outputs.items():
+        for other_name, other in outputs.items():
+            if other_name != name and _path_is_under(output, other):
+                raise GroundingError(
+                    f"durable registry outputs must not nest: {output} is inside {other}"
+                )
+    output_attributes = {
+        "durable_protein_registry",
+        "durable_evidence_registry",
+        "durable_membership_registry",
+        "durable_qualified_record_bindings",
+    }
+    sharded_outputs = [output for output in outputs.values() if layout.is_sharded(output)]
+    for attribute, value in sorted(vars(args).items()):
+        if attribute in output_attributes or not isinstance(value, Path):
+            continue
+        for output in sharded_outputs:
+            if _path_is_under(value, output):
+                raise GroundingError(
+                    f"--{attribute.replace('_', '-')} must not be inside the sharded durable "
+                    f"registry {output}: {value}"
+                )
+    for name in ("durable evidence registry", "durable qualified-record bindings"):
+        output = outputs[name]
+        if _path_is_under(output, PROTECTED_GROUNDING_ROOT) and not layout.is_sharded(output):
+            raise GroundingError(
+                f"{name} under data/grounding must be a sharded {layout.SHARD_SUFFIX} "
+                f"registry: {output}"
+            )
+    # The layout reader, and with it the validator and `check`, refuses a symlinked
+    # sharded registry (registry_layout_conflict). Every durable load and write below
+    # resolves its path first, so without this the promoter would accept the symlink and
+    # write through it into its target (#867).
+    for name, output in outputs.items():
+        if layout.is_sharded(output) and os.path.islink(output):
+            raise GroundingError(
+                f"registry_layout_conflict: {name} must not be a symlink: {output}"
+            )
+    # Also any sharded registry that is not one of these outputs, in any letter case:
+    # APFS resolves X.jsonl.D to X.jsonl.d, which the exact-name checks above miss.
+    for output in outputs.values():
+        enclosing = layout.sharded_ancestor(output.resolve().parent)
+        if enclosing is not None:
+            raise GroundingError(
+                f"durable registry output must not be inside the sharded registry "
+                f"{enclosing}: {output}"
+            )
 
 
 def _semantic_errors_for_record(
@@ -3593,6 +4203,13 @@ def _validate_resolved_row(row: dict[str, Any], approval: dict[str, str]) -> lis
             reasons.append(f"missing:{key}")
     if row.get("evidence_tier") not in {"A", "B"}:
         reasons.append("unqualifiable:evidence_tier")
+    # Re-applied at promotion so a row resolved before #1081, which never recorded
+    # fragment status, cannot install a WHOLE_PROTEIN claim; re-fetch and re-resolve.
+    if isinstance(occurrence, dict) and occurrence.get("scope") == "WHOLE_PROTEIN":
+        if row.get("uniprot_fragment") is True:
+            reasons.append("invalid:whole_protein_scope_for_uniprot_fragment")
+        elif row.get("uniprot_fragment") is not False:
+            reasons.append("missing:uniprot_fragment_status_for_whole_protein")
     return sorted(set(reasons))
 
 
@@ -3812,8 +4429,99 @@ def _promotion_qualified_record_preflight(
     return next_bindings
 
 
+def _plan_artifact_updates(
+    updates: list[tuple[Path, str | None]],
+) -> tuple[list[tuple[Path, str | bytes | None]], list[tuple[Path, str]]]:
+    """Expand artifact updates into exact file operations, before any write.
+
+    A sharded ``.jsonl.d`` target becomes its changed shards, deletions of shards that
+    are now empty, and ``manifest.json`` last; when anything changes, its expected
+    logical digest is returned for the post-install verify.  ``(path, None)`` deletes a
+    non-sharded file.  Every other target is written verbatim, as before #801.  A
+    target whose layout twin exists, or is written by the same call, is refused unless
+    that twin is deleted here, so an install can never leave both layouts on disk.
+    """
+
+    resolved = [(path.resolve(), text) for path, text in updates]
+    deleted = {path for path, text in resolved if text is None}
+    written = {path for path, text in resolved if text is not None}
+    planned: list[tuple[Path, str | bytes | None]] = []
+    verify: list[tuple[Path, str]] = []
+    for path, text in resolved:
+        twin = layout.legacy_twin(path)
+        if (
+            text is not None
+            and twin is not None
+            and (os.path.lexists(twin) or twin in written)
+            and twin not in deleted
+        ):
+            raise GroundingError(
+                f"refusing to write {path} while its other registry layout {twin} exists"
+            )
+        if not layout.is_sharded(path):
+            planned.append((path, text))
+            continue
+        if text is None:
+            raise GroundingError(f"a sharded registry cannot be deleted by a transaction: {path}")
+        try:
+            plan = layout.plan_sharded_write(path, text)
+        except layout.RegistryLayoutError as exc:
+            raise GroundingError(f"refusing sharded registry write to {path}: {exc}") from exc
+        planned.extend(plan)
+        if plan:
+            verify.append((path, _text_digest(text)))
+    return planned, verify
+
+
+def _apply_artifact_operation(path: Path, payload: str | bytes | None) -> None:
+    """Perform one planned step: delete, install exact shard bytes, or write text."""
+
+    if payload is None:
+        path.unlink()
+    elif isinstance(payload, bytes):
+        _atomic_bytes(path, payload)
+    else:
+        _atomic_text(path, payload)
+
+
+def _missing_directories(paths: Iterable[Path]) -> list[Path]:
+    """Directories an install would create, deepest first, so rollback can remove them."""
+
+    missing: set[Path] = set()
+    for path in paths:
+        parent = path.parent
+        while parent != parent.parent and not os.path.lexists(parent):
+            missing.add(parent)
+            parent = parent.parent
+    return sorted(missing, key=lambda directory: len(directory.parts), reverse=True)
+
+
+@contextmanager
+def _interrupts_held() -> Iterator[list[int]]:
+    """Hold Ctrl-C (SIGINT) until the block ends, recording each one that arrives.
+
+    A rollback cut short by a second Ctrl-C would leave registries and trait records at
+    different promotion generations.  Only the main thread receives Python signal
+    handlers, so elsewhere nothing can interrupt the block and nothing is installed;
+    the same holds when the current handler was not set from Python.
+    """
+
+    received: list[int] = []
+    if (
+        threading.current_thread() is not threading.main_thread()
+        or signal.getsignal(signal.SIGINT) is None
+    ):
+        yield received
+        return
+    previous = signal.signal(signal.SIGINT, lambda signum, _frame: received.append(signum))
+    try:
+        yield received
+    finally:
+        signal.signal(signal.SIGINT, previous)
+
+
 def _install_promotion_transaction(
-    artifact_updates: list[tuple[Path, str]],
+    artifact_updates: list[tuple[Path, str | None]],
     trait_updates: dict[Path, str],
 ) -> None:
     """Install a prevalidated promotion set with exact in-process rollback.
@@ -3823,39 +4531,71 @@ def _install_promotion_transaction(
     failure prevents an ordinary validation/I/O exception from leaving registries,
     receipts, and trait records at different promotion generations.  A sudden process
     or OS crash still requires a journal for true multi-file crash atomicity.
+
+    Sharded registries are planned and refused before the first write, installed shard
+    by shard with each manifest last, and re-verified against the intended text after
+    any deletes and before the first trait write (#801).  Rollback also runs on an
+    interrupt, restores in reverse order so a manifest is restored first, and removes
+    the directories this install created.  A further Ctrl-C is held from the rollback's
+    first step until it ends, and a restore that raises anything, an interrupt
+    included, does not stop the others; it is reported as an incomplete rollback.
     """
 
-    targets = [path.resolve() for path, _text in artifact_updates]
+    planned, verify = _plan_artifact_updates(artifact_updates)
+    targets = [path for path, _payload in planned]
     targets.extend(path.resolve() for path in sorted(trait_updates))
     if len(targets) != len(set(targets)):
         raise GroundingError("promotion transaction contains duplicate output paths")
     snapshots = {path: path.read_bytes() if path.is_file() else None for path in targets}
+    created = _missing_directories(targets)
     attempted: list[Path] = []
     try:
-        for path, text in artifact_updates:
-            resolved = path.resolve()
-            attempted.append(resolved)
-            _atomic_text(resolved, text)
+        for path, payload in planned:
+            attempted.append(path)
+            _apply_artifact_operation(path, payload)
+        for path, expected in verify:
+            installed = layout.sharded_digest(path)
+            if installed != expected:
+                raise GroundingError(
+                    f"installed sharded registry does not verify as the intended image: "
+                    f"{path} ({installed} != {expected})"
+                )
         for path in sorted(trait_updates):
             resolved = path.resolve()
             attempted.append(resolved)
             write_validated_record(resolved, trait_updates[path], encoding="utf-8")
-    except Exception as exc:
-        rollback_errors: list[str] = []
-        for path in reversed(attempted):
-            try:
-                snapshot = snapshots[path]
-                if snapshot is None:
-                    path.unlink(missing_ok=True)
-                else:
-                    _atomic_bytes(path, snapshot)
-            except Exception as rollback_exc:  # pragma: no cover - catastrophic I/O path
-                rollback_errors.append(f"{path}: {rollback_exc}")
+    except BaseException as exc:
+        with _interrupts_held() as interrupts:
+            rollback_errors: list[str] = []
+            for path in reversed(attempted):
+                try:
+                    snapshot = snapshots[path]
+                    if snapshot is None:
+                        path.unlink(missing_ok=True)
+                    else:
+                        _atomic_bytes(path, snapshot)
+                except BaseException as rollback_exc:
+                    rollback_errors.append(
+                        f"{path}: {type(rollback_exc).__name__}: {rollback_exc}"
+                    )
+            for directory in created:
+                try:
+                    if os.path.lexists(directory):
+                        directory.rmdir()
+                except OSError as rollback_exc:  # pragma: no cover - foreign entry appeared
+                    rollback_errors.append(f"{directory}: {rollback_exc}")
         if rollback_errors:
             raise GroundingError(
                 "promotion transaction failed and rollback was incomplete: "
                 + "; ".join(rollback_errors[:5])
             ) from exc
+        if isinstance(exc, KeyboardInterrupt) or (interrupts and isinstance(exc, Exception)):
+            raise KeyboardInterrupt(
+                "promotion transaction interrupted; the rollback completed, so every "
+                "target holds its pre-transaction bytes again"
+            ) from exc
+        if not isinstance(exc, Exception):
+            raise
         raise GroundingError(f"promotion transaction failed and was rolled back: {exc}") from exc
 
 
@@ -3891,19 +4631,6 @@ def promote(args: argparse.Namespace) -> int:
         candidates_by_record[record_key].add(candidate_id)
         if candidate_id in approved:
             approved_by_record[record_key].add(candidate_id)
-    multiply_approved = {
-        record_key: candidate_ids
-        for record_key, candidate_ids in approved_by_record.items()
-        if len(candidate_ids) > 1
-    }
-    if multiply_approved:
-        detail = "; ".join(
-            f"{_review_record_label(record_key)}=[{', '.join(sorted(candidate_ids))}]"
-            for record_key, candidate_ids in sorted(multiply_approved.items())[:5]
-        )
-        raise GroundingError(
-            "review protocol approves multiple alternatives for one trait record: " + detail
-        )
     undecided_approved_alternatives: dict[tuple[str, str], list[str]] = {}
     for record_key in approved_by_record:
         undecided = sorted(
@@ -4048,12 +4775,15 @@ def promote(args: argparse.Namespace) -> int:
     selected_references, selected_evidence = _selected_registry_rows(
         selected, staging_registry, staging_evidence
     )
-    membership_selected = any(row.get("mapping_method") == "SOURCE_MEMBERSHIP" for row in selected)
+    membership_selected = any(
+        row.get("mapping_method") in _UNIPROT_FACT_METHODS for row in selected
+    )
     merged_memberships: list[dict[str, Any]] = []
     durable_membership_digest: str | None = None
     membership_text = ""
     membership_changed = False
     if membership_selected:
+        _verify_uniprot_fact_receipt(args, selected)
         staging_memberships = _load_membership_rows(
             args.membership_registry.resolve(), required=True
         )
@@ -4077,6 +4807,7 @@ def promote(args: argparse.Namespace) -> int:
             membership_text = dump_memberships(merged_memberships)
         except MembershipSnapshotError as exc:
             raise GroundingError(f"durable membership merge conflict: {exc}") from exc
+        _require_installed_uniprot_facts(selected, selected_references, merged_memberships)
         membership_changed = durable_membership_digest != _text_digest(membership_text)
     registry = _merge_protein_reference_rows(existing_registry, selected_references, selected)
     effective_selected = _selected_rows_for_merged_protein_references(
@@ -4092,18 +4823,10 @@ def promote(args: argparse.Namespace) -> int:
     evidence_text = _registry_text(evidence_registry)
     registry_changed = durable_registry_digest != _text_digest(registry_text)
     evidence_changed = durable_evidence_digest != _text_digest(evidence_text)
-    hierarchy_index: dict[str, frozenset[str]] = {}
-    if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected):
-        from validate_uniprot_grounding import build_hierarchy_index
-
-        hierarchy_index, hierarchy_findings = build_hierarchy_index(
-            sorted(traits_root.rglob("*.yaml"))
-        )
-        if hierarchy_findings:
-            detail = "; ".join(
-                f"{finding.code}: {finding.message}" for finding in hierarchy_findings[:3]
-            )
-            raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
+    go_edges_path = args.durable_go_edges.resolve()
+    go_edges, go_edges_text, go_edges_digest, go_edges_changed = _merged_go_edges(
+        effective_selected, go_edges_path, args.go_obo
+    )
     grouped: dict[Path, list[dict[str, Any]]] = defaultdict(list)
     for row in effective_selected:
         path = _safe_record_path(row["record_path"], traits_root)
@@ -4160,6 +4883,25 @@ def promote(args: argparse.Namespace) -> int:
     )
     if stale_selected_preimages:
         raise GroundingError("\n".join(stale_selected_preimages))
+    hierarchy_index: dict[str, frozenset[str]] = {}
+    if any(row.get("source_trait_id") != row.get("trait_id") for row in effective_selected) or any(
+        _record_has_inheritance(record) for record in prospective_records.values()
+    ):
+        # Whole records are validated below, so an example inherited in an earlier batch
+        # needs the index even when this batch's own rows are exact (#1038).
+        from go_true_path import union_index
+        from validate_uniprot_grounding import build_hierarchy_index
+
+        hierarchy_index, hierarchy_findings = build_hierarchy_index(
+            sorted(traits_root.rglob("*.yaml")), go_edges=go_edges_path
+        )
+        if hierarchy_findings:
+            detail = "; ".join(
+                f"{finding.code}: {finding.message}" for finding in hierarchy_findings[:3]
+            )
+            raise GroundingError(f"trait hierarchy validation rejected preflight: {detail}")
+        # The edges this batch installs, so its own paths validate before the write.
+        hierarchy_index = union_index(hierarchy_index, go_edges)
     for path in sorted(prospective_records):
         semantic_errors = _semantic_errors_for_record(
             prospective_records[path],
@@ -4220,6 +4962,8 @@ def promote(args: argparse.Namespace) -> int:
                 durable_membership_digest,
             )
         )
+    if go_edges_changed:
+        durable_expectations.append((go_edges_path, go_edges_digest))
     for path, expected_digest in durable_expectations:
         if _artifact_digest(path) != expected_digest:
             durable_changed_during_preflight.append(path)
@@ -4245,6 +4989,8 @@ def promote(args: argparse.Namespace) -> int:
     # Install normalized registries and their receipt generation before trait mutation.
     # The transaction helper restores exact preimages after any in-process failure.
     artifact_updates: list[tuple[Path, str]] = []
+    if go_edges_changed:
+        artifact_updates.append((args.durable_go_edges, go_edges_text))
     if membership_changed:
         artifact_updates.append((args.durable_membership_registry, membership_text))
     if registry_changed:
@@ -4258,7 +5004,7 @@ def promote(args: argparse.Namespace) -> int:
         {path: candidate_text for path, (_sha, candidate_text) in candidates_to_write.items()},
     )
     print(
-        f"WROTE {int(membership_changed) + int(registry_changed) + int(evidence_changed) + int(bindings_changed):,} "
+        f"WROTE {int(go_edges_changed) + int(membership_changed) + int(registry_changed) + int(evidence_changed) + int(bindings_changed):,} "
         "durable registry "
         "artifact(s) before trait mutation"
     )
@@ -4267,9 +5013,13 @@ def promote(args: argparse.Namespace) -> int:
 
 
 def _parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
+    # allow_abbrev=False everywhere: the batch recipes forbid their fixed flags by exact
+    # name, and a prefix such as --interpro-f would otherwise slip past them (#1080).
+    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    resolver = subparsers.add_parser("resolve", help="resolve candidates without writing traits")
+    resolver = subparsers.add_parser(
+        "resolve", help="resolve candidates without writing traits", allow_abbrev=False
+    )
     resolver.add_argument("--queue", type=Path, required=True, help="candidate JSONL ledger")
     resolver.add_argument("--providers", default="protein-registry,interpro")
     resolver.add_argument(
@@ -4404,6 +5154,12 @@ def _parser() -> argparse.ArgumentParser:
         default=DEFAULT_DURABLE_MEMBERSHIP_REGISTRY,
         help="future durable provider path recorded in membership GroundingEvidence",
     )
+    resolver.add_argument(
+        "--go-obo",
+        type=Path,
+        default=DEFAULT_GO_OBO,
+        help="local go-basic.obo for GO true-path inheritance; skipped if absent (#1002)",
+    )
     resolver.add_argument("--out", type=Path, default=DEFAULT_OUT_DIR / "resolved.jsonl")
     resolver.add_argument("--review", type=Path, default=DEFAULT_OUT_DIR / "review.tsv")
     resolver.add_argument(
@@ -4413,7 +5169,9 @@ def _parser() -> argparse.ArgumentParser:
     resolver.add_argument("--fail-on-rejected", action="store_true")
     resolver.set_defaults(func=resolve)
 
-    promoter = subparsers.add_parser("promote", help="promote explicitly approved rows")
+    promoter = subparsers.add_parser(
+        "promote", help="promote explicitly approved rows", allow_abbrev=False
+    )
     promoter.add_argument("--resolved", type=Path, required=True)
     promoter.add_argument("--approved", type=Path, required=True)
     promoter.add_argument("--traits", type=Path, default=DEFAULT_TRAITS)
@@ -4438,6 +5196,21 @@ def _parser() -> argparse.ArgumentParser:
         help="reviewed ECOD/PDBe SIFTS mapping provider (default: beside --resolved)",
     )
     promoter.add_argument(
+        "--fetch-request-plan",
+        type=Path,
+        help="the batch's UniProt fetch request plan (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--fetch-receipt",
+        type=Path,
+        help="the batch's UniProt fetch receipt (required for ComplexPortal/Rhea/GO facts)",
+    )
+    promoter.add_argument(
+        "--allow-offline-uniprot-fixture",
+        action="store_true",
+        help="tests only: accept an OFFLINE_FIXTURE fetch receipt for UniProt-lane facts",
+    )
+    promoter.add_argument(
         "--durable-protein-registry",
         type=Path,
         default=DEFAULT_DURABLE_PROTEIN_REGISTRY,
@@ -4457,6 +5230,18 @@ def _parser() -> argparse.ArgumentParser:
             "durable approved UniProt membership output "
             f"(default: {DEFAULT_DURABLE_MEMBERSHIP_REGISTRY})"
         ),
+    )
+    promoter.add_argument(
+        "--durable-go-edges",
+        type=Path,
+        default=DEFAULT_GO_EDGES,
+        help=f"tracked GO true-path edges (default: {DEFAULT_GO_EDGES})",
+    )
+    promoter.add_argument(
+        "--go-obo",
+        type=Path,
+        default=DEFAULT_GO_OBO,
+        help="local go-basic.obo that proves each GO true-path edge before install",
     )
     promoter.add_argument(
         "--durable-qualified-record-bindings",
@@ -4513,6 +5298,30 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _promotion_lock_directories(args: argparse.Namespace) -> list[Path]:
+    """Every directory ``promote --apply`` writes a durable registry into, once each.
+
+    That is ``data/grounding`` alone for the default outputs.  The outputs may be split
+    across directories, and each one is locked, so no other promote, eLife promote or
+    migration can write any of them concurrently.  Call it only after
+    ``_validate_durable_paths``, which keeps every output, and so every directory here,
+    outside the trait roots and outside any sharded registry: a lock file must never be
+    created there.  Directories are deduplicated by filesystem identity and sorted, so
+    concurrent writers take them in one order.
+    """
+
+    directories: dict[tuple[Any, ...], Path] = {}
+    for output in (
+        args.durable_protein_registry,
+        args.durable_evidence_registry,
+        args.durable_membership_registry,
+        args.durable_qualified_record_bindings,
+    ):
+        directory = output.resolve().parent
+        directories.setdefault(_physical_path_key(directory), directory)
+    return sorted(directories.values())
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "resolve" and args.protein_registry:
@@ -4528,8 +5337,17 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "promote" and args.sifts_registry is None:
         args.sifts_registry = args.resolved.resolve().parent / "sifts_mappings.jsonl"
     try:
+        if args.command == "promote" and args.apply:
+            # One writer at a time per registry directory (#801); dry runs never lock.
+            # Validate first, so the lock is never taken, or its file created, where the
+            # promotion would then refuse to write.
+            _validate_durable_paths(args, args.traits.resolve())
+            with ExitStack() as locks:
+                for directory in _promotion_lock_directories(args):
+                    locks.enter_context(layout.registry_lock(directory))
+                return args.func(args)
         return args.func(args)
-    except GroundingError as exc:
+    except (GroundingError, layout.RegistryLayoutError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 2
 
