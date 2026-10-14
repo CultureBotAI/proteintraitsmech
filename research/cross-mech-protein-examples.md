@@ -8,6 +8,36 @@ issue: "#652"
 
 # Cross-Mech protein examples
 
+## Publication review — 2026-10-13
+
+[PR #1112](https://github.com/CultureBotAI/proteintraitsmech/pull/1112) publishes
+the refresh and the two saved review bundles below. Current main
+`31feff8a07587d13dfe18f9cc89a5e21f849227b` was integrated without rewriting
+either review. Reproduction against main's updated grounding inputs found
+only the inventory's `coverage.json` input fingerprints stale; the protein,
+sequence, candidate and disposition counts were unchanged. Regeneration uses
+the same sibling pins, discovery snapshot, candidate queue and two previously
+finalized review batches, not another live sibling refresh.
+
+The adversarial PR **self-review** reproduced an output/input collision and
+malformed-cache-receipt handling defects in the new Rhea recovery helper
+([#1113](https://github.com/CultureBotAI/proteintraitsmech/issues/1113)). Added
+regressions failed before the fix; the helper now rejects aliases before
+acquisition or writes and validates receipt shape, checksum syntax and size.
+Its release-141 table pin and lookup-only evidence role are unchanged. The
+focused cross-Mech, fetcher and documentation suite passed **139 tests**.
+
+The scientific findings remain open as separate, bounded follow-ups:
+[SOD1 chemistry #1114](https://github.com/CultureBotAI/proteintraitsmech/issues/1114),
+[TRX2-specific LMA1 evidence #1115](https://github.com/CultureBotAI/proteintraitsmech/issues/1115),
+and [mixed CK2 assembly evidence #1116](https://github.com/CultureBotAI/proteintraitsmech/issues/1116).
+Filing these issues does not retire their immutable review findings. The SOD1
+source/record correction still needs a maintained curation route; the other
+two require exact-variant evidence adjudication. These pre-existing scientific
+holds are not new claims introduced by the inventory PR. No proposed decision
+is finalized and no new canonical example is installed. Independent scientific
+review remains required before finalizing the 33 recommendations.
+
 ## Scientific membership self-review — 2026-10-13
 
 The [scientific review](../reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.md)

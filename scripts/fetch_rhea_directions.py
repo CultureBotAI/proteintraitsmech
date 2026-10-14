@@ -63,13 +63,31 @@ def atomic_write(path: Path, payload: bytes) -> None:
 
 def restore(archive: Path, out: Path) -> dict:
     receipt_path = Path(f"{archive}.fetch.json")
+    source_path = Path(f"{out}.source.json")
+    # Run before the shared fetcher can replace a missing/stale archive. Paths
+    # supplied through symlinked directories must not disguise a collision.
+    paths = [archive, receipt_path, out, source_path]
+    for index, path in enumerate(paths):
+        for other in paths[:index]:
+            if (path.resolve() == other.resolve()
+                    or (path.exists() and other.exists() and path.samefile(other))):
+                raise fetch_source.FetchError("archive, receipts and output paths must be distinct")
     if archive.exists() or receipt_path.exists():
         receipt = json.loads(receipt_path.read_text())
+        if not isinstance(receipt, dict):
+            raise fetch_source.FetchError("cached archive receipt must be a JSON object")
         if receipt.get("requested_url") != ARCHIVE_URL:
             raise fetch_source.FetchError("cached archive receipt has the wrong source URL")
+        recorded_hash = receipt.get("sha256")
+        if (not isinstance(recorded_hash, str) or len(recorded_hash) != 64
+                or any(char not in "0123456789abcdefABCDEF" for char in recorded_hash)):
+            raise fetch_source.FetchError("cached archive receipt has an invalid SHA-256")
+        recorded_bytes = receipt.get("bytes")
+        if type(recorded_bytes) is not int or recorded_bytes < 300_000_000:
+            raise fetch_source.FetchError("cached archive receipt has an invalid byte count")
         size, digest = fetch_source.validate_download(
-            archive, min_bytes=300_000_000, expected_sha256=receipt["sha256"], prefix=b"BZh")
-        if size != receipt.get("bytes"):
+            archive, min_bytes=300_000_000, expected_sha256=recorded_hash, prefix=b"BZh")
+        if size != recorded_bytes:
             raise fetch_source.FetchError("cached archive size differs from its fetch receipt")
     else:
         receipt = fetch_source.fetch(ARCHIVE_URL, archive, min_bytes=300_000_000,
@@ -82,7 +100,7 @@ def restore(archive: Path, out: Path) -> dict:
               "sha256": DIRECTIONS_SHA256, "bytes": len(payload),
               "evidence_role": "DIRECTION_LOOKUP_NOT_PROTEIN_TRAIT_EVIDENCE"}
     atomic_write(out, payload)
-    atomic_write(Path(f"{out}.source.json"), (json.dumps(source, indent=2, sort_keys=True) + "\n").encode())
+    atomic_write(source_path, (json.dumps(source, indent=2, sort_keys=True) + "\n").encode())
     return source
 
 

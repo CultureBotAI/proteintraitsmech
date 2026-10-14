@@ -87,3 +87,83 @@ def test_bad_member_preserves_existing_output(tmp_path, monkeypatch):
     with pytest.raises(fetcher.fetch_source.FetchError, match="release-141 pin"):
         fetcher.restore(source, out)
     assert out.read_bytes() == b"existing"
+
+
+def prepare_valid_cache(source, monkeypatch):
+    receipt = {"requested_url": fetcher.ARCHIVE_URL, "sha256": "a" * 64, "bytes": 300_000_000}
+    Path(f"{source}.fetch.json").write_text(json.dumps(receipt))
+    monkeypatch.setattr(fetcher.fetch_source, "validate_download", lambda *a, **kw: (300_000_000, "a" * 64))
+    reader = fetcher.read_directions
+    monkeypatch.setattr(fetcher, "read_directions", lambda path: reader(path, hashlib.sha256(PAYLOAD).hexdigest()))
+
+
+def test_restore_writes_payload_and_lookup_only_provenance(tmp_path, monkeypatch):
+    source = archive(tmp_path)
+    prepare_valid_cache(source, monkeypatch)
+    out = tmp_path / "directions.tsv"
+    result = fetcher.restore(source, out)
+    assert out.read_bytes() == PAYLOAD
+    assert json.loads(Path(f"{out}.source.json").read_text()) == result
+    assert result["archive_sha256"] == "a" * 64
+    assert result["archive_member"] == MEMBER
+    assert result["evidence_role"] == "DIRECTION_LOOKUP_NOT_PROTEIN_TRAIT_EVIDENCE"
+
+
+@pytest.mark.parametrize("alias", ["archive", "receipt", "sidecar_archive", "sidecar_receipt", "parent_symlink"])
+def test_output_alias_refused_without_modifying_inputs(tmp_path, monkeypatch, alias):
+    source = archive(tmp_path)
+    if alias == "sidecar_archive":
+        source = source.rename(tmp_path / "directions.tsv.source.json")
+    prepare_valid_cache(source, monkeypatch)
+    receipt = Path(f"{source}.fetch.json")
+    out = tmp_path / "directions.tsv"
+    if alias == "archive":
+        out = source
+    elif alias == "receipt":
+        out = receipt
+    elif alias == "sidecar_receipt":
+        Path(f"{out}.source.json").symlink_to(receipt)
+    elif alias == "parent_symlink":
+        (tmp_path / "alias").symlink_to(tmp_path, target_is_directory=True)
+        out = tmp_path / "alias" / source.name
+    originals = {path: path.read_bytes() for path in (source, receipt)}
+    with pytest.raises(fetcher.fetch_source.FetchError, match="distinct"):
+        fetcher.restore(source, out)
+    assert {path: path.read_bytes() for path in originals} == originals
+
+
+@pytest.mark.parametrize("receipt", [
+    [], None,
+    {"requested_url": fetcher.ARCHIVE_URL, "sha256": None, "bytes": 300_000_000},
+    {"requested_url": fetcher.ARCHIVE_URL, "sha256": 123, "bytes": 300_000_000},
+    {"requested_url": fetcher.ARCHIVE_URL, "sha256": "z" * 64, "bytes": 300_000_000},
+    {"requested_url": fetcher.ARCHIVE_URL, "sha256": "a" * 64, "bytes": True},
+    {"requested_url": fetcher.ARCHIVE_URL, "sha256": "a" * 64, "bytes": -1},
+    {"requested_url": fetcher.ARCHIVE_URL},
+])
+def test_malformed_cache_receipt_refused_cleanly(tmp_path, monkeypatch, receipt):
+    source = archive(tmp_path)
+    Path(f"{source}.fetch.json").write_text(json.dumps(receipt))
+    out = tmp_path / "directions.tsv"
+    out.write_bytes(b"existing")
+    monkeypatch.setattr(fetcher.fetch_source, "validate_download", lambda *a, **kw: pytest.fail("invalid receipt must be rejected before validation"))
+    with pytest.raises(fetcher.fetch_source.FetchError, match="receipt"):
+        fetcher.restore(source, out)
+    assert out.read_bytes() == b"existing"
+
+
+def test_missing_archive_alias_refused_before_fetch(tmp_path, monkeypatch):
+    source = tmp_path / "archive.tar.bz2"
+    monkeypatch.setattr(fetcher.fetch_source, "fetch", lambda *a, **kw: pytest.fail("must reject alias before fetching"))
+    with pytest.raises(fetcher.fetch_source.FetchError, match="distinct"):
+        fetcher.restore(source, source)
+    assert not source.exists()
+
+
+def test_malformed_receipt_cli_has_no_traceback(tmp_path, capsys):
+    source = archive(tmp_path)
+    Path(f"{source}.fetch.json").write_text("null")
+    with pytest.raises(SystemExit) as error:
+        fetcher.main(["--archive", str(source), "--out", str(tmp_path / "out.tsv")])
+    assert error.value.code == 1
+    assert "receipt must be a JSON object" in capsys.readouterr().err
