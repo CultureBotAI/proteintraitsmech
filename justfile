@@ -1596,6 +1596,28 @@ fetch-residue-frame *args:
 fetch-interpro-frame *args:
     python3 scripts/fetch_interpro_frame.py {{args}}
 
+# Stamp an InterPro frame pair written before the completeness marker (#1070) as
+# complete. Offline: re-derives the organism-panel target set from data/traits,
+# checks every target is in both frames, and only then records
+# `_meta.completeness` (basis offline-certification); payload and `built` are kept.
+# Dry-run unless --apply. Point --out/--grouped-out/--traits at another checkout's
+# finished crawl to certify it there. Panel only: --accessions is refused here (#1097);
+# `just fetch-duf-interpro-frame --certify` certifies the DUF lane's sidecar against
+# its accessions.txt. Certifying changes the frame's bytes, so the CATH stage's
+# interpro_frame byte pin no longer matches until it is repinned (#1098).
+certify-interpro-frame *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    for argument in "$@"; do
+      case "$argument" in
+        --accessions|--accessions=*)
+          echo "ERROR: certify-interpro-frame certifies the organism panel only: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    python3 scripts/fetch_interpro_frame.py --certify "$@"
+
 # Adjudicate the identical-residue-set links from the alignment overlay (issue #7,
 # phase 12): a CATH superfamily and an InterPro entry covering the same residues
 # are the same superfamily under two identifiers only if InterPro actually

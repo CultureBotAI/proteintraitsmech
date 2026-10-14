@@ -17,7 +17,9 @@ TRUST LEVELS
 1. SNAPSHOT (pinned, never copied) -- DUFMech's frozen rows, read from git objects at
    the pinned commit ``PINNED_COMMIT`` of ``CultureBotAI/DUFMech`` and checked
    against the pinned SHA-256 of both the JSON and its manifest. A moving path or a
-   working tree is never read.
+   working tree is never read. The SHA-256 pins are what guarantee content; the
+   ancestry check against the checkout's *local* ``origin/main`` ref is an offline
+   consistency check, not proof that the commit is published upstream.
 2. AUDIT (``audit``, read-only) -- each (Pfam family, protein) lead is joined to the
    exact ``Pfam:<id>`` trait record here and given one status. Only leads on a record
    with no QUALIFIED canonical example become TARGET leads. The pinned record-content
@@ -245,13 +247,19 @@ def load_snapshot(
         raise DufLeadError(
             f"pinned commit {commit} is not in {repo}; run `git -C {repo} fetch origin`"
         ) from error
+    # Offline consistency check only: origin/main is the checkout's local remote-tracking
+    # ref, which can be stale or set by hand. It catches an unfetched or local-only
+    # commit; it does not prove publication. Content rests on the SHA-256 pins (#1077).
     published = subprocess.run(
         ["git", "-C", str(repo), "merge-base", "--is-ancestor", commit, "origin/main"],
         capture_output=True,
         check=False,
     )
     if published.returncode:
-        raise DufLeadError(f"pinned commit {commit} is not on {DUFMECH_REPOSITORY} origin/main")
+        raise DufLeadError(
+            f"pinned commit {commit} is not an ancestor of the local origin/main ref in "
+            f"{repo}; run `git -C {repo} fetch origin`"
+        )
     raw = _git_bytes(repo, "show", f"{commit}:{SNAPSHOT_PATH}")
     manifest_raw = _git_bytes(repo, "show", f"{commit}:{MANIFEST_PATH}")
     rows, manifest = verify_snapshot(
@@ -512,16 +520,9 @@ def _load_frame(path: Path, label: str) -> tuple[dict[str, Any], dict[str, Any]]
     meta = blob.get("_meta") or {}
     if meta.get("source") != "InterPro":
         raise DufLeadError(f"{path} is not an InterPro sidecar")
-    if meta.get("complete") is False or (
-        isinstance(meta.get("targets"), int)
-        and meta.get("count", len(blob["proteins"])) < meta["targets"]
-    ):
-        count = meta.get("count", len(blob["proteins"]))
-        targets = meta.get("targets", "?")
-        raise DufLeadError(
-            f"{label} at {path} is incomplete ({count} of {targets} targets); "
-            "re-run fetch-duf-interpro-frame --apply"
-        )
+    # No frame-level completeness gate: candidate_rows requires every *planned*
+    # accession to be present, which is exact for this lane, whereas a frame-level
+    # stamp describes whatever accession list the crawl was given.
     return blob["proteins"], meta
 
 
@@ -588,11 +589,13 @@ def candidate_rows(
             )
         accession = lead["protein_id"].removeprefix("UniProtKB:")
         matches = frame.get(accession)
-        if not isinstance(matches, dict):
+        if matches is None:
             # The crawler stores a protein without matches as {}, so absence means the
             # crawl did not reach it (canary, failure, interruption): never a rejection.
             uncovered.add(accession)
             continue
+        if not isinstance(matches, dict):
+            raise DufLeadError(f"DUF InterPro frame entry for {accession} is not an object")
         flat = matches.get(lead["trait_id"])
         if flat is None:
             reject(lead, "NO_EXACT_INTERPRO_MATCH", f"InterPro {interpro_release}")
@@ -615,26 +618,24 @@ def candidate_rows(
         if lead["scope"] == "WHOLE_PROTEIN":
             groups.append((None, intervals))
         else:
-            raw_groups = raw_entry.get(lead["trait_id"]) if raw_entry else None
-            if raw_groups is not None and not isinstance(raw_groups, list):
-                reject(lead, "MALFORMED_INTERPRO_GROUPED_LOCATION")
-                continue
+            raw_groups = (raw_entry or {}).get(lead["trait_id"])
             if isinstance(raw_groups, list) and raw_groups:
                 seen: set[str] = set()
-                malformed = False
+                flat_set = {tuple(interval) for interval in intervals}
+                failure = ""
                 for raw in raw_groups:
                     group = _intervals(raw)
                     if group is None:
-                        malformed = True
+                        failure = "MALFORMED_INTERPRO_GROUPED_LOCATION"
                         break
+                    # Grouped locations get the same checks as flat intervals (#1078),
+                    # and every fragment must be one of the flat frame's intervals: the
+                    # crawler writes both frames from the same fragments.
                     if any(not (1 <= start <= end <= length) for start, end in group):
-                        malformed = True
+                        failure = "INTERPRO_GROUPED_LOCATION_OUT_OF_BOUNDS"
                         break
-                    if any(
-                        not any(i_start <= g_start and g_end <= i_end for i_start, i_end in intervals)
-                        for g_start, g_end in group
-                    ):
-                        malformed = True
+                    if not {tuple(interval) for interval in group} <= flat_set:
+                        failure = "INTERPRO_GROUPED_LOCATION_NOT_IN_FLAT_MATCH"
                         break
                     location_id = derive_interpro_location_id(
                         lead["protein_id"],
@@ -644,15 +645,17 @@ def candidate_rows(
                     if location_id not in seen:
                         seen.add(location_id)
                         groups.append((location_id, group))
-                if malformed or not groups:
-                    reject(lead, "MALFORMED_INTERPRO_GROUPED_LOCATION")
+                if failure:
+                    reject(lead, failure, f"length {length}" if "BOUNDS" in failure else "")
                     continue
+            elif raw_groups is not None and not isinstance(raw_groups, list):
+                reject(lead, "MALFORMED_INTERPRO_GROUPED_LOCATION")
+                continue
             elif len(intervals) == 1:
                 groups.append((None, intervals))
             else:
                 reject(lead, "UNGROUPED_INTERPRO_LOCATIONS", f"{len(intervals)} ranges")
                 continue
-        other_signatures = sorted(sig for sig in matches if sig != lead["trait_id"])
         for location_id, group in groups:
             row: dict[str, Any] = {
                 "schema_version": 1,
@@ -685,7 +688,6 @@ def candidate_rows(
                     "lead_reviewed": lead["lead_reviewed"],
                     "lead_selection_reasons": lead["lead_selection_reasons"],
                 },
-                "other_interpro_signatures": other_signatures,
             }
             if lead["scope"] == "LOCALIZED":
                 row["coordinate_frame"] = "UNIPROT_CANONICAL"
@@ -710,7 +712,13 @@ def candidate_rows(
 
 
 def _snapshot_from_args(args: argparse.Namespace) -> Snapshot:
-    return load_snapshot(Path(args.dufmech_repo))
+    # Pins are read at call time, not bound as defaults, so they stay the module's.
+    return load_snapshot(
+        Path(args.dufmech_repo),
+        PINNED_COMMIT,
+        expected_sha256=SNAPSHOT_SHA256,
+        expected_manifest_sha256=MANIFEST_SHA256,
+    )
 
 
 def pinned_provenance() -> dict[str, Any]:

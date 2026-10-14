@@ -210,11 +210,21 @@ _REVIEW_COLUMNS = (
     "intervals",
     "review_flags",
     "reasons",
-    "lead_provenance",
-    "other_interpro_signatures",
     "reviewer",
     "reviewed_at",
     "review_notes",
+)
+
+# Appended before the reviewer columns only when the batch carries DUF discovery-lead
+# rows (duf_lead_provenance, research/duf-discovery-leads.md), so every other lane's
+# review TSV keeps exactly _REVIEW_COLUMNS (#1072).
+_DUF_REVIEW_COLUMNS = (
+    "duf_lead_status",
+    "duf_lead_rank",
+    "duf_lead_reviewed",
+    "duf_snapshot",
+    "other_pfam_signatures",
+    "multi_domain_whole_protein",
 )
 
 _REVIEW_DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
@@ -1776,7 +1786,12 @@ def _resolve_occurrence(
         source_intervals, source_interval_reasons = _normalise_intervals(raw_source_intervals)
         reasons.extend(source_interval_reasons)
         interpro_location_id = _clean_text(candidate.get("interpro_location_id")) or ""
-        if raw_source_intervals is None:
+        if not isinstance(matches, dict):
+            # The crawler stores a protein without matches as {}; a missing key means
+            # the frame never reached this protein, which is not evidence of no match
+            # (#1070). The row still fails closed, under a reason that says so.
+            reasons.append("missing:interpro_frame_entry")
+        elif raw_source_intervals is None:
             reasons.append("missing:exact_interpro_match")
         else:
             if not interpro_location_id and intervals and intervals != source_intervals:
@@ -2495,30 +2510,6 @@ def _review_inheritance_path(value: Any) -> str:
     return _canonical_json(value)
 
 
-def _review_lead_provenance(value: Any) -> str:
-    """Compact summary of discovery-lead provenance for the review TSV (#1072)."""
-
-    if not value:
-        return ""
-    if isinstance(value, str):
-        return value
-    if isinstance(value, dict):
-        parts: list[str] = []
-        if "lead_rank" in value:
-            parts.append(f"rank={value['lead_rank']}")
-        if "lead_reviewed" in value:
-            parts.append(f"reviewed={value['lead_reviewed']}")
-        reasons = value.get("lead_selection_reasons")
-        if reasons:
-            if isinstance(reasons, list):
-                parts.append(f"reasons={','.join(str(r) for r in reasons)}")
-            else:
-                parts.append(f"reasons={reasons}")
-        if parts:
-            return ";".join(parts)
-    return _canonical_json(value)
-
-
 def _review_flags(row: dict[str, Any]) -> list[str]:
     """Return deterministic flags whose cases the review protocol samples exhaustively."""
 
@@ -2755,6 +2746,7 @@ def resolve(args: argparse.Namespace) -> int:
     _write_jsonl(args.evidence_out, [evidence_by_id[key] for key in sorted(evidence_by_id)])
     _write_jsonl(args.out, resolved)
     review_rows = []
+    duf_batch = any(isinstance(row.get("duf_lead_provenance"), dict) for row in resolved)
     for row in resolved:
         review_rows.append(
             {
@@ -2782,14 +2774,7 @@ def resolve(args: argparse.Namespace) -> int:
                 "intervals": _canonical_json(row.get("intervals") or []),
                 "review_flags": ";".join(_review_flags(row)),
                 "reasons": ";".join(row.get("reasons") or []),
-                "lead_provenance": _review_lead_provenance(
-                    row.get("duf_lead_provenance") or row.get("lead_provenance")
-                ),
-                "other_interpro_signatures": (
-                    ";".join(str(s) for s in row["other_interpro_signatures"])
-                    if isinstance(row.get("other_interpro_signatures"), list)
-                    else str(row.get("other_interpro_signatures") or "")
-                ),
+                **(_duf_review_fields(row, context.interpro) if duf_batch else {}),
                 "reviewer": "",
                 "reviewed_at": "",
                 "review_notes": "",
@@ -2799,7 +2784,9 @@ def resolve(args: argparse.Namespace) -> int:
     from io import StringIO
 
     buffer = StringIO(newline="")
-    writer = csv.DictWriter(buffer, fieldnames=_REVIEW_COLUMNS, delimiter="\t", lineterminator="\n")
+    writer = csv.DictWriter(
+        buffer, fieldnames=_review_columns(duf_batch), delimiter="\t", lineterminator="\n"
+    )
     writer.writeheader()
     writer.writerows(review_rows)
     lines.append(buffer.getvalue())
@@ -2816,6 +2803,46 @@ def resolve(args: argparse.Namespace) -> int:
         f"WROTE {_display_path(args.evidence_out)} ({len(evidence_by_id):,} source-evidence rows)"
     )
     return 1 if args.fail_on_rejected and counts["REJECTED"] else 0
+
+
+def _review_columns(duf: bool) -> tuple[str, ...]:
+    if not duf:
+        return _REVIEW_COLUMNS
+    split = _REVIEW_COLUMNS.index("reviewer")
+    return _REVIEW_COLUMNS[:split] + _DUF_REVIEW_COLUMNS + _REVIEW_COLUMNS[split:]
+
+
+def _duf_review_fields(row: dict[str, Any], interpro: dict[str, Any]) -> dict[str, str]:
+    """Lead provenance and the carrier's other Pfam signatures, for the reviewer only.
+
+    ``other_pfam_signatures`` lists every other ``Pfam:`` signature the bound InterPro
+    frame places on the protein. Pfam alone, because the frame also holds InterPro
+    entries and other member databases that integrate the DUF itself and would read as
+    a second family. ``multi_domain_whole_protein`` is ``yes`` for a WHOLE_PROTEIN row
+    whose carrier has another Pfam signature: the review rule in
+    research/duf-discovery-leads.md applies. Nothing here enters the resolution digest.
+    """
+    provenance = row.get("duf_lead_provenance") or {}
+    trait_id = str(row.get("source_trait_id") or row.get("trait_id") or "")
+    matches = interpro.get(_accession(str(row.get("protein_id") or "")) or "")
+    if isinstance(matches, dict):
+        others = sorted(key for key in matches if key.startswith("Pfam:") and key != trait_id)
+        listed = ";".join(others)
+        multi = "yes" if others else "no"
+    else:
+        listed, multi = "", "unknown"
+    snapshot = provenance.get("snapshot_id") or ""
+    if snapshot and provenance.get("commit"):
+        snapshot = f"{snapshot}@{provenance['commit']}"
+    reviewed = provenance.get("lead_reviewed")
+    return {
+        "duf_lead_status": str(provenance.get("lead_status") or ""),
+        "duf_lead_rank": str(provenance.get("lead_rank") or ""),
+        "duf_lead_reviewed": "" if reviewed is None else str(bool(reviewed)).lower(),
+        "duf_snapshot": snapshot,
+        "other_pfam_signatures": listed,
+        "multi_domain_whole_protein": multi if row.get("scope") == "WHOLE_PROTEIN" else "",
+    }
 
 
 def _read_approvals(path: Path) -> dict[str, dict[str, str]]:
@@ -4986,6 +5013,8 @@ def promote(args: argparse.Namespace) -> int:
 
 
 def _parser() -> argparse.ArgumentParser:
+    # allow_abbrev=False everywhere: the batch recipes forbid their fixed flags by exact
+    # name, and a prefix such as --interpro-f would otherwise slip past them (#1080).
     parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
     subparsers = parser.add_subparsers(dest="command", required=True)
     resolver = subparsers.add_parser(

@@ -1,7 +1,7 @@
 ---
 topic: Routing DUFMech's UniProt candidates onto Pfam DUF trait records as discovery leads
 date: 2026-10-11
-status: lane implemented; first review batch resolved, unreviewed, not promoted
+status: lane implemented; first review batch resolved, unreviewed, not promoted; follow-ups #1069-#1080 addressed 2026-10-12
 scope: scripts/duf_leads.py, reports/uniprot-grounding/duf-leads, the UniProt grounding funnel
 ---
 
@@ -63,19 +63,25 @@ The snapshot is read from git objects in the sibling DUFMech checkout
 path. `scripts/duf_leads.py` pins:
 
 - repository `CultureBotAI/DUFMech`. The checkout's `origin` must be this repository.
-- commit `217c2cc5cfc2fc43b7196e46fac57ee2a71efe0b`, which must be an ancestor of
-  the local remote-tracking ref `origin/main`. This is DUFMech PR #137, which froze the snapshot.
-  (Checking `origin/main` locally guards against unmerged scratch branch work in the
-  sibling checkout; true online publication would require a network check, while cryptographic
-  content integrity is guaranteed by the immutable commit SHA and SHA-256 hashes.)
+- commit `217c2cc5cfc2fc43b7196e46fac57ee2a71efe0b`, which must be an ancestor of the
+  checkout's local `origin/main` ref. This is DUFMech PR #137, which froze the snapshot.
 - `data/worklists/uniprot-duf-example-candidates-2026-10-07.json`, SHA-256
   `0c9e637106357244f3b70f34b14c29e034e9bfdd4fec6b977b5f323174d55cbe`.
 - its manifest, SHA-256
   `1004848bc569d67505929c529fcf7e7012537b3053d4c423e22dd7abb84aa45f`. The manifest's
   own byte count, digest, row total and single release (`2026_03`) are also checked.
 
-Every row's shape is validated. A changed byte, a different origin, a commit disconnected from
-the local tracking ref, or a duplicated lead fails closed. Every candidate row carries this provenance
+Every row's shape is validated. A changed byte, a different origin, a commit missing
+from the checkout or not under its local `origin/main`, or a duplicated lead fails
+closed.
+
+What this guarantees, precisely: the bytes read are exactly the pinned bytes (both
+SHA-256 pins, read from git objects), so the input cannot drift. It does **not**
+prove that the commit is published on GitHub. `origin/main` is the checkout's local
+remote-tracking ref; it is as fresh as the last `git fetch` and can be moved by hand
+(the tests do). The ancestry check is an offline consistency check that catches an
+unfetched or local-only commit, nothing more. The pinned commit being DUFMech PR #137
+is a fact recorded when the pin was chosen, not something the lane re-verifies (#1077). Every candidate row carries this provenance
 under `duf_lead_provenance`, outside the candidate identity.
 
 ### Audit statuses
@@ -119,6 +125,11 @@ registry fetch supplies them. Rejections are reported with a reason:
 - `MALFORMED_INTERPRO_INTERVAL`
 - `INTERPRO_INTERVAL_OUT_OF_BOUNDS`
 - `MALFORMED_INTERPRO_GROUPED_LOCATION`
+- `INTERPRO_GROUPED_LOCATION_OUT_OF_BOUNDS`: a grouped fragment outside
+  `1 <= start <= end <= length`, the same check flat intervals get (#1078)
+- `INTERPRO_GROUPED_LOCATION_NOT_IN_FLAT_MATCH`: a grouped fragment that is not one
+  of the compact frame's intervals for the same signature. The crawler writes both
+  frames from the same fragments, so disagreement means a corrupt or mixed sidecar
 - `UNGROUPED_INTERPRO_LOCATIONS`
 
 These are hard errors, not rejections:
@@ -127,6 +138,7 @@ These are hard errors, not rejections:
 - a planned accession missing from the DUF sidecar. The crawler stores a protein
   without matches as `{}`, so absence means the crawl has not reached it (a canary, a
   failure or an interruption). Finish `fetch-duf-interpro-frame` before staging;
+- a compact or grouped sidecar entry that is not a JSON object;
 - an audit run with `--no-content-gate`, or a `summary.json` or `discovery-plan.json`
   that does not record the pinned DUFMech snapshot;
 - a `leads.jsonl` that changed after discovery (its `leads_sha256` no longer matches).
@@ -137,6 +149,50 @@ and a partial crawl written into the panel frame would make the ordinary audit r
 absence where there was only no crawl. `resolve-duf-review-batch` is the ordinary
 resolver with that sidecar bound and both InterPro paths fixed. The resolver records
 the sidecar path in each row's provider evidence, so a later promotion can re-check it.
+A candidate whose accession is not in the bound frame at all is rejected with
+`missing:interpro_frame_entry` (the frame never reached it), distinct from
+`missing:exact_interpro_match` (reached, no such signature).
+
+### Reviewing a DUF batch
+
+When a resolved batch carries `duf_lead_provenance`, `.review.tsv` gains six columns
+before `reviewer` (#1072). Every other lane's review TSV keeps its usual columns, and
+the finalizer carries extra columns through unchanged. None of them is part of the
+resolution digest.
+
+| Column | Content |
+| --- | --- |
+| `duf_lead_status` | the audit status of the lead (`TARGET_ABSENT_FROM_TRAIT` or `TARGET_LEGACY_ON_TRAIT`) |
+| `duf_lead_rank` | DUFMech's rank of the lead within its family (1-3) |
+| `duf_lead_reviewed` | whether DUFMech saw a Swiss-Prot entry (`true`/`false`) |
+| `duf_snapshot` | `<snapshot_id>@<commit>` of the pinned DUFMech snapshot |
+| `other_pfam_signatures` | every other `Pfam:` signature the bound InterPro frame places on the protein |
+| `multi_domain_whole_protein` | for `WHOLE_PROTEIN` rows: `yes` if `other_pfam_signatures` is non-empty, `no` if empty, `unknown` if the frame has no entry; blank for `LOCALIZED` rows |
+
+`other_pfam_signatures` lists Pfam only. The frame also holds InterPro entries and
+other member databases, and those routinely integrate the DUF itself, so they would
+read as a second family when there is none.
+
+**Review rule for whole-protein carriers.** A `SEQ_FAMILY` (or
+`SEQ_HOMOLOGOUS_SUPERFAMILY`) record is grounded `WHOLE_PROTEIN`: the claim is that the
+family describes the protein. On a carrier whose `multi_domain_whole_protein` is `yes`,
+that claim is contract-valid but often a poor exemplar, because the protein's identity
+may be another domain.
+
+1. Prefer a `no` alternative of the same record over any `yes` one. Approve at most
+   one exemplar per record, as the selector already requires.
+2. Approve a `yes` row only if no `no` alternative qualified, and only when
+   `review_notes` says why the DUF still defines the protein (for example, the DUF
+   interval covers most of the sequence and the other signatures are short or
+   peripheral). Otherwise mark it `REJECTED` (or leave the record undecided with
+   `SKIP`), with the competing signatures named in `review_notes`.
+3. `unknown` means the bound frame has no entry for the protein. The resolver will
+   already have rejected the row; do not approve it.
+4. `LOCALIZED` rows are not affected: their claim is the located interval, not the
+   protein's identity.
+
+Lead provenance is context, never evidence. `duf_lead_reviewed = true` or rank 1
+makes a row easier to check, not more likely to be correct.
 
 ### Bounds
 
@@ -221,26 +277,24 @@ explicit authorization.
 
 The rebuilt residue frame does not reproduce the plan's 2026-09-24 pin
 (`4fc4d2fb…`). The sidecar embeds its build date, and its top-up set depends on the
-corpus at build time. For byte-pinned historical consumers such as
-`stage_cath_grounding_candidates.py`, the original 2026-09-24 frame bytes are retained
-as a pinned baseline artifact; for new consumers and regenerable workflows, consumers
-should pin a content projection (e.g. per-protein sequence length, sequence SHA-256,
-and UniProt release) rather than a whole-file sidecar byte digest (#1071).
+corpus at build time. Since 2026-10-12 (#1071), byte-pinned frame consumers can also
+pin a *content* digest: `python3 scripts/sidecar.py content-sha256 <frame>` hashes
+the canonical JSON without the volatile `_meta` keys (`built`, `completeness`, and
+the interim top-level `complete`/`targets` marker).
+`stage_cath_grounding_candidates.py` keeps the `4fc4d2fb…` byte pin and also accepts
+the rebuilt frame's content digest
+`a640a2ea9f8d1f6a552f583531c50e2d98a38642534a2c028aea96878886dcc2`.
 
-## Reviewer protocol and rules
-
-When reviewing DUF candidate batches (`.review.tsv`), reviewers must evaluate each candidate against the following rules (#1072):
-
-1. **Prefer single-domain carriers over multi-domain passenger proteins.**
-   - For `SEQ_FAMILY` records grounded `WHOLE_PROTEIN`, consult the `other_interpro_signatures` column in `.review.tsv`.
-   - If the protein carries other characterized InterPro family or domain signatures and its primary biological identity belongs to another family (i.e. the DUF is merely an ancillary passenger domain), the candidate should be **REJECTED** or deferred.
-   - Reviewers must prefer proteins that are dedicated single-domain carriers or where the DUF family constitutes the defining architecture of the protein.
-2. **Review lead provenance.**
-   - Inspect the `lead_provenance` column in `.review.tsv` (`rank`, `reviewed`, and `reasons`).
-   - Strongly prefer reviewed Swiss-Prot leads (`reviewed=True`) over unreviewed TrEMBL leads (`reviewed=False`) when available.
-   - For unreviewed TrEMBL leads, rank 1 candidates with standard DUF selection reasons should be prioritized over lower-ranked candidates unless disqualified by multi-domain architecture.
-3. **Refuse poor candidates.**
-   - DUF leads are candidates for review, not certified exemplars. If all candidate alternatives for a record are low-quality, fragments, or dubious multi-domain carriers, the reviewer should leave `decision` empty or reject them, rather than forcing a low-quality exemplar onto the record.
+What this guarantees: a rebuild at the same release with an identical payload binds
+whatever day it was built. A rebuild whose top-up differs, or any other change in
+sequences, features, release or absent list, still fails closed. So does a frame
+that lacks a sequence the CATH stage consumes, through the stage's own count
+contract and per-observation checks. A new frame needs a new, reviewed content pin.
+The original `4fc4d2fb…` bytes were not retained, so its content digest is unknown.
+The rebuilt `69edb24b…` bytes are retained outside the repository with this batch's
+other artifacts. The production CATH stage was not re-run against the rebuilt frame:
+it also needs the 2026-09-24 panel InterPro frame (`bc2d66…`), which was not
+available to this change.
 
 ## Limits and open questions
 
@@ -250,12 +304,72 @@ When reviewing DUF candidate batches (`.review.tsv`), reviewers must evaluate ea
   Qualifying through the lane establishes that the protein *carries the family at a
   pinned release*, with source coordinates. It establishes nothing about function,
   and nothing about whether the family defines the protein.
-- **Whole-protein scope on multi-domain proteins.** Addressed by the reviewer
-  protocol above: reviewers must reject or defer multi-domain passenger proteins.
+- **Whole-protein scope on multi-domain proteins.** Handled by the review rule in
+  [Reviewing a DUF batch](#reviewing-a-duf-batch): the TSV flags each multi-domain
+  whole-protein carrier, and the rule decides it. The flag is not enforced in code.
 - **Arbitrary picks.** Most leads are minimum-annotation-score TrEMBL entries. A
   record whose three leads are all poor should be rejected, not forced to an exemplar.
 - **Panel frames are not complete.** The pinned-release residue frame was rebuilt.
   The panel InterPro frame was only canaried, because a full crawl is about 41,600
-  proteins. The lane does not need it, but `audit-uniprot-grounding` does.
+  proteins. The lane does not need it, but `audit-uniprot-grounding` does. Since
+  2026-10-12 (#1070) every InterPro frame write records `_meta.completeness`, which
+  is `complete: true` only when every target is in both the compact and grouped
+  frames. `audit-uniprot-grounding` refuses a frame that is not stamped complete
+  *for the organism-panel target set* (`target_set: organism-panel-exemplars`),
+  including any frame written before the marker existed and any frame stamped for an
+  accession list, such as a DUF sidecar (#1097). PR #1095 briefly wrote a simpler
+  top-level `_meta.complete`/`_meta.targets` marker. It records a count but no target
+  set, so the audit treats such a frame as unstamped and refuses it until it is
+  certified. Certification drops those keys and adds the `completeness` stamp. A
+  residue frame stamped incomplete (`completeness.complete` false, or the interim
+  `complete: false`) is also refused. An unstamped residue frame is accepted,
+  because a protein missing from it is reported as missing and never read as a
+  negative. A `--top-up` run without queries carries the extended frame's stamp
+  forward and leaves an unstamped frame unstamped (#1108). When the grouped frame's path
+  exists, it must carry the same stamp (target set, count, `targets_sha256`); when it
+  does not exist, the audit skips it, which only leaves multi-location localized
+  matches ungrouped (#1102). The audit also re-derives the panel targets from
+  `--traits` and prints a WARNING, not a refusal, if their digest differs from the
+  stamp: proteins added to the corpus since the crawl were not crawled.
+  `--allow-incomplete-interpro-frame` overrides the refusal for diagnostics and marks
+  each `NO_LOCAL_EXACT_TRAIT_MATCH` as uninformative.
+
+  "Complete" is narrow. The panel target set is the exemplar proteins that carry a
+  member-database record and records of two or more trait categories
+  (`fetch_interpro_frame.target_proteins`). A complete frame says each of those
+  proteins was crawled. It says nothing about carriers outside that set, so
+  `NO_LOCAL_EXACT_TRAIT_MATCH` still means "no match among the panel targets", not
+  "no carrier exists". A finished crawl from an older
+  script is stamped offline with `just certify-interpro-frame --apply`: it
+  re-derives the target set from `data/traits`, checks coverage of both frames, and
+  only then stamps `basis: offline-certification`. It certifies the panel only:
+  `--accessions` is refused by the recipe, and by the script whenever the output is
+  the panel frame path. The DUF sidecar is certified with
+  `just fetch-duf-interpro-frame --certify`. Certification leaves the payload and
+  `built` unchanged, so neither the content digest nor any provider evidence changes.
+  The bytes do change, though. `stage_cath_grounding_candidates.py` byte-pins the
+  2026-09-24 panel frame `bc2d66…`, and has no content pin for it, because those bytes
+  were not retained and could not be found on this machine. So a certified (or
+  re-crawled) panel frame is refused by the CATH stage, with an error that says so,
+  until a reviewed byte or content pin is added (#1098). If `data/traits` changed after the crawl started, the new targets show up
+  as missing, and resuming the crawl fetches only those. The resolver needs no
+  global marker: it checks each candidate's own accession (see above).
+
+  To certify a crawl that finished in another checkout with the pre-marker script,
+  run the updated script from a checkout that has this change, and point it at that
+  crawl's frames and at the trait tree the crawl's targets came from. Dry run first,
+  then stamp:
+
+  ```bash
+  CRAWL=../ProteinTraitsMech-interpro-crawl
+  just certify-interpro-frame \
+    --out "$CRAWL/data/raw/align_cache/interpro_frame.json" \
+    --grouped-out "$CRAWL/data/raw/align_cache/interpro_grouped_locations.json" \
+    --traits "$CRAWL/data/traits"
+  # exit 0 and "covers its target set" -> re-run with --apply; exit 1 lists missing targets
+  ```
+
+  The target scan reads the whole trait tree and takes about two minutes. On a copy of
+  the 1-protein canary frame it refused, as it should: 1 of 41,601 targets present.
 - **Content gate is InterPro 109.0.** The gate replays the pinned 109.0 XML while
   occurrences come from 110.0. Earlier Pfam batches had the same split.

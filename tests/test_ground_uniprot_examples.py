@@ -5728,47 +5728,115 @@ def test_every_caller_of_the_digest_uses_the_shared_helper():
         assert "ground._resolution_digest(row)" in text, f"{name} no longer verifies the digest"
 
 
-def test_ground_uniprot_examples_parser_refuses_abbreviated_flags():
-    with pytest.raises(SystemExit):
-        ground._parser().parse_args(
-            ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "z"]
-        )
-    with pytest.raises(SystemExit):
-        ground._parser().parse_args(
-            ["promote", "--resolved", "r", "--approved", "a", "--interpro-f", "z"]
-        )
+# -------------------------------------- DUF review columns and frame coverage (#1070, #1072)
 
 
-def test_review_lead_provenance_formatting_and_columns(local_sources):
-    assert ground._review_lead_provenance(None) == ""
-    assert ground._review_lead_provenance("") == ""
-    assert ground._review_lead_provenance("direct-string") == "direct-string"
-    assert (
-        ground._review_lead_provenance(
-            {
-                "lead_rank": 1,
-                "lead_reviewed": True,
-                "lead_selection_reasons": ["single_domain", "curated"],
-            }
-        )
-        == "rank=1;reviewed=True;reasons=single_domain,curated"
-    )
+DUF_PROVENANCE = {
+    "repository": "CultureBotAI/DUFMech",
+    "commit": "c" * 40,
+    "snapshot_id": "uniprot-duf-example-candidates-2026-10-07",
+    "lead_status": "TARGET_ABSENT_FROM_TRAIT",
+    "lead_rank": 2,
+    "lead_reviewed": False,
+    "lead_selection_reasons": ["protein_traits_trait_without_family_example"],
+}
 
-    candidate = {
-        **local_sources["candidate"],
-        "duf_lead_provenance": {
-            "lead_rank": 2,
-            "lead_reviewed": False,
-            "lead_selection_reasons": ["unreviewed_lead"],
-        },
-        "other_interpro_signatures": ["Pfam:PF99999", "Pfam:PF88888"],
-    }
-    local_sources["queue"].write_text(json.dumps(candidate) + "\n", encoding="utf-8")
+
+def _review_tsv(fixture: dict) -> tuple[list[str], list[dict]]:
+    with fixture["review"].open(encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        return list(reader.fieldnames or []), list(reader)
+
+
+def test_ordinary_review_tsv_keeps_exactly_its_columns(local_sources):
     assert ground.main(_resolve_args(local_sources)) == 0
-
-    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
-        review = next(csv.DictReader(handle, delimiter="\t"))
-    assert review["lead_provenance"] == "rank=2;reviewed=False;reasons=unreviewed_lead"
-    assert review["other_interpro_signatures"] == "Pfam:PF99999;Pfam:PF88888"
+    columns, _ = _review_tsv(local_sources)
+    assert columns == list(ground._REVIEW_COLUMNS)
 
 
+def test_duf_batch_review_tsv_shows_lead_provenance_and_other_pfam_signatures(local_sources):
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {
+            "P12345": {
+                "Pfam:PF00001": [[2, 5]],
+                "Pfam:PF00002": [[6, 9]],
+                "InterPro:IPR000001": [[2, 5]],  # integrates the DUF: never "another family"
+            }
+        },
+    )
+    _jsonl(local_sources["queue"], [{**local_sources["candidate"],
+                                     "duf_lead_provenance": DUF_PROVENANCE}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
+    columns, rows = _review_tsv(local_sources)
+    split = columns.index("reviewer")
+    assert columns[split - len(ground._DUF_REVIEW_COLUMNS):split] == list(
+        ground._DUF_REVIEW_COLUMNS
+    )
+    assert [c for c in columns if c not in ground._DUF_REVIEW_COLUMNS] == list(
+        ground._REVIEW_COLUMNS
+    )
+    row = rows[0]
+    assert row["duf_lead_status"] == "TARGET_ABSENT_FROM_TRAIT"
+    assert row["duf_lead_rank"] == "2" and row["duf_lead_reviewed"] == "false"
+    assert row["duf_snapshot"] == f"uniprot-duf-example-candidates-2026-10-07@{'c' * 40}"
+    assert row["other_pfam_signatures"] == "Pfam:PF00002"
+    assert row["multi_domain_whole_protein"] == ""  # LOCALIZED: the rule does not apply
+
+
+@pytest.mark.parametrize(
+    ("matches", "expected"),
+    [
+        ({"Pfam:PF00001": [[1, 9]]}, ("", "no")),
+        ({"Pfam:PF00001": [[1, 5]], "Pfam:PF00009": [[6, 9]], "Pfam:PF00003": [[7, 8]]},
+         ("Pfam:PF00003;Pfam:PF00009", "yes")),
+        (None, ("", "unknown")),
+    ],
+)
+def test_duf_review_fields_flag_multi_domain_whole_protein_carriers(matches, expected):
+    row = {
+        "trait_id": "Pfam:PF00001",
+        "source_trait_id": "Pfam:PF00001",
+        "protein_id": "UniProtKB:P12345",
+        "scope": "WHOLE_PROTEIN",
+        "duf_lead_provenance": DUF_PROVENANCE,
+    }
+    interpro = {} if matches is None else {"P12345": matches}
+    fields = ground._duf_review_fields(row, interpro)
+    assert (fields["other_pfam_signatures"], fields["multi_domain_whole_protein"]) == expected
+
+
+def test_resolver_distinguishes_an_uncrawled_protein_from_no_match(local_sources):
+    for frame in ("interpro", "interpro_grouped"):
+        _sidecar(local_sources[frame], "InterPro", "109.0", {})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:interpro_frame_entry" in row["reasons"]
+    assert "missing:exact_interpro_match" not in row["reasons"]
+
+    _sidecar(local_sources["interpro"], "InterPro", "109.0", {"P12345": {}})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:exact_interpro_match" in row["reasons"]
+    assert "missing:interpro_frame_entry" not in row["reasons"]
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "x"],
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-grouped", "x"],
+        ["resolve", "--que", "q", "--batch", "b"],
+        ["promote", "--resolved", "r", "--approved", "a", "--fetch-rec", "x"],
+        ["elife-promote", "--decisions", "d", "--app"],
+    ],
+)
+def test_resolver_parsers_refuse_abbreviated_flags(argv):
+    # The batch recipes forbid fixed flags by exact name; a prefix must not slip past (#1080).
+    with pytest.raises(SystemExit):
+        ground._parser().parse_args(argv)
