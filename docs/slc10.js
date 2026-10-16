@@ -51,7 +51,7 @@ async function main() {
     evidence(c,e.evidence);$("explanations").append(c);}
   function matrix(){const site=b.sites.find(s=>s.assertion_id===$("site").value);
     if(typeof history!=="undefined"&&history.replaceState){
-      const sp=new URLSearchParams(location.search);
+      const sp=new URL(location.href).searchParams;
       if($("site").value && $("site").value!=="slc10-site:7ZYI-J-706-NA-4.5A") sp.set("site",$("site").value);
       else sp.delete("site");
       const qs=sp.toString();
@@ -68,7 +68,7 @@ async function main() {
     if(site.cutoff_sensitivity){const t=el("table");table(t,["Cutoff (Å)","Atom pairs","Residues","Side-chain N/O/S positions"],site.cutoff_sensitivity.map(s=>[s.cutoff_angstrom,s.atom_pair_count,s.residue_positions.length,s.sidechain_heteroatom_positions.join(", ")||"None"]),"Cutoff sensitivity; N/O/S proximity is not proof of coordination");$("site-detail").append(t);}
   }
   for(const s of b.sites){const o=el("option",s.structure_id+" · "+s.ligand_instance);o.value=s.assertion_id;$("site").append(o);}
-  const urlSite=new URLSearchParams(location.search).get("site");
+  const urlSite=new URL(location.href).searchParams.get("site");
   $("site").value=b.sites.some(s=>s.assertion_id===urlSite)?urlSite:"slc10-site:7ZYI-J-706-NA-4.5A";
   $("site").addEventListener("change",matrix);matrix();
   table($("models"),["Apo model","Fit pairs","Global RMSD (Å)","E257 candidate","E257 CA residual (Å)","Evidence"],(b.model_comparisons||[]).map(m=>{
@@ -104,7 +104,7 @@ main().catch(error=>{
   const s=$("summary");
   s.textContent="Cannot display verified evidence: "+error.message+" ";
   s.className="notice";
-  s.setAttribute("role","alert");
+  if(s.setAttribute)s.setAttribute("role","alert");
   const retry=el("button","Retry");
   retry.type="button";
   retry.addEventListener("click",()=>location.reload());
