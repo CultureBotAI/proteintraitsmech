@@ -8,6 +8,39 @@ issue: "#652"
 
 # Cross-Mech protein examples
 
+## Publication review — 2026-10-15
+
+[PR #1122](https://github.com/CultureBotAI/proteintraitsmech/pull/1122) publishes
+the three scientific follow-ups below and the narrow CPX-2267 chemistry repair.
+Main `4a43f430684d593f730546067608d92432ea0334` was integrated without rewriting
+the immutable review bundles or changing their historical observations.
+
+The adversarial publication **self-review** reproduced two implementation defects:
+
+- [#1123](https://github.com/CultureBotAI/proteintraitsmech/issues/1123): repair
+  preview and already-corrected paths could report success on schema-invalid
+  records, or crash on malformed metadata. Every CLI path now validates the
+  input before inspecting repair metadata; refused inputs remain untouched.
+- [#1124](https://github.com/CultureBotAI/proteintraitsmech/issues/1124): seeder
+  preview skipped the source guard, while apply could write earlier rows before
+  rejecting a later drifted CPX-2267 source. Both modes now generate and preflight
+  every selected row across all source files before any writes. This is a source
+  preflight guarantee, not a whole-batch transaction against later I/O failures.
+  Existing records remain skipped unless `--force` selects them, and reseeding
+  still preserves human curation.
+
+The initial adversarial regressions produced seven failures before remediation.
+Regression coverage includes preview/apply, already-corrected invalid inputs,
+description/member drift within and across source files, and curated force-reseed
+preservation. Required publication CI runs on the final pushed revision; an older
+local full-suite process whose result could not be recovered is not counted as a
+pass. This code self-review is not independent scientific sign-off.
+
+Scientific issues #1114, #1115 and #1116 remain open. No candidate disposition,
+canonical example, sequence, residue annotation or causal graph is promoted by
+this PR. Fresh resolution and independent scientific adjudication remain required
+for the historical candidate holds.
+
 ## SOD1 chemistry follow-up — 2026-10-14
 
 The local correction for [#1114](https://github.com/CultureBotAI/proteintraitsmech/issues/1114)

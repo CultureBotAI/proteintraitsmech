@@ -173,3 +173,103 @@ def test_main_guard_refuses_curated_record(tmp_path, monkeypatch, original):
     monkeypatch.setattr(repair, "TARGET", target)
     assert repair.main(["--apply"]) == 1
     assert target.read_text() == text
+
+
+@pytest.mark.parametrize("args", [[], ["--apply"]])
+@pytest.mark.parametrize("corrected", [False, True])
+def test_main_validates_even_dry_run_and_completed_records(
+    tmp_path, monkeypatch, original, args, corrected
+):
+    text = repair.repair_record_text(original) if corrected else original
+    invalid = text + "not_a_schema_field: value\n"
+    target = tmp_path / "target.yaml"
+    target.write_text(invalid)
+    before = target.stat().st_mtime_ns
+    monkeypatch.setattr(repair, "TARGET", target)
+    assert repair.main(args) == 1
+    assert target.read_text() == invalid
+    assert target.stat().st_mtime_ns == before
+
+
+@pytest.mark.parametrize("args", [[], ["--apply"]])
+def test_main_rejects_malformed_completed_metadata_cleanly(
+    tmp_path, monkeypatch, original, args
+):
+    text = repair.repair_record_text(original)
+    from record_io import replace_block
+    invalid = replace_block(text, "evidence", "evidence: invalid\n")
+    target = tmp_path / "target.yaml"
+    target.write_text(invalid)
+    monkeypatch.setattr(repair, "TARGET", target)
+    assert repair.main(args) == 1
+    assert target.read_text() == invalid
+
+
+def complex_tab_row(ac, name, description):
+    return "\t".join([ac, name, "-", "559292", "P00445(1)|P40202(1)",
+                      "-", "-", "GO:1902693(SOD1-CCS1 complex)", "-", description])
+
+
+@pytest.mark.parametrize("args", [[], ["--apply"]])
+@pytest.mark.parametrize("separate_files", [False, True])
+@pytest.mark.parametrize("drift", ["description", "members"])
+def test_seeder_source_drift_is_preflighted_before_any_write(
+    tmp_path, monkeypatch, args, separate_files, drift
+):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    earlier = complex_tab_row("CPX-9999", "Earlier complex", "A different complex.") + "\n"
+    later = complex_tab_row(errata.ACCESSION, LABEL, errata.SOURCE_DESCRIPTION) + "\n"
+    if drift == "description":
+        later = later.replace(errata.SOURCE_DESCRIPTION, "Unexpected upstream description.")
+    else:
+        later = later.replace("P00445(1)|P40202(1)", "P00441(1)|P40202(1)")
+    if separate_files:
+        (raw / "a.tsv").write_text(earlier)
+        (raw / "b.tsv").write_text(later)
+    else:
+        (raw / "yeast.tsv").write_text(earlier + later)
+    output = tmp_path / "output"
+    monkeypatch.setattr(seeder, "RAW", raw)
+    monkeypatch.setattr(seeder, "OUT_DIR", output)
+    monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", *args])
+    assert seeder.main() == 1
+    assert not output.exists(), "a drifted source must be rejected before installing earlier rows"
+
+
+def test_seeder_cli_preview_apply_skip_and_curated_force(tmp_path, monkeypatch):
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    source = raw / "yeast.tsv"
+    source.write_text(complex_tab_row(errata.ACCESSION, LABEL, errata.SOURCE_DESCRIPTION) + "\n")
+    output = tmp_path / "output"
+    target = output / f"{seeder.slug(LABEL)}-{errata.ACCESSION.lower()}.yaml"
+    monkeypatch.setattr(seeder, "RAW", raw)
+    monkeypatch.setattr(seeder, "OUT_DIR", output)
+    monkeypatch.setattr(sys, "argv", ["seed_complexportal.py"])
+    assert seeder.main() == 0
+    assert not output.exists()
+    monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", "--apply"])
+    assert seeder.main() == 0
+    seeded = target.read_text()
+    assert yaml.safe_load(seeded)["definition"] == errata.CORRECTED_DESCRIPTION + repair.TAIL
+    before = target.stat().st_mtime_ns
+    assert seeder.main() == 0
+    assert target.stat().st_mtime_ns == before
+    curated = seeded.replace("mapping_status: PROPOSED", "mapping_status: REVIEWED")
+    curated = curated.replace("oxygen and hydrogen peroxide", "oxygen plus hydrogen peroxide", 1)
+    target.write_text(curated)
+    monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", "--force"])
+    assert seeder.main() == 0
+    assert target.read_text() == curated
+    monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", "--force", "--apply"])
+    assert seeder.main() == 0
+    assert target.read_text() == curated
+    source.write_text(complex_tab_row(errata.ACCESSION, LABEL, "Unexpected source drift.") + "\n")
+    for args in ([], ["--apply"]):
+        monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", *args])
+        assert seeder.main() == 0  # an existing, unselected target stays untouched
+        assert target.read_text() == curated
+        monkeypatch.setattr(sys, "argv", ["seed_complexportal.py", "--force", *args])
+        assert seeder.main() == 1
+        assert target.read_text() == curated

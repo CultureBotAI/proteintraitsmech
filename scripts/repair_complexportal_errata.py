@@ -17,6 +17,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import complexportal_errata as errata  # noqa: E402
 from record_io import (  # noqa: E402
+    RecordValidationError,
     append_to_section,
     extract_block,
     is_curated,
@@ -98,6 +99,13 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     try:
         text = TARGET.read_text(encoding="utf-8")
+        # The writer validates changed output, but preview and no-op paths never
+        # reach it. Reject invalid inputs before claiming success in any mode.
+        from validate_strict import validate_one
+
+        errors = validate_one(TARGET)
+        if errors:
+            raise RecordValidationError(TARGET, errors)
         out = repair_record_text(text)
         if out == text:
             print("CPX-2267: already corrected; no history appended")

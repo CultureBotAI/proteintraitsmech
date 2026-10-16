@@ -129,6 +129,7 @@ def main() -> int:
         return 2
 
     written = skipped = total = 0
+    planned = []
     for tsv in tsvs:
         for line in tsv.read_text(encoding="utf-8", errors="replace").splitlines():
             if line.startswith("#") or not line.strip():
@@ -152,10 +153,20 @@ def main() -> int:
             if path.exists() and not args.force:
                 skipped += 1
                 continue
-            if args.apply:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                write_record(path, build_yaml(ac, name, taxon_name, members, subparts, gos, c[9]))
-                written += 1
+            # Preview and apply use the same guards. Complete source preflight
+            # before any writes, so erratum drift cannot strand a partial batch.
+            try:
+                text = build_yaml(ac, name, taxon_name, members, subparts, gos, c[9])
+            except ValueError as exc:
+                print(f"FAIL: {tsv.name} {ac}: {exc}", file=sys.stderr)
+                return 1
+            planned.append((path, text))
+
+    if args.apply:
+        for path, text in planned:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            write_record(path, text)
+            written += 1
 
     print(f"Complex Portal: {total} complexes across {len(tsvs)} species → "
           f"FUNC_INTERACTION_PARTNER.")
