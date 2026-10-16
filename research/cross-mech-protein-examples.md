@@ -8,6 +8,124 @@ issue: "#652"
 
 # Cross-Mech protein examples
 
+## Publication review — 2026-10-15
+
+[PR #1122](https://github.com/CultureBotAI/proteintraitsmech/pull/1122) publishes
+the three scientific follow-ups below and the narrow CPX-2267 chemistry repair.
+Main `4a43f430684d593f730546067608d92432ea0334` was integrated without rewriting
+the immutable review bundles or changing their historical observations.
+
+The adversarial publication **self-review** reproduced two implementation defects:
+
+- [#1123](https://github.com/CultureBotAI/proteintraitsmech/issues/1123): repair
+  preview and already-corrected paths could report success on schema-invalid
+  records, or crash on malformed metadata. Every CLI path now validates the
+  input before inspecting repair metadata; refused inputs remain untouched.
+- [#1124](https://github.com/CultureBotAI/proteintraitsmech/issues/1124): seeder
+  preview skipped the source guard, while apply could write earlier rows before
+  rejecting a later drifted CPX-2267 source. Both modes now generate and preflight
+  every selected row across all source files before any writes. This is a source
+  preflight guarantee, not a whole-batch transaction against later I/O failures.
+  Existing records remain skipped unless `--force` selects them, and reseeding
+  still preserves human curation.
+
+The initial adversarial regressions produced seven failures before remediation.
+Regression coverage includes preview/apply, already-corrected invalid inputs,
+description/member drift within and across source files, and curated force-reseed
+preservation. Required publication CI runs on the final pushed revision; an older
+local full-suite process whose result could not be recovered is not counted as a
+pass. This code self-review is not independent scientific sign-off.
+
+Scientific issues #1114, #1115 and #1116 remain open. No candidate disposition,
+canonical example, sequence, residue annotation or causal graph is promoted by
+this PR. Fresh resolution and independent scientific adjudication remain required
+for the historical candidate holds.
+
+## SOD1 chemistry follow-up — 2026-10-14
+
+The local correction for [#1114](https://github.com/CultureBotAI/proteintraitsmech/issues/1114)
+changes the CPX-2267 definition's reaction products from water/hydrogen peroxide
+to **oxygen/hydrogen peroxide**, supported by the inspected
+[ENZYME EC 1.15.1.1 reaction](https://enzyme.expasy.org/EC/1.15.1.1).
+The accession-specific [erratum](../scripts/complexportal_errata.py) is consumed
+by both the Complex Portal seeder and a registered, text-preserving repair:
+
+```bash
+just repair-complexportal-errata          # dry-run
+just repair-complexportal-errata --apply
+```
+
+The repair refuses curated or unexpected inputs, uses the closed-schema atomic
+writer, preserves unrelated fields, and is idempotent. Source wording and the
+two protein members are checked before applying the seeder erratum. Unexpected
+future wording requires re-review; no general water-to-oxygen replacement is
+performed. Other Complex Portal records retain their existing output bytes.
+The corrected record is `PROPOSED`, with claim-scoped citations and an explicitly
+LLM-assisted event, not human `REVIEWED` status.
+
+The supporting [structure/primary abstract](https://www.rcsb.org/structure/1JK9)
+uses yeast **H48F-SOD1** and yeast CCS. The new evidence note distinguishes this
+association/maturation context from mature SOD1 homodimer and wild-type catalytic
+activity. The inherited activation percentages and GO parent/xref modeling are
+not independently validated by this narrow chemistry correction.
+
+The historical candidate `ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179`
+and its proposed rejection remain untouched. Its resolution digest still binds
+the old record, so **fresh native resolution and independent review remain
+required** before finalization or separately authorized promotion. No example,
+sequence, residue interval, causal graph or durable grounding registry is changed.
+The 33 recommendations and other two scientific holds are not re-adjudicated
+by this chemistry correction. Its
+[successor review](../reviews/structured/20261014T200325Z-cpx-2267-chemistry-followup/review.md)
+([YAML](../reviews/structured/20261014T200325Z-cpx-2267-chemistry-followup/review.yaml))
+preserves F1 as open while recording the local remediation.
+
+## TRX2 primary-evidence follow-up — 2026-10-14
+
+For [#1115](https://github.com/CultureBotAI/proteintraitsmech/issues/1115), the
+previously unread [1996 paper](https://doi.org/10.1083/jcb.132.5.787) was acquired
+with a provenance receipt; printed pages 789–791 and 793 were visually checked.
+Figure 1 includes **single-deletion** comparisons: the LMA1 activity peak remains
+when TRX1 alone is deleted. Table II likewise supports functional redundancy.
+However, the purified peptides on page 790 identify TRX1, not TRX2.
+
+This strengthens the functional basis for the Portal's explicitly
+curator-inferred TRX2 membership, without establishing direct purification of
+TRX2–Pbi2. The
+[successor review](../reviews/structured/20261014T200325Z-cpx-1279-primary-evidence-followup/review.md)
+([YAML](../reviews/structured/20261014T200325Z-cpx-1279-primary-evidence-followup/review.yaml))
+narrows F2's evidence gap but retains the provisional hold for independent
+adjudication. It does not change the record, proposed partition or examples.
+Raw source PDF/receipt remain ignored under
+`data/raw/cross-mech-followups-20261014/`; source licensing is recorded in the
+review.
+
+## Mixed CK2 primary-evidence follow-up — 2026-10-14
+
+For [#1116](https://github.com/CultureBotAI/proteintraitsmech/issues/1116), a
+newly identified [HeLa primary study](https://doi.org/10.1074/jbc.270.13.7501)
+(PMID:7706297) reports both catalytic paralogs co-precipitating with one another
+and beta, with immunodepletion supporting distinct isoforms. Its primary abstract
+was read at PubMed and CSHL and pinned through a receipted Europe PMC acquisition.
+This is positive mixed-assembly evidence, stronger than separate binary contacts.
+The full article and its antibody/assembly controls remain uninspected because
+the publisher routes were inaccessible; this is not a completed qualification.
+
+The [platelet study](https://doi.org/10.1074/jbc.273.14.8459) explicitly retains
+separate alpha-only and alpha-prime-only tetramer populations as an alternative.
+[PDB 1JWH](https://www.rcsb.org/structure/1JWH) contains two P68400 alpha chains
+and two P67870 beta chains, not P19784 alpha-prime. Neither should be relabeled
+as a solved mixed-variant structure. The seeded record's generic three-subunit
+wording counts protein types, not established chain stoichiometry, and was not
+corrected in this read-only follow-up.
+
+The [successor review](../reviews/structured/20261014T201943Z-cpx-2437-primary-evidence-followup/review.md)
+([YAML](../reviews/structured/20261014T201943Z-cpx-2437-primary-evidence-followup/review.yaml))
+retains F3 as provisional/open for full-text assessment and independent native
+adjudication, while recording the new positive evidence. No record, original
+decision partition or canonical example changed. The abstract snapshot and its
+receipt remain ignored beside the TRX2 source PDF.
+
 ## Publication review — 2026-10-13
 
 [PR #1112](https://github.com/CultureBotAI/proteintraitsmech/pull/1112) publishes

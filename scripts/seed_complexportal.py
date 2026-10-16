@@ -28,6 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lossy_text_errata import repair as _repair_lossy  # noqa: E402
+import complexportal_errata as errata  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
@@ -85,6 +86,7 @@ def build_yaml(ac, name, taxon_name, members, subparts, gos, description):
     n = len(members) + len(subparts)
     d = description.strip() if description and description.strip() != "-" else \
         f"The {label}."
+    d = errata.correct_description(ac, d, members, subparts)
     tail = f" A curated stable macromolecular complex (Complex Portal) with {n} " \
            f"subunit{'s' if n != 1 else ''}"
     tail += f", from {taxon_name}." if taxon_name else "."
@@ -92,9 +94,12 @@ def build_yaml(ac, name, taxon_name, members, subparts, gos, description):
     lines = [f"identifier: ComplexPortal:{ac}", f"label: {yaml_escape(label)}"]
     f = folded(_repair_lossy(d))   # 3'->5' arrow (#139)
     lines += [f"definition: {f[0]}", *f[1:]]
-    lines += ["definition_source: Complex Portal", "trait_axis: FUNCTION",
+    corrected = ac == errata.ACCESSION
+    source = yaml_escape(errata.DEFINITION_SOURCE) if corrected else "Complex Portal"
+    status = "PROPOSED" if corrected else "SEEDED"
+    lines += [f"definition_source: {source}", "trait_axis: FUNCTION",
               "trait_category: FUNC_INTERACTION_PARTNER", "term_kind: CLASS",
-              "mapping_status: SEEDED",
+              f"mapping_status: {status}",
               "parent_traits:", f"  - {complex_parent(gos)}"]
     rels = ([("biolink:has_part", c) for c in members]
             + [("biolink:has_part", c) for c in subparts])[:MAX_MEMBERS]
@@ -106,6 +111,8 @@ def build_yaml(ac, name, taxon_name, members, subparts, gos, description):
     xr = [gid for gid, _ in gos][:8]
     if xr:
         lines += ["xrefs:"] + [f"  - {x}" for x in xr]
+    if corrected:
+        lines.extend(block.rstrip("\n") for block in errata.metadata_blocks().values())
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 
@@ -122,6 +129,7 @@ def main() -> int:
         return 2
 
     written = skipped = total = 0
+    planned = []
     for tsv in tsvs:
         for line in tsv.read_text(encoding="utf-8", errors="replace").splitlines():
             if line.startswith("#") or not line.strip():
@@ -145,10 +153,20 @@ def main() -> int:
             if path.exists() and not args.force:
                 skipped += 1
                 continue
-            if args.apply:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                write_record(path, build_yaml(ac, name, taxon_name, members, subparts, gos, c[9]))
-                written += 1
+            # Preview and apply use the same guards. Complete source preflight
+            # before any writes, so erratum drift cannot strand a partial batch.
+            try:
+                text = build_yaml(ac, name, taxon_name, members, subparts, gos, c[9])
+            except ValueError as exc:
+                print(f"FAIL: {tsv.name} {ac}: {exc}", file=sys.stderr)
+                return 1
+            planned.append((path, text))
+
+    if args.apply:
+        for path, text in planned:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            write_record(path, text)
+            written += 1
 
     print(f"Complex Portal: {total} complexes across {len(tsvs)} species → "
           f"FUNC_INTERACTION_PARTNER.")

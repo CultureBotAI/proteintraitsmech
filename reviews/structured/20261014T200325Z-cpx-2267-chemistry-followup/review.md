@@ -1,0 +1,489 @@
+# CPX-2267 chemistry correction and preservation of its candidate hold
+
+- Review: 20261014T200325Z-cpx-2267-chemistry-followup
+- Repository: culturebotai/proteintraitsmech
+- Started UTC: 2026-10-14T19:50:29Z
+- Finished UTC: 2026-10-14T20:03:25Z
+- Reviewer: Codex (self_review)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The CPX-2267 definition now gives oxygen and hydrogen peroxide as SOD1 reaction products. An accession-specific exact-source erratum is shared by the seeder and registered validated repair, with scoped evidence, AI attribution and PROPOSED status. The historical P00445 candidate remains unchanged and binds the old record. Its hold is not retired: fresh resolution and independent review are still required. No protein example or residue-level claim is added.
+
+## Scope And Provenance
+
+One chemistry correction and the corresponding historical candidate; not a whole-record scientific pass or a new batch adjudication.
+
+Selection: Exact record and candidate implicated by finding F1 in the 20261013 scientific review and issue 1114.
+Coverage: full; 2 reviewed / 2 in the declared population.
+Source: working_tree at Git base 9e0c5536b0d0ef0a3f51b8767bfc19dc56466dc2.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| ComplexPortal:CPX-2267 | data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml | generated | SOD1-CCS1 superoxide dismutase heterodimer |
+| ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl # candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | snapshot_row | UniProtKB:P00445 / ComplexPortal:CPX-2267 (historical unresolved hold) |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Post-correction schema and durable grounding validation | passed | True | ComplexPortal:CPX-2267 | One record passes closed schema and semantic validation; 21048 durable bindings checked, zero semantic findings. No new qualification was introduced. |
+| Corrected record closed-schema validation | passed | True | ComplexPortal:CPX-2267 | One corrected record; zero errors. This proves shape, not all inherited scientific claims. |
+| Erratum and registered-editor regression tests | passed | True | ComplexPortal:CPX-2267 | 69 tests passed, including unrelated-seeder byte stability, exact-source/membership drift refusal, curated-record protection, schema failure preservation, metadata parity, reseed protection and no-op idempotence. |
+| Registered write-route audit | passed | True | ComplexPortal:CPX-2267 | The new editor is registered and uses write_validated_record; the seeder retains write_record merge protection. |
+| Append-only curation history validation | passed | True | ComplexPortal:CPX-2267 | History validates and identifies agent curation, not human sign-off. |
+| Source and historical candidate integrity | passed | True | ComplexPortal:CPX-2267, ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | Inspected cached CPX JSON matches its receipt hash. Its exact function and two protein participants replay through the erratum; the two small molecules are excluded as in the seeder. The native historical resolution digest replays but its record_sha256 differs from the corrected record. |
+| Graph audit | passed | False | ComplexPortal:CPX-2267 | The record has no causal graphs; the audit reports zero graphs, not a positive mechanism assessment. |
+| Fresh resolution and independent scientific review | skipped | False | ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 | Outside this correction scope and still mandatory before finalized approval or promotion. The historical rejection recommendation is unchanged. |
+
+## Scientific And Domain Assessments
+
+### SOD1 reaction products
+
+consistency: supported. Targets: ComplexPortal:CPX-2267.
+
+The corrected products agree with EC 1.15.1.1. Only this reaction-product claim is positively reassessed, not all retained source prose.
+
+### Regeneration-safe correction
+
+ownership: supported. Targets: ComplexPortal:CPX-2267.
+
+Seeder and registered repair use the same guarded erratum. Regression tests verify byte stability elsewhere, metadata parity, curated-definition protection and no duplicate history on rerun.
+
+### Historical resolution is stale after the record correction
+
+grounding: concern. Targets: ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179.
+
+Keep the hold. The H48F structural study is contextual support, not independent re-review of a fresh wild-type membership candidate or a new catalytic qualification.
+
+## Findings
+
+### F1: Chemistry corrected locally; original candidate still requires fresh resolution and review
+
+major / open / confirmed; issue key: cpx-2267-reaction-products.
+
+The maintained correction fixes the original definition error. The affected historical candidate still binds the wrong-chemistry preimage and must not be promoted or relabeled approved. The original follow-up remains open for fresh native resolution and independent scientific adjudication; this successor records partial remediation without rewriting the old finding or candidate.
+
+Disposition: Local chemistry remediation is complete, but the predecessor's stale candidate hold has not been independently re-adjudicated.
+
+## Recommended Actions And Acceptance Checks
+
+### fresh-review
+
+Re-resolve the exact P00445/CPX-2267 candidate in fresh native staging, then independently review its complex-membership scope against the corrected target and exact evidence before any authorized promotion.
+
+- Fresh native resolution binds the corrected record and exact release/sequence/provider facts.
+- Independent review explicitly distinguishes complex membership, H48F structural context and mature SOD1 activity.
+- Preserve all historical inputs and decisions; no manual digest replacement or inferred residue coordinates.
+- Finalize and promote only after the native review gates and separate user authorization are satisfied.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| enzyme | https://enzyme.expasy.org/EC/1.15.1.1; Reaction catalysed | supports | Source-native reaction assertion supports oxygen and hydrogen peroxide; it does not prove activity of the maturation heterodimer. |
+| structure | https://www.rcsb.org/structure/1JK9; Entry title, biological assembly 1, macromolecules, and primary citation abstract DOI:10.1038/nsb0901-751 / PMID:11524675 | partial | The yeast heterodimer structure uses H48F-SOD1, not unmutated SOD1. Supports association in the maturation context, not wild-type catalysis or equivalence to mature SOD1 homodimer. Full paper not read in this follow-up. |
+| portal | https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2267; Cached JSON functions[0], protein participants, crossReferences and adjacent fetch sidecar | context_only | The source function contains the incorrect water product. P00445 and P40202 protein membership is retained. The receipt records acquisition on 2026-10-13 and its old destination; bytes now live in the ignored batch sources directory. This was a cached-source inspection, not a fresh Portal fetch. |
+| correction | data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml; definition, definition_source, evidence, mapping_status, curation_history and maintained erratum/repair/seeder | supports | Exact chemistry replacement with scoped citations, PROPOSED status and LLM-assisted event. Identity, membership, hierarchy, license and other inherited prose remain unchanged. No canonical example or graph is present. |
+| candidate | reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl; candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179 and corresponding proposed-partition row | supports | Historical row binds pre-correction SHA-256 d62248f087addd4aad0be31776115ad930d4c22fe67dc90dc7afab3c31e164e1 and the unchanged native digest. It cannot approve the changed record. The proposed partition still recommends REJECTED/hold, not a finalized decision. |
+| predecessor | reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml; F1 / cpx-2267-reaction-products | context_only | Confirmed inherited chemistry error; requires maintained correction and fresh candidate resolution. Other findings are not superseded here. |
+
+## Limits And Additional Notes
+
+- This is an AI self-review of a single chemistry correction, not independent or human sign-off and not a full scientific pass on the record.
+- Inherited activation percentages, typographical defects, GO parent/xref modeling and the generic stable-complex wording were not revised or independently validated by this narrow repair.
+- The local parent GO:1902693 record and Portal annotation qualifiers were inspected as context; cross-reference remapping is not part of this erratum.
+- The cited primary abstract and PDB entry were inspected; the full 2001 article was not read in this follow-up.
+- The full ComplexTAB species release is unavailable locally; regeneration was tested through the seeder builder and exact cached Portal function/member replay, not a fresh bulk release reseed.
+- No current scientific disposition is supplied for CPX-1279, CPX-2437 or the other recommendations.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261014T200325Z-cpx-2267-chemistry-followup
+kind: batch
+repository: culturebotai/proteintraitsmech
+title: CPX-2267 chemistry correction and preservation of its candidate hold
+started_at: '2026-10-14T19:50:29Z'
+finished_at: '2026-10-14T20:03:25Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: self_review
+  independence_basis: The same agent implemented and inspected this local correction.
+    This is not independent scientific adjudication or human sign-off.
+skill: proteintraitsmech-cross-mech-proteins; curate-yaml-record
+completion: completed
+verdict: needs_curation
+native_verdict: CHEMISTRY_CORRECTED_CANDIDATE_HOLD_RETAINED
+scientific_review: true
+summary: 'The CPX-2267 definition now gives oxygen and hydrogen peroxide as SOD1 reaction
+  products. An accession-specific exact-source erratum is shared by the seeder and
+  registered validated repair, with scoped evidence, AI attribution and PROPOSED status.
+  The historical P00445 candidate remains unchanged and binds the old record. Its
+  hold is not retired: fresh resolution and independent review are still required.
+  No protein example or residue-level claim is added.'
+source:
+  git_revision: 9e0c5536b0d0ef0a3f51b8767bfc19dc56466dc2
+  state: working_tree
+  inputs:
+  - path: data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+    sha256: 116d7c096418f421414e05e58223b73e69b2c4dca2ba5505704353ad15a7eb49
+    role: target
+  - path: data/traits/function/localization/go/superoxide-dismutase-complex-go1902693.yaml
+    sha256: 4089ad6a9c92b572b3fa19c9474e49893a7c850287d22d0108f184bbef0d5277
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+    sha256: 97a4612c183c3d92b2b54f371e43abfe23e24731e3722bbea4053d193f5af4eb
+    role: target
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.scientific-self-review-partition.jsonl
+    sha256: b736cb56a904f4198e0690ef5b3af2bb9ec153f7c689db1757e63b543d107fbe
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json
+    sha256: e264491510c1bc2d750f24322a21016dffff55bfdb2488e002d0fa09b7045f31
+    role: context
+  - path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.sources/CPX-2267.json.fetch.json
+    sha256: a5cf4b6bb056154ac77334e54c2b07f5458c089aac2c96eb56d85e91d7a02674
+    role: context
+  - path: reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml
+    sha256: d9e511daf5cf59b5081be6679c64af7399304286f63280c4e48b90327045dbdc
+    role: context
+  - path: scripts/complexportal_errata.py
+    sha256: 7bf686ec0c55a7ce89037c2299341eb598887ea2b6197050d491256e4c59281b
+    role: context
+  - path: scripts/repair_complexportal_errata.py
+    sha256: 751800b9a5e07f33615c75ac44121a6385d816828942847e51dce332248b99d3
+    role: context
+  - path: scripts/seed_complexportal.py
+    sha256: 983c9e7dff5c5d93e110a539a5575d8cf992532c3365676db0d73679eb4d49ef
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: b2ecb451e29ea4caec33105523bfddcc12f966936399042178566f3fae83b4f2
+    role: context
+  - path: tests/test_complexportal_errata.py
+    sha256: 6ff9eb676897204137eabfadcdfcd69a45115eaa905dd830d85a90875763daf8
+    role: context
+  - path: tests/test_inplace_editor_guards.py
+    sha256: 079140cc8294adacef943f7d1eed5f376e9904c8aab4f41d783bbf1014d73797
+    role: context
+scope:
+  description: One chemistry correction and the corresponding historical candidate;
+    not a whole-record scientific pass or a new batch adjudication.
+  selection: Exact record and candidate implicated by finding F1 in the 20261013 scientific
+    review and issue 1114.
+  coverage: full
+  population_size: 2
+  reviewed_target_ids:
+  - ComplexPortal:CPX-2267
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  exclusions:
+  - target: Other cross-Mech candidates, including CPX-1279 and CPX-2437
+    reason: Different evidence questions; not reassessed by this bounded correction.
+  - target: Independent candidate re-resolution, finalized review decisions and canonical
+      promotion
+    reason: This pass fixes the maintained chemistry claim and preserves the hold;
+      it does not supply independent adjudication.
+targets:
+- target_id: ComplexPortal:CPX-2267
+  path: data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+  label: SOD1-CCS1 superoxide dismutase heterodimer
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/complexportal_errata.py
+    role: Accession-specific source erratum, evidence and curation event
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/seed_complexportal.py
+    role: Maintained ComplexTAB-to-record transform
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/repair_complexportal_errata.py
+    role: Registered text-preserving validated repair of the existing record
+- target_id: ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  path: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  selector: candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  label: UniProtKB:P00445 / ComplexPortal:CPX-2267 (historical unresolved hold)
+  record_class: UniProt grounding candidate
+  kind: snapshot_row
+  semantic_digest:
+    algorithm: ground_uniprot_examples._resolution_digest
+    sha256: 2922ae9a08a6c04a81e0ee3ab86375f718f63b3866c06f59aaaa3f7854e307a5
+    description: Historical resolved-row digest; binds the pre-correction record,
+      not the current record. Not re-resolved or approved by this correction review.
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver and guarded promoter; not invoked to promote here
+checks:
+- check_id: semantic
+  name: Post-correction schema and durable grounding validation
+  command: just validate-all data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One record passes closed schema and semantic validation; 21048 durable
+    bindings checked, zero semantic findings. No new qualification was introduced.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: schema
+  name: Corrected record closed-schema validation
+  command: just validate data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One corrected record; zero errors. This proves shape, not all inherited
+    scientific claims.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: regression
+  name: Erratum and registered-editor regression tests
+  command: .venv/bin/pytest -q tests/test_complexportal_errata.py tests/test_inplace_editor_guards.py
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 69 tests passed, including unrelated-seeder byte stability, exact-source/membership
+    drift refusal, curated-record protection, schema failure preservation, metadata
+    parity, reseed protection and no-op idempotence.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: writer-audit
+  name: Registered write-route audit
+  command: just audit-writers
+  exit_code: 0
+  status: passed
+  required: true
+  summary: The new editor is registered and uses write_validated_record; the seeder
+    retains write_record merge protection.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: history
+  name: Append-only curation history validation
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: History validates and identifies agent curation, not human sign-off.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: replay
+  name: Source and historical candidate integrity
+  status: passed
+  required: true
+  summary: Inspected cached CPX JSON matches its receipt hash. Its exact function
+    and two protein participants replay through the erratum; the two small molecules
+    are excluded as in the seeder. The native historical resolution digest replays
+    but its record_sha256 differs from the corrected record.
+  target_ids:
+  - ComplexPortal:CPX-2267
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  evidence_ids:
+  - portal
+  - candidate
+- check_id: graphs
+  name: Graph audit
+  command: just audit-graphs data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+  exit_code: 0
+  status: passed
+  required: false
+  summary: The record has no causal graphs; the audit reports zero graphs, not a positive
+    mechanism assessment.
+  target_ids:
+  - ComplexPortal:CPX-2267
+- check_id: independent-adjudication
+  name: Fresh resolution and independent scientific review
+  status: skipped
+  required: false
+  summary: Outside this correction scope and still mandatory before finalized approval
+    or promotion. The historical rejection recommendation is unchanged.
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+evidence:
+- evidence_id: enzyme
+  kind: database
+  reference: https://enzyme.expasy.org/EC/1.15.1.1
+  locator: Reaction catalysed
+  accessed_at: '2026-10-14T19:44:39Z'
+  support: supports
+  quote: 2 superoxide + 2 H(+) = H2O2 + O2
+  summary: Source-native reaction assertion supports oxygen and hydrogen peroxide;
+    it does not prove activity of the maturation heterodimer.
+- evidence_id: structure
+  kind: primary_source
+  reference: https://www.rcsb.org/structure/1JK9
+  locator: Entry title, biological assembly 1, macromolecules, and primary citation
+    abstract DOI:10.1038/nsb0901-751 / PMID:11524675
+  accessed_at: '2026-10-14T19:44:39Z'
+  support: partial
+  quote: a complex comprising one monomer of each protein
+  summary: The yeast heterodimer structure uses H48F-SOD1, not unmutated SOD1. Supports
+    association in the maturation context, not wild-type catalysis or equivalence
+    to mature SOD1 homodimer. Full paper not read in this follow-up.
+- evidence_id: portal
+  kind: database
+  reference: https://www.ebi.ac.uk/intact/complex-ws/complex/CPX-2267
+  locator: Cached JSON functions[0], protein participants, crossReferences and adjacent
+    fetch sidecar
+  accessed_at: '2026-10-14T19:50:29Z'
+  snapshot_sha256: e264491510c1bc2d750f24322a21016dffff55bfdb2488e002d0fa09b7045f31
+  support: context_only
+  summary: The source function contains the incorrect water product. P00445 and P40202
+    protein membership is retained. The receipt records acquisition on 2026-10-13
+    and its old destination; bytes now live in the ignored batch sources directory.
+    This was a cached-source inspection, not a fresh Portal fetch.
+- evidence_id: correction
+  kind: record_content
+  reference: data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml
+  locator: definition, definition_source, evidence, mapping_status, curation_history
+    and maintained erratum/repair/seeder
+  accessed_at: '2026-10-14T19:50:29Z'
+  support: supports
+  summary: Exact chemistry replacement with scoped citations, PROPOSED status and
+    LLM-assisted event. Identity, membership, hierarchy, license and other inherited
+    prose remain unchanged. No canonical example or graph is present.
+- evidence_id: candidate
+  kind: record_content
+  reference: reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl
+  locator: candidate_id=ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+    and corresponding proposed-partition row
+  accessed_at: '2026-10-14T19:50:29Z'
+  support: supports
+  summary: Historical row binds pre-correction SHA-256 d62248f087addd4aad0be31776115ad930d4c22fe67dc90dc7afab3c31e164e1
+    and the unchanged native digest. It cannot approve the changed record. The proposed
+    partition still recommends REJECTED/hold, not a finalized decision.
+- evidence_id: predecessor
+  kind: prior_review
+  reference: reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml
+  locator: F1 / cpx-2267-reaction-products
+  accessed_at: '2026-10-14T19:50:29Z'
+  support: context_only
+  summary: Confirmed inherited chemistry error; requires maintained correction and
+    fresh candidate resolution. Other findings are not superseded here.
+assessments:
+- assessment_id: chemistry
+  area: consistency
+  topic: SOD1 reaction products
+  outcome: supported
+  target_ids:
+  - ComplexPortal:CPX-2267
+  evidence_ids:
+  - enzyme
+  - correction
+  - portal
+  summary: The corrected products agree with EC 1.15.1.1. Only this reaction-product
+    claim is positively reassessed, not all retained source prose.
+- assessment_id: ownership
+  area: ownership
+  topic: Regeneration-safe correction
+  outcome: supported
+  target_ids:
+  - ComplexPortal:CPX-2267
+  evidence_ids:
+  - correction
+  summary: Seeder and registered repair use the same guarded erratum. Regression tests
+    verify byte stability elsewhere, metadata parity, curated-definition protection
+    and no duplicate history on rerun.
+- assessment_id: candidate-hold
+  area: grounding
+  topic: Historical resolution is stale after the record correction
+  outcome: concern
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  evidence_ids:
+  - candidate
+  - structure
+  - predecessor
+  summary: Keep the hold. The H48F structural study is contextual support, not independent
+    re-review of a fresh wild-type membership candidate or a new catalytic qualification.
+findings:
+- finding_id: F1
+  issue_key: cpx-2267-reaction-products
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Chemistry corrected locally; original candidate still requires fresh resolution
+    and review
+  description: The maintained correction fixes the original definition error. The
+    affected historical candidate still binds the wrong-chemistry preimage and must
+    not be promoted or relabeled approved. The original follow-up remains open for
+    fresh native resolution and independent scientific adjudication; this successor
+    records partial remediation without rewriting the old finding or candidate.
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ComplexPortal:CPX-2267
+  field_paths:
+  - data/traits/function/interaction_partner/complexportal/sod1-ccs1-superoxide-dismutase-heterodimer-cpx-2267.yaml#/definition
+  evidence_ids:
+  - enzyme
+  - correction
+  - candidate
+  - predecessor
+  - structure
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Native re-resolution and promotion gates; no manual ledger editing
+  disposition_reason: Local chemistry remediation is complete, but the predecessor's
+    stale candidate hold has not been independently re-adjudicated.
+  previous_occurrences:
+  - repository: culturebotai/proteintraitsmech
+    review_id: 20261013T043714Z-cross-mech-complex-scientific
+    finding_id: F1
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+actions:
+- action_id: fresh-review
+  description: Re-resolve the exact P00445/CPX-2267 candidate in fresh native staging,
+    then independently review its complex-membership scope against the corrected target
+    and exact evidence before any authorized promotion.
+  finding_ids:
+  - F1
+  target_ids:
+  - ug-387ae8a352c578e2457c6cb0bca9fe1381919183f03083868a3adfb6229c6179
+  - ComplexPortal:CPX-2267
+  owner_paths:
+  - repository: culturebotai/proteintraitsmech
+    path: scripts/ground_uniprot_examples.py
+    role: Maintained resolver/promoter
+  acceptance_checks:
+  - Fresh native resolution binds the corrected record and exact release/sequence/provider
+    facts.
+  - Independent review explicitly distinguishes complex membership, H48F structural
+    context and mature SOD1 activity.
+  - Preserve all historical inputs and decisions; no manual digest replacement or
+    inferred residue coordinates.
+  - Finalize and promote only after the native review gates and separate user authorization
+    are satisfied.
+limitations:
+- This is an AI self-review of a single chemistry correction, not independent or human
+  sign-off and not a full scientific pass on the record.
+- Inherited activation percentages, typographical defects, GO parent/xref modeling
+  and the generic stable-complex wording were not revised or independently validated
+  by this narrow repair.
+- The local parent GO:1902693 record and Portal annotation qualifiers were inspected
+  as context; cross-reference remapping is not part of this erratum.
+- The cited primary abstract and PDB entry were inspected; the full 2001 article was
+  not read in this follow-up.
+- The full ComplexTAB species release is unavailable locally; regeneration was tested
+  through the seeder builder and exact cached Portal function/member replay, not a
+  fresh bulk release reseed.
+- No current scientific disposition is supplied for CPX-1279, CPX-2437 or the other
+  recommendations.
+related_reviews:
+- repository: culturebotai/proteintraitsmech
+  review_id: 20261013T043714Z-cross-mech-complex-scientific
+  relationship: Successor observation for F1 only; preserves its affected candidate
+    and all other findings.
+links:
+- https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+```
