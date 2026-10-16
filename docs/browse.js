@@ -92,10 +92,12 @@ let ID_INDEX = new Map(); // id → record
 let FACETS = { total: 0, counts: {} };
 let SELECTED = { axis: new Set(), src: new Set(), cat: new Set(), sta: new Set() };
 let QUERY = "";
+let SORT = "id";
 let PAGE = 0;
 let FILTERED_CACHE = null;
 let LAST_RESULTS_HASH = "#";
 let LIST_RENDER_GENERATION = 0;
+let INITIAL_SEARCH_CONSUMED = false;
 
 /* ------------------------------------------------------------------ */
 /* Boot                                                               */
@@ -153,7 +155,7 @@ async function boot() {
     if (!facRes.ok) throw new Error("facets.json " + facRes.status);
     FACETS = await facRes.json();
   } catch (e) {
-    results.innerHTML = `<div class="empty">Failed to load index: ${e.message}</div>`;
+    results.innerHTML = `<div class="empty" role="alert">Failed to load index: ${escapeHTML(e.message)} <button type="button" onclick="boot()">Retry</button></div>`;
     return;
   }
   SHARD_MANIFEST = (FACETS.shards && FACETS.shards.length)
@@ -197,9 +199,21 @@ async function route() {
   // Query, facets and page are restored from the complete results URL.
   const params = parseHashParams(h);
   const state = new URLSearchParams(h.replace(/^#/, ""));
-  const query = state.get("q") || "";
+  let query = state.get("q") || "";
+  if (!query && !INITIAL_SEARCH_CONSUMED) {
+    INITIAL_SEARCH_CONSUMED = true;
+    if (window.location && window.location.search) {
+      query = new URLSearchParams(window.location.search).get("q") || "";
+    }
+  } else {
+    INITIAL_SEARCH_CONSUMED = true;
+  }
   QUERY = query.trim().toLowerCase();
   document.getElementById("q").value = query;
+  const sortParam = state.get("sort") || "id";
+  SORT = ["id", "label", "label-desc", "axis", "source"].includes(sortParam) ? sortParam : "id";
+  const sortEl = document.getElementById("sort");
+  if (sortEl) sortEl.value = SORT;
   applyHashFacets(params);
   PAGE = Math.max(0, Number.parseInt(state.get("page"), 10) || 0);
   syncResultsHash();
@@ -215,6 +229,7 @@ function syncResultsHash() {
   }
   const query = document.getElementById("q").value.trim();
   if (query) params.set("q", query);
+  if (SORT && SORT !== "id") params.set("sort", SORT);
   if (PAGE) params.set("page", String(PAGE));
   LAST_RESULTS_HASH = "#" + params.toString();
   history.replaceState(null, "", LAST_RESULTS_HASH);
@@ -401,6 +416,16 @@ function wireInputs() {
       renderList();
     }, 120);
   });
+  const sortEl = document.getElementById("sort");
+  if (sortEl && sortEl.addEventListener) {
+    sortEl.addEventListener("change", () => {
+      SORT = sortEl.value || "id";
+      FILTERED_CACHE = null;
+      PAGE = 0;
+      syncResultsHash();
+      renderList();
+    });
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -429,6 +454,15 @@ function filterRecords() {
       (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))) ||
       (r.chemx && r.chemx.some(n => n.toLowerCase().includes(qs)))
     );
+  }
+  if (SORT && SORT !== "id") {
+    out = out.slice().sort((a, b) => {
+      if (SORT === "label") return String(a.label || a.id || "").localeCompare(String(b.label || b.id || ""));
+      if (SORT === "label-desc") return String(b.label || b.id || "").localeCompare(String(a.label || a.id || ""));
+      if (SORT === "axis") return String(a.axis || "").localeCompare(String(b.axis || "")) || String(a.cat || "").localeCompare(String(b.cat || "")) || String(a.id || "").localeCompare(String(b.id || ""));
+      if (SORT === "source") return String(a.src || "").localeCompare(String(b.src || "")) || String(a.id || "").localeCompare(String(b.id || ""));
+      return String(a.id || "").localeCompare(String(b.id || ""));
+    });
   }
   FILTERED_CACHE = out;
   return out;
