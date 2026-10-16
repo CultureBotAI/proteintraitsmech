@@ -717,6 +717,10 @@ fetch-complexportal:
 seed-complexportal *args:
     python3 scripts/seed_complexportal.py {{args}}
 
+# Apply the accession-scoped scientific erratum; dry-run unless --apply.
+repair-complexportal-errata *args:
+    uv run python scripts/repair_complexportal_errata.py {{args}}
+
 # --- Round-4 sources (research/protein-trait-sources-round4.md) ---
 
 # UniProtKB controlled-vocabulary Keywords (CC-BY 4.0) -> class-level

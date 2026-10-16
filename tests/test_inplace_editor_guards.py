@@ -44,6 +44,7 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 EDITORS = [
+    "repair_complexportal_errata",
     "backfill_source_definitions",
     "enrich_pfam_definitions",
     "enrich_ncbifam_definitions",

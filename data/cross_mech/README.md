@@ -117,6 +117,11 @@ not change this inventory's disposition or qualification counts. The holds cover
 an incorrect SOD1 reaction description and unresolved TRX2-LMA1 / mixed-CK2
 variant evidence. See the review for exact claims, sources and limitations.
 
+The [2026-10-14 SOD1 follow-up](../../research/cross-mech-protein-examples.md#sod1-chemistry-follow-up--2026-10-14)
+corrects the reaction products through a shared source erratum and guarded writer.
+It does not retire the old candidate hold: that snapshot requires fresh resolution
+and independent review. No inventory approval or protein qualification is added.
+
 "All" is bounded by the fleet's declared record globs and explicit UniProt
 accession recognition. Gene names, other identifier namespaces, family IDs and
 uncommitted sibling work are not silently resolved or treated as protein entries.
