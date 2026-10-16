@@ -239,3 +239,16 @@ def test_the_legend_is_built_from_nodes_not_markup():
     assert 'style="background:${' not in html, (
         "a palette colour is being written into a style attribute again"
     )
+
+
+def test_map_page_has_facet_sidebar_and_unified_search_and_hash_aliases():
+    """Every page should expose a prominent search bar and left-hand facet sidebar."""
+    html = MAP_HTML.read_text(encoding="utf-8")
+    assert 'aside class="controls facet-sidebar"' in html
+    assert 'action="browse.html"' in html
+    assert '"#map=sequence": "sequence_map.json"' in html
+    assert '"#map=corpus": "corpus_map.json"' in html
+    for name in ("index.html", "browse.html", "slc10.html"):
+        page = (ROOT / "docs" / name).read_text(encoding="utf-8")
+        assert 'type="search"' in page
+

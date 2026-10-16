@@ -14,30 +14,41 @@
   :root[data-theme="light"]{--pastel-a:#B7E4DC;--pastel-b:#FCE3B0;--accent:#2E8B84;--ink:#1a1a1a;--muted:#555;--line:rgba(0,0,0,.12);--card:#fff;--stage-bg:#f8f9fa}
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--pastel-b)}
-  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:20px 24px;border-bottom:1px solid var(--line)}
+  header.site{background:linear-gradient(135deg,var(--pastel-a),var(--pastel-b));padding:18px 24px;border-bottom:1px solid var(--line)}
+  .site-bar{max-width:1360px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
   header.site h1{margin:0 0 .15em;font-size:1.5rem}
   header.site p{margin:0;color:var(--muted);font-size:.9rem}
   header.site a{color:var(--accent)}
-  .wrap{max-width:1160px;margin:0 auto;padding:18px 24px}
-  .controls{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px;margin:.2rem 0 1rem}
-  .stats{display:flex;gap:18px;font-size:.8rem;color:var(--muted)}
-  .stat b{color:var(--accent);font-size:1.05rem;font-variant-numeric:tabular-nums;margin-left:.3em}
-  .controls label{max-width:100%;display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;color:var(--muted)}
-  .controls select,.controls input{max-width:100%;font:inherit;font-size:.9rem;padding:.4em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:200px}
+  .header-search{display:flex;align-items:center;gap:6px}
+  .header-search input[type="search"]{font:inherit;font-size:.86rem;padding:.38em .65em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:210px}
+  .header-search button{font:inherit;font-size:.84rem;font-weight:600;padding:.38em .75em;border:1px solid var(--accent);border-radius:7px;background:var(--accent);color:#fff;cursor:pointer}
+  :root[data-theme="dark"] .header-search button{color:#0f1615}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .header-search button{color:#0f1615}}
+  .wrap{max-width:1360px;margin:0 auto;padding:18px 24px;display:grid;grid-template-columns:290px minmax(0,1fr);gap:20px;align-items:start}
+  @media (max-width:900px){.wrap{grid-template-columns:1fr}}
+  .facet-sidebar{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;position:sticky;top:14px;display:flex;flex-direction:column;gap:12px}
+  @media (max-width:900px){.facet-sidebar{position:static}}
+  .controls{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin:0}
+  .stats{display:flex;justify-content:space-between;gap:12px;font-size:.82rem;color:var(--muted);background:var(--stage-bg);padding:8px 10px;border-radius:8px;border:1px solid var(--line)}
+  .stat b{color:var(--accent);font-size:1.02rem;font-variant-numeric:tabular-nums;margin-left:.3em}
+  .controls label{max-width:100%;display:flex;flex-direction:column;gap:.25rem;font-size:.78rem;font-weight:600;color:var(--muted)}
+  .controls select,.controls input{max-width:100%;width:100%;font:inherit;font-size:.88rem;padding:.42em .55em;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);min-width:0}
   .controls input[type="checkbox"]{min-width:0;width:auto}
-  .controls .availability-toggle{flex-direction:row;align-items:center;align-self:center}
+  .controls .availability-toggle{flex-direction:row;align-items:center;align-self:flex-start}
   .controls select:focus,.controls input:focus{outline:none;border-color:var(--accent)}
-  .embseg{display:flex;flex-wrap:wrap;max-width:100%;align-items:stretch;border:1px solid var(--line);border-radius:8px;overflow:hidden;align-self:flex-end;background:var(--card)}
-  .embseg .seg-label{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;padding:0 .7em;background:var(--pastel-a)}
-  .seg-btn{font:inherit;font-size:.85rem;padding:.45em .9em;border:0;border-left:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap}
+  .embseg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .embseg .seg-label{grid-column:1 / -1;font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;padding:.35em .7em;background:var(--pastel-a);border-bottom:1px solid var(--line)}
+  .seg-btn{font:inherit;font-size:.82rem;padding:.45em .55em;border:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;white-space:nowrap;text-align:center}
   .seg-btn:hover{background:var(--stage-bg)}
   .seg-btn.active{background:var(--accent);color:#fff;font-weight:600}
-  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 .8rem}
-  .legend button{display:inline-flex;align-items:center;gap:.45em;font-size:.82rem;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.32em .7em .32em .55em;color:var(--ink);cursor:pointer;transition:all .15s}
+  .facet-group-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:.2rem 0 0}
+  .legend{display:flex;flex-direction:column;gap:6px;margin:0}
+  .legend button{display:flex;align-items:center;justify-content:space-between;gap:.45em;font-size:.8rem;background:var(--stage-bg);border:1px solid var(--line);border-radius:8px;padding:.35em .65em;color:var(--ink);cursor:pointer;transition:all .15s;text-align:left;width:100%}
   .legend button:hover{border-color:var(--accent)}
   .legend button.off{opacity:.4;text-decoration:line-through}
-  .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
-  .legend .cnt{color:var(--muted);font-variant-numeric:tabular-nums}
+  .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block;flex-shrink:0}
+  .legend .cnt{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:auto}
+  .map-workspace{min-width:0}
   #stage{position:relative;background:var(--stage-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
   #tip{position:absolute;pointer-events:none;background:#000;color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
@@ -59,18 +70,36 @@
 </head>
 <body>
   <header class="site">
-    <h1 id="map-title">Corpus map</h1>
-    <p><span id="map-description">2-D map of the published embedding snapshot, colored by trait axis</span> ·
-       <a href="index.html">home</a> · <a href="browse.html">browse</a> · <a href="https://culturebotai.github.io/mechs/">All Mech projects</a></p>
+    <div class="site-bar">
+      <div>
+        <h1 id="map-title">Corpus map</h1>
+        <p><span id="map-description">2-D map of the published embedding snapshot, colored by trait axis</span> ·
+           <a href="index.html">home</a> · <a href="browse.html">browse</a> · <a href="slc10.html">SLC10 pilot</a> · <a href="https://culturebotai.github.io/mechs/">All Mech projects</a></p>
+      </div>
+      <form class="header-search" action="browse.html" method="get" role="search">
+        <input type="search" name="q" placeholder="Search 277,953 traits…" aria-label="Search traits in browser">
+        <button type="submit">Browse</button>
+      </form>
+    </div>
   </header>
-  <p id="map-coverage" style="padding:0 1rem" aria-live="polite"></p>
+  <p id="map-coverage" style="max-width:1360px;margin:.6rem auto 0;padding:0 24px" aria-live="polite"></p>
   <script src="map-coverage.js"></script>
   <main class="wrap">
-    <div class="controls">
+    <aside class="controls facet-sidebar" aria-label="Map filters and facets">
       <div class="stats">
         <span class="stat">Total<b id="s-total">…</b></span>
         <span class="stat">Visible<b id="s-visible">…</b></span>
       </div>
+      <div class="embseg" role="group" aria-label="Map embedding">
+        <span class="seg-label">Embedding Space</span>
+        <button class="seg-btn active" data-map="corpus_map.json" title="definition + structure/source identifiers">Full record</button>
+        <button class="seg-btn" data-map="corpus_map_definitions.json" title="pure definition semantics only">Definition only</button>
+        <button class="seg-btn" data-map="protein_map.json" title="one point per Swiss-Prot protein, positioned by the corpus traits it carries">Proteins</button>
+        <button class="seg-btn" data-map="sequence_map.json" title="one point per canonical-example protein, positioned by its ESM-2 sequence embedding — no annotation in the input">Sequences (pLM)</button>
+      </div>
+      <label>Search plotted items
+        <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
+      </label>
       <label>Filter category
         <select id="cat-filter"><option value="">All categories</option></select>
       </label>
@@ -78,35 +107,28 @@
       <label id="depth-wrap" hidden><span id="depth-label">Annotation depth</span>
         <select id="depth-filter"><option value="">All</option></select>
       </label>
-      <label>Search
-        <input type="search" id="search" placeholder="identifier / CURIE…" autocomplete="off">
-      </label>
-      <div class="embseg" role="group" aria-label="Map embedding">
-        <span class="seg-label">Embedding</span>
-        <button class="seg-btn active" data-map="corpus_map.json" title="definition + structure/source identifiers">Full record</button>
-        <button class="seg-btn" data-map="corpus_map_definitions.json" title="pure definition semantics only">Definition only</button>
-        <button class="seg-btn" data-map="protein_map.json" title="one point per Swiss-Prot protein, positioned by the corpus traits it carries">Proteins</button>
-        <button class="seg-btn" data-map="sequence_map.json" title="one point per canonical-example protein, positioned by its ESM-2 sequence embedding — no annotation in the input">Sequences</button>
+      <div id="biophysical-controls" hidden>
+        <div class="controls">
+          <label>Color by
+            <select id="biophysical-descriptor"><option value="">Domain of life</option></select>
+          </label>
+          <label>Minimum <input id="biophysical-min" type="number" step="any"></label>
+          <label>Maximum <input id="biophysical-max" type="number" step="any"></label>
+          <label class="availability-toggle"><input id="biophysical-available" type="checkbox"> Only proteins with values</label>
+        </div>
+        <p class="hint" id="biophysical-legend"></p>
       </div>
-    </div>
-    <div id="biophysical-controls" hidden>
-      <div class="controls">
-        <label>Color by
-          <select id="biophysical-descriptor"><option value="">Domain of life</option></select>
-        </label>
-        <label>Minimum <input id="biophysical-min" type="number" step="any"></label>
-        <label>Maximum <input id="biophysical-max" type="number" step="any"></label>
-        <label class="availability-toggle"><input id="biophysical-available" type="checkbox"> Only proteins with values</label>
+      <div class="facet-group-title">Interactive Facets (click to toggle)</div>
+      <p class="hint" id="legend-label" hidden></p>
+      <div class="legend" id="legend"></div>
+    </aside>
+    <div class="map-workspace">
+      <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
+      <p class="hint" id="hint">Loading corpus map…</p>
+      <div class="dataview">
+        <a id="csv-dl" class="dlbtn" download="corpus_map.csv" aria-disabled="true">Download data (CSV)</a>
+        <span class="hint" id="dl-note">Data-table fallback for this dense scatter — the CSV lists every plotted point (identifier / CURIE, trait axis, trait category, x, y).</span>
       </div>
-      <p class="hint" id="biophysical-legend"></p>
-    </div>
-    <p class="hint" id="legend-label" hidden></p>
-    <div class="legend" id="legend"></div>
-    <div id="stage"><canvas id="cv" width="1120" height="660"></canvas><div id="tip"></div></div>
-    <p class="hint" id="hint">Loading corpus map…</p>
-    <div class="dataview">
-      <a id="csv-dl" class="dlbtn" download="corpus_map.csv" aria-disabled="true">Download data (CSV)</a>
-      <span class="hint" id="dl-note">Data-table fallback for this dense scatter — the CSV lists every plotted point (identifier / CURIE, trait axis, trait category, x, y).</span>
     </div>
   </main>
   <script src="biophysical-map.js"></script>
@@ -171,7 +193,13 @@
         option.textContent=series.label+" ("+series.available+" values)";
         option.disabled=series.available===0; bioSelect.appendChild(option);
       });
+      if(pendingUrlState && pendingUrlState.bio){
+        const match=overlay.series.find(s=>s.descriptor_id===pendingUrlState.bio && s.available>0);
+        if(match){ bioSelect.value=match.descriptor_id; bioSeries=match; }
+        pendingUrlState.bio="";
+      }
       bioWrap.hidden=false; updateBioLegend();
+      if(bioSeries){ update(); buildCsv(); }
     } catch(error) {
       if(serial===loadSerial) document.getElementById("hint").textContent+=" Biophysical values unavailable.";
     }
@@ -205,6 +233,33 @@
   const activeAxes=new Set();      // axis names currently shown (legend toggles)
   let catFilter="", depthFilter="", query="";   // dropdowns + search
   let VF=new Uint8Array(0);        // per-point: passes all filters
+  function readUrlParams(){
+    const sp=new URLSearchParams(window.location.search);
+    return {
+      q:(sp.get("q")||"").trim(),
+      cat:(sp.get("cat")||"").trim(),
+      depth:(sp.get("depth")||"").trim(),
+      hide:(sp.get("hide")||"").split(",").map(s=>s.trim()).filter(Boolean),
+      bio:(sp.get("bio")||"").trim(),
+    };
+  }
+  let pendingUrlState=readUrlParams();
+  function syncMapUrl(){
+    if(!DATA || !window.history || !window.history.replaceState) return;
+    const sp=new URLSearchParams();
+    const srch=document.getElementById("search");
+    const qVal=srch ? srch.value.trim() : query;
+    if(qVal) sp.set("q",qVal);
+    if(catFilter) sp.set("cat",catFilter);
+    if(depthFilter) sp.set("depth",depthFilter);
+    const hiddenAxes=DATA.axes.filter(a=>!activeAxes.has(a));
+    if(hiddenAxes.length) sp.set("hide",hiddenAxes.join(","));
+    if(bioSeries && bioSeries.descriptor_id) sp.set("bio",bioSeries.descriptor_id);
+    const qs=sp.toString();
+    const hash=Object.keys(MAP_BY_HASH).find(k=>MAP_BY_HASH[k]===CURRENT_MAP)||location.hash||"";
+    const next=window.location.pathname+(qs?"?"+qs:"")+hash;
+    history.replaceState(null,"",next);
+  }
 
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const fmt=n=>n.toLocaleString();
@@ -228,7 +283,9 @@
   function loadMap(file){
     clearMapData();
     document.getElementById("map-description").textContent="Loading selected map…";
-    document.getElementById("hint").textContent="Loading selected map…";
+    const hintEl=document.getElementById("hint");
+    hintEl.removeAttribute("role");
+    hintEl.textContent="Loading selected map…";
     CURRENT_MAP=file;
     const coverageNode = document.getElementById("map-coverage");
     coverageNode.textContent = "";
@@ -250,7 +307,20 @@
       LINK=d.link||null;
       ID_STRIP=d.id_strip_prefix||""; UNIT=d.unit||"records";
       activeAxes.clear(); d.axes.forEach(a=>activeAxes.add(a));
-      catFilter=""; query=""; const srch=document.getElementById("search"); if(srch) srch.value="";
+      if(pendingUrlState && pendingUrlState.hide.length){
+        pendingUrlState.hide.forEach(a=>activeAxes.delete(a));
+        pendingUrlState.hide=[];
+      }
+      catFilter="";
+      const srch=document.getElementById("search");
+      if(pendingUrlState && pendingUrlState.q){
+        query=pendingUrlState.q.toLowerCase();
+        if(srch) srch.value=pendingUrlState.q;
+        pendingUrlState.q="";
+      } else {
+        query="";
+        if(srch) srch.value="";
+      }
       document.getElementById("s-total").textContent=fmt(d.points.length);
       const catCount={}; for(const p of d.points){const c=d.cats[p[4]]; catCount[c]=(catCount[c]||0)+1;}
       const sel=document.getElementById("cat-filter");
@@ -260,6 +330,11 @@
         o.value=c; o.textContent=`${c} (${fmt(catCount[c])})`;
         sel.appendChild(o);
       });
+      if(pendingUrlState && pendingUrlState.cat && d.cats.includes(pendingUrlState.cat)){
+        catFilter=pendingUrlState.cat;
+        sel.value=pendingUrlState.cat;
+        pendingUrlState.cat="";
+      }
       // Annotation depth: present on the protein map only. Kept in the source
       // order rather than sorted, because the bins are a scale.
       depthFilter="";
@@ -278,6 +353,11 @@
           o.value=k; o.textContent=`${k} (${fmt(dc[k])})`;
           dSel.appendChild(o);
         });
+        if(pendingUrlState && pendingUrlState.depth && d.depths.includes(pendingUrlState.depth)){
+          depthFilter=pendingUrlState.depth;
+          dSel.value=pendingUrlState.depth;
+          pendingUrlState.depth="";
+        }
         dWrap.hidden=false;
       } else { dWrap.hidden=true; dSel.innerHTML=""; }
       buildLegend();
@@ -303,6 +383,7 @@
       clearMapData();
       document.getElementById("map-description").textContent="Selected map could not be loaded.";
       const hint=document.getElementById("hint");
+      hint.setAttribute("role","alert");
       hint.textContent="This map could not be loaded. Check your connection and try again. ";
       const retry=document.createElement("button"); retry.type="button"; retry.textContent="Retry map";
       retry.addEventListener("click",()=>loadMap(file)); hint.append(retry);
@@ -335,7 +416,14 @@
   const MAP_BY_HASH = {"#proteins": "protein_map.json",
                        "#sequences": "sequence_map.json",
                        "#definitions": "corpus_map_definitions.json",
-                       "#corpus": "corpus_map.json"};
+                       "#corpus": "corpus_map.json",
+                       "#map=protein": "protein_map.json",
+                       "#map=proteins": "protein_map.json",
+                       "#map=sequence": "sequence_map.json",
+                       "#map=sequences": "sequence_map.json",
+                       "#map=definition": "corpus_map_definitions.json",
+                       "#map=definitions": "corpus_map_definitions.json",
+                       "#map=corpus": "corpus_map.json"};
   function selectMap(file){
     document.querySelectorAll(".seg-btn").forEach(b =>
       b.classList.toggle("active", b.dataset.map === file));
@@ -344,6 +432,11 @@
   window.addEventListener("hashchange", () => {
     const f = MAP_BY_HASH[location.hash];
     if (f && f !== CURRENT_MAP) selectMap(f);
+  });
+  window.addEventListener("popstate", () => {
+    pendingUrlState = readUrlParams();
+    const f = MAP_BY_HASH[location.hash] || "corpus_map.json";
+    selectMap(f);
   });
   selectMap(MAP_BY_HASH[location.hash] || "corpus_map.json");
 
@@ -379,6 +472,7 @@
     const leg=document.getElementById("legend"); leg.innerHTML="";
     DATA.axes.forEach(ax=>{
       const b=document.createElement("button");
+      b.classList.toggle("off",!activeAxes.has(ax));
       const sw=document.createElement("span");
       sw.className="sw"; sw.style.background=colorOf(ax);
       const cnt=document.createElement("span");
@@ -407,6 +501,7 @@
       VF[i]=ok?1:0; if(ok) vis++;
     }
     document.getElementById("s-visible").textContent=fmt(vis);
+    syncMapUrl();
     draw();
   }
 

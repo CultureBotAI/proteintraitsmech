@@ -22,6 +22,8 @@ function details(row) {
     table(t,["Reference residue","Reported replacement"],row.sequence_substitutions.map(s=>[s.residue+s.position,s.substituted_residue]),
       "Reference coordinates; the checksum does not certify the complete assay construct");body.append(t,el("p",row.construct));}
   body.append(el("pre",JSON.stringify(row,null,2))); $("detail").showModal();
+  const id=row.assertion_id||row.mechanism_id||row.reasoning_id;
+  if(id&&history.replaceState)history.replaceState(null,"",location.pathname+location.search+"#"+encodeURIComponent(id));
 }
 function action(text,row,cls) {const b=el("button",text,cls); b.type="button"; b.addEventListener("click",()=>details(row)); return b;}
 function table(node,headings,rows,caption) {
@@ -48,6 +50,13 @@ async function main() {
       if(e[field]?.length){c.append(el("h4",label));for(const ref of e[field])c.append(action(indexed.get(ref).activity||ref,indexed.get(ref)));}}
     evidence(c,e.evidence);$("explanations").append(c);}
   function matrix(){const site=b.sites.find(s=>s.assertion_id===$("site").value);
+    if(history.replaceState){
+      const sp=new URLSearchParams(location.search);
+      if($("site").value && $("site").value!=="slc10-site:7ZYI-J-706-NA-4.5A") sp.set("site",$("site").value);
+      else sp.delete("site");
+      const qs=sp.toString();
+      history.replaceState(null,"",location.pathname+(qs?"?"+qs:"")+location.hash);
+    }
     const positions=[...new Set(site.contacts.map(c=>c.protein_position))].sort((a,z)=>a-z);
     $("site-context").textContent=site.structure_state+" · "+site.ligand_instance+" · "+site.distance_cutoff_angstrom+" Å heavy-atom cutoff. "+site.limitations;
     table($("matrix"),["Protein",...positions.map(p=>site.contacts.find(c=>c.protein_position===p).protein_residue+p)],b.protein_references.map(protein=>{
@@ -59,7 +68,9 @@ async function main() {
     if(site.cutoff_sensitivity){const t=el("table");table(t,["Cutoff (Å)","Atom pairs","Residues","Side-chain N/O/S positions"],site.cutoff_sensitivity.map(s=>[s.cutoff_angstrom,s.atom_pair_count,s.residue_positions.length,s.sidechain_heteroatom_positions.join(", ")||"None"]),"Cutoff sensitivity; N/O/S proximity is not proof of coordination");$("site-detail").append(t);}
   }
   for(const s of b.sites){const o=el("option",s.structure_id+" · "+s.ligand_instance);o.value=s.assertion_id;$("site").append(o);}
-  $("site").value="slc10-site:7ZYI-J-706-NA-4.5A";$("site").addEventListener("change",matrix);matrix();
+  const urlSite=new URLSearchParams(location.search).get("site");
+  $("site").value=b.sites.some(s=>s.assertion_id===urlSite)?urlSite:"slc10-site:7ZYI-J-706-NA-4.5A";
+  $("site").addEventListener("change",matrix);matrix();
   table($("models"),["Apo model","Fit pairs","Global RMSD (Å)","E257 candidate","E257 CA residual (Å)","Evidence"],(b.model_comparisons||[]).map(m=>{
     const p=m.pairs.find(p=>p.anchor_position===257);return [name(m.protein_id),m.fit_residue_count,num(m.fit_rmsd_angstrom),p.target_position?p.target_residue+p.target_position:"Unresolved",num(p.ca_displacement_angstrom),action("Inspect fit and confidence",m)];}),"All models compared with experimental 7ZYI; no target ligand occupancy inferred");
   table($("assays"),["Protein","Activity / substrate","Outcome","Conditions & evidence"],b.functional_observations.map(o=>[name(o.protein_id),o.activity+" — "+o.substrate,o.outcome+(o.outcome==="NOT_ASSESSED"?" (evidence gap)":""),action("Inspect assay",o)]),"Measured results remain separate from computational comparisons");
@@ -89,4 +100,13 @@ async function main() {
   if(location.hash){const id=decodeURIComponent(location.hash.slice(1));if(indexed.has(id))details(indexed.get(id));else document.getElementById(id)?.scrollIntoView();}
 }
 $("close-detail").addEventListener("click",()=>$("detail").close());
-main().catch(error=>{$("summary").textContent="Cannot display verified evidence: "+error.message;$("summary").className="notice";});
+main().catch(error=>{
+  const s=$("summary");
+  s.textContent="Cannot display verified evidence: "+error.message+" ";
+  s.className="notice";
+  s.setAttribute("role","alert");
+  const retry=el("button","Retry");
+  retry.type="button";
+  retry.addEventListener("click",()=>location.reload());
+  s.append(retry);
+});

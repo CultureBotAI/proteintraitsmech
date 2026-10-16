@@ -92,6 +92,8 @@ const run=code=>vm.runInContext(code,context);
  assert.equal(run('QUERY'),'malformed % query');
  context.window.location.hash='#src=bad%escape&q=bad%escape'; await run('route()');
  assert.equal(run('[...SELECTED.src][0]'),'bad%escape'); assert.equal(run('QUERY'),'bad%escape');
+ context.window.location.hash=''; context.window.location.search='?q=PF01758'; run('INITIAL_SEARCH_CONSUMED=false; QUERY="";'); await run('route()');
+ assert.equal(run('QUERY'),'pf01758'); assert.equal(node('q').value,'PF01758');
  run('let rejectOld; exactRecord=()=>new Promise((_, reject)=>{rejectOld=reject;});');
  context.window.location.hash='#record=slow%3Aold'; const old=run('route()');
  context.window.location.hash='#record=new%3Arecord'; node('results').innerHTML='new record remains';
