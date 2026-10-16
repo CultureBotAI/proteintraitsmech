@@ -170,6 +170,7 @@ def local_sources(tmp_path):
                 "sequence_length": len(sequence),
                 "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
                 "reviewed": True,
+                "fragment": False,
                 "uniprot_release": "2026_02",
             }
         ],
@@ -280,6 +281,7 @@ def _add_second_interpro_candidate(fixture: dict) -> None:
             "sequence_length": len(sequence),
             "sequence_sha256": sequence_sha256,
             "reviewed": True,
+            "fragment": False,
             "uniprot_release": "2026_02",
         },
     )
@@ -2266,6 +2268,148 @@ def test_whole_protein_keeps_real_match_footprint_out_of_occurrence(local_source
     assert "coordinate_frame" not in row["trait_occurrence"]
 
 
+def _set_registry_fragment(local_sources, fragment: bool | None) -> None:
+    """Rewrite the fixture registry row; ``None`` removes the field (a pre-#1081 fetch)."""
+
+    path = local_sources["source_registry"]
+    (row,) = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    row.pop("fragment", None)
+    if fragment is not None:
+        row["fragment"] = fragment
+    _jsonl(path, [row])
+
+
+def _whole_protein_panther_candidate(local_sources) -> dict:
+    local_sources["record"].write_text(
+        _record("PANTHER:PTHR12345", axis="FUNCTION"), encoding="utf-8"
+    )
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {"P12345": {"PANTHER:PTHR12345": [[1, 9]]}},
+    )
+    return {
+        **local_sources["candidate"],
+        "trait_id": "PANTHER:PTHR12345",
+        "source_trait_id": "PANTHER:PTHR12345",
+        "trait_axis": "FUNCTION",
+        "trait_category": "FUNC_PROTEIN_FAMILY",
+        "scope": "WHOLE_PROTEIN",
+        "coordinate_frame": None,
+        "intervals": [{"start": 1, "end": 9}],
+    }
+
+
+def _review_row(local_sources) -> dict:
+    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
+        (row,) = list(csv.DictReader(handle, delimiter="\t"))
+    return row
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason", "review_value"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment", "true"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein", ""),
+    ],
+)
+def test_fragment_or_unrecorded_fragment_status_cannot_qualify_whole_protein(
+    local_sources, fragment, reason, review_value
+):
+    """#1081: a UniProt fragment cannot exemplify a whole-protein claim, and a registry
+    fetched before fragment capture fails closed rather than passing as complete."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _set_registry_fragment(local_sources, fragment)
+    # A producer cannot vouch for completeness; the registry value always wins.
+    _jsonl(local_sources["queue"], [{**candidate, "uniprot_fragment": False}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert row["reasons"] == [reason]
+    assert row["uniprot_fragment"] is fragment
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == review_value
+    assert review["reasons"] == reason
+
+
+def test_fragment_keeps_localized_qualification_but_is_flagged_for_review(local_sources):
+    _set_registry_fragment(local_sources, True)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["trait_occurrence"]["scope"] == "LOCALIZED"
+    assert row["uniprot_fragment"] is True
+    review = _review_row(local_sources)
+    assert review["uniprot_fragment"] == "true"
+    assert "UNIPROT_FRAGMENT" in review["review_flags"].split(";")
+    # Fragment status is a qualification input, not a staged ProteinReference field.
+    (staged,) = [
+        json.loads(line)
+        for line in local_sources["registry"].read_text(encoding="utf-8").splitlines()
+    ]
+    assert "fragment" not in staged
+
+
+def test_unrecorded_fragment_status_leaves_localized_rows_qualified(local_sources):
+    _set_registry_fragment(local_sources, None)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    assert row["uniprot_fragment"] is None
+    assert _review_row(local_sources)["uniprot_fragment"] == ""
+
+
+@pytest.mark.parametrize(
+    ("fragment", "reason"),
+    [
+        (True, "invalid:whole_protein_scope_for_uniprot_fragment"),
+        (None, "missing:uniprot_fragment_status_for_whole_protein"),
+    ],
+)
+def test_promotion_rejects_whole_protein_rows_without_complete_fragment_status(
+    local_sources, fragment, reason
+):
+    """A row resolved before #1081 never recorded fragment status; promotion re-checks."""
+
+    candidate = _whole_protein_panther_candidate(local_sources)
+    _jsonl(local_sources["queue"], [candidate])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "QUALIFIED"
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == []
+    if fragment is None:
+        row.pop("uniprot_fragment")
+    else:
+        row["uniprot_fragment"] = fragment
+    row["resolution_digest"] = ground._resolution_digest(row)
+    approval = {"resolution_digest": row["resolution_digest"]}
+    assert ground._validate_resolved_row(row, approval) == [reason]
+
+
+def test_durable_registry_refuses_fetch_staging_fragment_status(tmp_path):
+    """#1087: fragment status never reaches a merged durable ProteinReference."""
+
+    sequence = "ACDEFGHIK"
+    row = {
+        "protein_id": "UniProtKB:P12345",
+        "protein_label": "Fixture protein",
+        "taxon_id": "NCBITaxon:9606",
+        "taxon_label": "Homo sapiens",
+        "sequence": sequence,
+        "sequence_length": len(sequence),
+        "sequence_sha256": hashlib.sha256(sequence.encode("ascii")).hexdigest(),
+        "reviewed": True,
+        "uniprot_release": "2026_02",
+    }
+    path = tmp_path / "protein_registry.jsonl"
+    ground._validate_registry_mapping({row["protein_id"]: row}, path)
+    with pytest.raises(ground.GroundingError, match="registry_fetch_staging_only_field"):
+        ground._validate_registry_mapping({row["protein_id"]: {**row, "fragment": False}}, path)
+
+
 def _prepare_panther_content_gate_fixture(
     local_sources, *, template_only: bool, redundant_class: bool = False
 ) -> None:
@@ -3160,6 +3304,7 @@ def _queue_second_protein(local_sources, *, go_term, evidence="IDA:EcoCyc"):
             "sequence_length": len(_SECOND_SEQUENCE),
             "sequence_sha256": _SECOND_SHA,
             "reviewed": True,
+            "fragment": False,
             "uniprot_release": "2026_02",
         },
     )
@@ -5583,47 +5728,115 @@ def test_every_caller_of_the_digest_uses_the_shared_helper():
         assert "ground._resolution_digest(row)" in text, f"{name} no longer verifies the digest"
 
 
-def test_ground_uniprot_examples_parser_refuses_abbreviated_flags():
-    with pytest.raises(SystemExit):
-        ground._parser().parse_args(
-            ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "z"]
-        )
-    with pytest.raises(SystemExit):
-        ground._parser().parse_args(
-            ["promote", "--resolved", "r", "--approved", "a", "--interpro-f", "z"]
-        )
+# -------------------------------------- DUF review columns and frame coverage (#1070, #1072)
 
 
-def test_review_lead_provenance_formatting_and_columns(local_sources):
-    assert ground._review_lead_provenance(None) == ""
-    assert ground._review_lead_provenance("") == ""
-    assert ground._review_lead_provenance("direct-string") == "direct-string"
-    assert (
-        ground._review_lead_provenance(
-            {
-                "lead_rank": 1,
-                "lead_reviewed": True,
-                "lead_selection_reasons": ["single_domain", "curated"],
-            }
-        )
-        == "rank=1;reviewed=True;reasons=single_domain,curated"
-    )
+DUF_PROVENANCE = {
+    "repository": "CultureBotAI/DUFMech",
+    "commit": "c" * 40,
+    "snapshot_id": "uniprot-duf-example-candidates-2026-10-07",
+    "lead_status": "TARGET_ABSENT_FROM_TRAIT",
+    "lead_rank": 2,
+    "lead_reviewed": False,
+    "lead_selection_reasons": ["protein_traits_trait_without_family_example"],
+}
 
-    candidate = {
-        **local_sources["candidate"],
-        "duf_lead_provenance": {
-            "lead_rank": 2,
-            "lead_reviewed": False,
-            "lead_selection_reasons": ["unreviewed_lead"],
-        },
-        "other_interpro_signatures": ["Pfam:PF99999", "Pfam:PF88888"],
-    }
-    local_sources["queue"].write_text(json.dumps(candidate) + "\n", encoding="utf-8")
+
+def _review_tsv(fixture: dict) -> tuple[list[str], list[dict]]:
+    with fixture["review"].open(encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        return list(reader.fieldnames or []), list(reader)
+
+
+def test_ordinary_review_tsv_keeps_exactly_its_columns(local_sources):
     assert ground.main(_resolve_args(local_sources)) == 0
-
-    with local_sources["review"].open(encoding="utf-8", newline="") as handle:
-        review = next(csv.DictReader(handle, delimiter="\t"))
-    assert review["lead_provenance"] == "rank=2;reviewed=False;reasons=unreviewed_lead"
-    assert review["other_interpro_signatures"] == "Pfam:PF99999;Pfam:PF88888"
+    columns, _ = _review_tsv(local_sources)
+    assert columns == list(ground._REVIEW_COLUMNS)
 
 
+def test_duf_batch_review_tsv_shows_lead_provenance_and_other_pfam_signatures(local_sources):
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {
+            "P12345": {
+                "Pfam:PF00001": [[2, 5]],
+                "Pfam:PF00002": [[6, 9]],
+                "InterPro:IPR000001": [[2, 5]],  # integrates the DUF: never "another family"
+            }
+        },
+    )
+    _jsonl(local_sources["queue"], [{**local_sources["candidate"],
+                                     "duf_lead_provenance": DUF_PROVENANCE}])
+    assert ground.main(_resolve_args(local_sources)) == 0
+    assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
+    columns, rows = _review_tsv(local_sources)
+    split = columns.index("reviewer")
+    assert columns[split - len(ground._DUF_REVIEW_COLUMNS):split] == list(
+        ground._DUF_REVIEW_COLUMNS
+    )
+    assert [c for c in columns if c not in ground._DUF_REVIEW_COLUMNS] == list(
+        ground._REVIEW_COLUMNS
+    )
+    row = rows[0]
+    assert row["duf_lead_status"] == "TARGET_ABSENT_FROM_TRAIT"
+    assert row["duf_lead_rank"] == "2" and row["duf_lead_reviewed"] == "false"
+    assert row["duf_snapshot"] == f"uniprot-duf-example-candidates-2026-10-07@{'c' * 40}"
+    assert row["other_pfam_signatures"] == "Pfam:PF00002"
+    assert row["multi_domain_whole_protein"] == ""  # LOCALIZED: the rule does not apply
+
+
+@pytest.mark.parametrize(
+    ("matches", "expected"),
+    [
+        ({"Pfam:PF00001": [[1, 9]]}, ("", "no")),
+        ({"Pfam:PF00001": [[1, 5]], "Pfam:PF00009": [[6, 9]], "Pfam:PF00003": [[7, 8]]},
+         ("Pfam:PF00003;Pfam:PF00009", "yes")),
+        (None, ("", "unknown")),
+    ],
+)
+def test_duf_review_fields_flag_multi_domain_whole_protein_carriers(matches, expected):
+    row = {
+        "trait_id": "Pfam:PF00001",
+        "source_trait_id": "Pfam:PF00001",
+        "protein_id": "UniProtKB:P12345",
+        "scope": "WHOLE_PROTEIN",
+        "duf_lead_provenance": DUF_PROVENANCE,
+    }
+    interpro = {} if matches is None else {"P12345": matches}
+    fields = ground._duf_review_fields(row, interpro)
+    assert (fields["other_pfam_signatures"], fields["multi_domain_whole_protein"]) == expected
+
+
+def test_resolver_distinguishes_an_uncrawled_protein_from_no_match(local_sources):
+    for frame in ("interpro", "interpro_grouped"):
+        _sidecar(local_sources[frame], "InterPro", "109.0", {})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:interpro_frame_entry" in row["reasons"]
+    assert "missing:exact_interpro_match" not in row["reasons"]
+
+    _sidecar(local_sources["interpro"], "InterPro", "109.0", {"P12345": {}})
+    assert ground.main(_resolve_args(local_sources)) == 0
+    row = _resolved(local_sources)
+    assert row["qualification_status"] == "REJECTED"
+    assert "missing:exact_interpro_match" in row["reasons"]
+    assert "missing:interpro_frame_entry" not in row["reasons"]
+
+
+@pytest.mark.parametrize(
+    "argv",
+    [
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-f", "x"],
+        ["resolve", "--queue", "q", "--batch", "b", "--interpro-grouped", "x"],
+        ["resolve", "--que", "q", "--batch", "b"],
+        ["promote", "--resolved", "r", "--approved", "a", "--fetch-rec", "x"],
+        ["elife-promote", "--decisions", "d", "--app"],
+    ],
+)
+def test_resolver_parsers_refuse_abbreviated_flags(argv):
+    # The batch recipes forbid fixed flags by exact name; a prefix must not slip past (#1080).
+    with pytest.raises(SystemExit):
+        ground._parser().parse_args(argv)

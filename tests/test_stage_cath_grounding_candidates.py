@@ -906,3 +906,78 @@ def test_production_cath_snapshot_golden_when_private_frames_exist(
     assert hashlib.sha256(stage.render_stage(result).encode("utf-8")).hexdigest() == (
         "51f8f1c0ffd9f12cc3e6910e559acf5f7a28a1a4fd0a4d5c12083369025e28f4"
     )
+
+
+# ------------------------------------------------ residue-frame content pin (#1071)
+
+
+def _rebuild_residue(case: dict[str, Any], **meta: Any) -> dict[str, Any]:
+    """Rewrite the residue frame as a later rebuild would: new date, other layout."""
+    value = json.loads(case["residue"].read_text(encoding="utf-8"))
+    value["_meta"].update(meta)
+    _write(case["residue"], json.dumps(value, indent=1))
+    return value
+
+
+def _build_with_content_pins(case: dict[str, Any], pins: frozenset[str]) -> stage.StageResult:
+    return stage.build_stage(
+        cath_names_path=case["names"],
+        interpro_frame_path=case["interpro"],
+        residue_frame_path=case["residue"],
+        traits_root=case["traits"],
+        protein_registry_path=case["registry"],
+        repo_root=case["repo"],
+        expected_source_sha256=case["pins"],
+        expected_protein_registry_sha256=case["registry_pin"],
+        expected_counts=case["counts"],
+        accepted_source_content_sha256={"residue_frame": pins},
+    )
+
+
+def test_a_rebuilt_residue_frame_binds_by_content_pin_not_by_bytes(tmp_path: Path) -> None:
+    case = _case(tmp_path)
+    content = stage.sidecar_content_sha256(json.loads(case["residue"].read_text()))
+    original = _build(case)
+    rebuilt = _rebuild_residue(
+        case, built="2099-01-01", completeness={"complete": True, "basis": "crawl"}
+    )
+    assert stage.sidecar_content_sha256(rebuilt) == content
+    with pytest.raises(stage.CathStageError, match="residue frame sha256 mismatch"):
+        _build_with_content_pins(case, frozenset())
+    result = _build_with_content_pins(case, frozenset({content}))
+    assert result.summary["annotation_discovery_count"] == (
+        original.summary["annotation_discovery_count"]
+    )
+    # the bytes actually read are what the stage records, never the pin it matched
+    residue_artifact = result.summary["source_artifacts"][2]
+    assert residue_artifact["sha256"] == hashlib.sha256(case["residue"].read_bytes()).hexdigest()
+
+
+def test_a_content_pin_still_fails_closed_on_different_content(tmp_path: Path) -> None:
+    case = _case(tmp_path)
+    content = stage.sidecar_content_sha256(json.loads(case["residue"].read_text()))
+    value = json.loads(case["residue"].read_text(encoding="utf-8"))
+    accession = sorted(value["proteins"])[0]
+    value["proteins"][accession]["seq"] = "W" + value["proteins"][accession]["seq"][1:]
+    _write(case["residue"], json.dumps(value))
+    with pytest.raises(stage.CathStageError, match="content sha256 .* is not pinned"):
+        _build_with_content_pins(case, frozenset({content}))
+
+
+def test_the_retained_2026_03_rebuild_content_digest_is_pinned() -> None:
+    assert stage.EXPECTED_RESIDUE_FRAME_SHA256.startswith("4fc4d2fb")
+    assert stage.SOURCE_CONTENT_PINS["residue_frame"] == frozenset(
+        {"a640a2ea9f8d1f6a552f583531c50e2d98a38642534a2c028aea96878886dcc2"}
+    )
+    assert stage.SOURCE_CONTENT_PINS["cath_names"] == frozenset()
+
+
+def test_a_certified_interpro_frame_is_refused_with_a_repin_hint(tmp_path: Path) -> None:
+    case = _case(tmp_path)
+    value = json.loads(case["interpro"].read_text(encoding="utf-8"))
+    value["_meta"]["completeness"] = {"complete": True, "basis": "offline-certification"}
+    _canonical_file(case["interpro"], value)
+    with pytest.raises(stage.CathStageError, match=r"needs a reviewed byte or content pin.*#1098"):
+        _build(case)
+    assert stage.SOURCE_CONTENT_PINS["interpro_frame"] == frozenset()
+

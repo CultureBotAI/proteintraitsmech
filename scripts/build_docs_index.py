@@ -69,6 +69,12 @@ Record shape:
           [234, 255, "REGION", "SEQUENCE", "Disordered"],
           [57, 57, "SITE", "STRUCTURE", "Interaction with phosphoserine"],
           ...
+        ],
+        "occ": [                             # qualified locations for this trait
+          {"ranges": [[118, 127]], "positions": [120, 122],
+           "mapping_method": "PATTERN_MATCH", "evidence_source": "IEDB",
+           "source_trait_id": "IEDB:10012", "source_release": "2026_03",
+           "coordinate_frame": "UNIPROT_CANONICAL"}
         ]
       }, ...
     ],
@@ -87,6 +93,8 @@ from pathlib import Path
 from typing import Any
 
 import yaml
+
+SAFE_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from docs_protein_sequences import ProteinSequenceRegistry  # noqa: E402
@@ -339,14 +347,31 @@ DOCS_MAX_EXAMPLES = 5
 # promoter after older profile suggestions. Within each qualification stratum,
 # preserve the existing curator/API/profile preference and stable file order.
 # This changes display priority only; it never qualifies an example.
-_EXAMPLE_RANK = {"CURATOR": 0, "UNIPROTKB_API": 1, "SWISSPROT_PROFILE": 2}
+_EXAMPLE_RANK = {
+    "CURATOR": 0,
+    "UNIPROT_GROUNDING": 1,
+    "UNIPROTKB_API": 2,
+    "SWISSPROT_PROFILE": 3,
+}
 
 
-def _docs_examples(examples: list) -> list:
-    """Verified exemplars first, then existing source rank; retain the display cap."""
-    ordered = sorted(enumerate(examples),
-                     key=lambda p: (p[1].get("qualification_status") != "QUALIFIED",
-                                    _EXAMPLE_RANK.get(p[1].get("source"), 3), p[0]))
+def _docs_examples(examples: list, trait_id: str = "") -> list:
+    """Verified exemplars first (localized coordinates prioritized), then existing source rank; retain the display cap."""
+    def _rank(p: tuple[int, dict]) -> tuple:
+        idx, ex = p
+        is_qualified = ex.get("qualification_status") == "QUALIFIED"
+        has_localized = False
+        if is_qualified:
+            for occ in ex.get("trait_occurrences") or []:
+                if (occ.get("qualification_status") == "QUALIFIED"
+                        and occ.get("scope") == "LOCALIZED"
+                        and (not trait_id or occ.get("trait_id") == trait_id)
+                        and (not ex.get("protein_id") or occ.get("protein_id") == ex.get("protein_id"))):
+                    has_localized = True
+                    break
+        return (not is_qualified, not has_localized, _EXAMPLE_RANK.get(ex.get("source"), 4), idx)
+
+    ordered = sorted(enumerate(examples), key=_rank)
     return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
 
 
@@ -393,6 +418,37 @@ def _project_example(ex: dict, trait_id: str = "", *,
              f.get("trait_axis") or "", f.get("note") or ""]
             for f in feats
         ]
+    # Trait locations are distinct from the generic feature track. Keep disjoint
+    # intervals and residue sets intact, and show only qualified assertions for
+    # this record on this exact protein. Do not overlay the optional legacy
+    # sequence: it is not the authoritative ProteinReference sequence.
+    occurrences = []
+    if ex.get("qualification_status") == "QUALIFIED":
+        for occurrence in ex.get("trait_occurrences") or []:
+            if (occurrence.get("qualification_status") != "QUALIFIED"
+                    or occurrence.get("trait_id") != trait_id
+                    or occurrence.get("protein_id") != ex.get("protein_id")
+                    or occurrence.get("scope") != "LOCALIZED"):
+                continue
+            ranges = [[r["start"], r["end"]] for r in occurrence.get("intervals") or []]
+            positions = list(occurrence.get("residue_positions") or [])
+            if not ranges and not positions:
+                continue
+            item = {key: occurrence[key] for key in (
+                "coordinate_frame", "mapping_method", "evidence_source",
+                "source_trait_id", "source_release",
+            ) if occurrence.get(key)}
+            if ranges:
+                item["ranges"] = ranges
+            if positions:
+                item["positions"] = positions
+            occurrences.append(item)
+    if occurrences:
+        proj["occ"] = occurrences
+        if ex.get("sequence_version"):
+            proj["sv"] = ex["sequence_version"]
+        if ex.get("uniprot_release"):
+            proj["rel"] = ex["uniprot_release"]
     proj.update(sequence_payload)
     return proj
 
@@ -426,7 +482,7 @@ def load_record(path: Path, *,
                 protein_sequences: ProteinSequenceRegistry | None = None) -> dict[str, Any] | None:
     try:
         with path.open("r", encoding="utf-8") as fh:
-            data = yaml.load(fh, Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
+            data = yaml.load(fh, Loader=SAFE_YAML_LOADER)
     except yaml.YAMLError as exc:
         print(f"WARN: {path.relative_to(REPO_ROOT)}: {exc}", file=sys.stderr)
         return None
@@ -479,7 +535,7 @@ def load_record(path: Path, *,
         # which are first because they are rank-ordered.
         "ex": [_project_example(e, identifier, protein_sequences=protein_sequences,
                                 record_path=str(path))
-               for e in _docs_examples(data.get("canonical_examples") or [])],
+               for e in _docs_examples(data.get("canonical_examples") or [], identifier)],
         # Cross-source equivalence [object, predicate, relation_source] from the
         # overlay (not stored on the YAML). Empty for most records.
         "eq": EQUIV.get(identifier, []),

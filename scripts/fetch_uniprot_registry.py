@@ -18,6 +18,19 @@ require both ``--apply`` and an exact saved ``--request-plan``.  The plan is red
 before the first response and immediately before output installation.  The receipt is
 installed last and is the generation boundary for the three normalized outputs.
 
+Plan/receipt schema v2 (#1082) binds every artifact by content digest and by its
+repository-relative path (absolute only for a path outside the checkout), never by
+device or inode, so a verified batch can be moved to another checkout or worktree and
+still verify there; any byte difference still fails closed.  A schema-v1 plan and
+receipt remain verifiable read-only: their absolute paths are re-anchored on the
+current checkout through the supplied receipt's repository-relative location, their
+parent inodes are ignored, and every content digest is still checked.  A v1 plan can
+no longer be applied; re-plan instead.
+
+Every v2 ProteinReference row records UniProt fragment status (#1081) as ``fragment``,
+taken from ``proteinDescription.flag`` ("Fragment"/"Fragments"), which the ``fragment``
+return field requests explicitly.  An unrecognized flag blocks that accession.
+
 Tests and reproducible offline reviews can provide ``--offline-responses`` instead of
 using the network.  There is no stale-release override: a missing, malformed, mixed, or
 unexpected release aborts the run before any existing output is replaced.  This script
@@ -70,9 +83,20 @@ DEFAULT_BLOCKED = DEFAULT_OUT_DIR / "uniprot_registry_blocked.tsv"
 DEFAULT_MEMBERSHIPS = DEFAULT_OUT_DIR / "uniprot_memberships.jsonl"
 DEFAULT_RECEIPT = DEFAULT_OUT_DIR / "uniprot_fetch_receipt.json"
 
-PLAN_SCHEMA_VERSION = 1
+PLAN_SCHEMA_VERSION = 2
+# v1 plans bound absolute paths and output-parent inodes; they are still verified, never
+# applied (#1082).
+LEGACY_PLAN_SCHEMA_VERSION = 1
+SUPPORTED_PLAN_SCHEMA_VERSIONS = frozenset({LEGACY_PLAN_SCHEMA_VERSION, PLAN_SCHEMA_VERSION})
 PLAN_KIND = "UNIPROT_REGISTRY_FETCH_REQUEST_PLAN"
-RECEIPT_SCHEMA_VERSION = 1
+# Receipts are written only for current plans; a legacy v1 plan verifies only with the v1
+# receipt it produced. Both receipt versions share one field set; v2 paths are
+# repository-relative.
+RECEIPT_SCHEMA_VERSION = 2
+RECEIPT_SCHEMA_FOR_PLAN = {
+    LEGACY_PLAN_SCHEMA_VERSION: 1,
+    PLAN_SCHEMA_VERSION: RECEIPT_SCHEMA_VERSION,
+}
 RECEIPT_KIND = "UNIPROT_REGISTRY_FETCH_RECEIPT"
 PENDING_KIND = "UNIPROT_REGISTRY_FETCH_GENERATION_PENDING"
 PLAN_ID_PREFIX = "uniprot-registry-fetch-plan:"
@@ -138,6 +162,12 @@ RETURN_FIELDS = (
     "sequence_version",
     *FACT_FIELDS,
 )
+# Registry plans from v2 also request UniProt's ``fragment`` field
+# (proteinDescription.flag) explicitly (#1081). RETURN_FIELDS stays the v1 list, which
+# other fetchers share.
+REGISTRY_RETURN_FIELDS = (*RETURN_FIELDS[:3], "fragment", *RETURN_FIELDS[3:])
+_FRAGMENT_FLAGS = frozenset({"Fragment", "Fragments"})
+_KNOWN_ENTRY_FLAGS = _FRAGMENT_FLAGS | {"Precursor"}
 USER_AGENT = "ProteinTraitsMech-UniProt-registry/1.0"
 REQUEST_HEADERS = {"Accept": "application/json", "User-Agent": USER_AGENT}
 RESPONSE_PROVENANCE_HEADERS = (
@@ -252,6 +282,9 @@ class VerifiedFetchReceipt:
     candidate_jsonl_bytes: bytes
     protein_registry_jsonl_bytes: bytes
     membership_registry_jsonl_bytes: bytes
+    # Where each bound artifact is in this checkout, by role: candidate_queue,
+    # selector_manifest, request_plan, fetch_receipt and the three outputs.
+    artifact_paths: dict[str, Path]
 
 
 def _canonical_json(value: Any) -> str:
@@ -510,6 +543,91 @@ def _output_path(path: Path) -> str:
     return str(_lexical_absolute(path))
 
 
+def _stable_path(path: Path) -> str:
+    """Repository-relative POSIX spelling, or the absolute one outside the checkout."""
+
+    lexical = _lexical_absolute(path)
+    try:
+        return lexical.relative_to(_lexical_absolute(REPO_ROOT)).as_posix()
+    except ValueError:
+        return str(lexical)
+
+
+def _stable_artifact_projection(artifact: CapturedArtifact) -> dict[str, Any]:
+    return {**_artifact_projection(artifact), "path": _stable_path(artifact.path)}
+
+
+def _located(stored: str) -> Path:
+    """Where a v2 plan's stored path is in this checkout."""
+
+    path = Path(stored)
+    return _lexical_absolute(path if path.is_absolute() else REPO_ROOT / path)
+
+
+def _plan_locator(plan: Mapping[str, Any], receipt_path: Path) -> Callable[[str], Path]:
+    """Map a plan's stored paths to this checkout (#1082).
+
+    v2 paths are already repository-relative.  A v1 plan stored absolute paths from the
+    checkout that produced it; when the supplied receipt is not at that exact path, the
+    old checkout root is recovered from the receipt's repository-relative location here,
+    and every v1 path under it is re-anchored on this checkout.  Content digests, not
+    these paths, decide whether the artifacts are the ones the plan bound.
+    """
+
+    if plan["schema_version"] != LEGACY_PLAN_SCHEMA_VERSION:
+        return _located
+    recorded = plan["output_paths"]["fetch_receipt"]
+    supplied = _lexical_absolute(receipt_path)
+    if not isinstance(recorded, str) or not Path(recorded).is_absolute():
+        raise RegistryBuildError("v1 request plan lacks an absolute fetch_receipt path")
+    if str(supplied) == recorded:
+        return lambda stored: _lexical_absolute(Path(stored))
+    try:
+        relative = supplied.relative_to(_lexical_absolute(REPO_ROOT)).as_posix()
+    except ValueError as exc:
+        raise RegistryBuildError(
+            "a relocated v1 fetch receipt must sit inside this checkout at its original "
+            "repository-relative path"
+        ) from exc
+    if not recorded.endswith("/" + relative):
+        raise RegistryBuildError(
+            "relocated v1 fetch receipt is not at its original repository-relative path: "
+            f"{relative} does not end {recorded}"
+        )
+    old_root = Path(recorded[: -len(relative) - 1])
+
+    def locate(stored: str) -> Path:
+        path = _lexical_absolute(Path(stored))
+        try:
+            return _lexical_absolute(REPO_ROOT / path.relative_to(old_root))
+        except ValueError:
+            return path
+
+    return locate
+
+
+def _plan_return_fields(schema_version: int) -> tuple[str, ...]:
+    return RETURN_FIELDS if schema_version == LEGACY_PLAN_SCHEMA_VERSION else REGISTRY_RETURN_FIELDS
+
+
+# Fields that only say where a plan's artifacts were, never what they contain.
+_PLAN_LOCATION_FIELDS = ("output_paths", "output_parent_bindings", "request_plan_id")
+_PLAN_ARTIFACT_FIELDS = (
+    "candidate_artifact",
+    "selector_manifest_artifact",
+    "offline_fixture_artifact",
+)
+
+
+def _plan_content_projection(plan: Mapping[str, Any]) -> dict[str, Any]:
+    projection = {key: value for key, value in plan.items() if key not in _PLAN_LOCATION_FIELDS}
+    for key in _PLAN_ARTIFACT_FIELDS:
+        artifact = projection.get(key)
+        if isinstance(artifact, dict):
+            projection[key] = {name: value for name, value in artifact.items() if name != "path"}
+    return projection
+
+
 def _is_below(path: Path, parent: Path) -> bool:
     try:
         _lexical_absolute(path).relative_to(_lexical_absolute(parent))
@@ -605,37 +723,29 @@ def _assert_bound_output_parent(output: BoundOutput) -> None:
 
 def _validate_output_bindings(
     paths: Mapping[str, Path], *, forbidden_artifacts: Sequence[CapturedArtifact]
-) -> dict[str, dict[str, Any]]:
-    bound = _bind_output_paths(paths, forbidden_artifacts=forbidden_artifacts)
-    try:
-        return {
-            role: {
-                "parent_path": str(output.path.parent),
-                "parent_device": os.fstat(output.parent_descriptor).st_dev,
-                "parent_inode": os.fstat(output.parent_descriptor).st_ino,
-            }
-            for role, output in bound.by_role.items()
-        }
-    finally:
-        bound.close()
+) -> None:
+    """Fail a plan early on output paths that could never be bound safely.
+
+    The plan records no device or inode (#1082): directory identity is held by retained
+    descriptors only within the one process that writes or verifies.
+    """
+
+    _bind_output_paths(paths, forbidden_artifacts=forbidden_artifacts).close()
 
 
-def _assert_bound_outputs_match_plan(bound: BoundOutputs, plan: Mapping[str, Any]) -> None:
-    if set(bound.by_role) != set(plan["output_paths"]):
+def _assert_bound_outputs_at(bound: BoundOutputs, locations: Mapping[str, Path]) -> None:
+    if set(bound.by_role) != set(locations):
         raise RegistryBuildError("bound output roles do not match request plan")
     for role, output in bound.by_role.items():
         _assert_bound_output_parent(output)
-        if str(output.path) != plan["output_paths"][role]:
+        if output.path != _lexical_absolute(locations[role]):
             raise RegistryBuildError(f"bound {role} output path does not match request plan")
-        metadata = os.fstat(output.parent_descriptor)
-        expected = plan["output_parent_bindings"][role]
-        observed = {
-            "parent_path": str(output.path.parent),
-            "parent_device": metadata.st_dev,
-            "parent_inode": metadata.st_ino,
-        }
-        if observed != expected:
-            raise RegistryBuildError(f"bound {role} output parent does not match request plan")
+
+
+def _assert_bound_outputs_match_plan(bound: BoundOutputs, plan: Mapping[str, Any]) -> None:
+    _assert_bound_outputs_at(
+        bound, {role: _located(path) for role, path in plan["output_paths"].items()}
+    )
 
 
 def _clean(value: Any) -> str | None:
@@ -895,7 +1005,9 @@ def _targets(
     return targets, invalid
 
 
-def request_url(accessions: Iterable[str]) -> str:
+def request_url(
+    accessions: Iterable[str], *, return_fields: Sequence[str] = RETURN_FIELDS
+) -> str:
     """Official REST URL for one exact-accession batch, including isoforms."""
     ordered = tuple(sorted(set(accessions)))
     if not ordered:
@@ -906,7 +1018,7 @@ def request_url(accessions: Iterable[str]) -> str:
         "format": "json",
         "size": "500",
         "includeIsoform": "true",
-        "fields": ",".join(RETURN_FIELDS),
+        "fields": ",".join(return_fields),
     }
     return f"{UNIPROT_SEARCH}?{urllib.parse.urlencode(params)}"
 
@@ -924,10 +1036,12 @@ def _target_projection(target: Target) -> dict[str, Any]:
     }
 
 
-def _request_projection(index: int, targets: Sequence[Target]) -> dict[str, Any]:
+def _request_projection(
+    index: int, targets: Sequence[Target], *, return_fields: Sequence[str] = RETURN_FIELDS
+) -> dict[str, Any]:
     accessions = [target.accession for target in targets]
     protein_ids = [target.protein_id for target in targets]
-    url = request_url(accessions)
+    url = request_url(accessions, return_fields=return_fields)
     row: dict[str, Any] = {
         "chunk_index": index,
         "accession_count": len(accessions),
@@ -955,7 +1069,12 @@ def _resolved_output_paths(args: argparse.Namespace) -> dict[str, Path]:
     return outputs
 
 
-def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
+def _derive_request_plan(
+    args: argparse.Namespace, *, schema_version: int = PLAN_SCHEMA_VERSION
+) -> PreparedPlan:
+    """Derive the exact plan; ``schema_version=1`` only rederives a legacy plan's content."""
+
+    return_fields = _plan_return_fields(schema_version)
     if not 1 <= args.batch_size <= 200:
         raise RegistryBuildError("--batch-size must be between 1 and 200")
     if not args.expect_release or _RELEASE.fullmatch(args.expect_release) is None:
@@ -980,7 +1099,7 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
     bound_inputs = [queue, selector]
     if offline_fixture is not None:
         bound_inputs.append(offline_fixture)
-    output_parent_bindings = _validate_output_bindings(outputs, forbidden_artifacts=bound_inputs)
+    _validate_output_bindings(outputs, forbidden_artifacts=bound_inputs)
     targets, blocked = _targets(candidates)
     if blocked:
         detail = "; ".join(
@@ -993,11 +1112,11 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
         raise RegistryBuildError("candidate request plan contains no eligible targets")
     target_rows = [_target_projection(target) for target in targets]
     requests = [
-        _request_projection(index, chunk)
+        _request_projection(index, chunk, return_fields=return_fields)
         for index, chunk in enumerate(_chunks(targets, args.batch_size), 1)
     ]
     plan: dict[str, Any] = {
-        "schema_version": PLAN_SCHEMA_VERSION,
+        "schema_version": schema_version,
         "kind": PLAN_KIND,
         "batch_id": args.batch,
         "source_batch": manifest["source_batch"],
@@ -1005,7 +1124,7 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
         "network_action_performed": False,
         "fresh_fetch_scope": "ALL_EXACT_TARGETS_IN_SELECTOR_BOUND_CANDIDATE_LEDGER",
         "candidate_artifact": {
-            **_artifact_projection(queue),
+            **_stable_artifact_projection(queue),
             "candidate_row_count": len(candidates),
             "candidate_id_count": len(candidates),
             "candidate_ids_sha256": _value_sha256(
@@ -1013,7 +1132,7 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
             ),
         },
         "selector_manifest_artifact": {
-            **_artifact_projection(selector),
+            **_stable_artifact_projection(selector),
             "selector_schema_version": manifest.get("schema_version"),
             "source_batch": manifest["source_batch"],
             "declared_candidate_sha256": manifest["candidate_jsonl_sha256"],
@@ -1024,7 +1143,7 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
         },
         "acquisition_mode": ("OFFLINE_FIXTURE" if offline_fixture is not None else "UNIPROT_REST"),
         "offline_fixture_artifact": (
-            _artifact_projection(offline_fixture) if offline_fixture is not None else None
+            _stable_artifact_projection(offline_fixture) if offline_fixture is not None else None
         ),
         "expected_uniprot_release": args.expect_release,
         "target_count": len(targets),
@@ -1037,15 +1156,14 @@ def _derive_request_plan(args: argparse.Namespace) -> PreparedPlan:
             "format": "json",
             "page_size": 500,
             "include_isoform": True,
-            "return_fields": list(RETURN_FIELDS),
+            "return_fields": list(return_fields),
             "response_release_header": "x-uniprot-release",
             "batch_size": args.batch_size,
         },
         "request_count": len(requests),
         "requests": requests,
         "requests_sha256": _value_sha256(requests),
-        "output_paths": {role: _output_path(path) for role, path in outputs.items()},
-        "output_parent_bindings": output_parent_bindings,
+        "output_paths": {role: _stable_path(path) for role, path in outputs.items()},
         "receipt_install_policy": "INSTALL_RECEIPT_LAST_AS_GENERATION_BOUNDARY",
     }
     plan["request_plan_id"] = PLAN_ID_PREFIX + _value_sha256(plan)
@@ -1069,7 +1187,7 @@ def _load_request_plan(path: Path) -> tuple[dict[str, Any], CapturedArtifact]:
         raise RegistryBuildError("request plan is not exact canonical JSON")
     if (
         type(value.get("schema_version")) is not int
-        or value.get("schema_version") != PLAN_SCHEMA_VERSION
+        or value.get("schema_version") not in SUPPORTED_PLAN_SCHEMA_VERSIONS
         or value.get("kind") != PLAN_KIND
     ):
         raise RegistryBuildError("request plan schema/kind mismatch")
@@ -1120,10 +1238,18 @@ def _response_payload(
 
 
 class NetworkClient:
-    def __init__(self, *, timeout: float, retries: int, interval: float):
+    def __init__(
+        self,
+        *,
+        timeout: float,
+        retries: int,
+        interval: float,
+        return_fields: Sequence[str] = RETURN_FIELDS,
+    ):
         self.timeout = timeout
         self.retries = retries
         self.interval = interval
+        self.return_fields = tuple(return_fields)
         self._last_request = 0.0
 
     def _throttle(self) -> None:
@@ -1133,7 +1259,7 @@ class NetworkClient:
         self._last_request = time.monotonic()
 
     def fetch(self, accessions: tuple[str, ...]) -> FetchResponse:
-        url = request_url(accessions)
+        url = request_url(accessions, return_fields=self.return_fields)
         for attempt in range(self.retries + 1):
             self._throttle()
             request = urllib.request.Request(url, headers=REQUEST_HEADERS)
@@ -1221,9 +1347,12 @@ def _offline_objects(artifact: CapturedArtifact) -> list[dict[str, Any]]:
 class OfflineClient:
     """Ordered, exact-request response fixture used for tests and offline review."""
 
-    def __init__(self, artifact: CapturedArtifact):
+    def __init__(
+        self, artifact: CapturedArtifact, *, return_fields: Sequence[str] = RETURN_FIELDS
+    ):
         self.path = artifact.path
         self.responses = _offline_objects(artifact)
+        self.return_fields = tuple(return_fields)
         self.index = 0
 
     def fetch(self, accessions: tuple[str, ...]) -> FetchResponse:
@@ -1249,7 +1378,7 @@ class OfflineClient:
             requested=accessions,
             release=release,
             results=tuple(results),
-            request_url=request_url(accessions),
+            request_url=request_url(accessions, return_fields=self.return_fields),
             response_url=None,
             status=int(raw.get("status", 200)),
             body_sha256=hashlib.sha256(body_bytes).hexdigest(),
@@ -1284,6 +1413,28 @@ def _protein_label(entry: dict[str, Any]) -> str | None:
                 if isinstance(full_name, dict) and _clean(full_name.get("value")):
                     return _clean(full_name["value"])
     return _clean(entry.get("uniProtkbId"))
+
+
+def entry_fragment_status(entry: Mapping[str, Any]) -> tuple[bool | None, str | None]:
+    """UniProt fragment status from ``proteinDescription.flag`` (#1081).
+
+    Returns ``(is_fragment, None)`` or ``(None, failure)``.  UniProt omits the flag for
+    a complete entry, so its absence means "not a fragment" only when the entry has a
+    protein description at all; an unrecognized flag value fails closed.
+    """
+
+    description = entry.get("proteinDescription")
+    if not isinstance(description, dict):
+        return None, "missing proteinDescription; fragment status unknown"
+    flag = description.get("flag")
+    if flag is None:
+        return False, None
+    if not isinstance(flag, str):
+        return None, "proteinDescription.flag is not a string"
+    tokens = [token.strip() for token in flag.split(",")]
+    if not all(tokens) or set(tokens) - _KNOWN_ENTRY_FLAGS:
+        return None, f"unrecognized proteinDescription.flag {flag!r}"
+    return bool(set(tokens) & _FRAGMENT_FLAGS), None
 
 
 def _entry_reference(
@@ -1586,14 +1737,14 @@ def _build_receipt(
 ) -> dict[str, Any]:
     output_paths = plan["output_paths"]
     receipt: dict[str, Any] = {
-        "schema_version": RECEIPT_SCHEMA_VERSION,
+        "schema_version": RECEIPT_SCHEMA_FOR_PLAN[plan["schema_version"]],
         "kind": RECEIPT_KIND,
         "generation_boundary": True,
         "generation_pending": False,
         "receipt_install_policy": "INSTALLED_LAST_AFTER_THREE_BOUND_OUTPUTS",
         "batch_id": plan["batch_id"],
         "request_plan_id": plan["request_plan_id"],
-        "request_plan_artifact": _artifact_projection(plan_artifact),
+        "request_plan_artifact": _stable_artifact_projection(plan_artifact),
         "expected_uniprot_release": plan["expected_uniprot_release"],
         "observed_uniprot_release": release,
         "acquisition_mode": plan["acquisition_mode"],
@@ -1682,7 +1833,9 @@ def _strict_blocked_rows(artifact: CapturedArtifact) -> list[dict[str, str]]:
     return rows
 
 
-def _request_plan_args(plan: Mapping[str, Any]) -> argparse.Namespace:
+def _request_plan_args(
+    plan: Mapping[str, Any], locate: Callable[[str], Path] = _located
+) -> argparse.Namespace:
     try:
         acquisition_mode = plan["acquisition_mode"]
         offline = plan["offline_fixture_artifact"]
@@ -1693,14 +1846,14 @@ def _request_plan_args(plan: Mapping[str, Any]) -> argparse.Namespace:
         elif acquisition_mode == "OFFLINE_FIXTURE":
             if not isinstance(offline, dict) or not isinstance(offline.get("path"), str):
                 raise RegistryBuildError("offline request plan lacks its fixture artifact")
-            offline_path = offline["path"]
+            offline_path = str(locate(offline["path"]))
         else:
             raise RegistryBuildError("request plan acquisition_mode is invalid")
         values = [
             "--queue",
-            str(plan["candidate_artifact"]["path"]),
+            str(locate(plan["candidate_artifact"]["path"])),
             "--selector-manifest",
-            str(plan["selector_manifest_artifact"]["path"]),
+            str(locate(plan["selector_manifest_artifact"]["path"])),
             "--batch",
             str(plan["batch_id"]),
             "--batch-size",
@@ -1708,13 +1861,13 @@ def _request_plan_args(plan: Mapping[str, Any]) -> argparse.Namespace:
             "--expect-release",
             str(plan["expected_uniprot_release"]),
             "--out",
-            str(plan["output_paths"]["protein_registry"]),
+            str(locate(plan["output_paths"]["protein_registry"])),
             "--membership-out",
-            str(plan["output_paths"]["membership_registry"]),
+            str(locate(plan["output_paths"]["membership_registry"])),
             "--blocked",
-            str(plan["output_paths"]["blocked_registry"]),
+            str(locate(plan["output_paths"]["blocked_registry"])),
             "--receipt",
-            str(plan["output_paths"]["fetch_receipt"]),
+            str(locate(plan["output_paths"]["fetch_receipt"])),
         ]
         if offline_path is not None:
             values.extend(("--offline-responses", offline_path))
@@ -1749,7 +1902,7 @@ def _verify_output_projection(
     artifact = (
         _capture_bound_output(bound_output, description=f"installed {role}")
         if bound_output is not None
-        else _capture(Path(expected_path), description=f"installed {role}")
+        else _capture(_located(expected_path), description=f"installed {role}")
     )
     if declared_sha != artifact.sha256 or declared_size != artifact.size_bytes:
         raise RegistryBuildError(f"installed {role} bytes do not match receipt")
@@ -1769,23 +1922,47 @@ def _verify_output_projection(
 
 
 def verify_fetch_receipt(*, receipt_path: Path, request_plan_path: Path) -> VerifiedFetchReceipt:
-    """Strictly verify one complete installed generation without network or writes."""
+    """Strictly verify one complete installed generation without network or writes.
+
+    The generation is located in this checkout, not where it was produced (#1082): a v2
+    plan's repository-relative paths, or a v1 plan's re-anchored absolute ones.  Every
+    input and output must still have exactly the bytes the plan and receipt bind.
+    """
 
     request_plan, plan_artifact = _load_request_plan(request_plan_path)
-    rederived = _derive_request_plan(_request_plan_args(request_plan))
-    _require_exact_plan(request_plan, rederived.plan)
-    expected_receipt_path = request_plan["output_paths"]["fetch_receipt"]
-    if _output_path(receipt_path) != expected_receipt_path:
+    schema_version = request_plan["schema_version"]
+    locate = _plan_locator(request_plan, receipt_path)
+    try:
+        rederived = _derive_request_plan(
+            _request_plan_args(request_plan, locate), schema_version=schema_version
+        )
+    except RegistryBuildError as exc:
+        raise RegistryBuildError(
+            f"cannot rederive the request plan from its artifacts in this checkout: {exc}"
+        ) from exc
+    if schema_version == PLAN_SCHEMA_VERSION:
+        _require_exact_plan(request_plan, rederived.plan)
+    elif _plan_content_projection(request_plan) != _plan_content_projection(rederived.plan):
+        raise RegistryBuildError("v1 request plan content does not match its rederived content")
+    output_paths = {role: locate(path) for role, path in request_plan["output_paths"].items()}
+    if _lexical_absolute(receipt_path) != output_paths["fetch_receipt"]:
         raise RegistryBuildError("supplied receipt path does not match independent request plan")
-    output_paths = {role: Path(path) for role, path in request_plan["output_paths"].items()}
+    artifact_paths = {
+        "candidate_queue": rederived.queue.path,
+        "selector_manifest": rederived.selector_manifest.path,
+        "request_plan": plan_artifact.path,
+        **output_paths,
+    }
     bound = _bind_output_paths(output_paths, forbidden_artifacts=[plan_artifact])
     try:
-        _assert_bound_outputs_match_plan(bound, request_plan)
+        _assert_bound_outputs_at(bound, output_paths)
         return _verify_fetch_receipt_bound(
             request_plan=request_plan,
             plan_artifact=plan_artifact,
             bound=bound,
             candidate_jsonl_bytes=rederived.queue.raw,
+            locate=locate,
+            artifact_paths=artifact_paths,
         )
     finally:
         bound.close()
@@ -1797,7 +1974,11 @@ def _verify_fetch_receipt_bound(
     plan_artifact: CapturedArtifact,
     bound: BoundOutputs,
     candidate_jsonl_bytes: bytes,
+    locate: Callable[[str], Path],
+    artifact_paths: dict[str, Path],
 ) -> VerifiedFetchReceipt:
+    schema_version = request_plan["schema_version"]
+    output_paths = {role: artifact_paths[role] for role in bound.by_role}
     receipt_artifact = _capture_bound_output(
         bound.by_role["fetch_receipt"], description="fetch receipt"
     )
@@ -1828,10 +2009,10 @@ def _verify_fetch_receipt_bound(
         "receipt_id",
     }
     if set(receipt) != expected_receipt_keys:
-        raise RegistryBuildError("fetch receipt does not have the exact v1 field set")
+        raise RegistryBuildError("fetch receipt does not have the exact receipt field set")
     if (
         type(receipt.get("schema_version")) is not int
-        or receipt.get("schema_version") != RECEIPT_SCHEMA_VERSION
+        or receipt.get("schema_version") != RECEIPT_SCHEMA_FOR_PLAN[schema_version]
         or receipt.get("kind") != RECEIPT_KIND
         or receipt.get("generation_boundary") is not True
         or receipt.get("generation_pending") is not False
@@ -1861,7 +2042,19 @@ def _verify_fetch_receipt_bound(
         or target_count != request_plan["target_count"]
     ):
         raise RegistryBuildError("fetch receipt does not bind the exact plan/release/targets")
-    if receipt.get("request_plan_artifact") != _artifact_projection(plan_artifact):
+    plan_projection = receipt.get("request_plan_artifact")
+    if schema_version == PLAN_SCHEMA_VERSION:
+        plan_bound = plan_projection == _stable_artifact_projection(plan_artifact)
+    else:
+        plan_bound = (
+            isinstance(plan_projection, dict)
+            and set(plan_projection) == {"path", "sha256", "size_bytes"}
+            and isinstance(plan_projection["path"], str)
+            and locate(plan_projection["path"]) == plan_artifact.path
+            and plan_projection["sha256"] == plan_artifact.sha256
+            and plan_projection["size_bytes"] == plan_artifact.size_bytes
+        )
+    if not plan_bound:
         raise RegistryBuildError("fetch receipt does not bind supplied request-plan bytes")
     mode = request_plan["acquisition_mode"]
     if (
@@ -1906,7 +2099,7 @@ def _verify_fetch_receipt_bound(
             "unexpected_accessions",
         }:
             raise RegistryBuildError(
-                f"fetch receipt response {index} does not have the exact v1 field set"
+                f"fetch receipt response {index} does not have the exact response field set"
             )
         headers = response.get("response_header_projection")
         if (
@@ -2017,11 +2210,18 @@ def _verify_fetch_receipt_bound(
     references: dict[str, dict[str, Any]] = {}
     for line_number, row in enumerate(registry_rows, 1):
         findings = validate_protein_reference(
-            row, path=Path(request_plan["output_paths"]["protein_registry"]), line=line_number
+            row,
+            path=Path(request_plan["output_paths"]["protein_registry"]),
+            line=line_number,
+            fetch_staging=True,
         )
         if findings:
             raise RegistryBuildError("installed protein registry fails strict validation")
         protein_id = str(row["protein_id"])
+        if schema_version == PLAN_SCHEMA_VERSION and type(row.get("fragment")) is not bool:
+            raise RegistryBuildError(
+                f"installed ProteinReference {protein_id} lacks its UniProt fragment status"
+            )
         if protein_id in references:
             raise RegistryBuildError("installed protein registry has duplicate protein_id")
         target = targets_by_id.get(protein_id)
@@ -2084,7 +2284,7 @@ def _verify_fetch_receipt_bound(
             or rechecked.inode != initial.inode
         ):
             raise RegistryBuildError(f"installed {role} changed during strict verification")
-    _assert_bound_outputs_match_plan(bound, request_plan)
+    _assert_bound_outputs_at(bound, output_paths)
     final_receipt = _capture_bound_output(
         bound.by_role["fetch_receipt"], description="fetch receipt final recheck"
     )
@@ -2094,7 +2294,7 @@ def _verify_fetch_receipt_bound(
         or final_receipt.inode != receipt_artifact.inode
     ):
         raise RegistryBuildError("fetch receipt changed during strict verification")
-    _assert_bound_outputs_match_plan(bound, request_plan)
+    _assert_bound_outputs_at(bound, output_paths)
     return VerifiedFetchReceipt(
         receipt=receipt,
         request_plan=request_plan,
@@ -2104,6 +2304,7 @@ def _verify_fetch_receipt_bound(
         candidate_jsonl_bytes=candidate_jsonl_bytes,
         protein_registry_jsonl_bytes=captured["protein_registry"].raw,
         membership_registry_jsonl_bytes=captured["membership_registry"].raw,
+        artifact_paths=dict(artifact_paths),
     )
 
 
@@ -2117,6 +2318,11 @@ def build(args: argparse.Namespace) -> int:
     if args.request_plan is None:
         raise RegistryBuildError("--apply requires an exact saved --request-plan")
     supplied_plan, plan_artifact = _load_request_plan(args.request_plan)
+    if supplied_plan["schema_version"] != PLAN_SCHEMA_VERSION:
+        raise RegistryBuildError(
+            f"request plan schema v{supplied_plan['schema_version']} can be verified but not "
+            f"applied; re-plan with the current v{PLAN_SCHEMA_VERSION} dry run"
+        )
     _require_exact_plan(supplied_plan, prepared.plan)
     output_paths = _resolved_output_paths(args)
     forbidden_collisions = {
@@ -2161,10 +2367,13 @@ def _execute_apply(
     targets = list(checkpoint.targets)
     client: NetworkClient | OfflineClient
     if checkpoint.offline_fixture is not None:
-        client = OfflineClient(checkpoint.offline_fixture)
+        client = OfflineClient(checkpoint.offline_fixture, return_fields=REGISTRY_RETURN_FIELDS)
     else:
         client = NetworkClient(
-            timeout=args.timeout, retries=args.retries, interval=args.request_interval
+            timeout=args.timeout,
+            retries=args.retries,
+            interval=args.request_interval,
+            return_fields=REGISTRY_RETURN_FIELDS,
         )
     references: list[dict[str, Any]] = []
     memberships: list[dict[str, Any]] = []
@@ -2249,6 +2458,12 @@ def _execute_apply(
                 )
                 continue
             reference, failures = _entry_reference(matches[0], target, release)
+            if reference is not None:
+                fragment, fragment_failure = entry_fragment_status(matches[0])
+                if fragment_failure is not None:
+                    reference, failures = None, [fragment_failure]
+                else:
+                    reference["fragment"] = fragment
             if failures:
                 blocked.append(
                     _blocked_row(
