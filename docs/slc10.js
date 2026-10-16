@@ -23,7 +23,7 @@ function details(row) {
       "Reference coordinates; the checksum does not certify the complete assay construct");body.append(t,el("p",row.construct));}
   body.append(el("pre",JSON.stringify(row,null,2))); $("detail").showModal();
   const id=row.assertion_id||row.mechanism_id||row.reasoning_id;
-  if(id&&history.replaceState)history.replaceState(null,"",location.pathname+location.search+"#"+encodeURIComponent(id));
+  if(id&&typeof history!=="undefined"&&history.replaceState)history.replaceState(null,"",location.pathname+location.search+"#"+encodeURIComponent(id));
 }
 function action(text,row,cls) {const b=el("button",text,cls); b.type="button"; b.addEventListener("click",()=>details(row)); return b;}
 function table(node,headings,rows,caption) {
@@ -50,7 +50,7 @@ async function main() {
       if(e[field]?.length){c.append(el("h4",label));for(const ref of e[field])c.append(action(indexed.get(ref).activity||ref,indexed.get(ref)));}}
     evidence(c,e.evidence);$("explanations").append(c);}
   function matrix(){const site=b.sites.find(s=>s.assertion_id===$("site").value);
-    if(history.replaceState){
+    if(typeof history!=="undefined"&&history.replaceState){
       const sp=new URLSearchParams(location.search);
       if($("site").value && $("site").value!=="slc10-site:7ZYI-J-706-NA-4.5A") sp.set("site",$("site").value);
       else sp.delete("site");
