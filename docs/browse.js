@@ -800,28 +800,41 @@ function loadMethods() {
   return METHODS_PROMISE;
 }
 
-// A record's detection methods = source-specific ∪ category-generic (the
-// common-parent feature), source first, de-duplicated by name.
+// A record's detection methods = record-specific ∪ source-specific ∪
+// category-generic (the common-parent feature), de-duplicated by name.
 function methodsHtml(r) {
-  if (!METHODS) return "";
-  const bs = (METHODS.by_source || {})[r.src] || [];
-  const bc = (METHODS.by_category || {})[r.cat] || [];
+  if (!r) return "";
+  const br = Array.isArray(r.dm) ? r.dm : [];
+  if (!METHODS && !br.length) return "";
+  const bs = (METHODS && METHODS.by_source && METHODS.by_source[r.src]) || [];
+  const bc = (METHODS && METHODS.by_category && METHODS.by_category[r.cat]) || [];
+  const localId = r.id && r.id.includes(":") ? r.id.slice(r.id.indexOf(":") + 1) : (r.id || "{id}");
+  const firstPat = Array.isArray(r.pat) && r.pat[0] ? String(r.pat[0]) : null;
   const seen = new Set();
   const items = [];
-  for (const [group, list] of [["source", bs], ["category", bc]]) {
+  for (const [group, list] of [["record", br], ["source", bs], ["category", bc]]) {
     for (const m of list) {
       if (!m || seen.has(m.name)) continue;
       seen.add(m.name);
+      const mType = m.method_type || m.type || "";
+      const mEdam = m.edam || m.edam_operation || "";
+      const mEco = m.eco || m.evidence_code || "";
+      const mRef = m.ref || m.reference || "";
+      let recipe = m.recipe || "";
+      if (recipe) {
+        if (r.id) recipe = recipe.replace(/\{curie\}/g, r.id).replace(/\{id\}/g, localId);
+        if (firstPat) recipe = recipe.replace(/<Regex>/g, firstPat).replace(/\{pat\}/g, firstPat);
+      }
       const toolLink = m.tool && m.tool.startsWith("biotools:")
         ? `<a href="https://bio.tools/${m.tool.slice(9)}" target="_blank" rel="noopener">${escapeHTML(m.tool.slice(9))}</a>`
         : (m.tool ? `<a href="${escapeAttr(m.tool)}" target="_blank" rel="noopener">tool</a>` : "");
-      const grounding = [m.edam, m.eco].filter(Boolean).map(escapeHTML).join(" · ");
+      const grounding = [mEdam, mEco].filter(Boolean).map(escapeHTML).join(" · ");
       items.push(`<li>
         <strong>${escapeHTML(m.name)}</strong>
-        <span class="map-src">${escapeHTML((m.method_type || "").toLowerCase().replace(/_/g, " "))} · ${group}</span>
+        <span class="map-src">${escapeHTML(mType.toLowerCase().replace(/_/g, " "))} · ${group}</span>
         ${toolLink ? " · " + toolLink : ""}
-        ${m.ref ? " · " + curieLink(m.ref) : ""}
-        ${m.recipe ? `<div class="pre" style="margin:.25rem 0 0">${escapeHTML(m.recipe)}</div>` : ""}
+        ${mRef ? " · " + curieLink(mRef) : ""}
+        ${recipe ? `<div class="pre" style="margin:.25rem 0 0">${escapeHTML(recipe)}</div>` : ""}
         ${grounding ? `<div class="map-src">${grounding}</div>` : ""}
       </li>`);
     }
