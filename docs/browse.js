@@ -809,7 +809,9 @@ function methodsHtml(r) {
   const bs = (METHODS && METHODS.by_source && METHODS.by_source[r.src]) || [];
   const bc = (METHODS && METHODS.by_category && METHODS.by_category[r.cat]) || [];
   const localId = r.id && r.id.includes(":") ? r.id.slice(r.id.indexOf(":") + 1) : (r.id || "{id}");
-  const firstPat = Array.isArray(r.pat) && r.pat[0] ? String(r.pat[0]) : null;
+  const firstPat = typeof r.pat === "string" && r.pat
+    ? r.pat
+    : (Array.isArray(r.pat) && r.pat[0] ? String(r.pat[0]) : null);
   const seen = new Set();
   const items = [];
   for (const [group, list] of [["record", br], ["source", bs], ["category", bc]]) {
@@ -826,8 +828,10 @@ function methodsHtml(r) {
         if (firstPat) recipe = recipe.replace(/<Regex>/g, firstPat).replace(/\{pat\}/g, firstPat);
       }
       const toolLink = m.tool && m.tool.startsWith("biotools:")
-        ? `<a href="https://bio.tools/${m.tool.slice(9)}" target="_blank" rel="noopener">${escapeHTML(m.tool.slice(9))}</a>`
-        : (m.tool ? `<a href="${escapeAttr(m.tool)}" target="_blank" rel="noopener">tool</a>` : "");
+        ? `<a href="${escapeAttr("https://bio.tools/" + encodeURIComponent(m.tool.slice(9)))}" target="_blank" rel="noopener">${escapeHTML(m.tool.slice(9))}</a>`
+        : (m.tool && /^https?:\/\//i.test(m.tool)
+          ? `<a href="${escapeAttr(m.tool)}" target="_blank" rel="noopener">tool</a>`
+          : (m.tool ? `<span class="map-src">${escapeHTML(m.tool)}</span>` : ""));
       const grounding = [mEdam, mEco].filter(Boolean).map(escapeHTML).join(" · ");
       items.push(`<li>
         <strong>${escapeHTML(m.name)}</strong>

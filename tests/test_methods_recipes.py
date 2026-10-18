@@ -25,11 +25,11 @@ BUILD_DOCS_SPEC.loader.exec_module(BUILD_DOCS)
 
 
 def test_build_methods_validates_and_matches_committed_json():
-    assert BUILD_METHODS.main() == 0
     yaml_doc = yaml.safe_load((ROOT / "data" / "methods" / "methods.yaml").read_text(encoding="utf-8"))
     json_doc = json.loads((ROOT / "docs" / "data" / "methods.json").read_text(encoding="utf-8"))
     assert json_doc["by_source"] == yaml_doc["by_source"]
     assert json_doc["by_category"] == yaml_doc["by_category"]
+    assert BUILD_METHODS.main() == 0
 
 
 def test_every_method_has_runnable_non_comment_recipe():
@@ -46,6 +46,10 @@ def test_every_method_has_runnable_non_comment_recipe():
                 assert recipe and not recipe.startswith("#"), (
                     f"{scope}/{key}/{m['name']} has comment-only recipe: {recipe!r}"
                 )
+                for tok in BUILD_METHODS.PLACEHOLDER_RE.findall(recipe):
+                    assert BUILD_METHODS.is_valid_placeholder(tok), (
+                        f"{scope}/{key}/{m['name']} has unsupported placeholder {{{tok}}}"
+                    )
 
 
 def test_all_concrete_schema_categories_and_facets_have_runnable_recipes():
@@ -59,6 +63,10 @@ def test_all_concrete_schema_categories_and_facets_have_runnable_recipes():
     pvs = schema["enums"]["ProteinTraitCategoryEnum"]["permissible_values"]
     concrete_cats = set(pvs.keys()) - BUILD_METHODS.ABSTRACT_CATEGORIES
     assert concrete_cats <= set(by_category.keys())
+
+    inferred = BUILD_METHODS.inferred_sources()
+    assert len(inferred) >= 35
+    assert inferred <= set(by_source.keys())
 
     facets_path = ROOT / "docs" / "data" / "facets.json"
     if facets_path.exists():

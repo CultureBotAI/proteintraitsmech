@@ -10,7 +10,9 @@ real. Stdlib + PyYAML.
 
 from __future__ import annotations
 
+import ast
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -19,12 +21,36 @@ SRC = REPO_ROOT / "data" / "methods" / "methods.yaml"
 OUT = REPO_ROOT / "docs" / "data" / "methods.json"
 FACETS = REPO_ROOT / "docs" / "data" / "facets.json"
 SCHEMA = REPO_ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
+DOCS_INDEX_SCRIPT = REPO_ROOT / "scripts" / "build_docs_index.py"
 
 REQUIRED = ("name", "method_type", "edam", "tool", "recipe")
 TYPES = {"SEQUENCE_PATTERN", "HMM_PROFILE", "PROFILE_MATRIX",
          "STRUCTURAL_ALGORITHM", "ML_PREDICTOR", "HOMOLOGY_TRANSFER",
          "EXPERIMENTAL"}
 ABSTRACT_CATEGORIES = {"UPPER", "OTHER"}
+PLACEHOLDER_RE = re.compile(r"\{([A-Za-z0-9_.-]+)\}")
+ALLOWED_PLACEHOLDERS = {"id", "curie", "pat", "input", "output", "db"}
+
+
+def is_valid_placeholder(token: str) -> bool:
+    return token in ALLOWED_PLACEHOLDERS or token.startswith(("input.", "output.", "db."))
+
+
+def inferred_sources() -> set[str]:
+    """Extract all source strings returned by infer_source() in build_docs_index.py."""
+    if not DOCS_INDEX_SCRIPT.exists():
+        return set()
+    tree = ast.parse(DOCS_INDEX_SCRIPT.read_text(encoding="utf-8"))
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef) and node.name == "infer_source":
+            return {
+                sub.value.value
+                for sub in ast.walk(node)
+                if isinstance(sub, ast.Return)
+                and isinstance(sub.value, ast.Constant)
+                and isinstance(sub.value.value, str)
+            }
+    return set()
 
 
 def main() -> int:
@@ -34,14 +60,17 @@ def main() -> int:
     by_category = doc.get("by_category") or {}
 
     schema_doc = yaml.safe_load(SCHEMA.read_text(encoding="utf-8"))
-    enum_pvs = (
-        ((schema_doc.get("enums") or {}).get("ProteinTraitCategoryEnum") or {})
-        .get("permissible_values")
-        or {}
-    )
+    enums = schema_doc.get("enums") or {}
+    enum_pvs = (enums.get("ProteinTraitCategoryEnum") or {}).get("permissible_values") or {}
     cats = set(enum_pvs.keys()) - ABSTRACT_CATEGORIES
+    schema_types = set(
+        ((enums.get("MethodTypeEnum") or {}).get("permissible_values") or {}).keys()
+    ) or TYPES
 
     errors = []
+    if schema_types != TYPES:
+        errors.append(f"TYPES mismatch vs schema MethodTypeEnum: {TYPES ^ schema_types}")
+
     n_methods = 0
     for scope, table in (("by_source", by_source), ("by_category", by_category)):
         for key, methods in table.items():
@@ -59,11 +88,19 @@ def main() -> int:
                     errors.append(
                         f"{scope}/{key}/{m.get('name','?')}: comment-only recipe {recipe!r}"
                     )
-                if m.get("method_type") not in TYPES:
+                for tok in PLACEHOLDER_RE.findall(recipe):
+                    if not is_valid_placeholder(tok):
+                        errors.append(
+                            f"{scope}/{key}/{m.get('name','?')}: unsupported placeholder {{{tok}}}"
+                        )
+                if m.get("method_type") not in schema_types:
                     errors.append(f"{scope}/{key}/{m.get('name')}: bad method_type {m.get('method_type')}")
 
     for missing_cat in sorted(cats - set(by_category.keys())):
         errors.append(f"by_category: missing concrete schema category {missing_cat}")
+
+    for missing_src in sorted(inferred_sources() - set(by_source.keys())):
+        errors.append(f"by_source: missing infer_source() source {missing_src!r}")
 
     if FACETS.exists():
         facets = json.loads(FACETS.read_text(encoding="utf-8"))

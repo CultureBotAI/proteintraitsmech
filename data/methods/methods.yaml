@@ -114,7 +114,7 @@ by_source:
       tool: https://repeatsdb.org/
       ref: PMID:36629399
       eco: ECO:0000041
-      recipe: "curl -s 'https://repeatsdb.org/api/entries?uniprot={id}'   # or run ReUPred / Raphael on {input.pdb}"
+      recipe: "curl -s 'https://repeatsdb.org/api/entries?repeatsdb_id={id}'   # or run ReUPred / Raphael on {input.pdb}"
   TCDB:
     - name: BLAST vs TCDB (TCDB-BLAST)
       method_type: HOMOLOGY_TRANSFER
@@ -146,7 +146,7 @@ by_source:
       tool: https://www.rhea-db.org/
       ref: PMID:34755880
       eco: ECO:0000250
-      recipe: "CLEAN --fasta {input.fasta} && curl -s 'https://www.rhea-db.org/rhea?query=ec:{ec}&format=tsv'   # or map UniProt catalytic activity to {curie}"
+      recipe: "CLEAN --fasta {input.fasta} && curl -s 'https://www.rhea-db.org/rhea?query={curie}&format=tsv'   # or map UniProt catalytic activity to {curie}"
   CARD/ARO:
     - name: RGI (Resistance Gene Identifier)
       method_type: HOMOLOGY_TRANSFER
@@ -242,7 +242,7 @@ by_source:
       tool: biotools:intact
       ref: PMID:34761267
       eco: ECO:0000250
-      recipe: "curl -s 'https://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/query/{id}'   # query IntAct PSICQUIC"
+      recipe: "curl -s 'https://www.ebi.ac.uk/Tools/webservices/psicquic/intact/webservices/current/search/query/{curie}'   # query IntAct PSICQUIC"
   PSI-MOD:
     - name: Mass-spectrometry PTM identification (MaxQuant / MSFragger) or MusiteDeep
       method_type: ML_PREDICTOR
