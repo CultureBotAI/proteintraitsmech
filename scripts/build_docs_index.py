@@ -561,6 +561,8 @@ def load_record(path: Path, *,
         # Synonyms stay complete for search and record display.
         "syn": list(dict.fromkeys(s.get("synonym_text") for s in (data.get("synonyms") or [])
                                  if isinstance(s, dict) and s.get("synonym_text"))),
+        "dm": [m for m in (data.get("detection_methods") or [])
+               if isinstance(m, dict) and m.get("name")],
         "cg": data.get("causal_graphs") or [],
         "history": data.get("curation_history") or [],
         "path": rel,
@@ -581,7 +583,7 @@ MAX_SHARD_RECORDS = 25000
 # upfront payload small as the corpus changes.
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
-DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "cg", "history", "gf")
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "dm", "cg", "history", "gf")
 LIST_DEF = 140
 
 
