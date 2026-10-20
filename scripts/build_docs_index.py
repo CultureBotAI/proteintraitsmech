@@ -199,7 +199,25 @@ def infer_source(identifier: str, path: Path) -> str:
         return "MEROPS"
     if identifier.startswith(("proteintraitsmech:UNIPROTKB_", "proteintraitsmech:UNIPROT_FT_")):
         return "UniProtKB"
-    if identifier.startswith(("proteintraitsmech:STABILITY_", "proteintraitsmech:EVO_", "proteintraitsmech:RIPP_LEADER_")):
+    if identifier.startswith((
+        "proteintraitsmech:STABILITY_",
+        "proteintraitsmech:EVO_",
+        "proteintraitsmech:RIPP_LEADER_",
+        "proteintraitsmech:NONSTD_",
+        "proteintraitsmech:LOWCOMP_",
+        "proteintraitsmech:COMPBIAS_",
+        "proteintraitsmech:QUATERNARY_",
+        "proteintraitsmech:ALLOSTERIC_",
+        "proteintraitsmech:SYMMETRY_",
+        "proteintraitsmech:COILED_COIL_",
+        "proteintraitsmech:SIGNAL_PEPTIDE_",
+        "proteintraitsmech:TRANSIT_PEPTIDE_",
+        "proteintraitsmech:PROPEPTIDE_",
+        "proteintraitsmech:DISULFIDE_INTRACHAIN",
+        "proteintraitsmech:DISULFIDE_INTERCHAIN",
+        "proteintraitsmech:DISULFIDE_CYSTINE_KNOT",
+        "proteintraitsmech:DISULFIDE_ALLOSTERIC_REDOX_SWITCH",
+    )):
         return "curated"
     if identifier.startswith("proteintraitsmech:"):
         # LSF seed used bare TERM names; UniProt uses UNIPROTKB_ prefix.

@@ -1,0 +1,35 @@
+identifier: proteintraitsmech:COILED_COIL_PARALLEL_DIMER
+label: "parallel dimeric coiled coil"
+definition: >-
+  A two-stranded alpha-helical coiled coil in which both chains run N-to-C in the same orientation, packing a-to-a' and d-to-d' core layers in register.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE_STRUCTURE
+trait_category: MIXED_COILED_COIL
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:COILED_COIL_HEPTAD_REPEAT
+synonyms:
+  - synonym_text: "two-stranded parallel coiled coil"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "parallel coiled-coil dimer"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "DeepCoil2 / Marcoil / LOGICOIL coiled-coil & oligomeric state predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0268
+    tool: "biotools:marcoil"
+    evidence_code: ECO:0007669
+    reference: PMID:30590416
+    recipe: "deepcoil -i {input} -o {output}"
+  - name: "SOCKET2 knobs-into-holes coiled-coil geometry assignment"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0268
+    tool: "biotools:socket2"
+    evidence_code: ECO:0007669
+    reference: PMID:34643705
+    recipe: "socket2 -f {input} -c 7.0 -o {output}"
+evidence:
+  - reference: PMID:28118746
+    notes: "Structural determinants of parallel vs antiparallel dimeric coiled coils."
+license: CC-BY-4.0
