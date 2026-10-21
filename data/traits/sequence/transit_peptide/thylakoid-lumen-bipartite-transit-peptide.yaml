@@ -8,23 +8,96 @@ trait_category: SEQ_TRANSIT_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_TRANSIT
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
 synonyms:
   - synonym_text: luTP
     synonym_type: EXACT_SYNONYM
   - synonym_text: "thylakoid luminal transit peptide"
     synonym_type: EXACT_SYNONYM
 xrefs:
-  - SO:0001075
+  - SO:0000725
 detection_methods:
   - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
     method_type: ML_PREDICTOR
     edam_operation: EDAM:operation_2489
     tool: "biotools:targetp"
     evidence_code: ECO:0000255
-    reference: PMID:31609389
+    reference: PMID:41809595
     recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: lutp_bipartite_stromal_thylakoid_import
+    title: "Bipartite stromal TOC/TIC import, SPP intermediate cleavage, and thylakoid Sec/Tat + TPP processing"
+    description: "A bipartite transit_peptide (SO:0000725) first participates in protein import into chloroplast stroma (GO:0045037) and SPP cleavage, exposing the second targeting signal for protein import into chloroplast thylakoid membrane (GO:0045038), TPP endopeptidase activity (GO:0004175), and localization to the chloroplast thylakoid lumen (GO:0009543)."
+    nodes:
+      - node_id: "SO:0000725"
+        label: transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0000725"
+        description: "Bipartite plastid transit peptide (N-terminal cTP + C-terminal thylakoid transfer peptide)."
+      - node_id: "GO:0045037"
+        label: "protein import into chloroplast stroma"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045037"
+        description: "First-stage import across the chloroplast envelope via TOC/TIC and SPP cleavage."
+      - node_id: "GO:0045038"
+        label: "protein import into chloroplast thylakoid membrane"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045038"
+        description: "Second-stage translocation across the thylakoid membrane via cpSec1 or cpTat."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Stromal and thylakoidal processing peptidase cleavage of the bipartite transit peptide."
+      - node_id: "GO:0009543"
+        label: "chloroplast thylakoid lumen"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0009543"
+        description: "Thylakoid lumen compartment where the mature protein resides."
+    edges:
+      - subject: "SO:0000725"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0045037"
+        description: "The N-terminal stromal targeting portion of the bipartite luTP directs chloroplast envelope import."
+        evidence:
+          - reference: PMID:37324391
+            snippet: "Transit peptides contain specific motifs and domains initially recognized by cytosolic factors followed by the chloroplast import components at the outer and inner envelope of the chloroplast membrane."
+            notes: "First-stage stromal import of bipartite luTP (PMID:37324391). (ECO:0000305)"
+      - subject: "GO:0045037"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0045038"
+        description: "Stromal import and transit peptide cleavage expose a second targeting signal for thylakoid translocation."
+        evidence:
+          - reference: PMID:37324391
+            snippet: "In the case of thylakoid-localized proteins, cleavage of the transit peptides may expose a second targeting signal guiding the protein to the thylakoid lumen or allow insertion into the thylakoid membrane by internal sequence information."
+            notes: "Unmasking of second targeting signal after stromal import (PMID:37324391). (ECO:0000305)"
+      - subject: "GO:0045038"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Cleavage of the transit peptide accompanies thylakoid sorting."
+        evidence:
+          - reference: PMID:37324391
+            snippet: "Once the preprotein emerges on the stromal side of the chloroplast protein import machinery, the transit peptide is cleaved by stromal processing peptidase."
+            notes: "Processing peptidase cleavage during plastid/thylakoid sorting (PMID:37324391). (ECO:0000305)"
+      - subject: "GO:0045038"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
+        object: "GO:0009543"
+        description: "The second targeting signal guides thylakoid-localized proteins to the thylakoid lumen."
+        evidence:
+          - reference: PMID:37324391
+            snippet: "In the case of thylakoid-localized proteins, cleavage of the transit peptides may expose a second targeting signal guiding the protein to the thylakoid lumen or allow insertion into the thylakoid membrane by internal sequence information."
+            notes: "Target end location in the chloroplast thylakoid lumen (PMID:37324391). (ECO:0000305)"
 evidence:
-  - reference: PMID:31609389
-    notes: "TargetP 2.0 identifies bipartite thylakoid luminal transit peptides (luTP)."
+  - reference: PMID:37324391
+    notes: "Cleavage of chloroplast transit peptides exposes a second targeting signal guiding thylakoid-localized proteins to the thylakoid lumen."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

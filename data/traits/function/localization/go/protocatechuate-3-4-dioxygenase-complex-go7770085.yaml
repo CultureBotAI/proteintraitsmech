@@ -1,7 +1,7 @@
 identifier: GO:7770085
 label: "protocatechuate 3,4-dioxygenase complex"
 definition: >-
-  A heterooligomeric non-heme iron dioxygenase enzyme complex composed of alpha (PcaG) and beta (PcaH) protomers (forming (alpha-beta)n assemblies with a catalytic Fe(III) site in the beta subunit) that catalyzes the intradiol ortho-cleavage of protocatechuate (3,4-dihydroxybenzoate) to 3-carboxy-cis,cis-muconate in the beta-ketoadipate pathway.
+  A heterooligomeric non-heme iron dioxygenase enzyme complex composed of alpha (PcaG) and beta (PcaH) protomers (forming (alpha-beta)n assemblies with a catalytic Fe(III) site in the beta subunit) that catalyzes the intradiol ortho-cleavage of protocatechuate (3,4-dihydroxybenzoate) to 3-carboxy-cis,cis-muconate(3-) in the beta-ketoadipate pathway.
 definition_source: "GO / CellStructureMech cross-Mech alignment"
 trait_axis: FUNCTION
 trait_category: FUNC_LOCALIZATION
@@ -19,7 +19,7 @@ synonyms:
 xrefs:
   - EC:1.13.11.3
   - GO:0018578
-  - RHEA:15457
+  - RHEA:10084
 detection_methods:
   - name: "InterProScan / ComplexPortal GO cellular-component subunit profile scan"
     method_type: HMM_PROFILE
@@ -28,7 +28,96 @@ detection_methods:
     evidence_code: ECO:0000265
     reference: PMID:24451626
     recipe: "interproscan.sh -i {input} -goterms -f tsv -o {output}"
+causal_graphs:
+  - graph_id: pcagh_intradiol_ortho_cleavage
+    title: "Non-heme Fe(III)-dependent intradiol ortho-cleavage of protocatechuate by the PcaGH complex"
+    description: "The heterooligomeric protocatechuate 3,4-dioxygenase complex (GO:7770085) incorporates a catalytic iron(3+) cofactor (CHEBI:29034) at the active site to enable protocatechuate 3,4-dioxygenase activity (GO:0018578 / EC:1.13.11.3 / RHEA:10084), converting 3,4-dihydroxybenzoate (CHEBI:36241) into 3-carboxy-cis,cis-muconate(3-) (CHEBI:57496) in protocatechuate catabolic process, ortho-cleavage (GO:0019618)."
+    nodes:
+      - node_id: "GO:7770085"
+        label: "protocatechuate 3,4-dioxygenase complex"
+        node_type: PROTEIN
+        grounding: "GO:7770085"
+        description: "Alpha-beta (PcaGH)n heterooligomeric non-heme ferric dioxygenase complex."
+      - node_id: "CHEBI:29034"
+        label: iron(3+)
+        node_type: CHEMICAL
+        grounding: "CHEBI:29034"
+        description: "Catalytic non-heme high-spin Fe(III) ion coordinated by Tyr408, Tyr447, His460, His462, and OH-."
+      - node_id: "GO:0018578"
+        label: "protocatechuate 3,4-dioxygenase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0018578"
+        description: "Intradiol ring-cleaving dioxygenase catalysis (EC:1.13.11.3 / RHEA:10084)."
+      - node_id: "CHEBI:36241"
+        label: "3,4-dihydroxybenzoate"
+        node_type: CHEMICAL
+        grounding: "CHEBI:36241"
+        description: "Protocatechuate aromatic substrate chelating the active-site Fe(III)."
+      - node_id: "CHEBI:57496"
+        label: "3-carboxy-cis,cis-muconate(3-)"
+        node_type: CHEMICAL
+        grounding: "CHEBI:57496"
+        description: "Ring-opened intradiol ortho-cleavage product entering the beta-ketoadipate pathway."
+      - node_id: "GO:0019618"
+        label: "protocatechuate catabolic process, ortho-cleavage"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0019618"
+        description: "Aerobic protocatechuate ortho-cleavage branch of the beta-ketoadipate pathway."
+    edges:
+      - subject: "GO:7770085"
+        predicate: "has component"
+        predicate_id: RO:0002180
+        object: "CHEBI:29034"
+        description: "The 3,4-PCD complex contains an active-site non-heme Fe(III) cofactor."
+        evidence:
+          - reference: PMID:16101286
+            snippet: "The active site Fe(III) of protocatechuate 3,4-dioxygenase (3,4-PCD) from Pseudomonas putida is ligated axially by Tyr447 and His462 and equatorially by Tyr408, His460, and OH(-). Tyr447 and OH(-) are displaced as protocatechuate (3,4-dihydroxybenzoate, PCA) chelates the iron and appear to serve as in situ bases to promote this process."
+            notes: "Active-site Fe(III) coordination in 3,4-PCD (PMID:16101286). (ECO:0000269)"
+      - subject: "GO:7770085"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0018578"
+        description: "The PcaHG holoenzyme complex enables protocatechuate 3,4-dioxygenase catalysis."
+        evidence:
+          - reference: PMID:11029436
+            snippet: "The nucleotide sequence of the A348 pcaHGB genes, which encode protocatechuate 3,4-dioxygenase (PcaHG) and beta-carboxy-cis,cis-muconate cycloisomerase (PcaB) for the first two steps in catabolism of the diphenolic protocatechuate, was determined."
+            notes: "PcaHG complex encodes protocatechuate 3,4-dioxygenase activity (PMID:11029436). (ECO:0000269)"
+      - subject: "GO:0018578"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:36241"
+        description: "Protocatechuate 3,4-dioxygenase chelates 3,4-dihydroxybenzoate at the active-site Fe(III)."
+        evidence:
+          - reference: PMID:16101286
+            snippet: "Tyr447 and OH(-) are displaced as protocatechuate (3,4-dihydroxybenzoate, PCA) chelates the iron and appear to serve as in situ bases to promote this process."
+            notes: "3,4-dihydroxybenzoate chelation at active-site Fe(III) (PMID:16101286). (ECO:0000269)"
+      - subject: "GO:0018578"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "CHEBI:57496"
+        description: "Protocatechuate 3,4-dioxygenase catalyzes ring cleavage to yield 3-carboxy-cis,cis-muconate(3-)."
+        evidence:
+          - reference: PMID:11029436
+            snippet: "The nucleotide sequence of the A348 pcaHGB genes, which encode protocatechuate 3,4-dioxygenase (PcaHG) and beta-carboxy-cis,cis-muconate cycloisomerase (PcaB) for the first two steps in catabolism of the diphenolic protocatechuate, was determined."
+            notes: "Formation of beta-carboxy-cis,cis-muconate in first step of protocatechuate catabolism (PMID:11029436). (ECO:0000269)"
+      - subject: "GO:0018578"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0019618"
+        description: "Protocatechuate 3,4-dioxygenase catalyzes the first step of protocatechuate ortho-cleavage catabolism."
+        evidence:
+          - reference: PMID:11029436
+            snippet: "The nucleotide sequence of the A348 pcaHGB genes, which encode protocatechuate 3,4-dioxygenase (PcaHG) and beta-carboxy-cis,cis-muconate cycloisomerase (PcaB) for the first two steps in catabolism of the diphenolic protocatechuate, was determined."
+            notes: "First step of protocatechuate ortho-cleavage catabolic pathway (PMID:11029436). (ECO:0000269)"
 evidence:
-  - reference: PMID:2563464
-    notes: "Crystal structure of protocatechuate 3,4-dioxygenase from Pseudomonas aeruginosa."
+  - reference: PMID:16101286
+    notes: "The active site Fe(III) of protocatechuate 3,4-dioxygenase from Pseudomonas putida chelates protocatechuate (3,4-dihydroxybenzoate) for ring cleavage."
+  - reference: PMID:11029436
+    notes: "PcaHG encodes protocatechuate 3,4-dioxygenase catalyzing the first step in protocatechuate catabolism to beta-carboxy-cis,cis-muconate."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

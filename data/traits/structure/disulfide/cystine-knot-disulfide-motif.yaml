@@ -24,7 +24,66 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:25352545
     recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: cystine_knot_threaded_macrocycle_stability
+    title: "Threaded three-disulfide cystine-knot topology locks tertiary fold and confers high stability"
+    description: "Oxidative protein folding (GO:0006457) couples six conserved L-cysteine residues (CHEBI:29950) into three interlocked L-cystine (cross-link) bridges (MOD:00034) forming a cystine-knot motif, which is causally upstream of regulation of protein stability (GO:0031647) against thermal and chemical degradation."
+    nodes:
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Six conserved cysteine residues (CysI-CysVI) arranged in a cystine-knot sequence pattern."
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "Three conserved disulfide linkages forming a cystine-knot network."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Oxidative folding assembling the three-disulfide cystine-knot topology."
+      - node_id: "GO:0031647"
+        label: "regulation of protein stability"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031647"
+        description: "Ultrastable tertiary structure resistant to thermal and chemical degradation."
+    edges:
+      - subject: "GO:0006457"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:29950"
+        description: "Oxidative folding of cystine-knot peptides utilizes six conserved L-cysteine residues."
+        evidence:
+          - reference: PMID:40763564
+            snippet: "Cyclotides are plant-derived cyclic peptides with three conserved disulfide linkages, forming a cyclic cystine knot (CCK) motif. This CCK topology makes them ultra stable structures and resistant to thermal and chemical degradation."
+            notes: "Conserved cysteine residues forming three disulfide linkages (PMID:40763564). (ECO:0000305)"
+      - subject: "GO:0006457"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00034"
+        description: "Oxidative folding produces three conserved L-cystine disulfide linkages in a cystine knot."
+        evidence:
+          - reference: PMID:40763564
+            snippet: "Cyclotides are plant-derived cyclic peptides with three conserved disulfide linkages, forming a cyclic cystine knot (CCK) motif. This CCK topology makes them ultra stable structures and resistant to thermal and chemical degradation."
+            notes: "Formation of three-disulfide cystine knot motif (PMID:40763564). (ECO:0000305)"
+      - subject: "GO:0006457"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0031647"
+        description: "The cystine-knot topology confers ultra-high resistance to thermal and chemical degradation."
+        evidence:
+          - reference: PMID:40763564
+            snippet: "Cyclotides are plant-derived cyclic peptides with three conserved disulfide linkages, forming a cyclic cystine knot (CCK) motif. This CCK topology makes them ultra stable structures and resistant to thermal and chemical degradation."
+            notes: "Ultrastability against thermal and chemical degradation (PMID:40763564). (ECO:0000305)"
 evidence:
-  - reference: PMID:19569188
-    notes: "Cystine-knot topologies in knottins, cyclotides, and growth factors."
+  - reference: PMID:40763564
+    notes: "Three conserved disulfide linkages form a cystine knot motif that confers high thermal and chemical stability."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

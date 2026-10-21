@@ -22,7 +22,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26950260
     recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: cryptic_pocket_opening_and_capture
+    title: "Conformational fluctuation opens transient cryptic cavity for ligand capture and allosteric regulation"
+    description: "Thermal loop/side-chain fluctuations expose a transient small molecule binding cavity (GO:0036094) that captures an effector ligand (CHEBI:35224), stabilizing the open-pocket state to enable enzyme regulator activity (GO:0030234) on orthosteric catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "CHEBI:35224"
+        label: effector
+        node_type: LIGAND
+        grounding: "CHEBI:35224"
+        description: "Ligand capturing the transiently open cryptic pocket."
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Ligand recognition within the transiently exposed cryptic cavity."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Allosteric regulation stabilized by cryptic pocket occupancy."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Orthosteric enzyme activity modulated by cryptic pocket engagement."
+    edges:
+      - subject: "GO:0036094"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:35224"
+        description: "Small molecule binding at the transiently exposed cryptic pocket captures the effector ligand."
+        evidence:
+          - reference: PMID:42734533
+            snippet: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change, making them difficult to identify and exploit in structure-based ligand discovery."
+            notes: "Cryptic pocket opening and ligand binding (PMID:42734533). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Ligand capture in the open cryptic pocket stabilizes a regulatory conformational state."
+        evidence:
+          - reference: PMID:42734533
+            snippet: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change, making them difficult to identify and exploit in structure-based ligand discovery."
+            notes: "Cryptic pocket conformational capture (PMID:42734533). (ECO:0000305)"
+      - subject: "GO:0030234"
+        predicate: regulates
+        predicate_id: RO:0002211
+        object: "GO:0003824"
+        description: "Cryptic-pocket-mediated enzyme regulator activity modulates target catalytic activity."
+        evidence:
+          - reference: PMID:42821008
+            snippet: "Allosteric and cryptic binding pockets represent a vast underexploited frontier in drug discovery, offering routes to biological targets historically considered undruggable."
+            notes: "Modulation of target activity via cryptic pockets (PMID:42821008). (ECO:0000305)"
 evidence:
-  - reference: PMID:36973262
-    notes: "PocketMiner and CryptoSite reveal cryptic pockets across the proteome."
+  - reference: PMID:42734533
+    notes: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change."
+  - reference: PMID:42821008
+    notes: "Allosteric and cryptic binding pockets offer routes to modulate biological targets historically considered undruggable."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

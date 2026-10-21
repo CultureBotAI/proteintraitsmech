@@ -8,7 +8,7 @@ trait_category: SEQ_PROPEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_PROPEP
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 synonyms:
   - synonym_text: "furin/prohormone convertase propeptide"
     synonym_type: EXACT_SYNONYM
@@ -25,7 +25,68 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:15019782
     recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: dibasic_propeptide_convertase_excision
+    title: "Proprotein convertase cleavage at dibasic (KR/RR/RxxR) motifs excises propeptide for hormone maturation"
+    description: "A dibasic-flanked propeptide (SO:0001062) participates in proteolytic protein processing (GO:0016485) enabled by subtilisin/kexin-like proprotein convertase endopeptidase activity (GO:0004175), driving secretory protein maturation (GO:0051604)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Prohormone/growth-factor propeptide flanked by paired basic (KR, RR, RxxR) cleavage sites."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Proprotein convertase (PCSK/furin/Kex2) cleavage C-terminal to basic pairs."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Endoproteolytic propeptide excision in the late Golgi network or secretory granules."
+      - node_id: "GO:0051604"
+        label: "protein maturation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051604"
+        description: "Proteolytic maturation of secretory proteins."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0016485"
+        description: "The dibasic-flanked N-terminal propeptide is cleaved at the consensus furin/PCSK dibasic site."
+        evidence:
+          - reference: PMID:37721936
+            snippet: "Some types of collagens, including transmembrane MACIT collagens and C. elegans cuticle collagens, are N-terminally cleaved at a dibasic site that resembles the consensus for furin or other proprotein convertases of the subtilisin/kexin (PCSK) family."
+            notes: "Dibasic site cleavage by PCSK/furin convertases (PMID:37721936). (ECO:0000269)"
+      - subject: "GO:0004175"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0016485"
+        description: "Subtilisin/kexin serine protease activity cleaves after dibasic residues in the late Golgi network."
+        evidence:
+          - reference: PMID:37482809
+            snippet: "Kex2 protease (Kex2p) is a membrane-bound serine protease responsible for the proteolytic maturation of various secretory proteins by cleaving after dibasic residues in the late Golgi network."
+            notes: "Endoproteolytic cleavage after dibasic residues (PMID:37482809). (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051604"
+        description: "Proteolytic cleavage after dibasic residues drives maturation of secretory proteins."
+        evidence:
+          - reference: PMID:37482809
+            snippet: "Kex2 protease (Kex2p) is a membrane-bound serine protease responsible for the proteolytic maturation of various secretory proteins by cleaving after dibasic residues in the late Golgi network."
+            notes: "Proteolytic maturation of secretory proteins (PMID:37482809). (ECO:0000269)"
 evidence:
-  - reference: PMID:22931919
-    notes: "Biochemistry and substrate specificity of proprotein convertases and dibasic propeptides."
+  - reference: PMID:37721936
+    notes: "Precursor proteins are N-terminally cleaved at dibasic sites matching the consensus for furin and subtilisin/kexin (PCSK) proprotein convertases."
+  - reference: PMID:37482809
+    notes: "Kex2 serine protease catalyzes proteolytic maturation of secretory proteins by cleaving after dibasic residues in the late Golgi network."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

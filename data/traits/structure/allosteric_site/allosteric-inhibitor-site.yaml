@@ -24,7 +24,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26950260
     recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: allosteric_inhibitor_t_state_stabilization
+    title: "Negative allosteric modulator binding stabilizes the T-state to inhibit catalysis"
+    description: "A negative allosteric modulator or feedback inhibitor (CHEBI:35224) binds at the allosteric inhibitor pocket via small molecule binding (GO:0036094), mediating enzyme inhibitor activity (GO:0004857) that negatively regulates orthosteric catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "CHEBI:35224"
+        label: effector
+        node_type: LIGAND
+        grounding: "CHEBI:35224"
+        description: "Negative allosteric modulator (NAM) or pathway feedback inhibitor."
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Effector binding at the non-orthosteric inhibitor cavity."
+      - node_id: "GO:0004857"
+        label: "enzyme inhibitor activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004857"
+        description: "Stabilization of the low-affinity or autoinhibited T-state conformation."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Orthosteric enzyme catalytic activity attenuated non-competitively."
+    edges:
+      - subject: "GO:0036094"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:35224"
+        description: "Small molecule binding at the allosteric inhibitor pocket engages the negative effector."
+        evidence:
+          - reference: PMID:31665428
+            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
+            notes: "Allosteric inhibitor pocket ligand engagement (PMID:31665428). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004857"
+        description: "Inhibitor pocket occupancy propagates an inhibitory conformational signal to the orthosteric site."
+        evidence:
+          - reference: PMID:31707700
+            snippet: "An allosteric mechanism refers to the biological regulation process wherein macromolecules propagate the effect of ligand binding at one site to a spatially distant orthosteric locus, thus affecting activity."
+            notes: "Allosteric propagation to enzyme inhibition (PMID:31707700). (ECO:0000305)"
+      - subject: "GO:0004857"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "GO:0003824"
+        description: "Allosteric enzyme inhibitor activity non-competitively attenuates orthosteric catalysis."
+        evidence:
+          - reference: PMID:31665428
+            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
+            notes: "Negative regulation of catalytic activity (PMID:31665428). (ECO:0000305)"
 evidence:
-  - reference: PMID:20971780
-    notes: "Structural mechanisms of negative allosteric inhibition across enzyme families."
+  - reference: PMID:31665428
+    notes: "Allosteric ligand binding at a topographically distinct site modulates and inhibits target protein function."
+  - reference: PMID:31707700
+    notes: "Allosteric ligand binding propagates regulatory effects to a spatially distant orthosteric locus."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

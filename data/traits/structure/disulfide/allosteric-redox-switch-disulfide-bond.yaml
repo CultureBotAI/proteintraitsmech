@@ -22,9 +22,80 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:25352545
     recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: allosteric_disulfide_redox_switch_regulation
+    title: "Reversible thiol-disulfide modification of allosteric cystine bonds controls protein activity"
+    description: "Protein-disulfide reductase activity (GO:0015035) modifies an allosteric L-cystine (cross-link) (MOD:00034) into reduced L-cysteine residues (CHEBI:29950), driving conformational enzyme regulator activity (GO:0030234) that regulates target catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "Allosteric disulfide bond in an intracellular or extracellular protein."
+      - node_id: "GO:0015035"
+        label: "protein-disulfide reductase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0015035"
+        description: "Thiol isomerase / oxidoreductase modifying allosteric disulfide bonds."
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Reduced dithiol cysteine pair generated upon allosteric disulfide cleavage."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Redox-coupled allosteric switch controlling mature protein function."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Target protein function controlled by allosteric disulfide modification."
+    edges:
+      - subject: "GO:0015035"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "MOD:00034"
+        description: "Thiol isomerases / oxidoreductases act on allosteric cystine disulfide bonds."
+        evidence:
+          - reference: PMID:42681370
+            snippet: "Thiol isomerases are oxidoreductases that mediate disulfide bond formation in nascent proteins of the endoplasmic reticulum to ensure their structural integrity. In addition to its role in protein folding, thiol isomerases can modify allosteric disulfide bonds in both intracellular and extracellular proteins, thereby controlling protein function."
+            notes: "Modification of allosteric disulfide bonds by thiol isomerases (PMID:42681370). (ECO:0000305)"
+      - subject: "GO:0015035"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "CHEBI:29950"
+        description: "Reductive cleavage converts the allosteric cystine crosslink into L-cysteine thiols."
+        evidence:
+          - reference: PMID:42681370
+            snippet: "Thiol isomerases are oxidoreductases that mediate disulfide bond formation in nascent proteins of the endoplasmic reticulum to ensure their structural integrity. In addition to its role in protein folding, thiol isomerases can modify allosteric disulfide bonds in both intracellular and extracellular proteins, thereby controlling protein function."
+            notes: "Reductive modification of allosteric disulfide bonds (PMID:42681370). (ECO:0000305)"
+      - subject: "GO:0015035"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Thiol isomerase modification of allosteric disulfides triggers an allosteric regulatory switch."
+        evidence:
+          - reference: PMID:42681370
+            snippet: "Thiol isomerases are oxidoreductases that mediate disulfide bond formation in nascent proteins of the endoplasmic reticulum to ensure their structural integrity. In addition to its role in protein folding, thiol isomerases can modify allosteric disulfide bonds in both intracellular and extracellular proteins, thereby controlling protein function."
+            notes: "Allosteric control of protein function via disulfide modification (PMID:42681370). (ECO:0000305)"
+      - subject: "GO:0030234"
+        predicate: regulates
+        predicate_id: RO:0002211
+        object: "GO:0003824"
+        description: "Allosteric disulfide switching controls target protein function."
+        evidence:
+          - reference: PMID:42681370
+            snippet: "Thiol isomerases are oxidoreductases that mediate disulfide bond formation in nascent proteins of the endoplasmic reticulum to ensure their structural integrity. In addition to its role in protein folding, thiol isomerases can modify allosteric disulfide bonds in both intracellular and extracellular proteins, thereby controlling protein function."
+            notes: "Regulation of protein function by allosteric disulfide switch (PMID:42681370). (ECO:0000305)"
 evidence:
-  - reference: PMID:17001100
-    notes: "Allosteric disulfide bonds and their characteristic -RHStaple dihedral geometry."
-  - reference: PMID:24743683
-    notes: "Classification of catalytic and allosteric disulfides from dihedral strain energy."
+  - reference: PMID:42681370
+    notes: "Thiol isomerases modify allosteric disulfide bonds in intracellular and extracellular proteins, thereby controlling protein function."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

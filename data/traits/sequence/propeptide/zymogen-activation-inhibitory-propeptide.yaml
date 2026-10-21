@@ -8,7 +8,7 @@ trait_category: SEQ_PROPEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_PROPEP
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 synonyms:
   - synonym_text: "zymogen activation peptide"
     synonym_type: EXACT_SYNONYM
@@ -24,7 +24,82 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:15019782
     recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: zymogen_propeptide_autoinhibition_and_activation
+    title: "Autoinhibitory propeptide steric blockade and proteolytic zymogen activation"
+    description: "An uncleaved propeptide (SO:0001062) participates in zymogen activation (GO:0031638) while intramolecular enzyme inhibitor activity (GO:0004857) negatively regulates catalytic activity (GO:0003824); endopeptidase activity (GO:0004175) enables zymogen activation (GO:0031638), positively regulating catalytic activity."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Cleavable autoinhibitory pro-domain or activation peptide of a zymogen."
+      - node_id: "GO:0004857"
+        label: "enzyme inhibitor activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004857"
+        description: "Steric active-site occlusion or cysteine-switch coordination maintaining zymogen latency."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Activating protease cleavage of the propeptide-catalytic domain junction."
+      - node_id: "GO:0031638"
+        label: "zymogen activation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031638"
+        description: "Proteolytic removal of the inhibitory propeptide and active-site maturation."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Mature enzyme catalytic activity."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0031638"
+        description: "The intramolecular propeptide of the inactive zymogen is processed during zymogen activation."
+        evidence:
+          - reference: PMID:31557781
+            snippet: "CatC is first synthetized as an inactive zymogen containing an intramolecular chain propeptide, the dimeric form of which is processed into the mature tetrameric form by proteolytic cleavages."
+            notes: "Intramolecular propeptide processing during zymogen maturation (PMID:31557781). (ECO:0000269)"
+      - subject: "GO:0004857"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "GO:0003824"
+        description: "Intramolecular propeptide inhibition maintains the zymogen in an inactive state."
+        evidence:
+          - reference: PMID:31557781
+            snippet: "CatC is first synthetized as an inactive zymogen containing an intramolecular chain propeptide, the dimeric form of which is processed into the mature tetrameric form by proteolytic cleavages."
+            notes: "Negative regulation of catalysis in latent zymogen (PMID:31557781). (ECO:0000269)"
+      - subject: "GO:0004175"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0031638"
+        description: "Post-translational proteolytic digestion of the propeptide triggers zymogen activation."
+        evidence:
+          - reference: PMID:38421254
+            snippet: "The preparation of active recombinant MTG requires post-translational proteolytic digestion of a propeptide that functions as an intramolecular chaperone to assist the correct folding of the MTG zymogen (MTGz) in the biosynthesis."
+            notes: "Proteolytic cleavage drives zymogen activation (PMID:38421254). (ECO:0000269)"
+      - subject: "GO:0031638"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Proteolytic removal of the propeptide produces the active mature enzyme."
+        evidence:
+          - reference: PMID:38421254
+            snippet: "The preparation of active recombinant MTG requires post-translational proteolytic digestion of a propeptide that functions as an intramolecular chaperone to assist the correct folding of the MTG zymogen (MTGz) in the biosynthesis."
+            notes: "Unmasking of mature catalytic activity (PMID:38421254). (ECO:0000269)"
 evidence:
-  - reference: PMID:16002793
-    notes: "Mechanisms of zymogen latency and proteolytic propeptide activation."
+  - reference: PMID:31557781
+    notes: "Cathepsin C is synthesized as an inactive zymogen with a propeptide that is processed into the mature active enzyme by proteolytic cleavages."
+  - reference: PMID:38421254
+    notes: "Preparation of active enzyme requires post-translational proteolytic digestion of the zymogen propeptide."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0
