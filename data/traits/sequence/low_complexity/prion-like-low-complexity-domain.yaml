@@ -1,0 +1,40 @@
+identifier: proteintraitsmech:LOWCOMP_PRION_LIKE_DOMAIN
+label: "prion-like low-complexity domain"
+definition: >-
+  A glutamine/asparagine/tyrosine/glycine-enriched, hydrophobic-depleted low-complexity sequence domain resembling yeast prion determinants (Sup35, Rnq1, Ure2) that drives reversible biomolecular condensate assembly or self-templating cross-beta fibrils.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_LOW_COMPLEXITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:LOWCOMP_REGION
+  - IDPO:00076
+synonyms:
+  - synonym_text: PrLD
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "prion-like domain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Q/N-rich prion-like low-complexity region"
+    synonym_type: RELATED_SYNONYM
+detection_methods:
+  - name: "PLAAC HMM prion-like amino-acid composition scan"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:plaac"
+    evidence_code: ECO:0000362
+    reference: PMID:24667259
+    recipe: "java -jar plaac.jar -i {input} -p all > {output}"
+  - name: "SEG / fLPS low-complexity sequence segmentation"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0000362
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 {input} > {output}"
+evidence:
+  - reference: PMID:24667259
+    notes: "PLAAC: a web and command-line application to scan for high-probability prion-like domains."
+  - reference: PMID:25891072
+    notes: "Prion-like domains in RNA-binding proteins are essential for phase separation and stress granules."
+license: CC-BY-4.0

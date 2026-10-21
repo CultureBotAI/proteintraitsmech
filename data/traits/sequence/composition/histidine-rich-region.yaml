@@ -1,0 +1,29 @@
+identifier: proteintraitsmech:COMPBIAS_HISTIDINE_RICH_REGION
+label: "histidine-rich region"
+definition: >-
+  A compositionally biased protein region significantly enriched in L-histidine residues (including polyHis runs and His-X repeats), conferring pH-responsive protonation switching, divalent transition-metal (Ni2+, Zn2+, Cu2+) coordination, or subnuclear speckle targeting.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_COMPOSITION
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:LOWCOMP_REGION
+synonyms:
+  - synonym_text: "His-rich region"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "polyhistidine-enriched region"
+    synonym_type: RELATED_SYNONYM
+sequence_pattern: "H{5,}"
+detection_methods:
+  - name: "fLPS2 compositional bias binomial P-value scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0007669
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 -c default {input} > {output}"
+evidence:
+  - reference: PMID:28851299
+    notes: "Discovery of histidine-rich compositional biases in proteomes using fLPS."
+license: CC-BY-4.0

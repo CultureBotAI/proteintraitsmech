@@ -1026,6 +1026,10 @@ seed-ripp *args:
 seed-uniprot-peptides *args:
     python3 scripts/seed_uniprot_peptide_classes.py {{args}}
 
+# Curated foundational sequence/structural/mixed protein trait classes + GO cross-Mech resolution
+seed-foundational-traits *args:
+    uv run python scripts/seed_foundational_traits.py {{args}}
+
 # ARO (Antibiotic Resistance Ontology, CC-BY) -> FUNC_RESISTANCE (seed-obo aro).
 fetch-aro:
     mkdir -p data/raw/aro
