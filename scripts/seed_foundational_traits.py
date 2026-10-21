@@ -32,7 +32,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from record_io import write_record  # noqa: E402
+from record_io import append_to_section, write_record  # noqa: E402
 from yaml_emit import folded, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -389,7 +389,7 @@ SPECS: tuple[TraitSpec, ...] = (
             ("Q/N-rich prion-like low-complexity region", "RELATED_SYNONYM"),
         ),
         evidence=(
-            ("PMID:24667259", "PLAAC: a web and command-line application to scan forigh-probability prion-like domains."),
+            ("PMID:24667259", "PLAAC: a web and command-line application to scan for high-probability prion-like domains."),
             ("PMID:25891072", "Prion-like domains in RNA-binding proteins are essential for phase separation and stress granules."),
         ),
         detection_methods=(M_PLAAC, M_SEG),
@@ -1228,7 +1228,7 @@ SPECS: tuple[TraitSpec, ...] = (
         definition=(
             "A parallel dimeric coiled-coil motif characterized by conserved L-leucine "
             "residues at every seventh (d) position of the heptad repeat and a buried polar "
-            "asparagine at an central a position that specifies dimer register."
+            "asparagine at a central a position that specifies dimer register."
         ),
         trait_axis="SEQUENCE_STRUCTURE",
         trait_category="MIXED_COILED_COIL",
@@ -1428,7 +1428,7 @@ SPECS: tuple[TraitSpec, ...] = (
             ("luTP", "EXACT_SYNONYM"),
             ("thylakoid luminal transit peptide", "EXACT_SYNONYM"),
         ),
-        xrefs=("SO:0001074",),
+        xrefs=("SO:0001075",),
         evidence=(("PMID:31609389", "TargetP 2.0 identifies bipartite thylakoid luminal transit peptides (luTP)."),),
         detection_methods=(M_TARGETP2,),
     ),
@@ -1658,8 +1658,8 @@ def emit_record(spec: TraitSpec) -> str:
     return "\n".join(lines) + "\n"
 
 
-def go_0016937_seed() -> tuple[Path, str]:
-    """Return path and seed payload to merge obsolete GO:0004085 into GO:0016937."""
+def go_0016937_seed() -> tuple[Path, str | None]:
+    """Return path and updated payload to merge obsolete GO:0004085 into GO:0016937."""
     path = (
         TRAITS_DIR
         / "function"
@@ -1667,43 +1667,12 @@ def go_0016937_seed() -> tuple[Path, str]:
         / "go"
         / "short-chain-fatty-acyl-coa-dehydrogenase-activity-go0016937.yaml"
     )
-    text = """identifier: GO:0016937
-label: "short-chain fatty acyl-CoA dehydrogenase activity"
-definition: >-
-  Catalysis of the reaction: a short-chain 2,3-saturated fatty acyl-CoA + H+ + oxidized [electron-transfer flavoprotein] = a short-chain (2E)-enoyl-CoA + reduced [electron-transfer flavoprotein]. A short-chain fatty acid has an aliphatic tail containing fewer than 6 carbons.
-definition_source: "GO (2026-06-15)"
-trait_axis: FUNCTION
-trait_category: FUNC_MOLECULAR_FUNCTION
-term_kind: CLASS
-mapping_status: SEEDED
-parent_traits:
-  - GO:0003995
-synonyms:
-  - synonym_text: "butanoyl-CoA dehydrogenase"
-    synonym_type: NARROW_SYNONYM
-  - synonym_text: "butyryl dehydrogenase"
-    synonym_type: NARROW_SYNONYM
-  - synonym_text: "butyryl-CoA dehydrogenase activity"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "short-chain acyl CoA dehydrogenase"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "short-chain-acyl-CoA dehydrogenase activity"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "unsaturated acyl-CoA reductase"
-    synonym_type: BROAD_SYNONYM
-xrefs:
-  - EC:1.3.8.1
-  - GO:0004085
-  - KEGG_REACTION:R01178
-  - MetaCyc:RXN-13449
-  - RHEA:24004
-  - RHEA:31287
-  - RHEA:43456
-  - RHEA:47196
-  - UM-BBD_reactionID:r0013
-license: CC-BY 4.0
-"""
-    return path, text
+    if not path.exists():
+        return path, None
+    existing = path.read_text(encoding="utf-8")
+    if "GO:0004085" in existing:
+        return path, existing
+    return path, append_to_section(existing, "xrefs", "xrefs:\n- GO:0004085\n")
 
 
 def main() -> int:
@@ -1726,7 +1695,7 @@ def main() -> int:
     # Also merge GO:0004085 alt_id into existing GO:0016937 record if not already present.
     go_path, go_seed = go_0016937_seed()
     go_updated = False
-    if go_path.exists():
+    if go_seed is not None:
         existing_go = go_path.read_text(encoding="utf-8")
         if "GO:0004085" not in existing_go or args.force:
             go_updated = True

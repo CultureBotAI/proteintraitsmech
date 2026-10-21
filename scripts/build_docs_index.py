@@ -213,11 +213,10 @@ def infer_source(identifier: str, path: Path) -> str:
         "proteintraitsmech:SIGNAL_PEPTIDE_",
         "proteintraitsmech:TRANSIT_PEPTIDE_",
         "proteintraitsmech:PROPEPTIDE_",
-        "proteintraitsmech:DISULFIDE_INTRACHAIN",
-        "proteintraitsmech:DISULFIDE_INTERCHAIN",
-        "proteintraitsmech:DISULFIDE_CYSTINE_KNOT",
-        "proteintraitsmech:DISULFIDE_ALLOSTERIC_REDOX_SWITCH",
-    )):
+    )) or (
+        identifier.startswith("proteintraitsmech:DISULFIDE_")
+        and identifier != "proteintraitsmech:DISULFIDE_BOND"
+    ):
         return "curated"
     if identifier.startswith("proteintraitsmech:"):
         # LSF seed used bare TERM names; UniProt uses UNIPROTKB_ prefix.

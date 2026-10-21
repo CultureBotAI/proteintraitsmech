@@ -20,7 +20,7 @@ Use [`curate-yaml-record`](../curate-yaml-record/SKILL.md) when a record already
 
 1. **Class-level traits only (`term_kind: CLASS`)**: Every record in `data/traits/` defines a reusable protein trait class, never an individual protein accession (`UniProtKB:...` carriers belong in `canonical_examples` via the release-pinned grounding workflow, never as a `ProteinTraitRecord` `identifier`).
 2. **Audited writer route**: Never hand-write unvalidated files into `data/traits/`. Emit new records through an idempotent seeder script (`scripts/seed_*.py`, dry-run by default, `--apply` to write) that calls `record_io.write_record(path, text, validate=True)`. Run `just audit-writers` whenever adding or modifying a writer script.
-3. **Runnable detection recipe coverage**: Every added record must resolve to a runnable detection recipe either via its own `detection_methods` slot or through `by_source` / `by_category` in `data/methods/methods.yaml` (`python3 scripts/build_methods.py --check`).
+3. **Runnable detection recipe coverage**: Every added record must resolve to a runnable detection recipe either via its own `detection_methods` slot or through `by_source` / `by_category` in `data/methods/methods.yaml` (`python3 scripts/build_methods.py` and `pytest tests/test_methods_recipes.py`).
 4. **License & provenance**: Every record must carry an explicit `definition_source` and a redistribution-compatible `license` (`CC-BY-4.0` or `CC0-1.0`). Do not ingest sources with restrictive or unresolved licensing.
 
 ---
@@ -66,7 +66,7 @@ Select `trait_axis` and `trait_category` from `src/proteintraitsmech/schema/prot
 Author records through `record_io.write_record(path, text, validate=True)` with the following structure:
 
 ```yaml
-identifier: proteintraitsmech:SELENOCYSTEINE_RESIDUE
+identifier: proteintraitsmech:NONSTD_SELENOCYSTEINE
 label: selenocysteine residue
 definition: >-
   Presence of a genetically encoded L-selenocysteine (Sec, U) residue incorporated
@@ -91,10 +91,8 @@ xrefs:
   - MOD:00044
 evidence:
   - reference: PMID:24070661
-    supports: SUPPORT
-    evidence_source: HUMAN_CURATED
     snippet: "Selenocysteine (Sec), the 21st amino acid, is inserted into nascent polypeptides at UGA codons with the aid of the SECIS element."
-    explanation: Establishes the co-translational mechanism and sequence determinants of genetically encoded selenocysteine residues in selenoproteins.
+    notes: Establishes the co-translational mechanism and sequence determinants of genetically encoded selenocysteine residues in selenoproteins.
 license: CC-BY-4.0
 ```
 
@@ -103,7 +101,7 @@ license: CC-BY-4.0
 - `parent_traits` references existing `identifier` values in `data/traits/` (do not introduce dangling parent edges).
 - `synonyms` uses `SynonymEntry` objects (`synonym_text`, `synonym_type` in `EXACT_SYNONYM | BROAD_SYNONYM | NARROW_SYNONYM | RELATED_SYNONYM`, optional `source`).
 - `xrefs` uses valid `PREFIX:ACCESSION` CURIE strings (`^[^\s:]+:[^\s:]+$`).
-- `evidence` uses `EvidenceItem` objects (`reference` as `PMID:` or `DOI:`, `supports`, `evidence_source`, `snippet`, `explanation`).
+- `evidence` uses `EvidenceItem` objects (`reference` as `PMID:` or `DOI:`, optional `snippet` and `notes`).
 - Leave `mapping_status: SEEDED` (or `PROPOSED`); `REVIEWED` is reserved for human sign-off.
 
 ### Step 4: Verify Detection Recipes, Baselines, and Governance Gates
@@ -117,7 +115,7 @@ After writing new records via `record_io.write_record`:
 2. **Detection recipe coverage**:
    Ensure the inferred source (`infer_source` in `scripts/build_docs_index.py`) and `trait_category` resolve to a runnable detection recipe in `data/methods/methods.yaml`:
    ```bash
-   .venv/bin/python scripts/build_methods.py --check
+   .venv/bin/python scripts/build_methods.py
    .venv/bin/python -m pytest tests/test_methods_recipes.py
    ```
 3. **Internal ID-label baseline**:
@@ -129,9 +127,13 @@ After writing new records via `record_io.write_record`:
    ```bash
    .venv/bin/python scripts/audit_writers.py
    .venv/bin/python scripts/new_history_record.py \
-     --operation SEED \
+     --kind other \
+     --slug "<batch-slug>" \
+     --path "scripts/seed_<name>.py" \
+     --event CREATE \
+     --outcome changed \
      --summary "Seed <N> <category> protein trait records" \
-     --files "<glob-or-paths>"
+     --details "<provenance, validation, and scope summary>"
    just validate-history
    .venv/bin/python -m pytest
    ```

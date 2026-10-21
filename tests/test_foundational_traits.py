@@ -55,6 +55,17 @@ def test_cross_mech_obsolete_go_xref_merged():
     assert not errors, f"validation errors in {target}: {errors}"
     data = yaml.safe_load(target.read_text(encoding="utf-8"))
     assert "GO:0004085" in (data.get("xrefs") or [])
+    path, seed_text = sft.go_0016937_seed()
+    assert path == target
+    assert seed_text is not None and "GO:0004085" in seed_text
+
+
+def test_disulfide_infer_source_distinguishes_lsf_parent_from_curated_subtypes():
+    """DISULFIDE_BOND stays LinkML LSF while DISULFIDE_* subtypes resolve to curated."""
+    dummy = ROOT / "data/traits/structure/disulfide/x.yaml"
+    assert bdi.infer_source("proteintraitsmech:DISULFIDE_BOND", dummy) == "LinkML LSF"
+    assert bdi.infer_source("proteintraitsmech:DISULFIDE_INTRACHAIN", dummy) == "curated"
+    assert bdi.infer_source("proteintraitsmech:DISULFIDE_FUTURE_SUBTYPE", dummy) == "curated"
 
 
 def test_previously_empty_class_categories_are_populated():
