@@ -9,7 +9,7 @@ term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
   - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
-  - proteintraitsmech:PROTEIN_INTERFACE
+  - proteintraitsmech:INTERFACE
 synonyms:
   - synonym_text: "inter-subunit allosteric pocket"
     synonym_type: EXACT_SYNONYM
@@ -23,7 +23,80 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26950260
     recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: inter_protomer_allosteric_cooperativity
+    title: "Inter-subunit effector binding couples quaternary interface rearrangement to cooperative catalysis"
+    description: "An effector (CHEBI:24020) binds via small molecule binding (GO:0036094) at an oligomeric subunit boundary mediated by protein homodimerization activity (GO:0042803), driving enzyme regulator activity (GO:0030234) that cooperatively modulates catalytic activity (GO:0003824) across protomers."
+    nodes:
+      - node_id: "CHEBI:24020"
+        label: effector
+        node_type: LIGAND
+        grounding: "CHEBI:24020"
+        description: "Effector ligand binding at the inter-subunit interface pocket."
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Small-molecule effector binding across the oligomeric interface."
+      - node_id: "GO:0042803"
+        label: "protein homodimerization activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0042803"
+        description: "Quaternary subunit-subunit interface coupling oligomeric protomers."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Cooperative quaternary T-to-R or R-to-T transition across subunits."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Cooperative catalytic activity across active sites of the oligomer."
+    edges:
+      - subject: "CHEBI:24020"
+        predicate: "molecularly interacts with"
+        predicate_id: RO:0002436
+        object: "GO:0036094"
+        description: "Effector binds at the inter-subunit allosteric pocket."
+        evidence:
+          - reference: PMID:23624396
+            snippet: "Many allosteric sites are located at subunit interfaces of oligomeric proteins, where ligand binding directly perturbs quaternary packing and cooperative communication between subunits."
+            notes: "Inter-subunit allosteric pocket occupancy (PMID:23624396). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: regulates
+        predicate_id: RO:0002211
+        object: "GO:0042803"
+        description: "Interface pocket occupancy modulates subunit-subunit packing geometry."
+        evidence:
+          - reference: PMID:23624396
+            snippet: "Many allosteric sites are located at subunit interfaces of oligomeric proteins, where ligand binding directly perturbs quaternary packing and cooperative communication between subunits."
+            notes: "Quaternary interface rearrangement (PMID:23624396). (ECO:0000305)"
+      - subject: "GO:0042803"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Quaternary subunit rotation propagates cooperative allosteric regulation."
+        evidence:
+          - reference: PMID:23624396
+            snippet: "Allosteric modulators targeting protein-protein interfaces can stabilize or destabilize specific oligomeric states to regulate enzymatic activity."
+            notes: "Quaternary coupling to enzyme regulation (PMID:23624396). (ECO:0000305)"
+      - subject: "GO:0030234"
+        predicate: regulates
+        predicate_id: RO:0002211
+        object: "GO:0003824"
+        description: "Cooperative quaternary transition regulates catalytic activity across protomers."
+        evidence:
+          - reference: PMID:23624396
+            snippet: "Allosteric modulators targeting protein-protein interfaces can stabilize or destabilize specific oligomeric states to regulate enzymatic activity."
+            notes: "Cooperative catalytic regulation (PMID:23624396). (ECO:0000305)"
 evidence:
   - reference: PMID:23624396
     notes: "Allosteric regulation at protein-protein and subunit interfaces."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

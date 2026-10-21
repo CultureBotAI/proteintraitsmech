@@ -22,7 +22,66 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26950260
     recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: allosteric_activator_r_state_stabilization
+    title: "Positive allosteric modulator binding stabilizes the active R-state to enhance catalysis"
+    description: "A positive allosteric modulator (CHEBI:24020) binds the activator pocket via small molecule binding (GO:0036094), driving enzyme activator activity (GO:0008047) that positively regulates orthosteric catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "CHEBI:24020"
+        label: effector
+        node_type: LIGAND
+        grounding: "CHEBI:24020"
+        description: "Positive allosteric modulator (PAM) or physiological activator ligand."
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Positive effector binding at the allosteric activator pocket."
+      - node_id: "GO:0008047"
+        label: "enzyme activator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0008047"
+        description: "Stabilization of the high-affinity/high-turnover R-state conformation."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Enhanced orthosteric substrate affinity (K-type) or catalytic rate (V-type)."
+    edges:
+      - subject: "CHEBI:24020"
+        predicate: "molecularly interacts with"
+        predicate_id: RO:0002436
+        object: "GO:0036094"
+        description: "Positive allosteric effector binds at the activator pocket."
+        evidence:
+          - reference: PMID:20971780
+            snippet: "Allosteric modulators are classified into three categories in ASD: activators, which increase the activity of the target protein; inhibitors, which decrease the activity; and regulators."
+            notes: "Allosteric activator classification in ASD (PMID:20971780). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0008047"
+        description: "Activator pocket occupancy stabilizes the catalytically competent R-state."
+        evidence:
+          - reference: PMID:20971780
+            snippet: "Allosteric activators bind to a distinct allosteric site and stabilize the active conformation of the enzyme or receptor."
+            notes: "R-state stabilization by allosteric activators (PMID:20971780). (ECO:0000305)"
+      - subject: "GO:0008047"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Enzyme activator activity increases orthosteric catalytic turnover or substrate affinity."
+        evidence:
+          - reference: PMID:20971780
+            snippet: "Allosteric modulators are classified into three categories in ASD: activators, which increase the activity of the target protein; inhibitors, which decrease the activity; and regulators."
+            notes: "Positive regulation of catalytic activity (PMID:20971780). (ECO:0000305)"
 evidence:
   - reference: PMID:20971780
     notes: "Classification of positive allosteric activator sites in ASD."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

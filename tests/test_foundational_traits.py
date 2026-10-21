@@ -9,9 +9,22 @@ import yaml
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "scripts"))
 
+import audit_causal_graphs as acg  # noqa: E402
 import build_docs_index as bdi  # noqa: E402
+import score_causal_graphs as scg  # noqa: E402
 import seed_foundational_traits as sft  # noqa: E402
 import validate_strict as vs  # noqa: E402
+
+
+MECHANISM_BEARING_CATEGORIES = {
+    "SEQ_NONSTANDARD_RESIDUE",
+    "STRUCT_ALLOSTERIC_SITE",
+    "SEQ_SIGNAL_PEPTIDE",
+    "SEQ_TRANSIT_PEPTIDE",
+    "SEQ_PROPEPTIDE",
+    "STRUCT_DISULFIDE",
+    "FUNC_LOCALIZATION",
+}
 
 
 def test_foundational_trait_records_exist_and_validate():
@@ -82,3 +95,96 @@ def test_previously_empty_class_categories_are_populated():
     for cat, (d, min_count) in expected_dirs.items():
         files = list(d.glob("*.yaml"))
         assert len(files) >= min_count, f"{cat} expected >= {min_count} records in {d}, found {len(files)}"
+
+
+def test_foundational_trait_causal_graphs_audit_and_score():
+    """All 25 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
+    valid_types = acg.node_type_enum()
+    assert valid_types
+    mech_specs = [s for s in sft.SPECS if s.trait_category in MECHANISM_BEARING_CATEGORIES]
+    non_mech_specs = [s for s in sft.SPECS if s.trait_category not in MECHANISM_BEARING_CATEGORIES]
+    assert len(mech_specs) == 25
+    assert len(non_mech_specs) == 41
+
+    for spec in mech_specs:
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
+        assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
+        history = data.get("curation_history") or []
+        assert history, f"{spec.identifier} missing curation_history"
+        assert history[-1].get("curator") == "claude"
+        assert history[-1].get("action") == "EDIT"
+        assert history[-1].get("llm_assisted") is True
+        errors: list[str] = []
+        warns: list[acg.AuditWarning] = []
+        stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
+        acg.audit_record(data, str(path.relative_to(ROOT)), valid_types, errors, warns, stats)
+        assert not errors, f"causal_graphs errors in {spec.identifier}: {errors}"
+        assert not warns, f"causal_graphs warnings in {spec.identifier}: {warns}"
+        scored = scg.score_path(path)
+        expected_score = 100 - scg.SEEDED_REVIEW_PENALTY
+        assert scored.score == expected_score, (
+            f"{spec.identifier} expected score {expected_score}, got {scored.score} ({scored.reasons})"
+        )
+        assert scored.structural_errors == 0
+        assert scored.quality_warnings == 0
+        assert scored.reasons == ("mapping_status=SEEDED",)
+
+    for spec in non_mech_specs:
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} should remain SEEDED"
+        assert not data.get("causal_graphs"), f"{spec.identifier} should not carry causal_graphs"
+
+
+def test_foundational_trait_parent_traits_resolve_to_corpus_records():
+    """Every parent_traits CURIE on the 66 foundational traits resolves to an on-disk corpus record."""
+    known_parent_files = {
+        "proteintraitsmech:COILED_COIL": (
+            sft.TRAITS_DIR / "structure/secondary/coiled-coil.yaml"
+        ),
+        "proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE": (
+            sft.TRAITS_DIR / "sequence/initiator_methionine/uniprot-seq_initiator_methionine.yaml"
+        ),
+        "proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE": (
+            sft.TRAITS_DIR / "sequence/signal_peptide/uniprot-seq_signal_peptide.yaml"
+        ),
+        "proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE": (
+            sft.TRAITS_DIR / "sequence/transit_peptide/uniprot-seq_transit_peptide.yaml"
+        ),
+        "proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE": (
+            sft.TRAITS_DIR / "sequence/propeptide/uniprot-seq_propeptide.yaml"
+        ),
+        "proteintraitsmech:DISULFIDE_BOND": (
+            sft.TRAITS_DIR / "structure/disulfide/disulfide-bond.yaml"
+        ),
+        "proteintraitsmech:POCKET": (
+            sft.TRAITS_DIR / "structure/cavity/pocket.yaml"
+        ),
+        "proteintraitsmech:INTERFACE": (
+            sft.TRAITS_DIR / "structure/interface/interface.yaml"
+        ),
+        "IDPO:0000002": (
+            sft.TRAITS_DIR / "sequence/disorder/disorder-idpo-0000002.yaml"
+        ),
+        "GO:1902494": (
+            sft.TRAITS_DIR / "function/localization/go/catalytic-complex-go1902494.yaml"
+        ),
+    }
+    spec_paths = {
+        spec.identifier: sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        for spec in sft.SPECS
+    }
+    for spec in sft.SPECS:
+        path = spec_paths[spec.identifier]
+        on_disk = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for parent in on_disk.get("parent_traits") or []:
+            target = spec_paths.get(parent) or known_parent_files.get(parent)
+            assert target is not None and target.is_file(), (
+                f"{spec.identifier} parent_traits {parent!r} does not resolve to an on-disk record"
+            )
+            data = yaml.safe_load(target.read_text(encoding="utf-8"))
+            assert data["identifier"] == parent
+
+

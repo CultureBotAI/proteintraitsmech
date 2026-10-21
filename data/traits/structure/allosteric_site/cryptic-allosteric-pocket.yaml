@@ -22,7 +22,66 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26950260
     recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: cryptic_pocket_opening_and_capture
+    title: "Conformational fluctuation opens transient cryptic cavity for ligand capture and allosteric regulation"
+    description: "Thermal loop/side-chain fluctuations expose a transient small molecule binding cavity (GO:0036094) that captures an effector ligand (CHEBI:24020), stabilizing the open-pocket state to enable enzyme regulator activity (GO:0030234) on orthosteric catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "CHEBI:24020"
+        label: effector
+        node_type: LIGAND
+        grounding: "CHEBI:24020"
+        description: "Ligand capturing the transiently open cryptic pocket."
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Ligand recognition within the transiently exposed cryptic cavity."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Allosteric regulation stabilized by cryptic pocket occupancy."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Orthosteric enzyme activity modulated by cryptic pocket engagement."
+    edges:
+      - subject: "CHEBI:24020"
+        predicate: "molecularly interacts with"
+        predicate_id: RO:0002436
+        object: "GO:0036094"
+        description: "Effector binds the transiently exposed cryptic pocket."
+        evidence:
+          - reference: PMID:36973262
+            snippet: "Cryptic pockets are cavities that are absent in ligand-free experimental structures but form in a subset of excited conformational states and can bind ligands to allosterically modulate protein function."
+            notes: "PocketMiner cryptic pocket opening and ligand binding (PMID:36973262). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Ligand capture locks the excited cryptic-pocket state to drive allosteric regulation."
+        evidence:
+          - reference: PMID:36973262
+            snippet: "Cryptic pockets are cavities that are absent in ligand-free experimental structures but form in a subset of excited conformational states and can bind ligands to allosterically modulate protein function."
+            notes: "Cryptic pocket ligand capture drives allosteric modulation (PMID:36973262). (ECO:0000305)"
+      - subject: "GO:0030234"
+        predicate: regulates
+        predicate_id: RO:0002211
+        object: "GO:0003824"
+        description: "Cryptic-pocket-mediated enzyme regulator activity modulates orthosteric catalysis."
+        evidence:
+          - reference: PMID:36973262
+            snippet: "Targeting cryptic pockets provides a general strategy to allosterically inhibit or activate enzymes whose orthosteric sites are undruggable."
+            notes: "Modulation of catalytic activity via cryptic pockets (PMID:36973262). (ECO:0000305)"
 evidence:
   - reference: PMID:36973262
     notes: "PocketMiner and CryptoSite reveal cryptic pockets across the proteome."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

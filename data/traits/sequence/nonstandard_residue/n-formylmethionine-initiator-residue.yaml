@@ -8,8 +8,7 @@ trait_category: SEQ_NONSTANDARD_RESIDUE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_NON_STD
-  - proteintraitsmech:UNIPROT_FT_INIT_MET
+  - proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
 synonyms:
   - synonym_text: "fMet initiator residue"
     synonym_type: EXACT_SYNONYM
@@ -26,7 +25,80 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:16336047
     recipe: "fuzzpro -sequence {input} -pattern '^M[ACDEFGHIKLMNPQRSTVWY]' -outfile {output}"
+causal_graphs:
+  - graph_id: fmet_initiation_deformylase_bypass
+    title: "Methionyl-tRNA formyltransferase initiation and peptide deformylase bypass"
+    description: "Methionyl-tRNA formyltransferase activity (GO:0004479 / EC:2.1.2.9) generates N-formyl-L-methionine (CHEBI:16714) on initiator tRNA(fMet) for prokaryotic and organellar translational initiation (GO:0006413); when formylmethionine deformylase activity (GO:0008463 / EC:3.5.1.88) is sterically or kinetically bypassed, the N-formyl-L-methionine residue (MOD:00060) is retained at the mature N-terminus."
+    nodes:
+      - node_id: "GO:0004479"
+        label: "methionyl-tRNA formyltransferase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004479"
+        description: "Fmt enzyme activity (EC:2.1.2.9) formylating initiator Met-tRNA(fMet)."
+      - node_id: "CHEBI:16714"
+        label: N-formyl-L-methionine
+        node_type: CHEMICAL
+        grounding: "CHEBI:16714"
+        description: "Formylated initiator amino acid precursor."
+      - node_id: "GO:0006413"
+        label: "translational initiation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006413"
+        description: "Ribosomal translation initiation incorporating N-terminal fMet."
+      - node_id: "GO:0008463"
+        label: "formylmethionine deformylase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0008463"
+        description: "PDF hydrolase activity (EC:3.5.1.88) that normally removes the N-formyl group."
+      - node_id: "MOD:00060"
+        label: "N-formyl-L-methionine residue"
+        node_type: RESIDUE
+        grounding: "MOD:00060"
+        description: "Retained N-terminal N-formyl-L-methionine residue on the polypeptide."
+    edges:
+      - subject: "GO:0004479"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "CHEBI:16714"
+        description: "Methionyl-tRNA formyltransferase produces N-formyl-L-methionine on initiator tRNA."
+        evidence:
+          - reference: PMID:16336047
+            snippet: "In bacteria, protein synthesis starts with a formylated methionine (fMet), which is co-translationally removed by peptide deformylase (PDF) in most cases."
+            notes: "Formylated initiator methionine synthesis (PMID:16336047). (ECO:0000269)"
+      - subject: "CHEBI:16714"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "GO:0006413"
+        description: "N-formyl-L-methionine serves as the initiator amino acid in bacterial and organellar translation."
+        evidence:
+          - reference: PMID:16336047
+            snippet: "In bacteria, protein synthesis starts with a formylated methionine (fMet), which is co-translationally removed by peptide deformylase (PDF) in most cases."
+            notes: "Translational initiation with fMet (PMID:16336047). (ECO:0000269)"
+      - subject: "GO:0006413"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00060"
+        description: "Translational initiation deposits an N-formyl-L-methionine residue at position 1 of the nascent polypeptide."
+        evidence:
+          - reference: PMID:16336047
+            snippet: "However, a subset of bacterial and plastid membrane and exported proteins retain their N-terminal formyl group due to unfavorable penultimate residues or rapid translocation."
+            notes: "Nascent and retained N-terminal fMet residue (PMID:16336047). (ECO:0000269)"
+      - subject: "GO:0008463"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "MOD:00060"
+        description: "Formylmethionine deformylase cleaves the N-formyl group unless sterically or kinetically bypassed."
+        evidence:
+          - reference: PMID:16336047
+            snippet: "Peptide deformylase (PDF) removes the N-formyl group from nascent polypeptides; retention of fMet occurs when PDF action is hindered."
+            notes: "PDF deformylation vs fMet retention (PMID:16336047). (ECO:0000269)"
 evidence:
   - reference: PMID:16336047
     notes: "Specificity of N-terminal formylmethionine retention and peptide deformylase cleavage."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

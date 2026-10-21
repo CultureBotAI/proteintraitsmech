@@ -8,7 +8,7 @@ trait_category: SEQ_SIGNAL_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_SIGNAL
+  - proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
 synonyms:
   - synonym_text: "Tat/SPI signal peptide"
     synonym_type: EXACT_SYNONYM
@@ -23,7 +23,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:34980915
     recipe: "signalp6 --fastafile {input} --output_dir {output} --format txt --organism other"
+causal_graphs:
+  - graph_id: tat_spi_folded_export_and_cleavage
+    title: "Twin-arginine (TatABC) folded protein translocation and signal peptidase I cleavage"
+    description: "A twin-arginine signal_peptide (SO:0000418) is recognized by TatBC to drive protein transport by the Tat complex (GO:0043953) of folded proteins, followed by signal peptidase I endopeptidase activity (GO:0004175) to complete protein secretion (GO:0009306)."
+    nodes:
+      - node_id: "SO:0000418"
+        label: signal_peptide
+        node_type: MOTIF
+        grounding: "SO:0000418"
+        description: "Tat/SPI leader peptide containing the [ST]RRxFLK twin-arginine motif."
+      - node_id: "GO:0043953"
+        label: "protein transport by the Tat complex"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0043953"
+        description: "Export of folded proteins across the membrane by the TatABC translocase."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Signal peptidase I (LepB / SPase I) cleavage at the c-region AxA site."
+      - node_id: "GO:0009306"
+        label: "protein secretion"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0009306"
+        description: "Release of the mature folded cofactor-containing protein."
+    edges:
+      - subject: "SO:0000418"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0043953"
+        description: "The twin-arginine motif targets folded preproteins to the Tat translocase."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Tat SPs contain a canonical twin-arginine motif in the n-region and direct folded proteins across the membrane via the Tat translocon."
+            notes: "Twin-arginine targeting to Tat translocon (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0043953"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Tat translocation exposes the c-region cleavage site to signal peptidase I."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Tat/SPI SPs are transported by the Tat translocon and cleaved by Signal Peptidase I (SPase I)."
+            notes: "Tat export followed by SPase I cleavage (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009306"
+        description: "SPase I cleavage releases the mature folded protein into the periplasm or extracellular space."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Tat/SPI SPs are transported by the Tat translocon and cleaved by Signal Peptidase I (SPase I)."
+            notes: "Release of mature Tat-exported protein (PMID:34980915). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
     notes: "Prediction of Tat/SPI twin-arginine signal peptides with SignalP 6.0."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

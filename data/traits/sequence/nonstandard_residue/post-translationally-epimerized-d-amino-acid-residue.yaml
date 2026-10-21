@@ -7,8 +7,6 @@ trait_axis: SEQUENCE
 trait_category: SEQ_NONSTANDARD_RESIDUE
 term_kind: CLASS
 mapping_status: SEEDED
-parent_traits:
-  - proteintraitsmech:UNIPROT_FT_NON_STD
 synonyms:
   - synonym_text: "ribosomally incorporated D-amino acid residue"
     synonym_type: RELATED_SYNONYM
@@ -24,7 +22,66 @@ detection_methods:
     evidence_code: ECO:0000259
     reference: PMID:23064350
     recipe: "hmmsearch --cut_ga --domtblout {output} PoyD_YydG_epimerase.hmm {input}"
+causal_graphs:
+  - graph_id: radical_sam_peptide_epimerization
+    title: "Radical-SAM peptide epimerase C-alpha stereoinversion of L- to D-amino acid residues"
+    description: "A radical-SAM peptide aminoacyl-L/D-epimerase (GO:0016855) abstracts the alpha-carbon hydrogen atom from a ribosomally translated L-alpha-amino acid residue (CHEBI:33709) during peptidyl-amino acid modification (GO:0018193) and stereoselectively donates a hydrogen atom to the opposite face, generating an in-chain D-alpha-amino acid residue (MOD:00412)."
+    nodes:
+      - node_id: "GO:0016855"
+        label: "racemase and epimerase activity, acting on amino acids and derivatives"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0016855"
+        description: "Radical-SAM peptide epimerase (PoyD/YydG family) or peptide L/D-isomerase activity."
+      - node_id: "CHEBI:33709"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:33709"
+        description: "Ribosomally incorporated L-configured alpha-amino acid residue substrate."
+      - node_id: "GO:0018193"
+        label: "peptidyl-amino acid modification"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0018193"
+        description: "Post-translational C-alpha radical abstraction and stereoinversion."
+      - node_id: "MOD:00412"
+        label: "D-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "MOD:00412"
+        description: "Post-translationally epimerized D-configured residue in the mature polypeptide."
+    edges:
+      - subject: "GO:0016855"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0018193"
+        description: "Peptide epimerase catalyzes post-translational C-alpha stereoinversion."
+        evidence:
+          - reference: PMID:23064350
+            snippet: "The radical S-adenosylmethionine (SAM) protein PoyD catalyses the irreversible epimerization of up to 18 L-amino acids into D-amino acids in the polytheonamide precursor peptide."
+            notes: "Radical-SAM peptide epimerase activity (PMID:23064350). (ECO:0000269)"
+      - subject: "GO:0018193"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:33709"
+        description: "Ribosomally translated L-amino acid residue serves as substrate for C-alpha H-abstraction."
+        evidence:
+          - reference: PMID:23064350
+            snippet: "PoyD catalyses the irreversible epimerization of up to 18 L-amino acids into D-amino acids in the polytheonamide precursor peptide."
+            notes: "L-amino acid residue substrate (PMID:23064350). (ECO:0000269)"
+      - subject: "GO:0018193"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00412"
+        description: "Back-face hydrogen atom transfer generates an epimerized D-amino acid residue."
+        evidence:
+          - reference: PMID:23064350
+            snippet: "Coexpression of the precursor peptide PoyA with the single radical SAM enzyme PoyD resulted in the introduction of D-amino acid residues throughout the core peptide."
+            notes: "Epimerized D-amino acid residue product (PMID:23064350). (ECO:0000269)"
 evidence:
   - reference: PMID:23064350
     notes: "Irreversible radical-SAM epimerization introduces multiple D-amino acid residues into proteusin peptides."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

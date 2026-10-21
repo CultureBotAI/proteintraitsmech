@@ -22,9 +22,82 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:25352545
     recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: allosteric_disulfide_redox_switch_regulation
+    title: "Reversible thiol-disulfide exchange of high-strain cystine bond switches protein activity"
+    description: "Protein-disulfide reductase activity (GO:0015035) reversibly cleaves a high-strain -RHStaple/-LHHook L-cystine (cross-link) (MOD:00034) into reduced L-cysteine residues (CHEBI:29950), driving conformational enzyme regulator activity (GO:0030234) and cell redox homeostasis (GO:0045454)."
+    nodes:
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "High-strain allosteric or catalytic disulfide bond (-RHStaple / +/-RHHook / -LHHook)."
+      - node_id: "GO:0015035"
+        label: "protein-disulfide reductase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0015035"
+        description: "Thioredoxin/glutaredoxin oxidoreductase cleaving the strained disulfide bond."
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Reduced dithiol cysteine pair generated upon disulfide cleavage."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Redox-coupled conformational switch regulating target protein function."
+      - node_id: "GO:0045454"
+        label: "cell redox homeostasis"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045454"
+        description: "Dithiol-disulfide redox signaling and homeostasis."
+    edges:
+      - subject: "GO:0015035"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "MOD:00034"
+        description: "Oxidoreductases reduce the high-strain allosteric cystine disulfide bond."
+        evidence:
+          - reference: PMID:17001100
+            snippet: "Allosteric disulfides control the function of the mature protein in which they reside when they are cleaved or formed by oxidoreductases, and typically adopt a high-strain -RHStaple configuration."
+            notes: "Reduction of strained -RHStaple allosteric disulfides (PMID:17001100). (ECO:0000305)"
+      - subject: "GO:0015035"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "CHEBI:29950"
+        description: "Reductive cleavage converts the cystine crosslink into a pair of L-cysteine thiols."
+        evidence:
+          - reference: PMID:24743683
+            snippet: "Cleavage of allosteric disulfide bonds by thiol-disulfide exchange or oxidoreductases induces a conformational change that switches protein ligand binding or enzymatic activity."
+            notes: "Dithiol formation upon disulfide cleavage (PMID:24743683). (ECO:0000305)"
+      - subject: "CHEBI:29950"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Release of dihedral disulfide strain triggers a conformational switch in protein activity."
+        evidence:
+          - reference: PMID:24743683
+            snippet: "Cleavage of allosteric disulfide bonds by thiol-disulfide exchange or oxidoreductases induces a conformational change that switches protein ligand binding or enzymatic activity."
+            notes: "Conformational switch upon disulfide reduction (PMID:24743683). (ECO:0000305)"
+      - subject: "GO:0015035"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0045454"
+        description: "Reversible dithiol-disulfide exchange mediates cellular redox regulation."
+        evidence:
+          - reference: PMID:17001100
+            snippet: "Catalytic and allosteric disulfides mediate thiol-disulfide exchange reactions essential for cellular redox homeostasis and signaling."
+            notes: "Role in cellular redox homeostasis (PMID:17001100). (ECO:0000305)"
 evidence:
   - reference: PMID:17001100
     notes: "Allosteric disulfide bonds and their characteristic -RHStaple dihedral geometry."
   - reference: PMID:24743683
     notes: "Classification of catalytic and allosteric disulfides from dihedral strain energy."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

@@ -8,7 +8,7 @@ trait_category: SEQ_TRANSIT_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_TRANSIT
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
 synonyms:
   - synonym_text: luTP
     synonym_type: EXACT_SYNONYM
@@ -24,7 +24,80 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:31609389
     recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: lutp_bipartite_stromal_thylakoid_import
+    title: "Bipartite stromal TOC/TIC import, SPP intermediate cleavage, and thylakoid Sec/Tat + TPP processing"
+    description: "A bipartite thylakoid_transit_peptide (SO:0001075) first directs protein import into chloroplast stroma (GO:0045037) and SPP cleavage, exposing the thylakoid transfer domain for protein import into chloroplast thylakoid membrane (GO:0045038) and TPP endopeptidase activity (GO:0004175) to deliver the mature protein into the chloroplast thylakoid lumen (GO:0009543)."
+    nodes:
+      - node_id: "SO:0001075"
+        label: thylakoid_transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0001075"
+        description: "Bipartite plastid transit peptide (N-terminal cTP + C-terminal thylakoid transfer peptide)."
+      - node_id: "GO:0045037"
+        label: "protein import into chloroplast stroma"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045037"
+        description: "First-stage import across the chloroplast envelope via TOC/TIC and SPP cleavage."
+      - node_id: "GO:0045038"
+        label: "protein import into chloroplast thylakoid membrane"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045038"
+        description: "Second-stage translocation across the thylakoid membrane via cpSec1 or cpTat."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Thylakoidal processing peptidase (TPP / Plsp1, EC:3.4.21.89) cleavage at the AxA motif."
+      - node_id: "GO:0009543"
+        label: "chloroplast thylakoid lumen"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0009543"
+        description: "Thylakoid lumen compartment where the mature protein resides."
+    edges:
+      - subject: "SO:0001075"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0045037"
+        description: "The N-terminal stromal targeting portion of the bipartite luTP directs TOC/TIC import."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Proteins targeted to the thylakoid lumen carry a bipartite transit peptide (luTP) composed of an N-terminal stromal targeting peptide cleaved by SPP, followed by a thylakoid transfer peptide cleaved by the thylakoidal processing peptidase (TPP)."
+            notes: "First-stage stromal import of bipartite luTP (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0045037"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0045038"
+        description: "Stromal import and SPP cleavage unmask the Sec/Tat thylakoid transfer peptide."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Proteins targeted to the thylakoid lumen carry a bipartite transit peptide (luTP) composed of an N-terminal stromal targeting peptide cleaved by SPP, followed by a thylakoid transfer peptide cleaved by the thylakoidal processing peptidase (TPP)."
+            notes: "Unmasking of thylakoid transfer peptide after stromal import (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0045038"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Thylakoid translocation presents the luminal AxA cleavage site to TPP."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "The thylakoid transfer peptide directs translocation across the thylakoid membrane via the cpSec or cpTat pathway and is cleaved by TPP in the lumen."
+            notes: "Thylakoid translocation followed by TPP cleavage (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009543"
+        description: "TPP cleavage releases the mature protein into the chloroplast thylakoid lumen."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "The thylakoid transfer peptide directs translocation across the thylakoid membrane via the cpSec or cpTat pathway and is cleaved by TPP in the lumen."
+            notes: "Release into chloroplast thylakoid lumen (PMID:31609389). (ECO:0000305)"
 evidence:
   - reference: PMID:31609389
     notes: "TargetP 2.0 identifies bipartite thylakoid luminal transit peptides (luTP)."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

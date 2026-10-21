@@ -8,7 +8,7 @@ trait_category: SEQ_TRANSIT_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_TRANSIT
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
 synonyms:
   - synonym_text: cTP
     synonym_type: EXACT_SYNONYM
@@ -26,7 +26,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:31609389
     recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: ctp_toc_tic_stromal_import_spp_cleavage
+    title: "TOC/TIC chloroplast stromal import and stromal processing peptidase (SPP) cleavage"
+    description: "A chloroplast_transit_peptide (SO:0001074) mediates protein import into chloroplast stroma (GO:0045037) across the outer (TOC) and inner (TIC) envelope translocons, where stromal processing peptidase endopeptidase activity (GO:0004175) excises the cTP in the chloroplast stroma (GO:0009570)."
+    nodes:
+      - node_id: "SO:0001074"
+        label: chloroplast_transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0001074"
+        description: "Ser/Thr-enriched N-terminal chloroplast stroma transit peptide (cTP)."
+      - node_id: "GO:0045037"
+        label: "protein import into chloroplast stroma"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045037"
+        description: "TOC/TIC-mediated translocation across the chloroplast envelope membranes."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Stromal processing peptidase (SPP, EC:3.4.24.65) cleavage of the cTP."
+      - node_id: "GO:0009570"
+        label: "chloroplast stroma"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0009570"
+        description: "Chloroplast stromal compartment receiving the mature cleaved protein."
+    edges:
+      - subject: "SO:0001074"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0045037"
+        description: "The N-terminal cTP directs precursor translocation through the TOC/TIC machinery."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Chloroplast transit peptides (cTPs) target proteins to the chloroplast stroma via the TOC-TIC translocon complexes and are cleaved by the stromal processing peptidase (SPP)."
+            notes: "cTP-mediated import into chloroplast stroma (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0045037"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Import into the stroma exposes the cTP cleavage site to stromal processing peptidase (SPP)."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Chloroplast transit peptides (cTPs) target proteins to the chloroplast stroma via the TOC-TIC translocon complexes and are cleaved by the stromal processing peptidase (SPP)."
+            notes: "SPP cleavage upon stromal import (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009570"
+        description: "SPP cleavage releases the mature protein in the chloroplast stroma."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Chloroplast transit peptides (cTPs) target proteins to the chloroplast stroma via the TOC-TIC translocon complexes and are cleaved by the stromal processing peptidase (SPP)."
+            notes: "Mature stromal localization after SPP cleavage (PMID:31609389). (ECO:0000305)"
 evidence:
   - reference: PMID:31609389
     notes: "TargetP 2.0 discriminates stromal chloroplast transit peptides (cTP) and cleavage sites."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

@@ -8,7 +8,7 @@ trait_category: SEQ_PROPEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_PROPEP
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 synonyms:
   - synonym_text: "zymogen activation peptide"
     synonym_type: EXACT_SYNONYM
@@ -24,7 +24,80 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:15019782
     recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: zymogen_propeptide_autoinhibition_and_activation
+    title: "Autoinhibitory propeptide steric blockade and proteolytic zymogen activation"
+    description: "An uncleaved propeptide (SO:0001062) exerts intramolecular enzyme inhibitor activity (GO:0004857) that negatively regulates orthosteric catalytic activity (GO:0003824); endopeptidase activity (GO:0004175) excises the propeptide to drive zymogen activation (GO:0031638), positively regulating catalytic activity."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Cleavable autoinhibitory pro-domain or activation peptide of a zymogen."
+      - node_id: "GO:0004857"
+        label: "enzyme inhibitor activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004857"
+        description: "Steric active-site occlusion or cysteine-switch coordination maintaining zymogen latency."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Activating protease cleavage of the propeptide-catalytic domain junction."
+      - node_id: "GO:0031638"
+        label: "zymogen activation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031638"
+        description: "Proteolytic removal of the inhibitory propeptide and active-site maturation."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Mature enzyme catalytic activity."
+    edges:
+      - subject: "SO:0001062"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0004857"
+        description: "The intact propeptide sterically blocks the catalytic cleft to maintain latency."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Many proteases are synthesized as inactive precursors, or zymogens, with N-terminal propeptides that sterically block the active site to prevent premature activation."
+            notes: "Steric active-site blockade by zymogen propeptides (PMID:16002793). (ECO:0000305)"
+      - subject: "GO:0004857"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "GO:0003824"
+        description: "Intramolecular propeptide inhibition suppresses catalytic activity in the zymogen."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Many proteases are synthesized as inactive precursors, or zymogens, with N-terminal propeptides that sterically block the active site to prevent premature activation."
+            notes: "Negative regulation of catalysis in latent zymogen (PMID:16002793). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0031638"
+        description: "Proteolytic cleavage of the propeptide triggers zymogen activation."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Activation requires proteolytic cleavage and removal of the propeptide, releasing the active mature enzyme."
+            notes: "Proteolytic cleavage drives zymogen activation (PMID:16002793). (ECO:0000305)"
+      - subject: "GO:0031638"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Zymogen activation unmasks the catalytic site for full enzymatic activity."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Activation requires proteolytic cleavage and removal of the propeptide, releasing the active mature enzyme."
+            notes: "Unmasking of mature catalytic activity (PMID:16002793). (ECO:0000305)"
 evidence:
   - reference: PMID:16002793
     notes: "Mechanisms of zymogen latency and proteolytic propeptide activation."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

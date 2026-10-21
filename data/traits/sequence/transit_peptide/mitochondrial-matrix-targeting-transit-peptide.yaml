@@ -8,7 +8,7 @@ trait_category: SEQ_TRANSIT_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_TRANSIT
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
 synonyms:
   - synonym_text: mTP
     synonym_type: EXACT_SYNONYM
@@ -26,7 +26,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:31609389
     recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: mtp_tom_tim23_import_mpp_cleavage
+    title: "TOM/TIM23 mitochondrial matrix import and MPP presequence cleavage"
+    description: "An N-terminal mitochondrial_targeting_signal (SO:0001073) directs protein import into mitochondrial matrix (GO:0030150) across the TOM and TIM23 translocons, where the mitochondrial processing peptidase complex (GO:0017087) cleaves the presequence to release the mature protein in the mitochondrial matrix (GO:0005759)."
+    nodes:
+      - node_id: "SO:0001073"
+        label: mitochondrial_targeting_signal
+        node_type: MOTIF
+        grounding: "SO:0001073"
+        description: "Amphipathic positively charged N-terminal mitochondrial presequence (mTP)."
+      - node_id: "GO:0030150"
+        label: "protein import into mitochondrial matrix"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0030150"
+        description: "TOM/TIM23-mediated translocation of nuclear-encoded precursor proteins."
+      - node_id: "GO:0017087"
+        label: "mitochondrial processing peptidase complex"
+        node_type: PROTEIN
+        grounding: "GO:0017087"
+        description: "Heterodimeric MPP metallopeptidase (EC:3.4.24.64) excising the N-terminal mTP."
+      - node_id: "GO:0005759"
+        label: "mitochondrial matrix"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0005759"
+        description: "Destination mitochondrial matrix compartment of the cleaved mature protein."
+    edges:
+      - subject: "SO:0001073"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0030150"
+        description: "The amphipathic N-terminal presequence is recognized by TOM receptors to initiate matrix import."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
+            notes: "mTP targeting for mitochondrial matrix import (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0030150"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0017087"
+        description: "Translocation into the matrix exposes the presequence cleavage site to MPP."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
+            notes: "MPP cleavage of imported mitochondrial presequences (PMID:31609389). (ECO:0000305)"
+      - subject: "GO:0017087"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005759"
+        description: "MPP proteolysis releases the mature folded protein within the mitochondrial matrix."
+        evidence:
+          - reference: PMID:31609389
+            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
+            notes: "Mature protein localization in the mitochondrial matrix (PMID:31609389). (ECO:0000305)"
 evidence:
   - reference: PMID:31609389
     notes: "TargetP 2.0 predicts mitochondrial, chloroplast, and thylakoid luminal transit peptides."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

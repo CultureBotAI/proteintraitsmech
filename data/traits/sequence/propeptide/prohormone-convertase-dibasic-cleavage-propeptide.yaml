@@ -8,7 +8,7 @@ trait_category: SEQ_PROPEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_PROPEP
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 synonyms:
   - synonym_text: "furin/prohormone convertase propeptide"
     synonym_type: EXACT_SYNONYM
@@ -25,7 +25,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:15019782
     recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: dibasic_propeptide_convertase_excision
+    title: "Proprotein convertase cleavage at dibasic (KR/RR/RxxR) motifs excises propeptide for hormone maturation"
+    description: "A dibasic-flanked propeptide (SO:0001062) is recognized by subtilisin/kexin-like proprotein convertase endopeptidase activity (GO:0004175), driving proteolytic protein processing (GO:0016485) and bioactive peptide/growth-factor protein maturation (GO:0051604)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Prohormone/growth-factor propeptide flanked by paired basic (KR, RR, RxxR) cleavage sites."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Proprotein convertase (PCSK1/PCSK2/furin, EC:3.4.21.93/EC:3.4.21.94/EC:3.4.21.75) cleavage C-terminal to basic pairs."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Endoproteolytic propeptide excision in the trans-Golgi network or secretory granules."
+      - node_id: "GO:0051604"
+        label: "protein maturation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051604"
+        description: "Generation of the mature bioactive peptide hormone or growth factor."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0016485"
+        description: "The dibasic-flanked propeptide serves as the recognition substrate for proprotein processing."
+        evidence:
+          - reference: PMID:22931919
+            snippet: "The proprotein convertases (PCs) are a family of nine secretory serine proteases that cleave precursor proteins at single or paired basic residues within the consensus motif (R/K)-(X)n-(R/K)."
+            notes: "Dibasic propeptide recognition by proprotein convertases (PMID:22931919). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0016485"
+        description: "Proprotein convertase endopeptidase activity cleaves C-terminal to the KR/RR/RxxR site."
+        evidence:
+          - reference: PMID:22931919
+            snippet: "The proprotein convertases (PCs) are a family of nine secretory serine proteases that cleave precursor proteins at single or paired basic residues within the consensus motif (R/K)-(X)n-(R/K)."
+            notes: "Endoproteolytic cleavage at dibasic motifs (PMID:22931919). (ECO:0000305)"
+      - subject: "GO:0016485"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051604"
+        description: "Excision of the propeptide produces the mature bioactive hormone or growth factor."
+        evidence:
+          - reference: PMID:22931919
+            snippet: "Cleavage of the propeptide by PCs in the trans-Golgi network or secretory granules is required for the maturation of polypeptide hormones, neuropeptides, and growth factors."
+            notes: "Propeptide excision yields mature bioactive peptide (PMID:22931919). (ECO:0000305)"
 evidence:
   - reference: PMID:22931919
     notes: "Biochemistry and substrate specificity of proprotein convertases and dibasic propeptides."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

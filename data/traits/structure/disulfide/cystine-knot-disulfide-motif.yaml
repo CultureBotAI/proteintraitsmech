@@ -24,7 +24,66 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:25352545
     recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: cystine_knot_threaded_macrocycle_stability
+    title: "Threaded three-disulfide cystine-knot topology locks tertiary fold and resists proteolysis"
+    description: "Six conserved L-cysteine residues (CHEBI:29950) oxidize into three interlocked L-cystine (cross-link) bridges (MOD:00034) where CysIII-CysVI threads the CysI-CysIV / CysII-CysV ring, locking native protein folding (GO:0006457) and negatively regulating proteolytic cleavage by endopeptidase activity (GO:0004175)."
+    nodes:
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Six conserved cysteine residues (CysI-CysVI) arranged in a knottin sequence pattern."
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "Threaded three-disulfide (CysI-CysIV, CysII-CysV, CysIII-CysVI) cystine-knot network."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Hyperstable knotted tertiary fold resistant to thermal and chemical denaturation."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Host or digestive endopeptidase attack resisted by the rigid cystine-knot core."
+    edges:
+      - subject: "CHEBI:29950"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "MOD:00034"
+        description: "Six conserved cysteines pair in the I-IV, II-V, III-VI threaded cystine-knot connectivity."
+        evidence:
+          - reference: PMID:19569188
+            snippet: "The cystine knot comprises an embedded ring formed by two disulfide bonds (CysI-CysIV and CysII-CysV) and their connecting backbone segments, which is threaded by a third disulfide bond (CysIII-CysVI)."
+            notes: "Threaded three-disulfide connectivity of cystine knots (PMID:19569188). (ECO:0000305)"
+      - subject: "MOD:00034"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0006457"
+        description: "The threaded cystine-knot topology locks the compact tertiary fold against unfolding."
+        evidence:
+          - reference: PMID:19569188
+            snippet: "This knotted arrangement of three disulfide bonds confers exceptional thermal, chemical, and proteolytic stability to cystine-knot proteins."
+            notes: "Hyperstability of cystine-knot fold (PMID:19569188). (ECO:0000305)"
+      - subject: "MOD:00034"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "GO:0004175"
+        description: "Compact threaded crosslinking prevents backbone unfolding required for endopeptidase cleavage."
+        evidence:
+          - reference: PMID:19569188
+            snippet: "This knotted arrangement of three disulfide bonds confers exceptional thermal, chemical, and proteolytic stability to cystine-knot proteins."
+            notes: "Resistance to proteolytic degradation (PMID:19569188). (ECO:0000305)"
 evidence:
   - reference: PMID:19569188
     notes: "Cystine-knot topologies in knottins, cyclotides, and growth factors."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

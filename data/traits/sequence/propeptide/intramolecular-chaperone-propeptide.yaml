@@ -8,7 +8,7 @@ trait_category: SEQ_PROPEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_PROPEP
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 synonyms:
   - synonym_text: "IMC propeptide"
     synonym_type: EXACT_SYNONYM
@@ -24,7 +24,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:15019782
     recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: imc_propeptide_folding_and_autocleavage
+    title: "Intramolecular-chaperone propeptide catalyzes protease domain folding followed by autoprocessing"
+    description: "An intramolecular-chaperone propeptide (SO:0001062) lowers the kinetic transition barrier to positively regulate protein folding (GO:0006457) of the cognate protease domain, which then acquires endopeptidase activity (GO:0004175) to cleave and degrade the propeptide during zymogen activation (GO:0031638)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Intramolecular chaperone (IMC) propeptide domain (e.g. subtilisin/alpha-lytic protease pro-region)."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Kinetically assisted folding of the mature protease domain."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Autocatalytic cleavage and proteolytic degradation of the IMC propeptide."
+      - node_id: "GO:0031638"
+        label: "zymogen activation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031638"
+        description: "Release of the kinetically trapped, active mature protease after propeptide destruction."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0006457"
+        description: "The IMC propeptide stabilizes the folding transition state of the catalytic domain."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Propeptides of subtilisin and alpha-lytic protease act as intramolecular chaperones that directly catalyze the folding of the catalytic domain across a high kinetic barrier."
+            notes: "Intramolecular chaperone catalysis of protein folding (PMID:16002793). (ECO:0000305)"
+      - subject: "GO:0006457"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Folding of the protease domain forms the catalytic triad capable of autoprocessing."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Once the protease domain folds into its native state, it autocatalytically cleaves and degrades the propeptide to yield the active enzyme."
+            notes: "Folding enables autocatalytic endopeptidase activity (PMID:16002793). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0031638"
+        description: "Autocatalytic cleavage and degradation of the IMC propeptide completes zymogen activation."
+        evidence:
+          - reference: PMID:16002793
+            snippet: "Once the protease domain folds into its native state, it autocatalytically cleaves and degrades the propeptide to yield the active enzyme."
+            notes: "Propeptide degradation completes enzyme activation (PMID:16002793). (ECO:0000305)"
 evidence:
   - reference: PMID:16002793
     notes: "Intramolecular chaperone propeptides catalyze folding of their cognate protease domains."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

@@ -8,7 +8,7 @@ trait_category: SEQ_SIGNAL_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_SIGNAL
+  - proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
 synonyms:
   - synonym_text: "Sec/SPI signal peptide"
     synonym_type: EXACT_SYNONYM
@@ -24,7 +24,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:34980915
     recipe: "signalp6 --fastafile {input} --output_dir {output} --format txt --organism other"
+causal_graphs:
+  - graph_id: sec_spi_translocation_and_cleavage
+    title: "Sec-mediated secretory translocation and signal peptidase I proteolytic cleavage"
+    description: "An N-terminal signal_peptide (SO:0000418) directs the nascent polypeptide into protein transport by the Sec complex (GO:0043952), followed by signal peptidase I endopeptidase activity (GO:0004175) at the Ala-X-Ala c-region motif to complete protein secretion (GO:0009306)."
+    nodes:
+      - node_id: "SO:0000418"
+        label: signal_peptide
+        node_type: MOTIF
+        grounding: "SO:0000418"
+        description: "Tripartite N-terminal Sec/SPI secretory leader peptide (n-, h-, and AxA c-region)."
+      - node_id: "GO:0043952"
+        label: "protein transport by the Sec complex"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0043952"
+        description: "Polypeptide translocation across the SecYEG/Sec61 translocon channel."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Type I signal peptidase (LepB/SPase I, EC:3.4.21.89) cleavage of the N-terminal leader."
+      - node_id: "GO:0009306"
+        label: "protein secretion"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0009306"
+        description: "Release of the mature cleaved secretory protein across the membrane."
+    edges:
+      - subject: "SO:0000418"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0043952"
+        description: "The tripartite Sec/SPI signal peptide targets the preprotein to the SecYEG/Sec61 translocon."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Signal peptides (SPs) are short N-terminal amino acid sequences that target proteins to the secretory (Sec) or twin-arginine translocation (Tat) pathways in prokaryotes and eukaryotes."
+            notes: "Sec targeting by N-terminal signal peptides (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0043952"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Translocation across the Sec channel exposes the c-region cleavage site to signal peptidase I."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Sec/SPI SPs are transported by the Sec translocon and cleaved by Signal Peptidase I (SPase I)."
+            notes: "Translocation precedes SPase I cleavage (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009306"
+        description: "Proteolytic removal of the signal peptide releases the mature secreted polypeptide."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Sec/SPI SPs are transported by the Sec translocon and cleaved by Signal Peptidase I (SPase I)."
+            notes: "SPase I cleavage releases mature secreted protein (PMID:34980915). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
     notes: "SignalP 6.0 predicts all five types of signal peptides across bacteria, archaea, and eukarya."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0

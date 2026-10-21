@@ -8,7 +8,7 @@ trait_category: SEQ_SIGNAL_PEPTIDE
 term_kind: CLASS
 mapping_status: SEEDED
 parent_traits:
-  - proteintraitsmech:UNIPROT_FT_SIGNAL
+  - proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
 synonyms:
   - synonym_text: "Sec/SPIII signal peptide"
     synonym_type: EXACT_SYNONYM
@@ -22,7 +22,66 @@ detection_methods:
     evidence_code: ECO:0000255
     reference: PMID:34980915
     recipe: "signalp6 --fastafile {input} --output_dir {output} --format txt --organism other"
+causal_graphs:
+  - graph_id: sec_spiii_prepilin_cleavage
+    title: "Sec membrane insertion and prepilin peptidase (SPase III) cytoplasmic leader cleavage"
+    description: "A short basic prepilin signal_peptide (SO:0000418) directs inner-membrane insertion via protein transport by the Sec complex (GO:0043952), where prepilin peptidase (PilD / SPase III) endopeptidase activity (GO:0004175) cleaves after the conserved -1 glycine to drive pilin protein maturation (GO:0051604)."
+    nodes:
+      - node_id: "SO:0000418"
+        label: signal_peptide
+        node_type: MOTIF
+        grounding: "SO:0000418"
+        description: "Short basic N-terminal Sec/SPIII prepilin leader peptide."
+      - node_id: "GO:0043952"
+        label: "protein transport by the Sec complex"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0043952"
+        description: "Sec-mediated insertion of the prepilin precursor into the cytoplasmic membrane."
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Type IV prepilin peptidase (PilD / SPase III, EC:3.4.23.43) cleavage at the cytoplasmic face."
+      - node_id: "GO:0051604"
+        label: "protein maturation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051604"
+        description: "Maturation and N-methylation of the type IV pilin subunit for filament assembly."
+    edges:
+      - subject: "SO:0000418"
+        predicate: "has participant"
+        predicate_id: RO:0000057
+        object: "GO:0043952"
+        description: "The Sec/SPIII leader directs Sec-dependent membrane insertion of the prepilin."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Sec/SPIII SPs are prepilin signal peptides transported by the Sec translocon and cleaved by Signal Peptidase III (SPase III, prepilin peptidase)."
+            notes: "Sec insertion of Sec/SPIII prepilins (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0043952"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0004175"
+        description: "Membrane insertion positions the n/h boundary on the cytoplasmic side for SPase III cleavage."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Unlike SPase I and II, SPase III cleaves the positively charged n-region on the cytoplasmic side of the membrane just before the hydrophobic region."
+            notes: "Cytoplasmic-side cleavage by SPase III (PMID:34980915). (ECO:0000305)"
+      - subject: "GO:0004175"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051604"
+        description: "SPase III leader excision and N-terminal methylation produce the mature pilin subunit."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "Sec/SPIII SPs are prepilin signal peptides transported by the Sec translocon and cleaved by Signal Peptidase III (SPase III, prepilin peptidase)."
+            notes: "Prepilin maturation via SPase III (PMID:34980915). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
     notes: "Sec/SPIII prepilin signal peptide prediction in SignalP 6.0."
+curation_history:
+  - timestamp: '2026-10-21T03:30:00Z'
+    curator: claude
+    action: EDIT
+    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
+    llm_assisted: true
 license: CC-BY-4.0
