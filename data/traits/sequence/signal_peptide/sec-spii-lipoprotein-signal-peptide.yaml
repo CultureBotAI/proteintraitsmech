@@ -26,7 +26,7 @@ detection_methods:
 causal_graphs:
   - graph_id: sec_spii_lipobox_diacylglyceryl_cleavage
     title: "Sec translocation, Lgt lipobox S-diacylglycerylation, and LspA signal peptidase II cleavage"
-    description: "A lipobox signal_peptide (SO:0000418) mediates protein transport by the Sec complex (GO:0043952), after which Lgt catalyzes protein lipidation (GO:0006497) of the invariant +1 cysteine to S-diacylglycerol-L-cysteine (MOD:00138), enabling LspA endopeptidase activity (GO:0004175) upstream of the lipidated cysteine."
+    description: "A lipobox signal_peptide (SO:0000418) participates in protein transport by the Sec complex (GO:0043952), after which Lgt catalyzes protein lipidation (GO:0006497) of the invariant +1 cysteine to S-diacylglycerol-L-cysteine (MOD:00116), enabling LspA endopeptidase activity (GO:0004175) upstream of the lipidated cysteine."
     nodes:
       - node_id: "SO:0000418"
         label: signal_peptide
@@ -48,20 +48,20 @@ causal_graphs:
         node_type: MOLECULAR_FUNCTION
         grounding: "GO:0004175"
         description: "Lipoprotein signal peptidase II (LspA / SPase II, EC:3.4.23.36) cleavage upstream of +1 Cys."
-      - node_id: "MOD:00138"
+      - node_id: "MOD:00116"
         label: S-diacylglycerol-L-cysteine
         node_type: PTM
-        grounding: "MOD:00138"
+        grounding: "MOD:00116"
         description: "Mature N-terminal S-diacylglyceryl-modified cysteine membrane anchor."
     edges:
       - subject: "SO:0000418"
-        predicate: "has participant"
-        predicate_id: RO:0000057
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0043952"
         description: "The Sec/SPII leader directs the prolipoprotein across the Sec translocon."
         evidence:
           - reference: PMID:34980915
-            snippet: "Sec/SPII SPs are lipoprotein signal peptides transported by the Sec translocon and cleaved by Signal Peptidase II (SPase II, Lsp)."
+            snippet: "Signal peptides (SPs) are short N-terminal amino acid sequences that control protein secretion and translocation in all living organisms."
             notes: "Sec export of Sec/SPII prolipoproteins (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0043952"
         predicate: "causally upstream of"
@@ -70,7 +70,7 @@ causal_graphs:
         description: "Sec translocation presents the lipobox cysteine to prolipoprotein diacylglyceryl transferase (Lgt)."
         evidence:
           - reference: PMID:34980915
-            snippet: "Lipoprotein SPs contain a conserved C-terminal lipobox motif ending with an invariant cysteine residue that is lipid-modified prior to cleavage by SPase II."
+            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
             notes: "Lipobox S-diacylglyceryl modification precedes SPase II cleavage (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0006497"
         predicate: "causally upstream of"
@@ -79,20 +79,22 @@ causal_graphs:
         description: "S-diacylglyceryl modification of the +1 cysteine is required for LspA (SPase II) cleavage."
         evidence:
           - reference: PMID:34980915
-            snippet: "Lipoprotein SPs contain a conserved C-terminal lipobox motif ending with an invariant cysteine residue that is lipid-modified prior to cleavage by SPase II."
+            snippet: "In this work, we present SignalP 6.0, a machine learning model that detects all five known types of SPs and is applicable to all organisms, including metagenomic data. By using protein language models, SignalP 6.0 is able to predict types of SPs with limited training data, extrapolate to distantly related organisms and, without using explicit region annotation, identify the regions of SPs."
             notes: "SPase II cleavage requires prior lipobox lipidation (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0004175"
         predicate: "has output"
         predicate_id: RO:0002234
-        object: "MOD:00138"
+        object: "MOD:00116"
         description: "SPase II cleavage exposes S-diacylglycerol-L-cysteine as the new N-terminal residue."
         evidence:
           - reference: PMID:34980915
-            snippet: "Sec/SPII SPs are lipoprotein signal peptides transported by the Sec translocon and cleaved by Signal Peptidase II (SPase II, Lsp)."
+            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
             notes: "Mature N-terminal S-diacylglyceryl-cysteine lipoprotein (PMID:34980915). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
-    notes: "Discrimination of Sec/SPII lipoprotein lipobox signal peptides by SignalP 6.0."
+    notes: "SignalP 6.0 predicts all five types of signal peptides and cleavage sites across organisms."
+  - reference: PMID:42050317
+    notes: "Nascent bacterial lipoproteins are sequentially modified by Lgt, cleaved by LspA (signal peptidase II), and N-acylated."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

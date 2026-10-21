@@ -25,12 +25,12 @@ detection_methods:
 causal_graphs:
   - graph_id: allosteric_activator_r_state_stabilization
     title: "Positive allosteric modulator binding stabilizes the active R-state to enhance catalysis"
-    description: "A positive allosteric modulator (CHEBI:24020) binds the activator pocket via small molecule binding (GO:0036094), driving enzyme activator activity (GO:0008047) that positively regulates orthosteric catalytic activity (GO:0003824)."
+    description: "A positive allosteric modulator (CHEBI:35224) binds the activator pocket via small molecule binding (GO:0036094), driving enzyme activator activity (GO:0008047) that positively regulates orthosteric catalytic activity (GO:0003824)."
     nodes:
-      - node_id: "CHEBI:24020"
+      - node_id: "CHEBI:35224"
         label: effector
         node_type: LIGAND
-        grounding: "CHEBI:24020"
+        grounding: "CHEBI:35224"
         description: "Positive allosteric modulator (PAM) or physiological activator ligand."
       - node_id: "GO:0036094"
         label: "small molecule binding"
@@ -48,36 +48,38 @@ causal_graphs:
         grounding: "GO:0003824"
         description: "Enhanced orthosteric substrate affinity (K-type) or catalytic rate (V-type)."
     edges:
-      - subject: "CHEBI:24020"
-        predicate: "molecularly interacts with"
-        predicate_id: RO:0002436
-        object: "GO:0036094"
-        description: "Positive allosteric effector binds at the activator pocket."
+      - subject: "GO:0036094"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:35224"
+        description: "Small molecule binding at the activator pocket engages the positive allosteric effector."
         evidence:
-          - reference: PMID:20971780
-            snippet: "Allosteric modulators are classified into three categories in ASD: activators, which increase the activity of the target protein; inhibitors, which decrease the activity; and regulators."
-            notes: "Allosteric activator classification in ASD (PMID:20971780). (ECO:0000305)"
+          - reference: PMID:31665428
+            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
+            notes: "Allosteric activator site ligand engagement (PMID:31665428). (ECO:0000305)"
       - subject: "GO:0036094"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0008047"
-        description: "Activator pocket occupancy stabilizes the catalytically competent R-state."
+        description: "Activator pocket occupancy propagates an activating conformational change to the orthosteric site."
         evidence:
-          - reference: PMID:20971780
-            snippet: "Allosteric activators bind to a distinct allosteric site and stabilize the active conformation of the enzyme or receptor."
-            notes: "R-state stabilization by allosteric activators (PMID:20971780). (ECO:0000305)"
+          - reference: PMID:31707700
+            snippet: "An allosteric mechanism refers to the biological regulation process wherein macromolecules propagate the effect of ligand binding at one site to a spatially distant orthosteric locus, thus affecting activity."
+            notes: "Allosteric propagation to enzyme activation (PMID:31707700). (ECO:0000305)"
       - subject: "GO:0008047"
         predicate: "positively regulates"
         predicate_id: RO:0002213
         object: "GO:0003824"
         description: "Enzyme activator activity increases orthosteric catalytic turnover or substrate affinity."
         evidence:
-          - reference: PMID:20971780
-            snippet: "Allosteric modulators are classified into three categories in ASD: activators, which increase the activity of the target protein; inhibitors, which decrease the activity; and regulators."
-            notes: "Positive regulation of catalytic activity (PMID:20971780). (ECO:0000305)"
+          - reference: PMID:31665428
+            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
+            notes: "Positive regulation of catalytic activity (PMID:31665428). (ECO:0000305)"
 evidence:
-  - reference: PMID:20971780
-    notes: "Classification of positive allosteric activator sites in ASD."
+  - reference: PMID:31665428
+    notes: "Allosteric ligand binding at a topographically distinct allosteric site fine-tunes and activates target protein function."
+  - reference: PMID:31707700
+    notes: "Ligand binding at an allosteric site propagates conformational changes to a spatially distant orthosteric locus."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

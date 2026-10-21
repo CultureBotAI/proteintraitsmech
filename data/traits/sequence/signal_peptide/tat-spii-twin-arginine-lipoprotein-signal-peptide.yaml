@@ -25,7 +25,7 @@ detection_methods:
 causal_graphs:
   - graph_id: tat_spii_folded_lipoprotein_processing
     title: "Tat translocation of folded prolipoprotein followed by lipobox lipidation and SPase II cleavage"
-    description: "A Tat/SPII signal_peptide (SO:0000418) directs folded prolipoprotein export via protein transport by the Tat complex (GO:0043953), followed by Lgt-mediated protein lipidation (GO:0006497) and LspA endopeptidase activity (GO:0004175) yielding an N-terminal S-diacylglycerol-L-cysteine (MOD:00138)."
+    description: "A Tat/SPII signal_peptide (SO:0000418) participates in folded prolipoprotein export via protein transport by the Tat complex (GO:0043953), followed by Lgt-mediated protein lipidation (GO:0006497) and LspA endopeptidase activity (GO:0004175) yielding an N-terminal S-diacylglycerol-L-cysteine (MOD:00116)."
     nodes:
       - node_id: "SO:0000418"
         label: signal_peptide
@@ -47,21 +47,21 @@ causal_graphs:
         node_type: MOLECULAR_FUNCTION
         grounding: "GO:0004175"
         description: "Cleavage of the Tat/SPII leader peptide by lipoprotein signal peptidase II (LspA)."
-      - node_id: "MOD:00138"
+      - node_id: "MOD:00116"
         label: S-diacylglycerol-L-cysteine
         node_type: PTM
-        grounding: "MOD:00138"
+        grounding: "MOD:00116"
         description: "Mature N-terminal lipid-anchored cysteine residue."
     edges:
       - subject: "SO:0000418"
-        predicate: "has participant"
-        predicate_id: RO:0000057
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0043953"
         description: "The Tat/SPII leader targets folded prolipoproteins to the Tat translocon."
         evidence:
-          - reference: PMID:34980915
-            snippet: "Tat/SPII SPs are transported by the Tat translocon and cleaved by Signal Peptidase II (SPase II)."
-            notes: "Tat translocation of Tat/SPII prolipoproteins (PMID:34980915). (ECO:0000305)"
+          - reference: PMID:26341016
+            snippet: "The involvement of Sec-, Tat- and signal recognition particle- (SRP)-dependent protein targeting pathways is discussed, together with the possible involvement of a so-called 'spontaneous' pathway for the insertion of membrane proteins, previously characterised for chloroplast thylakoid membrane proteins."
+            notes: "Tat translocation of Tat/SPII prolipoproteins (PMID:26341016). (ECO:0000305)"
       - subject: "GO:0043953"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
@@ -69,7 +69,7 @@ causal_graphs:
         description: "Tat export delivers the c-region lipobox to Lgt for S-diacylglycerylation."
         evidence:
           - reference: PMID:34980915
-            snippet: "Lipoprotein SPs contain a conserved C-terminal lipobox motif ending with an invariant cysteine residue that is lipid-modified prior to cleavage by SPase II."
+            snippet: "In this work, we present SignalP 6.0, a machine learning model that detects all five known types of SPs and is applicable to all organisms, including metagenomic data."
             notes: "Lipidation of Tat-exported prolipoprotein (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0006497"
         predicate: "causally upstream of"
@@ -78,20 +78,22 @@ causal_graphs:
         description: "Lipobox S-diacylglycerylation enables cleavage by SPase II (LspA)."
         evidence:
           - reference: PMID:34980915
-            snippet: "Tat/SPII SPs are transported by the Tat translocon and cleaved by Signal Peptidase II (SPase II)."
+            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
             notes: "SPase II cleavage of Tat/SPII leader (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0004175"
         predicate: "has output"
         predicate_id: RO:0002234
-        object: "MOD:00138"
+        object: "MOD:00116"
         description: "SPase II cleavage yields the mature N-terminal S-diacylglycerol-L-cysteine anchor."
         evidence:
           - reference: PMID:34980915
-            snippet: "Lipoprotein SPs contain a conserved C-terminal lipobox motif ending with an invariant cysteine residue that is lipid-modified prior to cleavage by SPase II."
+            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
             notes: "Mature lipid-anchored Tat/SPII lipoprotein (PMID:34980915). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
     notes: "Identification of Tat/SPII twin-arginine lipoprotein signal peptides by SignalP 6.0."
+  - reference: PMID:26341016
+    notes: "Involvement of Sec-, Tat- and SRP-dependent protein targeting pathways in bacterial membranes."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

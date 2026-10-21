@@ -26,12 +26,12 @@ detection_methods:
 causal_graphs:
   - graph_id: inter_protomer_allosteric_cooperativity
     title: "Inter-subunit effector binding couples quaternary interface rearrangement to cooperative catalysis"
-    description: "An effector (CHEBI:24020) binds via small molecule binding (GO:0036094) at an oligomeric subunit boundary mediated by protein homodimerization activity (GO:0042803), driving enzyme regulator activity (GO:0030234) that cooperatively modulates catalytic activity (GO:0003824) across protomers."
+    description: "An effector (CHEBI:35224) binds via small molecule binding (GO:0036094) at an oligomeric subunit boundary mediated by protein homodimerization activity (GO:0042803), driving enzyme regulator activity (GO:0030234) that cooperatively modulates catalytic activity (GO:0003824) across protomers."
     nodes:
-      - node_id: "CHEBI:24020"
+      - node_id: "CHEBI:35224"
         label: effector
         node_type: LIGAND
-        grounding: "CHEBI:24020"
+        grounding: "CHEBI:35224"
         description: "Effector ligand binding at the inter-subunit interface pocket."
       - node_id: "GO:0036094"
         label: "small molecule binding"
@@ -54,45 +54,47 @@ causal_graphs:
         grounding: "GO:0003824"
         description: "Cooperative catalytic activity across active sites of the oligomer."
     edges:
-      - subject: "CHEBI:24020"
-        predicate: "molecularly interacts with"
-        predicate_id: RO:0002436
-        object: "GO:0036094"
-        description: "Effector binds at the inter-subunit allosteric pocket."
+      - subject: "GO:0036094"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:35224"
+        description: "Small molecule binding at the inter-subunit cavity engages the allosteric effector."
         evidence:
-          - reference: PMID:23624396
-            snippet: "Many allosteric sites are located at subunit interfaces of oligomeric proteins, where ligand binding directly perturbs quaternary packing and cooperative communication between subunits."
-            notes: "Inter-subunit allosteric pocket occupancy (PMID:23624396). (ECO:0000305)"
+          - reference: PMID:42628823
+            snippet: "Solvent mapping using FTMap and FTMove across oligomeric ensembles revealed multiple high-confidence cavities predominantly located at subunit interfaces, in addition to canonical catalytic sites."
+            notes: "Inter-subunit cavity detection across oligomeric ensembles (PMID:42628823). (ECO:0000305)"
       - subject: "GO:0036094"
         predicate: regulates
         predicate_id: RO:0002211
         object: "GO:0042803"
         description: "Interface pocket occupancy modulates subunit-subunit packing geometry."
         evidence:
-          - reference: PMID:23624396
-            snippet: "Many allosteric sites are located at subunit interfaces of oligomeric proteins, where ligand binding directly perturbs quaternary packing and cooperative communication between subunits."
-            notes: "Quaternary interface rearrangement (PMID:23624396). (ECO:0000305)"
+          - reference: PMID:42628823
+            snippet: "Across all four enzymes, interface-localized pockets consistently emerged as promising candidate regulatory regions, suggesting that protein-protein interfaces may represent valuable targets for allosteric modulation."
+            notes: "Protein-protein interface pockets as allosteric regulatory regions (PMID:42628823). (ECO:0000305)"
       - subject: "GO:0042803"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0030234"
-        description: "Quaternary subunit rotation propagates cooperative allosteric regulation."
+        description: "Conformational changes across the dimer interface propagate allosteric regulation between protomers."
         evidence:
-          - reference: PMID:23624396
-            snippet: "Allosteric modulators targeting protein-protein interfaces can stabilize or destabilize specific oligomeric states to regulate enzymatic activity."
-            notes: "Quaternary coupling to enzyme regulation (PMID:23624396). (ECO:0000305)"
+          - reference: PMID:42539251
+            snippet: "Consistent with the conformational asymmetry observed in apo -FraB crystal structures, our findings establish a half-site reactivity mechanism in which post-binding conformational changes across the dimer interface restrict substrate cleavage to one active site even though both protomers are able to bind substrate."
+            notes: "Dimer interface conformational coupling (PMID:42539251). (ECO:0000269)"
       - subject: "GO:0030234"
         predicate: regulates
         predicate_id: RO:0002211
         object: "GO:0003824"
         description: "Cooperative quaternary transition regulates catalytic activity across protomers."
         evidence:
-          - reference: PMID:23624396
-            snippet: "Allosteric modulators targeting protein-protein interfaces can stabilize or destabilize specific oligomeric states to regulate enzymatic activity."
-            notes: "Cooperative catalytic regulation (PMID:23624396). (ECO:0000305)"
+          - reference: PMID:42628823
+            snippet: "Across all four enzymes, interface-localized pockets consistently emerged as promising candidate regulatory regions, suggesting that protein-protein interfaces may represent valuable targets for allosteric modulation."
+            notes: "Cooperative catalytic regulation across subunit interfaces (PMID:42628823). (ECO:0000305)"
 evidence:
-  - reference: PMID:23624396
-    notes: "Allosteric regulation at protein-protein and subunit interfaces."
+  - reference: PMID:42628823
+    notes: "Interface-localized pockets across oligomeric enzyme ensembles serve as candidate regulatory regions for allosteric modulation."
+  - reference: PMID:42539251
+    notes: "Post-binding conformational changes across the dimer interface regulate substrate cleavage across active sites."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

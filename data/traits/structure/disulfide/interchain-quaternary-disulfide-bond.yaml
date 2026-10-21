@@ -25,7 +25,7 @@ detection_methods:
 causal_graphs:
   - graph_id: interchain_disulfide_quaternary_crosslinking
     title: "Inter-subunit cystine crosslinking covalently stabilizes quaternary dimer/oligomer assembly"
-    description: "Protein disulfide isomerase activity (GO:0003756) oxidizes L-cysteine residues (CHEBI:29950) across juxtaposed polypeptide subunits to form an interchain L-cystine (cross-link) (MOD:00034) that covalently stabilizes protein heterodimerization activity (GO:0046982) and homodimerization."
+    description: "Protein disulfide isomerase activity (GO:0003756) oxidizes L-cysteine residues (CHEBI:29950) across juxtaposed polypeptide subunits to form an interchain L-cystine (cross-link) (MOD:00034) that drives covalent protein complex oligomerization (GO:0051259)."
     nodes:
       - node_id: "CHEBI:29950"
         label: "L-cysteine residue"
@@ -42,42 +42,42 @@ causal_graphs:
         node_type: PTM
         grounding: "MOD:00034"
         description: "Interchain covalent cystine disulfide bridge linking two subunits."
-      - node_id: "GO:0046982"
-        label: "protein heterodimerization activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0046982"
-        description: "Covalent quaternary subunit assembly (e.g., immunoglobulin H-L or insulin A-B chains)."
+      - node_id: "GO:0051259"
+        label: "protein complex oligomerization"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051259"
+        description: "Covalent quaternary subunit assembly via interchain disulfide bonds."
     edges:
       - subject: "GO:0003756"
         predicate: "has input"
         predicate_id: RO:0002233
         object: "CHEBI:29950"
-        description: "Oxidative disulfide formation consumes juxtaposed cysteine thiols on partner chains."
+        description: "Oxidative disulfide formation consumes available cysteine thiols on partner subunits."
         evidence:
-          - reference: PMID:17001100
-            snippet: "Interchain disulfide bonds covalently link distinct polypeptide chains and stabilize quaternary structure in secreted and cell-surface oligomers."
-            notes: "Inter-subunit cysteine oxidation (PMID:17001100). (ECO:0000305)"
+          - reference: PMID:19005088
+            snippet: "Our results indicate that individual cysteine residues that remain available for disulfide bond formation in the folded monomer can form interchain disulfide bonds with a variety of different cysteine residues present in a companion subunit."
+            notes: "Inter-subunit cysteine oxidation (PMID:19005088). (ECO:0000269)"
       - subject: "GO:0003756"
         predicate: "has output"
         predicate_id: RO:0002234
         object: "MOD:00034"
-        description: "Oxidation forms an inter-polypeptide L-cystine covalent bridge."
+        description: "Oxidation forms an interchain L-cystine covalent bridge between companion subunits."
         evidence:
-          - reference: PMID:17001100
-            snippet: "Interchain disulfide bonds covalently link distinct polypeptide chains and stabilize quaternary structure in secreted and cell-surface oligomers."
-            notes: "Interchain cystine crosslink formation (PMID:17001100). (ECO:0000305)"
-      - subject: "MOD:00034"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
-        object: "GO:0046982"
-        description: "The interchain cystine crosslink locks subunit stoichiometry against dissociation."
+          - reference: PMID:19005088
+            snippet: "Our results indicate that individual cysteine residues that remain available for disulfide bond formation in the folded monomer can form interchain disulfide bonds with a variety of different cysteine residues present in a companion subunit."
+            notes: "Interchain cystine crosslink formation (PMID:19005088). (ECO:0000269)"
+      - subject: "GO:0003756"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051259"
+        description: "Interchain disulfide bond formation covalently links companion subunits into oligomers."
         evidence:
-          - reference: PMID:17001100
-            snippet: "Interchain disulfide bonds covalently link distinct polypeptide chains and stabilize quaternary structure in secreted and cell-surface oligomers."
-            notes: "Covalent stabilization of quaternary dimer/oligomer assembly (PMID:17001100). (ECO:0000305)"
+          - reference: PMID:19005088
+            snippet: "Our results indicate that individual cysteine residues that remain available for disulfide bond formation in the folded monomer can form interchain disulfide bonds with a variety of different cysteine residues present in a companion subunit."
+            notes: "Covalent subunit cross-linking into oligomers (PMID:19005088). (ECO:0000269)"
 evidence:
-  - reference: PMID:17001100
-    notes: "Geometry and quaternary stabilization of interchain disulfide bridges."
+  - reference: PMID:19005088
+    notes: "Available cysteine residues in folded monomers form interchain disulfide bonds with cysteine residues in companion subunits."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

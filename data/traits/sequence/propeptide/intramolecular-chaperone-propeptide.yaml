@@ -27,7 +27,7 @@ detection_methods:
 causal_graphs:
   - graph_id: imc_propeptide_folding_and_autocleavage
     title: "Intramolecular-chaperone propeptide catalyzes protease domain folding followed by autoprocessing"
-    description: "An intramolecular-chaperone propeptide (SO:0001062) lowers the kinetic transition barrier to positively regulate protein folding (GO:0006457) of the cognate protease domain, which then acquires endopeptidase activity (GO:0004175) to cleave and degrade the propeptide during zymogen activation (GO:0031638)."
+    description: "An intramolecular-chaperone propeptide (SO:0001062) participates in protein folding (GO:0006457) of the cognate protease domain, which then undergoes rate-limiting endopeptidase activity (GO:0004175) cleavage and IMC degradation during zymogen activation (GO:0031638)."
     nodes:
       - node_id: "SO:0001062"
         label: propeptide
@@ -51,35 +51,35 @@ causal_graphs:
         description: "Release of the kinetically trapped, active mature protease after propeptide destruction."
     edges:
       - subject: "SO:0001062"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0006457"
-        description: "The IMC propeptide stabilizes the folding transition state of the catalytic domain."
+        description: "The N-terminal IMC propeptide chaperones the folding of the subtilisin domain."
         evidence:
-          - reference: PMID:16002793
-            snippet: "Propeptides of subtilisin and alpha-lytic protease act as intramolecular chaperones that directly catalyze the folding of the catalytic domain across a high kinetic barrier."
-            notes: "Intramolecular chaperone catalysis of protein folding (PMID:16002793). (ECO:0000305)"
+          - reference: PMID:33569954
+            snippet: "Subtilisin is produced as a precursor that requires its N-terminal propeptide to act as an IMC to chaperone the folding of its subtilisin domain."
+            notes: "Intramolecular chaperone role in protein folding (PMID:33569954). (ECO:0000269)"
       - subject: "GO:0006457"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0004175"
-        description: "Folding of the protease domain forms the catalytic triad capable of autoprocessing."
+        description: "During precursor folding, the peptide bond between the IMC and subtilisin domain is cleaved."
         evidence:
-          - reference: PMID:16002793
-            snippet: "Once the protease domain folds into its native state, it autocatalytically cleaves and degrades the propeptide to yield the active enzyme."
-            notes: "Folding enables autocatalytic endopeptidase activity (PMID:16002793). (ECO:0000305)"
+          - reference: PMID:33569954
+            snippet: "During the precursor folding, the cleavage of the peptide bond between the IMC and the subtilisin domain is the most important and rate-limiting step, which leads to the structural reorganization of the subtilisin domain and IMC's degradation."
+            notes: "Precursor folding enables rate-limiting IMC cleavage (PMID:33569954). (ECO:0000269)"
       - subject: "GO:0004175"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0031638"
-        description: "Autocatalytic cleavage and degradation of the IMC propeptide completes zymogen activation."
+        description: "Cleavage and degradation of the IMC propeptide completes structural reorganization and activation."
         evidence:
-          - reference: PMID:16002793
-            snippet: "Once the protease domain folds into its native state, it autocatalytically cleaves and degrades the propeptide to yield the active enzyme."
-            notes: "Propeptide degradation completes enzyme activation (PMID:16002793). (ECO:0000305)"
+          - reference: PMID:33569954
+            snippet: "During the precursor folding, the cleavage of the peptide bond between the IMC and the subtilisin domain is the most important and rate-limiting step, which leads to the structural reorganization of the subtilisin domain and IMC's degradation."
+            notes: "IMC degradation completes enzyme activation (PMID:33569954). (ECO:0000269)"
 evidence:
-  - reference: PMID:16002793
-    notes: "Intramolecular chaperone propeptides catalyze folding of their cognate protease domains."
+  - reference: PMID:33569954
+    notes: "Subtilisin N-terminal propeptide acts as an intramolecular chaperone (IMC) for domain folding before cleavage and IMC degradation."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

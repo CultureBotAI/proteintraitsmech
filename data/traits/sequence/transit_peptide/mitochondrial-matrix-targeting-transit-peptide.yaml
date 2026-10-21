@@ -17,34 +17,34 @@ synonyms:
   - synonym_text: "mitochondrial matrix targeting signal"
     synonym_type: EXACT_SYNONYM
 xrefs:
-  - SO:0001073
+  - SO:0001808
 detection_methods:
   - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
     method_type: ML_PREDICTOR
     edam_operation: EDAM:operation_2489
     tool: "biotools:targetp"
     evidence_code: ECO:0000255
-    reference: PMID:31609389
+    reference: PMID:41809595
     recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
 causal_graphs:
   - graph_id: mtp_tom_tim23_import_mpp_cleavage
     title: "TOM/TIM23 mitochondrial matrix import and MPP presequence cleavage"
-    description: "An N-terminal mitochondrial_targeting_signal (SO:0001073) directs protein import into mitochondrial matrix (GO:0030150) across the TOM and TIM23 translocons, where the mitochondrial processing peptidase complex (GO:0017087) cleaves the presequence to release the mature protein in the mitochondrial matrix (GO:0005759)."
+    description: "An N-terminal mitochondrial_targeting_signal (SO:0001808) participates in protein import into mitochondrial matrix (GO:0030150) across the TOM and TIM23 translocons, causally upstream of mitochondrial processing peptidase endopeptidase activity (GO:0004175) with target end location in the mitochondrial matrix (GO:0005759)."
     nodes:
-      - node_id: "SO:0001073"
+      - node_id: "SO:0001808"
         label: mitochondrial_targeting_signal
         node_type: MOTIF
-        grounding: "SO:0001073"
+        grounding: "SO:0001808"
         description: "Amphipathic positively charged N-terminal mitochondrial presequence (mTP)."
       - node_id: "GO:0030150"
         label: "protein import into mitochondrial matrix"
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0030150"
         description: "TOM/TIM23-mediated translocation of nuclear-encoded precursor proteins."
-      - node_id: "GO:0017087"
-        label: "mitochondrial processing peptidase complex"
-        node_type: PROTEIN
-        grounding: "GO:0017087"
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
         description: "Heterodimeric MPP metallopeptidase (EC:3.4.24.64) excising the N-terminal mTP."
       - node_id: "GO:0005759"
         label: "mitochondrial matrix"
@@ -52,36 +52,36 @@ causal_graphs:
         grounding: "GO:0005759"
         description: "Destination mitochondrial matrix compartment of the cleaved mature protein."
     edges:
-      - subject: "SO:0001073"
-        predicate: "has participant"
-        predicate_id: RO:0000057
+      - subject: "SO:0001808"
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0030150"
-        description: "The amphipathic N-terminal presequence is recognized by TOM receptors to initiate matrix import."
+        description: "The amphipathic N-terminal presequence is recognized by Tom20 to initiate matrix import."
         evidence:
-          - reference: PMID:31609389
-            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
-            notes: "mTP targeting for mitochondrial matrix import (PMID:31609389). (ECO:0000305)"
+          - reference: PMID:36173160
+            snippet: "The 20-kDa TOM (translocase of outer mitochondrial membrane) subunit, Tom20, is the first receptor of the protein import pathway into mitochondria. Tom20 recognizes the mitochondrial targeting signal embedded in the presequences attached to mature mitochondrial proteins, as an N-terminal extension."
+            notes: "mTP recognition by Tom20 for mitochondrial matrix import (PMID:36173160). (ECO:0000269)"
       - subject: "GO:0030150"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
-        object: "GO:0017087"
-        description: "Translocation into the matrix exposes the presequence cleavage site to MPP."
+        object: "GO:0004175"
+        description: "Translocation into the matrix exposes the presequence attached to mature mitochondrial proteins for cleavage."
         evidence:
-          - reference: PMID:31609389
-            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
-            notes: "MPP cleavage of imported mitochondrial presequences (PMID:31609389). (ECO:0000305)"
-      - subject: "GO:0017087"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
+          - reference: PMID:36173160
+            snippet: "Tom20 recognizes the mitochondrial targeting signal embedded in the presequences attached to mature mitochondrial proteins, as an N-terminal extension. Consequently, ~1,000 different mitochondrial proteins are sorted into the mitochondrial matrix, and distinguished from non-mitochondrial proteins."
+            notes: "Presequence processing upon mitochondrial matrix import (PMID:36173160). (ECO:0000269)"
+      - subject: "GO:0030150"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
         object: "GO:0005759"
-        description: "MPP proteolysis releases the mature folded protein within the mitochondrial matrix."
+        description: "Mitochondrial matrix import delivers sorted proteins into the mitochondrial matrix."
         evidence:
-          - reference: PMID:31609389
-            snippet: "Mitochondrial transit peptides (mTPs) are N-terminal presequences that direct nuclear-encoded proteins into the mitochondria and are cleaved upon import by the mitochondrial processing peptidase (MPP)."
-            notes: "Mature protein localization in the mitochondrial matrix (PMID:31609389). (ECO:0000305)"
+          - reference: PMID:36173160
+            snippet: "Consequently, ~1,000 different mitochondrial proteins are sorted into the mitochondrial matrix, and distinguished from non-mitochondrial proteins."
+            notes: "Target end location in the mitochondrial matrix (PMID:36173160). (ECO:0000269)"
 evidence:
-  - reference: PMID:31609389
-    notes: "TargetP 2.0 predicts mitochondrial, chloroplast, and thylakoid luminal transit peptides."
+  - reference: PMID:36173160
+    notes: "Tom20 recognizes the mitochondrial targeting signal in N-terminal presequences to sort proteins into the mitochondrial matrix."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import audit_causal_graphs as acg  # noqa: E402
 import build_docs_index as bdi  # noqa: E402
+import record_io as rio  # noqa: E402
 import score_causal_graphs as scg  # noqa: E402
 import seed_foundational_traits as sft  # noqa: E402
 import validate_strict as vs  # noqa: E402
@@ -130,6 +131,12 @@ def test_foundational_trait_causal_graphs_audit_and_score():
         assert scored.structural_errors == 0
         assert scored.quality_warnings == 0
         assert scored.reasons == ("mapping_status=SEEDED",)
+        fresh = sft.emit_record(spec)
+        assert "curation_history:" not in fresh, f"seeder must not emit curation_history for {spec.identifier}"
+        existing_text = path.read_text(encoding="utf-8")
+        assert rio.merge_on_reseed(existing_text, fresh) == existing_text, (
+            f"merge_on_reseed must preserve curation_history and be idempotent on {spec.identifier}"
+        )
 
     for spec in non_mech_specs:
         path = sft.TRAITS_DIR / spec.rel_dir / spec.filename

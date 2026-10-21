@@ -15,87 +15,87 @@ synonyms:
   - synonym_text: "21st amino acid residue"
     synonym_type: RELATED_SYNONYM
 xrefs:
-  - SO:0001413
-  - MOD:00044
-  - CHEBI:29999
+  - SO:0001455
+  - MOD:00031
+  - CHEBI:30000
 detection_methods:
   - name: "SecMarker / Infernal SECIS + TGA selenoprotein prediction"
     method_type: HMM_PROFILE
     edam_operation: EDAM:operation_0415
     tool: "https://secmarker.crg.es/"
     evidence_code: ECO:0000255
-    reference: PMID:24070661
+    reference: PMID:28192430
     recipe: "cmsearch --cpu 4 --tblout {output} RF00031.cm {input}"
 causal_graphs:
   - graph_id: secis_selenocysteine_incorporation
     title: "SECIS-directed cotranslational selenocysteine incorporation at UGA"
-    description: "A cis-acting SECIS stem-loop RNA element (SO:0000406) recruits the selenocysteine-specific elongation factor SelB/EEFSEC and Sec-tRNA(Sec) to recode an in-frame UGA codon (SO:0001413) during selenocysteine incorporation (GO:0001514), cotranslationally inserting L-selenocysteine (CHEBI:29999 / MOD:00044) into the nascent selenoprotein."
+    description: "A cis-acting SECIS stem-loop RNA element (SO:1001274) recruits the selenocysteine-specific elongation factor SelB/EEFSEC and Sec-tRNA(Sec) to recode an in-frame UGA codon (SO:0000885) during selenocysteine incorporation (GO:0001514), cotranslationally inserting L-selenocysteine (CHEBI:16633 / MOD:00031) into the nascent selenoprotein."
     nodes:
-      - node_id: "SO:0000406"
-        label: "SECIS element"
+      - node_id: "SO:1001274"
+        label: SECIS_element
         node_type: NUCLEIC_ACID
-        grounding: "SO:0000406"
+        grounding: "SO:1001274"
         description: "Selenocysteine insertion sequence stem-loop RNA element in the selenoprotein mRNA."
-      - node_id: "SO:0001413"
-        label: "selenocysteine UGA codon"
+      - node_id: "SO:0000885"
+        label: stop_codon_redefined_as_selenocysteine
         node_type: NUCLEIC_ACID
-        grounding: "SO:0001413"
+        grounding: "SO:0000885"
         description: "In-frame UGA stop codon recoded for L-selenocysteine insertion."
       - node_id: "GO:0001514"
         label: "selenocysteine incorporation"
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0001514"
         description: "SelB/EEFSEC-mediated translational recoding and Sec-tRNA(Sec) delivery."
-      - node_id: "CHEBI:29999"
+      - node_id: "CHEBI:16633"
         label: L-selenocysteine
         node_type: CHEMICAL
-        grounding: "CHEBI:29999"
+        grounding: "CHEBI:16633"
         description: "21st amino acid precursor delivered on Sec-tRNA(Sec) to the ribosomal A-site."
-      - node_id: "MOD:00044"
+      - node_id: "MOD:00031"
         label: "L-selenocysteine residue"
         node_type: RESIDUE
-        grounding: "MOD:00044"
+        grounding: "MOD:00031"
         description: "Cotranslationally incorporated L-selenocysteine residue in the polypeptide chain."
     edges:
-      - subject: "SO:0000406"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
+      - subject: "SO:1001274"
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0001514"
-        description: "The SECIS RNA stem-loop directs SelB/EEFSEC recruitment for UGA recoding."
+        description: "The SECIS RNA stem-loop participates in SelB/EEFSEC recruitment for UGA recoding."
         evidence:
-          - reference: PMID:24070661
-            snippet: "Selenoproteins are proteins that include selenocysteine (Sec), a non-standard amino acid inserted co-translationally in response to the UGA codon. The recoding of UGA as Sec depends on a cis-acting stem-loop structure, the selenocysteine insertion sequence (SECIS) element."
-            notes: "SecMarker / selenocysteine incorporation mechanism (PMID:24070661). (ECO:0000305)"
-      - subject: "SO:0001413"
-        predicate: "has participant"
-        predicate_id: RO:0000057
+          - reference: PMID:28192430
+            snippet: "Selenocysteine (Sec) is known as the 21st amino acid, a cysteine analogue with selenium replacing sulphur. Sec is inserted co-translationally in a small fraction of proteins called selenoproteins."
+            notes: "SecMarker / selenocysteine incorporation mechanism (PMID:28192430). (ECO:0000305)"
+      - subject: "SO:0000885"
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0001514"
         description: "In-frame UGA codon participates as the recoded ribosomal decoding site."
         evidence:
-          - reference: PMID:24070661
-            snippet: "Selenoproteins are proteins that include selenocysteine (Sec), a non-standard amino acid inserted co-translationally in response to the UGA codon."
-            notes: "In-frame UGA codon recoding (PMID:24070661). (ECO:0000305)"
+          - reference: PMID:28192430
+            snippet: "In selenoprotein genes, the Sec specific tRNA (tRNASec) drives the recoding of highly specific UGA codons from stop signals to Sec."
+            notes: "In-frame UGA codon recoding (PMID:28192430). (ECO:0000305)"
       - subject: "GO:0001514"
         predicate: "has input"
         predicate_id: RO:0002233
-        object: "CHEBI:29999"
+        object: "CHEBI:16633"
         description: "Selenocysteine incorporation consumes Sec-tRNA(Sec)-charged L-selenocysteine."
         evidence:
-          - reference: PMID:24070661
-            snippet: "Selenoproteins are proteins that include selenocysteine (Sec), a non-standard amino acid inserted co-translationally in response to the UGA codon."
-            notes: "L-selenocysteine substrate input (PMID:24070661). (ECO:0000305)"
+          - reference: PMID:28192430
+            snippet: "Sec is inserted co-translationally in a small fraction of proteins called selenoproteins. In selenoprotein genes, the Sec specific tRNA (tRNASec) drives the recoding of highly specific UGA codons from stop signals to Sec."
+            notes: "L-selenocysteine substrate input (PMID:28192430). (ECO:0000305)"
       - subject: "GO:0001514"
         predicate: "has output"
         predicate_id: RO:0002234
-        object: "MOD:00044"
+        object: "MOD:00031"
         description: "Cotranslational UGA recoding yields an incorporated L-selenocysteine residue in the polypeptide."
         evidence:
-          - reference: PMID:24070661
-            snippet: "The recoding of UGA as Sec depends on a cis-acting stem-loop structure, the selenocysteine insertion sequence (SECIS) element."
-            notes: "Polypeptide L-selenocysteine residue output (PMID:24070661). (ECO:0000305)"
+          - reference: PMID:28192430
+            snippet: "In selenoprotein genes, the Sec specific tRNA (tRNASec) drives the recoding of highly specific UGA codons from stop signals to Sec."
+            notes: "Polypeptide L-selenocysteine residue output (PMID:28192430). (ECO:0000305)"
 evidence:
-  - reference: PMID:24070661
-    notes: "SecMarker identifies SECIS elements and selenoprotein genes across genomes."
+  - reference: PMID:28192430
+    notes: "Secmarker identifies tRNASec and UGA recoding across selenoprotein-encoding genomes."
 curation_history:
   - timestamp: '2026-10-21T03:30:00Z'
     curator: claude

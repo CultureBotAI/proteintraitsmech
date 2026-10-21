@@ -25,22 +25,22 @@ Stage 2 of the `mech-goal-sequence-20261019` cycle audited all `429,359` records
 All 25 mechanism-bearing foundational records were updated via the registered writer `scripts/seed_foundational_traits.py` (preserving native `mapping_status: SEEDED` per `.claude/skills/curate-yaml-record/SKILL.md` with `curation_history` entry `curator: claude`, `action: EDIT`, `llm_assisted: true`), with `111/111` grounded nodes, `86/86` RO-typed (`predicate_id`) and snippet-cited edges, `0` errors / `0` warnings in `audit_causal_graphs.py --strict`, and `score_causal_graphs.py` score `95/95` (maximum possible for `mapping_status: SEEDED`, where `SEEDED_REVIEW_PENALTY = 5` is reserved for human `REVIEWED` promotion):
 
 1. **`SEQ_NONSTANDARD_RESIDUE` (4 records)**:
-   - `proteintraitsmech:NONSTD_SELENOCYSTEINE`: `selenocysteine residue` (`MOD:00040`) + `SECIS element` (`SO:0000015`) → `selenocysteine incorporation` (`GO:0001514`) → `oxidoreductase activity` (`GO:0016491`) → `cellular oxidant detoxification` (`GO:0098869`) (PMID:27587760, PMID:12775843).
-   - `proteintraitsmech:NONSTD_PYRROLYSINE`: `L-pyrrolysine` (`CHEBI:29157`) + `pyrrolysyl-tRNA synthetase activity` (`GO:0043767`) → `pyrrolysine incorporation` (`GO:0030631`) → `pyrrolysine residue` (`MOD:01155`) → `methanogenesis, from methylamine` (`GO:0019386`) (PMID:12029133, PMID:12029134).
-   - `proteintraitsmech:NONSTD_N_FORMYLMETHIONINE`: `10-formyltetrahydrofolate` (`CHEBI:15637`) + `methionyl-tRNA formyltransferase activity` (`GO:0004479`) → `N-formyl-L-methionine residue` (`MOD:00055`) → `translational initiation` (`GO:0006413`), regulated by `formylmethionine deformylase activity` (`GO:0008463`) (PMID:8999083, PMID:26814188).
-   - `proteintraitsmech:NONSTD_D_AMINO_ACID_RESIDUE`: `L-alpha-amino acid residue` (`MOD:00868`) + `peptidyl-amino-acid racemase activity` (`GO:0016855`) → `peptidyl-amino acid modification` (`GO:0018193`) → `D-alpha-amino acid residue` (`MOD:00869`) (PMID:16339763, PMID:24478330).
+   - `proteintraitsmech:NONSTD_SELENOCYSTEINE`: `SECIS_element` (`SO:1001274`) + `stop_codon_redefined_as_selenocysteine` (`SO:0000885`) + `L-selenocysteine` (`CHEBI:16633`) → `selenocysteine incorporation` (`GO:0001514`) → `L-selenocysteine residue` (`MOD:00040`) (PMID:28192430, PMID:26819414).
+   - `proteintraitsmech:NONSTD_PYRROLYSINE`: `L-pyrrolysine` (`CHEBI:21860`) + `pyrrolysyl-tRNA synthetase activity` (`GO:0043767`) + `stop_codon_redefined_as_pyrrolysine` (`SO:0000884`) → `pyrrolysine incorporation` (`GO:0030631`) → `L-pyrrolysine residue` (`MOD:01155`) (PMID:42848426, PMID:16150879).
+   - `proteintraitsmech:NONSTD_N_FORMYLMETHIONINE`: `methionyl-tRNA formyltransferase activity` (`GO:0004479`) → `N-formyl-L-methionine` (`CHEBI:16552`) / `N-formyl-L-methionine residue` (`MOD:00055`) → `translational initiation` (`GO:0006413`), followed by `formylmethionine deformylase activity` (`GO:0008463`) (PMID:42079159, PMID:42278349).
+   - `proteintraitsmech:NONSTD_D_AMINO_ACID_RESIDUE`: `L-alpha-amino acid residue` (`MOD:00868`) + `peptidyl-amino-acid racemase activity` (`GO:0016855`) → `peptidyl-amino acid modification` (`GO:0018193`) → `D-alpha-amino acid residue` (`MOD:00869`) (PMID:29779654, PMID:23064837).
 2. **`STRUCT_ALLOSTERIC_SITE` (5 records)**:
-   - `proteintraitsmech:ALLOSTERIC_REGULATORY_SITE`, `ALLOSTERIC_ACTIVATOR_SITE`, `ALLOSTERIC_INHIBITOR_SITE`, `ALLOSTERIC_CRYPTIC_POCKET`, `ALLOSTERIC_SUBUNIT_INTERFACE_SITE` (PMID:19759533, PMID:27642010, PMID:23495256, PMID:25651000, PMID:4950922, PMID:15924906).
+   - `proteintraitsmech:ALLOSTERIC_REGULATORY_SITE`, `ALLOSTERIC_ACTIVATOR_SITE`, `ALLOSTERIC_INHIBITOR_SITE`, `ALLOSTERIC_CRYPTIC_POCKET`, `ALLOSTERIC_SUBUNIT_INTERFACE_SITE` (PMID:26952375, PMID:42396523, PMID:37882678).
 3. **`SEQ_SIGNAL_PEPTIDE` (5 records)**:
-   - `proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPI`, `SIGNAL_PEPTIDE_SEC_SPII`, `SIGNAL_PEPTIDE_TAT_SPI`, `SIGNAL_PEPTIDE_TAT_SPII`, `SIGNAL_PEPTIDE_SEC_SPIII` (PMID:38167977, PMID:28659283, PMID:9034966, PMID:22380950, PMID:21696469, PMID:16816205, PMID:30979948, PMID:29024998, PMID:2863324, PMID:23836233).
+   - `proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPI`, `SIGNAL_PEPTIDE_SEC_SPII`, `SIGNAL_PEPTIDE_TAT_SPI`, `SIGNAL_PEPTIDE_TAT_SPII`, `SIGNAL_PEPTIDE_SEC_SPIII` (PMID:38336966, PMID:37905051, PMID:38319956, PMID:28792336).
 4. **`SEQ_TRANSIT_PEPTIDE` (3 records)**:
-   - `proteintraitsmech:TRANSIT_PEPTIDE_MITOCHONDRIAL`, `TRANSIT_PEPTIDE_CHLOROPLAST_STROMA`, `TRANSIT_PEPTIDE_THYLAKOID_LUMEN` (PMID:31548606, PMID:25303527, PMID:30862688, PMID:29386296, PMID:25060687, PMID:15355568).
+   - `proteintraitsmech:TRANSIT_PEPTIDE_MITOCHONDRIAL`, `TRANSIT_PEPTIDE_CHLOROPLAST_STROMA`, `TRANSIT_PEPTIDE_THYLAKOID_LUMEN` (PMID:36690624, PMID:36732524, PMID:40919263).
 5. **`SEQ_PROPEPTIDE` (3 records)**:
-   - `proteintraitsmech:PROPEPTIDE_ZYMOGEN_ACTIVATION`, `PROPEPTIDE_INTRAMOLECULAR_CHAPERONE`, `PROPEPTIDE_PROHORMONE_DIBASIC` (PMID:9405952, PMID:19334252, PMID:2729713, PMID:15921970, PMID:9651366, PMID:23240029).
+   - `proteintraitsmech:PROPEPTIDE_ZYMOGEN_ACTIVATION`, `PROPEPTIDE_INTRAMOLECULAR_CHAPERONE`, `PROPEPTIDE_PROHORMONE_DIBASIC` (PMID:38050917, PMID:40499874, PMID:42955853).
 6. **`STRUCT_DISULFIDE` (4 records)**:
-   - `proteintraitsmech:DISULFIDE_INTRACHAIN`, `DISULFIDE_INTERCHAIN`, `DISULFIDE_CYSTINE_KNOT`, `DISULFIDE_ALLOSTERIC_REDOX_SWITCH` (PMID:10542099, PMID:25326457, PMID:16199474, PMID:21854759, PMID:8108456, PMID:22009750, PMID:16931765, PMID:29959203).
+   - `proteintraitsmech:DISULFIDE_INTRACHAIN`, `DISULFIDE_INTERCHAIN`, `DISULFIDE_CYSTINE_KNOT`, `DISULFIDE_ALLOSTERIC_REDOX_SWITCH` (PMID:42829235, PMID:19005088, PMID:40763564, PMID:42681370).
 7. **`FUNC_LOCALIZATION` (1 record)**:
-   - `GO:7770085` (`protocatechuate 3,4-dioxygenase complex`): `protocatechuate 3,4-dioxygenase complex` (`GO:7770085`) + `3,4-dihydroxybenzoate` (`CHEBI:36062`) + `dioxygen` (`CHEBI:15379`) + `iron(3+)` (`CHEBI:29034`) → `protocatechuate 3,4-dioxygenase activity` (`GO:0018578`) → `protocatechuate catabolic process, ortho-cleavage` (`GO:0019618`) (PMID:2790722, PMID:9175705).
+   - `GO:7770085` (`protocatechuate 3,4-dioxygenase complex`): `protocatechuate 3,4-dioxygenase complex` (`GO:7770085`) + `iron(3+)` (`CHEBI:29034`) → `protocatechuate 3,4-dioxygenase activity` (`GO:0018578`) + `3,4-dihydroxybenzoate` (`CHEBI:36241`) → `3-carboxy-cis,cis-muconate(3-)` (`CHEBI:57496`) in `protocatechuate catabolic process, ortho-cleavage` (`GO:0019618`) (PMID:16101286, PMID:11029436).
 
 ## Hierarchy and Cross-Reference Audit Fixes
 
