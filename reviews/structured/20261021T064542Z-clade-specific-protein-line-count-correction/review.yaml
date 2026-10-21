@@ -1,0 +1,463 @@
+schema_version: 1.0.0
+review_id: 20261021T064542Z-clade-specific-protein-line-count-correction
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Clerical correction to clade-specific protein review
+started_at: '2026-10-21T06:45:42Z'
+finished_at: '2026-10-21T06:45:42Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Current session assessed unchanged record bytes using local
+    rules and inspected external sources. Prior authorship independence is not established;
+    this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The class and evolutionary placement are sound, but detection-based restriction
+  and the breadth of the orphan synonym need explicit scientific scope. A separate
+  minor wording issue implies a taxon xref that the intentionally generic record does
+  not contain. Historical CC0 licensing is supported. No trait data were changed.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/landing_sources.json
+    sha256: 679b100d2c6313e2ec78fecbbbea8731595932ec52051d311ad0fc9d5a6b1004
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/evolution/conservation/clade-specific-protein.yaml
+    sha256: ea5995931348ed081b569b0abed22dd732b142862e617b14c6153da4d940f108
+    role: target
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: research/equivalence-cutoffs-evolution.md
+    sha256: b7da60078c50056c0b8866e535a6e34e3f681affdf3ad75312cee8bdd9801bb5
+    role: context
+  - path: reviews/structured/20261021T064449Z-clade-specific-protein/review.yaml
+    sha256: 423623507ee017be07fd146c03258b7288e1a4d6b6b3113b2f3810e23ebf4a1a
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/seed_evolution.py
+    sha256: 98c34ef72148a445026b5c2faa0cc1b374438d4a1c9f20eef368cb3c0a1ae174
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field review of one complete ProteinTraitRecord, including
+    identity, source support, placement, hierarchy, representations, examples, graph
+    applicability, completeness and audit status.
+  selection: Path-order unreviewed record 1 of the batch. Initial ignore-independent
+    data/traits/**/*.yaml inventory contained 429359 records; scripts/record_review.py
+    list validated 1 record path as already targeted, leaving 429358. Snapshot-row
+    context paths were not counted. This review covers exactly this target, not the
+    whole queue.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+targets:
+- kind: generated
+  label: clade-specific protein
+  owner_paths:
+  - path: scripts/seed_evolution.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained class definitions and generator
+  path: data/traits/evolution/conservation/clade-specific-protein.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:EVO_CLADE_SPECIFIC
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/evolution/conservation/clade-specific-protein.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One record checked in closed mode.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and UniProt semantics
+  command: just validate-all data/traits/evolution/conservation/clade-specific-protein.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Target checked together with the repository grounding registry integrity;
+    no qualification inferred.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/evolution/conservation/clade-specific-protein.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Target inspected for graphs; zero graphs is not evidence of a mechanism.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  evidence_ids:
+  - validation-3
+- check_id: history
+  name: Existing curation history validity
+  command: UV_CACHE_DIR=/private/tmp/ptm-record-reviews-20261021/uv-cache UV_NO_SYNC=1
+    just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 'Full history recipe completed: No issues found. Presence of a per-record
+    history entry is advisory. This review adds no curation event.'
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- check_id: structured-adapter
+  name: Structured expression-module adapter applicability
+  status: not_applicable
+  required: false
+  summary: Generic unscoped class names no gene, locus, organism or dataset; iModulonDB
+    membership cannot establish its definition.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- check_id: references
+  name: External identifiers and internal reference applicability
+  status: not_applicable
+  required: false
+  summary: No DOI, PMID, source accession, ontology CURIE value, parent identifier
+    or causal-node grounding is asserted. NCBITaxon is mentioned as a prospective
+    prefix only; the local stable identifier was checked.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- check_id: line-count
+  name: Clerical line-count verification
+  command: wc -l data/traits/evolution/conservation/clade-specific-protein.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 21 newline-terminated lines; the previous 24-line statement was incorrect.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/evolution/conservation/clade-specific-protein.yaml
+  locator: Entire YAML record
+  accessed_at: '2026-10-21T06:41:45Z'
+  support: supports
+  snapshot_sha256: ea5995931348ed081b569b0abed22dd732b142862e617b14c6153da4d940f108
+  summary: Read the entire 21-line generic EVO_CLADE_SPECIFIC record, including definition,
+    four exact synonyms, presence-breadth metric, SEEDED status and CC0 license.
+- evidence_id: schema
+  kind: authority
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord, EvolutionaryScope and TraitCategoryEnum
+  accessed_at: '2026-10-21T06:41:45Z'
+  support: supports
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  summary: EvolutionaryScope allows an empty taxon_scope for a generic class and distinguishes
+    distribution from selection metrics. EVO_CONSERVATION is the schema category.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_evolution.py
+  locator: TERMS, SCOPE, record(), main()
+  accessed_at: '2026-10-21T06:41:45Z'
+  support: supports
+  snapshot_sha256: 98c34ef72148a445026b5c2faa0cc1b374438d4a1c9f20eef368cb3c0a1ae174
+  summary: The maintained EVO_CLADE_SPECIFIC TERMS and SCOPE entries emit this generic
+    parent class; main skips existing records without force.
+- evidence_id: trg-source
+  kind: primary_source
+  reference: https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000862
+  locator: Weisman et al. 2020, DOI:10.1371/journal.pbio.3000862; Abstract and Introduction
+  accessed_at: '2026-10-21T06:41:55Z'
+  support: partial
+  summary: Defines lineage restriction through detectable homologs outside a monophyletic
+    group and uses orphan for the single-species case. Its homology-detection analysis
+    cautions against interpreting detection failure as true evolutionary absence.
+- evidence_id: license-policy
+  kind: authority
+  reference: conf/landing_sources.json
+  locator: 'curated integrations: evolutionary / pangenome traits; LICENSE final paragraph;
+    download.yaml curated_evolution'
+  accessed_at: '2026-10-21T06:44:33Z'
+  support: supports
+  summary: Historical evolution records retain CC0; current project contributions
+    use CC BY 4.0. The current seeder license does not invalidate the historical record
+    license.
+- evidence_id: identifier-search
+  kind: search
+  reference: data/traits/
+  locator: 'identifier: proteintraitsmech:EVO_CLADE_SPECIFIC'
+  accessed_at: '2026-10-21T06:44:33Z'
+  support: supports
+  summary: The exact identifier occurs as a record identifier only at the target path.
+    All nine EVO identifiers resolve to their respective local records.
+  search_scope: 'rg -n --no-ignore --hidden ''identifier: proteintraitsmech:EVO_''
+    data/traits; all files under corpus, including ignored/hidden inputs.'
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/evolution/conservation/clade-specific-protein.yaml
+  locator: Executed 2026-10-21T06:41:46Z through 2026-10-21T06:41:47Z; exit 0
+  accessed_at: '2026-10-21T06:41:47Z'
+  support: supports
+  summary: "uv run python scripts/validate_strict.py --workers 1 'data/traits/evolution/conservation/clade-specific-protein.yaml'\n\
+    Validating 1 files with 1 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml\n\
+    \n=== validate-strict summary ===\n  files scanned:      1\n  files with ERROR:\
+    \   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/evolution/conservation/clade-specific-protein.yaml
+  locator: Executed 2026-10-21T06:41:47Z through 2026-10-21T06:44:28Z; exit 0
+  accessed_at: '2026-10-21T06:44:28Z'
+  support: supports
+  summary: "uv run python scripts/validate_strict.py data/traits/evolution/conservation/clade-specific-protein.yaml\n\
+    Validating 1 files with 17 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml\n\
+    \n=== validate-strict summary ===\n  files scanned:      1\n  files with ERROR:\
+    \   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    uv run python scripts/validate_uniprot_grounding.py data/traits/evolution/conservation/clade-specific-protein.yaml\n\
+    files scanned: 1\nregistry proteins: 12700\nsource evidence objects: 21048\nqualified\
+    \ record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/evolution/conservation/clade-specific-protein.yaml
+  locator: Executed 2026-10-21T06:44:28Z through 2026-10-21T06:44:28Z; exit 0
+  accessed_at: '2026-10-21T06:44:28Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings
+
+
+    uv run python scripts/audit_causal_graphs.py data/traits/evolution/conservation/clade-specific-protein.yaml'
+assessments:
+- assessment_id: identity
+  area: identity
+  topic: Generic taxonomic restriction class
+  outcome: supported
+  evidence_ids:
+  - record
+  - owner
+  - identifier-search
+  summary: The stable local identifier resolves to the intended generic protein-trait
+    class, not a particular gene or protein instance. The seeder explicitly intends
+    a parent class for future scoped traits.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- assessment_id: placement
+  area: schema
+  topic: EVOLUTION / EVO_CONSERVATION
+  outcome: supported
+  evidence_ids:
+  - record
+  - schema
+  summary: Presence breadth across taxa is evolutionary evidence. EVO_CONSERVATION
+    is the authoritative enum; the EVOL shorthand in general guidance is not the schema
+    vocabulary.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- assessment_id: definition
+  area: scope
+  topic: Detection-based restriction and synonym scope
+  outcome: concern
+  evidence_ids:
+  - record
+  - trg-source
+  summary: The unqualified present-only definition does not distinguish observed homology
+    restriction from true absence. Treating orphan gene as exact for every clade level
+    exceeds the single-species usage in the inspected source; gene terminology also
+    needs an explicit encoded-protein interpretation.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- assessment_id: representation
+  area: representation
+  topic: Generic scope and future instantiation
+  outcome: supported
+  evidence_ids:
+  - schema
+  - record
+  - owner
+  summary: The presence-breadth metric is explicit. Empty taxon scope and orthology
+    method are permissible on a generic class; a real scoped assertion would need
+    the panel and detection method. The definition misleadingly refers to an existing
+    NCBITaxon xref although this generic record has none.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- assessment_id: license-status
+  area: provenance
+  topic: Curated seed provenance, historical license and status
+  outcome: supported
+  evidence_ids:
+  - record
+  - owner
+  - license-policy
+  summary: The definition is marked as project curation, the historical CC0 status
+    is explained by policy, and SEEDED makes no human-review claim. The seeder is
+    the maintained fix owner; no record, status or history was changed.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+- assessment_id: optional-fields
+  area: completeness
+  topic: Hierarchy, examples, chemistry, graphs and discussion scope
+  outcome: not_applicable
+  evidence_ids:
+  - record
+  - owner
+  summary: This generic record contains no parent relation, ontology accession, example,
+    residue coordinate, chemistry/function assertion, causal edge, discussion or dataset.
+    Those optional features are not mandatory for this trait; no instance mechanism
+    is inferred.
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+findings:
+- issue_key: evo-clade-specific-detection-and-orphan-scope
+  category: scope
+  severity: major
+  certainty: provisional
+  title: Restriction and orphan equivalence need an operational scope
+  description: The definition asserts biological presence only in a taxon, and assigns
+    orphan gene as an exact synonym across arbitrary clades. The inspected primary
+    source instead defines detection-based restriction and limits orphan to one species.
+    This creates a material membership ambiguity. Terminology varies, so curator adjudication
+    should retain the conflict and choose an explicit convention rather than declare
+    every historical use wrong.
+  field_paths:
+  - definition
+  - synonyms
+  - evolutionary_scope.conservation_metric
+  evidence_ids:
+  - record
+  - trg-source
+  - owner
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  owner_paths:
+  - path: scripts/seed_evolution.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained class definitions and generator
+  rule_id: ProteinTraitRecord review checklist
+  native_severity: major
+  normalization_reason: Material scope or evidence mismatch under the local field
+    checklist.
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261021T064449Z-clade-specific-protein
+    finding_id: F1
+- issue_key: evo-clade-specific-unconditional-xref-wording
+  category: consistency
+  severity: minor
+  title: Definition refers to a taxon xref absent from this generic class
+  description: The definition says the NCBITaxon xref gives the clade, but the complete
+    YAML has no xrefs and is intentionally generic. The gap is conditional wording,
+    not a demand to invent a taxon.
+  field_paths:
+  - definition
+  evidence_ids:
+  - record
+  - owner
+  - schema
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  owner_paths:
+  - path: scripts/seed_evolution.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained class definitions and generator
+  certainty: confirmed
+  rule_id: ProteinTraitRecord review checklist
+  native_severity: minor
+  normalization_reason: Bounded wording or provenance defect without a wrong core
+    trait identity.
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261021T064449Z-clade-specific-protein
+    finding_id: F2
+actions:
+- action_id: A1
+  description: Revise the maintained EVO_CLADE_SPECIFIC definition/synonyms in scripts/seed_evolution.py
+    to declare a detection-based convention, protein-coding scope and taxon granularity;
+    cite the chosen source and regenerate only through the audited record route after
+    separate curation authorization.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  owner_paths:
+  - path: scripts/seed_evolution.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained class definitions and generator
+  acceptance_checks:
+  - Compare revised wording and synonym types with the exact cited primary definition;
+    distinguish a one-species orphan from a broader clade class.
+  - Verify scoped instances require a defined panel and homology detection procedure.
+  - Run just validate-all data/traits/evolution/conservation/clade-specific-protein.yaml.
+- action_id: A2
+  description: Make the seeder definition state that a scoped descendant supplies
+    the clade reference; preserve the unscoped generic class.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:EVO_CLADE_SPECIFIC
+  owner_paths:
+  - path: scripts/seed_evolution.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained class definitions and generator
+  acceptance_checks:
+  - Definition no longer implies the generic target already carries an NCBITaxon assertion.
+  - Run just validate data/traits/evolution/conservation/clade-specific-protein.yaml.
+limitations:
+- Single generic-class review; no species-level presence/absence or individual protein
+  qualification was attempted.
+- The bounded primary-source review establishes a documented usage and detection caveat,
+  not universal consensus on orphan terminology.
+- No explicit per-record primary citation is present; the named definition source
+  is project curation. External evidence is captured in this review and is not silently
+  added to the record.
+tags:
+- unreviewed-path-order
+- batch-001
+notes:
+- The predecessor incorrectly called the target 24 lines long. wc -l verifies 21 lines.
+  The complete target bytes and original SHA-256 were correct; the scientific assessment,
+  two open findings and proposed actions are unchanged. This linked observation preserves
+  the original immutable bundle.
+related_reviews:
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261021T064449Z-clade-specific-protein
+  relationship: Corrects only the record-line-count statement; preserves scientific
+    findings.
