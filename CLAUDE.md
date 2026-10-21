@@ -139,6 +139,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Measure Git/Pages scale | [scalability-check](.claude/skills/scalability-check/SKILL.md) |
 | Assess/maintain the backlog ("what's next") | [next-tasks](.claude/skills/next-tasks/SKILL.md) |
 | Full open-issue queue triage | [review-open-issues](.claude/skills/review-open-issues/SKILL.md) |
+| Evolve recurring goal-cycle workflow profile | [proteintraitsmech-evolve-workflow](.claude/skills/proteintraitsmech-evolve-workflow/SKILL.md) |
 
 ## Change-to-gate matrix
 
