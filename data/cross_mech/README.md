@@ -96,7 +96,7 @@ still be installed and present here.
 The 2026-10-13 snapshot covers 13 sibling repositories, 656,222 declared records,
 16,082 mentions and 2,602 distinct accessions. All 2,047 previous accessions remain;
 555 were added to the inventory, not promoted to new canonical examples. Of the
-2,602 proteins, 939 have existing qualified examples, 667 have only legacy
+2,602 proteins, 943 have existing qualified examples, 663 have only legacy
 examples and 996 remain discovery-only. UniProt release `2026_03` returned
 2,484 active sequences; 118 accessions were inactive (115 deleted, two merged,
 one split). No replacement accession was substituted.
@@ -104,7 +104,7 @@ The normalized store preserves five existing `2026_02` ProteinReferences
 (P00909, P02918, P11446, P17443, P42858), alongside 2,479 `2026_03` sequences.
 Their release mismatch is explicit; current-release annotations are not grafted
 onto these older references. 2,419 sequences have usable generic annotations
-in the combined inputs; 306 proteins have existing localized qualified traits,
+in the combined inputs; 316 proteins have existing localized qualified traits,
 which are not necessarily residue-level causal explanations. Both prior batches'
 71 approvals and 180 rejections remain in the inventory. Full
 refresh scope, qualifications, review limits and follow-up are recorded in the
