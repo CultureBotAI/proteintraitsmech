@@ -20,16 +20,16 @@ previous_evidence:
   sha256: 509577e3349b9946fdde2b3a8148064a1398c7a3a755ace8d1b3356a43d31c7e
 artifacts:
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/issue_map.yaml
-  sha256: c5df8b0ab69dee256a25f5b865e602e077e6b1bf98db7af3a455c2c128b820f7
+  sha256: a25b61308c8bc06765d7d57b5792513b4af4216c8c7d5bf811ea2c02ef52406e
   kind: issue_map
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/validation.md
-  sha256: 0dd633d06863685563d8c56e705692e692325768d205e8ee6fbe3cd5dcadae4a
+  sha256: 9e2a2ba6393794fd7e00573f178ceeffa2168eb88a4c9a17e9f82d754c511679
   kind: validation
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_report.md
-  sha256: 725ed9beba1c41c66a76836d5e748d2ee676b48c9b92253e60203027634b775e
+  sha256: 4b912049ee9f9bc3f54a258c9803738da382a9b5c07bb90d04fc87174bca5292
   kind: review_report
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_findings.yaml
-  sha256: 2550ef4a4b54e1425a62e73fba5174e4f06c21a9767440825ef003e58e761c1c
+  sha256: 438b6712ef02fc88990c1bf5e054fc2b901925f85b2eed0f4da2cc3015be6330
   kind: review_findings
 findings:
 - finding_id: F1
@@ -39,10 +39,11 @@ findings:
     proteases'
   group_id: G2
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
-  disposition: 'Authored and unit-tested the CDD:cd00104 erratum in scripts/cdd_errata.py
-    (include_all=True); in-place application to the promoted record is deferred under
-    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
-    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  disposition: 'In-place repair of promoted record CDD:cd00104 (3 qualified human
+    examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and CDD:cd00104 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py
+    explicitly refuses records with qualified examples until #1172 lands.'
   carried_from: F1
 - finding_id: F2
   status: deferred
@@ -50,10 +51,11 @@ findings:
     repeats its opening title sentence verbatim'
   group_id: G2
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
-  disposition: 'Authored and unit-tested the CDD:cd00959 erratum in scripts/cdd_errata.py
-    (include_all=True); in-place application to the promoted record is deferred under
-    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
-    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  disposition: 'In-place repair of promoted record CDD:cd00959 (2 qualified E. coli/human
+    examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and CDD:cd00959 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py
+    explicitly refuses records with qualified examples until #1172 lands.'
   carried_from: F2
 - finding_id: F3
   status: resolved
@@ -202,17 +204,18 @@ groups:
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
   status: deferred
   summary: Already-promoted CDD sequence-domain records (CDD:cd00104 and CDD:cd00959)
-    whose minor typographical/duplication errata are authored in scripts/cdd_errata.py
-    (include_all=True) and deferred in-place pending sharded qualified_record_bindings.jsonl.d
-    re-binding.
+    whose minor typographical/duplication errata and scripts/cdd_errata.py entries
+    are deferred pending sharded qualified_record_bindings.jsonl.d re-binding support
+    in scripts/ground_protein_examples.py.
   resolution_evidence:
   - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/issue_map.yaml
   - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/validation.md
   - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_findings.yaml
-  disposition: 'Authored and unit-tested CDD:cd00104 (F1) and CDD:cd00959 (F2) errata
-    in scripts/cdd_errata.py (include_all=True); in-place application to the promoted
-    YAML records is deferred under open issue #1172 until scripts/ground_protein_examples.py
-    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  disposition: 'In-place repair of promoted records CDD:cd00104 (F1) and CDD:cd00959
+    (F2) is deferred under open issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and both entries are added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py
+    explicitly refuses records with qualified examples until #1172 lands.'
 carry_forward_ids:
 - F1
 - F2

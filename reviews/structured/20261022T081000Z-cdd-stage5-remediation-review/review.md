@@ -11,7 +11,7 @@
 
 ## Summary
 
-Post-remediation cohort review of all 12 CDD sequence-domain records from the Stage 4 inventory after Stage 5 grouped remediation (#1171, #1172). All 10 major/minor prose, paralog-scope, and biochemical contradictions on the unpromoted G1 records (F3-F12: CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551) are resolved in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py and wired into scripts/seed_cdd.py, with literature-grounded evidence and curation_history entries. The 2 minor prose errata on already-promoted records CDD:cd00104 (F1) and CDD:cd00959 (F2) are authored and unit-tested in scripts/cdd_errata.py (include_all=True) and explicitly deferred under open issue #1172 pending sharded qualified_record_bindings.jsonl.d re-binding.
+Post-remediation cohort review of all 12 CDD sequence-domain records from the Stage 4 inventory after Stage 5 grouped remediation (#1171, #1172). All 10 major/minor prose, paralog-scope, and biochemical contradictions on the unpromoted G1 records (F3-F12: CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551) are resolved in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py and wired into scripts/seed_cdd.py, with literature-grounded evidence and curation_history entries. The 2 minor prose errata on already-promoted records CDD:cd00104 (F1) and CDD:cd00959 (F2) are explicitly deferred under open issue #1172 pending sharded qualified_record_bindings.jsonl.d re-binding support in scripts/ground_protein_examples.py and subsequent addition of their errata entries to scripts/cdd_errata.py.
 
 ## Scope And Provenance
 
@@ -45,8 +45,8 @@ Working-tree hashes do not imply those bytes were committed.
 | Release-pinned UniProt grounding and binding replay across all 12 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | 12 files scanned, 21,331 qualified record bindings verified, 0 semantic findings; promoted examples on CDD:cd00104 and CDD:cd00959 replay cleanly and all 10 repaired G1 records validate with 0 findings. |
 | Causal-graph audit across all 12 cohort records | passed | False | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | 0 records with causal_graphs, 0 errors, 0 warnings. |
 | Registered write-route audit including scripts/repair_cdd_errata.py | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | 618 scripts examined, 8 registered editors verified, 0 unguarded writer findings. |
-| Append-only curation history validation | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | All 13 history records validate against src/proteintraitsmech/schema/history.yaml with 0 errors. |
-| CDD errata and in-place editor guard unit test suites | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | 18 passed across tests/test_cdd_errata.py and tests/test_inplace_editor_guards.py, verifying seeder idempotency, repair_cdd_errata dry-run/apply semantics, and editor guard compliance. |
+| Append-only curation history validation | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | All 13 repository history/*.yaml records validate against src/proteintraitsmech/schema/history.yaml with 0 errors, and all 10 repaired G1 trait records carry valid in-record curation_history entries. |
+| CDD errata and in-place editor guard unit test suites | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd09530, CDD:cd13344, CDD:cd14999, CDD:cd15894, CDD:cd16523, CDD:cd16652, CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551 | 123 passed across tests/test_cdd_errata.py and tests/test_inplace_editor_guards.py, verifying seeder idempotency, repair_cdd_errata dry-run/apply/refusal semantics, and editor guard compliance. |
 
 ## Scientific And Domain Assessments
 
@@ -66,7 +66,7 @@ All 10 G1 CDD records (F3-F12) have been repaired via scripts/cdd_errata.py and 
 
 consistency: concern. Targets: CDD:cd00104, CDD:cd00959.
 
-Errata entries for CDD:cd00104 (F1) and CDD:cd00959 (F2) are authored and unit-tested in scripts/cdd_errata.py (include_all=True), but applying them in-place to the YAML files is deferred under #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).
+In-place repair of the minor typographical/duplication errata on promoted records CDD:cd00104 (F1) and CDD:cd00959 (F2) is deferred under #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256) and the two G2 entries are added to scripts/cdd_errata.py.
 
 ## Findings
 
@@ -76,7 +76,7 @@ minor / deferred / confirmed; issue key: cdd-cd00104-kazal-definition-typo-and-i
 
 CDD:cd00104 definition states 'Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling 'chymotrypsin' and listing 'avian ovomucoids' (which are Kazal-type inhibitor proteins, PMID:6192856) as target enzymes.
 
-Disposition: Authored and unit-tested the CDD:cd00104 erratum in scripts/cdd_errata.py (include_all=True); in-place application to the promoted record is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).
+Disposition: In-place repair of promoted record CDD:cd00104 (3 qualified human examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256) and CDD:cd00104 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py explicitly refuses records with qualified examples until #1172 lands.
 
 ### F2: CDD:cd00959 definition repeats its opening title sentence verbatim
 
@@ -84,7 +84,7 @@ minor / deferred / confirmed; issue key: cdd-cd00959-dera-duplicated-opening-sen
 
 CDD:cd00959 definition begins with the duplicated sentence '2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.' due to upstream CDD title+description concatenation in scripts/seed_cdd.py.
 
-Disposition: Authored and unit-tested the CDD:cd00959 erratum in scripts/cdd_errata.py (include_all=True); in-place application to the promoted record is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).
+Disposition: In-place repair of promoted record CDD:cd00959 (2 qualified E. coli/human examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256) and CDD:cd00959 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py explicitly refuses records with qualified examples until #1172 lands.
 
 ### F3: CDD:cd09530 names Samd14 in label/definition whereas its human carrier is SAMD15 (Q9P1V8) and human SAMD14 (Q8IZD0) matches CDD:cd09512
 
@@ -170,9 +170,9 @@ Disposition: Repaired CDD:cd21551 via scripts/cdd_errata.py and scripts/repair_c
 
 ### rebind-promoted-cdd-records-and-apply-g2-errata
 
-Extend scripts/ground_protein_examples.py with a dedicated rebind subcommand for sharded data/grounding/qualified_record_bindings.jsonl.d receipts, then promote the CDD:cd00104 (F1) and CDD:cd00959 (F2) entries in scripts/cdd_errata.py to active default application (#1172).
+Extend scripts/ground_protein_examples.py with re-binding support for sharded data/grounding/qualified_record_bindings.jsonl.d receipts, add CDD:cd00104 (F1) and CDD:cd00959 (F2) entries to scripts/cdd_errata.py, and apply and re-bind both records (#1172).
 
-- scripts/repair_cdd_errata.py --include-all --apply updates CDD:cd00104 and CDD:cd00959 and re-binds their 5 sharded qualified_record_bindings.jsonl.d rows.
+- Adding CDD:cd00104 and CDD:cd00959 to scripts/cdd_errata.py and running the #1172 re-binding workflow updates both records and re-binds their 5 sharded qualified_record_bindings.jsonl.d rows.
 - scripts/validate_uniprot_grounding.py and scripts/validate_strict.py exit 0 across CDD:cd00104 and CDD:cd00959.
 
 ## Category Boundaries
@@ -187,8 +187,8 @@ Extend scripts/ground_protein_examples.py with a dedicated rebind subcommand for
 
 | Evidence | Reference / locator | Support | Observation |
 | --- | --- | --- | --- |
-| ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; definition, canonical_examples, evidence (PMID:6192856) | supports | Promoted CDD record (3 qualified human examples) whose domain boundaries and UniProt groundings pass validation; erratum entry is authored in scripts/cdd_errata.py (include_all=True) and deferred in-place under #1172 pending sharded qualified_record_bindings re-binding. |
-| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; definition, canonical_examples, ec_associations (EC:4.1.2.4) | supports | Promoted CDD record (2 qualified E. coli/human examples) whose domain boundaries and UniProt groundings pass validation; erratum entry is authored in scripts/cdd_errata.py (include_all=True) and deferred in-place under #1172 pending sharded qualified_record_bindings re-binding. |
+| ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; definition, canonical_examples, evidence (PMID:6192856) | supports | Promoted CDD record (3 qualified human examples) whose domain boundaries and UniProt groundings pass validation; in-place erratum repair and sharded qualified_record_bindings.jsonl.d re-binding are deferred under #1172. |
+| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; definition, canonical_examples, ec_associations (EC:4.1.2.4) | supports | Promoted CDD record (2 qualified E. coli/human examples) whose domain boundaries and UniProt groundings pass validation; in-place erratum repair and sharded qualified_record_bindings.jsonl.d re-binding are deferred under #1172. |
 | ev-cd09530 | data/traits/sequence/domain/cdd/sam-domain-of-samd14-subfamily-sam-sterile-alpha-motif-domain-of-samd1-cd09530.yaml; definition, definition_source, evidence (UniProtKB:Q9P1V8), curation_history | supports | Repaired CDD:cd09530 definition disambiguates human SAMD15 (UniProtKB:Q9P1V8, HGNC:20263, formerly FAM15A) from human SAMD14 (UniProtKB:Q8IZD0 in CDD:cd09512), with grounded evidence and curation_history (#1171, F3). |
 | ev-cd09512-sibling | data/traits/sequence/domain/cdd/sam-domain-of-sam-neurabin-like-subfamily-sam-sterile-alpha-motif-doma-cd09512.yaml; identifier, label, definition | supports | Sibling CDD:cd09512 confirms canonical human SAMD14 placement and supports retaining CDD:cd09530 as a distinct SAM subfamily. |
 | ev-cd13344 | data/traits/sequence/domain/cdd/myotubularian-mtm-related-7-protein-mtmr7-pleckstrin-homology-glucosyl-cd13344.yaml; definition, definition_source, evidence (PMID:11956206, PMID:14690594), curation_history | supports | Repaired CDD:cd13344 fixes 'Myotubularian' to 'Myotubularin', states MTMR7 PtdIns3P/Ins(1,3)P2 specificity and MTMR9 heterodimerization (PMID:11956206), and replaces the self-contradictory trailing sentence with literature-backed PH-GRAM phosphoinositide binding (PMID:14690594) (#1171, F4). |
@@ -203,9 +203,9 @@ Extend scripts/ground_protein_examples.py with a dedicated rebind subcommand for
 | ev-cd20534 | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; definition, definition_source, evidence (PMID:23912459), curation_history | supports | Repaired CDD:cd20534 removes the conflated CNNM1-4/ACDP magnesium transporter text and replaces it with the CDK10-activating cyclin CCNQ/FAM58A description and PMID:23912459 evidence (#1171, F11). |
 | ev-cd20535-cd04590-siblings | data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml; CDD:cd04590 (CBS_pair_ACDP) and CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) | supports | Sibling records CDD:cd04590 (CBS_pair_ACDP) and CDD:cd20535 (second cyclin box of CCNQ) confirm domain separation from CDD:cd20534. |
 | ev-cd21551 | data/traits/sequence/domain/cdd/vefs-vrn2-emf2-fis2-su-z-12-box-found-in-suppressor-of-zeste-12-protei-cd21551.yaml; definition, definition_source, evidence (PMID:15225548), curation_history | supports | Repaired CDD:cd21551 states that PRC2/EED-EZH2 directly methylates H3K27 while SUZ12 influences H3K9 methylation indirectly, backed by PMID:15225548 (#1171, F12). |
-| ev-cdd-errata-module | scripts/cdd_errata.py; CDD_ERRATA, apply_cdd_erratum() | supports | Canonical accession-keyed CDD errata table covering all 12 Stage 4 findings (10 active G1 entries applied by default plus 2 G2 entries behind include_all=True pending #1172). |
-| ev-repair-cdd-errata | scripts/repair_cdd_errata.py; repair_cdd_records(), main() | supports | Registered in-place CDD errata repair writer routing all writes through validated_write_yaml_record with append-only curation_history and history/ event logging. |
-| ev-seed-cdd | scripts/seed_cdd.py; build_record() -&gt; apply_cdd_erratum() | supports | Maintained CDD seeder transform wired to apply_cdd_erratum() so future re-seeds preserve all curated errata. |
+| ev-cdd-errata-module | scripts/cdd_errata.py; CddErratum, ERRATA, correct_description(), metadata_blocks(), expected_record() | supports | Canonical accession-keyed CDD errata table covering the 10 unpromoted G1 Stage 4 findings (F3-F12), with fail-closed parent and source_description verification. |
+| ev-repair-cdd-errata | scripts/repair_cdd_errata.py; should_enrich(), repair_record_text(), main() | supports | Registered in-place CDD errata repair writer routing all writes through record_io.write_validated_record with preflight validation, qualified-example refusal, and append-only in-record curation_history entries. |
+| ev-seed-cdd | scripts/seed_cdd.py; _build_yaml() -&gt; cdd_errata.correct_description(), cdd_errata.metadata_blocks() | supports | Maintained CDD seeder transform wired to cdd_errata.correct_description() and cdd_errata.metadata_blocks() so future re-seeds preserve all curated G1 errata. |
 | ev-prior-cohort-review | reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml; findings F1-F12 | supports | Immutable Stage 4 cohort review establishing findings F1-F12 across the 12-record CDD SEQ_DOMAIN inventory. |
 | ev-prior-cd00104-review | reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml; finding F1 | supports | Immutable Stage 4 single-record review of CDD:cd00104 establishing finding F1. |
 
@@ -247,9 +247,10 @@ summary: 'Post-remediation cohort review of all 12 CDD sequence-domain records f
   CDD:cd17150, CDD:cd18592, CDD:cd20534, CDD:cd21551) are resolved in place via scripts/cdd_errata.py
   and scripts/repair_cdd_errata.py and wired into scripts/seed_cdd.py, with literature-grounded
   evidence and curation_history entries. The 2 minor prose errata on already-promoted
-  records CDD:cd00104 (F1) and CDD:cd00959 (F2) are authored and unit-tested in scripts/cdd_errata.py
-  (include_all=True) and explicitly deferred under open issue #1172 pending sharded
-  qualified_record_bindings.jsonl.d re-binding.'
+  records CDD:cd00104 (F1) and CDD:cd00959 (F2) are explicitly deferred under open
+  issue #1172 pending sharded qualified_record_bindings.jsonl.d re-binding support
+  in scripts/ground_protein_examples.py and subsequent addition of their errata entries
+  to scripts/cdd_errata.py.'
 source:
   git_revision: f80e2bf88b10d010a0f24427c3101ab501a59639
   state: working_tree
@@ -813,8 +814,9 @@ checks:
   exit_code: 0
   status: passed
   required: true
-  summary: All 13 history records validate against src/proteintraitsmech/schema/history.yaml
-    with 0 errors.
+  summary: All 13 repository history/*.yaml records validate against src/proteintraitsmech/schema/history.yaml
+    with 0 errors, and all 10 repaired G1 trait records carry valid in-record curation_history
+    entries.
   target_ids:
   - CDD:cd00104
   - CDD:cd00959
@@ -829,7 +831,16 @@ checks:
   - CDD:cd20534
   - CDD:cd21551
   evidence_ids:
-  - ev-repair-cdd-errata
+  - ev-cd09530
+  - ev-cd13344
+  - ev-cd14999
+  - ev-cd15894
+  - ev-cd16523
+  - ev-cd16652
+  - ev-cd17150
+  - ev-cd18592
+  - ev-cd20534
+  - ev-cd21551
 - check_id: errata-tests
   name: CDD errata and in-place editor guard unit test suites
   command: .venv/bin/python -m pytest -o cache_dir=/tmp/pytest_cache tests/test_cdd_errata.py
@@ -837,9 +848,9 @@ checks:
   exit_code: 0
   status: passed
   required: true
-  summary: 18 passed across tests/test_cdd_errata.py and tests/test_inplace_editor_guards.py,
-    verifying seeder idempotency, repair_cdd_errata dry-run/apply semantics, and editor
-    guard compliance.
+  summary: 123 passed across tests/test_cdd_errata.py and tests/test_inplace_editor_guards.py,
+    verifying seeder idempotency, repair_cdd_errata dry-run/apply/refusal semantics,
+    and editor guard compliance.
   target_ids:
   - CDD:cd00104
   - CDD:cd00959
@@ -868,9 +879,8 @@ evidence:
   quote: Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin,
     avian ovomucoids, and elastases
   summary: 'Promoted CDD record (3 qualified human examples) whose domain boundaries
-    and UniProt groundings pass validation; erratum entry is authored in scripts/cdd_errata.py
-    (include_all=True) and deferred in-place under #1172 pending sharded qualified_record_bindings
-    re-binding.'
+    and UniProt groundings pass validation; in-place erratum repair and sharded qualified_record_bindings.jsonl.d
+    re-binding are deferred under #1172.'
 - evidence_id: ev-cd00959
   kind: record_content
   reference: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
@@ -881,9 +891,8 @@ evidence:
   quote: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate
     aldolase (DERA) of the DeoC family.
   summary: 'Promoted CDD record (2 qualified E. coli/human examples) whose domain
-    boundaries and UniProt groundings pass validation; erratum entry is authored in
-    scripts/cdd_errata.py (include_all=True) and deferred in-place under #1172 pending
-    sharded qualified_record_bindings re-binding.'
+    boundaries and UniProt groundings pass validation; in-place erratum repair and
+    sharded qualified_record_bindings.jsonl.d re-binding are deferred under #1172.'
 - evidence_id: ev-cd09530
   kind: record_content
   reference: data/traits/sequence/domain/cdd/sam-domain-of-samd14-subfamily-sam-sterile-alpha-motif-domain-of-samd1-cd09530.yaml
@@ -1075,32 +1084,31 @@ evidence:
 - evidence_id: ev-cdd-errata-module
   kind: record_content
   reference: scripts/cdd_errata.py
-  locator: CDD_ERRATA, apply_cdd_erratum()
+  locator: CddErratum, ERRATA, correct_description(), metadata_blocks(), expected_record()
   accessed_at: '2026-10-22T07:58:00Z'
   snapshot_sha256: 179877ce910c756ffb39dbb1a5c2656ccc0596afb346c63bc1db2e19c46af02d
   support: supports
-  summary: 'Canonical accession-keyed CDD errata table covering all 12 Stage 4 findings
-    (10 active G1 entries applied by default plus 2 G2 entries behind include_all=True
-    pending #1172).'
+  summary: Canonical accession-keyed CDD errata table covering the 10 unpromoted G1
+    Stage 4 findings (F3-F12), with fail-closed parent and source_description verification.
 - evidence_id: ev-repair-cdd-errata
   kind: record_content
   reference: scripts/repair_cdd_errata.py
-  locator: repair_cdd_records(), main()
+  locator: should_enrich(), repair_record_text(), main()
   accessed_at: '2026-10-22T07:58:00Z'
   snapshot_sha256: a21c156a3f093541a77f328bac99c18bf5cb60b78d9ff74b4efa7008c556d69d
   support: supports
   summary: Registered in-place CDD errata repair writer routing all writes through
-    validated_write_yaml_record with append-only curation_history and history/ event
-    logging.
+    record_io.write_validated_record with preflight validation, qualified-example
+    refusal, and append-only in-record curation_history entries.
 - evidence_id: ev-seed-cdd
   kind: record_content
   reference: scripts/seed_cdd.py
-  locator: build_record() -> apply_cdd_erratum()
+  locator: _build_yaml() -> cdd_errata.correct_description(), cdd_errata.metadata_blocks()
   accessed_at: '2026-10-22T07:58:00Z'
   snapshot_sha256: 4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a
   support: supports
-  summary: Maintained CDD seeder transform wired to apply_cdd_erratum() so future
-    re-seeds preserve all curated errata.
+  summary: Maintained CDD seeder transform wired to cdd_errata.correct_description()
+    and cdd_errata.metadata_blocks() so future re-seeds preserve all curated G1 errata.
 - evidence_id: ev-prior-cohort-review
   kind: prior_review
   reference: reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml
@@ -1204,13 +1212,12 @@ assessments:
   evidence_ids:
   - ev-cd00104
   - ev-cd00959
-  - ev-cdd-errata-module
   - ev-prior-cohort-review
   - ev-prior-cd00104-review
-  summary: 'Errata entries for CDD:cd00104 (F1) and CDD:cd00959 (F2) are authored
-    and unit-tested in scripts/cdd_errata.py (include_all=True), but applying them
-    in-place to the YAML files is deferred under #1172 until scripts/ground_protein_examples.py
-    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  summary: 'In-place repair of the minor typographical/duplication errata on promoted
+    records CDD:cd00104 (F1) and CDD:cd00959 (F2) is deferred under #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and the two G2 entries are added to scripts/cdd_errata.py.'
 boundary_decisions:
 - action: retain
   target_ids:
@@ -1295,8 +1302,8 @@ findings:
   - data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml#/definition
   evidence_ids:
   - ev-cd00104
-  - ev-cdd-errata-module
   - ev-prior-cohort-review
+  - ev-prior-cd00104-review
   owner_paths:
   - repository: CultureBotAI/proteintraitsmech
     path: scripts/cdd_errata.py
@@ -1310,10 +1317,11 @@ findings:
   - repository: CultureBotAI/proteintraitsmech
     path: scripts/record_io.py
     role: Guarded validated record writer
-  disposition_reason: 'Authored and unit-tested the CDD:cd00104 erratum in scripts/cdd_errata.py
-    (include_all=True); in-place application to the promoted record is deferred under
-    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
-    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  disposition_reason: 'In-place repair of promoted record CDD:cd00104 (3 qualified
+    human examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and CDD:cd00104 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py
+    explicitly refuses records with qualified examples until #1172 lands.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261022T052200Z-cdd-cd00104-record-review
@@ -1340,7 +1348,6 @@ findings:
   - data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml#/definition
   evidence_ids:
   - ev-cd00959
-  - ev-cdd-errata-module
   - ev-prior-cohort-review
   owner_paths:
   - repository: CultureBotAI/proteintraitsmech
@@ -1355,10 +1362,11 @@ findings:
   - repository: CultureBotAI/proteintraitsmech
     path: scripts/record_io.py
     role: Guarded validated record writer
-  disposition_reason: 'Authored and unit-tested the CDD:cd00959 erratum in scripts/cdd_errata.py
-    (include_all=True); in-place application to the promoted record is deferred under
-    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
-    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  disposition_reason: 'In-place repair of promoted record CDD:cd00959 (2 qualified
+    E. coli/human examples) is deferred under GitHub issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256)
+    and CDD:cd00959 is added to scripts/cdd_errata.py; scripts/repair_cdd_errata.py
+    explicitly refuses records with qualified examples until #1172 lands.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
@@ -1853,10 +1861,10 @@ findings:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 actions:
 - action_id: rebind-promoted-cdd-records-and-apply-g2-errata
-  description: Extend scripts/ground_protein_examples.py with a dedicated rebind subcommand
-    for sharded data/grounding/qualified_record_bindings.jsonl.d receipts, then promote
-    the CDD:cd00104 (F1) and CDD:cd00959 (F2) entries in scripts/cdd_errata.py to
-    active default application (#1172).
+  description: Extend scripts/ground_protein_examples.py with re-binding support for
+    sharded data/grounding/qualified_record_bindings.jsonl.d receipts, add CDD:cd00104
+    (F1) and CDD:cd00959 (F2) entries to scripts/cdd_errata.py, and apply and re-bind
+    both records (#1172).
   finding_ids:
   - F1
   - F2
@@ -1877,8 +1885,9 @@ actions:
     path: scripts/record_io.py
     role: Guarded validated record writer
   acceptance_checks:
-  - scripts/repair_cdd_errata.py --include-all --apply updates CDD:cd00104 and CDD:cd00959
-    and re-binds their 5 sharded qualified_record_bindings.jsonl.d rows.
+  - 'Adding CDD:cd00104 and CDD:cd00959 to scripts/cdd_errata.py and running the #1172
+    re-binding workflow updates both records and re-binds their 5 sharded qualified_record_bindings.jsonl.d
+    rows.'
   - scripts/validate_uniprot_grounding.py and scripts/validate_strict.py exit 0 across
     CDD:cd00104 and CDD:cd00959.
 limitations:
