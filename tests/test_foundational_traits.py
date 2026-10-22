@@ -25,12 +25,17 @@ MECHANISM_BEARING_CATEGORIES = {
     "SEQ_PROPEPTIDE",
     "STRUCT_DISULFIDE",
     "FUNC_LOCALIZATION",
+    "SEQ_INITIATOR_METHIONINE",
+    "SEQ_MATURE_CHAIN",
+    "STRUCT_CAVITY",
 }
+
+ROUND_124_EDITED_IDS = {spec.identifier for spec in sft.SPECS[:66] if spec.causal_graphs}
 
 
 def test_foundational_trait_records_exist_and_validate():
     """Every record defined in seed_foundational_traits must exist on disk and pass strict validation."""
-    assert len(sft.SPECS) == 66
+    assert len(sft.SPECS) == 84
     seen_ids: set[str] = set()
     for spec in sft.SPECS:
         assert spec.identifier not in seen_ids, f"duplicate identifier: {spec.identifier}"
@@ -83,7 +88,7 @@ def test_disulfide_infer_source_distinguishes_lsf_parent_from_curated_subtypes()
 
 
 def test_previously_empty_class_categories_are_populated():
-    """All 7 previously empty class-level categories now have populated directories."""
+    """All previously empty and single-record class-level categories now have populated directories."""
     expected_dirs = {
         "SEQ_NONSTANDARD_RESIDUE": (sft.TRAITS_DIR / "sequence/nonstandard_residue", 4),
         "SEQ_LOW_COMPLEXITY": (sft.TRAITS_DIR / "sequence/low_complexity", 4),
@@ -92,6 +97,12 @@ def test_previously_empty_class_categories_are_populated():
         "STRUCT_ALLOSTERIC_SITE": (sft.TRAITS_DIR / "structure/allosteric_site", 5),
         "STRUCT_SYMMETRY": (sft.TRAITS_DIR / "structure/symmetry", 9),
         "MIXED_COILED_COIL": (sft.TRAITS_DIR / "sequence_structure/coiled_coil", 7),
+        "SEQ_INITIATOR_METHIONINE": (sft.TRAITS_DIR / "sequence/initiator_methionine", 5),
+        "SEQ_MATURE_CHAIN": (sft.TRAITS_DIR / "sequence/mature_chain", 5),
+        "SEQ_TRANSIT_PEPTIDE": (sft.TRAITS_DIR / "sequence/transit_peptide", 7),
+        "SEQ_PROPEPTIDE": (sft.TRAITS_DIR / "sequence/propeptide", 6),
+        "STRUCT_CAVITY": (sft.TRAITS_DIR / "structure/cavity", 7),
+        "EVO_CONSERVATION": (sft.TRAITS_DIR / "evolution/conservation", 6),
     }
     for cat, (d, min_count) in expected_dirs.items():
         files = list(d.glob("*.yaml"))
@@ -99,24 +110,26 @@ def test_previously_empty_class_categories_are_populated():
 
 
 def test_foundational_trait_causal_graphs_audit_and_score():
-    """All 25 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
+    """All 40 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
     valid_types = acg.node_type_enum()
     assert valid_types
     mech_specs = [s for s in sft.SPECS if s.trait_category in MECHANISM_BEARING_CATEGORIES]
     non_mech_specs = [s for s in sft.SPECS if s.trait_category not in MECHANISM_BEARING_CATEGORIES]
-    assert len(mech_specs) == 25
-    assert len(non_mech_specs) == 41
+    assert len(mech_specs) == 40
+    assert len(non_mech_specs) == 44
+    assert len(ROUND_124_EDITED_IDS) == 25
 
     for spec in mech_specs:
         path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
         assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
-        history = data.get("curation_history") or []
-        assert history, f"{spec.identifier} missing curation_history"
-        assert history[-1].get("curator") == "claude"
-        assert history[-1].get("action") == "EDIT"
-        assert history[-1].get("llm_assisted") is True
+        if spec.identifier in ROUND_124_EDITED_IDS:
+            history = data.get("curation_history") or []
+            assert history, f"{spec.identifier} missing curation_history"
+            assert history[-1].get("curator") == "claude"
+            assert history[-1].get("action") == "EDIT"
+            assert history[-1].get("llm_assisted") is True
         errors: list[str] = []
         warns: list[acg.AuditWarning] = []
         stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
@@ -146,13 +159,16 @@ def test_foundational_trait_causal_graphs_audit_and_score():
 
 
 def test_foundational_trait_parent_traits_resolve_to_corpus_records():
-    """Every parent_traits CURIE on the 66 foundational traits resolves to an on-disk corpus record."""
+    """Every parent_traits CURIE on the 84 foundational traits resolves to an on-disk corpus record."""
     known_parent_files = {
         "proteintraitsmech:COILED_COIL": (
             sft.TRAITS_DIR / "structure/secondary/coiled-coil.yaml"
         ),
         "proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE": (
             sft.TRAITS_DIR / "sequence/initiator_methionine/uniprot-seq_initiator_methionine.yaml"
+        ),
+        "proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN": (
+            sft.TRAITS_DIR / "sequence/mature_chain/uniprot-seq_mature_chain.yaml"
         ),
         "proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE": (
             sft.TRAITS_DIR / "sequence/signal_peptide/uniprot-seq_signal_peptide.yaml"
@@ -166,11 +182,23 @@ def test_foundational_trait_parent_traits_resolve_to_corpus_records():
         "proteintraitsmech:DISULFIDE_BOND": (
             sft.TRAITS_DIR / "structure/disulfide/disulfide-bond.yaml"
         ),
+        "proteintraitsmech:CAVITY": (
+            sft.TRAITS_DIR / "structure/cavity/cavity.yaml"
+        ),
         "proteintraitsmech:POCKET": (
             sft.TRAITS_DIR / "structure/cavity/pocket.yaml"
         ),
+        "proteintraitsmech:TUNNEL": (
+            sft.TRAITS_DIR / "structure/cavity/tunnel.yaml"
+        ),
         "proteintraitsmech:INTERFACE": (
             sft.TRAITS_DIR / "structure/interface/interface.yaml"
+        ),
+        "proteintraitsmech:EVO_CONSERVED": (
+            sft.TRAITS_DIR / "evolution/conservation/conserved-protein.yaml"
+        ),
+        "proteintraitsmech:EVO_VARIABLE": (
+            sft.TRAITS_DIR / "evolution/conservation/variable-protein.yaml"
         ),
         "IDPO:0000002": (
             sft.TRAITS_DIR / "sequence/disorder/disorder-idpo-0000002.yaml"

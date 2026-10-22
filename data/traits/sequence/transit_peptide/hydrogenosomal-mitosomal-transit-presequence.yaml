@@ -1,0 +1,74 @@
+identifier: proteintraitsmech:TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME
+label: "hydrogenosomal / mitosomal N-terminal transit presequence"
+definition: >-
+  A short cleavable N-terminal transit presequence (typically 5-25 residues, enriched in sub-terminal arginine/lysine residues proximal to the cleavage site) on nuclear-encoded proteins of anaerobic protists that directs import across the double membrane of mitochondrion-related organelles — hydrogenosomes (GO:0042566) and mitosomes (GO:0032047) — and is proteolytically removed in the organellar lumen by hydrogenosomal or mitosomal processing peptidase (HPP / GPP).
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_TRANSIT_PEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
+synonyms:
+  - synonym_text: "hydrogenosomal targeting presequence"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "mitosomal N-terminal targeting presequence"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "MRO matrix transit peptide"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - SO:0000725
+  - GO:0042566
+  - GO:0032047
+  - GO:0033365
+detection_methods:
+  - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_2489
+    tool: "biotools:targetp"
+    evidence_code: ECO:0000255
+    reference: PMID:41809595
+    recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: CG_TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME
+    title: "N-terminal presequence-directed import and processing in hydrogenosomes and mitosomes"
+    description: "A short N-terminal transit presequence (SO:0000725) is recognized by the mitochondrion-related organelle import and processing-peptidase machinery (GO:0033365), delivering proteins into mitosomes (GO:0032047) and hydrogenosomes (GO:0042566)."
+    nodes:
+      - node_id: "SO:0000725"
+        label: transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0000725"
+        description: "Short N-terminal targeting presequence recognized by hydrogenosomal and mitosomal protein import and processing peptidase machinery"
+      - node_id: "GO:0033365"
+        label: "protein localization to organelle"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0033365"
+        description: "Translocation across the double membrane of mitochondrion-related organelles and presequence cleavage by processing peptidase"
+      - node_id: "GO:0042566"
+        label: hydrogenosome
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0042566"
+        description: "Hydrogen-producing double-membrane mitochondrion-related organelle of anaerobic eukaryotes"
+    edges:
+      - subject: "SO:0000725"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0033365"
+        description: "N-terminal targeting signals on mitosomal and hydrogenosomal precursor proteins are necessary and sufficient for recognition by the organellar import and processing peptidase machinery."
+        evidence:
+          - reference: PMID:16040811
+            snippet: "Here, we report that proteins targeted into mitosomes of Giardia intestinalis have targeting signals necessary and sufficient to be recognized by the mitosomal protein import machinery."
+            notes: "N-terminal targeting presequences direct import into mitosomes and hydrogenosomes (PMID:16040811). (ECO:0000269)"
+      - subject: "GO:0033365"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
+        object: "GO:0042566"
+        description: "Shared presequence recognition and inner-membrane translocase/peptidase processing deliver precursor proteins into hydrogenosomes."
+        evidence:
+          - reference: PMID:16040811
+            snippet: "Expression of these mitosomal proteins in Trichomonas vaginalis results in targeting to hydrogenosomes, a hydrogen-producing form of mitochondria."
+            notes: "Cross-recognition and import into hydrogenosomes (PMID:16040811). (ECO:0000269)"
+evidence:
+  - reference: PMID:16040811
+    notes: "Proteins targeted into Giardia mitosomes and Trichomonas hydrogenosomes carry conserved N-terminal targeting presequences recognized by a shared TIM/processing-peptidase import machinery."
+license: CC-BY-4.0

@@ -1,0 +1,36 @@
+identifier: proteintraitsmech:EVO_UNIVERSAL_SINGLE_COPY_ORTHOLOG
+label: "universal single-copy ortholog protein"
+definition: >-
+  An evolutionary protein conservation trait in which a protein-coding gene is maintained as a strictly single-copy orthologous group present in >= 90% of species across a broad taxonomic clade (such as Bacteria, Archaea, or Eukaryota; BUSCO / OrthoDB universal single-copy markers), reflecting strong dosage-balance and functional constraints against both gene loss and paralogous duplication.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: EVOLUTION
+trait_category: EVO_CONSERVATION
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:EVO_CONSERVED
+synonyms:
+  - synonym_text: "BUSCO single-copy ortholog"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "universal single-copy marker protein"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "dosage-constrained universal ortholog"
+    synonym_type: RELATED_SYNONYM
+evolutionary_scope:
+  min_prevalence: 0.9
+  max_prevalence: 1.0
+  definition_method: "BUSCO / OrthoDB universal single-copy ortholog benchmark (>=90% single-copy presence)"
+  conservation_metric: "presence-breadth (single-copy across >=90% of species in clade)"
+  orthology_basis: "OrthoDB / BUSCO profile-HMM orthologous groups"
+detection_methods:
+  - name: "BUSCO / OrthoDB universal single-copy ortholog HMM profile search"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_3745
+    tool: "biotools:busco"
+    evidence_code: ECO:0000265
+    reference: PMID:26059717
+    recipe: "busco -i {input} -m proteins -l auto-lineage -o {output}"
+evidence:
+  - reference: PMID:26059717
+    notes: "Benchmarking Universal Single-Copy Orthologs (BUSCO) defines clade-wide orthologous protein groups present as single-copy genes in >90% of species due to evolutionary constraints on gene content and duplication."
+license: CC-BY-4.0

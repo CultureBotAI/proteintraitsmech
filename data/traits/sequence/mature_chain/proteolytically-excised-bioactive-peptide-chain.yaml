@@ -1,0 +1,71 @@
+identifier: proteintraitsmech:MATURE_CHAIN_BIOACTIVE_PEPTIDE
+label: "proteolytically excised bioactive antimicrobial/effector peptide chain"
+definition: >-
+  A short mature bioactive C-terminal or internal peptide chain (SO:0000419) liberated from an inactive holoprotein precursor (such as a cathelicidin, defensin, or ribosomally synthesized bacteriocin proprotein) by granule or extracellular endoproteases (including proteinase 3, neutrophil elastase, or leader peptidases) to unmask membrane-active antimicrobial or host-defense activity.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_MATURE_CHAIN
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
+synonyms:
+  - synonym_text: "holoprotein-cleaved mature antimicrobial peptide chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "mature host-defense peptide region"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - SO:0000419
+  - GO:0002777
+  - GO:0042742
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_MATURE_CHAIN_BIOACTIVE_PEPTIDE
+    title: "Proteolytic liberation of C-terminal bioactive antimicrobial peptide chain from holoprotein precursor"
+    description: "Proteolytic cleavage during antimicrobial peptide biosynthesis (GO:0002777) removes the N-terminal cathelin/pro-domain from the inactive holoprotein to release the mature bioactive peptide chain (SO:0000419), which mediates antimicrobial humoral defense (GO:0061844)."
+    nodes:
+      - node_id: "GO:0002777"
+        label: "antimicrobial peptide biosynthetic process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0002777"
+        description: "Proteolytic cleavage of an inactive holoprotein precursor (such as a cathelicidin or bacteriocin proprotein) to release the active C-terminal peptide"
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Mature bioactive antimicrobial or effector peptide chain (SO:0000419) liberated from its proprotein precursor"
+      - node_id: "GO:0061844"
+        label: "antimicrobial humoral immune response mediated by antimicrobial peptide"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0061844"
+        description: "Direct antimicrobial defense mediated by the mature excised peptide"
+    edges:
+      - subject: "GO:0002777"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Proteolytic processing of the holoprotein precursor by elastase or proteinase 3 liberates the active C-terminal antimicrobial peptide chain."
+        evidence:
+          - reference: PMID:11134217
+            snippet: "Bovine and porcine cathelicidins are cleaved by elastase from the azurophil granules to yield the active antimicrobial peptides."
+            notes: "Proteolytic cleavage of cathelicidin holoprotein yields active antimicrobial peptide (PMID:11134217). (ECO:0000269)"
+      - subject: "SO:0000419"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0061844"
+        description: "Once cleaved from the holoprotein precursor, the mature C-terminal peptide chain executes antimicrobial defense."
+        evidence:
+          - reference: PMID:11134217
+            snippet: "Cathelicidins are a family of antimicrobial proteins found in the peroxidase-negative granules of neutrophils. The known biologic functions reside in the C-terminus, which must be cleaved from the holoprotein to become active."
+            notes: "Biological antimicrobial activity resides in the cleaved C-terminal peptide chain (PMID:11134217). (ECO:0000269)"
+evidence:
+  - reference: PMID:11134217
+    notes: "Cathelicidins are synthesized as inactive holoproteins whose C-terminal antimicrobial peptide chain must be proteolytically cleaved by elastase or proteinase 3 to become active."
+license: CC-BY-4.0

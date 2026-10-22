@@ -1,0 +1,73 @@
+identifier: proteintraitsmech:TRANSIT_PEPTIDE_APICOPLAST
+label: "apicoplast bipartite transit peptide"
+definition: >-
+  A cleavable bipartite N-terminal leader sequence in apicomplexan parasites (such as Plasmodium and Toxoplasma) consisting of an N-terminal hydrophobic secretory signal peptide that mediates co-translational entry into the endoplasmic reticulum followed by a net-positively charged plant-like plastid transit peptide that directs subsequent transport across the four surrounding membranes into the apicoplast stroma (GO:0020011), with both segments removed stepwise during import.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_TRANSIT_PEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
+synonyms:
+  - synonym_text: "apicoplast bipartite presequence"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "SP+TP apicoplast targeting leader"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "secondary plastid bipartite transit peptide"
+    synonym_type: BROAD_SYNONYM
+xrefs:
+  - SO:0000725
+  - GO:0020011
+  - GO:0033365
+detection_methods:
+  - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_2489
+    tool: "biotools:targetp"
+    evidence_code: ECO:0000255
+    reference: PMID:41809595
+    recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: CG_TRANSIT_PEPTIDE_APICOPLAST
+    title: "Two-step secretory-to-apicoplast import via bipartite signal + transit presequence"
+    description: "An apicoplast bipartite transit peptide (SO:0000725) combines an ER signal peptide with a plant-like transit peptide to drive two-step organellar protein localization (GO:0033365) and stepwise proteolytic cleavage into the apicoplast lumen (GO:0020011)."
+    nodes:
+      - node_id: "SO:0000725"
+        label: transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0000725"
+        description: "Bipartite N-terminal presequence composed of a secretory signal peptide followed by a plant-like plastid transit peptide removed stepwise during apicoplast import"
+      - node_id: "GO:0033365"
+        label: "protein localization to organelle"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0033365"
+        description: "Two-step secretory-to-plastid import and stepwise presequence cleavage targeting nuclear-encoded proteins to the apicoplast"
+      - node_id: "GO:0020011"
+        label: apicoplast
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0020011"
+        description: "Four-membrane-bound non-photosynthetic relict plastid of apicomplexan parasites"
+    edges:
+      - subject: "SO:0000725"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0033365"
+        description: "The bipartite signal peptide + transit peptide presequence mediates two-step import into the apicoplast."
+        evidence:
+          - reference: PMID:10775264
+            snippet: "We demonstrate that protein targeting is at least a two-step process mediated by bipartite N-terminal pre-sequences that consist of a signal peptide for entry into the secretory pathway and a plant-like transit peptide for subsequent import into the apicoplast."
+            notes: "Bipartite signal + transit presequence mediates two-step apicoplast targeting (PMID:10775264). (ECO:0000269)"
+      - subject: "GO:0033365"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
+        object: "GO:0020011"
+        description: "Stepwise removal of the bipartite presequence components delivers the mature protein into the apicoplast."
+        evidence:
+          - reference: PMID:10775264
+            snippet: "The pre-sequence components are removed stepwise during apicoplast targeting."
+            notes: "Stepwise presequence cleavage during apicoplast import (PMID:10775264). (ECO:0000269)"
+evidence:
+  - reference: PMID:10775264
+    notes: "Protein targeting to the four-membrane-bound apicoplast of Plasmodium falciparum is a two-step process mediated by bipartite N-terminal pre-sequences consisting of a signal peptide and a plant-like transit peptide removed stepwise."
+license: CC-BY-4.0

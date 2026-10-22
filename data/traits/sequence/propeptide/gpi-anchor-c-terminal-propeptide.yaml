@@ -1,0 +1,74 @@
+identifier: proteintraitsmech:PROPEPTIDE_GPI_C_TERMINAL
+label: "GPI-anchor C-terminal transamidase-cleaved propeptide"
+definition: >-
+  A transient C-terminal propeptide extension (spanning the polar spacer downstream of the omega cleavage site and a C-terminal hydrophobic tail) on precursor proteins destined for glycosylphosphatidylinositol (GPI) anchoring that is recognized and cleaved at the omega residue in the endoplasmic reticulum lumen by the heteropentameric GPI-anchor transamidase complex (PIGK/GPAA1/PIGT/PIGS/PIGU, GO:0003923) concomitant with amide-bond transfer of the mature C-terminus onto a preassembled GPI glycolipid anchor.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_PROPEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
+synonyms:
+  - synonym_text: "C-terminal GPI-attachment propeptide signal"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "omega-site C-terminal propeptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "GPI-T cleaved C-terminal peptide"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - SO:0001062
+  - GO:0003923
+  - GO:0016255
+  - GO:0042765
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_PROPEPTIDE_GPI_C_TERMINAL
+    title: "GPI-anchor transamidase cleavage of C-terminal propeptide and GPI attachment"
+    description: "The C-terminal GPI propeptide extension (SO:0001062) positions the precursor omega site in the catalytic cleft of the PIGK subunit within the GPI-anchor transamidase complex (GO:0003923), which cleaves off the C-terminal propeptide and catalyzes attachment of the GPI anchor to the protein (GO:0016255)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Transient C-terminal hydrophobic propeptide downstream of the omega site cleaved during GPI transamidation"
+      - node_id: "GO:0003923"
+        label: "GPI-anchor transamidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003923"
+        description: "Catalytic activity of the GPI transamidase complex (PIGK Cys206-His164-Asn58 triad) cleaving the omega-site peptide bond and transferring the GPI anchor"
+      - node_id: "GO:0016255"
+        label: "attachment of GPI anchor to protein"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016255"
+        description: "Endoplasmic-reticulum maturation of GPI-anchored proteins by C-terminal propeptide replacement with a GPI glycolipid"
+    edges:
+      - subject: "SO:0001062"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0003923"
+        description: "The C-terminal propeptide directs the precursor omega-site peptide bond to the PIGK Cys206-His164-Asn58 catalytic triad of GPI transamidase."
+        evidence:
+          - reference: PMID:35165458
+            snippet: "The PIGK subunit functions as the catalytic component, in which we identified a C206-H164-N58 triad that is critical for the transamination reaction."
+            notes: "PIGK Cys206-His164-Asn58 catalytic triad drives the GPI transamidation cleavage/transfer reaction (PMID:35165458). (ECO:0000269)"
+      - subject: "GO:0003923"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0016255"
+        description: "GPI-anchor transamidase cleavage of the C-terminal propeptide catalyzes covalent attachment of the GPI anchor in the ER."
+        evidence:
+          - reference: PMID:35165458
+            snippet: "Attaching GPI to the protein in the endoplasmic reticulum (ER) is catalyzed by the transmembrane GPI transamidase (GPIT) complex, which is essential for maturation of the GPI-anchored proteins."
+            notes: "GPIT complex catalyzes GPI attachment for protein maturation in the ER (PMID:35165458). (ECO:0000269)"
+evidence:
+  - reference: PMID:35165458
+    notes: "Attachment of GPI anchors to precursor proteins in the ER is catalyzed by the five-subunit transmembrane GPI transamidase (GPIT) complex via the PIGK Cys206-His164-Asn58 catalytic triad."
+license: CC-BY-4.0

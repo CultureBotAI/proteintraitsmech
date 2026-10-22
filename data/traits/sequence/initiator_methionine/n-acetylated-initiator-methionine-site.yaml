@@ -1,0 +1,88 @@
+identifier: proteintraitsmech:INIT_METHIONINE_ACETYLATED
+label: "N-alpha-acetylated initiator methionine site"
+definition: >-
+  A retained N-terminal initiator methionine position (Met1) that is co- or post-translationally acetylated on its alpha-amino group by N-terminal acetyltransferase complexes (primarily NatB on Met-Asp/Glu/Asn/Gln N-termini and NatC/NatE/NatF on Met-Leu/Ile/Phe/Tyr/Lys/Met N-termini) to form N-acetyl-L-methionine (MOD:00058), regulating protein folding, complex assembly, subcellular targeting, and Ac/N-degron-mediated turnover.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_INITIATOR_METHIONINE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
+synonyms:
+  - synonym_text: "NatB/NatC-acetylated initiator Met1 site"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Nt-acetylated initiator methionine"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Ac-Met1 N-terminal modification site"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - MOD:00058
+  - GO:0004596
+  - GO:0006474
+sequence_pattern: "^M[DENQFLIWY]"
+detection_methods:
+  - name: "NetAcet / N-terminal acetyltransferase (NatB/NatC/NatE) substrate motif scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0417
+    tool: "biotools:netacet"
+    evidence_code: ECO:0000255
+    reference: PMID:27498224
+    recipe: "fuzzpro -sequence {input} -pattern '^M[DENQFLIWY]' -outfile {output}"
+causal_graphs:
+  - graph_id: CG_INIT_METHIONINE_ACETYLATED
+    title: "N-alpha-acetylation of retained initiator methionine by N-terminal acetyltransferases"
+    description: "Retained initiator methionine residues followed by acidic/polar (NatB) or hydrophobic/amphipathic (NatC/NatE/NatF) penultimate residues are recognized by protein-N-terminal amino-acid acetyltransferases (GO:0004596), driving N-terminal protein amino acid acetylation (GO:0006474) to form N-acetyl-L-methionine (MOD:00058) and modulate protein folding (GO:0006457)."
+    nodes:
+      - node_id: "MOD:00058"
+        label: N-acetyl-L-methionine
+        node_type: PTM
+        grounding: "MOD:00058"
+        description: "N-terminal initiator methionine modified to N-acetyl-L-methionine (MOD:00058) by N-terminal acetyltransferases"
+      - node_id: "GO:0004596"
+        label: "protein-N-terminal amino-acid acetyltransferase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004596"
+        description: "Catalytic activity of N-terminal acetyltransferase complexes (NatB, NatC, NatE, NatF) transferring an acetyl group from acetyl-CoA to the alpha-amino group of Met1"
+      - node_id: "GO:0006474"
+        label: "N-terminal protein amino acid acetylation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006474"
+        description: "Co- or post-translational acetylation of the N-terminal initiator methionine"
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Protein folding, subcellular targeting, and interaction modulation governed by N-terminal acetylation"
+    edges:
+      - subject: "MOD:00058"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0004596"
+        description: "Retained Met1 N-terminal motif serves as the recognition substrate for N-terminal acetyltransferase complexes."
+        evidence:
+          - reference: PMID:27498224
+            snippet: "N-terminal (Nt) acetylation is known to be a highly abundant co-translational protein modification, but the recent discovery of Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) revealed that it can also be added post-translationally."
+            notes: "NAT complexes recognize and acetylate N-terminal initiator residues (PMID:27498224). (ECO:0000305)"
+      - subject: "GO:0004596"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0006474"
+        description: "N-terminal acetyltransferase activity catalyzes N-terminal protein amino acid acetylation."
+        evidence:
+          - reference: PMID:27498224
+            snippet: "N-terminal (Nt) acetylation is known to be a highly abundant co-translational protein modification, but the recent discovery of Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) revealed that it can also be added post-translationally."
+            notes: "NATs catalyze co- and post-translational N-terminal acetylation (PMID:27498224). (ECO:0000305)"
+      - subject: "GO:0006474"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0006457"
+        description: "N-terminal acetylation modulates protein folding, targeting, and protein-protein interactions."
+        evidence:
+          - reference: PMID:27498224
+            snippet: "Nt-acetylation also modulates protein interactions, targeting, and folding."
+            notes: "Nt-acetylation modulates protein folding and interactions (PMID:27498224). (ECO:0000305)"
+evidence:
+  - reference: PMID:27498224
+    notes: "N-terminal acetyltransferases (NATs) catalyze co- and post-translational N-terminal acetylation that modulates protein interactions, targeting, folding, and N-end rule turnover."
+license: CC-BY-4.0

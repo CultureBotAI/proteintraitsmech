@@ -10,11 +10,15 @@ Fills the 7 zero-record domain categories in ProteinTraitCategoryEnum:
   - STRUCT_SYMMETRY         (data/traits/structure/symmetry/)
   - MIXED_COILED_COIL       (data/traits/sequence_structure/coiled_coil/)
 
-Expands the 4 single-record categories where canonical subclasses were absent:
-  - SEQ_SIGNAL_PEPTIDE      (data/traits/sequence/signal_peptide/)
-  - SEQ_TRANSIT_PEPTIDE     (data/traits/sequence/transit_peptide/)
-  - SEQ_PROPEPTIDE          (data/traits/sequence/propeptide/)
-  - STRUCT_DISULFIDE        (data/traits/structure/disulfide/)
+Expands the single-record and sparse categories where canonical subclasses were absent:
+  - SEQ_SIGNAL_PEPTIDE       (data/traits/sequence/signal_peptide/)
+  - SEQ_TRANSIT_PEPTIDE      (data/traits/sequence/transit_peptide/)
+  - SEQ_PROPEPTIDE           (data/traits/sequence/propeptide/)
+  - SEQ_INITIATOR_METHIONINE (data/traits/sequence/initiator_methionine/)
+  - SEQ_MATURE_CHAIN         (data/traits/sequence/mature_chain/)
+  - STRUCT_DISULFIDE         (data/traits/structure/disulfide/)
+  - STRUCT_CAVITY            (data/traits/structure/cavity/)
+  - EVO_CONSERVATION         (data/traits/evolution/conservation/)
 
 And resolves the cross-Mech GO gaps:
   - GO:7770085 (protocatechuate 3,4-dioxygenase complex, FUNC_LOCALIZATION)
@@ -99,6 +103,7 @@ class TraitSpec:
     evidence: tuple[tuple[str, str], ...] = ()
     detection_methods: tuple[MethodSpec, ...] = ()
     causal_graphs: tuple[CausalGraphSpec, ...] = ()
+    evolutionary_scope: tuple[tuple[str, object], ...] = ()
     definition_source: str = DEF_SOURCE
 
 
@@ -263,6 +268,60 @@ M_GO_COMPLEX = MethodSpec(
     evidence_code="ECO:0000265",
     reference="PMID:24451626",
     recipe="interproscan.sh -i {input} -goterms -f tsv -o {output}",
+)
+M_MAP_NME = MethodSpec(
+    name="TermiNator / EMBOSS fuzzpro penultimate-residue N-terminal methionine excision scan",
+    method_type="SEQUENCE_PATTERN",
+    edam_operation="EDAM:operation_0422",
+    tool="biotools:emboss",
+    evidence_code="ECO:0000255",
+    reference="PMID:2682640",
+    recipe="fuzzpro -sequence {input} -pattern '{pat}' -outfile {output}",
+)
+M_NAT_PRED = MethodSpec(
+    name="NetAcet / N-terminal acetyltransferase (NatB/NatC/NatE) substrate motif scan",
+    method_type="SEQUENCE_PATTERN",
+    edam_operation="EDAM:operation_0417",
+    tool="biotools:netacet",
+    evidence_code="ECO:0000255",
+    reference="PMID:27498224",
+    recipe="fuzzpro -sequence {input} -pattern '^M[DENQFLIWY]' -outfile {output}",
+)
+M_INTEIN = MethodSpec(
+    name="InterProScan / Pfam Hint-domain & intein splice-junction HMM scan",
+    method_type="HMM_PROFILE",
+    edam_operation="EDAM:operation_0300",
+    tool="biotools:interproscan",
+    evidence_code="ECO:0000259",
+    reference="PMID:24695729",
+    recipe="interproscan.sh -i {input} -appl Pfam,ProSiteProfiles -f tsv -o {output}",
+)
+M_CAVER = MethodSpec(
+    name="CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation",
+    method_type="STRUCTURAL_ALGORITHM",
+    edam_operation="EDAM:operation_0250",
+    tool="biotools:caver",
+    evidence_code="ECO:0007669",
+    reference="PMID:23093919",
+    recipe="java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}",
+)
+M_BUSCO = MethodSpec(
+    name="BUSCO / OrthoDB universal single-copy ortholog HMM profile search",
+    method_type="HMM_PROFILE",
+    edam_operation="EDAM:operation_3745",
+    tool="biotools:busco",
+    evidence_code="ECO:0000265",
+    reference="PMID:26059717",
+    recipe="busco -i {input} -m proteins -l auto-lineage -o {output}",
+)
+M_CODEML_HYPHY = MethodSpec(
+    name="PAML codeml / HyPhy codon maximum-likelihood dN/dS (omega) selection test",
+    method_type="HOMOLOGY_TRANSFER",
+    edam_operation="EDAM:operation_0554",
+    tool="biotools:paml",
+    evidence_code="ECO:0007669",
+    reference="PMID:17483113",
+    recipe="codeml codeml.ctl",
 )
 
 
@@ -4173,6 +4232,1668 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
     ),
+    # --- 13. SEQ_INITIATOR_METHIONINE (4 records) ---
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="excised-initiator-methionine-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_EXCISED",
+        label="methionyl-aminopeptidase-excised initiator methionine site",
+        definition=(
+            "An N-terminal initiator methionine position (Met1) that is co-translationally "
+            "cleaved by methionyl-aminopeptidase (MetAP / MAP, EC 3.4.11.18) during nascent "
+            "chain emergence from the ribosomal exit tunnel when the penultimate residue (P1', "
+            "position 2) has a small side chain with a radius of gyration <= 1.29 A (Gly, Ala, "
+            "Ser, Pro, Thr, Val, or Cys), exposing the penultimate residue as the mature "
+            "N-terminus."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        synonyms=(
+            ("cleaved N-terminal initiator methionine", "EXACT_SYNONYM"),
+            ("MetAP-cleaved initiator Met1 site", "EXACT_SYNONYM"),
+            ("N-terminal methionine excision (NME) positive site", "RELATED_SYNONYM"),
+        ),
+        xrefs=("GO:0004239", "GO:0006413"),
+        sequence_pattern="^M[GASPTVC]",
+        evidence=(
+            (
+                "PMID:2682640",
+                "Extent of N-terminal methionine excision by methionyl-aminopeptidase is governed by the maximal side-chain length of the penultimate amino acid.",
+            ),
+        ),
+        detection_methods=(M_MAP_NME,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_INIT_METHIONINE_EXCISED",
+                label="Co-translational initiator methionine excision by methionyl-aminopeptidase",
+                mechanism_summary=(
+                    "A small penultimate residue (Gly, Ala, Ser, Pro, Thr, Val, or Cys) at "
+                    "position 2 accommodates within the S1' substrate pocket of "
+                    "methionyl-aminopeptidase (MAP), enabling co-translational cleavage of the "
+                    "N-terminal initiator methionine to yield the mature processed N-terminus."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:16811",
+                        label="L-methionine",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:16811",
+                        description="N-terminal Met1 position adjacent to a small penultimate P1' residue (Gly, Ala, Ser, Pro, Thr, Val, or Cys) susceptible to co-translational excision",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0004239",
+                        label="initiator methionyl aminopeptidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004239",
+                        description="Catalytic activity of methionyl-aminopeptidase (MAP, EC 3.4.11.18) cleaving the N-terminal initiator methionine from nascent polypeptides",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016485",
+                        label="protein processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016485",
+                        description="Co-translational proteolytic removal of the initiator methionine to expose the penultimate residue at the mature N-terminus",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:16811",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0004239",
+                        description="Small penultimate side-chain geometry at P1' enables productive substrate recognition and cleavage by methionyl-aminopeptidase.",
+                        reference="PMID:2682640",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "From our results, methionine excision catalyzed by MAP is shown to "
+                            "obey the following rule: the catalytic efficiency of MAP, and "
+                            "therefore the extent of cleavage, decreases in parallel with the "
+                            "increasing of the maximal side-chain length of the amino acid in "
+                            "the penultimate position."
+                        ),
+                        notes="Penultimate side-chain length governs MAP cleavage efficiency (PMID:2682640).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0004239",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0016485",
+                        description="Methionyl-aminopeptidase activity catalyzes N-terminal methionine excision during nascent polypeptide processing.",
+                        reference="PMID:2682640",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "In a significant fraction of the Escherichia coli cytosolic "
+                            "proteins, the N-terminal methionine residue incorporated during the "
+                            "translation initiation step is excised. The N-terminal methionine "
+                            "excision is catalyzed by methionyl-aminopeptidase (MAP)."
+                        ),
+                        notes="MAP catalyzes N-terminal methionine excision (PMID:2682640).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="retained-initiator-methionine-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_RETAINED",
+        label="retained N-terminal initiator methionine site",
+        definition=(
+            "An N-terminal initiator methionine position (Met1) that is sterically protected "
+            "from methionyl-aminopeptidase (MetAP / MAP) cleavage because the penultimate "
+            "residue (P1', position 2) possesses a bulky, branched, or charged side chain "
+            "(Arg, Asn, Asp, Gln, Glu, His, Ile, Leu, Lys, Met, Phe, Trp, or Tyr) that exceeds "
+            "the steric exclusion radius of the MetAP S1' specificity pocket, retaining Met1 "
+            "as the permanent N-terminal residue of the mature polypeptide."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        synonyms=(
+            ("uncleaved initiator methionine site", "EXACT_SYNONYM"),
+            ("MetAP-resistant N-terminal Met1 site", "EXACT_SYNONYM"),
+            ("N-terminal methionine retention motif", "RELATED_SYNONYM"),
+        ),
+        xrefs=("GO:0004239", "GO:0006413"),
+        sequence_pattern="^M[RNDQEHLKMFPWYI]",
+        evidence=(
+            (
+                "PMID:2682640",
+                "Increasing maximal side-chain length of the penultimate amino acid abolishes methionyl-aminopeptidase cleavage, resulting in N-terminal methionine retention.",
+            ),
+        ),
+        detection_methods=(M_MAP_NME,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_INIT_METHIONINE_RETAINED",
+                label="Steric exclusion of bulky penultimate residues from methionyl-aminopeptidase retains N-terminal Met1",
+                mechanism_summary=(
+                    "When translation initiation incorporates Met1 upstream of a penultimate "
+                    "residue with a long or bulky side chain (Arg, Asn, Asp, Gln, Glu, His, "
+                    "Ile, Leu, Lys, Met, Phe, Trp, or Tyr), steric hindrance in the S1' pocket "
+                    "negatively regulates methionyl-aminopeptidase activity, preserving Met1 on "
+                    "the mature protein."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:16811",
+                        label="L-methionine",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:16811",
+                        description="N-terminal Met1 position adjacent to a bulky or charged penultimate P1' residue whose side chain sterically blocks the methionyl-aminopeptidase S1' pocket",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0004239",
+                        label="initiator methionyl aminopeptidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004239",
+                        description="Catalytic activity of methionyl-aminopeptidase (MAP, EC 3.4.11.18) toward nascent N-terminal methionine substrates",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006413",
+                        label="translational initiation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006413",
+                        description="Incorporation and retention of the N-terminal initiator methionine at position 1 of the mature polypeptide",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0006413",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="CHEBI:16811",
+                        description="Translational initiation incorporates the N-terminal methionine residue at position 1 of the nascent polypeptide.",
+                        reference="PMID:2682640",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "In a significant fraction of the Escherichia coli cytosolic "
+                            "proteins, the N-terminal methionine residue incorporated during the "
+                            "translation initiation step is excised. The N-terminal methionine "
+                            "excision is catalyzed by methionyl-aminopeptidase (MAP)."
+                        ),
+                        notes="Translation initiation incorporates N-terminal Met1 (PMID:2682640).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="CHEBI:16811",
+                        predicate="RO:0002212",
+                        predicate_label="negatively regulates",
+                        object="GO:0004239",
+                        description="Bulky penultimate side chains decrease methionyl-aminopeptidase catalytic efficiency to zero, preventing Met1 excision.",
+                        reference="PMID:2682640",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "From our results, methionine excision catalyzed by MAP is shown to "
+                            "obey the following rule: the catalytic efficiency of MAP, and "
+                            "therefore the extent of cleavage, decreases in parallel with the "
+                            "increasing of the maximal side-chain length of the amino acid in "
+                            "the penultimate position."
+                        ),
+                        notes="Large penultimate side chains inhibit MAP cleavage (PMID:2682640).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="formylated-initiator-methionine-processing-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_FORMYLATED_NME",
+        label="deformylase-dependent initiator formylmethionine processing site",
+        definition=(
+            "A prokaryotic, mitochondrial, or plastid N-terminal initiator methionine site "
+            "translated as N-formyl-L-methionine (fMet, MOD:00030) that undergoes obligate "
+            "sequential two-step N-terminal processing: (1) hydrolytic removal of the N-formyl "
+            "group by peptide deformylase (PDF, EC 3.5.1.88) to unblock the alpha-amino group, "
+            "which is strictly required before (2) methionyl-aminopeptidase (MAP, EC 3.4.11.18) "
+            "can cleave the initiator methionine."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        synonyms=(
+            ("PDF-MAP sequential N-terminal methionine excision site", "EXACT_SYNONYM"),
+            ("prokaryotic N-formylmethionine deformylation-excision site", "EXACT_SYNONYM"),
+            ("organellar fMet-NME processing site", "RELATED_SYNONYM"),
+        ),
+        xrefs=("MOD:00030", "GO:0008463", "GO:0004239"),
+        sequence_pattern="^M[ACDEFGHIKLMNPQRSTVWY]",
+        evidence=(
+            (
+                "PMID:18718933",
+                "Removal of the N-formyl group from N-formylmethionine by peptide deformylase is essential to allow subsequent excision of the first methionine by methionyl-aminopeptidase.",
+            ),
+            (
+                "PMID:42079159",
+                "Peptide deformylase (PDF, EC 3.5.1.88) removes the formyl group from N-formylmethionine on nascent bacterial polypeptides.",
+            ),
+        ),
+        detection_methods=(M_FMET,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_INIT_METHIONINE_FORMYLATED_NME",
+                label="Sequential peptide deformylase and methionyl-aminopeptidase N-terminal processing",
+                mechanism_summary=(
+                    "Nascent bacterial and organellar polypeptides initiate with "
+                    "N-formyl-L-methionine (MOD:00030); peptide deformylase (GO:0008463) "
+                    "hydrolyzes the N-formyl moiety, which unblocks and positively regulates "
+                    "initiator methionyl aminopeptidase activity (GO:0004239) to execute "
+                    "N-terminal protein processing (GO:0016485)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="MOD:00030",
+                        label="N-formyl-L-methionine residue",
+                        node_type="PTM",
+                        grounding="MOD:00030",
+                        description="Nascent bacterial or organellar N-formyl-L-methionine (MOD:00030) initiator site requiring deformylation prior to methionyl-aminopeptidase cleavage",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0008463",
+                        label="formylmethionine deformylase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0008463",
+                        description="Peptide deformylase (PDF, EC 3.5.1.88) activity hydrolyzing the N-terminal formyl group from nascent N-formylmethionine polypeptides",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0004239",
+                        label="initiator methionyl aminopeptidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004239",
+                        description="Methionyl-aminopeptidase (MAP) activity excising the deformylated N-terminal methionine residue",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016485",
+                        label="protein processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016485",
+                        description="Sequential N-terminal deformylation and initiator methionine excision on nascent bacterial and organellar polypeptides",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="MOD:00030",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0008463",
+                        description="Nascent N-formyl-L-methionine at position 1 serves as the substrate for peptide deformylase.",
+                        reference="PMID:42079159",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "The def gene encodes peptide deformylase (PDF, EC:3.5.1.88), an "
+                            "enzyme that contributes to protein processing by removing the "
+                            "formyl group from N-formylmethionine (fMet) on nascent peptides."
+                        ),
+                        notes="Peptide deformylase removes the formyl group from nascent fMet (PMID:42079159).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0008463",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0004239",
+                        description="Deformylation of N-formylmethionine by PDF is required before methionyl-aminopeptidase can cleave the first methionine.",
+                        reference="PMID:18718933",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Because protein synthesis begins with N-formylmethionine in plant "
+                            "endosymbiotic organelles, removal of the formyl group by peptide "
+                            "deformylase (PDF) is essential to allowing the excision of the "
+                            "first methionine."
+                        ),
+                        notes="Deformylation by PDF is essential for subsequent Met1 excision (PMID:18718933).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0004239",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0016485",
+                        description="Methionyl-aminopeptidase excision completes N-terminal protein processing of the deformylated nascent polypeptide.",
+                        reference="PMID:18718933",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Because protein synthesis begins with N-formylmethionine in plant "
+                            "endosymbiotic organelles, removal of the formyl group by peptide "
+                            "deformylase (PDF) is essential to allowing the excision of the "
+                            "first methionine."
+                        ),
+                        notes="Sequential PDF and MAP action in N-terminal protein processing (PMID:18718933).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="n-acetylated-initiator-methionine-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_ACETYLATED",
+        label="N-alpha-acetylated initiator methionine site",
+        definition=(
+            "A retained N-terminal initiator methionine position (Met1) that is co- or "
+            "post-translationally acetylated on its alpha-amino group by N-terminal "
+            "acetyltransferase complexes (primarily NatB on Met-Asp/Glu/Asn/Gln N-termini and "
+            "NatC/NatE/NatF on Met-Leu/Ile/Phe/Tyr/Lys/Met N-termini) to form "
+            "N-acetyl-L-methionine (MOD:00058), regulating protein folding, complex assembly, "
+            "subcellular targeting, and Ac/N-degron-mediated turnover."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        synonyms=(
+            ("NatB/NatC-acetylated initiator Met1 site", "EXACT_SYNONYM"),
+            ("Nt-acetylated initiator methionine", "EXACT_SYNONYM"),
+            ("Ac-Met1 N-terminal modification site", "RELATED_SYNONYM"),
+        ),
+        xrefs=("MOD:00058", "GO:0004596", "GO:0006474"),
+        sequence_pattern="^M[DENQFLIWY]",
+        evidence=(
+            (
+                "PMID:27498224",
+                "N-terminal acetyltransferases (NATs) catalyze co- and post-translational N-terminal acetylation that modulates protein interactions, targeting, folding, and N-end rule turnover.",
+            ),
+        ),
+        detection_methods=(M_NAT_PRED,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_INIT_METHIONINE_ACETYLATED",
+                label="N-alpha-acetylation of retained initiator methionine by N-terminal acetyltransferases",
+                mechanism_summary=(
+                    "Retained initiator methionine residues followed by acidic/polar (NatB) or "
+                    "hydrophobic/amphipathic (NatC/NatE/NatF) penultimate residues are recognized "
+                    "by protein-N-terminal amino-acid acetyltransferases (GO:0004596), driving "
+                    "N-terminal protein amino acid acetylation (GO:0006474) to form "
+                    "N-acetyl-L-methionine (MOD:00058) and modulate protein folding (GO:0006457)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="MOD:00058",
+                        label="N-acetyl-L-methionine",
+                        node_type="PTM",
+                        grounding="MOD:00058",
+                        description="N-terminal initiator methionine modified to N-acetyl-L-methionine (MOD:00058) by N-terminal acetyltransferases",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0004596",
+                        label="protein-N-terminal amino-acid acetyltransferase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004596",
+                        description="Catalytic activity of N-terminal acetyltransferase complexes (NatB, NatC, NatE, NatF) transferring an acetyl group from acetyl-CoA to the alpha-amino group of Met1",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006474",
+                        label="N-terminal protein amino acid acetylation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006474",
+                        description="Co- or post-translational acetylation of the N-terminal initiator methionine",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006457",
+                        label="protein folding",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006457",
+                        description="Protein folding, subcellular targeting, and interaction modulation governed by N-terminal acetylation",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="MOD:00058",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0004596",
+                        description="Retained Met1 N-terminal motif serves as the recognition substrate for N-terminal acetyltransferase complexes.",
+                        reference="PMID:27498224",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "N-terminal (Nt) acetylation is known to be a highly abundant "
+                            "co-translational protein modification, but the recent discovery of "
+                            "Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) "
+                            "revealed that it can also be added post-translationally."
+                        ),
+                        notes="NAT complexes recognize and acetylate N-terminal initiator residues (PMID:27498224).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0004596",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0006474",
+                        description="N-terminal acetyltransferase activity catalyzes N-terminal protein amino acid acetylation.",
+                        reference="PMID:27498224",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "N-terminal (Nt) acetylation is known to be a highly abundant "
+                            "co-translational protein modification, but the recent discovery of "
+                            "Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) "
+                            "revealed that it can also be added post-translationally."
+                        ),
+                        notes="NATs catalyze co- and post-translational N-terminal acetylation (PMID:27498224).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006474",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0006457",
+                        description="N-terminal acetylation modulates protein folding, targeting, and protein-protein interactions.",
+                        reference="PMID:27498224",
+                        evidence_code="ECO:0000305",
+                        snippet="Nt-acetylation also modulates protein interactions, targeting, and folding.",
+                        notes="Nt-acetylation modulates protein folding and interactions (PMID:27498224).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    # --- 14. SEQ_MATURE_CHAIN (4 records) ---
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="signal-peptidase-processed-mature-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_SECRETED",
+        label="signal-peptidase-processed mature polypeptide chain",
+        definition=(
+            "A mature functional polypeptide chain (SO:0000419) generated by endoproteolytic "
+            "cleavage of an N-terminal secretory signal peptide or bacterial lipoprotein leader "
+            "peptide by type I/II/III signal peptidase during or immediately following translocation "
+            "across the endoplasmic reticulum, bacterial cytoplasmic, or archaeal plasma membrane."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("secreted mature protein chain", "EXACT_SYNONYM"),
+            ("post-signal-peptide mature polypeptide region", "EXACT_SYNONYM"),
+        ),
+        xrefs=("SO:0000419", "GO:0016485", "GO:0051604"),
+        evidence=(
+            (
+                "PMID:34980915",
+                "Signal peptides control protein secretion and translocation in all living organisms and are cleaved off during translocation to release the mature polypeptide chain.",
+            ),
+        ),
+        detection_methods=(M_SIGNALP6,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_MATURE_CHAIN_SECRETED",
+                label="Signal peptidase cleavage of N-terminal signal peptide yields mature secreted chain",
+                mechanism_summary=(
+                    "An N-terminal signal peptide (SO:0000418) directs membrane translocation "
+                    "and proteolytic protein processing (GO:0016485) by signal peptidase, "
+                    "releasing the signal-peptidase-processed mature polypeptide chain (SO:0000419)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000418",
+                        label="signal_peptide",
+                        node_type="MOTIF",
+                        grounding="SO:0000418",
+                        description="Cleavable N-terminal secretory signal peptide directing translocation and subsequent cleavage by signal peptidase",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016485",
+                        label="protein processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016485",
+                        description="Proteolytic removal of the N-terminal signal peptide during or immediately following membrane translocation",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Mature functional polypeptide region (SO:0000419) released after signal peptide cleavage",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000418",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0016485",
+                        description="The N-terminal signal peptide directs co- or post-translational translocation and proteolytic cleavage by signal peptidase.",
+                        reference="PMID:34980915",
+                        evidence_code="ECO:0000269",
+                        snippet="Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms.",
+                        notes="Signal peptides control secretion and translocation Processing (PMID:34980915).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0016485",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Proteolytic removal of the signal peptide releases the mature secreted or membrane-anchored polypeptide chain.",
+                        reference="PMID:34980915",
+                        evidence_code="ECO:0000269",
+                        snippet="Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms.",
+                        notes="Release of the mature polypeptide chain upon signal peptide cleavage (PMID:34980915).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="proprotein-convertase-processed-mature-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
+        label="proprotein-convertase-processed mature polypeptide chain",
+        definition=(
+            "A mature bioactive polypeptide or peptide hormone/neuropeptide chain (SO:0000419) "
+            "excised from a larger proprotein, prohormone, or polyprotein precursor by "
+            "site-specific endopeptidases (such as subtilisin/kexin-like proprotein convertases "
+            "or secretory-vesicle cathepsin L) at monobasic or dibasic cleavage motifs within "
+            "the secretory pathway."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("prohormone-derived mature peptide chain", "EXACT_SYNONYM"),
+            ("polyprotein-processed mature polypeptide chain", "RELATED_SYNONYM"),
+            ("convertase-cleaved mature chain", "EXACT_SYNONYM"),
+        ),
+        xrefs=("SO:0000419", "GO:0016486", "GO:0004175"),
+        evidence=(
+            (
+                "PMID:18184105",
+                "Neuropeptides and peptide hormones are synthesized from proneuropeptide or prohormone precursors that undergo proteolytic processing in secretory vesicles to yield mature active peptides.",
+            ),
+        ),
+        detection_methods=(M_PROPEP,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_MATURE_CHAIN_PROPROTEIN_CLEAVED",
+                label="Endoproteolytic cleavage of prohormone/proprotein precursors yields mature active chains",
+                mechanism_summary=(
+                    "Subtilisin-like proprotein convertases and secretory-vesicle cysteine "
+                    "endopeptidases (GO:0004175) catalyze peptide hormone processing "
+                    "(GO:0016486) of proprotein precursors to produce the mature polypeptide "
+                    "chain (SO:0000419), which enables downstream hormone or signaling activity "
+                    "(GO:0005179)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0004175",
+                        label="endopeptidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004175",
+                        description="Proprotein convertase / processing endopeptidase activity cleaving dibasic or monobasic sites in prohormone and proneuropeptide precursors",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016486",
+                        label="peptide hormone processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016486",
+                        description="Proteolytic processing of prohormone and proneuropeptide precursors within secretory vesicles",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Bioactive mature polypeptide or peptide chain (SO:0000419) excised from a multivalent precursor",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005179",
+                        label="hormone activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005179",
+                        description="Receptor-mediated signaling or endocrine activity of the mature processed peptide",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0004175",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0016486",
+                        description="Proprotein convertases and processing endopeptidases catalyze proteolytic processing of prohormone precursors.",
+                        reference="PMID:18184105",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Neuropeptides are synthesized from protein precursors (termed "
+                            "proneuropeptides or prohormones) that require proteolytic "
+                            "processing primarily within secretory vesicles that store and "
+                            "secrete the mature neuropeptides to control target cellular and "
+                            "organ systems."
+                        ),
+                        notes="Proteolytic processing of proneuropeptides and prohormones in secretory vesicles (PMID:18184105).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0016486",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Proteolytic prohormone processing yields the mature bioactive peptide or polypeptide chain.",
+                        reference="PMID:18184105",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Neuropeptides are synthesized from protein precursors (termed "
+                            "proneuropeptides or prohormones) that require proteolytic "
+                            "processing primarily within secretory vesicles that store and "
+                            "secrete the mature neuropeptides to control target cellular and "
+                            "organ systems."
+                        ),
+                        notes="Generation of mature peptide chains from prohormone precursors (PMID:18184105).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000419",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0005179",
+                        description="The excised mature peptide chain mediates intercellular hormone and neurotransmitter signaling.",
+                        reference="PMID:18184105",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Peptide neurotransmitters and peptide hormones, collectively known "
+                            "as neuropeptides, are required for cell-cell communication in "
+                            "neurotransmission and for regulation of endocrine functions."
+                        ),
+                        notes="Mature peptide hormones regulate neurotransmission and endocrine functions (PMID:18184105).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="intein-spliced-mature-extein-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_INTEIN_SPLICED",
+        label="intein-spliced mature extein polypeptide chain",
+        definition=(
+            "A contiguous mature host polypeptide chain (SO:0000419) formed post-translationally "
+            "by autocatalytic protein splicing (GO:0016539), in which an internal intervening "
+            "polypeptide (intein) catalyzes its own excision from flanking N-extein and "
+            "C-extein segments coupled to native peptide-bond ligation of the exteins."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("ligated N/C-extein mature chain", "EXACT_SYNONYM"),
+            ("protein-splicing mature host polypeptide", "EXACT_SYNONYM"),
+            ("extein-ligated mature protein region", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0000419", "GO:0016539", "GO:0051604"),
+        evidence=(
+            (
+                "PMID:24695729",
+                "Inteins catalyze their excision from flanking polypeptides (exteins) concomitant with extein ligation to produce a mature host protein via sequential nucleophilic displacement reactions.",
+            ),
+        ),
+        detection_methods=(M_INTEIN,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_MATURE_CHAIN_INTEIN_SPLICED",
+                label="Autocatalytic intein excision and extein ligation produce mature host chain",
+                mechanism_summary=(
+                    "Intein-mediated protein splicing (GO:0016539) executes sequential "
+                    "nucleophilic acyl-shift and transesterification steps to excise the "
+                    "intervening intein and ligate the flanking N- and C-exteins into a "
+                    "contiguous mature extein polypeptide chain (SO:0000419), completing "
+                    "protein maturation (GO:0051604)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0016539",
+                        label="intein-mediated protein splicing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016539",
+                        description="Autocatalytic excision of an internal protein splicing element (intein) coupled to peptide-bond ligation of flanking N- and C-exteins",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Contiguous mature host polypeptide chain (SO:0000419) formed by native peptide bond ligation of N-extein and C-extein",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0051604",
+                        label="protein maturation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0051604",
+                        description="Maturation of the functional host protein following intein excision and extein ligation",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0016539",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Intein excision concomitant with N- and C-extein ligation produces the contiguous mature host polypeptide chain.",
+                        reference="PMID:24695729",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Inteins are nature's escape artists; they facilitate their "
+                            "excision from flanking polypeptides (exteins) concomitant with "
+                            "extein ligation to produce a mature host protein."
+                        ),
+                        notes="Intein excision and extein ligation yield the mature host protein (PMID:24695729).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000419",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0051604",
+                        description="Formation of the spliced extein chain via sequential nucleophilic displacements restores the mature functional host protein.",
+                        reference="PMID:24695729",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Splicing requires sequential nucleophilic displacement reactions "
+                            "catalyzed by strategies similar to proteases and asparagine lyases."
+                        ),
+                        notes="Sequential nucleophilic displacement steps complete protein splicing maturation (PMID:24695729).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="proteolytically-excised-bioactive-peptide-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_BIOACTIVE_PEPTIDE",
+        label="proteolytically excised bioactive antimicrobial/effector peptide chain",
+        definition=(
+            "A short mature bioactive C-terminal or internal peptide chain (SO:0000419) "
+            "liberated from an inactive holoprotein precursor (such as a cathelicidin, "
+            "defensin, or ribosomally synthesized bacteriocin proprotein) by granule or "
+            "extracellular endoproteases (including proteinase 3, neutrophil elastase, or "
+            "leader peptidases) to unmask membrane-active antimicrobial or host-defense "
+            "activity."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("holoprotein-cleaved mature antimicrobial peptide chain", "EXACT_SYNONYM"),
+            ("mature host-defense peptide region", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0000419", "GO:0002777", "GO:0042742"),
+        evidence=(
+            (
+                "PMID:11134217",
+                "Cathelicidins are synthesized as inactive holoproteins whose C-terminal antimicrobial peptide chain must be proteolytically cleaved by elastase or proteinase 3 to become active.",
+            ),
+        ),
+        detection_methods=(M_PROPEP,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_MATURE_CHAIN_BIOACTIVE_PEPTIDE",
+                label="Proteolytic liberation of C-terminal bioactive antimicrobial peptide chain from holoprotein precursor",
+                mechanism_summary=(
+                    "Proteolytic cleavage during antimicrobial peptide biosynthesis (GO:0002777) "
+                    "removes the N-terminal cathelin/pro-domain from the inactive holoprotein "
+                    "to release the mature bioactive peptide chain (SO:0000419), which mediates "
+                    "antimicrobial humoral defense (GO:0061844)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0002777",
+                        label="antimicrobial peptide biosynthetic process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0002777",
+                        description="Proteolytic cleavage of an inactive holoprotein precursor (such as a cathelicidin or bacteriocin proprotein) to release the active C-terminal peptide",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Mature bioactive antimicrobial or effector peptide chain (SO:0000419) liberated from its proprotein precursor",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0061844",
+                        label="antimicrobial humoral immune response mediated by antimicrobial peptide",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0061844",
+                        description="Direct antimicrobial defense mediated by the mature excised peptide",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0002777",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Proteolytic processing of the holoprotein precursor by elastase or proteinase 3 liberates the active C-terminal antimicrobial peptide chain.",
+                        reference="PMID:11134217",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Bovine and porcine cathelicidins are cleaved by elastase from the "
+                            "azurophil granules to yield the active antimicrobial peptides."
+                        ),
+                        notes="Proteolytic cleavage of cathelicidin holoprotein yields active antimicrobial peptide (PMID:11134217).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000419",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0061844",
+                        description="Once cleaved from the holoprotein precursor, the mature C-terminal peptide chain executes antimicrobial defense.",
+                        reference="PMID:11134217",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Cathelicidins are a family of antimicrobial proteins found in the "
+                            "peroxidase-negative granules of neutrophils. The known biologic "
+                            "functions reside in the C-terminus, which must be cleaved from the "
+                            "holoprotein to become active."
+                        ),
+                        notes="Biological antimicrobial activity resides in the cleaved C-terminal peptide chain (PMID:11134217).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    # --- 15. SEQ_TRANSIT_PEPTIDE additions (3 records) ---
+    TraitSpec(
+        rel_dir="sequence/transit_peptide",
+        filename="mitochondrial-intermembrane-space-bipartite-transit-peptide.yaml",
+        identifier="proteintraitsmech:TRANSIT_PEPTIDE_MITO_IMS",
+        label="mitochondrial intermembrane-space bipartite transit peptide",
+        definition=(
+            "A cleavable bipartite N-terminal mitochondrial transit peptide composed of an "
+            "N-terminal positively charged matrix-targeting presequence (cleaved in the matrix "
+            "by mitochondrial processing peptidase, MPP) followed immediately by a hydrophobic "
+            "stop-transfer sorting signal that arrests translocation in the TIM23 channel and "
+            "is cleaved on the intermembrane-space side of the inner membrane by the inner "
+            "membrane peptidase complex (Imp1p/Imp2p, IMP) to release the soluble protein into "
+            "the mitochondrial intermembrane space (GO:0005758)."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_TRANSIT_PEPTIDE",
+        parent_traits=(
+            "proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE",
+            "proteintraitsmech:TRANSIT_PEPTIDE_MITOCHONDRIAL",
+        ),
+        synonyms=(
+            ("mitochondrial IMS stop-transfer bipartite presequence", "EXACT_SYNONYM"),
+            ("Imp1/Imp2-cleaved intermembrane space sorting signal", "EXACT_SYNONYM"),
+        ),
+        xrefs=("SO:0001808", "GO:0045041", "GO:0005758"),
+        evidence=(
+            (
+                "PMID:8266095",
+                "The mitochondrial inner membrane protease (Imp1p/Imp2p) catalyzes cleavage of intermembrane space sorting signals for maturation of proteins delivered to the mitochondrial intermembrane space.",
+            ),
+        ),
+        detection_methods=(M_TARGETP2,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_TRANSIT_PEPTIDE_MITO_IMS",
+                label="Bipartite MTS + stop-transfer sorting and IMP cleavage into the mitochondrial intermembrane space",
+                mechanism_summary=(
+                    "A mitochondrial intermembrane-space bipartite transit peptide (SO:0001808) "
+                    "couples TIM23 arrest with cleavage by the inner membrane protease complex "
+                    "(Imp1p/Imp2p) during protein import into the mitochondrial intermembrane "
+                    "space (GO:0045041), delivering the mature protein to the mitochondrial "
+                    "intermembrane space (GO:0005758)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0001808",
+                        label="mitochondrial_targeting_signal",
+                        node_type="MOTIF",
+                        grounding="SO:0001808",
+                        description="Bipartite mitochondrial presequence containing an N-terminal matrix-targeting signal followed by a hydrophobic stop-transfer intermembrane-space sorting signal cleaved by Imp1p/Imp2p",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0045041",
+                        label="protein import into mitochondrial intermembrane space",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0045041",
+                        description="Sorting and inner-membrane protease processing of proteins imported into the mitochondrial intermembrane space",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005758",
+                        label="mitochondrial intermembrane space",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0005758",
+                        description="Mitochondrial intermembrane space compartment between the outer and inner mitochondrial membranes",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0001808",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0045041",
+                        description="The intermembrane-space sorting signal of the bipartite presequence is cleaved by the inner membrane protease (Imp1p/Imp2p) during IMS import.",
+                        reference="PMID:8266095",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "In addition to its catalyzing the cleavage of intermembrane space "
+                            "sorting signals, Imp2p is required for the stable and functional "
+                            "expression of Imp1p."
+                        ),
+                        notes="Imp1p/Imp2p cleaves intermembrane space sorting signals (PMID:8266095).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0045041",
+                        predicate="RO:0002339",
+                        predicate_label="has target end location",
+                        object="GO:0005758",
+                        description="Inner membrane protease maturation delivers the processed soluble protein to the mitochondrial intermembrane space.",
+                        reference="PMID:8266095",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "The mitochondrial inner membrane protease is required for the "
+                            "maturation of mitochondrial proteins that are delivered to the "
+                            "intermembrane space."
+                        ),
+                        notes="Maturation of proteins delivered to the mitochondrial intermembrane space (PMID:8266095).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/transit_peptide",
+        filename="apicoplast-bipartite-transit-peptide.yaml",
+        identifier="proteintraitsmech:TRANSIT_PEPTIDE_APICOPLAST",
+        label="apicoplast bipartite transit peptide",
+        definition=(
+            "A cleavable bipartite N-terminal leader sequence in apicomplexan parasites "
+            "(such as Plasmodium and Toxoplasma) consisting of an N-terminal hydrophobic "
+            "secretory signal peptide that mediates co-translational entry into the endoplasmic "
+            "reticulum followed by a net-positively charged plant-like plastid transit peptide "
+            "that directs subsequent transport across the four surrounding membranes into the "
+            "apicoplast stroma (GO:0020011), with both segments removed stepwise during import."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_TRANSIT_PEPTIDE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE",),
+        synonyms=(
+            ("apicoplast bipartite presequence", "EXACT_SYNONYM"),
+            ("SP+TP apicoplast targeting leader", "EXACT_SYNONYM"),
+            ("secondary plastid bipartite transit peptide", "BROAD_SYNONYM"),
+        ),
+        xrefs=("SO:0000725", "GO:0020011", "GO:0033365"),
+        evidence=(
+            (
+                "PMID:10775264",
+                "Protein targeting to the four-membrane-bound apicoplast of Plasmodium falciparum is a two-step process mediated by bipartite N-terminal pre-sequences consisting of a signal peptide and a plant-like transit peptide removed stepwise.",
+            ),
+        ),
+        detection_methods=(M_TARGETP2,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_TRANSIT_PEPTIDE_APICOPLAST",
+                label="Two-step secretory-to-apicoplast import via bipartite signal + transit presequence",
+                mechanism_summary=(
+                    "An apicoplast bipartite transit peptide (SO:0000725) combines an ER "
+                    "signal peptide with a plant-like transit peptide to drive two-step "
+                    "organellar protein localization (GO:0033365) and stepwise proteolytic "
+                    "cleavage into the apicoplast lumen (GO:0020011)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000725",
+                        label="transit_peptide",
+                        node_type="MOTIF",
+                        grounding="SO:0000725",
+                        description="Bipartite N-terminal presequence composed of a secretory signal peptide followed by a plant-like plastid transit peptide removed stepwise during apicoplast import",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0033365",
+                        label="protein localization to organelle",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0033365",
+                        description="Two-step secretory-to-plastid import and stepwise presequence cleavage targeting nuclear-encoded proteins to the apicoplast",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0020011",
+                        label="apicoplast",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0020011",
+                        description="Four-membrane-bound non-photosynthetic relict plastid of apicomplexan parasites",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000725",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0033365",
+                        description="The bipartite signal peptide + transit peptide presequence mediates two-step import into the apicoplast.",
+                        reference="PMID:10775264",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "We demonstrate that protein targeting is at least a two-step "
+                            "process mediated by bipartite N-terminal pre-sequences that consist "
+                            "of a signal peptide for entry into the secretory pathway and a "
+                            "plant-like transit peptide for subsequent import into the apicoplast."
+                        ),
+                        notes="Bipartite signal + transit presequence mediates two-step apicoplast targeting (PMID:10775264).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0033365",
+                        predicate="RO:0002339",
+                        predicate_label="has target end location",
+                        object="GO:0020011",
+                        description="Stepwise removal of the bipartite presequence components delivers the mature protein into the apicoplast.",
+                        reference="PMID:10775264",
+                        evidence_code="ECO:0000269",
+                        snippet="The pre-sequence components are removed stepwise during apicoplast targeting.",
+                        notes="Stepwise presequence cleavage during apicoplast import (PMID:10775264).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/transit_peptide",
+        filename="hydrogenosomal-mitosomal-transit-presequence.yaml",
+        identifier="proteintraitsmech:TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME",
+        label="hydrogenosomal / mitosomal N-terminal transit presequence",
+        definition=(
+            "A short cleavable N-terminal transit presequence (typically 5-25 residues, "
+            "enriched in sub-terminal arginine/lysine residues proximal to the cleavage site) "
+            "on nuclear-encoded proteins of anaerobic protists that directs import across the "
+            "double membrane of mitochondrion-related organelles — hydrogenosomes (GO:0042566) "
+            "and mitosomes (GO:0032047) — and is proteolytically removed in the organellar "
+            "lumen by hydrogenosomal or mitosomal processing peptidase (HPP / GPP)."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_TRANSIT_PEPTIDE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE",),
+        synonyms=(
+            ("hydrogenosomal targeting presequence", "EXACT_SYNONYM"),
+            ("mitosomal N-terminal targeting presequence", "EXACT_SYNONYM"),
+            ("MRO matrix transit peptide", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0000725", "GO:0042566", "GO:0032047", "GO:0033365"),
+        evidence=(
+            (
+                "PMID:16040811",
+                "Proteins targeted into Giardia mitosomes and Trichomonas hydrogenosomes carry conserved N-terminal targeting presequences recognized by a shared TIM/processing-peptidase import machinery.",
+            ),
+        ),
+        detection_methods=(M_TARGETP2,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME",
+                label="N-terminal presequence-directed import and processing in hydrogenosomes and mitosomes",
+                mechanism_summary=(
+                    "A short N-terminal transit presequence (SO:0000725) is recognized by the "
+                    "mitochondrion-related organelle import and processing-peptidase machinery "
+                    "(GO:0033365), delivering proteins into mitosomes (GO:0032047) and "
+                    "hydrogenosomes (GO:0042566)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000725",
+                        label="transit_peptide",
+                        node_type="MOTIF",
+                        grounding="SO:0000725",
+                        description="Short N-terminal targeting presequence recognized by hydrogenosomal and mitosomal protein import and processing peptidase machinery",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0033365",
+                        label="protein localization to organelle",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0033365",
+                        description="Translocation across the double membrane of mitochondrion-related organelles and presequence cleavage by processing peptidase",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0042566",
+                        label="hydrogenosome",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0042566",
+                        description="Hydrogen-producing double-membrane mitochondrion-related organelle of anaerobic eukaryotes",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000725",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0033365",
+                        description="N-terminal targeting signals on mitosomal and hydrogenosomal precursor proteins are necessary and sufficient for recognition by the organellar import and processing peptidase machinery.",
+                        reference="PMID:16040811",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Here, we report that proteins targeted into mitosomes of Giardia "
+                            "intestinalis have targeting signals necessary and sufficient to be "
+                            "recognized by the mitosomal protein import machinery."
+                        ),
+                        notes="N-terminal targeting presequences direct import into mitosomes and hydrogenosomes (PMID:16040811).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0033365",
+                        predicate="RO:0002339",
+                        predicate_label="has target end location",
+                        object="GO:0042566",
+                        description="Shared presequence recognition and inner-membrane translocase/peptidase processing deliver precursor proteins into hydrogenosomes.",
+                        reference="PMID:16040811",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Expression of these mitosomal proteins in Trichomonas vaginalis "
+                            "results in targeting to hydrogenosomes, a hydrogen-producing form "
+                            "of mitochondria."
+                        ),
+                        notes="Cross-recognition and import into hydrogenosomes (PMID:16040811).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    # --- 16. SEQ_PROPEPTIDE additions (2 records) ---
+    TraitSpec(
+        rel_dir="sequence/propeptide",
+        filename="vitamin-k-dependent-gamma-carboxylation-recognition-propeptide.yaml",
+        identifier="proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
+        label="vitamin K-dependent gamma-carboxylation recognition propeptide",
+        definition=(
+            "A cleavable N-terminal propeptide (typically residues -18 to -1, carrying conserved "
+            "Phe-16 and Ala-10 recognition determinants) in vitamin K-dependent coagulation and "
+            "calcification precursor proteins (such as Factor IX, Factor X, prothrombin, "
+            "Protein C, and osteocalcin) that functions as an obligate exosite docking motif "
+            "for vitamin K-dependent gamma-glutamyl carboxylase (GGCX, GO:0008488) in the "
+            "endoplasmic reticulum, directing processive gamma-carboxylation of downstream "
+            "glutamate residues into L-gamma-carboxyglutamic acid (Gla, MOD:00041) prior to "
+            "propeptide excision in the trans-Golgi."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_PROPEPTIDE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE",),
+        synonyms=(
+            ("gamma-glutamyl carboxylase docking propeptide", "EXACT_SYNONYM"),
+            ("Gla-domain carboxylation recognition propeptide", "EXACT_SYNONYM"),
+            ("VKD propeptide", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0001062", "GO:0008488", "GO:0017187", "MOD:00041"),
+        evidence=(
+            (
+                "PMID:3802193",
+                "The propeptide of Factor IX (residues -18 to -1, including Phe-16 and Ala-10) defines the recognition site that designates the adjacent glutamic acid-rich domain for vitamin K-dependent gamma-carboxylation.",
+            ),
+        ),
+        detection_methods=(M_PROPEP,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_PROPEPTIDE_VKD_GLA_RECOGNITION",
+                label="Propeptide exosite recognition directs vitamin K-dependent gamma-glutamyl carboxylation",
+                mechanism_summary=(
+                    "The vitamin K-dependent recognition propeptide (SO:0001062) docks to "
+                    "gamma-glutamyl carboxylase (GO:0008488), positively regulating "
+                    "peptidyl-glutamic acid carboxylation (GO:0017187) of the adjacent Gla "
+                    "domain to generate L-gamma-carboxyglutamic acid residues (MOD:00041)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0001062",
+                        label="propeptide",
+                        node_type="MOTIF",
+                        grounding="SO:0001062",
+                        description="Conserved N-terminal propeptide (residues -18 to -1) that tethers vitamin K-dependent precursors to gamma-glutamyl carboxylase",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0008488",
+                        label="gamma-glutamyl carboxylase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0008488",
+                        description="Vitamin K-dependent gamma-glutamyl carboxylase (GGCX) activity converting glutamate residues to gamma-carboxyglutamate",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0017187",
+                        label="peptidyl-glutamic acid carboxylation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0017187",
+                        description="Post-translational gamma-carboxylation of glutamic acid residues in the adjacent Gla domain",
+                    ),
+                    CausalNodeSpec(
+                        node_id="MOD:00041",
+                        label="L-gamma-carboxyglutamic acid",
+                        node_type="PTM",
+                        grounding="MOD:00041",
+                        description="Calcium-coordinating L-gamma-carboxyglutamic acid (Gla) residue produced in the mature vitamin K-dependent domain",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0001062",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0008488",
+                        description="The conserved N-terminal propeptide (including Phe-16 and Ala-10) provides the recognition site required for gamma-glutamyl carboxylase recruitment.",
+                        reference="PMID:3802193",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "These results indicate that the Factor IX propeptide participates "
+                            "in defining a recognition site that designates an adjacent glutamic "
+                            "acid-rich domain for gamma-carboxylation."
+                        ),
+                        notes="Factor IX propeptide defines the recognition site for gamma-carboxylation (PMID:3802193).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0008488",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0017187",
+                        description="Propeptide-bound gamma-glutamyl carboxylase catalyzes processive peptidyl-glutamic acid carboxylation.",
+                        reference="PMID:3802193",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Deletion of the propeptide (residues -18 to -1) abolished "
+                            "carboxylation, but not secretion, of Factor IX."
+                        ),
+                        notes="Deletion of the propeptide abolishes gamma-carboxylation (PMID:3802193).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0017187",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="MOD:00041",
+                        description="Peptidyl-glutamic acid carboxylation converts specific glutamate residues into L-gamma-carboxyglutamic acid (Gla).",
+                        reference="PMID:3802193",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Posttranslational processing of vitamin K-dependent proteins "
+                            "includes gamma-carboxylation of specific glutamic acid residues to "
+                            "form gamma-carboxyglutamic acids."
+                        ),
+                        notes="Gamma-carboxylation forms gamma-carboxyglutamic acid residues (PMID:3802193).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/propeptide",
+        filename="gpi-anchor-c-terminal-propeptide.yaml",
+        identifier="proteintraitsmech:PROPEPTIDE_GPI_C_TERMINAL",
+        label="GPI-anchor C-terminal transamidase-cleaved propeptide",
+        definition=(
+            "A transient C-terminal propeptide extension (spanning the polar spacer downstream "
+            "of the omega cleavage site and a C-terminal hydrophobic tail) on precursor proteins "
+            "destined for glycosylphosphatidylinositol (GPI) anchoring that is recognized and "
+            "cleaved at the omega residue in the endoplasmic reticulum lumen by the "
+            "heteropentameric GPI-anchor transamidase complex (PIGK/GPAA1/PIGT/PIGS/PIGU, "
+            "GO:0003923) concomitant with amide-bond transfer of the mature C-terminus onto a "
+            "preassembled GPI glycolipid anchor."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_PROPEPTIDE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE",),
+        synonyms=(
+            ("C-terminal GPI-attachment propeptide signal", "EXACT_SYNONYM"),
+            ("omega-site C-terminal propeptide", "EXACT_SYNONYM"),
+            ("GPI-T cleaved C-terminal peptide", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0001062", "GO:0003923", "GO:0016255", "GO:0042765"),
+        evidence=(
+            (
+                "PMID:35165458",
+                "Attachment of GPI anchors to precursor proteins in the ER is catalyzed by the five-subunit transmembrane GPI transamidase (GPIT) complex via the PIGK Cys206-His164-Asn58 catalytic triad.",
+            ),
+        ),
+        detection_methods=(M_PROPEP,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_PROPEPTIDE_GPI_C_TERMINAL",
+                label="GPI-anchor transamidase cleavage of C-terminal propeptide and GPI attachment",
+                mechanism_summary=(
+                    "The C-terminal GPI propeptide extension (SO:0001062) positions the "
+                    "precursor omega site in the catalytic cleft of the PIGK subunit within "
+                    "the GPI-anchor transamidase complex (GO:0003923), which cleaves off the "
+                    "C-terminal propeptide and catalyzes attachment of the GPI anchor to the "
+                    "protein (GO:0016255)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0001062",
+                        label="propeptide",
+                        node_type="MOTIF",
+                        grounding="SO:0001062",
+                        description="Transient C-terminal hydrophobic propeptide downstream of the omega site cleaved during GPI transamidation",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003923",
+                        label="GPI-anchor transamidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003923",
+                        description="Catalytic activity of the GPI transamidase complex (PIGK Cys206-His164-Asn58 triad) cleaving the omega-site peptide bond and transferring the GPI anchor",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016255",
+                        label="attachment of GPI anchor to protein",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016255",
+                        description="Endoplasmic-reticulum maturation of GPI-anchored proteins by C-terminal propeptide replacement with a GPI glycolipid",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0001062",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0003923",
+                        description="The C-terminal propeptide directs the precursor omega-site peptide bond to the PIGK Cys206-His164-Asn58 catalytic triad of GPI transamidase.",
+                        reference="PMID:35165458",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "The PIGK subunit functions as the catalytic component, in which we "
+                            "identified a C206-H164-N58 triad that is critical for the "
+                            "transamination reaction."
+                        ),
+                        notes="PIGK Cys206-His164-Asn58 catalytic triad drives the GPI transamidation cleavage/transfer reaction (PMID:35165458).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0003923",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0016255",
+                        description="GPI-anchor transamidase cleavage of the C-terminal propeptide catalyzes covalent attachment of the GPI anchor in the ER.",
+                        reference="PMID:35165458",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Attaching GPI to the protein in the endoplasmic reticulum (ER) is "
+                            "catalyzed by the transmembrane GPI transamidase (GPIT) complex, "
+                            "which is essential for maturation of the GPI-anchored proteins."
+                        ),
+                        notes="GPIT complex catalyzes GPI attachment for protein maturation in the ER (PMID:35165458).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    # --- 17. STRUCT_CAVITY additions (2 records) ---
+    TraitSpec(
+        rel_dir="structure/cavity",
+        filename="transmembrane-ion-channel-selectivity-filter-pore.yaml",
+        identifier="proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE",
+        label="transmembrane ion-channel selectivity-filter pore",
+        definition=(
+            "A specialized transmembrane channel cavity architecture consisting of a wide, "
+            "water-filled central vestibule coupled to a narrow (~12 A long) constricted "
+            "selectivity filter lined by backbone carbonyl oxygens or side-chain coordination "
+            "rings that mimic the hydration shell of a specific permeant ion (such as K+, Na+, "
+            "or Ca2+), enabling rapid, near-diffusion-limited conduction with high ionic "
+            "selectivity."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_CAVITY",
+        parent_traits=("proteintraitsmech:CAVITY", "proteintraitsmech:TUNNEL"),
+        synonyms=(
+            ("ion channel selectivity filter pore", "EXACT_SYNONYM"),
+            ("transmembrane conduction pore with selectivity filter", "EXACT_SYNONYM"),
+            ("selectivity filter and central cavity", "RELATED_SYNONYM"),
+        ),
+        xrefs=("GO:0005216", "GO:0015267", "GO:0034220"),
+        evidence=(
+            (
+                "PMID:9525859",
+                "The KcsA potassium channel pore comprises a wide water-filled central cavity and a narrow 12-angstrom selectivity filter lined by main-chain carbonyl oxygens that coordinate dehydrated K+ ions for selective conduction.",
+            ),
+        ),
+        detection_methods=(M_CAVER,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_CAVITY_SELECTIVITY_FILTER_PORE",
+                label="Backbone carbonyl coordination and multi-ion repulsion in the selectivity-filter pore drive selective ion conduction",
+                mechanism_summary=(
+                    "The transmembrane selectivity-filter pore geometry holds backbone carbonyl "
+                    "oxygens at precise coordination distances to dehydrate and coordinate "
+                    "permeant ions while excluding non-cognate ions, enabling channel activity "
+                    "(GO:0015267), monoatomic ion channel activity (GO:0005216), and "
+                    "transmembrane ion transport (GO:0034220)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0015267",
+                        label="channel activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0015267",
+                        description="Transmembrane pore combining a central water-filled cavity with a narrow 12-A carbonyl-lined selectivity filter",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005216",
+                        label="monoatomic ion channel activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005216",
+                        description="Selective catalysis of facilitated diffusion of monoatomic ions through a transmembrane aqueous pore",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0034220",
+                        label="monoatomic ion transmembrane transport",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0034220",
+                        description="Selective conduction of monoatomic ions across the lipid bilayer",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0015267",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0005216",
+                        description="Main-chain carbonyl oxygens lining the structurally constrained selectivity filter coordinate K+ ions selectively over Na+ to enable ion channel activity.",
+                        reference="PMID:9525859",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Main chain carbonyl oxygen atoms from the K+ channel signature "
+                            "sequence line the selectivity filter, which is held open by "
+                            "structural constraints to coordinate K+ ions but not smaller Na+ ions."
+                        ),
+                        notes="Selectivity filter carbonyl geometry coordinates K+ selectively (PMID:9525859).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005216",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0034220",
+                        description="Electrostatic repulsion between simultaneously bound ions in the selectivity filter promotes rapid transmembrane ion conduction.",
+                        reference="PMID:9525859",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "This configuration promotes ion conduction by exploiting "
+                            "electrostatic repulsive forces to overcome attractive forces "
+                            "between K+ ions and the selectivity filter."
+                        ),
+                        notes="Multi-ion electrostatic repulsion drives rapid selective conduction (PMID:9525859).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/cavity",
+        filename="buried-active-site-substrate-access-tunnel.yaml",
+        identifier="proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL",
+        label="buried active-site substrate/product access tunnel",
+        definition=(
+            "An internal structural tunnel connecting a deeply buried enzyme catalytic cavity "
+            "to the bulk exterior solvent, characterized by a bottleneck radius, length, "
+            "curvature, and gating residue lining that control substrate ingress, water/cosubstrate "
+            "access, reaction-intermediate shielding, and product egress."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_CAVITY",
+        parent_traits=("proteintraitsmech:CAVITY", "proteintraitsmech:TUNNEL"),
+        synonyms=(
+            ("enzyme active-site access tunnel", "EXACT_SYNONYM"),
+            ("substrate ingress / product egress tunnel", "EXACT_SYNONYM"),
+            ("gated catalytic access channel", "RELATED_SYNONYM"),
+        ),
+        xrefs=("GO:0003824", "GO:0036094", "CHEBI:24431"),
+        evidence=(
+            (
+                "PMID:23093919",
+                "Tunnels and channels facilitate the transport of small molecules, ions, and water solvent between buried enzyme active sites and bulk solvent, governing substrate specificity and catalytic efficiency.",
+            ),
+        ),
+        detection_methods=(M_CAVER,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL",
+                label="Internal access tunnel geometry governs small-molecule exchange with buried catalytic sites",
+                mechanism_summary=(
+                    "A buried active-site access tunnel provides the internal transport pathway "
+                    "for small-molecule substrates, ions, and solvent (CHEBI:24431) to reach and "
+                    "depart the occluded catalytic pocket, enabling small molecule binding "
+                    "(GO:0036094) and regulating enzyme catalytic activity (GO:0003824)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:24431",
+                        label="chemical entity",
+                        node_type="LIGAND",
+                        grounding="CHEBI:24431",
+                        description="Small-molecule substrates, ions, and water solvent transported through the internal access tunnel",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036094",
+                        label="small molecule binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0036094",
+                        description="Transport and binding of small-molecule substrates and ligands into the buried enzyme active site",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003824",
+                        label="catalytic activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003824",
+                        description="Enzyme catalysis within the buried active-site cavity governed by tunnel transport kinetics",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:24431",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0036094",
+                        description="Internal protein tunnels facilitate the transport of small-molecule substrates, ions, and water between bulk solvent and buried binding sites.",
+                        reference="PMID:23093919",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Tunnels and channels facilitate the transport of small molecules, "
+                            "ions and water solvent in a large variety of proteins."
+                        ),
+                        notes="Tunnels facilitate small-molecule and solvent transport in proteins (PMID:23093919).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036094",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0003824",
+                        description="Pathway geometry, physicochemical lining, and dynamics of substrate/product transport pathways govern enzyme structure-function and biocatalytic activity.",
+                        reference="PMID:23093919",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Characteristics of individual transport pathways, including their "
+                            "geometry, physico-chemical properties and dynamics are instrumental "
+                            "for understanding of structure-function relationships of these "
+                            "proteins, for the design of new inhibitors and construction of "
+                            "improved biocatalysts."
+                        ),
+                        notes="Tunnel geometry and dynamics govern enzyme catalytic function (PMID:23093919).",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    # --- 18. EVO_CONSERVATION additions (3 records) ---
+    TraitSpec(
+        rel_dir="evolution/conservation",
+        filename="universal-single-copy-ortholog-protein.yaml",
+        identifier="proteintraitsmech:EVO_UNIVERSAL_SINGLE_COPY_ORTHOLOG",
+        label="universal single-copy ortholog protein",
+        definition=(
+            "An evolutionary protein conservation trait in which a protein-coding gene is "
+            "maintained as a strictly single-copy orthologous group present in >= 90% of "
+            "species across a broad taxonomic clade (such as Bacteria, Archaea, or Eukaryota; "
+            "BUSCO / OrthoDB universal single-copy markers), reflecting strong dosage-balance "
+            "and functional constraints against both gene loss and paralogous duplication."
+        ),
+        trait_axis="EVOLUTION",
+        trait_category="EVO_CONSERVATION",
+        parent_traits=("proteintraitsmech:EVO_CONSERVED",),
+        synonyms=(
+            ("BUSCO single-copy ortholog", "EXACT_SYNONYM"),
+            ("universal single-copy marker protein", "EXACT_SYNONYM"),
+            ("dosage-constrained universal ortholog", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:26059717",
+                "Benchmarking Universal Single-Copy Orthologs (BUSCO) defines clade-wide orthologous protein groups present as single-copy genes in >90% of species due to evolutionary constraints on gene content and duplication.",
+            ),
+        ),
+        detection_methods=(M_BUSCO,),
+        evolutionary_scope=(
+            ("min_prevalence", 0.9),
+            ("max_prevalence", 1.0),
+            ("definition_method", "BUSCO / OrthoDB universal single-copy ortholog benchmark (>=90% single-copy presence)"),
+            ("conservation_metric", "presence-breadth (single-copy across >=90% of species in clade)"),
+            ("orthology_basis", "OrthoDB / BUSCO profile-HMM orthologous groups"),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="evolution/conservation",
+        filename="purifying-selection-constrained-protein.yaml",
+        identifier="proteintraitsmech:EVO_PURIFYING_SELECTION_CONSTRAINED",
+        label="purifying-selection-constrained protein (dN/dS << 1)",
+        definition=(
+            "An evolutionary protein conservation regime characterized by a ratio of "
+            "nonsynonymous to synonymous substitution rates significantly below unity "
+            "(omega = dN/dS << 1, typically omega < 0.2 across coding alignments), indicating "
+            "pervasive negative (purifying) Darwinian selection that eliminates deleterious "
+            "amino-acid replacements to preserve fold stability, catalytic geometry, or "
+            "interaction interfaces."
+        ),
+        trait_axis="EVOLUTION",
+        trait_category="EVO_CONSERVATION",
+        parent_traits=("proteintraitsmech:EVO_CONSERVED",),
+        synonyms=(
+            ("negatively selected protein", "EXACT_SYNONYM"),
+            ("low dN/dS constrained protein", "EXACT_SYNONYM"),
+            ("purifying Darwinian selection regime", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:17483113",
+                "Maximum-likelihood codon substitution models in PAML estimate nonsynonymous and synonymous substitution rates (dN and dS) to quantify purifying selection (dN/dS < 1) across protein-coding alignments.",
+            ),
+        ),
+        detection_methods=(M_CODEML_HYPHY,),
+        evolutionary_scope=(
+            ("definition_method", "PAML codeml / HyPhy maximum-likelihood codon substitution model (omega = dN/dS << 1)"),
+            ("conservation_metric", "dN/dS (purifying selection, omega < 1)"),
+            ("orthology_basis", "codon-aligned orthologous coding sequences"),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="evolution/conservation",
+        filename="positively-selected-diversifying-protein.yaml",
+        identifier="proteintraitsmech:EVO_POSITIVELY_SELECTED_DIVERSIFYING",
+        label="positively selected diversifying protein (dN/dS > 1)",
+        definition=(
+            "An evolutionary protein regime characterized by an elevated nonsynonymous-to-synonymous "
+            "substitution rate ratio exceeding unity (omega = dN/dS > 1 across the coding "
+            "sequence or at specific foreground branches/codon sites), driven by positive "
+            "(diversifying) Darwinian selection for adaptive sequence innovation such as "
+            "host-pathogen arms races, immune evasion, toxin diversification, or novel "
+            "substrate recognition."
+        ),
+        trait_axis="EVOLUTION",
+        trait_category="EVO_CONSERVATION",
+        parent_traits=("proteintraitsmech:EVO_VARIABLE",),
+        synonyms=(
+            ("diversifying selection protein", "EXACT_SYNONYM"),
+            ("adaptively evolving protein (omega > 1)", "EXACT_SYNONYM"),
+            ("positive Darwinian selection protein", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:17483113",
+                "Maximum-likelihood phylogenetic comparison of protein-coding genes in PAML detects positive Darwinian selection where the nonsynonymous substitution rate exceeds the synonymous rate (omega = dN/dS > 1).",
+            ),
+        ),
+        detection_methods=(M_CODEML_HYPHY,),
+        evolutionary_scope=(
+            ("definition_method", "PAML codeml / HyPhy branch-site or site-wise codon substitution model (omega = dN/dS > 1)"),
+            ("conservation_metric", "dN/dS (positive diversifying selection, omega > 1)"),
+            ("orthology_basis", "codon-aligned orthologous coding sequences"),
+        ),
+    ),
 )
 
 
@@ -4204,6 +5925,13 @@ def emit_record(spec: TraitSpec) -> str:
             lines.append(f"  - {x}")
     if spec.sequence_pattern:
         lines.append(f"sequence_pattern: {yaml_escape(spec.sequence_pattern)}")
+    if spec.evolutionary_scope:
+        lines.append("evolutionary_scope:")
+        for k, v in spec.evolutionary_scope:
+            if isinstance(v, (int, float)):
+                lines.append(f"  {k}: {v}")
+            else:
+                lines.append(f"  {k}: {yaml_escape(str(v))}")
     if spec.detection_methods:
         lines.append("detection_methods:")
         for m in spec.detection_methods:
@@ -4291,7 +6019,8 @@ def main() -> int:
             if args.apply:
                 write_record(go_path, go_seed, validate=True)
 
-    print(f"{len(SPECS)} foundational protein-trait records defined across 12 categories.")
+    n_cats = len({s.trait_category for s in SPECS})
+    print(f"{len(SPECS)} foundational protein-trait records defined across {n_cats} categories.")
     if args.apply:
         print(f"Wrote {written}; skipped {skipped} existing; GO:0016937 alt_id merged={go_updated}.")
     else:

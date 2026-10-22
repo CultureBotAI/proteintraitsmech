@@ -1,0 +1,74 @@
+identifier: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+label: "transmembrane ion-channel selectivity-filter pore"
+definition: >-
+  A specialized transmembrane channel cavity architecture consisting of a wide, water-filled central vestibule coupled to a narrow (~12 A long) constricted selectivity filter lined by backbone carbonyl oxygens or side-chain coordination rings that mimic the hydration shell of a specific permeant ion (such as K+, Na+, or Ca2+), enabling rapid, near-diffusion-limited conduction with high ionic selectivity.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:TUNNEL
+synonyms:
+  - synonym_text: "ion channel selectivity filter pore"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "transmembrane conduction pore with selectivity filter"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "selectivity filter and central cavity"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - GO:0005216
+  - GO:0015267
+  - GO:0034220
+detection_methods:
+  - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0250
+    tool: "biotools:caver"
+    evidence_code: ECO:0007669
+    reference: PMID:23093919
+    recipe: "java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}"
+causal_graphs:
+  - graph_id: CG_CAVITY_SELECTIVITY_FILTER_PORE
+    title: "Backbone carbonyl coordination and multi-ion repulsion in the selectivity-filter pore drive selective ion conduction"
+    description: "The transmembrane selectivity-filter pore geometry holds backbone carbonyl oxygens at precise coordination distances to dehydrate and coordinate permeant ions while excluding non-cognate ions, enabling channel activity (GO:0015267), monoatomic ion channel activity (GO:0005216), and transmembrane ion transport (GO:0034220)."
+    nodes:
+      - node_id: "GO:0015267"
+        label: "channel activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0015267"
+        description: "Transmembrane pore combining a central water-filled cavity with a narrow 12-A carbonyl-lined selectivity filter"
+      - node_id: "GO:0005216"
+        label: "monoatomic ion channel activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005216"
+        description: "Selective catalysis of facilitated diffusion of monoatomic ions through a transmembrane aqueous pore"
+      - node_id: "GO:0034220"
+        label: "monoatomic ion transmembrane transport"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0034220"
+        description: "Selective conduction of monoatomic ions across the lipid bilayer"
+    edges:
+      - subject: "GO:0015267"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0005216"
+        description: "Main-chain carbonyl oxygens lining the structurally constrained selectivity filter coordinate K+ ions selectively over Na+ to enable ion channel activity."
+        evidence:
+          - reference: PMID:9525859
+            snippet: "Main chain carbonyl oxygen atoms from the K+ channel signature sequence line the selectivity filter, which is held open by structural constraints to coordinate K+ ions but not smaller Na+ ions."
+            notes: "Selectivity filter carbonyl geometry coordinates K+ selectively (PMID:9525859). (ECO:0000269)"
+      - subject: "GO:0005216"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0034220"
+        description: "Electrostatic repulsion between simultaneously bound ions in the selectivity filter promotes rapid transmembrane ion conduction."
+        evidence:
+          - reference: PMID:9525859
+            snippet: "This configuration promotes ion conduction by exploiting electrostatic repulsive forces to overcome attractive forces between K+ ions and the selectivity filter."
+            notes: "Multi-ion electrostatic repulsion drives rapid selective conduction (PMID:9525859). (ECO:0000269)"
+evidence:
+  - reference: PMID:9525859
+    notes: "The KcsA potassium channel pore comprises a wide water-filled central cavity and a narrow 12-angstrom selectivity filter lined by main-chain carbonyl oxygens that coordinate dehydrated K+ ions for selective conduction."
+license: CC-BY-4.0

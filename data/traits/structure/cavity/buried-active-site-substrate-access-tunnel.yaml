@@ -1,0 +1,74 @@
+identifier: proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+label: "buried active-site substrate/product access tunnel"
+definition: >-
+  An internal structural tunnel connecting a deeply buried enzyme catalytic cavity to the bulk exterior solvent, characterized by a bottleneck radius, length, curvature, and gating residue lining that control substrate ingress, water/cosubstrate access, reaction-intermediate shielding, and product egress.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:TUNNEL
+synonyms:
+  - synonym_text: "enzyme active-site access tunnel"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "substrate ingress / product egress tunnel"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "gated catalytic access channel"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - GO:0003824
+  - GO:0036094
+  - CHEBI:24431
+detection_methods:
+  - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0250
+    tool: "biotools:caver"
+    evidence_code: ECO:0007669
+    reference: PMID:23093919
+    recipe: "java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}"
+causal_graphs:
+  - graph_id: CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL
+    title: "Internal access tunnel geometry governs small-molecule exchange with buried catalytic sites"
+    description: "A buried active-site access tunnel provides the internal transport pathway for small-molecule substrates, ions, and solvent (CHEBI:24431) to reach and depart the occluded catalytic pocket, enabling small molecule binding (GO:0036094) and regulating enzyme catalytic activity (GO:0003824)."
+    nodes:
+      - node_id: "CHEBI:24431"
+        label: "chemical entity"
+        node_type: LIGAND
+        grounding: "CHEBI:24431"
+        description: "Small-molecule substrates, ions, and water solvent transported through the internal access tunnel"
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Transport and binding of small-molecule substrates and ligands into the buried enzyme active site"
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Enzyme catalysis within the buried active-site cavity governed by tunnel transport kinetics"
+    edges:
+      - subject: "CHEBI:24431"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0036094"
+        description: "Internal protein tunnels facilitate the transport of small-molecule substrates, ions, and water between bulk solvent and buried binding sites."
+        evidence:
+          - reference: PMID:23093919
+            snippet: "Tunnels and channels facilitate the transport of small molecules, ions and water solvent in a large variety of proteins."
+            notes: "Tunnels facilitate small-molecule and solvent transport in proteins (PMID:23093919). (ECO:0000305)"
+      - subject: "GO:0036094"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Pathway geometry, physicochemical lining, and dynamics of substrate/product transport pathways govern enzyme structure-function and biocatalytic activity."
+        evidence:
+          - reference: PMID:23093919
+            snippet: "Characteristics of individual transport pathways, including their geometry, physico-chemical properties and dynamics are instrumental for understanding of structure-function relationships of these proteins, for the design of new inhibitors and construction of improved biocatalysts."
+            notes: "Tunnel geometry and dynamics govern enzyme catalytic function (PMID:23093919). (ECO:0000305)"
+evidence:
+  - reference: PMID:23093919
+    notes: "Tunnels and channels facilitate the transport of small molecules, ions, and water solvent between buried enzyme active sites and bulk solvent, governing substrate specificity and catalytic efficiency."
+license: CC-BY-4.0

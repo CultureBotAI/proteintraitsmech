@@ -1,0 +1,90 @@
+identifier: proteintraitsmech:INIT_METHIONINE_FORMYLATED_NME
+label: "deformylase-dependent initiator formylmethionine processing site"
+definition: >-
+  A prokaryotic, mitochondrial, or plastid N-terminal initiator methionine site translated as N-formyl-L-methionine (fMet, MOD:00030) that undergoes obligate sequential two-step N-terminal processing: (1) hydrolytic removal of the N-formyl group by peptide deformylase (PDF, EC 3.5.1.88) to unblock the alpha-amino group, which is strictly required before (2) methionyl-aminopeptidase (MAP, EC 3.4.11.18) can cleave the initiator methionine.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_INITIATOR_METHIONINE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
+synonyms:
+  - synonym_text: "PDF-MAP sequential N-terminal methionine excision site"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "prokaryotic N-formylmethionine deformylation-excision site"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "organellar fMet-NME processing site"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - MOD:00030
+  - GO:0008463
+  - GO:0004239
+sequence_pattern: "^M[ACDEFGHIKLMNPQRSTVWY]"
+detection_methods:
+  - name: "N-terminal initiator fMet / deformylase motif scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0239
+    tool: "biotools:emboss"
+    evidence_code: ECO:0000255
+    reference: PMID:42079159
+    recipe: "fuzzpro -sequence {input} -pattern '^M[ACDEFGHIKLMNPQRSTVWY]' -outfile {output}"
+causal_graphs:
+  - graph_id: CG_INIT_METHIONINE_FORMYLATED_NME
+    title: "Sequential peptide deformylase and methionyl-aminopeptidase N-terminal processing"
+    description: "Nascent bacterial and organellar polypeptides initiate with N-formyl-L-methionine (MOD:00030); peptide deformylase (GO:0008463) hydrolyzes the N-formyl moiety, which unblocks and positively regulates initiator methionyl aminopeptidase activity (GO:0004239) to execute N-terminal protein processing (GO:0016485)."
+    nodes:
+      - node_id: "MOD:00030"
+        label: "N-formyl-L-methionine residue"
+        node_type: PTM
+        grounding: "MOD:00030"
+        description: "Nascent bacterial or organellar N-formyl-L-methionine (MOD:00030) initiator site requiring deformylation prior to methionyl-aminopeptidase cleavage"
+      - node_id: "GO:0008463"
+        label: "formylmethionine deformylase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0008463"
+        description: "Peptide deformylase (PDF, EC 3.5.1.88) activity hydrolyzing the N-terminal formyl group from nascent N-formylmethionine polypeptides"
+      - node_id: "GO:0004239"
+        label: "initiator methionyl aminopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004239"
+        description: "Methionyl-aminopeptidase (MAP) activity excising the deformylated N-terminal methionine residue"
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Sequential N-terminal deformylation and initiator methionine excision on nascent bacterial and organellar polypeptides"
+    edges:
+      - subject: "MOD:00030"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0008463"
+        description: "Nascent N-formyl-L-methionine at position 1 serves as the substrate for peptide deformylase."
+        evidence:
+          - reference: PMID:42079159
+            snippet: "The def gene encodes peptide deformylase (PDF, EC:3.5.1.88), an enzyme that contributes to protein processing by removing the formyl group from N-formylmethionine (fMet) on nascent peptides."
+            notes: "Peptide deformylase removes the formyl group from nascent fMet (PMID:42079159). (ECO:0000269)"
+      - subject: "GO:0008463"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0004239"
+        description: "Deformylation of N-formylmethionine by PDF is required before methionyl-aminopeptidase can cleave the first methionine."
+        evidence:
+          - reference: PMID:18718933
+            snippet: "Because protein synthesis begins with N-formylmethionine in plant endosymbiotic organelles, removal of the formyl group by peptide deformylase (PDF) is essential to allowing the excision of the first methionine."
+            notes: "Deformylation by PDF is essential for subsequent Met1 excision (PMID:18718933). (ECO:0000269)"
+      - subject: "GO:0004239"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0016485"
+        description: "Methionyl-aminopeptidase excision completes N-terminal protein processing of the deformylated nascent polypeptide."
+        evidence:
+          - reference: PMID:18718933
+            snippet: "Because protein synthesis begins with N-formylmethionine in plant endosymbiotic organelles, removal of the formyl group by peptide deformylase (PDF) is essential to allowing the excision of the first methionine."
+            notes: "Sequential PDF and MAP action in N-terminal protein processing (PMID:18718933). (ECO:0000269)"
+evidence:
+  - reference: PMID:18718933
+    notes: "Removal of the N-formyl group from N-formylmethionine by peptide deformylase is essential to allow subsequent excision of the first methionine by methionyl-aminopeptidase."
+  - reference: PMID:42079159
+    notes: "Peptide deformylase (PDF, EC 3.5.1.88) removes the formyl group from N-formylmethionine on nascent bacterial polypeptides."
+license: CC-BY-4.0

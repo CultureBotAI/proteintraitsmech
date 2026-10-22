@@ -83,11 +83,11 @@ tasks:
 - **Priority**: P2
 - **Dependencies**: Receipt-locked `UNIPROT_REST` membership acquisition runs, `residue_frame.json` sequence cache expansion, and upstream coordinate/mapping tables
 - **Observation**:
-  - Across the 429,359 trait records in `data/traits/**/*.yaml` (including 39,616 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
+  - Across the 429,377 trait records in `data/traits/**/*.yaml` (including 39,631 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
     1. `RHEA` (`34,591` records, `34,578` with `causal_graphs`; `151` currently grounded with `QUALIFIED` examples) and `GO` (`45,931` records, `1` with `causal_graphs`; `467` currently grounded with `QUALIFIED` examples) use `WHOLE_PROTEIN` functional grounding via `uniprot_membership_snapshot.py` (`UNIPROT_REST`), which requires a cryptographically bound `.uniprot_fetch_receipt.json` and `uniprot_memberships.jsonl` per batch.
     2. `M-CSA` (`997` records, `996` with `causal_graphs`; `265` currently grounded with `QUALIFIED` examples) has `732` remaining records whose reference UniProt catalytic-residue accessions are absent from `data/raw/align_cache/residue_frame.json`, causing `resolve` to classify them as `BLOCKED` (`missing_protein_sequence`).
     3. `ARO` (`7,452` records, `1,539` with `causal_graphs`) stores antimicrobial-resistance reference sequences in `data/raw/card/aro.json` via NCBI protein/nucleotide accessions and CARD model IDs without a reviewed 1:1 Swiss-Prot accession + coordinate table, so `ground_uniprot_examples.py` has no `ARO` candidate emitter.
-    4. `proteintraitsmech` foundational trait classes (`66` records, `46` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
+    4. `proteintraitsmech` foundational trait classes (`84` records, `61` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
     5. `SFLD` (`302` records), `PRINTS` (`2,106` records), and `ECOD` (`16,580` records) are explicitly fail-closed at promotion in `scripts/ground_uniprot_examples.py` (`SFLD` family HMM membership lacks residue coordinates; `PRINTS` fingerprint motif intervals are not bundled in InterPro `protein2ipr.dat`; `ECOD` PDB chain intervals require SIFTS PDB-to-UniProt residue mapping).
 - **Desired outcome**:
   - Expand `data/raw/align_cache/residue_frame.json` to cover the remaining 732 `M-CSA` reference UniProt accessions, run receipted `UNIPROT_REST` membership batches for additional `RHEA`/`GO` cohorts, and add SIFTS / CARD-to-Swiss-Prot mapping support where exact organism, sequence, and claim scope can be preserved.
@@ -96,6 +96,7 @@ tasks:
   - `scripts/uniprot_membership_snapshot.py`
   - `data/raw/align_cache/residue_frame.json`
   - `data/cross_mech/coverage.json`
+  - `research/cycle2-stage1-add-records-frontier.md`
 
 ### `proteintraitsmech-infra-0003` — Remediate upstream CDD prose defects on 10 held `CDD` records before promoting their 12 held candidates
 

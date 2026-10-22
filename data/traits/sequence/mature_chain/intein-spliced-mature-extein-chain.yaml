@@ -1,0 +1,73 @@
+identifier: proteintraitsmech:MATURE_CHAIN_INTEIN_SPLICED
+label: "intein-spliced mature extein polypeptide chain"
+definition: >-
+  A contiguous mature host polypeptide chain (SO:0000419) formed post-translationally by autocatalytic protein splicing (GO:0016539), in which an internal intervening polypeptide (intein) catalyzes its own excision from flanking N-extein and C-extein segments coupled to native peptide-bond ligation of the exteins.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_MATURE_CHAIN
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
+synonyms:
+  - synonym_text: "ligated N/C-extein mature chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "protein-splicing mature host polypeptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "extein-ligated mature protein region"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - SO:0000419
+  - GO:0016539
+  - GO:0051604
+detection_methods:
+  - name: "InterProScan / Pfam Hint-domain & intein splice-junction HMM scan"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_0300
+    tool: "biotools:interproscan"
+    evidence_code: ECO:0000259
+    reference: PMID:24695729
+    recipe: "interproscan.sh -i {input} -appl Pfam,ProSiteProfiles -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_MATURE_CHAIN_INTEIN_SPLICED
+    title: "Autocatalytic intein excision and extein ligation produce mature host chain"
+    description: "Intein-mediated protein splicing (GO:0016539) executes sequential nucleophilic acyl-shift and transesterification steps to excise the intervening intein and ligate the flanking N- and C-exteins into a contiguous mature extein polypeptide chain (SO:0000419), completing protein maturation (GO:0051604)."
+    nodes:
+      - node_id: "GO:0016539"
+        label: "intein-mediated protein splicing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016539"
+        description: "Autocatalytic excision of an internal protein splicing element (intein) coupled to peptide-bond ligation of flanking N- and C-exteins"
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Contiguous mature host polypeptide chain (SO:0000419) formed by native peptide bond ligation of N-extein and C-extein"
+      - node_id: "GO:0051604"
+        label: "protein maturation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051604"
+        description: "Maturation of the functional host protein following intein excision and extein ligation"
+    edges:
+      - subject: "GO:0016539"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Intein excision concomitant with N- and C-extein ligation produces the contiguous mature host polypeptide chain."
+        evidence:
+          - reference: PMID:24695729
+            snippet: "Inteins are nature's escape artists; they facilitate their excision from flanking polypeptides (exteins) concomitant with extein ligation to produce a mature host protein."
+            notes: "Intein excision and extein ligation yield the mature host protein (PMID:24695729). (ECO:0000305)"
+      - subject: "SO:0000419"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0051604"
+        description: "Formation of the spliced extein chain via sequential nucleophilic displacements restores the mature functional host protein."
+        evidence:
+          - reference: PMID:24695729
+            snippet: "Splicing requires sequential nucleophilic displacement reactions catalyzed by strategies similar to proteases and asparagine lyases."
+            notes: "Sequential nucleophilic displacement steps complete protein splicing maturation (PMID:24695729). (ECO:0000305)"
+evidence:
+  - reference: PMID:24695729
+    notes: "Inteins catalyze their excision from flanking polypeptides (exteins) concomitant with extein ligation to produce a mature host protein via sequential nucleophilic displacement reactions."
+license: CC-BY-4.0
