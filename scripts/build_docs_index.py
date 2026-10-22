@@ -213,6 +213,9 @@ def infer_source(identifier: str, path: Path) -> str:
         "proteintraitsmech:SIGNAL_PEPTIDE_",
         "proteintraitsmech:TRANSIT_PEPTIDE_",
         "proteintraitsmech:PROPEPTIDE_",
+        "proteintraitsmech:INIT_METHIONINE_",
+        "proteintraitsmech:MATURE_CHAIN_",
+        "proteintraitsmech:CAVITY_",
     )) or (
         identifier.startswith("proteintraitsmech:DISULFIDE_")
         and identifier != "proteintraitsmech:DISULFIDE_BOND"

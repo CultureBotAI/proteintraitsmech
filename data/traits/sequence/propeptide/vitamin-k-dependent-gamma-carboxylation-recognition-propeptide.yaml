@@ -1,0 +1,88 @@
+identifier: proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION
+label: "vitamin K-dependent gamma-carboxylation recognition propeptide"
+definition: >-
+  A cleavable N-terminal propeptide (typically residues -18 to -1, carrying conserved Phe-16 and Ala-10 recognition determinants) in vitamin K-dependent coagulation and calcification precursor proteins (such as Factor IX, Factor X, prothrombin, Protein C, and osteocalcin) that functions as an obligate exosite docking motif for vitamin K-dependent gamma-glutamyl carboxylase (GGCX, GO:0008488) in the endoplasmic reticulum, directing processive gamma-carboxylation of downstream glutamate residues into L-gamma-carboxyglutamic acid (Gla, MOD:00041) prior to propeptide excision in the trans-Golgi.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_PROPEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
+synonyms:
+  - synonym_text: "gamma-glutamyl carboxylase docking propeptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Gla-domain carboxylation recognition propeptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "VKD propeptide"
+    synonym_type: RELATED_SYNONYM
+xrefs:
+  - SO:0001062
+  - GO:0008488
+  - GO:0017187
+  - MOD:00041
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_PROPEPTIDE_VKD_GLA_RECOGNITION
+    title: "Propeptide exosite recognition directs vitamin K-dependent gamma-glutamyl carboxylation"
+    description: "The vitamin K-dependent recognition propeptide (SO:0001062) docks to gamma-glutamyl carboxylase (GO:0008488), positively regulating peptidyl-glutamic acid carboxylation (GO:0017187) of the adjacent Gla domain to generate L-gamma-carboxyglutamic acid residues (MOD:00041)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "Conserved N-terminal propeptide (residues -18 to -1) that tethers vitamin K-dependent precursors to gamma-glutamyl carboxylase"
+      - node_id: "GO:0008488"
+        label: "gamma-glutamyl carboxylase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0008488"
+        description: "Vitamin K-dependent gamma-glutamyl carboxylase (GGCX) activity converting glutamate residues to gamma-carboxyglutamate"
+      - node_id: "GO:0017187"
+        label: "peptidyl-glutamic acid carboxylation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0017187"
+        description: "Post-translational gamma-carboxylation of glutamic acid residues in the adjacent Gla domain"
+      - node_id: "MOD:00041"
+        label: "L-gamma-carboxyglutamic acid"
+        node_type: PTM
+        grounding: "MOD:00041"
+        description: "Calcium-coordinating L-gamma-carboxyglutamic acid (Gla) residue produced in the mature vitamin K-dependent domain"
+    edges:
+      - subject: "SO:0001062"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0008488"
+        description: "The conserved N-terminal propeptide (including Phe-16 and Ala-10) provides the recognition site required for gamma-glutamyl carboxylase recruitment."
+        evidence:
+          - reference: PMID:3802193
+            snippet: "These results indicate that the Factor IX propeptide participates in defining a recognition site that designates an adjacent glutamic acid-rich domain for gamma-carboxylation."
+            notes: "Factor IX propeptide defines the recognition site for gamma-carboxylation (PMID:3802193). (ECO:0000269)"
+      - subject: "GO:0008488"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0017187"
+        description: "Propeptide-bound gamma-glutamyl carboxylase catalyzes processive peptidyl-glutamic acid carboxylation."
+        evidence:
+          - reference: PMID:3802193
+            snippet: "Deletion of the propeptide (residues -18 to -1) abolished carboxylation, but not secretion, of Factor IX."
+            notes: "Deletion of the propeptide abolishes gamma-carboxylation (PMID:3802193). (ECO:0000269)"
+      - subject: "GO:0017187"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00041"
+        description: "Peptidyl-glutamic acid carboxylation converts specific glutamate residues into L-gamma-carboxyglutamic acid (Gla)."
+        evidence:
+          - reference: PMID:3802193
+            snippet: "Posttranslational processing of vitamin K-dependent proteins includes gamma-carboxylation of specific glutamic acid residues to form gamma-carboxyglutamic acids."
+            notes: "Gamma-carboxylation forms gamma-carboxyglutamic acid residues (PMID:3802193). (ECO:0000269)"
+evidence:
+  - reference: PMID:3802193
+    notes: "The propeptide of Factor IX (residues -18 to -1, including Phe-16 and Ala-10) defines the recognition site that designates the adjacent glutamic acid-rich domain for vitamin K-dependent gamma-carboxylation."
+license: CC-BY-4.0

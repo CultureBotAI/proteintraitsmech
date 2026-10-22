@@ -1,0 +1,87 @@
+identifier: proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED
+label: "proprotein-convertase-processed mature polypeptide chain"
+definition: >-
+  A mature bioactive polypeptide or peptide hormone/neuropeptide chain (SO:0000419) excised from a larger proprotein, prohormone, or polyprotein precursor by site-specific endopeptidases (such as subtilisin/kexin-like proprotein convertases or secretory-vesicle cathepsin L) at monobasic or dibasic cleavage motifs within the secretory pathway.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_MATURE_CHAIN
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
+synonyms:
+  - synonym_text: "prohormone-derived mature peptide chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "polyprotein-processed mature polypeptide chain"
+    synonym_type: RELATED_SYNONYM
+  - synonym_text: "convertase-cleaved mature chain"
+    synonym_type: EXACT_SYNONYM
+xrefs:
+  - SO:0000419
+  - GO:0016486
+  - GO:0004175
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_MATURE_CHAIN_PROPROTEIN_CLEAVED
+    title: "Endoproteolytic cleavage of prohormone/proprotein precursors yields mature active chains"
+    description: "Subtilisin-like proprotein convertases and secretory-vesicle cysteine endopeptidases (GO:0004175) catalyze peptide hormone processing (GO:0016486) of proprotein precursors to produce the mature polypeptide chain (SO:0000419), which enables downstream hormone or signaling activity (GO:0005179)."
+    nodes:
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Proprotein convertase / processing endopeptidase activity cleaving dibasic or monobasic sites in prohormone and proneuropeptide precursors"
+      - node_id: "GO:0016486"
+        label: "peptide hormone processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016486"
+        description: "Proteolytic processing of prohormone and proneuropeptide precursors within secretory vesicles"
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Bioactive mature polypeptide or peptide chain (SO:0000419) excised from a multivalent precursor"
+      - node_id: "GO:0005179"
+        label: "hormone activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005179"
+        description: "Receptor-mediated signaling or endocrine activity of the mature processed peptide"
+    edges:
+      - subject: "GO:0004175"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0016486"
+        description: "Proprotein convertases and processing endopeptidases catalyze proteolytic processing of prohormone precursors."
+        evidence:
+          - reference: PMID:18184105
+            snippet: "Neuropeptides are synthesized from protein precursors (termed proneuropeptides or prohormones) that require proteolytic processing primarily within secretory vesicles that store and secrete the mature neuropeptides to control target cellular and organ systems."
+            notes: "Proteolytic processing of proneuropeptides and prohormones in secretory vesicles (PMID:18184105). (ECO:0000305)"
+      - subject: "GO:0016486"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Proteolytic prohormone processing yields the mature bioactive peptide or polypeptide chain."
+        evidence:
+          - reference: PMID:18184105
+            snippet: "Neuropeptides are synthesized from protein precursors (termed proneuropeptides or prohormones) that require proteolytic processing primarily within secretory vesicles that store and secrete the mature neuropeptides to control target cellular and organ systems."
+            notes: "Generation of mature peptide chains from prohormone precursors (PMID:18184105). (ECO:0000305)"
+      - subject: "SO:0000419"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0005179"
+        description: "The excised mature peptide chain mediates intercellular hormone and neurotransmitter signaling."
+        evidence:
+          - reference: PMID:18184105
+            snippet: "Peptide neurotransmitters and peptide hormones, collectively known as neuropeptides, are required for cell-cell communication in neurotransmission and for regulation of endocrine functions."
+            notes: "Mature peptide hormones regulate neurotransmission and endocrine functions (PMID:18184105). (ECO:0000305)"
+evidence:
+  - reference: PMID:18184105
+    notes: "Neuropeptides and peptide hormones are synthesized from proneuropeptide or prohormone precursors that undergo proteolytic processing in secretory vesicles to yield mature active peptides."
+license: CC-BY-4.0

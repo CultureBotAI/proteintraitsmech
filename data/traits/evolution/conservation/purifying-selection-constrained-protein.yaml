@@ -1,0 +1,34 @@
+identifier: proteintraitsmech:EVO_PURIFYING_SELECTION_CONSTRAINED
+label: "purifying-selection-constrained protein (dN/dS << 1)"
+definition: >-
+  An evolutionary protein conservation regime characterized by a ratio of nonsynonymous to synonymous substitution rates significantly below unity (omega = dN/dS << 1, typically omega < 0.2 across coding alignments), indicating pervasive negative (purifying) Darwinian selection that eliminates deleterious amino-acid replacements to preserve fold stability, catalytic geometry, or interaction interfaces.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: EVOLUTION
+trait_category: EVO_CONSERVATION
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:EVO_CONSERVED
+synonyms:
+  - synonym_text: "negatively selected protein"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "low dN/dS constrained protein"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "purifying Darwinian selection regime"
+    synonym_type: RELATED_SYNONYM
+evolutionary_scope:
+  definition_method: "PAML codeml / HyPhy maximum-likelihood codon substitution model (omega = dN/dS << 1)"
+  conservation_metric: "dN/dS (purifying selection, omega < 1)"
+  orthology_basis: "codon-aligned orthologous coding sequences"
+detection_methods:
+  - name: "PAML codeml / HyPhy codon maximum-likelihood dN/dS (omega) selection test"
+    method_type: HOMOLOGY_TRANSFER
+    edam_operation: EDAM:operation_0554
+    tool: "biotools:paml"
+    evidence_code: ECO:0007669
+    reference: PMID:17483113
+    recipe: "codeml codeml.ctl"
+evidence:
+  - reference: PMID:17483113
+    notes: "Maximum-likelihood codon substitution models in PAML estimate nonsynonymous and synonymous substitution rates (dN and dS) to quantify purifying selection (dN/dS < 1) across protein-coding alignments."
+license: CC-BY-4.0
