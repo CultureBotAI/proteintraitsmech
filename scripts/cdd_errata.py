@@ -2,12 +2,12 @@
 
 Shared by `seed_cdd.py` and `repair_cdd_errata.py`; this is not a global prose
 replacement. Each entry corresponds to one Stage 4 scientific review finding
-(`F3` through `F12`, tracked in #1171) on an NCBI CDD `SEQ_DOMAIN` record with
-zero qualified occurrences (`qualified_occurrence_count: 0`). The two remaining
-Stage 4 findings (`F1` on `CDD:cd00104` and `F2` on `CDD:cd00959`) carry
-qualified occurrences whose `record_preimage_sha256` is locked in
-`data/grounding/qualified_record_bindings.jsonl.d/` and `data/cross_mech/coverage.json`,
-and are tracked separately under #1172.
+(`F1` through `F12`, tracked in #1171 and #1172) on an NCBI CDD `SEQ_DOMAIN`
+record. Ten targets (`F3` through `F12`, #1171) had zero qualified occurrences
+at repair time; the two remaining Stage 4 targets (`F1` on `CDD:cd00104` and
+`F2` on `CDD:cd00959`, #1172) carry qualified occurrences whose
+`record_sha256` receipts in `data/grounding/qualified_record_bindings.jsonl.d/`
+are transactionally re-bound by `repair_cdd_errata.py`.
 
 Unexpected upstream wording, short names, or superfamily parentage must be
 re-reviewed rather than silently overwritten. No protein qualification is
@@ -54,6 +54,117 @@ class CddErratum:
 
 
 ERRATA: dict[str, CddErratum] = {
+    "cd00104": CddErratum(
+        accession="cd00104",
+        finding_id="F1",
+        label="KAZAL_FS",
+        parent="cl00097",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml"
+        ),
+        source_description=(
+            "Kazal type serine protease inhibitors and follistatin-like domains. "
+            "Kazal inhibitors inhibit serine proteases, such as, trypsin, "
+            "chyomotrypsin, avian ovomucoids, and elastases. The inhibitory domain "
+            "has one reactive site peptide bond, which serves the cognate enzyme as "
+            "substrate. The reactive site peptide bond is a combining loop which "
+            "has an identical conformation in all Kazal inhibitors and in all "
+            "enzyme/inhibitor complexes. These Kazal domains (small hydrophobic "
+            "core of alpha/beta structure with 3 to 4 disulfide bonds) often occur "
+            "in tandem arrays. Similar domains are also present in follistatin (FS) "
+            "and follistatin-like family members, which play an important role in "
+            "tissue specific regulation. The FS domain consists of an N-terminal "
+            "beta hairpin (FOLN/EGF-like domain) and a Kazal-like domain and has "
+            "five disulfide bonds. Although the Kazal-like FS substructure is "
+            "similar to Kazal proteinase inhibitors, no FS domain has yet been "
+            "shown to be a proteinase inhibitor. Follistatin-like family members "
+            "include SPARC, also known as, BM-40 or osteonectin, the Gallus gallus "
+            "Flik protein, as well as, agrin which has a long array of FS domains. "
+            "The kazal-type inhibitor domain has also been detected in an "
+            "extracellular loop region of solute carrier 21 (SLC21) family members "
+            "(organic anion transporters) , which may regulate the specificity of "
+            "anion uptake. The distant homolog, Ascidian trypsin inhibitor, is "
+            "included in this CD"
+        ),
+        replacements=(
+            (
+                "Kazal inhibitors inhibit serine proteases, such as, trypsin, "
+                "chyomotrypsin, avian ovomucoids, and elastases.",
+                "Kazal inhibitors (such as avian ovomucoids and pancreatic "
+                "secretory trypsin inhibitor) inhibit serine proteases such as "
+                "trypsin, chymotrypsin, and elastases.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1172 "
+            "(Stage 4 finding F1; PMID:6192856; UniProtKB:P00995)"
+        ),
+        evidence=(
+            (
+                "PMID:6192856",
+                "Three-dimensional structure of the complex between the serine proteinase, Streptomyces griseus proteinase B, and the third domain of the Kazal-type ovomucoid inhibitor from turkey",
+                "Bolognesi et al. (1982, J Mol Biol 162:839-868) establish that "
+                "avian ovomucoids are multi-domain Kazal-type serine protease "
+                "inhibitor proteins rather than target serine proteases, and "
+                "correct the upstream 'chyomotrypsin' spelling error.",
+            ),
+        ),
+        event_action="source_erratum_cd00104",
+        event_changes=(
+            "Corrected the 'chyomotrypsin' spelling error and clarified that "
+            "avian ovomucoids are Kazal-type serine protease inhibitor proteins "
+            "rather than target serine proteases (#1172, Stage 4 finding F1)."
+        ),
+    ),
+    "cd00959": CddErratum(
+        accession="cd00959",
+        finding_id="F2",
+        label="DeoC",
+        parent="cl21457",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml"
+        ),
+        source_description=(
+            "2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. "
+            "2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. DERA "
+            "belongs to the class I aldolases and catalyzes a reversible aldol "
+            "reaction between acetaldehyde and glyceraldehyde 3-phosphate to "
+            "generate 2-deoxyribose 5-phosphate. DERA is unique in catalyzing the "
+            "aldol reaction between two aldehydes, and its broad substrate "
+            "specificity confers considerable utility as a biocatalyst, offering an "
+            "environmentally benign alternative to chiral transition metal "
+            "catalysis of the asymmetric aldol reaction"
+        ),
+        replacements=(
+            (
+                "2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. "
+                "2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.",
+                "2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1172 "
+            "(Stage 4 finding F2; PMID:11305920; UniProtKB:P0A6L0)"
+        ),
+        evidence=(
+            (
+                "PMID:11305920",
+                "Crystal structure of Escherichia coli 2-deoxyribose-5-phosphate aldolase (DeoC) at 0.99 A resolution",
+                "Heine et al. (2001, Science 294:369-374) and UniProtKB:P0A6L0 "
+                "(DeoC) characterize 2-deoxyribose-5-phosphate aldolase (DERA) of "
+                "the DeoC family; the erratum removes the duplicated opening title "
+                "sentence from the upstream CDD description.",
+            ),
+        ),
+        event_action="source_erratum_cd00959",
+        event_changes=(
+            "Removed the duplicated opening title sentence "
+            "'2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.' from "
+            "the upstream CDD description (#1172, Stage 4 finding F2)."
+        ),
+    ),
     "cd09530": CddErratum(
         accession="cd09530",
         finding_id="F3",

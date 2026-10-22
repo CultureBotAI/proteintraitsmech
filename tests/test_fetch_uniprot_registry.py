@@ -2153,3 +2153,54 @@ def test_legacy_v1_batch_must_keep_its_repository_relative_location(tmp_path, mo
             receipt_path=elsewhere / "fetch-receipt.json",
             request_plan_path=elsewhere / "fetch-plan.json",
         )
+
+
+def test_legacy_v1_signature_only_return_fields_verifies_read_only(tmp_path, monkeypatch):
+    """Pre-#971 20-field signature-only v1 plans remain verifiable read-only."""
+
+    root = tmp_path / "worktree"
+    prepared = _checkout_batch(root, monkeypatch)
+    plan_path, receipt_path = prepared["plan"], prepared["receipt"]
+    v2 = json.loads(plan_path.read_text(encoding="utf-8"))
+    namespace = registry._request_plan_args(v2)
+    plan = registry._derive_request_plan(
+        namespace,
+        schema_version=1,
+        plan={"request_policy": {"return_fields": list(registry.LEGACY_SIGNATURE_RETURN_FIELDS)}},
+    ).plan
+    plan.pop("request_plan_id")
+    for key in ("candidate_artifact", "selector_manifest_artifact", "offline_fixture_artifact"):
+        plan[key]["path"] = str(root / plan[key]["path"])
+    plan["output_paths"] = {role: str(root / path) for role, path in plan["output_paths"].items()}
+    plan["output_parent_bindings"] = {
+        role: {"parent_device": 1, "parent_inode": 2, "parent_path": str(root / _BATCH)}
+        for role in plan["output_paths"]
+    }
+    plan["request_plan_id"] = registry.PLAN_ID_PREFIX + registry._value_sha256(plan)
+    plan_raw = registry.render_request_plan(plan).encode("utf-8")
+    plan_path.write_bytes(plan_raw)
+
+    def mutate(value):
+        value["schema_version"] = 1
+        value["request_plan_id"] = plan["request_plan_id"]
+        value["request_plan_artifact"] = {
+            "path": str(plan_path),
+            "sha256": hashlib.sha256(plan_raw).hexdigest(),
+            "size_bytes": len(plan_raw),
+        }
+        for response, request in zip(value["response_rows"], plan["requests"], strict=True):
+            response["request_id"] = request["request_id"]
+            response["request_url"] = request["request_url"]
+        value["response_rows_sha256"] = registry._value_sha256(value["response_rows"])
+        value["offline_fixture_artifact"] = plan["offline_fixture_artifact"]
+        for role, output in value["outputs"].items():
+            output["path"] = plan["output_paths"][role]
+
+    _rewrite_receipt(receipt_path, mutate)
+    loaded_plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    assert tuple(loaded_plan["request_policy"]["return_fields"]) == (
+        registry.LEGACY_SIGNATURE_RETURN_FIELDS
+    )
+    verified = registry.verify_fetch_receipt(receipt_path=receipt_path, request_plan_path=plan_path)
+    assert verified.artifact_paths["protein_registry"] == root / _BATCH / "B.registry.jsonl"
+

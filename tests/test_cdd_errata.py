@@ -1,4 +1,4 @@
-"""The 10 Stage 4 CDD scientific repairs and future seed generation must agree (#1171)."""
+"""The 12 Stage 4 CDD scientific repairs and future seed generation must agree (#1171, #1172)."""
 
 from __future__ import annotations
 
@@ -156,7 +156,7 @@ def test_repair_is_minimal_and_idempotent(acc: str):
 @pytest.mark.parametrize(
     "old,new",
     [
-        ("CDD:cd09530", "CDD:cd00104"),
+        ("CDD:cd09530", "CDD:cd99999"),
         ("CDD:cd09530", "Pfam:PF00001"),
         ("SEQ_DOMAIN", "SEQ_HOMOLOGOUS_SUPERFAMILY"),
         ("label: SAM_Samd14", "label: OTHER_LABEL"),
@@ -267,6 +267,41 @@ def test_main_validates_even_dry_run_and_completed_records(
     assert repair.main(args) == 1
     assert target.read_text() == invalid
     assert target.stat().st_mtime_ns == before
+
+
+def test_qualified_record_requires_matching_durable_bindings(
+    tmp_path, monkeypatch
+):
+    qualified = make_seeded_record("cd00104").replace(
+        "source: SWISSPROT_PROFILE\n",
+        "source: SWISSPROT_PROFILE\n"
+        "    qualification_status: QUALIFIED\n"
+        "    sequence_release: 2026_01\n"
+        '    sequence_sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\n'
+        "    trait_occurrences:\n"
+        "      - source_evidence_id: ev:missing\n"
+        "        qualification_status: QUALIFIED\n"
+        "        scope: LOCALIZED\n"
+        "        mapping_method: INTERPRO_MATCH\n"
+        "        source_trait_id: CDD:cd00104\n"
+        "        evidence_source: InterPro\n"
+        '        source_release: "109.0"\n'
+        '        sequence_sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\n'
+        "        coordinate_frame: UNIPROT_CANONICAL\n"
+        "        intervals:\n"
+        "          - start: 1\n"
+        "            end: 50\n",
+    )
+    with pytest.raises(ValueError, match="preimage re-binding"):
+        repair.repair_record_text(qualified)
+    repaired = repair.repair_record_text(qualified, allow_qualified=True)
+    assert yaml.safe_load(repaired)["definition"] == errata.ERRATA["cd00104"].corrected_description
+
+    target = tmp_path / "cd00104.yaml"
+    target.write_text(qualified)
+    monkeypatch.setattr(repair, "TARGETS", {"cd00104": target})
+    assert repair.main(["--apply"]) == 1
+    assert target.read_text() == qualified
 
 
 def _write_raw_cdd(

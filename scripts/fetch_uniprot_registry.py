@@ -162,6 +162,14 @@ RETURN_FIELDS = (
     "sequence_version",
     *FACT_FIELDS,
 )
+# Signature-only v1 plans generated before #971 added the three functional fact fields
+# (xref_complexportal, go_id, cc_catalytic_activity) use the 20-field signature return list.
+LEGACY_SIGNATURE_RETURN_FIELDS = tuple(
+    field
+    for field in RETURN_FIELDS
+    if field not in {"xref_complexportal", "go_id", "cc_catalytic_activity"}
+)
+LEGACY_V1_RETURN_FIELD_SETS = frozenset({LEGACY_SIGNATURE_RETURN_FIELDS, RETURN_FIELDS})
 # Registry plans from v2 also request UniProt's ``fragment`` field
 # (proteinDescription.flag) explicitly (#1081). RETURN_FIELDS stays the v1 list, which
 # other fetchers share.
@@ -606,8 +614,16 @@ def _plan_locator(plan: Mapping[str, Any], receipt_path: Path) -> Callable[[str]
     return locate
 
 
-def _plan_return_fields(schema_version: int) -> tuple[str, ...]:
-    return RETURN_FIELDS if schema_version == LEGACY_PLAN_SCHEMA_VERSION else REGISTRY_RETURN_FIELDS
+def _plan_return_fields(
+    schema_version: int, plan: Mapping[str, Any] | None = None
+) -> tuple[str, ...]:
+    if schema_version == LEGACY_PLAN_SCHEMA_VERSION:
+        policy = plan.get("request_policy") if isinstance(plan, Mapping) else None
+        declared = policy.get("return_fields") if isinstance(policy, Mapping) else None
+        if isinstance(declared, list) and tuple(declared) in LEGACY_V1_RETURN_FIELD_SETS:
+            return tuple(declared)
+        return RETURN_FIELDS
+    return REGISTRY_RETURN_FIELDS
 
 
 # Fields that only say where a plan's artifacts were, never what they contain.
@@ -1070,11 +1086,14 @@ def _resolved_output_paths(args: argparse.Namespace) -> dict[str, Path]:
 
 
 def _derive_request_plan(
-    args: argparse.Namespace, *, schema_version: int = PLAN_SCHEMA_VERSION
+    args: argparse.Namespace,
+    *,
+    schema_version: int = PLAN_SCHEMA_VERSION,
+    plan: Mapping[str, Any] | None = None,
 ) -> PreparedPlan:
     """Derive the exact plan; ``schema_version=1`` only rederives a legacy plan's content."""
 
-    return_fields = _plan_return_fields(schema_version)
+    return_fields = _plan_return_fields(schema_version, plan=plan)
     if not 1 <= args.batch_size <= 200:
         raise RegistryBuildError("--batch-size must be between 1 and 200")
     if not args.expect_release or _RELEASE.fullmatch(args.expect_release) is None:
@@ -1934,7 +1953,9 @@ def verify_fetch_receipt(*, receipt_path: Path, request_plan_path: Path) -> Veri
     locate = _plan_locator(request_plan, receipt_path)
     try:
         rederived = _derive_request_plan(
-            _request_plan_args(request_plan, locate), schema_version=schema_version
+            _request_plan_args(request_plan, locate),
+            schema_version=schema_version,
+            plan=request_plan,
         )
     except RegistryBuildError as exc:
         raise RegistryBuildError(
