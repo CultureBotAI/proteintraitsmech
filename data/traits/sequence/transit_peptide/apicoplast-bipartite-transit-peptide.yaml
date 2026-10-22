@@ -18,8 +18,9 @@ synonyms:
     synonym_type: BROAD_SYNONYM
 xrefs:
   - SO:0000725
-  - GO:0020011
   - GO:0033365
+  - GO:0016485
+  - GO:0020011
 detection_methods:
   - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
     method_type: ML_PREDICTOR
@@ -31,7 +32,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_TRANSIT_PEPTIDE_APICOPLAST
     title: "Two-step secretory-to-apicoplast import via bipartite signal + transit presequence"
-    description: "An apicoplast bipartite transit peptide (SO:0000725) combines an ER signal peptide with a plant-like transit peptide to drive two-step organellar protein localization (GO:0033365) and stepwise proteolytic cleavage into the apicoplast lumen (GO:0020011)."
+    description: "An apicoplast bipartite transit peptide (SO:0000725) combines an ER signal peptide with a plant-like transit peptide to drive two-step organellar protein localization (GO:0033365), followed by stepwise proteolytic protein processing (GO:0016485) that delivers the mature polypeptide into the apicoplast lumen (GO:0020011)."
     nodes:
       - node_id: "SO:0000725"
         label: transit_peptide
@@ -42,7 +43,12 @@ causal_graphs:
         label: "protein localization to organelle"
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0033365"
-        description: "Two-step secretory-to-plastid import and stepwise presequence cleavage targeting nuclear-encoded proteins to the apicoplast"
+        description: "Two-step secretory-to-plastid translocation targeting nuclear-encoded proteins across the four apicoplast membranes"
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Stepwise proteolytic removal of the N-terminal signal peptide in the ER and the plastid transit peptide in the apicoplast"
       - node_id: "GO:0020011"
         label: apicoplast
         node_type: CELLULAR_LOCALIZATION
@@ -59,15 +65,31 @@ causal_graphs:
             snippet: "We demonstrate that protein targeting is at least a two-step process mediated by bipartite N-terminal pre-sequences that consist of a signal peptide for entry into the secretory pathway and a plant-like transit peptide for subsequent import into the apicoplast."
             notes: "Bipartite signal + transit presequence mediates two-step apicoplast targeting (PMID:10775264). (ECO:0000269)"
       - subject: "GO:0033365"
-        predicate: "has target end location"
-        predicate_id: RO:0002339
-        object: "GO:0020011"
-        description: "Stepwise removal of the bipartite presequence components delivers the mature protein into the apicoplast."
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0016485"
+        description: "Two-step organellar targeting is accompanied by stepwise proteolytic removal of the signal-peptide and transit-peptide components."
         evidence:
           - reference: PMID:10775264
             snippet: "The pre-sequence components are removed stepwise during apicoplast targeting."
             notes: "Stepwise presequence cleavage during apicoplast import (PMID:10775264). (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
+        object: "GO:0020011"
+        description: "Stepwise processing of the bipartite presequence delivers the mature protein into the apicoplast lumen."
+        evidence:
+          - reference: PMID:10775264
+            snippet: "We demonstrate that protein targeting is at least a two-step process mediated by bipartite N-terminal pre-sequences that consist of a signal peptide for entry into the secretory pathway and a plant-like transit peptide for subsequent import into the apicoplast."
+            notes: "Processed protein is delivered to the apicoplast lumen (PMID:10775264). (ECO:0000269)"
 evidence:
   - reference: PMID:10775264
     notes: "Protein targeting to the four-membrane-bound apicoplast of Plasmodium falciparum is a two-step process mediated by bipartite N-terminal pre-sequences consisting of a signal peptide and a plant-like transit peptide removed stepwise."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_TRANSIT_PEPTIDE_APICOPLAST to a 4-node, 3-edge mechanism (SO:0000725 -> GO:0033365
+    -> GO:0016485 -> GO:0020011) with verbatim snippets from PMID:10775264 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

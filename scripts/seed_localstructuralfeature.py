@@ -116,7 +116,12 @@ TERMS = [
     {
         "term": "CATALYTIC_RESIDUE",
         "label": "catalytic residue",
-        "definition": "An amino acid residue directly involved in enzyme catalysis (active site).",
+        "definition": (
+            "An amino acid residue within an enzyme active site that participates directly in "
+            "the chemical mechanism of catalysis — acting as a nucleophile, general acid/base "
+            "proton donor or acceptor, covalent intermediate carrier, transition-state or "
+            "intermediate stabilizer, or direct activator of a catalytic water or cofactor."
+        ),
         "category": "STRUCT_ACTIVE_SITE",
         "subdir": "active_site",
         "so_xref": "SO:0001104",
@@ -124,7 +129,12 @@ TERMS = [
     {
         "term": "PROTEIN_BINDING_SITE",
         "label": "protein binding site",
-        "definition": "A site that interacts selectively and non-covalently with polypeptide molecules.",
+        "definition": (
+            "A contiguous or discontinuous structural patch of amino acid residues on a protein "
+            "surface or domain that interacts selectively and non-covalently with a polypeptide "
+            "or protein partner via shape complementarity, hydrogen bonds, salt bridges, and "
+            "buried hydrophobic contacts to mediate protein-protein recognition and complex assembly."
+        ),
         "category": "STRUCT_BINDING_SITE",
         "subdir": "binding_site",
         "so_xref": "SO:0000410",
@@ -132,7 +142,13 @@ TERMS = [
     {
         "term": "DISULFIDE_BOND",
         "label": "disulfide bond",
-        "definition": "A covalent S-S bond between two cysteine residues.",
+        "definition": (
+            "A covalent sulfur-sulfur (S-S) cross-link (L-cystine, MOD:00034) formed by oxidative "
+            "coupling of the thiol side chains of two cysteine residues (CHEBI:29950) within the "
+            "same polypeptide chain (intrachain) or between distinct chains (interchain), "
+            "catalyzed by thiol-disulfide oxidoreductases to stabilize tertiary/quaternary "
+            "fold or act as a redox-reversible allosteric switch."
+        ),
         "category": "STRUCT_DISULFIDE",
         "subdir": "disulfide",
         "so_xref": None,
@@ -140,7 +156,13 @@ TERMS = [
     {
         "term": "METAL_BINDING_SITE",
         "label": "metal binding site",
-        "definition": "A local site coordinating one or more metal ions.",
+        "definition": (
+            "A three-dimensional local coordination site (Minimal Functional Site) within a "
+            "protein structure in which amino acid side-chain or backbone donor atoms (typically "
+            "His, Cys, Asp, or Glu) coordinate one or more metal ions or polynuclear metal "
+            "clusters with defined geometry to stabilize protein fold, mediate electron transfer, "
+            "or catalyze enzymatic reactions."
+        ),
         "category": "STRUCT_METAL_SITE",
         "subdir": "metal_site",
         "so_xref": None,
@@ -196,7 +218,12 @@ TERMS = [
     {
         "term": "INTERFACE",
         "label": "interface",
-        "definition": "A surface patch mediating contact with another chain or molecule.",
+        "definition": (
+            "A solvent-accessible surface patch of interacting residues on a protein subunit or "
+            "domain that buries solvent-accessible surface area upon contact with another "
+            "polypeptide chain, nucleic acid, or macromolecular partner to drive homomeric or "
+            "heteromeric oligomerization and macromolecular complex formation."
+        ),
         "category": "STRUCT_INTERFACE",
         "subdir": "interface",
         "so_xref": None,

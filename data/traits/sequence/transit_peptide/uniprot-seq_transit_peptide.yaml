@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
 label: transit peptide
 definition: >-
-  An N-terminal organelle-targeting transit peptide (mitochondrial / chloroplast / peroxisomal) cleaved after import.
+  An N-terminal organelle-targeting transit peptide (mitochondrial matrix presequence, chloroplast stromal/thylakoid transit peptide, hydrogenosomal/mitosomal presequence, or apicoplast bipartite leader) that directs post-translational import into a membrane-bounded organelle and is proteolytically cleaved after translocation.
 definition_source: UniProtKB feature type
 trait_axis: SEQUENCE
 trait_category: SEQ_TRANSIT_PEPTIDE
@@ -188,4 +188,83 @@ canonical_examples:
     trait_axis: SEQUENCE
     trait_category: SEQ_TRANSIT_PEPTIDE
   sequence: MRGAGAILRPAARGARDLNPRRDISSWLAQWFPRTPARSVVALKTPIKVELVAGKTYRWCVCGRSKKQPFCDGSHFFQRTGLSPLKFKAQETRMVALCTCKATQRPPYCDGTHRSERVQKAEVGSPL
+causal_graphs:
+- graph_id: CG_UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
+  title: N-terminal transit peptide directs organellar translocon import and processing-peptidase maturation
+  description: An N-terminal organelle transit peptide (SO:0000725) interacts with outer- and inner-membrane
+    translocons to drive organellar protein import such as chloroplast stroma import (GO:0045037), followed
+    by processing endopeptidase cleavage (GO:0004175) that releases the mature protein in the target organellar
+    compartment (GO:0009570).
+  nodes:
+  - node_id: SO:0000725
+    label: transit_peptide
+    node_type: MOTIF
+    grounding: SO:0000725
+    description: Cleavable N-terminal organellar targeting presequence (chloroplast cTP or mitochondrial
+      MTS)
+  - node_id: GO:0045037
+    label: protein import into chloroplast stroma
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045037
+    description: Post-translational translocation of transit-peptide-bearing precursor proteins across
+      the TOC-TIC envelope translocons
+  - node_id: GO:0004175
+    label: endopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004175
+    description: Stromal processing peptidase (SPP) or mitochondrial processing peptidase (MPP) activity
+      excising the N-terminal transit peptide
+  - node_id: GO:0009570
+    label: chloroplast stroma
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0009570
+    description: Target organellar lumen where the cleaved mature protein folds and functions
+  edges:
+  - subject: SO:0000725
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0045037
+    description: The N-terminal chloroplast transit peptide is necessary and sufficient to direct precursor
+      protein import across the plastid envelope.
+    evidence:
+    - reference: PMID:37324391
+      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
+        signal, the chloroplast transit peptide (cTP).
+      notes: N-terminal transit peptide mediates plastid protein import (PMID:37324391) (ECO:0000269)
+  - subject: GO:0045037
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0004175
+    description: Translocation of the N-terminal transit peptide into the stroma exposes its cleavage
+      site to stromal processing peptidase.
+    evidence:
+    - reference: PMID:37324391
+      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
+        signal, the chloroplast transit peptide (cTP).
+      notes: Imported transit peptides are proteolytically cleaved upon reaching the stroma (PMID:37324391)
+        (ECO:0000269)
+  - subject: GO:0004175
+    predicate: has target end location
+    predicate_id: RO:0002339
+    object: GO:0009570
+    description: Processing peptidase cleavage releases the mature imported polypeptide in the chloroplast
+      stroma.
+    evidence:
+    - reference: PMID:37324391
+      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
+        signal, the chloroplast transit peptide (cTP).
+      notes: Transit-peptide-mediated import delivers mature proteins to the chloroplast stroma (PMID:37324391)
+        (ECO:0000269)
+evidence:
+- reference: PMID:37324391
+  notes: Chloroplast transit peptides (cTPs) mediate post-translational import of plastid precursor proteins
+    through the TOC-TIC translocons and are cleaved in the stroma by stromal processing peptidase.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
+    (SO:0000725 -> GO:0045037 -> GO:0004175 -> GO:0009570) grounded in PMID:37324391 while preserving
+    all 15 canonical_examples (Round 125).
+  llm_assisted: true
 license: CC-BY 4.0

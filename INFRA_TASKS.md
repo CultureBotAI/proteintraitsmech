@@ -49,6 +49,10 @@ tasks:
   status: resolved
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/605
   disposition: 'Resolved in Cycle 1 Stages 5-6 (#1172, PR #1173): repaired upstream CDD prose defects on all 10 held CDD records plus CDD:cd00104 and CDD:cd00959 (with transactional re-binding of 41 durable qualified_record_bindings receipts), restored read-only v1 signature-only fetch receipt verification in scripts/fetch_uniprot_registry.py, re-resolved batches 058of128 and 066of128, and promoted all 12 held Homo sapiens and Saccharomyces cerevisiae examples across the 10 repaired CDD records.'
+- task_id: proteintraitsmech-infra-0004
+  summary: 'Key causal_graphs list-union deduplication in scripts/record_io.py merge_on_reseed by graph_id so seeder upgrades to an existing causal graph update nodes and edges in place rather than appending a duplicate graph_id.'
+  status: note
+  disposition: 'Observed in Cycle 2 Stage 2 (causal_graphs, goal-167a): _union_list_keys in scripts/record_io.py deduplicates causal_graphs by full JSON serialization rather than graph_id identity; upgrading an existing graph_id in seed_foundational_traits.py requires replacing matching graph_id entries in place while preserving distinct curator-added graph_id entries.'
 ```
 <!-- mech-infra-tasks:end -->
 
@@ -83,11 +87,11 @@ tasks:
 - **Priority**: P2
 - **Dependencies**: Receipt-locked `UNIPROT_REST` membership acquisition runs, `residue_frame.json` sequence cache expansion, and upstream coordinate/mapping tables
 - **Observation**:
-  - Across the 429,377 trait records in `data/traits/**/*.yaml` (including 39,631 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
+  - Across the 429,377 trait records in `data/traits/**/*.yaml` (including 39,641 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
     1. `RHEA` (`34,591` records, `34,578` with `causal_graphs`; `151` currently grounded with `QUALIFIED` examples) and `GO` (`45,931` records, `1` with `causal_graphs`; `467` currently grounded with `QUALIFIED` examples) use `WHOLE_PROTEIN` functional grounding via `uniprot_membership_snapshot.py` (`UNIPROT_REST`), which requires a cryptographically bound `.uniprot_fetch_receipt.json` and `uniprot_memberships.jsonl` per batch.
     2. `M-CSA` (`997` records, `996` with `causal_graphs`; `265` currently grounded with `QUALIFIED` examples) has `732` remaining records whose reference UniProt catalytic-residue accessions are absent from `data/raw/align_cache/residue_frame.json`, causing `resolve` to classify them as `BLOCKED` (`missing_protein_sequence`).
     3. `ARO` (`7,452` records, `1,539` with `causal_graphs`) stores antimicrobial-resistance reference sequences in `data/raw/card/aro.json` via NCBI protein/nucleotide accessions and CARD model IDs without a reviewed 1:1 Swiss-Prot accession + coordinate table, so `ground_uniprot_examples.py` has no `ARO` candidate emitter.
-    4. `proteintraitsmech` foundational trait classes (`84` records, `61` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
+    4. `proteintraitsmech` foundational, local-structural, and UniProt peptide trait classes (`96` records across `seed_foundational_traits.py`, `seed_localstructuralfeature.py`, and `seed_uniprot_peptide_classes.py`; `51` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
     5. `SFLD` (`302` records), `PRINTS` (`2,106` records), and `ECOD` (`16,580` records) are explicitly fail-closed at promotion in `scripts/ground_uniprot_examples.py` (`SFLD` family HMM membership lacks residue coordinates; `PRINTS` fingerprint motif intervals are not bundled in InterPro `protein2ipr.dat`; `ECOD` PDB chain intervals require SIFTS PDB-to-UniProt residue mapping).
 - **Desired outcome**:
   - Expand `data/raw/align_cache/residue_frame.json` to cover the remaining 732 `M-CSA` reference UniProt accessions, run receipted `UNIPROT_REST` membership batches for additional `RHEA`/`GO` cohorts, and add SIFTS / CARD-to-Swiss-Prot mapping support where exact organism, sequence, and claim scope can be preserved.
@@ -130,4 +134,24 @@ tasks:
   - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-066of128.review-decisions.jsonl`
   - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-058of128.review-decisions.jsonl`
   - `data/traits/sequence/domain/cdd/`
+
+### `proteintraitsmech-infra-0004` — Key `causal_graphs` list-union deduplication in `scripts/record_io.py` by `graph_id`
+
+- **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 2, Stage 2 (`causal_graphs`, `goal-167a`)
+- **Status**: `note`
+- **Issue**: pending-link (non-blocking writer ergonomics note; related to causal-graph curation in https://github.com/CultureBotAI/proteintraitsmech/issues/1066)
+- **Priority**: P3
+- **Dependencies**: None
+- **Observation**:
+  - `scripts/record_io.py` defines `_MERGE_LIST_UNION_KEYS = ("xrefs", "go_terms", "evidence", "detection_methods", "canonical_examples", "causal_graphs", "parent_traits", "aliases")` and deduplicates list items in `_union_list_keys` by full canonical JSON serialization (`json.dumps(item, sort_keys=True)`).
+  - When a registered seeder (`scripts/seed_foundational_traits.py`, `scripts/seed_localstructuralfeature.py`, `scripts/seed_uniprot_peptide_classes.py`) upgrades nodes, edges, or snippet evidence inside an existing `CausalGraph` while keeping the same `graph_id`, running `merge_on_reseed(fresh, on_disk)` treats the old and new `CausalGraph` dicts as distinct items and appends a second graph with the same `graph_id` (which then fails `scripts/audit_causal_graphs.py` with `duplicate graph_id`).
+- **Desired outcome**:
+  - In `_union_list_keys` (`scripts/record_io.py`), when `key == "causal_graphs"` and items are dicts containing a non-empty `graph_id`, deduplicate or merge by `graph_id` (preferring the updated graph or unioning its `nodes` by `node_id` and `edges` by `(subject, predicate, object)`) while still preserving any curator-added `CausalGraph` with a distinct `graph_id`.
+- **Evidence paths**:
+  - `scripts/record_io.py`
+  - `scripts/seed_foundational_traits.py`
+  - `scripts/seed_localstructuralfeature.py`
+  - `scripts/seed_uniprot_peptide_classes.py`
+  - `research/causal-graphs-round125.md`
+
 

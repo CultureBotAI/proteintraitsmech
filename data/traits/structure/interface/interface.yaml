@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:INTERFACE
 label: interface
 definition: >-
-  A surface patch mediating contact with another chain or molecule.
+  A solvent-accessible surface patch of interacting residues on a protein subunit or domain that buries solvent-accessible surface area upon contact with another polypeptide chain, nucleic acid, or macromolecular partner to drive homomeric or heteromeric oligomerization and macromolecular complex formation.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_INTERFACE
@@ -10,3 +10,77 @@ mapping_status: SEEDED
 xrefs:
 - valuesets:LocalStructuralFeature
 - SO:0001093
+causal_graphs:
+- graph_id: CG_INTERFACE
+  title: Subunit contact interface residues drive dimerization and macromolecular oligomerization
+  description: Surface interface residues (CHEBI:83228) bury hydrophobic and polar contact area to enable
+    protein binding (GO:0005515), which is causally upstream of subunit dimerization (GO:0046983) and
+    positively regulates multiprotein complex oligomerization (GO:0051259).
+  nodes:
+  - node_id: CHEBI:83228
+    label: amino-acid residue
+    node_type: RESIDUE
+    grounding: CHEBI:83228
+    description: Core and rim amino-acid residues on the subunit surface patch that become buried upon
+      complex formation
+  - node_id: GO:0005515
+    label: protein binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0005515
+    description: Direct non-covalent macromolecular contact across the buried subunit interface
+  - node_id: GO:0046983
+    label: protein dimerization activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0046983
+    description: Homodimeric or heterodimeric subunit pairing mediated by conserved interface topologies
+  - node_id: GO:0051259
+    label: protein complex oligomerization
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0051259
+    description: Assembly of quaternary dimers and higher-order oligomers from interacting subunits
+  edges:
+  - subject: CHEBI:83228
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0005515
+    description: Residue contact patches on the subunit surface cluster into conserved interaction topologies
+      that mediate protein binding.
+    evidence:
+    - reference: PMID:24081580
+      snippet: For every interaction, 3did identifies and groups different binding modes by clustering
+        similar interfaces into 'interaction topologies'.
+      notes: Interface residue patches cluster into conserved binding topologies (PMID:24081580) (ECO:0000305)
+  - subject: GO:0005515
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0046983
+    description: Complementary inter-chain binding across the interface drives homomeric and heteromeric
+      subunit dimerization.
+    evidence:
+    - reference: PMID:24081580
+      snippet: For every interaction, 3did identifies and groups different binding modes by clustering
+        similar interfaces into 'interaction topologies'.
+      notes: Inter-domain interface binding modes mediate subunit pairing (PMID:24081580) (ECO:0000305)
+  - subject: GO:0046983
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0051259
+    description: Subunit dimerization and domain-domain interface contacts organize higher-order multiprotein
+      oligomerization.
+    evidence:
+    - reference: PMID:24081580
+      snippet: By maintaining a constantly updated collection of domain-based structural interaction templates,
+        3did is a reference source of information for the structural characterization of protein interaction
+        networks.
+      notes: Domain interface templates drive oligomeric complex assembly (PMID:24081580) (ECO:0000305)
+evidence:
+- reference: PMID:24081580
+  notes: Mosca et al. (2014) classify structural domain-domain and domain-motif interfaces into conserved
+    interaction topologies in 3did.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_INTERFACE (CHEBI:83228 -> GO:0005515
+    -> GO:0046983 -> GO:0051259) grounded in PMID:24081580 (Round 125).
+  llm_assisted: true

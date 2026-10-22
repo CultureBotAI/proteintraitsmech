@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
 label: signal peptide
 definition: >-
-  An N-terminal secretory signal peptide that targets the protein to the secretory pathway and is cleaved by signal peptidase.
+  An N-terminal secretory signal peptide (typically 15-30 residues with a positively charged n-region, a hydrophobic h-region, and a polar c-region carrying a small neutral residue at -3/-1) that targets nascent polypeptides to the Sec or Tat translocation machinery and is cleaved by signal peptidase during or immediately after membrane translocation.
 definition_source: UniProtKB feature type
 trait_axis: SEQUENCE
 trait_category: SEQ_SIGNAL_PEPTIDE
@@ -188,4 +188,84 @@ canonical_examples:
     trait_axis: SEQUENCE
     trait_category: SEQ_SIGNAL_PEPTIDE
   sequence: MLRAGWLRGAAALALLLAARVVAAFEPITVGLAIGAASAITGYLSYNDIYCRFAECCREERPLNASALKLDLEEKLFGQHLATEVIFKALTGFRNNKNPKKPLTLSLHGWAGTGKNFVSQIVAENLHPKGLKSNFVHLFVSTLHFPHEQKIKLYQDQLQKWIRGNVSACANSVFIFDEMDKLHPGIIDAIKPFLDYYEQVDGVSYRKAIFIFLSNAGGDLITKTALDFWRAGRKREDIQLKDLEPVLSVGVFNNKHSGLWHSGLIDKNLIDYFIPFLPLEYRHVKMCVRAEMRARGSAIDEDIVTRVAEEMTFFPRDEKIYSDKGCKTVQSRLDFH
+causal_graphs:
+- graph_id: CG_UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
+  title: N-terminal signal peptide directs Sec/Tat membrane translocation and signal peptidase cleavage
+    for secretion
+  description: An N-terminal secretory signal peptide (SO:0000418) directs nascent preproteins to the
+    Sec translocon for membrane translocation (GO:0043952), which is causally upstream of signal peptidase
+    endopeptidase cleavage (GO:0004175) that releases the mature polypeptide for protein secretion (GO:0009306).
+  nodes:
+  - node_id: SO:0000418
+    label: signal_peptide
+    node_type: MOTIF
+    grounding: SO:0000418
+    description: Cleavable N-terminal tripartite secretory signal peptide (n-, h-, and c-regions)
+  - node_id: GO:0043952
+    label: protein transport by the Sec complex
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0043952
+    description: Co-translational or post-translational polypeptide translocation across the ER or prokaryotic
+      cytoplasmic membrane
+  - node_id: GO:0004175
+    label: endopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004175
+    description: Signal peptidase (SPase I / SPase II / SPase IV) endopeptidase activity cleaving the
+      c-region (-3, -1) recognition motif
+  - node_id: GO:0009306
+    label: protein secretion
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009306
+    description: Export of the cleaved mature protein into the secretory lumen, periplasm, or extracellular
+      milieu
+  edges:
+  - subject: SO:0000418
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0043952
+    description: N-terminal signal peptides govern protein targeting and translocation across the Sec
+      (or Tat) membrane machinery.
+    evidence:
+    - reference: PMID:34980915
+      snippet: Signal peptides (SPs) are short amino acid sequences that control protein secretion and
+        translocation in all living organisms.
+      notes: Signal peptides direct protein translocation across membranes (PMID:34980915) (ECO:0000305)
+  - subject: GO:0043952
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0004175
+    description: Translocation exposes the signal peptide cleavage site at the trans side of the membrane
+      for cleavage by signal peptidase I, II, or IV.
+    evidence:
+    - reference: PMID:34980915
+      snippet: SignalP 6.0 is based on protein language models (LMs) that use information from millions
+        of unannotated protein sequences across all domains of life to predict all five SP types and their
+        cleavage sites.
+      notes: Translocated signal peptides are cleaved at their signal peptidase cleavage sites (PMID:34980915)
+        (ECO:0000305)
+  - subject: GO:0004175
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0009306
+    description: Signal peptidase cleavage excises the membrane-tethered leader peptide to complete protein
+      secretion.
+    evidence:
+    - reference: PMID:34980915
+      snippet: Signal peptides (SPs) are short amino acid sequences that control protein secretion and
+        translocation in all living organisms.
+      notes: Signal peptide cleavage releases the secreted protein (PMID:34980915) (ECO:0000305)
+evidence:
+- reference: PMID:34980915
+  notes: Teufel et al. (2022) characterize the five major classes of secretory signal peptides (Sec/SPase
+    I, Sec/SPase II, Sec/SPase IV, Tat/SPase I, and Tat/SPase II) and their translocation and cleavage
+    mechanisms.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
+    (SO:0000418 -> GO:0043952 -> GO:0004175 -> GO:0009306) grounded in PMID:34980915 while preserving
+    all 15 canonical_examples (Round 125).
+  llm_assisted: true
 license: CC-BY 4.0

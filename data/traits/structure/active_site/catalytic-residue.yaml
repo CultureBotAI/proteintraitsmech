@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:CATALYTIC_RESIDUE
 label: catalytic residue
 definition: >-
-  An amino acid residue directly involved in enzyme catalysis (active site).
+  An amino acid residue within an enzyme active site that participates directly in the chemical mechanism of catalysis — acting as a nucleophile, general acid/base proton donor or acceptor, covalent intermediate carrier, transition-state or intermediate stabilizer, or direct activator of a catalytic water or cofactor.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_ACTIVE_SITE
@@ -10,3 +10,84 @@ mapping_status: SEEDED
 xrefs:
   - SO:0001104
   - valuesets:LocalStructuralFeature
+causal_graphs:
+- graph_id: CG_CATALYTIC_RESIDUE
+  title: Active-site catalytic residues drive substrate activation and enzymatic turnover
+  description: Catalytic amino-acid residues (CHEBI:83228) within an enzyme active site orient and activate
+    bound small-molecule substrates or cofactors (GO:0036094), directly enabling enzymatic catalytic activity
+    (GO:0003824) that drives cellular metabolic processes (GO:0008152).
+  nodes:
+  - node_id: CHEBI:83228
+    label: amino-acid residue
+    node_type: RESIDUE
+    grounding: CHEBI:83228
+    description: Active-site amino-acid residue acting as nucleophile, general acid/base, or transition-state
+      stabilizer
+  - node_id: GO:0036094
+    label: small molecule binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0036094
+    description: Productive positioning and polarization of substrates, cofactors, and reaction intermediates
+      in the active-site environment
+  - node_id: GO:0003824
+    label: catalytic activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0003824
+    description: Direct chemical catalysis of bond cleavage, bond formation, or group transfer by active-site
+      residues
+  - node_id: GO:0008152
+    label: metabolic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0008152
+    description: Cellular biochemical reaction pathways driven by enzymatic catalysis
+  edges:
+  - subject: CHEBI:83228
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0036094
+    description: Conserved active-site amino acid residues establish the electrostatic and steric active-site
+      environment that binds and polarizes substrates and cofactors.
+    evidence:
+    - reference: PMID:12421562
+      snippet: The results indicate the dominance of a small set of amino acid residues in catalysis and
+        give a picture of a general active site environment.
+      notes: Active-site amino acid residues establish the catalytic environment (PMID:12421562) (ECO:0000269)
+  - subject: GO:0036094
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0003824
+    description: Substrate and cofactor engagement by catalytic residues in the active site directly drives
+      enzymatic chemical catalysis.
+    evidence:
+    - reference: PMID:12421562
+      snippet: We present an analysis of the residues directly involved in catalysis in 178 enzyme active
+        sites. Specific criteria were derived to define a catalytic residue, and used to create a catalytic
+        residue dataset, which was then analysed in terms of properties including secondary structure,
+        solvent accessibility, flexibility, conservation, quaternary structure and function.
+      notes: Catalytic residues directly execute enzyme active-site catalysis (PMID:12421562) (ECO:0000269)
+  - subject: GO:0003824
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0008152
+    description: Enzyme reaction mechanisms mediated by catalytic sites drive biological metabolic transformations.
+    evidence:
+    - reference: PMID:29106569
+      snippet: M-CSA (Mechanism and Catalytic Site Atlas) is a database of enzyme active sites and reaction
+        mechanisms that can be accessed at www.ebi.ac.uk/thornton-srv/m-csa. Our objectives with M-CSA
+        are to provide an open data resource for the community to browse known enzyme reaction mechanisms
+        and catalytic sites, and to use the dataset to understand enzyme function and evolution.
+      notes: Catalytic sites and reaction mechanisms drive enzyme function (PMID:29106569) (ECO:0000305)
+evidence:
+- reference: PMID:12421562
+  notes: Bartlett et al. (2002) define the criteria and functional roles of amino acid residues directly
+    involved in catalysis across 178 enzyme active sites.
+- reference: PMID:29106569
+  notes: Ribeiro et al. (2018) describe the Mechanism and Catalytic Site Atlas (M-CSA) cataloguing catalytic
+    residues and enzyme reaction mechanisms.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_CATALYTIC_RESIDUE (CHEBI:83228
+    -> GO:0036094 -> GO:0003824 -> GO:0008152) grounded in PMID:12421562 and PMID:29106569 (Round 125).
+  llm_assisted: true

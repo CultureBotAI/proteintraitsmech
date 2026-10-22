@@ -29,7 +29,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_MATURE_CHAIN_SECRETED
     title: "Signal peptidase cleavage of N-terminal signal peptide yields mature secreted chain"
-    description: "An N-terminal signal peptide (SO:0000418) directs membrane translocation and proteolytic protein processing (GO:0016485) by signal peptidase, releasing the signal-peptidase-processed mature polypeptide chain (SO:0000419)."
+    description: "An N-terminal signal peptide (SO:0000418) directs membrane translocation and proteolytic protein processing (GO:0016485) by signal peptidase, releasing the signal-peptidase-processed mature polypeptide chain (SO:0000419) for protein secretion (GO:0009306)."
     nodes:
       - node_id: "SO:0000418"
         label: signal_peptide
@@ -46,6 +46,11 @@ causal_graphs:
         node_type: DOMAIN
         grounding: "SO:0000419"
         description: "Mature functional polypeptide region (SO:0000419) released after signal peptide cleavage"
+      - node_id: "GO:0009306"
+        label: "protein secretion"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0009306"
+        description: "Translocation and release of the mature processed polypeptide across the secretory membrane"
     edges:
       - subject: "SO:0000418"
         predicate: "positively regulates"
@@ -55,17 +60,33 @@ causal_graphs:
         evidence:
           - reference: PMID:34980915
             snippet: "Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms."
-            notes: "Signal peptides control secretion and translocation Processing (PMID:34980915). (ECO:0000269)"
+            notes: "Signal peptides control secretion and translocation processing (PMID:34980915). (ECO:0000269)"
       - subject: "GO:0016485"
         predicate: "has output"
         predicate_id: RO:0002234
         object: "SO:0000419"
-        description: "Proteolytic removal of the signal peptide releases the mature secreted or membrane-anchored polypeptide chain."
+        description: "Proteolytic removal of the signal peptide after membrane translocation releases the mature polypeptide chain."
+        evidence:
+          - reference: PMID:34980915
+            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
+            notes: "Release of the mature polypeptide chain upon signal peptide cleavage (PMID:34980915). (ECO:0000269)"
+      - subject: "SO:0000419"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0009306"
+        description: "The signal-peptidase-processed mature polypeptide chain is secreted across the membrane into its target compartment."
         evidence:
           - reference: PMID:34980915
             snippet: "Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms."
-            notes: "Release of the mature polypeptide chain upon signal peptide cleavage (PMID:34980915). (ECO:0000269)"
+            notes: "Mature polypeptide translocation and secretion across the membrane (PMID:34980915). (ECO:0000269)"
 evidence:
   - reference: PMID:34980915
     notes: "Signal peptides control protein secretion and translocation in all living organisms and are cleaved off during translocation to release the mature polypeptide chain."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_MATURE_CHAIN_SECRETED to a 4-node, 3-edge mechanism (SO:0000418 -> GO:0016485 ->
+    SO:0000419 -> GO:0009306) with verbatim snippets from PMID:34980915 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

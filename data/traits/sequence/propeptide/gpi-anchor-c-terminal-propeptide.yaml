@@ -20,6 +20,7 @@ xrefs:
   - SO:0001062
   - GO:0003923
   - GO:0016255
+  - GO:0051604
   - GO:0042765
 detection_methods:
   - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
@@ -32,7 +33,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_PROPEPTIDE_GPI_C_TERMINAL
     title: "GPI-anchor transamidase cleavage of C-terminal propeptide and GPI attachment"
-    description: "The C-terminal GPI propeptide extension (SO:0001062) positions the precursor omega site in the catalytic cleft of the PIGK subunit within the GPI-anchor transamidase complex (GO:0003923), which cleaves off the C-terminal propeptide and catalyzes attachment of the GPI anchor to the protein (GO:0016255)."
+    description: "The C-terminal GPI propeptide extension (SO:0001062) positions the precursor omega site in the catalytic cleft of the PIGK subunit within the GPI-anchor transamidase complex (GO:0003923), which cleaves off the C-terminal propeptide and catalyzes attachment of the GPI anchor to the protein (GO:0016255), driving endoplasmic-reticulum protein maturation (GO:0051604)."
     nodes:
       - node_id: "SO:0001062"
         label: propeptide
@@ -48,7 +49,12 @@ causal_graphs:
         label: "attachment of GPI anchor to protein"
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0016255"
-        description: "Endoplasmic-reticulum maturation of GPI-anchored proteins by C-terminal propeptide replacement with a GPI glycolipid"
+        description: "Endoplasmic-reticulum covalent replacement of the C-terminal propeptide with a preassembled GPI glycolipid anchor"
+      - node_id: "GO:0051604"
+        label: "protein maturation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051604"
+        description: "Maturation of GPI-anchored precursor proteins in the endoplasmic reticulum prior to cell-surface transport"
     edges:
       - subject: "SO:0001062"
         predicate: enables
@@ -67,8 +73,24 @@ causal_graphs:
         evidence:
           - reference: PMID:35165458
             snippet: "Attaching GPI to the protein in the endoplasmic reticulum (ER) is catalyzed by the transmembrane GPI transamidase (GPIT) complex, which is essential for maturation of the GPI-anchored proteins."
-            notes: "GPIT complex catalyzes GPI attachment for protein maturation in the ER (PMID:35165458). (ECO:0000269)"
+            notes: "GPIT complex catalyzes GPI attachment in the ER (PMID:35165458). (ECO:0000269)"
+      - subject: "GO:0016255"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051604"
+        description: "Covalent GPI-anchor attachment in the ER is essential for the maturation of GPI-anchored proteins."
+        evidence:
+          - reference: PMID:35165458
+            snippet: "Attaching GPI to the protein in the endoplasmic reticulum (ER) is catalyzed by the transmembrane GPI transamidase (GPIT) complex, which is essential for maturation of the GPI-anchored proteins."
+            notes: "GPI attachment is essential for maturation of GPI-anchored proteins (PMID:35165458). (ECO:0000269)"
 evidence:
   - reference: PMID:35165458
     notes: "Attachment of GPI anchors to precursor proteins in the ER is catalyzed by the five-subunit transmembrane GPI transamidase (GPIT) complex via the PIGK Cys206-His164-Asn58 catalytic triad."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_PROPEPTIDE_GPI_C_TERMINAL to a 4-node, 3-edge mechanism (SO:0001062 -> GO:0003923
+    -> GO:0016255 -> GO:0051604) with verbatim snippets from PMID:35165458 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

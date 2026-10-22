@@ -17,6 +17,7 @@ synonyms:
     synonym_type: EXACT_SYNONYM
 xrefs:
   - SO:0001808
+  - GO:0004175
   - GO:0045041
   - GO:0005758
 detection_methods:
@@ -30,18 +31,23 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_TRANSIT_PEPTIDE_MITO_IMS
     title: "Bipartite MTS + stop-transfer sorting and IMP cleavage into the mitochondrial intermembrane space"
-    description: "A mitochondrial intermembrane-space bipartite transit peptide (SO:0001808) couples TIM23 arrest with cleavage by the inner membrane protease complex (Imp1p/Imp2p) during protein import into the mitochondrial intermembrane space (GO:0045041), delivering the mature protein to the mitochondrial intermembrane space (GO:0005758)."
+    description: "A mitochondrial intermembrane-space bipartite transit peptide (SO:0001808) arrests TIM23 translocation and presents its hydrophobic sorting signal to the inner membrane protease complex (Imp1p/Imp2p) endopeptidase activity (GO:0004175), which positively regulates protein import into the mitochondrial intermembrane space (GO:0045041) to deliver the mature protein into the mitochondrial intermembrane space (GO:0005758)."
     nodes:
       - node_id: "SO:0001808"
         label: mitochondrial_targeting_signal
         node_type: MOTIF
         grounding: "SO:0001808"
         description: "Bipartite mitochondrial presequence containing an N-terminal matrix-targeting signal followed by a hydrophobic stop-transfer intermembrane-space sorting signal cleaved by Imp1p/Imp2p"
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Inner membrane protease (Imp1p/Imp2p) endopeptidase activity cleaving intermembrane-space sorting signals at the inner-membrane IMS face"
       - node_id: "GO:0045041"
         label: "protein import into mitochondrial intermembrane space"
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0045041"
-        description: "Sorting and inner-membrane protease processing of proteins imported into the mitochondrial intermembrane space"
+        description: "Stop-transfer sorting and inner-membrane protease maturation of proteins imported into the mitochondrial intermembrane space"
       - node_id: "GO:0005758"
         label: "mitochondrial intermembrane space"
         node_type: CELLULAR_LOCALIZATION
@@ -49,14 +55,23 @@ causal_graphs:
         description: "Mitochondrial intermembrane space compartment between the outer and inner mitochondrial membranes"
     edges:
       - subject: "SO:0001808"
-        predicate: "involved in"
-        predicate_id: RO:0002331
-        object: "GO:0045041"
-        description: "The intermembrane-space sorting signal of the bipartite presequence is cleaved by the inner membrane protease (Imp1p/Imp2p) during IMS import."
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0004175"
+        description: "The intermembrane-space sorting signal of the bipartite presequence presents the cleavage site for catalysis by the inner membrane protease (Imp1p/Imp2p)."
         evidence:
           - reference: PMID:8266095
             snippet: "In addition to its catalyzing the cleavage of intermembrane space sorting signals, Imp2p is required for the stable and functional expression of Imp1p."
             notes: "Imp1p/Imp2p cleaves intermembrane space sorting signals (PMID:8266095). (ECO:0000269)"
+      - subject: "GO:0004175"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0045041"
+        description: "Inner membrane protease endopeptidase cleavage drives maturation of proteins imported into the mitochondrial intermembrane space."
+        evidence:
+          - reference: PMID:8266095
+            snippet: "The mitochondrial inner membrane protease is required for the maturation of mitochondrial proteins that are delivered to the intermembrane space."
+            notes: "IMP endopeptidase activity is required for IMS protein import and maturation (PMID:8266095). (ECO:0000269)"
       - subject: "GO:0045041"
         predicate: "has target end location"
         predicate_id: RO:0002339
@@ -69,4 +84,11 @@ causal_graphs:
 evidence:
   - reference: PMID:8266095
     notes: "The mitochondrial inner membrane protease (Imp1p/Imp2p) catalyzes cleavage of intermembrane space sorting signals for maturation of proteins delivered to the mitochondrial intermembrane space."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_TRANSIT_PEPTIDE_MITO_IMS to a 4-node, 3-edge mechanism (SO:0001808 -> GO:0004175
+    -> GO:0045041 -> GO:0005758) with verbatim snippets from PMID:8266095 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

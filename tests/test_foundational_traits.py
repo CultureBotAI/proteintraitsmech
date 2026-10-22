@@ -14,6 +14,8 @@ import build_docs_index as bdi  # noqa: E402
 import record_io as rio  # noqa: E402
 import score_causal_graphs as scg  # noqa: E402
 import seed_foundational_traits as sft  # noqa: E402
+import seed_localstructuralfeature as slsf  # noqa: E402
+import seed_uniprot_peptide_classes as supc  # noqa: E402
 import validate_strict as vs  # noqa: E402
 
 
@@ -124,12 +126,15 @@ def test_foundational_trait_causal_graphs_audit_and_score():
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
         assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
-        if spec.identifier in ROUND_124_EDITED_IDS:
-            history = data.get("curation_history") or []
-            assert history, f"{spec.identifier} missing curation_history"
-            assert history[-1].get("curator") == "claude"
-            assert history[-1].get("action") == "EDIT"
-            assert history[-1].get("llm_assisted") is True
+        history = data.get("curation_history") or []
+        assert history, f"{spec.identifier} missing curation_history"
+        assert history[-1].get("curator") == "claude"
+        assert history[-1].get("action") == "EDIT"
+        assert history[-1].get("llm_assisted") is True
+        if spec.identifier not in ROUND_124_EDITED_IDS:
+            cg = data["causal_graphs"][0]
+            assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+            assert len(cg.get("edges") or []) == 3, f"{spec.identifier} expected 3 edges"
         errors: list[str] = []
         warns: list[acg.AuditWarning] = []
         stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
@@ -257,6 +262,69 @@ def test_cycle2_stage1_records_have_verified_pmids_and_initiator_met_hierarchy()
                     ref = ev["reference"]
                     if ref.startswith("PMID:"):
                         assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+
+
+def test_root_local_structural_and_peptide_class_causal_graphs():
+    """All 10 mechanism-bearing root class records in LSF and UniProt peptide seeders carry audited 4-node/3-edge causal_graphs."""
+    valid_types = acg.node_type_enum()
+    mech_lsf_terms = {
+        "CATALYTIC_RESIDUE",
+        "PROTEIN_BINDING_SITE",
+        "METAL_BINDING_SITE",
+        "DISULFIDE_BOND",
+        "INTERFACE",
+    }
+    mech_lsf = [e for e in slsf.TERMS if e["term"] in mech_lsf_terms]
+    assert len(mech_lsf) == 5
+    assert len(supc.FEATURES) == 5
+
+    all_root_mech: list[tuple[pathlib.Path, str, str]] = [
+        (slsf.target_path(e), f"proteintraitsmech:{e['term']}", slsf.yaml_for(e)) for e in mech_lsf
+    ] + [
+        (
+            supc.OUT_DIR / subdir / f"uniprot-{category.lower()}.yaml",
+            f"proteintraitsmech:UNIPROT_FT_{category}",
+            supc.build_yaml(ft_type, category, label, definition, []),
+        )
+        for _ft_query, ft_type, category, subdir, label, definition in supc.FEATURES
+    ]
+    assert len(all_root_mech) == 10
+
+    for path, ident, fresh_yaml in all_root_mech:
+        assert path.is_file(), f"missing root class record: {path}"
+        v_errors = vs.validate_one(path)
+        assert not v_errors, f"validation errors in {path}: {v_errors}"
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        assert data["identifier"] == ident
+        assert data.get("mapping_status") == "SEEDED"
+        cgs = data.get("causal_graphs") or []
+        assert len(cgs) == 1
+        assert len(cgs[0].get("nodes") or []) == 4
+        assert len(cgs[0].get("edges") or []) == 3
+        history = data.get("curation_history") or []
+        assert history, f"{ident} missing curation_history"
+        assert history[-1].get("curator") == "claude"
+        assert history[-1].get("action") == "EDIT"
+        assert history[-1].get("llm_assisted") is True
+
+        errors: list[str] = []
+        warns: list[acg.AuditWarning] = []
+        stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
+        acg.audit_record(data, str(path.relative_to(ROOT)), valid_types, errors, warns, stats)
+        assert not errors, f"causal_graphs errors in {ident}: {errors}"
+        assert not warns, f"causal_graphs warnings in {ident}: {warns}"
+
+        scored = scg.score_path(path)
+        assert scored.score == 100 - scg.SEEDED_REVIEW_PENALTY
+        assert scored.structural_errors == 0
+        assert scored.quality_warnings == 0
+        assert scored.reasons == ("mapping_status=SEEDED",)
+
+        existing_text = path.read_text(encoding="utf-8")
+        assert yaml.safe_load(rio.merge_on_reseed(existing_text, fresh_yaml)) == data
+
+
+
 
 
 

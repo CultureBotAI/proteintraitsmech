@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
 label: cleaved initiator methionine
 definition: >-
-  The N-terminal initiator methionine that is post-translationally removed.
+  The N-terminal translation-initiating methionine residue (Met1) that is co-translationally or post-translationally excised by methionine aminopeptidase (MetAP) when the penultimate residue (P1') has a small side-chain radius of gyration.
 definition_source: UniProtKB feature type
 trait_axis: SEQUENCE
 trait_category: SEQ_INITIATOR_METHIONINE
@@ -188,4 +188,84 @@ canonical_examples:
     trait_axis: SEQUENCE
     trait_category: SEQ_INITIATOR_METHIONINE
   sequence: MSKNTVSSARFRKVDVDEYDENKFVDEEDGGDGQAGPDEGEVDSCLRQGNMTAALQAALKNPPINTKSQAVKDRAGSIVLKVLISFKANDIEKAVQSLDKNGVDLLMKYIYKGFESPSDNSSAMLLQWHEKALAAGGVGSIVRVLTARKTV
+causal_graphs:
+- graph_id: CG_UNIPROT_FT_SEQ_INITIATOR_METHIONINE
+  title: Co-translational initiator methionine incorporation and excision by methionine aminopeptidase
+  description: Translational initiation (GO:0006413) incorporates an N-terminal L-methionine residue (CHEBI:16811)
+    at position 1 of the nascent chain, which is recognized and hydrolyzed by initiator methionyl aminopeptidase
+    activity (GO:0004239) during N-terminal protein processing (GO:0016485).
+  nodes:
+  - node_id: GO:0006413
+    label: translational initiation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006413
+    description: Ribosomal initiation of polypeptide synthesis at the start codon with an N-terminal initiator
+      methionine
+  - node_id: CHEBI:16811
+    label: L-methionine
+    node_type: RESIDUE
+    grounding: CHEBI:16811
+    description: Cleavable N-terminal initiator methionine residue at position 1 of the nascent polypeptide
+  - node_id: GO:0004239
+    label: initiator methionyl aminopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004239
+    description: Ribosome-associated methionine aminopeptidase (MetAP) activity hydrolyzing the Met1-Xaa2
+      peptide bond
+  - node_id: GO:0016485
+    label: protein processing
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0016485
+    description: Co-translational proteolytic removal of the N-terminal initiator methionine to unmask
+      the mature N-terminus
+  edges:
+  - subject: GO:0006413
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: CHEBI:16811
+    description: Ribosomal translational initiation installs L-methionine at the N-terminus of newly synthesized
+      cytosolic proteins.
+    evidence:
+    - reference: PMID:2682640
+      snippet: The side-chain length of the penultimate amino acid strongly influences the cleavage of
+        the terminal methionine residue in vivo (the probability of cleavage decreases as the size of
+        the side chain increases).
+      notes: Nascent polypeptides carry an N-terminal initiator methionine subject to in vivo cleavage
+        (PMID:2682640) (ECO:0000269)
+  - subject: CHEBI:16811
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0004239
+    description: An N-terminal initiator methionine followed by a small penultimate residue enters the
+      MetAP catalytic pocket for hydrolysis.
+    evidence:
+    - reference: PMID:2682640
+      snippet: We have studied the cleavage of the NH2-terminal methionine residue from 20 mutants of
+        Escherichia coli methionyl-tRNA synthetase differing only at the second amino acid position, both
+        in vivo and in vitro with purified methionyl aminopeptidase.
+      notes: Methionyl aminopeptidase cleaves the N-terminal methionine residue (PMID:2682640) (ECO:0000269)
+  - subject: GO:0004239
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0016485
+    description: Methionyl aminopeptidase catalysis excises Met1 during co-translational N-terminal protein
+      processing.
+    evidence:
+    - reference: PMID:2682640
+      snippet: The in vitro study strongly suggests that the rules governing the NH2-terminal methionine
+        excision in vivo reflect the substrate specificity of the methionyl aminopeptidase alone.
+      notes: MetAP substrate specificity governs in vivo N-terminal methionine processing (PMID:2682640)
+        (ECO:0000269)
+evidence:
+- reference: PMID:2682640
+  notes: Hirel et al. (1989) demonstrate that N-terminal initiator methionine excision by methionyl aminopeptidase
+    is governed by the side-chain length of the penultimate amino acid residue.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_INITIATOR_METHIONINE
+    (GO:0006413 -> CHEBI:16811 -> GO:0004239 -> GO:0016485) grounded in PMID:2682640 while preserving
+    all 15 canonical_examples (Round 125).
+  llm_assisted: true
 license: CC-BY 4.0

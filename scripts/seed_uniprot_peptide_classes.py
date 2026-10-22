@@ -35,20 +35,32 @@ CAP = 15
 # feature: (ft_query, uniprot_feature_type, category, subdir, label, definition)
 FEATURES = [
     ("ft_signal", "Signal", "SEQ_SIGNAL_PEPTIDE", "signal_peptide", "signal peptide",
-     "An N-terminal secretory signal peptide that targets the protein to the "
-     "secretory pathway and is cleaved by signal peptidase."),
+     "An N-terminal secretory signal peptide (typically 15-30 residues with a "
+     "positively charged n-region, a hydrophobic h-region, and a polar c-region "
+     "carrying a small neutral residue at -3/-1) that targets nascent polypeptides "
+     "to the Sec or Tat translocation machinery and is cleaved by signal peptidase "
+     "during or immediately after membrane translocation."),
     ("ft_transit", "Transit peptide", "SEQ_TRANSIT_PEPTIDE", "transit_peptide", "transit peptide",
-     "An N-terminal organelle-targeting transit peptide (mitochondrial / "
-     "chloroplast / peroxisomal) cleaved after import."),
+     "An N-terminal organelle-targeting transit peptide (mitochondrial matrix "
+     "presequence, chloroplast stromal/thylakoid transit peptide, hydrogenosomal/"
+     "mitosomal presequence, or apicoplast bipartite leader) that directs "
+     "post-translational import into a membrane-bounded organelle and is "
+     "proteolytically cleaved after translocation."),
     ("ft_propep", "Propeptide", "SEQ_PROPEPTIDE", "propeptide", "propeptide",
-     "A propeptide / pro-region removed during maturation of a proprotein "
-     "(zymogen activation, proprotein-convertase processing)."),
+     "A transient propeptide / pro-region (N-terminal, C-terminal, or internal) "
+     "that suppresses premature enzymatic or hormonal activity, assists folding as "
+     "an intramolecular chaperone, or provides an enzyme-docking exosite, and is "
+     "proteolytically removed during proprotein maturation or zymogen activation."),
     ("ft_peptide", "Peptide", "SEQ_MATURE_CHAIN", "mature_chain", "released active peptide",
-     "A released, biologically active peptide excised from a larger precursor "
-     "(e.g. a neuropeptide or hormone)."),
+     "A released, biologically active polypeptide chain or mature peptide hormone, "
+     "neuropeptide, or antimicrobial peptide excised from a larger precursor "
+     "polyprotein by site-specific endopeptidase and exopeptidase processing."),
     ("ft_init_met", "Initiator methionine", "SEQ_INITIATOR_METHIONINE", "initiator_methionine",
      "cleaved initiator methionine",
-     "The N-terminal initiator methionine that is post-translationally removed."),
+     "The N-terminal translation-initiating methionine residue (Met1) that is "
+     "co-translationally or post-translationally excised by methionine "
+     "aminopeptidase (MetAP) when the penultimate residue (P1') has a small "
+     "side-chain radius of gyration."),
 ]
 
 
