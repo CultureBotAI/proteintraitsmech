@@ -33,13 +33,96 @@ notes below keyed by the same stable task ID.
 <!-- mech-infra-tasks:start -->
 ```yaml
 schema_version: '1.0.0'
-tasks: []
+tasks:
+- task_id: proteintraitsmech-infra-0001
+  summary: 'Re-fetch cross-mech-complex-20261013 under v2 UniProt receipt with fragment status and re-resolve CPX-2267 after #1122 chemistry repair so ComplexPortal mechanism-graph subunit examples can be promoted.'
+  status: deferred
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+  disposition: 'Blocked on live UniProt REST v2 fetch-generation refresh for cross-mech-complex-20261013 (to populate ProteinReference.fragment required by #1081/#1084) and independent scientific sign-off on the 36-candidate ComplexPortal partition (#1114, #1115, #1116).'
+- task_id: proteintraitsmech-infra-0002
+  summary: 'Acquire receipt-locked UniProt REST membership snapshots and expanded residue_frame.json sequences for mechanism-graph sources (RHEA, GO, M-CSA, ARO) and fail-closed signature/structure sources (SFLD, PRINTS, ECOD/SIFTS).'
+  status: deferred
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/652
+  disposition: 'Source-limited and network-fetch-gated: RHEA (34,578 mechanism records) and GO (45,931 records) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded active-site mechanism records) lacks residue_frame.json sequences; ARO (1,539 mechanism records) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
+- task_id: proteintraitsmech-infra-0003
+  summary: 'Repair upstream CDD definition defects on 10 held CDD records (cd13344, cd14999, cd15894, cd17150, cd09530, cd16523, cd16652, cd18592, cd20534, cd21551) and re-resolve their 12 held UniProt candidate examples.'
+  status: open
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/605
+  disposition: 'Held at Stage 3 review per ground-protein-example fail-closed policy due to upstream CDD prose defects (paralog/family conflation, conflicting receptor/nomenclature aliases, substrate/degradation-pathway errors, or methylation-scope conflation); requires guarded definition repair and fresh resolution before promotion.'
 ```
 <!-- mech-infra-tasks:end -->
 
 ## Tasks
 
-No infrastructure tasks have been entered through this workflow yet. This empty
-bootstrap ledger is not an audit result or a claim that the repository has no
-infrastructure needs. Add evidence-backed entries as work exposes them.
+### `proteintraitsmech-infra-0001` — Re-fetch `cross-mech-complex-20261013` with v2 `fragment` status and re-resolve `CPX-2267`
+
+- **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 1, Stage 3 (`protein_examples`, `goal-3006`)
+- **Status**: `deferred`
+- **Issue**: https://github.com/CultureBotAI/proteintraitsmech/issues/1114 (with companion scientific holds https://github.com/CultureBotAI/proteintraitsmech/issues/1115 and https://github.com/CultureBotAI/proteintraitsmech/issues/1116; fragment-status gate landed in https://github.com/CultureBotAI/proteintraitsmech/issues/1081 / PR #1084)
+- **Priority**: P1
+- **Dependencies**: Live UniProt REST v2 fetch generation (`scripts/fetch_uniprot_registry.py --apply`) and independent scientific review of the 36-candidate ComplexPortal partition
+- **Observation**:
+  - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013` stages 36 `WHOLE_PROTEIN` subunit candidates across 25 `ComplexPortal` mechanism-graph records (33 recommended approvals across 22 records; 3 holds on `ComplexPortal:CPX-2267`, `ComplexPortal:CPX-1279`, and `ComplexPortal:CPX-2437`).
+  - Because `cross-mech-complex-20261013.protein_registry.jsonl` and `cross-mech-complex-20261013.resolved.jsonl` were generated under a v1 fetch receipt prior to `#1081` / PR `#1084`, the resolved rows carry `uniprot_fragment: null`. Running `scripts/ground_uniprot_examples.py promote` fails closed at preflight with `missing:uniprot_fragment_status_for_whole_protein` for all 33 approved rows, and modifying `protein_registry.jsonl` in place is rightly rejected by `_verify_resolved_fetch_receipt_provenance` (`protein_registry sha256 mismatch`).
+  - Additionally, `ComplexPortal:CPX-2267` was updated in PR `#1122` (`#1114`) to fix the superoxide dismutase reaction products, invalidating its historical preimage digest until re-resolved.
+- **Desired outcome**:
+  - Re-run `scripts/fetch_uniprot_registry.py` and `scripts/ground_uniprot_examples.py resolve` for the `cross-mech-complex-20261013` candidate cohort to capture `fragment: true|false` under a schema-v2 fetch receipt and bind the updated `CPX-2267` preimage, then complete independent review and promote the qualified ComplexPortal subunit examples.
+- **Evidence paths**:
+  - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl`
+  - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_receipt.json`
+  - `reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml`
+  - `research/cross-mech-protein-examples.md`
+  - `scripts/fetch_uniprot_registry.py`
+  - `scripts/ground_uniprot_examples.py`
+
+### `proteintraitsmech-infra-0002` — Source-limited and writer/receipt blockers for mechanism-graph and corpus-wide protein examples
+
+- **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 1, Stage 3 (`protein_examples`, `goal-3006`)
+- **Status**: `deferred`
+- **Issue**: https://github.com/CultureBotAI/proteintraitsmech/issues/652
+- **Priority**: P2
+- **Dependencies**: Receipt-locked `UNIPROT_REST` membership acquisition runs, `residue_frame.json` sequence cache expansion, and upstream coordinate/mapping tables
+- **Observation**:
+  - Across the 429,359 trait records in `data/traits/**/*.yaml` (including 39,616 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
+    1. `RHEA` (`34,591` records, `34,578` with `causal_graphs`; `151` currently grounded with `QUALIFIED` examples) and `GO` (`45,931` records, `1` with `causal_graphs`; `467` currently grounded with `QUALIFIED` examples) use `WHOLE_PROTEIN` functional grounding via `uniprot_membership_snapshot.py` (`UNIPROT_REST`), which requires a cryptographically bound `.uniprot_fetch_receipt.json` and `uniprot_memberships.jsonl` per batch.
+    2. `M-CSA` (`997` records, `996` with `causal_graphs`; `265` currently grounded with `QUALIFIED` examples) has `732` remaining records whose reference UniProt catalytic-residue accessions are absent from `data/raw/align_cache/residue_frame.json`, causing `resolve` to classify them as `BLOCKED` (`missing_protein_sequence`).
+    3. `ARO` (`7,452` records, `1,539` with `causal_graphs`) stores antimicrobial-resistance reference sequences in `data/raw/card/aro.json` via NCBI protein/nucleotide accessions and CARD model IDs without a reviewed 1:1 Swiss-Prot accession + coordinate table, so `ground_uniprot_examples.py` has no `ARO` candidate emitter.
+    4. `proteintraitsmech` foundational trait classes (`66` records, `46` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
+    5. `SFLD` (`302` records), `PRINTS` (`2,106` records), and `ECOD` (`16,580` records) are explicitly fail-closed at promotion in `scripts/ground_uniprot_examples.py` (`SFLD` family HMM membership lacks residue coordinates; `PRINTS` fingerprint motif intervals are not bundled in InterPro `protein2ipr.dat`; `ECOD` PDB chain intervals require SIFTS PDB-to-UniProt residue mapping).
+- **Desired outcome**:
+  - Expand `data/raw/align_cache/residue_frame.json` to cover the remaining 732 `M-CSA` reference UniProt accessions, run receipted `UNIPROT_REST` membership batches for additional `RHEA`/`GO` cohorts, and add SIFTS / CARD-to-Swiss-Prot mapping support where exact organism, sequence, and claim scope can be preserved.
+- **Evidence paths**:
+  - `scripts/ground_uniprot_examples.py`
+  - `scripts/uniprot_membership_snapshot.py`
+  - `data/raw/align_cache/residue_frame.json`
+  - `data/cross_mech/coverage.json`
+
+### `proteintraitsmech-infra-0003` — Remediate upstream CDD prose defects on 10 held `CDD` records before promoting their 12 held candidates
+
+- **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 1, Stage 3 (`protein_examples`, `goal-3006`)
+- **Status**: `open`
+- **Issue**: https://github.com/CultureBotAI/proteintraitsmech/issues/605 (batch tracking in https://github.com/CultureBotAI/proteintraitsmech/issues/1167)
+- **Priority**: P2
+- **Dependencies**: Guarded trait-definition curation repair (`scripts/trait_record_writer.py`) and fresh `scripts/ground_uniprot_examples.py resolve` run on the 10 updated records
+- **Observation**:
+  - During Stage 3 review and promotion of `human-ecoli-yeast-complete-cdd-066of128` (`147` approved examples promoted across `69` records out of `294` decision rows across `91` records) and `human-ecoli-yeast-complete-cdd-058of128` (`136` approved examples promoted across `71` records out of `289` decision rows across `104` records), **12 target-taxon (`Homo sapiens` / `Saccharomyces cerevisiae`) candidate rows across 10 `CDD` records** were held (`REJECTED` in the batch partition with `HOLD_PROSE_REVIEW` / `HOLD_FOR_PROSE_CURATION` notes, alongside non-target-taxon `DEFER_OUTSIDE_TARGET_TAXA` and pre-existing `DEFER_ALREADY_SATISFIED` rows) per `.claude/skills/ground-protein-example/SKILL.md` because their seeded upstream CDD definitions have biological/prose defects that would invalidate preimage hashes if edited mid-promotion:
+    - Batch `066of128` (**4 held CDD records, 4 target-taxon candidate rows**):
+      1. `CDD:cd13344` (`1` candidate: `UniProtKB:Q9Y216`, human MTMR7 at `29-113`): MTMR7 PH-GRAM record switches to MTMR6 binding/activity wording (`HOLD_PROSE_REVIEW`).
+      2. `CDD:cd14999` (`1` candidate: `UniProtKB:Q9UKP6`, human UTS2R at `53-337`): source-derived urotensin-II receptor definition gives a conflicting hypocretin-receptor alias (`HOLD_PROSE_REVIEW`).
+      3. `CDD:cd15894` (`1` candidate: `UniProtKB:P60880`, human SNAP25 at `19-81`): generalizes a transmembrane domain to Qb/Qc SNARE proteins whereas SNAP25 has two SNARE domains and palmitoylation (`HOLD_PROSE_REVIEW`).
+      4. `CDD:cd17150` (`1` candidate: `UniProtKB:A2VCK2`, human DCDC2B at `17-102`): DCDC2B-specific first-domain record switches to DCDC2 gene/disease prose and starts with typo `Dublecortin-like domain 1` (`HOLD_PROSE_REVIEW`).
+    - Batch `058of128` (**6 held CDD records, 8 target-taxon candidate rows**):
+      1. `CDD:cd09530` (`1` candidate: `UniProtKB:Q9P1V8`, human SAMD15/FAM15A at `543-609`): `SAM_Samd14` / `"SAM domain of SAMD14 subfamily"` nomenclature conflict with its sole human match `SAMD15` (`HGNC:18631`, whereas human `SAMD14` `Q8IZD0` matches `cd09512`; `HOLD_FOR_PROSE_CURATION`).
+      2. `CDD:cd16523` (`1` candidate: `UniProtKB:Q8WY64`, human MYLIP/IDOL at `383-434`): sentence 2 claims blanket proteasomal degradation of MRLC, LDLR, VLDLR, and LRP8, contradicting sentence 4 and primary literature (`DOI:10.1074/jbc.M110.123729`) showing lysosomal MVB degradation of LDLR/VLDLR/LRP8 (`HOLD_FOR_PROSE_CURATION`).
+      3. `CDD:cd16652` (`1` candidate: `UniProtKB:Q12508`, yeast RMD5/GID2 at `359-406`): malformed substrate prose (`"fructose-1, 6-bisphosphate by fructose-1, 6-bisphosphatase"`) in enzyme list (`HOLD_FOR_PROSE_CURATION`).
+      4. `CDD:cd18592` (`3` candidates: `UniProtKB:O15440` ABCC5 at `181-467`, `UniProtKB:Q96J66` ABCC11 at `165-451`, `UniProtKB:Q96J65` ABCC12 at `125-411`): upstream CDD prose conflates `MRP7` (`ABCC10`) with `CFTR` (`ABCC7`) and overstates anticancer-drug export for `ABCC12`/`MRP9` (`HOLD_FOR_PROSE_CURATION`).
+      5. `CDD:cd20534` (`1` candidate: `UniProtKB:Q8N1B3`, human CCNQ/FAM58A at `27-128`): conflates STAR-syndrome Cyclin-M/Cyclin-Q (`CCNQ`/`FAM58A`) with the `CNNM1-4` (`ACDP`) magnesium-transporter family (`HOLD_FOR_PROSE_CURATION`).
+      6. `CDD:cd21551` (`1` candidate: `UniProtKB:Q15022`, human SUZ12 at `563-684`): conflates SUZ12's indirect H3K9 effect (`DOI:10.1007/s10577-007-1126-1`) with PRC2/EZH2 H3K27me3 catalysis (`HOLD_FOR_PROSE_CURATION`).
+  - Additionally, two promoted CDD records carry minor non-blocking upstream CDD typographical defects in `definition` (`CDD:cd00104`: `chyomotrypsin` typo and listing `avian ovomucoids` in the target protease list; `CDD:cd00959`: duplicated opening sentence) that cannot be edited without re-binding their `qualified_record_bindings.jsonl.d/` preimage hashes.
+- **Desired outcome**:
+  - Apply a guarded definition repair to the 10 held `CDD` records (and optionally `CDD:cd00104` / `CDD:cd00959` with re-binding), re-run `scripts/ground_uniprot_examples.py resolve` against the updated record preimages, and promote the 12 held `Homo sapiens` and `Saccharomyces cerevisiae` examples.
+- **Evidence paths**:
+  - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-066of128.review-decisions.jsonl`
+  - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-058of128.review-decisions.jsonl`
+  - `data/traits/sequence/domain/cdd/`
 
