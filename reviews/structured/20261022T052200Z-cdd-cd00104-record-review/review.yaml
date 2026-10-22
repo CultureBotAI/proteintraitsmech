@@ -1,0 +1,277 @@
+schema_version: 1.0.0
+review_id: 20261022T052200Z-cdd-cd00104-record-review
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Single-record scientific review of CDD:cd00104 (Kazal-type serine protease
+  inhibitor domain)
+started_at: '2026-10-22T05:05:00Z'
+finished_at: '2026-10-22T05:22:00Z'
+reviewer:
+  identity: Antigravity
+  kind: agent
+  model: Claude Opus 4.6
+  independence: independent
+  independence_basis: Stage 4 single-record scientific audit of the committed CDD:cd00104
+    record and its Stage 3 UniProt grounding bindings without modifying scientific
+    records.
+skill: review-yaml-record
+completion: completed
+verdict: needs_curation
+native_verdict: NEEDS_CURATION
+scientific_review: true
+summary: CDD:cd00104 (Kazal-type serine protease inhibitors and follistatin-like domains)
+  passes strict LinkML validation and release-pinned UniProt grounding replay for
+  all three qualified human canonical examples (P00995 SPINK1 25-79, P19835 CEL 46-91,
+  and Q9NQ38 SPINK5 six Kazal repeats), and its PMID:6192856 evidence and InterPro:IPR002350
+  parent hierarchy are accurate. However, its upstream CDD-seeded definition contains
+  a typographical error ('chyomotrypsin' for 'chymotrypsin') and lists 'avian ovomucoids'
+  (which are Kazal-type serine protease inhibitor proteins, not target serine proteases)
+  among the inhibited enzymes. Preserved as open finding F1 for Stage 5 grouped repair
+  and qualified-binding re-verification.
+source:
+  git_revision: 32b4f33a71b846acf59b96b7da7282f293ea2165
+  state: git_commit
+  inputs:
+  - path: INFRA_TASKS.md
+    sha256: 8393fd14c2c14e94415284edce027f2365cdc11d34db1a8fa65c4843240bfc38
+    role: context
+  - path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+    sha256: d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52
+    role: target
+  - path: scripts/seed_cdd.py
+    sha256: 09dfcecfb251e8b86a9b15de1a07e63c5c28fcd81ca5f4a13c91f32091729274
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Full single-record scientific review of CDD:cd00104 covering identity,
+    axis/category placement, hierarchy, protein examples, literature evidence, prose
+    accuracy, and writer ownership.
+  selection: Selected from the frozen 12-record Stage 4 CDD SEQ_DOMAIN inventory as
+    the representative promoted record with three qualified canonical examples and
+    an upstream CDD definition defect tracked in INFRA_TASKS.md (proteintraitsmech-infra-0003).
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - CDD:cd00104
+targets:
+- target_id: CDD:cd00104
+  path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  label: Kazal-type serine protease inhibitors and follistatin-like domains
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/trait_record_writer.py
+    role: Guarded validated record writer
+checks:
+- check_id: schema
+  name: Strict LinkML and OAK ontology-binding validation
+  command: .venv/bin/python scripts/validate_strict.py --out /tmp/instance_validation_failures.tsv
+    data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Record passes closed LinkML schema validation and OAK term-label bindings
+    with 0 errors.
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+- check_id: semantic
+  name: Release-pinned UniProt grounding and binding replay
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py --out /tmp/uniprot_grounding_validation.tsv
+    data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: All 3 QUALIFIED human canonical examples (P00995, P19835, Q9NQ38 across
+    8 domain occurrences) resolve against protein_registry.jsonl, occurrence_evidence.jsonl.d,
+    and 21,331 qualified_record_bindings with 0 semantic findings.
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+  - ev-cdd-batch066
+- check_id: graphs
+  name: Causal-graph structural and semantic audit
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  exit_code: 0
+  status: passed
+  required: false
+  summary: Record has no causal_graphs block (0 graphs, 0 errors); absence is expected
+    for uncurated CDD sequence domain records.
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+- check_id: writer-audit
+  name: Registered write-route audit
+  command: .venv/bin/python scripts/audit_writers.py
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 616 scripts examined with 0 unguarded writer findings.
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-seed-cdd
+evidence:
+- evidence_id: ev-cd00104-yaml
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  locator: id, label, definition, parent_traits, canonical_examples, evidence
+  accessed_at: '2026-10-22T05:10:00Z'
+  snapshot_sha256: d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52
+  support: partial
+  quote: Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin,
+    avian ovomucoids, and elastases; Kazal-like domains are also seen in the extracellular
+    part of agrins, which are not known to be protease inhibitors.
+  summary: Record identity, InterPro:IPR002350 parent, PMID:6192856 evidence, and
+    3 QUALIFIED human examples are well-formed, but definition contains the 'chyomotrypsin'
+    typo and mislists 'avian ovomucoids' as inhibited serine proteases.
+- evidence_id: ev-pmid-6192856
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/6192856/
+  locator: PMID:6192856 (Bolognesi et al., 1982, J Mol Biol 162:839-868)
+  accessed_at: '2026-10-22T05:12:00Z'
+  support: supports
+  quote: Three-dimensional structure of the complex between the serine proteinase,
+    Streptomyces griseus proteinase B, and the third domain of the Kazal-type ovomucoid
+    inhibitor from turkey
+  summary: Primary structural citation confirms that avian ovomucoids are Kazal-type
+    serine protease inhibitor proteins whose Kazal domains bind and inhibit serine
+    proteases such as trypsin, chymotrypsin, and elastases.
+- evidence_id: ev-cdd-batch066
+  kind: record_content
+  reference: INFRA_TASKS.md
+  locator: proteintraitsmech-infra-0003 (Stage 3 CDD batch 066of128 notes for CDD:cd00104)
+  accessed_at: '2026-10-22T05:14:00Z'
+  snapshot_sha256: 8393fd14c2c14e94415284edce027f2365cdc11d34db1a8fa65c4843240bfc38
+  support: supports
+  summary: Stage 3 grounding review promoted P00995 (SPINK1 25-79), P19835 (CEL 46-91),
+    and Q9NQ38 (SPINK5 6 repeats) for CDD:cd00104 while logging the upstream CDD 'chyomotrypsin'
+    and 'avian ovomucoids' wording defect in INFRA_TASKS.md.
+- evidence_id: ev-seed-cdd
+  kind: record_content
+  reference: scripts/seed_cdd.py
+  locator: seed_cdd()
+  accessed_at: '2026-10-22T05:15:00Z'
+  snapshot_sha256: 09dfcecfb251e8b86a9b15de1a07e63c5c28fcd81ca5f4a13c91f32091729274
+  support: supports
+  summary: scripts/seed_cdd.py copies raw description text directly from cddid_all.tbl
+    and lacks an accession-keyed errata table to preserve definition corrections across
+    reseeding.
+assessments:
+- assessment_id: identity-and-hierarchy
+  area: identity
+  topic: Class-level conserved domain identity and InterPro hierarchy
+  outcome: supported
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+  - ev-pmid-6192856
+  summary: CDD:cd00104 is a valid class-level sequence domain trait (SEQ_DOMAIN on
+    SEQUENCE) representing the Kazal-type serine protease inhibitor and follistatin-like
+    domain family (short_name KAZAL_FS), anchored to parent InterPro:IPR002350 and
+    SO:0000417.
+- assessment_id: grounding-and-evidence
+  area: grounding
+  topic: Qualified human UniProt canonical examples and literature support
+  outcome: supported
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+  - ev-pmid-6192856
+  - ev-cdd-batch066
+  summary: All three human canonical examples (P00995 SPINK1, P19835 CEL, Q9NQ38 SPINK5)
+    are QUALIFIED against UniProt release 2026_01 and InterPro 107.0 with exact domain
+    intervals and valid PMID:6192856 ECO:0000305 evidence.
+- assessment_id: definition-prose
+  area: consistency
+  topic: Upstream CDD definition spelling and inhibitor-vs-target category error
+  outcome: concern
+  target_ids:
+  - CDD:cd00104
+  evidence_ids:
+  - ev-cd00104-yaml
+  - ev-pmid-6192856
+  - ev-seed-cdd
+  summary: The definition contains 'chyomotrypsin' (typo for 'chymotrypsin') and lists
+    'avian ovomucoids' as an example of serine proteases inhibited by Kazal inhibitors,
+    whereas avian ovomucoids are themselves classic multi-domain Kazal-type serine
+    protease inhibitors.
+findings:
+- finding_id: F1
+  issue_key: cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion
+  category: consistency
+  severity: minor
+  status: open
+  certainty: confirmed
+  title: CDD:cd00104 definition misspells chymotrypsin and lists avian ovomucoids
+    as target serine proteases
+  description: In data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml,
+    the upstream CDD definition states 'Kazal inhibitors inhibit serine proteases,
+    such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases'. First, 'chyomotrypsin'
+    is a typographical error for 'chymotrypsin'. Second, avian ovomucoids are Kazal-type
+    serine protease inhibitor proteins (as shown by the record's own cited reference
+    PMID:6192856), not target serine proteases. Because CDD:cd00104 has 3 promoted
+    QUALIFIED canonical examples bound in data/grounding/qualified_record_bindings.jsonl.d/,
+    repairing the definition in Stage 5 requires updating scripts/seed_cdd.py via
+    a guarded CDD errata module and re-binding the record SHA-256.
+  target_ids:
+  - CDD:cd00104
+  field_paths:
+  - data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml#/definition
+  evidence_ids:
+  - ev-cd00104-yaml
+  - ev-pmid-6192856
+  - ev-cdd-batch066
+  - ev-seed-cdd
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/trait_record_writer.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+actions:
+- action_id: repair-cd00104-definition-and-rebind
+  description: Add an accession-specific erratum for CDD:cd00104 in a shared CDD errata
+    module wired into scripts/seed_cdd.py and a registered repair script, correcting
+    'chyomotrypsin' to 'chymotrypsin' and clarifying that avian ovomucoids are canonical
+    Kazal-type inhibitors rather than target proteases, then refresh the record's
+    qualified_record_bindings.jsonl.d receipt.
+  finding_ids:
+  - F1
+  target_ids:
+  - CDD:cd00104
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/trait_record_writer.py
+    role: Guarded validated record writer
+  acceptance_checks:
+  - CDD:cd00104 definition spells 'chymotrypsin' accurately and distinguishes Kazal
+    inhibitor proteins (including avian ovomucoids) from target serine proteases.
+  - scripts/seed_cdd.py replays the erratum deterministically so reseeding preserves
+    the curated definition.
+  - scripts/validate_strict.py and scripts/validate_uniprot_grounding.py pass with
+    0 findings after updating the record binding.
+limitations:
+- This single-record review covers CDD:cd00104 only; the remaining 11 records in the
+  Stage 4 frozen CDD inventory are reviewed in the companion category bundle 20261022T052300Z-cdd-stage3-domain-cohort-review.
+- No edits to data/traits/ were performed in Stage 4; finding F1 is preserved open
+  for Stage 5 grouped remediation.
+links:
+- https://github.com/CultureBotAI/proteintraitsmech/issues/605
