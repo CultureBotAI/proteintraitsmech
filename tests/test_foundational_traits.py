@@ -223,3 +223,40 @@ def test_foundational_trait_parent_traits_resolve_to_corpus_records():
             assert data["identifier"] == parent
 
 
+def test_cycle2_stage1_records_have_verified_pmids_and_initiator_met_hierarchy():
+    """Cycle 2 Stage 1 foundational traits have verified PMIDs, resolved recipes, and non-contradictory hierarchy."""
+    cycle2_specs = {spec.identifier: spec for spec in sft.SPECS[66:]}
+    assert len(cycle2_specs) == 18
+
+    assert cycle2_specs["proteintraitsmech:INIT_METHIONINE_EXCISED"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",
+    )
+    assert cycle2_specs["proteintraitsmech:INIT_METHIONINE_RETAINED"].parent_traits == ()
+    assert cycle2_specs["proteintraitsmech:INIT_METHIONINE_FORMYLATED_NME"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",
+    )
+    assert cycle2_specs["proteintraitsmech:INIT_METHIONINE_ACETYLATED"].parent_traits == (
+        "proteintraitsmech:INIT_METHIONINE_RETAINED",
+    )
+
+    for spec in cycle2_specs.values():
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for m in data.get("detection_methods") or []:
+            assert "{pat}" not in m["recipe"], f"{spec.identifier} recipe still contains unresolved {{pat}}"
+            ref = m["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for ev in data.get("evidence") or []:
+            ref = ev["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for cg in data.get("causal_graphs") or []:
+            for edge in cg.get("edges") or []:
+                for ev in edge.get("evidence") or []:
+                    ref = ev["reference"]
+                    if ref.startswith("PMID:"):
+                        assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+
+
+

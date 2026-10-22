@@ -7,8 +7,6 @@ trait_axis: SEQUENCE
 trait_category: SEQ_INITIATOR_METHIONINE
 term_kind: CLASS
 mapping_status: SEEDED
-parent_traits:
-  - proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
 synonyms:
   - synonym_text: "uncleaved initiator methionine site"
     synonym_type: EXACT_SYNONYM
@@ -21,13 +19,13 @@ xrefs:
   - GO:0006413
 sequence_pattern: "^M[RNDQEHLKMFPWYI]"
 detection_methods:
-  - name: "TermiNator / EMBOSS fuzzpro penultimate-residue N-terminal methionine excision scan"
+  - name: "TermiNator / EMBOSS fuzzpro bulky penultimate-residue N-terminal methionine retention scan"
     method_type: SEQUENCE_PATTERN
     edam_operation: EDAM:operation_0422
     tool: "biotools:emboss"
     evidence_code: ECO:0000255
     reference: PMID:2682640
-    recipe: "fuzzpro -sequence {input} -pattern '{pat}' -outfile {output}"
+    recipe: "fuzzpro -sequence {input} -pattern '^M[RNDQEHLKMFPWYI]' -outfile {output}"
 causal_graphs:
   - graph_id: CG_INIT_METHIONINE_RETAINED
     title: "Steric exclusion of bulky penultimate residues from methionyl-aminopeptidase retains N-terminal Met1"

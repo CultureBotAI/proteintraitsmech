@@ -269,14 +269,32 @@ M_GO_COMPLEX = MethodSpec(
     reference="PMID:24451626",
     recipe="interproscan.sh -i {input} -goterms -f tsv -o {output}",
 )
-M_MAP_NME = MethodSpec(
+M_MAP_NME_EXCISED = MethodSpec(
     name="TermiNator / EMBOSS fuzzpro penultimate-residue N-terminal methionine excision scan",
     method_type="SEQUENCE_PATTERN",
     edam_operation="EDAM:operation_0422",
     tool="biotools:emboss",
     evidence_code="ECO:0000255",
     reference="PMID:2682640",
-    recipe="fuzzpro -sequence {input} -pattern '{pat}' -outfile {output}",
+    recipe="fuzzpro -sequence {input} -pattern '^M[GASPTVC]' -outfile {output}",
+)
+M_MAP_NME_RETAINED = MethodSpec(
+    name="TermiNator / EMBOSS fuzzpro bulky penultimate-residue N-terminal methionine retention scan",
+    method_type="SEQUENCE_PATTERN",
+    edam_operation="EDAM:operation_0422",
+    tool="biotools:emboss",
+    evidence_code="ECO:0000255",
+    reference="PMID:2682640",
+    recipe="fuzzpro -sequence {input} -pattern '^M[RNDQEHLKMFPWYI]' -outfile {output}",
+)
+M_FMET_PDF = MethodSpec(
+    name="N-terminal initiator fMet / peptide deformylase substrate scan",
+    method_type="SEQUENCE_PATTERN",
+    edam_operation="EDAM:operation_0239",
+    tool="biotools:emboss",
+    evidence_code="ECO:0000255",
+    reference="PMID:18718933",
+    recipe="fuzzpro -sequence {input} -pattern '^M[ACDEFGHIKLMNPQRSTVWY]' -outfile {output}",
 )
 M_NAT_PRED = MethodSpec(
     name="NetAcet / N-terminal acetyltransferase (NatB/NatC/NatE) substrate motif scan",
@@ -285,7 +303,16 @@ M_NAT_PRED = MethodSpec(
     tool="biotools:netacet",
     evidence_code="ECO:0000255",
     reference="PMID:27498224",
-    recipe="fuzzpro -sequence {input} -pattern '^M[DENQFLIWY]' -outfile {output}",
+    recipe="fuzzpro -sequence {input} -pattern '^M[DENQFLIWYKM]' -outfile {output}",
+)
+M_TARGETP2_V2 = MethodSpec(
+    name="TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor",
+    method_type="ML_PREDICTOR",
+    edam_operation="EDAM:operation_2489",
+    tool="biotools:targetp",
+    evidence_code="ECO:0000255",
+    reference="PMID:31601689",
+    recipe="targetp -fasta {input} -org pl -format short -prefix {output}",
 )
 M_INTEIN = MethodSpec(
     name="InterProScan / Pfam Hint-domain & intein splice-junction HMM scan",
@@ -4262,7 +4289,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 "Extent of N-terminal methionine excision by methionyl-aminopeptidase is governed by the maximal side-chain length of the penultimate amino acid.",
             ),
         ),
-        detection_methods=(M_MAP_NME,),
+        detection_methods=(M_MAP_NME_EXCISED,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_INIT_METHIONINE_EXCISED",
@@ -4349,7 +4376,7 @@ SPECS: tuple[TraitSpec, ...] = (
         ),
         trait_axis="SEQUENCE",
         trait_category="SEQ_INITIATOR_METHIONINE",
-        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        parent_traits=(),
         synonyms=(
             ("uncleaved initiator methionine site", "EXACT_SYNONYM"),
             ("MetAP-resistant N-terminal Met1 site", "EXACT_SYNONYM"),
@@ -4363,7 +4390,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 "Increasing maximal side-chain length of the penultimate amino acid abolishes methionyl-aminopeptidase cleavage, resulting in N-terminal methionine retention.",
             ),
         ),
-        detection_methods=(M_MAP_NME,),
+        detection_methods=(M_MAP_NME_RETAINED,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_INIT_METHIONINE_RETAINED",
@@ -4464,12 +4491,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 "PMID:18718933",
                 "Removal of the N-formyl group from N-formylmethionine by peptide deformylase is essential to allow subsequent excision of the first methionine by methionyl-aminopeptidase.",
             ),
-            (
-                "PMID:42079159",
-                "Peptide deformylase (PDF, EC 3.5.1.88) removes the formyl group from N-formylmethionine on nascent bacterial polypeptides.",
-            ),
         ),
-        detection_methods=(M_FMET,),
+        detection_methods=(M_FMET_PDF,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_INIT_METHIONINE_FORMYLATED_NME",
@@ -4518,14 +4541,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="enables",
                         object="GO:0008463",
                         description="Nascent N-formyl-L-methionine at position 1 serves as the substrate for peptide deformylase.",
-                        reference="PMID:42079159",
+                        reference="PMID:18718933",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The def gene encodes peptide deformylase (PDF, EC:3.5.1.88), an "
-                            "enzyme that contributes to protein processing by removing the "
-                            "formyl group from N-formylmethionine (fMet) on nascent peptides."
+                            "Because protein synthesis begins with N-formylmethionine in plant "
+                            "endosymbiotic organelles, removal of the formyl group by peptide "
+                            "deformylase (PDF) is essential to allowing the excision of the "
+                            "first methionine."
                         ),
-                        notes="Peptide deformylase removes the formyl group from nascent fMet (PMID:42079159).",
+                        notes="Peptide deformylase removes the formyl group from nascent fMet (PMID:18718933).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0008463",
@@ -4572,20 +4596,20 @@ SPECS: tuple[TraitSpec, ...] = (
             "A retained N-terminal initiator methionine position (Met1) that is co- or "
             "post-translationally acetylated on its alpha-amino group by N-terminal "
             "acetyltransferase complexes (primarily NatB on Met-Asp/Glu/Asn/Gln N-termini and "
-            "NatC/NatE/NatF on Met-Leu/Ile/Phe/Tyr/Lys/Met N-termini) to form "
+            "NatC/NatE/NatF on Met-Leu/Ile/Phe/Trp/Tyr/Lys/Met N-termini) to form "
             "N-acetyl-L-methionine (MOD:00058), regulating protein folding, complex assembly, "
             "subcellular targeting, and Ac/N-degron-mediated turnover."
         ),
         trait_axis="SEQUENCE",
         trait_category="SEQ_INITIATOR_METHIONINE",
-        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        parent_traits=("proteintraitsmech:INIT_METHIONINE_RETAINED",),
         synonyms=(
             ("NatB/NatC-acetylated initiator Met1 site", "EXACT_SYNONYM"),
             ("Nt-acetylated initiator methionine", "EXACT_SYNONYM"),
             ("Ac-Met1 N-terminal modification site", "RELATED_SYNONYM"),
         ),
         xrefs=("MOD:00058", "GO:0004596", "GO:0006474"),
-        sequence_pattern="^M[DENQFLIWY]",
+        sequence_pattern="^M[DENQFLIWYKM]",
         evidence=(
             (
                 "PMID:27498224",
@@ -4601,23 +4625,16 @@ SPECS: tuple[TraitSpec, ...] = (
                     "Retained initiator methionine residues followed by acidic/polar (NatB) or "
                     "hydrophobic/amphipathic (NatC/NatE/NatF) penultimate residues are recognized "
                     "by protein-N-terminal amino-acid acetyltransferases (GO:0004596), driving "
-                    "N-terminal protein amino acid acetylation (GO:0006474) to form "
+                    "N-terminal protein amino acid acetylation (GO:0006474) to generate "
                     "N-acetyl-L-methionine (MOD:00058) and modulate protein folding (GO:0006457)."
                 ),
                 nodes=(
-                    CausalNodeSpec(
-                        node_id="MOD:00058",
-                        label="N-acetyl-L-methionine",
-                        node_type="PTM",
-                        grounding="MOD:00058",
-                        description="N-terminal initiator methionine modified to N-acetyl-L-methionine (MOD:00058) by N-terminal acetyltransferases",
-                    ),
                     CausalNodeSpec(
                         node_id="GO:0004596",
                         label="protein-N-terminal amino-acid acetyltransferase activity",
                         node_type="MOLECULAR_FUNCTION",
                         grounding="GO:0004596",
-                        description="Catalytic activity of N-terminal acetyltransferase complexes (NatB, NatC, NatE, NatF) transferring an acetyl group from acetyl-CoA to the alpha-amino group of Met1",
+                        description="Catalytic activity of N-terminal acetyltransferase complexes (NatB, NatC, NatE, NatF) transferring an acetyl group from acetyl-CoA to the alpha-amino group of retained Met1",
                     ),
                     CausalNodeSpec(
                         node_id="GO:0006474",
@@ -4625,6 +4642,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         node_type="BIOLOGICAL_PROCESS",
                         grounding="GO:0006474",
                         description="Co- or post-translational acetylation of the N-terminal initiator methionine",
+                    ),
+                    CausalNodeSpec(
+                        node_id="MOD:00058",
+                        label="N-acetyl-L-methionine",
+                        node_type="PTM",
+                        grounding="MOD:00058",
+                        description="N-terminal initiator methionine modified to N-acetyl-L-methionine (MOD:00058) by N-terminal acetyltransferases",
                     ),
                     CausalNodeSpec(
                         node_id="GO:0006457",
@@ -4636,27 +4660,11 @@ SPECS: tuple[TraitSpec, ...] = (
                 ),
                 edges=(
                     CausalEdgeSpec(
-                        subject="MOD:00058",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
-                        object="GO:0004596",
-                        description="Retained Met1 N-terminal motif serves as the recognition substrate for N-terminal acetyltransferase complexes.",
-                        reference="PMID:27498224",
-                        evidence_code="ECO:0000305",
-                        snippet=(
-                            "N-terminal (Nt) acetylation is known to be a highly abundant "
-                            "co-translational protein modification, but the recent discovery of "
-                            "Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) "
-                            "revealed that it can also be added post-translationally."
-                        ),
-                        notes="NAT complexes recognize and acetylate N-terminal initiator residues (PMID:27498224).",
-                    ),
-                    CausalEdgeSpec(
                         subject="GO:0004596",
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0006474",
-                        description="N-terminal acetyltransferase activity catalyzes N-terminal protein amino acid acetylation.",
+                        description="N-terminal acetyltransferase (NatB/NatC/NatE/NatF) activity catalyzes co- and post-translational N-terminal protein amino acid acetylation of retained Met1.",
                         reference="PMID:27498224",
                         evidence_code="ECO:0000305",
                         snippet=(
@@ -4669,10 +4677,26 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006474",
-                        predicate="RO:0002213",
-                        predicate_label="positively regulates",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="MOD:00058",
+                        description="N-terminal acetylation of retained initiator methionine yields an N-acetyl-L-methionine (MOD:00058) residue at position 1.",
+                        reference="PMID:27498224",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "N-terminal (Nt) acetylation is known to be a highly abundant "
+                            "co-translational protein modification, but the recent discovery of "
+                            "Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) "
+                            "revealed that it can also be added post-translationally."
+                        ),
+                        notes="N-terminal acetylation generates N-acetyl-L-methionine at the N-terminus (PMID:27498224).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="MOD:00058",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
                         object="GO:0006457",
-                        description="N-terminal acetylation modulates protein folding, targeting, and protein-protein interactions.",
+                        description="The N-acetyl-L-methionine modification at the N-terminus modulates protein folding, subcellular targeting, and protein-protein interactions.",
                         reference="PMID:27498224",
                         evidence_code="ECO:0000305",
                         snippet="Nt-acetylation also modulates protein interactions, targeting, and folding.",
@@ -5114,7 +5138,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 "The mitochondrial inner membrane protease (Imp1p/Imp2p) catalyzes cleavage of intermembrane space sorting signals for maturation of proteins delivered to the mitochondrial intermembrane space.",
             ),
         ),
-        detection_methods=(M_TARGETP2,),
+        detection_methods=(M_TARGETP2_V2,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_TRANSIT_PEPTIDE_MITO_IMS",
@@ -5212,7 +5236,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 "Protein targeting to the four-membrane-bound apicoplast of Plasmodium falciparum is a two-step process mediated by bipartite N-terminal pre-sequences consisting of a signal peptide and a plant-like transit peptide removed stepwise.",
             ),
         ),
-        detection_methods=(M_TARGETP2,),
+        detection_methods=(M_TARGETP2_V2,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_TRANSIT_PEPTIDE_APICOPLAST",
@@ -5306,7 +5330,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 "Proteins targeted into Giardia mitosomes and Trichomonas hydrogenosomes carry conserved N-terminal targeting presequences recognized by a shared TIM/processing-peptidase import machinery.",
             ),
         ),
-        detection_methods=(M_TARGETP2,),
+        detection_methods=(M_TARGETP2_V2,),
         causal_graphs=(
             CausalGraphSpec(
                 graph_id="CG_TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME",
