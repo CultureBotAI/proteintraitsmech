@@ -1,0 +1,43 @@
+schema_version: '1.0.0'
+repository_key: proteintraitsmech
+github_repository: CultureBotAI/proteintraitsmech
+run_id: mech-goal-sequence-20261019
+cycle: 1
+stage: 6
+revision: 1
+outcome: completed
+summary: 'Froze INFRA_TASKS.md at 2026-10-22T11:14:52Z (sha256 8393fd14c2c14e94415284edce027f2365cdc11d34db1a8fa65c4843240bfc38) across 3 tasks; resolved proteintraitsmech-infra-0003 (#605, #1172) by repairing CDD:cd00104 and CDD:cd00959 with transactional receipt re-binding, restoring read-only legacy v1 signature-only return_fields verification in fetch_uniprot_registry.py, and re-resolving/finalizing/promoting all 12 held Homo sapiens and Saccharomyces cerevisiae examples across the 10 repaired CDD records in batches 058of128 and 066of128; explicitly deferred network-fetch-gated and source-limited tasks proteintraitsmech-infra-0001 (#1114) and proteintraitsmech-infra-0002 (#652).'
+source_revision: 57a5803fe5f419dc54111fe0e6f4e64acfa04ea0
+scope_frozen_at: '2026-10-22T11:14:52Z'
+artifacts:
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/infra_snapshot.md
+  sha256: 8393fd14c2c14e94415284edce027f2365cdc11d34db1a8fa65c4843240bfc38
+  kind: infra_snapshot
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/implementation_plan.md
+  sha256: 4e3b80b17e751c37a790abfd14c627c551413f7ab693453e002f30d9ced5f1f6
+  kind: implementation_plan
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/validation.md
+  sha256: dcd095ee98611534349d5133794c478ac4f9f9890aca1eca41b19d9c166f70aa
+  kind: validation
+findings: []
+groups: []
+carry_forward_ids: []
+infra_tasks:
+- task_id: proteintraitsmech-infra-0001
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+  status: deferred
+  summary: 'Re-fetch cross-mech-complex-20261013 under v2 UniProt receipt with fragment status and re-resolve CPX-2267 after #1122 chemistry repair so ComplexPortal mechanism-graph subunit examples can be promoted.'
+  disposition: 'Blocked on live UniProt REST v2 fetch-generation refresh for cross-mech-complex-20261013 (to populate ProteinReference.fragment required by #1081/#1084) and independent scientific sign-off on the 36-candidate ComplexPortal partition (#1114, #1115, #1116).'
+- task_id: proteintraitsmech-infra-0002
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/652
+  status: deferred
+  summary: 'Acquire receipt-locked UniProt REST membership snapshots and expanded residue_frame.json sequences for mechanism-graph sources (RHEA, GO, M-CSA, ARO) and fail-closed signature/structure sources (SFLD, PRINTS, ECOD/SIFTS).'
+  disposition: 'Source-limited and network-fetch-gated: RHEA (34,578 mechanism records) and GO (45,931 records) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded active-site mechanism records) lacks residue_frame.json sequences; ARO (1,539 mechanism records) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
+- task_id: proteintraitsmech-infra-0003
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/605
+  status: resolved
+  summary: 'Repair upstream CDD definition defects on 10 held CDD records (cd13344, cd14999, cd15894, cd17150, cd09530, cd16523, cd16652, cd18592, cd20534, cd21551) and re-resolve their 12 held UniProt candidate examples.'
+  resolution_evidence:
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/implementation_plan.md
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/validation.md
+  disposition: 'Resolved in Cycle 1 Stages 5-6 (#1172, PR #1173): repaired upstream CDD prose defects on all 10 held CDD records plus CDD:cd00104 and CDD:cd00959 (with transactional re-binding of 41 durable qualified_record_bindings receipts), restored read-only v1 signature-only fetch receipt verification in scripts/fetch_uniprot_registry.py, re-resolved batches 058of128 and 066of128, and promoted all 12 held Homo sapiens and Saccharomyces cerevisiae examples across the 10 repaired CDD records.'

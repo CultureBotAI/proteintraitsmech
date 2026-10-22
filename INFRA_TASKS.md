@@ -46,9 +46,9 @@ tasks:
   disposition: 'Source-limited and network-fetch-gated: RHEA (34,578 mechanism records) and GO (45,931 records) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded active-site mechanism records) lacks residue_frame.json sequences; ARO (1,539 mechanism records) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
 - task_id: proteintraitsmech-infra-0003
   summary: 'Repair upstream CDD definition defects on 10 held CDD records (cd13344, cd14999, cd15894, cd17150, cd09530, cd16523, cd16652, cd18592, cd20534, cd21551) and re-resolve their 12 held UniProt candidate examples.'
-  status: open
+  status: resolved
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/605
-  disposition: 'Held at Stage 3 review per ground-protein-example fail-closed policy due to upstream CDD prose defects (paralog/family conflation, conflicting receptor/nomenclature aliases, substrate/degradation-pathway errors, or methylation-scope conflation); requires guarded definition repair and fresh resolution before promotion.'
+  disposition: 'Resolved in Cycle 1 Stages 5-6 (#1172, PR #1173): repaired upstream CDD prose defects on all 10 held CDD records plus CDD:cd00104 and CDD:cd00959 (with transactional re-binding of 41 durable qualified_record_bindings receipts), restored read-only v1 signature-only fetch receipt verification in scripts/fetch_uniprot_registry.py, re-resolved batches 058of128 and 066of128, and promoted all 12 held Homo sapiens and Saccharomyces cerevisiae examples across the 10 repaired CDD records.'
 ```
 <!-- mech-infra-tasks:end -->
 
@@ -100,28 +100,32 @@ tasks:
 ### `proteintraitsmech-infra-0003` — Remediate upstream CDD prose defects on 10 held `CDD` records before promoting their 12 held candidates
 
 - **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 1, Stage 3 (`protein_examples`, `goal-3006`)
-- **Status**: `open`
-- **Issue**: https://github.com/CultureBotAI/proteintraitsmech/issues/605 (batch tracking in https://github.com/CultureBotAI/proteintraitsmech/issues/1167)
+- **Status**: `resolved`
+- **Issue**: https://github.com/CultureBotAI/proteintraitsmech/issues/605 (batch tracking in https://github.com/CultureBotAI/proteintraitsmech/issues/1167; remediation tracked in https://github.com/CultureBotAI/proteintraitsmech/issues/1172 / PR #1173)
 - **Priority**: P2
-- **Dependencies**: Guarded trait-definition curation repair (`scripts/trait_record_writer.py`) and fresh `scripts/ground_uniprot_examples.py resolve` run on the 10 updated records
+- **Dependencies**: Guarded trait-definition curation repair (`scripts/trait_record_writer.py`, `scripts/cdd_errata.py`, `scripts/repair_cdd_errata.py`) and fresh `scripts/ground_uniprot_examples.py resolve` + `promote` run on the updated records
 - **Observation**:
-  - During Stage 3 review and promotion of `human-ecoli-yeast-complete-cdd-066of128` (`147` approved examples promoted across `69` records out of `294` decision rows across `91` records) and `human-ecoli-yeast-complete-cdd-058of128` (`136` approved examples promoted across `71` records out of `289` decision rows across `104` records), **12 target-taxon (`Homo sapiens` / `Saccharomyces cerevisiae`) candidate rows across 10 `CDD` records** were held (`REJECTED` in the batch partition with `HOLD_PROSE_REVIEW` / `HOLD_FOR_PROSE_CURATION` notes, alongside non-target-taxon `DEFER_OUTSIDE_TARGET_TAXA` and pre-existing `DEFER_ALREADY_SATISFIED` rows) per `.claude/skills/ground-protein-example/SKILL.md` because their seeded upstream CDD definitions have biological/prose defects that would invalidate preimage hashes if edited mid-promotion:
+  - During Stage 3 review and promotion of `human-ecoli-yeast-complete-cdd-066of128` (`147` approved examples promoted across `69` records out of `294` decision rows across `91` records) and `human-ecoli-yeast-complete-cdd-058of128` (`136` approved examples promoted across `71` records out of `289` decision rows across `104` records), **12 target-taxon (`Homo sapiens` / `Saccharomyces cerevisiae`) candidate rows across 10 `CDD` records** were held (`REJECTED` in the batch partition with `HOLD_PROSE_REVIEW` / `HOLD_FOR_PROSE_CURATION` notes, alongside non-target-taxon `DEFER_OUTSIDE_TARGET_TAXA` and pre-existing `DEFER_ALREADY_SATISFIED` rows) per `.claude/skills/ground-protein-example/SKILL.md` because their seeded upstream CDD definitions had biological/prose defects that would invalidate preimage hashes if edited mid-promotion:
     - Batch `066of128` (**4 held CDD records, 4 target-taxon candidate rows**):
-      1. `CDD:cd13344` (`1` candidate: `UniProtKB:Q9Y216`, human MTMR7 at `29-113`): MTMR7 PH-GRAM record switches to MTMR6 binding/activity wording (`HOLD_PROSE_REVIEW`).
-      2. `CDD:cd14999` (`1` candidate: `UniProtKB:Q9UKP6`, human UTS2R at `53-337`): source-derived urotensin-II receptor definition gives a conflicting hypocretin-receptor alias (`HOLD_PROSE_REVIEW`).
-      3. `CDD:cd15894` (`1` candidate: `UniProtKB:P60880`, human SNAP25 at `19-81`): generalizes a transmembrane domain to Qb/Qc SNARE proteins whereas SNAP25 has two SNARE domains and palmitoylation (`HOLD_PROSE_REVIEW`).
-      4. `CDD:cd17150` (`1` candidate: `UniProtKB:A2VCK2`, human DCDC2B at `17-102`): DCDC2B-specific first-domain record switches to DCDC2 gene/disease prose and starts with typo `Dublecortin-like domain 1` (`HOLD_PROSE_REVIEW`).
+      1. `CDD:cd13344` (`1` candidate: `UniProtKB:Q9Y216`, human MTMR7 at `1-103`): MTMR7 PH-GRAM record switched to MTMR6 binding/activity wording (`HOLD_PROSE_REVIEW`).
+      2. `CDD:cd14999` (`1` candidate: `UniProtKB:Q9UKP6`, human UTS2R at `53-326`): source-derived urotensin-II receptor definition gave a conflicting hypocretin-receptor alias (`HOLD_PROSE_REVIEW`).
+      3. `CDD:cd15894` (`1` candidate: `UniProtKB:P60880`, human SNAP25 at `10-82`): generalized a transmembrane domain to Qb/Qc SNARE proteins whereas SNAP25 has two SNARE domains and palmitoylation (`HOLD_PROSE_REVIEW`).
+      4. `CDD:cd17150` (`1` candidate: `UniProtKB:A2VCK2`, human DCDC2B at `9-87`): DCDC2B-specific first-domain record switched to DCDC2 gene/disease prose and started with typo `Dublecortin-like domain 1` (`HOLD_PROSE_REVIEW`).
     - Batch `058of128` (**6 held CDD records, 8 target-taxon candidate rows**):
       1. `CDD:cd09530` (`1` candidate: `UniProtKB:Q9P1V8`, human SAMD15/FAM15A at `543-609`): `SAM_Samd14` / `"SAM domain of SAMD14 subfamily"` nomenclature conflict with its sole human match `SAMD15` (`HGNC:18631`, whereas human `SAMD14` `Q8IZD0` matches `cd09512`; `HOLD_FOR_PROSE_CURATION`).
-      2. `CDD:cd16523` (`1` candidate: `UniProtKB:Q8WY64`, human MYLIP/IDOL at `383-434`): sentence 2 claims blanket proteasomal degradation of MRLC, LDLR, VLDLR, and LRP8, contradicting sentence 4 and primary literature (`DOI:10.1074/jbc.M110.123729`) showing lysosomal MVB degradation of LDLR/VLDLR/LRP8 (`HOLD_FOR_PROSE_CURATION`).
+      2. `CDD:cd16523` (`1` candidate: `UniProtKB:Q8WY64`, human MYLIP/IDOL at `383-434`): sentence 2 claimed blanket proteasomal degradation of MRLC, LDLR, VLDLR, and LRP8, contradicting sentence 4 and primary literature (`DOI:10.1074/jbc.M110.123729`) showing lysosomal MVB degradation of LDLR/VLDLR/LRP8 (`HOLD_FOR_PROSE_CURATION`).
       3. `CDD:cd16652` (`1` candidate: `UniProtKB:Q12508`, yeast RMD5/GID2 at `359-406`): malformed substrate prose (`"fructose-1, 6-bisphosphate by fructose-1, 6-bisphosphatase"`) in enzyme list (`HOLD_FOR_PROSE_CURATION`).
-      4. `CDD:cd18592` (`3` candidates: `UniProtKB:O15440` ABCC5 at `181-467`, `UniProtKB:Q96J66` ABCC11 at `165-451`, `UniProtKB:Q96J65` ABCC12 at `125-411`): upstream CDD prose conflates `MRP7` (`ABCC10`) with `CFTR` (`ABCC7`) and overstates anticancer-drug export for `ABCC12`/`MRP9` (`HOLD_FOR_PROSE_CURATION`).
-      5. `CDD:cd20534` (`1` candidate: `UniProtKB:Q8N1B3`, human CCNQ/FAM58A at `27-128`): conflates STAR-syndrome Cyclin-M/Cyclin-Q (`CCNQ`/`FAM58A`) with the `CNNM1-4` (`ACDP`) magnesium-transporter family (`HOLD_FOR_PROSE_CURATION`).
-      6. `CDD:cd21551` (`1` candidate: `UniProtKB:Q15022`, human SUZ12 at `563-684`): conflates SUZ12's indirect H3K9 effect (`DOI:10.1007/s10577-007-1126-1`) with PRC2/EZH2 H3K27me3 catalysis (`HOLD_FOR_PROSE_CURATION`).
-  - Additionally, two promoted CDD records carry minor non-blocking upstream CDD typographical defects in `definition` (`CDD:cd00104`: `chyomotrypsin` typo and listing `avian ovomucoids` in the target protease list; `CDD:cd00959`: duplicated opening sentence) that cannot be edited without re-binding their `qualified_record_bindings.jsonl.d/` preimage hashes.
-- **Desired outcome**:
-  - Apply a guarded definition repair to the 10 held `CDD` records (and optionally `CDD:cd00104` / `CDD:cd00959` with re-binding), re-run `scripts/ground_uniprot_examples.py resolve` against the updated record preimages, and promote the 12 held `Homo sapiens` and `Saccharomyces cerevisiae` examples.
+      4. `CDD:cd18592` (`3` candidates: `UniProtKB:O15440` ABCC5 at `181-467`, `UniProtKB:Q96J66` ABCC11 at `165-451`, `UniProtKB:Q96J65` ABCC12 at `125-411`): upstream CDD prose conflated `MRP7` (`ABCC10`) with `CFTR` (`ABCC7`) and overstated anticancer-drug export for `ABCC12`/`MRP9` (`HOLD_FOR_PROSE_CURATION`).
+      5. `CDD:cd20534` (`1` candidate: `UniProtKB:Q8N1B3`, human CCNQ/FAM58A at `26-135`): conflated STAR-syndrome Cyclin-M/Cyclin-Q (`CCNQ`/`FAM58A`) with the `CNNM1-4` (`ACDP`) magnesium-transporter family (`HOLD_FOR_PROSE_CURATION`).
+      6. `CDD:cd21551` (`1` candidate: `UniProtKB:Q15022`, human SUZ12 at `563-684`): conflated SUZ12's indirect H3K9 effect (`DOI:10.1007/s10577-007-1126-1`) with PRC2/EZH2 H3K27me3 catalysis (`HOLD_FOR_PROSE_CURATION`).
+  - Additionally, two promoted CDD records carried minor non-blocking upstream CDD typographical defects in `definition` (`CDD:cd00104`: `chyomotrypsin` typo and listing `avian ovomucoids` in the target protease list; `CDD:cd00959`: duplicated opening sentence) that required transactional re-binding of their `qualified_record_bindings.jsonl.d/` preimage hashes.
+- **Resolution & Validation**:
+  - In Stage 5 ([#1172](https://github.com/CultureBotAI/proteintraitsmech/issues/1172), PR [#1173](https://github.com/CultureBotAI/proteintraitsmech/pull/1173)) and Stage 6, all 12 CDD records (`10` held + `CDD:cd00104` and `CDD:cd00959`) were added to `ERRATA` in `scripts/cdd_errata.py` and repaired via `scripts/repair_cdd_errata.py --apply` with transactional re-binding of 41 durable `qualified_record_bindings.jsonl.d/` receipts.
+  - Read-only verification of pre-#971 20-field signature-only `schema_version=1` UniProt fetch plans was restored in `scripts/fetch_uniprot_registry.py` (`LEGACY_SIGNATURE_RETURN_FIELDS`), batches `human-ecoli-yeast-complete-cdd-058of128` and `human-ecoli-yeast-complete-cdd-066of128` were re-resolved and finalized (`144` approved across `77` records in `058of128`; `151` approved across `73` records in `066of128`), and all 12 held `Homo sapiens` / `Saccharomyces cerevisiae` examples were promoted into the 10 repaired `CDD` records via `scripts/ground_uniprot_examples.py promote --apply`.
 - **Evidence paths**:
+  - `scripts/cdd_errata.py`
+  - `scripts/repair_cdd_errata.py`
+  - `scripts/fetch_uniprot_registry.py`
   - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-066of128.review-decisions.jsonl`
   - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-complete-cdd-058of128.review-decisions.jsonl`
   - `data/traits/sequence/domain/cdd/`
