@@ -31,6 +31,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import cdd_errata as errata  # noqa: E402
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -87,22 +88,33 @@ def build_yaml(acc, short, desc, category, parent):
     label = (desc_c or acc) if opaque else short
     definition = desc_c or f"NCBI CDD {KIND[category]} ({acc})."
     def_source = "NCBI CDD"
+    status = "SEEDED"
     if category == "FUNC_ORTHOLOG_GROUP":            # KOG "<acc>, name [cat]" → real def
         composed = compose_kog(desc_c)
         if composed:
             definition, def_source = composed, KOG_SOURCE
+    corrected = acc in errata.ERRATA
+    if corrected:
+        erratum = errata.ERRATA[acc]
+        if category != "SEQ_DOMAIN" or short != erratum.label:
+            raise ValueError(f"{acc}: unexpected short name or category; re-review required")
+        definition = errata.correct_description(acc, definition, parent)
+        def_source = yaml_escape(erratum.definition_source)
+        status = "PROPOSED"
     lines = [f"identifier: CDD:{acc}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines += [f"definition: {f[0]}", *f[1:]]
     lines += [f"definition_source: {def_source}", f"trait_axis: {AXIS[category]}",
               f"trait_category: {category}", "term_kind: CLASS",
-              "mapping_status: SEEDED"]
+              f"mapping_status: {status}"]
     if parent:
         lines += ["parent_traits:", f"  - CDD:{parent}"]
     if short and short != label and short != acc:
         lines += ["synonyms:",
                   f"  - synonym_text: {yaml_escape(short)}",
                   "    synonym_type: EXACT_SYNONYM", "    source: CDD"]
+    if corrected:
+        lines.extend(block.rstrip("\n") for block in errata.metadata_blocks(acc).values())
     lines.append(f"license: {LICENSE}")
     return "\n".join(lines) + "\n"
 
@@ -156,24 +168,37 @@ def main() -> int:
     sfs = sorted({parent_of[a] for a in domains if a in parent_of and parent_of[a] in info})
 
     written = skipped = 0
+    planned: list[tuple[Path, str]] = []
 
     def emit(acc, category, subdir, parent):
-        nonlocal written, skipped
+        nonlocal skipped
         short, desc = info[acc]
-        path = OUT_DIR.parent / subdir / "cdd" / f"{slugify(desc or short)}-{acc.lower()}.yaml"
+        slug_source = (
+            errata.ERRATA[acc].source_description
+            if acc in errata.ERRATA
+            else (desc or short)
+        )
+        path = OUT_DIR.parent / subdir / "cdd" / f"{slugify(slug_source)}-{acc.lower()}.yaml"
         if path.exists() and not args.force:
             skipped += 1
             return
-        if args.apply:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            write_record(path, build_yaml(acc, short, desc, category, parent))
-            written += 1
+        planned.append((path, build_yaml(acc, short, desc, category, parent)))
 
-    for sf in sfs:
-        emit(sf, "SEQ_HOMOLOGOUS_SUPERFAMILY", "sequence/homologous_superfamily", "")
-    for acc, (cat, subdir) in sorted(seedable.items()):
-        parent = parent_of.get(acc) if cat == "SEQ_DOMAIN" else ""
-        emit(acc, cat, subdir, parent if parent in info else "")
+    try:
+        for sf in sfs:
+            emit(sf, "SEQ_HOMOLOGOUS_SUPERFAMILY", "sequence/homologous_superfamily", "")
+        for acc, (cat, subdir) in sorted(seedable.items()):
+            parent = parent_of.get(acc) if cat == "SEQ_DOMAIN" else ""
+            emit(acc, cat, subdir, parent if parent in info else "")
+    except ValueError as exc:
+        print(f"FAIL: {exc}", file=sys.stderr)
+        return 1
+
+    if args.apply:
+        for path, text in planned:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            write_record(path, text)
+            written += 1
 
     n_kog = sum(1 for _, (c, _) in seedable.items() if c == "FUNC_ORTHOLOG_GROUP")
     n_fam = sum(1 for _, (c, _) in seedable.items() if c == "FUNC_PROTEIN_FAMILY")

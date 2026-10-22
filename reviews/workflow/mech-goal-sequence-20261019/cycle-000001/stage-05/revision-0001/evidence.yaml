@@ -1,0 +1,219 @@
+schema_version: 1.0.0
+repository_key: proteintraitsmech
+github_repository: CultureBotAI/proteintraitsmech
+run_id: mech-goal-sequence-20261019
+cycle: 1
+stage: 5
+revision: 1
+outcome: completed
+summary: 'Grouped all 12 Stage 4 CDD SEQ_DOMAIN review findings (F1-F12) by cause
+  and repair ownership into GitHub issues #1171 (G1: F3-F12, resolved) and #1172 (G2:
+  F1-F2, deferred pending sharded qualified_record_bindings re-binding). Implemented
+  scripts/cdd_errata.py, wired scripts/seed_cdd.py, registered scripts/repair_cdd_errata.py
+  in scripts/record_io.py, repaired all 10 G1 CDD records in place with literature-grounded
+  evidence and curation_history, validated with strict LinkML/OAK, UniProt grounding,
+  writer audit, and pytest, and recorded post-remediation structured review 20261022T081000Z-cdd-stage5-remediation-review.'
+source_revision: f80e2bf88b10d010a0f24427c3101ab501a59639
+scope_frozen_at: '2026-10-22T07:50:00Z'
+previous_evidence:
+  path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-04/revision-0001/evidence.yaml
+  sha256: 509577e3349b9946fdde2b3a8148064a1398c7a3a755ace8d1b3356a43d31c7e
+artifacts:
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/issue_map.yaml
+  sha256: c5df8b0ab69dee256a25f5b865e602e077e6b1bf98db7af3a455c2c128b820f7
+  kind: issue_map
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/validation.md
+  sha256: 0dd633d06863685563d8c56e705692e692325768d205e8ee6fbe3cd5dcadae4a
+  kind: validation
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_report.md
+  sha256: 725ed9beba1c41c66a76836d5e748d2ee676b48c9b92253e60203027634b775e
+  kind: review_report
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_findings.yaml
+  sha256: 2550ef4a4b54e1425a62e73fba5174e4f06c21a9767440825ef003e58e761c1c
+  kind: review_findings
+findings:
+- finding_id: F1
+  status: deferred
+  summary: '[cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion] CDD:cd00104
+    definition misspells chymotrypsin and lists avian ovomucoids as target serine
+    proteases'
+  group_id: G2
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  disposition: 'Authored and unit-tested the CDD:cd00104 erratum in scripts/cdd_errata.py
+    (include_all=True); in-place application to the promoted record is deferred under
+    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
+    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  carried_from: F1
+- finding_id: F2
+  status: deferred
+  summary: '[cdd-cd00959-dera-duplicated-opening-sentence] CDD:cd00959 definition
+    repeats its opening title sentence verbatim'
+  group_id: G2
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  disposition: 'Authored and unit-tested the CDD:cd00959 erratum in scripts/cdd_errata.py
+    (include_all=True); in-place application to the promoted record is deferred under
+    GitHub issue #1172 until scripts/ground_protein_examples.py supports re-binding
+    sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+  carried_from: F2
+- finding_id: F3
+  status: resolved
+  summary: '[cdd-cd09530-samd14-vs-samd15-nomenclature-conflict] CDD:cd09530 names
+    Samd14 in label/definition whereas its human carrier is SAMD15 (Q9P1V8) and human
+    SAMD14 (Q8IZD0) matches CDD:cd09512'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd09530 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): disambiguated legacy FAM15A as human SAMD15 (UniProtKB:Q9P1V8, HGNC:20263),
+    distinct from human SAMD14 in CDD:cd09512, with grounded evidence and curation_history.'
+  carried_from: F3
+- finding_id: F4
+  status: resolved
+  summary: '[cdd-cd13344-mtmr7-paralog-mtmr6-contradiction] CDD:cd13344 (PH-GRAM_MTMR7)
+    switches mid-definition to paralog MTMR6 and ends with a self-contradictory phosphoinositide-binding
+    sentence'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd13344 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): corrected ''Myotubularian'' to ''Myotubularin'', replaced misplaced MTMR6
+    text with MTMR7 PtdIns3P/Ins(1,3)P2 specificity and MTMR9 heterodimerization (PMID:11956206),
+    and resolved the trailing PH-GRAM phosphoinositide-binding sentence (PMID:14690594).'
+  carried_from: F4
+- finding_id: F5
+  status: resolved
+  summary: '[cdd-cd14999-uts2r-hypocretin-receptor-misaliasing] CDD:cd14999 erroneously
+    aliases urotensin-II receptor (UTS2R/GPR14) as the hypocretin receptor'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd14999 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171, #952): removed the false ''hypocretin receptor'' synonym (distinguishing
+    UTS2R/GPR14 from HCRTR1/HCRTR2 in CDD:cd15208) and qualified experimental mammalian
+    arterial vasoconstrictor activity (PMID:10497709).'
+  carried_from: F5
+- finding_id: F6
+  status: resolved
+  summary: '[cdd-cd15894-snap25-transmembrane-domain-overclaim] CDD:cd15894 (SNARE_SNAP25N)
+    asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 is membrane-anchored
+    via palmitoylated cysteines'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd15894 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): replaced the false transmembrane-domain claim with the accurate statement
+    that Qb/Qc SNAREs lack a transmembrane domain and SNAP25 is membrane-anchored
+    via palmitoylated cysteines in its inter-motif linker (PMID:9759094).'
+  carried_from: F6
+- finding_id: F7
+  status: resolved
+  summary: '[cdd-cd16523-mylip-proteasomal-vs-lysosomal-ldlr-degradation] CDD:cd16523
+    (RING-HC_MYLIP) sentence 2 claims proteasomal degradation of LDLR, VLDLR, and
+    LRP8, contradicting sentence 4 (lysosomal degradation)'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd16523 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): distinguished proteasomal degradation of MRLC from ESCRT/MVB-dependent
+    lysosomal degradation of the lipoprotein receptors LDLR, VLDLR, and LRP8 (PMID:19520913,
+    PMID:20427281).'
+  carried_from: F7
+- finding_id: F8
+  status: resolved
+  summary: '[cdd-cd16652-rmd5-malformed-fbpase-substrate-phrase] CDD:cd16652 (dRING_Rmd5p-like)
+    contains malformed substrate/enzyme text (''fructose-1, 6-bisphosphate by fructose-1,
+    6-bisphosphatase (FBPase)'')'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd16652 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): replaced the garbled substrate/enzyme phrase with ''fructose-1,6-bisphosphatase
+    (FBPase)'' (PMID:18508924).'
+  carried_from: F8
+- finding_id: F9
+  status: resolved
+  summary: '[cdd-cd17150-dcdc2b-typo-and-dcdc2-paralog-disease-switch] CDD:cd17150
+    (DCX1_DCDC2B) misspells Doublecortin as Dublecortin in label/definition and switches
+    to paralog DCDC2 disease genetics'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd17150 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): corrected ''Dublecortin-like'' to ''Doublecortin-like'' and distinguished
+    DCDC2B (UniProtKB:A2VCK2, CDD:cd17150) from its paralog DCDC2 (UniProtKB:Q9UHG0,
+    CDD:cd17148).'
+  carried_from: F9
+- finding_id: F10
+  status: resolved
+  summary: '[cdd-cd18592-abcc-mrp7-cftr-misassignment-and-mdr-overclaim] CDD:cd18592
+    (ABC_6TM_MRP5_8_9_D1) misassigns MRP7-9 to ABCC7-9 (CFTR/SUR1/SUR2) instead of
+    ABCC10-12 and overclaims MDR efflux for ABCC12'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd18592 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): corrected the mapping of MRP7-MRP9 to ABCC10-ABCC12 (distinguishing ABCC7/CFTR
+    and ABCC8-9/SUR1-2) and qualified MRP9/ABCC12 transport characterization (PMID:16984901).'
+  carried_from: F10
+- finding_id: F11
+  status: resolved
+  summary: '[cdd-cd20534-ccnq-cnnm-acdp-magnesium-transporter-conflation] CDD:cd20534
+    (CYCLIN_CCNM_CCNQ_rpt1) conflates Cyclin-Q/Cyclin-M (CCNQ/FAM58A) with the CNNM1-4
+    (ACDP) magnesium transporter family'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd20534 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): replaced the conflated CNNM1-4/ACDP magnesium transporter prose and citation
+    with the CDK10-activating cyclin CCNQ/FAM58A description and PMID:23912459 evidence.'
+  carried_from: F11
+- finding_id: F12
+  status: resolved
+  summary: '[cdd-cd21551-suz12-prc2-h3k9-methylation-overclaim] CDD:cd21551 (VEFS-box_SUZ12)
+    claims PRC2 directly methylates both H3K9 and H3K27'
+  group_id: G1
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  disposition: 'Repaired CDD:cd21551 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    (#1171): clarified that the PRC2/EED-EZH2 complex directly methylates H3K27 (H3K27me),
+    whereas SUZ12 influences H3K9 methylation indirectly (PMID:15225548).'
+  carried_from: F12
+groups:
+- group_id: G1
+  finding_ids:
+  - F3
+  - F4
+  - F5
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - F12
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1171
+  status: resolved
+  summary: Unpromoted Stage 3-held CDD sequence-domain records with upstream NCBI
+    CDD nomenclature, paralog-scope, and biochemical contradictions repaired via scripts/cdd_errata.py,
+    scripts/repair_cdd_errata.py, and scripts/seed_cdd.py.
+  resolution_evidence:
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/issue_map.yaml
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/validation.md
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_report.md
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_findings.yaml
+  disposition: Resolved all 10 findings (F3-F12) in place via registered writer scripts/repair_cdd_errata.py
+    and wired scripts/seed_cdd.py to scripts/cdd_errata.py; verified by strict LinkML/OAK
+    validation, UniProt grounding replay, writer audit, unit tests, and post-remediation
+    review bundle 20261022T081000Z-cdd-stage5-remediation-review.
+- group_id: G2
+  finding_ids:
+  - F1
+  - F2
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  status: deferred
+  summary: Already-promoted CDD sequence-domain records (CDD:cd00104 and CDD:cd00959)
+    whose minor typographical/duplication errata are authored in scripts/cdd_errata.py
+    (include_all=True) and deferred in-place pending sharded qualified_record_bindings.jsonl.d
+    re-binding.
+  resolution_evidence:
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/issue_map.yaml
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/validation.md
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/review_findings.yaml
+  disposition: 'Authored and unit-tested CDD:cd00104 (F1) and CDD:cd00959 (F2) errata
+    in scripts/cdd_errata.py (include_all=True); in-place application to the promoted
+    YAML records is deferred under open issue #1172 until scripts/ground_protein_examples.py
+    supports re-binding sharded qualified_record_bindings.jsonl.d receipts (record_sha256).'
+carry_forward_ids:
+- F1
+- F2
+infra_tasks: []
