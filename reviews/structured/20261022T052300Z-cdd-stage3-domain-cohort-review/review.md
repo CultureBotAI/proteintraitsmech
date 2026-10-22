@@ -127,7 +127,7 @@ CDD:cd17150 has the typo 'Dublecortin-like domain 1' in both label and definitio
 
 major / open / confirmed; issue key: cdd-cd18592-abcc-mrp7-cftr-misassignment-and-mdr-overclaim.
 
-CDD:cd18592 states 'Nine human MRPs have been identified (MRP1-9, also known as ABCC1-6 and ABCC7-9, respectively)', misassigning MRP7, MRP8, and MRP9 to ABCC7 (CFTR), ABCC8 (SUR1), and ABCC9 (SUR2) instead of ABCC10, ABCC11, and ABCC12, and attributes blanket anticancer-drug efflux across all members including ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q9UNQ0 (ABCC11, 165-451), and Q96J65 (ABCC12, 125-411).
+CDD:cd18592 states 'Nine human MRPs have been identified (MRP1-9, also known as ABCC1-6 and ABCC7-9, respectively)', misassigning MRP7, MRP8, and MRP9 to ABCC7 (CFTR), ABCC8 (SUR1), and ABCC9 (SUR2) instead of ABCC10, ABCC11, and ABCC12, and attributes blanket anticancer-drug efflux across all members including ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q96J66 (ABCC11, 165-451), and Q96J65 (ABCC12, 125-411).
 
 ### F11: CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) conflates Cyclin-Q/Cyclin-M (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
 
@@ -287,6 +287,9 @@ source:
   - path: data/traits/sequence/domain/cdd/vefs-vrn2-emf2-fis2-su-z-12-box-found-in-suppressor-of-zeste-12-protei-cd21551.yaml
     sha256: ff603a20dd777948e50bd44c88575bdd8b4cf442e46f70d3df62bfba5a85e7d4
     role: target
+  - path: scripts/record_io.py
+    sha256: ef18d4a2224810768232337f1007cb757425bff87aa96edd1e6b193da14863bf
+    role: context
   - path: scripts/seed_cdd.py
     sha256: 09dfcecfb251e8b86a9b15de1a07e63c5c28fcd81ca5f4a13c91f32091729274
     role: context
@@ -335,8 +338,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd00959
   path: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
   label: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family
@@ -347,8 +354,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: e131f3ec97c0e75830bc67a3f73046509ce0ddd3fc148f7b8e5f3cf05eba5ab0
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd09530
   path: data/traits/sequence/domain/cdd/sam-domain-of-samd14-subfamily-sam-sterile-alpha-motif-domain-of-samd1-cd09530.yaml
   label: SAM domain of SAMD14 subfamily
@@ -359,8 +370,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 36e62ccee26da135fc9a3d26f625be68fcdbf7966d35fabb13971dd13c443957
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd13344
   path: data/traits/sequence/domain/cdd/myotubularian-mtm-related-7-protein-mtmr7-pleckstrin-homology-glucosyl-cd13344.yaml
   label: Myotubularian (MTM)-related 7 protein (MTMR7) Pleckstrin homology-Glucosyltransferases,
@@ -372,8 +387,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 25f25b4811e49099c08936c3489d0d1d02339cc8449e5621d2452941c9d6d2d2
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd14999
   path: data/traits/sequence/domain/cdd/urotensin-ii-receptor-member-of-the-class-a-family-of-seven-transmembr-cd14999.yaml
   label: Urotensin-II receptor, member of the class A family of seven-transmembrane
@@ -385,8 +404,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 29cb639a3bbf2158faa5680b179a1d1e4c6c392928321359db55344eb23e5df5
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd15894
   path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml
   label: N-terminal SNARE motif of SNAP25
@@ -397,8 +420,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 1c763a03debd0194ab731f4cd1facdc5a506578a252388a409fe3ceb9f30425d
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd16523
   path: data/traits/sequence/domain/cdd/ring-finger-hc-subclass-found-in-myosin-regulatory-light-chain-interac-cd16523.yaml
   label: RING finger, HC subclass, found in myosin regulatory light chain interacting
@@ -410,8 +437,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 3620b0d7f29bbc2778450e3a9730a1433348af1f13ba8786e3a09106ca0583e4
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd16652
   path: data/traits/sequence/domain/cdd/degenerated-ring-dring-finger-found-in-saccharomyces-cerevisiae-requir-cd16652.yaml
   label: Degenerated RING (dRING) finger found in Saccharomyces cerevisiae required
@@ -423,8 +454,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: e15b95997315b996a6488ab375071f3e7db65f626e84d91703a9d6168e6b0029
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd17150
   path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml
   label: Dublecortin-like domain 1 found in doublecortin domain-containing protein
@@ -436,8 +471,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 587b8c22dc5e29192acb9f1b74ffeeb815729223f478bc32020aacb8e6fe6e0b
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd18592
   path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml
   label: Six-transmembrane helical domain 1 (TMD1) of multidrug resistance-associated
@@ -449,8 +488,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 819db68ddb4bd173baa067ff5908f9a7e90de8781735097ff24bed8e2c7f4c1f
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd20534
   path: data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml
   label: First cyclin box found in cyclin-M (CCNM) family
@@ -461,8 +504,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: e960b87e4e30cb1624627e3a4b8e01ac2a181c0ffe6bdedba3082edd7fa06f11
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd21551
   path: data/traits/sequence/domain/cdd/vefs-vrn2-emf2-fis2-su-z-12-box-found-in-suppressor-of-zeste-12-protei-cd21551.yaml
   label: VEFS (VRN2-EMF2-FIS2-Su(z)12) box found in suppressor of zeste 12 protein
@@ -474,8 +521,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: ff603a20dd777948e50bd44c88575bdd8b4cf442e46f70d3df62bfba5a85e7d4
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 checks:
 - check_id: schema
   name: Strict LinkML and OAK ontology-binding validation across all 12 cohort records
@@ -1078,7 +1129,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1105,7 +1156,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1137,7 +1188,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1168,7 +1219,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1199,7 +1250,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1231,7 +1282,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1264,7 +1315,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1295,7 +1346,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1326,7 +1377,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1342,7 +1393,7 @@ findings:
     also known as ABCC1-6 and ABCC7-9, respectively)'', misassigning MRP7, MRP8, and
     MRP9 to ABCC7 (CFTR), ABCC8 (SUR1), and ABCC9 (SUR2) instead of ABCC10, ABCC11,
     and ABCC12, and attributes blanket anticancer-drug efflux across all members including
-    ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q9UNQ0 (ABCC11, 165-451),
+    ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q96J66 (ABCC11, 165-451),
     and Q96J65 (ABCC12, 125-411).'
   target_ids:
   - CDD:cd18592
@@ -1357,7 +1408,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1389,7 +1440,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1420,7 +1471,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -1457,7 +1508,7 @@ actions:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   acceptance_checks:
   - All 10 held CDD records carry accurate, paralog-specific definitions and literature
@@ -1481,7 +1532,7 @@ actions:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   acceptance_checks:
   - CDD:cd00104 and CDD:cd00959 definitions are repaired via the registered CDD errata

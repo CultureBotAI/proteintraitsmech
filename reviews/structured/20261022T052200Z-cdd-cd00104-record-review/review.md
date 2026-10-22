@@ -135,6 +135,9 @@ source:
   - path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
     sha256: d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52
     role: target
+  - path: scripts/record_io.py
+    sha256: ef18d4a2224810768232337f1007cb757425bff87aa96edd1e6b193da14863bf
+    role: context
   - path: scripts/seed_cdd.py
     sha256: 09dfcecfb251e8b86a9b15de1a07e63c5c28fcd81ca5f4a13c91f32091729274
     role: context
@@ -163,8 +166,12 @@ targets:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 checks:
 - check_id: schema
   name: Strict LinkML and OAK ontology-binding validation
@@ -336,7 +343,7 @@ findings:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -356,7 +363,7 @@ actions:
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   acceptance_checks:
   - CDD:cd00104 definition spells 'chymotrypsin' accurately and distinguishes Kazal

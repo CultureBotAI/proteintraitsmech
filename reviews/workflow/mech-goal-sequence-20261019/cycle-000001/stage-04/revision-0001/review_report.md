@@ -12,10 +12,10 @@
 
 | Review ID | Kind | Skill | Verdict | Artifact Path | SHA-256 |
 | --- | --- | --- | --- | --- | --- |
-| `20261022T052200Z-cdd-cd00104-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml` | `8b2aba7c07248ab4dd0cebadbf3232cf06dc86d5a7d2489a075e58145b578ac1` |
-| `20261022T052200Z-cdd-cd00104-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.md` | `e3e3b634ae9cc905c20c888aa26103dc119756a094ccba13408de33aa0297c8b` |
-| `20261022T052300Z-cdd-stage3-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml` | `e3dcca5c5e5c81fd85058b0d86454db2261b1836d7cf0be61e320744c8541561` |
-| `20261022T052300Z-cdd-stage3-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.md` | `08697d43d37ed728eeded34a71c94c1ac91383213e29f3334ab94e99a62dfc00` |
+| `20261022T052200Z-cdd-cd00104-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml` | `f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9` |
+| `20261022T052200Z-cdd-cd00104-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.md` | `2f18c73512fb48ebe1467eba3389c6304e58b84229609053598b2f839372cb80` |
+| `20261022T052300Z-cdd-stage3-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml` | `ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e` |
+| `20261022T052300Z-cdd-stage3-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.md` | `9d6b53b00ebb3f90833f58d64b6e1543c0a0195e36545295e1521cd56594dd4f` |
 
 ## Frozen Inventory & Coverage
 

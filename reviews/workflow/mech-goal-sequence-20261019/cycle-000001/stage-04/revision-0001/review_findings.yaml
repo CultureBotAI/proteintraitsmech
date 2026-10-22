@@ -12,17 +12,17 @@ native_review_bundles:
   skill: review-yaml-record
   verdict: needs_curation
   review_yaml_path: reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml
-  review_yaml_sha256: 8b2aba7c07248ab4dd0cebadbf3232cf06dc86d5a7d2489a075e58145b578ac1
+  review_yaml_sha256: f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9
   review_md_path: reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.md
-  review_md_sha256: e3e3b634ae9cc905c20c888aa26103dc119756a094ccba13408de33aa0297c8b
+  review_md_sha256: 2f18c73512fb48ebe1467eba3389c6304e58b84229609053598b2f839372cb80
 - review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
   kind: category
   skill: review-yaml-category
   verdict: needs_curation
   review_yaml_path: reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml
-  review_yaml_sha256: e3dcca5c5e5c81fd85058b0d86454db2261b1836d7cf0be61e320744c8541561
+  review_yaml_sha256: ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e
   review_md_path: reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.md
-  review_md_sha256: 08697d43d37ed728eeded34a71c94c1ac91383213e29f3334ab94e99a62dfc00
+  review_md_sha256: 9d6b53b00ebb3f90833f58d64b6e1543c0a0195e36545295e1521cd56594dd4f
 findings:
 - finding_id: F1
   issue_key: cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion
@@ -30,8 +30,12 @@ findings:
   severity: minor
   status: open
   certainty: confirmed
-  title: CDD:cd00104 definition misspells chymotrypsin and lists avian ovomucoids as target serine proteases
-  description: CDD:cd00104 definition states 'Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling 'chymotrypsin' and listing 'avian ovomucoids' (which are Kazal-type inhibitor proteins, PMID:6192856) as target enzymes.
+  title: CDD:cd00104 definition misspells chymotrypsin and lists avian ovomucoids
+    as target serine proteases
+  description: CDD:cd00104 definition states 'Kazal inhibitors inhibit serine proteases,
+    such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling
+    'chymotrypsin' and listing 'avian ovomucoids' (which are Kazal-type inhibitor
+    proteins, PMID:6192856) as target enzymes.
   target_ids:
   - CDD:cd00104
   field_paths:
@@ -40,12 +44,12 @@ findings:
   - ev-cd00104
   - ev-cdd-batch066
   - ev-seed-cdd-cohort
-  owner_paths: &id001
+  owner_paths:
   - repository: CultureBotAI/proteintraitsmech
     path: scripts/seed_cdd.py
     role: Maintained CDD seeder transform (requires accession-level errata support)
   - repository: CultureBotAI/proteintraitsmech
-    path: scripts/trait_record_writer.py
+    path: scripts/record_io.py
     role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
@@ -56,7 +60,9 @@ findings:
   status: open
   certainty: confirmed
   title: CDD:cd00959 definition repeats its opening title sentence verbatim
-  description: CDD:cd00959 definition begins with the duplicated sentence '2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.' due to upstream CDD title+description concatenation in scripts/seed_cdd.py.
+  description: CDD:cd00959 definition begins with the duplicated sentence '2-deoxyribose-5-phosphate
+    aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA)
+    of the DeoC family.' due to upstream CDD title+description concatenation in scripts/seed_cdd.py.
   target_ids:
   - CDD:cd00959
   field_paths:
@@ -65,7 +71,13 @@ findings:
   - ev-cd00959
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F3
@@ -74,8 +86,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd09530 names Samd14 in label/definition whereas its human carrier is SAMD15 (Q9P1V8) and human SAMD14 (Q8IZD0) matches CDD:cd09512
-  description: CDD:cd09530 (short_name SAM_Samd14) defines the domain as 'SAM domain of Samd14 (sterile alpha motif domain-containing protein 14) and similar proteins', without noting that human SAMD14 (UniProtKB:Q8IZD0) is classified under sibling CDD:cd09512 (SAM_Neurabin-like) while the actual human protein matched by CDD:cd09530 in InterPro/CDD is SAMD15/FAM15A (UniProtKB:Q9P1V8, residues 543-609). This nomenclature conflict blocked Stage 3 promotion of candidate ug-261dc8be43fe67ef5a89ce9ecdbdd8107e3ab08802277a3f574bf5c5f9b8c78b.
+  title: CDD:cd09530 names Samd14 in label/definition whereas its human carrier is
+    SAMD15 (Q9P1V8) and human SAMD14 (Q8IZD0) matches CDD:cd09512
+  description: CDD:cd09530 (short_name SAM_Samd14) defines the domain as 'SAM domain
+    of Samd14 (sterile alpha motif domain-containing protein 14) and similar proteins',
+    without noting that human SAMD14 (UniProtKB:Q8IZD0) is classified under sibling
+    CDD:cd09512 (SAM_Neurabin-like) while the actual human protein matched by CDD:cd09530
+    in InterPro/CDD is SAMD15/FAM15A (UniProtKB:Q9P1V8, residues 543-609). This nomenclature
+    conflict blocked Stage 3 promotion of candidate ug-261dc8be43fe67ef5a89ce9ecdbdd8107e3ab08802277a3f574bf5c5f9b8c78b.
   target_ids:
   - CDD:cd09530
   field_paths:
@@ -85,7 +103,13 @@ findings:
   - ev-cd09512-sibling
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F4
@@ -94,8 +118,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd13344 (PH-GRAM_MTMR7) switches mid-definition to paralog MTMR6 and ends with a self-contradictory phosphoinositide-binding sentence
-  description: CDD:cd13344 represents the PH-GRAM domain of MTMR7 (human Q9Y216, 29-113), but sentences 2 and 5 switch without qualification to paralog MTMR6 catalytic activity and end with the self-contradictory statement 'It is not clear if the PH-GRAM domain of MTMR6 binds to phosphoinositides, with a study showing that the PH-GRAM domain of MTMR6 does not bind to phosphoinositides', blocking Stage 3 promotion of candidate ug-dc9e5d1720249523285386416d18a96bb231173b464db6621df6a3f0ba42c240.
+  title: CDD:cd13344 (PH-GRAM_MTMR7) switches mid-definition to paralog MTMR6 and
+    ends with a self-contradictory phosphoinositide-binding sentence
+  description: CDD:cd13344 represents the PH-GRAM domain of MTMR7 (human Q9Y216, 29-113),
+    but sentences 2 and 5 switch without qualification to paralog MTMR6 catalytic
+    activity and end with the self-contradictory statement 'It is not clear if the
+    PH-GRAM domain of MTMR6 binds to phosphoinositides, with a study showing that
+    the PH-GRAM domain of MTMR6 does not bind to phosphoinositides', blocking Stage
+    3 promotion of candidate ug-dc9e5d1720249523285386416d18a96bb231173b464db6621df6a3f0ba42c240.
   target_ids:
   - CDD:cd13344
   field_paths:
@@ -104,7 +134,13 @@ findings:
   - ev-cd13344
   - ev-cdd-batch066
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F5
@@ -113,8 +149,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd14999 erroneously aliases urotensin-II receptor (UTS2R/GPR14) as the hypocretin receptor
-  description: CDD:cd14999 (7tmA_UII-R) states 'The urotensin-II receptor (also known as G-protein coupled receptor 14, GPR14, or the hypocretin receptor) is a receptor for the cyclic undecapeptide urotensin-II'. Hypocretin/orexin receptors (HCRTR1/HCRTR2) are distinct GPCRs; UTS2R/GPR14 is not the hypocretin receptor. This misaliasing blocked Stage 3 promotion of human UTS2R candidate ug-4ca0bc07c3ff11d11874a90b7bcbb2b3c258f9ecae390a173ba6162ff34f887d (Q9UKP6, 53-337).
+  title: CDD:cd14999 erroneously aliases urotensin-II receptor (UTS2R/GPR14) as the
+    hypocretin receptor
+  description: CDD:cd14999 (7tmA_UII-R) states 'The urotensin-II receptor (also known
+    as G-protein coupled receptor 14, GPR14, or the hypocretin receptor) is a receptor
+    for the cyclic undecapeptide urotensin-II'. Hypocretin/orexin receptors (HCRTR1/HCRTR2)
+    are distinct GPCRs; UTS2R/GPR14 is not the hypocretin receptor. This misaliasing
+    blocked Stage 3 promotion of human UTS2R candidate ug-4ca0bc07c3ff11d11874a90b7bcbb2b3c258f9ecae390a173ba6162ff34f887d
+    (Q9UKP6, 53-337).
   target_ids:
   - CDD:cd14999
   field_paths:
@@ -123,7 +165,13 @@ findings:
   - ev-cd14999
   - ev-cdd-batch066
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F6
@@ -132,8 +180,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd15894 (SNARE_SNAP25N) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
-  description: CDD:cd15894 states 'Both, Qb/Qc SNAREs consist of 2 coiled-coil helices (which form a single SNARE domain) and a transmembrane domain'. SNAP25 (human P60880, 19-81) is a t-SNARE containing an N-terminal Qb SNARE motif (cd15894) and a C-terminal Qc SNARE motif (sibling cd15885) linked by a palmitoylated cysteine-rich region and lacks any transmembrane domain. This overclaim blocked Stage 3 promotion of candidate ug-e252e4d82e1d26e10002d5abaa0877a146c31f0fd970400dc106954f6c8a85e7.
+  title: CDD:cd15894 (SNARE_SNAP25N) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15894 states 'Both, Qb/Qc SNAREs consist of 2 coiled-coil helices
+    (which form a single SNARE domain) and a transmembrane domain'. SNAP25 (human
+    P60880, 19-81) is a t-SNARE containing an N-terminal Qb SNARE motif (cd15894)
+    and a C-terminal Qc SNARE motif (sibling cd15885) linked by a palmitoylated cysteine-rich
+    region and lacks any transmembrane domain. This overclaim blocked Stage 3 promotion
+    of candidate ug-e252e4d82e1d26e10002d5abaa0877a146c31f0fd970400dc106954f6c8a85e7.
   target_ids:
   - CDD:cd15894
   field_paths:
@@ -143,7 +197,13 @@ findings:
   - ev-cd15885-sibling
   - ev-cdd-batch066
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F7
@@ -152,8 +212,16 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd16523 (RING-HC_MYLIP) sentence 2 claims proteasomal degradation of LDLR, VLDLR, and LRP8, contradicting sentence 4 (lysosomal degradation)
-  description: 'In CDD:cd16523, sentence 2 claims that MYLIP/IDOL mediates ''ubiquitination and subsequent proteasomal degradation of myosin regulatory light chain (MRLC), low density lipoprotein receptor (LDLR), very low-density lipoprotein receptor (VLDLR) and low density lipoprotein receptor-related protein 8 (LRP8)'', contradicting sentence 4 (''triggers the ubiquitination and degradation of LDLR in lysosomes'') and primary literature (PMID:20884618, PMID:23225852) showing ESCRT/MVB-dependent lysosomal degradation of lipoprotein receptors. Blocked candidate: ug-75a40219c6b45df1ff1c607cf4d9a3e5e07de73f79ba1367231206244ab507c9 (Q8WY64, 383-434).'
+  title: CDD:cd16523 (RING-HC_MYLIP) sentence 2 claims proteasomal degradation of
+    LDLR, VLDLR, and LRP8, contradicting sentence 4 (lysosomal degradation)
+  description: 'In CDD:cd16523, sentence 2 claims that MYLIP/IDOL mediates ''ubiquitination
+    and subsequent proteasomal degradation of myosin regulatory light chain (MRLC),
+    low density lipoprotein receptor (LDLR), very low-density lipoprotein receptor
+    (VLDLR) and low density lipoprotein receptor-related protein 8 (LRP8)'', contradicting
+    sentence 4 (''triggers the ubiquitination and degradation of LDLR in lysosomes'')
+    and primary literature (PMID:20884618, PMID:23225852) showing ESCRT/MVB-dependent
+    lysosomal degradation of lipoprotein receptors. Blocked candidate: ug-75a40219c6b45df1ff1c607cf4d9a3e5e07de73f79ba1367231206244ab507c9
+    (Q8WY64, 383-434).'
   target_ids:
   - CDD:cd16523
   field_paths:
@@ -162,7 +230,13 @@ findings:
   - ev-cd16523
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F8
@@ -171,8 +245,14 @@ findings:
   severity: minor
   status: open
   certainty: confirmed
-  title: CDD:cd16652 (dRING_Rmd5p-like) contains malformed substrate/enzyme text ('fructose-1, 6-bisphosphate by fructose-1, 6-bisphosphatase (FBPase)')
-  description: 'CDD:cd16652 states that yeast Rmd5p/GID2 mediates ''the polyubiquitination and subsequent proteasomal degradation of fructose-1, 6-bisphosphate by fructose-1, 6-bisphosphatase (FBPase), phosphoenolpyruvate carboxykinase (PEPCK), cytoplasmic malate dehydrogenase''. FBPase (the enzyme, not the metabolite fructose-1,6-bisphosphate) is the ubiquitinated target. Blocked candidate: ug-4e3f322fa6f3b0c46798f889e3994a15bc8dfbeae6e94e0c6bb5eb1342632b8d (Q12508, 359-406).'
+  title: CDD:cd16652 (dRING_Rmd5p-like) contains malformed substrate/enzyme text ('fructose-1,
+    6-bisphosphate by fructose-1, 6-bisphosphatase (FBPase)')
+  description: 'CDD:cd16652 states that yeast Rmd5p/GID2 mediates ''the polyubiquitination
+    and subsequent proteasomal degradation of fructose-1, 6-bisphosphate by fructose-1,
+    6-bisphosphatase (FBPase), phosphoenolpyruvate carboxykinase (PEPCK), cytoplasmic
+    malate dehydrogenase''. FBPase (the enzyme, not the metabolite fructose-1,6-bisphosphate)
+    is the ubiquitinated target. Blocked candidate: ug-4e3f322fa6f3b0c46798f889e3994a15bc8dfbeae6e94e0c6bb5eb1342632b8d
+    (Q12508, 359-406).'
   target_ids:
   - CDD:cd16652
   field_paths:
@@ -181,7 +261,13 @@ findings:
   - ev-cd16652
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F9
@@ -190,8 +276,12 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd17150 (DCX1_DCDC2B) misspells Doublecortin as Dublecortin in label/definition and switches to paralog DCDC2 disease genetics
-  description: 'CDD:cd17150 has the typo ''Dublecortin-like domain 1'' in both label and definition and switches mid-definition from DCDC2B (human A2VCK2, 17-102) to paralog DCDC2 ciliary localization and reading-disability/ADHD genetics. Blocked candidate: ug-9bf8f0912858b90c6bb97f3bf8493bd6a4c05ebcc6a5a44d6bc37cf1dc2db84e.'
+  title: CDD:cd17150 (DCX1_DCDC2B) misspells Doublecortin as Dublecortin in label/definition
+    and switches to paralog DCDC2 disease genetics
+  description: 'CDD:cd17150 has the typo ''Dublecortin-like domain 1'' in both label
+    and definition and switches mid-definition from DCDC2B (human A2VCK2, 17-102)
+    to paralog DCDC2 ciliary localization and reading-disability/ADHD genetics. Blocked
+    candidate: ug-9bf8f0912858b90c6bb97f3bf8493bd6a4c05ebcc6a5a44d6bc37cf1dc2db84e.'
   target_ids:
   - CDD:cd17150
   field_paths:
@@ -202,7 +292,13 @@ findings:
   - ev-cd17151-sibling
   - ev-cdd-batch066
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F10
@@ -211,8 +307,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) misassigns MRP7-9 to ABCC7-9 (CFTR/SUR1/SUR2) instead of ABCC10-12 and overclaims MDR efflux for ABCC12
-  description: 'CDD:cd18592 states ''Nine human MRPs have been identified (MRP1-9, also known as ABCC1-6 and ABCC7-9, respectively)'', misassigning MRP7, MRP8, and MRP9 to ABCC7 (CFTR), ABCC8 (SUR1), and ABCC9 (SUR2) instead of ABCC10, ABCC11, and ABCC12, and attributes blanket anticancer-drug efflux across all members including ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q9UNQ0 (ABCC11, 165-451), and Q96J65 (ABCC12, 125-411).'
+  title: CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) misassigns MRP7-9 to ABCC7-9 (CFTR/SUR1/SUR2)
+    instead of ABCC10-12 and overclaims MDR efflux for ABCC12
+  description: 'CDD:cd18592 states ''Nine human MRPs have been identified (MRP1-9,
+    also known as ABCC1-6 and ABCC7-9, respectively)'', misassigning MRP7, MRP8, and
+    MRP9 to ABCC7 (CFTR), ABCC8 (SUR1), and ABCC9 (SUR2) instead of ABCC10, ABCC11,
+    and ABCC12, and attributes blanket anticancer-drug efflux across all members including
+    ABCC12/MRP9. Blocked candidates: O15440 (ABCC5, 181-467), Q96J66 (ABCC11, 165-451),
+    and Q96J65 (ABCC12, 125-411).'
   target_ids:
   - CDD:cd18592
   field_paths:
@@ -221,7 +323,13 @@ findings:
   - ev-cd18592
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F11
@@ -230,8 +338,13 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) conflates Cyclin-Q/Cyclin-M (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
-  description: 'CDD:cd20534 models the first cyclin box of CCNQ/FAM58A (human Q8N1B3, 27-128, the CDK10-activating cyclin mutated in STAR syndrome), but its upstream CDD definition and PMID:14695534 evidence describe the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (properly modeled by CDD:cd04590) and urofacial/hypomagnesemia/Jalili syndromes. Blocked candidate: ug-4bd7ba713556d491efbc4d9fd7d719ff9353c2fb4545d42deaa66a6c31e3a16e.'
+  title: CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) conflates Cyclin-Q/Cyclin-M (CCNQ/FAM58A)
+    with the CNNM1-4 (ACDP) magnesium transporter family
+  description: 'CDD:cd20534 models the first cyclin box of CCNQ/FAM58A (human Q8N1B3,
+    27-128, the CDK10-activating cyclin mutated in STAR syndrome), but its upstream
+    CDD definition and PMID:14695534 evidence describe the unrelated CNNM1-4 (ACDP)
+    CBS-pair magnesium transporter family (properly modeled by CDD:cd04590) and urofacial/hypomagnesemia/Jalili
+    syndromes. Blocked candidate: ug-4bd7ba713556d491efbc4d9fd7d719ff9353c2fb4545d42deaa66a6c31e3a16e.'
   target_ids:
   - CDD:cd20534
   field_paths:
@@ -242,7 +355,13 @@ findings:
   - ev-cd20535-cd04590-siblings
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 - finding_id: F12
@@ -251,8 +370,14 @@ findings:
   severity: major
   status: open
   certainty: confirmed
-  title: CDD:cd21551 (VEFS-box_SUZ12) claims PRC2 directly methylates both H3K9 and H3K27
-  description: 'CDD:cd21551 states ''The PRC2 complex methylates Lys-9 (H3K9) and Lys-27 (H3K27) of histone H3'', whereas canonical PRC2 (EZH1/EZH2 stimulated by the SUZ12 VEFS box) catalyzes H3K27me1/2/3 and reported H3K9me3 reductions upon SUZ12 loss reflect indirect cross-talk rather than intrinsic PRC2 H3K9 methyltransferase activity. Blocked candidate: ug-44aa2243f55dd0bb095beac3f1d82993fc80a2db2cb5e276dcde11e61a26c8bb (Q15022, 563-684).'
+  title: CDD:cd21551 (VEFS-box_SUZ12) claims PRC2 directly methylates both H3K9 and
+    H3K27
+  description: 'CDD:cd21551 states ''The PRC2 complex methylates Lys-9 (H3K9) and
+    Lys-27 (H3K27) of histone H3'', whereas canonical PRC2 (EZH1/EZH2 stimulated by
+    the SUZ12 VEFS box) catalyzes H3K27me1/2/3 and reported H3K9me3 reductions upon
+    SUZ12 loss reflect indirect cross-talk rather than intrinsic PRC2 H3K9 methyltransferase
+    activity. Blocked candidate: ug-44aa2243f55dd0bb095beac3f1d82993fc80a2db2cb5e276dcde11e61a26c8bb
+    (Q15022, 563-684).'
   target_ids:
   - CDD:cd21551
   field_paths:
@@ -261,7 +386,13 @@ findings:
   - ev-cd21551
   - ev-cdd-batch058
   - ev-seed-cdd-cohort
-  owner_paths: *id001
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform (requires accession-level errata support)
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
   external_issues:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
 carry_forward_ids:
