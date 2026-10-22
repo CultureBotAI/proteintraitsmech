@@ -398,3 +398,126 @@ def test_seeder_cli_preview_apply_skip_and_curated_force(tmp_path, monkeypatch):
         monkeypatch.setattr(sys, "argv", ["seed_cdd.py", "--force", *args])
         assert seeder.main() == 1
         assert target.read_text() == curated
+
+
+def test_main_rollback_restores_earlier_target_on_second_write_failure(
+    tmp_path, monkeypatch, original
+):
+    first = tmp_path / "first.yaml"
+    second = tmp_path / "second.yaml"
+    second_orig = make_seeded_record("cd13344")
+    first.write_text(original)
+    second.write_text(second_orig)
+    monkeypatch.setattr(repair, "TARGETS", {"cd09530": first, "cd13344": second})
+    real_write = repair.write_validated_record
+    calls = 0
+
+    def fail_on_second(path, text, encoding="utf-8"):
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("simulated disk write failure")
+        return real_write(path, text, encoding=encoding)
+
+    monkeypatch.setattr(repair, "write_validated_record", fail_on_second)
+    assert repair.main(["--apply"]) == 1
+    assert first.read_text() == original
+    assert second.read_text() == second_orig
+
+
+def test_validate_durable_registry_paths_rejects_collisions_and_traits_nesting(
+    tmp_path,
+):
+    reg = tmp_path / "proteins.jsonl"
+    ev = tmp_path / "evidence.jsonl"
+    with pytest.raises(ValueError, match="must differ"):
+        repair._validate_durable_registry_paths(reg, ev, ev)
+    inside_traits = repair.TRAITS_ROOT / "bad_bindings.jsonl"
+    with pytest.raises(ValueError, match="outside trait records"):
+        repair._validate_durable_registry_paths(reg, ev, inside_traits)
+
+
+def test_prepare_qualified_rebindings_rejects_stripped_qualified_yaml_when_bound(
+    tmp_path, monkeypatch, original
+):
+    import json
+
+    traits = tmp_path / "traits"
+    rel = errata.ERRATA["cd09530"].rel_path
+    target = traits / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(original)
+    monkeypatch.setattr(repair, "TRAITS_ROOT", traits)
+    monkeypatch.setattr(repair, "TARGETS", {"cd09530": target})
+
+    reg = tmp_path / "proteins.jsonl"
+    ev = tmp_path / "evidence.jsonl"
+    bind = tmp_path / "bindings.jsonl"
+    reg.write_text(
+        json.dumps(
+            {
+                "protein_id": "UniProtKB:Q9P1V8",
+                "protein_label": "Sterile alpha motif domain-containing protein 15",
+                "taxon_id": "NCBITaxon:9606",
+                "taxon_label": "Homo sapiens",
+                "sequence_length": 674,
+                "reviewed": True,
+                "sequence_sha256": "a" * 64,
+                "uniprot_release": "2026_01",
+                "source": "UNIPROT_GROUNDING",
+            }
+        )
+        + "\n"
+    )
+    ev.write_text(
+        json.dumps(
+            {
+                "evidence_id": "ug-evidence:111111111111111111111111",
+                "trait_id": "CDD:cd09530",
+                "protein_id": "UniProtKB:Q9P1V8",
+                "scope": "LOCALIZED",
+                "mapping_method": "INTERPRO_MATCH",
+                "provider_kind": "INTERPRO",
+                "provider_source": "data/raw/align_cache/interpro_frame.json",
+                "provider_release": "109.0",
+                "provider_entry_id": "UniProtKB:Q9P1V8|CDD:cd09530|543|609",
+                "provider_entry_sha256": "b" * 64,
+                "protein_sequence_sha256": "a" * 64,
+                "protein_sequence_length": 674,
+                "uniprot_release": "2026_01",
+                "sequence_interval": {"start": 543, "end": 609},
+            }
+        )
+        + "\n"
+    )
+    bind.write_text(
+        json.dumps(
+            {
+                "binding_id": "ug-record-binding:222222222222222222222222",
+                "evidence_id": "ug-evidence:111111111111111111111111",
+                "candidate_id": "ug-cand:3333333333333333",
+                "trait_id": "CDD:cd09530",
+                "record_path": f"data/traits/{rel}",
+                "record_sha256": "c" * 64,
+                "content_gate_version": "uniprot-record-content-gate-v1",
+                "content_gate_projection": {"record": {}, "claim": {}, "support": {}},
+                "content_gate_projection_sha256": "d" * 64,
+            }
+        )
+        + "\n"
+    )
+    assert (
+        repair.main(
+            [
+                "--durable-protein-registry",
+                str(reg),
+                "--durable-evidence-registry",
+                str(ev),
+                "--durable-qualified-record-bindings",
+                str(bind),
+            ]
+        )
+        == 1
+    )
+
+

@@ -13,6 +13,8 @@ cannot revive the upstream source errors.
 from __future__ import annotations
 
 import argparse
+from contextlib import ExitStack
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -21,6 +23,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cdd_errata as errata  # noqa: E402
+import grounding_registry_layout as layout  # noqa: E402
 from record_io import (  # noqa: E402
     RecordValidationError,
     append_to_section,
@@ -163,6 +166,62 @@ def repair_record_text(text: str, *, allow_qualified: bool = False) -> str:
     return out
 
 
+def _validate_durable_registry_paths(
+    durable_protein_registry: Path,
+    durable_evidence_registry: Path,
+    durable_qualified_record_bindings: Path,
+) -> list[Path]:
+    import ground_uniprot_examples as gu
+
+    outputs = {
+        "durable protein registry": durable_protein_registry,
+        "durable evidence registry": durable_evidence_registry,
+        "durable qualified-record bindings": durable_qualified_record_bindings,
+    }
+    output_keys = {name: gu._physical_path_key(path) for name, path in outputs.items()}
+    if len(set(output_keys.values())) != len(output_keys):
+        raise ValueError(
+            "durable protein, evidence, and qualified-record binding paths must differ"
+        )
+    for name, output in outputs.items():
+        if gu._path_is_under(output, TRAITS_ROOT) or gu._path_is_under(
+            output, gu.DEFAULT_TRAITS
+        ):
+            raise ValueError(
+                f"durable registry output must be outside trait records: {output}"
+            )
+        for other_name, other in outputs.items():
+            if other_name != name and gu._path_is_under(output, other):
+                raise ValueError(
+                    f"durable registry outputs must not nest: {output} is inside {other}"
+                )
+        if layout.is_sharded(output) and os.path.islink(output):
+            raise ValueError(
+                f"registry_layout_conflict: {name} must not be a symlink: {output}"
+            )
+        enclosing = layout.sharded_ancestor(output.resolve().parent)
+        if enclosing is not None:
+            raise ValueError(
+                f"durable registry output must not be inside the sharded registry "
+                f"{enclosing}: {output}"
+            )
+    for name in ("durable evidence registry", "durable qualified-record bindings"):
+        output = outputs[name]
+        if gu._path_is_under(
+            output, gu.PROTECTED_GROUNDING_ROOT
+        ) and not layout.is_sharded(output):
+            raise ValueError(
+                f"{name} under data/grounding must be a sharded {layout.SHARD_SUFFIX} "
+                f"registry: {output}"
+            )
+
+    directories: dict[tuple[Any, ...], Path] = {}
+    for output in outputs.values():
+        directory = output.resolve().parent
+        directories.setdefault(gu._physical_path_key(directory), directory)
+    return sorted(directories.values())
+
+
 def _prepare_qualified_rebindings(
     planned: list[tuple[str, Path, str, str, bool]],
     *,
@@ -178,12 +237,19 @@ def _prepare_qualified_rebindings(
 ]:
     import ground_uniprot_examples as gu
 
-    qualified_planned = [
-        (acc, target, before_text, out, changed)
-        for acc, target, before_text, out, changed in planned
-        if _has_qualified_examples(yaml.safe_load(before_text))
-    ]
-    if not qualified_planned:
+    all_planned_paths = {target.resolve(): acc for acc, target, _, _, _ in planned}
+    has_yaml_qualified = any(
+        _has_qualified_examples(yaml.safe_load(before_text))
+        for _, _, before_text, _, _ in planned
+    )
+    any_under_traits_root = any(
+        gu._path_is_under(path, TRAITS_ROOT.resolve()) for path in all_planned_paths
+    )
+    bindings_present = (
+        any_under_traits_root
+        and gu._artifact_digest(durable_qualified_record_bindings) is not None
+    )
+    if not has_yaml_qualified and not bindings_present:
         return (
             0,
             None,
@@ -200,6 +266,26 @@ def _prepare_qualified_rebindings(
         durable_qualified_record_bindings,
         existing_evidence,
     )
+    bound_planned_paths = {
+        gu._safe_record_path(binding["record_path"], TRAITS_ROOT).resolve()
+        for binding in existing_bindings.values()
+        if gu._safe_record_path(binding["record_path"], TRAITS_ROOT).resolve()
+        in all_planned_paths
+    }
+    qualified_planned = [
+        (acc, target, before_text, out, changed)
+        for acc, target, before_text, out, changed in planned
+        if _has_qualified_examples(yaml.safe_load(before_text))
+        or target.resolve() in bound_planned_paths
+    ]
+    if not qualified_planned:
+        return (
+            0,
+            None,
+            (durable_protein_registry, reg_digest),
+            (durable_evidence_registry, ev_digest),
+            (durable_qualified_record_bindings, bind_digest),
+        )
     if not existing_bindings:
         raise ValueError(
             "qualified CDD erratum target requires durable qualified_record_bindings, "
@@ -359,68 +445,98 @@ def main(argv: list[str] | None = None) -> int:
     try:
         from validate_strict import validate_one
 
-        planned: list[tuple[str, Path, str, str, bool]] = []
-        for acc, target in TARGETS.items():
-            text = target.read_text(encoding="utf-8")
-            # The writer validates changed output, but preview and no-op paths
-            # never reach it. Reject invalid inputs before claiming success.
-            errors = validate_one(target)
-            if errors:
-                raise RecordValidationError(target, errors)
-            out = repair_record_text(text, allow_qualified=True)
-            if out == text:
-                planned.append((acc, target, text, out, False))
-                continue
-            if not should_enrich(text):
-                raise ValueError(f"CDD:{acc}: refusing curated target")
-            planned.append((acc, target, text, out, True))
-
-        (
-            rebound_count,
-            merged_bindings,
-            reg_expect,
-            ev_expect,
-            bind_expect,
-        ) = _prepare_qualified_rebindings(
-            planned,
-            durable_protein_registry=args.durable_protein_registry,
-            durable_evidence_registry=args.durable_evidence_registry,
-            durable_qualified_record_bindings=args.durable_qualified_record_bindings,
+        lock_directories = _validate_durable_registry_paths(
+            args.durable_protein_registry,
+            args.durable_evidence_registry,
+            args.durable_qualified_record_bindings,
         )
+        with ExitStack() as locks:
+            if args.apply:
+                for directory in lock_directories:
+                    locks.enter_context(layout.registry_lock(directory))
 
-        if args.apply:
-            changed_traits = {
-                target: out
-                for _, target, _, out, changed in planned
-                if changed
-            }
-            if merged_bindings is not None:
-                for label_name, (path, expected_digest) in (
-                    ("durable protein registry", reg_expect),
-                    ("durable evidence registry", ev_expect),
-                    ("durable qualified-record bindings", bind_expect),
-                ):
-                    if gu._artifact_digest(path) != expected_digest:
-                        raise ValueError(
-                            f"{label_name} changed during preflight: {path}"
-                        )
+            planned: list[tuple[str, Path, str, str, bool]] = []
+            for acc, target in TARGETS.items():
+                text = target.read_text(encoding="utf-8")
+                # The writer validates changed output, but preview and no-op paths
+                # never reach it. Reject invalid inputs before claiming success.
+                errors = validate_one(target)
+                if errors:
+                    raise RecordValidationError(target, errors)
+                out = repair_record_text(text, allow_qualified=True)
+                if out == text:
+                    planned.append((acc, target, text, out, False))
+                    continue
+                if not should_enrich(text):
+                    raise ValueError(f"CDD:{acc}: refusing curated target")
+                planned.append((acc, target, text, out, True))
+
+            (
+                rebound_count,
+                merged_bindings,
+                reg_expect,
+                ev_expect,
+                bind_expect,
+            ) = _prepare_qualified_rebindings(
+                planned,
+                durable_protein_registry=args.durable_protein_registry,
+                durable_evidence_registry=args.durable_evidence_registry,
+                durable_qualified_record_bindings=args.durable_qualified_record_bindings,
+            )
+
+            if args.apply:
+                changed_traits = {
+                    target: out
+                    for _, target, _, out, changed in planned
+                    if changed
+                }
+                if merged_bindings is not None:
+                    for label_name, (path, expected_digest) in (
+                        ("durable protein registry", reg_expect),
+                        ("durable evidence registry", ev_expect),
+                        ("durable qualified-record bindings", bind_expect),
+                    ):
+                        if gu._artifact_digest(path) != expected_digest:
+                            raise ValueError(
+                                f"{label_name} changed during preflight: {path}"
+                            )
                 for _acc, target, before_text, _out, _changed in planned:
                     if target.read_text(encoding="utf-8") != before_text:
                         raise ValueError(
                             f"record changed during preflight: {target}"
                         )
-                gu._install_promotion_transaction(
-                    [
-                        (
-                            args.durable_qualified_record_bindings,
-                            gu._registry_text(merged_bindings),
+                if merged_bindings is not None:
+                    gu._install_promotion_transaction(
+                        [
+                            (
+                                args.durable_qualified_record_bindings,
+                                gu._registry_text(merged_bindings),
+                            )
+                        ],
+                        changed_traits,
+                    )
+                elif changed_traits:
+                    snapshots = {
+                        target.resolve(): (
+                            target.read_bytes() if target.is_file() else None
                         )
-                    ],
-                    changed_traits,
-                )
-            else:
-                for target, out in changed_traits.items():
-                    write_validated_record(target, out)
+                        for target in sorted(changed_traits)
+                    }
+                    attempted: list[Path] = []
+                    try:
+                        for target, out in sorted(changed_traits.items()):
+                            resolved = target.resolve()
+                            attempted.append(resolved)
+                            write_validated_record(resolved, out, encoding="utf-8")
+                    except BaseException:
+                        with gu._interrupts_held():
+                            for path in reversed(attempted):
+                                snapshot = snapshots[path]
+                                if snapshot is None:
+                                    path.unlink(missing_ok=True)
+                                else:
+                                    gu._atomic_bytes(path, snapshot)
+                        raise
 
         for acc, _target, _before, _out, changed in planned:
             if not changed:
@@ -436,7 +552,13 @@ def main(argv: list[str] | None = None) -> int:
                 f"{rebound_count} durable receipt(s) (#1172)"
             )
         return 0
-    except (OSError, ValueError, yaml.YAMLError, gu.GroundingError) as exc:
+    except (
+        OSError,
+        ValueError,
+        yaml.YAMLError,
+        gu.GroundingError,
+        layout.RegistryLayoutError,
+    ) as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1
 
