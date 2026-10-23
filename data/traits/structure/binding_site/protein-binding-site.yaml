@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:PROTEIN_BINDING_SITE
 label: protein binding site
 definition: >-
-  A site that interacts selectively and non-covalently with polypeptide molecules.
+  A contiguous or discontinuous structural patch of amino acid residues on a protein surface or domain that interacts selectively and non-covalently with a polypeptide or protein partner via shape complementarity, hydrogen bonds, salt bridges, and buried hydrophobic contacts to mediate protein-protein recognition and complex assembly.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
@@ -11,3 +11,78 @@ xrefs:
 - SO:0000410
 - valuesets:LocalStructuralFeature
 - SO:0001091
+causal_graphs:
+- graph_id: CG_PROTEIN_BINDING_SITE
+  title: Surface binding-site residues mediate selective protein binding and complex assembly
+  description: Contact amino-acid residues (CHEBI:83228) within a protein binding site form complementary
+    non-covalent interactions that enable selective protein binding (GO:0005515), positively regulating
+    protein complex oligomerization (GO:0051259) to assemble a stable protein-containing complex (GO:0032991).
+  nodes:
+  - node_id: CHEBI:83228
+    label: amino-acid residue
+    node_type: RESIDUE
+    grounding: CHEBI:83228
+    description: Surface-exposed binding-site amino-acid residues forming non-covalent contacts with a
+      polypeptide partner
+  - node_id: GO:0005515
+    label: protein binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0005515
+    description: Selective non-covalent recognition of a partner domain or linear peptide motif
+  - node_id: GO:0051259
+    label: protein complex oligomerization
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0051259
+    description: Assembly of interacting polypeptide chains into a multiprotein oligomer or complex
+  - node_id: GO:0032991
+    label: protein-containing complex
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0032991
+    description: Stable or transient macromolecular complex formed by interacting protein subunits
+  edges:
+  - subject: CHEBI:83228
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0005515
+    description: Clustered interface residues at the binding site define conserved interaction topologies
+      that enable selective protein binding.
+    evidence:
+    - reference: PMID:24081580
+      snippet: For every interaction, 3did identifies and groups different binding modes by clustering
+        similar interfaces into 'interaction topologies'.
+      notes: Binding-site residue contacts define conserved protein-binding modes (PMID:24081580) (ECO:0000305)
+  - subject: GO:0005515
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0051259
+    description: Selective domain-domain and domain-motif binding drives multiprotein complex assembly
+      across protein interaction networks.
+    evidence:
+    - reference: PMID:24081580
+      snippet: By maintaining a constantly updated collection of domain-based structural interaction templates,
+        3did is a reference source of information for the structural characterization of protein interaction
+        networks.
+      notes: Structural protein binding templates mediate protein interaction assembly (PMID:24081580)
+        (ECO:0000305)
+  - subject: GO:0051259
+    predicate: has output
+    predicate_id: RO:0002234
+    object: GO:0032991
+    description: Oligomerization of interacting subunits produces a functional protein-containing complex.
+    evidence:
+    - reference: PMID:24081580
+      snippet: By maintaining a constantly updated collection of domain-based structural interaction templates,
+        3did is a reference source of information for the structural characterization of protein interaction
+        networks.
+      notes: Assembled domain interactions form protein-containing complexes (PMID:24081580) (ECO:0000305)
+evidence:
+- reference: PMID:24081580
+  notes: Mosca et al. (2014) characterize domain-based and motif-based protein-protein binding sites and
+    interaction topologies across high-resolution 3D structures in 3did.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_PROTEIN_BINDING_SITE (CHEBI:83228
+    -> GO:0005515 -> GO:0051259 -> GO:0032991) grounded in PMID:24081580 (Round 125).
+  llm_assisted: true

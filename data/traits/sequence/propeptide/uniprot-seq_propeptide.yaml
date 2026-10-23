@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
 label: propeptide
 definition: >-
-  A propeptide / pro-region removed during maturation of a proprotein (zymogen activation, proprotein-convertase processing).
+  A transient propeptide / pro-region (N-terminal, C-terminal, or internal) that suppresses premature enzymatic or hormonal activity, assists folding as an intramolecular chaperone, or provides an enzyme-docking exosite, and is proteolytically removed during proprotein maturation or zymogen activation.
 definition_source: UniProtKB feature type
 trait_axis: SEQUENCE
 trait_category: SEQ_PROPEPTIDE
@@ -188,4 +188,86 @@ canonical_examples:
     trait_axis: SEQUENCE
     trait_category: SEQ_PROPEPTIDE
   sequence: MIPAKDMAKVMIVMLAICFLTKSDGKSVKKRSVSEIQLMHNLGKHLNSMERVEWLRKKLQDVHNFVALGAPLAPRDAGSQRPRKKEDNVLVESHEKSLGEADKADVNVLTKAKSQ
+causal_graphs:
+- graph_id: CG_UNIPROT_FT_SEQ_PROPEPTIDE
+  title: Intramolecular chaperone folding and proteolytic propeptide removal drive zymogen activation
+  description: A transient propeptide (SO:0001062) acts as an intramolecular chaperone that positively
+    regulates zymogen protein folding (GO:0006457) while maintaining latency until endopeptidase cleavage
+    (GO:0004175) excises the pro-region to trigger zymogen activation (GO:0031638).
+  nodes:
+  - node_id: SO:0001062
+    label: propeptide
+    node_type: MOTIF
+    grounding: SO:0001062
+    description: Cleavable pro-region that assists precursor folding and suppresses premature catalytic
+      activity
+  - node_id: GO:0006457
+    label: protein folding
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006457
+    description: Intramolecular chaperone-assisted folding of the zymogen or proprotein into its native
+      conformation
+  - node_id: GO:0004175
+    label: endopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004175
+    description: Autocatalytic or trans-acting processing endopeptidase activity cleaving the propeptide
+      boundary
+  - node_id: GO:0031638
+    label: zymogen activation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0031638
+    description: Proteolytic removal of the inhibitory propeptide to unmask the active mature enzyme or
+      protein
+  edges:
+  - subject: SO:0001062
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0006457
+    description: The propeptide functions as an intramolecular chaperone that assists correct folding
+      of the zymogen during biosynthesis.
+    evidence:
+    - reference: PMID:38421254
+      snippet: The preparation of active recombinant MTG requires post-translational proteolytic digestion
+        of a propeptide that functions as an intramolecular chaperone to assist the correct folding of
+        the MTG zymogen (MTGz) in the biosynthesis.
+      notes: Propeptide acts as an intramolecular chaperone for zymogen folding (PMID:38421254) (ECO:0000269)
+  - subject: GO:0006457
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0004175
+    description: Proper folding of the propeptide-bearing zymogen positions the propeptide cleavage site
+      for post-translational endopeptidase digestion.
+    evidence:
+    - reference: PMID:38421254
+      snippet: The preparation of active recombinant MTG requires post-translational proteolytic digestion
+        of a propeptide that functions as an intramolecular chaperone to assist the correct folding of
+        the MTG zymogen (MTGz) in the biosynthesis.
+      notes: Folded zymogen undergoes proteolytic digestion of the propeptide (PMID:38421254) (ECO:0000269)
+  - subject: GO:0004175
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0031638
+    description: Proteolytic cleavage and removal of the propeptide converts the inactive zymogen into
+      the active mature enzyme.
+    evidence:
+    - reference: PMID:31557781
+      snippet: CatC is first synthetized as an inactive zymogen containing an intramolecular chain propeptide,
+        the dimeric form of which is processed into the mature tetrameric form by proteolytic cleavages.
+      notes: Proteolytic cleavage of the propeptide activates the zymogen (PMID:31557781) (ECO:0000269)
+evidence:
+- reference: PMID:38421254
+  notes: Propeptides act as intramolecular chaperones that assist correct zymogen folding prior to post-translational
+    proteolytic removal.
+- reference: PMID:31557781
+  notes: Inactive zymogens containing an propeptide are converted into mature active enzymes by proteolytic
+    excision of the propeptide.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_PROPEPTIDE (SO:0001062
+    -> GO:0006457 -> GO:0004175 -> GO:0031638) grounded in PMID:38421254 and PMID:31557781 while preserving
+    all 15 canonical_examples (Round 125).
+  llm_assisted: true
 license: CC-BY 4.0

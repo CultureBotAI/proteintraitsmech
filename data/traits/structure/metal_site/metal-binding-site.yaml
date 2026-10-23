@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:METAL_BINDING_SITE
 label: metal binding site
 definition: >-
-  A local site coordinating one or more metal ions.
+  A three-dimensional local coordination site (Minimal Functional Site) within a protein structure in which amino acid side-chain or backbone donor atoms (typically His, Cys, Asp, or Glu) coordinate one or more metal ions or polynuclear metal clusters with defined geometry to stabilize protein fold, mediate electron transfer, or catalyze enzymatic reactions.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
@@ -10,3 +10,84 @@ mapping_status: SEEDED
 xrefs:
 - valuesets:LocalStructuralFeature
 - GO:0046872
+causal_graphs:
+- graph_id: CG_METAL_BINDING_SITE
+  title: Minimal functional metal-binding site coordinates metal cofactors for fold stability and catalysis
+  description: First-shell coordinating amino-acid residues (CHEBI:83228) within a metal binding site
+    form a Minimal Functional Site that enables selective metal ion binding (GO:0046872), positively regulating
+    protein structural stability (GO:0031647) and enabling metalloenzyme catalytic activity (GO:0003824).
+  nodes:
+  - node_id: CHEBI:83228
+    label: amino-acid residue
+    node_type: RESIDUE
+    grounding: CHEBI:83228
+    description: First-sphere donor amino-acid residues (His, Cys, Asp, Glu, and backbone carbonyls) forming
+      the local metal coordination environment
+  - node_id: GO:0046872
+    label: metal ion binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0046872
+    description: Coordination of one or more metal ions or polynuclear clusters within the Minimal Functional
+      Site
+  - node_id: GO:0031647
+    label: regulation of protein stability
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0031647
+    description: Conformational cross-linking and tertiary fold stabilization imparted by structural metal
+      coordination
+  - node_id: GO:0003824
+    label: catalytic activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0003824
+    description: Lewis-acid activation, substrate polarization, or redox catalysis mediated by catalytic
+      metal centers
+  edges:
+  - subject: CHEBI:83228
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0046872
+    description: Donor amino-acid residues in the local 3D Minimal Functional Site coordinate metal ions
+      with defined geometry.
+    evidence:
+    - reference: PMID:23155064
+      snippet: MFSs are 3D templates that describe the local environment around the metal(s) independently
+        of the larger context of the macromolecular structure embedding the site(s), and are the central
+        objects of MetalPDB design.
+      notes: Local 3D residue environment (MFS) coordinates the metal ion(s) (PMID:23155064) (ECO:0000305)
+  - subject: GO:0046872
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0031647
+    description: Metal coordination within equistructural Minimal Functional Sites stabilizes the local
+      and global macromolecular fold.
+    evidence:
+    - reference: PMID:23155064
+      snippet: This is achieved through the systematic and automated representation of metal-binding sites
+        in proteins and nucleic acids by way of Minimal Functional Sites (MFSs).
+      notes: Minimal Functional Sites organize structural metal coordination in proteins (PMID:23155064)
+        (ECO:0000305)
+  - subject: GO:0046872
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0003824
+    description: Coordinated metal centers in metalloenzyme Minimal Functional Sites directly enable catalytic
+      function.
+    evidence:
+    - reference: PMID:23155064
+      snippet: MFSs are grouped into equistructural (broadly defined as sites found in corresponding positions
+        in similar structures) and equivalent sites (equistructural sites that contain the same metals),
+        allowing users to easily analyse similarities and variations in metal-macromolecule interactions,
+        and to link them to functional information.
+      notes: Equivalent metal-binding Minimal Functional Sites link metal coordination to catalytic function
+        (PMID:23155064) (ECO:0000305)
+evidence:
+- reference: PMID:23155064
+  notes: Andreini et al. (2013) characterize metal-binding Minimal Functional Sites (MFSs) in MetalPDB
+    and their structural and catalytic roles in metalloproteins.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_METAL_BINDING_SITE (CHEBI:83228
+    -> GO:0046872 -> GO:0031647 + GO:0003824) grounded in PMID:23155064 (Round 125).
+  llm_assisted: true

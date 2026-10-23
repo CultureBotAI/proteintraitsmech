@@ -18,9 +18,10 @@ synonyms:
   - synonym_text: "gated catalytic access channel"
     synonym_type: RELATED_SYNONYM
 xrefs:
-  - GO:0003824
-  - GO:0036094
   - CHEBI:24431
+  - GO:0036094
+  - GO:0003824
+  - GO:0008152
 detection_methods:
   - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
     method_type: STRUCTURAL_ALGORITHM
@@ -32,7 +33,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL
     title: "Internal access tunnel geometry governs small-molecule exchange with buried catalytic sites"
-    description: "A buried active-site access tunnel provides the internal transport pathway for small-molecule substrates, ions, and solvent (CHEBI:24431) to reach and depart the occluded catalytic pocket, enabling small molecule binding (GO:0036094) and regulating enzyme catalytic activity (GO:0003824)."
+    description: "A buried active-site access tunnel provides the internal transport pathway for small-molecule substrates, ions, and solvent (CHEBI:24431) to reach and depart the occluded catalytic pocket, enabling small molecule binding (GO:0036094), regulating enzyme catalytic activity (GO:0003824), and supporting cellular metabolic processes (GO:0008152)."
     nodes:
       - node_id: "CHEBI:24431"
         label: "chemical entity"
@@ -48,7 +49,12 @@ causal_graphs:
         label: "catalytic activity"
         node_type: MOLECULAR_FUNCTION
         grounding: "GO:0003824"
-        description: "Enzyme catalysis within the buried active-site cavity governed by tunnel transport kinetics"
+        description: "Enzyme catalysis within the buried active-site cavity governed by tunnel bottleneck geometry and gating kinetics"
+      - node_id: "GO:0008152"
+        label: "metabolic process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0008152"
+        description: "Enzymatic metabolic conversions mediated by biocatalysts with buried active-site tunnels"
     edges:
       - subject: "CHEBI:24431"
         predicate: "involved in"
@@ -63,12 +69,28 @@ causal_graphs:
         predicate: "positively regulates"
         predicate_id: RO:0002213
         object: "GO:0003824"
-        description: "Pathway geometry, physicochemical lining, and dynamics of substrate/product transport pathways govern enzyme structure-function and biocatalytic activity."
+        description: "Pathway geometry, physicochemical lining, and dynamics of substrate/product transport pathways govern enzyme structure-function and catalytic activity."
         evidence:
           - reference: PMID:23093919
             snippet: "Characteristics of individual transport pathways, including their geometry, physico-chemical properties and dynamics are instrumental for understanding of structure-function relationships of these proteins, for the design of new inhibitors and construction of improved biocatalysts."
             notes: "Tunnel geometry and dynamics govern enzyme catalytic function (PMID:23093919). (ECO:0000305)"
+      - subject: "GO:0003824"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0008152"
+        description: "Biocatalytic turnover in enzymes with buried active-site access tunnels drives metabolic transformations."
+        evidence:
+          - reference: PMID:23093919
+            snippet: "Characteristics of individual transport pathways, including their geometry, physico-chemical properties and dynamics are instrumental for understanding of structure-function relationships of these proteins, for the design of new inhibitors and construction of improved biocatalysts."
+            notes: "Biocatalytic function enabled by buried active-site tunnels (PMID:23093919). (ECO:0000305)"
 evidence:
   - reference: PMID:23093919
     notes: "Tunnels and channels facilitate the transport of small molecules, ions, and water solvent between buried enzyme active sites and bulk solvent, governing substrate specificity and catalytic efficiency."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL to a 4-node, 3-edge mechanism (CHEBI:24431 -> GO:0036094
+    -> GO:0003824 -> GO:0008152) with verbatim snippets from PMID:23093919 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

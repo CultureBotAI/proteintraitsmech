@@ -29,8 +29,13 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_MATURE_CHAIN_BIOACTIVE_PEPTIDE
     title: "Proteolytic liberation of C-terminal bioactive antimicrobial peptide chain from holoprotein precursor"
-    description: "Proteolytic cleavage during antimicrobial peptide biosynthesis (GO:0002777) removes the N-terminal cathelin/pro-domain from the inactive holoprotein to release the mature bioactive peptide chain (SO:0000419), which mediates antimicrobial humoral defense (GO:0061844)."
+    description: "Granule or extracellular endopeptidase activity (GO:0004175, such as neutrophil elastase or proteinase 3) drives antimicrobial peptide biosynthesis (GO:0002777) by cleaving the N-terminal pro-domain from the inactive holoprotein to release the mature bioactive peptide chain (SO:0000419), which mediates antimicrobial humoral defense (GO:0061844)."
     nodes:
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Serine endoprotease activity (such as neutrophil elastase or proteinase 3) cleaving the inactive holoprotein precursor"
       - node_id: "GO:0002777"
         label: "antimicrobial peptide biosynthetic process"
         node_type: BIOLOGICAL_PROCESS
@@ -47,11 +52,20 @@ causal_graphs:
         grounding: "GO:0061844"
         description: "Direct antimicrobial defense mediated by the mature excised peptide"
     edges:
+      - subject: "GO:0004175"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0002777"
+        description: "Granule serine endoproteases such as neutrophil elastase or proteinase 3 cleave inactive cathelicidin holoproteins to initiate active antimicrobial peptide generation."
+        evidence:
+          - reference: PMID:11134217
+            snippet: "Bovine and porcine cathelicidins are cleaved by elastase from the azurophil granules to yield the active antimicrobial peptides."
+            notes: "Elastase endopeptidase activity cleaves cathelicidin holoproteins (PMID:11134217). (ECO:0000269)"
       - subject: "GO:0002777"
         predicate: "has output"
         predicate_id: RO:0002234
         object: "SO:0000419"
-        description: "Proteolytic processing of the holoprotein precursor by elastase or proteinase 3 liberates the active C-terminal antimicrobial peptide chain."
+        description: "Proteolytic processing of the holoprotein precursor liberates the active C-terminal antimicrobial peptide chain."
         evidence:
           - reference: PMID:11134217
             snippet: "Bovine and porcine cathelicidins are cleaved by elastase from the azurophil granules to yield the active antimicrobial peptides."
@@ -68,4 +82,11 @@ causal_graphs:
 evidence:
   - reference: PMID:11134217
     notes: "Cathelicidins are synthesized as inactive holoproteins whose C-terminal antimicrobial peptide chain must be proteolytically cleaved by elastase or proteinase 3 to become active."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_MATURE_CHAIN_BIOACTIVE_PEPTIDE to a 4-node, 3-edge mechanism (GO:0004175 -> GO:0002777
+    -> SO:0000419 -> GO:0061844) with verbatim snippets from PMID:11134217 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

@@ -31,8 +31,13 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_INIT_METHIONINE_EXCISED
     title: "Co-translational initiator methionine excision by methionyl-aminopeptidase"
-    description: "A small penultimate residue (Gly, Ala, Ser, Pro, Thr, Val, or Cys) at position 2 accommodates within the S1' substrate pocket of methionyl-aminopeptidase (MAP), enabling co-translational cleavage of the N-terminal initiator methionine to yield the mature processed N-terminus."
+    description: "Translational initiation (GO:0006413) incorporates the N-terminal L-methionine residue (CHEBI:16811) at position 1; when the penultimate residue (Gly, Ala, Ser, Pro, Thr, Val, or Cys) at position 2 accommodates within the S1' substrate pocket of methionyl-aminopeptidase (GO:0004239), co-translational cleavage removes Met1 during protein processing (GO:0016485) to expose the penultimate residue as the mature N-terminus."
     nodes:
+      - node_id: "GO:0006413"
+        label: "translational initiation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006413"
+        description: "Translational initiation incorporating the N-terminal methionine residue at position 1 of the nascent polypeptide"
       - node_id: "CHEBI:16811"
         label: L-methionine
         node_type: RESIDUE
@@ -49,11 +54,20 @@ causal_graphs:
         grounding: "GO:0016485"
         description: "Co-translational proteolytic removal of the initiator methionine to expose the penultimate residue at the mature N-terminus"
     edges:
+      - subject: "GO:0006413"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "CHEBI:16811"
+        description: "Translational initiation incorporates the N-terminal methionine residue at position 1 of the nascent polypeptide."
+        evidence:
+          - reference: PMID:2682640
+            snippet: "In a significant fraction of the Escherichia coli cytosolic proteins, the N-terminal methionine residue incorporated during the translation initiation step is excised. The N-terminal methionine excision is catalyzed by methionyl-aminopeptidase (MAP)."
+            notes: "Translation initiation incorporates N-terminal Met1 (PMID:2682640). (ECO:0000269)"
       - subject: "CHEBI:16811"
-        predicate: enables
-        predicate_id: RO:0002327
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0004239"
-        description: "Small penultimate side-chain geometry at P1' enables productive substrate recognition and cleavage by methionyl-aminopeptidase."
+        description: "Small penultimate side-chain geometry at P1' allows N-terminal L-methionine to participate in productive substrate recognition and cleavage by methionyl-aminopeptidase."
         evidence:
           - reference: PMID:2682640
             snippet: "From our results, methionine excision catalyzed by MAP is shown to obey the following rule: the catalytic efficiency of MAP, and therefore the extent of cleavage, decreases in parallel with the increasing of the maximal side-chain length of the amino acid in the penultimate position."
@@ -70,4 +84,11 @@ causal_graphs:
 evidence:
   - reference: PMID:2682640
     notes: "Extent of N-terminal methionine excision by methionyl-aminopeptidase is governed by the maximal side-chain length of the penultimate amino acid."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_INIT_METHIONINE_EXCISED to a 4-node, 3-edge mechanism (GO:0006413 -> CHEBI:16811
+    -> GO:0004239 -> GO:0016485) with verbatim snippets from PMID:2682640 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0

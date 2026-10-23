@@ -1,7 +1,7 @@
 identifier: proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
 label: released active peptide
 definition: >-
-  A released, biologically active peptide excised from a larger precursor (e.g. a neuropeptide or hormone).
+  A released, biologically active polypeptide chain or mature peptide hormone, neuropeptide, or antimicrobial peptide excised from a larger precursor polyprotein by site-specific endopeptidase and exopeptidase processing.
 definition_source: UniProtKB feature type
 trait_axis: SEQUENCE
 trait_category: SEQ_MATURE_CHAIN
@@ -333,4 +333,84 @@ canonical_examples:
     trait_axis: SEQUENCE
     trait_category: SEQ_MATURE_CHAIN
   sequence: MNAFLLSALCLLGAWAALAGGVTVQDGNFSFSLESVKKLKDLQEPQEPRVGKLRNFAPIPGEPVVPILCSNPNFPEELKPLCKEPNAQEILQRLEEIAEDPGTCEICAYAACTGC
+causal_graphs:
+- graph_id: CG_UNIPROT_FT_SEQ_MATURE_CHAIN
+  title: Proprotein convertase cleavage excises mature bioactive polypeptide chains from precursors
+  description: Proprotein convertase endopeptidase activity (GO:0004175) positively regulates proteolytic
+    protein processing (GO:0016485) of precursor polyproteins, releasing a defined mature protein/peptide
+    region (SO:0000419) that completes functional protein maturation (GO:0051604).
+  nodes:
+  - node_id: GO:0004175
+    label: endopeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004175
+    description: Subtilisin/kexin-like proprotein convertase or processing endopeptidase cleaving precursor
+      proteins at specific recognition sites
+  - node_id: GO:0016485
+    label: protein processing
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0016485
+    description: Site-specific proteolytic cleavage of precursor polyproteins or prohormones in the secretory
+      pathway
+  - node_id: SO:0000419
+    label: mature_protein_region
+    node_type: DOMAIN
+    grounding: SO:0000419
+    description: Excised, biologically active mature polypeptide chain or peptide hormone
+  - node_id: GO:0051604
+    label: protein maturation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0051604
+    description: Generation of the active mature peptide or protein product from an inactive precursor
+  edges:
+  - subject: GO:0004175
+    predicate: positively regulates
+    predicate_id: RO:0002213
+    object: GO:0016485
+    description: Proprotein convertases catalyze site-specific endoproteolytic processing of secretory
+      precursor proteins.
+    evidence:
+    - reference: PMID:18184105
+      snippet: The proprotein convertases (PCs) are a family of nine secretory serine proteases related
+        to bacterial subtilisin and yeast kexin.
+      notes: Proprotein convertases are secretory serine endopeptidases that process precursors (PMID:18184105)
+        (ECO:0000305)
+  - subject: GO:0016485
+    predicate: has output
+    predicate_id: RO:0002234
+    object: SO:0000419
+    description: Proteolytic processing at basic or non-basic cleavage sites releases the mature polypeptide
+      chain or bioactive peptide.
+    evidence:
+    - reference: PMID:18184105
+      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
+        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
+        residues or self-cleave, respectively.
+      notes: Cleavage at defined recognition sites excises mature chains and peptides (PMID:18184105)
+        (ECO:0000305)
+  - subject: SO:0000419
+    predicate: involved in
+    predicate_id: RO:0002331
+    object: GO:0051604
+    description: Release of the excised mature region completes post-translational maturation of hormones,
+      neuropeptides, and secreted proteins.
+    evidence:
+    - reference: PMID:18184105
+      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
+        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
+        residues or self-cleave, respectively.
+      notes: Excised mature chains represent the processed products of proprotein maturation (PMID:18184105)
+        (ECO:0000305)
+evidence:
+- reference: PMID:18184105
+  notes: Seidah et al. (2008) review the proprotein convertase family of serine endopeptidases that cleave
+    precursor proteins at dibasic or monobasic sites to release mature bioactive peptides and hormones.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_MATURE_CHAIN (GO:0004175
+    -> GO:0016485 -> SO:0000419 -> GO:0051604) grounded in PMID:18184105 while preserving all 15 canonical_examples
+    (Round 125).
+  llm_assisted: true
 license: CC-BY 4.0

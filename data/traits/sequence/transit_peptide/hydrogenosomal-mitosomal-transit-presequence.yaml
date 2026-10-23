@@ -32,7 +32,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME
     title: "N-terminal presequence-directed import and processing in hydrogenosomes and mitosomes"
-    description: "A short N-terminal transit presequence (SO:0000725) is recognized by the mitochondrion-related organelle import and processing-peptidase machinery (GO:0033365), delivering proteins into mitosomes (GO:0032047) and hydrogenosomes (GO:0042566)."
+    description: "A short N-terminal transit presequence (SO:0000725) is recognized by the conserved mitochondrion-related organelle import and processing-peptidase machinery (GO:0033365), targeting proteins into mitosomes (GO:0032047) and hydrogenosomes (GO:0042566)."
     nodes:
       - node_id: "SO:0000725"
         label: transit_peptide
@@ -44,11 +44,16 @@ causal_graphs:
         node_type: BIOLOGICAL_PROCESS
         grounding: "GO:0033365"
         description: "Translocation across the double membrane of mitochondrion-related organelles and presequence cleavage by processing peptidase"
+      - node_id: "GO:0032047"
+        label: mitosome
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0032047"
+        description: "Double-membrane mitochondrion-related organelle of anaerobic eukaryotes such as Giardia intestinalis that functions in iron-sulfur cluster assembly"
       - node_id: "GO:0042566"
         label: hydrogenosome
         node_type: CELLULAR_LOCALIZATION
         grounding: "GO:0042566"
-        description: "Hydrogen-producing double-membrane mitochondrion-related organelle of anaerobic eukaryotes"
+        description: "Hydrogen-producing double-membrane mitochondrion-related organelle of anaerobic eukaryotes such as Trichomonas vaginalis"
     edges:
       - subject: "SO:0000725"
         predicate: "involved in"
@@ -62,6 +67,15 @@ causal_graphs:
       - subject: "GO:0033365"
         predicate: "has target end location"
         predicate_id: RO:0002339
+        object: "GO:0032047"
+        description: "Mitosomal protein import machinery recognizes the N-terminal presequence and delivers the imported protein into mitosomes."
+        evidence:
+          - reference: PMID:16040811
+            snippet: "Here, we report that proteins targeted into mitosomes of Giardia intestinalis have targeting signals necessary and sufficient to be recognized by the mitosomal protein import machinery."
+            notes: "Presequence-directed import into Giardia mitosomes (PMID:16040811). (ECO:0000269)"
+      - subject: "GO:0033365"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
         object: "GO:0042566"
         description: "Shared presequence recognition and inner-membrane translocase/peptidase processing deliver precursor proteins into hydrogenosomes."
         evidence:
@@ -71,4 +85,11 @@ causal_graphs:
 evidence:
   - reference: PMID:16040811
     notes: "Proteins targeted into Giardia mitosomes and Trichomonas hydrogenosomes carry conserved N-terminal targeting presequences recognized by a shared TIM/processing-peptidase import machinery."
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Expanded CG_TRANSIT_PEPTIDE_HYDROGENOSOME_MITOSOME to a 4-node, 3-edge mechanism (SO:0000725
+    -> GO:0033365 -> GO:0032047 + GO:0042566) with verbatim snippets from PMID:16040811 (Round 125).
+  llm_assisted: true
 license: CC-BY-4.0
