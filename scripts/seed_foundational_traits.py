@@ -4351,10 +4351,10 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="CHEBI:16811",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0004239",
-                        description="Small penultimate side-chain geometry at P1' enables productive substrate recognition and cleavage by methionyl-aminopeptidase.",
+                        description="Small penultimate side-chain geometry at P1' allows N-terminal L-methionine to participate in productive substrate recognition and cleavage by methionyl-aminopeptidase.",
                         reference="PMID:2682640",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -4495,10 +4495,10 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004239",
-                        predicate="RO:0002212",
-                        predicate_label="negatively regulates",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
                         object="GO:0016485",
-                        description="Steric inhibition of methionyl-aminopeptidase cleavage prevents N-terminal methionine excision, retaining Met1 as the mature N-terminal residue.",
+                        description="Methionyl-aminopeptidase activity enables N-terminal methionine excision during protein processing, which is sterically blocked when the penultimate side chain is bulky.",
                         reference="PMID:2682640",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -4588,10 +4588,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="MOD:00030",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0008463",
-                        description="Nascent N-formyl-L-methionine at position 1 serves as the substrate for peptide deformylase.",
+                        description="Nascent N-formyl-L-methionine at position 1 participates as the substrate for peptide deformylase.",
                         reference="PMID:18718933",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -5298,10 +5298,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0001808",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0004175",
-                        description="The intermembrane-space sorting signal of the bipartite presequence presents the cleavage site for catalysis by the inner membrane protease (Imp1p/Imp2p).",
+                        description="The intermembrane-space sorting signal of the bipartite presequence participates as the cleavage substrate for the inner membrane protease (Imp1p/Imp2p).",
                         reference="PMID:8266095",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -5778,10 +5778,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0001062",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0003923",
-                        description="The C-terminal propeptide directs the precursor omega-site peptide bond to the PIGK Cys206-His164-Asn58 catalytic triad of GPI transamidase.",
+                        description="The C-terminal propeptide participates as the cleavage/transfer substrate at the PIGK Cys206-His164-Asn58 catalytic triad of GPI transamidase.",
                         reference="PMID:35165458",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -5847,7 +5847,7 @@ SPECS: tuple[TraitSpec, ...] = (
             ("transmembrane conduction pore with selectivity filter", "EXACT_SYNONYM"),
             ("selectivity filter and central cavity", "RELATED_SYNONYM"),
         ),
-        xrefs=("GO:0046872", "GO:0015267", "GO:0005216", "GO:0034220"),
+        xrefs=("SO:0000417", "GO:0046872", "GO:0005216", "GO:0034220"),
         evidence=(
             (
                 "PMID:9525859",
@@ -5860,26 +5860,27 @@ SPECS: tuple[TraitSpec, ...] = (
                 graph_id="CG_CAVITY_SELECTIVITY_FILTER_PORE",
                 label="Backbone carbonyl coordination and multi-ion repulsion in the selectivity-filter pore drive selective ion conduction",
                 mechanism_summary=(
-                    "The transmembrane selectivity-filter pore geometry holds backbone carbonyl "
-                    "oxygens at precise coordination distances for selective metal ion binding "
-                    "(GO:0046872) that dehydrates and coordinates permeant ions while excluding "
-                    "non-cognate ions, enabling channel activity (GO:0015267), monoatomic ion "
-                    "channel activity (GO:0005216), and transmembrane ion transport (GO:0034220)."
+                    "The pore-lining selectivity-filter polypeptide domain (SO:0000417) holds "
+                    "backbone carbonyl oxygens at precise coordination distances to enable "
+                    "selective metal ion binding (GO:0046872) that dehydrates and coordinates "
+                    "permeant ions while excluding non-cognate ions, which is causally upstream "
+                    "of monoatomic ion channel activity (GO:0005216) and positively regulates "
+                    "monoatomic ion transmembrane transport (GO:0034220)."
                 ),
                 nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Pore-lining transmembrane selectivity-filter domain combining a central water-filled cavity with a narrow 12-A carbonyl-lined filter",
+                    ),
                     CausalNodeSpec(
                         node_id="GO:0046872",
                         label="metal ion binding",
                         node_type="MOLECULAR_FUNCTION",
                         grounding="GO:0046872",
                         description="Dehydrated metal ion coordination by the rings of main-chain carbonyl oxygen atoms lining the 12-A selectivity filter",
-                    ),
-                    CausalNodeSpec(
-                        node_id="GO:0015267",
-                        label="channel activity",
-                        node_type="MOLECULAR_FUNCTION",
-                        grounding="GO:0015267",
-                        description="Transmembrane pore combining a central water-filled cavity with a narrow 12-A carbonyl-lined selectivity filter",
                     ),
                     CausalNodeSpec(
                         node_id="GO:0005216",
@@ -5898,11 +5899,11 @@ SPECS: tuple[TraitSpec, ...] = (
                 ),
                 edges=(
                     CausalEdgeSpec(
-                        subject="GO:0046872",
+                        subject="SO:0000417",
                         predicate="RO:0002327",
                         predicate_label="enables",
-                        object="GO:0015267",
-                        description="Structurally constrained main-chain carbonyl oxygens in the selectivity filter coordinate dehydrated K+ ions while excluding smaller Na+ ions to form an ion-selective channel pore.",
+                        object="GO:0046872",
+                        description="Structurally constrained main-chain carbonyl oxygens in the selectivity-filter domain coordinate dehydrated K+ ions while excluding smaller Na+ ions.",
                         reference="PMID:9525859",
                         evidence_code="ECO:0000269",
                         snippet=(
@@ -5913,11 +5914,11 @@ SPECS: tuple[TraitSpec, ...] = (
                         notes="Selectivity filter carbonyl geometry coordinates K+ selectively (PMID:9525859).",
                     ),
                     CausalEdgeSpec(
-                        subject="GO:0015267",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        subject="GO:0046872",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
                         object="GO:0005216",
-                        description="Selective coordination of permeant ions in the filter pore enables monoatomic ion channel activity.",
+                        description="Selective coordination of permeant ions in the filter pore drives selective monoatomic ion channel activity.",
                         reference="PMID:9525859",
                         evidence_code="ECO:0000269",
                         snippet=(

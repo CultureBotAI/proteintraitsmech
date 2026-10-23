@@ -18,8 +18,8 @@ synonyms:
   - synonym_text: "selectivity filter and central cavity"
     synonym_type: RELATED_SYNONYM
 xrefs:
+  - SO:0000417
   - GO:0046872
-  - GO:0015267
   - GO:0005216
   - GO:0034220
 detection_methods:
@@ -33,18 +33,18 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_CAVITY_SELECTIVITY_FILTER_PORE
     title: "Backbone carbonyl coordination and multi-ion repulsion in the selectivity-filter pore drive selective ion conduction"
-    description: "The transmembrane selectivity-filter pore geometry holds backbone carbonyl oxygens at precise coordination distances for selective metal ion binding (GO:0046872) that dehydrates and coordinates permeant ions while excluding non-cognate ions, enabling channel activity (GO:0015267), monoatomic ion channel activity (GO:0005216), and transmembrane ion transport (GO:0034220)."
+    description: "The pore-lining selectivity-filter polypeptide domain (SO:0000417) holds backbone carbonyl oxygens at precise coordination distances to enable selective metal ion binding (GO:0046872) that dehydrates and coordinates permeant ions while excluding non-cognate ions, which is causally upstream of monoatomic ion channel activity (GO:0005216) and positively regulates monoatomic ion transmembrane transport (GO:0034220)."
     nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Pore-lining transmembrane selectivity-filter domain combining a central water-filled cavity with a narrow 12-A carbonyl-lined filter"
       - node_id: "GO:0046872"
         label: "metal ion binding"
         node_type: MOLECULAR_FUNCTION
         grounding: "GO:0046872"
         description: "Dehydrated metal ion coordination by the rings of main-chain carbonyl oxygen atoms lining the 12-A selectivity filter"
-      - node_id: "GO:0015267"
-        label: "channel activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0015267"
-        description: "Transmembrane pore combining a central water-filled cavity with a narrow 12-A carbonyl-lined selectivity filter"
       - node_id: "GO:0005216"
         label: "monoatomic ion channel activity"
         node_type: MOLECULAR_FUNCTION
@@ -56,20 +56,20 @@ causal_graphs:
         grounding: "GO:0034220"
         description: "Selective conduction of monoatomic ions across the lipid bilayer driven by multi-ion electrostatic repulsion"
     edges:
-      - subject: "GO:0046872"
+      - subject: "SO:0000417"
         predicate: enables
         predicate_id: RO:0002327
-        object: "GO:0015267"
-        description: "Structurally constrained main-chain carbonyl oxygens in the selectivity filter coordinate dehydrated K+ ions while excluding smaller Na+ ions to form an ion-selective channel pore."
+        object: "GO:0046872"
+        description: "Structurally constrained main-chain carbonyl oxygens in the selectivity-filter domain coordinate dehydrated K+ ions while excluding smaller Na+ ions."
         evidence:
           - reference: PMID:9525859
             snippet: "Main chain carbonyl oxygen atoms from the K+ channel signature sequence line the selectivity filter, which is held open by structural constraints to coordinate K+ ions but not smaller Na+ ions."
             notes: "Selectivity filter carbonyl geometry coordinates K+ selectively (PMID:9525859). (ECO:0000269)"
-      - subject: "GO:0015267"
-        predicate: enables
-        predicate_id: RO:0002327
+      - subject: "GO:0046872"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
         object: "GO:0005216"
-        description: "Selective coordination of permeant ions in the filter pore enables monoatomic ion channel activity."
+        description: "Selective coordination of permeant ions in the filter pore drives selective monoatomic ion channel activity."
         evidence:
           - reference: PMID:9525859
             snippet: "Main chain carbonyl oxygen atoms from the K+ channel signature sequence line the selectivity filter, which is held open by structural constraints to coordinate K+ ions but not smaller Na+ ions."
@@ -90,7 +90,7 @@ curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
   action: EDIT
-  changes: Expanded CG_CAVITY_SELECTIVITY_FILTER_PORE to a 4-node, 3-edge mechanism (GO:0046872 -> GO:0015267
+  changes: Expanded CG_CAVITY_SELECTIVITY_FILTER_PORE to a 4-node, 3-edge mechanism (SO:0000417 -> GO:0046872
     -> GO:0005216 -> GO:0034220) with verbatim snippets from PMID:9525859 (Round 125).
   llm_assisted: true
 license: CC-BY-4.0

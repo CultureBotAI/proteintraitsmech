@@ -33,6 +33,11 @@ MECHANISM_BEARING_CATEGORIES = {
 }
 
 ROUND_124_EDITED_IDS = {spec.identifier for spec in sft.SPECS[:66] if spec.causal_graphs}
+STAGE1_UNCHANGED_IDS = {
+    "proteintraitsmech:INIT_METHIONINE_ACETYLATED",
+    "proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
+    "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
+}
 
 
 def test_foundational_trait_records_exist_and_validate():
@@ -127,10 +132,13 @@ def test_foundational_trait_causal_graphs_audit_and_score():
         assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
         assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
         history = data.get("curation_history") or []
-        assert history, f"{spec.identifier} missing curation_history"
-        assert history[-1].get("curator") == "claude"
-        assert history[-1].get("action") == "EDIT"
-        assert history[-1].get("llm_assisted") is True
+        if spec.identifier in STAGE1_UNCHANGED_IDS:
+            assert not history, f"{spec.identifier} unchanged since Stage 1 seeding must not carry no-op EDIT history"
+        else:
+            assert history, f"{spec.identifier} missing curation_history"
+            assert history[-1].get("curator") == "claude"
+            assert history[-1].get("action") == "EDIT"
+            assert history[-1].get("llm_assisted") is True
         if spec.identifier not in ROUND_124_EDITED_IDS:
             cg = data["causal_graphs"][0]
             assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
@@ -319,6 +327,18 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
         assert scored.structural_errors == 0
         assert scored.quality_warnings == 0
         assert scored.reasons == ("mapping_status=SEEDED",)
+
+        assert "causal_graphs:" in fresh_yaml, f"{ident} seeder must emit causal_graphs directly"
+        assert "evidence:" in fresh_yaml, f"{ident} seeder must emit evidence directly"
+        for ev in data.get("evidence") or []:
+            ref = ev["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {ident}"
+        for edge in cgs[0].get("edges") or []:
+            for ev in edge.get("evidence") or []:
+                ref = ev["reference"]
+                if ref.startswith("PMID:"):
+                    assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {ident}"
 
         existing_text = path.read_text(encoding="utf-8")
         assert yaml.safe_load(rio.merge_on_reseed(existing_text, fresh_yaml)) == data
