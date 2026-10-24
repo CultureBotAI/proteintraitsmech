@@ -1,0 +1,952 @@
+# Review of requires desferrioxamine E
+
+- Review: 20261021T112934Z-desferrioxamine-e-chebi50437
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T11:21:58Z
+- Finished UTC: 2026-10-21T11:29:34Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The exact desferrioxamine E chemical identity is supported. One confirmed major finding concerns chemical-to-protein-trait equivalence. Free-ligand state, ferric complex and bounded production/activity evidence remain distinct.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 3 in batch 019. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c) covers 178 record paths, leaving 429181 before this batch. 19 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml | generated | requires desferrioxamine E |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_50437 | CHEBI:50437 resolves and is nonobsolete. Its exact cyclic structure, formula, charge, definition and siderophore role were inspected, together with all three outgoing structural parents and additional source roles, external conjugate and ferric-complex comparison. Local siderophore/cofactor ancestors were read. Primary abstracts support only the stated organism/production and activity context. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+The entire local record denotes a proposed reusable protein requirement for desferrioxamine E. CHEBI:50437 denotes the chemical referent, not an equivalent protein-requirement class.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+scripts/seed_chebi_cofactor.py owns the generated target and synthesizes its requirement wrapper from chemical-role selection and source chemical text. Official CC BY 4.0 licensing is verified. Current comparison snapshots do not establish the original seed release.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+The actual source role relation explains the local broader requirement parent. Chemical-role taxonomy is not automatically a protein-requirement hierarchy or true equivalence; this one-record review does not certify the parent.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+CHEBI:50437 in xrefs denotes a chemical entity, whereas the target denotes a protein functional requirement. The schema defines xrefs as true own-source equivalence, not chemical association.
+
+### Desferrioxamine E cyclic ligand and exact charge
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+CHEBI:50437 is the iron-free neutral C27H48N6O9 with three hydroxamic OH groups. The source structure is a cyclic33-membered scaffold with no terminal amino group; it is distinct from acyclic desferrioxamine B. The exact E conjugate and ferric complex remain separate chemical states. No stereocentre is specified in this structure.
+
+### FUNCTION cofactor requirement representation
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+E production and source siderophore role provide bounded biological context. They do not establish an exact free-ligand protonation population, bound geometry or protein requiring this state as a non-substrate cofactor. Iron handling and in-vitro activity are not sufficient by themselves, and do not prove universal absence of such a role.
+
+### Bounds of bacterial occurrence and antitumour background
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_50437.
+
+The local antitumour background has bounded support in nocardamine inhibition of colony formation in tumour-cell lines. It is not interpreted as demonstrated clinical efficacy or general cytotoxicity. Multiple primary production studies support occurrence in several bacteria; their results do not establish a universal protein requirement or transfer chaxalactin antibacterial assays to E.
+
+## Findings
+
+### F1: Chemical entity is encoded as equivalent to a protein requirement class
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-50437.chemical-entity-equivalence.
+
+The local record denotes a protein requirement for desferrioxamine E, whereas CHEBI:50437 denotes the specific neutral iron-free macrocyclic ligand. xrefs equates a functional requirement and chemical state.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:50437 from trait-equivalence xrefs and preserve the exact source identity through schema-compatible grounding. Preserve chemical-source provenance separately from the locally synthesized requirement. Before assigning a COFACTOR chemical_participant, adjudicate the activity-relative role against the non-substrate requirement category; if unresolved, retain that uncertainty and only a supported representation. Do not blindly move an own-source association to mapped_xrefs or qualify a protein from chemical-role membership alone.
+
+- The regenerated target preserves intended CHEBI:50437 chemistry without asserting equality to a protein requirement.
+- Preserve CHEBI:50437, its three hydroxamic OH groups and neutral charge. Distinguish the conjugate free ligand and ferrioxamine E60261; neither acid/base relation nor has-part supports automatic role transfer or merging.
+- Any typed participant has an explicitly supported activity-relative role and exact chemical scope; no automatic chemical merge, universal requirement, unreviewed example or status promotion is introduced.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml. These are future curation acceptance checks, not claims that record bytes have already changed.
+- For maintained Python/writer changes add focused pytest coverage, then run just lint, just test and just audit-writers. Regenerate this existing target through an audited scoped route. Run full-corpus just validate-all before merging record changes and save a fresh structured scientific review against changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing | supports | Official ChEBI Introduction describes chemical entities and chemical classes. Licensing states CC BY 4.0. It supports source licensing, not the synthesized protein-requirement wrapper. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16. Its original access time is preserved; this is not a release assignment for the live backend or original seed. |
+| chemical | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_50437; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:50437 to nonobsolete desferrioxamine E. Identifiers, names and chemical annotations were inspected. The actual source definition was inspected. |
+| chemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/50437/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The complete exact-identity response was inspected: names, formula, charge, structure, incoming/outgoing relations and the chemical definition. The chemical-role assertions do not themselves qualify a protein. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The source defines cofactor as a biochemical role for an organic molecule or ion required by an enzyme; it is not a protein-requirement class. |
+| local-cofactor-ancestor | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire captured ancestor YAML | supports | The complete captured cofactor-requirement ancestor was read. Its definition, ChEBI role xref and SEEDED status provide hierarchy context; this target review does not certify that ancestor. |
+| siderophore-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26672/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The source role concerns microbial iron(III) chelation for transport and sequestration, with outgoing cofactor, iron(3+) chelator and iron ionophore parents. This authentic role hierarchy does not by itself establish non-substrate dependence in a protein. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/84730/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The counterpart is C27H45N6O9 with charge−3 and three hydroxamate O− groups. The two entries have explicit acid/base relation and the same macrocyclic scaffold. |
+| ferric-complex | https://www.ebi.ac.uk/chebi/backend/api/public/compound/60261/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | Ferrioxamine E has C27H45FeN6O9, charge0, and has-part relations to iron(3+) and the E trianion84730. It is a distinct metal complex, not equivalent to either free-ligand protonation state. |
+| production-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A1367428%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID1367428; DOI10.1007/bf00173718; complete indexed abstract | supports | The complete primary abstract reports production of desferrioxamine E by S. olivaceus TU2718 and culture/feeding experiments. It supports organism and production context, not exact physiological ligand charge or a protein non-substrate requirement. |
+| nocardamine-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21376551%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID21376551; DOI10.1016/j.micres.2011.01.004; complete indexed abstract | supports | The complete primary abstract identifies nocardamine from Citricoccus KMM3890 by combined spectral analysis. It reports inhibition of colony formation in several human tumour-cell lines, weak antibacterial activity and no revealed cytotoxic activity in that study. These bounded in-vitro results do not establish clinical efficacy or activity of the exact free trianion. |
+| cyclic-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/50455/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The cyclic-desferrioxamine class has null prose definition and no fixed structure; outgoing taxonomy identifies a desferrioxamine class. This is chemical/source-role context. |
+| macrocycle | https://www.ebi.ac.uk/chebi/backend/api/public/compound/51026/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The macrocycle parent defines a cyclic system with at least nine ring atoms. This is chemical/source-role context. |
+| hydroxamic-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23445/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The cyclic-hydroxamic-acid parent is a lactam with an OH substituent on nitrogen. This is chemical/source-role context. |
+| marine-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/76507/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The marine-metabolite role concerns a compound found in marine organisms. This is chemical/source-role context. |
+| antineoplastic-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/35610/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The antineoplastic role concerns inhibition or prevention of neoplasm proliferation. This is chemical/source-role context. |
+| bacterial-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/76969/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The bacterial-metabolite role concerns bacterial metabolic production. This is chemical/source-role context. |
+| biofilm-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21628895%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID21628895; DOI10.1248/bpb.34.917; complete indexed abstract | supports | The complete primary abstract reports E production by actinomycete MS67 and inhibition of mycobacterial biofilm formation, with iron depletion suggested as mechanism. It does not report universal antibacterial effects or exact neutral protein dependence. |
+| chaxalactin-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21879726%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID21879726; DOI10.1021/np200470u; complete indexed abstract | supports | The complete primary abstract reports known E alongside new chaxalactins in Streptomyces C34. The reported antibacterial results for compounds1–3 concern chaxalactins, and are not attributed here to E. |
+| culture-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A23839716%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID23839716; DOI10.1007/s11274-013-1425-y; complete indexed abstract | supports | The complete primary abstract reports conditional E production by actinobacterium23F with lysine and dipyridyl. It supports biosynthetic occurrence only. |
+| erwinia-review | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21814817%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; PMID21814817; DOI10.1007/s00203-011-0739-0; publication type and complete abstract | supports | This source-linked article is a review of siderophore systems in Erwinia/Pantoea. Its complete abstract supplies secondary biological context, not exact-state primary protein qualification. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml; Executed 2026-10-21T11:22:25Z through 2026-10-21T11:22:26Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml; Executed 2026-10-21T11:22:22Z through 2026-10-21T11:23:43Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml; Executed 2026-10-21T11:22:26Z through 2026-10-21T11:22:26Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T11:23:43Z through 2026-10-21T11:23:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Primary articles were inspected at complete indexed-abstract level. Occurrence and tumour-cell/biofilm assays do not independently establish exact-state protonation, protein-bound coordination or a non-substrate protein requirement. No clinical efficacy or universal role exclusion is asserted.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T112934Z-desferrioxamine-e-chebi50437
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires desferrioxamine E
+started_at: '2026-10-21T11:21:58Z'
+finished_at: '2026-10-21T11:29:34Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The exact desferrioxamine E chemical identity is supported. One confirmed
+  major finding concerns chemical-to-protein-trait equivalence. Free-ligand state,
+  ferric complex and bounded production/activity evidence remain distinct.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+    sha256: 92cdc68a93f8db2d34269298ffd9ad2afa0662ae726a98e5d668ca7a39afd522
+    role: target
+  - path: data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml
+    sha256: 175820a0774cc2ae713276150391b45b77c215ad3c0f31dcf2bea11969dcd51a
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 3 in batch 019. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c) covers 178 record paths,
+    leaving 429181 before this batch. 19 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+targets:
+- kind: generated
+  label: requires desferrioxamine E
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:50437 resolves and is nonobsolete. Its exact cyclic structure, formula,
+    charge, definition and siderophore role were inspected, together with all three
+    outgoing structural parents and additional source roles, external conjugate and
+    ferric-complex comparison. Local siderophore/cofactor ancestors were read. Primary
+    abstracts support only the stated organism/production and activity context.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - cofactor-role
+  - licence
+  - release
+  - siderophore-role
+  - conjugate
+  - ferric-complex
+  - production-primary
+  - nocardamine-primary
+  - cyclic-parent
+  - macrocycle
+  - hydroxamic-parent
+  - marine-role
+  - antineoplastic-role
+  - bacterial-role
+  - biofilm-primary
+  - chaxalactin-primary
+  - culture-primary
+  - erwinia-review
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: 92cdc68a93f8db2d34269298ffd9ad2afa0662ae726a98e5d668ca7a39afd522
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: 175820a0774cc2ae713276150391b45b77c215ad3c0f31dcf2bea11969dcd51a
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing
+  summary: Official ChEBI Introduction describes chemical entities and chemical classes.
+    Licensing states CC BY 4.0. It supports source licensing, not the synthesized
+    protein-requirement wrapper.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16.
+    Its original access time is preserved; this is not a release assignment for the
+    live backend or original seed.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_50437
+  accessed_at: '2026-10-21T11:22:22.331461Z'
+  snapshot_sha256: 1513f1d270af6a6635eb31cd1701984b3a250c88ed9e7e2c57c0694de1d599ca
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:50437 to nonobsolete desferrioxamine E. Identifiers,
+    names and chemical annotations were inspected. The actual source definition was
+    inspected.
+- evidence_id: chemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/50437/
+  accessed_at: '2026-10-21T11:22:21.745919Z'
+  snapshot_sha256: 9396cfcf92dde3910ccc709f61d8e1ed4ab83d75266141ad21a0629c09021f00
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: 'The complete exact-identity response was inspected: names, formula, charge,
+    structure, incoming/outgoing relations and the chemical definition. The chemical-role
+    assertions do not themselves qualify a protein.'
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The source defines cofactor as a biochemical role for an organic molecule
+    or ion required by an enzyme; it is not a protein-requirement class.
+- evidence_id: local-cofactor-ancestor
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire captured ancestor YAML
+  accessed_at: '2026-10-21T11:21:58Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: The complete captured cofactor-requirement ancestor was read. Its definition,
+    ChEBI role xref and SEEDED status provide hierarchy context; this target review
+    does not certify that ancestor.
+- evidence_id: siderophore-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26672/
+  accessed_at: '2026-10-21T09:02:57.586907Z'
+  snapshot_sha256: 1ac432c5ea916b157a4b958e8c38d8b955ede686142c49ead9c1e2ed5713154b
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The source role concerns microbial iron(III) chelation for transport and
+    sequestration, with outgoing cofactor, iron(3+) chelator and iron ionophore parents.
+    This authentic role hierarchy does not by itself establish non-substrate dependence
+    in a protein.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/84730/
+  accessed_at: '2026-10-21T11:22:21.762648Z'
+  snapshot_sha256: 159c8f6c15503c4b58c6992beadadf183995a0cc3796925ef37142e238e4ea91
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The counterpart is C27H45N6O9 with charge−3 and three hydroxamate O− groups.
+    The two entries have explicit acid/base relation and the same macrocyclic scaffold.
+- evidence_id: ferric-complex
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/60261/
+  accessed_at: '2026-10-21T11:23:14.785410Z'
+  snapshot_sha256: 85911bc946694cacdb99f8a2cacd018ab675c25f303df3c1a812aa4557f08f32
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: Ferrioxamine E has C27H45FeN6O9, charge0, and has-part relations to iron(3+)
+    and the E trianion84730. It is a distinct metal complex, not equivalent to either
+    free-ligand protonation state.
+- evidence_id: production-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A1367428%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:17.805646Z'
+  snapshot_sha256: 69f1fdb1d47a295ee12f3cd28940c6b8dffc79a8051f68805a9284d4cec42c68
+  support: supports
+  locator: PMID1367428; DOI10.1007/bf00173718; complete indexed abstract
+  summary: The complete primary abstract reports production of desferrioxamine E by
+    S. olivaceus TU2718 and culture/feeding experiments. It supports organism and
+    production context, not exact physiological ligand charge or a protein non-substrate
+    requirement.
+- evidence_id: nocardamine-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21376551%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:18.112553Z'
+  snapshot_sha256: cec667f9b7da9e903be7da514e9b5b1572db6ae34ea50c65a8ba03613e357130
+  support: supports
+  locator: PMID21376551; DOI10.1016/j.micres.2011.01.004; complete indexed abstract
+  summary: The complete primary abstract identifies nocardamine from Citricoccus KMM3890
+    by combined spectral analysis. It reports inhibition of colony formation in several
+    human tumour-cell lines, weak antibacterial activity and no revealed cytotoxic
+    activity in that study. These bounded in-vitro results do not establish clinical
+    efficacy or activity of the exact free trianion.
+- evidence_id: cyclic-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/50455/
+  accessed_at: '2026-10-21T11:23:13.872455Z'
+  snapshot_sha256: 921ccbbea98071ed7ee1e7942776416da885dcaa2e953aeab9239600c9fa5639
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The cyclic-desferrioxamine class has null prose definition and no fixed
+    structure; outgoing taxonomy identifies a desferrioxamine class. This is chemical/source-role
+    context.
+- evidence_id: macrocycle
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/51026/
+  accessed_at: '2026-10-21T11:23:14.056844Z'
+  snapshot_sha256: 1cadb78bef0b4baceb8f03f1ee7f7065056985f8abb1a3e35ddf4f343043d4c4
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The macrocycle parent defines a cyclic system with at least nine ring atoms.
+    This is chemical/source-role context.
+- evidence_id: hydroxamic-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23445/
+  accessed_at: '2026-10-21T11:23:14.048403Z'
+  snapshot_sha256: fcf0e50331f34fd6345276da4b27d8482da66c1ce189d67ad66961f83f7c4d79
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The cyclic-hydroxamic-acid parent is a lactam with an OH substituent on
+    nitrogen. This is chemical/source-role context.
+- evidence_id: marine-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/76507/
+  accessed_at: '2026-10-21T11:23:14.938031Z'
+  snapshot_sha256: a681b3432305d2266c2c7cbfff3de06e6968a27ee6a49af4f05e1e87bc5d873c
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The marine-metabolite role concerns a compound found in marine organisms.
+    This is chemical/source-role context.
+- evidence_id: antineoplastic-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/35610/
+  accessed_at: '2026-10-21T11:23:14.265699Z'
+  snapshot_sha256: 4b8e6689294e3b82ec67135dece4ba2825a0c5339699881260f5e0564df0cc82
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The antineoplastic role concerns inhibition or prevention of neoplasm proliferation.
+    This is chemical/source-role context.
+- evidence_id: bacterial-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/76969/
+  accessed_at: '2026-10-21T11:23:14.607400Z'
+  snapshot_sha256: 2e39bcf99dd2f2f7cbff545d082bbbe1794d7a951109c84f344672080b37df09
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The bacterial-metabolite role concerns bacterial metabolic production.
+    This is chemical/source-role context.
+- evidence_id: biofilm-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21628895%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:18.215594Z'
+  snapshot_sha256: cb57dda132126a8c17763aebc49d27f72586cf541f02307d69d1e62323bd6968
+  support: supports
+  locator: PMID21628895; DOI10.1248/bpb.34.917; complete indexed abstract
+  summary: The complete primary abstract reports E production by actinomycete MS67
+    and inhibition of mycobacterial biofilm formation, with iron depletion suggested
+    as mechanism. It does not report universal antibacterial effects or exact neutral
+    protein dependence.
+- evidence_id: chaxalactin-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21879726%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:19.036212Z'
+  snapshot_sha256: c174278d5a42389549d3d942179d705204d4e7375e7226c3901a72eb6c5ca761
+  support: supports
+  locator: PMID21879726; DOI10.1021/np200470u; complete indexed abstract
+  summary: The complete primary abstract reports known E alongside new chaxalactins
+    in Streptomyces C34. The reported antibacterial results for compounds1–3 concern
+    chaxalactins, and are not attributed here to E.
+- evidence_id: culture-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A23839716%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:19.345573Z'
+  snapshot_sha256: 70e333752dc33ee9050813b4a1fae4b95800ee04e014c9536a848b2afb5a4c22
+  support: supports
+  locator: PMID23839716; DOI10.1007/s11274-013-1425-y; complete indexed abstract
+  summary: The complete primary abstract reports conditional E production by actinobacterium23F
+    with lysine and dipyridyl. It supports biosynthetic occurrence only.
+- evidence_id: erwinia-review
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21814817%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:18.729437Z'
+  snapshot_sha256: c894c20164b9d7890ea9aba2f0083a819486933de037307256e42682e541705c
+  support: supports
+  locator: PMID21814817; DOI10.1007/s00203-011-0739-0; publication type and complete
+    abstract
+  summary: This source-linked article is a review of siderophore systems in Erwinia/Pantoea.
+    Its complete abstract supplies secondary biological context, not exact-state primary
+    protein qualification.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  locator: Executed 2026-10-21T11:22:25Z through 2026-10-21T11:22:26Z; exit 0
+  accessed_at: '2026-10-21T11:22:26Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml
+  locator: Executed 2026-10-21T11:22:22Z through 2026-10-21T11:23:43Z; exit 0
+  accessed_at: '2026-10-21T11:23:43Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+  locator: Executed 2026-10-21T11:22:26Z through 2026-10-21T11:22:26Z; exit 0
+  accessed_at: '2026-10-21T11:22:26Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T11:23:43Z through 2026-10-21T11:23:44Z; exit 0
+  accessed_at: '2026-10-21T11:23:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The entire local record denotes a proposed reusable protein requirement
+    for desferrioxamine E. CHEBI:50437 denotes the chemical referent, not an equivalent
+    protein-requirement class.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-5
+  topic: Chemical identity and protein requirement scope
+- area: provenance
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns the generated target and synthesizes
+    its requirement wrapper from chemical-role selection and source chemical text.
+    Official CC BY 4.0 licensing is verified. Current comparison snapshots do not
+    establish the original seed release.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical-role
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-6
+  topic: ChEBI attribution and release provenance
+- area: consistency
+  outcome: supported
+  summary: The actual source role relation explains the local broader requirement
+    parent. Chemical-role taxonomy is not automatically a protein-requirement hierarchy
+    or true equivalence; this one-record review does not certify the parent.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - chemical-role
+  - cofactor-role
+  - siderophore-role
+  - local-cofactor-ancestor
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-7
+  topic: Chemical-role and protein-trait hierarchy
+- area: grounding
+  outcome: concern
+  summary: CHEBI:50437 in xrefs denotes a chemical entity, whereas the target denotes
+    a protein functional requirement. The schema defines xrefs as true own-source
+    equivalence, not chemical association.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-8
+  topic: Chemical association versus trait equivalence
+- area: evidence
+  outcome: supported
+  summary: CHEBI:50437 is the iron-free neutral C27H48N6O9 with three hydroxamic OH
+    groups. The source structure is a cyclic33-membered scaffold with no terminal
+    amino group; it is distinct from acyclic desferrioxamine B. The exact E conjugate
+    and ferric complex remain separate chemical states. No stereocentre is specified
+    in this structure.
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - conjugate
+  - ferric-complex
+  - cyclic-parent
+  - macrocycle
+  - hydroxamic-parent
+  topic: Desferrioxamine E cyclic ligand and exact charge
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-9
+- area: representation
+  outcome: unknown
+  summary: E production and source siderophore role provide bounded biological context.
+    They do not establish an exact free-ligand protonation population, bound geometry
+    or protein requiring this state as a non-substrate cofactor. Iron handling and
+    in-vitro activity are not sufficient by themselves, and do not prove universal
+    absence of such a role.
+  evidence_ids:
+  - record
+  - schema
+  - siderophore-role
+  - production-primary
+  - nocardamine-primary
+  - conjugate
+  - ferric-complex
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-10
+  topic: FUNCTION cofactor requirement representation
+- area: evidence
+  outcome: supported
+  summary: The local antitumour background has bounded support in nocardamine inhibition
+    of colony formation in tumour-cell lines. It is not interpreted as demonstrated
+    clinical efficacy or general cytotoxicity. Multiple primary production studies
+    support occurrence in several bacteria; their results do not establish a universal
+    protein requirement or transfer chaxalactin antibacterial assays to E.
+  evidence_ids:
+  - record
+  - chemical-role
+  - nocardamine-primary
+  - production-primary
+  - biofilm-primary
+  - chaxalactin-primary
+  - culture-primary
+  topic: Bounds of bacterial occurrence and antitumour background
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-50437.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is encoded as equivalent to a protein requirement class
+  description: The local record denotes a protein requirement for desferrioxamine
+    E, whereas CHEBI:50437 denotes the specific neutral iron-free macrocyclic ligand.
+    xrefs equates a functional requirement and chemical state.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The chemical and a protein requirement for it have different
+    denotations. The intended candidate requirement is recoverable through correctly
+    typed grounding and activity-relative role adjudication.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:50437
+    from trait-equivalence xrefs and preserve the exact source identity through schema-compatible
+    grounding. Preserve chemical-source provenance separately from the locally synthesized
+    requirement. Before assigning a COFACTOR chemical_participant, adjudicate the
+    activity-relative role against the non-substrate requirement category; if unresolved,
+    retain that uncertainty and only a supported representation. Do not blindly move
+    an own-source association to mapped_xrefs or qualify a protein from chemical-role
+    membership alone.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_50437
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated target preserves intended CHEBI:50437 chemistry without asserting
+    equality to a protein requirement.
+  - Preserve CHEBI:50437, its three hydroxamic OH groups and neutral charge. Distinguish
+    the conjugate free ligand and ferrioxamine E60261; neither acid/base relation
+    nor has-part supports automatic role transfer or merging.
+  - Any typed participant has an explicitly supported activity-relative role and exact
+    chemical scope; no automatic chemical merge, universal requirement, unreviewed
+    example or status promotion is introduced.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml.
+    These are future curation acceptance checks, not claims that record bytes have
+    already changed.
+  - For maintained Python/writer changes add focused pytest coverage, then run just
+    lint, just test and just audit-writers. Regenerate this existing target through
+    an audited scoped route. Run full-corpus just validate-all before merging record
+    changes and save a fresh structured scientific review against changed bytes.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Primary articles were inspected at complete indexed-abstract level. Occurrence and
+  tumour-cell/biofilm assays do not independently establish exact-state protonation,
+  protein-bound coordination or a non-substrate protein requirement. No clinical efficacy
+  or universal role exclusion is asserted.
+tags:
+- unreviewed-path-order
+- batch-019
+- chebi-cofactor
+```
