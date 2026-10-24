@@ -1,0 +1,793 @@
+# Review of requires cobalamin
+
+- Review: 20261021T101519Z-cobalamin-chebi30411
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T10:08:22Z
+- Finished UTC: 2026-10-21T10:15:19Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Chemical identity and current source cofactor-role context are supported within explicit oxidation-unspecified family limits. One confirmed major finding concerns chemical-to-protein-trait equivalence in xrefs; no protein requirement is independently qualified.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 7 in batch 014. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb) covers 128 record paths, leaving 429231 before this batch. 14 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml | generated | requires cobalamin |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_30411 | CHEBI:30411 resolves in current official backend and OLS responses. The direct cofactor role and compared chemical parents resolve; prosthetic-group ancestry is verified; resolution and role context do not establish equivalence to a protein requirement or qualify a protein member. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The exact identifier supports the source oxidation-unspecified cobalamin chemical scope. It is not silently replaced by cyanocobalamin, an arbitrary corrinoid or a fixed cobalt oxidation state. IUPAC nomenclature identifies the dimethylbenzimidazolyl cobamide framework and separately specifies oxidation/axial-ligand variants. Absent formula/charge/structure fields are retained as limits rather than filled in from a particular derivative.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The chemical identity and stated prosthetic group, cofactor roles are traceable to current ChEBI; the protein-requirement wrapper is maintained generator synthesis. Source attribution and licence are supported, but the exact seed release is unknown. Current source fidelity is distinguished from independent biological qualification.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The captured local cofactor requirement parent resolves and the current direct cofactor role supports candidate hierarchy context. The prosthetic-group role is a cofactor descendant. No external chemical-structure taxonomy is imported as a protein-trait edge, and parent-record xref correctness is not certified.
+
+### Biological requirement and chemical-state evidence
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The inspected primary/authority material supplies bounded cobalamin-family and specific mammalian enzyme context; it does not demonstrate interchangeability of derivatives or universal protein dependence. No canonical protein member is qualified.
+
+### FUNCTION cofactor requirement representation
+
+representation: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+The local requires-label denotes a proposed reusable FUNCTION/FUNC_COFACTOR_REQUIREMENT class and remains SEEDED. Chemical source roles support candidate context rather than automatic protein qualification; no binding observation alone is treated as an obligatory activity requirement.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_30411.
+
+CHEBI:30411 denotes a chemical entity or chemical class, whereas the local identifier denotes a protein requirement for it. xrefs requires true equivalence; chemical_participants provides typed chemical association.
+
+## Findings
+
+### F1: Chemical entity is asserted equivalent to a protein requirement class
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-30411.chemical-entity-equivalence.
+
+The local requires-cobalamin trait denotes a protein functional requirement, while CHEBI:30411 in xrefs denotes its chemical referent. The source cofactor-role assertion supplies candidate context, not equivalence between a chemical and its protein requirement. This machine-readable equality changes denotation despite supported chemical identification.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Change build in scripts/seed_chebi_cofactor.py to represent CHEBI:30411 through chemical_participants with role COFACTOR while preserving the proposed requirement class, exact chemical scope, source roles and attribution. Keep the oxidation-unspecified cobalamin scope; do not invent a fixed formula, charge or axial ligand. Do not recast the trait as a chemical instance or merely relocate the association to mapped_xrefs.
+
+- The corrected association has typed chemical-participant semantics rather than chemical-to-trait equality.
+- Retain exact chemical scope and candidate status; do not merge charge/oxidation/ligand/stereochemical variants, qualify protein members or infer universal/exclusive physiological dependence.
+- A focused maintained source-transform fixture verifies the typed output. Regenerate through an audited route explicitly selecting the existing target and preserve original source attribution.
+- For maintained writer changes run just audit-writers, just lint and just test, including the focused source-transform fixture. Then run just validate data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml. Run full just validate-all before merging record changes, as required by CLAUDE.md. Capture changed inputs and save a fresh validated review; do not overwrite this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Chemical scope and Licensing section | supports | The official ChEBI About text establishes chemical-entity/role scope and CC BY 4.0 licensing, not equality with protein traits. |
+| current-release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | The reused official OLS metadata identifies comparison ontology version 256 and retains its original access time and digest. It does not recover the seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/30411/; Identity, complete definition/names, formula/charge, default structure and outgoing relations | supports | The current cobalamin entry explicitly leaves the central cobalt oxidation state unspecified and supplies no molecular formula, net charge or default structure. Its IUPAC names identify the dimethylbenzimidazolyl cobamide framework. Direct roles include prosthetic group, cofactor and antineoplastic agent, and its chemical parent is cobalamins CHEBI:23334. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:30411; Inspected source response captured at the recorded UTC time | supports | OLS resolves the same nonobsolete cobalamin entry and definition; formula, charge and structure are likewise absent. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition and outgoing role hierarchy | supports | CHEBI:23357 defines a chemical cofactor role with direct biochemical-role parent CHEBI:52206. This is candidate class context rather than per-protein requirement evidence. |
+| chemical-parent-1 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23334/; Identity, complete definition/names, formula/charge, default structure and outgoing relations | supports | The asserted chemical parent CHEBI:23334 resolves with its source label and available definition/chemical fields. Available outgoing relations were inspected; chemical taxonomy is not automatically a protein-requirement subclass relation. |
+| nomenclature | https://iupac.qmul.ac.uk/misc/B12.html; Inspected full authority text, especially sections7–12,15 and abbreviation appendix | supports | The IUPAC-IUB corrinoid recommendations distinguish the dimethylbenzimidazolyl cobamide framework, axial ligands and cobalt oxidation states; sections 8,11,15 and the appendix identify adenosylcob(III)alamin. These naming conventions do not determine every enzyme-bound geometry. |
+| prosthetic-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26348/; Identity, complete definition/names, formula/charge, default structure and outgoing relations | supports | The prosthetic-group role is a tightly bound nonpolypeptide protein unit and has direct is-a cofactor CHEBI:23357. This validates source role ancestry, not universal binding behaviour for every derivative. |
+| cobamide-family | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23341/; Identity, complete definition/names, formula/charge, default structure and outgoing relations | supports | The broader cobamides entry resolves without formula/default structure and has a cobalt-corrinoid-hexaamide parent. This supplies chemical-family context, not equivalence of every derivative. |
+| vitamin-family | https://www.ebi.ac.uk/chebi/backend/api/public/compound/176843/; Identity, complete definition/names, formula/charge, default structure and outgoing relations | context_only | The source vitamin B12 entry denotes a group of biologically active cobalamin vitamers and lists multiple named derivatives. This source class context is not used to certify every nutritional statement or imply that all vitamers are identical. |
+| metabolism-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11371572%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified identifiers and complete indexed abstract; full paper not inspected | context_only | PMID:11371572; DOI:10.1074/jbc.M104043200. The complete indexed abstract reports NO reactions with three cobalamin valency states and inhibition of methionine synthase/folate-pathway flux in cultured mammalian cells. The proposed involvement of monovalent cobalamin is qualified by the authors; this does not make all states interchangeable. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml; Executed 2026-10-21T10:12:51Z through 2026-10-21T10:12:52Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/chlorophyll-b-chebi27888.yaml data/traits/function/cofactor_requirement/chebi/chrysobactin-chebi61345.yaml data/traits/function/cofactor_requirement/chebi/cob-chebi15721.yaml data/traits/function/cofactor_requirement/chebi/cob-i-alamin-1-chebi60488.yaml data/traits/function/cofactor_requirement/chebi/cob-i-alamin-chebi15982.yaml data/traits/function/cofactor_requirement/chebi/cob-ii-alamin-chebi16304.yaml data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml data/traits/function/cofactor_requirement/chebi/cobalt-2-chebi48828.yaml data/traits/function/cofactor_requirement/chebi/cobalt-3-chebi49415.yaml data/traits/function/cofactor_requirement/chebi/cobamamide-chebi18408.yaml; Executed 2026-10-21T10:09:08Z through 2026-10-21T10:12:23Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml; Executed 2026-10-21T10:12:52Z through 2026-10-21T10:12:52Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T10:12:23Z through 2026-10-21T10:12:24Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Current source names and nomenclature establish the broad chemical scope, not a universal protein requirement for every cobalamin derivative. The inspected methionine-synthase study concerns NO reactions and mammalian-cell folate flux; it does not establish interchangeability of all oxidation or axial-ligand forms. Generic cobalamin scope and specific protein-bound coordination must remain distinct.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T101519Z-cobalamin-chebi30411
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires cobalamin
+started_at: '2026-10-21T10:08:22Z'
+finished_at: '2026-10-21T10:15:19Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Chemical identity and current source cofactor-role context are supported
+  within explicit oxidation-unspecified family limits. One confirmed major finding
+  concerns chemical-to-protein-trait equivalence in xrefs; no protein requirement
+  is independently qualified.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+    sha256: 3611e767fc778a2ca1b224696367fcf37b1829676d02b9944f63bdcf11479d90
+    role: target
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 7 in batch 014. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb)
+    covers 128 record paths, leaving 429231 before this batch. 14 inventories were
+    combined. Published branch coverage is not described as merged main. Snapshot-row
+    context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+targets:
+- kind: generated
+  label: requires cobalamin
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/chlorophyll-b-chebi27888.yaml
+    data/traits/function/cofactor_requirement/chebi/chrysobactin-chebi61345.yaml data/traits/function/cofactor_requirement/chebi/cob-chebi15721.yaml
+    data/traits/function/cofactor_requirement/chebi/cob-i-alamin-1-chebi60488.yaml
+    data/traits/function/cofactor_requirement/chebi/cob-i-alamin-chebi15982.yaml data/traits/function/cofactor_requirement/chebi/cob-ii-alamin-chebi16304.yaml
+    data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml data/traits/function/cofactor_requirement/chebi/cobalt-2-chebi48828.yaml
+    data/traits/function/cofactor_requirement/chebi/cobalt-3-chebi49415.yaml data/traits/function/cofactor_requirement/chebi/cobamamide-chebi18408.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:30411 resolves in current official backend and OLS responses. The
+    direct cofactor role and compared chemical parents resolve; prosthetic-group ancestry
+    is verified; resolution and role context do not establish equivalence to a protein
+    requirement or qualify a protein member.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - licence
+  - current-release
+  - chemical-parent-1
+  - prosthetic-role
+  - nomenclature
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T10:08:22Z'
+  snapshot_sha256: 3611e767fc778a2ca1b224696367fcf37b1829676d02b9944f63bdcf11479d90
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T10:08:22Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T10:08:22Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T10:08:22Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T10:08:22Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Chemical scope and Licensing section
+  summary: The official ChEBI About text establishes chemical-entity/role scope and
+    CC BY 4.0 licensing, not equality with protein traits.
+- evidence_id: current-release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: The reused official OLS metadata identifies comparison ontology version
+    256 and retains its original access time and digest. It does not recover the seed
+    release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/30411/
+  accessed_at: '2026-10-21T10:08:54.791861Z'
+  snapshot_sha256: 6416ad6aed0fec4ef68eb3090ec5cea7fe151ba88c4112ad3ce60f0214139dcc
+  support: supports
+  locator: Identity, complete definition/names, formula/charge, default structure
+    and outgoing relations
+  summary: The current cobalamin entry explicitly leaves the central cobalt oxidation
+    state unspecified and supplies no molecular formula, net charge or default structure.
+    Its IUPAC names identify the dimethylbenzimidazolyl cobamide framework. Direct
+    roles include prosthetic group, cofactor and antineoplastic agent, and its chemical
+    parent is cobalamins CHEBI:23334.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:30411
+  accessed_at: '2026-10-21T10:08:54.102007Z'
+  snapshot_sha256: 559f660a510259620d2bc8eaae432e408e79b632c14f0b873d0f23f446b47edf
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves the same nonobsolete cobalamin entry and definition; formula,
+    charge and structure are likewise absent.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T08:48:04.105973Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition and outgoing role hierarchy
+  summary: CHEBI:23357 defines a chemical cofactor role with direct biochemical-role
+    parent CHEBI:52206. This is candidate class context rather than per-protein requirement
+    evidence.
+- evidence_id: chemical-parent-1
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23334/
+  accessed_at: '2026-10-21T10:10:08.473532Z'
+  snapshot_sha256: 79ef6d37bc7b1ae3883cc1b68cd6a91f2bd6642bf56994109a00b906c176e32a
+  support: supports
+  locator: Identity, complete definition/names, formula/charge, default structure
+    and outgoing relations
+  summary: The asserted chemical parent CHEBI:23334 resolves with its source label
+    and available definition/chemical fields. Available outgoing relations were inspected;
+    chemical taxonomy is not automatically a protein-requirement subclass relation.
+- evidence_id: nomenclature
+  kind: authority
+  reference: https://iupac.qmul.ac.uk/misc/B12.html
+  accessed_at: '2026-10-21T10:10:09.866385Z'
+  snapshot_sha256: 141b1694babbee69d3b5f7700936be8a8d13f50bd56628e7edcf4bdf44f406ea
+  support: supports
+  locator: Inspected full authority text, especially sections7–12,15 and abbreviation
+    appendix
+  summary: The IUPAC-IUB corrinoid recommendations distinguish the dimethylbenzimidazolyl
+    cobamide framework, axial ligands and cobalt oxidation states; sections 8,11,15
+    and the appendix identify adenosylcob(III)alamin. These naming conventions do
+    not determine every enzyme-bound geometry.
+- evidence_id: prosthetic-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26348/
+  accessed_at: '2026-10-21T10:10:09.154369Z'
+  snapshot_sha256: 157d26df2acd97761722c8e4804050c3ea0ca1381a65c5d6523f8f11c154b5dd
+  support: supports
+  locator: Identity, complete definition/names, formula/charge, default structure
+    and outgoing relations
+  summary: The prosthetic-group role is a tightly bound nonpolypeptide protein unit
+    and has direct is-a cofactor CHEBI:23357. This validates source role ancestry,
+    not universal binding behaviour for every derivative.
+- evidence_id: cobamide-family
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23341/
+  accessed_at: '2026-10-21T10:10:56.818244Z'
+  snapshot_sha256: db346d8c96e2001004d5db884f3e51d22c42c3159d42ba769cf1afef095c81b4
+  support: supports
+  locator: Identity, complete definition/names, formula/charge, default structure
+    and outgoing relations
+  summary: The broader cobamides entry resolves without formula/default structure
+    and has a cobalt-corrinoid-hexaamide parent. This supplies chemical-family context,
+    not equivalence of every derivative.
+- evidence_id: vitamin-family
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/176843/
+  accessed_at: '2026-10-21T10:10:57.490022Z'
+  snapshot_sha256: b0b9aea3163960c64b19097a86b7efacf542cd044fcb6f4bd5ab88b877281edc
+  support: context_only
+  locator: Identity, complete definition/names, formula/charge, default structure
+    and outgoing relations
+  summary: The source vitamin B12 entry denotes a group of biologically active cobalamin
+    vitamers and lists multiple named derivatives. This source class context is not
+    used to certify every nutritional statement or imply that all vitamers are identical.
+- evidence_id: metabolism-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11371572%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:10:09.236884Z'
+  snapshot_sha256: 66d4292d2988fc77c8109bb10e9e50d1e549841da94aca59b97aa69273a16b74
+  support: context_only
+  locator: Verified identifiers and complete indexed abstract; full paper not inspected
+  summary: PMID:11371572; DOI:10.1074/jbc.M104043200. The complete indexed abstract
+    reports NO reactions with three cobalamin valency states and inhibition of methionine
+    synthase/folate-pathway flux in cultured mammalian cells. The proposed involvement
+    of monovalent cobalamin is qualified by the authors; this does not make all states
+    interchangeable.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  locator: Executed 2026-10-21T10:12:51Z through 2026-10-21T10:12:52Z; exit 0
+  accessed_at: '2026-10-21T10:12:52Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/chlorophyll-b-chebi27888.yaml
+    data/traits/function/cofactor_requirement/chebi/chrysobactin-chebi61345.yaml data/traits/function/cofactor_requirement/chebi/cob-chebi15721.yaml
+    data/traits/function/cofactor_requirement/chebi/cob-i-alamin-1-chebi60488.yaml
+    data/traits/function/cofactor_requirement/chebi/cob-i-alamin-chebi15982.yaml data/traits/function/cofactor_requirement/chebi/cob-ii-alamin-chebi16304.yaml
+    data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml data/traits/function/cofactor_requirement/chebi/cobalt-2-chebi48828.yaml
+    data/traits/function/cofactor_requirement/chebi/cobalt-3-chebi49415.yaml data/traits/function/cofactor_requirement/chebi/cobamamide-chebi18408.yaml
+  locator: Executed 2026-10-21T10:09:08Z through 2026-10-21T10:12:23Z; exit 0
+  accessed_at: '2026-10-21T10:12:23Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+  locator: Executed 2026-10-21T10:12:52Z through 2026-10-21T10:12:52Z; exit 0
+  accessed_at: '2026-10-21T10:12:52Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T10:12:23Z through 2026-10-21T10:12:24Z; exit 0
+  accessed_at: '2026-10-21T10:12:24Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The exact identifier supports the source oxidation-unspecified cobalamin
+    chemical scope. It is not silently replaced by cyanocobalamin, an arbitrary corrinoid
+    or a fixed cobalt oxidation state. IUPAC nomenclature identifies the dimethylbenzimidazolyl
+    cobamide framework and separately specifies oxidation/axial-ligand variants. Absent
+    formula/charge/structure fields are retained as limits rather than filled in from
+    a particular derivative.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - chemical-parent-1
+  - nomenclature
+  - cobamide-family
+  - vitamin-family
+  - metabolism-primary
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-5
+  topic: Chemical identity and protein requirement scope
+- area: provenance
+  outcome: supported
+  summary: The chemical identity and stated prosthetic group, cofactor roles are traceable
+    to current ChEBI; the protein-requirement wrapper is maintained generator synthesis.
+    Source attribution and licence are supported, but the exact seed release is unknown.
+    Current source fidelity is distinguished from independent biological qualification.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - owner
+  - registry
+  - licence
+  - current-release
+  - cofactor-role
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-6
+  topic: ChEBI attribution and release provenance
+- area: consistency
+  outcome: supported
+  summary: The captured local cofactor requirement parent resolves and the current
+    direct cofactor role supports candidate hierarchy context. The prosthetic-group
+    role is a cofactor descendant. No external chemical-structure taxonomy is imported
+    as a protein-trait edge, and parent-record xref correctness is not certified.
+  evidence_ids:
+  - record
+  - local-parent-1
+  - chemical
+  - cofactor-role
+  - schema
+  - prosthetic-role
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-7
+  topic: Chemical-role and protein-trait hierarchy
+- area: evidence
+  outcome: supported
+  summary: The inspected primary/authority material supplies bounded cobalamin-family
+    and specific mammalian enzyme context; it does not demonstrate interchangeability
+    of derivatives or universal protein dependence. No canonical protein member is
+    qualified.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - chemical-parent-1
+  - nomenclature
+  - cobamide-family
+  - vitamin-family
+  - metabolism-primary
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-8
+  topic: Biological requirement and chemical-state evidence
+- area: representation
+  outcome: supported
+  summary: The local requires-label denotes a proposed reusable FUNCTION/FUNC_COFACTOR_REQUIREMENT
+    class and remains SEEDED. Chemical source roles support candidate context rather
+    than automatic protein qualification; no binding observation alone is treated
+    as an obligatory activity requirement.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-9
+  topic: FUNCTION cofactor requirement representation
+- area: grounding
+  outcome: concern
+  summary: CHEBI:30411 denotes a chemical entity or chemical class, whereas the local
+    identifier denotes a protein requirement for it. xrefs requires true equivalence;
+    chemical_participants provides typed chemical association.
+  evidence_ids:
+  - record
+  - chemical
+  - schema
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  assessment_id: assessment-10
+  topic: Chemical association versus trait equivalence
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-30411.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is asserted equivalent to a protein requirement class
+  description: The local requires-cobalamin trait denotes a protein functional requirement,
+    while CHEBI:30411 in xrefs denotes its chemical referent. The source cofactor-role
+    assertion supplies candidate context, not equivalence between a chemical and its
+    protein requirement. This machine-readable equality changes denotation despite
+    supported chemical identification.
+  evidence_ids:
+  - record
+  - chemical
+  - schema
+  - owner
+  - registry
+  - cofactor-role
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The chemical referent and its protein-requirement class have
+    different denotations; typed chemical grounding is available in the schema.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Change build in scripts/seed_chebi_cofactor.py to represent CHEBI:30411
+    through chemical_participants with role COFACTOR while preserving the proposed
+    requirement class, exact chemical scope, source roles and attribution. Keep the
+    oxidation-unspecified cobalamin scope; do not invent a fixed formula, charge or
+    axial ligand. Do not recast the trait as a chemical instance or merely relocate
+    the association to mapped_xrefs.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_30411
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The corrected association has typed chemical-participant semantics rather than
+    chemical-to-trait equality.
+  - Retain exact chemical scope and candidate status; do not merge charge/oxidation/ligand/stereochemical
+    variants, qualify protein members or infer universal/exclusive physiological dependence.
+  - A focused maintained source-transform fixture verifies the typed output. Regenerate
+    through an audited route explicitly selecting the existing target and preserve
+    original source attribution.
+  - For maintained writer changes run just audit-writers, just lint and just test,
+    including the focused source-transform fixture. Then run just validate data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/cobalamin-chebi30411.yaml.
+    Run full just validate-all before merging record changes, as required by CLAUDE.md.
+    Capture changed inputs and save a fresh validated review; do not overwrite this
+    observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Current source names and nomenclature establish the broad chemical scope, not a
+  universal protein requirement for every cobalamin derivative. The inspected methionine-synthase
+  study concerns NO reactions and mammalian-cell folate flux; it does not establish
+  interchangeability of all oxidation or axial-ligand forms. Generic cobalamin scope
+  and specific protein-bound coordination must remain distinct.
+tags:
+- unreviewed-path-order
+- batch-014
+- chebi-cofactor
+```
