@@ -1,0 +1,774 @@
+# Review of 2Fe-2S
+
+- Review: 20261021T070140Z-2fe-2s-kw-0001
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T06:56:02Z
+- Finished UTC: 2026-10-21T07:01:40Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The source identity and general binding class are sound, but the copied definition excludes established Rieske coordination. One major definition/scope finding and one minor lost-parent finding need maintained-input curation.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 1 in batch 002. Fresh main inventory has 429359 records; union of validated main targets and published batch-001 targets at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d covers 10 record paths, leaving 429349 before this batch. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| UniProtKB-KW:KW-0001 | data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml | generated | 2Fe-2S |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | UniProtKB-KW:KW-0001 | Single target validated in closed mode. |
+| Closed schema and UniProt semantics | passed | True | UniProtKB-KW:KW-0001 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Registry consistency is not protein qualification for this target. |
+| Causal graph integrity | passed | True | UniProtKB-KW:KW-0001 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | UniProtKB-KW:KW-0001 | Full history gate; this review adds no history event. |
+| Source identity and asserted references | passed | True | UniProtKB-KW:KW-0001 | Official UniProt API resolves the target and asserted Iron-sulfur parent; parent-chain IDs Iron and Metal-binding also resolve. The source-direct GO association resolves in QuickGO. Resolution is distinct from semantic equivalence, which is assessed separately. |
+
+## Scientific And Domain Assessments
+
+### Ownership
+
+ownership: supported. Targets: UniProtKB-KW:KW-0001.
+
+The maintained UniProt keyword seeder owns future changes; this review does not modify emitted records.
+
+### Provenance
+
+provenance: supported. Targets: UniProtKB-KW:KW-0001.
+
+Source identity and CC-BY 4.0 attribution are present. Current official source release is 2026_03; the original seed release is not claimed to be established.
+
+### Completeness
+
+completeness: supported. Targets: UniProtKB-KW:KW-0001.
+
+This is a class record, with no instance sequence or specimen substituted for a trait. Optional motifs, structures, detection methods and canonical examples are not automatically required for this keyword.
+
+### Graph
+
+graph: not_applicable. Targets: UniProtKB-KW:KW-0001.
+
+No causal_graphs or graph nodes occur in the target; no molecular mechanism or node-grounding coverage is claimed.
+
+### Scope
+
+scope: supported. Targets: UniProtKB-KW:KW-0001.
+
+The record remains SEEDED. Review-bundle validation neither promotes scientific status nor qualifies any protein example.
+
+### Identity
+
+identity: supported. Targets: UniProtKB-KW:KW-0001.
+
+Stable identifier, label and class-level cluster identity resolve to the intended UniProt keyword; it is not an individual protein or a binding-site interval.
+
+### Consistency
+
+consistency: concern. Targets: UniProtKB-KW:KW-0001.
+
+The retained Iron-sulfur parent is correct, but the seeder preserves one parent and loses the additional Metal-binding route; Iron-sulfur to Iron does not recover it.
+
+### Evidence
+
+evidence: concern. Targets: UniProtKB-KW:KW-0001.
+
+The definition is faithfully copied but scientifically too narrow: Rieske Fe2S2 coordination need not use four cysteines.
+
+### Grounding
+
+grounding: concern. Targets: UniProtKB-KW:KW-0001.
+
+GO:0051537 is a valid source-direct association to the intended general binding class, but the current four-cysteine local definition is narrower than that GO class.
+
+### Nomenclature
+
+nomenclature: supported. Targets: UniProtKB-KW:KW-0001.
+
+All six aliases match the upstream keyword. Chemical shorthand is interpreted within this protein-annotation class, not asserted as equality between a molecule and a protein.
+
+## Findings
+
+### F1: Four-cysteine definition excludes Rieske proteins
+
+major / open / confirmed; issue key: uniprot-keyword.KW-0001.four-cysteine-overrestriction.
+
+The universal four-cysteine clause excludes the experimentally established two-cysteine/two-histidine Rieske coordination. The upstream keyword itself annotates a Rieske protein, and its GO mapping defines the broader core-binding class. Faithful transcription therefore does not make the definition scientifically complete.
+
+### F2: Additional Metal-binding hierarchy path is omitted
+
+minor / open / confirmed; issue key: uniprot-keyword.KW-0001.lost-metal-binding-parent.
+
+The official keyword has both Iron-sulfur and Metal-binding parents. Only Iron-sulfur is emitted; the local Iron-sulfur to Iron chain terminates without Metal-binding. This is confirmed hierarchy incompleteness, not a wrong retained parent or wrong identity.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Add a maintained, cited definition correction or overlay through scripts/seed_uniprot_keywords.py that defines the Fe2S2 core without universally fixing protein ligand residues, while preserving the source wording as provenance. Reassess the direct GO equivalence after regeneration.
+
+- Definition includes both four-cysteine and Rieske two-cysteine/two-histidine coordination without claiming every protein uses either pattern.
+- Counterexample is attached to the corrected claim with inspected primary evidence.
+- Regeneration preserves KW-0001 identity; strict validation and subsequent semantic review pass.
+
+### A2
+
+Update immediate_parent/build_yaml in scripts/seed_uniprot_keywords.py to preserve all valid seeded immediate parents, retaining the separate policy for unseeded category roots; regenerate the affected target in a separately authorized curation change.
+
+- A multiple-HI-path fixture retains both routed parents deterministically.
+- Regenerated target retains Iron-sulfur and reaches Metal-binding without dangling category-root links.
+- Run strict validation and graph audit, then save a new review against the changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml; Entire target YAML | supports | Complete record inspected: stable keyword identity, definition/source, FUNCTION axis, FUNC_BINDING_CAPACITY category, CLASS kind, SEEDED status, parent list, synonyms, xrefs and CC-BY 4.0 licence; optional representations, examples, citations and graphs are absent from this YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord, parent_traits, xrefs and FUNC_BINDING_CAPACITY | supports | FUNC_BINDING_CAPACITY is a protein-level ability to bind a ligand, distinct from localized sequence binding sites. parent_traits are broader classes; xrefs assert true source-direct equivalents. Optional examples and graphs are not mandatory for this class. |
+| owner | scripts/seed_uniprot_keywords.py; route, immediate_parent, build_yaml, main | supports | Ligand keywords route to FUNC_BINDING_CAPACITY; definitions are copied; first immediate parent only is retained if seeded; untyped source aliases become EXACT_SYNONYM and source GO associations become xrefs. |
+| licence | https://rest.uniprot.org/help/license; Inspected source response captured at the recorded UTC time | supports | UniProt permits copyrightable database content under Creative Commons Attribution 4.0; the record licence is compatible. |
+| local-parent-1 | data/traits/function/binding_capacity/uniprot_keywords/iron-sulfur-kw-0411.yaml; Entire local parent YAML | supports | Complete local parent record inspected for identifier, class, definition and broader-parent chain. |
+| keyword | https://rest.uniprot.org/keywords/KW-0001.json; Inspected source response captured at the recorded UTC time | supports | Official UniProt 2026_03 keyword resolves the identifier and label; local definition, source aliases and GO mapping agree. Current immediate parents are Iron-sulfur KW-0411 and Metal-binding KW-0479. |
+| parent | https://rest.uniprot.org/keywords/KW-0411.json; Inspected source response captured at the recorded UTC time | supports | Iron-sulfur KW-0411 is a broader cluster-binding class; official parents are Iron KW-0408 and Metal-binding KW-0479. |
+| iron | https://rest.uniprot.org/keywords/KW-0408.json; Inspected source response captured at the recorded UTC time | supports | Iron KW-0408 resolves and its broader source node is Ligand; it does not restore the missing Metal-binding path. |
+| metal | https://rest.uniprot.org/keywords/KW-0479.json; Inspected source response captured at the recorded UTC time | supports | Metal-binding KW-0479 resolves as a protein metal-binding class. |
+| local-iron | data/traits/function/binding_capacity/uniprot_keywords/iron-kw-0408.yaml | supports | Entire local record inspected. Iron has no parent_traits; Metal-binding exists as a separate valid class. Together with local Iron-sulfur this establishes that the target lacks a local path to Metal-binding. |
+| local-metal | data/traits/function/binding_capacity/uniprot_keywords/metal-binding-kw-0479.yaml | supports | Entire local record inspected. Iron has no parent_traits; Metal-binding exists as a separate valid class. Together with local Iron-sulfur this establishes that the target lacks a local path to Metal-binding. |
+| go | https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO%3A0051537; Inspected source response captured at the recorded UTC time | supports | GO:0051537 is a nonobsolete molecular function for binding the Fe2S2 inorganic core; its definition imposes no four-cysteine restriction. |
+| rieske | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A8736555+AND+SRC%3AMED&amp;format=json&amp;resultType=core&amp;pageSize=10; Complete scientific abstract and citation metadata; full paper not inspected | refutes | Iwata and colleagues (1996), PMID 8736555, DOI 10.1016/s0969-2126(96)00062-7: the inspected complete abstract reports a bovine Rieske fragment structure at 1.5 angstrom resolution, with two cysteine and two histidine ligands to the Fe2S2 cluster. This single direct counterexample refutes universal four-cysteine ligation. |
+| annotation | https://rest.uniprot.org/uniprotkb/P13272.json; Inspected source response captured at the recorded UTC time | supports | Current UniProt entry P13272 carries KW-0001. This supports inclusion of a Rieske protein in upstream annotation practice, not eligibility as a release-pinned canonical example here. |
+| validation-1 | just validate data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml; Executed 2026-10-21T06:59:40Z through 2026-10-21T06:59:42Z; exit 0 | supports | uv run python scripts/validate_strict.py --workers 1 'data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml'<br>Validating 1 files with 1 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml<br><br>=== validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml; Executed 2026-10-21T06:56:30Z through 2026-10-21T06:59:20Z; exit 0 | supports | uv run python scripts/validate_strict.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml<br>Validating 10 files with 17 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml<br><br>=== validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>uv run python scripts/validate_uniprot_grounding.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml; Executed 2026-10-21T06:59:42Z through 2026-10-21T06:59:42Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings<br><br>uv run python scripts/audit_causal_graphs.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml |
+| validation-4 | just validate-history; Executed 2026-10-21T06:59:20Z through 2026-10-21T06:59:22Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The original keywlist release used in the July seed is not recoverable from this record. Current API release 2026_03 is a comparison snapshot, not an asserted historical seed release.
+- External responses were inspected and SHA256-captured in session scratch; the bundle retains URLs, access times, digests and bounded observations, not full response bodies.
+- This is one record review, not a source-wide audit. No examples or mechanisms are qualified. iModulonDB is not applicable to this generic ligand class without a gene, organism or expression dataset.
+- Rieske evidence comes from an inspected primary abstract and a current UniProt annotation, not full-paper inspection or qualification of a canonical protein example.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T070140Z-2fe-2s-kw-0001
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of 2Fe-2S
+started_at: '2026-10-21T06:56:02Z'
+finished_at: '2026-10-21T07:01:40Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The source identity and general binding class are sound, but the copied definition
+  excludes established Rieske coordination. One major definition/scope finding and
+  one minor lost-parent finding need maintained-input curation.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+    sha256: fda7bd13d50db23b4bc0bc504db3936ce3a063252ecbf2ff74913b135e6ad62d
+    role: target
+  - path: data/traits/function/binding_capacity/uniprot_keywords/iron-kw-0408.yaml
+    sha256: a3a1d0c8576edbb5662ca686fa53a77d628f49a459141ce2e47a7e3eab491ed3
+    role: context
+  - path: data/traits/function/binding_capacity/uniprot_keywords/iron-sulfur-kw-0411.yaml
+    sha256: 1039326a057594e726283088f3fc0047a2f6f33d93722973cb7b8f4e7bed96e1
+    role: context
+  - path: data/traits/function/binding_capacity/uniprot_keywords/metal-binding-kw-0479.yaml
+    sha256: d10e02a25025a55164f0092bd661e65424e47d422358598ec596d9f810e5b083
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_uniprot_keywords.py
+    sha256: 8b21fb8f61aea278c593f5afd22f0d137f159d66a75dad1067cc8eca44def576
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 1 in batch 002. Fresh main inventory has 429359 records;
+    union of validated main targets and published batch-001 targets at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d
+    covers 10 record paths, leaving 429349 before this batch. Published branch coverage
+    is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - UniProtKB-KW:KW-0001
+targets:
+- kind: generated
+  label: 2Fe-2S
+  owner_paths:
+  - path: scripts/seed_uniprot_keywords.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained source parser, category routing, parent selection and YAML emitter
+  path: data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  record_class: ProteinTraitRecord
+  target_id: UniProtKB-KW:KW-0001
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and UniProt semantics
+  command: just validate-all data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Registry consistency is not protein qualification
+    for this target.
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full history gate; this review adds no history event.
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source identity and asserted references
+  status: passed
+  required: true
+  summary: Official UniProt API resolves the target and asserted Iron-sulfur parent;
+    parent-chain IDs Iron and Metal-binding also resolve. The source-direct GO association
+    resolves in QuickGO. Resolution is distinct from semantic equivalence, which is
+    assessed separately.
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  evidence_ids:
+  - keyword
+  - parent
+  - iron
+  - metal
+  - go
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T06:56:02Z'
+  snapshot_sha256: fda7bd13d50db23b4bc0bc504db3936ce3a063252ecbf2ff74913b135e6ad62d
+  support: supports
+  summary: 'Complete record inspected: stable keyword identity, definition/source,
+    FUNCTION axis, FUNC_BINDING_CAPACITY category, CLASS kind, SEEDED status, parent
+    list, synonyms, xrefs and CC-BY 4.0 licence; optional representations, examples,
+    citations and graphs are absent from this YAML.'
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord, parent_traits, xrefs and FUNC_BINDING_CAPACITY
+  accessed_at: '2026-10-21T06:56:02Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_BINDING_CAPACITY is a protein-level ability to bind a ligand, distinct
+    from localized sequence binding sites. parent_traits are broader classes; xrefs
+    assert true source-direct equivalents. Optional examples and graphs are not mandatory
+    for this class.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_uniprot_keywords.py
+  locator: route, immediate_parent, build_yaml, main
+  accessed_at: '2026-10-21T06:56:02Z'
+  snapshot_sha256: 8b21fb8f61aea278c593f5afd22f0d137f159d66a75dad1067cc8eca44def576
+  support: supports
+  summary: Ligand keywords route to FUNC_BINDING_CAPACITY; definitions are copied;
+    first immediate parent only is retained if seeded; untyped source aliases become
+    EXACT_SYNONYM and source GO associations become xrefs.
+- evidence_id: licence
+  kind: authority
+  reference: https://rest.uniprot.org/help/license
+  accessed_at: '2026-10-21T06:55:09.358488Z'
+  snapshot_sha256: 5960c22bf17f22286504b927dbb3ca41713c571ed91a10fe7a88ddd964b416ce
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: UniProt permits copyrightable database content under Creative Commons Attribution
+    4.0; the record licence is compatible.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/binding_capacity/uniprot_keywords/iron-sulfur-kw-0411.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T06:56:02Z'
+  snapshot_sha256: 1039326a057594e726283088f3fc0047a2f6f33d93722973cb7b8f4e7bed96e1
+  support: supports
+  summary: Complete local parent record inspected for identifier, class, definition
+    and broader-parent chain.
+- evidence_id: keyword
+  kind: database
+  reference: https://rest.uniprot.org/keywords/KW-0001.json
+  accessed_at: '2026-10-21T06:55:08.522680Z'
+  snapshot_sha256: 5f6f4bffb17067a8a4534b530950926dff06b51573b45a4c7c9d8bf092d0e81e
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Official UniProt 2026_03 keyword resolves the identifier and label; local
+    definition, source aliases and GO mapping agree. Current immediate parents are
+    Iron-sulfur KW-0411 and Metal-binding KW-0479.
+- evidence_id: parent
+  kind: database
+  reference: https://rest.uniprot.org/keywords/KW-0411.json
+  accessed_at: '2026-10-21T06:55:10.439732Z'
+  snapshot_sha256: cf9739e12b9e54e6d28377a77cc5ddb7a2f93006c5668abdb1992ddfa4b97b56
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Iron-sulfur KW-0411 is a broader cluster-binding class; official parents
+    are Iron KW-0408 and Metal-binding KW-0479.
+- evidence_id: iron
+  kind: database
+  reference: https://rest.uniprot.org/keywords/KW-0408.json
+  accessed_at: '2026-10-21T06:55:11.459917Z'
+  snapshot_sha256: 2bd85545a5b176ab8abe708af3dfc0606a96ccb933689785235be2380b72dae1
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Iron KW-0408 resolves and its broader source node is Ligand; it does not
+    restore the missing Metal-binding path.
+- evidence_id: metal
+  kind: database
+  reference: https://rest.uniprot.org/keywords/KW-0479.json
+  accessed_at: '2026-10-21T06:55:10.449313Z'
+  snapshot_sha256: e93ca03a4a8a79a9efbc7fd77e67ec2833bf4fe68f274dd1b229827566bcddb1
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Metal-binding KW-0479 resolves as a protein metal-binding class.
+- evidence_id: local-iron
+  kind: record_content
+  reference: data/traits/function/binding_capacity/uniprot_keywords/iron-kw-0408.yaml
+  accessed_at: '2026-10-21T07:01:40Z'
+  snapshot_sha256: a3a1d0c8576edbb5662ca686fa53a77d628f49a459141ce2e47a7e3eab491ed3
+  support: supports
+  summary: Entire local record inspected. Iron has no parent_traits; Metal-binding
+    exists as a separate valid class. Together with local Iron-sulfur this establishes
+    that the target lacks a local path to Metal-binding.
+- evidence_id: local-metal
+  kind: record_content
+  reference: data/traits/function/binding_capacity/uniprot_keywords/metal-binding-kw-0479.yaml
+  accessed_at: '2026-10-21T07:01:40Z'
+  snapshot_sha256: d10e02a25025a55164f0092bd661e65424e47d422358598ec596d9f810e5b083
+  support: supports
+  summary: Entire local record inspected. Iron has no parent_traits; Metal-binding
+    exists as a separate valid class. Together with local Iron-sulfur this establishes
+    that the target lacks a local path to Metal-binding.
+- evidence_id: go
+  kind: database
+  reference: https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO%3A0051537
+  accessed_at: '2026-10-21T06:55:12.660019Z'
+  snapshot_sha256: 2a0e7fc99f744a0bc82ece8cec524f4c9463bf792c8b9bcea2d5f09f06ff484d
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: GO:0051537 is a nonobsolete molecular function for binding the Fe2S2 inorganic
+    core; its definition imposes no four-cysteine restriction.
+- evidence_id: rieske
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A8736555+AND+SRC%3AMED&format=json&resultType=core&pageSize=10
+  accessed_at: '2026-10-21T06:55:58.182166Z'
+  snapshot_sha256: 4b7dd405ecf0ca30cc3ba87106f255aa17507f155d47e23a7b41dc18f471e909
+  support: refutes
+  locator: Complete scientific abstract and citation metadata; full paper not inspected
+  summary: 'Iwata and colleagues (1996), PMID 8736555, DOI 10.1016/s0969-2126(96)00062-7:
+    the inspected complete abstract reports a bovine Rieske fragment structure at
+    1.5 angstrom resolution, with two cysteine and two histidine ligands to the Fe2S2
+    cluster. This single direct counterexample refutes universal four-cysteine ligation.'
+- evidence_id: annotation
+  kind: database
+  reference: https://rest.uniprot.org/uniprotkb/P13272.json
+  accessed_at: '2026-10-21T06:55:58.415405Z'
+  snapshot_sha256: 7955799bd9a48d975c9a7a73ed8551bd9959506ca022a7bb90db955459a63bfc
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Current UniProt entry P13272 carries KW-0001. This supports inclusion of
+    a Rieske protein in upstream annotation practice, not eligibility as a release-pinned
+    canonical example here.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  locator: Executed 2026-10-21T06:59:40Z through 2026-10-21T06:59:42Z; exit 0
+  accessed_at: '2026-10-21T06:59:42Z'
+  support: supports
+  summary: "uv run python scripts/validate_strict.py --workers 1 'data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml'\n\
+    Validating 1 files with 1 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml\n\
+    \n=== validate-strict summary ===\n  files scanned:      1\n  files with ERROR:\
+    \   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml
+    data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml
+  locator: Executed 2026-10-21T06:56:30Z through 2026-10-21T06:59:20Z; exit 0
+  accessed_at: '2026-10-21T06:59:20Z'
+  support: supports
+  summary: "uv run python scripts/validate_strict.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml\n\
+    Validating 10 files with 17 workers; schema=/private/tmp/ptm-record-reviews-20261021/repo/src/proteintraitsmech/schema/proteintraitsmech.yaml\n\
+    \n=== validate-strict summary ===\n  files scanned:      10\n  files with ERROR:\
+    \   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    uv run python scripts/validate_uniprot_grounding.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/3fe-4s-kw-0003.yaml data/traits/function/binding_capacity/uniprot_keywords/4fe-4s-kw-0004.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/atp-binding-kw-0067.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/bacteriochlorophyll-kw-0076.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/bile-pigment-kw-0089.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/biotin-kw-0092.yaml data/traits/function/binding_capacity/uniprot_keywords/c-di-gmp-kw-0973.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/cadmium-kw-0104.yaml\
+    \ data/traits/function/binding_capacity/uniprot_keywords/calcium-kw-0106.yaml\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml
+  locator: Executed 2026-10-21T06:59:42Z through 2026-10-21T06:59:42Z; exit 0
+  accessed_at: '2026-10-21T06:59:42Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings
+
+
+    uv run python scripts/audit_causal_graphs.py data/traits/function/binding_capacity/uniprot_keywords/2fe-2s-kw-0001.yaml'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T06:59:20Z through 2026-10-21T06:59:22Z; exit 0
+  accessed_at: '2026-10-21T06:59:22Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: The maintained UniProt keyword seeder owns future changes; this review
+    does not modify emitted records.
+  evidence_ids:
+  - owner
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-1
+  topic: Ownership
+- area: provenance
+  outcome: supported
+  summary: Source identity and CC-BY 4.0 attribution are present. Current official
+    source release is 2026_03; the original seed release is not claimed to be established.
+  evidence_ids:
+  - record
+  - licence
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-2
+  topic: Provenance
+- area: completeness
+  outcome: supported
+  summary: This is a class record, with no instance sequence or specimen substituted
+    for a trait. Optional motifs, structures, detection methods and canonical examples
+    are not automatically required for this keyword.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-3
+  topic: Completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal_graphs or graph nodes occur in the target; no molecular mechanism
+    or node-grounding coverage is claimed.
+  evidence_ids:
+  - record
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-4
+  topic: Graph
+- area: scope
+  outcome: supported
+  summary: The record remains SEEDED. Review-bundle validation neither promotes scientific
+    status nor qualifies any protein example.
+  evidence_ids:
+  - record
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-5
+  topic: Scope
+- area: identity
+  outcome: supported
+  summary: Stable identifier, label and class-level cluster identity resolve to the
+    intended UniProt keyword; it is not an individual protein or a binding-site interval.
+  evidence_ids:
+  - record
+  - keyword
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-6
+  topic: Identity
+- area: consistency
+  outcome: concern
+  summary: The retained Iron-sulfur parent is correct, but the seeder preserves one
+    parent and loses the additional Metal-binding route; Iron-sulfur to Iron does
+    not recover it.
+  evidence_ids:
+  - record
+  - keyword
+  - parent
+  - local-parent-1
+  - local-iron
+  - local-metal
+  - owner
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-7
+  topic: Consistency
+- area: evidence
+  outcome: concern
+  summary: 'The definition is faithfully copied but scientifically too narrow: Rieske
+    Fe2S2 coordination need not use four cysteines.'
+  evidence_ids:
+  - record
+  - keyword
+  - rieske
+  - annotation
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-8
+  topic: Evidence
+- area: grounding
+  outcome: concern
+  summary: GO:0051537 is a valid source-direct association to the intended general
+    binding class, but the current four-cysteine local definition is narrower than
+    that GO class.
+  evidence_ids:
+  - record
+  - go
+  - rieske
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-9
+  topic: Grounding
+- area: nomenclature
+  outcome: supported
+  summary: All six aliases match the upstream keyword. Chemical shorthand is interpreted
+    within this protein-annotation class, not asserted as equality between a molecule
+    and a protein.
+  evidence_ids:
+  - record
+  - keyword
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  assessment_id: assessment-10
+  topic: Nomenclature
+findings:
+- issue_key: uniprot-keyword.KW-0001.four-cysteine-overrestriction
+  category: scope
+  severity: major
+  title: Four-cysteine definition excludes Rieske proteins
+  description: The universal four-cysteine clause excludes the experimentally established
+    two-cysteine/two-histidine Rieske coordination. The upstream keyword itself annotates
+    a Rieske protein, and its GO mapping defines the broader core-binding class. Faithful
+    transcription therefore does not make the definition scientifically complete.
+  evidence_ids:
+  - record
+  - keyword
+  - go
+  - rieske
+  - annotation
+  finding_id: F1
+  status: open
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  owner_paths:
+  - path: scripts/seed_uniprot_keywords.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained source parser, category routing, parent selection and YAML emitter
+  certainty: confirmed
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+  normalization_reason: The definition or exact synonym materially misstates the scope
+    of the identified trait.
+- issue_key: uniprot-keyword.KW-0001.lost-metal-binding-parent
+  category: consistency
+  severity: minor
+  title: Additional Metal-binding hierarchy path is omitted
+  description: The official keyword has both Iron-sulfur and Metal-binding parents.
+    Only Iron-sulfur is emitted; the local Iron-sulfur to Iron chain terminates without
+    Metal-binding. This is confirmed hierarchy incompleteness, not a wrong retained
+    parent or wrong identity.
+  evidence_ids:
+  - record
+  - keyword
+  - parent
+  - local-parent-1
+  - local-iron
+  - local-metal
+  - owner
+  finding_id: F2
+  status: open
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  owner_paths:
+  - path: scripts/seed_uniprot_keywords.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained source parser, category routing, parent selection and YAML emitter
+  certainty: confirmed
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+  normalization_reason: The core identity is intact; bounded wording, hierarchy completeness
+    or interpretation needs follow-up.
+actions:
+- action_id: A1
+  description: Add a maintained, cited definition correction or overlay through scripts/seed_uniprot_keywords.py
+    that defines the Fe2S2 core without universally fixing protein ligand residues,
+    while preserving the source wording as provenance. Reassess the direct GO equivalence
+    after regeneration.
+  finding_ids:
+  - F1
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  owner_paths:
+  - path: scripts/seed_uniprot_keywords.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained source parser, category routing, parent selection and YAML emitter
+  acceptance_checks:
+  - Definition includes both four-cysteine and Rieske two-cysteine/two-histidine coordination
+    without claiming every protein uses either pattern.
+  - Counterexample is attached to the corrected claim with inspected primary evidence.
+  - Regeneration preserves KW-0001 identity; strict validation and subsequent semantic
+    review pass.
+- action_id: A2
+  description: Update immediate_parent/build_yaml in scripts/seed_uniprot_keywords.py
+    to preserve all valid seeded immediate parents, retaining the separate policy
+    for unseeded category roots; regenerate the affected target in a separately authorized
+    curation change.
+  finding_ids:
+  - F2
+  target_ids:
+  - UniProtKB-KW:KW-0001
+  owner_paths:
+  - path: scripts/seed_uniprot_keywords.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained source parser, category routing, parent selection and YAML emitter
+  acceptance_checks:
+  - A multiple-HI-path fixture retains both routed parents deterministically.
+  - Regenerated target retains Iron-sulfur and reaches Metal-binding without dangling
+    category-root links.
+  - Run strict validation and graph audit, then save a new review against the changed
+    bytes.
+limitations:
+- The original keywlist release used in the July seed is not recoverable from this
+  record. Current API release 2026_03 is a comparison snapshot, not an asserted historical
+  seed release.
+- External responses were inspected and SHA256-captured in session scratch; the bundle
+  retains URLs, access times, digests and bounded observations, not full response
+  bodies.
+- This is one record review, not a source-wide audit. No examples or mechanisms are
+  qualified. iModulonDB is not applicable to this generic ligand class without a gene,
+  organism or expression dataset.
+- Rieske evidence comes from an inspected primary abstract and a current UniProt annotation,
+  not full-paper inspection or qualification of a canonical protein example.
+tags:
+- unreviewed-path-order
+- batch-002
+- uniprot-keywords
+```
