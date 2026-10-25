@@ -72,11 +72,11 @@ We audited all **235** `.approved.tsv` / `.review-decisions.jsonl` review batche
     ```
   - **Scope & Verification**:
     - `review coverage: InterPro=1000/25`
-    - `972` approved `LOCALIZED` (`INTERPRO_MATCH`) candidate rows across `972` unique `InterPro` trait records (`1` already present on disk, **`971` newly written trait records**: `964` `SEQ_DOMAIN`, `5` `SEQ_CONSERVATION`, `3` `SEQ_REPEAT`).
+    - `972` approved `LOCALIZED` (`INTERPRO_MATCH`) candidate rows across `972` unique `InterPro` trait records (`964` `SEQ_DOMAIN`, `5` `SEQ_CONSERVATION`, `3` `SEQ_REPEAT`; `1` `SEQ_DOMAIN` already present on disk, **`971` newly written trait records**: `963` `SEQ_DOMAIN`, `5` `SEQ_CONSERVATION`, `3` `SEQ_REPEAT`).
     - All **971** written records previously had **`0` `QUALIFIED` canonical examples** on disk (carrying only legacy `SWISSPROT_PROFILE` examples); `951` upgraded the existing `SWISSPROT_PROFILE` example in-place to `QUALIFIED` with exact `InterPro 110.0` / `UniProt 2026_03` coordinates, and `20` appended a priority-taxon (`Homo sapiens` / `Saccharomyces cerevisiae`) `QUALIFIED` example alongside the existing legacy example.
     - Zero `record_content_findings` and zero `review_flags` across all 971 promoted rows; DUF and taxon-scoped records (`InterPro:IPR056044` `UniProtKB:P34263` *C. elegans* `B0303.14`, `InterPro:IPR055783..055785` `UniProtKB:O31978` *B. subtilis* `YomG`, `InterPro:IPR057262`/`IPR057377` `UniProtKB:Q57968` *M. jannaschii* `MJ0548`) match the exact protein and organism named in their definitions.
   - **Durable Registry Totals (Before → After)**:
-    - `data/grounding/protein_registry.jsonl`: **12,924 → 13,208** proteins (**+284** new `ProteinReference` entries)
+    - `data/grounding/protein_registry.jsonl`: **12,925 → 13,208** proteins (**+283** new `ProteinReference` entries)
     - `data/grounding/occurrence_evidence.jsonl.d/`: **21,343 → 22,314** evidence rows (**+971** new `GroundingEvidence` entries)
     - `data/grounding/qualified_record_bindings.jsonl.d/`: **21,343 → 22,314** transactional bindings (**+971** new record bindings)
 

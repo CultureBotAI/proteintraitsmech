@@ -54,9 +54,9 @@ tasks:
   status: note
   disposition: 'Observed in Cycle 2 Stage 2 (causal_graphs, goal-167a): _union_list_keys in scripts/record_io.py deduplicates causal_graphs by full JSON serialization rather than graph_id identity; upgrading an existing graph_id in seed_foundational_traits.py requires replacing matching graph_id entries in place while preserving distinct curator-added graph_id entries.'
 - task_id: proteintraitsmech-infra-0005
-  summary: 'Default --protein-registry beside --resolved in scripts/ground_uniprot_examples.py _provider_override and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
+  summary: 'Check stem-prefixed <batch>.protein_registry.jsonl siblings before unprefixed directory defaults in scripts/ground_uniprot_examples.py main() (lines 5330-5338) and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
   status: note
-  disposition: 'Observed in Cycle 2 Stage 3 (protein_examples, goal-9220): (1) promote CLI help states --protein-registry defaults beside --resolved, but _provider_override checks args.protein_registry before default assignment and falls back to evidence["path"] when omitted; (2) remaining localized batches cnp-017..020, cdd-042..050, and prosite-065 contain valid unpromoted rows alongside rows superseded by later promotions, requiring re-resolution against current record preimages.'
+  disposition: 'Observed in Cycle 2 Stage 3 (protein_examples, goal-9220): (1) in scripts/ground_uniprot_examples.py:5330-5338, main() defaults args.protein_registry, args.evidence_registry, args.membership_registry, and args.sifts_registry to unprefixed args.resolved.resolve().parent / "protein_registry.jsonl" (etc.) rather than checking stem-prefixed <batch>.protein_registry.jsonl siblings first, so _provider_cache (line 2953) skips non-existent unprefixed files in review-batches/ and _verify_provider_evidence (line 3023) fails with stale:provider_missing:protein_registry unless passed explicitly; (2) remaining localized batches cnp-017..020, cdd-042..050, and prosite-065 contain valid unpromoted rows alongside rows superseded by later promotions, requiring re-resolution against current record preimages.'
 ```
 <!-- mech-infra-tasks:end -->
 
@@ -162,7 +162,7 @@ tasks:
   - `scripts/seed_uniprot_peptide_classes.py`
   - `research/causal-graphs-round125.md`
 
-### `proteintraitsmech-infra-0005` — Default `--protein-registry` beside `--resolved` in `_provider_override` and re-resolve partially superseded localized review batches
+### `proteintraitsmech-infra-0005` — Check stem-prefixed `<batch>.protein_registry.jsonl` siblings in `scripts/ground_uniprot_examples.py` `main()` and re-resolve partially superseded localized review batches
 
 - **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 2, Stage 3 (`protein_examples`, `goal-9220`)
 - **Status**: `note`
@@ -170,10 +170,10 @@ tasks:
 - **Priority**: P3
 - **Dependencies**: None
 - **Observation**:
-  1. `scripts/ground_uniprot_examples.py promote -h` documents `--protein-registry`, `--evidence-registry`, and `--membership-registry` as `(default: beside --resolved)`, and `promote()` resolves those defaults at lines 4620–4624 (`args.protein_registry or _default_protein_registry_path(args.resolved)`), **after** `_provider_cache(selected, args)` and `_verify_provider_evidence(row, args, provider_cache)` run using `args.protein_registry` (`None` when omitted). When a batch's `resolved.jsonl` recorded a temporary `.uniprot_registry.jsonl` or moved staging path in `provider_evidence` while the sibling `<batch>.protein_registry.jsonl` exists beside `--resolved`, omitting `--protein-registry` causes `_provider_override` to fall back to `evidence["path"]` instead of `<batch>.protein_registry.jsonl`.
+  1. `scripts/ground_uniprot_examples.py promote -h` documents `--protein-registry`, `--evidence-registry`, `--membership-registry`, and `--sifts-registry` as `(default: beside --resolved)`, and `main()` (`scripts/ground_uniprot_examples.py:5330-5338`) populates those defaults before calling `promote(args)` using unprefixed directory-level filenames (`args.resolved.resolve().parent / "protein_registry.jsonl"`, `"occurrence_evidence.jsonl"`, `"uniprot_memberships.jsonl"`, `"sifts_mappings.jsonl"`). When `args.resolved` is a stem-prefixed review-batch file such as `reports/uniprot-grounding/review-batches/human-ecoli-yeast-repair-mixed-039.resolved.jsonl`, the sibling artifacts on disk are `<batch>.protein_registry.jsonl` and `<batch>.occurrence_evidence.jsonl`, whereas unprefixed `review-batches/protein_registry.jsonl` does not exist. Consequently, `_provider_cache` (`line 2953: if not path.is_file(): continue`) skips loading the provider registries and `_verify_provider_evidence` (`line 3023`) rejects every row with `stale:provider_missing:protein_registry` unless `--protein-registry` and `--evidence-registry` are passed explicitly.
   2. Several historical `LOCALIZED` review batches (`human-ecoli-yeast-repair-cnp-017..020`, `repair-existing-local-review-042..050-2026-03-cdd`, and `repair-existing-local-review-065-2026-03-prosite`) contain valid unpromoted `InterPro`/`CDD`/`PROSITE` candidate rows alongside rows whose target records were subsequently promoted by another batch (`conflict:different_qualified_trait_occurrence` or `stale:record_changed_since_resolve`). Because `promote` fails closed at whole-batch preflight if any approved row's preimage is stale or conflicts with a different promoted protein occurrence, promoting the remaining ungrounded rows from those batches requires re-running `resolve` against current on-disk record preimages.
 - **Desired outcome**:
-  - Populate `args.protein_registry`, `args.evidence_registry`, and `args.membership_registry` with their sibling defaults (`_default_protein_registry_path(args.resolved)`, etc.) at the start of `promote(args)` before `_provider_cache` runs, and re-resolve the remaining ungrounded candidates in `cnp-017..020`, `cdd-042..050`, and `prosite-065` against current on-disk record preimages.
+  - In `scripts/ground_uniprot_examples.py:5330-5338`, check for stem-prefixed `<batch>.protein_registry.jsonl` (and corresponding `.occurrence_evidence.jsonl`, `.uniprot_memberships.jsonl`, `.sifts_mappings.jsonl`) siblings beside `--resolved` before falling back to unprefixed `protein_registry.jsonl`, and re-resolve the remaining ungrounded candidates in `cnp-017..020`, `cdd-042..050`, and `prosite-065` against current on-disk record preimages.
 - **Evidence paths**:
   - `scripts/ground_uniprot_examples.py`
   - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-repair-mixed-039.resolved.jsonl`
