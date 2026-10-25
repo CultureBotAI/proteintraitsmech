@@ -85,7 +85,7 @@ Disposition: Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_c
 
 major / open / confirmed; issue key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation.
 
-CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454]) models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; unpromoted seed examples Mus musculus UniProtKB:Q8QZR8 and Homo sapiens UniProtKB:Q8N1B3), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:18297059, PMID:23912459), but sentence 2 of its upstream CDD definition states 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (contrasted with CDD:cd04590 in repaired sibling CDD:cd20534).
+CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454]) models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; unpromoted seed examples Mus musculus UniProtKB:Q8QZR8 and Homo sapiens UniProtKB:Q8N1B3), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459), but sentence 2 of its upstream CDD definition states 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (contrasted with CDD:cd04590 in repaired sibling CDD:cd20534).
 
 ### F14: CDD:cd15885 (SNARE_SNAP25C) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
 
@@ -97,13 +97,13 @@ CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856]) models the C-term
 
 major / open / confirmed; issue key: cdd-cd17151-dcdc2c-typo-and-dcdc2-paralog-disease-switch.
 
-CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922]) models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C).' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2 is a member of doublecortin (DCX) family... DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922]) models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C).' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2 is a member of doublecortin (DCX) family.' and 'DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
 
 ### F16: CDD:cd17154 (DCX2_DCDC2C) switches mid-definition from DCDC2C to paralog DCDC2 reading-disability and ADHD genetics
 
 major / open / confirmed; issue key: cdd-cd17154-dcdc2c-rpt2-dcdc2-paralog-disease-switch.
 
-CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) models the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family... DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) models the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family.' and 'DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
 
 ### F17: CDD:cd17149 (DCX1_DCDC2) misspells Doublecortin-like as Dublecortin-like in definition and interpolates an off-target ubiquitin protein-modifier sentence
 
@@ -140,9 +140,9 @@ Add accession-keyed errata entries for CDD:cd20535 (F13), CDD:cd15885 (F14), CDD
 | Evidence | Reference / locator | Support | Observation |
 | --- | --- | --- | --- |
 | ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; identifier, label, definition, canonical_examples, evidence (PMID:6192856), curation_history | supports | Verified on disk that CDD:cd00104 (label=KAZAL_FS) spells 'chymotrypsin' accurately, distinguishes Kazal inhibitor proteins (avian ovomucoids and pancreatic secretory trypsin inhibitor) from target proteases, and replays all 26 QUALIFIED canonical examples (25 Homo sapiens and 1 Mus musculus A2ASQ1, out of 28 total canonical_examples on the record, backed by 39 durable qualified_record_bindings.jsonl.d receipts) cleanly. |
-| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; identifier, label, definition, canonical_examples, evidence (PMID:11053864), curation_history | supports | Verified on disk that CDD:cd00959 (label=DeoC) no longer repeats its opening title sentence and replays both QUALIFIED canonical examples (Escherichia coli K12 P0A6L0 and Homo sapiens Q9Y315, out of 5 total canonical_examples on the record, backed by 2 durable qualified_record_bindings.jsonl.d receipts) cleanly. |
+| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; identifier, label, definition, canonical_examples, evidence (PMID:11305920), curation_history | supports | Verified on disk that CDD:cd00959 (label=DeoC) no longer repeats its opening title sentence and replays both QUALIFIED canonical examples (Escherichia coli K12 P0A6L0 and Homo sapiens Q9Y315, out of 5 total canonical_examples on the record, backed by 2 durable qualified_record_bindings.jsonl.d receipts) cleanly. |
 | ev-cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; identifier, label, definition, parent_traits, canonical_examples | refutes | CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454], unpromoted seed examples Mus musculus Q8QZR8 and Homo sapiens Q8N1B3, no evidence block on disk) models the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition conflates CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium transporter family. |
-| ev-cd20534-cd04590-siblings | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454]) and CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, parent_traits=[CDD:cl15354]) | supports | Repaired first-repeat sibling CDD:cd20534 (qualified on human Q8N1B3 at residues 26-135, PMID:18297059 and PMID:23912459) and CBS-pair record CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, definition='Two tandem repeats of the cystathionine beta-synthase (CBS pair) domains the majority of which are associated with the CorC_HlyC domain.') confirm that CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP. |
+| ev-cd20534-cd04590-siblings | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454]) and CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, parent_traits=[CDD:cl15354]) | supports | Repaired first-repeat sibling CDD:cd20534 (qualified on human Q8N1B3 at residues 26-135, PMID:23912459) and CBS-pair record CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, definition='Two tandem repeats of the cystathionine beta-synthase (CBS pair) domains the majority of which are associated with the CorC_HlyC domain.') confirm that CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP. |
 | ev-cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; identifier, label, definition, parent_traits, canonical_examples (P60879, P60880, P36975) | refutes | CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856], 3 unpromoted seed examples Mus musculus P60879, Homo sapiens P60880, and Drosophila melanogaster P36975 without promoted residue intervals on disk) models the C-terminal Qc SNARE motif of SNAP25, but its upstream CDD definition falsely asserts that Qb/Qc SNAREs contain a transmembrane domain. |
 | ev-cd15894-sibling | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml; identifier, label, definition, parent_traits, canonical_examples, evidence (PMID:9759094) | supports | Repaired N-terminal sibling CDD:cd15894 (label=SNARE_SNAP25N, parent_traits=[CDD:cl22856], qualified on human P60880 at residues 10-82) confirms that SNAP25 lacks a transmembrane domain and is membrane-anchored via palmitoylated cysteines in the linker between its two SNARE motifs (PMID:9759094). |
 | ev-cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml; identifier, label, definition, parent_traits, canonical_examples (A8MYV0) | refutes | CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922], unpromoted seed example Homo sapiens DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like' as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD/mathematics genetics without distinguishing DCDC2C from DCDC2. |
@@ -651,7 +651,7 @@ evidence:
 - evidence_id: ev-cd00959
   kind: record_content
   reference: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
-  locator: identifier, label, definition, canonical_examples, evidence (PMID:11053864),
+  locator: identifier, label, definition, canonical_examples, evidence (PMID:11305920),
     curation_history
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f
@@ -696,11 +696,11 @@ evidence:
     two cyclin boxes. This model corresponds to the first one. The cyclin box is a
     protein binding domain
   summary: Repaired first-repeat sibling CDD:cd20534 (qualified on human Q8N1B3 at
-    residues 26-135, PMID:18297059 and PMID:23912459) and CBS-pair record CDD:cd04590
-    (label=CBS_pair_CorC_HlyC_assoc, definition='Two tandem repeats of the cystathionine
-    beta-synthase (CBS pair) domains the majority of which are associated with the
-    CorC_HlyC domain.') confirm that CDD:cd20535 is the non-overlapping C-terminal
-    second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP.
+    residues 26-135, PMID:23912459) and CBS-pair record CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc,
+    definition='Two tandem repeats of the cystathionine beta-synthase (CBS pair) domains
+    the majority of which are associated with the CorC_HlyC domain.') confirm that
+    CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A
+    and is unrelated to CNNM1-4/ACDP.
 - evidence_id: ev-cd15885
   kind: record_content
   reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
@@ -1151,12 +1151,12 @@ findings:
   description: CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454])
     models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; unpromoted
     seed examples Mus musculus UniProtKB:Q8QZR8 and Homo sapiens UniProtKB:Q8N1B3),
-    the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:18297059,
-    PMID:23912459), but sentence 2 of its upstream CDD definition states 'The CCNM
-    family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily
-    conserved Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4
-    (ACDP) CBS-pair magnesium transporter family (contrasted with CDD:cd04590 in repaired
-    sibling CDD:cd20534).
+    the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459),
+    but sentence 2 of its upstream CDD definition states 'The CCNM family proteins,
+    also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved
+    Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4 (ACDP) CBS-pair
+    magnesium transporter family (contrasted with CDD:cd04590 in repaired sibling
+    CDD:cd20534).
   target_ids:
   - CDD:cd20535
   field_paths:
@@ -1234,7 +1234,7 @@ findings:
     seed example UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the
     typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
     2C (DCDC2C).' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2
-    is a member of doublecortin (DCX) family... DCDC2 genetic variation in humans
+    is a member of doublecortin (DCX) family.' and 'DCDC2 genetic variation in humans
     is associated with reading disability, attention deficit hyperactivity disorder
     (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from
     DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
@@ -1272,7 +1272,7 @@ findings:
   description: CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) models
     the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (unpromoted
     seed example UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification
-    to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family... DCDC2
+    to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family.' and 'DCDC2
     genetic variation in humans is associated with reading disability, attention deficit
     hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing
     DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
