@@ -13,10 +13,10 @@
 
 | Review ID | Kind | Skill | Verdict | Artifact Path | SHA-256 |
 | --- | --- | --- | --- | --- | --- |
-| `20261025T202200Z-cdd-cd20535-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.yaml` | `b22ad04e983db076bfe5702c85ef2c22339ab5b6ca1d25b269974773e23f7fea` |
-| `20261025T202200Z-cdd-cd20535-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.md` | `258250123dedb058164d816d1efa50b328de499a25c95c4b90fd9c4ac1bcb24e` |
-| `20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.yaml` | `2af8bcbcaf00ad835d60e5f6bb8785e15e21067c0f4f86bdab1a480b09b69f13` |
-| `20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.md` | `f24147baabf5d0b1a4e9c8984da41dc1fda8927f98c7e7bfd04ece23aabb96ca` |
+| `20261025T202200Z-cdd-cd20535-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.yaml` | `3350c8a9e1f827e75f8586e63b061e22165dd7668b71af380c71c87e85b61a57` |
+| `20261025T202200Z-cdd-cd20535-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.md` | `366851b002e497cdea5e24e094ce1460bcc7869ef3a700b420ddb0c874b2c3a0` |
+| `20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.yaml` | `dece566de361a4332aea889a5e9cfd542961e2551ef8243a2253d544529e2b9b` |
+| `20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.md` | `07d7be937727e8c37698fcae59d9a487b43ce903039bab712b2caeac86ab1e1f` |
 
 ## Frozen Inventory & Coverage
 
@@ -46,10 +46,10 @@ Full coverage (`8 / 8` target records, `100%`) of the frozen Cycle 2 Stage 4 `CD
 ## Boundary Decisions
 
 All 8 target `CDD` domain records represent distinct conserved protein sequence domains (`trait_axis: SEQUENCE`, `trait_category: SEQ_DOMAIN`, `so_term: SO:0000417`) and are retained (`action: retain`) as separate class-level trait records:
-- `CDD:cd00104` (`KAZAL_FS`) and `CDD:cd00959` (`DeoC`) are retained as distinct promoted domain families with verified Cycle 1 Stage 6 errata repairs and sharded `qualified_record_bindings` receipts.
-- `CDD:cd20535` (`CYCLIN_CCNM_CCNQ_rpt2`, C-terminal second cyclin box of `CCNQ`/`FAM58A` under `InterPro:IPR006670`) is retained separate from N-terminal first cyclin box sibling `CDD:cd20534` (`CYCLIN_CCNM_CCNQ_rpt1` under `InterPro:IPR006671`) and separate from `CDD:cd04590` (`CBS_pair_ACDP` in `CNNM1-4` magnesium transporters).
-- `CDD:cd15885` (`SNARE_SNAP25C`, C-terminal Qc SNARE motif of `SNAP25`, human `P60880` residues `140–202`) is retained separate from N-terminal Qb SNARE motif sibling `CDD:cd15894` (`SNARE_SNAP25N`, residues `19–81`).
-- `CDD:cd17149` (`DCX1_DCDC2`, N-terminal repeat 1 of `DCDC2`), `CDD:cd17151` (`DCX1_DCDC2C`, N-terminal repeat 1 of `DCDC2C`), and `CDD:cd17154` (`DCX2_DCDC2C`, C-terminal repeat 2 of `DCDC2C`) are retained separate from each other and from `CDD:cd17150` (`DCX1_DCDC2B`) and `CDD:cd17152` (`DCX2_DCDC2`).
+- `CDD:cd00104` (`KAZAL_FS`, `28` canonical examples: `26` qualified and `2` historical across `39` durable `qualified_record_bindings` receipts) and `CDD:cd00959` (`DeoC`, `5` canonical examples: `2` qualified and `3` historical across `2` durable `qualified_record_bindings` receipts) are retained as distinct promoted domain families with verified Cycle 1 Stage 6 errata repairs.
+- `CDD:cd20535` (`CYCLIN_CCNM_CCNQ_rpt2`, C-terminal second cyclin box of `CCNQ`/`FAM58A`, `parent_traits: ["InterPro:IPR039361"]`, human `Q8N1B3` residues `145–218`) is retained separate from N-terminal first cyclin box sibling `CDD:cd20534` (`CYCLIN_CCNM_CCNQ_rpt1`, `parent_traits: ["InterPro:IPR039361"]`, human `Q8N1B3` residues `26–135`) and separate from `CDD:cd04590` (`CBS_pair_ACDP` in `CNNM1-4` magnesium transporters, `parent_traits: ["InterPro:IPR000644"]`).
+- `CDD:cd15885` (`SNARE_SNAP25C`, C-terminal Qc SNARE motif of `SNAP25`, human `P60880` residues `140–202`) is retained separate from N-terminal Qb SNARE motif sibling `CDD:cd15894` (`SNARE_SNAP25N`, human `P60880` residues `10–82`).
+- `CDD:cd17149` (`DCX1_DCDC2`, N-terminal repeat 1 of `DCDC2`), `CDD:cd17151` (`DCX1_DCDC2C`, N-terminal repeat 1 of `DCDC2C`), and `CDD:cd17154` (`DCX2_DCDC2C`, C-terminal repeat 2 of `DCDC2C`) are retained separate from each other and from `CDD:cd17150` (`DCX1_DCDC2B`) and `CDD:cd17152` (`DCX2_DCDC2`; included as a boundary-contrast context record because its definition contains only the minor `Ubiquitin (Ub) is a protein modifier...` fold-note interpolation without the `Dublecortin-like` typo or paralog switch).
 - `CDD:cd18593` (`ABC_6TM_MRP4_D1_like`, TMD1 of `MRP4`/`ABCC4`) is retained separate from sibling `CDD:cd18592` (`ABC_6TM_MRP5_8_9_D1`, TMD1 of `MRP5`/`ABCC5`, `MRP8`/`ABCC11`, and `MRP9`/`ABCC12`).
 
 ## Carry-Forward Dispositions (`F1`–`F2`) & Preserved Open Findings (`F13`–`F18`)

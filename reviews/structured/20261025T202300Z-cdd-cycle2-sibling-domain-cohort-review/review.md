@@ -17,28 +17,28 @@ Full cohort review of all 8 eligible CDD sequence-domain records in the frozen C
 
 Frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory comprising the 2 Cycle 1 Stage 5 deferred carry-forward records (CDD:cd00104, CDD:cd00959) and 6 unpromoted tandem-repeat/subfamily sibling records of the Cycle 1 CDD cohort (CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, CDD:cd18593).
 
-Selection: Every CDD record carried forward from Cycle 1 Stage 5 (F1, F2) plus every direct tandem-repeat or paralog-subfamily CDD sibling of the Cycle 1 cohort (CYCLIN_CCNM_CCNQ, SNARE_SNAP25, DCX_DCDC2/DCDC2C, and ABC_6TM_MRP) that retained upstream CDD template prose defects after Cycle 1 remediation.
+Selection: Every CDD record carried forward from Cycle 1 Stage 5 (F1, F2) plus every selected tandem-repeat or paralog-subfamily CDD sibling in the frozen 8-record Cycle 2 Stage 4 inventory (CYCLIN_CCNM_CCNQ, SNARE_SNAP25, DCX_DCDC2/DCDC2C, and ABC_6TM_MRP) that retained upstream CDD template prose defects after Cycle 1 remediation.
 Coverage: full; 8 reviewed / 8 in the declared population.
 Source: git_commit at Git base 66e8f479733907dc0792e481f41bb2f0fbb9dc27.
 Working-tree hashes do not imply those bytes were committed.
 
 | Target | Path / selector | Kind | Label |
 | --- | --- | --- | --- |
-| CDD:cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml | generated | Kazal-type serine protease inhibitors and follistatin-like domains |
-| CDD:cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml | generated | 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family |
-| CDD:cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml | generated | C-terminal SNARE motif of SNAP25 |
-| CDD:cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml | generated | Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2) and similar proteins |
-| CDD:cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml | generated | Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins |
-| CDD:cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml | generated | Doublecortin-like domain 2 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins |
-| CDD:cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml | generated | Six-transmembrane helical domain 1 (TMD1) of multidrug resistance-associated protein MRP4 and similar proteins |
-| CDD:cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml | generated | Second cyclin box found in cyclin-M (CCNM) family |
+| CDD:cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml | generated | KAZAL_FS |
+| CDD:cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml | generated | DeoC |
+| CDD:cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml | generated | SNARE_SNAP25C |
+| CDD:cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml | generated | DCX1_DCDC2 |
+| CDD:cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml | generated | DCX1_DCDC2C |
+| CDD:cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml | generated | DCX2_DCDC2C |
+| CDD:cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml | generated | ABC_6TM_MRP4_D1_like |
+| CDD:cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml | generated | CYCLIN_CCNM_CCNQ_rpt2 |
 
 ## Validation
 
 | Check | Status | Required | Targets | Result |
 | --- | --- | --- | --- | --- |
 | Strict LinkML and OAK ontology-binding validation across all 8 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | All 8 CDD cohort records pass closed LinkML schema validation and OAK ontology-term checks with 0 errors. |
-| Release-pinned UniProt grounding and binding replay across all 8 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 8 files scanned, 13,208 registry proteins, 22,314 qualified record bindings verified, 0 semantic findings; promoted examples on CDD:cd00104 and CDD:cd00959 replay cleanly against their updated record_sha256 digests and the 6 sibling records remain unpromoted as expected. |
+| Release-pinned UniProt grounding and binding replay across all 8 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 8 files scanned, 13,208 registry proteins, 22,314 qualified record bindings verified, 0 semantic findings; promoted examples on CDD:cd00104 (26 QUALIFIED examples across 39 durable qualified_record_bindings.jsonl.d receipts) and CDD:cd00959 (2 QUALIFIED examples across 2 durable qualified_record_bindings.jsonl.d receipts) replay cleanly against their updated record_sha256 digests and the 6 sibling records remain unpromoted as expected. |
 | Causal-graph audit across all 8 cohort records | passed | False | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 0 records with causal_graphs, 0 errors, 0 warnings. |
 | Registered write-route audit | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 618 scripts examined (51 seeders, 8 registered editors, 2 validated promoters, 52 declared bypasses), 0 unguarded writer findings. |
 | Append-only curation history validation | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | All 15 history records under history/**/*.yaml validate against src/proteintraitsmech/schema/history.yaml (HistoryRecord) with 0 errors. |
@@ -49,13 +49,13 @@ Working-tree hashes do not imply those bytes were committed.
 
 scope: supported. Targets: CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535.
 
-All 8 records are genuine conserved protein sequence domain profiles (trait_axis: SEQUENCE, trait_category: SEQ_DOMAIN, so_term: SO:0000417) with distinct CDD PSSM identifiers and non-overlapping repeat intervals or paralog-subfamily scopes. None should be merged or lumped with sibling CDD profiles.
+All 8 records are genuine conserved protein sequence domain profiles (trait_axis: SEQUENCE, trait_category: SEQ_DOMAIN; parent_traits=CDD:cl00097, CDD:cl21457, CDD:cl40454, CDD:cl22856, CDD:cl28922, and CDD:cl38913) with distinct CDD PSSM identifiers and non-overlapping repeat intervals or paralog-subfamily scopes. None should be merged or lumped with sibling CDD profiles.
 
 ### Verification of Cycle 1 carry-forward findings F1 (CDD:cd00104) and F2 (CDD:cd00959)
 
 consistency: supported. Targets: CDD:cd00104, CDD:cd00959.
 
-Both Cycle 1 Stage 5 deferred carry-forward findings — F1 on CDD:cd00104 and F2 on CDD:cd00959 — are verified resolved on disk at commit 66e8f479733907dc0792e481f41bb2f0fbb9dc27 with entries in scripts/cdd_errata.py, curation_history events, and valid sharded qualified_record_bindings.jsonl.d receipts.
+Both Cycle 1 Stage 5 deferred carry-forward findings — F1 on CDD:cd00104 and F2 on CDD:cd00959 — are verified resolved on disk at commit 66e8f479733907dc0792e481f41bb2f0fbb9dc27 with entries in scripts/cdd_errata.py, curation_history events, and valid sharded qualified_record_bindings.jsonl.d receipts (39 receipts across 26 QUALIFIED examples on CDD:cd00104; 2 receipts across 2 QUALIFIED examples on CDD:cd00959).
 
 ### Upstream CDD nomenclature, paralog-scope, and biochemical contradictions across the 6 sibling CDD records (F13-F18)
 
@@ -71,7 +71,7 @@ minor / resolved / confirmed; issue key: cdd-cd00104-kazal-definition-typo-and-i
 
 CDD:cd00104 previously stated 'Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling 'chymotrypsin' and listing 'avian ovomucoids' (Kazal-type inhibitor proteins, PMID:6192856) as target enzymes.
 
-Disposition: Repaired CDD:cd00104 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), correcting 'chyomotrypsin' to 'chymotrypsin', distinguishing avian ovomucoids as canonical Kazal-type inhibitors rather than target proteases (PMID:6192856), and updating all 3 durable qualified_record_bindings.jsonl.d receipts to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).
+Disposition: Repaired CDD:cd00104 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), correcting 'chyomotrypsin' to 'chymotrypsin', distinguishing avian ovomucoids as canonical Kazal-type inhibitors rather than target proteases (PMID:6192856), and updating all 39 durable qualified_record_bindings.jsonl.d receipts (covering all 26 QUALIFIED canonical examples out of 28 total canonical_examples on the record) to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).
 
 ### F2: CDD:cd00959 definition repeats its opening title sentence verbatim
 
@@ -79,43 +79,43 @@ minor / resolved / confirmed; issue key: cdd-cd00959-dera-duplicated-opening-sen
 
 CDD:cd00959 previously began with the duplicated sentence '2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.' due to upstream CDD title+description concatenation.
 
-Disposition: Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), removing the duplicated opening title sentence and updating both durable qualified_record_bindings.jsonl.d receipts to the new record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).
+Disposition: Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), removing the duplicated opening title sentence and updating both durable qualified_record_bindings.jsonl.d receipts (covering the 2 QUALIFIED canonical examples out of 5 total canonical_examples on the record) to the new record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).
 
 ### F13: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) conflates the second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
 
 major / open / confirmed; issue key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation.
 
-CDD:cd20535 models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459), but its upstream CDD definition and PMID:14695534 citation describe the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590) and urofacial, hypomagnesemia, and Jalili syndromes.
+CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454]) models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; unpromoted seed examples Mus musculus UniProtKB:Q8QZR8 and Homo sapiens UniProtKB:Q8N1B3), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:18297059, PMID:23912459), but sentence 2 of its upstream CDD definition states 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (contrasted with CDD:cd04590 in repaired sibling CDD:cd20534).
 
 ### F14: CDD:cd15885 (SNARE_SNAP25C) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
 
 major / open / confirmed; issue key: cdd-cd15885-snap25c-transmembrane-domain-overclaim.
 
-CDD:cd15885 models the C-terminal Qc SNARE motif of SNAP25 (human UniProtKB:P60880, mouse P60879, chicken P36975), but its upstream CDD definition states 'Both, Qb/Qc SNAREs consist of 2 coiled-coil helices (which form a single SNARE domain) and a transmembrane domain'. SNAP25-family Qb/Qc t-SNAREs lack a transmembrane domain and attach to membranes via palmitoylated cysteines in the inter-motif linker between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885) SNARE motifs (PMID:9759094).
+CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856]) models the C-terminal Qc SNARE motif of SNAP25 (unpromoted seed examples Mus musculus UniProtKB:P60879, Homo sapiens UniProtKB:P60880, and Drosophila melanogaster UniProtKB:P36975), but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' SNAP25-family Qb/Qc t-SNAREs lack a transmembrane domain and attach to membranes via palmitoylated cysteines in the inter-motif linker between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885) SNARE motifs (PMID:9759094).
 
 ### F15: CDD:cd17151 (DCX1_DCDC2C) misspells Doublecortin-like as Dublecortin-like in definition and switches to paralog DCDC2 disease genetics
 
 major / open / confirmed; issue key: cdd-cd17151-dcdc2c-typo-and-dcdc2-paralog-disease-switch.
 
-CDD:cd17151 models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922]) models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C).' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2 is a member of doublecortin (DCX) family... DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
 
 ### F16: CDD:cd17154 (DCX2_DCDC2C) switches mid-definition from DCDC2C to paralog DCDC2 reading-disability and ADHD genetics
 
 major / open / confirmed; issue key: cdd-cd17154-dcdc2c-rpt2-dcdc2-paralog-disease-switch.
 
-CDD:cd17154 models the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification to paralog DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) models the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (unpromoted seed example UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family... DCDC2 genetic variation in humans is associated with reading disability, attention deficit hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
 
 ### F17: CDD:cd17149 (DCX1_DCDC2) misspells Doublecortin-like as Dublecortin-like in definition and interpolates an off-target ubiquitin protein-modifier sentence
 
 minor / open / confirmed; issue key: cdd-cd17149-dcdc2-typo-and-ubiquitin-modifier-digression.
 
-CDD:cd17149 models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2 (UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2) and similar proteins', and interpolates an off-target sentence defining the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair') even though DCX domains only adopt a ubiquitin-like beta-grasp fold and do not function as ubiquitin protein modifiers.
+CDD:cd17149 (label=DCX1_DCDC2, parent_traits=[CDD:cl28922]) models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2 (unpromoted seed example UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2).', and interpolates an off-target sentence defining the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair.') even though DCX domains only adopt a ubiquitin-like beta-grasp fold and do not function as ubiquitin protein modifiers.
 
 ### F18: CDD:cd18593 (ABC_6TM_MRP4_D1_like) misassigns MRP7 to ABCC7 (CFTR) instead of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9 members
 
 major / open / confirmed; issue key: cdd-cd18593-mrp4-abcc-mrp7-cftr-misassignment-and-mdr-overclaim.
 
-CDD:cd18593 models TMD1 of MRP4/ABCC4 (human UniProtKB:O15439, mouse E9Q236), but carries the corrupted upstream CDD ABCC template text stating 'Five MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively) contain a N-terminal 5-TM domain (TMD0)' and claiming blanket anticancer multidrug-resistance efflux across all nine MRPs (MRP1-MRP9). In HGNC/UniProt nomenclature, ABCC7 is CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10 (UniProtKB:Q5T3U5), MRP8 is ABCC11, and MRP9 is ABCC12 (an uncharacterized paralog without established drug-efflux activity, PMID:16984901).
+CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913]) models TMD1 of MRP4/ABCC4 (unpromoted seed examples Homo sapiens UniProtKB:O15439 and Mus musculus UniProtKB:E9Q236), but carries the corrupted upstream CDD ABCC template text stating 'On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 7, respectively) have an additional N-terminal five transmembrane segments in a single domain (TMD0) connected to the core (TMD-NBD) by a cytoplasmic linker (L0)' and claiming 'The MRP subfamily (ABCC subfamily) is composed of 13 members, of which MRP1 to MRP9 are the major transporters that cause multidrug resistance in tumor cells by pumping anticancer drugs out of the cell.' In HGNC/UniProt nomenclature, ABCC7 is CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10 (UniProtKB:Q5T3U5), MRP8 is ABCC11, and MRP9 is ABCC12 (a paralog whose physiological substrates and transport activity remain less characterized, PMID:16984901).
 
 ## Recommended Actions And Acceptance Checks
 
@@ -129,28 +129,28 @@ Add accession-keyed errata entries for CDD:cd20535 (F13), CDD:cd15885 (F14), CDD
 
 ## Category Boundaries
 
-- retain: CDD:cd00104, CDD:cd00959. Retain promoted records CDD:cd00104 (KAZAL_FS) and CDD:cd00959 (DeoC) as distinct conserved domain families whose definitions and sharded qualified_record_bindings receipts were repaired in Cycle 1 Stage 6 (#1172, PR #1175).
-- retain: CDD:cd20535. Retain CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, C-terminal second cyclin box of CCNQ/FAM58A under InterPro:IPR006670) as distinct from N-terminal first cyclin box sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1 under InterPro:IPR006671) and distinct from CDD:cd04590 (CBS_pair_ACDP in CNNM1-4 magnesium transporters).
-- retain: CDD:cd15885. Retain CDD:cd15885 (SNARE_SNAP25C, C-terminal Qc SNARE motif of SNAP25, human P60880 residues 140-202) as distinct from N-terminal Qb SNARE motif sibling CDD:cd15894 (SNARE_SNAP25N, residues 19-81) because they represent non-overlapping tandem coiled-coil SNARE domains on SNAP25.
-- retain: CDD:cd17149, CDD:cd17151, CDD:cd17154. Retain CDD:cd17149 (DCX1_DCDC2, N-terminal repeat 1 of DCDC2), CDD:cd17151 (DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154 (DCX2_DCDC2C, C-terminal repeat 2 of DCDC2C) as distinct repeat-position and paralog-subfamily domain profiles separate from each other and from CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2).
-- retain: CDD:cd18593. Retain CDD:cd18593 (ABC_6TM_MRP4_D1_like, TMD1 of MRP4/ABCC4) as a distinct ABCC TMD1 subfamily profile separate from sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1, TMD1 of MRP5/ABCC5, MRP8/ABCC11, and MRP9/ABCC12).
+- retain: CDD:cd00104, CDD:cd00959. Retain promoted records CDD:cd00104 (label=KAZAL_FS, parent_traits=[CDD:cl00097]) and CDD:cd00959 (label=DeoC, parent_traits=[CDD:cl21457]) as distinct conserved domain families whose definitions and sharded qualified_record_bindings receipts were repaired in Cycle 1 Stage 6 (#1172, PR #1175).
+- retain: CDD:cd20535. Retain CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454], C-terminal second cyclin box of CCNQ/FAM58A) as distinct from N-terminal first cyclin box sibling CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454], qualified on human Q8N1B3 at residues 26-135) and distinct from CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, parent_traits=[CDD:cl15354]).
+- retain: CDD:cd15885. Retain CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856], C-terminal Qc SNARE motif of SNAP25 with unpromoted seed examples Mus musculus P60879, Homo sapiens P60880, and Drosophila melanogaster P36975) as distinct from N-terminal Qb SNARE motif sibling CDD:cd15894 (label=SNARE_SNAP25N, parent_traits=[CDD:cl22856], qualified on human P60880 at residues 10-82) because they represent non-overlapping tandem coiled-coil SNARE domains on SNAP25.
+- retain: CDD:cd17149, CDD:cd17151, CDD:cd17154. Retain CDD:cd17149 (label=DCX1_DCDC2, N-terminal repeat 1 of DCDC2), CDD:cd17151 (label=DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154 (label=DCX2_DCDC2C, C-terminal repeat 2 of DCDC2C) under parent_traits [CDD:cl28922] as distinct repeat-position and paralog-subfamily domain profiles separate from each other and from CDD:cd17150 (label=DCX1_DCDC2B) and CDD:cd17152 (label=DCX2_DCDC2).
+- retain: CDD:cd18593. Retain CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913], TMD1 of MRP4/ABCC4) as a distinct ABCC TMD1 subfamily profile separate from sibling CDD:cd18592 (label=ABC_6TM_MRP5_8_9_D1, parent_traits=[CDD:cl38913], TMD1 of MRP5/ABCC5, MRP8/ABCC11, and MRP9/ABCC12).
 
 ## Evidence
 
 | Evidence | Reference / locator | Support | Observation |
 | --- | --- | --- | --- |
-| ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; definition, canonical_examples, evidence (PMID:6192856), curation_history | supports | Verified on disk that CDD:cd00104 spells 'chymotrypsin' accurately, distinguishes Kazal inhibitor proteins (avian ovomucoids) from target proteases, and replays all 3 qualified human canonical examples cleanly. |
-| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; definition, canonical_examples, curation_history | supports | Verified on disk that CDD:cd00959 no longer repeats its opening title sentence and replays both qualified canonical examples (E. coli P0A6L0, human Q9Y315) cleanly. |
-| ev-cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; id, label, short_name, definition, canonical_examples, evidence (PMID:14695534) | refutes | CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, seed examples Q8QZR8 and Q8N1B3) models the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition and PMID:14695534 citation conflate CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium transporter family. |
-| ev-cd20534-cd04590-siblings | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) and CDD:cd04590 (CBS_pair_ACDP) | supports | Repaired first-repeat sibling CDD:cd20534 (Q8N1B3 residues 27-128, PMID:23912459) and CBS-pair record CDD:cd04590 confirm that CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP. |
-| ev-cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; id, label, short_name, definition, canonical_examples (P60880, P60879, P36975) | refutes | CDD:cd15885 (SNARE_SNAP25C) models the C-terminal Qc SNARE motif of SNAP25 (human P60880 residues 140-202), but its upstream CDD definition falsely asserts that Qb/Qc SNAREs contain a transmembrane domain. |
-| ev-cd15894-sibling | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml; id, short_name, definition, evidence (PMID:9759094) | supports | Repaired N-terminal sibling CDD:cd15894 (SNARE_SNAP25N, qualified on human P60880 residues 19-81) confirms that SNAP25 lacks a transmembrane domain and is membrane-anchored via palmitoylated cysteines (PMID:9759094). |
-| ev-cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml; id, label, short_name, definition, canonical_examples (A8MYV0) | refutes | CDD:cd17151 (DCX1_DCDC2C, human DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like' as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2. |
-| ev-cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml; id, label, short_name, definition, canonical_examples (A8MYV0) | refutes | CDD:cd17154 (DCX2_DCDC2C, C-terminal second DCX repeat of human DCDC2C UniProtKB:A8MYV0) switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2. |
-| ev-cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; id, label, short_name, definition, canonical_examples (Q9UHG0) | partial | CDD:cd17149 (DCX1_DCDC2, N-terminal first DCX repeat of human DCDC2 UniProtKB:Q9UHG0) misspells 'Doublecortin-like' as 'Dublecortin-like' and interpolates an off-target sentence defining the ubiquitin protein modifier even though DCX domains only adopt a ubiquitin-like beta-grasp fold. |
-| ev-cd17150-cd17152-siblings | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml; CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2) | supports | Repaired paralog sibling CDD:cd17150 (DCX1_DCDC2B on human DCDC2B A2VCK2) and second-repeat sibling CDD:cd17152 (DCX2_DCDC2 on human DCDC2 Q9UHG0) confirm the clean repeat-position and paralog-subfamily partition across DCX1/DCX2 profiles in DCDC2, DCDC2B, and DCDC2C. |
-| ev-cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml; id, label, short_name, definition, canonical_examples (O15439, E9Q236) | refutes | CDD:cd18593 (ABC_6TM_MRP4_D1_like, human MRP4/ABCC4 O15439) carries the corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7 (CFTR, a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes anticancer multidrug-resistance efflux across all MRP1-MRP9 members (including uncharacterized MRP9/ABCC12). |
-| ev-cd18592-sibling | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml; id, short_name, definition, evidence (PMID:16984901) | supports | Repaired sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) confirms the accurate HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11, MRP9=ABCC12; ABCC7=CFTR) and transport qualification (PMID:16984901). |
+| ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; identifier, label, definition, canonical_examples, evidence (PMID:6192856), curation_history | supports | Verified on disk that CDD:cd00104 (label=KAZAL_FS) spells 'chymotrypsin' accurately, distinguishes Kazal inhibitor proteins (avian ovomucoids and pancreatic secretory trypsin inhibitor) from target proteases, and replays all 26 QUALIFIED canonical examples (25 Homo sapiens and 1 Mus musculus A2ASQ1, out of 28 total canonical_examples on the record, backed by 39 durable qualified_record_bindings.jsonl.d receipts) cleanly. |
+| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; identifier, label, definition, canonical_examples, evidence (PMID:11053864), curation_history | supports | Verified on disk that CDD:cd00959 (label=DeoC) no longer repeats its opening title sentence and replays both QUALIFIED canonical examples (Escherichia coli K12 P0A6L0 and Homo sapiens Q9Y315, out of 5 total canonical_examples on the record, backed by 2 durable qualified_record_bindings.jsonl.d receipts) cleanly. |
+| ev-cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; identifier, label, definition, parent_traits, canonical_examples | refutes | CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454], unpromoted seed examples Mus musculus Q8QZR8 and Homo sapiens Q8N1B3, no evidence block on disk) models the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition conflates CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium transporter family. |
+| ev-cd20534-cd04590-siblings | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454]) and CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, parent_traits=[CDD:cl15354]) | supports | Repaired first-repeat sibling CDD:cd20534 (qualified on human Q8N1B3 at residues 26-135, PMID:18297059 and PMID:23912459) and CBS-pair record CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, definition='Two tandem repeats of the cystathionine beta-synthase (CBS pair) domains the majority of which are associated with the CorC_HlyC domain.') confirm that CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP. |
+| ev-cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; identifier, label, definition, parent_traits, canonical_examples (P60879, P60880, P36975) | refutes | CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856], 3 unpromoted seed examples Mus musculus P60879, Homo sapiens P60880, and Drosophila melanogaster P36975 without promoted residue intervals on disk) models the C-terminal Qc SNARE motif of SNAP25, but its upstream CDD definition falsely asserts that Qb/Qc SNAREs contain a transmembrane domain. |
+| ev-cd15894-sibling | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml; identifier, label, definition, parent_traits, canonical_examples, evidence (PMID:9759094) | supports | Repaired N-terminal sibling CDD:cd15894 (label=SNARE_SNAP25N, parent_traits=[CDD:cl22856], qualified on human P60880 at residues 10-82) confirms that SNAP25 lacks a transmembrane domain and is membrane-anchored via palmitoylated cysteines in the linker between its two SNARE motifs (PMID:9759094). |
+| ev-cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml; identifier, label, definition, parent_traits, canonical_examples (A8MYV0) | refutes | CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922], unpromoted seed example Homo sapiens DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like' as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD/mathematics genetics without distinguishing DCDC2C from DCDC2. |
+| ev-cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml; identifier, label, definition, parent_traits, canonical_examples (A8MYV0) | refutes | CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922], C-terminal second DCX repeat of unpromoted seed example Homo sapiens DCDC2C UniProtKB:A8MYV0) switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD/mathematics genetics without distinguishing DCDC2C from DCDC2. |
+| ev-cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; identifier, label, definition, parent_traits, canonical_examples (Q9UHG0) | partial | CDD:cd17149 (label=DCX1_DCDC2, parent_traits=[CDD:cl28922], N-terminal first DCX repeat of unpromoted seed example Homo sapiens DCDC2 UniProtKB:Q9UHG0) misspells 'Doublecortin-like' as 'Dublecortin-like' and interpolates an off-target sentence defining the ubiquitin protein modifier even though DCX domains only adopt a ubiquitin-like beta-grasp fold. |
+| ev-cd17150-cd17152-siblings | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml; CDD:cd17150 (label=DCX1_DCDC2B, parent_traits=[CDD:cl28922]) and CDD:cd17152 (label=DCX2_DCDC2, parent_traits=[CDD:cl28922]) | supports | Repaired paralog sibling CDD:cd17150 (label=DCX1_DCDC2B on human DCDC2B A2VCK2) and second-repeat sibling CDD:cd17152 (label=DCX2_DCDC2 on human DCDC2 Q9UHG0) confirm the clean repeat-position and paralog-subfamily partition across DCX1/DCX2 profiles in DCDC2, DCDC2B, and DCDC2C. |
+| ev-cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml; identifier, label, definition, parent_traits, canonical_examples (O15439, E9Q236) | refutes | CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913], unpromoted seed examples Homo sapiens MRP4/ABCC4 O15439 and Mus musculus E9Q236) carries the corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7 (CFTR, a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes anticancer multidrug-resistance efflux across all MRP1-MRP9 members (including MRP9/ABCC12). |
+| ev-cd18592-sibling | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml; identifier, label, definition, parent_traits, evidence (PMID:16984901) | supports | Repaired sibling CDD:cd18592 (label=ABC_6TM_MRP5_8_9_D1, parent_traits=[CDD:cl38913]) confirms the accurate HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11, MRP9=ABCC12; ABCC7=CFTR) and transport qualification (PMID:16984901). |
 | ev-prior-stage4-cd00104 | reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml; finding F1 | supports | Cycle 1 Stage 4 single-record review of CDD:cd00104 recording finding F1. |
 | ev-prior-stage4-cohort | reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml; findings F1 and F2 | supports | Cycle 1 Stage 4 cohort review recording findings F1 and F2 and noting boundary siblings cd20535, cd15885, and cd17151. |
 | ev-prior-stage5-cohort | reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml; findings F1 and F2 (deferred under #1172) and F3-F12 (resolved under #1171) | supports | Cycle 1 Stage 5 post-remediation review deferring F1 and F2 under #1172 until sharded qualified_record_bindings re-binding landed. |
@@ -159,7 +159,7 @@ Add accession-keyed errata entries for CDD:cd20535 (F13), CDD:cd15885 (F14), CDD
 
 ## Limits And Additional Notes
 
-- This cohort review covers the frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings); other CDD records outside this cohort were not re-audited.
+- This cohort review covers the frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings); other CDD records outside this 8-record target inventory — including boundary context record CDD:cd17152 (label=DCX2_DCDC2), which also carries the upstream off-target ubiquitin protein-modifier sentence noted on CDD:cd17149 — are outside the frozen Stage 4 target inventory and were not added as Stage 4 target records.
 - No scientific trait records under data/traits/ were edited during Stage 4; findings F13-F18 remain open for Stage 5 grouped remediation.
 
 ## Complete Structured Record
@@ -283,9 +283,9 @@ scope:
     and 6 unpromoted tandem-repeat/subfamily sibling records of the Cycle 1 CDD cohort
     (CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, CDD:cd18593).
   selection: Every CDD record carried forward from Cycle 1 Stage 5 (F1, F2) plus every
-    direct tandem-repeat or paralog-subfamily CDD sibling of the Cycle 1 cohort (CYCLIN_CCNM_CCNQ,
-    SNARE_SNAP25, DCX_DCDC2/DCDC2C, and ABC_6TM_MRP) that retained upstream CDD template
-    prose defects after Cycle 1 remediation.
+    selected tandem-repeat or paralog-subfamily CDD sibling in the frozen 8-record
+    Cycle 2 Stage 4 inventory (CYCLIN_CCNM_CCNQ, SNARE_SNAP25, DCX_DCDC2/DCDC2C, and
+    ABC_6TM_MRP) that retained upstream CDD template prose defects after Cycle 1 remediation.
   coverage: full
   population_size: 8
   reviewed_target_ids:
@@ -303,13 +303,20 @@ scope:
     reason: 'Already remediated and verified in Cycle 1 Stage 5 (20261022T081000Z-cdd-stage5-remediation-review)
       and promoted in Cycle 1 Stage 6 (#1171, #1172); cd15894, cd17150, cd18592, and
       cd20534 are included here as boundary-contrast context inputs.'
-  - target: Sibling CDD records cd04590 (CBS_pair_ACDP) and cd17152 (DCX2_DCDC2)
-    reason: Inspected as boundary-contrast context inputs whose definitions are already
-      scoped to their respective protein families (CNNM/ACDP and DCDC2 repeat 2).
+  - target: Sibling CDD records cd04590 (label=CBS_pair_CorC_HlyC_assoc) and cd17152
+      (label=DCX2_DCDC2)
+    reason: 'Outside the frozen 8-record Cycle 2 Stage 4 target inventory (population_size:
+      8) and included only as boundary-contrast context inputs: cd04590 models the
+      tandem CBS-pair domain associated with CorC_HlyC (referenced by cd20534 to contrast
+      CNNM/ACDP proteins with CCNQ/FAM58A), and cd17152 models the C-terminal repeat
+      2 of DCDC2 (contrasted with N-terminal repeat 1 in cd17149 and DCDC2C repeat
+      2 in cd17154; note that cd17152.yaml also retains the same upstream off-target
+      ubiquitin protein-modifier sentence as cd17149.yaml and is noted for future
+      follow-up outside this 8-record cohort).'
 targets:
 - target_id: CDD:cd00104
   path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
-  label: Kazal-type serine protease inhibitors and follistatin-like domains
+  label: KAZAL_FS
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -331,7 +338,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd00959
   path: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
-  label: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family
+  label: DeoC
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -353,7 +360,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd15885
   path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
-  label: C-terminal SNARE motif of SNAP25
+  label: SNARE_SNAP25C
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -375,8 +382,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd17149
   path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
-  label: Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2 (DCDC2) and similar proteins
+  label: DCX1_DCDC2
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -398,8 +404,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd17151
   path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
-  label: Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2C (DCDC2C) and similar proteins
+  label: DCX1_DCDC2C
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -421,8 +426,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd17154
   path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
-  label: Doublecortin-like domain 2 found in doublecortin domain-containing protein
-    2C (DCDC2C) and similar proteins
+  label: DCX2_DCDC2C
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -444,8 +448,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd18593
   path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
-  label: Six-transmembrane helical domain 1 (TMD1) of multidrug resistance-associated
-    protein MRP4 and similar proteins
+  label: ABC_6TM_MRP4_D1_like
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -467,7 +470,7 @@ targets:
     description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
 - target_id: CDD:cd20535
   path: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
-  label: Second cyclin box found in cyclin-M (CCNM) family
+  label: CYCLIN_CCNM_CCNQ_rpt2
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -537,7 +540,9 @@ checks:
   status: passed
   required: true
   summary: 8 files scanned, 13,208 registry proteins, 22,314 qualified record bindings
-    verified, 0 semantic findings; promoted examples on CDD:cd00104 and CDD:cd00959
+    verified, 0 semantic findings; promoted examples on CDD:cd00104 (26 QUALIFIED
+    examples across 39 durable qualified_record_bindings.jsonl.d receipts) and CDD:cd00959
+    (2 QUALIFIED examples across 2 durable qualified_record_bindings.jsonl.d receipts)
     replay cleanly against their updated record_sha256 digests and the 6 sibling records
     remain unpromoted as expected.
   target_ids:
@@ -629,167 +634,218 @@ evidence:
 - evidence_id: ev-cd00104
   kind: record_content
   reference: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
-  locator: definition, canonical_examples, evidence (PMID:6192856), curation_history
+  locator: identifier, label, definition, canonical_examples, evidence (PMID:6192856),
+    curation_history
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26
   support: supports
-  quote: Kazal inhibitors (such as avian ovomucoids and pancreatic secretory trypsin
-    inhibitor) inhibit serine proteases including trypsin, chymotrypsin, and elastases;
-    Kazal-like domains are also seen in the extracellular part of agrins, which are
-    not known to be protease inhibitors.
-  summary: Verified on disk that CDD:cd00104 spells 'chymotrypsin' accurately, distinguishes
-    Kazal inhibitor proteins (avian ovomucoids) from target proteases, and replays
-    all 3 qualified human canonical examples cleanly.
+  quote: Kazal type serine protease inhibitors and follistatin-like domains. Kazal
+    inhibitors (such as avian ovomucoids and pancreatic secretory trypsin inhibitor)
+    inhibit serine proteases such as trypsin, chymotrypsin, and elastases.
+  summary: Verified on disk that CDD:cd00104 (label=KAZAL_FS) spells 'chymotrypsin'
+    accurately, distinguishes Kazal inhibitor proteins (avian ovomucoids and pancreatic
+    secretory trypsin inhibitor) from target proteases, and replays all 26 QUALIFIED
+    canonical examples (25 Homo sapiens and 1 Mus musculus A2ASQ1, out of 28 total
+    canonical_examples on the record, backed by 39 durable qualified_record_bindings.jsonl.d
+    receipts) cleanly.
 - evidence_id: ev-cd00959
   kind: record_content
   reference: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
-  locator: definition, canonical_examples, curation_history
+  locator: identifier, label, definition, canonical_examples, evidence (PMID:11053864),
+    curation_history
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f
   support: supports
-  quote: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. DERA is a class
-    I aldolase that catalyzes the reversible aldol reaction between acetaldehyde and
-    D-glyceraldehyde 3-phosphate to form 2-deoxy-D-ribose 5-phosphate.
-  summary: Verified on disk that CDD:cd00959 no longer repeats its opening title sentence
-    and replays both qualified canonical examples (E. coli P0A6L0, human Q9Y315) cleanly.
+  quote: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. DERA belongs
+    to the class I aldolases and catalyzes a reversible aldol reaction between acetaldehyde
+    and glyceraldehyde 3-phosphate to generate 2-deoxyribose 5-phosphate.
+  summary: Verified on disk that CDD:cd00959 (label=DeoC) no longer repeats its opening
+    title sentence and replays both QUALIFIED canonical examples (Escherichia coli
+    K12 P0A6L0 and Homo sapiens Q9Y315, out of 5 total canonical_examples on the record,
+    backed by 2 durable qualified_record_bindings.jsonl.d receipts) cleanly.
 - evidence_id: ev-cd20535
   kind: record_content
   reference: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
-  locator: id, label, short_name, definition, canonical_examples, evidence (PMID:14695534)
+  locator: identifier, label, definition, parent_traits, canonical_examples
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074
   support: refutes
-  quote: The CCNM family proteins, also known as ancient conserved domain-containing
-    proteins (ACDPs), are involved in magnesium homeostasis. Mutations in CCNM1 (also
-    known as ACDP1) are associated with urofacial syndrome, while mutations in CCNM2
-    and CCNM4 are associated with hypomagnesemia and Jalili syndrome, respectively.
-  summary: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, seed examples Q8QZR8 and Q8N1B3) models
-    the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition
-    and PMID:14695534 citation conflate CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium
+  quote: second cyclin box found in cyclin-M (CCNM) family. The CCNM family proteins,
+    also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved
+    Mg2+ transporters. CCNM, also called cyclin-Q (CCNQ), or CDK10-activating cyclin,
+    or cyclin-related protein FAM58A, associates with CDK10 to promote its kinase
+    activity. Members of this family contain two cyclin boxes. This model corresponds
+    to the second one. The cyclin box is a protein binding domain
+  summary: CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454],
+    unpromoted seed examples Mus musculus Q8QZR8 and Homo sapiens Q8N1B3, no evidence
+    block on disk) models the C-terminal second cyclin box of CCNQ/FAM58A, but its
+    upstream CDD definition conflates CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium
     transporter family.
 - evidence_id: ev-cd20534-cd04590-siblings
   kind: record_content
   reference: data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml
-  locator: CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) and CDD:cd04590 (CBS_pair_ACDP)
+  locator: CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454])
+    and CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc, parent_traits=[CDD:cl15354])
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: 72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88
   support: supports
-  summary: Repaired first-repeat sibling CDD:cd20534 (Q8N1B3 residues 27-128, PMID:23912459)
-    and CBS-pair record CDD:cd04590 confirm that CDD:cd20535 is the non-overlapping
-    C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP.
+  quote: first cyclin box found in cyclin-M (CCNM) family. Cyclin-M (CCNM), officially
+    designated cyclin-Q (CCNQ, formerly FAM58A; distinct from the CNNM1-4/ACDP magnesium
+    transporter family in CDD:cd04590), is the CDK10-activating cyclin that associates
+    with CDK10 to promote its protein kinase activity. Members of this family contain
+    two cyclin boxes. This model corresponds to the first one. The cyclin box is a
+    protein binding domain
+  summary: Repaired first-repeat sibling CDD:cd20534 (qualified on human Q8N1B3 at
+    residues 26-135, PMID:18297059 and PMID:23912459) and CBS-pair record CDD:cd04590
+    (label=CBS_pair_CorC_HlyC_assoc, definition='Two tandem repeats of the cystathionine
+    beta-synthase (CBS pair) domains the majority of which are associated with the
+    CorC_HlyC domain.') confirm that CDD:cd20535 is the non-overlapping C-terminal
+    second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP.
 - evidence_id: ev-cd15885
   kind: record_content
   reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
-  locator: id, label, short_name, definition, canonical_examples (P60880, P60879,
-    P36975)
+  locator: identifier, label, definition, parent_traits, canonical_examples (P60879,
+    P60880, P36975)
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea
   support: refutes
-  quote: Both, Qb/Qc SNAREs consist of 2 coiled-coil helices (which form a single
-    SNARE domain) and a transmembrane domain.
-  summary: CDD:cd15885 (SNARE_SNAP25C) models the C-terminal Qc SNARE motif of SNAP25
-    (human P60880 residues 140-202), but its upstream CDD definition falsely asserts
-    that Qb/Qc SNAREs contain a transmembrane domain.
+  quote: Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging
+    to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
+    with other SNARE proteins, and a transmembrane domain.
+  summary: CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856], 3 unpromoted
+    seed examples Mus musculus P60879, Homo sapiens P60880, and Drosophila melanogaster
+    P36975 without promoted residue intervals on disk) models the C-terminal Qc SNARE
+    motif of SNAP25, but its upstream CDD definition falsely asserts that Qb/Qc SNAREs
+    contain a transmembrane domain.
 - evidence_id: ev-cd15894-sibling
   kind: record_content
   reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml
-  locator: id, short_name, definition, evidence (PMID:9759094)
+  locator: identifier, label, definition, parent_traits, canonical_examples, evidence
+    (PMID:9759094)
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368
   support: supports
-  quote: Unlike syntaxin (Qa) and VAMP/synaptobrevin (R-SNARE) proteins, SNAP25-family
-    Qb/Qc SNAREs lack a transmembrane domain; SNAP25 contains two tandem coiled-coil
-    SNARE motifs (an N-terminal Qb motif and a C-terminal Qc motif) and is anchored
-    to membranes via palmitoylation of cysteine residues in the central linker region.
-  summary: Repaired N-terminal sibling CDD:cd15894 (SNARE_SNAP25N, qualified on human
-    P60880 residues 19-81) confirms that SNAP25 lacks a transmembrane domain and is
-    membrane-anchored via palmitoylated cysteines (PMID:9759094).
+  quote: Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging
+    to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
+    with other SNARE proteins, and lack a transmembrane domain; SNAP25 is anchored
+    to target membranes via palmitoylated cysteine residues in the linker between
+    its two SNARE motifs.
+  summary: Repaired N-terminal sibling CDD:cd15894 (label=SNARE_SNAP25N, parent_traits=[CDD:cl22856],
+    qualified on human P60880 at residues 10-82) confirms that SNAP25 lacks a transmembrane
+    domain and is membrane-anchored via palmitoylated cysteines in the linker between
+    its two SNARE motifs (PMID:9759094).
 - evidence_id: ev-cd17151
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
-  locator: id, label, short_name, definition, canonical_examples (A8MYV0)
+  locator: identifier, label, definition, parent_traits, canonical_examples (A8MYV0)
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d
   support: refutes
   quote: Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2C (DCDC2C) and similar proteins. DCDC2, also called reading disability, autosomal,
-    2 (RU2), is a member of the doublecortin family... Mutations in DCDC2 have been
-    associated with reading disability (RD) and attention-deficit/hyperactivity disorder
-    (ADHD).
-  summary: CDD:cd17151 (DCX1_DCDC2C, human DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like'
+    2C (DCDC2C). DCDC2 is a member of doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with stable double tandem DCX repeats of ubiquitin-like tertiary
+    fold. Microtubules are key components of the cytoskeleton that are involved in
+    cell movement, shape determination, division and transport. DCDC2 genetic variation
+    in humans is associated with reading disability, attention deficit hyperactivity
+    disorder (ADHD), and difficulties in mathematics.
+  summary: CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922], unpromoted
+    seed example Homo sapiens DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like'
     as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0)
-    and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2.
+    and its reading-disability/ADHD/mathematics genetics without distinguishing DCDC2C
+    from DCDC2.
 - evidence_id: ev-cd17154
   kind: record_content
   reference: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
-  locator: id, label, short_name, definition, canonical_examples (A8MYV0)
+  locator: identifier, label, definition, parent_traits, canonical_examples (A8MYV0)
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 92a423f28b256ec77c726a51a6bce8725e24218cf6f1d94c80fc8a1cfd115941
   support: refutes
   quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
-    2C (DCDC2C) and similar proteins. DCDC2, also called reading disability, autosomal,
-    2 (RU2), is a member of the doublecortin family... Mutations in DCDC2 have been
-    associated with reading disability (RD) and attention-deficit/hyperactivity disorder
-    (ADHD).
-  summary: CDD:cd17154 (DCX2_DCDC2C, C-terminal second DCX repeat of human DCDC2C
-    UniProtKB:A8MYV0) switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and
-    its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2.
+    2C (DCDC2C). DCDC2 is a member of the doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with stable double tandem DCX repeats of a ubiquitin-like tertiary
+    fold. Microtubules are key components of cytoskeleton that are involved in cell
+    movement, shape determination, division and transport. DCDC2 genetic variation
+    in humans is associated with reading disability, attention deficit hyperactivity
+    disorder (ADHD), and difficulties in mathematics.
+  summary: CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922], C-terminal
+    second DCX repeat of unpromoted seed example Homo sapiens DCDC2C UniProtKB:A8MYV0)
+    switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD/mathematics
+    genetics without distinguishing DCDC2C from DCDC2.
 - evidence_id: ev-cd17149
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
-  locator: id, label, short_name, definition, canonical_examples (Q9UHG0)
+  locator: identifier, label, definition, parent_traits, canonical_examples (Q9UHG0)
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 74a1c7b8bb284513e28bce564a5705142f643fa1bfe1c199bf6c338631bb2e76
   support: partial
   quote: Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2 (DCDC2) and similar proteins... Ubiquitin (Ub) is a protein modifier in eukaryotes
-    that is involved in various cellular processes, including transcriptional regulation,
-    cell cycle control, and DNA repair.
-  summary: CDD:cd17149 (DCX1_DCDC2, N-terminal first DCX repeat of human DCDC2 UniProtKB:Q9UHG0)
+    2 (DCDC2). DCDC2 is a member of doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with a stable ubiquitin-like tertiary fold. Ubiquitin (Ub) is a
+    protein modifier in eukaryotes that is involved in various cellular processes,
+    including transcriptional regulation, cell cycle control, and DNA repair.
+  summary: CDD:cd17149 (label=DCX1_DCDC2, parent_traits=[CDD:cl28922], N-terminal
+    first DCX repeat of unpromoted seed example Homo sapiens DCDC2 UniProtKB:Q9UHG0)
     misspells 'Doublecortin-like' as 'Dublecortin-like' and interpolates an off-target
     sentence defining the ubiquitin protein modifier even though DCX domains only
     adopt a ubiquitin-like beta-grasp fold.
 - evidence_id: ev-cd17150-cd17152-siblings
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml
-  locator: CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2)
+  locator: CDD:cd17150 (label=DCX1_DCDC2B, parent_traits=[CDD:cl28922]) and CDD:cd17152
+    (label=DCX2_DCDC2, parent_traits=[CDD:cl28922])
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756
   support: supports
-  summary: Repaired paralog sibling CDD:cd17150 (DCX1_DCDC2B on human DCDC2B A2VCK2)
-    and second-repeat sibling CDD:cd17152 (DCX2_DCDC2 on human DCDC2 Q9UHG0) confirm
-    the clean repeat-position and paralog-subfamily partition across DCX1/DCX2 profiles
-    in DCDC2, DCDC2B, and DCDC2C.
+  quote: Doublecortin-like domain 1 found in doublecortin domain-containing protein
+    2B (DCDC2B). DCDC2B is a member of the doublecortin (DCX) family closely related
+    to its paralog DCDC2, a microtubule-associated protein (MAP) with stable double
+    tandem DCX repeats of ubiquitin-like tertiary fold.
+  summary: Repaired paralog sibling CDD:cd17150 (label=DCX1_DCDC2B on human DCDC2B
+    A2VCK2) and second-repeat sibling CDD:cd17152 (label=DCX2_DCDC2 on human DCDC2
+    Q9UHG0) confirm the clean repeat-position and paralog-subfamily partition across
+    DCX1/DCX2 profiles in DCDC2, DCDC2B, and DCDC2C.
 - evidence_id: ev-cd18593
   kind: record_content
   reference: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
-  locator: id, label, short_name, definition, canonical_examples (O15439, E9Q236)
+  locator: identifier, label, definition, parent_traits, canonical_examples (O15439,
+    E9Q236)
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 7f72a55f63a4f82d87f7f4456ea7b3085585eb2f7461b79fd3752ca19d368b9a
   support: refutes
-  quote: Five MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively)
-    contain a N-terminal 5-TM domain (TMD0)... They are unidirectional efflux transporters
-    that mediate the ATP-dependent export of organic anions, including cytotoxic and
-    antiviral drugs, and confer resistance to multiple anticancer drugs in tumor cells.
-  summary: CDD:cd18593 (ABC_6TM_MRP4_D1_like, human MRP4/ABCC4 O15439) carries the
-    corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7 (CFTR,
-    a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes
+  quote: The MRP subfamily (ABCC subfamily) is composed of 13 members, of which MRP1
+    to MRP9 are the major transporters that cause multidrug resistance in tumor cells
+    by pumping anticancer drugs out of the cell. These nine MRP members function as
+    ATP-dependent exporters for endogenous substances and xenobiotics. MRP family
+    can be divided into two groups, depending on their structural architecture. MRP4,
+    MRP5, MRP8, and MRP9 (ABCC4, 5, 11 and 12, respectively) have a typical ABC transporter
+    structure and each composed of two transmembrane domains (TMD1 and TMD2) and two
+    nucleotide domains (NBD1 and NBD2). On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1,
+    2, 3, 6 and 7, respectively) have an additional N-terminal five transmembrane
+    segments in a single domain (TMD0) connected to the core (TMD-NBD) by a cytoplasmic
+    linker (L0)
+  summary: CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913], unpromoted
+    seed examples Homo sapiens MRP4/ABCC4 O15439 and Mus musculus E9Q236) carries
+    the corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7
+    (CFTR, a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes
     anticancer multidrug-resistance efflux across all MRP1-MRP9 members (including
-    uncharacterized MRP9/ABCC12).
+    MRP9/ABCC12).
 - evidence_id: ev-cd18592-sibling
   kind: record_content
   reference: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml
-  locator: id, short_name, definition, evidence (PMID:16984901)
+  locator: identifier, label, definition, parent_traits, evidence (PMID:16984901)
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a
   support: supports
-  quote: Nine human MRPs have been identified (MRP1-MRP9, corresponding to ABCC1-ABCC6
-    and ABCC10-ABCC12, respectively; ABCC7 is CFTR and ABCC8-ABCC9 are the sulfonylurea
-    receptors SUR1 and SUR2). Five MRPs (MRP1, MRP2, MRP3, MRP6, and MRP7, i.e., ABCC1,
-    ABCC2, ABCC3, ABCC6, and ABCC10) contain an N-terminal 5-TM domain (TMD0)...
-  summary: Repaired sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) confirms the accurate
-    HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11, MRP9=ABCC12; ABCC7=CFTR)
-    and transport qualification (PMID:16984901).
+  quote: The human ABCC subfamily includes nine multidrug resistance-associated proteins
+    (MRP1-MRP6 corresponding to ABCC1-ABCC6, and MRP7-MRP9 corresponding to ABCC10-ABCC12,
+    whereas ABCC7 is the CFTR chloride channel and ABCC8/ABCC9 are the sulfonylurea
+    receptors SUR1/SUR2). Several MRP members (notably MRP1-MRP5, MRP7/ABCC10, and
+    MRP8/ABCC11) function as ATP-dependent efflux pumps for endogenous organic anions,
+    cyclic nucleotides, and xenobiotics, whereas physiological substrates and transport
+    activity of MRP9 (ABCC12) remain less characterized.
+  summary: Repaired sibling CDD:cd18592 (label=ABC_6TM_MRP5_8_9_D1, parent_traits=[CDD:cl38913])
+    confirms the accurate HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11,
+    MRP9=ABCC12; ABCC7=CFTR) and transport qualification (PMID:16984901).
 - evidence_id: ev-prior-stage4-cd00104
   kind: prior_review
   reference: reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml
@@ -865,7 +921,8 @@ assessments:
   - ev-cd20534-cd04590-siblings
   - ev-cd20535
   summary: 'All 8 records are genuine conserved protein sequence domain profiles (trait_axis:
-    SEQUENCE, trait_category: SEQ_DOMAIN, so_term: SO:0000417) with distinct CDD PSSM
+    SEQUENCE, trait_category: SEQ_DOMAIN; parent_traits=CDD:cl00097, CDD:cl21457,
+    CDD:cl40454, CDD:cl22856, CDD:cl28922, and CDD:cl38913) with distinct CDD PSSM
     identifiers and non-overlapping repeat intervals or paralog-subfamily scopes.
     None should be merged or lumped with sibling CDD profiles.'
 - assessment_id: carry-forward-f1-f2-resolved-on-disk
@@ -886,7 +943,8 @@ assessments:
   summary: Both Cycle 1 Stage 5 deferred carry-forward findings — F1 on CDD:cd00104
     and F2 on CDD:cd00959 — are verified resolved on disk at commit 66e8f479733907dc0792e481f41bb2f0fbb9dc27
     with entries in scripts/cdd_errata.py, curation_history events, and valid sharded
-    qualified_record_bindings.jsonl.d receipts.
+    qualified_record_bindings.jsonl.d receipts (39 receipts across 26 QUALIFIED examples
+    on CDD:cd00104; 2 receipts across 2 QUALIFIED examples on CDD:cd00959).
 - assessment_id: sibling-cdd-records-upstream-prose-defects
   area: consistency
   topic: Upstream CDD nomenclature, paralog-scope, and biochemical contradictions
@@ -926,28 +984,32 @@ boundary_decisions:
   - ev-cd00104
   - ev-cd00959
   - ev-cycle1-stage6-evidence
-  rationale: 'Retain promoted records CDD:cd00104 (KAZAL_FS) and CDD:cd00959 (DeoC)
-    as distinct conserved domain families whose definitions and sharded qualified_record_bindings
-    receipts were repaired in Cycle 1 Stage 6 (#1172, PR #1175).'
+  rationale: 'Retain promoted records CDD:cd00104 (label=KAZAL_FS, parent_traits=[CDD:cl00097])
+    and CDD:cd00959 (label=DeoC, parent_traits=[CDD:cl21457]) as distinct conserved
+    domain families whose definitions and sharded qualified_record_bindings receipts
+    were repaired in Cycle 1 Stage 6 (#1172, PR #1175).'
 - action: retain
   target_ids:
   - CDD:cd20535
   evidence_ids:
   - ev-cd20535
   - ev-cd20534-cd04590-siblings
-  rationale: Retain CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, C-terminal second cyclin box
-    of CCNQ/FAM58A under InterPro:IPR006670) as distinct from N-terminal first cyclin
-    box sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1 under InterPro:IPR006671) and distinct
-    from CDD:cd04590 (CBS_pair_ACDP in CNNM1-4 magnesium transporters).
+  rationale: Retain CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454],
+    C-terminal second cyclin box of CCNQ/FAM58A) as distinct from N-terminal first
+    cyclin box sibling CDD:cd20534 (label=CYCLIN_CCNM_CCNQ_rpt1, parent_traits=[CDD:cl40454],
+    qualified on human Q8N1B3 at residues 26-135) and distinct from CDD:cd04590 (label=CBS_pair_CorC_HlyC_assoc,
+    parent_traits=[CDD:cl15354]).
 - action: retain
   target_ids:
   - CDD:cd15885
   evidence_ids:
   - ev-cd15885
   - ev-cd15894-sibling
-  rationale: Retain CDD:cd15885 (SNARE_SNAP25C, C-terminal Qc SNARE motif of SNAP25,
-    human P60880 residues 140-202) as distinct from N-terminal Qb SNARE motif sibling
-    CDD:cd15894 (SNARE_SNAP25N, residues 19-81) because they represent non-overlapping
+  rationale: Retain CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856],
+    C-terminal Qc SNARE motif of SNAP25 with unpromoted seed examples Mus musculus
+    P60879, Homo sapiens P60880, and Drosophila melanogaster P36975) as distinct from
+    N-terminal Qb SNARE motif sibling CDD:cd15894 (label=SNARE_SNAP25N, parent_traits=[CDD:cl22856],
+    qualified on human P60880 at residues 10-82) because they represent non-overlapping
     tandem coiled-coil SNARE domains on SNAP25.
 - action: retain
   target_ids:
@@ -959,19 +1021,21 @@ boundary_decisions:
   - ev-cd17151
   - ev-cd17154
   - ev-cd17150-cd17152-siblings
-  rationale: Retain CDD:cd17149 (DCX1_DCDC2, N-terminal repeat 1 of DCDC2), CDD:cd17151
-    (DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154 (DCX2_DCDC2C, C-terminal
-    repeat 2 of DCDC2C) as distinct repeat-position and paralog-subfamily domain profiles
-    separate from each other and from CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2).
+  rationale: Retain CDD:cd17149 (label=DCX1_DCDC2, N-terminal repeat 1 of DCDC2),
+    CDD:cd17151 (label=DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154
+    (label=DCX2_DCDC2C, C-terminal repeat 2 of DCDC2C) under parent_traits [CDD:cl28922]
+    as distinct repeat-position and paralog-subfamily domain profiles separate from
+    each other and from CDD:cd17150 (label=DCX1_DCDC2B) and CDD:cd17152 (label=DCX2_DCDC2).
 - action: retain
   target_ids:
   - CDD:cd18593
   evidence_ids:
   - ev-cd18593
   - ev-cd18592-sibling
-  rationale: Retain CDD:cd18593 (ABC_6TM_MRP4_D1_like, TMD1 of MRP4/ABCC4) as a distinct
-    ABCC TMD1 subfamily profile separate from sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1,
-    TMD1 of MRP5/ABCC5, MRP8/ABCC11, and MRP9/ABCC12).
+  rationale: Retain CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913],
+    TMD1 of MRP4/ABCC4) as a distinct ABCC TMD1 subfamily profile separate from sibling
+    CDD:cd18592 (label=ABC_6TM_MRP5_8_9_D1, parent_traits=[CDD:cl38913], TMD1 of MRP5/ABCC5,
+    MRP8/ABCC11, and MRP9/ABCC12).
 findings:
 - finding_id: F1
   issue_key: cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion
@@ -1012,8 +1076,9 @@ findings:
   disposition_reason: 'Repaired CDD:cd00104 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
     in Cycle 1 Stage 6 (#1172, PR #1175), correcting ''chyomotrypsin'' to ''chymotrypsin'',
     distinguishing avian ovomucoids as canonical Kazal-type inhibitors rather than
-    target proteases (PMID:6192856), and updating all 3 durable qualified_record_bindings.jsonl.d
-    receipts to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).'
+    target proteases (PMID:6192856), and updating all 39 durable qualified_record_bindings.jsonl.d
+    receipts (covering all 26 QUALIFIED canonical examples out of 28 total canonical_examples
+    on the record) to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261022T052200Z-cdd-cd00104-record-review
@@ -1062,8 +1127,9 @@ findings:
     role: Guarded validated record writer
   disposition_reason: 'Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
     in Cycle 1 Stage 6 (#1172, PR #1175), removing the duplicated opening title sentence
-    and updating both durable qualified_record_bindings.jsonl.d receipts to the new
-    record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).'
+    and updating both durable qualified_record_bindings.jsonl.d receipts (covering
+    the 2 QUALIFIED canonical examples out of 5 total canonical_examples on the record)
+    to the new record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
@@ -1082,17 +1148,19 @@ findings:
   certainty: confirmed
   title: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) conflates the second cyclin box of Cyclin-Q/Cyclin-M
     (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
-  description: CDD:cd20535 models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M
-    (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8), the activating
-    cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459), but
-    its upstream CDD definition and PMID:14695534 citation describe the unrelated
-    CNNM1-4 (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590)
-    and urofacial, hypomagnesemia, and Jalili syndromes.
+  description: CDD:cd20535 (label=CYCLIN_CCNM_CCNQ_rpt2, parent_traits=[CDD:cl40454])
+    models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; unpromoted
+    seed examples Mus musculus UniProtKB:Q8QZR8 and Homo sapiens UniProtKB:Q8N1B3),
+    the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:18297059,
+    PMID:23912459), but sentence 2 of its upstream CDD definition states 'The CCNM
+    family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily
+    conserved Mg2+ transporters', conflating CCNM/CCNQ with the unrelated CNNM1-4
+    (ACDP) CBS-pair magnesium transporter family (contrasted with CDD:cd04590 in repaired
+    sibling CDD:cd20534).
   target_ids:
   - CDD:cd20535
   field_paths:
   - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/definition
-  - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/evidence
   evidence_ids:
   - ev-cd20535
   - ev-cd20534-cd04590-siblings
@@ -1120,13 +1188,16 @@ findings:
   certainty: confirmed
   title: CDD:cd15885 (SNARE_SNAP25C) asserts that Qb/Qc SNAREs have a transmembrane
     domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
-  description: CDD:cd15885 models the C-terminal Qc SNARE motif of SNAP25 (human UniProtKB:P60880,
-    mouse P60879, chicken P36975), but its upstream CDD definition states 'Both, Qb/Qc
-    SNAREs consist of 2 coiled-coil helices (which form a single SNARE domain) and
-    a transmembrane domain'. SNAP25-family Qb/Qc t-SNAREs lack a transmembrane domain
-    and attach to membranes via palmitoylated cysteines in the inter-motif linker
-    between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885) SNARE
-    motifs (PMID:9759094).
+  description: CDD:cd15885 (label=SNARE_SNAP25C, parent_traits=[CDD:cl22856]) models
+    the C-terminal Qc SNARE motif of SNAP25 (unpromoted seed examples Mus musculus
+    UniProtKB:P60879, Homo sapiens UniProtKB:P60880, and Drosophila melanogaster UniProtKB:P36975),
+    but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil
+    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
+    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
+    and a transmembrane domain.' SNAP25-family Qb/Qc t-SNAREs lack a transmembrane
+    domain and attach to membranes via palmitoylated cysteines in the inter-motif
+    linker between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885)
+    SNARE motifs (PMID:9759094).
   target_ids:
   - CDD:cd15885
   field_paths:
@@ -1158,14 +1229,15 @@ findings:
   certainty: confirmed
   title: CDD:cd17151 (DCX1_DCDC2C) misspells Doublecortin-like as Dublecortin-like
     in definition and switches to paralog DCDC2 disease genetics
-  description: CDD:cd17151 models the N-terminal first doublecortin-like domain (DCX1)
-    of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but its definition begins with
-    the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2C (DCDC2C) and similar proteins' and immediately switches in sentence 2 to paralog
-    DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations
-    in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity
-    disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0,
-    CDD:cd17149/CDD:cd17152).
+  description: CDD:cd17151 (label=DCX1_DCDC2C, parent_traits=[CDD:cl28922]) models
+    the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (unpromoted
+    seed example UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the
+    typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2C (DCDC2C).' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2
+    is a member of doublecortin (DCX) family... DCDC2 genetic variation in humans
+    is associated with reading disability, attention deficit hyperactivity disorder
+    (ADHD), and difficulties in mathematics.') without distinguishing DCDC2C from
+    DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
   target_ids:
   - CDD:cd17151
   field_paths:
@@ -1197,12 +1269,13 @@ findings:
   certainty: confirmed
   title: CDD:cd17154 (DCX2_DCDC2C) switches mid-definition from DCDC2C to paralog
     DCDC2 reading-disability and ADHD genetics
-  description: CDD:cd17154 models the C-terminal second doublecortin-like domain (DCX2)
-    of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without
-    qualification to paralog DCDC2 ('DCDC2, also called reading disability, autosomal,
-    2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD)
-    and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C
-    from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+  description: CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) models
+    the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (unpromoted
+    seed example UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification
+    to paralog DCDC2 ('DCDC2 is a member of the doublecortin (DCX) family... DCDC2
+    genetic variation in humans is associated with reading disability, attention deficit
+    hyperactivity disorder (ADHD), and difficulties in mathematics.') without distinguishing
+    DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
   target_ids:
   - CDD:cd17154
   field_paths:
@@ -1234,14 +1307,15 @@ findings:
   certainty: confirmed
   title: CDD:cd17149 (DCX1_DCDC2) misspells Doublecortin-like as Dublecortin-like
     in definition and interpolates an off-target ubiquitin protein-modifier sentence
-  description: CDD:cd17149 models the N-terminal first doublecortin-like domain (DCX1)
-    of human DCDC2 (UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the
-    typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
-    2 (DCDC2) and similar proteins', and interpolates an off-target sentence defining
-    the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes
-    that is involved in various cellular processes, including transcriptional regulation,
-    cell cycle control, and DNA repair') even though DCX domains only adopt a ubiquitin-like
-    beta-grasp fold and do not function as ubiquitin protein modifiers.
+  description: CDD:cd17149 (label=DCX1_DCDC2, parent_traits=[CDD:cl28922]) models
+    the N-terminal first doublecortin-like domain (DCX1) of human DCDC2 (unpromoted
+    seed example UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the typo
+    'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2).',
+    and interpolates an off-target sentence defining the ubiquitin protein modifier
+    ('Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various
+    cellular processes, including transcriptional regulation, cell cycle control,
+    and DNA repair.') even though DCX domains only adopt a ubiquitin-like beta-grasp
+    fold and do not function as ubiquitin protein modifiers.
   target_ids:
   - CDD:cd17149
   field_paths:
@@ -1274,14 +1348,18 @@ findings:
   title: CDD:cd18593 (ABC_6TM_MRP4_D1_like) misassigns MRP7 to ABCC7 (CFTR) instead
     of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9
     members
-  description: CDD:cd18593 models TMD1 of MRP4/ABCC4 (human UniProtKB:O15439, mouse
-    E9Q236), but carries the corrupted upstream CDD ABCC template text stating 'Five
-    MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively)
-    contain a N-terminal 5-TM domain (TMD0)' and claiming blanket anticancer multidrug-resistance
-    efflux across all nine MRPs (MRP1-MRP9). In HGNC/UniProt nomenclature, ABCC7 is
-    CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10 (UniProtKB:Q5T3U5),
-    MRP8 is ABCC11, and MRP9 is ABCC12 (an uncharacterized paralog without established
-    drug-efflux activity, PMID:16984901).
+  description: CDD:cd18593 (label=ABC_6TM_MRP4_D1_like, parent_traits=[CDD:cl38913])
+    models TMD1 of MRP4/ABCC4 (unpromoted seed examples Homo sapiens UniProtKB:O15439
+    and Mus musculus UniProtKB:E9Q236), but carries the corrupted upstream CDD ABCC
+    template text stating 'On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6
+    and 7, respectively) have an additional N-terminal five transmembrane segments
+    in a single domain (TMD0) connected to the core (TMD-NBD) by a cytoplasmic linker
+    (L0)' and claiming 'The MRP subfamily (ABCC subfamily) is composed of 13 members,
+    of which MRP1 to MRP9 are the major transporters that cause multidrug resistance
+    in tumor cells by pumping anticancer drugs out of the cell.' In HGNC/UniProt nomenclature,
+    ABCC7 is CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10
+    (UniProtKB:Q5T3U5), MRP8 is ABCC11, and MRP9 is ABCC12 (a paralog whose physiological
+    substrates and transport activity remain less characterized, PMID:16984901).
   target_ids:
   - CDD:cd18593
   field_paths:
@@ -1349,7 +1427,10 @@ actions:
 limitations:
 - This cohort review covers the frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory
   (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings); other CDD records
-  outside this cohort were not re-audited.
+  outside this 8-record target inventory — including boundary context record CDD:cd17152
+  (label=DCX2_DCDC2), which also carries the upstream off-target ubiquitin protein-modifier
+  sentence noted on CDD:cd17149 — are outside the frozen Stage 4 target inventory
+  and were not added as Stage 4 target records.
 - No scientific trait records under data/traits/ were edited during Stage 4; findings
   F13-F18 remain open for Stage 5 grouped remediation.
 related_reviews:

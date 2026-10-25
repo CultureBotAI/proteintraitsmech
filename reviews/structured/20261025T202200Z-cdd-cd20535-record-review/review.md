@@ -1,4 +1,4 @@
-# Single-record scientific review of CDD:cd20535 (Second cyclin box found in cyclin-M/CCNQ family)
+# Single-record scientific review of CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2; second cyclin box found in cyclin-M/CCNQ family)
 
 - Review: 20261025T202200Z-cdd-cd20535-record-review
 - Repository: CultureBotAI/proteintraitsmech
@@ -11,7 +11,7 @@
 
 ## Summary
 
-CDD:cd20535 (Second cyclin box found in cyclin-M (CCNM) family; short_name CYCLIN_CCNM_CCNQ_rpt2) passes strict LinkML schema validation and represents a valid class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE, parent InterPro:IPR006670) modeling the C-terminal cyclin-box repeat of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human UniProtKB:Q8N1B3 and mouse UniProtKB:Q8QZR8), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459). However, its upstream CDD-seeded definition and PMID:14695534 citation conflate the CCNM/CCNQ cyclin family with the unrelated CNNM1-4 (ancient conserved domain-containing protein, ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590) and urofacial, hypomagnesemia, and Jalili syndromes — the exact upstream nomenclature conflation repaired on first-repeat sibling CDD:cd20534 in Cycle 1 Stage 5 (#1171). Preserved as open finding F13 for Cycle 2 Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+CDD:cd20535 (label CYCLIN_CCNM_CCNQ_rpt2; opening definition phrase 'second cyclin box found in cyclin-M (CCNM) family') passes strict LinkML schema validation and represents a valid class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE, parent_traits: [CDD:cl40454]) modeling the C-terminal second cyclin-box repeat of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; mouse UniProtKB:Q8QZR8 and human UniProtKB:Q8N1B3), the CDK10-activating cyclin mutated in X-linked STAR syndrome (PMID:23912459). However, its upstream CDD-seeded definition falsely states 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters' — conflating the CCNM/CCNQ cyclin family with the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590, label CBS_pair_CorC_HlyC_assoc) and lacking any literature evidence block — the exact upstream nomenclature conflation repaired on first-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1) in Cycle 1 Stage 5 (#1171). Preserved as open finding F13 for Cycle 2 Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
 
 ## Scope And Provenance
 
@@ -24,7 +24,7 @@ Working-tree hashes do not imply those bytes were committed.
 
 | Target | Path / selector | Kind | Label |
 | --- | --- | --- | --- |
-| CDD:cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml | generated | Second cyclin box found in cyclin-M (CCNM) family |
+| CDD:cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml | generated | CYCLIN_CCNM_CCNQ_rpt2 |
 
 ## Validation
 
@@ -37,23 +37,23 @@ Working-tree hashes do not imply those bytes were committed.
 
 ## Scientific And Domain Assessments
 
-### Class-level C-terminal cyclin-box repeat identity and InterPro hierarchy
+### Class-level C-terminal cyclin-box repeat identity and CDD superfamily hierarchy
 
 identity: supported. Targets: CDD:cd20535.
 
-CDD:cd20535 is a valid class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE, SO:0000417) representing the C-terminal second cyclin-box fold (short_name CYCLIN_CCNM_CCNQ_rpt2) of CCNQ/FAM58A, properly placed under InterPro:IPR006670 (Cyclin, C-terminal domain) and distinct from N-terminal repeat CDD:cd20534 (InterPro:IPR006671).
+CDD:cd20535 is a valid class-level sequence domain trait (trait_axis: SEQUENCE, trait_category: SEQ_DOMAIN, label: CYCLIN_CCNM_CCNQ_rpt2, parent_traits: [CDD:cl40454]) representing the C-terminal second cyclin-box fold of CCNQ/FAM58A, distinct from N-terminal first-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1, qualified on human Q8N1B3 at residues 26-135).
 
 ### Legacy Swiss-Prot seed carriers Q8QZR8 and Q8N1B3
 
 grounding: supported. Targets: CDD:cd20535.
 
-The two Swiss-Prot seed examples on CDD:cd20535 — Mus musculus Ccnq (UniProtKB:Q8QZR8) and Homo sapiens CCNQ/FAM58A (UniProtKB:Q8N1B3) — are genuine Cyclin-Q orthologs containing the C-terminal second cyclin box.
+The two unpromoted Swiss-Prot seed examples on CDD:cd20535 — Mus musculus Cyclin-Q (UniProtKB:Q8QZR8) and Homo sapiens Cyclin-Q (UniProtKB:Q8N1B3) — are genuine Cyclin-Q orthologs containing the C-terminal second cyclin box.
 
 ### Upstream CDD conflation of Cyclin-M/CCNQ with CNNM1-4/ACDP magnesium transporters
 
 consistency: concern. Targets: CDD:cd20535.
 
-CDD:cd20535 inherits the upstream NCBI CDD description and PMID:14695534 citation that confuse the legacy 'Cyclin-M (CCNM)' alias of CCNQ/FAM58A with the CNNM1-4 (ACDP) magnesium transporter family (CDD:cd04590) and its associated urofacial, hypomagnesemia, and Jalili syndromes.
+CDD:cd20535 inherits the upstream NCBI CDD description statement 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters' that confuses the legacy 'cyclin-M (CCNM)' alias of CCNQ/FAM58A with the CNNM1-4 (ACDP) CBS-pair magnesium transporter family (CDD:cd04590, label CBS_pair_CorC_HlyC_assoc), and lacks a literature evidence block citing PMID:23912459.
 
 ## Findings
 
@@ -61,16 +61,16 @@ CDD:cd20535 inherits the upstream NCBI CDD description and PMID:14695534 citatio
 
 major / open / confirmed; issue key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation.
 
-In data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml, the domain profile models the C-terminal second cyclin box (CYCLIN_CCNM_CCNQ_rpt2) of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459). However, its upstream CDD definition states 'The CCNM family proteins, also known as ancient conserved domain-containing proteins (ACDPs), are involved in magnesium homeostasis. Mutations in CCNM1 (also known as ACDP1) are associated with urofacial syndrome, while mutations in CCNM2 and CCNM4 are associated with hypomagnesemia and Jalili syndrome, respectively' and cites PMID:14695534 (an ACDP paper). CNNM1-4 (ACDP1-4) are CBS-pair magnesium transporters modeled by CDD:cd04590, not cyclin-box proteins. Preserved open in Stage 4 for Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+In data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml, the domain profile models the C-terminal second cyclin box (label CYCLIN_CCNM_CCNQ_rpt2, parent_traits: [CDD:cl40454]) of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; mouse UniProtKB:Q8QZR8, human UniProtKB:Q8N1B3), the CDK10-activating cyclin mutated in X-linked STAR syndrome (PMID:23912459). However, its upstream CDD definition states 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters.' CNNM1-4 (ACDP1-4) are CBS-pair magnesium transporters modeled by CDD:cd04590 (label CBS_pair_CorC_HlyC_assoc), not cyclin-box proteins, and CDD:cd20535 currently lacks an evidence block citing PMID:23912459. Preserved open in Stage 4 for Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
 
 ## Recommended Actions And Acceptance Checks
 
 ### repair-cd20535-definition-and-evidence-via-cdd-errata
 
-Add an accession-keyed erratum for CDD:cd20535 in scripts/cdd_errata.py and apply it via scripts/repair_cdd_errata.py, replacing the conflated CNNM1-4/ACDP magnesium transporter prose and PMID:14695534 citation with the C-terminal cyclin-box repeat description of Cyclin-Q/CCNQ (FAM58A, CDK10-activating cyclin mutated in X-linked STAR syndrome) backed by PMID:23912459.
+Add an accession-keyed erratum for CDD:cd20535 in scripts/cdd_errata.py and apply it via scripts/repair_cdd_errata.py, replacing the false 'The CCNM family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+ transporters' sentence with the disambiguated CCNQ/FAM58A CDK10-activating cyclin description and adding an evidence entry citing PMID:23912459.
 
-- CDD:cd20535 definition accurately describes the second (C-terminal) cyclin box of CCNQ/FAM58A and explicitly distinguishes CCNQ from CNNM1-4/ACDP magnesium transporters (CDD:cd04590).
-- CDD:cd20535 evidence cites PMID:23912459 with a verbatim CDK10/CCNQ snippet instead of the misplaced ACDP reference PMID:14695534.
+- CDD:cd20535 definition accurately describes the second (C-terminal) cyclin box of CCNQ/FAM58A and explicitly distinguishes CCNQ from the CNNM1-4/ACDP magnesium transporter family in CDD:cd04590.
+- CDD:cd20535 evidence block is populated with PMID:23912459 and a verbatim CDK10/CCNQ snippet.
 - scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay the erratum idempotently and scripts/validate_strict.py passes with 0 errors.
 
 ## Category Boundaries
@@ -80,10 +80,10 @@ Add an accession-keyed erratum for CDD:cd20535 in scripts/cdd_errata.py and appl
 
 | Evidence | Reference / locator | Support | Observation |
 | --- | --- | --- | --- |
-| ev-cd20535-yaml | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; id, label, short_name, definition, parent_traits, canonical_examples, evidence | refutes | CDD:cd20535 (short_name CYCLIN_CCNM_CCNQ_rpt2, parent InterPro:IPR006670) carries seed examples Q8QZR8 (mouse Ccnq) and Q8N1B3 (human CCNQ/FAM58A), but its upstream CDD definition and PMID:14695534 citation describe the unrelated CNNM1-4 (ACDP) magnesium transporter family. |
-| ev-cd20534-sibling | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; id, short_name, definition, canonical_examples, evidence (PMID:23912459) | supports | First-repeat sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1, qualified on human Q8N1B3 residues 27-128) was repaired in Cycle 1 Stage 5 (#1171) to disambiguate CCNQ/FAM58A from CNNM1-4/ACDP and cite PMID:23912459. |
-| ev-cd04590-acdp | data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml; id, short_name, definition | supports | CDD:cd04590 (CBS_pair_ACDP) models the CBS-pair domain of the CNNM1-4/ACDP magnesium transporter family, confirming that the ACDP prose and PMID:14695534 citation on CDD:cd20535 belong to CNNM/ACDP rather than the CCNQ cyclin-box fold. |
-| ev-pmid-23912459 | https://pubmed.ncbi.nlm.nih.gov/23912459/; PMID:23912459 (Guen et al., 2013, Nat Genet 45:1032-1037) | supports | Primary functional genetics study establishing that Cyclin-M/Cyclin-Q (FAM58A/CCNQ, UniProtKB:Q8N1B3) is the activating cyclin partner of CDK10 and that STAR syndrome mutations disrupt CDK10/CCNQ complex formation. |
+| ev-cd20535-yaml | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; identifier, label, definition, definition_source, parent_traits, canonical_examples | refutes | CDD:cd20535 (label CYCLIN_CCNM_CCNQ_rpt2, parent_traits: [CDD:cl40454]) carries unpromoted Swiss-Prot seed examples UniProtKB:Q8QZR8 (Mus musculus Cyclin-Q) and UniProtKB:Q8N1B3 (Homo sapiens Cyclin-Q) and no evidence block, while its upstream CDD definition falsely states that CCNM family proteins are ancient conserved domain proteins (ACDPs) and evolutionarily conserved Mg2+ transporters. |
+| ev-cd20534-sibling | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; identifier, label, definition, parent_traits, canonical_examples, evidence (PMID:23912459) | supports | First-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1, parent_traits: [CDD:cl40454], qualified on human UniProtKB:Q8N1B3 at residues 26-135) was repaired in Cycle 1 Stage 5 (#1171) to disambiguate CCNQ/FAM58A from CNNM1-4/ACDP (CDD:cd04590) and cite PMID:23912459. |
+| ev-cd04590-acdp | data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml; identifier, label, definition, parent_traits, canonical_examples | supports | CDD:cd04590 (label CBS_pair_CorC_HlyC_assoc, parent_traits: [CDD:cl15354], carrying Caenorhabditis elegans Metal transporter cnnm-1 UniProtKB:A3QM97) models the CBS-pair domain associated with CorC_HlyC in CNNM/ACDP metal transporters, confirming that the ACDP Mg2+ transporter prose in CDD:cd20535 belongs to CNNM/ACDP rather than the CCNQ cyclin-box fold. |
+| ev-pmid-23912459 | https://pubmed.ncbi.nlm.nih.gov/23912459/; PMID:23912459 (Guen et al., 2013, Nat Genet 45:1038-1042) | supports | Primary functional genetics study (Guen et al., 2013, Nat Genet 45:1038-1042) establishing that Cyclin-M/Cyclin-Q (FAM58A/CCNQ, UniProtKB:Q8N1B3) interacts with CDK10 to form an active protein kinase complex and is mutated in X-linked STAR syndrome. |
 | ev-cdd-errata-writer | scripts/cdd_errata.py; CDD_ERRATA table and scripts/repair_cdd_errata.py | supports | scripts/cdd_errata.py currently contains 12 accession-keyed entries (including CDD:cd20534) wired into scripts/seed_cdd.py and scripts/repair_cdd_errata.py, providing the exact registered repair route for adding CDD:cd20535 in Stage 5. |
 
 ## Limits And Additional Notes
@@ -100,8 +100,8 @@ schema_version: 1.0.0
 review_id: 20261025T202200Z-cdd-cd20535-record-review
 kind: record
 repository: CultureBotAI/proteintraitsmech
-title: Single-record scientific review of CDD:cd20535 (Second cyclin box found in
-  cyclin-M/CCNQ family)
+title: Single-record scientific review of CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2; second
+  cyclin box found in cyclin-M/CCNQ family)
 started_at: '2026-10-25T20:10:00Z'
 finished_at: '2026-10-25T20:22:00Z'
 reviewer:
@@ -117,18 +117,20 @@ completion: completed
 verdict: needs_curation
 native_verdict: NEEDS_CURATION
 scientific_review: true
-summary: CDD:cd20535 (Second cyclin box found in cyclin-M (CCNM) family; short_name
-  CYCLIN_CCNM_CCNQ_rpt2) passes strict LinkML schema validation and represents a valid
-  class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE, parent InterPro:IPR006670)
-  modeling the C-terminal cyclin-box repeat of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human
-  UniProtKB:Q8N1B3 and mouse UniProtKB:Q8QZR8), the activating cyclin partner of CDK10
-  mutated in X-linked STAR syndrome (PMID:23912459). However, its upstream CDD-seeded
-  definition and PMID:14695534 citation conflate the CCNM/CCNQ cyclin family with
-  the unrelated CNNM1-4 (ancient conserved domain-containing protein, ACDP) CBS-pair
-  magnesium transporter family (modeled by CDD:cd04590) and urofacial, hypomagnesemia,
-  and Jalili syndromes — the exact upstream nomenclature conflation repaired on first-repeat
-  sibling CDD:cd20534 in Cycle 1 Stage 5 (#1171). Preserved as open finding F13 for
-  Cycle 2 Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+summary: 'CDD:cd20535 (label CYCLIN_CCNM_CCNQ_rpt2; opening definition phrase ''second
+  cyclin box found in cyclin-M (CCNM) family'') passes strict LinkML schema validation
+  and represents a valid class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE,
+  parent_traits: [CDD:cl40454]) modeling the C-terminal second cyclin-box repeat of
+  Cyclin-Q/Cyclin-M (CCNQ/FAM58A; mouse UniProtKB:Q8QZR8 and human UniProtKB:Q8N1B3),
+  the CDK10-activating cyclin mutated in X-linked STAR syndrome (PMID:23912459). However,
+  its upstream CDD-seeded definition falsely states ''The CCNM family proteins, also
+  called ancient conserved domain proteins (ACDPs), are evolutionarily conserved Mg2+
+  transporters'' — conflating the CCNM/CCNQ cyclin family with the unrelated CNNM1-4
+  (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590, label CBS_pair_CorC_HlyC_assoc)
+  and lacking any literature evidence block — the exact upstream nomenclature conflation
+  repaired on first-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1) in Cycle
+  1 Stage 5 (#1171). Preserved as open finding F13 for Cycle 2 Stage 5 grouped remediation
+  via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.'
 source:
   git_revision: 66e8f479733907dc0792e481f41bb2f0fbb9dc27
   state: git_commit
@@ -172,7 +174,7 @@ scope:
 targets:
 - target_id: CDD:cd20535
   path: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
-  label: Second cyclin box found in cyclin-M (CCNM) family
+  label: CYCLIN_CCNM_CCNQ_rpt2
   kind: generated
   record_class: ProteinTraitRecord
   owner_paths:
@@ -247,56 +249,65 @@ evidence:
 - evidence_id: ev-cd20535-yaml
   kind: record_content
   reference: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
-  locator: id, label, short_name, definition, parent_traits, canonical_examples, evidence
+  locator: identifier, label, definition, definition_source, parent_traits, canonical_examples
   accessed_at: '2026-10-25T20:14:00Z'
   snapshot_sha256: 8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074
   support: refutes
-  quote: The CCNM family proteins, also known as ancient conserved domain-containing
-    proteins (ACDPs), are involved in magnesium homeostasis. Mutations in CCNM1 (also
-    known as ACDP1) are associated with urofacial syndrome, while mutations in CCNM2
-    and CCNM4 are associated with hypomagnesemia and Jalili syndrome, respectively.
-  summary: CDD:cd20535 (short_name CYCLIN_CCNM_CCNQ_rpt2, parent InterPro:IPR006670)
-    carries seed examples Q8QZR8 (mouse Ccnq) and Q8N1B3 (human CCNQ/FAM58A), but
-    its upstream CDD definition and PMID:14695534 citation describe the unrelated
-    CNNM1-4 (ACDP) magnesium transporter family.
+  quote: second cyclin box found in cyclin-M (CCNM) family. The CCNM family proteins,
+    also called ancient conserved domain proteins (ACDPs), are evolutionarily conserved
+    Mg2+ transporters. CCNM, also called cyclin-Q (CCNQ), or CDK10-activating cyclin,
+    or cyclin-related protein FAM58A, associates with CDK10 to promote its kinase
+    activity. Members of this family contain two cyclin boxes. This model corresponds
+    to the second one. The cyclin box is a protein binding domain
+  summary: 'CDD:cd20535 (label CYCLIN_CCNM_CCNQ_rpt2, parent_traits: [CDD:cl40454])
+    carries unpromoted Swiss-Prot seed examples UniProtKB:Q8QZR8 (Mus musculus Cyclin-Q)
+    and UniProtKB:Q8N1B3 (Homo sapiens Cyclin-Q) and no evidence block, while its
+    upstream CDD definition falsely states that CCNM family proteins are ancient conserved
+    domain proteins (ACDPs) and evolutionarily conserved Mg2+ transporters.'
 - evidence_id: ev-cd20534-sibling
   kind: record_content
   reference: data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml
-  locator: id, short_name, definition, canonical_examples, evidence (PMID:23912459)
+  locator: identifier, label, definition, parent_traits, canonical_examples, evidence
+    (PMID:23912459)
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: 72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88
   support: supports
-  quote: Cyclin-Q (CCNQ, formerly FAM58A; also termed Cyclin-M) is the activating
-    cyclin partner of cyclin-dependent kinase 10 (CDK10), and loss-of-function mutations
-    in CCNQ/FAM58A cause X-linked STAR syndrome (toe syndactyly, telecanthus, and
-    anogenital and renal malformations). Note that the legacy 'cyclin-M (CCNM)' alias
-    used by CDD is distinct from the CNNM1-4 (ancient conserved domain-containing
-    protein, ACDP) magnesium transporter family, which contains CBS-pair domains (CDD:cd04590)
-    rather than cyclin-box folds.
-  summary: First-repeat sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1, qualified on human
-    Q8N1B3 residues 27-128) was repaired in Cycle 1 Stage 5 (#1171) to disambiguate
-    CCNQ/FAM58A from CNNM1-4/ACDP and cite PMID:23912459.
+  quote: first cyclin box found in cyclin-M (CCNM) family. Cyclin-M (CCNM), officially
+    designated cyclin-Q (CCNQ, formerly FAM58A; distinct from the CNNM1-4/ACDP magnesium
+    transporter family in CDD:cd04590), is the CDK10-activating cyclin that associates
+    with CDK10 to promote its protein kinase activity. Members of this family contain
+    two cyclin boxes. This model corresponds to the first one. The cyclin box is a
+    protein binding domain
+  summary: 'First-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1, parent_traits:
+    [CDD:cl40454], qualified on human UniProtKB:Q8N1B3 at residues 26-135) was repaired
+    in Cycle 1 Stage 5 (#1171) to disambiguate CCNQ/FAM58A from CNNM1-4/ACDP (CDD:cd04590)
+    and cite PMID:23912459.'
 - evidence_id: ev-cd04590-acdp
   kind: record_content
   reference: data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml
-  locator: id, short_name, definition
+  locator: identifier, label, definition, parent_traits, canonical_examples
   accessed_at: '2026-10-25T20:15:00Z'
   snapshot_sha256: 5bfd6d04f6c15aad7dd69ca34e3c88ae6dbad3d07023a8e1cba85eee3a719274
   support: supports
-  summary: CDD:cd04590 (CBS_pair_ACDP) models the CBS-pair domain of the CNNM1-4/ACDP
-    magnesium transporter family, confirming that the ACDP prose and PMID:14695534
-    citation on CDD:cd20535 belong to CNNM/ACDP rather than the CCNQ cyclin-box fold.
+  quote: Two tandem repeats of the cystathionine beta-synthase (CBS pair) domains
+    the majority of which are associated with the CorC_HlyC domain.
+  summary: 'CDD:cd04590 (label CBS_pair_CorC_HlyC_assoc, parent_traits: [CDD:cl15354],
+    carrying Caenorhabditis elegans Metal transporter cnnm-1 UniProtKB:A3QM97) models
+    the CBS-pair domain associated with CorC_HlyC in CNNM/ACDP metal transporters,
+    confirming that the ACDP Mg2+ transporter prose in CDD:cd20535 belongs to CNNM/ACDP
+    rather than the CCNQ cyclin-box fold.'
 - evidence_id: ev-pmid-23912459
   kind: primary_source
   reference: https://pubmed.ncbi.nlm.nih.gov/23912459/
-  locator: PMID:23912459 (Guen et al., 2013, Nat Genet 45:1032-1037)
+  locator: PMID:23912459 (Guen et al., 2013, Nat Genet 45:1038-1042)
   accessed_at: '2026-10-25T20:16:00Z'
   support: supports
-  quote: Cyclin M (FAM58A) is the activating partner of CDK10, and STAR syndrome mutations
-    impair the formation of the CDK10/cyclin M protein kinase complex.
-  summary: Primary functional genetics study establishing that Cyclin-M/Cyclin-Q (FAM58A/CCNQ,
-    UniProtKB:Q8N1B3) is the activating cyclin partner of CDK10 and that STAR syndrome
-    mutations disrupt CDK10/CCNQ complex formation.
+  quote: Cyclin M (FAM58A) interacts with CDK10 and forms an active protein kinase
+    complex
+  summary: Primary functional genetics study (Guen et al., 2013, Nat Genet 45:1038-1042)
+    establishing that Cyclin-M/Cyclin-Q (FAM58A/CCNQ, UniProtKB:Q8N1B3) interacts
+    with CDK10 to form an active protein kinase complex and is mutated in X-linked
+    STAR syndrome.
 - evidence_id: ev-cdd-errata-writer
   kind: record_content
   reference: scripts/cdd_errata.py
@@ -310,17 +321,18 @@ evidence:
 assessments:
 - assessment_id: identity-and-hierarchy
   area: identity
-  topic: Class-level C-terminal cyclin-box repeat identity and InterPro hierarchy
+  topic: Class-level C-terminal cyclin-box repeat identity and CDD superfamily hierarchy
   outcome: supported
   target_ids:
   - CDD:cd20535
   evidence_ids:
   - ev-cd20535-yaml
   - ev-cd20534-sibling
-  summary: CDD:cd20535 is a valid class-level sequence domain trait (SEQ_DOMAIN on
-    SEQUENCE, SO:0000417) representing the C-terminal second cyclin-box fold (short_name
-    CYCLIN_CCNM_CCNQ_rpt2) of CCNQ/FAM58A, properly placed under InterPro:IPR006670
-    (Cyclin, C-terminal domain) and distinct from N-terminal repeat CDD:cd20534 (InterPro:IPR006671).
+  summary: 'CDD:cd20535 is a valid class-level sequence domain trait (trait_axis:
+    SEQUENCE, trait_category: SEQ_DOMAIN, label: CYCLIN_CCNM_CCNQ_rpt2, parent_traits:
+    [CDD:cl40454]) representing the C-terminal second cyclin-box fold of CCNQ/FAM58A,
+    distinct from N-terminal first-repeat sibling CDD:cd20534 (label CYCLIN_CCNM_CCNQ_rpt1,
+    qualified on human Q8N1B3 at residues 26-135).'
 - assessment_id: grounding-and-carriers
   area: grounding
   topic: Legacy Swiss-Prot seed carriers Q8QZR8 and Q8N1B3
@@ -330,9 +342,9 @@ assessments:
   evidence_ids:
   - ev-cd20535-yaml
   - ev-pmid-23912459
-  summary: The two Swiss-Prot seed examples on CDD:cd20535 — Mus musculus Ccnq (UniProtKB:Q8QZR8)
-    and Homo sapiens CCNQ/FAM58A (UniProtKB:Q8N1B3) — are genuine Cyclin-Q orthologs
-    containing the C-terminal second cyclin box.
+  summary: The two unpromoted Swiss-Prot seed examples on CDD:cd20535 — Mus musculus
+    Cyclin-Q (UniProtKB:Q8QZR8) and Homo sapiens Cyclin-Q (UniProtKB:Q8N1B3) — are
+    genuine Cyclin-Q orthologs containing the C-terminal second cyclin box.
 - assessment_id: definition-and-citation-conflation
   area: consistency
   topic: Upstream CDD conflation of Cyclin-M/CCNQ with CNNM1-4/ACDP magnesium transporters
@@ -345,10 +357,12 @@ assessments:
   - ev-cd04590-acdp
   - ev-pmid-23912459
   - ev-cdd-errata-writer
-  summary: CDD:cd20535 inherits the upstream NCBI CDD description and PMID:14695534
-    citation that confuse the legacy 'Cyclin-M (CCNM)' alias of CCNQ/FAM58A with the
-    CNNM1-4 (ACDP) magnesium transporter family (CDD:cd04590) and its associated urofacial,
-    hypomagnesemia, and Jalili syndromes.
+  summary: CDD:cd20535 inherits the upstream NCBI CDD description statement 'The CCNM
+    family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily
+    conserved Mg2+ transporters' that confuses the legacy 'cyclin-M (CCNM)' alias
+    of CCNQ/FAM58A with the CNNM1-4 (ACDP) CBS-pair magnesium transporter family (CDD:cd04590,
+    label CBS_pair_CorC_HlyC_assoc), and lacks a literature evidence block citing
+    PMID:23912459.
 findings:
 - finding_id: F13
   issue_key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation
@@ -358,23 +372,21 @@ findings:
   certainty: confirmed
   title: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) conflates the second cyclin box of Cyclin-Q/Cyclin-M
     (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
-  description: In data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml,
-    the domain profile models the C-terminal second cyclin box (CYCLIN_CCNM_CCNQ_rpt2)
-    of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8),
-    the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459).
-    However, its upstream CDD definition states 'The CCNM family proteins, also known
-    as ancient conserved domain-containing proteins (ACDPs), are involved in magnesium
-    homeostasis. Mutations in CCNM1 (also known as ACDP1) are associated with urofacial
-    syndrome, while mutations in CCNM2 and CCNM4 are associated with hypomagnesemia
-    and Jalili syndrome, respectively' and cites PMID:14695534 (an ACDP paper). CNNM1-4
-    (ACDP1-4) are CBS-pair magnesium transporters modeled by CDD:cd04590, not cyclin-box
-    proteins. Preserved open in Stage 4 for Stage 5 grouped remediation via scripts/cdd_errata.py
-    and scripts/repair_cdd_errata.py.
+  description: 'In data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml,
+    the domain profile models the C-terminal second cyclin box (label CYCLIN_CCNM_CCNQ_rpt2,
+    parent_traits: [CDD:cl40454]) of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; mouse UniProtKB:Q8QZR8,
+    human UniProtKB:Q8N1B3), the CDK10-activating cyclin mutated in X-linked STAR
+    syndrome (PMID:23912459). However, its upstream CDD definition states ''The CCNM
+    family proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily
+    conserved Mg2+ transporters.'' CNNM1-4 (ACDP1-4) are CBS-pair magnesium transporters
+    modeled by CDD:cd04590 (label CBS_pair_CorC_HlyC_assoc), not cyclin-box proteins,
+    and CDD:cd20535 currently lacks an evidence block citing PMID:23912459. Preserved
+    open in Stage 4 for Stage 5 grouped remediation via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py.'
   target_ids:
   - CDD:cd20535
   field_paths:
   - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/definition
-  - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/evidence
   evidence_ids:
   - ev-cd20535-yaml
   - ev-cd20534-sibling
@@ -399,10 +411,10 @@ findings:
 actions:
 - action_id: repair-cd20535-definition-and-evidence-via-cdd-errata
   description: Add an accession-keyed erratum for CDD:cd20535 in scripts/cdd_errata.py
-    and apply it via scripts/repair_cdd_errata.py, replacing the conflated CNNM1-4/ACDP
-    magnesium transporter prose and PMID:14695534 citation with the C-terminal cyclin-box
-    repeat description of Cyclin-Q/CCNQ (FAM58A, CDK10-activating cyclin mutated in
-    X-linked STAR syndrome) backed by PMID:23912459.
+    and apply it via scripts/repair_cdd_errata.py, replacing the false 'The CCNM family
+    proteins, also called ancient conserved domain proteins (ACDPs), are evolutionarily
+    conserved Mg2+ transporters' sentence with the disambiguated CCNQ/FAM58A CDK10-activating
+    cyclin description and adding an evidence entry citing PMID:23912459.
   finding_ids:
   - F13
   target_ids:
@@ -422,10 +434,10 @@ actions:
     role: Guarded validated record writer
   acceptance_checks:
   - CDD:cd20535 definition accurately describes the second (C-terminal) cyclin box
-    of CCNQ/FAM58A and explicitly distinguishes CCNQ from CNNM1-4/ACDP magnesium transporters
-    (CDD:cd04590).
-  - CDD:cd20535 evidence cites PMID:23912459 with a verbatim CDK10/CCNQ snippet instead
-    of the misplaced ACDP reference PMID:14695534.
+    of CCNQ/FAM58A and explicitly distinguishes CCNQ from the CNNM1-4/ACDP magnesium
+    transporter family in CDD:cd04590.
+  - CDD:cd20535 evidence block is populated with PMID:23912459 and a verbatim CDK10/CCNQ
+    snippet.
   - scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay the erratum idempotently
     and scripts/validate_strict.py passes with 0 errors.
 limitations:
