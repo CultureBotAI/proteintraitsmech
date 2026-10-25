@@ -43,7 +43,7 @@ tasks:
   summary: 'Acquire receipt-locked UniProt REST membership snapshots and expanded residue_frame.json sequences for mechanism-graph sources (RHEA, GO, M-CSA, ARO) and fail-closed signature/structure sources (SFLD, PRINTS, ECOD/SIFTS).'
   status: deferred
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/652
-  disposition: 'Source-limited and network-fetch-gated: RHEA (34,578 mechanism records) and GO (45,931 records) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded active-site mechanism records) lacks residue_frame.json sequences; ARO (1,539 mechanism records) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
+  disposition: 'Source-limited and network-fetch-gated: across 39,641 causal_graphs records in Cycle 2 Stage 3, RHEA (18,465 ungrounded of 18,558 with causal_graphs) and GO (GO:7770085) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded QUALIFIED of 1,003 with causal_graphs) lacks residue_frame.json sequences; ARO (7,342 with causal_graphs) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; EC (1,104 ungrounded of 6,888 with causal_graphs) and 44 proteintraitsmech:* classes lack source-shipped UniProt residue-interval tables; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
 - task_id: proteintraitsmech-infra-0003
   summary: 'Repair upstream CDD definition defects on 10 held CDD records (cd13344, cd14999, cd15894, cd17150, cd09530, cd16523, cd16652, cd18592, cd20534, cd21551) and re-resolve their 12 held UniProt candidate examples.'
   status: resolved
@@ -53,6 +53,10 @@ tasks:
   summary: 'Key causal_graphs list-union deduplication in scripts/record_io.py merge_on_reseed by graph_id so seeder upgrades to an existing causal graph update nodes and edges in place rather than appending a duplicate graph_id.'
   status: note
   disposition: 'Observed in Cycle 2 Stage 2 (causal_graphs, goal-167a): _union_list_keys in scripts/record_io.py deduplicates causal_graphs by full JSON serialization rather than graph_id identity; upgrading an existing graph_id in seed_foundational_traits.py requires replacing matching graph_id entries in place while preserving distinct curator-added graph_id entries.'
+- task_id: proteintraitsmech-infra-0005
+  summary: 'Check stem-prefixed <batch>.protein_registry.jsonl siblings before unprefixed directory defaults in scripts/ground_uniprot_examples.py main() (lines 5330-5338) and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
+  status: note
+  disposition: 'Observed in Cycle 2 Stage 3 (protein_examples, goal-9220): (1) in scripts/ground_uniprot_examples.py:5330-5338, main() defaults args.protein_registry, args.evidence_registry, args.membership_registry, and args.sifts_registry to unprefixed args.resolved.resolve().parent / "protein_registry.jsonl" (etc.) rather than checking stem-prefixed <batch>.protein_registry.jsonl siblings first, so _provider_cache (line 2953) skips non-existent unprefixed files in review-batches/ and _verify_provider_evidence (line 3023) fails with stale:provider_missing:protein_registry unless passed explicitly; (2) remaining localized batches cnp-017..020, cdd-042..050, and prosite-065 contain valid unpromoted rows alongside rows superseded by later promotions, requiring re-resolution against current record preimages.'
 ```
 <!-- mech-infra-tasks:end -->
 
@@ -69,13 +73,15 @@ tasks:
   - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013` stages 36 `WHOLE_PROTEIN` subunit candidates across 25 `ComplexPortal` mechanism-graph records (33 recommended approvals across 22 records; 3 holds on `ComplexPortal:CPX-2267`, `ComplexPortal:CPX-1279`, and `ComplexPortal:CPX-2437`).
   - Because `cross-mech-complex-20261013.protein_registry.jsonl` and `cross-mech-complex-20261013.resolved.jsonl` were generated under a v1 fetch receipt prior to `#1081` / PR `#1084`, the resolved rows carry `uniprot_fragment: null`. Running `scripts/ground_uniprot_examples.py promote` fails closed at preflight with `missing:uniprot_fragment_status_for_whole_protein` for all 33 approved rows, and modifying `protein_registry.jsonl` in place is rightly rejected by `_verify_resolved_fetch_receipt_provenance` (`protein_registry sha256 mismatch`).
   - Additionally, `ComplexPortal:CPX-2267` was updated in PR `#1122` (`#1114`) to fix the superoxide dismutase reaction products, invalidating its historical preimage digest until re-resolved.
+  - **Cycle 2 Stage 3 (`goal-9220`) Update**: Exhaustive preflight of all 235 review batches in `reports/uniprot-grounding/review-batches/` confirmed that all remaining unpromoted `WHOLE_PROTEIN` batches (`cross-mech-complex-20261013`, `ready-local-review-077-2026-03-panther`, `repair-existing-local-review-177-2026-03-topup`, `repair-existing-local-review-179-2026-03-topup`, `human-ecoli-yeast-repair-mixed-038`, `human-ecoli-yeast-repair-mixed-040`, `human-ecoli-yeast-repair-mixed-042`, `human-ecoli-yeast-repair-panther-021..037`, `human-ecoli-yeast-complete-panther-001..005`, `human-ecoli-yeast-complete-go-008..021`, `human-ecoli-yeast-complete-rhea-035..054`, and `human-ecoli-yeast-complete-complexportal-006`) fail closed with `missing:uniprot_fragment_status_for_whole_protein` because their v1 fetch receipts lack `ProteinReference.fragment`.
 - **Desired outcome**:
-  - Re-run `scripts/fetch_uniprot_registry.py` and `scripts/ground_uniprot_examples.py resolve` for the `cross-mech-complex-20261013` candidate cohort to capture `fragment: true|false` under a schema-v2 fetch receipt and bind the updated `CPX-2267` preimage, then complete independent review and promote the qualified ComplexPortal subunit examples.
+  - Re-run `scripts/fetch_uniprot_registry.py` and `scripts/ground_uniprot_examples.py resolve` for the `cross-mech-complex-20261013` candidate cohort (and remaining `WHOLE_PROTEIN` cohorts) to capture `fragment: true|false` under a schema-v2 fetch receipt and bind the updated `CPX-2267` preimage, then complete independent review and promote the qualified examples.
 - **Evidence paths**:
   - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.resolved.jsonl`
   - `reports/uniprot-grounding/review-batches/cross-mech-complex-20261013.uniprot_fetch_receipt.json`
   - `reviews/structured/20261013T043714Z-cross-mech-complex-scientific/review.yaml`
   - `research/cross-mech-protein-examples.md`
+  - `research/stage3-protein-examples-cycle2-coverage-2026-10-25.md`
   - `scripts/fetch_uniprot_registry.py`
   - `scripts/ground_uniprot_examples.py`
 
@@ -87,20 +93,22 @@ tasks:
 - **Priority**: P2
 - **Dependencies**: Receipt-locked `UNIPROT_REST` membership acquisition runs, `residue_frame.json` sequence cache expansion, and upstream coordinate/mapping tables
 - **Observation**:
-  - Across the 429,377 trait records in `data/traits/**/*.yaml` (including 39,641 records with `causal_graphs`), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
-    1. `RHEA` (`34,591` records, `34,578` with `causal_graphs`; `151` currently grounded with `QUALIFIED` examples) and `GO` (`45,931` records, `1` with `causal_graphs`; `467` currently grounded with `QUALIFIED` examples) use `WHOLE_PROTEIN` functional grounding via `uniprot_membership_snapshot.py` (`UNIPROT_REST`), which requires a cryptographically bound `.uniprot_fetch_receipt.json` and `uniprot_memberships.jsonl` per batch.
-    2. `M-CSA` (`997` records, `996` with `causal_graphs`; `265` currently grounded with `QUALIFIED` examples) has `732` remaining records whose reference UniProt catalytic-residue accessions are absent from `data/raw/align_cache/residue_frame.json`, causing `resolve` to classify them as `BLOCKED` (`missing_protein_sequence`).
-    3. `ARO` (`7,452` records, `1,539` with `causal_graphs`) stores antimicrobial-resistance reference sequences in `data/raw/card/aro.json` via NCBI protein/nucleotide accessions and CARD model IDs without a reviewed 1:1 Swiss-Prot accession + coordinate table, so `ground_uniprot_examples.py` has no `ARO` candidate emitter.
-    4. `proteintraitsmech` foundational, local-structural, and UniProt peptide trait classes (`96` records across `seed_foundational_traits.py`, `seed_localstructuralfeature.py`, and `seed_uniprot_peptide_classes.py`; `51` with `causal_graphs`), `BioLiP` (`29` records, `6` with `causal_graphs`), `MetalPDB` (`15` records, `6` with `causal_graphs`), and `EC` (`8,225` records, `4` with `causal_graphs`) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
-    5. `SFLD` (`302` records), `PRINTS` (`2,106` records), and `ECOD` (`16,580` records) are explicitly fail-closed at promotion in `scripts/ground_uniprot_examples.py` (`SFLD` family HMM membership lacks residue coordinates; `PRINTS` fingerprint motif intervals are not bundled in InterPro `protein2ipr.dat`; `ECOD` PDB chain intervals require SIFTS PDB-to-UniProt residue mapping).
+  - Across the 429,377 trait records in `data/traits/**/*.yaml` (including **39,641 records with `causal_graphs`** after Cycle 2 Stages 1–3; durable `protein_registry.jsonl`: **13,208** proteins; durable `qualified_record_bindings.jsonl.d/`: **22,314** bindings after promoting `human-ecoli-yeast-repair-mixed-039` across 971 `InterPro` records in Cycle 2 Stage 3), `scripts/ground_uniprot_examples.py` enforces strict source-asserted provenance and coordinate gates (`--require-qualified`):
+    1. `RHEA` (`34,591` records, `18,558` with `causal_graphs`; `93` with `causal_graphs` currently have `canonical_examples` and `18,465` have `0` examples) and `GO` (`45,931` records, `1` with `causal_graphs` — `GO:7770085` protocatechuate 3,4-dioxygenase complex, `0` examples) use `WHOLE_PROTEIN` functional grounding via `uniprot_membership_snapshot.py` (`UNIPROT_REST`), which requires a cryptographically bound v2 `.uniprot_fetch_receipt.json` (with `fragment` status) and `uniprot_memberships.jsonl` per batch.
+    2. `M-CSA` (`1,003` records in `data/traits/structure/active_site/mcsa`, all `1,003` with `causal_graphs` and `canonical_examples`: `265` grounded with `QUALIFIED` examples + `738` legacy seeded) has `732` remaining records whose reference UniProt catalytic-residue accessions are absent from `data/raw/align_cache/residue_frame.json`, causing `resolve` to classify them as `BLOCKED` (`missing_protein_sequence`).
+    3. `ARO` (`7,452` records, `7,342` with `causal_graphs`, `0` with `canonical_examples`) stores antimicrobial-resistance reference sequences in `data/raw/card/aro.json` via NCBI protein/nucleotide accessions and CARD model IDs without a reviewed 1:1 Swiss-Prot accession + coordinate table, so `ground_uniprot_examples.py` has no `ARO` candidate emitter.
+    4. `EC` (`8,225` records, `6,888` with `causal_graphs`: `5,784` with `canonical_examples` and `1,104` with `0` examples) has `1,104` mechanism-graph records lacking Swiss-Prot `DR` cross-references in `data/raw/expasy/enzyme.dat` and lacks source-shipped residue intervals for `QUALIFIED` promotion.
+    5. `BioLiP` (`5,572` records with `causal_graphs`, `100%` with `canonical_examples`), `MetalPDB` (`228` records with `causal_graphs`, `100%` with `canonical_examples`), and `UNIPROT_FT_SEQ_*` (`5` records with `causal_graphs`, `100%` with 15 `canonical_examples` each) are 100% populated with legacy/source examples, while the **44 `proteintraitsmech:*` single-file mechanism-graph classes** (`8` root/cavity classes + `8` Cycle 1 Stage 1 structural leaf classes + `28` Cycle 2 Stage 1 sequence feature leaf classes) define general mechanism/site classes without source-shipped UniProt residue-interval tables in `data/raw/`.
+    6. `SFLD` (`302` records), `PRINTS` (`2,106` records), and `ECOD` (`16,580` records) are explicitly fail-closed at promotion in `scripts/ground_uniprot_examples.py` (`SFLD` family HMM membership lacks residue coordinates; `PRINTS` fingerprint motif intervals are not bundled in InterPro `protein2ipr.dat`; `ECOD` PDB chain intervals require SIFTS PDB-to-UniProt residue mapping).
 - **Desired outcome**:
-  - Expand `data/raw/align_cache/residue_frame.json` to cover the remaining 732 `M-CSA` reference UniProt accessions, run receipted `UNIPROT_REST` membership batches for additional `RHEA`/`GO` cohorts, and add SIFTS / CARD-to-Swiss-Prot mapping support where exact organism, sequence, and claim scope can be preserved.
+  - Expand `data/raw/align_cache/residue_frame.json` to cover the remaining 732 `M-CSA` reference UniProt accessions, run receipted v2 `UNIPROT_REST` membership batches for additional `RHEA`/`GO` cohorts, and add SIFTS / CARD-to-Swiss-Prot mapping support where exact organism, sequence, and claim scope can be preserved.
 - **Evidence paths**:
   - `scripts/ground_uniprot_examples.py`
   - `scripts/uniprot_membership_snapshot.py`
   - `data/raw/align_cache/residue_frame.json`
   - `data/cross_mech/coverage.json`
   - `research/cycle2-stage1-add-records-frontier.md`
+  - `research/stage3-protein-examples-cycle2-coverage-2026-10-25.md`
 
 ### `proteintraitsmech-infra-0003` — Remediate upstream CDD prose defects on 10 held `CDD` records before promoting their 12 held candidates
 
@@ -153,5 +161,24 @@ tasks:
   - `scripts/seed_localstructuralfeature.py`
   - `scripts/seed_uniprot_peptide_classes.py`
   - `research/causal-graphs-round125.md`
+
+### `proteintraitsmech-infra-0005` — Check stem-prefixed `<batch>.protein_registry.jsonl` siblings in `scripts/ground_uniprot_examples.py` `main()` and re-resolve partially superseded localized review batches
+
+- **Originating run / cycle / stage**: `mech-goal-sequence-20261019`, Cycle 2, Stage 3 (`protein_examples`, `goal-9220`)
+- **Status**: `note`
+- **Issue**: pending-link (non-blocking promoter CLI ergonomics and batch re-resolution note; related to https://github.com/CultureBotAI/proteintraitsmech/issues/652)
+- **Priority**: P3
+- **Dependencies**: None
+- **Observation**:
+  1. `scripts/ground_uniprot_examples.py promote -h` documents `--protein-registry`, `--evidence-registry`, `--membership-registry`, and `--sifts-registry` as `(default: beside --resolved)`, and `main()` (`scripts/ground_uniprot_examples.py:5330-5338`) populates those defaults before calling `promote(args)` using unprefixed directory-level filenames (`args.resolved.resolve().parent / "protein_registry.jsonl"`, `"occurrence_evidence.jsonl"`, `"uniprot_memberships.jsonl"`, `"sifts_mappings.jsonl"`). When `args.resolved` is a stem-prefixed review-batch file such as `reports/uniprot-grounding/review-batches/human-ecoli-yeast-repair-mixed-039.resolved.jsonl`, the sibling artifacts on disk are `<batch>.protein_registry.jsonl` and `<batch>.occurrence_evidence.jsonl`, whereas unprefixed `review-batches/protein_registry.jsonl` does not exist. Consequently, `_provider_cache` (`line 2953: if not path.is_file(): continue`) skips loading the provider registries and `_verify_provider_evidence` (`line 3023`) rejects every row with `stale:provider_missing:protein_registry` unless `--protein-registry` and `--evidence-registry` are passed explicitly.
+  2. Several historical `LOCALIZED` review batches (`human-ecoli-yeast-repair-cnp-017..020`, `repair-existing-local-review-042..050-2026-03-cdd`, and `repair-existing-local-review-065-2026-03-prosite`) contain valid unpromoted `InterPro`/`CDD`/`PROSITE` candidate rows alongside rows whose target records were subsequently promoted by another batch (`conflict:different_qualified_trait_occurrence` or `stale:record_changed_since_resolve`). Because `promote` fails closed at whole-batch preflight if any approved row's preimage is stale or conflicts with a different promoted protein occurrence, promoting the remaining ungrounded rows from those batches requires re-running `resolve` against current on-disk record preimages.
+- **Desired outcome**:
+  - In `scripts/ground_uniprot_examples.py:5330-5338`, check for stem-prefixed `<batch>.protein_registry.jsonl` (and corresponding `.occurrence_evidence.jsonl`, `.uniprot_memberships.jsonl`, `.sifts_mappings.jsonl`) siblings beside `--resolved` before falling back to unprefixed `protein_registry.jsonl`, and re-resolve the remaining ungrounded candidates in `cnp-017..020`, `cdd-042..050`, and `prosite-065` against current on-disk record preimages.
+- **Evidence paths**:
+  - `scripts/ground_uniprot_examples.py`
+  - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-repair-mixed-039.resolved.jsonl`
+  - `reports/uniprot-grounding/review-batches/human-ecoli-yeast-repair-cnp-017.resolved.jsonl`
+  - `research/stage3-protein-examples-cycle2-coverage-2026-10-25.md`
+
 
 
