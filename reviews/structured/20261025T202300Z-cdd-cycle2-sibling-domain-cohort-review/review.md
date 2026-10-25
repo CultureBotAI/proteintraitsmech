@@ -1,0 +1,1371 @@
+# Cohort scientific review of 8 Cycle 2 Stage 4 CDD sequence-domain records (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings)
+
+- Review: 20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-25T20:11:00Z
+- Finished UTC: 2026-10-25T20:23:00Z
+- Reviewer: Antigravity (independent)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Full cohort review of all 8 eligible CDD sequence-domain records in the frozen Cycle 2 Stage 4 inventory (2 Cycle 1 Stage 5 deferred carry-forward records CDD:cd00104 and CDD:cd00959, plus 6 unpromoted tandem-repeat and paralog-subfamily siblings of the Cycle 1 CDD cohort: CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, and CDD:cd18593). All 8 records pass strict LinkML schema validation, UniProt grounding replay, causal-graph audit, writer audit, and curation-history validation, and each represents a genuine, non-redundant conserved sequence domain class (SEQ_DOMAIN on SEQUENCE) that should be retained as a distinct record. Carry-forward findings F1 (CDD:cd00104) and F2 (CDD:cd00959) are verified resolved on disk following Cycle 1 Stage 6 (#1172, PR #1175). Six new open findings (F13-F18: 5 major, 1 minor) across the 6 sibling CDD records share a single root cause in upstream NCBI CDD template descriptions and are preserved open for Cycle 2 Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+
+## Scope And Provenance
+
+Frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory comprising the 2 Cycle 1 Stage 5 deferred carry-forward records (CDD:cd00104, CDD:cd00959) and 6 unpromoted tandem-repeat/subfamily sibling records of the Cycle 1 CDD cohort (CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, CDD:cd18593).
+
+Selection: Every CDD record carried forward from Cycle 1 Stage 5 (F1, F2) plus every direct tandem-repeat or paralog-subfamily CDD sibling of the Cycle 1 cohort (CYCLIN_CCNM_CCNQ, SNARE_SNAP25, DCX_DCDC2/DCDC2C, and ABC_6TM_MRP) that retained upstream CDD template prose defects after Cycle 1 remediation.
+Coverage: full; 8 reviewed / 8 in the declared population.
+Source: git_commit at Git base 66e8f479733907dc0792e481f41bb2f0fbb9dc27.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| CDD:cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml | generated | Kazal-type serine protease inhibitors and follistatin-like domains |
+| CDD:cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml | generated | 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family |
+| CDD:cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml | generated | C-terminal SNARE motif of SNAP25 |
+| CDD:cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml | generated | Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2) and similar proteins |
+| CDD:cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml | generated | Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins |
+| CDD:cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml | generated | Doublecortin-like domain 2 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins |
+| CDD:cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml | generated | Six-transmembrane helical domain 1 (TMD1) of multidrug resistance-associated protein MRP4 and similar proteins |
+| CDD:cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml | generated | Second cyclin box found in cyclin-M (CCNM) family |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Strict LinkML and OAK ontology-binding validation across all 8 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | All 8 CDD cohort records pass closed LinkML schema validation and OAK ontology-term checks with 0 errors. |
+| Release-pinned UniProt grounding and binding replay across all 8 cohort records | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 8 files scanned, 13,208 registry proteins, 22,314 qualified record bindings verified, 0 semantic findings; promoted examples on CDD:cd00104 and CDD:cd00959 replay cleanly against their updated record_sha256 digests and the 6 sibling records remain unpromoted as expected. |
+| Causal-graph audit across all 8 cohort records | passed | False | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 0 records with causal_graphs, 0 errors, 0 warnings. |
+| Registered write-route audit | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | 618 scripts examined (51 seeders, 8 registered editors, 2 validated promoters, 52 declared bypasses), 0 unguarded writer findings. |
+| Append-only curation history validation | passed | True | CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535 | All 15 history records under history/**/*.yaml validate against src/proteintraitsmech/schema/history.yaml (HistoryRecord) with 0 errors. |
+
+## Scientific And Domain Assessments
+
+### Category placement and tandem-repeat/subfamily boundary distinctness across all 8 CDD records
+
+scope: supported. Targets: CDD:cd00104, CDD:cd00959, CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535.
+
+All 8 records are genuine conserved protein sequence domain profiles (trait_axis: SEQUENCE, trait_category: SEQ_DOMAIN, so_term: SO:0000417) with distinct CDD PSSM identifiers and non-overlapping repeat intervals or paralog-subfamily scopes. None should be merged or lumped with sibling CDD profiles.
+
+### Verification of Cycle 1 carry-forward findings F1 (CDD:cd00104) and F2 (CDD:cd00959)
+
+consistency: supported. Targets: CDD:cd00104, CDD:cd00959.
+
+Both Cycle 1 Stage 5 deferred carry-forward findings — F1 on CDD:cd00104 and F2 on CDD:cd00959 — are verified resolved on disk at commit 66e8f479733907dc0792e481f41bb2f0fbb9dc27 with entries in scripts/cdd_errata.py, curation_history events, and valid sharded qualified_record_bindings.jsonl.d receipts.
+
+### Upstream CDD nomenclature, paralog-scope, and biochemical contradictions across the 6 sibling CDD records (F13-F18)
+
+consistency: concern. Targets: CDD:cd15885, CDD:cd17149, CDD:cd17151, CDD:cd17154, CDD:cd18593, CDD:cd20535.
+
+All 6 unpromoted sibling CDD records (CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, CDD:cd18593) carry upstream NCBI CDD template defects (CNNM/ACDP conflation, false SNAP25 transmembrane claim, DCDC2C-&gt;DCDC2 paralog switch, 'Dublecortin-like' typo, off-target ubiquitin modifier sentence, and MRP7=ABCC7/CFTR misassignment) that require Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+
+## Findings
+
+### F1: CDD:cd00104 definition misspells chymotrypsin and lists avian ovomucoids as target serine proteases
+
+minor / resolved / confirmed; issue key: cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion.
+
+CDD:cd00104 previously stated 'Kazal inhibitors inhibit serine proteases, such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling 'chymotrypsin' and listing 'avian ovomucoids' (Kazal-type inhibitor proteins, PMID:6192856) as target enzymes.
+
+Disposition: Repaired CDD:cd00104 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), correcting 'chyomotrypsin' to 'chymotrypsin', distinguishing avian ovomucoids as canonical Kazal-type inhibitors rather than target proteases (PMID:6192856), and updating all 3 durable qualified_record_bindings.jsonl.d receipts to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).
+
+### F2: CDD:cd00959 definition repeats its opening title sentence verbatim
+
+minor / resolved / confirmed; issue key: cdd-cd00959-dera-duplicated-opening-sentence.
+
+CDD:cd00959 previously began with the duplicated sentence '2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family.' due to upstream CDD title+description concatenation.
+
+Disposition: Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py in Cycle 1 Stage 6 (#1172, PR #1175), removing the duplicated opening title sentence and updating both durable qualified_record_bindings.jsonl.d receipts to the new record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).
+
+### F13: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) conflates the second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
+
+major / open / confirmed; issue key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation.
+
+CDD:cd20535 models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8), the activating cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459), but its upstream CDD definition and PMID:14695534 citation describe the unrelated CNNM1-4 (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590) and urofacial, hypomagnesemia, and Jalili syndromes.
+
+### F14: CDD:cd15885 (SNARE_SNAP25C) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
+
+major / open / confirmed; issue key: cdd-cd15885-snap25c-transmembrane-domain-overclaim.
+
+CDD:cd15885 models the C-terminal Qc SNARE motif of SNAP25 (human UniProtKB:P60880, mouse P60879, chicken P36975), but its upstream CDD definition states 'Both, Qb/Qc SNAREs consist of 2 coiled-coil helices (which form a single SNARE domain) and a transmembrane domain'. SNAP25-family Qb/Qc t-SNAREs lack a transmembrane domain and attach to membranes via palmitoylated cysteines in the inter-motif linker between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885) SNARE motifs (PMID:9759094).
+
+### F15: CDD:cd17151 (DCX1_DCDC2C) misspells Doublecortin-like as Dublecortin-like in definition and switches to paralog DCDC2 disease genetics
+
+major / open / confirmed; issue key: cdd-cd17151-dcdc2c-typo-and-dcdc2-paralog-disease-switch.
+
+CDD:cd17151 models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but its definition begins with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2C (DCDC2C) and similar proteins' and immediately switches in sentence 2 to paralog DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+
+### F16: CDD:cd17154 (DCX2_DCDC2C) switches mid-definition from DCDC2C to paralog DCDC2 reading-disability and ADHD genetics
+
+major / open / confirmed; issue key: cdd-cd17154-dcdc2c-rpt2-dcdc2-paralog-disease-switch.
+
+CDD:cd17154 models the C-terminal second doublecortin-like domain (DCX2) of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without qualification to paralog DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+
+### F17: CDD:cd17149 (DCX1_DCDC2) misspells Doublecortin-like as Dublecortin-like in definition and interpolates an off-target ubiquitin protein-modifier sentence
+
+minor / open / confirmed; issue key: cdd-cd17149-dcdc2-typo-and-ubiquitin-modifier-digression.
+
+CDD:cd17149 models the N-terminal first doublecortin-like domain (DCX1) of human DCDC2 (UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein 2 (DCDC2) and similar proteins', and interpolates an off-target sentence defining the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair') even though DCX domains only adopt a ubiquitin-like beta-grasp fold and do not function as ubiquitin protein modifiers.
+
+### F18: CDD:cd18593 (ABC_6TM_MRP4_D1_like) misassigns MRP7 to ABCC7 (CFTR) instead of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9 members
+
+major / open / confirmed; issue key: cdd-cd18593-mrp4-abcc-mrp7-cftr-misassignment-and-mdr-overclaim.
+
+CDD:cd18593 models TMD1 of MRP4/ABCC4 (human UniProtKB:O15439, mouse E9Q236), but carries the corrupted upstream CDD ABCC template text stating 'Five MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively) contain a N-terminal 5-TM domain (TMD0)' and claiming blanket anticancer multidrug-resistance efflux across all nine MRPs (MRP1-MRP9). In HGNC/UniProt nomenclature, ABCC7 is CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10 (UniProtKB:Q5T3U5), MRP8 is ABCC11, and MRP9 is ABCC12 (an uncharacterized paralog without established drug-efflux activity, PMID:16984901).
+
+## Recommended Actions And Acceptance Checks
+
+### extend-cdd-errata-and-repair-cycle2-sibling-records
+
+Add accession-keyed errata entries for CDD:cd20535 (F13), CDD:cd15885 (F14), CDD:cd17151 (F15), CDD:cd17154 (F16), CDD:cd17149 (F17), and CDD:cd18593 (F18) to scripts/cdd_errata.py and apply them in place via scripts/repair_cdd_errata.py with literature-backed evidence and curation_history entries.
+
+- All 6 sibling CDD records (cd20535, cd15885, cd17151, cd17154, cd17149, cd18593) carry accurate, paralog- and repeat-specific definitions and grounded literature citations.
+- scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay all 18 CDD errata entries deterministically and idempotently.
+- scripts/validate_strict.py, scripts/validate_uniprot_grounding.py, and scripts/audit_writers.py pass with 0 errors.
+
+## Category Boundaries
+
+- retain: CDD:cd00104, CDD:cd00959. Retain promoted records CDD:cd00104 (KAZAL_FS) and CDD:cd00959 (DeoC) as distinct conserved domain families whose definitions and sharded qualified_record_bindings receipts were repaired in Cycle 1 Stage 6 (#1172, PR #1175).
+- retain: CDD:cd20535. Retain CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, C-terminal second cyclin box of CCNQ/FAM58A under InterPro:IPR006670) as distinct from N-terminal first cyclin box sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1 under InterPro:IPR006671) and distinct from CDD:cd04590 (CBS_pair_ACDP in CNNM1-4 magnesium transporters).
+- retain: CDD:cd15885. Retain CDD:cd15885 (SNARE_SNAP25C, C-terminal Qc SNARE motif of SNAP25, human P60880 residues 140-202) as distinct from N-terminal Qb SNARE motif sibling CDD:cd15894 (SNARE_SNAP25N, residues 19-81) because they represent non-overlapping tandem coiled-coil SNARE domains on SNAP25.
+- retain: CDD:cd17149, CDD:cd17151, CDD:cd17154. Retain CDD:cd17149 (DCX1_DCDC2, N-terminal repeat 1 of DCDC2), CDD:cd17151 (DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154 (DCX2_DCDC2C, C-terminal repeat 2 of DCDC2C) as distinct repeat-position and paralog-subfamily domain profiles separate from each other and from CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2).
+- retain: CDD:cd18593. Retain CDD:cd18593 (ABC_6TM_MRP4_D1_like, TMD1 of MRP4/ABCC4) as a distinct ABCC TMD1 subfamily profile separate from sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1, TMD1 of MRP5/ABCC5, MRP8/ABCC11, and MRP9/ABCC12).
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| ev-cd00104 | data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml; definition, canonical_examples, evidence (PMID:6192856), curation_history | supports | Verified on disk that CDD:cd00104 spells 'chymotrypsin' accurately, distinguishes Kazal inhibitor proteins (avian ovomucoids) from target proteases, and replays all 3 qualified human canonical examples cleanly. |
+| ev-cd00959 | data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml; definition, canonical_examples, curation_history | supports | Verified on disk that CDD:cd00959 no longer repeats its opening title sentence and replays both qualified canonical examples (E. coli P0A6L0, human Q9Y315) cleanly. |
+| ev-cd20535 | data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml; id, label, short_name, definition, canonical_examples, evidence (PMID:14695534) | refutes | CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, seed examples Q8QZR8 and Q8N1B3) models the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition and PMID:14695534 citation conflate CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium transporter family. |
+| ev-cd20534-cd04590-siblings | data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml; CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) and CDD:cd04590 (CBS_pair_ACDP) | supports | Repaired first-repeat sibling CDD:cd20534 (Q8N1B3 residues 27-128, PMID:23912459) and CBS-pair record CDD:cd04590 confirm that CDD:cd20535 is the non-overlapping C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP. |
+| ev-cd15885 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; id, label, short_name, definition, canonical_examples (P60880, P60879, P36975) | refutes | CDD:cd15885 (SNARE_SNAP25C) models the C-terminal Qc SNARE motif of SNAP25 (human P60880 residues 140-202), but its upstream CDD definition falsely asserts that Qb/Qc SNAREs contain a transmembrane domain. |
+| ev-cd15894-sibling | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml; id, short_name, definition, evidence (PMID:9759094) | supports | Repaired N-terminal sibling CDD:cd15894 (SNARE_SNAP25N, qualified on human P60880 residues 19-81) confirms that SNAP25 lacks a transmembrane domain and is membrane-anchored via palmitoylated cysteines (PMID:9759094). |
+| ev-cd17151 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml; id, label, short_name, definition, canonical_examples (A8MYV0) | refutes | CDD:cd17151 (DCX1_DCDC2C, human DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like' as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2. |
+| ev-cd17154 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml; id, label, short_name, definition, canonical_examples (A8MYV0) | refutes | CDD:cd17154 (DCX2_DCDC2C, C-terminal second DCX repeat of human DCDC2C UniProtKB:A8MYV0) switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2. |
+| ev-cd17149 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; id, label, short_name, definition, canonical_examples (Q9UHG0) | partial | CDD:cd17149 (DCX1_DCDC2, N-terminal first DCX repeat of human DCDC2 UniProtKB:Q9UHG0) misspells 'Doublecortin-like' as 'Dublecortin-like' and interpolates an off-target sentence defining the ubiquitin protein modifier even though DCX domains only adopt a ubiquitin-like beta-grasp fold. |
+| ev-cd17150-cd17152-siblings | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml; CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2) | supports | Repaired paralog sibling CDD:cd17150 (DCX1_DCDC2B on human DCDC2B A2VCK2) and second-repeat sibling CDD:cd17152 (DCX2_DCDC2 on human DCDC2 Q9UHG0) confirm the clean repeat-position and paralog-subfamily partition across DCX1/DCX2 profiles in DCDC2, DCDC2B, and DCDC2C. |
+| ev-cd18593 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml; id, label, short_name, definition, canonical_examples (O15439, E9Q236) | refutes | CDD:cd18593 (ABC_6TM_MRP4_D1_like, human MRP4/ABCC4 O15439) carries the corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7 (CFTR, a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes anticancer multidrug-resistance efflux across all MRP1-MRP9 members (including uncharacterized MRP9/ABCC12). |
+| ev-cd18592-sibling | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml; id, short_name, definition, evidence (PMID:16984901) | supports | Repaired sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) confirms the accurate HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11, MRP9=ABCC12; ABCC7=CFTR) and transport qualification (PMID:16984901). |
+| ev-prior-stage4-cd00104 | reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml; finding F1 | supports | Cycle 1 Stage 4 single-record review of CDD:cd00104 recording finding F1. |
+| ev-prior-stage4-cohort | reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml; findings F1 and F2 | supports | Cycle 1 Stage 4 cohort review recording findings F1 and F2 and noting boundary siblings cd20535, cd15885, and cd17151. |
+| ev-prior-stage5-cohort | reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml; findings F1 and F2 (deferred under #1172) and F3-F12 (resolved under #1171) | supports | Cycle 1 Stage 5 post-remediation review deferring F1 and F2 under #1172 until sharded qualified_record_bindings re-binding landed. |
+| ev-cycle1-stage6-evidence | reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/evidence.yaml; proteintraitsmech-infra-0003 resolution (#1172, PR #1175) | supports | Cycle 1 Stage 6 workflow evidence documenting the in-place repair and transactional qualified_record_bindings re-binding of CDD:cd00104 (F1) and CDD:cd00959 (F2). |
+| ev-cdd-errata-infrastructure | scripts/cdd_errata.py; CDD_ERRATA table, scripts/repair_cdd_errata.py, and scripts/seed_cdd.py | supports | scripts/cdd_errata.py contains all 12 Cycle 1 CDD errata entries (including CDD:cd00104 and CDD:cd00959) and is wired into scripts/seed_cdd.py and scripts/repair_cdd_errata.py, providing the registered writer route for remediating F13-F18 in Cycle 2 Stage 5. |
+
+## Limits And Additional Notes
+
+- This cohort review covers the frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings); other CDD records outside this cohort were not re-audited.
+- No scientific trait records under data/traits/ were edited during Stage 4; findings F13-F18 remain open for Stage 5 grouped remediation.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review
+kind: category
+repository: CultureBotAI/proteintraitsmech
+title: Cohort scientific review of 8 Cycle 2 Stage 4 CDD sequence-domain records (2
+  Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings)
+started_at: '2026-10-25T20:11:00Z'
+finished_at: '2026-10-25T20:23:00Z'
+reviewer:
+  identity: Antigravity
+  kind: agent
+  model: Claude Opus 4.6
+  independence: independent
+  independence_basis: Cycle 2 Stage 4 cohort scientific review of the frozen 8-record
+    CDD SEQ_DOMAIN inventory and 6 sibling CDD boundary records without modifying
+    scientific records.
+skill: review-yaml-category
+completion: completed
+verdict: needs_curation
+native_verdict: COHORT_NEEDS_CURATION_2_RESOLVED_6_OPEN_FINDINGS
+scientific_review: true
+summary: 'Full cohort review of all 8 eligible CDD sequence-domain records in the
+  frozen Cycle 2 Stage 4 inventory (2 Cycle 1 Stage 5 deferred carry-forward records
+  CDD:cd00104 and CDD:cd00959, plus 6 unpromoted tandem-repeat and paralog-subfamily
+  siblings of the Cycle 1 CDD cohort: CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154,
+  CDD:cd17149, and CDD:cd18593). All 8 records pass strict LinkML schema validation,
+  UniProt grounding replay, causal-graph audit, writer audit, and curation-history
+  validation, and each represents a genuine, non-redundant conserved sequence domain
+  class (SEQ_DOMAIN on SEQUENCE) that should be retained as a distinct record. Carry-forward
+  findings F1 (CDD:cd00104) and F2 (CDD:cd00959) are verified resolved on disk following
+  Cycle 1 Stage 6 (#1172, PR #1175). Six new open findings (F13-F18: 5 major, 1 minor)
+  across the 6 sibling CDD records share a single root cause in upstream NCBI CDD
+  template descriptions and are preserved open for Cycle 2 Stage 5 grouped remediation
+  via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.'
+source:
+  git_revision: 66e8f479733907dc0792e481f41bb2f0fbb9dc27
+  state: git_commit
+  inputs:
+  - path: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+    sha256: 3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f
+    role: target
+  - path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+    sha256: 91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea
+    role: target
+  - path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+    sha256: e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b
+    role: context
+  - path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+    sha256: 92a423f28b256ec77c726a51a6bce8725e24218cf6f1d94c80fc8a1cfd115941
+    role: target
+  - path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+    sha256: 74a1c7b8bb284513e28bce564a5705142f643fa1bfe1c199bf6c338631bb2e76
+    role: target
+  - path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml
+    sha256: fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756
+    role: context
+  - path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+    sha256: 6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d
+    role: target
+  - path: data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml
+    sha256: 72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88
+    role: context
+  - path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+    sha256: 62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26
+    role: target
+  - path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml
+    sha256: d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368
+    role: context
+  - path: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+    sha256: 8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074
+    role: target
+  - path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml
+    sha256: fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a
+    role: context
+  - path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+    sha256: 7f72a55f63a4f82d87f7f4456ea7b3085585eb2f7461b79fd3752ca19d368b9a
+    role: target
+  - path: data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml
+    sha256: 5bfd6d04f6c15aad7dd69ca34e3c88ae6dbad3d07023a8e1cba85eee3a719274
+    role: context
+  - path: reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml
+    sha256: f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9
+    role: context
+  - path: reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml
+    sha256: ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e
+    role: context
+  - path: reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml
+    sha256: 438b6712ef02fc88990c1bf5e054fc2b901925f85b2eed0f4da2cc3015be6330
+    role: context
+  - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/evidence.yaml
+    sha256: 10d01ef913b4531b80bd3b42ae8eea21f3c61872bc753196411b9e0c16b25a93
+    role: context
+  - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/evidence.yaml
+    sha256: 3cded5bbfd329238d0e695ce9bc64098886a7724b03dacd1b524f91ca7903201
+    role: context
+  - path: scripts/cdd_errata.py
+    sha256: 5cc563845168a79aa0859d58257052a4f2d0fc8fc0a6687c0d967e8d55a8a303
+    role: context
+  - path: scripts/record_io.py
+    sha256: ef18d4a2224810768232337f1007cb757425bff87aa96edd1e6b193da14863bf
+    role: context
+  - path: scripts/repair_cdd_errata.py
+    sha256: b44d0face51dbabbe7e31ddd980074a184781ec8834f5170509d3ab4125c2fa3
+    role: context
+  - path: scripts/seed_cdd.py
+    sha256: 4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory comprising
+    the 2 Cycle 1 Stage 5 deferred carry-forward records (CDD:cd00104, CDD:cd00959)
+    and 6 unpromoted tandem-repeat/subfamily sibling records of the Cycle 1 CDD cohort
+    (CDD:cd20535, CDD:cd15885, CDD:cd17151, CDD:cd17154, CDD:cd17149, CDD:cd18593).
+  selection: Every CDD record carried forward from Cycle 1 Stage 5 (F1, F2) plus every
+    direct tandem-repeat or paralog-subfamily CDD sibling of the Cycle 1 cohort (CYCLIN_CCNM_CCNQ,
+    SNARE_SNAP25, DCX_DCDC2/DCDC2C, and ABC_6TM_MRP) that retained upstream CDD template
+    prose defects after Cycle 1 remediation.
+  coverage: full
+  population_size: 8
+  reviewed_target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  exclusions:
+  - target: 10 Cycle 1 G1 CDD records already resolved in Cycle 1 Stage 5 (cd09530,
+      cd13344, cd14999, cd15894, cd16523, cd16652, cd17150, cd18592, cd20534, cd21551)
+    reason: 'Already remediated and verified in Cycle 1 Stage 5 (20261022T081000Z-cdd-stage5-remediation-review)
+      and promoted in Cycle 1 Stage 6 (#1171, #1172); cd15894, cd17150, cd18592, and
+      cd20534 are included here as boundary-contrast context inputs.'
+  - target: Sibling CDD records cd04590 (CBS_pair_ACDP) and cd17152 (DCX2_DCDC2)
+    reason: Inspected as boundary-contrast context inputs whose definitions are already
+      scoped to their respective protein families (CNNM/ACDP and DCDC2 repeat 2).
+targets:
+- target_id: CDD:cd00104
+  path: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  label: Kazal-type serine protease inhibitors and follistatin-like domains
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd00959
+  path: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+  label: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd15885
+  path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+  label: C-terminal SNARE motif of SNAP25
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd17149
+  path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+  label: Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2 (DCDC2) and similar proteins
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 74a1c7b8bb284513e28bce564a5705142f643fa1bfe1c199bf6c338631bb2e76
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd17151
+  path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+  label: Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2C (DCDC2C) and similar proteins
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd17154
+  path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+  label: Doublecortin-like domain 2 found in doublecortin domain-containing protein
+    2C (DCDC2C) and similar proteins
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 92a423f28b256ec77c726a51a6bce8725e24218cf6f1d94c80fc8a1cfd115941
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd18593
+  path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+  label: Six-transmembrane helical domain 1 (TMD1) of multidrug resistance-associated
+    protein MRP4 and similar proteins
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 7f72a55f63a4f82d87f7f4456ea7b3085585eb2f7461b79fd3752ca19d368b9a
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+- target_id: CDD:cd20535
+  path: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+  label: Second cyclin box found in cyclin-M (CCNM) family
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: 8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+checks:
+- check_id: schema
+  name: Strict LinkML and OAK ontology-binding validation across all 8 cohort records
+  command: .venv/bin/python scripts/validate_strict.py --out /tmp/instance_validation_failures.tsv
+    data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+    data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+    data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+    data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+    data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+    data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: All 8 CDD cohort records pass closed LinkML schema validation and OAK ontology-term
+    checks with 0 errors.
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-cd15885
+  - ev-cd17149
+  - ev-cd17151
+  - ev-cd17154
+  - ev-cd18593
+  - ev-cd20535
+- check_id: semantic
+  name: Release-pinned UniProt grounding and binding replay across all 8 cohort records
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py --out /tmp/uniprot_grounding_validation.tsv
+    data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+    data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+    data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+    data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+    data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+    data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 8 files scanned, 13,208 registry proteins, 22,314 qualified record bindings
+    verified, 0 semantic findings; promoted examples on CDD:cd00104 and CDD:cd00959
+    replay cleanly against their updated record_sha256 digests and the 6 sibling records
+    remain unpromoted as expected.
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-cycle1-stage6-evidence
+- check_id: graphs
+  name: Causal-graph audit across all 8 cohort records
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+    data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+    data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+    data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+    data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+    data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+    data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+  exit_code: 0
+  status: passed
+  required: false
+  summary: 0 records with causal_graphs, 0 errors, 0 warnings.
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-cd15885
+  - ev-cd17149
+  - ev-cd17151
+  - ev-cd17154
+  - ev-cd18593
+  - ev-cd20535
+- check_id: writer-audit
+  name: Registered write-route audit
+  command: .venv/bin/python scripts/audit_writers.py
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 618 scripts examined (51 seeders, 8 registered editors, 2 validated promoters,
+    52 declared bypasses), 0 unguarded writer findings.
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cdd-errata-infrastructure
+- check_id: history
+  name: Append-only curation history validation
+  command: .venv/bin/python -c "import glob, sys, linkml.validator as v; files = sorted(glob.glob('history/**/*.yaml',
+    recursive=True)); sys.exit(sum(1 for f in files for _ in v.validate_file(f, 'src/proteintraitsmech/schema/history.yaml',
+    'HistoryRecord').results))"
+  exit_code: 0
+  status: passed
+  required: true
+  summary: All 15 history records under history/**/*.yaml validate against src/proteintraitsmech/schema/history.yaml
+    (HistoryRecord) with 0 errors.
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cdd-errata-infrastructure
+evidence:
+- evidence_id: ev-cd00104
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml
+  locator: definition, canonical_examples, evidence (PMID:6192856), curation_history
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26
+  support: supports
+  quote: Kazal inhibitors (such as avian ovomucoids and pancreatic secretory trypsin
+    inhibitor) inhibit serine proteases including trypsin, chymotrypsin, and elastases;
+    Kazal-like domains are also seen in the extracellular part of agrins, which are
+    not known to be protease inhibitors.
+  summary: Verified on disk that CDD:cd00104 spells 'chymotrypsin' accurately, distinguishes
+    Kazal inhibitor proteins (avian ovomucoids) from target proteases, and replays
+    all 3 qualified human canonical examples cleanly.
+- evidence_id: ev-cd00959
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml
+  locator: definition, canonical_examples, curation_history
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f
+  support: supports
+  quote: 2-deoxyribose-5-phosphate aldolase (DERA) of the DeoC family. DERA is a class
+    I aldolase that catalyzes the reversible aldol reaction between acetaldehyde and
+    D-glyceraldehyde 3-phosphate to form 2-deoxy-D-ribose 5-phosphate.
+  summary: Verified on disk that CDD:cd00959 no longer repeats its opening title sentence
+    and replays both qualified canonical examples (E. coli P0A6L0, human Q9Y315) cleanly.
+- evidence_id: ev-cd20535
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml
+  locator: id, label, short_name, definition, canonical_examples, evidence (PMID:14695534)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074
+  support: refutes
+  quote: The CCNM family proteins, also known as ancient conserved domain-containing
+    proteins (ACDPs), are involved in magnesium homeostasis. Mutations in CCNM1 (also
+    known as ACDP1) are associated with urofacial syndrome, while mutations in CCNM2
+    and CCNM4 are associated with hypomagnesemia and Jalili syndrome, respectively.
+  summary: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, seed examples Q8QZR8 and Q8N1B3) models
+    the C-terminal second cyclin box of CCNQ/FAM58A, but its upstream CDD definition
+    and PMID:14695534 citation conflate CCNM/CCNQ with the CNNM1-4 (ACDP) magnesium
+    transporter family.
+- evidence_id: ev-cd20534-cd04590-siblings
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml
+  locator: CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1) and CDD:cd04590 (CBS_pair_ACDP)
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: 72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88
+  support: supports
+  summary: Repaired first-repeat sibling CDD:cd20534 (Q8N1B3 residues 27-128, PMID:23912459)
+    and CBS-pair record CDD:cd04590 confirm that CDD:cd20535 is the non-overlapping
+    C-terminal second cyclin box of CCNQ/FAM58A and is unrelated to CNNM1-4/ACDP.
+- evidence_id: ev-cd15885
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml
+  locator: id, label, short_name, definition, canonical_examples (P60880, P60879,
+    P36975)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea
+  support: refutes
+  quote: Both, Qb/Qc SNAREs consist of 2 coiled-coil helices (which form a single
+    SNARE domain) and a transmembrane domain.
+  summary: CDD:cd15885 (SNARE_SNAP25C) models the C-terminal Qc SNARE motif of SNAP25
+    (human P60880 residues 140-202), but its upstream CDD definition falsely asserts
+    that Qb/Qc SNAREs contain a transmembrane domain.
+- evidence_id: ev-cd15894-sibling
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml
+  locator: id, short_name, definition, evidence (PMID:9759094)
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368
+  support: supports
+  quote: Unlike syntaxin (Qa) and VAMP/synaptobrevin (R-SNARE) proteins, SNAP25-family
+    Qb/Qc SNAREs lack a transmembrane domain; SNAP25 contains two tandem coiled-coil
+    SNARE motifs (an N-terminal Qb motif and a C-terminal Qc motif) and is anchored
+    to membranes via palmitoylation of cysteine residues in the central linker region.
+  summary: Repaired N-terminal sibling CDD:cd15894 (SNARE_SNAP25N, qualified on human
+    P60880 residues 19-81) confirms that SNAP25 lacks a transmembrane domain and is
+    membrane-anchored via palmitoylated cysteines (PMID:9759094).
+- evidence_id: ev-cd17151
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml
+  locator: id, label, short_name, definition, canonical_examples (A8MYV0)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d
+  support: refutes
+  quote: Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2C (DCDC2C) and similar proteins. DCDC2, also called reading disability, autosomal,
+    2 (RU2), is a member of the doublecortin family... Mutations in DCDC2 have been
+    associated with reading disability (RD) and attention-deficit/hyperactivity disorder
+    (ADHD).
+  summary: CDD:cd17151 (DCX1_DCDC2C, human DCDC2C UniProtKB:A8MYV0) misspells 'Doublecortin-like'
+    as 'Dublecortin-like' and switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0)
+    and its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2.
+- evidence_id: ev-cd17154
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+  locator: id, label, short_name, definition, canonical_examples (A8MYV0)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 92a423f28b256ec77c726a51a6bce8725e24218cf6f1d94c80fc8a1cfd115941
+  support: refutes
+  quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
+    2C (DCDC2C) and similar proteins. DCDC2, also called reading disability, autosomal,
+    2 (RU2), is a member of the doublecortin family... Mutations in DCDC2 have been
+    associated with reading disability (RD) and attention-deficit/hyperactivity disorder
+    (ADHD).
+  summary: CDD:cd17154 (DCX2_DCDC2C, C-terminal second DCX repeat of human DCDC2C
+    UniProtKB:A8MYV0) switches in sentence 2 to paralog DCDC2 (UniProtKB:Q9UHG0) and
+    its reading-disability/ADHD genetics without distinguishing DCDC2C from DCDC2.
+- evidence_id: ev-cd17149
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+  locator: id, label, short_name, definition, canonical_examples (Q9UHG0)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 74a1c7b8bb284513e28bce564a5705142f643fa1bfe1c199bf6c338631bb2e76
+  support: partial
+  quote: Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2 (DCDC2) and similar proteins... Ubiquitin (Ub) is a protein modifier in eukaryotes
+    that is involved in various cellular processes, including transcriptional regulation,
+    cell cycle control, and DNA repair.
+  summary: CDD:cd17149 (DCX1_DCDC2, N-terminal first DCX repeat of human DCDC2 UniProtKB:Q9UHG0)
+    misspells 'Doublecortin-like' as 'Dublecortin-like' and interpolates an off-target
+    sentence defining the ubiquitin protein modifier even though DCX domains only
+    adopt a ubiquitin-like beta-grasp fold.
+- evidence_id: ev-cd17150-cd17152-siblings
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml
+  locator: CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2)
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756
+  support: supports
+  summary: Repaired paralog sibling CDD:cd17150 (DCX1_DCDC2B on human DCDC2B A2VCK2)
+    and second-repeat sibling CDD:cd17152 (DCX2_DCDC2 on human DCDC2 Q9UHG0) confirm
+    the clean repeat-position and paralog-subfamily partition across DCX1/DCX2 profiles
+    in DCDC2, DCDC2B, and DCDC2C.
+- evidence_id: ev-cd18593
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml
+  locator: id, label, short_name, definition, canonical_examples (O15439, E9Q236)
+  accessed_at: '2026-10-25T20:14:00Z'
+  snapshot_sha256: 7f72a55f63a4f82d87f7f4456ea7b3085585eb2f7461b79fd3752ca19d368b9a
+  support: refutes
+  quote: Five MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively)
+    contain a N-terminal 5-TM domain (TMD0)... They are unidirectional efflux transporters
+    that mediate the ATP-dependent export of organic anions, including cytotoxic and
+    antiviral drugs, and confer resistance to multiple anticancer drugs in tumor cells.
+  summary: CDD:cd18593 (ABC_6TM_MRP4_D1_like, human MRP4/ABCC4 O15439) carries the
+    corrupted upstream CDD ABCC family template that misassigns MRP7 to ABCC7 (CFTR,
+    a chloride channel lacking TMD0) instead of ABCC10 (Q5T3U5) and overgeneralizes
+    anticancer multidrug-resistance efflux across all MRP1-MRP9 members (including
+    uncharacterized MRP9/ABCC12).
+- evidence_id: ev-cd18592-sibling
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml
+  locator: id, short_name, definition, evidence (PMID:16984901)
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a
+  support: supports
+  quote: Nine human MRPs have been identified (MRP1-MRP9, corresponding to ABCC1-ABCC6
+    and ABCC10-ABCC12, respectively; ABCC7 is CFTR and ABCC8-ABCC9 are the sulfonylurea
+    receptors SUR1 and SUR2). Five MRPs (MRP1, MRP2, MRP3, MRP6, and MRP7, i.e., ABCC1,
+    ABCC2, ABCC3, ABCC6, and ABCC10) contain an N-terminal 5-TM domain (TMD0)...
+  summary: Repaired sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) confirms the accurate
+    HGNC ABCC nomenclature mapping (MRP7=ABCC10, MRP8=ABCC11, MRP9=ABCC12; ABCC7=CFTR)
+    and transport qualification (PMID:16984901).
+- evidence_id: ev-prior-stage4-cd00104
+  kind: prior_review
+  reference: reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml
+  locator: finding F1
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9
+  support: supports
+  summary: Cycle 1 Stage 4 single-record review of CDD:cd00104 recording finding F1.
+- evidence_id: ev-prior-stage4-cohort
+  kind: prior_review
+  reference: reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml
+  locator: findings F1 and F2
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e
+  support: supports
+  summary: Cycle 1 Stage 4 cohort review recording findings F1 and F2 and noting boundary
+    siblings cd20535, cd15885, and cd17151.
+- evidence_id: ev-prior-stage5-cohort
+  kind: prior_review
+  reference: reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml
+  locator: 'findings F1 and F2 (deferred under #1172) and F3-F12 (resolved under #1171)'
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: 438b6712ef02fc88990c1bf5e054fc2b901925f85b2eed0f4da2cc3015be6330
+  support: supports
+  summary: 'Cycle 1 Stage 5 post-remediation review deferring F1 and F2 under #1172
+    until sharded qualified_record_bindings re-binding landed.'
+- evidence_id: ev-cycle1-stage6-evidence
+  kind: record_content
+  reference: reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/evidence.yaml
+  locator: 'proteintraitsmech-infra-0003 resolution (#1172, PR #1175)'
+  accessed_at: '2026-10-25T20:15:00Z'
+  snapshot_sha256: 3cded5bbfd329238d0e695ce9bc64098886a7724b03dacd1b524f91ca7903201
+  support: supports
+  summary: Cycle 1 Stage 6 workflow evidence documenting the in-place repair and transactional
+    qualified_record_bindings re-binding of CDD:cd00104 (F1) and CDD:cd00959 (F2).
+- evidence_id: ev-cdd-errata-infrastructure
+  kind: record_content
+  reference: scripts/cdd_errata.py
+  locator: CDD_ERRATA table, scripts/repair_cdd_errata.py, and scripts/seed_cdd.py
+  accessed_at: '2026-10-25T20:16:00Z'
+  snapshot_sha256: 5cc563845168a79aa0859d58257052a4f2d0fc8fc0a6687c0d967e8d55a8a303
+  support: supports
+  summary: scripts/cdd_errata.py contains all 12 Cycle 1 CDD errata entries (including
+    CDD:cd00104 and CDD:cd00959) and is wired into scripts/seed_cdd.py and scripts/repair_cdd_errata.py,
+    providing the registered writer route for remediating F13-F18 in Cycle 2 Stage
+    5.
+assessments:
+- assessment_id: cohort-boundaries-and-identity
+  area: scope
+  topic: Category placement and tandem-repeat/subfamily boundary distinctness across
+    all 8 CDD records
+  outcome: supported
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-cd15885
+  - ev-cd15894-sibling
+  - ev-cd17149
+  - ev-cd17150-cd17152-siblings
+  - ev-cd17151
+  - ev-cd17154
+  - ev-cd18592-sibling
+  - ev-cd18593
+  - ev-cd20534-cd04590-siblings
+  - ev-cd20535
+  summary: 'All 8 records are genuine conserved protein sequence domain profiles (trait_axis:
+    SEQUENCE, trait_category: SEQ_DOMAIN, so_term: SO:0000417) with distinct CDD PSSM
+    identifiers and non-overlapping repeat intervals or paralog-subfamily scopes.
+    None should be merged or lumped with sibling CDD profiles.'
+- assessment_id: carry-forward-f1-f2-resolved-on-disk
+  area: consistency
+  topic: Verification of Cycle 1 carry-forward findings F1 (CDD:cd00104) and F2 (CDD:cd00959)
+  outcome: supported
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-prior-stage4-cd00104
+  - ev-prior-stage4-cohort
+  - ev-prior-stage5-cohort
+  - ev-cycle1-stage6-evidence
+  - ev-cdd-errata-infrastructure
+  summary: Both Cycle 1 Stage 5 deferred carry-forward findings — F1 on CDD:cd00104
+    and F2 on CDD:cd00959 — are verified resolved on disk at commit 66e8f479733907dc0792e481f41bb2f0fbb9dc27
+    with entries in scripts/cdd_errata.py, curation_history events, and valid sharded
+    qualified_record_bindings.jsonl.d receipts.
+- assessment_id: sibling-cdd-records-upstream-prose-defects
+  area: consistency
+  topic: Upstream CDD nomenclature, paralog-scope, and biochemical contradictions
+    across the 6 sibling CDD records (F13-F18)
+  outcome: concern
+  target_ids:
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd15885
+  - ev-cd15894-sibling
+  - ev-cd17149
+  - ev-cd17150-cd17152-siblings
+  - ev-cd17151
+  - ev-cd17154
+  - ev-cd18592-sibling
+  - ev-cd18593
+  - ev-cd20534-cd04590-siblings
+  - ev-cd20535
+  - ev-cdd-errata-infrastructure
+  summary: All 6 unpromoted sibling CDD records (CDD:cd20535, CDD:cd15885, CDD:cd17151,
+    CDD:cd17154, CDD:cd17149, CDD:cd18593) carry upstream NCBI CDD template defects
+    (CNNM/ACDP conflation, false SNAP25 transmembrane claim, DCDC2C->DCDC2 paralog
+    switch, 'Dublecortin-like' typo, off-target ubiquitin modifier sentence, and MRP7=ABCC7/CFTR
+    misassignment) that require Stage 5 grouped remediation via scripts/cdd_errata.py
+    and scripts/repair_cdd_errata.py.
+boundary_decisions:
+- action: retain
+  target_ids:
+  - CDD:cd00104
+  - CDD:cd00959
+  evidence_ids:
+  - ev-cd00104
+  - ev-cd00959
+  - ev-cycle1-stage6-evidence
+  rationale: 'Retain promoted records CDD:cd00104 (KAZAL_FS) and CDD:cd00959 (DeoC)
+    as distinct conserved domain families whose definitions and sharded qualified_record_bindings
+    receipts were repaired in Cycle 1 Stage 6 (#1172, PR #1175).'
+- action: retain
+  target_ids:
+  - CDD:cd20535
+  evidence_ids:
+  - ev-cd20535
+  - ev-cd20534-cd04590-siblings
+  rationale: Retain CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2, C-terminal second cyclin box
+    of CCNQ/FAM58A under InterPro:IPR006670) as distinct from N-terminal first cyclin
+    box sibling CDD:cd20534 (CYCLIN_CCNM_CCNQ_rpt1 under InterPro:IPR006671) and distinct
+    from CDD:cd04590 (CBS_pair_ACDP in CNNM1-4 magnesium transporters).
+- action: retain
+  target_ids:
+  - CDD:cd15885
+  evidence_ids:
+  - ev-cd15885
+  - ev-cd15894-sibling
+  rationale: Retain CDD:cd15885 (SNARE_SNAP25C, C-terminal Qc SNARE motif of SNAP25,
+    human P60880 residues 140-202) as distinct from N-terminal Qb SNARE motif sibling
+    CDD:cd15894 (SNARE_SNAP25N, residues 19-81) because they represent non-overlapping
+    tandem coiled-coil SNARE domains on SNAP25.
+- action: retain
+  target_ids:
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  evidence_ids:
+  - ev-cd17149
+  - ev-cd17151
+  - ev-cd17154
+  - ev-cd17150-cd17152-siblings
+  rationale: Retain CDD:cd17149 (DCX1_DCDC2, N-terminal repeat 1 of DCDC2), CDD:cd17151
+    (DCX1_DCDC2C, N-terminal repeat 1 of DCDC2C), and CDD:cd17154 (DCX2_DCDC2C, C-terminal
+    repeat 2 of DCDC2C) as distinct repeat-position and paralog-subfamily domain profiles
+    separate from each other and from CDD:cd17150 (DCX1_DCDC2B) and CDD:cd17152 (DCX2_DCDC2).
+- action: retain
+  target_ids:
+  - CDD:cd18593
+  evidence_ids:
+  - ev-cd18593
+  - ev-cd18592-sibling
+  rationale: Retain CDD:cd18593 (ABC_6TM_MRP4_D1_like, TMD1 of MRP4/ABCC4) as a distinct
+    ABCC TMD1 subfamily profile separate from sibling CDD:cd18592 (ABC_6TM_MRP5_8_9_D1,
+    TMD1 of MRP5/ABCC5, MRP8/ABCC11, and MRP9/ABCC12).
+findings:
+- finding_id: F1
+  issue_key: cdd-cd00104-kazal-definition-typo-and-inhibitor-target-confusion
+  category: consistency
+  severity: minor
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd00104 definition misspells chymotrypsin and lists avian ovomucoids
+    as target serine proteases
+  description: CDD:cd00104 previously stated 'Kazal inhibitors inhibit serine proteases,
+    such as, trypsin, chyomotrypsin, avian ovomucoids, and elastases', misspelling
+    'chymotrypsin' and listing 'avian ovomucoids' (Kazal-type inhibitor proteins,
+    PMID:6192856) as target enzymes.
+  target_ids:
+  - CDD:cd00104
+  field_paths:
+  - data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml#/definition
+  evidence_ids:
+  - ev-cd00104
+  - ev-prior-stage4-cd00104
+  - ev-prior-stage4-cohort
+  - ev-prior-stage5-cohort
+  - ev-cycle1-stage6-evidence
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd00104 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    in Cycle 1 Stage 6 (#1172, PR #1175), correcting ''chyomotrypsin'' to ''chymotrypsin'',
+    distinguishing avian ovomucoids as canonical Kazal-type inhibitors rather than
+    target proteases (PMID:6192856), and updating all 3 durable qualified_record_bindings.jsonl.d
+    receipts to the new record_sha256 (62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26).'
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261022T052200Z-cdd-cd00104-record-review
+    finding_id: F1
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
+    finding_id: F1
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261022T081000Z-cdd-stage5-remediation-review
+    finding_id: F1
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F2
+  issue_key: cdd-cd00959-dera-duplicated-opening-sentence
+  category: consistency
+  severity: minor
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd00959 definition repeats its opening title sentence verbatim
+  description: CDD:cd00959 previously began with the duplicated sentence '2-deoxyribose-5-phosphate
+    aldolase (DERA) of the DeoC family. 2-deoxyribose-5-phosphate aldolase (DERA)
+    of the DeoC family.' due to upstream CDD title+description concatenation.
+  target_ids:
+  - CDD:cd00959
+  field_paths:
+  - data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml#/definition
+  evidence_ids:
+  - ev-cd00959
+  - ev-prior-stage4-cohort
+  - ev-prior-stage5-cohort
+  - ev-cycle1-stage6-evidence
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd00959 via scripts/cdd_errata.py and scripts/repair_cdd_errata.py
+    in Cycle 1 Stage 6 (#1172, PR #1175), removing the duplicated opening title sentence
+    and updating both durable qualified_record_bindings.jsonl.d receipts to the new
+    record_sha256 (3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f).'
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
+    finding_id: F2
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261022T081000Z-cdd-stage5-remediation-review
+    finding_id: F2
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F13
+  issue_key: cdd-cd20535-ccnq-rpt2-cnnm-acdp-magnesium-transporter-conflation
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd20535 (CYCLIN_CCNM_CCNQ_rpt2) conflates the second cyclin box of Cyclin-Q/Cyclin-M
+    (CCNQ/FAM58A) with the CNNM1-4 (ACDP) magnesium transporter family
+  description: CDD:cd20535 models the C-terminal second cyclin box of Cyclin-Q/Cyclin-M
+    (CCNQ/FAM58A; human UniProtKB:Q8N1B3, mouse UniProtKB:Q8QZR8), the activating
+    cyclin partner of CDK10 mutated in X-linked STAR syndrome (PMID:23912459), but
+    its upstream CDD definition and PMID:14695534 citation describe the unrelated
+    CNNM1-4 (ACDP) CBS-pair magnesium transporter family (modeled by CDD:cd04590)
+    and urofacial, hypomagnesemia, and Jalili syndromes.
+  target_ids:
+  - CDD:cd20535
+  field_paths:
+  - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/definition
+  - data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml#/evidence
+  evidence_ids:
+  - ev-cd20535
+  - ev-cd20534-cd04590-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F14
+  issue_key: cdd-cd15885-snap25c-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd15885 (SNARE_SNAP25C) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP25 is membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15885 models the C-terminal Qc SNARE motif of SNAP25 (human UniProtKB:P60880,
+    mouse P60879, chicken P36975), but its upstream CDD definition states 'Both, Qb/Qc
+    SNAREs consist of 2 coiled-coil helices (which form a single SNARE domain) and
+    a transmembrane domain'. SNAP25-family Qb/Qc t-SNAREs lack a transmembrane domain
+    and attach to membranes via palmitoylated cysteines in the inter-motif linker
+    between the N-terminal Qb (CDD:cd15894) and C-terminal Qc (CDD:cd15885) SNARE
+    motifs (PMID:9759094).
+  target_ids:
+  - CDD:cd15885
+  field_paths:
+  - data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml#/definition
+  evidence_ids:
+  - ev-cd15885
+  - ev-cd15894-sibling
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F15
+  issue_key: cdd-cd17151-dcdc2c-typo-and-dcdc2-paralog-disease-switch
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd17151 (DCX1_DCDC2C) misspells Doublecortin-like as Dublecortin-like
+    in definition and switches to paralog DCDC2 disease genetics
+  description: CDD:cd17151 models the N-terminal first doublecortin-like domain (DCX1)
+    of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but its definition begins with
+    the typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2C (DCDC2C) and similar proteins' and immediately switches in sentence 2 to paralog
+    DCDC2 ('DCDC2, also called reading disability, autosomal, 2 (RU2)... Mutations
+    in DCDC2 have been associated with reading disability (RD) and attention-deficit/hyperactivity
+    disorder (ADHD)') without distinguishing DCDC2C from DCDC2 (UniProtKB:Q9UHG0,
+    CDD:cd17149/CDD:cd17152).
+  target_ids:
+  - CDD:cd17151
+  field_paths:
+  - data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml#/definition
+  evidence_ids:
+  - ev-cd17151
+  - ev-cd17150-cd17152-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F16
+  issue_key: cdd-cd17154-dcdc2c-rpt2-dcdc2-paralog-disease-switch
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd17154 (DCX2_DCDC2C) switches mid-definition from DCDC2C to paralog
+    DCDC2 reading-disability and ADHD genetics
+  description: CDD:cd17154 models the C-terminal second doublecortin-like domain (DCX2)
+    of human DCDC2C (UniProtKB:A8MYV0, HGNC:33863), but sentence 2 switches without
+    qualification to paralog DCDC2 ('DCDC2, also called reading disability, autosomal,
+    2 (RU2)... Mutations in DCDC2 have been associated with reading disability (RD)
+    and attention-deficit/hyperactivity disorder (ADHD)') without distinguishing DCDC2C
+    from DCDC2 (UniProtKB:Q9UHG0, CDD:cd17149/CDD:cd17152).
+  target_ids:
+  - CDD:cd17154
+  field_paths:
+  - data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml#/definition
+  evidence_ids:
+  - ev-cd17154
+  - ev-cd17150-cd17152-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F17
+  issue_key: cdd-cd17149-dcdc2-typo-and-ubiquitin-modifier-digression
+  category: consistency
+  severity: minor
+  status: open
+  certainty: confirmed
+  title: CDD:cd17149 (DCX1_DCDC2) misspells Doublecortin-like as Dublecortin-like
+    in definition and interpolates an off-target ubiquitin protein-modifier sentence
+  description: CDD:cd17149 models the N-terminal first doublecortin-like domain (DCX1)
+    of human DCDC2 (UniProtKB:Q9UHG0, HGNC:18141), begins its definition with the
+    typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2 (DCDC2) and similar proteins', and interpolates an off-target sentence defining
+    the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes
+    that is involved in various cellular processes, including transcriptional regulation,
+    cell cycle control, and DNA repair') even though DCX domains only adopt a ubiquitin-like
+    beta-grasp fold and do not function as ubiquitin protein modifiers.
+  target_ids:
+  - CDD:cd17149
+  field_paths:
+  - data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml#/definition
+  evidence_ids:
+  - ev-cd17149
+  - ev-cd17150-cd17152-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F18
+  issue_key: cdd-cd18593-mrp4-abcc-mrp7-cftr-misassignment-and-mdr-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd18593 (ABC_6TM_MRP4_D1_like) misassigns MRP7 to ABCC7 (CFTR) instead
+    of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9
+    members
+  description: CDD:cd18593 models TMD1 of MRP4/ABCC4 (human UniProtKB:O15439, mouse
+    E9Q236), but carries the corrupted upstream CDD ABCC template text stating 'Five
+    MRPs (MRP1, 2, 3, 6, and 7, also known as ABCC1, 2, 3, 6, and 7, respectively)
+    contain a N-terminal 5-TM domain (TMD0)' and claiming blanket anticancer multidrug-resistance
+    efflux across all nine MRPs (MRP1-MRP9). In HGNC/UniProt nomenclature, ABCC7 is
+    CFTR (an epithelial chloride channel lacking TMD0), whereas MRP7 is ABCC10 (UniProtKB:Q5T3U5),
+    MRP8 is ABCC11, and MRP9 is ABCC12 (an uncharacterized paralog without established
+    drug-efflux activity, PMID:16984901).
+  target_ids:
+  - CDD:cd18593
+  field_paths:
+  - data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml#/definition
+  evidence_ids:
+  - ev-cd18593
+  - ev-cd18592-sibling
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+actions:
+- action_id: extend-cdd-errata-and-repair-cycle2-sibling-records
+  description: Add accession-keyed errata entries for CDD:cd20535 (F13), CDD:cd15885
+    (F14), CDD:cd17151 (F15), CDD:cd17154 (F16), CDD:cd17149 (F17), and CDD:cd18593
+    (F18) to scripts/cdd_errata.py and apply them in place via scripts/repair_cdd_errata.py
+    with literature-backed evidence and curation_history entries.
+  finding_ids:
+  - F13
+  - F14
+  - F15
+  - F16
+  - F17
+  - F18
+  target_ids:
+  - CDD:cd15885
+  - CDD:cd17149
+  - CDD:cd17151
+  - CDD:cd17154
+  - CDD:cd18593
+  - CDD:cd20535
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  acceptance_checks:
+  - All 6 sibling CDD records (cd20535, cd15885, cd17151, cd17154, cd17149, cd18593)
+    carry accurate, paralog- and repeat-specific definitions and grounded literature
+    citations.
+  - scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay all 18 CDD errata
+    entries deterministically and idempotently.
+  - scripts/validate_strict.py, scripts/validate_uniprot_grounding.py, and scripts/audit_writers.py
+    pass with 0 errors.
+limitations:
+- This cohort review covers the frozen 8-record Cycle 2 Stage 4 CDD SEQ_DOMAIN inventory
+  (2 Cycle 1 carry-forwards and 6 tandem-repeat/subfamily siblings); other CDD records
+  outside this cohort were not re-audited.
+- No scientific trait records under data/traits/ were edited during Stage 4; findings
+  F13-F18 remain open for Stage 5 grouped remediation.
+related_reviews:
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261025T202200Z-cdd-cd20535-record-review
+  relationship: Companion Cycle 2 Stage 4 single-record deep review of CDD:cd20535
+    (finding F13).
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261022T052300Z-cdd-stage3-domain-cohort-review
+  relationship: Cycle 1 Stage 4 cohort review of the 12-record CDD inventory (findings
+    F1-F12).
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261022T081000Z-cdd-stage5-remediation-review
+  relationship: Cycle 1 Stage 5 post-remediation review resolving F3-F12 and deferring
+    F1-F2.
+links:
+- https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+- https://github.com/CultureBotAI/proteintraitsmech/issues/605
+```
