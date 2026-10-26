@@ -25,7 +25,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26973785
     recipe: "freesasa --format=json {input} > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_SURFACE_BASIC_CATIONIC_PATCH
+    title: "Cationic surface patch electrostatic recognition of DNA and nucleic acids"
+    description: "Spatially clustered basic amino acid side chains on the solvent-accessible protein surface generate a high positive electrostatic potential patch that drives DNA and nucleic acid binding."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Spatially clustered basic amino acid residues (Arg, Lys, His) on the solvent-accessible surface."
+      - node_id: "PATO:0002195"
+        label: "positive charge"
+        node_type: QUALITY
+        grounding: "PATO:0002195"
+        description: "High net positive electrostatic potential across the cationic surface patch."
+      - node_id: "GO:0003677"
+        label: "DNA binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003677"
+        description: "Electrostatic recognition and binding of the polyanionic DNA phosphodiester backbone."
+      - node_id: "GO:0003676"
+        label: "nucleic acid binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003676"
+        description: "Polyanionic nucleic acid binding mediated by the positively charged surface patch."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0002195"
+        description: "Clustered basic surface residues excluding negatively charged residues form a positively charged surface patch."
+        evidence:
+          - reference: PMID:14654279
+            snippet: "This knowledge led to the development of a prediction method in which patches of surface residues were selected such that they excluded residues with negative electrostatic scores."
+            notes: "Jones et al. (2003) J Mol Biol 334:779-793 identify cationic surface patches excluding negative electrostatic scores. (ECO:0000269)"
+      - subject: "PATO:0002195"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0003677"
+        description: "Surface patches with the largest positive electrostatic scores mediate DNA binding."
+        evidence:
+          - reference: PMID:14654279
+            snippet: "From this, it was observed that the DNA-binding sites were, in general, amongst the top 10% of patches with the largest positive electrostatic scores."
+            notes: "DNA-binding sites coincide with the most positively charged surface patches. (ECO:0000269)"
+      - subject: "GO:0003677"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0003676"
+        description: "DNA-binding cationic surface patches are a specialized mode of nucleic acid binding."
+        evidence:
+          - reference: PMID:14654279
+            snippet: "Surface patches and the DNA-binding sites were initially analysed for accessibility, electrostatic potential, residue propensity, hydrophobicity and residue conservation."
+            notes: "Electrostatic potential and accessibility characterize nucleic-acid-binding surface patches. (ECO:0000269)"
 evidence:
   - reference: PMID:14654279
     notes: "DNA-binding and polyanion-binding sites on protein structures coincide with solvent-accessible surface patches exhibiting the largest positive electrostatic potential scores."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_SURFACE_BASIC_CATIONIC_PATCH (CHEBI:83228
+    -> PATO:0002195 -> GO:0003677 -> GO:0003676) with distinct verbatim snippets from PMID:14654279 (Round
+    126).
+  llm_assisted: true
 license: CC-BY-4.0

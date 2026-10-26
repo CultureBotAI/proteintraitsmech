@@ -22,7 +22,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:21471012
     recipe: "prody anm {input} -n 20 -o {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_DYNAMICS_ALLOSTERIC_ENSEMBLE_TRANSMISSION_PATHWAY
+    title: "Allosteric dynamic-coupling residue network signal transmission to catalysis"
+    description: "Correlated dynamical fluctuations of amino acid residues organized into local structural communities transmit allosteric signals across critical inter-community edges, regulating distant catalytic site activity."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Networked amino acid residues connected by dynamic contacts across local structural communities."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Correlated side-chain and backbone thermal fluctuations captured by the dynamic contact map."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Long-range allosteric signal communication across critical inter-community edges."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Allosterically modulated enzymatic catalysis at the distant active site."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0001543"
+        description: "Amino acid residues form a dynamic contact network organized into locally intraconnected communities."
+        evidence:
+          - reference: PMID:19351898
+            snippet: "A dynamic contact map defines the edges connecting nodes (amino acids and nucleotides) in the physical network whose overall topology is presented as a network of communities, local substructures that are highly intraconnected, but loosely interconnected."
+            notes: "Sethi et al. (2009) PNAS 106:6620-6625 define dynamical amino acid contact networks and community structure. (ECO:0000269)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Correlated fluctuations propagate allosteric communication across critical inter-community edges."
+        evidence:
+          - reference: PMID:19351898
+            snippet: "Whereas nodes within a single community can communicate through many alternate pathways, the communication between monomers in different communities has to take place through a smaller number of critical edges or interactions."
+            notes: "Critical inter-community edges bottleneck and transmit long-range allosteric signals. (ECO:0000269)"
+      - subject: "GO:0030234"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Allosteric network communication regulates catalytic aminoacylation activity at the active site."
+        evidence:
+          - reference: PMID:19351898
+            snippet: "Although the 2 class I synthetases have remarkably different interactions with their cognate tRNAs, the allosteric networks for charging tRNA with the correct amino acid display considerable similarities."
+            notes: "Conserved allosteric residue networks couple tRNA recognition to catalytic amino acid charging. (ECO:0000269)"
 evidence:
   - reference: PMID:19351898
     notes: "Correlated residue fluctuations in protein dynamical networks form interconnected communities and critical inter-community edges that transmit allosteric signals between distant effector and catalytic sites."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_DYNAMICS_ALLOSTERIC_ENSEMBLE_TRANSMISSION_PATHWAY
+    (CHEBI:83228 -> PATO:0001543 -> GO:0030234 -> GO:0003824) with distinct verbatim snippets from PMID:19351898
+    (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

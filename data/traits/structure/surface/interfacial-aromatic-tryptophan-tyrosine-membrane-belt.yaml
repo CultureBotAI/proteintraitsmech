@@ -20,7 +20,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26973785
     recipe: "freesasa --format=json {input} > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_SURFACE_MEMBRANE_ANCHORING_AROMATIC_BELT
+    title: "Interfacial aromatic Trp/Tyr belt anchoring and membrane protein stabilization"
+    description: "Flanking tryptophan and tyrosine residues on the exterior surface of a transmembrane protein localize to the lipid glycerol headgroup region of the membrane interface, anchoring bilayer orientation and enhancing membrane protein stability."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Surface-exposed tryptophan and tyrosine aromatic residues flanking the transmembrane domain."
+      - node_id: "GO:0005543"
+        label: "phospholipid binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005543"
+        description: "Interfacial interaction of Trp and Tyr aromatic rings with phospholipid glycerol/carbonyl regions."
+      - node_id: "GO:0016020"
+        label: membrane
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0016020"
+        description: "Lipid bilayer hydrocarbon-water interfacial region where the transmembrane protein is anchored."
+      - node_id: "GO:0031647"
+        label: "regulation of protein stability"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031647"
+        description: "Enhanced thermodynamic and orientational stability of the integral membrane protein in the bilayer."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0005543"
+        description: "Interfacial tryptophan and tyrosine side chains partition into the phospholipid glycerol group region."
+        evidence:
+          - reference: PMID:9778346
+            snippet: "We find that the analogues reside in the vicinity of the glycerol group where they all cause similar modest changes in acyl chain organization and that hydrocarbon penetration was not increased by reduction of hydrogen bonding or electric dipole interaction ability."
+            notes: "Yau et al. (1998) Biochemistry 37:14713-14723 demonstrate localization of Trp indole rings at the lipid glycerol interface. (ECO:0000269)"
+      - subject: "GO:0005543"
+        predicate: "located in"
+        predicate_id: RO:0001025
+        object: "GO:0016020"
+        description: "Aromatic interfacial phospholipid interactions localize the aromatic belt to the membrane surface."
+        evidence:
+          - reference: PMID:9778346
+            snippet: "These observations rule out simple amphipathic or dipolar interactions as the physical basis for the interfacial preference."
+            notes: "Aromatic ring structure and pi-electronic properties drive selective localization to the membrane interface. (ECO:0000269)"
+      - subject: "GO:0005543"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0031647"
+        description: "Interfacial Trp and Tyr interactions with the lipid bilayer enhance integral membrane protein stability."
+        evidence:
+          - reference: PMID:9778346
+            snippet: "One of the ubiquitous features of membrane proteins is the preference of tryptophan and tyrosine residues for membrane surfaces that presumably arises from enhanced stability due to distinct interfacial interactions."
+            notes: "Interfacial aromatic belts stabilize transmembrane proteins at the bilayer surface. (ECO:0000269)"
 evidence:
   - reference: PMID:9778346
     notes: "Transmembrane alpha-helical bundles and beta-barrels display a conserved surface belt of tryptophan and tyrosine residues positioned at the lipid-water carbonyl/glycerol interface that anchors vertical membrane orientation."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_SURFACE_MEMBRANE_ANCHORING_AROMATIC_BELT
+    (CHEBI:83228 -> GO:0005543 -> GO:0016020 -> GO:0031647) with distinct verbatim snippets from PMID:9778346
+    (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

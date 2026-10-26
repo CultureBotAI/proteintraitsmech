@@ -22,9 +22,70 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26973785
     recipe: "freesasa --format=json {input} > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_SURFACE_HYDROPHOBIC_PATCH
+    title: "Solvent-exposed hydrophobic surface patch self-association and stability regulation"
+    description: "Solvent-accessible nonpolar amino acid side chains clustered on the exterior surface of a folded protein create high spatial aggregation propensity (SAP) hydrophobic patches that drive self-association and govern native protein stability."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Clustered nonpolar amino acid residues dynamically exposed on the folded protein surface."
+      - node_id: "PATO:0001884"
+        label: hydrophobicity
+        node_type: QUALITY
+        grounding: "PATO:0001884"
+        description: "High surface hydrophobicity quantified by spatial aggregation propensity (SAP)."
+      - node_id: "GO:0042802"
+        label: "identical protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0042802"
+        description: "Hydrophobic desolvation-driven self-association and protein aggregation."
+      - node_id: "GO:0031647"
+        label: "regulation of protein stability"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031647"
+        description: "Modulation of native-state conformational and colloidal stability."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0001884"
+        description: "Dynamically exposed nonpolar surface residues exhibit high spatial aggregation propensity (SAP) hydrophobicity."
+        evidence:
+          - reference: PMID:19571001
+            snippet: "Using full antibody atomistic molecular dynamics simulations, we identify the antibody regions prone to aggregation by using a technology that we developed called spatial aggregation propensity (SAP)."
+            notes: "Chennamsetty et al. (2009) PNAS 106:11937-11942 define SAP over dynamically exposed hydrophobic surface residues. (ECO:0000269)"
+      - subject: "PATO:0001884"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0042802"
+        description: "Solvent-exposed hydrophobic patches drive protein self-association and aggregation."
+        evidence:
+          - reference: PMID:19571001
+            snippet: "Aggregation leads to a decrease in antibody activity and could elicit an immunological response."
+            notes: "Exposed hydrophobic patches promote intermolecular self-association and aggregation. (ECO:0000269)"
+      - subject: "GO:0042802"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0031647"
+        description: "Mutational disruption of exposed hydrophobic patches suppresses self-association and enhances protein stability."
+        evidence:
+          - reference: PMID:19571001
+            snippet: "SAP identifies the location and size of these aggregation prone regions, and allows us to perform target mutations of those regions to engineer antibodies for stability."
+            notes: "Targeted mutation of SAP hydrophobic patches improves colloidal and conformational protein stability. (ECO:0000269)"
 evidence:
   - reference: PMID:19571001
     notes: "Spatial aggregation propensity (SAP) identifies dynamically exposed hydrophobic surface patches on folded proteins that mediate protein-protein interaction and self-association."
   - reference: PMID:25451785
     notes: "CamSol profiles solvent-exposed hydrophobic and polar surface patches to quantify native-state protein solubility."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_SURFACE_HYDROPHOBIC_PATCH (CHEBI:83228 ->
+    PATO:0001884 -> GO:0042802 -> GO:0031647) with distinct verbatim snippets from PMID:19571001 (Round
+    126).
+  llm_assisted: true
 license: CC-BY-4.0

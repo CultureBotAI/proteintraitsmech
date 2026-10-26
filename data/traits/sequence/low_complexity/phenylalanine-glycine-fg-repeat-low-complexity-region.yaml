@@ -32,9 +32,70 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:28851299
     recipe: "fLPS -t 1e-5 -c default {input} > {output}"
+causal_graphs:
+  - graph_id: fg_repeat_hydrogel_nuclear_pore_selectivity_barrier
+    title: "Cohesive phenylalanine inter-repeat interactions cross-link FG-nucleoporin repeats into a selective nuclear pore hydrogel permeability barrier"
+    description: "Hydrophobic phenylalanine side chains within tandem FG-repeat low-complexity domains engage in reversible inter-repeat cross-linking to form a three-dimensional sieve-like hydrogel barrier in the nuclear pore complex, which nuclear transport receptors traverse by competitively disrupting adjacent inter-repeat contacts."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Phenylalanine and glycine residues arranged in tandem FG-repeat motifs within intrinsically disordered nucleoporin regions."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Cohesive phenylalanine-mediated inter-repeat cross-linking and competitive binding by nuclear transport receptors."
+      - node_id: "GO:0005643"
+        label: "nuclear pore"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0005643"
+        description: "Nuclear pore complex central permeability barrier formed by the cross-linked FG-repeat hydrogel meshwork."
+      - node_id: "GO:0006913"
+        label: "nucleocytoplasmic transport"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006913"
+        description: "Selective passage of nuclear transport receptor-cargo complexes across the nuclear pore permeability barrier."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0005515"
+        description: "Phenylalanine residues within FG-repeat domains mediate cohesive inter-repeat interactions that cross-link repeats into elastic hydrogels."
+        evidence:
+          - reference: PMID:17082456
+            snippet: "Here, we found that phenylalanine-mediated inter-repeat interactions indeed cross-link FG-repeat domains into elastic and reversible hydrogels."
+            notes: "Frey et al. 2006 demonstrate that Phe-mediated inter-repeat contacts cross-link FG-repeat domains into reversible hydrogels. (ECO:0000269)"
+      - subject: "GO:0005515"
+        predicate: "located in"
+        predicate_id: RO:0001025
+        object: "GO:0005643"
+        description: "Reversible cross-linking between FG-rich nucleoporin repeats forms the sieve-like permeability barrier of the nuclear pore complex."
+        evidence:
+          - reference: PMID:17082456
+            snippet: "To explain this selectivity, a sieve structure of the permeability barrier has been proposed that is created through reversible cross-linking between Phe and Gly (FG)-rich nucleoporin repeats."
+            notes: "Cross-linked FG-repeat meshwork constitutes the selective permeability barrier in the nuclear pore. (ECO:0000305)"
+      - subject: "GO:0005515"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0006913"
+        description: "Nuclear transport receptors competitively disrupt adjacent FG inter-repeat contacts to transiently open meshes and catalyze nucleocytoplasmic passage."
+        evidence:
+          - reference: PMID:17082456
+            snippet: "According to this model, nuclear transport receptors overcome the size limit of the sieve and catalyze their own nuclear pore-passage by a competitive disruption of adjacent inter-repeat contacts, which transiently opens adjoining meshes."
+            notes: "Competitive binding of nuclear transport receptors to FG repeats drives selective nucleocytoplasmic transport. (ECO:0000269)"
 evidence:
   - reference: PMID:17082456
     notes: "Phenylalanine-mediated inter-repeat interactions cross-link Phe and Gly (FG)-rich nucleoporin repeat domains into elastic and reversible hydrogels that form the selective nuclear pore permeability barrier."
   - reference: PMID:28851299
     notes: "fLPS detects multiple-residue compositional biases including Phe/Gly-rich low-complexity regions."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph fg_repeat_hydrogel_nuclear_pore_selectivity_barrier (CHEBI:83228
+    -> GO:0005515 -> GO:0005643 -> GO:0006913) with distinct verbatim snippets from PMID:17082456 (Round
+    126).
+  llm_assisted: true
 license: CC-BY-4.0

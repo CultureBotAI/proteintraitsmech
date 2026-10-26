@@ -6226,6 +6226,84 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FLPS, M_SEG),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="polyampholytic_charge_patterning_ensemble_compaction",
+                label="Linear charge-block patterning of oppositely charged residues governs polyampholytic disordered ensemble compaction and function",
+                mechanism_summary=(
+                    "In polyampholytic intrinsically disordered regions, the fraction of charged "
+                    "residues and the linear sequence segregation of positively and negatively "
+                    "charged amino acid side chains govern long-range intrachain electrostatic "
+                    "attractions and repulsions, shaping conformational ensemble compaction "
+                    "(globule, coil, or hairpin preferences) and downstream macromolecular binding."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Positively and negatively charged amino acid residues distributed in alternating or segregated blocks along the low-complexity sequence.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0002193",
+                        label="electric charge",
+                        node_type="QUALITY",
+                        grounding="PATO:0002193",
+                        description="Linear sequence distribution and charge-patterning parameter (kappa) of oppositely charged side chains.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Conformational ensemble preferences (coil, globule, or hairpin compaction) sampled by the polyampholytic disordered region.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Ensemble-mediated macromolecular recognition and functional interaction governed by the disordered conformational distribution.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0002193",
+                        description="Polyampholytic low-complexity regions comprise sequences enriched in both positively and negatively charged amino acid residues.",
+                        reference="PMID:23901099",
+                        evidence_code="ECO:0000305",
+                        snippet="Most IDPs are polyampholytes, with sequences that include both positively and negatively charged residues.",
+                        notes="Das & Pappu 2013 define polyampholytic IDPs by their complement of positively and negatively charged residues.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0002193",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="PATO:0001543",
+                        description="The fraction of charged residues and linear sequence patterning of oppositely charged blocks determine the conformational ensemble preferences of strong polyampholytes.",
+                        reference="PMID:23901099",
+                        evidence_code="ECO:0000269",
+                        snippet="Using atomistic simulations, we show that weak polyampholytes form globules, whereas the conformational preferences of strong polyampholytes are determined by a combination of fraction of charged residues values and the linear sequence distributions of oppositely charged residues.",
+                        notes="Linear charge-block distribution (kappa) controls chain compaction and conformational preferences.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Sequence-encoded conformational ensembles sampled by polyampholytic disordered regions govern their biological functions and partner interactions.",
+                        reference="PMID:23901099",
+                        evidence_code="ECO:0000305",
+                        snippet="The functions of intrinsically disordered proteins (IDPs) are governed by relationships between information encoded in their amino acid sequences and the ensembles of conformations that they sample as autonomous units.",
+                        notes="Conformational ensembles sampled by polyampholytic sequences govern IDP functional interactions.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="sequence/low_complexity",
@@ -6259,6 +6337,83 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_SEG, M_FLPS),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="fg_repeat_hydrogel_nuclear_pore_selectivity_barrier",
+                label="Cohesive phenylalanine inter-repeat interactions cross-link FG-nucleoporin repeats into a selective nuclear pore hydrogel permeability barrier",
+                mechanism_summary=(
+                    "Hydrophobic phenylalanine side chains within tandem FG-repeat low-complexity "
+                    "domains engage in reversible inter-repeat cross-linking to form a three-dimensional "
+                    "sieve-like hydrogel barrier in the nuclear pore complex, which nuclear transport "
+                    "receptors traverse by competitively disrupting adjacent inter-repeat contacts."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Phenylalanine and glycine residues arranged in tandem FG-repeat motifs within intrinsically disordered nucleoporin regions.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Cohesive phenylalanine-mediated inter-repeat cross-linking and competitive binding by nuclear transport receptors.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005643",
+                        label="nuclear pore",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0005643",
+                        description="Nuclear pore complex central permeability barrier formed by the cross-linked FG-repeat hydrogel meshwork.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006913",
+                        label="nucleocytoplasmic transport",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006913",
+                        description="Selective passage of nuclear transport receptor-cargo complexes across the nuclear pore permeability barrier.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0005515",
+                        description="Phenylalanine residues within FG-repeat domains mediate cohesive inter-repeat interactions that cross-link repeats into elastic hydrogels.",
+                        reference="PMID:17082456",
+                        evidence_code="ECO:0000269",
+                        snippet="Here, we found that phenylalanine-mediated inter-repeat interactions indeed cross-link FG-repeat domains into elastic and reversible hydrogels.",
+                        notes="Frey et al. 2006 demonstrate that Phe-mediated inter-repeat contacts cross-link FG-repeat domains into reversible hydrogels.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0001025",
+                        predicate_label="located in",
+                        object="GO:0005643",
+                        description="Reversible cross-linking between FG-rich nucleoporin repeats forms the sieve-like permeability barrier of the nuclear pore complex.",
+                        reference="PMID:17082456",
+                        evidence_code="ECO:0000305",
+                        snippet="To explain this selectivity, a sieve structure of the permeability barrier has been proposed that is created through reversible cross-linking between Phe and Gly (FG)-rich nucleoporin repeats.",
+                        notes="Cross-linked FG-repeat meshwork constitutes the selective permeability barrier in the nuclear pore.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0006913",
+                        description="Nuclear transport receptors competitively disrupt adjacent FG inter-repeat contacts to transiently open meshes and catalyze nucleocytoplasmic passage.",
+                        reference="PMID:17082456",
+                        evidence_code="ECO:0000269",
+                        snippet="According to this model, nuclear transport receptors overcome the size limit of the sieve and catalyze their own nuclear pore-passage by a competitive disruption of adjacent inter-repeat contacts, which transiently opens adjoining meshes.",
+                        notes="Competitive binding of nuclear transport receptors to FG repeats drives selective nucleocytoplasmic transport.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="sequence/initiator_methionine",
@@ -6349,7 +6504,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Recognition and polyubiquitination by the N-recognin E3 ubiquitin-protein transferase drives ubiquitin-dependent catabolism via the N-end rule pathway.",
                         reference="PMID:20110468",
                         evidence_code="ECO:0000269",
-                        snippet="Using the yeast Saccharomyces cerevisiae, we found that the Nt-acetylated Met residue could act as a degradation signal (degron), targeted by the Doa10 ubiquitin ligase.",
+                        snippet="Several examined proteins of diverse functions contained these N-terminal degrons, termed Ac N-degrons, which comprise a prevalent class of degradation signals in cellular proteins.",
                         notes="Doa10-mediated ubiquitination of Nt-acetylated Met initiates the Ac/N-end rule proteolytic pathway.",
                     ),
                     CausalEdgeSpec(
@@ -6456,7 +6611,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Formation of the autocatalytically cleaved mature chain completes zymogen protein maturation.",
                         reference="PMID:7477383",
                         evidence_code="ECO:0000269",
-                        snippet="This fold provides both the capacity for nucleophilic attack and the possibility of autocatalytic processing.",
+                        snippet="Here we show that all three enzymes share an unusual fold in which the nucleophile and other catalytic groups occupy equivalent sites.",
                         notes="Self-activation via autocatalytic processing matures the amidohydrolase precursor.",
                     ),
                     CausalEdgeSpec(
@@ -6720,6 +6875,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_ELECTROSTATIC_PATCH",
+                label="Solvent-accessible electrostatic surface patch steering and complex formation",
+                mechanism_summary=(
+                    "Clustered ionizable side chains and polar backbone atoms on the solvent-accessible "
+                    "surface exhibit pronounced electrostatic potentials that govern long-range "
+                    "diffusional steering, protein partner binding, and macromolecular complex formation."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Clustered ionizable and polar amino acid residues on the solvent-accessible protein surface.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0002193",
+                        label="electric charge",
+                        node_type="QUALITY",
+                        grounding="PATO:0002193",
+                        description="Net surface electrostatic potential generated by clustered charged residues in aqueous solution.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Long-range electrostatic steering and recognition of macromolecular binding partners.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0032991",
+                        label="protein-containing complex",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0032991",
+                        description="Assembled macromolecular protein complex stabilized by complementary electrostatic surface potentials.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0002193",
+                        description="Clustered surface amino acid residues bear net electric charge distributions in aqueous solution.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="A major revival in the use of classical electrostatics as an approach to the study of charged and polar molecules in aqueous solution has been made possible through the development of fast numerical and computational methods to solve the Poisson-Boltzmann equation for solute molecules that have complex shapes and charge distributions.",
+                        notes="Honig & Nicholls (1995) Science 268:1144-1149 describe Poisson-Boltzmann modeling of protein surface charge distributions.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0002193",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Surface electrostatic potential governs diffusion-limited encounter rates and pH-dependent macromolecular binding.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="Classical electrostatics has also proved to be successful quantitative tool yielding accurate descriptions of electrical potentials, diffusion limited processes, pH-dependent properties of proteins, ionic strength-dependent phenomena, and the solvation free energies of organic molecules.",
+                        notes="Surface electrostatic potential drives diffusion-limited macromolecular association.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0032991",
+                        description="Electrostatically steered binding mediates macromolecular complex assembly.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="Graphical visualization of the calculated electrostatic potentials generated by proteins and nucleic acids has revealed insights into the role of electrostatic interactions in a wide range of biological phenomena.",
+                        notes="Electrostatic surface interactions govern macromolecular complex assembly.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/surface",
@@ -6749,6 +6980,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_BASIC_CATIONIC_PATCH",
+                label="Cationic surface patch electrostatic recognition of DNA and nucleic acids",
+                mechanism_summary=(
+                    "Spatially clustered basic amino acid side chains on the solvent-accessible "
+                    "protein surface generate a high positive electrostatic potential patch that "
+                    "drives DNA and nucleic acid binding."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Spatially clustered basic amino acid residues (Arg, Lys, His) on the solvent-accessible surface.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0002195",
+                        label="positive charge",
+                        node_type="QUALITY",
+                        grounding="PATO:0002195",
+                        description="High net positive electrostatic potential across the cationic surface patch.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003677",
+                        label="DNA binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003677",
+                        description="Electrostatic recognition and binding of the polyanionic DNA phosphodiester backbone.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003676",
+                        label="nucleic acid binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003676",
+                        description="Polyanionic nucleic acid binding mediated by the positively charged surface patch.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0002195",
+                        description="Clustered basic surface residues excluding negatively charged residues form a positively charged surface patch.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:14654279",
+                        snippet="This knowledge led to the development of a prediction method in which patches of surface residues were selected such that they excluded residues with negative electrostatic scores.",
+                        notes="Jones et al. (2003) J Mol Biol 334:779-793 identify cationic surface patches excluding negative electrostatic scores.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0002195",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0003677",
+                        description="Surface patches with the largest positive electrostatic scores mediate DNA binding.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:14654279",
+                        snippet="From this, it was observed that the DNA-binding sites were, in general, amongst the top 10% of patches with the largest positive electrostatic scores.",
+                        notes="DNA-binding sites coincide with the most positively charged surface patches.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0003677",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0003676",
+                        description="DNA-binding cationic surface patches are a specialized mode of nucleic acid binding.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:14654279",
+                        snippet="Surface patches and the DNA-binding sites were initially analysed for accessibility, electrostatic potential, residue propensity, hydrophobicity and residue conservation.",
+                        notes="Electrostatic potential and accessibility characterize nucleic-acid-binding surface patches.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/surface",
@@ -6781,6 +7088,83 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_ACIDIC_ANIONIC_PATCH",
+                label="Anionic surface patch electrostatic steering of cationic protein partners",
+                mechanism_summary=(
+                    "Spatially clustered acidic Asp and Glu carboxylate side chains on the "
+                    "solvent-accessible surface generate a strong negative electrostatic potential "
+                    "that steers diffusion-limited binding of complementary cationic partners into "
+                    "macromolecular complexes."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Clustered acidic Asp and Glu carboxylate residues exposed on the molecular surface.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0002196",
+                        label="negative charge",
+                        node_type="QUALITY",
+                        grounding="PATO:0002196",
+                        description="Strong net negative electrostatic potential across the anionic surface patch.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Electrostatic steering and recognition of cationic protein binding partners.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0032991",
+                        label="protein-containing complex",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0032991",
+                        description="High-affinity protein complex formed by complementary anionic-cationic surface pairing.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0002196",
+                        description="Clustered acidic surface residues generate negative electrostatic charge distributions on the protein surface.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="A major revival in the use of classical electrostatics as an approach to the study of charged and polar molecules in aqueous solution has been made possible through the development of fast numerical and computational methods to solve the Poisson-Boltzmann equation for solute molecules that have complex shapes and charge distributions.",
+                        notes="Poisson-Boltzmann continuum electrostatics quantifies negative charge distributions on protein surfaces.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0002196",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Negative surface electrostatic potential steers diffusion-limited protein association.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="Classical electrostatics has also proved to be successful quantitative tool yielding accurate descriptions of electrical potentials, diffusion limited processes, pH-dependent properties of proteins, ionic strength-dependent phenomena, and the solvation free energies of organic molecules.",
+                        notes="Anionic surface potentials accelerate diffusion-limited protein binding.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0032991",
+                        description="Electrostatic partner binding drives formation of complementary protein complexes.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:7761829",
+                        snippet="Graphical visualization of the calculated electrostatic potentials generated by proteins and nucleic acids has revealed insights into the role of electrostatic interactions in a wide range of biological phenomena.",
+                        notes="Complementary surface electrostatic potentials stabilize macromolecular complexes.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/surface",
@@ -6813,6 +7197,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_HYDROPHOBIC_PATCH",
+                label="Solvent-exposed hydrophobic surface patch self-association and stability regulation",
+                mechanism_summary=(
+                    "Solvent-accessible nonpolar amino acid side chains clustered on the exterior "
+                    "surface of a folded protein create high spatial aggregation propensity (SAP) "
+                    "hydrophobic patches that drive self-association and govern native protein stability."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Clustered nonpolar amino acid residues dynamically exposed on the folded protein surface.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001884",
+                        label="hydrophobicity",
+                        node_type="QUALITY",
+                        grounding="PATO:0001884",
+                        description="High surface hydrophobicity quantified by spatial aggregation propensity (SAP).",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0042802",
+                        label="identical protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0042802",
+                        description="Hydrophobic desolvation-driven self-association and protein aggregation.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0031647",
+                        label="regulation of protein stability",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0031647",
+                        description="Modulation of native-state conformational and colloidal stability.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0001884",
+                        description="Dynamically exposed nonpolar surface residues exhibit high spatial aggregation propensity (SAP) hydrophobicity.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19571001",
+                        snippet="Using full antibody atomistic molecular dynamics simulations, we identify the antibody regions prone to aggregation by using a technology that we developed called spatial aggregation propensity (SAP).",
+                        notes="Chennamsetty et al. (2009) PNAS 106:11937-11942 define SAP over dynamically exposed hydrophobic surface residues.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001884",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0042802",
+                        description="Solvent-exposed hydrophobic patches drive protein self-association and aggregation.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19571001",
+                        snippet="Aggregation leads to a decrease in antibody activity and could elicit an immunological response.",
+                        notes="Exposed hydrophobic patches promote intermolecular self-association and aggregation.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0042802",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0031647",
+                        description="Mutational disruption of exposed hydrophobic patches suppresses self-association and enhances protein stability.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19571001",
+                        snippet="SAP identifies the location and size of these aggregation prone regions, and allows us to perform target mutations of those regions to engineer antibodies for stability.",
+                        notes="Targeted mutation of SAP hydrophobic patches improves colloidal and conformational protein stability.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/surface",
@@ -6837,8 +7297,89 @@ SPECS: tuple[TraitSpec, ...] = (
                 "PMID:12646921",
                 "Dense N-linked glycosylation across the solvent-accessible surface of viral envelope glycoproteins forms an evolving glycan shield that sterically occludes underlying neutralizing epitopes.",
             ),
+            (
+                "PMID:27114034",
+                "Cryo-EM and crystallographic structures of fully glycosylated HIV-1 Env trimers reveal an interlocking network of N-linked oligosaccharides that sterically encases the underlying protein surface to evade antibody binding.",
+            ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_GLYCOSYLATION_SHIELD",
+                label="Surface N-glycan steric shield occlusion of antibody binding and immune evasion",
+                mechanism_summary=(
+                    "Dense N-linked glycosylation across a glycoprotein's solvent-accessible surface "
+                    "forms a crowded network of interlocking oligosaccharides that sterically encases "
+                    "the underlying polypeptide domain, inhibiting neutralizing antibody binding and "
+                    "modulating the host humoral immune response."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0006487",
+                        label="protein N-linked glycosylation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006487",
+                        description="Covalent attachment of dense N-linked oligosaccharide arrays across surface sequons.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Underlying glycoprotein surface domain encased by the interlocking N-glycan canopy.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Recognition and binding of the underlying protein epitope by neutralizing antibodies.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006955",
+                        label="immune response",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006955",
+                        description="Host humoral antibody-mediated immune response targeting the surface glycoprotein.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0006487",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="SO:0000417",
+                        description="Dense N-linked glycosylation establishes an ordered network of glycan-glycan interactions across the polypeptide domain surface.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:27114034",
+                        snippet="The revealed features delineate a taxonomy of N-linked glycan-glycan interactions.",
+                        notes="Stewart-Jones et al. (2016) Cell 165:813-826 resolve the ordered N-glycan canopy across the HIV-1 Env trimer surface.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0002212",
+                        predicate_label="negatively regulates",
+                        object="GO:0005515",
+                        description="The crowded oligosaccharide shield encases the underlying polypeptide surface and sterically blocks antibody binding.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:27114034",
+                        snippet="These structures reveal the HIV-1-glycan shield to comprise a network of interlocking oligosaccharides, substantially ordered by glycan crowding, that encase the protein component of Env and enable HIV-1 to avoid most antibody-mediated neutralization.",
+                        notes="Steric encasement by the interlocking glycan canopy prevents neutralizing antibody binding.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0006955",
+                        description="Steric occlusion of antibody binding mediates evasion of the host humoral immune response.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:27114034",
+                        snippet="The HIV-1-envelope (Env) trimer is covered by a glycan shield of ~90 N-linked oligosaccharides, which comprises roughly half its mass and is a key component of HIV evasion from humoral immunity.",
+                        notes="The surface N-glycan shield is a primary determinant of humoral immune evasion.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/surface",
@@ -6866,6 +7407,83 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_FREESASA,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_SURFACE_MEMBRANE_ANCHORING_AROMATIC_BELT",
+                label="Interfacial aromatic Trp/Tyr belt anchoring and membrane protein stabilization",
+                mechanism_summary=(
+                    "Flanking tryptophan and tyrosine residues on the exterior surface of a "
+                    "transmembrane protein localize to the lipid glycerol headgroup region of "
+                    "the membrane interface, anchoring bilayer orientation and enhancing "
+                    "membrane protein stability."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Surface-exposed tryptophan and tyrosine aromatic residues flanking the transmembrane domain.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005543",
+                        label="phospholipid binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005543",
+                        description="Interfacial interaction of Trp and Tyr aromatic rings with phospholipid glycerol/carbonyl regions.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016020",
+                        label="membrane",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0016020",
+                        description="Lipid bilayer hydrocarbon-water interfacial region where the transmembrane protein is anchored.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0031647",
+                        label="regulation of protein stability",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0031647",
+                        description="Enhanced thermodynamic and orientational stability of the integral membrane protein in the bilayer.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0005543",
+                        description="Interfacial tryptophan and tyrosine side chains partition into the phospholipid glycerol group region.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9778346",
+                        snippet="We find that the analogues reside in the vicinity of the glycerol group where they all cause similar modest changes in acyl chain organization and that hydrocarbon penetration was not increased by reduction of hydrogen bonding or electric dipole interaction ability.",
+                        notes="Yau et al. (1998) Biochemistry 37:14713-14723 demonstrate localization of Trp indole rings at the lipid glycerol interface.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005543",
+                        predicate="RO:0001025",
+                        predicate_label="located in",
+                        object="GO:0016020",
+                        description="Aromatic interfacial phospholipid interactions localize the aromatic belt to the membrane surface.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9778346",
+                        snippet="These observations rule out simple amphipathic or dipolar interactions as the physical basis for the interfacial preference.",
+                        notes="Aromatic ring structure and pi-electronic properties drive selective localization to the membrane interface.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005543",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0031647",
+                        description="Interfacial Trp and Tyr interactions with the lipid bilayer enhance integral membrane protein stability.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9778346",
+                        snippet="One of the ubiquitous features of membrane proteins is the preference of tryptophan and tyrosine residues for membrane surfaces that presumably arises from enhanced stability due to distinct interfacial interactions.",
+                        notes="Interfacial aromatic belts stabilize transmembrane proteins at the bilayer surface.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/dynamics",
@@ -6893,6 +7511,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_PRODY_ANM,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_DYNAMICS_DOMAIN_HINGE",
+                label="Interdomain hinge-bending conformational closure and functional regulation",
+                mechanism_summary=(
+                    "Localized low-energy main-chain torsion rotations in a flexible interdomain "
+                    "hinge region drive large-amplitude rigid-body domain closure around interdomain "
+                    "interfaces, coupling ligand binding to functional regulation."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Quasi-rigid polypeptide domains linked by an interdomain hinge segment.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Low-energy torsional conformational flexibility within the interdomain hinge region.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Formation and rearrangement of interdomain and partner binding interfaces during domain closure.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0030234",
+                        label="enzyme regulator activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0030234",
+                        description="Conformational gating and regulation of protein activity via combined hinge and shear motions.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0001543",
+                        description="Interdomain hinge joints endow linked polypeptide domains with low-energy conformational flexibility.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8204609",
+                        snippet="We explain these domain movements in terms of the repertoire of low-energy conformation changes that are known to occur in proteins.",
+                        notes="Gerstein, Lesk & Chothia (1994) Biochemistry 33:6739-6749 classify hinge and shear domain movements.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Hinge flexibility enables domain closure and opening governed by interdomain interface geometry.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8204609",
+                        snippet="We emphasize that the elements used in particular proteins are determined mainly by the structure of the interfaces between the domains.",
+                        notes="Interdomain interface packing determines whether hinge or shear motions occur upon binding.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0030234",
+                        description="Combined hinge and shear domain movements regulate active-site access and macromolecular function.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8204609",
+                        snippet="We first describe the basic elements of this repertoire, hinge and shear motions, and then show how the elements of the repertoire can be combined to produce domain movements.",
+                        notes="Hinge-bending domain closure couples binding interface rearrangement to functional regulation.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/dynamics",
@@ -6922,6 +7616,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_PRODY_ANM,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_DYNAMICS_CATALYTIC_GATING_LOOP",
+                label="Ligand-driven active-site gating loop closure and transition-state stabilization",
+                mechanism_summary=(
+                    "Substrate binding energy drives closure of a flexible active-site gating "
+                    "loop from an entropically rich open ground state to a stiff, closed Michaelis "
+                    "complex that stabilizes the transition state and accelerates metabolic turnover."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0036094",
+                        label="small molecule binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0036094",
+                        description="Binding of the substrate ligand (such as a phosphorylated intermediate) at the active site.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Open-to-closed conformational transition of the mobile active-site gating loop.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003824",
+                        label="catalytic activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003824",
+                        description="Enzymatic rate acceleration via transition-state stabilization in the closed active site.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0008152",
+                        label="metabolic process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0008152",
+                        description="Catalytic turnover of enzyme-bound metabolic substrate to product.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0036094",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="PATO:0001543",
+                        description="Substrate binding energy drives conversion of the flexible gating loop into a closed, stiff Michaelis complex.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:30703322",
+                        snippet="Experimental results are presented which show that the phosphodianion-binding energy of phosphate monoester substrates is used to drive conversion of their protein catalysts from flexible and entropically rich ground states to stiff and catalytically active Michaelis complexes.",
+                        notes="Richard (2019) J Am Chem Soc 141:3320-3331 demonstrates ligand-driven loop closure into a stiff catalytically active complex.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0003824",
+                        description="Closure of the gating loop over the active site stabilizes the reaction transition state and accelerates catalysis.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:30703322",
+                        snippet="The enormous rate accelerations observed for many enzyme catalysts are due to strong stabilizing interactions between the protein and reaction transition state.",
+                        notes="Active-site closure creates strong transition-state stabilizing interactions.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0003824",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0008152",
+                        description="Catalytic turnover at the closed active site converts bound substrate to product.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:30703322",
+                        snippet="This Perspective presents evidence that the catalytic events for the turnover of enzyme-bound substrate to product occur at stiff protein active sites, and it describes the imperatives for the evolution of enzymes with flexible structures in their unliganded form that undergo large ligand-driven protein conformational changes to an active stiff form.",
+                        notes="Cyclic gating loop closure and reopening enables rapid enzymatic substrate-to-product turnover.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/dynamics",
@@ -6951,8 +7721,88 @@ SPECS: tuple[TraitSpec, ...] = (
                 "PMID:20591649",
                 "Fold-switching proteins remodel secondary and tertiary structure across flexible regions to expose alternative binding surfaces and expand biological function.",
             ),
+            (
+                "PMID:29784778",
+                "Extant fold-switching proteins remodel secondary structure in response to cellular stimuli to switch between distinct 3D fold topologies and functional binding states.",
+            ),
         ),
         detection_methods=(M_PRODY_ANM,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_DYNAMICS_METAMORPHIC_FOLD_SWITCH",
+                label="Metamorphic secondary-structure remodeling and alternative partner binding",
+                mechanism_summary=(
+                    "A conformationally bistable polypeptide domain exhibits structural flexibility "
+                    "that enables reversible secondary- and tertiary-structure fold remodeling under "
+                    "physiological stimuli, exposing new macromolecular binding interfaces."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Metamorphic polypeptide domain capable of adopting two distinct native 3D topologies.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Conformational bistability of the fold-switching polypeptide segment.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006457",
+                        label="protein folding",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006457",
+                        description="Reversible remodeling of secondary and tertiary structure into an alternative native fold topology.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Engagement of distinct macromolecular binding partners by the remodeled fold state.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0001543",
+                        description="Metamorphic polypeptide domains depart from a single static 3D fold by maintaining conformational bistability.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:29784778",
+                        snippet="A central tenet of biology is that globular proteins have a unique 3D structure under physiological conditions.",
+                        notes="Porter & Looger (2018) PNAS 115:5968-5973 characterize extant fold-switching proteins that violate the single-fold paradigm.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0006457",
+                        description="Conformational plasticity enables secondary-structure remodeling and refolding in response to cellular stimuli.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:29784778",
+                        snippet="Recent work has challenged this notion by demonstrating that some proteins switch folds, a process that involves remodeling of secondary structure in response to a few mutations (evolved fold switchers) or cellular stimuli (extant fold switchers).",
+                        notes="Extant fold switchers remodel alpha-helical and beta-sheet secondary structure into an alternative native fold.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006457",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0005515",
+                        description="Switching between distinct fold topologies exposes new binding interfaces that expand functional partner interactions.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:20591649",
+                        snippet="An increasing number of proteins demonstrate the ability to switch between very different fold topologies, expanding their functional utility through new binding interactions.",
+                        notes="Bryan & Orban (2010) Curr Opin Struct Biol 20:482-488 show that fold switching creates new functional binding interactions.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/dynamics",
@@ -6980,6 +7830,83 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_PRODY_ANM, M_PISA),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_DYNAMICS_DOMAIN_SWAPPING_HINGE_LOOP",
+                label="3D domain-swapping hinge loop extension and intertwined oligomer assembly",
+                mechanism_summary=(
+                    "Conformational extension of a bistable hinge loop allows a polypeptide "
+                    "domain from one monomeric chain to exchange with the identical domain of "
+                    "another chain, driving homotypic subunit binding and oligomerization into "
+                    "an intertwined dimeric or higher-order complex."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Swapping polypeptide domain connected to the main body by the bistable hinge loop.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0042802",
+                        label="identical protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0042802",
+                        description="Reciprocal intermolecular exchange of identical domains between monomeric chains.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0051259",
+                        label="protein complex oligomerization",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0051259",
+                        description="Conversion of closed monomers into domain-swapped oligomeric assemblies.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0032991",
+                        label="protein-containing complex",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0032991",
+                        description="Intertwined homodimer or higher oligomer stabilized by swapped domain interfaces.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0042802",
+                        description="Upon hinge-loop extension, one domain of a monomeric chain is replaced by the identical domain from a partner chain.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8580836",
+                        snippet="In 3D domain swapping, one domain of a monomeric protein is replaced by the same domain from an identical protein chain.",
+                        notes="Bennett, Schlunegger & Eisenberg (1995) Protein Sci 4:2455-2468 define reciprocal domain exchange across the hinge loop.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0042802",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0051259",
+                        description="Reciprocal intermolecular domain exchange drives protein oligomerization from monomers.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8580836",
+                        snippet="3D domain swapping is a mechanism for forming oligomeric proteins from their monomers.",
+                        notes="3D domain swapping converts monomeric subunits into oligomers.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0051259",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="GO:0032991",
+                        description="Domain-swapped oligomerization yields an intertwined dimer or higher oligomer.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:8580836",
+                        snippet="The result is an intertwined dimer or higher oligomer, with one domain of each subunit replaced by the identical domain from another subunit.",
+                        notes="Reciprocal domain replacement produces an intertwined oligomeric complex.",
+                    ),
+                ),
+            ),
+        ),
     ),
     TraitSpec(
         rel_dir="structure/dynamics",
@@ -7008,6 +7935,82 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
         detection_methods=(M_PRODY_ANM,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_FOUNDATIONAL_DYNAMICS_ALLOSTERIC_ENSEMBLE_TRANSMISSION_PATHWAY",
+                label="Allosteric dynamic-coupling residue network signal transmission to catalysis",
+                mechanism_summary=(
+                    "Correlated dynamical fluctuations of amino acid residues organized into "
+                    "local structural communities transmit allosteric signals across critical "
+                    "inter-community edges, regulating distant catalytic site activity."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Networked amino acid residues connected by dynamic contacts across local structural communities.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Correlated side-chain and backbone thermal fluctuations captured by the dynamic contact map.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0030234",
+                        label="enzyme regulator activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0030234",
+                        description="Long-range allosteric signal communication across critical inter-community edges.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003824",
+                        label="catalytic activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003824",
+                        description="Allosterically modulated enzymatic catalysis at the distant active site.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:83228",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
+                        object="PATO:0001543",
+                        description="Amino acid residues form a dynamic contact network organized into locally intraconnected communities.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19351898",
+                        snippet="A dynamic contact map defines the edges connecting nodes (amino acids and nucleotides) in the physical network whose overall topology is presented as a network of communities, local substructures that are highly intraconnected, but loosely interconnected.",
+                        notes="Sethi et al. (2009) PNAS 106:6620-6625 define dynamical amino acid contact networks and community structure.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0030234",
+                        description="Correlated fluctuations propagate allosteric communication across critical inter-community edges.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19351898",
+                        snippet="Whereas nodes within a single community can communicate through many alternate pathways, the communication between monomers in different communities has to take place through a smaller number of critical edges or interactions.",
+                        notes="Critical inter-community edges bottleneck and transmit long-range allosteric signals.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0030234",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0003824",
+                        description="Allosteric network communication regulates catalytic aminoacylation activity at the active site.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:19351898",
+                        snippet="Although the 2 class I synthetases have remarkably different interactions with their cognate tRNAs, the allosteric networks for charging tRNA with the correct amino acid display considerable similarities.",
+                        notes="Conserved allosteric residue networks couple tRNA recognition to catalytic amino acid charging.",
+                    ),
+                ),
+            ),
+        ),
     ),
 )
 

@@ -23,7 +23,67 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:21471012
     recipe: "prody anm {input} -n 20 -o {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_DYNAMICS_DOMAIN_HINGE
+    title: "Interdomain hinge-bending conformational closure and functional regulation"
+    description: "Localized low-energy main-chain torsion rotations in a flexible interdomain hinge region drive large-amplitude rigid-body domain closure around interdomain interfaces, coupling ligand binding to functional regulation."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Quasi-rigid polypeptide domains linked by an interdomain hinge segment."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Low-energy torsional conformational flexibility within the interdomain hinge region."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Formation and rearrangement of interdomain and partner binding interfaces during domain closure."
+      - node_id: "GO:0030234"
+        label: "enzyme regulator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0030234"
+        description: "Conformational gating and regulation of protein activity via combined hinge and shear motions."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0001543"
+        description: "Interdomain hinge joints endow linked polypeptide domains with low-energy conformational flexibility."
+        evidence:
+          - reference: PMID:8204609
+            snippet: "We explain these domain movements in terms of the repertoire of low-energy conformation changes that are known to occur in proteins."
+            notes: "Gerstein, Lesk & Chothia (1994) Biochemistry 33:6739-6749 classify hinge and shear domain movements. (ECO:0000305)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Hinge flexibility enables domain closure and opening governed by interdomain interface geometry."
+        evidence:
+          - reference: PMID:8204609
+            snippet: "We emphasize that the elements used in particular proteins are determined mainly by the structure of the interfaces between the domains."
+            notes: "Interdomain interface packing determines whether hinge or shear motions occur upon binding. (ECO:0000305)"
+      - subject: "GO:0005515"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0030234"
+        description: "Combined hinge and shear domain movements regulate active-site access and macromolecular function."
+        evidence:
+          - reference: PMID:8204609
+            snippet: "We first describe the basic elements of this repertoire, hinge and shear motions, and then show how the elements of the repertoire can be combined to produce domain movements."
+            notes: "Hinge-bending domain closure couples binding interface rearrangement to functional regulation. (ECO:0000305)"
 evidence:
   - reference: PMID:8204609
     notes: "Large-scale rigid-body domain movements in proteins are mediated by localized backbone dihedral rotations within flexible interdomain hinge regions where packing constraints are minimal."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_DYNAMICS_DOMAIN_HINGE (SO:0000417 -> PATO:0001543
+    -> GO:0005515 -> GO:0030234) with distinct verbatim snippets from PMID:8204609 (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

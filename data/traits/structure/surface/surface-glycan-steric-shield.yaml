@@ -20,7 +20,70 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26973785
     recipe: "freesasa --format=json {input} > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_SURFACE_GLYCOSYLATION_SHIELD
+    title: "Surface N-glycan steric shield occlusion of antibody binding and immune evasion"
+    description: "Dense N-linked glycosylation across a glycoprotein's solvent-accessible surface forms a crowded network of interlocking oligosaccharides that sterically encases the underlying polypeptide domain, inhibiting neutralizing antibody binding and modulating the host humoral immune response."
+    nodes:
+      - node_id: "GO:0006487"
+        label: "protein N-linked glycosylation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006487"
+        description: "Covalent attachment of dense N-linked oligosaccharide arrays across surface sequons."
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Underlying glycoprotein surface domain encased by the interlocking N-glycan canopy."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Recognition and binding of the underlying protein epitope by neutralizing antibodies."
+      - node_id: "GO:0006955"
+        label: "immune response"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006955"
+        description: "Host humoral antibody-mediated immune response targeting the surface glycoprotein."
+    edges:
+      - subject: "GO:0006487"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "SO:0000417"
+        description: "Dense N-linked glycosylation establishes an ordered network of glycan-glycan interactions across the polypeptide domain surface."
+        evidence:
+          - reference: PMID:27114034
+            snippet: "The revealed features delineate a taxonomy of N-linked glycan-glycan interactions."
+            notes: "Stewart-Jones et al. (2016) Cell 165:813-826 resolve the ordered N-glycan canopy across the HIV-1 Env trimer surface. (ECO:0000269)"
+      - subject: "SO:0000417"
+        predicate: "negatively regulates"
+        predicate_id: RO:0002212
+        object: "GO:0005515"
+        description: "The crowded oligosaccharide shield encases the underlying polypeptide surface and sterically blocks antibody binding."
+        evidence:
+          - reference: PMID:27114034
+            snippet: "These structures reveal the HIV-1-glycan shield to comprise a network of interlocking oligosaccharides, substantially ordered by glycan crowding, that encase the protein component of Env and enable HIV-1 to avoid most antibody-mediated neutralization."
+            notes: "Steric encasement by the interlocking glycan canopy prevents neutralizing antibody binding. (ECO:0000269)"
+      - subject: "GO:0005515"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0006955"
+        description: "Steric occlusion of antibody binding mediates evasion of the host humoral immune response."
+        evidence:
+          - reference: PMID:27114034
+            snippet: "The HIV-1-envelope (Env) trimer is covered by a glycan shield of ~90 N-linked oligosaccharides, which comprises roughly half its mass and is a key component of HIV evasion from humoral immunity."
+            notes: "The surface N-glycan shield is a primary determinant of humoral immune evasion. (ECO:0000269)"
 evidence:
   - reference: PMID:12646921
     notes: "Dense N-linked glycosylation across the solvent-accessible surface of viral envelope glycoproteins forms an evolving glycan shield that sterically occludes underlying neutralizing epitopes."
+  - reference: PMID:27114034
+    notes: "Cryo-EM and crystallographic structures of fully glycosylated HIV-1 Env trimers reveal an interlocking network of N-linked oligosaccharides that sterically encases the underlying protein surface to evade antibody binding."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_SURFACE_GLYCOSYLATION_SHIELD (GO:0006487
+    -> SO:0000417 -> GO:0005515 -> GO:0006955) with distinct verbatim snippets from PMID:27114034 (Round
+    126).
+  llm_assisted: true
 license: CC-BY-4.0

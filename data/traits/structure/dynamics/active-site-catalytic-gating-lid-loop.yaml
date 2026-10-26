@@ -22,7 +22,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:21471012
     recipe: "prody anm {input} -n 20 -o {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_DYNAMICS_CATALYTIC_GATING_LOOP
+    title: "Ligand-driven active-site gating loop closure and transition-state stabilization"
+    description: "Substrate binding energy drives closure of a flexible active-site gating loop from an entropically rich open ground state to a stiff, closed Michaelis complex that stabilizes the transition state and accelerates metabolic turnover."
+    nodes:
+      - node_id: "GO:0036094"
+        label: "small molecule binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0036094"
+        description: "Binding of the substrate ligand (such as a phosphorylated intermediate) at the active site."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Open-to-closed conformational transition of the mobile active-site gating loop."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Enzymatic rate acceleration via transition-state stabilization in the closed active site."
+      - node_id: "GO:0008152"
+        label: "metabolic process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0008152"
+        description: "Catalytic turnover of enzyme-bound metabolic substrate to product."
+    edges:
+      - subject: "GO:0036094"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "PATO:0001543"
+        description: "Substrate binding energy drives conversion of the flexible gating loop into a closed, stiff Michaelis complex."
+        evidence:
+          - reference: PMID:30703322
+            snippet: "Experimental results are presented which show that the phosphodianion-binding energy of phosphate monoester substrates is used to drive conversion of their protein catalysts from flexible and entropically rich ground states to stiff and catalytically active Michaelis complexes."
+            notes: "Richard (2019) J Am Chem Soc 141:3320-3331 demonstrates ligand-driven loop closure into a stiff catalytically active complex. (ECO:0000305)"
+      - subject: "PATO:0001543"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0003824"
+        description: "Closure of the gating loop over the active site stabilizes the reaction transition state and accelerates catalysis."
+        evidence:
+          - reference: PMID:30703322
+            snippet: "The enormous rate accelerations observed for many enzyme catalysts are due to strong stabilizing interactions between the protein and reaction transition state."
+            notes: "Active-site closure creates strong transition-state stabilizing interactions. (ECO:0000305)"
+      - subject: "GO:0003824"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0008152"
+        description: "Catalytic turnover at the closed active site converts bound substrate to product."
+        evidence:
+          - reference: PMID:30703322
+            snippet: "This Perspective presents evidence that the catalytic events for the turnover of enzyme-bound substrate to product occur at stiff protein active sites, and it describes the imperatives for the evolution of enzymes with flexible structures in their unliganded form that undergo large ligand-driven protein conformational changes to an active stiff form."
+            notes: "Cyclic gating loop closure and reopening enables rapid enzymatic substrate-to-product turnover. (ECO:0000305)"
 evidence:
   - reference: PMID:30703322
     notes: "Substrate binding drives conformational closure of flexible active-site gating loops (such as the triosephosphate isomerase loop 6), sequestering the reaction intermediate from bulk water and stabilizing the catalytic transition state."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_DYNAMICS_CATALYTIC_GATING_LOOP (GO:0036094
+    -> PATO:0001543 -> GO:0003824 -> GO:0008152) with distinct verbatim snippets from PMID:30703322 (Round
+    126).
+  llm_assisted: true
 license: CC-BY-4.0
