@@ -1,0 +1,93 @@
+identifier: proteintraitsmech:INIT_METHIONINE_N_DEGRON
+label: "initiator-methionine N-degron recognition site"
+definition: >-
+  A retained N-terminal initiator methionine site that functions as a conditional proteolytic degradation signal (N-degron) in the ubiquitin-dependent N-end rule pathway, either after co-translational N-alpha-acetylation (Ac/N-degron recognized by Doa10/MARCH6 when unshielded by partner subunits) or when retained unmodified ahead of a bulky hydrophobic penultimate residue (MPhi Arg/N-degron recognized by UBR-family E3 ubiquitin ligases).
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_INITIATOR_METHIONINE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:INIT_METHIONINE_RETAINED
+synonyms:
+  - synonym_text: "Ac/N-degron initiator methionine site"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "MPhi/N-degron retained Met1 site"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "N-end rule initiator methionine degradation signal"
+    synonym_type: EXACT_SYNONYM
+xrefs:
+  - SO:0000419
+  - MOD:00058
+detection_methods:
+  - name: "NetAcet / N-terminal acetyltransferase (NatB/NatC/NatE) substrate motif scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0417
+    tool: "biotools:netacet"
+    evidence_code: ECO:0000255
+    reference: PMID:27498224
+    recipe: "fuzzpro -sequence {input} -pattern '^M[DENQFLIWYKM]' -outfile {output}"
+  - name: "TermiNator / EMBOSS fuzzpro bulky penultimate-residue N-terminal methionine retention scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:emboss"
+    evidence_code: ECO:0000255
+    reference: PMID:2682640
+    recipe: "fuzzpro -sequence {input} -pattern '^M[RNDQEHLKMFPWYI]' -outfile {output}"
+causal_graphs:
+  - graph_id: CG_INIT_METHIONINE_N_DEGRON
+    title: "N-terminally acetylated retained initiator methionine functions as an Ac/N-degron recognized by E3 ubiquitin ligases for proteasomal degradation"
+    description: "Co-translational retention and N-alpha-acetylation of the initiator methionine residue creates a conditional Ac/N-degron recognized by N-recognin E3 ubiquitin-protein transferases (such as Doa10/MARCH6), driving ubiquitin-dependent protein catabolism via the N-end rule pathway and 26S proteasomal degradation."
+    nodes:
+      - node_id: "MOD:00058"
+        label: N-acetyl-L-methionine
+        node_type: PTM
+        grounding: "MOD:00058"
+        description: "Retained N-terminal initiator L-methionine residue modified by N-alpha-acetylation to form an Ac/N-degron."
+      - node_id: "GO:0004842"
+        label: "ubiquitin-protein transferase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004842"
+        description: "E3 ubiquitin ligase N-recognin activity (e.g. Doa10/MARCH6) that recognizes the unshielded N-acetylated initiator methionine."
+      - node_id: "GO:0071596"
+        label: "ubiquitin-dependent protein catabolic process via the N-end rule pathway"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0071596"
+        description: "Selective polyubiquitination and turnover of proteins bearing destabilizing N-terminal degradation signals (N-degrons)."
+      - node_id: "GO:0043161"
+        label: "proteasome-mediated ubiquitin-dependent protein catabolic process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0043161"
+        description: "Proteolytic degradation of the polyubiquitinated N-degron substrate by the 26S proteasome."
+    edges:
+      - subject: "MOD:00058"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0004842"
+        description: "The N-acetylated initiator methionine (Ac/N-degron) is recognized as a substrate determinant by the Doa10 E3 ubiquitin-protein transferase."
+        evidence:
+          - reference: PMID:20110468
+            snippet: "Using the yeast Saccharomyces cerevisiae, we found that the Nt-acetylated Met residue could act as a degradation signal (degron), targeted by the Doa10 ubiquitin ligase."
+            notes: "Hwang et al. 2010 demonstrate that Nt-acetylated Met acts as an Ac/N-degron recognized by the Doa10 ubiquitin ligase. (ECO:0000269)"
+      - subject: "GO:0004842"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0071596"
+        description: "Recognition and polyubiquitination by the N-recognin E3 ubiquitin-protein transferase drives ubiquitin-dependent catabolism via the N-end rule pathway."
+        evidence:
+          - reference: PMID:20110468
+            snippet: "Using the yeast Saccharomyces cerevisiae, we found that the Nt-acetylated Met residue could act as a degradation signal (degron), targeted by the Doa10 ubiquitin ligase."
+            notes: "Doa10-mediated ubiquitination of Nt-acetylated Met initiates the Ac/N-end rule proteolytic pathway. (ECO:0000269)"
+      - subject: "GO:0071596"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0043161"
+        description: "Ubiquitin-dependent N-end rule targeting commits the unshielded Ac/N-degron-bearing protein to proteasome-mediated degradation."
+        evidence:
+          - reference: PMID:20110468
+            snippet: "The retained N-terminal methionine (Met) residue of a nascent protein is often N-terminally acetylated (Nt-acetylated)."
+            notes: "N-end rule polyubiquitination of Nt-acetylated nascent chains leads to proteasomal degradation. (ECO:0000269)"
+evidence:
+  - reference: PMID:20110468
+    notes: "Retained and N-terminally acetylated initiator methionine residues act as specific Ac/N-degron degradation signals targeted by the Doa10/MARCH6 ubiquitin ligase in the N-end rule pathway."
+license: CC-BY-4.0

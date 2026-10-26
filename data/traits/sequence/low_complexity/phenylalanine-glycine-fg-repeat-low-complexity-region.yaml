@@ -1,0 +1,40 @@
+identifier: proteintraitsmech:LOWCOMP_FG_NUCLEOPORIN_REPEAT_REGION
+label: "phenylalanine-glycine (FG)-repeat low-complexity region"
+definition: >-
+  A low-complexity intrinsically disordered sequence region composed of tandem phenylalanine-glycine dipeptide motifs (including FG, FxFG, GLFG, and PAFG repeats) separated by polar or charged spacer sequences, characteristic of nuclear pore complex FG-nucleoporins where cohesive hydrophobic Phe-Phe interactions form a selective hydrogel-like permeability barrier penetrated by karyopherin transport receptors.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_LOW_COMPLEXITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:LOWCOMP_REGION
+synonyms:
+  - synonym_text: "FG-repeat nucleoporin domain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "GLFG / FxFG repeat low-complexity region"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "cohesive FG-repeat hydrogel domain"
+    synonym_type: RELATED_SYNONYM
+sequence_pattern: "(?:F[A-Z]?FG|GLFG|[PA]FG)"
+detection_methods:
+  - name: "SEG / fLPS low-complexity sequence segmentation"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0000362
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 {input} > {output}"
+  - name: "fLPS2 compositional bias binomial P-value scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0007669
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 -c default {input} > {output}"
+evidence:
+  - reference: PMID:17082456
+    notes: "Phenylalanine-mediated inter-repeat interactions cross-link Phe and Gly (FG)-rich nucleoporin repeat domains into elastic and reversible hydrogels that form the selective nuclear pore permeability barrier."
+  - reference: PMID:28851299
+    notes: "fLPS detects multiple-residue compositional biases including Phe/Gly-rich low-complexity regions."
+license: CC-BY-4.0

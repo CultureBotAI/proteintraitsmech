@@ -18,6 +18,8 @@ Expands the single-record and sparse categories where canonical subclasses were 
   - SEQ_MATURE_CHAIN         (data/traits/sequence/mature_chain/)
   - STRUCT_DISULFIDE         (data/traits/structure/disulfide/)
   - STRUCT_CAVITY            (data/traits/structure/cavity/)
+  - STRUCT_SURFACE           (data/traits/structure/surface/)
+  - STRUCT_DYNAMICS          (data/traits/structure/dynamics/)
   - EVO_CONSERVATION         (data/traits/evolution/conservation/)
 
 And resolves the cross-Mech GO gaps:
@@ -349,6 +351,24 @@ M_CODEML_HYPHY = MethodSpec(
     evidence_code="ECO:0007669",
     reference="PMID:17483113",
     recipe="codeml codeml.ctl",
+)
+M_FREESASA = MethodSpec(
+    name="FreeSASA / APBS solvent-accessible surface area & electrostatic patch calculation",
+    method_type="STRUCTURAL_ALGORITHM",
+    edam_operation="EDAM:operation_0387",
+    tool="biotools:freesasa",
+    evidence_code="ECO:0007669",
+    reference="PMID:26973785",
+    recipe="freesasa --format=json {input} > {output}",
+)
+M_PRODY_ANM = MethodSpec(
+    name="ProDy / ANM anisotropic network model & conformational ensemble PCA",
+    method_type="STRUCTURAL_ALGORITHM",
+    edam_operation="EDAM:operation_0244",
+    tool="biotools:prody",
+    evidence_code="ECO:0007669",
+    reference="PMID:21471012",
+    recipe="prody anm {input} -n 20 -o {output}",
 )
 
 
@@ -6171,6 +6191,823 @@ SPECS: tuple[TraitSpec, ...] = (
             ("conservation_metric", "dN/dS (positive diversifying selection, omega > 1)"),
             ("orthology_basis", "codon-aligned orthologous coding sequences"),
         ),
+    ),
+    # --- 16. Cycle 3 Stage 1 expansion across SEQ_LOW_COMPLEXITY, SEQ_INITIATOR_METHIONINE,
+    #         SEQ_MATURE_CHAIN, STRUCT_ALLOSTERIC_SITE, STRUCT_DISULFIDE, STRUCT_SURFACE,
+    #         and STRUCT_DYNAMICS (17 records) ---
+    TraitSpec(
+        rel_dir="sequence/low_complexity",
+        filename="polyampholytic-mixed-charge-block-low-complexity-region.yaml",
+        identifier="proteintraitsmech:LOWCOMP_POLYAMPHOLYTIC_CHARGE_BLOCK",
+        label="polyampholytic mixed-charge-block low-complexity region",
+        definition=(
+            "A low-complexity sequence region enriched in both positively charged (Lys, Arg) "
+            "and negatively charged (Glu, Asp) residues arranged in alternating or segregated "
+            "charge blocks (quantified by the charge-patterning parameter kappa or sequential "
+            "charge decoration SCD), governing chain compaction, alpha-helical single-alpha-helix "
+            "formation, or electrostatic coacervation and nuclear-speckle partitioning."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_LOW_COMPLEXITY",
+        parent_traits=("proteintraitsmech:LOWCOMP_REGION",),
+        synonyms=(
+            ("charge-blocky polyampholytic low-complexity region", "EXACT_SYNONYM"),
+            ("high-kappa mixed-charge low-complexity tract", "RELATED_SYNONYM"),
+            ("E/K or D/R alternating charge block domain", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:23901099",
+                "Conformations of intrinsically disordered polyampholytic proteins are governed by the fraction of charged residues and the linear sequence patterning of oppositely charged residues.",
+            ),
+            (
+                "PMID:28851299",
+                "fLPS identifies multi-residue charged compositional biases and low-complexity regions in protein sequences.",
+            ),
+        ),
+        detection_methods=(M_FLPS, M_SEG),
+    ),
+    TraitSpec(
+        rel_dir="sequence/low_complexity",
+        filename="phenylalanine-glycine-fg-repeat-low-complexity-region.yaml",
+        identifier="proteintraitsmech:LOWCOMP_FG_NUCLEOPORIN_REPEAT_REGION",
+        label="phenylalanine-glycine (FG)-repeat low-complexity region",
+        definition=(
+            "A low-complexity intrinsically disordered sequence region composed of tandem "
+            "phenylalanine-glycine dipeptide motifs (including FG, FxFG, GLFG, and PAFG repeats) "
+            "separated by polar or charged spacer sequences, characteristic of nuclear pore "
+            "complex FG-nucleoporins where cohesive hydrophobic Phe-Phe interactions form a "
+            "selective hydrogel-like permeability barrier penetrated by karyopherin transport receptors."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_LOW_COMPLEXITY",
+        parent_traits=("proteintraitsmech:LOWCOMP_REGION",),
+        synonyms=(
+            ("FG-repeat nucleoporin domain", "EXACT_SYNONYM"),
+            ("GLFG / FxFG repeat low-complexity region", "NARROW_SYNONYM"),
+            ("cohesive FG-repeat hydrogel domain", "RELATED_SYNONYM"),
+        ),
+        sequence_pattern="(?:F[A-Z]?FG|GLFG|[PA]FG)",
+        evidence=(
+            (
+                "PMID:17082456",
+                "Phenylalanine-mediated inter-repeat interactions cross-link Phe and Gly (FG)-rich nucleoporin repeat domains into elastic and reversible hydrogels that form the selective nuclear pore permeability barrier.",
+            ),
+            (
+                "PMID:28851299",
+                "fLPS detects multiple-residue compositional biases including Phe/Gly-rich low-complexity regions.",
+            ),
+        ),
+        detection_methods=(M_SEG, M_FLPS),
+    ),
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="initiator-methionine-ac-n-degron-and-arg-n-degron-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_N_DEGRON",
+        label="initiator-methionine N-degron recognition site",
+        definition=(
+            "A retained N-terminal initiator methionine site that functions as a conditional "
+            "proteolytic degradation signal (N-degron) in the ubiquitin-dependent N-end rule "
+            "pathway, either after co-translational N-alpha-acetylation (Ac/N-degron recognized "
+            "by Doa10/MARCH6 when unshielded by partner subunits) or when retained unmodified "
+            "ahead of a bulky hydrophobic penultimate residue (MPhi Arg/N-degron recognized by "
+            "UBR-family E3 ubiquitin ligases)."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:INIT_METHIONINE_RETAINED",),
+        synonyms=(
+            ("Ac/N-degron initiator methionine site", "NARROW_SYNONYM"),
+            ("MPhi/N-degron retained Met1 site", "NARROW_SYNONYM"),
+            ("N-end rule initiator methionine degradation signal", "EXACT_SYNONYM"),
+        ),
+        xrefs=("SO:0000419", "MOD:00058"),
+        evidence=(
+            (
+                "PMID:20110468",
+                "Retained and N-terminally acetylated initiator methionine residues act as specific Ac/N-degron degradation signals targeted by the Doa10/MARCH6 ubiquitin ligase in the N-end rule pathway.",
+            ),
+        ),
+        detection_methods=(M_NAT_PRED, M_MAP_NME_RETAINED),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_INIT_METHIONINE_N_DEGRON",
+                label="N-terminally acetylated retained initiator methionine functions as an Ac/N-degron recognized by E3 ubiquitin ligases for proteasomal degradation",
+                mechanism_summary=(
+                    "Co-translational retention and N-alpha-acetylation of the initiator methionine "
+                    "residue creates a conditional Ac/N-degron recognized by N-recognin E3 "
+                    "ubiquitin-protein transferases (such as Doa10/MARCH6), driving ubiquitin-dependent "
+                    "protein catabolism via the N-end rule pathway and 26S proteasomal degradation."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="MOD:00058",
+                        label="N-acetyl-L-methionine",
+                        node_type="PTM",
+                        grounding="MOD:00058",
+                        description="Retained N-terminal initiator L-methionine residue modified by N-alpha-acetylation to form an Ac/N-degron.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0004842",
+                        label="ubiquitin-protein transferase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004842",
+                        description="E3 ubiquitin ligase N-recognin activity (e.g. Doa10/MARCH6) that recognizes the unshielded N-acetylated initiator methionine.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0071596",
+                        label="ubiquitin-dependent protein catabolic process via the N-end rule pathway",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0071596",
+                        description="Selective polyubiquitination and turnover of proteins bearing destabilizing N-terminal degradation signals (N-degrons).",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0043161",
+                        label="proteasome-mediated ubiquitin-dependent protein catabolic process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0043161",
+                        description="Proteolytic degradation of the polyubiquitinated N-degron substrate by the 26S proteasome.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="MOD:00058",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0004842",
+                        description="The N-acetylated initiator methionine (Ac/N-degron) is recognized as a substrate determinant by the Doa10 E3 ubiquitin-protein transferase.",
+                        reference="PMID:20110468",
+                        evidence_code="ECO:0000269",
+                        snippet="Using the yeast Saccharomyces cerevisiae, we found that the Nt-acetylated Met residue could act as a degradation signal (degron), targeted by the Doa10 ubiquitin ligase.",
+                        notes="Hwang et al. 2010 demonstrate that Nt-acetylated Met acts as an Ac/N-degron recognized by the Doa10 ubiquitin ligase.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0004842",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
+                        object="GO:0071596",
+                        description="Recognition and polyubiquitination by the N-recognin E3 ubiquitin-protein transferase drives ubiquitin-dependent catabolism via the N-end rule pathway.",
+                        reference="PMID:20110468",
+                        evidence_code="ECO:0000269",
+                        snippet="Using the yeast Saccharomyces cerevisiae, we found that the Nt-acetylated Met residue could act as a degradation signal (degron), targeted by the Doa10 ubiquitin ligase.",
+                        notes="Doa10-mediated ubiquitination of Nt-acetylated Met initiates the Ac/N-end rule proteolytic pathway.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0071596",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0043161",
+                        description="Ubiquitin-dependent N-end rule targeting commits the unshielded Ac/N-degron-bearing protein to proteasome-mediated degradation.",
+                        reference="PMID:20110468",
+                        evidence_code="ECO:0000269",
+                        snippet="The retained N-terminal methionine (Met) residue of a nascent protein is often N-terminally acetylated (Nt-acetylated).",
+                        notes="N-end rule polyubiquitination of Nt-acetylated nascent chains leads to proteasomal degradation.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="autocatalytically-cleaved-mature-polypeptide-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_AUTOCATALYTIC_CLEAVED",
+        label="autocatalytically cleaved mature polypeptide chain",
+        definition=(
+            "A mature polypeptide chain generated by intramolecular cis-autoproteolytic "
+            "cleavage of a precursor zymogen without an external protease, typically via "
+            "an N->O or N->S acyl rearrangement catalyzed by an internal threonine, serine, "
+            "or cysteine residue that becomes the catalytic N-terminal nucleophile (as in "
+            "Ntn-hydrolases such as proteasome beta subunits, penicillin acylase, glycosylasparaginase, "
+            "and GPCR autoproteolysis-inducing GAIN domains)."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("Ntn-hydrolase autoproteolytically processed mature chain", "NARROW_SYNONYM"),
+            ("cis-autoproteolytic mature polypeptide subunit", "EXACT_SYNONYM"),
+            ("self-cleaved N-terminal nucleophile mature chain", "RELATED_SYNONYM"),
+        ),
+        xrefs=("SO:0000419",),
+        evidence=(
+            (
+                "PMID:7477383",
+                "N-terminal nucleophile (Ntn) hydrolases share a beta-sandwich fold that catalyzes intramolecular autocatalytic processing of an inactive precursor to liberate a mature chain with a catalytic N-terminal Thr, Ser, or Cys nucleophile.",
+            ),
+        ),
+        detection_methods=(M_PROPEP,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="CG_MATURE_CHAIN_AUTOCATALYTIC_CLEAVED",
+                label="Intramolecular cis-autoproteolytic cleavage liberates a mature polypeptide chain bearing a catalytic N-terminal nucleophile",
+                mechanism_summary=(
+                    "In N-terminal nucleophile (Ntn) hydrolases and related autoproteolytic zymogens, "
+                    "the folded precursor catalyzes intramolecular proteolysis at the peptide bond "
+                    "preceding an internal Thr, Ser, or Cys residue, liberating a mature polypeptide "
+                    "chain whose newly exposed N-terminal residue serves as the active-site nucleophile."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0006508",
+                        label="proteolysis",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006508",
+                        description="Intramolecular cis-autoproteolytic cleavage of the scissile peptide bond preceding the catalytic nucleophile.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Processed mature polypeptide chain carrying a newly liberated N-terminal Thr, Ser, or Cys nucleophile.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0051604",
+                        label="protein maturation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0051604",
+                        description="Conversion of the inactive single-chain zymogen precursor into the mature active enzyme subunit.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0003824",
+                        label="catalytic activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003824",
+                        description="Active-site nucleophilic catalysis enabled by the free alpha-amino group and side chain of the N-terminal residue of the mature chain.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0006508",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Intramolecular autocatalytic proteolysis cleaves the precursor to yield the mature polypeptide chain.",
+                        reference="PMID:7477383",
+                        evidence_code="ECO:0000269",
+                        snippet="This fold provides both the capacity for nucleophilic attack and the possibility of autocatalytic processing.",
+                        notes="Brannigan et al. 1995 establish that the Ntn-hydrolase fold directs autocatalytic processing to generate the mature N-terminal nucleophile chain.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000419",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0051604",
+                        description="Formation of the autocatalytically cleaved mature chain completes zymogen protein maturation.",
+                        reference="PMID:7477383",
+                        evidence_code="ECO:0000269",
+                        snippet="This fold provides both the capacity for nucleophilic attack and the possibility of autocatalytic processing.",
+                        notes="Self-activation via autocatalytic processing matures the amidohydrolase precursor.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="SO:0000419",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0003824",
+                        description="The newly exposed N-terminal Cys, Ser, or Thr residue of the mature polypeptide chain acts as the catalytic nucleophile.",
+                        reference="PMID:7477383",
+                        evidence_code="ECO:0000269",
+                        snippet="These enzymes use the side chain of the amino-terminal residue, incorporated in a beta-sheet, as the nucleophile in the catalytic attack at the carbonyl carbon.",
+                        notes="The amino-terminal residue liberated by autocatalytic processing directly catalyzes nucleophilic attack at the substrate carbonyl carbon.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/allosteric_site",
+        filename="covalent-allosteric-regulatory-site.yaml",
+        identifier="proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
+        label="covalent allosteric regulatory site",
+        definition=(
+            "An allosteric regulatory pocket containing a solvent-accessible or cryptically "
+            "exposed nucleophilic residue (most commonly a reactive cysteine sulfhydryl, or "
+            "lysine/tyrosine side chain) at which covalent adduct formation by an endogenous "
+            "electrophile, reactive metabolite, or targeted covalent allosteric modulator "
+            "allosterically shifts the protein conformational ensemble and regulates "
+            "orthosteric ligand affinity, catalysis, or effector binding."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_ALLOSTERIC_SITE",
+        parent_traits=("proteintraitsmech:ALLOSTERIC_REGULATORY_SITE",),
+        synonyms=(
+            ("targeted covalent allosteric pocket", "EXACT_SYNONYM"),
+            ("cysteine-reactive allosteric site", "NARROW_SYNONYM"),
+            ("electrophile-modified allosteric regulatory site", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:24256730",
+                "Small molecules that irreversibly bind to a reactive cysteine in the K-Ras(G12C) switch-II allosteric pocket subvert nucleotide preference and impair effector interactions.",
+            ),
+        ),
+        detection_methods=(M_FPOCKET,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="covalent_allosteric_cysteine_adduct_regulation",
+                label="Covalent effector modification of a nucleophilic residue in an allosteric pocket shifts the conformational ensemble to regulate protein activity",
+                mechanism_summary=(
+                    "An electrophilic allosteric effector binds within a topographically distinct "
+                    "allosteric pocket and forms a covalent bond with a nucleophilic cysteine side "
+                    "chain, remodeling surrounding switch loops to allosterically regulate nucleotide "
+                    "affinity and downstream effector or enzymatic activity."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:35224",
+                        label="effector",
+                        node_type="LIGAND",
+                        grounding="CHEBI:35224",
+                        description="Electrophilic small-molecule allosteric modulator that covalently modifies the allosteric pocket.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="CHEBI:29950",
+                        label="L-cysteine residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:29950",
+                        description="Nucleophilic cysteine residue positioned within the allosteric pocket that anchors covalent ligand binding.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036094",
+                        label="small molecule binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0036094",
+                        description="Covalent capture and pocket occupancy of the small-molecule effector within the allosteric site.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0030234",
+                        label="enzyme regulator activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0030234",
+                        description="Allosteric regulation of nucleotide/substrate preference and downstream effector interaction.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0036094",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
+                        object="CHEBI:35224",
+                        description="Allosteric pocket capture takes the covalent small-molecule effector as input.",
+                        reference="PMID:24256730",
+                        evidence_code="ECO:0000269",
+                        snippet="Here we report the development of small molecules that irreversibly bind to a common oncogenic mutant, K-Ras(G12C).",
+                        notes="Ostrem et al. 2013 demonstrate irreversible small-molecule binding to the switch-II allosteric pocket of K-Ras(G12C).",
+                    ),
+                    CausalEdgeSpec(
+                        subject="CHEBI:29950",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0036094",
+                        description="The nucleophilic L-cysteine residue in the allosteric pocket forms the covalent bond that anchors small-molecule binding.",
+                        reference="PMID:24256730",
+                        evidence_code="ECO:0000269",
+                        snippet="These compounds rely on the mutant cysteine for binding and therefore do not affect the wild-type protein.",
+                        notes="Covalent tethering or electrophilic reaction at the pocket cysteine residue is required for allosteric modulator binding.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036094",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0030234",
+                        description="Covalent occupancy of the allosteric pocket remodels switch-I and switch-II conformations to regulate nucleotide preference and effector binding.",
+                        reference="PMID:24256730",
+                        evidence_code="ECO:0000269",
+                        snippet="Binding of these inhibitors to K-Ras(G12C) disrupts both switch-I and switch-II, subverting the native nucleotide preference to favour GDP over GTP and impairing binding to Raf.",
+                        notes="Covalent binding in the switch-II pocket allosterically controls nucleotide affinity and effector interactions.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/disulfide",
+        filename="catalytic-cxxc-dithiol-disulfide-active-site-motif.yaml",
+        identifier="proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
+        label="catalytic CXXC dithiol-disulfide active-site motif",
+        definition=(
+            "A redox-active catalytic disulfide/dithiol motif (canonical consensus C-X-X-C, "
+            "such as CGPC in thioredoxin, CPYC in glutaredoxin, CGHC in protein disulfide "
+            "isomerase, and CPHC in DsbA) positioned at the N-terminus of an alpha-helix in "
+            "thioredoxin-fold oxidoreductases, where the solvent-exposed N-terminal cysteine "
+            "has a depressed pKa and initiates nucleophilic dithiol-disulfide exchange on "
+            "substrate proteins while the buried C-terminal resolving cysteine completes "
+            "intramolecular disulfide formation or substrate reduction."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DISULFIDE",
+        parent_traits=("proteintraitsmech:DISULFIDE_ALLOSTERIC_REDOX_SWITCH",),
+        synonyms=(
+            ("thioredoxin-fold CXXC catalytic disulfide", "NARROW_SYNONYM"),
+            ("redox-active CXXC dithiol/disulfide couple", "EXACT_SYNONYM"),
+            ("attacking and resolving cysteine CXXC motif", "RELATED_SYNONYM"),
+        ),
+        sequence_pattern="C[A-Z]{2}C",
+        evidence=(
+            (
+                "PMID:9403310",
+                "Thiol:disulfide oxidoreductases contain a catalytic CXXC motif in which the low-pKa thiolate of the N-terminal cysteine initiates substrate disulfide reduction via nucleophilic attack.",
+            ),
+        ),
+        detection_methods=(M_DSSP_SSBOND,),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="catalytic_cxxc_dithiol_disulfide_exchange",
+                label="Nucleophilic attack by the N-terminal CXXC thiolate and resolution by the C-terminal cysteine catalyze thiol-disulfide oxidoreduction",
+                mechanism_summary=(
+                    "In thiol:disulfide oxidoreductases, the low-pKa thiolate of the N-terminal "
+                    "cysteine in the active-site CXXC motif performs a nucleophilic attack on a "
+                    "substrate disulfide bond to form a mixed-disulfide intermediate, which is "
+                    "resolved by the C-terminal CXXC cysteine to yield an intramolecular CXXC "
+                    "cystine cross-link and maintain cellular redox homeostasis."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:29950",
+                        label="L-cysteine residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:29950",
+                        description="Nucleophilic N-terminal L-cysteine thiolate and resolving C-terminal L-cysteine of the catalytic CXXC motif.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0015035",
+                        label="protein-disulfide reductase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0015035",
+                        description="Catalytic dithiol-disulfide exchange that reduces target protein disulfide bonds.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="MOD:00034",
+                        label="L-cystine (cross-link)",
+                        node_type="PTM",
+                        grounding="MOD:00034",
+                        description="Reversible intramolecular disulfide bond formed between the attacking and resolving cysteines of the CXXC motif.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0045454",
+                        label="cell redox homeostasis",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0045454",
+                        description="Cellular thiol-disulfide redox balance maintained by thioredoxin-fold CXXC oxidoreductases.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:29950",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0015035",
+                        description="The thiolate form of the N-terminal cysteine residue in the CXXC motif performs the nucleophilic attack that initiates substrate disulfide reduction.",
+                        reference="PMID:9403310",
+                        evidence_code="ECO:0000269",
+                        snippet="To initiate the reduction of a substrate disulfide bond, the thiolate form of the N-terminal cysteine residue (CXXC) of this motif performs a nucleophilic attack.",
+                        notes="Chivers et al. 1997 establish the microscopic pKa and nucleophilic role of the N-terminal Cys32 in the E. coli thioredoxin CXXC motif.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0015035",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="MOD:00034",
+                        description="Resolution of the mixed-disulfide intermediate by the C-terminal CXXC cysteine releases the reduced substrate and yields an oxidized CXXC cystine cross-link.",
+                        reference="PMID:9403310",
+                        evidence_code="ECO:0000269",
+                        snippet="Thiol:disulfide oxidoreductases have a CXXC motif within their active sites.",
+                        notes="Dithiol-disulfide exchange cycles the active-site CXXC motif between dithiol and intramolecular cystine disulfide states.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0015035",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
+                        object="GO:0045454",
+                        description="CXXC-catalyzed protein-disulfide reduction maintains cellular thiol-disulfide redox homeostasis.",
+                        reference="PMID:9403310",
+                        evidence_code="ECO:0000269",
+                        snippet="Escherichia coli thioredoxin [Trx (CGPC)] is the best characterized thiol:disulfide oxidoreductase.",
+                        notes="Thioredoxin CGPC oxidoreductase activity is a primary effector of cellular dithiol-disulfide redox homeostasis.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="surface-electrostatic-patch.yaml",
+        identifier="proteintraitsmech:SURFACE_ELECTROSTATIC_PATCH",
+        label="solvent-accessible electrostatic surface patch",
+        definition=(
+            "A contiguous region on a protein's solvent-accessible molecular surface "
+            "exhibiting a pronounced positive or negative electrostatic potential (typically "
+            "|phi| >= 1 to 2 kT/e as computed by Poisson-Boltzmann continuum electrostatics "
+            "over clustered ionizable side chains and polar backbone atoms), governing "
+            "long-range electrostatic steering, macromolecular partner recognition, pH-dependent "
+            "stability, and diffusional encounter rates."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        parent_traits=("PATO:0002193",),
+        synonyms=(
+            ("electrostatic potential surface patch", "EXACT_SYNONYM"),
+            ("charged solvent-accessible surface cluster", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:7761829",
+                "Numerical solution of the Poisson-Boltzmann equation maps electrostatic potentials across protein solvent-accessible surfaces that govern macromolecular recognition and electrostatic steering.",
+            ),
+            (
+                "PMID:11517324",
+                "Continuum electrostatic calculations with APBS characterize biomolecular surface electrostatic potential patches across proteins and supramolecular assemblies.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="positively-charged-cationic-surface-patch.yaml",
+        identifier="proteintraitsmech:SURFACE_BASIC_CATIONIC_PATCH",
+        label="positively charged cationic surface patch",
+        definition=(
+            "A solvent-accessible electrostatic surface patch with a strong net positive "
+            "electrostatic potential formed by spatially clustered basic side chains (arginine, "
+            "lysine, and protonated histidine) in 3D structure even when non-contiguous in "
+            "primary sequence, mediating electrostatic recognition of polyanionic partners "
+            "such as duplex DNA, RNA, heparin/heparan sulfate glycosaminoglycans, and "
+            "anionic phospholipid headgroups (PIP2, phosphatidylserine, cardiolipin)."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        parent_traits=("proteintraitsmech:SURFACE_ELECTROSTATIC_PATCH", "PATO:0002195"),
+        synonyms=(
+            ("basic electrostatic surface patch", "EXACT_SYNONYM"),
+            ("cationic Arg/Lys surface patch", "RELATED_SYNONYM"),
+            ("polyanion-binding positive surface patch", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:14654279",
+                "DNA-binding and polyanion-binding sites on protein structures coincide with solvent-accessible surface patches exhibiting the largest positive electrostatic potential scores.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="negatively-charged-acidic-surface-patch.yaml",
+        identifier="proteintraitsmech:SURFACE_ACIDIC_ANIONIC_PATCH",
+        label="negatively charged acidic surface patch",
+        definition=(
+            "A solvent-accessible electrostatic surface patch with a strong net negative "
+            "electrostatic potential formed by spatially clustered acidic carboxylate side "
+            "chains (aspartate and glutamate) on the 3D molecular surface, mediating "
+            "long-range electrostatic steering of cationic protein partners (such as "
+            "barnase-barstar or cytochrome c complexes), nucleic-acid mimicry, divalent "
+            "cation recruitment, or halophilic hydration-shell stabilization."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        parent_traits=("proteintraitsmech:SURFACE_ELECTROSTATIC_PATCH", "PATO:0002196"),
+        synonyms=(
+            ("acidic electrostatic surface patch", "EXACT_SYNONYM"),
+            ("anionic Asp/Glu surface patch", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:8638017",
+                "Clustered negatively charged acidic surface residues generate long-range electrostatic steering potentials that accelerate macromolecular association and enhance aqueous solvation.",
+            ),
+            (
+                "PMID:7761829",
+                "Poisson-Boltzmann surface electrostatic potential calculations resolve anionic surface patches on proteins.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="solvent-exposed-hydrophobic-surface-patch.yaml",
+        identifier="proteintraitsmech:SURFACE_HYDROPHOBIC_PATCH",
+        label="solvent-exposed hydrophobic surface patch",
+        definition=(
+            "A contiguous cluster of solvent-accessible nonpolar side chains (Leu, Ile, Val, "
+            "Phe, Trp, Met, Tyr, Ala) exposed on the exterior surface of a folded protein "
+            "domain (quantified by spatial aggregation propensity SAP or structure-corrected "
+            "CamSol hydrophobicity), providing the thermodynamic desolvation driving force "
+            "for high-affinity protein-protein interaction hot spots, peripheral membrane "
+            "association, or concentration-dependent self-association and aggregation."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        parent_traits=("PATO:0001884",),
+        synonyms=(
+            ("nonpolar solvent-accessible surface patch", "EXACT_SYNONYM"),
+            ("spatial aggregation propensity (SAP) hydrophobic patch", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:19571001",
+                "Spatial aggregation propensity (SAP) identifies dynamically exposed hydrophobic surface patches on folded proteins that mediate protein-protein interaction and self-association.",
+            ),
+            (
+                "PMID:25451785",
+                "CamSol profiles solvent-exposed hydrophobic and polar surface patches to quantify native-state protein solubility.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="surface-glycan-steric-shield.yaml",
+        identifier="proteintraitsmech:SURFACE_GLYCOSYLATION_SHIELD",
+        label="surface glycan steric shield",
+        definition=(
+            "A dense array of covalently attached N-linked or O-linked oligosaccharide "
+            "chains distributed across a protein's solvent-accessible surface whose "
+            "conformational ensembles collectively occlude underlying polypeptide surface "
+            "area from macromolecular probes, shielding viral envelope glycoproteins and "
+            "secreted cell-surface proteins from neutralizing antibodies and host proteases."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        synonyms=(
+            ("glycan shield", "EXACT_SYNONYM"),
+            ("N-glycan surface steric canopy", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:12646921",
+                "Dense N-linked glycosylation across the solvent-accessible surface of viral envelope glycoproteins forms an evolving glycan shield that sterically occludes underlying neutralizing epitopes.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="interfacial-aromatic-tryptophan-tyrosine-membrane-belt.yaml",
+        identifier="proteintraitsmech:SURFACE_MEMBRANE_ANCHORING_AROMATIC_BELT",
+        label="interfacial aromatic tryptophan/tyrosine membrane belt",
+        definition=(
+            "A ring-like surface arrangement of solvent- and lipid-exposed tryptophan and "
+            "tyrosine side chains flanking the hydrophobic transmembrane barrel or alpha-helical "
+            "bundle of an integral membrane protein at the membrane-water interface (~12 to 15 A "
+            "from the bilayer midplane), anchoring vertical orientation and matching bilayer "
+            "thickness via dipolar, quadrupolar, and hydrogen-bonding interactions with lipid "
+            "glycerol/carbonyl headgroups."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        synonyms=(
+            ("membrane-water interfacial aromatic girdle", "EXACT_SYNONYM"),
+            ("Trp/Tyr transmembrane flanking aromatic ring belt", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:9778346",
+                "Transmembrane alpha-helical bundles and beta-barrels display a conserved surface belt of tryptophan and tyrosine residues positioned at the lipid-water carbonyl/glycerol interface that anchors vertical membrane orientation.",
+            ),
+        ),
+        detection_methods=(M_FREESASA,),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="interdomain-hinge-bending-region.yaml",
+        identifier="proteintraitsmech:DYNAMICS_DOMAIN_HINGE",
+        label="interdomain hinge-bending region",
+        definition=(
+            "A short flexible polypeptide segment or pair of beta-strands/alpha-helical "
+            "joints connecting two quasi-rigid tertiary domains where localized main-chain "
+            "torsion-angle rotations (phi/psi changes) drive large-amplitude rigid-body "
+            "hinge-bending domain closure and opening (as in periplasmic binding proteins, "
+            "adenylate kinase, lactoferrin, and immunoglobulins)."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("proteintraitsmech:ELBOW", "PATO:0001543"),
+        synonyms=(
+            ("domain hinge axis linker", "EXACT_SYNONYM"),
+            ("hinge-bending interdomain pivot", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:8204609",
+                "Large-scale rigid-body domain movements in proteins are mediated by localized backbone dihedral rotations within flexible interdomain hinge regions where packing constraints are minimal.",
+            ),
+        ),
+        detection_methods=(M_PRODY_ANM,),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="active-site-catalytic-gating-lid-loop.yaml",
+        identifier="proteintraitsmech:DYNAMICS_CATALYTIC_GATING_LOOP",
+        label="active-site catalytic gating/lid loop",
+        definition=(
+            "A conformationally mobile surface loop flanking an enzyme active site or "
+            "substrate binding pocket that undergoes reversible open-to-closed transitions "
+            "(microsecond-to-millisecond timescale) upon ligand binding, desolvating the "
+            "catalytic pocket, positioning catalytic residues, and preventing premature "
+            "hydrolysis or escape of reactive reaction intermediates (exemplified by "
+            "triosephosphate isomerase loop 6, dihydrofolate reductase Met20 loop, and "
+            "lipase interfacial lids)."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("PATO:0001543",),
+        synonyms=(
+            ("catalytic omega-loop lid", "NARROW_SYNONYM"),
+            ("substrate-gated active-site closure loop", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:30703322",
+                "Substrate binding drives conformational closure of flexible active-site gating loops (such as the triosephosphate isomerase loop 6), sequestering the reaction intermediate from bulk water and stabilizing the catalytic transition state.",
+            ),
+        ),
+        detection_methods=(M_PRODY_ANM,),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="metamorphic-fold-switching-region.yaml",
+        identifier="proteintraitsmech:DYNAMICS_METAMORPHIC_FOLD_SWITCH",
+        label="metamorphic fold-switching region",
+        definition=(
+            "A polypeptide region or domain capable of reversible, large-scale remodeling "
+            "of its secondary and tertiary structure (such as alpha-helix to beta-sheet "
+            "interconversion) between two or more distinct, stable native fold topologies "
+            "under physiological conditions (exemplified by RfaH C-terminal domain, XCL1 "
+            "lymphotactin, KaiB, and Mad2), exposing distinct functional surfaces in each fold state."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("PATO:0001543",),
+        synonyms=(
+            ("fold-switching metamorphic protein segment", "EXACT_SYNONYM"),
+            ("reversible secondary- and tertiary-structure remodeling region", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:18583598",
+                "Metamorphic proteins reversibly interconvert between two distinct, stable native fold topologies with different secondary-structure elements and biological functions under physiological conditions.",
+            ),
+            (
+                "PMID:20591649",
+                "Fold-switching proteins remodel secondary and tertiary structure across flexible regions to expose alternative binding surfaces and expand biological function.",
+            ),
+        ),
+        detection_methods=(M_PRODY_ANM,),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="3d-domain-swapping-hinge-loop.yaml",
+        identifier="proteintraitsmech:DYNAMICS_DOMAIN_SWAPPING_HINGE_LOOP",
+        label="3D domain-swapping hinge loop",
+        definition=(
+            "A conformationally bistable polypeptide loop that folds back on its own chain "
+            "in the closed monomeric state but adopts an extended conformation in the "
+            "3D domain-swapped state, allowing an adjacent secondary-structure element or "
+            "tertiary domain to exchange into the equivalent position of an identical partner "
+            "subunit to form an intertwined dimer or higher oligomer."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("proteintraitsmech:ELBOW", "PATO:0001543"),
+        synonyms=(
+            ("three-dimensional domain-swapping hinge segment", "EXACT_SYNONYM"),
+            ("monomer-to-swapped-oligomer hinge loop", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:8580836",
+                "In 3D domain swapping, conformational extension of a flexible hinge loop allows a secondary or tertiary structural segment of one monomeric chain to exchange with the identical segment of an adjacent subunit, forming an intertwined dimer or higher oligomer.",
+            ),
+        ),
+        detection_methods=(M_PRODY_ANM, M_PISA),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="allosteric-dynamic-coupling-residue-network.yaml",
+        identifier="proteintraitsmech:DYNAMICS_ALLOSTERIC_ENSEMBLE_TRANSMISSION_PATHWAY",
+        label="allosteric dynamic-coupling residue network",
+        definition=(
+            "A contiguous network of dynamically coupled residues spanning the tertiary "
+            "interior between a distal allosteric site and an orthosteric catalytic or "
+            "binding site, through which correlated side-chain rotamer and backbone "
+            "fluctuations propagate allosteric free-energy perturbations across community "
+            "interfaces, including entropically driven allostery without large mean-backbone "
+            "displacement."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("PATO:0001543",),
+        synonyms=(
+            ("allosteric conformational communication pathway", "EXACT_SYNONYM"),
+            ("correlated-motion residue community network", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:19351898",
+                "Correlated residue fluctuations in protein dynamical networks form interconnected communities and critical inter-community edges that transmit allosteric signals between distant effector and catalytic sites.",
+            ),
+        ),
+        detection_methods=(M_PRODY_ANM,),
     ),
 )
 

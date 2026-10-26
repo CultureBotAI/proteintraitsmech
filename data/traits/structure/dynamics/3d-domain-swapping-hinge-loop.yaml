@@ -1,0 +1,36 @@
+identifier: proteintraitsmech:DYNAMICS_DOMAIN_SWAPPING_HINGE_LOOP
+label: "3D domain-swapping hinge loop"
+definition: >-
+  A conformationally bistable polypeptide loop that folds back on its own chain in the closed monomeric state but adopts an extended conformation in the 3D domain-swapped state, allowing an adjacent secondary-structure element or tertiary domain to exchange into the equivalent position of an identical partner subunit to form an intertwined dimer or higher oligomer.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_DYNAMICS
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:ELBOW
+  - PATO:0001543
+synonyms:
+  - synonym_text: "three-dimensional domain-swapping hinge segment"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "monomer-to-swapped-oligomer hinge loop"
+    synonym_type: RELATED_SYNONYM
+detection_methods:
+  - name: "ProDy / ANM anisotropic network model & conformational ensemble PCA"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0244
+    tool: "biotools:prody"
+    evidence_code: ECO:0007669
+    reference: PMID:21471012
+    recipe: "prody anm {input} -n 20 -o {output}"
+  - name: "PDBePISA macromolecular interface & quaternary assembly analysis"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0248
+    tool: "biotools:pdbepisa"
+    evidence_code: ECO:0007669
+    reference: PMID:17681537
+    recipe: "pisa {id} -analyse {input} && pisa {id} -xml assemblies > {output}"
+evidence:
+  - reference: PMID:8580836
+    notes: "In 3D domain swapping, conformational extension of a flexible hinge loop allows a secondary or tertiary structural segment of one monomeric chain to exchange with the identical segment of an adjacent subunit, forming an intertwined dimer or higher oligomer."
+license: CC-BY-4.0

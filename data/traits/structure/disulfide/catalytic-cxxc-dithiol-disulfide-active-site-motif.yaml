@@ -1,0 +1,84 @@
+identifier: proteintraitsmech:DISULFIDE_CATALYTIC_CXXC
+label: "catalytic CXXC dithiol-disulfide active-site motif"
+definition: >-
+  A redox-active catalytic disulfide/dithiol motif (canonical consensus C-X-X-C, such as CGPC in thioredoxin, CPYC in glutaredoxin, CGHC in protein disulfide isomerase, and CPHC in DsbA) positioned at the N-terminus of an alpha-helix in thioredoxin-fold oxidoreductases, where the solvent-exposed N-terminal cysteine has a depressed pKa and initiates nucleophilic dithiol-disulfide exchange on substrate proteins while the buried C-terminal resolving cysteine completes intramolecular disulfide formation or substrate reduction.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_DISULFIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:DISULFIDE_ALLOSTERIC_REDOX_SWITCH
+synonyms:
+  - synonym_text: "thioredoxin-fold CXXC catalytic disulfide"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "redox-active CXXC dithiol/disulfide couple"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "attacking and resolving cysteine CXXC motif"
+    synonym_type: RELATED_SYNONYM
+sequence_pattern: "C[A-Z]{2}C"
+detection_methods:
+  - name: "mkdssp / Geometry-based Sgamma-Sgamma disulfide bond & dihedral χ3 assignment"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_1836
+    tool: "biotools:dssp"
+    evidence_code: ECO:0007669
+    reference: PMID:25352545
+    recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: catalytic_cxxc_dithiol_disulfide_exchange
+    title: "Nucleophilic attack by the N-terminal CXXC thiolate and resolution by the C-terminal cysteine catalyze thiol-disulfide oxidoreduction"
+    description: "In thiol:disulfide oxidoreductases, the low-pKa thiolate of the N-terminal cysteine in the active-site CXXC motif performs a nucleophilic attack on a substrate disulfide bond to form a mixed-disulfide intermediate, which is resolved by the C-terminal CXXC cysteine to yield an intramolecular CXXC cystine cross-link and maintain cellular redox homeostasis."
+    nodes:
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Nucleophilic N-terminal L-cysteine thiolate and resolving C-terminal L-cysteine of the catalytic CXXC motif."
+      - node_id: "GO:0015035"
+        label: "protein-disulfide reductase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0015035"
+        description: "Catalytic dithiol-disulfide exchange that reduces target protein disulfide bonds."
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "Reversible intramolecular disulfide bond formed between the attacking and resolving cysteines of the CXXC motif."
+      - node_id: "GO:0045454"
+        label: "cell redox homeostasis"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045454"
+        description: "Cellular thiol-disulfide redox balance maintained by thioredoxin-fold CXXC oxidoreductases."
+    edges:
+      - subject: "CHEBI:29950"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0015035"
+        description: "The thiolate form of the N-terminal cysteine residue in the CXXC motif performs the nucleophilic attack that initiates substrate disulfide reduction."
+        evidence:
+          - reference: PMID:9403310
+            snippet: "To initiate the reduction of a substrate disulfide bond, the thiolate form of the N-terminal cysteine residue (CXXC) of this motif performs a nucleophilic attack."
+            notes: "Chivers et al. 1997 establish the microscopic pKa and nucleophilic role of the N-terminal Cys32 in the E. coli thioredoxin CXXC motif. (ECO:0000269)"
+      - subject: "GO:0015035"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00034"
+        description: "Resolution of the mixed-disulfide intermediate by the C-terminal CXXC cysteine releases the reduced substrate and yields an oxidized CXXC cystine cross-link."
+        evidence:
+          - reference: PMID:9403310
+            snippet: "Thiol:disulfide oxidoreductases have a CXXC motif within their active sites."
+            notes: "Dithiol-disulfide exchange cycles the active-site CXXC motif between dithiol and intramolecular cystine disulfide states. (ECO:0000269)"
+      - subject: "GO:0015035"
+        predicate: "involved in"
+        predicate_id: RO:0002331
+        object: "GO:0045454"
+        description: "CXXC-catalyzed protein-disulfide reduction maintains cellular thiol-disulfide redox homeostasis."
+        evidence:
+          - reference: PMID:9403310
+            snippet: "Escherichia coli thioredoxin [Trx (CGPC)] is the best characterized thiol:disulfide oxidoreductase."
+            notes: "Thioredoxin CGPC oxidoreductase activity is a primary effector of cellular dithiol-disulfide redox homeostasis. (ECO:0000269)"
+evidence:
+  - reference: PMID:9403310
+    notes: "Thiol:disulfide oxidoreductases contain a catalytic CXXC motif in which the low-pKa thiolate of the N-terminal cysteine initiates substrate disulfide reduction via nucleophilic attack."
+license: CC-BY-4.0
