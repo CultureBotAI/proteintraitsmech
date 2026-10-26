@@ -37,12 +37,16 @@ STAGE1_UNCHANGED_IDS = {
     "proteintraitsmech:INIT_METHIONINE_ACETYLATED",
     "proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
     "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
+    "proteintraitsmech:INIT_METHIONINE_N_DEGRON",
+    "proteintraitsmech:MATURE_CHAIN_AUTOCATALYTIC_CLEAVED",
+    "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
+    "proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
 }
 
 
 def test_foundational_trait_records_exist_and_validate():
     """Every record defined in seed_foundational_traits must exist on disk and pass strict validation."""
-    assert len(sft.SPECS) == 84
+    assert len(sft.SPECS) == 101
     seen_ids: set[str] = set()
     for spec in sft.SPECS:
         assert spec.identifier not in seen_ids, f"duplicate identifier: {spec.identifier}"
@@ -98,17 +102,20 @@ def test_previously_empty_class_categories_are_populated():
     """All previously empty and single-record class-level categories now have populated directories."""
     expected_dirs = {
         "SEQ_NONSTANDARD_RESIDUE": (sft.TRAITS_DIR / "sequence/nonstandard_residue", 4),
-        "SEQ_LOW_COMPLEXITY": (sft.TRAITS_DIR / "sequence/low_complexity", 4),
+        "SEQ_LOW_COMPLEXITY": (sft.TRAITS_DIR / "sequence/low_complexity", 6),
         "SEQ_COMPOSITION": (sft.TRAITS_DIR / "sequence/composition", 10),
         "STRUCT_QUATERNARY": (sft.TRAITS_DIR / "structure/quaternary", 11),
-        "STRUCT_ALLOSTERIC_SITE": (sft.TRAITS_DIR / "structure/allosteric_site", 5),
+        "STRUCT_ALLOSTERIC_SITE": (sft.TRAITS_DIR / "structure/allosteric_site", 6),
         "STRUCT_SYMMETRY": (sft.TRAITS_DIR / "structure/symmetry", 9),
         "MIXED_COILED_COIL": (sft.TRAITS_DIR / "sequence_structure/coiled_coil", 7),
-        "SEQ_INITIATOR_METHIONINE": (sft.TRAITS_DIR / "sequence/initiator_methionine", 5),
-        "SEQ_MATURE_CHAIN": (sft.TRAITS_DIR / "sequence/mature_chain", 5),
+        "SEQ_INITIATOR_METHIONINE": (sft.TRAITS_DIR / "sequence/initiator_methionine", 6),
+        "SEQ_MATURE_CHAIN": (sft.TRAITS_DIR / "sequence/mature_chain", 6),
         "SEQ_TRANSIT_PEPTIDE": (sft.TRAITS_DIR / "sequence/transit_peptide", 7),
         "SEQ_PROPEPTIDE": (sft.TRAITS_DIR / "sequence/propeptide", 6),
+        "STRUCT_DISULFIDE": (sft.TRAITS_DIR / "structure/disulfide", 6),
         "STRUCT_CAVITY": (sft.TRAITS_DIR / "structure/cavity", 7),
+        "STRUCT_SURFACE": (sft.TRAITS_DIR / "structure/surface", 6),
+        "STRUCT_DYNAMICS": (sft.TRAITS_DIR / "structure/dynamics", 6),
         "EVO_CONSERVATION": (sft.TRAITS_DIR / "evolution/conservation", 6),
     }
     for cat, (d, min_count) in expected_dirs.items():
@@ -117,13 +124,13 @@ def test_previously_empty_class_categories_are_populated():
 
 
 def test_foundational_trait_causal_graphs_audit_and_score():
-    """All 40 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
+    """All 44 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
     valid_types = acg.node_type_enum()
     assert valid_types
     mech_specs = [s for s in sft.SPECS if s.trait_category in MECHANISM_BEARING_CATEGORIES]
     non_mech_specs = [s for s in sft.SPECS if s.trait_category not in MECHANISM_BEARING_CATEGORIES]
-    assert len(mech_specs) == 40
-    assert len(non_mech_specs) == 44
+    assert len(mech_specs) == 44
+    assert len(non_mech_specs) == 57
     assert len(ROUND_124_EDITED_IDS) == 25
 
     for spec in mech_specs:
@@ -219,6 +226,24 @@ def test_foundational_trait_parent_traits_resolve_to_corpus_records():
         "GO:1902494": (
             sft.TRAITS_DIR / "function/localization/go/catalytic-complex-go1902494.yaml"
         ),
+        "proteintraitsmech:ELBOW": (
+            sft.TRAITS_DIR / "structure/dynamics/elbow.yaml"
+        ),
+        "PATO:0001543": (
+            sft.TRAITS_DIR / "structure/dynamics/pato/flexibility-pato0001543.yaml"
+        ),
+        "PATO:0002193": (
+            sft.TRAITS_DIR / "structure/surface/pato/electric-charge-pato0002193.yaml"
+        ),
+        "PATO:0002195": (
+            sft.TRAITS_DIR / "structure/surface/pato/positive-charge-pato0002195.yaml"
+        ),
+        "PATO:0002196": (
+            sft.TRAITS_DIR / "structure/surface/pato/negative-charge-pato0002196.yaml"
+        ),
+        "PATO:0001884": (
+            sft.TRAITS_DIR / "structure/surface/pato/hydrophobicity-pato0001884.yaml"
+        ),
     }
     spec_paths = {
         spec.identifier: sft.TRAITS_DIR / spec.rel_dir / spec.filename
@@ -238,7 +263,7 @@ def test_foundational_trait_parent_traits_resolve_to_corpus_records():
 
 def test_cycle2_stage1_records_have_verified_pmids_and_initiator_met_hierarchy():
     """Cycle 2 Stage 1 foundational traits have verified PMIDs, resolved recipes, and non-contradictory hierarchy."""
-    cycle2_specs = {spec.identifier: spec for spec in sft.SPECS[66:]}
+    cycle2_specs = {spec.identifier: spec for spec in sft.SPECS[66:84]}
     assert len(cycle2_specs) == 18
 
     assert cycle2_specs["proteintraitsmech:INIT_METHIONINE_EXCISED"].parent_traits == (
@@ -253,6 +278,43 @@ def test_cycle2_stage1_records_have_verified_pmids_and_initiator_met_hierarchy()
     )
 
     for spec in cycle2_specs.values():
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for m in data.get("detection_methods") or []:
+            assert "{pat}" not in m["recipe"], f"{spec.identifier} recipe still contains unresolved {{pat}}"
+            ref = m["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for ev in data.get("evidence") or []:
+            ref = ev["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for cg in data.get("causal_graphs") or []:
+            for edge in cg.get("edges") or []:
+                for ev in edge.get("evidence") or []:
+                    ref = ev["reference"]
+                    if ref.startswith("PMID:"):
+                        assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+
+
+def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
+    """Cycle 3 Stage 1 foundational traits have verified PMIDs, resolved recipes, and valid parent_traits."""
+    cycle3_specs = {spec.identifier: spec for spec in sft.SPECS[84:]}
+    assert len(cycle3_specs) == 17
+    assert cycle3_specs["proteintraitsmech:INIT_METHIONINE_N_DEGRON"].parent_traits == (
+        "proteintraitsmech:INIT_METHIONINE_RETAINED",
+    )
+    assert cycle3_specs["proteintraitsmech:MATURE_CHAIN_AUTOCATALYTIC_CLEAVED"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",
+    )
+    assert cycle3_specs["proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE"].parent_traits == (
+        "proteintraitsmech:ALLOSTERIC_REGULATORY_SITE",
+    )
+    assert cycle3_specs["proteintraitsmech:DISULFIDE_CATALYTIC_CXXC"].parent_traits == (
+        "proteintraitsmech:DISULFIDE_ALLOSTERIC_REDOX_SWITCH",
+    )
+
+    for spec in cycle3_specs.values():
         path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         for m in data.get("detection_methods") or []:

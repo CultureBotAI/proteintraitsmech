@@ -1,0 +1,39 @@
+identifier: proteintraitsmech:LOWCOMP_POLYAMPHOLYTIC_CHARGE_BLOCK
+label: "polyampholytic mixed-charge-block low-complexity region"
+definition: >-
+  A low-complexity sequence region enriched in both positively charged (Lys, Arg) and negatively charged (Glu, Asp) residues arranged in alternating or segregated charge blocks (quantified by the charge-patterning parameter kappa or sequential charge decoration SCD), governing chain compaction, alpha-helical single-alpha-helix formation, or electrostatic coacervation and nuclear-speckle partitioning.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_LOW_COMPLEXITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:LOWCOMP_REGION
+synonyms:
+  - synonym_text: "charge-blocky polyampholytic low-complexity region"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "high-kappa mixed-charge low-complexity tract"
+    synonym_type: RELATED_SYNONYM
+  - synonym_text: "E/K or D/R alternating charge block domain"
+    synonym_type: RELATED_SYNONYM
+detection_methods:
+  - name: "fLPS2 compositional bias binomial P-value scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0007669
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 -c default {input} > {output}"
+  - name: "SEG / fLPS low-complexity sequence segmentation"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0000362
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 {input} > {output}"
+evidence:
+  - reference: PMID:23901099
+    notes: "Conformations of intrinsically disordered polyampholytic proteins are governed by the fraction of charged residues and the linear sequence patterning of oppositely charged residues."
+  - reference: PMID:28851299
+    notes: "fLPS identifies multi-residue charged compositional biases and low-complexity regions in protein sequences."
+license: CC-BY-4.0
