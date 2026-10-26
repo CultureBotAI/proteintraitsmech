@@ -30,6 +30,12 @@ MECHANISM_BEARING_CATEGORIES = {
     "SEQ_INITIATOR_METHIONINE",
     "SEQ_MATURE_CHAIN",
     "STRUCT_CAVITY",
+    "STRUCT_SURFACE",
+    "STRUCT_DYNAMICS",
+}
+MECHANISM_BEARING_LOWCOMP_IDS = {
+    "proteintraitsmech:LOWCOMP_POLYAMPHOLYTIC_CHARGE_BLOCK",
+    "proteintraitsmech:LOWCOMP_FG_NUCLEOPORIN_REPEAT_REGION",
 }
 
 ROUND_124_EDITED_IDS = {spec.identifier for spec in sft.SPECS[:66] if spec.causal_graphs}
@@ -37,8 +43,6 @@ STAGE1_UNCHANGED_IDS = {
     "proteintraitsmech:INIT_METHIONINE_ACETYLATED",
     "proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
     "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
-    "proteintraitsmech:INIT_METHIONINE_N_DEGRON",
-    "proteintraitsmech:MATURE_CHAIN_AUTOCATALYTIC_CLEAVED",
     "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
     "proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
 }
@@ -124,13 +128,21 @@ def test_previously_empty_class_categories_are_populated():
 
 
 def test_foundational_trait_causal_graphs_audit_and_score():
-    """All 44 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
+    """All 57 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
     valid_types = acg.node_type_enum()
     assert valid_types
-    mech_specs = [s for s in sft.SPECS if s.trait_category in MECHANISM_BEARING_CATEGORIES]
-    non_mech_specs = [s for s in sft.SPECS if s.trait_category not in MECHANISM_BEARING_CATEGORIES]
-    assert len(mech_specs) == 44
-    assert len(non_mech_specs) == 57
+    mech_specs = [
+        s
+        for s in sft.SPECS
+        if s.trait_category in MECHANISM_BEARING_CATEGORIES or s.identifier in MECHANISM_BEARING_LOWCOMP_IDS
+    ]
+    non_mech_specs = [
+        s
+        for s in sft.SPECS
+        if s.trait_category not in MECHANISM_BEARING_CATEGORIES and s.identifier not in MECHANISM_BEARING_LOWCOMP_IDS
+    ]
+    assert len(mech_specs) == 57
+    assert len(non_mech_specs) == 44
     assert len(ROUND_124_EDITED_IDS) == 25
 
     for spec in mech_specs:
@@ -179,7 +191,7 @@ def test_foundational_trait_causal_graphs_audit_and_score():
 
 
 def test_foundational_trait_parent_traits_resolve_to_corpus_records():
-    """Every parent_traits CURIE on the 84 foundational traits resolves to an on-disk corpus record."""
+    """Every parent_traits CURIE on the 101 foundational traits resolves to an on-disk corpus record."""
     known_parent_files = {
         "proteintraitsmech:COILED_COIL": (
             sft.TRAITS_DIR / "structure/secondary/coiled-coil.yaml"
@@ -326,8 +338,15 @@ def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
             ref = ev["reference"]
             if ref.startswith("PMID:"):
                 assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
-        for cg in data.get("causal_graphs") or []:
-            for edge in cg.get("edges") or []:
+        cgs = data.get("causal_graphs") or []
+        assert len(cgs) == 1, f"{spec.identifier} must carry a causal_graph"
+        for cg in cgs:
+            assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+            edges = cg.get("edges") or []
+            assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
+            snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+            assert len(set(snippets)) == 3, f"{spec.identifier} must have 3 distinct verbatim snippets"
+            for edge in edges:
                 for ev in edge.get("evidence") or []:
                     ref = ev["reference"]
                     if ref.startswith("PMID:"):
@@ -404,9 +423,4 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
 
         existing_text = path.read_text(encoding="utf-8")
         assert yaml.safe_load(rio.merge_on_reseed(existing_text, fresh_yaml)) == data
-
-
-
-
-
 

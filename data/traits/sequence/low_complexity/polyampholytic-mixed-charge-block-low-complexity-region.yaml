@@ -31,9 +31,70 @@ detection_methods:
     evidence_code: ECO:0000362
     reference: PMID:28851299
     recipe: "fLPS -t 1e-5 {input} > {output}"
+causal_graphs:
+  - graph_id: polyampholytic_charge_patterning_ensemble_compaction
+    title: "Linear charge-block patterning of oppositely charged residues governs polyampholytic disordered ensemble compaction and function"
+    description: "In polyampholytic intrinsically disordered regions, the fraction of charged residues and the linear sequence segregation of positively and negatively charged amino acid side chains govern long-range intrachain electrostatic attractions and repulsions, shaping conformational ensemble compaction (globule, coil, or hairpin preferences) and downstream macromolecular binding."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Positively and negatively charged amino acid residues distributed in alternating or segregated blocks along the low-complexity sequence."
+      - node_id: "PATO:0002193"
+        label: "electric charge"
+        node_type: QUALITY
+        grounding: "PATO:0002193"
+        description: "Linear sequence distribution and charge-patterning parameter (kappa) of oppositely charged side chains."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Conformational ensemble preferences (coil, globule, or hairpin compaction) sampled by the polyampholytic disordered region."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Ensemble-mediated macromolecular recognition and functional interaction governed by the disordered conformational distribution."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0002193"
+        description: "Polyampholytic low-complexity regions comprise sequences enriched in both positively and negatively charged amino acid residues."
+        evidence:
+          - reference: PMID:23901099
+            snippet: "Most IDPs are polyampholytes, with sequences that include both positively and negatively charged residues."
+            notes: "Das & Pappu 2013 define polyampholytic IDPs by their complement of positively and negatively charged residues. (ECO:0000305)"
+      - subject: "PATO:0002193"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "PATO:0001543"
+        description: "The fraction of charged residues and linear sequence patterning of oppositely charged blocks determine the conformational ensemble preferences of strong polyampholytes."
+        evidence:
+          - reference: PMID:23901099
+            snippet: "Using atomistic simulations, we show that weak polyampholytes form globules, whereas the conformational preferences of strong polyampholytes are determined by a combination of fraction of charged residues values and the linear sequence distributions of oppositely charged residues."
+            notes: "Linear charge-block distribution (kappa) controls chain compaction and conformational preferences. (ECO:0000269)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Sequence-encoded conformational ensembles sampled by polyampholytic disordered regions govern their biological functions and partner interactions."
+        evidence:
+          - reference: PMID:23901099
+            snippet: "The functions of intrinsically disordered proteins (IDPs) are governed by relationships between information encoded in their amino acid sequences and the ensembles of conformations that they sample as autonomous units."
+            notes: "Conformational ensembles sampled by polyampholytic sequences govern IDP functional interactions. (ECO:0000305)"
 evidence:
   - reference: PMID:23901099
     notes: "Conformations of intrinsically disordered polyampholytic proteins are governed by the fraction of charged residues and the linear sequence patterning of oppositely charged residues."
   - reference: PMID:28851299
     notes: "fLPS identifies multi-residue charged compositional biases and low-complexity regions in protein sequences."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph polyampholytic_charge_patterning_ensemble_compaction
+    (CHEBI:83228 -> PATO:0002193 -> PATO:0001543 -> GO:0005515) with distinct verbatim
+    snippets from PMID:23901099 (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

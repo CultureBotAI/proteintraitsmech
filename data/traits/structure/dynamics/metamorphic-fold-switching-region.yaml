@@ -22,9 +22,72 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:21471012
     recipe: "prody anm {input} -n 20 -o {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_DYNAMICS_METAMORPHIC_FOLD_SWITCH
+    title: "Metamorphic secondary-structure remodeling and alternative partner binding"
+    description: "A conformationally bistable polypeptide domain exhibits structural flexibility that enables reversible secondary- and tertiary-structure fold remodeling under physiological stimuli, exposing new macromolecular binding interfaces."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Metamorphic polypeptide domain capable of adopting two distinct native 3D topologies."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Conformational bistability of the fold-switching polypeptide segment."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Reversible remodeling of secondary and tertiary structure into an alternative native fold topology."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Engagement of distinct macromolecular binding partners by the remodeled fold state."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0001543"
+        description: "Metamorphic polypeptide domains depart from a single static 3D fold by maintaining conformational bistability."
+        evidence:
+          - reference: PMID:29784778
+            snippet: "A central tenet of biology is that globular proteins have a unique 3D structure under physiological conditions."
+            notes: "Porter & Looger (2018) PNAS 115:5968-5973 characterize extant fold-switching proteins that violate the single-fold paradigm. (ECO:0000305)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0006457"
+        description: "Conformational plasticity enables secondary-structure remodeling and refolding in response to cellular stimuli."
+        evidence:
+          - reference: PMID:29784778
+            snippet: "Recent work has challenged this notion by demonstrating that some proteins switch folds, a process that involves remodeling of secondary structure in response to a few mutations (evolved fold switchers) or cellular stimuli (extant fold switchers)."
+            notes: "Extant fold switchers remodel alpha-helical and beta-sheet secondary structure into an alternative native fold. (ECO:0000305)"
+      - subject: "GO:0006457"
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
+        object: "GO:0005515"
+        description: "Switching between distinct fold topologies exposes new binding interfaces that expand functional partner interactions."
+        evidence:
+          - reference: PMID:20591649
+            snippet: "An increasing number of proteins demonstrate the ability to switch between very different fold topologies, expanding their functional utility through new binding interactions."
+            notes: "Bryan & Orban (2010) Curr Opin Struct Biol 20:482-488 show that fold switching creates new functional binding interactions. (ECO:0000305)"
 evidence:
   - reference: PMID:18583598
     notes: "Metamorphic proteins reversibly interconvert between two distinct, stable native fold topologies with different secondary-structure elements and biological functions under physiological conditions."
   - reference: PMID:20591649
     notes: "Fold-switching proteins remodel secondary and tertiary structure across flexible regions to expose alternative binding surfaces and expand biological function."
+  - reference: PMID:29784778
+    notes: "Extant fold-switching proteins remodel secondary structure in response to cellular stimuli to switch between distinct 3D fold topologies and functional binding states."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_DYNAMICS_METAMORPHIC_FOLD_SWITCH
+    (SO:0000417 -> PATO:0001543 -> GO:0006457 -> GO:0005515) with distinct verbatim
+    snippets from PMID:20591649, PMID:29784778 (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

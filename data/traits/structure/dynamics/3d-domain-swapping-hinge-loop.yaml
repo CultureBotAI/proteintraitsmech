@@ -30,7 +30,68 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:17681537
     recipe: "pisa {id} -analyse {input} && pisa {id} -xml assemblies > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_DYNAMICS_DOMAIN_SWAPPING_HINGE_LOOP
+    title: "3D domain-swapping hinge loop extension and intertwined oligomer assembly"
+    description: "Conformational extension of a bistable hinge loop allows a polypeptide domain from one monomeric chain to exchange with the identical domain of another chain, driving homotypic subunit binding and oligomerization into an intertwined dimeric or higher-order complex."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Swapping polypeptide domain connected to the main body by the bistable hinge loop."
+      - node_id: "GO:0042802"
+        label: "identical protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0042802"
+        description: "Reciprocal intermolecular exchange of identical domains between monomeric chains."
+      - node_id: "GO:0051259"
+        label: "protein complex oligomerization"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0051259"
+        description: "Conversion of closed monomers into domain-swapped oligomeric assemblies."
+      - node_id: "GO:0032991"
+        label: "protein-containing complex"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0032991"
+        description: "Intertwined homodimer or higher oligomer stabilized by swapped domain interfaces."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0042802"
+        description: "Upon hinge-loop extension, one domain of a monomeric chain is replaced by the identical domain from a partner chain."
+        evidence:
+          - reference: PMID:8580836
+            snippet: "In 3D domain swapping, one domain of a monomeric protein is replaced by the same domain from an identical protein chain."
+            notes: "Bennett, Schlunegger & Eisenberg (1995) Protein Sci 4:2455-2468 define reciprocal domain exchange across the hinge loop. (ECO:0000305)"
+      - subject: "GO:0042802"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0051259"
+        description: "Reciprocal intermolecular domain exchange drives protein oligomerization from monomers."
+        evidence:
+          - reference: PMID:8580836
+            snippet: "3D domain swapping is a mechanism for forming oligomeric proteins from their monomers."
+            notes: "3D domain swapping converts monomeric subunits into oligomers. (ECO:0000305)"
+      - subject: "GO:0051259"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "GO:0032991"
+        description: "Domain-swapped oligomerization yields an intertwined dimer or higher oligomer."
+        evidence:
+          - reference: PMID:8580836
+            snippet: "The result is an intertwined dimer or higher oligomer, with one domain of each subunit replaced by the identical domain from another subunit."
+            notes: "Reciprocal domain replacement produces an intertwined oligomeric complex. (ECO:0000305)"
 evidence:
   - reference: PMID:8580836
     notes: "In 3D domain swapping, conformational extension of a flexible hinge loop allows a secondary or tertiary structural segment of one monomeric chain to exchange with the identical segment of an adjacent subunit, forming an intertwined dimer or higher oligomer."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_DYNAMICS_DOMAIN_SWAPPING_HINGE_LOOP
+    (SO:0000417 -> GO:0042802 -> GO:0051259 -> GO:0032991) with distinct verbatim
+    snippets from PMID:8580836 (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0

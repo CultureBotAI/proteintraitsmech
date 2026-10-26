@@ -23,9 +23,70 @@ detection_methods:
     evidence_code: ECO:0007669
     reference: PMID:26973785
     recipe: "freesasa --format=json {input} > {output}"
+causal_graphs:
+  - graph_id: CG_FOUNDATIONAL_SURFACE_ACIDIC_ANIONIC_PATCH
+    title: "Anionic surface patch electrostatic steering of cationic protein partners"
+    description: "Spatially clustered acidic Asp and Glu carboxylate side chains on the solvent-accessible surface generate a strong negative electrostatic potential that steers diffusion-limited binding of complementary cationic partners into macromolecular complexes."
+    nodes:
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Clustered acidic Asp and Glu carboxylate residues exposed on the molecular surface."
+      - node_id: "PATO:0002196"
+        label: "negative charge"
+        node_type: QUALITY
+        grounding: "PATO:0002196"
+        description: "Strong net negative electrostatic potential across the anionic surface patch."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Electrostatic steering and recognition of cationic protein binding partners."
+      - node_id: "GO:0065003"
+        label: "protein-containing complex assembly"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0065003"
+        description: "Assembly of high-affinity protein complexes via complementary anionic-cationic surface pairing."
+    edges:
+      - subject: "CHEBI:83228"
+        predicate: "has quality"
+        predicate_id: RO:0000086
+        object: "PATO:0002196"
+        description: "Clustered acidic surface residues generate a negatively charged electrostatic binding surface."
+        evidence:
+          - reference: PMID:8612072
+            snippet: "The rapid association of barnase and its intracellular inhibitor barstar has been analysed from the effects of mutagenesis and electrostatic screening."
+            notes: "Schreiber & Fersht (1996) Nat Struct Biol 3:427-431 analyze the negatively charged acidic binding surface of barstar by mutagenesis and electrostatic screening. (ECO:0000269)"
+      - subject: "PATO:0002196"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Negative surface electrostatic potential steers rapid association with complementary cationic protein partners."
+        evidence:
+          - reference: PMID:8612072
+            snippet: "A basal association rate constant of 10(5) M(-1) s(-1) is increased to over 5 x 10(9) M(-1) s(-1) by electrostatic forces."
+            notes: "Long-range electrostatic attraction from the acidic surface patch accelerates protein-protein binding over four orders of magnitude. (ECO:0000269)"
+      - subject: "GO:0005515"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0065003"
+        description: "Electrostatically steered encounter complex formation leads to assembly of the high-affinity protein complex."
+        evidence:
+          - reference: PMID:8612072
+            snippet: "The association between the oppositely charged proteins proceeds through the rate-determining formation of an early, weakly specific complex, which is dominated by long-range electrostatic interactions, followed by precise docking to form the high affinity complex."
+            notes: "Long-range electrostatic steering and subsequent docking drive assembly of the barnase-barstar protein complex. (ECO:0000269)"
 evidence:
-  - reference: PMID:8638017
+  - reference: PMID:8612072
     notes: "Clustered negatively charged acidic surface residues generate long-range electrostatic steering potentials that accelerate macromolecular association and enhance aqueous solvation."
   - reference: PMID:7761829
     notes: "Poisson-Boltzmann surface electrostatic potential calculations resolve anionic surface patches on proteins."
+curation_history:
+- timestamp: '2026-10-26T06:40:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added 4-node, 3-edge causal_graph CG_FOUNDATIONAL_SURFACE_ACIDIC_ANIONIC_PATCH
+    (CHEBI:83228 -> PATO:0002196 -> GO:0005515 -> GO:0065003) with distinct verbatim
+    snippets from PMID:8612072 (Round 126).
+  llm_assisted: true
 license: CC-BY-4.0
