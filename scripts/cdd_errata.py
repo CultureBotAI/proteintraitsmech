@@ -2,12 +2,13 @@
 
 Shared by `seed_cdd.py` and `repair_cdd_errata.py`; this is not a global prose
 replacement. Each entry corresponds to one Stage 4 scientific review finding
-(`F1` through `F12`, tracked in #1171 and #1172) on an NCBI CDD `SEQ_DOMAIN`
-record. Ten targets (`F3` through `F12`, #1171) had zero qualified occurrences
-at repair time; the two remaining Stage 4 targets (`F1` on `CDD:cd00104` and
-`F2` on `CDD:cd00959`, #1172) carry qualified occurrences whose
-`record_sha256` receipts in `data/grounding/qualified_record_bindings.jsonl.d/`
-are transactionally re-bound by `repair_cdd_errata.py`.
+(`F1` through `F18`, tracked in #1171, #1172, and #1188) on an NCBI CDD
+`SEQ_DOMAIN` record. Sixteen targets (`F3` through `F12` in #1171, and `F13`
+through `F18` in #1188) had zero qualified occurrences at repair time; the two
+remaining Stage 4 targets (`F1` on `CDD:cd00104` and `F2` on `CDD:cd00959`,
+#1172) carried qualified occurrences whose `record_sha256` receipts in
+`data/grounding/qualified_record_bindings.jsonl.d/` are transactionally
+re-bound by `repair_cdd_errata.py`.
 
 Unexpected upstream wording, short names, or superfamily parentage must be
 re-reviewed rather than silently overwritten. No protein qualification is
@@ -21,6 +22,7 @@ from dataclasses import dataclass
 from yaml_emit import yaml_escape
 
 CURATION_TIMESTAMP = "2026-10-22T07:35:00Z"
+CYCLE2_CURATION_TIMESTAMP = "2026-10-25T23:10:00Z"
 
 
 @dataclass(frozen=True)
@@ -36,6 +38,7 @@ class CddErratum:
     evidence: tuple[tuple[str, str, str], ...]
     event_action: str
     event_changes: str
+    curation_timestamp: str = CURATION_TIMESTAMP
 
     @property
     def identifier(self) -> str:
@@ -384,6 +387,74 @@ ERRATA: dict[str, CddErratum] = {
             "mammalian arterial preparations (#1171, #952, Stage 4 finding F5)."
         ),
     ),
+    "cd15885": CddErratum(
+        accession="cd15885",
+        finding_id="F14",
+        label="SNARE_SNAP25C",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml"
+        ),
+        source_description=(
+            "C-terminal SNARE motif of SNAP25. C-terminal SNARE motifs of SNAP25, "
+            "a member of the Qb/Qc subfamily of SNARE (soluble "
+            "N-ethylmaleimide-sensitive factor attachment protein receptor) "
+            "proteins. SNAP25 interacts with Syntaxin-1 (Qa) and the R-SNARE VAMP2 "
+            "(also called synaptobrevin-2). The complex plays a role in transport "
+            "of secretory granule from trans-Golgi network to the plasma membrane. "
+            "Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one "
+            "belonging to the Qb subgroup and one belonging to the Qc subgroup), "
+            "which mediate the interactions with other SNARE proteins, and a "
+            "transmembrane domain. In general, the SNARE complex mediates membrane "
+            "fusion, important for trafficking of newly synthesized proteins, "
+            "recycling of pre-existing proteins and organelle formation. SNARE "
+            "proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs, "
+            "depending on whether the residue in the hydrophilic center layer of "
+            "the four-helical bundle is a glutamine (Q) or arginine (R). Qa-, as "
+            "well as Qb- and Qc-SNAREs, are localized to target organelle "
+            "membranes, while R-SNARE is localized to vesicle membranes. They form "
+            "unique complexes consisting of one member of each subgroup, that "
+            "mediate fusion between a specific type of vesicles and their target "
+            "organelle. Their SNARE motifs form twisted and parallel "
+            "heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are "
+            "SNAP23, SNAP29, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; SNAP25 is anchored to target membranes "
+                "via palmitoylated cysteine residues in the linker between its two "
+                "SNARE motifs.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F14; PMID:9759094; UniProtKB:P60880)"
+        ),
+        evidence=(
+            (
+                "PMID:9759094",
+                "Four parallel alpha-helices... SNAP-25 contributes two helices (Sn1 and Sn2) connected by a palmitoylated linker and lacks a transmembrane anchor",
+                "Sutton et al. (1998, Nature 395:347-353) and UniProtKB:P60880 "
+                "(SNAP25) establish that Qbc-SNAREs (SNAP25, SNAP23, SNAP29, SNAP47, "
+                "Sec9) contribute both Qb and Qc SNARE motifs and lack a "
+                "transmembrane domain, with SNAP25 anchored to membranes via "
+                "S-palmitoylated cysteine residues in its inter-motif linker.",
+            ),
+        ),
+        event_action="source_erratum_cd15885",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP25 and Qb/Qc SNAREs lack a transmembrane "
+            "domain, and SNAP25 is membrane-anchored via palmitoylated cysteines "
+            "in the linker between its two SNARE motifs (#1188, Cycle 2 Stage 4 "
+            "finding F14)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
     "cd15894": CddErratum(
         accession="cd15894",
         finding_id="F6",
@@ -574,6 +645,72 @@ ERRATA: dict[str, CddErratum] = {
             "finding F8)."
         ),
     ),
+    "cd17149": CddErratum(
+        accession="cd17149",
+        finding_id="F17",
+        label="DCX1_DCDC2",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml"
+        ),
+        source_description=(
+            "Dublecortin-like domain 1 found in doublecortin domain-containing "
+            "protein 2 (DCDC2). DCDC2 is a member of doublecortin (DCX) family. "
+            "It is a microtubule-associated protein (MAP) with a stable "
+            "ubiquitin-like tertiary fold. Ubiquitin (Ub) is a protein modifier "
+            "in eukaryotes that is involved in various cellular processes, "
+            "including transcriptional regulation, cell cycle control, and DNA "
+            "repair. Microtubules are key components of the cytoskeleton that are "
+            "involved in cell movement, shape determination, division and "
+            "transport. DCDC2 genetic variation in humans is associated with "
+            "reading disability, attention deficit hyperactivity disorder (ADHD), "
+            "and difficulties in mathematics. A genetic variant of DCDC2 "
+            "associates with dyslexia, a common neurobehavioral disorder of "
+            "reading. DCDC2 protein interacts with many of the same cytoskeleton "
+            "related proteins that other members of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "Dublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2 (DCDC2). DCDC2 is a member of doublecortin (DCX) family. "
+                "It is a microtubule-associated protein (MAP) with a stable "
+                "ubiquitin-like tertiary fold. Ubiquitin (Ub) is a protein modifier "
+                "in eukaryotes that is involved in various cellular processes, "
+                "including transcriptional regulation, cell cycle control, and DNA "
+                "repair.",
+                "Doublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) "
+                "family. It is a microtubule-associated protein (MAP) with stable "
+                "double tandem DCX repeats adopting a ubiquitin-like beta-grasp "
+                "tertiary fold.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F17; PMID:16278295; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "PMID:16278295",
+                "DCDC2 contains a doublecortin peptide domain, similar to the DCX gene mutated in X-linked lissencephaly and double cortex syndrome",
+                "Meng et al. (2005, Proc Natl Acad Sci USA 102:17053-17058) and "
+                "reviewed human UniProtKB/Swiss-Prot entry Q9UHG0 (DCDC2, HGNC:18141) "
+                "characterize DCDC2 as a microtubule-associated protein containing "
+                "tandem doublecortin (DCX) domains with a ubiquitin-like beta-grasp "
+                "fold, correcting the 'Dublecortin-like' spelling error and removing "
+                "the off-target ubiquitin protein-modifier digression.",
+            ),
+        ),
+        event_action="source_erratum_cd17149",
+        event_changes=(
+            "Corrected the 'Dublecortin-like' spelling error and replaced the "
+            "off-target ubiquitin protein-modifier digression with the tandem DCX "
+            "ubiquitin-like beta-grasp repeat description (#1188, Cycle 2 Stage 4 "
+            "finding F17)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
     "cd17150": CddErratum(
         accession="cd17150",
         finding_id="F9",
@@ -641,6 +778,144 @@ ERRATA: dict[str, CddErratum] = {
             "DCDC2 (UniProtKB:Q9UHG0, modeled by CDD:cd17148) in the phenotype "
             "summary (#1171, Stage 4 finding F9)."
         ),
+    ),
+    "cd17151": CddErratum(
+        accession="cd17151",
+        finding_id="F15",
+        label="DCX1_DCDC2C",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml"
+        ),
+        source_description=(
+            "Dublecortin-like domain 1 found in doublecortin domain-containing "
+            "protein 2C (DCDC2C). DCDC2 is a member of doublecortin (DCX) family. "
+            "It is a microtubule-associated protein (MAP) with stable double tandem "
+            "DCX repeats of ubiquitin-like tertiary fold. Microtubules are key "
+            "components of the cytoskeleton that are involved in cell movement, "
+            "shape determination, division and transport. DCDC2 genetic variation "
+            "in humans is associated with reading disability, attention deficit "
+            "hyperactivity disorder (ADHD), and difficulties in mathematics. A "
+            "genetic variant of DCDC2 associates with dyslexia, a common "
+            "neurobehavioral disorder of reading. DCDC2 protein interacts with many "
+            "of the same cytoskeleton related proteins that other members of the "
+            "DCX family interact with"
+        ),
+        replacements=(
+            (
+                "Dublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2C (DCDC2C). DCDC2 is a member of doublecortin (DCX) "
+                "family. It is a microtubule-associated protein (MAP) with stable "
+                "double tandem DCX repeats of ubiquitin-like tertiary fold.",
+                "Doublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2C (DCDC2C). DCDC2C is a member of the doublecortin (DCX) "
+                "family closely related to its paralog DCDC2, a "
+                "microtubule-associated protein (MAP) with stable double tandem DCX "
+                "repeats of ubiquitin-like tertiary fold.",
+            ),
+            (
+                "DCDC2 genetic variation in humans is associated with reading "
+                "disability, attention deficit hyperactivity disorder (ADHD), and "
+                "difficulties in mathematics. A genetic variant of DCDC2 associates "
+                "with dyslexia, a common neurobehavioral disorder of reading.",
+                "In the paralogous DCDC2 gene, human genetic variation is "
+                "associated with reading disability (dyslexia), attention deficit "
+                "hyperactivity disorder (ADHD), and difficulties in mathematics.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F15; UniProtKB:A8MYV0; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "UniProtKB:A8MYV0",
+                "Protein Name: Doublecortin domain-containing protein 2C; Gene Name: DCDC2C; DR CDD; cd17151; DCX1_DCDC2C; 1.",
+                "Reviewed human UniProtKB/Swiss-Prot entry A8MYV0 (DCDC2C, "
+                "HGNC:33863) carries the N-terminal DCX1 domain modeled by "
+                "CDD:cd17151 (DCX1_DCDC2C), whereas human DCDC2 (UniProtKB:Q9UHG0, "
+                "HGNC:18141) is a distinct paralog whose N-terminal DCX1 domain is "
+                "modeled by CDD:cd17149 (DCX1_DCDC2).",
+            ),
+        ),
+        event_action="source_erratum_cd17151",
+        event_changes=(
+            "Corrected the 'Dublecortin-like' spelling error and distinguished "
+            "DCDC2C (UniProtKB:A8MYV0, modeled by CDD:cd17151) from its paralog "
+            "DCDC2 (UniProtKB:Q9UHG0, modeled by CDD:cd17149) in the phenotype "
+            "summary (#1188, Cycle 2 Stage 4 finding F15)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
+    "cd17154": CddErratum(
+        accession="cd17154",
+        finding_id="F16",
+        label="DCX2_DCDC2C",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml"
+        ),
+        source_description=(
+            "Doublecortin-like domain 2 found in doublecortin domain-containing "
+            "protein 2C (DCDC2C). DCDC2 is a member of the doublecortin (DCX) "
+            "family. It is a microtubule-associated protein (MAP) with stable "
+            "double tandem DCX repeats of a ubiquitin-like tertiary fold. "
+            "Microtubules are key components of cytoskeleton that are involved in "
+            "cell movement, shape determination, division and transport. DCDC2 "
+            "genetic variation in humans is associated with reading disability, "
+            "attention deficit hyperactivity disorder (ADHD), and difficulties in "
+            "mathematics. A genetic variant of DCDC2 associates with dyslexia, a "
+            "common neurobehavioral disorder of reading. DCDC2 protein interacts "
+            "with many of the same cytoskeleton related proteins that other "
+            "members of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "Doublecortin-like domain 2 found in doublecortin domain-containing "
+                "protein 2C (DCDC2C). DCDC2 is a member of the doublecortin (DCX) "
+                "family. It is a microtubule-associated protein (MAP) with stable "
+                "double tandem DCX repeats of a ubiquitin-like tertiary fold.",
+                "Doublecortin-like domain 2 found in doublecortin domain-containing "
+                "protein 2C (DCDC2C). DCDC2C is a member of the doublecortin (DCX) "
+                "family closely related to its paralog DCDC2, a "
+                "microtubule-associated protein (MAP) with stable double tandem DCX "
+                "repeats of a ubiquitin-like tertiary fold.",
+            ),
+            (
+                "DCDC2 genetic variation in humans is associated with reading "
+                "disability, attention deficit hyperactivity disorder (ADHD), and "
+                "difficulties in mathematics. A genetic variant of DCDC2 associates "
+                "with dyslexia, a common neurobehavioral disorder of reading.",
+                "In the paralogous DCDC2 gene, human genetic variation is "
+                "associated with reading disability (dyslexia), attention deficit "
+                "hyperactivity disorder (ADHD), and difficulties in mathematics.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F16; UniProtKB:A8MYV0; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "UniProtKB:A8MYV0",
+                "Protein Name: Doublecortin domain-containing protein 2C; Gene Name: DCDC2C; DR CDD; cd17154; DCX2_DCDC2C; 1.",
+                "Reviewed human UniProtKB/Swiss-Prot entry A8MYV0 (DCDC2C, "
+                "HGNC:33863) carries the C-terminal DCX2 domain modeled by "
+                "CDD:cd17154 (DCX2_DCDC2C), whereas human DCDC2 (UniProtKB:Q9UHG0, "
+                "HGNC:18141) is a distinct paralog whose C-terminal DCX2 domain is "
+                "modeled by CDD:cd17152 (DCX2_DCDC2).",
+            ),
+        ),
+        event_action="source_erratum_cd17154",
+        event_changes=(
+            "Distinguished DCDC2C (UniProtKB:A8MYV0, modeled by CDD:cd17154) from "
+            "its paralog DCDC2 (UniProtKB:Q9UHG0, modeled by CDD:cd17152) in the "
+            "domain description and human genetics phenotype summary (#1188, "
+            "Cycle 2 Stage 4 finding F16)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
     ),
     "cd18592": CddErratum(
         accession="cd18592",
@@ -717,6 +992,82 @@ ERRATA: dict[str, CddErratum] = {
             "(#1171, Stage 4 finding F10)."
         ),
     ),
+    "cd18593": CddErratum(
+        accession="cd18593",
+        finding_id="F18",
+        label="ABC_6TM_MRP4_D1_like",
+        parent="cl38913",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml"
+        ),
+        source_description=(
+            "Six-transmembrane helical domain 1 (TMD1) of multidrug "
+            "resistance-associated protein 4 (MRP4) and similar proteins. This "
+            "group represents the six-transmembrane domain 1 (TMD1) of multidrug "
+            "resistance-associated protein 4 (MRP4), which belongs to the "
+            "subfamily C of the ATP-binding cassette (ABC) transporter "
+            "superfamily. The MRP subfamily (ABCC subfamily) is composed of 13 "
+            "members, of which MRP1 to MRP9 are the major transporters that cause "
+            "multidrug resistance in tumor cells by pumping anticancer drugs out "
+            "of the cell. These nine MRP members function as ATP-dependent "
+            "exporters for endogenous substances and xenobiotics. MRP family can "
+            "be divided into two groups, depending on their structural "
+            "architecture. MRP4, MRP5, MRP8, and MRP9 (ABCC4, 5, 11 and 12, "
+            "respectively) have a typical ABC transporter structure and each "
+            "composed of two transmembrane domains (TMD1 and TMD2) and two "
+            "nucleotide domains (NBD1 and NBD2). On the other hand, MRP1, 2, 3, 6 "
+            "and 7 (ABCC1, 2, 3, 6 and 7, respectively) have an additional "
+            "N-terminal five transmembrane segments in a single domain (TMD0) "
+            "connected to the core (TMD-NBD) by a cytoplasmic linker (L0)"
+        ),
+        replacements=(
+            (
+                "The MRP subfamily (ABCC subfamily) is composed of 13 members, of "
+                "which MRP1 to MRP9 are the major transporters that cause multidrug "
+                "resistance in tumor cells by pumping anticancer drugs out of the "
+                "cell. These nine MRP members function as ATP-dependent exporters "
+                "for endogenous substances and xenobiotics.",
+                "The human ABCC subfamily includes nine multidrug "
+                "resistance-associated proteins (MRP1-MRP6 corresponding to "
+                "ABCC1-ABCC6, and MRP7-MRP9 corresponding to ABCC10-ABCC12, whereas "
+                "ABCC7 is the CFTR chloride channel and ABCC8/ABCC9 are the "
+                "sulfonylurea receptors SUR1/SUR2). Several MRP members (notably "
+                "MRP1-MRP5, MRP7/ABCC10, and MRP8/ABCC11) function as ATP-dependent "
+                "efflux pumps for endogenous organic anions, cyclic nucleotides, and "
+                "xenobiotics, whereas physiological substrates and transport "
+                "activity of MRP9 (ABCC12) remain less characterized.",
+            ),
+            (
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 7, "
+                "respectively)",
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 10, "
+                "respectively)",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F18; PMID:16984901; UniProtKB:O15439)"
+        ),
+        evidence=(
+            (
+                "PMID:16984901",
+                "The human ABCC subfamily contains 12 full transporters, including nine MRPs (MRP1-6/ABCC1-6 and MRP7-9/ABCC10-12), CFTR (ABCC7), and SUR1/SUR2 (ABCC8/9)",
+                "Deeley et al. (2006, Physiol Rev 86:849-899) and UniProtKB:O15439 "
+                "(ABCC4/MRP4) establish that MRP7 is ABCC10 (whereas ABCC7 is the "
+                "CFTR chloride channel) and that MRP9/ABCC12 has not been shown to "
+                "act as a broad tumor multidrug resistance efflux pump.",
+            ),
+        ),
+        event_action="source_erratum_cd18593",
+        event_changes=(
+            "Corrected the false mapping of MRP7 to ABCC7 (MRP7 is ABCC10; ABCC7 "
+            "is CFTR) and qualified the overgeneralized claim that all MRP1-MRP9 "
+            "members are characterized tumor multidrug resistance efflux pumps "
+            "(#1188, Cycle 2 Stage 4 finding F18)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
     "cd20534": CddErratum(
         accession="cd20534",
         finding_id="F11",
@@ -769,6 +1120,61 @@ ERRATA: dict[str, CddErratum] = {
             "CCNQ/FAM58A (informally called cyclin-M) with the unrelated "
             "CNNM1-4/ACDP magnesium transporter family (#1171, Stage 4 finding F11)."
         ),
+    ),
+    "cd20535": CddErratum(
+        accession="cd20535",
+        finding_id="F13",
+        label="CYCLIN_CCNM_CCNQ_rpt2",
+        parent="cl40454",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml"
+        ),
+        source_description=(
+            "second cyclin box found in cyclin-M (CCNM) family. The CCNM family "
+            "proteins, also called ancient conserved domain proteins (ACDPs), are "
+            "evolutionarily conserved Mg2+ transporters. CCNM, also called cyclin-Q "
+            "(CCNQ), or CDK10-activating cyclin, or cyclin-related protein FAM58A, "
+            "associates with CDK10 to promote its kinase activity. Members of this "
+            "family contain two cyclin boxes. This model corresponds to the second "
+            "one. The cyclin box is a protein binding domain"
+        ),
+        replacements=(
+            (
+                "The CCNM family proteins, also called ancient conserved domain "
+                "proteins (ACDPs), are evolutionarily conserved Mg2+ transporters. "
+                "CCNM, also called cyclin-Q (CCNQ), or CDK10-activating cyclin, or "
+                "cyclin-related protein FAM58A, associates with CDK10 to promote "
+                "its kinase activity.",
+                "Cyclin-M (CCNM), officially designated cyclin-Q (CCNQ, formerly "
+                "FAM58A; distinct from the CNNM1-4/ACDP magnesium transporter "
+                "family in CDD:cd04590), is the CDK10-activating cyclin that "
+                "associates with CDK10 to promote its protein kinase activity.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1188 "
+            "(Cycle 2 Stage 4 finding F13; PMID:23912459; UniProtKB:Q8N1B3)"
+        ),
+        evidence=(
+            (
+                "PMID:23912459",
+                "Cyclin M (FAM58A) interacts with CDK10 and forms an active protein kinase complex",
+                "Guen et al. (2013, Nat Genet 45:1038-1042) and UniProtKB:Q8N1B3 "
+                "(CCNQ/FAM58A, HGNC:28434) establish that cyclin-Q (formerly called "
+                "cyclin-M/FAM58A) is the CDK10-activating cyclin containing two "
+                "cyclin boxes, unrelated to the CNNM1-4 (ACDP1-4) ancient conserved "
+                "domain magnesium transporter family (CDD:cd04590).",
+            ),
+        ),
+        event_action="source_erratum_cd20535",
+        event_changes=(
+            "Removed the false conflation of the CDK10-activating cyclin "
+            "CCNQ/FAM58A (informally called cyclin-M) with the unrelated "
+            "CNNM1-4/ACDP magnesium transporter family (#1188, Cycle 2 Stage 4 "
+            "finding F13)."
+        ),
+        curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
     ),
     "cd21551": CddErratum(
         accession="cd21551",
@@ -853,7 +1259,7 @@ def metadata_blocks(acc: str) -> dict[str, str]:
     return {
         "evidence": evidence,
         "curation_history": (
-            f'curation_history:\n  - timestamp: "{CURATION_TIMESTAMP}"\n'
+            f'curation_history:\n  - timestamp: "{erratum.curation_timestamp}"\n'
             "    curator: claude\n"
             f"    action: {erratum.event_action}\n"
             f"    changes: {yaml_escape(erratum.event_changes)}\n"
