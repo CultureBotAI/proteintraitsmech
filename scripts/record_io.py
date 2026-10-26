@@ -565,6 +565,68 @@ def _key(value):
     return str(value)
 
 
+def _graph_id(value) -> str | None:
+    """Non-empty `graph_id` for a CausalGraph mapping, or None."""
+    if not isinstance(value, dict):
+        return None
+    gid = value.get("graph_id")
+    if gid is None or isinstance(gid, bool):
+        return None
+    text = str(gid).strip()
+    return text or None
+
+
+def _merge_causal_graphs(old_val: list, new_val: list) -> list:
+    """Merge `causal_graphs` by `graph_id` so seeder upgrades update in place.
+
+    When a registered seeder (`seed_foundational_traits.py`,
+    `seed_localstructuralfeature.py`, `seed_uniprot_peptide_classes.py`) upgrades
+    nodes, edges, or snippet evidence inside an existing `CausalGraph` while
+    retaining its `graph_id`, a full-dict union (`_key`) treats the old and new
+    graphs as distinct items and appends a duplicate `graph_id` (which fails
+    `audit_causal_graphs.py`). Matching by `graph_id` updates seeder-emitted
+    graphs in place at their existing position, preserves curator- or builder-added
+    graphs with distinct `graph_id` values, and appends any newly seeded `graph_id`
+    entries.
+    """
+    new_by_id: dict[str, dict] = {}
+    for item in new_val:
+        gid = _graph_id(item)
+        if gid is not None:
+            new_by_id[gid] = item
+
+    merged: list = []
+    seen_ids: set[str] = set()
+    seen_keys: set = set()
+
+    for item in old_val:
+        gid = _graph_id(item)
+        if gid is not None:
+            if gid in seen_ids:
+                continue
+            seen_ids.add(gid)
+            merged.append(new_by_id.get(gid, item))
+        else:
+            k = _key(item)
+            if k not in seen_keys:
+                seen_keys.add(k)
+                merged.append(item)
+
+    for item in new_val:
+        gid = _graph_id(item)
+        if gid is not None:
+            if gid not in seen_ids:
+                seen_ids.add(gid)
+                merged.append(new_by_id[gid])
+        else:
+            k = _key(item)
+            if k not in seen_keys:
+                seen_keys.add(k)
+                merged.append(item)
+
+    return merged
+
+
 def _union_list_keys(existing: str, fresh: str, out: str) -> str:
     """Union every top-level key that is a list in both records, existing entries first.
 
@@ -581,7 +643,10 @@ def _union_list_keys(existing: str, fresh: str, out: str) -> str:
         new_val = new_doc.get(key)
         if key == "definitions" or not isinstance(old_val, list) or not isinstance(new_val, list):
             continue
-        merged = list(old_val) + [v for v in new_val if _key(v) not in {_key(o) for o in old_val}]
+        if key == "causal_graphs":
+            merged = _merge_causal_graphs(old_val, new_val)
+        else:
+            merged = list(old_val) + [v for v in new_val if _key(v) not in {_key(o) for o in old_val}]
         if merged == old_val and old_val == new_val:
             continue
         block = yaml.safe_dump({key: merged}, sort_keys=False, allow_unicode=True, width=100)

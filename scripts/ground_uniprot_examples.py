@@ -5322,20 +5322,42 @@ def _promotion_lock_directories(args: argparse.Namespace) -> list[Path]:
     return sorted(directories.values())
 
 
+def _default_promote_sibling(resolved: Path, filename: str) -> Path:
+    """Resolve a staging registry beside ``--resolved``, preferring ``<batch>.<filename>``."""
+
+    resolved_path = resolved.resolve()
+    parent = resolved_path.parent
+    name = resolved_path.name
+    suffix = ".resolved.jsonl"
+    if name.endswith(suffix) and len(name) > len(suffix):
+        stem = name[: -len(suffix)]
+        prefixed = parent / f"{stem}.{filename}"
+        if prefixed.is_file():
+            return prefixed
+    return parent / filename
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "resolve" and args.protein_registry:
         if args.protein_registry.resolve() == args.registry_out.resolve():
             raise SystemExit("input --protein-registry and --registry-out must differ")
     if args.command == "promote" and args.protein_registry is None:
-        default_registry = args.resolved.resolve().parent / "protein_registry.jsonl"
-        args.protein_registry = default_registry
+        args.protein_registry = _default_promote_sibling(
+            args.resolved, "protein_registry.jsonl"
+        )
     if args.command == "promote" and args.evidence_registry is None:
-        args.evidence_registry = args.resolved.resolve().parent / "occurrence_evidence.jsonl"
+        args.evidence_registry = _default_promote_sibling(
+            args.resolved, "occurrence_evidence.jsonl"
+        )
     if args.command == "promote" and args.membership_registry is None:
-        args.membership_registry = args.resolved.resolve().parent / "uniprot_memberships.jsonl"
+        args.membership_registry = _default_promote_sibling(
+            args.resolved, "uniprot_memberships.jsonl"
+        )
     if args.command == "promote" and args.sifts_registry is None:
-        args.sifts_registry = args.resolved.resolve().parent / "sifts_mappings.jsonl"
+        args.sifts_registry = _default_promote_sibling(
+            args.resolved, "sifts_mappings.jsonl"
+        )
     try:
         if args.command == "promote" and args.apply:
             # One writer at a time per registry directory (#801); dry runs never lock.

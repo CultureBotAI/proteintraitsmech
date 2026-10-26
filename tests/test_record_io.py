@@ -1526,3 +1526,114 @@ def test_validated_write_uses_the_real_closed_schema(tmp_path):
     with pytest.raises(RecordValidationError, match="Additional properties"):
         write_validated_record(target, valid + "invented_slot: true\n")
     assert target.read_text(encoding="utf-8") == valid
+
+
+def test_causal_graphs_merge_by_graph_id_updates_in_place_and_preserves_distinct_graphs():
+    """Upgrading an existing graph_id in a seeder replaces it in place without duplicating graph_id."""
+    existing = """identifier: proteintraitsmech:active_site
+label: active site
+trait_axis: STRUCTURE
+mapping_status: SEEDED
+causal_graphs:
+  - graph_id: proteintraitsmech-active-site-mechanism
+    name: active site catalytic mechanism
+    description: Old 2-node coarse mechanism
+    nodes:
+      - node_id: proteintraitsmech:active_site
+        label: active site
+      - node_id: GO:0003824
+        label: catalytic activity
+    edges:
+      - subject: proteintraitsmech:active_site
+        predicate: RO:0002411
+        object: GO:0003824
+  - graph_id: curator-added-secondary-graph
+    name: curator secondary mechanism
+    nodes:
+      - node_id: CHEBI:15377
+        label: water
+    edges: []
+license: CC0-1.0
+"""
+    fresh = """identifier: proteintraitsmech:active_site
+label: active site
+trait_axis: STRUCTURE
+mapping_status: SEEDED
+causal_graphs:
+  - graph_id: proteintraitsmech-active-site-mechanism
+    name: active site catalytic mechanism
+    description: Upgraded multi-step mechanism with substrate and transition state
+    nodes:
+      - node_id: proteintraitsmech:active_site
+        label: active site
+      - node_id: CHEBI:26806
+        label: substrate
+      - node_id: GO:0003824
+        label: catalytic activity
+    edges:
+      - subject: proteintraitsmech:active_site
+        predicate: RO:0002411
+        object: CHEBI:26806
+      - subject: CHEBI:26806
+        predicate: RO:0002411
+        object: GO:0003824
+  - graph_id: newly-seeded-companion-graph
+    name: companion mechanism
+    nodes: []
+    edges: []
+license: CC0-1.0
+"""
+    merged_once = merge_on_reseed(existing, fresh)
+    merged_twice = merge_on_reseed(merged_once, fresh)
+    doc = yaml.safe_load(merged_once)
+    graphs = doc["causal_graphs"]
+
+    assert [g["graph_id"] for g in graphs] == [
+        "proteintraitsmech-active-site-mechanism",
+        "curator-added-secondary-graph",
+        "newly-seeded-companion-graph",
+    ]
+    assert graphs[0]["description"] == (
+        "Upgraded multi-step mechanism with substrate and transition state"
+    )
+    assert [n["node_id"] for n in graphs[0]["nodes"]] == [
+        "proteintraitsmech:active_site",
+        "CHEBI:26806",
+        "GO:0003824",
+    ]
+    assert len(graphs[0]["edges"]) == 2
+    assert graphs[1]["name"] == "curator secondary mechanism"
+    assert yaml.safe_load(merged_twice)["causal_graphs"] == graphs
+
+
+def test_default_promote_sibling_prefers_stem_prefixed_batch_registries(tmp_path):
+    """Stem-prefixed <batch>.<registry> siblings beside --resolved take precedence over unprefixed defaults."""
+    import ground_uniprot_examples as gue
+
+    batch_resolved = tmp_path / "batch-039.resolved.jsonl"
+    batch_resolved.write_text("", encoding="utf-8")
+    prefixed_proteins = tmp_path / "batch-039.protein_registry.jsonl"
+    prefixed_proteins.write_text("", encoding="utf-8")
+    prefixed_evidence = tmp_path / "batch-039.occurrence_evidence.jsonl"
+    prefixed_evidence.write_text("", encoding="utf-8")
+
+    assert (
+        gue._default_promote_sibling(batch_resolved, "protein_registry.jsonl")
+        == prefixed_proteins.resolve()
+    )
+    assert (
+        gue._default_promote_sibling(batch_resolved, "occurrence_evidence.jsonl")
+        == prefixed_evidence.resolve()
+    )
+    assert (
+        gue._default_promote_sibling(batch_resolved, "uniprot_memberships.jsonl")
+        == (tmp_path / "uniprot_memberships.jsonl").resolve()
+    )
+
+    unprefixed_resolved = tmp_path / "resolved.jsonl"
+    unprefixed_resolved.write_text("", encoding="utf-8")
+    assert (
+        gue._default_promote_sibling(unprefixed_resolved, "protein_registry.jsonl")
+        == (tmp_path / "protein_registry.jsonl").resolve()
+    )
+
