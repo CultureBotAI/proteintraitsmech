@@ -14,10 +14,10 @@ artifacts:
   sha256: 4e1e6ddf50234826e715a2f01f6437c7b36014c26da290cfec8ea6ceef38217c
   kind: infra_snapshot
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/implementation_plan.md
-  sha256: 94ac7d2027b0bd415443f54626779a9b49cc9798f65229dbe05a63ced5c6e6ea
+  sha256: b2cd79ac9bcdd31292cb4479f12ed80609bae5b8c11380663f27f51adb9ed9cf
   kind: implementation_plan
 - path: reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/validation.md
-  sha256: c81595b559c63881d9fab3374e0f50559fc18f4f92eb1b78b85cbd45f1e76060
+  sha256: 83e4d0c5159260fdf27e894b9bd1d2713ee7fd60170b25599e6d051a8842db83
   kind: validation
 findings: []
 groups: []
@@ -45,4 +45,4 @@ infra_tasks:
   issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1191
   status: deferred
   summary: 'Check stem-prefixed <batch>.protein_registry.jsonl siblings before unprefixed directory defaults in scripts/ground_uniprot_examples.py main() (lines 5330-5338) and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
-  disposition: 'Part (1) landed in Cycle 2 Stage 6 (#1191): added _default_promote_sibling in scripts/ground_uniprot_examples.py and wired main() so promote checks stem-prefixed <batch>.protein_registry.jsonl, <batch>.occurrence_evidence.jsonl, <batch>.uniprot_memberships.jsonl, and <batch>.sifts_mappings.jsonl siblings beside --resolved before falling back to unprefixed directory defaults (covered by test_default_promote_sibling_prefers_stem_prefixed_batch_registries in tests/test_record_io.py). Part (2) remains deferred in #1191 for future Stage 3 (protein_examples) cycles because the 14 historical localized batches (cnp-017..020, cdd-042..050, prosite-065; 24,444 resolved rows, 12,608 APPROVED rows) were resolved prior to interpro_location_id in occurrence_evidence.jsonl and require re-resolution against current record preimages and interpro_location_id digests.'
+  disposition: 'Part (1) landed in Cycle 2 Stage 6 (#1191): added _default_promote_sibling in scripts/ground_uniprot_examples.py (lines 5325-5337) and wired main() (args.command == "promote", lines 5345-5360; pre-PR lines 5330-5338 in the frozen summary) so promote checks stem-prefixed <batch>.protein_registry.jsonl, <batch>.occurrence_evidence.jsonl, <batch>.uniprot_memberships.jsonl, and <batch>.sifts_mappings.jsonl siblings beside --resolved before falling back to unprefixed directory defaults (covered by test_default_promote_sibling_prefers_stem_prefixed_batch_registries in tests/test_record_io.py). Part (2) remains deferred in #1191 for future Stage 3 (protein_examples) cycles because the 14 historical localized batches (cnp-017..020, cdd-042..050, prosite-065; 24,444 resolved rows, 12,608 APPROVED rows) were resolved prior to interpro_location_id in occurrence_evidence.jsonl and require re-resolution against current record preimages and interpro_location_id digests.'
