@@ -191,7 +191,7 @@ def test_foundational_trait_causal_graphs_audit_and_score():
 
 
 def test_foundational_trait_parent_traits_resolve_to_corpus_records():
-    """Every parent_traits CURIE on the 84 foundational traits resolves to an on-disk corpus record."""
+    """Every parent_traits CURIE on the 101 foundational traits resolves to an on-disk corpus record."""
     known_parent_files = {
         "proteintraitsmech:COILED_COIL": (
             sft.TRAITS_DIR / "structure/secondary/coiled-coil.yaml"
@@ -423,9 +423,4 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
 
         existing_text = path.read_text(encoding="utf-8")
         assert yaml.safe_load(rio.merge_on_reseed(existing_text, fresh_yaml)) == data
-
-
-
-
-
 
