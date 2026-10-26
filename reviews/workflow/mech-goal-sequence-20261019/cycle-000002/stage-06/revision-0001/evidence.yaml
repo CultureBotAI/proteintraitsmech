@@ -1,0 +1,48 @@
+schema_version: '1.0.0'
+repository_key: proteintraitsmech
+github_repository: CultureBotAI/proteintraitsmech
+run_id: mech-goal-sequence-20261019
+cycle: 2
+stage: 6
+revision: 1
+outcome: completed
+summary: 'Froze INFRA_TASKS.md at 2026-10-26T01:23:18Z (sha256 4e1e6ddf50234826e715a2f01f6437c7b36014c26da290cfec8ea6ceef38217c) across 4 pending tasks; resolved proteintraitsmech-infra-0004 (#1190) by adding _graph_id and _merge_causal_graphs in scripts/record_io.py so merge_on_reseed updates matching graph_id entries in place and preserves distinct curator/builder graph_id entries; implemented Part (1) of proteintraitsmech-infra-0005 (#1191) by adding _default_promote_sibling in scripts/ground_uniprot_examples.py so promote checks stem-prefixed <batch>.<registry>.jsonl siblings beside --resolved before unprefixed directory defaults, while carrying forward Part (2) (re-resolving and promoting/archiving the 14 pre-interpro_location_id localized review batches cnp-017..020, cdd-042..050, and prosite-065) as deferred under open issue #1191 alongside network-fetch-gated and source-limited tasks proteintraitsmech-infra-0001 (#1114) and proteintraitsmech-infra-0002 (#652).'
+source_revision: fcd963db8c72a14ba9c49df60e4f1fbf2f2b6cd2
+scope_frozen_at: '2026-10-26T01:23:18Z'
+artifacts:
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/infra_snapshot.md
+  sha256: 4e1e6ddf50234826e715a2f01f6437c7b36014c26da290cfec8ea6ceef38217c
+  kind: infra_snapshot
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/implementation_plan.md
+  sha256: b2cd79ac9bcdd31292cb4479f12ed80609bae5b8c11380663f27f51adb9ed9cf
+  kind: implementation_plan
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/validation.md
+  sha256: 83e4d0c5159260fdf27e894b9bd1d2713ee7fd60170b25599e6d051a8842db83
+  kind: validation
+findings: []
+groups: []
+carry_forward_ids: []
+infra_tasks:
+- task_id: proteintraitsmech-infra-0001
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+  status: deferred
+  summary: 'Re-fetch cross-mech-complex-20261013 under v2 UniProt receipt with fragment status and re-resolve CPX-2267 after #1122 chemistry repair so ComplexPortal mechanism-graph subunit examples can be promoted.'
+  disposition: 'Blocked on live UniProt REST v2 fetch-generation refresh for cross-mech-complex-20261013 (to populate ProteinReference.fragment required by #1081/#1084) and independent scientific sign-off on the 36-candidate ComplexPortal partition (#1114, #1115, #1116).'
+- task_id: proteintraitsmech-infra-0002
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/652
+  status: deferred
+  summary: 'Acquire receipt-locked UniProt REST membership snapshots and expanded residue_frame.json sequences for mechanism-graph sources (RHEA, GO, M-CSA, ARO) and fail-closed signature/structure sources (SFLD, PRINTS, ECOD/SIFTS).'
+  disposition: 'Source-limited and network-fetch-gated: across 39,641 causal_graphs records in Cycle 2 Stage 3, RHEA (18,465 ungrounded of 18,558 with causal_graphs) and GO (GO:7770085) require receipt-locked UNIPROT_REST fetch generations; M-CSA (732 ungrounded QUALIFIED of 1,003 with causal_graphs) lacks residue_frame.json sequences; ARO (7,342 with causal_graphs) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; EC (1,104 ungrounded of 6,888 with causal_graphs) and 44 proteintraitsmech:* classes lack source-shipped UniProt residue-interval tables; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
+- task_id: proteintraitsmech-infra-0004
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1190
+  status: resolved
+  summary: 'Key causal_graphs list-union deduplication in scripts/record_io.py merge_on_reseed by graph_id so seeder upgrades to an existing causal graph update nodes and edges in place rather than appending a duplicate graph_id.'
+  resolution_evidence:
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/implementation_plan.md
+  - reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-06/revision-0001/validation.md
+  disposition: 'Resolved in Cycle 2 Stage 6 (#1190): added _graph_id and _merge_causal_graphs in scripts/record_io.py and wired _union_list_keys for key == "causal_graphs" so re-seeding replaces matching graph_id entries in place while preserving distinct curator/builder graph_id entries and appending newly seeded graph_id entries (covered by test_causal_graphs_merge_by_graph_id_updates_in_place_and_preserves_distinct_graphs in tests/test_record_io.py).'
+- task_id: proteintraitsmech-infra-0005
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1191
+  status: deferred
+  summary: 'Check stem-prefixed <batch>.protein_registry.jsonl siblings before unprefixed directory defaults in scripts/ground_uniprot_examples.py main() (lines 5330-5338) and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
+  disposition: 'Part (1) landed in Cycle 2 Stage 6 (#1191): added _default_promote_sibling in scripts/ground_uniprot_examples.py (lines 5325-5337) and wired main() (args.command == "promote", lines 5345-5360; pre-PR lines 5330-5338 in the frozen summary) so promote checks stem-prefixed <batch>.protein_registry.jsonl, <batch>.occurrence_evidence.jsonl, <batch>.uniprot_memberships.jsonl, and <batch>.sifts_mappings.jsonl siblings beside --resolved before falling back to unprefixed directory defaults (covered by test_default_promote_sibling_prefers_stem_prefixed_batch_registries in tests/test_record_io.py). Part (2) remains deferred in #1191 for future Stage 3 (protein_examples) cycles because the 14 historical localized batches (cnp-017..020, cdd-042..050, prosite-065; 24,444 resolved rows, 12,608 APPROVED rows) were resolved prior to interpro_location_id in occurrence_evidence.jsonl and require re-resolution against current record preimages and interpro_location_id digests.'
