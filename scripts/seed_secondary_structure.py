@@ -25,6 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from structural_trait_curations import curate_seed  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "secondary"
@@ -132,7 +133,7 @@ def emit(rec: dict) -> str:
         if r.get("topology"):
             lines.append(f"  topology_string: {yaml_scalar(r['topology'])}")
         lines.append(f"  evidence_source: {r['evidence_source']}")
-    return "\n".join(lines) + "\n"
+    return curate_seed("\n".join(lines) + "\n", "seed_secondary_structure")
 
 
 def yaml_scalar(s: str) -> str:
@@ -186,7 +187,7 @@ def main() -> int:
             continue
         if args.apply:
             OUT_DIR.mkdir(parents=True, exist_ok=True)
-            write_record(path, emit(rec))
+            write_record(path, emit(rec), validate=True)
         if exists:
             enriched += 1
         else:

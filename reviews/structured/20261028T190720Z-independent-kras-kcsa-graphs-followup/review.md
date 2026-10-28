@@ -1,0 +1,632 @@
+# Independent scientific follow-up of KRAS inhibitor identity and retained KcsA graph
+
+- Review: 20261028T190720Z-independent-kras-kcsa-graphs-followup
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-28T19:05:47.036284Z
+- Finished UTC: 2026-10-28T19:07:20Z
+- Reviewer: Codex grounding_route_audit (independent)
+- Completion: completed
+- Verdict: pass_with_limitations
+- Scientific review: true
+
+## Summary
+
+The KRAS inhibitor participant is now an explicitly local material LIGAND set, resolving the ChEBI role-as-molecule mismatch. The three supported KRAS edges and two KcsA edges retain their study scope. No new graph findings remain in this two-target review; unrelated record findings are not closed.
+
+## Scope And Provenance
+
+Only the two retained causal graphs, their node identities/types, directed predicates, local definitions, edge evidence and qualification boundary. Whole target files were read for context; unrelated fields are not certified.
+
+Selection: Explicit requested KRAS(G12C) and KcsA graph IDs in two named existing records; no sampling.
+Coverage: full; 2 reviewed / 2 in the declared population.
+Source: working_tree at Git base c4147394c698324ae537c0c63c2c9f6647c4f4fc.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE | data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml # causal_graphs[graph_id=covalent_allosteric_cysteine_adduct_regulation] | generated | covalent allosteric regulatory site |
+| proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml # causal_graphs[graph_id=CG_CAVITY_SELECTIVITY_FILTER_PORE] | generated | transmembrane ion-channel selectivity-filter pore |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Native exact input inspection | passed | True | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | Current target/schema/ledger/owner hashes captured with prior native review and exact correction preimage/delta. |
+| Closed-schema target validation | passed | True | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | 2 files; 0 error rows. Embedded curation history is schema checked. |
+| Native causal graph structure audit | passed | True | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | 2 graphs, 7 nodes, 5 edges; 3 grounded nodes; 5/5 snippet-cited edges; 0 errors, 0 warnings. Local inhibitor-set typing is explicit. |
+| Native qualification semantic validator | passed | True | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | 2 files; 0 semantic findings. This migration-safe pass does not mean an example exists or is qualified. |
+| Primary literature and authority inspection | passed | True | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | Source-scoped mechanism claims and chemical/GO node meanings support the retained graphs. The local inhibitor-set identity removes GSCI-001; no source-qualified coordinates are inferred. |
+| Structured transcriptomic adapter applicability | not_applicable | False | proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | The selected claims concern biochemical/structural mechanisms; expression-module membership cannot establish covalent capture or ion coordination. |
+
+## Scientific And Domain Assessments
+
+### KRAS study-specific mechanism and evidence scope
+
+graph: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE.
+
+Three retained edges reflect reported irreversible inhibitor capture, cysteine participation and changed nucleotide/Raf behavior. Descriptions limit them to tested KRAS(G12C) compounds; Cys12 is paper numbering, not a released UniProt occurrence.
+
+### Covalent capture versus GO binding
+
+grounding: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE.
+
+The explicit local capture process correctly avoids assigning covalent attachment to GO:0036094. Its scope and local status are stated.
+
+### Inhibitor molecule versus biochemical role
+
+grounding: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE.
+
+The explicitly local kras_g12c_inhibitors LIGAND names the tested inhibitor molecules and states that the set has no single asserted chemical identity. CHEBI:35224 no longer grounds that participant; GSCI-001 is resolved.
+
+### KcsA filter coordination and conduction interpretation
+
+graph: supported. Targets: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE.
+
+The local KcsA filter enables metal-ion binding; its coordination contributes to selective channel function. The second edge is explicitly a structural mechanistic interpretation (ECO:0000305), not an experimentally proved universal channel law.
+
+### Native directionality and scoped local definitions
+
+representation: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE.
+
+Participation runs from cysteine to capture, input from capture to inhibitor participant, and enabling from filter to activity. Local nodes have explicit descriptions. Causal STATE use follows the native molecular-graph convention; no formal RO/BFO entailment claim is made.
+
+### Mechanism examples versus qualified protein occurrences
+
+scope: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE.
+
+Graphs are study-scoped illustrations associated with trait classes. They assert neither canonical examples nor source-qualified UniProt/PDB coordinate mappings.
+
+### Correction preservation and review lineage
+
+provenance: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE.
+
+The KRAS correction preserves all supported edges and their evidence while changing the inhibitor endpoint. KcsA bytes are unchanged from the first review. Both graphs remain PROPOSED study-scoped examples without canonical qualification.
+
+## Findings
+
+### GSCI-001: KRAS inhibitor participant now uses a scoped local material identity
+
+major / resolved / confirmed; issue key: proteintraitsmech-kras-effector-role-grounding.
+
+The former CHEBI:35224 role-grounded LIGAND has been replaced by kras_g12c_inhibitors, a described local LIGAND set of the tested Ostrem et al. molecules. The has-input endpoint now references that node. The material/role conflation is absent in the inspected current graph.
+
+Disposition: Direct current-record inspection confirms the requested identity correction. Primary mechanism support and preserved graph/history invariants were reassessed, and current native checks passed. This resolution affects only GSCI-001.
+
+## Recommended Actions And Acceptance Checks
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| primary-kras | https://pubmed.ncbi.nlm.nih.gov/24256730/; Abstract and Extended Data Figure 2 caption | supports | Ostrem et al. 2013 abstract reports irreversible, mutant-cysteine-dependent inhibition, altered switches, GDP preference and impaired Raf interaction for tested KRAS(G12C) compounds. Extended Data Figure 2 caption identifies attachment at Cys12. |
+| primary-kcsa | https://pubmed.ncbi.nlm.nih.gov/9525859/; Abstract | supports | Doyle et al. 1998 abstract describes the S. lividans KcsA carbonyl-lined filter, K/Na discrimination, and an ion-repulsion interpretation contributing to selective conduction. |
+| go-small | https://amigo.geneontology.org/amigo/term/GO:0036094; Definition and parent table | supports | GO:0036094 is small molecule binding and is_a GO:0005488. It cannot describe covalent adduct formation. |
+| go-binding | https://amigo.geneontology.org/amigo/term/GO:0005488; Definition | supports | GO binding explicitly requires a noncovalent interaction; replacing its descendant with a scoped local covalent-capture process is appropriate. |
+| chebi-effector | https://www.ebi.ac.uk/chebi/CHEBI:35224; Outgoing relations; definition | supports | CHEBI:35224 is an effector biochemical role. Its removal as the material inhibitor identity corrects the mismatch; the current local node names the studied molecule set without inventing exact shared chemical identity. |
+| chebi-cysteine | https://www.ebi.ac.uk/chebi/CHEBI:29950; Name and outgoing relations | supports | CHEBI:29950 is L-cysteine residue, with proteinogenic amino-acid residue and cysteine residue parents; suitable chemical class grounding for the described mutant Cys12 residue. |
+| go-metal | https://amigo.geneontology.org/amigo/term/GO:0046872; Name, definition, parent table | supports | GO:0046872 is metal ion binding. K+ coordination is an appropriately scoped instance of this broad activity. |
+| go-channel | https://amigo.geneontology.org/amigo/term/GO:0005216; Definition | supports | GO:0005216 is monoatomic ion channel activity; its definition permits selective or nonselective facilitated ion passage through a transmembrane aqueous pore. KcsA description supplies the potassium-specific context. |
+| ro-process | https://oborel.github.io/obo-relations/process-relations/; Process classes and participation/input-output-agent sections | supports | Official RO process guide identifies participates in, has input, enabled by and their directions. It treats GO molecular functions as molecular activities. |
+| ro-causal | https://oborel.github.io/obo-relations/causal-relations/; Causal algebra | context_only | RO causal guide defines an algebra over occurrents and discusses causal influence. Native PTM guidance permits described biochemical STATE nodes in molecular causal stories; this review does not certify an OWL interpretation. |
+| native-rubric | .claude/skills/molecular-causal-graphs/SKILL.md; Choose node types; Choose predicates; Modeling patterns | supports | Native node/predicate tables allow scoped local states, residue participation, motif-enables-activity, material input, and causally upstream connections. Chemical grounding must name the participant rather than a mismatched concept. |
+| target-graphs | data/curation/structural_trait_curations.yaml; Exact target paths and SHA-256 hashes in source.inputs | supports | Both current target YAMLs were reread. They retain 7 nodes and 5 cited edges, with 3 grounded nodes and explicitly scoped local nodes. No canonical examples or released protein-coordinate assertions occur. |
+| prior-independent-review | reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml; GSCI-001; proteintraitsmech-kras-effector-role-grounding | context_only | Prior independent graph observation records the exact pre-correction KRAS bytes and the sole role/material grounding finding. It does not supply independent evidence for the scientific claims. |
+| correction-delta | research/structural-traits-20261028/grounding/independent-graph-resolution-delta.json; Exact saved-preimage comparison and edge/node invariants | supports | Saved preimage matches the prior native review and current input pins. Current output matches the guarded transform/output pin; the only graph change is replacement of the role-grounded participant and its edge endpoint. Other nodes, three edges, scope text, history prefix and absence of examples are preserved; one history event appended. |
+
+## Limits And Additional Notes
+
+- Primary abstract and KRAS Extended Data Figure 2 caption were inspected; no comprehensive full-text reanalysis, raw structural calculation, PDB residue extraction or new provider acquisition was performed.
+- Official ChEBI and GO pages resolved; direct OLS property endpoints failed, so predicates were checked against official RO guidance and the native molecular-graph rubric.
+- RO causal algebra is described over occurrents. PTM permits described biochemical STATE nodes in its narrative graph convention; this report does not assert full OWL/RO-BFO logical consistency.
+- The separate history-directory validator concerns other files; embedded target history was checked by the target schema. Full-corpus history and term inventories are outside this two-graph scope.
+- This is a new graph-scoped observation. No earlier unrelated finding is closed by an empty finding list for KcsA or by positive assessments.
+- No human REVIEWED status, canonical example, exact chemical identity for every tested compound, or released protein-coordinate mapping is conferred.
+- The first review remains immutable. Authority and primary-source access timestamps retained from this same review session; changed target bytes and the new ligand identity were independently reinspected.
+- The native local-state/predicate abstraction limit is retained explicitly; this is scientific support for the described mechanism, not formal ontology satisfiability.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261028T190720Z-independent-kras-kcsa-graphs-followup
+kind: batch
+repository: CultureBotAI/proteintraitsmech
+title: Independent scientific follow-up of KRAS inhibitor identity and retained KcsA
+  graph
+started_at: '2026-10-28T19:05:47.036284Z'
+finished_at: '2026-10-28T19:07:20Z'
+reviewer:
+  identity: Codex grounding_route_audit
+  kind: agent
+  model: gpt-6-astra
+  independence: independent
+  independence_basis: This agent identified GSCI-001 in the first independent source
+    review but did not author graph proposals or apply the correction. It reread both
+    current target files, compared the saved preimage, and checked current graph claims
+    against the already inspected primary literature and ontology authorities.
+skill: review-yaml-record (explicit two-target graph-scoped batch requested)
+completion: completed
+verdict: pass_with_limitations
+scientific_review: true
+summary: The KRAS inhibitor participant is now an explicitly local material LIGAND
+  set, resolving the ChEBI role-as-molecule mismatch. The three supported KRAS edges
+  and two KcsA edges retain their study scope. No new graph findings remain in this
+  two-target review; unrelated record findings are not closed.
+source:
+  git_revision: c4147394c698324ae537c0c63c2c9f6647c4f4fc
+  state: working_tree
+  inputs:
+  - path: .claude/skills/molecular-causal-graphs/SKILL.md
+    sha256: de35c69487283d2b28cae6048cf2c02953012aba41e897680999c4e3bde3dbc1
+    role: context
+  - path: data/curation/structural_trait_curations.yaml
+    sha256: 80aa87bfdf6978ac38da2e760372cbb52b35129254cb99957220371f4302fd93
+    role: context
+  - path: data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    sha256: 3cd8cf5a7d2f1740f94006e56bec4e7b08c7ee09819c36f9a42642d398402101
+    role: target
+  - path: data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    sha256: 78e9ce0c692963e102ce10b012e0cdd520a8deb7dded4fe67ba0d48b34930fba
+    role: target
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: research/structural-traits-20261028/followup-preimages/covalent-second-pass.yaml
+    sha256: c936a6c4d3a4df00ba7048e797e74a786ef97ada9e737467534d87360a8e9008
+    role: context
+  - path: research/structural-traits-20261028/grounding/independent-graph-resolution-delta.json
+    sha256: 257a5e6b3e85b408e1264af2dfea26b8950ce72b163f23f7a3a0b8b8130350f7
+    role: context
+  - path: reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml
+    sha256: d4ccfef880e1289dcda77bdbe47244f3bb3b2511fbcd3880a34836c614a1feeb
+    role: context
+  - path: scripts/curate_structural_traits.py
+    sha256: 60fe9bf32d9d4f3801fba1342dc3bb5aa7e0e85c05f496dac710d75524204ddc
+    role: context
+  - path: scripts/seed_foundational_traits.py
+    sha256: 8b829acf781e52e3e35e25510b024e785ff5d6ad04462b7e1e9cec3ee56f4b7f
+    role: context
+  - path: scripts/structural_trait_curations.py
+    sha256: 72226af447168758724b895c89d38d901ca7a20c4afe80229ee21b4d555989fc
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Only the two retained causal graphs, their node identities/types, directed
+    predicates, local definitions, edge evidence and qualification boundary. Whole
+    target files were read for context; unrelated fields are not certified.
+  selection: Explicit requested KRAS(G12C) and KcsA graph IDs in two named existing
+    records; no sampling.
+  coverage: full
+  population_size: 2
+  reviewed_target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  exclusions:
+  - target: All other records and fields outside selected causal_graphs
+    reason: This observation does not reassess or close unrelated definition, synonym,
+      hierarchy, method or example findings.
+  - target: Canonical protein qualification and residue-coordinate mapping
+    reason: No qualification is asserted or performed; graph numbering remains source-study
+      context.
+targets:
+- target_id: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  path: data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+  selector: causal_graphs[graph_id=covalent_allosteric_cysteine_adduct_regulation]
+  label: covalent allosteric regulatory site
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained reviewed scientific blocks and hashes
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained source emission
+- target_id: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  path: data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+  selector: causal_graphs[graph_id=CG_CAVITY_SELECTIVITY_FILTER_PORE]
+  label: transmembrane ion-channel selectivity-filter pore
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained reviewed scientific blocks and hashes
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained source emission
+checks:
+- check_id: inspect
+  name: Native exact input inspection
+  status: passed
+  required: true
+  summary: Current target/schema/ledger/owner hashes captured with prior native review
+    and exact correction preimage/delta.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  command: .venv/bin/python scripts/record_review.py inspect --targets research/structural-traits-20261028/grounding/independent-graph-science-targets.json
+    --input src/proteintraitsmech/schema/proteintraitsmech.yaml --input data/curation/structural_trait_curations.yaml
+    --input scripts/seed_foundational_traits.py --input scripts/structural_trait_curations.py
+    --input scripts/curate_structural_traits.py --input .claude/skills/molecular-causal-graphs/SKILL.md
+    --input docs/record-review-profile.md --input reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml
+    --input research/structural-traits-20261028/followup-preimages/covalent-second-pass.yaml
+    --input research/structural-traits-20261028/grounding/independent-graph-resolution-delta.json
+  exit_code: 0
+- check_id: strict
+  name: Closed-schema target validation
+  status: passed
+  required: true
+  summary: 2 files; 0 error rows. Embedded curation history is schema checked.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  command: .venv/bin/python scripts/validate_strict.py --workers 1 --out research/structural-traits-20261028/grounding/independent-graph-resolution-strict.tsv
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+  exit_code: 0
+- check_id: graphs
+  name: Native causal graph structure audit
+  status: passed
+  required: true
+  summary: 2 graphs, 7 nodes, 5 edges; 3 grounded nodes; 5/5 snippet-cited edges;
+    0 errors, 0 warnings. Local inhibitor-set typing is explicit.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+  exit_code: 0
+- check_id: uniprot
+  name: Native qualification semantic validator
+  status: passed
+  required: true
+  summary: 2 files; 0 semantic findings. This migration-safe pass does not mean an
+    example exists or is qualified.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    --out research/structural-traits-20261028/grounding/independent-graph-resolution-uniprot.tsv
+  exit_code: 0
+- check_id: source-review
+  name: Primary literature and authority inspection
+  status: passed
+  required: true
+  summary: Source-scoped mechanism claims and chemical/GO node meanings support the
+    retained graphs. The local inhibitor-set identity removes GSCI-001; no source-qualified
+    coordinates are inferred.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - primary-kras
+  - primary-kcsa
+  - chebi-effector
+  - chebi-cysteine
+  - go-small
+  - go-binding
+  - go-metal
+  - go-channel
+  - correction-delta
+- check_id: imodulon
+  name: Structured transcriptomic adapter applicability
+  status: not_applicable
+  required: false
+  summary: The selected claims concern biochemical/structural mechanisms; expression-module
+    membership cannot establish covalent capture or ion coordination.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+evidence:
+- evidence_id: primary-kras
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/24256730/
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: Ostrem et al. 2013 abstract reports irreversible, mutant-cysteine-dependent
+    inhibition, altered switches, GDP preference and impaired Raf interaction for
+    tested KRAS(G12C) compounds. Extended Data Figure 2 caption identifies attachment
+    at Cys12.
+  locator: Abstract and Extended Data Figure 2 caption
+- evidence_id: primary-kcsa
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/9525859/
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: Doyle et al. 1998 abstract describes the S. lividans KcsA carbonyl-lined
+    filter, K/Na discrimination, and an ion-repulsion interpretation contributing
+    to selective conduction.
+  locator: Abstract
+- evidence_id: go-small
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0036094
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: GO:0036094 is small molecule binding and is_a GO:0005488. It cannot describe
+    covalent adduct formation.
+  locator: Definition and parent table
+- evidence_id: go-binding
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0005488
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: GO binding explicitly requires a noncovalent interaction; replacing its
+    descendant with a scoped local covalent-capture process is appropriate.
+  locator: Definition
+- evidence_id: chebi-effector
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/CHEBI:35224
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: CHEBI:35224 is an effector biochemical role. Its removal as the material
+    inhibitor identity corrects the mismatch; the current local node names the studied
+    molecule set without inventing exact shared chemical identity.
+  locator: Outgoing relations; definition
+- evidence_id: chebi-cysteine
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/CHEBI:29950
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: CHEBI:29950 is L-cysteine residue, with proteinogenic amino-acid residue
+    and cysteine residue parents; suitable chemical class grounding for the described
+    mutant Cys12 residue.
+  locator: Name and outgoing relations
+- evidence_id: go-metal
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0046872
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: GO:0046872 is metal ion binding. K+ coordination is an appropriately scoped
+    instance of this broad activity.
+  locator: Name, definition, parent table
+- evidence_id: go-channel
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0005216
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: GO:0005216 is monoatomic ion channel activity; its definition permits selective
+    or nonselective facilitated ion passage through a transmembrane aqueous pore.
+    KcsA description supplies the potassium-specific context.
+  locator: Definition
+- evidence_id: ro-process
+  kind: authority
+  reference: https://oborel.github.io/obo-relations/process-relations/
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: Official RO process guide identifies participates in, has input, enabled
+    by and their directions. It treats GO molecular functions as molecular activities.
+  locator: Process classes and participation/input-output-agent sections
+- evidence_id: ro-causal
+  kind: authority
+  reference: https://oborel.github.io/obo-relations/causal-relations/
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: context_only
+  summary: RO causal guide defines an algebra over occurrents and discusses causal
+    influence. Native PTM guidance permits described biochemical STATE nodes in molecular
+    causal stories; this review does not certify an OWL interpretation.
+  locator: Causal algebra
+- evidence_id: native-rubric
+  kind: record_content
+  reference: .claude/skills/molecular-causal-graphs/SKILL.md
+  accessed_at: '2026-10-28T19:03:19Z'
+  support: supports
+  summary: Native node/predicate tables allow scoped local states, residue participation,
+    motif-enables-activity, material input, and causally upstream connections. Chemical
+    grounding must name the participant rather than a mismatched concept.
+  locator: Choose node types; Choose predicates; Modeling patterns
+- evidence_id: target-graphs
+  kind: record_content
+  reference: data/curation/structural_trait_curations.yaml
+  accessed_at: '2026-10-28T19:06:54Z'
+  support: supports
+  summary: Both current target YAMLs were reread. They retain 7 nodes and 5 cited
+    edges, with 3 grounded nodes and explicitly scoped local nodes. No canonical examples
+    or released protein-coordinate assertions occur.
+  locator: Exact target paths and SHA-256 hashes in source.inputs
+- evidence_id: prior-independent-review
+  kind: prior_review
+  reference: reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml
+  locator: GSCI-001; proteintraitsmech-kras-effector-role-grounding
+  accessed_at: '2026-10-28T19:06:54Z'
+  support: context_only
+  summary: Prior independent graph observation records the exact pre-correction KRAS
+    bytes and the sole role/material grounding finding. It does not supply independent
+    evidence for the scientific claims.
+- evidence_id: correction-delta
+  kind: record_content
+  reference: research/structural-traits-20261028/grounding/independent-graph-resolution-delta.json
+  locator: Exact saved-preimage comparison and edge/node invariants
+  accessed_at: '2026-10-28T19:06:54Z'
+  support: supports
+  summary: Saved preimage matches the prior native review and current input pins.
+    Current output matches the guarded transform/output pin; the only graph change
+    is replacement of the role-grounded participant and its edge endpoint. Other nodes,
+    three edges, scope text, history prefix and absence of examples are preserved;
+    one history event appended.
+assessments:
+- assessment_id: kras-mechanism
+  area: graph
+  topic: KRAS study-specific mechanism and evidence scope
+  outcome: supported
+  summary: Three retained edges reflect reported irreversible inhibitor capture, cysteine
+    participation and changed nucleotide/Raf behavior. Descriptions limit them to
+    tested KRAS(G12C) compounds; Cys12 is paper numbering, not a released UniProt
+    occurrence.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  evidence_ids:
+  - primary-kras
+  - chebi-cysteine
+  - target-graphs
+- assessment_id: kras-covalent-process
+  area: grounding
+  topic: Covalent capture versus GO binding
+  outcome: supported
+  summary: The explicit local capture process correctly avoids assigning covalent
+    attachment to GO:0036094. Its scope and local status are stated.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  evidence_ids:
+  - primary-kras
+  - go-small
+  - go-binding
+  - target-graphs
+- assessment_id: kras-ligand-identity
+  area: grounding
+  topic: Inhibitor molecule versus biochemical role
+  outcome: supported
+  summary: The explicitly local kras_g12c_inhibitors LIGAND names the tested inhibitor
+    molecules and states that the set has no single asserted chemical identity. CHEBI:35224
+    no longer grounds that participant; GSCI-001 is resolved.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  evidence_ids:
+  - chebi-effector
+  - primary-kras
+  - target-graphs
+  - correction-delta
+- assessment_id: kcsa-mechanism
+  area: graph
+  topic: KcsA filter coordination and conduction interpretation
+  outcome: supported
+  summary: The local KcsA filter enables metal-ion binding; its coordination contributes
+    to selective channel function. The second edge is explicitly a structural mechanistic
+    interpretation (ECO:0000305), not an experimentally proved universal channel law.
+  target_ids:
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - primary-kcsa
+  - go-metal
+  - go-channel
+  - target-graphs
+- assessment_id: graph-predicates
+  area: representation
+  topic: Native directionality and scoped local definitions
+  outcome: supported
+  summary: Participation runs from cysteine to capture, input from capture to inhibitor
+    participant, and enabling from filter to activity. Local nodes have explicit descriptions.
+    Causal STATE use follows the native molecular-graph convention; no formal RO/BFO
+    entailment claim is made.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - native-rubric
+  - ro-process
+  - ro-causal
+  - target-graphs
+- assessment_id: qualification-boundary
+  area: scope
+  topic: Mechanism examples versus qualified protein occurrences
+  outcome: supported
+  summary: Graphs are study-scoped illustrations associated with trait classes. They
+    assert neither canonical examples nor source-qualified UniProt/PDB coordinate
+    mappings.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - target-graphs
+  - primary-kras
+  - primary-kcsa
+- assessment_id: bounded-correction
+  area: provenance
+  topic: Correction preservation and review lineage
+  outcome: supported
+  summary: The KRAS correction preserves all supported edges and their evidence while
+    changing the inhibitor endpoint. KcsA bytes are unchanged from the first review.
+    Both graphs remain PROPOSED study-scoped examples without canonical qualification.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - prior-independent-review
+  - correction-delta
+  - target-graphs
+findings:
+- finding_id: GSCI-001
+  issue_key: proteintraitsmech-kras-effector-role-grounding
+  category: grounding
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: KRAS inhibitor participant now uses a scoped local material identity
+  description: The former CHEBI:35224 role-grounded LIGAND has been replaced by kras_g12c_inhibitors,
+    a described local LIGAND set of the tested Ostrem et al. molecules. The has-input
+    endpoint now references that node. The material/role conflation is absent in the
+    inspected current graph.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  field_paths:
+  - causal_graphs[graph_id=covalent_allosteric_cysteine_adduct_regulation].nodes[node_id=kras_g12c_inhibitors]
+  - causal_graphs[graph_id=covalent_allosteric_cysteine_adduct_regulation].edges[0].object
+  evidence_ids:
+  - chebi-effector
+  - primary-kras
+  - target-graphs
+  - correction-delta
+  rule_id: review-yaml-record:near-miss-not-match; molecular-causal-graphs:choose-node-types
+  native_severity: major
+  normalization_reason: Wrong ontology grounding for a mechanistic participant is
+    major under the native review rubric; record identity and cited experimental effect
+    remain sound.
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained reviewed scientific blocks and hashes
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained source emission
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T190328Z-independent-kras-kcsa-graphs
+    finding_id: GSCI-001
+  disposition_reason: Direct current-record inspection confirms the requested identity
+    correction. Primary mechanism support and preserved graph/history invariants were
+    reassessed, and current native checks passed. This resolution affects only GSCI-001.
+actions: []
+limitations:
+- Primary abstract and KRAS Extended Data Figure 2 caption were inspected; no comprehensive
+  full-text reanalysis, raw structural calculation, PDB residue extraction or new
+  provider acquisition was performed.
+- Official ChEBI and GO pages resolved; direct OLS property endpoints failed, so predicates
+  were checked against official RO guidance and the native molecular-graph rubric.
+- RO causal algebra is described over occurrents. PTM permits described biochemical
+  STATE nodes in its narrative graph convention; this report does not assert full
+  OWL/RO-BFO logical consistency.
+- The separate history-directory validator concerns other files; embedded target history
+  was checked by the target schema. Full-corpus history and term inventories are outside
+  this two-graph scope.
+- This is a new graph-scoped observation. No earlier unrelated finding is closed by
+  an empty finding list for KcsA or by positive assessments.
+- No human REVIEWED status, canonical example, exact chemical identity for every tested
+  compound, or released protein-coordinate mapping is conferred.
+links:
+- research/structural-traits-20261028/motifs/graph-review.json
+tags:
+- structural-traits
+- independent-science
+- causal-graphs
+- kras
+- kcsa
+related_reviews:
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T190328Z-independent-kras-kcsa-graphs
+  relationship: Scientific follow-up resolving only GSCI-001 while retaining the same
+    two graph targets; unrelated findings are unaffected.
+notes:
+- The first review remains immutable. Authority and primary-source access timestamps
+  retained from this same review session; changed target bytes and the new ligand
+  identity were independently reinspected.
+- The native local-state/predicate abstraction limit is retained explicitly; this
+  is scientific support for the described mechanism, not formal ontology satisfiability.
+```

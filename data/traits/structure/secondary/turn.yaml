@@ -1,22 +1,50 @@
 identifier: proteintraitsmech:TURN
 label: turn
 definition: >-
-  Hydrogen-bonded turn (DSSP T); reverses chain direction over a few residues.
-definition_source: DSSP (Kabsch & Sander 1983; mkdssp)
+  A backbone region assigned the hydrogen-bonded turn state T by the DSSP secondary-structure
+  algorithm.
+definition_source: PMID:6667333
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
 - proteintraitsmech:SECONDARY_STRUCTURE_ELEMENT
 secondary_structure_representations:
-- method: curated
+- method: DSSP state definition
   state_alphabet: DSSP_8
-  topology_string: T
-  evidence_source: research/cross-source-comparison-review-1.md
+  ss_string: T
+  evidence_source: PMID:6667333
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): T.
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: A backbone region assigned the hydrogen-bonded turn state T by the DSSP secondary-structure
+    algorithm.
+  source: PMID:6667333
+  method: GENERATED
+detection_methods:
+- name: DSSP coordinate-based assignment of the T turn state
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://github.com/PDB-REDO/dssp
+  reference: PMID:6667333
+  recipe: mkdssp --output-format=dssp {input.pdb} {output.dssp}
+  edam_operation: EDAM:operation_0319
+  evidence_code: ECO:0007669
+evidence:
+- reference: PMID:6667333
+  notes: DSSP assigns T as a hydrogen-bonded turn state. The assignment is not an exhaustive classifier
+    of geometrically defined beta turns.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis, annotations and topology notation are CC-BY-4.0 under LICENSE/
+    LICENSE-DATA; this is not a license for the cited articles or tools. No article prose, figures,
+    matrices or software are redistributed. Source-specific terms and inspected sections are retained
+    in the evidence dossier.
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, xrefs, mapping_status, definitions, secondary_structure_representations,
+    detection_methods, evidence, license using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

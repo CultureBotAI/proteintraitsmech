@@ -1,89 +1,64 @@
 identifier: proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
 label: "allosteric regulatory site"
 definition: >-
-  A topographically distinct ligand- or effector-binding pocket, physically separate from the orthosteric active or substrate-binding site, whose occupancy shifts the conformational ensemble or dynamic coupling of the protein to modulate functional activity.
-definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+  A protein site distinct from an orthosteric functional site, whose engagement by an effector
+  changes activity or affinity at that other site through coupling within the protein or protein
+  complex.
+definition_source: PMID:31665428
 trait_axis: STRUCTURE
 trait_category: STRUCT_ALLOSTERIC_SITE
 term_kind: CLASS
-mapping_status: SEEDED
-parent_traits:
-  - proteintraitsmech:POCKET
+mapping_status: PROPOSED
 synonyms:
-  - synonym_text: "allosteric site"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "allosteric effector pocket"
-    synonym_type: EXACT_SYNONYM
+- synonym_text: allosteric site
+  synonym_type: EXACT_SYNONYM
+- synonym_text: allosteric effector pocket
+  synonym_type: NARROW_SYNONYM
 detection_methods:
-  - name: "Fpocket / AlloSitePro allosteric & cryptic pocket geometry predictor"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_2575
-    tool: "biotools:fpocket"
-    evidence_code: ECO:0007669
-    reference: PMID:26950260
-    recipe: "fpocket -f {input} -d && mv {input}_out {output}"
-causal_graphs:
-  - graph_id: allosteric_effector_ensemble_regulation
-    title: "Allosteric effector pocket occupancy shifts conformational ensemble to regulate orthosteric activity"
-    description: "An allosteric effector ligand (CHEBI:35224) binds at a topographically distinct small molecule binding pocket (GO:0036094), shifting the conformational ensemble to enable enzyme regulator activity (GO:0030234) that modulates orthosteric catalytic activity (GO:0003824)."
-    nodes:
-      - node_id: "CHEBI:35224"
-        label: effector
-        node_type: LIGAND
-        grounding: "CHEBI:35224"
-        description: "Allosteric modulator or physiological effector binding outside the active site."
-      - node_id: "GO:0036094"
-        label: "small molecule binding"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0036094"
-        description: "Non-orthosteric effector binding at the allosteric regulatory cavity."
-      - node_id: "GO:0030234"
-        label: "enzyme regulator activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0030234"
-        description: "Allosteric conformational coupling across the protein scaffold."
-      - node_id: "GO:0003824"
-        label: "catalytic activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0003824"
-        description: "Orthosteric enzyme catalytic activity modulated at a distance."
-    edges:
-      - subject: "GO:0036094"
-        predicate: "has input"
-        predicate_id: RO:0002233
-        object: "CHEBI:35224"
-        description: "Small molecule binding at the topographically distinct regulatory pocket engages the allosteric effector."
-        evidence:
-          - reference: PMID:31665428
-            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
-            notes: "Allosteric site ligand binding definition (PMID:31665428). (ECO:0000305)"
-      - subject: "GO:0036094"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "GO:0030234"
-        description: "Ligand occupancy at the allosteric pocket propagates a conformational signal across the protein."
-        evidence:
-          - reference: PMID:31707700
-            snippet: "An allosteric mechanism refers to the biological regulation process wherein macromolecules propagate the effect of ligand binding at one site to a spatially distant orthosteric locus, thus affecting activity."
-            notes: "Propagation of ligand binding to distant orthosteric site (PMID:31707700). (ECO:0000305)"
-      - subject: "GO:0030234"
-        predicate: regulates
-        predicate_id: RO:0002211
-        object: "GO:0003824"
-        description: "Allosteric conformational coupling regulates orthosteric catalytic activity."
-        evidence:
-          - reference: PMID:31665428
-            snippet: "Allosteric regulation is one of the most direct and efficient ways to fine-tune protein function; it is induced by the binding of a ligand at an allosteric site that is topographically distinct from an orthosteric site."
-            notes: "Orthosteric activity regulation via allosteric site (PMID:31665428). (ECO:0000305)"
+- name: fpocket candidate surface-pocket detection (allosteric function requires independent evidence)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:fpocket
+  reference: PMID:19486540
+  recipe: fpocket -f {input}
+  edam_operation: EDAM:operation_2575
+  evidence_code: ECO:0007669
+
 evidence:
-  - reference: PMID:31665428
-    notes: "AlloDriver and ASD characterize allosteric regulation induced by ligand binding at a site topographically distinct from an orthosteric site."
-  - reference: PMID:31707700
-    notes: "Allosteric mechanisms propagate the effect of ligand binding at one site to a spatially distant orthosteric locus, affecting activity."
+- reference: PMID:31665428
+  notes: AlloDriver and ASD characterize allosteric regulation induced by ligand binding at a site topographically
+    distinct from an orthosteric site.
+- reference: PMID:31707700
+  notes: Allosteric mechanisms propagate the effect of ligand binding at one site to a spatially distant
+    orthosteric locus, affecting activity.
+- reference: PMID:19486540
+  notes: Candidate pocket geometry is computational evidence; allosteric coupling requires independent
+    support.
+- reference: PMID:31665428
+  notes: The ASD resource provides context for modulation at a site distinct from the orthosteric site;
+    it does not impose one conformational or kinetic model.
 curation_history:
-  - timestamp: '2026-10-21T03:30:00Z'
-    curator: claude
-    action: EDIT
-    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
-    llm_assisted: true
+- timestamp: '2026-10-21T03:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits
+    hierarchy.
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated detection_methods, definition, parent_traits, synonyms, definition_source, evidence,
+    discussions, causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_ALLOSTERIC_REGULATORY_SITE_DETECTION
+  prompt: fpocket screens concavities; establish effector binding and a coupled functional change separately.
+    Sites need not form a pocket or follow a rigid conformational transition.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
 license: CC-BY-4.0

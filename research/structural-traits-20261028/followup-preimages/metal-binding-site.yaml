@@ -1,0 +1,62 @@
+identifier: proteintraitsmech:METAL_BINDING_SITE
+label: metal binding site
+definition: >-
+  A local three-dimensional arrangement of protein donor atoms, together with any associated
+  nonprotein ligands, that coordinates one or more metal ions in a protein structure.
+definition_source: PMID:23155064
+trait_axis: STRUCTURE
+trait_category: STRUCT_METAL_SITE
+term_kind: CLASS
+mapping_status: PROPOSED
+evidence:
+- reference: PMID:23155064
+  notes: Andreini et al. (2013) characterize metal-binding Minimal Functional Sites (MFSs) in MetalPDB
+    and their structural and catalytic roles in metalloproteins.
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Source enum member retained as provenance, not an equivalent identifier.
+- reference: https://metalpdb.cerm.unifi.it/
+  notes: MetalPDB organizes structural metal-site information; structural occurrence alone does not
+    identify physiological metal usage or catalytic function.
+- reference: PMID:1433293
+  notes: The carbonic-anhydrase-II study describes the zinc environment in PDB 2CBA. It supports a metal-site
+    representative, not a universal link from metal binding to folding or catalysis.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_METAL_BINDING_SITE (CHEBI:83228
+    -> GO:0046872 -> GO:0031647 + GO:0003824) grounded in PMID:23155064 (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, definition, detection_methods, definition_source, evidence, discussions, structural_geometry_representations,
+    causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+detection_methods:
+- name: MetalPDB structural metal-site inspection (observed coordination, not function assignment)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://metalpdb.cerm.unifi.it/
+  reference: PMID:23155064
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0000305
+discussions:
+- discussion_id: STRUCTURE_20261028_METAL_BINDING_SITE_DETECTION
+  prompt: Verify metal identity, occupancy, donor atoms, geometry and experimental context. A modeled
+    metal or plausible coordination site does not establish physiological binding, folding effects or
+    catalysis; distinguish the coordinating shell from larger comparison templates. No validated executable
+    metal-site detector was established here.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+structural_geometry_representations:
+- structure_ref: PDB:2CBA
+  structure_source: PDB, entry version 1.5
+  evidence_source: PMID:1433293; https://www.rcsb.org/structure/2CBA; inspected 2026-10-28. Human carbonic
+    anhydrase II chain A, X-ray structure. Representative containing the source-described zinc site;
+    exact donor-atom selection unspecified. No qualified UniProt occurrence asserted.

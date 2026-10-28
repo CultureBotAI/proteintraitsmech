@@ -47,6 +47,81 @@ STAGE1_UNCHANGED_IDS = {
     "proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
 }
 
+# Explicit dispositions from the independent structural graph audit. Optional
+# graphs are removed when source summaries do not establish the asserted chain.
+CURATED_NO_GRAPH_IDS = {
+    "proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE",
+    "proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE",
+    "proteintraitsmech:ALLOSTERIC_REGULATORY_SITE",
+    "proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET",
+    "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE",
+    "proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL",
+    "proteintraitsmech:PROTEIN_BINDING_SITE",
+    "proteintraitsmech:CATALYTIC_RESIDUE",
+    "proteintraitsmech:METAL_BINDING_SITE",
+}
+SCOPED_GRAPH_REFERENCES = {
+    "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE": "PMID:24256730",
+    "proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE": "PMID:9525859",
+}
+CURATED_GRAPH_IDS = CURATED_NO_GRAPH_IDS | SCOPED_GRAPH_REFERENCES.keys()
+
+
+def assert_structural_curation(data):
+    assert data.get("mapping_status") == "PROPOSED"
+    history = data.get("curation_history") or []
+    assert history
+    assert history[-1].get("curator") == "codex-gpt-6-astra"
+    assert any(event.get("action") == "structural_trait_evidence_curation_20261028"
+               for event in history)
+    assert history[-1].get("action") and history[-1].get("changes")
+    assert history[-1].get("llm_assisted") is True
+
+
+def assert_scoped_graph(data):
+    """Retained mechanisms concern the cited experiment, not the whole class."""
+    graphs = data.get("causal_graphs") or []
+    assert len(graphs) == 1
+    graph = graphs[0]
+    ref = SCOPED_GRAPH_REFERENCES[data["identifier"]]
+    assert all(
+        {ev["reference"] for ev in edge["evidence"]} == {ref}
+        for edge in graph["edges"]
+    )
+    nodes = {node["node_id"]: node for node in graph["nodes"]}
+    edges = {(edge["subject"], edge["predicate_id"], edge["object"])
+             for edge in graph["edges"]}
+    if data["identifier"] == "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE":
+        assert "KRAS(G12C)" in graph["description"]
+        state = nodes["kras_g12c_altered_binding_state"]
+        assert state["node_type"] == "STATE" and state["local"] is True
+        assert not state.get("grounding")
+        capture = nodes["kras_g12c_covalent_capture"]
+        assert capture["node_type"] == "BIOLOGICAL_PROCESS" and capture["local"] is True
+        assert not capture.get("grounding")
+        inhibitors = nodes["kras_g12c_inhibitors"]
+        assert inhibitors["node_type"] == "LIGAND" and inhibitors["local"] is True
+        assert not inhibitors.get("grounding")
+        assert "CHEBI:35224" not in nodes  # Effector is a role, not the material inhibitor set.
+        assert "GO:0036094" not in nodes  # GO binding explicitly excludes covalent attachment.
+        assert "GO:0030234" not in nodes
+        assert edges == {
+            ("kras_g12c_covalent_capture", "RO:0002233", "kras_g12c_inhibitors"),
+            ("CHEBI:29950", "RO:0000056", "kras_g12c_covalent_capture"),
+            ("kras_g12c_covalent_capture", "RO:0002411", "kras_g12c_altered_binding_state"),
+        }
+    else:
+        assert "KcsA" in graph["description"]
+        motif = nodes["kcsa_selectivity_filter"]
+        assert motif["node_type"] == "MOTIF" and motif["local"] is True
+        assert not motif.get("grounding")
+        assert "SO:0000417" not in nodes
+        assert "GO:0034220" not in nodes
+        assert edges == {
+            ("kcsa_selectivity_filter", "RO:0002327", "GO:0046872"),
+            ("GO:0046872", "RO:0002411", "GO:0005216"),
+        }
+
 
 def test_foundational_trait_records_exist_and_validate():
     """Every record defined in seed_foundational_traits must exist on disk and pass strict validation."""
@@ -128,7 +203,7 @@ def test_previously_empty_class_categories_are_populated():
 
 
 def test_foundational_trait_causal_graphs_audit_and_score():
-    """All 57 mechanism-bearing foundational traits carry audited causal_graphs with 0 errors/warnings."""
+    """Audit retained graphs and explicit removals in the historical 57-trait cohort."""
     valid_types = acg.node_type_enum()
     assert valid_types
     mech_specs = [
@@ -148,17 +223,27 @@ def test_foundational_trait_causal_graphs_audit_and_score():
     for spec in mech_specs:
         path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
-        assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
-        assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
-        history = data.get("curation_history") or []
-        if spec.identifier in STAGE1_UNCHANGED_IDS:
-            assert not history, f"{spec.identifier} unchanged since Stage 1 seeding must not carry no-op EDIT history"
+        curated = spec.identifier in CURATED_GRAPH_IDS
+        if curated:
+            assert_structural_curation(data)
         else:
-            assert history, f"{spec.identifier} missing curation_history"
-            assert history[-1].get("curator") == "claude"
-            assert history[-1].get("action") == "EDIT"
-            assert history[-1].get("llm_assisted") is True
-        if spec.identifier not in ROUND_124_EDITED_IDS:
+            assert data.get("mapping_status") == "SEEDED", f"{spec.identifier} must preserve native SEEDED status"
+        if spec.identifier in CURATED_NO_GRAPH_IDS:
+            assert not data.get("causal_graphs"), f"{spec.identifier} must not regenerate unsupported graphs"
+        elif spec.identifier in SCOPED_GRAPH_REFERENCES:
+            assert_scoped_graph(data)
+        else:
+            assert data.get("causal_graphs"), f"{spec.identifier} missing causal_graphs"
+        history = data.get("curation_history") or []
+        if not curated:
+            if spec.identifier in STAGE1_UNCHANGED_IDS:
+                assert not history, f"{spec.identifier} unchanged since Stage 1 seeding must not carry no-op EDIT history"
+            else:
+                assert history, f"{spec.identifier} missing curation_history"
+                assert history[-1].get("curator") == "claude"
+                assert history[-1].get("action") == "EDIT"
+                assert history[-1].get("llm_assisted") is True
+        if not curated and spec.identifier not in ROUND_124_EDITED_IDS:
             cg = data["causal_graphs"][0]
             assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
             assert len(cg.get("edges") or []) == 3, f"{spec.identifier} expected 3 edges"
@@ -168,20 +253,34 @@ def test_foundational_trait_causal_graphs_audit_and_score():
         acg.audit_record(data, str(path.relative_to(ROOT)), valid_types, errors, warns, stats)
         assert not errors, f"causal_graphs errors in {spec.identifier}: {errors}"
         assert not warns, f"causal_graphs warnings in {spec.identifier}: {warns}"
-        scored = scg.score_path(path)
-        expected_score = 100 - scg.SEEDED_REVIEW_PENALTY
-        assert scored.score == expected_score, (
-            f"{spec.identifier} expected score {expected_score}, got {scored.score} ({scored.reasons})"
-        )
-        assert scored.structural_errors == 0
-        assert scored.quality_warnings == 0
-        assert scored.reasons == ("mapping_status=SEEDED",)
+        if data.get("causal_graphs"):
+            scored = scg.score_path(path)
+            assert scored.structural_errors == 0
+            assert scored.quality_warnings == 0
+            if not curated:
+                expected_score = 100 - scg.SEEDED_REVIEW_PENALTY
+                assert scored.score == expected_score, (
+                    f"{spec.identifier} expected score {expected_score}, got {scored.score} ({scored.reasons})"
+                )
+                assert scored.reasons == ("mapping_status=SEEDED",)
         fresh = sft.emit_record(spec)
-        assert "curation_history:" not in fresh, f"seeder must not emit curation_history for {spec.identifier}"
+        if curated:
+            assert yaml.safe_load(fresh).get("curation_history") == history
+            assert yaml.safe_load(fresh).get("causal_graphs") == data.get("causal_graphs")
+        else:
+            assert "curation_history:" not in fresh, f"seeder must not emit curation_history for {spec.identifier}"
         existing_text = path.read_text(encoding="utf-8")
-        assert rio.merge_on_reseed(existing_text, fresh) == existing_text, (
-            f"merge_on_reseed must preserve curation_history and be idempotent on {spec.identifier}"
-        )
+        merged = rio.merge_on_reseed(existing_text, fresh)
+        if curated:
+            # The first reseed may reposition newly added blocks; it must retain
+            # every value and the exact history, then reach a stable byte form.
+            assert yaml.safe_load(merged) == data
+            assert rio.extract_block(merged, "curation_history") == rio.extract_block(existing_text, "curation_history")
+            assert rio.merge_on_reseed(merged, fresh) == merged
+        else:
+            assert merged == existing_text, (
+                f"merge_on_reseed must preserve curation_history and be idempotent on {spec.identifier}"
+            )
 
     for spec in non_mech_specs:
         path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
@@ -340,12 +439,15 @@ def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
                 assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
         cgs = data.get("causal_graphs") or []
         assert len(cgs) == 1, f"{spec.identifier} must carry a causal_graph"
+        if spec.identifier in SCOPED_GRAPH_REFERENCES:
+            assert_scoped_graph(data)
         for cg in cgs:
-            assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
             edges = cg.get("edges") or []
-            assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
-            snippets = [edge["evidence"][0]["snippet"] for edge in edges]
-            assert len(set(snippets)) == 3, f"{spec.identifier} must have 3 distinct verbatim snippets"
+            if spec.identifier not in SCOPED_GRAPH_REFERENCES:
+                assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+                assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
+                snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+                assert len(set(snippets)) == 3, f"{spec.identifier} must have 3 distinct verbatim snippets"
             for edge in edges:
                 for ev in edge.get("evidence") or []:
                     ref = ev["reference"]
@@ -354,7 +456,7 @@ def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
 
 
 def test_root_local_structural_and_peptide_class_causal_graphs():
-    """All 10 mechanism-bearing root class records in LSF and UniProt peptide seeders carry audited 4-node/3-edge causal_graphs."""
+    """Keep supported root graphs and prevent regeneration of three unsupported chains."""
     valid_types = acg.node_type_enum()
     mech_lsf_terms = {
         "CATALYTIC_RESIDUE",
@@ -385,15 +487,23 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
         assert not v_errors, f"validation errors in {path}: {v_errors}"
         data = yaml.safe_load(path.read_text(encoding="utf-8"))
         assert data["identifier"] == ident
-        assert data.get("mapping_status") == "SEEDED"
         cgs = data.get("causal_graphs") or []
-        assert len(cgs) == 1
-        assert len(cgs[0].get("nodes") or []) == 4
-        assert len(cgs[0].get("edges") or []) == 3
+        removed = ident in CURATED_NO_GRAPH_IDS
+        if removed:
+            assert_structural_curation(data)
+            assert not cgs
+            assert not yaml.safe_load(fresh_yaml).get("causal_graphs")
+            assert yaml.safe_load(fresh_yaml).get("curation_history") == data.get("curation_history")
+        else:
+            assert data.get("mapping_status") == "SEEDED"
+            assert len(cgs) == 1
+            assert len(cgs[0].get("nodes") or []) == 4
+            assert len(cgs[0].get("edges") or []) == 3
         history = data.get("curation_history") or []
         assert history, f"{ident} missing curation_history"
-        assert history[-1].get("curator") == "claude"
-        assert history[-1].get("action") == "EDIT"
+        if not removed:
+            assert history[-1].get("curator") == "claude"
+            assert history[-1].get("action") == "EDIT"
         assert history[-1].get("llm_assisted") is True
 
         errors: list[str] = []
@@ -403,19 +513,19 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
         assert not errors, f"causal_graphs errors in {ident}: {errors}"
         assert not warns, f"causal_graphs warnings in {ident}: {warns}"
 
-        scored = scg.score_path(path)
-        assert scored.score == 100 - scg.SEEDED_REVIEW_PENALTY
-        assert scored.structural_errors == 0
-        assert scored.quality_warnings == 0
-        assert scored.reasons == ("mapping_status=SEEDED",)
-
-        assert "causal_graphs:" in fresh_yaml, f"{ident} seeder must emit causal_graphs directly"
+        if not removed:
+            scored = scg.score_path(path)
+            assert scored.score == 100 - scg.SEEDED_REVIEW_PENALTY
+            assert scored.structural_errors == 0
+            assert scored.quality_warnings == 0
+            assert scored.reasons == ("mapping_status=SEEDED",)
+            assert "causal_graphs:" in fresh_yaml, f"{ident} seeder must emit causal_graphs directly"
         assert "evidence:" in fresh_yaml, f"{ident} seeder must emit evidence directly"
         for ev in data.get("evidence") or []:
             ref = ev["reference"]
             if ref.startswith("PMID:"):
                 assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {ident}"
-        for edge in cgs[0].get("edges") or []:
+        for edge in [edge for cg in cgs for edge in cg.get("edges", [])]:
             for ev in edge.get("evidence") or []:
                 ref = ev["reference"]
                 if ref.startswith("PMID:"):

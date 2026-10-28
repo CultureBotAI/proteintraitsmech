@@ -1,0 +1,59 @@
+identifier: proteintraitsmech:CATALYTIC_RESIDUE
+label: catalytic residue
+definition: >-
+  An amino acid residue that contributes directly to an enzyme reaction mechanism or provides an
+  essential indirect catalytic role, such as controlling catalytic-group reactivity,
+  stereochemistry, transition-state stabilization or a catalytic metal environment.
+definition_source: PMID:29106569
+trait_axis: STRUCTURE
+trait_category: STRUCT_ACTIVE_SITE
+term_kind: CLASS
+mapping_status: PROPOSED
+xrefs:
+- SO:0001104
+
+evidence:
+- reference: PMID:12421562
+  notes: Bartlett et al. (2002) define the criteria and functional roles of amino acid residues directly
+    involved in catalysis across 178 enzyme active sites.
+- reference: PMID:29106569
+  notes: Ribeiro et al. (2018) describe the Mechanism and Catalytic Site Atlas (M-CSA) cataloguing catalytic
+    residues and enzyme reaction mechanisms.
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Source enum member retained as provenance, not an equivalent identifier.
+- reference: https://www.ebi.ac.uk/thornton-srv/m-csa/documentation/
+  notes: Catalytic annotation includes direct and essential indirect roles; homology-based annotation
+    is kept separate from experimental mechanism evidence.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_CATALYTIC_RESIDUE (CHEBI:83228
+    -> GO:0036094 -> GO:0003824 -> GO:0008152) grounded in PMID:12421562 and PMID:29106569 (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, definition, detection_methods, definition_source, evidence, discussions, causal_graphs,
+    mapping_status using the cited sources and data/curation/structural_trait_curations.yaml. Retained
+    scoped evidence and method limits; no canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+detection_methods:
+- name: M-CSA catalytic-residue transfer with conservation and mechanism review
+  method_type: HOMOLOGY_TRANSFER
+  tool: https://www.ebi.ac.uk/thornton-srv/m-csa/
+  reference: PMID:29106569
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0000305
+discussions:
+- discussion_id: STRUCTURE_20261028_CATALYTIC_RESIDUE_DETECTION
+  prompt: Structural proximity or substrate binding alone does not establish a catalytic role. Evaluate
+    mechanistic literature and residue perturbation with folding/binding controls; transfer from characterized
+    homologs requires conserved catalytic residues and compatible mechanism. No complete local transfer
+    recipe was verified.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'

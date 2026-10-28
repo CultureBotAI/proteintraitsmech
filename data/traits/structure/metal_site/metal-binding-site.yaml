@@ -1,89 +1,31 @@
 identifier: proteintraitsmech:METAL_BINDING_SITE
 label: metal binding site
 definition: >-
-  A three-dimensional local coordination site (Minimal Functional Site) within a protein structure in which amino acid side-chain or backbone donor atoms (typically His, Cys, Asp, or Glu) coordinate one or more metal ions or polynuclear metal clusters with defined geometry to stabilize protein fold, mediate electron transfer, or catalyze enzymatic reactions.
-definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  A local three-dimensional arrangement of protein donor atoms, together with any associated
+  nonprotein ligands, that coordinates one or more metal ions in a protein structure.
+definition_source: PMID:23155064
 trait_axis: STRUCTURE
 trait_category: STRUCT_METAL_SITE
 term_kind: CLASS
-mapping_status: SEEDED
-xrefs:
-- valuesets:LocalStructuralFeature
-- GO:0046872
-causal_graphs:
-- graph_id: CG_METAL_BINDING_SITE
-  title: Minimal functional metal-binding site coordinates metal cofactors for fold stability and catalysis
-  description: First-shell coordinating amino-acid residues (CHEBI:83228) within a metal binding site
-    form a Minimal Functional Site that enables selective metal ion binding (GO:0046872), positively regulating
-    protein structural stability (GO:0031647) and enabling metalloenzyme catalytic activity (GO:0003824).
-  nodes:
-  - node_id: CHEBI:83228
-    label: amino-acid residue
-    node_type: RESIDUE
-    grounding: CHEBI:83228
-    description: First-sphere donor amino-acid residues (His, Cys, Asp, Glu, and backbone carbonyls) forming
-      the local metal coordination environment
-  - node_id: GO:0046872
-    label: metal ion binding
-    node_type: MOLECULAR_FUNCTION
-    grounding: GO:0046872
-    description: Coordination of one or more metal ions or polynuclear clusters within the Minimal Functional
-      Site
-  - node_id: GO:0031647
-    label: regulation of protein stability
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0031647
-    description: Conformational cross-linking and tertiary fold stabilization imparted by structural metal
-      coordination
-  - node_id: GO:0003824
-    label: catalytic activity
-    node_type: MOLECULAR_FUNCTION
-    grounding: GO:0003824
-    description: Lewis-acid activation, substrate polarization, or redox catalysis mediated by catalytic
-      metal centers
-  edges:
-  - subject: CHEBI:83228
-    predicate: enables
-    predicate_id: RO:0002327
-    object: GO:0046872
-    description: Donor amino-acid residues in the local 3D Minimal Functional Site coordinate metal ions
-      with defined geometry.
-    evidence:
-    - reference: PMID:23155064
-      snippet: MFSs are 3D templates that describe the local environment around the metal(s) independently
-        of the larger context of the macromolecular structure embedding the site(s), and are the central
-        objects of MetalPDB design.
-      notes: Local 3D residue environment (MFS) coordinates the metal ion(s) (PMID:23155064) (ECO:0000305)
-  - subject: GO:0046872
-    predicate: positively regulates
-    predicate_id: RO:0002213
-    object: GO:0031647
-    description: Metal coordination within equistructural Minimal Functional Sites stabilizes the local
-      and global macromolecular fold.
-    evidence:
-    - reference: PMID:23155064
-      snippet: This is achieved through the systematic and automated representation of metal-binding sites
-        in proteins and nucleic acids by way of Minimal Functional Sites (MFSs).
-      notes: Minimal Functional Sites organize structural metal coordination in proteins (PMID:23155064)
-        (ECO:0000305)
-  - subject: GO:0046872
-    predicate: enables
-    predicate_id: RO:0002327
-    object: GO:0003824
-    description: Coordinated metal centers in metalloenzyme Minimal Functional Sites directly enable catalytic
-      function.
-    evidence:
-    - reference: PMID:23155064
-      snippet: MFSs are grouped into equistructural (broadly defined as sites found in corresponding positions
-        in similar structures) and equivalent sites (equistructural sites that contain the same metals),
-        allowing users to easily analyse similarities and variations in metal-macromolecule interactions,
-        and to link them to functional information.
-      notes: Equivalent metal-binding Minimal Functional Sites link metal coordination to catalytic function
-        (PMID:23155064) (ECO:0000305)
+mapping_status: PROPOSED
 evidence:
 - reference: PMID:23155064
   notes: Andreini et al. (2013) characterize metal-binding Minimal Functional Sites (MFSs) in MetalPDB
     and their structural and catalytic roles in metalloproteins.
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Source enum member retained as provenance, not an equivalent identifier.
+- reference: https://metalpdb.cerm.unifi.it/
+  notes: MetalPDB organizes structural metal-site information; structural occurrence alone does not
+    identify physiological metal usage or catalytic function.
+- reference: PMID:1433293
+  notes: The carbonic-anhydrase-II study describes the zinc environment in PDB 2CBA. It supports a metal-site
+    representative, not a universal link from metal binding to folding or catalysis.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis and annotations are CC-BY-4.0 under LICENSE/ LICENSE-DATA.
+    Legacy valuesets provenance retains Apache-2.0 attribution. The MetalPDB article's CC-BY-NC-3.0
+    terms do not authorize redistribution of MetalPDB data here. PDB archive metadata are CC0-1.0; primary
+    structural article rights are separate. No MetalPDB tables, article prose, figures or coordinates
+    are copied.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
@@ -91,3 +33,44 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_METAL_BINDING_SITE (CHEBI:83228
     -> GO:0046872 -> GO:0031647 + GO:0003824) grounded in PMID:23155064 (Round 125).
   llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, definition, detection_methods, definition_source, evidence, discussions, structural_geometry_representations,
+    causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+- timestamp: '2026-10-28T19:04:33Z'
+  curator: codex-gpt-6-astra
+  action: EDIT
+  llm_assisted: true
+  changes: Recorded CC-BY-4.0 for project-authored factual synthesis/annotations after source-specific
+    rights review; retained upstream attributions and excluded third-party exports/software from that
+    license claim.
+detection_methods:
+- name: MetalPDB structural metal-site inspection (observed coordination, not function assignment)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://metalpdb.cerm.unifi.it/
+  reference: PMID:23155064
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0000305
+discussions:
+- discussion_id: STRUCTURE_20261028_METAL_BINDING_SITE_DETECTION
+  prompt: Verify metal identity, occupancy, donor atoms, geometry and experimental context. A modeled
+    metal or plausible coordination site does not establish physiological binding, folding effects or
+    catalysis; distinguish the coordinating shell from larger comparison templates. No validated executable
+    metal-site detector was established here.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+structural_geometry_representations:
+- structure_ref: PDB:2CBA
+  structure_source: PDB, entry version 1.5
+  evidence_source: PMID:1433293; https://www.rcsb.org/structure/2CBA; inspected 2026-10-28. Human carbonic
+    anhydrase II chain A, X-ray structure. Representative containing the source-described zinc site;
+    exact donor-atom selection unspecified. No qualified UniProt occurrence asserted.
+license: CC-BY-4.0

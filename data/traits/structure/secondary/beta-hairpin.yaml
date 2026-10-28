@@ -1,25 +1,58 @@
 identifier: proteintraitsmech:BETA_HAIRPIN
 label: beta hairpin
 definition: >-
-  Two adjacent antiparallel beta strands connected by a short loop or turn.
-definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  A structural motif formed by two sequence-adjacent beta strands that pair antiparallel and are
+  joined by a connecting loop.
+definition_source: PMID:33389765
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
-- proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF
-xrefs:
-- valuesets:LocalStructuralFeature
-- SO:0001114
+- proteintraitsmech:SUPER_SECONDARY_MOTIF
+
 secondary_structure_representations:
 - method: curated
   state_alphabet: TOPOLOGY
   topology_string: E-turn-E
-  evidence_source: research/cross-source-comparison-review-1.md
+  evidence_source: PMID:33389765
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): E-turn-E.
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: A structural motif formed by two sequence-adjacent beta strands that pair antiparallel and are
+    joined by a connecting loop.
+  source: PMID:33389765
+  method: GENERATED
+detection_methods:
+- name: PROMOTIF coordinate motif classification (licensed external prerequisite)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  reference: PMID:8745398
+  recipe: promotif {input.pdb}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+evidence:
+- reference: PMID:33389765
+  notes: The two strands are antiparallel and paired; the connecting loop need not be a four-residue
+    beta turn. The E-turn-E token uses turn to denote this connector.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis, annotations and topology notation are CC-BY-4.0 under LICENSE/
+    LICENSE-DATA; this is not a license for the cited articles or tools. No article prose, figures,
+    matrices or software are redistributed. Source-specific terms and inspected sections are retained
+    in the evidence dossier.
+- reference: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  notes: PROMOTIF v2 manual documents the recipe and class-specific output. An authorized installation
+    is required under its academic-use terms; the program was neither installed nor run in this curation.
+- reference: DOI:10.1002/pro.4936
+  notes: Section 2.1/Figure 1 distinguish paired-strand hairpins from arches. Both are called beta-beta
+    loops; bare beta-beta is therefore not installed as an exact synonym. No source prose or figures
+    reproduced.
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, parent_traits, xrefs, mapping_status, definitions,
+    secondary_structure_representations, detection_methods, evidence, license using the cited sources
+    and data/curation/structural_trait_curations.yaml. Retained scoped evidence and method limits; no
+    canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

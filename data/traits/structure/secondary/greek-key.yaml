@@ -1,22 +1,54 @@
 identifier: proteintraitsmech:GREEK_KEY
 label: Greek key motif
 definition: >-
-  Four-stranded antiparallel beta motif with a characteristic connectivity (three adjacent strands plus a fourth folded back).
-definition_source: DSSP (Kabsch & Sander 1983; mkdssp)
+  A four-strand beta-structural motif with Greek-key connectivity, conventionally described by the
+  topology +3,-1,-1.
+definition_source: PMID:8506258
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
 - proteintraitsmech:SUPER_SECONDARY_MOTIF
 secondary_structure_representations:
 - method: curated
   state_alphabet: TOPOLOGY
   topology_string: E-E-E-E(greek-key)
-  evidence_source: research/cross-source-comparison-review-1.md
+  evidence_source: PMID:8506258
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): E-E-E-E(greek-key).
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: A four-strand beta-structural motif with Greek-key connectivity, conventionally described by
+    the topology +3,-1,-1.
+  source: PMID:8506258
+  method: GENERATED
+evidence:
+- reference: PMID:8506258
+  notes: The conventional four-strand connectivity is +3,-1,-1. The primary analysis distinguishes multiple
+    hydrogen-bonding and three-dimensional arrangements within this convention.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis, annotations and topology notation are CC-BY-4.0 under LICENSE/
+    LICENSE-DATA; this is not a license for the cited articles or tools. No article prose, figures,
+    matrices or software are redistributed. Source-specific terms and inspected sections are retained
+    in the evidence dossier.
+- reference: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  notes: The command supplies sheet-topology data; a curator must inspect .sht/.str connectivity and
+    confirm the stated four-strand convention. This is not an automatic Greek-key classification result.
+    Authorized PROMOTIF installation and documented command alias/wrapper are prerequisites.
+detection_methods:
+- name: PROMOTIF sheet-topology extraction followed by reviewed Greek-key connectivity classification
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  reference: PMID:8506258
+  recipe: promotif {input.pdb}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0000305
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, xrefs, mapping_status, definitions, secondary_structure_representations,
+    evidence, license, detection_methods using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

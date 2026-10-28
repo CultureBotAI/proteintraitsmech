@@ -1,11 +1,46 @@
 identifier: proteintraitsmech:GROOVE
 label: groove
 definition: >-
-  A surface channel, e.g. a nucleic-acid-binding groove.
+  An elongated depression or channel along the surface of a protein structure.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_CAVITY
 term_kind: CLASS
-mapping_status: SEEDED
-xrefs:
-  - valuesets:LocalStructuralFeature
+mapping_status: PROPOSED
+detection_methods:
+- name: CASTp 3.0 solvent-probe topography analysis (web submission; geometry only)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: http://sts.bioe.uic.edu/castp/
+  reference: DOI:10.1093/nar/gky473
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+evidence:
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Class identity follows the named enum member; the enum identifier is source provenance, not
+    an equivalent trait.
+- reference: DOI:10.1093/nar/gky473
+  notes: CASTp supplies surface topography for further shape interpretation; it does not assign a universal
+    cleft-versus-groove class boundary.
+- reference: https://github.com/linkml/valuesets/blob/main/LICENSE
+  notes: The named LocalStructuralFeature enum member is distributed under Apache-2.0, inspected 2026-10-28.
+    Method papers retain their own terms.
+discussions:
+- discussion_id: STRUCTURE_20261028_GROOVE_DETECTION
+  prompt: A surface-topography result needs explicit shape, connectivity and assembly review before
+    assigning this label. No universal length/width cutoff distinguishing clefts from grooves was established
+    in this audit; do not infer binding from shape.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, license, definition, detection_methods, evidence, discussions, mapping_status
+    using the cited sources and data/curation/structural_trait_curations.yaml. Retained scoped evidence
+    and method limits; no canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+license: Apache-2.0

@@ -1,22 +1,61 @@
 identifier: proteintraitsmech:HELIX_TURN_HELIX
 label: helix-turn-helix
 definition: >-
-  Two alpha helices joined by a short turn; a recurrent DNA-binding motif.
-definition_source: DSSP (Kabsch & Sander 1983; mkdssp)
+  A recurring structural motif comprising two alpha helices linked by a short turn.
+definition_source: SO:0001081
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
 - proteintraitsmech:SUPER_SECONDARY_MOTIF
 secondary_structure_representations:
 - method: curated
   state_alphabet: TOPOLOGY
   topology_string: H-turn-H
-  evidence_source: research/cross-source-comparison-review-1.md
+  evidence_source: SO:0001081
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): H-turn-H.
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: A recurring structural motif comprising two alpha helices linked by a short turn.
+  source: SO:0001081
+  method: GENERATED
+xrefs:
+- SO:0001081
+detection_methods:
+- name: EMBOSS helixturnhelix sequence-screen prediction; geometry confirmation required
+  method_type: PROFILE_MATRIX
+  tool: https://emboss.bioinformatics.nl/cgi-bin/emboss/help/helixturnhelix
+  reference: PMID:2402433
+  recipe: helixturnhelix -sequence {input.fasta} -outfile {output.hth} -minsd 2.5 -auto
+  edam_operation: EDAM:operation_0268
+  evidence_code: ECO:0007669
+evidence:
+- reference: SO:0001081
+  notes: The ontology describes a two-helix structural motif. DNA binding and sequence-screen predictions
+    are separate claims.
+- reference: https://github.com/The-Sequence-Ontology/SO-Ontologies/blob/master/LICENSE
+  notes: Sequence Ontology CC-BY-4.0 terms inspected 2026-10-28; definition paraphrased from the 2026-08-07
+    ontology. Cited papers and software retain their own terms.
+- reference: PMID:2402433
+  notes: The Dodd-Egan matrix estimates HTH likelihood from sequence. The linked EMBOSS implementation
+    is a screening method; a hit does not establish the 3D motif or DNA-binding activity.
+- reference: PMID:1387915
+  notes: The lambda repressor-operator study explicitly describes its HTH region. PDB 1LMB is a representative
+    structure containing that region; no local residue selection or qualified UniProt occurrence is
+    asserted.
+structural_geometry_representations:
+- structure_ref: PDB:1LMB
+  structure_source: PDB, entry version 1.3
+  evidence_source: PMID:1387915; https://www.rcsb.org/structure/1LMB; inspected 2026-10-28. Lambda repressor
+    chains C/D (author 3/4), X-ray 1.8 angstrom. Structure containing the source-described HTH region;
+    motif bounds unspecified.
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, xrefs, mapping_status, definitions, secondary_structure_representations,
+    detection_methods, evidence, license, structural_geometry_representations using the cited sources
+    and data/curation/structural_trait_curations.yaml. Retained scoped evidence and method limits; no
+    canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

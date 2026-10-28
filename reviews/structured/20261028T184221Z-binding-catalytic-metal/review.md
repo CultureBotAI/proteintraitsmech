@@ -1,0 +1,693 @@
+# Initial structural trait audit: binding-catalytic-metal
+
+- Review: 20261028T184221Z-binding-catalytic-metal
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-28T18:37:02Z
+- Finished UTC: 2026-10-28T18:42:21Z
+- Reviewer: Codex cavity_binding_evidence (independent)
+- Completion: partial
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Every selected record was inspected and native deterministic checks pass. Bounded source-backed identity, scope and evidence corrections are needed; complete legacy reference and ontology recertification remains unavailable.
+
+## Scope And Provenance
+
+Bounded existing structural seed cohort; no new records or qualified protein promotion.
+
+Selection: Explicit target membership resolved from current structure folders and generic site seeds; ignored-inclusive alias/parent search retained distinct concepts.
+Coverage: full; 3 reviewed / 3 in the declared population.
+Source: working_tree at Git base c4147394c698324ae537c0c63c2c9f6647c4f4fc.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:PROTEIN_BINDING_SITE | data/traits/structure/binding_site/protein-binding-site.yaml | generated | protein binding site |
+| proteintraitsmech:CATALYTIC_RESIDUE | data/traits/structure/active_site/catalytic-residue.yaml | generated | catalytic residue |
+| proteintraitsmech:METAL_BINDING_SITE | data/traits/structure/metal_site/metal-binding-site.yaml | generated | metal binding site |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| strict native check | passed | True | proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | All 16 selected records pass strict schema validation. |
+| graph native check | passed | True | proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | 11 graphs, 45 nodes and 34 edges pass structural audit; this does not verify scientific entailment. |
+| grounding native check | passed | True | proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | 16 records pass legacy-compatible grounding checks. This does not qualify any protein example. |
+| Complete reference and ontology re-verification | unavailable | True | proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | Some publisher and PubMed/PMC pages were inaccessible; not every legacy citation, ontology CURIE, quote, or method was independently recertified. |
+
+## Scientific And Domain Assessments
+
+### protein binding site identity, scope, detection and evidence
+
+evidence: concern. Targets: proteintraitsmech:PROTEIN_BINDING_SITE.
+
+Read all fields. Retain this distinct class, but correct the source-backed findings attached to this target. Deterministic validity does not establish mechanistic entailment or qualified examples.
+
+### catalytic residue identity, scope, detection and evidence
+
+evidence: concern. Targets: proteintraitsmech:CATALYTIC_RESIDUE.
+
+Read all fields. Retain this distinct class, but correct the source-backed findings attached to this target. Deterministic validity does not establish mechanistic entailment or qualified examples.
+
+### metal binding site identity, scope, detection and evidence
+
+evidence: concern. Targets: proteintraitsmech:METAL_BINDING_SITE.
+
+Read all fields. Retain this distinct class, but correct the source-backed findings attached to this target. Deterministic validity does not establish mechanistic entailment or qualified examples.
+
+## Findings
+
+### enum-xrefs: Vocabulary identifier is not equivalent to each member
+
+major / open / confirmed; issue key: structural-traits-enum-xrefs.
+
+Remove valuesets:LocalStructuralFeature from trait-equivalence xrefs while retaining enum/member provenance. Record upstream Apache-2.0 attribution without assuming a blanket evidence license.
+
+### generic-mechanism-overreach: Database-overview text does not support universal causal chains
+
+major / open / confirmed; issue key: structural-traits-generic-mechanism-overreach.
+
+Protein binding is connected to oligomerization using a database-resource description; catalytic activity to positive regulation of metabolism using an atlas description; metal binding to fold stability and catalysis using site-organization descriptions. The snippets do not establish these universal edges. Retain direct supported chemistry only, or replace with scoped experimental mechanisms. No ontology-label correction is asserted without inspecting the authoritative term.
+
+### catalytic-boundary: Definition excludes essential indirect catalytic roles
+
+major / open / confirmed; issue key: structural-traits-catalytic-boundary.
+
+M-CSA explicitly includes essential indirect roles, not only direct chemical participants. Broaden the definition accordingly while excluding proximity and ordinary binding as sufficient criteria.
+
+### metal-boundary: Metal coordination is conflated with broader site template and function
+
+major / open / confirmed; issue key: structural-traits-metal-boundary.
+
+The definition equates the local donor-atom site with a Minimal Functional Site and requires selected biological roles. Define coordination geometry independently; identify the larger MetalPDB template and demonstrate biological role separately. Remove GO0046872 from equivalence xrefs; it is the metal ion binding function, not the structural site.
+
+## Recommended Actions And Acceptance Checks
+
+### action-enum-xrefs
+
+Remove valuesets:LocalStructuralFeature from trait-equivalence xrefs while retaining enum/member provenance. Record upstream Apache-2.0 attribution without assuming a blanket evidence license.
+
+- Change maintained seeder input or reviewed overlay as well as generated output.
+- Revalidate schema and native graph/grounding checks after scoped curation.
+- Re-review the exact affected claims against inspected sources; keep PROPOSED until native qualification gates are met.
+
+### action-generic-mechanism-overreach
+
+Protein binding is connected to oligomerization using a database-resource description; catalytic activity to positive regulation of metabolism using an atlas description; metal binding to fold stability and catalysis using site-organization descriptions. The snippets do not establish these universal edges. Retain direct supported chemistry only, or replace with scoped experimental mechanisms. No ontology-label correction is asserted without inspecting the authoritative term.
+
+- Change maintained seeder input or reviewed overlay as well as generated output.
+- Revalidate schema and native graph/grounding checks after scoped curation.
+- Re-review the exact affected claims against inspected sources; keep PROPOSED until native qualification gates are met.
+
+### action-catalytic-boundary
+
+M-CSA explicitly includes essential indirect roles, not only direct chemical participants. Broaden the definition accordingly while excluding proximity and ordinary binding as sufficient criteria.
+
+- Change maintained seeder input or reviewed overlay as well as generated output.
+- Revalidate schema and native graph/grounding checks after scoped curation.
+- Re-review the exact affected claims against inspected sources; keep PROPOSED until native qualification gates are met.
+
+### action-metal-boundary
+
+The definition equates the local donor-atom site with a Minimal Functional Site and requires selected biological roles. Define coordination geometry independently; identify the larger MetalPDB template and demonstrate biological role separately. Remove GO0046872 from equivalence xrefs; it is the metal ion binding function, not the structural site.
+
+- Change maintained seeder input or reviewed overlay as well as generated output.
+- Revalidate schema and native graph/grounding checks after scoped curation.
+- Re-review the exact affected claims against inspected sources; keep PROPOSED until native qualification gates are met.
+
+## Category Boundaries
+
+- retain: proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE. These concepts differ by solvent connectivity, location, chemistry or demonstrated allosteric/functional coupling. Shared geometry and similar labels do not establish identity. No merges proposed.
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| graph | research/structural-traits-20261028/cavities/graph-validation.txt; Actual native command output | supports | 11 graphs, 45 nodes and 34 edges pass structural audit; this does not verify scientific entailment. |
+| grounding | research/structural-traits-20261028/cavities/grounding-validation.txt; Actual native command output | supports | 16 records pass legacy-compatible grounding checks. This does not qualify any protein example. |
+| local | research/structural-traits-20261028/cavities/inspected-inputs.json; SHA256-frozen input records and owning seeders | supports | All 16 target YAML records and maintained seeder inputs were read; native inspect captured their bytes before formal judgement. |
+| mcsa | https://www.ebi.ac.uk/thornton-srv/m-csa/documentation/; Catalytic residue criteria and homology transfer | supports | M-CSA includes direct chemical participants and essential indirect catalytic roles. Conservation/homology transfer is a prediction route; proximity or binding alone does not establish catalytic participation. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord.xrefs and parent_traits slots | supports | The xrefs field denotes equivalent identifiers; superclass relationships must preserve class extension. |
+| search | research/structural-traits-20261028/cavities/identity-search.txt; Ignored-inclusive exact ID and label search over data/traits | supports | Aliases and parent relationships were searched with rg --no-ignore --hidden; the three cohorts retain distinct geometric and functional identities. |
+| strict | research/structural-traits-20261028/cavities/strict-validation.txt; Actual native command output | supports | All 16 selected records pass strict schema validation. |
+| valuesets | https://linkml.io/valuesets/elements/LocalStructuralFeature/; Permissible Values and YAML | supports | The draft enum distinguishes enclosed CAVITY from accessible POCKET, surface GROOVE/CLEFT and connecting TUNNEL. Its enum identifier denotes the vocabulary, not each member. |
+| valuesets-license | https://raw.githubusercontent.com/linkml/valuesets/main/LICENSE; LICENSE header | supports | The upstream valuesets repository declares Apache-2.0; a default CC-BY label would not be justified. |
+
+## Limits And Additional Notes
+
+- All selected YAML records were read, but this is not complete re-verification of every legacy reference or ontology term. Inaccessible pages and search-only leads were not promoted to positive evidence.
+- No executable structural detection run, new canonical protein qualification, paid research or scientific record changes were performed.
+- Graph checks establish syntax and grounded identifiers, not whether citations entail the asserted causal edges.
+- No absence claim outside the bounded ignored-inclusive data/traits search is made.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261028T184221Z-binding-catalytic-metal
+kind: category
+repository: CultureBotAI/proteintraitsmech
+title: 'Initial structural trait audit: binding-catalytic-metal'
+started_at: '2026-10-28T18:37:02Z'
+finished_at: '2026-10-28T18:42:21Z'
+reviewer:
+  identity: Codex cavity_binding_evidence
+  kind: agent
+  independence: independent
+  independence_basis: Read-only researcher separate from implementing root agent;
+    did not author or edit selected records.
+skill: .claude/skills/review-yaml-category/SKILL.md
+completion: partial
+verdict: needs_curation
+scientific_review: true
+summary: Every selected record was inspected and native deterministic checks pass.
+  Bounded source-backed identity, scope and evidence corrections are needed; complete
+  legacy reference and ontology recertification remains unavailable.
+source:
+  git_revision: c4147394c698324ae537c0c63c2c9f6647c4f4fc
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: data/methods/methods.yaml
+    sha256: 1a0940b44fdf879489b664614debac0347b7780f1d9cc2d0c3c863a6fea78b54
+    role: context
+  - path: data/traits/structure/active_site/catalytic-residue.yaml
+    sha256: 37f66c3c1f17fefd0c966f4a3aac28b4a306682b7d3eb57591abd7758457d6df
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    sha256: 5dc8cb6496fa24f611600a2e1cd32a36734c64fd68a0fd34b6de7104b82dce32
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml
+    sha256: 879439c2aeedeaab4f5cb3fea2b1e7d5ad86c85e6fdebc2ebd51c342a70b722d
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    sha256: 4c74cf01a67a9f68c464e346c7ef43789d7ee439dc7210806164e84382a726e5
+    role: target
+  - path: data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    sha256: e299f11d2828dd1ea036581c1003dc64996e12fcd462325de989e6af678eab2d
+    role: target
+  - path: data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml
+    sha256: ee3d412a7a82e2698ed04f797c77cff9470f75f66303bd12cb941e2f427c9a42
+    role: target
+  - path: data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    sha256: b9babc4e2985a071cbc5adb77bfbba9d53ce96157755edc2ac370285b1de006f
+    role: target
+  - path: data/traits/structure/binding_site/protein-binding-site.yaml
+    sha256: 7dbd5cee351c560cb2348e0fc3ebdefb2b529a0353e1d62c1b381ff26c340760
+    role: target
+  - path: data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml
+    sha256: 3022f7988f1c1bfcf898f5548b42ce0f9ef5c281b4cc9ecc7395110ba8c607d7
+    role: target
+  - path: data/traits/structure/cavity/cavity.yaml
+    sha256: 96c1db4ce0f1c6485ec1224a449cd927b5dab182497f6531edf45fede1b8c3fe
+    role: target
+  - path: data/traits/structure/cavity/cleft.yaml
+    sha256: 5178e23cbd152e127b94688c1405d9605f14546430e4ff96be5f67f2ab29447e
+    role: target
+  - path: data/traits/structure/cavity/groove.yaml
+    sha256: 5ef7a5450ef756275a5394f00aebdf7007e7e7e32c1c13b0788e52a0a1c0ff07
+    role: target
+  - path: data/traits/structure/cavity/pocket.yaml
+    sha256: 2d9de3cbb4af4c29c95c50f6263e061629029d8036f3c8b19dff0f9ed0399ae7
+    role: target
+  - path: data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    sha256: e1364af257da12766490e63302d075d55635bddfc04b58fce100f4f4ddf18d78
+    role: target
+  - path: data/traits/structure/cavity/tunnel.yaml
+    sha256: 580096dc9504f7c2501cba91384a15b67e04b74664e00c5fc69211823a8253e3
+    role: target
+  - path: data/traits/structure/metal_site/metal-binding-site.yaml
+    sha256: 93891458436edd95525d70836640cabf2b9e144542a164ca8f12ea14bee76efd
+    role: target
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: scripts/seed_foundational_traits.py
+    sha256: 75b1188f650d1007d6bdcc2744df5ff65e364aca4360f5b1c7bfe23479b9b50d
+    role: context
+  - path: scripts/seed_localstructuralfeature.py
+    sha256: dea0ca33c86dc9cdc8597de859fe1db5ae92d3fb265e3f10b1074e5c2652415b
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Bounded existing structural seed cohort; no new records or qualified
+    protein promotion.
+  selection: Explicit target membership resolved from current structure folders and
+    generic site seeds; ignored-inclusive alias/parent search retained distinct concepts.
+  coverage: full
+  population_size: 3
+  reviewed_target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+targets:
+- target_id: proteintraitsmech:PROTEIN_BINDING_SITE
+  path: data/traits/structure/binding_site/protein-binding-site.yaml
+  label: protein binding site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:CATALYTIC_RESIDUE
+  path: data/traits/structure/active_site/catalytic-residue.yaml
+  label: catalytic residue
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:METAL_BINDING_SITE
+  path: data/traits/structure/metal_site/metal-binding-site.yaml
+  label: metal binding site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  record_class: ProteinTraitRecord
+checks:
+- check_id: strict
+  name: strict native check
+  status: passed
+  required: true
+  summary: All 16 selected records pass strict schema validation.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/validate_strict.py --workers 1 --out research/structural-traits-20261028/cavities/strict-errors.tsv
+    data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml data/traits/structure/cavity/cavity.yaml
+    data/traits/structure/cavity/cleft.yaml data/traits/structure/cavity/groove.yaml
+    data/traits/structure/cavity/pocket.yaml data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - strict
+  scope_note: Executed once over all 16 selected targets; this review covers the declared
+    subset.
+- check_id: graph
+  name: graph native check
+  status: passed
+  required: true
+  summary: 11 graphs, 45 nodes and 34 edges pass structural audit; this does not verify
+    scientific entailment.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml
+    data/traits/structure/cavity/cavity.yaml data/traits/structure/cavity/cleft.yaml
+    data/traits/structure/cavity/groove.yaml data/traits/structure/cavity/pocket.yaml
+    data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - graph
+  scope_note: Executed once over all 16 selected targets; this review covers the declared
+    subset.
+- check_id: grounding
+  name: grounding native check
+  status: passed
+  required: true
+  summary: 16 records pass legacy-compatible grounding checks. This does not qualify
+    any protein example.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py --out research/structural-traits-20261028/cavities/grounding-errors.tsv
+    data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml data/traits/structure/cavity/cavity.yaml
+    data/traits/structure/cavity/cleft.yaml data/traits/structure/cavity/groove.yaml
+    data/traits/structure/cavity/pocket.yaml data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - grounding
+  scope_note: Executed once over all 16 selected targets; this review covers the declared
+    subset.
+- check_id: source-reverification
+  name: Complete reference and ontology re-verification
+  status: unavailable
+  required: true
+  summary: Some publisher and PubMed/PMC pages were inaccessible; not every legacy
+    citation, ontology CURIE, quote, or method was independently recertified.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - local
+evidence:
+- evidence_id: graph
+  kind: validation
+  reference: research/structural-traits-20261028/cavities/graph-validation.txt
+  locator: Actual native command output
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: 11 graphs, 45 nodes and 34 edges pass structural audit; this does not verify
+    scientific entailment.
+- evidence_id: grounding
+  kind: validation
+  reference: research/structural-traits-20261028/cavities/grounding-validation.txt
+  locator: Actual native command output
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: 16 records pass legacy-compatible grounding checks. This does not qualify
+    any protein example.
+- evidence_id: local
+  kind: record_content
+  reference: research/structural-traits-20261028/cavities/inspected-inputs.json
+  locator: SHA256-frozen input records and owning seeders
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: All 16 target YAML records and maintained seeder inputs were read; native
+    inspect captured their bytes before formal judgement.
+- evidence_id: mcsa
+  kind: authority
+  reference: https://www.ebi.ac.uk/thornton-srv/m-csa/documentation/
+  locator: Catalytic residue criteria and homology transfer
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: M-CSA includes direct chemical participants and essential indirect catalytic
+    roles. Conservation/homology transfer is a prediction route; proximity or binding
+    alone does not establish catalytic participation.
+- evidence_id: schema
+  kind: authority
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord.xrefs and parent_traits slots
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: The xrefs field denotes equivalent identifiers; superclass relationships
+    must preserve class extension.
+- evidence_id: search
+  kind: search
+  reference: research/structural-traits-20261028/cavities/identity-search.txt
+  locator: Ignored-inclusive exact ID and label search over data/traits
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: Aliases and parent relationships were searched with rg --no-ignore --hidden;
+    the three cohorts retain distinct geometric and functional identities.
+  search_scope: All data/traits including hidden and ignored files; bounded ID, label,
+    structural-neighbor and ontology-alias queries. No fleet-wide absence claim.
+- evidence_id: strict
+  kind: validation
+  reference: research/structural-traits-20261028/cavities/strict-validation.txt
+  locator: Actual native command output
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: All 16 selected records pass strict schema validation.
+- evidence_id: valuesets
+  kind: authority
+  reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  locator: Permissible Values and YAML
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: The draft enum distinguishes enclosed CAVITY from accessible POCKET, surface
+    GROOVE/CLEFT and connecting TUNNEL. Its enum identifier denotes the vocabulary,
+    not each member.
+- evidence_id: valuesets-license
+  kind: authority
+  reference: https://raw.githubusercontent.com/linkml/valuesets/main/LICENSE
+  locator: LICENSE header
+  accessed_at: '2026-10-28T18:42:21Z'
+  support: supports
+  summary: The upstream valuesets repository declares Apache-2.0; a default CC-BY
+    label would not be justified.
+assessments:
+- assessment_id: assessment-0
+  area: evidence
+  topic: protein binding site identity, scope, detection and evidence
+  outcome: concern
+  summary: Read all fields. Retain this distinct class, but correct the source-backed
+    findings attached to this target. Deterministic validity does not establish mechanistic
+    entailment or qualified examples.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  evidence_ids:
+  - local
+  - mcsa
+  - schema
+  - valuesets
+  - valuesets-license
+- assessment_id: assessment-1
+  area: evidence
+  topic: catalytic residue identity, scope, detection and evidence
+  outcome: concern
+  summary: Read all fields. Retain this distinct class, but correct the source-backed
+    findings attached to this target. Deterministic validity does not establish mechanistic
+    entailment or qualified examples.
+  target_ids:
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  evidence_ids:
+  - local
+  - mcsa
+  - schema
+  - valuesets
+  - valuesets-license
+- assessment_id: assessment-2
+  area: evidence
+  topic: metal binding site identity, scope, detection and evidence
+  outcome: concern
+  summary: Read all fields. Retain this distinct class, but correct the source-backed
+    findings attached to this target. Deterministic validity does not establish mechanistic
+    entailment or qualified examples.
+  target_ids:
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - local
+  - mcsa
+  - schema
+  - valuesets
+  - valuesets-license
+findings:
+- finding_id: enum-xrefs
+  issue_key: structural-traits-enum-xrefs
+  category: identity
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Vocabulary identifier is not equivalent to each member
+  description: Remove valuesets:LocalStructuralFeature from trait-equivalence xrefs
+    while retaining enum/member provenance. Record upstream Apache-2.0 attribution
+    without assuming a blanket evidence license.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - xrefs
+  - provenance
+  evidence_ids:
+  - local
+  - schema
+  - valuesets
+  - valuesets-license
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+- finding_id: generic-mechanism-overreach
+  issue_key: structural-traits-generic-mechanism-overreach
+  category: graph
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Database-overview text does not support universal causal chains
+  description: Protein binding is connected to oligomerization using a database-resource
+    description; catalytic activity to positive regulation of metabolism using an
+    atlas description; metal binding to fold stability and catalysis using site-organization
+    descriptions. The snippets do not establish these universal edges. Retain direct
+    supported chemistry only, or replace with scoped experimental mechanisms. No ontology-label
+    correction is asserted without inspecting the authoritative term.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - causal_graphs
+  evidence_ids:
+  - local
+  - mcsa
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+- finding_id: catalytic-boundary
+  issue_key: structural-traits-catalytic-boundary
+  category: scope
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Definition excludes essential indirect catalytic roles
+  description: M-CSA explicitly includes essential indirect roles, not only direct
+    chemical participants. Broaden the definition accordingly while excluding proximity
+    and ordinary binding as sufficient criteria.
+  target_ids:
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  field_paths:
+  - definition
+  - detection_methods
+  evidence_ids:
+  - local
+  - mcsa
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+- finding_id: metal-boundary
+  issue_key: structural-traits-metal-boundary
+  category: scope
+  severity: major
+  status: open
+  certainty: confirmed
+  title: Metal coordination is conflated with broader site template and function
+  description: The definition equates the local donor-atom site with a Minimal Functional
+    Site and requires selected biological roles. Define coordination geometry independently;
+    identify the larger MetalPDB template and demonstrate biological role separately.
+    Remove GO0046872 from equivalence xrefs; it is the metal ion binding function,
+    not the structural site.
+  target_ids:
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - definition
+  - xrefs
+  - causal_graphs
+  evidence_ids:
+  - local
+  - schema
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+actions:
+- action_id: action-enum-xrefs
+  description: Remove valuesets:LocalStructuralFeature from trait-equivalence xrefs
+    while retaining enum/member provenance. Record upstream Apache-2.0 attribution
+    without assuming a blanket evidence license.
+  finding_ids:
+  - enum-xrefs
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  acceptance_checks:
+  - Change maintained seeder input or reviewed overlay as well as generated output.
+  - Revalidate schema and native graph/grounding checks after scoped curation.
+  - Re-review the exact affected claims against inspected sources; keep PROPOSED until
+    native qualification gates are met.
+- action_id: action-generic-mechanism-overreach
+  description: Protein binding is connected to oligomerization using a database-resource
+    description; catalytic activity to positive regulation of metabolism using an
+    atlas description; metal binding to fold stability and catalysis using site-organization
+    descriptions. The snippets do not establish these universal edges. Retain direct
+    supported chemistry only, or replace with scoped experimental mechanisms. No ontology-label
+    correction is asserted without inspecting the authoritative term.
+  finding_ids:
+  - generic-mechanism-overreach
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  acceptance_checks:
+  - Change maintained seeder input or reviewed overlay as well as generated output.
+  - Revalidate schema and native graph/grounding checks after scoped curation.
+  - Re-review the exact affected claims against inspected sources; keep PROPOSED until
+    native qualification gates are met.
+- action_id: action-catalytic-boundary
+  description: M-CSA explicitly includes essential indirect roles, not only direct
+    chemical participants. Broaden the definition accordingly while excluding proximity
+    and ordinary binding as sufficient criteria.
+  finding_ids:
+  - catalytic-boundary
+  target_ids:
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  acceptance_checks:
+  - Change maintained seeder input or reviewed overlay as well as generated output.
+  - Revalidate schema and native graph/grounding checks after scoped curation.
+  - Re-review the exact affected claims against inspected sources; keep PROPOSED until
+    native qualification gates are met.
+- action_id: action-metal-boundary
+  description: The definition equates the local donor-atom site with a Minimal Functional
+    Site and requires selected biological roles. Define coordination geometry independently;
+    identify the larger MetalPDB template and demonstrate biological role separately.
+    Remove GO0046872 from equivalence xrefs; it is the metal ion binding function,
+    not the structural site.
+  finding_ids:
+  - metal-boundary
+  target_ids:
+  - proteintraitsmech:METAL_BINDING_SITE
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  acceptance_checks:
+  - Change maintained seeder input or reviewed overlay as well as generated output.
+  - Revalidate schema and native graph/grounding checks after scoped curation.
+  - Re-review the exact affected claims against inspected sources; keep PROPOSED until
+    native qualification gates are met.
+boundary_decisions:
+- action: retain
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  rationale: These concepts differ by solvent connectivity, location, chemistry or
+    demonstrated allosteric/functional coupling. Shared geometry and similar labels
+    do not establish identity. No merges proposed.
+  evidence_ids:
+  - local
+  - search
+limitations:
+- All selected YAML records were read, but this is not complete re-verification of
+  every legacy reference or ontology term. Inaccessible pages and search-only leads
+  were not promoted to positive evidence.
+- No executable structural detection run, new canonical protein qualification, paid
+  research or scientific record changes were performed.
+- Graph checks establish syntax and grounded identifiers, not whether citations entail
+  the asserted causal edges.
+- No absence claim outside the bounded ignored-inclusive data/traits search is made.
+tags:
+- structural-traits
+- initial-audit
+```

@@ -1,0 +1,2525 @@
+# Bounded cavity, allosteric and generic binding remediation followup
+
+- Review: 20261028T190742Z-cavity-binding-remediation-followup
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-28T18:54:43Z
+- Finished UTC: 2026-10-28T19:07:42Z
+- Reviewer: codex-gpt-6-astra / preflight_boundary_review (self_review)
+- Completion: completed
+- Verdict: pass_with_limitations
+- Scientific review: true
+
+## Summary
+
+All 16 explicit targets were reread against the bounded prior findings and inspected source claims. Fifteen stable issue keys are resolved with linked prior occurrences, including two first-pass corrections. Nine unsupported generic graphs are removed; two specific-study graphs retain five supported scoped edges. Current maintained inputs reproduce the curated content and all statuses remain PROPOSED. This is a remediation followup, not complete legacy-reference recertification or protein qualification.
+
+## Scope And Provenance
+
+Post-curation reassessment of exact findings across the existing 7 cavity, 6 allosteric and 3 generic binding/catalytic/metal targets.
+
+Selection: Explicit 16-target list from the initial three coherent cohorts and supplementary obsolete-SO finding. Full field reads support bounded remediation decisions; adjacent family/domain records remain outside this local-site review.
+Coverage: full; 16 reviewed / 16 in the declared population.
+Source: working_tree at Git base c4147394c698324ae537c0c63c2c9f6647c4f4fc.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL | data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml | generated | buried active-site substrate/product access tunnel |
+| proteintraitsmech:CAVITY | data/traits/structure/cavity/cavity.yaml | generated | cavity |
+| proteintraitsmech:CLEFT | data/traits/structure/cavity/cleft.yaml | generated | cleft |
+| proteintraitsmech:GROOVE | data/traits/structure/cavity/groove.yaml | generated | groove |
+| proteintraitsmech:POCKET | data/traits/structure/cavity/pocket.yaml | generated | pocket |
+| proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE | data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml | generated | transmembrane ion-channel selectivity-filter pore |
+| proteintraitsmech:TUNNEL | data/traits/structure/cavity/tunnel.yaml | generated | tunnel |
+| proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE | data/traits/structure/allosteric_site/allosteric-activator-site.yaml | generated | allosteric activator site |
+| proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE | data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml | generated | allosteric inhibitor site |
+| proteintraitsmech:ALLOSTERIC_REGULATORY_SITE | data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml | generated | allosteric regulatory site |
+| proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE | data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml | generated | covalent allosteric regulatory site |
+| proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET | data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml | generated | cryptic allosteric pocket |
+| proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE | data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml | generated | subunit-interface allosteric site |
+| proteintraitsmech:PROTEIN_BINDING_SITE | data/traits/structure/binding_site/protein-binding-site.yaml | generated | protein binding site |
+| proteintraitsmech:CATALYTIC_RESIDUE | data/traits/structure/active_site/catalytic-residue.yaml | generated | catalytic residue |
+| proteintraitsmech:METAL_BINDING_SITE | data/traits/structure/metal_site/metal-binding-site.yaml | generated | metal binding site |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Seeder source pins and evidence-based graph dispositions | passed | True | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | ...............                                                          [100%]<br>15 passed in 3.10s |
+| Native strict schema validation | passed | True | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | Validating 16 files with 1 workers; schema=/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/worktrees/ptm-structure-20261028-029cc7/worktree/src/proteintraitsmech/schema/proteintraitsmech.yaml<br><br>=== validate-strict summary ===<br>  files scanned:      16<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                research/structural-traits-20261028/motifs/cavity-post-final-strict.tsv |
+| Native strict causal graph audit | passed | True | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | causal-graph audit: 2 records, 2 graphs, 7 nodes, 5 edges &#124; grounded nodes 3/7, snippet-cited edges 5/5 &#124; 0 errors, 0 warnings |
+| Native UniProt grounding semantics | passed | True | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | files scanned: 16<br>registry proteins: 13208<br>source evidence objects: 22314<br>qualified record bindings: 22314<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: research/structural-traits-20261028/motifs/cavity-post-final-grounding.tsv |
+| Bounded scientific source reassessment | passed | True | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | Read all selected records and inspected primary/native sources needed for the explicit prior findings and the two new corrections. Geometry, functional evidence, class identity and source rights are kept distinct. |
+| Complete legacy source and term recertification | skipped | False | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | Outside this bounded remediation scope. The initial reviews limitation remains explicit; unmodified legacy claims are not newly certified. |
+| Structural detector execution | skipped | False | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | No structural detection jobs were run. Recipes were checked against inspected available native documentation; CAVER PDF command-section access remained incomplete. |
+| Qualified protein promotion | not_applicable | False | proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL, proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE, proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE | No canonical example promotion is part of this review; PDB anchors remain representative geometry only. |
+
+## Scientific And Domain Assessments
+
+### CAVITY_SUBSTRATE_ACCESS_TUNNEL bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL.
+
+The connected substrate pathway retains TUNNEL and drops incompatible enclosed CAVITY ancestry. CAVER is named as the actual method, and neither geometry nor a broad metabolism chain establishes transport function; the unsupported generic graph is removed.
+
+### CAVITY bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:CAVITY.
+
+The definition is explicitly enclosed and solvent-disconnected for the chosen probe and coordinate state. Vocabulary membership is provenance, not equivalence; CASTp coverage and assembly/probe limits are explicit. No universal causal graph is added.
+
+### CLEFT bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:CLEFT.
+
+The elongated depression between structural elements remains distinct from enclosed cavity and generic pocket. CASTp supplies candidate geometry with manual class adjudication; no unsupported numerical class boundary or function is invented.
+
+### GROOVE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:GROOVE.
+
+Surface-groove geometry is retained without an automatic groove classifier or inferred function. Probe, coordinate and biological-assembly limits constrain the proposed inspection method.
+
+### POCKET bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:POCKET.
+
+A solvent-accessible concavity is not defined by ligand binding or allostery. The corrected fpocket reference/recipe supplies candidate geometry and its functional limits; enum-wide equivalence is removed.
+
+### CAVITY_SELECTIVITY_FILTER_PORE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE.
+
+The broad selective transmembrane passage no longer inherits enclosed CAVITY or universal KcsA dimensions. Two retained edges explicitly describe KcsA coordination/selective conductance, with a local motif rather than a protein-domain class equivalence.
+
+### TUNNEL bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:TUNNEL.
+
+The local definition covers internal-to-solvent or between-region passages and explicitly separates source terminology. CAVER coverage states parameter and conformer requirements; geometry alone is not transport evidence.
+
+### ALLOSTERIC_ACTIVATOR_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE.
+
+Positive modulation at a distinct site remains the class criterion; the definition does not mandate a pocket, R/T model or enzyme-only mechanism. Fpocket is geometry evidence, and the unsupported universal graph is absent.
+
+### ALLOSTERIC_INHIBITOR_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE.
+
+Negative modulation is scoped to activity or affinity at a distinct site and avoids one kinetic mechanism. Candidate pockets do not prove inhibition; the universal graph is removed.
+
+### ALLOSTERIC_REGULATORY_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_REGULATORY_SITE.
+
+The parent class covers modulation at a distinct functional site without requiring a pocket or one allosteric model. Pocket synonyms are narrower and graph overreach is removed.
+
+### ALLOSTERIC_COVALENT_REGULATORY_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE.
+
+The corrected local capture process represents covalent attachment, not inherited noncovalent GO binding. Three edges preserve only the tested KRAS(G12C) mechanism and exact short source snippets. The independent third-pass review also replaces the effector role with a local material inhibitor-set LIGAND node. The earlier graph-proposal error is explicitly linked and corrected, and a new history event preserves the first event.
+
+### ALLOSTERIC_CRYPTIC_POCKET bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET.
+
+The class combines hidden/occluded pocket accessibility and independently supported allosteric coupling. Broad ligand-binding-site equivalence and universal catalytic chain are removed; recent computational/perspective citations are scoped accordingly.
+
+### ALLOSTERIC_SUBUNIT_INTERFACE_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE.
+
+Interface location and coupling define the class without requiring a pocket. The corrected pocket synonym is NARROW, and predicted interface cavities/FraB half-site context do not establish a universal causal chain. Prior history is preserved with one correction event.
+
+### PROTEIN_BINDING_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:PROTEIN_BINDING_SITE.
+
+The obsolete SO:0001091 and enum-wide equivalence are removed. The polypeptide binding-site mapping remains; PISA is explicitly predictive and the 1BXL representative structure is not a qualified occurrence. The generic oligomerization/function graph is removed.
+
+### CATALYTIC_RESIDUE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:CATALYTIC_RESIDUE.
+
+The boundary includes direct chemistry and essential indirect catalytic contributions and excludes binding-only evidence. M-CSA homology transfer is identified as expert review with no invented executable detector; a universal transition-state chain is not asserted.
+
+### METAL_BINDING_SITE bounded remediation
+
+evidence: supported. Targets: proteintraitsmech:METAL_BINDING_SITE.
+
+The class is metal coordination rather than the MetalPDB minimal-functional-site template or a GO molecular function. Database geometry inspection has expert-review evidence and explicit functional limits; 2CBA is representative only and no universal stabilization/catalysis chain remains.
+
+## Findings
+
+### enum-xrefs: Vocabulary identifier is not equivalent to each member
+
+major / resolved / confirmed; issue key: structural-traits-enum-xrefs.
+
+Prior finding: Remove valuesets:LocalStructuralFeature from trait-equivalence xrefs while retaining enum/member provenance. Record upstream Apache-2.0 attribution without assuming a blanket evidence license. Current disposition: Removed valuesets:LocalStructuralFeature from all eight affected equivalence lists, retaining native source provenance. Five enum-derived geometry records carry source-specific Apache attribution; project synthesis licensing does not relicense papers.
+
+Disposition: Removed valuesets:LocalStructuralFeature from all eight affected equivalence lists, retaining native source provenance. Five enum-derived geometry records carry source-specific Apache attribution; project synthesis licensing does not relicense papers.
+
+### geometry-coverage: Generic geometry seeds lack evidence and detection limits
+
+major / resolved / confirmed; issue key: structural-traits-geometry-coverage.
+
+Prior finding: The five generic geometry records contain no detection_methods or evidence. Add class-specific operational limits: probe radius and coordinate state, biological assembly, solvent connectivity, and need for independent functional evidence. Avoid inventing universal groove/cleft numerical boundaries. Current disposition: Five generic geometry records now contain evidence and method-specific operational limits, including probe/conformer/assembly and the distinction between geometry and function. No universal cleft/groove threshold or causal chain was manufactured.
+
+Disposition: Five generic geometry records now contain evidence and method-specific operational limits, including probe/conformer/assembly and the distinction between geometry and function. No universal cleft/groove threshold or causal chain was manufactured.
+
+### enclosed-parent: Connected tunnel and pore are not enclosed-void subclasses
+
+major / resolved / confirmed; issue key: structural-traits-enclosed-parent.
+
+Prior finding: Both functional pathways inherit CAVITY although its maintained definition requires an enclosed solvent-inaccessible void. Keep the explicit enum meaning and remove that superclass, retaining TUNNEL under the current broad passage definition. Do not merge geometry with demonstrated function. Current disposition: Both functional connected pathways retain TUNNEL and remove the incompatible enclosed CAVITY parent.
+
+Disposition: Both functional connected pathways retain TUNNEL and remove the incompatible enclosed CAVITY parent.
+
+### pathway-method: One CAVER recipe is labelled as two distinct methods
+
+major / resolved / confirmed; issue key: structural-traits-pathway-method.
+
+Prior finding: The CAVER tool and Java recipe do not execute MOLE. Rename as CAVER and state starting-point/configuration, atom radii, probe size, conformer and ensemble requirements. A computed path is insufficient evidence for transport or ion selectivity. Current disposition: The method is now named CAVER, with its own recipe and configuration/input/conformer limits. MOLE is not falsely claimed to execute; successful detector execution remains outside this review.
+
+Disposition: The method is now named CAVER, with its own recipe and configuration/input/conformer limits. MOLE is not falsely claimed to execute; successful detector execution remains outside this review.
+
+### channel-overgeneralization: KcsA architecture was generalized to unrelated ion channels
+
+major / resolved / confirmed; issue key: structural-traits-channel-overgeneralization.
+
+Prior finding: Remove the universal approximately 12-A length, carbonyl geometry and near-diffusion rate from the broad class definition. Preserve KcsA-specific mechanism evidence with its explicit protein scope. Broad GO/CHEBI/SO domain IDs in these two pathway records are functional/contextual nodes rather than equivalent structural class identifiers. Current disposition: Broad-class KcsA dimensions, architecture/rate constraints and non-equivalent function/domain xrefs are removed. Only a two-edge explicitly KcsA-scoped example mechanism remains; the substrate-tunnel generic chain is removed.
+
+Disposition: Broad-class KcsA dimensions, architecture/rate constraints and non-equivalent function/domain xrefs are removed. Only a two-edge explicitly KcsA-scoped example mechanism remains; the substrate-tunnel generic chain is removed.
+
+### fpocket-reference: All six allosteric methods cite an unrelated PMID
+
+major / resolved / confirmed; issue key: structural-traits-fpocket-reference.
+
+Prior finding: Replace PMID26950260 with PMID19486540 for fpocket; separate AlloSitePro rather than assigning its identity to the fpocket tool. Remove the broken filename-based mv and use the documented fpocket invocation. Candidate pockets do not establish allostery, crypticity, covalent reactivity or effect direction. Current disposition: All six allosteric methods cite the actual fpocket primary paper PMID19486540 and documented fpocket -f input invocation. Mislabelled methods and unsupported output move are absent, and predicted geometry is not presented as allosteric proof.
+
+Disposition: All six allosteric methods cite the actual fpocket primary paper PMID19486540 and documented fpocket -f input invocation. Mislabelled methods and unsupported output move are absent, and predicted geometry is not presented as allosteric proof.
+
+### allostery-scope: Generic allosteric class definitions require unjustified mechanisms
+
+major / resolved / confirmed; issue key: structural-traits-allostery-scope.
+
+Prior finding: General allosteric regulatory sites need not be pockets; activators/inhibitors need not follow a mandatory R/T scheme or a fixed enzyme inhibition mode. Subunit-interface sites need not require concerted rotation or catalytic cooperativity. Define demonstrated coupling and direction of effect; preserve specific mechanisms only at their documented scope. Current disposition: All six definitions describe site-level modulation at a distinct function without imposing universal pocket, R/T or enzyme-only behavior. Unsupported broad-class graphs are removed; the retained covalent mechanism is study-scoped.
+
+Disposition: All six definitions describe site-level modulation at a distinct function without imposing universal pocket, R/T or enzyme-only behavior. Unsupported broad-class graphs are removed; the retained covalent mechanism is study-scoped.
+
+### cryptic-equivalence: Cryptic binding pocket is broader than cryptic allosteric pocket
+
+major / resolved / confirmed; issue key: structural-traits-cryptic-equivalence.
+
+Prior finding: The exact synonym cryptic binding pocket drops the requirement for allosteric coupling. Mark as a broad synonym or remove. A single static pocket prediction does not establish crypticity; compare declared structural states and independently demonstrate allostery. Current disposition: Cryptic allosteric pocket is retained under regulatory site and geometric POCKET with broad ligand-binding equivalence removed. Computational accessibility evidence is distinguished from causal functional coupling.
+
+Disposition: Cryptic allosteric pocket is retained under regulatory site and geometric POCKET with broad ligand-binding equivalence removed. Computational accessibility evidence is distinguished from causal functional coupling.
+
+### interface-prediction-causality: Candidate interface pockets are used as causal evidence
+
+major / resolved / confirmed; issue key: structural-traits-interface-prediction-causality.
+
+Prior finding: The record quotes candidate regulatory regions as evidence for occupancy changing packing and regulating catalysis. These quoted claims do not entail the asserted causal edges. GO0042803 is labelled protein homodimerization activity while the class covers oligomeric interfaces generally. Defer those broad edges pending a demonstrated specific mechanism. Current disposition: The universal interface mechanism graph is removed. The computational pocket paper is candidate evidence and FraB is explicitly preprint half-site context rather than a generic effector mechanism.
+
+Disposition: The universal interface mechanism graph is removed. The computational pocket paper is candidate evidence and FraB is explicitly preprint half-site context rather than a generic effector mechanism.
+
+### generic-mechanism-overreach: Database-overview text does not support universal causal chains
+
+major / resolved / confirmed; issue key: structural-traits-generic-mechanism-overreach.
+
+Prior finding: Protein binding is connected to oligomerization using a database-resource description; catalytic activity to positive regulation of metabolism using an atlas description; metal binding to fold stability and catalysis using site-organization descriptions. The snippets do not establish these universal edges. Retain direct supported chemistry only, or replace with scoped experimental mechanisms. No ontology-label correction is asserted without inspecting the authoritative term. Current disposition: Unsupported universal graphs were removed from protein-binding, catalytic-residue and metal-site classes. No replacement graph was manufactured to satisfy historical graph-count tests.
+
+Disposition: Unsupported universal graphs were removed from protein-binding, catalytic-residue and metal-site classes. No replacement graph was manufactured to satisfy historical graph-count tests.
+
+### catalytic-boundary: Definition excludes essential indirect catalytic roles
+
+major / resolved / confirmed; issue key: structural-traits-catalytic-boundary.
+
+Prior finding: M-CSA explicitly includes essential indirect roles, not only direct chemical participants. Broaden the definition accordingly while excluding proximity and ordinary binding as sufficient criteria. Current disposition: Definition includes direct and essential indirect catalytic roles, with binding-only exclusion and explicit expert-review method limits consistent with inspected M-CSA criteria.
+
+Disposition: Definition includes direct and essential indirect catalytic roles, with binding-only exclusion and explicit expert-review method limits consistent with inspected M-CSA criteria.
+
+### metal-boundary: Metal coordination is conflated with broader site template and function
+
+major / resolved / confirmed; issue key: structural-traits-metal-boundary.
+
+Prior finding: The definition equates the local donor-atom site with a Minimal Functional Site and requires selected biological roles. Define coordination geometry independently; identify the larger MetalPDB template and demonstrate biological role separately. Remove GO0046872 from equivalence xrefs; it is the metal ion binding function, not the structural site. Current disposition: Definition uses metal coordination geometry and no longer treats MetalPDB minimal functional sites or generic GO metal binding as equivalent structural class identities. Functional and physiological limits are explicit.
+
+Disposition: Definition uses metal coordination geometry and no longer treats MetalPDB minimal functional sites or generic GO metal binding as equivalent structural class identities. Functional and physiological limits are explicit.
+
+### obsolete-binding-xref: Obsolete broader SO term used as exact binding-site equivalence
+
+major / resolved / confirmed; issue key: structural-traits-obsolete-binding-xref.
+
+Prior finding: The seed xrefs SO0001091, obsolete generic non_covalent_binding_site. Remove it; retain source-provenance-backed SO0000410 pending any narrower mapping adjudication. Current disposition: Removed obsolete SO:0001091 while retaining source-native SO:0000410, with no blanket protein-binding function/class equivalence substituted.
+
+Disposition: Removed obsolete SO:0001091 while retaining source-native SO:0000410, with no blanket protein-binding function/class equivalence substituted.
+
+### covalent-noncovalent-grounding: Covalent capture was incorrectly grounded as noncovalent GO binding
+
+major / resolved / confirmed; issue key: structural-traits-covalent-noncovalent-grounding.
+
+Prior finding: Replace GO:0036094 in the study-scoped KRAS mechanism with an ungrounded local BIOLOGICAL_PROCESS node describing covalent capture. Preserve the supported three edges and their primary evidence. Current disposition: Replaced incompatible GO:0036094 with local kras_g12c_covalent_capture BIOLOGICAL_PROCESS and preserved the three study-supported edges. The corrected bytes and new history event were reread; this closes the preserved first-pass observation and supersedes my historical proposal.
+
+Disposition: Replaced incompatible GO:0036094 with local kras_g12c_covalent_capture BIOLOGICAL_PROCESS and preserved the three study-supported edges. The corrected bytes and new history event were reread; this closes the preserved first-pass observation and supersedes my historical proposal.
+
+### interface-pocket-synonym: A pocket synonym was exact for a broader interface-site class
+
+major / resolved / confirmed; issue key: structural-traits-interface-pocket-synonym.
+
+Prior finding: Change inter-subunit allosteric pocket from EXACT_SYNONYM to NARROW_SYNONYM; the site definition does not require pocket geometry. Current disposition: The broader interface-site class now marks inter-subunit allosteric pocket as NARROW_SYNONYM. First-pass bytes are preserved and the correction appends history without rewriting earlier events.
+
+Disposition: The broader interface-site class now marks inter-subunit allosteric pocket as NARROW_SYNONYM. First-pass bytes are preserved and the correction appends history without rewriting earlier events.
+
+## Recommended Actions And Acceptance Checks
+
+## Category Boundaries
+
+- retain: proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL, proteintraitsmech:CAVITY, proteintraitsmech:CLEFT, proteintraitsmech:GROOVE, proteintraitsmech:POCKET, proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE, proteintraitsmech:TUNNEL. Retain distinct solvent-connectivity and surface geometry classes, and distinguish functional pathways from their broad geometry. Source terminology overlaps do not establish synonymy.
+- retain: proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE, proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE, proteintraitsmech:ALLOSTERIC_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE, proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET, proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE. Retain the parent regulatory site and its directional, chemical, accessibility and interface subclasses. The pocket subset is not exact synonymy with all sites.
+- retain: proteintraitsmech:PROTEIN_BINDING_SITE, proteintraitsmech:CATALYTIC_RESIDUE, proteintraitsmech:METAL_BINDING_SITE. Retain protein association, catalytic contribution and metal coordination as separate class criteria; representative structures do not collapse them into families or instances.
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| current | research/structural-traits-20261028/motifs/cavity-post-final-inspection.json; All 16 current records, maintained overlay, seeders, schema and native lineage hashes | supports | Every selected YAML was read. After the first inspection, the two allosteric followup records, three generic-site license notes, overlay, guarded editor/helper and focused tests changed; their changed bytes were reread before final capture. The final capture enumerates the exact target and supporting input hashes. |
+| firstpass | reviews/structured/20261028T185945Z-allosteric-firstpass-corrections/review.yaml; Two archived first-pass findings and exact snapshot paths | supports | The frozen first-pass snapshots exactly match the original native corpus-path hashes. They preserve the discovered GO covalency mismatch and overbroad pocket synonym; both are explicitly reassessed on corrected current bytes here. |
+| graph-prior | research/structural-traits-20261028/motifs/graph-review.json; Historical per-record graph dispositions | context_only | The original independent graph proposal removed nine unsupported broad-class graphs and retained two scoped mechanisms. Its proposed GO:0036094 capture node was erroneous; a further independent review also identified CHEBI:35224 as a role rather than material ligand. Both are superseded by linked native corrections; the historical JSON was not rewritten. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, representations, causal_graphs and status/history slots | supports | Equivalent xrefs do not mean source vocabulary membership or broad functional relevance. Causal graphs are optional. Structural geometry representatives do not substitute for qualified canonical protein occurrences. |
+| valuesets | https://linkml.io/valuesets/elements/LocalStructuralFeature/; Permissible Values and YAML for CAVITY, CLEFT, GROOVE, POCKET, TUNNEL and binding/catalytic terms | supports | The source enum is a vocabulary, not an equivalent identifier for each member. Its local convention distinguishes enclosed cavity from surface depression or connected passage; this is a draft vocabulary convention, not universal terminology. |
+| rights | LICENSE; Project license scope; third-party material exception; overlay license_disposition | supports | Project-authored factual synthesis may carry project data attribution. This does not relicense upstream papers, copied text, tools, structures or source databases; the overlay records that distinction. |
+| valuesets-rights | https://raw.githubusercontent.com/linkml/valuesets/main/LICENSE; Apache-2.0 license header | supports | The maintained valuesets source declares Apache-2.0; the five enum-derived geometry records preserve that attribution separately from primary-paper rights. |
+| so-rights | https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/LICENSE; Upstream license header and attribution provisions | supports | The Sequence Ontology repository declares CC-BY-4.0. The generic site followup notes preserve SO source attribution rather than treating a project license as a replacement. |
+| pdb-rights | https://www.wwpdb.org/about/usage-policies; Usage policy for archive data files | supports | wwPDB archive data files are under CC0-1.0 and original author attribution is encouraged. This does not set the license of associated journal articles. |
+| mole | https://pmc.ncbi.nlm.nih.gov/articles/PMC3765717/; Background and Methods; PMID:23953065, DOI:10.1186/1758-2946-5-39 | supports | MOLE distinguishes pathways connecting internal points to exterior and surface-to-surface pores. Its broader cavity wording is retained as a terminology difference; the local enclosed-void convention is explicit. Geometry and physicochemical calculations are not proof of transport function. |
+| caver | https://pubmed.ncbi.nlm.nih.gov/23093919/; Primary abstract; PMID:23093919, DOI:10.1371/journal.pcbi.1002708 | supports | CAVER is a pathway geometry method applied to static structures and trajectories. The source supports method context and parameter/conformer limitations, not a universal tunnel-to-catalysis causal chain. |
+| castp | https://pubmed.ncbi.nlm.nih.gov/29860391/; Abstract and Figure 2 caption; DOI:10.1093/nar/gky473 | supports | CASTp describes surface pockets, interior cavities and channels and uses biological assemblies. The figure caption illustrates an artificial pocket produced by an asymmetric unit, supporting the assembly caveat; CASTp is not an automatic cleft-versus-groove identity proof. |
+| fpocket | https://pubmed.ncbi.nlm.nih.gov/19486540/; Primary method abstract; DOI:10.1186/1471-2105-10-168 | supports | Fpocket uses alpha spheres and Voronoi geometry for candidate pocket detection. It does not determine binding, catalytic role or allosteric coupling. |
+| fpocket-cli | https://raw.githubusercontent.com/Discngine/fpocket/master/doc/GETTINGSTARTED.md; Basic command example and output description | supports | The upstream basic command accepts fpocket -f followed by an input coordinate file. The curated recipe removes the previously unsupported output move; binaries were not installed or executed in this audit. |
+| pisa | https://www.ccp4.ac.uk/html/pisa.html; Command-line usage: -analyse and -xml | supports | PISA documents analysis with a session name, coordinate file and optional configuration, then XML output. The curated recipe follows those commands and records configuration/assembly limitations. A predicted interface is not experimental binding proof. |
+| so | https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so-edit.obo; data-version 2026-08-07; SO:0000410, SO:0001091 and SO:0001104 term stanzas | supports | SO:0001091 is obsolete; its removal is warranted. SO:0000410 denotes a polypeptide binding-site feature and SO:0001104 an amino acid involved in enzyme activity. These do not justify broad GO function equivalence or a direct-chemistry-only catalytic definition. |
+| mcsa | https://www.ebi.ac.uk/thornton-srv/m-csa/documentation/; Section 3.3.b catalytic residue criteria and homology context | supports | M-CSA includes residues directly involved in catalysis and essential indirect contributors while excluding binding-only residues. Homology transfer requires expert assessment and does not identify catalytic function from conservation alone. |
+| metalpdb | https://pubmed.ncbi.nlm.nih.gov/23155064/; Resource abstract; DOI:10.1093/nar/gks1063 | supports | MetalPDB organizes metal sites and local structural environments. Its minimal functional site representation is not identical to the broader metal coordination class, nor proof that every metal site stabilizes a fold or supports catalysis. |
+| asd | https://pubmed.ncbi.nlm.nih.gov/31665428/; ASD resource abstract; DOI:10.1093/nar/gkz958 | supports | ASD provides allosteric site/modulator context. A distinct allosteric site does not imply one R/T model, a pocket geometry, or a universal inhibition/activation pathway. |
+| interface-study | https://pubmed.ncbi.nlm.nih.gov/42628823/; Computational study abstract; DOI:10.1016/j.bbapap.2026.141172 | supports | Interface-localized pockets across oligomeric enzyme ensembles are candidate regulatory regions. Prediction does not establish a universal causal effector-binding interface mechanism. |
+| frab | https://pubmed.ncbi.nlm.nih.gov/42539251/; Preprint abstract; DOI:10.64898/2026.07.17.739170 | supports | The FraB preprint concerns substrate half-site reactivity in a dimer. It can contextualize intersubunit coupling, not prove a generic allosteric effector pocket. |
+| cryptic-study | https://pubmed.ncbi.nlm.nih.gov/42734533/; Computational study abstract; DOI:10.1021/acs.jcim.6c01260 | supports | The recent study concerns computational opening and ligand assessment of cryptic regions. It does not show that every newly detected pocket has functional allosteric coupling. |
+| cryptic-perspective | https://pubmed.ncbi.nlm.nih.gov/42821008/; Perspective abstract; DOI:10.1007/s10822-026-00949-5 | context_only | The cited publication is a perspective on cryptic pocket discovery, not experimental evidence for a universal causal chain. |
+| kcsa | https://pubmed.ncbi.nlm.nih.gov/9525859/; Primary structural abstract; DOI:10.1126/science.280.5360.69 | supports | The KcsA study supports carbonyl-mediated potassium coordination and the filter geometry underlying selective conductance. The two retained edges explicitly concern KcsA; its length, carbonyl geometry and transport behavior are not imposed on all Na/Ca/other channel filters. |
+| kras | https://shokatlab.ucsf.edu/pdfs/24256730.pdf; Pages 1-3, abstract and Results; PMID:24256730, DOI:10.1038/nature12796 | supports | The study reports Cys12-dependent inhibitor capture, nucleotide preference shift and reduced Raf association in KRAS(G12C). The local capture process and altered-binding state retain this particular mechanism without a universal enzyme-regulator assertion. The paper carries an all-rights-reserved notice; no blanket paper license is inferred. |
+| go-small | https://amigo.geneontology.org/amigo/term/GO:0036094; Definition and is_a parent GO:0005488 | supports | Small-molecule binding is a molecular function inheriting binding. It is not an ontology grounding for covalent capture. |
+| go-binding | https://amigo.geneontology.org/amigo/term/GO:0005488; Term definition | supports | GO binding explicitly specifies noncovalent interaction. The corrected KRAS graph uses a local BIOLOGICAL_PROCESS rather than this incompatible function. |
+| chebi-effector | https://www.ebi.ac.uk/chebi/CHEBI:35224; Effector definition and outgoing is_a biochemical role relationship | supports | CHEBI:35224 denotes a biochemical role. The corrected graph instead uses a local LIGAND node for the tested inhibitor set, with no false material grounding. |
+| chebi-cysteine | https://www.ebi.ac.uk/chebi/CHEBI:29950; L-cysteine residue; outgoing proteinogenic residue relationships | supports | CHEBI:29950 is an L-cysteine residue and remains appropriate for residue chemistry. The source study numbering is explicit and no qualified UniProt coordinate is inferred. |
+| go-metal | https://amigo.geneontology.org/amigo/term/GO:0046872; Term definition and binding ancestors | supports | Metal-ion binding is a molecular function; its study-scoped use in the KcsA graph denotes potassium coordination, not a structural-class equivalent xref. |
+| go-channel | https://amigo.geneontology.org/amigo/term/GO:0005216; Monoatomic ion channel activity definition | supports | The activity enables energy-independent facilitated diffusion through a transmembrane pore without a carrier mechanism; the retained graph explicitly scopes this function to KcsA. |
+| graph-independent-20261028T190328Z-independent-kras-kcsa-graphs | reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml; Independent two-graph source and ontology review | supports | Primary-source claims are appropriately study-scoped and the covalent-capture correction avoids GO noncovalent binding. One major KRAS participant-grounding mismatch remains: biochemical-role CHEBI:35224 is used as the inhibitor molecule. KcsA retained graph is supported within the declared scope. |
+| graph-independent-20261028T190720Z-independent-kras-kcsa-graphs-followup | reviews/structured/20261028T190720Z-independent-kras-kcsa-graphs-followup/review.yaml; Independent two-graph source and ontology review | supports | The KRAS inhibitor participant is now an explicitly local material LIGAND set, resolving the ChEBI role-as-molecule mismatch. The three supported KRAS edges and two KcsA edges retain their study scope. No new graph findings remain in this two-target review; unrelated record findings are not closed. |
+| pdb-1bxl | https://www.rcsb.org/structure/1BXL; Version 1.4, chains/assembly, experimental method and primary abstract; PMID:9020082 | supports | The Bcl-xL/Bak complex provides a representative protein-peptide interface in a solution NMR structure. The record retains a structural-geometry anchor and source context without asserted occurrence bounds or qualification. |
+| pdb-2cba | https://www.rcsb.org/structure/2CBA; Version 1.5, X-ray metadata and primary abstract; PMID:1433293 | supports | Human carbonic anhydrase II provides a representative zinc-containing structure. No donor-atom/residue selection or qualified trait occurrence is inferred from accession alone. |
+| search | research/structural-traits-20261028/motifs/cavity-post-identity-search.txt; 47 matching lines from ignored-inclusive structure-corpus ID/label search | supports | The search includes hidden and ignored files and finds adjacent domain/fold/allosteric-network records. Similar labels provide no identity basis to merge those records with generic geometry or local-site classes. |
+| validation | research/structural-traits-20261028/motifs/cavity-post-validation.json; Four actual commands, UTC start/finish, stdout/stderr and exit codes | supports | 15 seeder/foundational tests passed. Strict validation scanned all 16 with no errors. Graph audit found 2 graphs, 7 nodes and 5 edges with no errors or warnings. Native grounding validation scanned 16 with no semantic findings. These checks do not certify source entailment or qualification. |
+| maintained-inputs | data/curation/structural_trait_curations.yaml; Selected exact input/output hashes, source emission pins and field blocks | supports | The current generated fields match a maintained overlay consumed by the original seeders. The final generic protein-binding, catalytic-residue and metal-site followups add scoped project-authored synthesis rights with upstream attributions, not an upstream data redistribution license. Reviewed source emissions remain SHA-256 pinned. The two followup entries pin their exact prior outputs and preserve old history plus one new event; all 16 remain PROPOSED. |
+
+## Limits And Additional Notes
+
+- Completed refers to the bounded remediation question and all 16 selected records. This does not close the initial reviews limitation that every legacy reference, quote and ontology identifier has not been independently recertified.
+- No structural detector, PISA analysis or molecular experiment was executed. CASTp and MetalPDB inspection and M-CSA expert homology review are honestly non-executable coverage; class-specific discrimination/function remains in open record discussions.
+- Official CAVER PDF retrieval was intermittent; its opening material was accessible but the command section could not be fully reinspected in this pass. The recipe is not execution-certified. The CAVER method identity and geometry-versus-function boundary were checked against the inspected primary method abstract.
+- PDB 1BXL and 2CBA are representative geometry anchors. None of these 16 records gains a qualified canonical protein occurrence, verified residue bounds or human REVIEWED status; deterministic grounding success is not qualification.
+- Project data licensing covers project-authored synthesis only. Upstream papers, structures, tool software and copied source material retain their own rights; no blanket publication license is inferred.
+- Self-review is declared for the overall bundle because I authored the earlier graph proposal and implementation tests. The original cavity/binding definition proposals and record edits came from other agents; a further independent review of my contribution remains useful.
+- No absence or duplicate-equivalence claim is made outside the declared ignored-inclusive structural ID/label search.
+- Historical graph-review.json is preserved unchanged; its GO:0036094 covalent-capture proposal is explicitly superseded by the linked first-pass observation and current local process node.
+- The final two scientific followups changed only their reviewed content/history via the guarded editor. This reviewer wrote review artifacts and the separately assigned seeder/test integration, but no scientific YAML, overlay, Git, workflow or session state.
+- Structured transcriptomic adapters are not applicable to generic protein structural-site boundaries; absence from such adapters is not biological evidence.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261028T190742Z-cavity-binding-remediation-followup
+kind: category
+repository: CultureBotAI/proteintraitsmech
+title: Bounded cavity, allosteric and generic binding remediation followup
+started_at: '2026-10-28T18:54:43Z'
+finished_at: '2026-10-28T19:07:42Z'
+reviewer:
+  identity: codex-gpt-6-astra / preflight_boundary_review
+  kind: agent
+  model: gpt-6-astra
+  independence: self_review
+  independence_basis: 'Conservative whole-bundle designation: I am separate from the
+    original cavity/binding proposal author and the root implementing all record/overlay
+    changes, but I authored earlier graph recommendations and seeder integration/tests.
+    Those self-authored portions are not presented as independent validation. This
+    review detected and explicitly corrected my earlier GO covalency error.'
+skill: .claude/skills/review-yaml-category/SKILL.md
+completion: completed
+verdict: pass_with_limitations
+scientific_review: true
+summary: All 16 explicit targets were reread against the bounded prior findings and
+  inspected source claims. Fifteen stable issue keys are resolved with linked prior
+  occurrences, including two first-pass corrections. Nine unsupported generic graphs
+  are removed; two specific-study graphs retain five supported scoped edges. Current
+  maintained inputs reproduce the curated content and all statuses remain PROPOSED.
+  This is a remediation followup, not complete legacy-reference recertification or
+  protein qualification.
+source:
+  git_revision: c4147394c698324ae537c0c63c2c9f6647c4f4fc
+  state: working_tree
+  inputs:
+  - path: .claude/skills/review-yaml-category/SKILL.md
+    sha256: 7f854d2eeab35aaf0e2860deacbb92bdf95b8f0960432ad488ea8259d27b7f90
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: data/curation/structural_trait_curations.yaml
+    sha256: 80aa87bfdf6978ac38da2e760372cbb52b35129254cb99957220371f4302fd93
+    role: context
+  - path: data/traits/structure/active_site/catalytic-residue.yaml
+    sha256: 20a991d1d8b62615d820510d5de42d752179492168a7268f5ef2b68ae4a62b79
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    sha256: b6f79e89ad7da86677709a549e937863dbdf417612da8d35ff3aefce015114b5
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml
+    sha256: 99d0382ce9e29ef2d65415d36fcef0437611e8e09229f5e06c5a81e9d55f9c58
+    role: target
+  - path: data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    sha256: e3f39e79f4e850be41b1f2e7a516501b6a1aa7179d7fa7085ee0ae1eaf899466
+    role: target
+  - path: data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    sha256: 3cd8cf5a7d2f1740f94006e56bec4e7b08c7ee09819c36f9a42642d398402101
+    role: target
+  - path: data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml
+    sha256: 02960594bf6bfdd1bc2919ac633647991d9d352b62b5b47faa6398c5d1077c5a
+    role: target
+  - path: data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    sha256: 746fedb750c2f015bb3dd02c29cd285b2c7dff154343a95047e7bf50ce1a43b6
+    role: target
+  - path: data/traits/structure/binding_site/protein-binding-site.yaml
+    sha256: f4b7617b2e853478b022a6ed815175c403d8e38832eafeac082f5c2dab188542
+    role: target
+  - path: data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml
+    sha256: e85bbcfb2ae2df9ef4e860f54bcbfaafc269b358eb846dd5037bef4102c8baa5
+    role: target
+  - path: data/traits/structure/cavity/cavity.yaml
+    sha256: fd9f5a2b51a249133a1169bfb544ac55125a967702b104fe95dcf0f731bb6d95
+    role: target
+  - path: data/traits/structure/cavity/cleft.yaml
+    sha256: a5288224864c4d23d6e8f6d3ce54e18407e0e030dcbac3860cdc9cdc8c40bc60
+    role: target
+  - path: data/traits/structure/cavity/groove.yaml
+    sha256: 96094d2983c1f885d77d025d31bae7cb6c064ec23dd472292e80e620b3cc3336
+    role: target
+  - path: data/traits/structure/cavity/pocket.yaml
+    sha256: 940a74360ef28bfcc1ed40b67b741882e46b012e2c9958b1b5692f2190c5ad0c
+    role: target
+  - path: data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    sha256: 78e9ce0c692963e102ce10b012e0cdd520a8deb7dded4fe67ba0d48b34930fba
+    role: target
+  - path: data/traits/structure/cavity/tunnel.yaml
+    sha256: 417421591621cda376ec2dad316eb15a884ce68df6fdd1e97343116e882ae344
+    role: target
+  - path: data/traits/structure/metal_site/metal-binding-site.yaml
+    sha256: 3f58424adb4b1c50bbcb82aa404210c1fb5af1af783b69de23cf8451e8274219
+    role: target
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: research/structural-traits-20261028/motifs/cavity-post-identity-search.txt
+    sha256: 30fbb61cb4a77d290d6f29957517ef74727a1947ca0173d5bc291c5e7ed64487
+    role: context
+  - path: research/structural-traits-20261028/motifs/cavity-post-inspection.json
+    sha256: 1642ebc440aef602ccaebfa47a6b8e61b86e9432456c1e9c4060b39f89460baa
+    role: context
+  - path: research/structural-traits-20261028/motifs/cavity-post-validation.json
+    sha256: 099402c9cd931330ab133cbb30d1410dd1d6d7581383d2bafeea9497fad79c51
+    role: context
+  - path: research/structural-traits-20261028/motifs/graph-review.json
+    sha256: 6ea5b70493799916d3d8de363b31fb801f56ed0c2a04bb1b3c8387dba1071df2
+    role: context
+  - path: reviews/structured/20261028T184221Z-allosteric-sites/review.yaml
+    sha256: fc0966c27ef5794b2b6aafe356c7ca46aeae7532948aa16e3209b47da76a7fac
+    role: context
+  - path: reviews/structured/20261028T184221Z-binding-catalytic-metal/review.yaml
+    sha256: 8a5b529dbbfa87b9655b9fbcab98b5f6dac1269fb4971ffd3aee534af56e8712
+    role: context
+  - path: reviews/structured/20261028T184221Z-cavity-geometry/review.yaml
+    sha256: 9b30b4872c48097eb4a41891119581238c1f696ad561f025f9b5a5655b75e1fd
+    role: context
+  - path: reviews/structured/20261028T184648Z-protein-binding-obsolete-xref/review.yaml
+    sha256: a5876794577128ca561443362e160d5f58f08fd081d3244cac0171ba597166c5
+    role: context
+  - path: reviews/structured/20261028T185945Z-allosteric-firstpass-corrections/review.yaml
+    sha256: 60d82f6e7fc480758647e8f11ab46a1b4b94d30f9425d19e76484f325e026fd0
+    role: context
+  - path: reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml
+    sha256: d4ccfef880e1289dcda77bdbe47244f3bb3b2511fbcd3880a34836c614a1feeb
+    role: context
+  - path: reviews/structured/20261028T190720Z-independent-kras-kcsa-graphs-followup/review.yaml
+    sha256: cb796913bf7c00ee04932d349300b00717a3aed1c45f022c2efce2f36c50e451
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/curate_structural_traits.py
+    sha256: 60fe9bf32d9d4f3801fba1342dc3bb5aa7e0e85c05f496dac710d75524204ddc
+    role: context
+  - path: scripts/seed_foundational_traits.py
+    sha256: 8b829acf781e52e3e35e25510b024e785ff5d6ad04462b7e1e9cec3ee56f4b7f
+    role: context
+  - path: scripts/seed_localstructuralfeature.py
+    sha256: 50969e6bdafaaf2eb57ada680868a8ef5417951654c2157f28122c60bfda9036
+    role: context
+  - path: scripts/seed_secondary_structure.py
+    sha256: 21f0ad5a35c97ce6f448887a166e5afb31dc0f22bce777b0f318456875ea5064
+    role: context
+  - path: scripts/structural_trait_curations.py
+    sha256: 72226af447168758724b895c89d38d901ca7a20c4afe80229ee21b4d555989fc
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+  - path: tests/test_foundational_traits.py
+    sha256: bd2caf19c0ab56f78c78125dd8e2fea69ab769acd602810a95c6aa7eac4e1358
+    role: context
+  - path: tests/test_seeder_structural_curations.py
+    sha256: 4114871549faff39fdfc674e78df2ddd307e948ca9f535fd1c5b3633be8f6321
+    role: context
+scope:
+  description: Post-curation reassessment of exact findings across the existing 7
+    cavity, 6 allosteric and 3 generic binding/catalytic/metal targets.
+  selection: Explicit 16-target list from the initial three coherent cohorts and supplementary
+    obsolete-SO finding. Full field reads support bounded remediation decisions; adjacent
+    family/domain records remain outside this local-site review.
+  coverage: full
+  population_size: 16
+  reviewed_target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+targets:
+- target_id: proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  path: data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml
+  label: buried active-site substrate/product access tunnel
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:CAVITY
+  path: data/traits/structure/cavity/cavity.yaml
+  label: cavity
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:CLEFT
+  path: data/traits/structure/cavity/cleft.yaml
+  label: cleft
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:GROOVE
+  path: data/traits/structure/cavity/groove.yaml
+  label: groove
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:POCKET
+  path: data/traits/structure/cavity/pocket.yaml
+  label: pocket
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  path: data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+  label: transmembrane ion-channel selectivity-filter pore
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:TUNNEL
+  path: data/traits/structure/cavity/tunnel.yaml
+  label: tunnel
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  path: data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+  label: allosteric activator site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  path: data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml
+  label: allosteric inhibitor site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  path: data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+  label: allosteric regulatory site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  path: data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+  label: covalent allosteric regulatory site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  path: data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml
+  label: cryptic allosteric pocket
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  path: data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+  label: subunit-interface allosteric site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:PROTEIN_BINDING_SITE
+  path: data/traits/structure/binding_site/protein-binding-site.yaml
+  label: protein binding site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:CATALYTIC_RESIDUE
+  path: data/traits/structure/active_site/catalytic-residue.yaml
+  label: catalytic residue
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+- target_id: proteintraitsmech:METAL_BINDING_SITE
+  path: data/traits/structure/metal_site/metal-binding-site.yaml
+  label: metal binding site
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  record_class: ProteinTraitRecord
+checks:
+- check_id: regeneration-tests
+  name: Seeder source pins and evidence-based graph dispositions
+  status: passed
+  required: true
+  summary: '...............                                                          [100%]
+
+    15 passed in 3.10s'
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python -m pytest --rootdir=. -o cache_dir=.pytest_cache tests/test_foundational_traits.py
+    tests/test_seeder_structural_curations.py -q
+  exit_code: 0
+  evidence_ids:
+  - validation
+  scope_note: Tests include unrelated foundational emissions for regression coverage;
+    record validators operate on exactly the 16 selected paths. Grounding pass does
+    not qualify examples.
+- check_id: strict
+  name: Native strict schema validation
+  status: passed
+  required: true
+  summary: "Validating 16 files with 1 workers; schema=/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/worktrees/ptm-structure-20261028-029cc7/worktree/src/proteintraitsmech/schema/proteintraitsmech.yaml\n\
+    \n=== validate-strict summary ===\n  files scanned:      16\n  files with ERROR:\
+    \   0\n  total ERROR rows:   0\n  TSV:                research/structural-traits-20261028/motifs/cavity-post-final-strict.tsv"
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/validate_strict.py --workers 1 --out research/structural-traits-20261028/motifs/cavity-post-final-strict.tsv
+    data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml data/traits/structure/cavity/cavity.yaml
+    data/traits/structure/cavity/cleft.yaml data/traits/structure/cavity/groove.yaml
+    data/traits/structure/cavity/pocket.yaml data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - validation
+  scope_note: Tests include unrelated foundational emissions for regression coverage;
+    record validators operate on exactly the 16 selected paths. Grounding pass does
+    not qualify examples.
+- check_id: graphs
+  name: Native strict causal graph audit
+  status: passed
+  required: true
+  summary: 'causal-graph audit: 2 records, 2 graphs, 7 nodes, 5 edges | grounded nodes
+    3/7, snippet-cited edges 5/5 | 0 errors, 0 warnings'
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/audit_causal_graphs.py --strict data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml
+    data/traits/structure/cavity/cavity.yaml data/traits/structure/cavity/cleft.yaml
+    data/traits/structure/cavity/groove.yaml data/traits/structure/cavity/pocket.yaml
+    data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - validation
+  scope_note: Tests include unrelated foundational emissions for regression coverage;
+    record validators operate on exactly the 16 selected paths. Grounding pass does
+    not qualify examples.
+- check_id: grounding
+  name: Native UniProt grounding semantics
+  status: passed
+  required: true
+  summary: 'files scanned: 16
+
+    registry proteins: 13208
+
+    source evidence objects: 22314
+
+    qualified record bindings: 22314
+
+    UniProt membership objects: 431
+
+    hierarchy records: 0
+
+    semantic findings: 0
+
+    TSV: research/structural-traits-20261028/motifs/cavity-post-final-grounding.tsv'
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py --out research/structural-traits-20261028/motifs/cavity-post-final-grounding.tsv
+    data/traits/structure/cavity/buried-active-site-substrate-access-tunnel.yaml data/traits/structure/cavity/cavity.yaml
+    data/traits/structure/cavity/cleft.yaml data/traits/structure/cavity/groove.yaml
+    data/traits/structure/cavity/pocket.yaml data/traits/structure/cavity/transmembrane-ion-channel-selectivity-filter-pore.yaml
+    data/traits/structure/cavity/tunnel.yaml data/traits/structure/allosteric_site/allosteric-activator-site.yaml
+    data/traits/structure/allosteric_site/allosteric-inhibitor-site.yaml data/traits/structure/allosteric_site/allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml
+    data/traits/structure/allosteric_site/cryptic-allosteric-pocket.yaml data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml
+    data/traits/structure/binding_site/protein-binding-site.yaml data/traits/structure/active_site/catalytic-residue.yaml
+    data/traits/structure/metal_site/metal-binding-site.yaml
+  exit_code: 0
+  evidence_ids:
+  - validation
+  scope_note: Tests include unrelated foundational emissions for regression coverage;
+    record validators operate on exactly the 16 selected paths. Grounding pass does
+    not qualify examples.
+- check_id: source-claim-review
+  name: Bounded scientific source reassessment
+  status: passed
+  required: true
+  summary: Read all selected records and inspected primary/native sources needed for
+    the explicit prior findings and the two new corrections. Geometry, functional
+    evidence, class identity and source rights are kept distinct.
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - current
+  - valuesets
+  - mole
+  - caver
+  - castp
+  - fpocket
+  - so
+  - mcsa
+  - metalpdb
+  - asd
+  - kcsa
+  - kras
+  - go-binding
+  - maintained-inputs
+- check_id: legacy-recertification
+  name: Complete legacy source and term recertification
+  status: skipped
+  required: false
+  summary: Outside this bounded remediation scope. The initial reviews limitation
+    remains explicit; unmodified legacy claims are not newly certified.
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - current
+- check_id: detector-execution
+  name: Structural detector execution
+  status: skipped
+  required: false
+  summary: No structural detection jobs were run. Recipes were checked against inspected
+    available native documentation; CAVER PDF command-section access remained incomplete.
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - fpocket-cli
+  - pisa
+  - caver
+- check_id: qualified-occurrences
+  name: Qualified protein promotion
+  status: not_applicable
+  required: false
+  summary: No canonical example promotion is part of this review; PDB anchors remain
+    representative geometry only.
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - pdb-1bxl
+  - pdb-2cba
+  - schema
+evidence:
+- evidence_id: current
+  kind: record_content
+  reference: research/structural-traits-20261028/motifs/cavity-post-final-inspection.json
+  locator: All 16 current records, maintained overlay, seeders, schema and native
+    lineage hashes
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Every selected YAML was read. After the first inspection, the two allosteric
+    followup records, three generic-site license notes, overlay, guarded editor/helper
+    and focused tests changed; their changed bytes were reread before final capture.
+    The final capture enumerates the exact target and supporting input hashes.
+- evidence_id: firstpass
+  kind: prior_review
+  reference: reviews/structured/20261028T185945Z-allosteric-firstpass-corrections/review.yaml
+  locator: Two archived first-pass findings and exact snapshot paths
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The frozen first-pass snapshots exactly match the original native corpus-path
+    hashes. They preserve the discovered GO covalency mismatch and overbroad pocket
+    synonym; both are explicitly reassessed on corrected current bytes here.
+- evidence_id: graph-prior
+  kind: prior_review
+  reference: research/structural-traits-20261028/motifs/graph-review.json
+  locator: Historical per-record graph dispositions
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: context_only
+  summary: The original independent graph proposal removed nine unsupported broad-class
+    graphs and retained two scoped mechanisms. Its proposed GO:0036094 capture node
+    was erroneous; a further independent review also identified CHEBI:35224 as a role
+    rather than material ligand. Both are superseded by linked native corrections;
+    the historical JSON was not rewritten.
+- evidence_id: schema
+  kind: authority
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, representations, causal_graphs
+    and status/history slots
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Equivalent xrefs do not mean source vocabulary membership or broad functional
+    relevance. Causal graphs are optional. Structural geometry representatives do
+    not substitute for qualified canonical protein occurrences.
+- evidence_id: valuesets
+  kind: authority
+  reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  locator: Permissible Values and YAML for CAVITY, CLEFT, GROOVE, POCKET, TUNNEL and
+    binding/catalytic terms
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The source enum is a vocabulary, not an equivalent identifier for each
+    member. Its local convention distinguishes enclosed cavity from surface depression
+    or connected passage; this is a draft vocabulary convention, not universal terminology.
+- evidence_id: rights
+  kind: authority
+  reference: LICENSE
+  locator: Project license scope; third-party material exception; overlay license_disposition
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Project-authored factual synthesis may carry project data attribution.
+    This does not relicense upstream papers, copied text, tools, structures or source
+    databases; the overlay records that distinction.
+- evidence_id: valuesets-rights
+  kind: authority
+  reference: https://raw.githubusercontent.com/linkml/valuesets/main/LICENSE
+  locator: Apache-2.0 license header
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The maintained valuesets source declares Apache-2.0; the five enum-derived
+    geometry records preserve that attribution separately from primary-paper rights.
+- evidence_id: so-rights
+  kind: authority
+  reference: https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/LICENSE
+  locator: Upstream license header and attribution provisions
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The Sequence Ontology repository declares CC-BY-4.0. The generic site followup
+    notes preserve SO source attribution rather than treating a project license as
+    a replacement.
+- evidence_id: pdb-rights
+  kind: authority
+  reference: https://www.wwpdb.org/about/usage-policies
+  locator: Usage policy for archive data files
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: wwPDB archive data files are under CC0-1.0 and original author attribution
+    is encouraged. This does not set the license of associated journal articles.
+- evidence_id: mole
+  kind: primary_source
+  reference: https://pmc.ncbi.nlm.nih.gov/articles/PMC3765717/
+  locator: Background and Methods; PMID:23953065, DOI:10.1186/1758-2946-5-39
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: MOLE distinguishes pathways connecting internal points to exterior and
+    surface-to-surface pores. Its broader cavity wording is retained as a terminology
+    difference; the local enclosed-void convention is explicit. Geometry and physicochemical
+    calculations are not proof of transport function.
+- evidence_id: caver
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/23093919/
+  locator: Primary abstract; PMID:23093919, DOI:10.1371/journal.pcbi.1002708
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: CAVER is a pathway geometry method applied to static structures and trajectories.
+    The source supports method context and parameter/conformer limitations, not a
+    universal tunnel-to-catalysis causal chain.
+- evidence_id: castp
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/29860391/
+  locator: Abstract and Figure 2 caption; DOI:10.1093/nar/gky473
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: CASTp describes surface pockets, interior cavities and channels and uses
+    biological assemblies. The figure caption illustrates an artificial pocket produced
+    by an asymmetric unit, supporting the assembly caveat; CASTp is not an automatic
+    cleft-versus-groove identity proof.
+- evidence_id: fpocket
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/19486540/
+  locator: Primary method abstract; DOI:10.1186/1471-2105-10-168
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Fpocket uses alpha spheres and Voronoi geometry for candidate pocket detection.
+    It does not determine binding, catalytic role or allosteric coupling.
+- evidence_id: fpocket-cli
+  kind: authority
+  reference: https://raw.githubusercontent.com/Discngine/fpocket/master/doc/GETTINGSTARTED.md
+  locator: Basic command example and output description
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The upstream basic command accepts fpocket -f followed by an input coordinate
+    file. The curated recipe removes the previously unsupported output move; binaries
+    were not installed or executed in this audit.
+- evidence_id: pisa
+  kind: authority
+  reference: https://www.ccp4.ac.uk/html/pisa.html
+  locator: 'Command-line usage: -analyse and -xml'
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: PISA documents analysis with a session name, coordinate file and optional
+    configuration, then XML output. The curated recipe follows those commands and
+    records configuration/assembly limitations. A predicted interface is not experimental
+    binding proof.
+- evidence_id: so
+  kind: authority
+  reference: https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so-edit.obo
+  locator: data-version 2026-08-07; SO:0000410, SO:0001091 and SO:0001104 term stanzas
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: SO:0001091 is obsolete; its removal is warranted. SO:0000410 denotes a
+    polypeptide binding-site feature and SO:0001104 an amino acid involved in enzyme
+    activity. These do not justify broad GO function equivalence or a direct-chemistry-only
+    catalytic definition.
+- evidence_id: mcsa
+  kind: authority
+  reference: https://www.ebi.ac.uk/thornton-srv/m-csa/documentation/
+  locator: Section 3.3.b catalytic residue criteria and homology context
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: M-CSA includes residues directly involved in catalysis and essential indirect
+    contributors while excluding binding-only residues. Homology transfer requires
+    expert assessment and does not identify catalytic function from conservation alone.
+- evidence_id: metalpdb
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/23155064/
+  locator: Resource abstract; DOI:10.1093/nar/gks1063
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: MetalPDB organizes metal sites and local structural environments. Its minimal
+    functional site representation is not identical to the broader metal coordination
+    class, nor proof that every metal site stabilizes a fold or supports catalysis.
+- evidence_id: asd
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/31665428/
+  locator: ASD resource abstract; DOI:10.1093/nar/gkz958
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: ASD provides allosteric site/modulator context. A distinct allosteric site
+    does not imply one R/T model, a pocket geometry, or a universal inhibition/activation
+    pathway.
+- evidence_id: interface-study
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/42628823/
+  locator: Computational study abstract; DOI:10.1016/j.bbapap.2026.141172
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Interface-localized pockets across oligomeric enzyme ensembles are candidate
+    regulatory regions. Prediction does not establish a universal causal effector-binding
+    interface mechanism.
+- evidence_id: frab
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/42539251/
+  locator: Preprint abstract; DOI:10.64898/2026.07.17.739170
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The FraB preprint concerns substrate half-site reactivity in a dimer. It
+    can contextualize intersubunit coupling, not prove a generic allosteric effector
+    pocket.
+- evidence_id: cryptic-study
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/42734533/
+  locator: Computational study abstract; DOI:10.1021/acs.jcim.6c01260
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The recent study concerns computational opening and ligand assessment of
+    cryptic regions. It does not show that every newly detected pocket has functional
+    allosteric coupling.
+- evidence_id: cryptic-perspective
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/42821008/
+  locator: Perspective abstract; DOI:10.1007/s10822-026-00949-5
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: context_only
+  summary: The cited publication is a perspective on cryptic pocket discovery, not
+    experimental evidence for a universal causal chain.
+- evidence_id: kcsa
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/9525859/
+  locator: Primary structural abstract; DOI:10.1126/science.280.5360.69
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The KcsA study supports carbonyl-mediated potassium coordination and the
+    filter geometry underlying selective conductance. The two retained edges explicitly
+    concern KcsA; its length, carbonyl geometry and transport behavior are not imposed
+    on all Na/Ca/other channel filters.
+- evidence_id: kras
+  kind: primary_source
+  reference: https://shokatlab.ucsf.edu/pdfs/24256730.pdf
+  locator: Pages 1-3, abstract and Results; PMID:24256730, DOI:10.1038/nature12796
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The study reports Cys12-dependent inhibitor capture, nucleotide preference
+    shift and reduced Raf association in KRAS(G12C). The local capture process and
+    altered-binding state retain this particular mechanism without a universal enzyme-regulator
+    assertion. The paper carries an all-rights-reserved notice; no blanket paper license
+    is inferred.
+- evidence_id: go-small
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0036094
+  locator: Definition and is_a parent GO:0005488
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Small-molecule binding is a molecular function inheriting binding. It is
+    not an ontology grounding for covalent capture.
+- evidence_id: go-binding
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0005488
+  locator: Term definition
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: GO binding explicitly specifies noncovalent interaction. The corrected
+    KRAS graph uses a local BIOLOGICAL_PROCESS rather than this incompatible function.
+- evidence_id: chebi-effector
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/CHEBI:35224
+  locator: Effector definition and outgoing is_a biochemical role relationship
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: CHEBI:35224 denotes a biochemical role. The corrected graph instead uses
+    a local LIGAND node for the tested inhibitor set, with no false material grounding.
+- evidence_id: chebi-cysteine
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/CHEBI:29950
+  locator: L-cysteine residue; outgoing proteinogenic residue relationships
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: CHEBI:29950 is an L-cysteine residue and remains appropriate for residue
+    chemistry. The source study numbering is explicit and no qualified UniProt coordinate
+    is inferred.
+- evidence_id: go-metal
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0046872
+  locator: Term definition and binding ancestors
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Metal-ion binding is a molecular function; its study-scoped use in the
+    KcsA graph denotes potassium coordination, not a structural-class equivalent xref.
+- evidence_id: go-channel
+  kind: authority
+  reference: https://amigo.geneontology.org/amigo/term/GO:0005216
+  locator: Monoatomic ion channel activity definition
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The activity enables energy-independent facilitated diffusion through a
+    transmembrane pore without a carrier mechanism; the retained graph explicitly
+    scopes this function to KcsA.
+- evidence_id: graph-independent-20261028T190328Z-independent-kras-kcsa-graphs
+  kind: prior_review
+  reference: reviews/structured/20261028T190328Z-independent-kras-kcsa-graphs/review.yaml
+  locator: Independent two-graph source and ontology review
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: 'Primary-source claims are appropriately study-scoped and the covalent-capture
+    correction avoids GO noncovalent binding. One major KRAS participant-grounding
+    mismatch remains: biochemical-role CHEBI:35224 is used as the inhibitor molecule.
+    KcsA retained graph is supported within the declared scope.'
+- evidence_id: graph-independent-20261028T190720Z-independent-kras-kcsa-graphs-followup
+  kind: prior_review
+  reference: reviews/structured/20261028T190720Z-independent-kras-kcsa-graphs-followup/review.yaml
+  locator: Independent two-graph source and ontology review
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The KRAS inhibitor participant is now an explicitly local material LIGAND
+    set, resolving the ChEBI role-as-molecule mismatch. The three supported KRAS edges
+    and two KcsA edges retain their study scope. No new graph findings remain in this
+    two-target review; unrelated record findings are not closed.
+- evidence_id: pdb-1bxl
+  kind: database
+  reference: https://www.rcsb.org/structure/1BXL
+  locator: Version 1.4, chains/assembly, experimental method and primary abstract;
+    PMID:9020082
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The Bcl-xL/Bak complex provides a representative protein-peptide interface
+    in a solution NMR structure. The record retains a structural-geometry anchor and
+    source context without asserted occurrence bounds or qualification.
+- evidence_id: pdb-2cba
+  kind: database
+  reference: https://www.rcsb.org/structure/2CBA
+  locator: Version 1.5, X-ray metadata and primary abstract; PMID:1433293
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: Human carbonic anhydrase II provides a representative zinc-containing structure.
+    No donor-atom/residue selection or qualified trait occurrence is inferred from
+    accession alone.
+- evidence_id: search
+  kind: search
+  reference: research/structural-traits-20261028/motifs/cavity-post-identity-search.txt
+  locator: 47 matching lines from ignored-inclusive structure-corpus ID/label search
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The search includes hidden and ignored files and finds adjacent domain/fold/allosteric-network
+    records. Similar labels provide no identity basis to merge those records with
+    generic geometry or local-site classes.
+  search_scope: rg --no-ignore --hidden across data/traits/structure, exact selected
+    prefixes and cavity/cleft/groove/pocket/tunnel/allosteric/site labels. This is
+    a bounded boundary check, not a corpus-wide duplicate certification.
+- evidence_id: validation
+  kind: validation
+  reference: research/structural-traits-20261028/motifs/cavity-post-validation.json
+  locator: Four actual commands, UTC start/finish, stdout/stderr and exit codes
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: 15 seeder/foundational tests passed. Strict validation scanned all 16 with
+    no errors. Graph audit found 2 graphs, 7 nodes and 5 edges with no errors or warnings.
+    Native grounding validation scanned 16 with no semantic findings. These checks
+    do not certify source entailment or qualification.
+- evidence_id: maintained-inputs
+  kind: record_content
+  reference: data/curation/structural_trait_curations.yaml
+  locator: Selected exact input/output hashes, source emission pins and field blocks
+  accessed_at: '2026-10-28T19:07:42Z'
+  support: supports
+  summary: The current generated fields match a maintained overlay consumed by the
+    original seeders. The final generic protein-binding, catalytic-residue and metal-site
+    followups add scoped project-authored synthesis rights with upstream attributions,
+    not an upstream data redistribution license. Reviewed source emissions remain
+    SHA-256 pinned. The two followup entries pin their exact prior outputs and preserve
+    old history plus one new event; all 16 remain PROPOSED.
+assessments:
+- assessment_id: target-1
+  area: evidence
+  topic: CAVITY_SUBSTRATE_ACCESS_TUNNEL bounded remediation
+  outcome: supported
+  summary: The connected substrate pathway retains TUNNEL and drops incompatible enclosed
+    CAVITY ancestry. CAVER is named as the actual method, and neither geometry nor
+    a broad metabolism chain establishes transport function; the unsupported generic
+    graph is removed.
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - mole
+  - caver
+  - schema
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-2
+  area: evidence
+  topic: CAVITY bounded remediation
+  outcome: supported
+  summary: The definition is explicitly enclosed and solvent-disconnected for the
+    chosen probe and coordinate state. Vocabulary membership is provenance, not equivalence;
+    CASTp coverage and assembly/probe limits are explicit. No universal causal graph
+    is added.
+  target_ids:
+  - proteintraitsmech:CAVITY
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - valuesets
+  - valuesets-rights
+  - castp
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-3
+  area: evidence
+  topic: CLEFT bounded remediation
+  outcome: supported
+  summary: The elongated depression between structural elements remains distinct from
+    enclosed cavity and generic pocket. CASTp supplies candidate geometry with manual
+    class adjudication; no unsupported numerical class boundary or function is invented.
+  target_ids:
+  - proteintraitsmech:CLEFT
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - valuesets
+  - castp
+  - valuesets-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-4
+  area: evidence
+  topic: GROOVE bounded remediation
+  outcome: supported
+  summary: Surface-groove geometry is retained without an automatic groove classifier
+    or inferred function. Probe, coordinate and biological-assembly limits constrain
+    the proposed inspection method.
+  target_ids:
+  - proteintraitsmech:GROOVE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - valuesets
+  - castp
+  - valuesets-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-5
+  area: evidence
+  topic: POCKET bounded remediation
+  outcome: supported
+  summary: A solvent-accessible concavity is not defined by ligand binding or allostery.
+    The corrected fpocket reference/recipe supplies candidate geometry and its functional
+    limits; enum-wide equivalence is removed.
+  target_ids:
+  - proteintraitsmech:POCKET
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - valuesets
+  - fpocket
+  - fpocket-cli
+  - valuesets-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-6
+  area: evidence
+  topic: CAVITY_SELECTIVITY_FILTER_PORE bounded remediation
+  outcome: supported
+  summary: The broad selective transmembrane passage no longer inherits enclosed CAVITY
+    or universal KcsA dimensions. Two retained edges explicitly describe KcsA coordination/selective
+    conductance, with a local motif rather than a protein-domain class equivalence.
+  target_ids:
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - mole
+  - kcsa
+  - caver
+  - schema
+  - go-metal
+  - go-channel
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-7
+  area: evidence
+  topic: TUNNEL bounded remediation
+  outcome: supported
+  summary: The local definition covers internal-to-solvent or between-region passages
+    and explicitly separates source terminology. CAVER coverage states parameter and
+    conformer requirements; geometry alone is not transport evidence.
+  target_ids:
+  - proteintraitsmech:TUNNEL
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - valuesets
+  - mole
+  - caver
+  - valuesets-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-8
+  area: evidence
+  topic: ALLOSTERIC_ACTIVATOR_SITE bounded remediation
+  outcome: supported
+  summary: Positive modulation at a distinct site remains the class criterion; the
+    definition does not mandate a pocket, R/T model or enzyme-only mechanism. Fpocket
+    is geometry evidence, and the unsupported universal graph is absent.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - asd
+  - fpocket
+  - fpocket-cli
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-9
+  area: evidence
+  topic: ALLOSTERIC_INHIBITOR_SITE bounded remediation
+  outcome: supported
+  summary: Negative modulation is scoped to activity or affinity at a distinct site
+    and avoids one kinetic mechanism. Candidate pockets do not prove inhibition; the
+    universal graph is removed.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - asd
+  - fpocket
+  - fpocket-cli
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-10
+  area: evidence
+  topic: ALLOSTERIC_REGULATORY_SITE bounded remediation
+  outcome: supported
+  summary: The parent class covers modulation at a distinct functional site without
+    requiring a pocket or one allosteric model. Pocket synonyms are narrower and graph
+    overreach is removed.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - asd
+  - fpocket
+  - schema
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-11
+  area: evidence
+  topic: ALLOSTERIC_COVALENT_REGULATORY_SITE bounded remediation
+  outcome: supported
+  summary: The corrected local capture process represents covalent attachment, not
+    inherited noncovalent GO binding. Three edges preserve only the tested KRAS(G12C)
+    mechanism and exact short source snippets. The independent third-pass review also
+    replaces the effector role with a local material inhibitor-set LIGAND node. The
+    earlier graph-proposal error is explicitly linked and corrected, and a new history
+    event preserves the first event.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - kras
+  - go-small
+  - go-binding
+  - chebi-effector
+  - chebi-cysteine
+  - firstpass
+  - graph-prior
+  - graph-independent-20261028T190328Z-independent-kras-kcsa-graphs
+  - graph-independent-20261028T190720Z-independent-kras-kcsa-graphs-followup
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-12
+  area: evidence
+  topic: ALLOSTERIC_CRYPTIC_POCKET bounded remediation
+  outcome: supported
+  summary: The class combines hidden/occluded pocket accessibility and independently
+    supported allosteric coupling. Broad ligand-binding-site equivalence and universal
+    catalytic chain are removed; recent computational/perspective citations are scoped
+    accordingly.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - asd
+  - cryptic-study
+  - cryptic-perspective
+  - fpocket
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-13
+  area: evidence
+  topic: ALLOSTERIC_SUBUNIT_INTERFACE_SITE bounded remediation
+  outcome: supported
+  summary: Interface location and coupling define the class without requiring a pocket.
+    The corrected pocket synonym is NARROW, and predicted interface cavities/FraB
+    half-site context do not establish a universal causal chain. Prior history is
+    preserved with one correction event.
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - asd
+  - interface-study
+  - frab
+  - firstpass
+  - fpocket
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-14
+  area: evidence
+  topic: PROTEIN_BINDING_SITE bounded remediation
+  outcome: supported
+  summary: The obsolete SO:0001091 and enum-wide equivalence are removed. The polypeptide
+    binding-site mapping remains; PISA is explicitly predictive and the 1BXL representative
+    structure is not a qualified occurrence. The generic oligomerization/function
+    graph is removed.
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - so
+  - pisa
+  - pdb-1bxl
+  - schema
+  - rights
+  - so-rights
+  - pdb-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-15
+  area: evidence
+  topic: CATALYTIC_RESIDUE bounded remediation
+  outcome: supported
+  summary: The boundary includes direct chemistry and essential indirect catalytic
+    contributions and excludes binding-only evidence. M-CSA homology transfer is identified
+    as expert review with no invented executable detector; a universal transition-state
+    chain is not asserted.
+  target_ids:
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - mcsa
+  - so
+  - schema
+  - rights
+  - so-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+- assessment_id: target-16
+  area: evidence
+  topic: METAL_BINDING_SITE bounded remediation
+  outcome: supported
+  summary: The class is metal coordination rather than the MetalPDB minimal-functional-site
+    template or a GO molecular function. Database geometry inspection has expert-review
+    evidence and explicit functional limits; 2CBA is representative only and no universal
+    stabilization/catalysis chain remains.
+  target_ids:
+  - proteintraitsmech:METAL_BINDING_SITE
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - metalpdb
+  - pdb-2cba
+  - schema
+  - rights
+  - pdb-rights
+  dimensions:
+  - name: scientific_status
+    value: PROPOSED; representative-only where present
+    definition: No human sign-off or qualified occurrence is conferred by this followup.
+    evidence_ids:
+    - current
+    - schema
+findings:
+- finding_id: enum-xrefs
+  issue_key: structural-traits-enum-xrefs
+  category: identity
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Vocabulary identifier is not equivalent to each member
+  description: 'Prior finding: Remove valuesets:LocalStructuralFeature from trait-equivalence
+    xrefs while retaining enum/member provenance. Record upstream Apache-2.0 attribution
+    without assuming a blanket evidence license. Current disposition: Removed valuesets:LocalStructuralFeature
+    from all eight affected equivalence lists, retaining native source provenance.
+    Five enum-derived geometry records carry source-specific Apache attribution; project
+    synthesis licensing does not relicense papers.'
+  target_ids:
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:TUNNEL
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - xrefs
+  - provenance
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - valuesets
+  - valuesets-rights
+  - schema
+  - rights
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-cavity-geometry
+    finding_id: enum-xrefs
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-binding-catalytic-metal
+    finding_id: enum-xrefs
+  disposition_reason: Removed valuesets:LocalStructuralFeature from all eight affected
+    equivalence lists, retaining native source provenance. Five enum-derived geometry
+    records carry source-specific Apache attribution; project synthesis licensing
+    does not relicense papers.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: geometry-coverage
+  issue_key: structural-traits-geometry-coverage
+  category: completeness
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Generic geometry seeds lack evidence and detection limits
+  description: 'Prior finding: The five generic geometry records contain no detection_methods
+    or evidence. Add class-specific operational limits: probe radius and coordinate
+    state, biological assembly, solvent connectivity, and need for independent functional
+    evidence. Avoid inventing universal groove/cleft numerical boundaries. Current
+    disposition: Five generic geometry records now contain evidence and method-specific
+    operational limits, including probe/conformer/assembly and the distinction between
+    geometry and function. No universal cleft/groove threshold or causal chain was
+    manufactured.'
+  target_ids:
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:TUNNEL
+  field_paths:
+  - definition
+  - detection_methods
+  - evidence
+  - notes
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - valuesets
+  - castp
+  - mole
+  - fpocket
+  - caver
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-cavity-geometry
+    finding_id: geometry-coverage
+  disposition_reason: Five generic geometry records now contain evidence and method-specific
+    operational limits, including probe/conformer/assembly and the distinction between
+    geometry and function. No universal cleft/groove threshold or causal chain was
+    manufactured.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: enclosed-parent
+  issue_key: structural-traits-enclosed-parent
+  category: identity
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Connected tunnel and pore are not enclosed-void subclasses
+  description: 'Prior finding: Both functional pathways inherit CAVITY although its
+    maintained definition requires an enclosed solvent-inaccessible void. Keep the
+    explicit enum meaning and remove that superclass, retaining TUNNEL under the current
+    broad passage definition. Do not merge geometry with demonstrated function. Current
+    disposition: Both functional connected pathways retain TUNNEL and remove the incompatible
+    enclosed CAVITY parent.'
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  field_paths:
+  - parent_traits
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - valuesets
+  - mole
+  - caver
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-cavity-geometry
+    finding_id: enclosed-parent
+  disposition_reason: Both functional connected pathways retain TUNNEL and remove
+    the incompatible enclosed CAVITY parent.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: pathway-method
+  issue_key: structural-traits-pathway-method
+  category: evidence
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: One CAVER recipe is labelled as two distinct methods
+  description: 'Prior finding: The CAVER tool and Java recipe do not execute MOLE.
+    Rename as CAVER and state starting-point/configuration, atom radii, probe size,
+    conformer and ensemble requirements. A computed path is insufficient evidence
+    for transport or ion selectivity. Current disposition: The method is now named
+    CAVER, with its own recipe and configuration/input/conformer limits. MOLE is not
+    falsely claimed to execute; successful detector execution remains outside this
+    review.'
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  field_paths:
+  - detection_methods
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - caver
+  - mole
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-cavity-geometry
+    finding_id: pathway-method
+  disposition_reason: The method is now named CAVER, with its own recipe and configuration/input/conformer
+    limits. MOLE is not falsely claimed to execute; successful detector execution
+    remains outside this review.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: channel-overgeneralization
+  issue_key: structural-traits-channel-overgeneralization
+  category: scope
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: KcsA architecture was generalized to unrelated ion channels
+  description: 'Prior finding: Remove the universal approximately 12-A length, carbonyl
+    geometry and near-diffusion rate from the broad class definition. Preserve KcsA-specific
+    mechanism evidence with its explicit protein scope. Broad GO/CHEBI/SO domain IDs
+    in these two pathway records are functional/contextual nodes rather than equivalent
+    structural class identifiers. Current disposition: Broad-class KcsA dimensions,
+    architecture/rate constraints and non-equivalent function/domain xrefs are removed.
+    Only a two-edge explicitly KcsA-scoped example mechanism remains; the substrate-tunnel
+    generic chain is removed.'
+  target_ids:
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  field_paths:
+  - definition
+  - xrefs
+  - causal_graphs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - kcsa
+  - caver
+  - schema
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-cavity-geometry
+    finding_id: channel-overgeneralization
+  disposition_reason: Broad-class KcsA dimensions, architecture/rate constraints and
+    non-equivalent function/domain xrefs are removed. Only a two-edge explicitly KcsA-scoped
+    example mechanism remains; the substrate-tunnel generic chain is removed.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: fpocket-reference
+  issue_key: structural-traits-fpocket-reference
+  category: evidence
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: All six allosteric methods cite an unrelated PMID
+  description: 'Prior finding: Replace PMID26950260 with PMID19486540 for fpocket;
+    separate AlloSitePro rather than assigning its identity to the fpocket tool. Remove
+    the broken filename-based mv and use the documented fpocket invocation. Candidate
+    pockets do not establish allostery, crypticity, covalent reactivity or effect
+    direction. Current disposition: All six allosteric methods cite the actual fpocket
+    primary paper PMID19486540 and documented fpocket -f input invocation. Mislabelled
+    methods and unsupported output move are absent, and predicted geometry is not
+    presented as allosteric proof.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  field_paths:
+  - detection_methods
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - fpocket
+  - fpocket-cli
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-allosteric-sites
+    finding_id: fpocket-reference
+  disposition_reason: All six allosteric methods cite the actual fpocket primary paper
+    PMID19486540 and documented fpocket -f input invocation. Mislabelled methods and
+    unsupported output move are absent, and predicted geometry is not presented as
+    allosteric proof.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: allostery-scope
+  issue_key: structural-traits-allostery-scope
+  category: scope
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Generic allosteric class definitions require unjustified mechanisms
+  description: 'Prior finding: General allosteric regulatory sites need not be pockets;
+    activators/inhibitors need not follow a mandatory R/T scheme or a fixed enzyme
+    inhibition mode. Subunit-interface sites need not require concerted rotation or
+    catalytic cooperativity. Define demonstrated coupling and direction of effect;
+    preserve specific mechanisms only at their documented scope. Current disposition:
+    All six definitions describe site-level modulation at a distinct function without
+    imposing universal pocket, R/T or enzyme-only behavior. Unsupported broad-class
+    graphs are removed; the retained covalent mechanism is study-scoped.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  field_paths:
+  - definition
+  - parent_traits
+  - causal_graphs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - asd
+  - kras
+  - schema
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-allosteric-sites
+    finding_id: allostery-scope
+  disposition_reason: All six definitions describe site-level modulation at a distinct
+    function without imposing universal pocket, R/T or enzyme-only behavior. Unsupported
+    broad-class graphs are removed; the retained covalent mechanism is study-scoped.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: cryptic-equivalence
+  issue_key: structural-traits-cryptic-equivalence
+  category: identity
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Cryptic binding pocket is broader than cryptic allosteric pocket
+  description: 'Prior finding: The exact synonym cryptic binding pocket drops the
+    requirement for allosteric coupling. Mark as a broad synonym or remove. A single
+    static pocket prediction does not establish crypticity; compare declared structural
+    states and independently demonstrate allostery. Current disposition: Cryptic allosteric
+    pocket is retained under regulatory site and geometric POCKET with broad ligand-binding
+    equivalence removed. Computational accessibility evidence is distinguished from
+    causal functional coupling.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  field_paths:
+  - synonyms
+  - definition
+  - detection_methods
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - cryptic-study
+  - cryptic-perspective
+  - asd
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-allosteric-sites
+    finding_id: cryptic-equivalence
+  disposition_reason: Cryptic allosteric pocket is retained under regulatory site
+    and geometric POCKET with broad ligand-binding equivalence removed. Computational
+    accessibility evidence is distinguished from causal functional coupling.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: interface-prediction-causality
+  issue_key: structural-traits-interface-prediction-causality
+  category: graph
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Candidate interface pockets are used as causal evidence
+  description: 'Prior finding: The record quotes candidate regulatory regions as evidence
+    for occupancy changing packing and regulating catalysis. These quoted claims do
+    not entail the asserted causal edges. GO0042803 is labelled protein homodimerization
+    activity while the class covers oligomeric interfaces generally. Defer those broad
+    edges pending a demonstrated specific mechanism. Current disposition: The universal
+    interface mechanism graph is removed. The computational pocket paper is candidate
+    evidence and FraB is explicitly preprint half-site context rather than a generic
+    effector mechanism.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  field_paths:
+  - causal_graphs[0].edges[1]
+  - causal_graphs[0].edges[3]
+  - causal_graphs[0].nodes
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - interface-study
+  - frab
+  - asd
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-allosteric-sites
+    finding_id: interface-prediction-causality
+  disposition_reason: The universal interface mechanism graph is removed. The computational
+    pocket paper is candidate evidence and FraB is explicitly preprint half-site context
+    rather than a generic effector mechanism.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: generic-mechanism-overreach
+  issue_key: structural-traits-generic-mechanism-overreach
+  category: graph
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Database-overview text does not support universal causal chains
+  description: 'Prior finding: Protein binding is connected to oligomerization using
+    a database-resource description; catalytic activity to positive regulation of
+    metabolism using an atlas description; metal binding to fold stability and catalysis
+    using site-organization descriptions. The snippets do not establish these universal
+    edges. Retain direct supported chemistry only, or replace with scoped experimental
+    mechanisms. No ontology-label correction is asserted without inspecting the authoritative
+    term. Current disposition: Unsupported universal graphs were removed from protein-binding,
+    catalytic-residue and metal-site classes. No replacement graph was manufactured
+    to satisfy historical graph-count tests.'
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - causal_graphs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - pisa
+  - mcsa
+  - metalpdb
+  - schema
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-binding-catalytic-metal
+    finding_id: generic-mechanism-overreach
+  disposition_reason: Unsupported universal graphs were removed from protein-binding,
+    catalytic-residue and metal-site classes. No replacement graph was manufactured
+    to satisfy historical graph-count tests.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: catalytic-boundary
+  issue_key: structural-traits-catalytic-boundary
+  category: scope
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Definition excludes essential indirect catalytic roles
+  description: 'Prior finding: M-CSA explicitly includes essential indirect roles,
+    not only direct chemical participants. Broaden the definition accordingly while
+    excluding proximity and ordinary binding as sufficient criteria. Current disposition:
+    Definition includes direct and essential indirect catalytic roles, with binding-only
+    exclusion and explicit expert-review method limits consistent with inspected M-CSA
+    criteria.'
+  target_ids:
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  field_paths:
+  - definition
+  - detection_methods
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - mcsa
+  - so
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-binding-catalytic-metal
+    finding_id: catalytic-boundary
+  disposition_reason: Definition includes direct and essential indirect catalytic
+    roles, with binding-only exclusion and explicit expert-review method limits consistent
+    with inspected M-CSA criteria.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: metal-boundary
+  issue_key: structural-traits-metal-boundary
+  category: scope
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Metal coordination is conflated with broader site template and function
+  description: 'Prior finding: The definition equates the local donor-atom site with
+    a Minimal Functional Site and requires selected biological roles. Define coordination
+    geometry independently; identify the larger MetalPDB template and demonstrate
+    biological role separately. Remove GO0046872 from equivalence xrefs; it is the
+    metal ion binding function, not the structural site. Current disposition: Definition
+    uses metal coordination geometry and no longer treats MetalPDB minimal functional
+    sites or generic GO metal binding as equivalent structural class identities. Functional
+    and physiological limits are explicit.'
+  target_ids:
+  - proteintraitsmech:METAL_BINDING_SITE
+  field_paths:
+  - definition
+  - xrefs
+  - causal_graphs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - metalpdb
+  - pdb-2cba
+  - schema
+  - rights
+  - pdb-rights
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184221Z-binding-catalytic-metal
+    finding_id: metal-boundary
+  disposition_reason: Definition uses metal coordination geometry and no longer treats
+    MetalPDB minimal functional sites or generic GO metal binding as equivalent structural
+    class identities. Functional and physiological limits are explicit.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: obsolete-binding-xref
+  issue_key: structural-traits-obsolete-binding-xref
+  category: identity
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Obsolete broader SO term used as exact binding-site equivalence
+  description: 'Prior finding: The seed xrefs SO0001091, obsolete generic non_covalent_binding_site.
+    Remove it; retain source-provenance-backed SO0000410 pending any narrower mapping
+    adjudication. Current disposition: Removed obsolete SO:0001091 while retaining
+    source-native SO:0000410, with no blanket protein-binding function/class equivalence
+    substituted.'
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  field_paths:
+  - xrefs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - so
+  - schema
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_localstructuralfeature.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T184648Z-protein-binding-obsolete-xref
+    finding_id: obsolete-binding-xref
+  disposition_reason: Removed obsolete SO:0001091 while retaining source-native SO:0000410,
+    with no blanket protein-binding function/class equivalence substituted.
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+- finding_id: covalent-noncovalent-grounding
+  issue_key: structural-traits-covalent-noncovalent-grounding
+  category: grounding
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: Covalent capture was incorrectly grounded as noncovalent GO binding
+  description: 'Prior finding: Replace GO:0036094 in the study-scoped KRAS mechanism
+    with an ungrounded local BIOLOGICAL_PROCESS node describing covalent capture.
+    Preserve the supported three edges and their primary evidence. Current disposition:
+    Replaced incompatible GO:0036094 with local kras_g12c_covalent_capture BIOLOGICAL_PROCESS
+    and preserved the three study-supported edges. The corrected bytes and new history
+    event were reread; this closes the preserved first-pass observation and supersedes
+    my historical proposal.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  field_paths:
+  - causal_graphs
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - firstpass
+  - go-small
+  - go-binding
+  - kras
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained curation overlay; frozen preimage is historical input only
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T185945Z-allosteric-firstpass-corrections
+    finding_id: covalent-noncovalent-grounding
+  disposition_reason: Replaced incompatible GO:0036094 with local kras_g12c_covalent_capture
+    BIOLOGICAL_PROCESS and preserved the three study-supported edges. The corrected
+    bytes and new history event were reread; this closes the preserved first-pass
+    observation and supersedes my historical proposal.
+- finding_id: interface-pocket-synonym
+  issue_key: structural-traits-interface-pocket-synonym
+  category: identity
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: A pocket synonym was exact for a broader interface-site class
+  description: 'Prior finding: Change inter-subunit allosteric pocket from EXACT_SYNONYM
+    to NARROW_SYNONYM; the site definition does not require pocket geometry. Current
+    disposition: The broader interface-site class now marks inter-subunit allosteric
+    pocket as NARROW_SYNONYM. First-pass bytes are preserved and the correction appends
+    history without rewriting earlier events.'
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  field_paths:
+  - synonyms
+  evidence_ids:
+  - current
+  - maintained-inputs
+  - validation
+  - firstpass
+  - asd
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_foundational_traits.py
+    role: maintained seeder
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained curation overlay; frozen preimage is historical input only
+  - repository: CultureBotAI/proteintraitsmech
+    path: data/curation/structural_trait_curations.yaml
+    role: maintained exact-hash curation overlay consumed by the original seeders
+  external_issues:
+  - https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+  previous_occurrences:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261028T185945Z-allosteric-firstpass-corrections
+    finding_id: interface-pocket-synonym
+  disposition_reason: The broader interface-site class now marks inter-subunit allosteric
+    pocket as NARROW_SYNONYM. First-pass bytes are preserved and the correction appends
+    history without rewriting earlier events.
+actions: []
+boundary_decisions:
+- action: retain
+  target_ids:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+  - proteintraitsmech:CAVITY
+  - proteintraitsmech:CLEFT
+  - proteintraitsmech:GROOVE
+  - proteintraitsmech:POCKET
+  - proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
+  - proteintraitsmech:TUNNEL
+  rationale: Retain distinct solvent-connectivity and surface geometry classes, and
+    distinguish functional pathways from their broad geometry. Source terminology
+    overlaps do not establish synonymy.
+  evidence_ids:
+  - current
+  - valuesets
+  - mole
+  - search
+- action: retain
+  target_ids:
+  - proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE
+  - proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
+  - proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
+  - proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+  rationale: Retain the parent regulatory site and its directional, chemical, accessibility
+    and interface subclasses. The pocket subset is not exact synonymy with all sites.
+  evidence_ids:
+  - current
+  - asd
+  - kras
+  - firstpass
+  - search
+- action: retain
+  target_ids:
+  - proteintraitsmech:PROTEIN_BINDING_SITE
+  - proteintraitsmech:CATALYTIC_RESIDUE
+  - proteintraitsmech:METAL_BINDING_SITE
+  rationale: Retain protein association, catalytic contribution and metal coordination
+    as separate class criteria; representative structures do not collapse them into
+    families or instances.
+  evidence_ids:
+  - current
+  - mcsa
+  - metalpdb
+  - so
+  - search
+limitations:
+- Completed refers to the bounded remediation question and all 16 selected records.
+  This does not close the initial reviews limitation that every legacy reference,
+  quote and ontology identifier has not been independently recertified.
+- No structural detector, PISA analysis or molecular experiment was executed. CASTp
+  and MetalPDB inspection and M-CSA expert homology review are honestly non-executable
+  coverage; class-specific discrimination/function remains in open record discussions.
+- Official CAVER PDF retrieval was intermittent; its opening material was accessible
+  but the command section could not be fully reinspected in this pass. The recipe
+  is not execution-certified. The CAVER method identity and geometry-versus-function
+  boundary were checked against the inspected primary method abstract.
+- PDB 1BXL and 2CBA are representative geometry anchors. None of these 16 records
+  gains a qualified canonical protein occurrence, verified residue bounds or human
+  REVIEWED status; deterministic grounding success is not qualification.
+- Project data licensing covers project-authored synthesis only. Upstream papers,
+  structures, tool software and copied source material retain their own rights; no
+  blanket publication license is inferred.
+- Self-review is declared for the overall bundle because I authored the earlier graph
+  proposal and implementation tests. The original cavity/binding definition proposals
+  and record edits came from other agents; a further independent review of my contribution
+  remains useful.
+- No absence or duplicate-equivalence claim is made outside the declared ignored-inclusive
+  structural ID/label search.
+notes:
+- Historical graph-review.json is preserved unchanged; its GO:0036094 covalent-capture
+  proposal is explicitly superseded by the linked first-pass observation and current
+  local process node.
+- The final two scientific followups changed only their reviewed content/history via
+  the guarded editor. This reviewer wrote review artifacts and the separately assigned
+  seeder/test integration, but no scientific YAML, overlay, Git, workflow or session
+  state.
+- Structured transcriptomic adapters are not applicable to generic protein structural-site
+  boundaries; absence from such adapters is not biological evidence.
+related_reviews:
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T184221Z-cavity-geometry
+  relationship: followup
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T184221Z-allosteric-sites
+  relationship: followup
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T184221Z-binding-catalytic-metal
+  relationship: followup
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T184648Z-protein-binding-obsolete-xref
+  relationship: followup
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T185945Z-allosteric-firstpass-corrections
+  relationship: followup
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T190328Z-independent-kras-kcsa-graphs
+  relationship: independent graph review context; resolution owned by that reviewer
+- repository: CultureBotAI/proteintraitsmech
+  review_id: 20261028T190720Z-independent-kras-kcsa-graphs-followup
+  relationship: independent graph review context; resolution owned by that reviewer
+links:
+- https://github.com/CultureBotAI/ProteinTraitsMech/issues/1201
+tags:
+- structural-traits
+- remediation-followup
+- bounded-review
+```

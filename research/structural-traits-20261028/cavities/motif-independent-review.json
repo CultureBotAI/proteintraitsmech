@@ -1,0 +1,217 @@
+{
+  "schema_version": "1.0",
+  "reviewer": "Codex cavity_binding_evidence",
+  "independence": "Independent of the motif dossier author and root implementing agent; no motif or ledger writes performed.",
+  "created_at": "2026-10-28T18:48:59.951029+00:00",
+  "scope": "Eight proposed motif ledger entries, their effective inherited parents, evidence dossier and initial audit; independent scientific spot-check of proposed fields.",
+  "input_hashes": [
+    {
+      "path": "data/curation/structural_trait_curations.yaml",
+      "sha256": "26061a505c534c415839fe11cf51f1be533c4108f2eb9791d2168758ca16259f"
+    },
+    {
+      "path": "research/structural-traits-20261028/motifs/evidence-dossier.json",
+      "sha256": "2365b337930122508817dd59747ca2149d1627660c66809f39899a48bd3f2fdb"
+    },
+    {
+      "path": "research/structural-traits-20261028/motifs/initial-review.json",
+      "sha256": "c14d7820a2413adb638f0f3f5f1a4f9a430e85fcc6c461c789c9c2a96abcfe97"
+    }
+  ],
+  "verdict": "accept_with_bounded_corrections",
+  "blocking_before_apply": [
+    "beta-turn-boundary"
+  ],
+  "assessments": [
+    {
+      "identifier": "proteintraitsmech:HELIX_TURN_HELIX",
+      "assessment": "Accept the geometric definition, SUPER_SECONDARY_MOTIF parent, SO0001081 xref, sequence-screen caveat and bounded PDB1LMB representation. A whole-structure anchor is not a local-motif comparison or qualified occurrence."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_ALPHA_BETA",
+      "assessment": "Accept parallel hydrogen-bonded strands and intervening alpha helix; PROMOTIF .bab has the same documented scope. The E-H-E token alone is insufficient, as the record explains."
+    },
+    {
+      "identifier": "proteintraitsmech:GREEK_KEY",
+      "assessment": "Accept four-strand +3,-1,-1 connectivity and retained token; the inspected primary abstract allows several geometries. Add the planned explicit manual connectivity review method; no universal automatic classifier should be implied."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_HAIRPIN",
+      "assessment": "Accept two sequence-adjacent antiparallel paired strands with connecting loop, broader motif parent repair, removal of SO0001114/enum equivalence, and explicit non-equivalence of a generic connector to a four-residue beta turn."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_TURN",
+      "assessment": "Parent and SO0001133 mapping repairs are supported, but strengthen the definition with a compact nonhelical-turn condition; the current wording does not distinguish an arbitrary tetrapeptide."
+    },
+    {
+      "identifier": "proteintraitsmech:SUPER_SECONDARY_MOTIF",
+      "assessment": "Accept small-number/spatial-connectivity synthesis and POLYPEPTIDE_STRUCTURAL_MOTIF parent. No generic executable classifier was established; keep that gap visible."
+    },
+    {
+      "identifier": "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF",
+      "assessment": "Accept need-not-form replacement and SO0001079 equivalence. The source does not prohibit independently stable units. SO license basis is explicit."
+    },
+    {
+      "identifier": "proteintraitsmech:TURN",
+      "assessment": "Accept DSSP-assigned T identity and SECONDARY_STRUCTURE_ELEMENT parent; it is not the universal parent of geometric beta turns. Use state-string notation and avoid asking for subsequent motif classification to identify this state itself."
+    }
+  ],
+  "sources_independently_inspected": [
+    {
+      "id": "so",
+      "url": "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so-edit.obo",
+      "inspected": "Release2026-08-07; SO0001079, SO0001081, SO0001114, SO0001128, SO0001133; parent and part relationships",
+      "support": "Independently confirms wrong helix xref, motif stability modality and beta-turn/H-bond tension.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    },
+    {
+      "id": "promotif",
+      "url": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+      "inspected": "Availability/install/run, secondary structure, beta turns, strands/sheets/BAB, hairpins",
+      "support": "Independently confirms the proposed classification scope and external license/setup prerequisite.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    },
+    {
+      "id": "greek",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8506258/",
+      "inspected": "DOI10.1093/protein/6.3.233 and abstract",
+      "support": "Four-strand conventional connectivity encompasses multiple 3D arrangements.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    },
+    {
+      "id": "emboss",
+      "url": "https://emboss.bioinformatics.nl/cgi-bin/emboss/help/helixturnhelix",
+      "inspected": "Description; EMBOSS6.6 qualifiers",
+      "support": "Sequence scoring reports putative HTH motifs; declared recipe options supported.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    },
+    {
+      "id": "dssp",
+      "url": "https://raw.githubusercontent.com/PDB-REDO/dssp/trunk/doc/mkdssp.md",
+      "inspected": "Synopsis/options; H-bond algorithm description; DSSP state table",
+      "support": "Current CLI supports explicit legacy output; T denotes Turn.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    },
+    {
+      "id": "pdb1lmb",
+      "url": "https://www.rcsb.org/structure/1LMB",
+      "inspected": "Entry1.3, 1.80A Xray, citation PMID1387915 DOI10.1016/0022-2836(92)90690-l, HTH abstract, chains C/D author3/4",
+      "support": "Valid structure containing documented HTH region; no exact local boundaries verified.",
+      "accessed_at": "2026-10-28T18:48:59.951029+00:00"
+    }
+  ],
+  "corrections": [
+    {
+      "id": "beta-turn-boundary",
+      "severity": "major",
+      "target_ids": [
+        "proteintraitsmech:BETA_TURN"
+      ],
+      "fields": [
+        "definition",
+        "definitions[STRUCTURAL]"
+      ],
+      "reason": "After removing the narrower DSSP-T parent, the proposed definition supplies no compact-turn condition. Central torsions and optional H-bond alone do not delimit beta turns.",
+      "proposed_definition": "A local four-residue backbone turn with a compact, nonhelical central conformation; an i-to-i+3 backbone hydrogen bond may be present.",
+      "proposed_structural_definition": "In the PROMOTIF operational definition, four consecutive residues i through i+3 form a beta turn when the C-alpha atoms of i and i+3 are separated by less than 7 angstroms and the two central residues are nonhelical. Subtypes are classified by the central backbone torsions; the end-to-end hydrogen bond is optional.",
+      "source_ids": [
+        "promotif",
+        "so"
+      ],
+      "implementation_note": "Retain SO0001133 mapping and cite the manual alongside it. Treat the distance test as the named operational convention, not a newly invented universal numerical ontology axiom."
+    },
+    {
+      "id": "turn-state-field",
+      "severity": "minor",
+      "target_ids": [
+        "proteintraitsmech:TURN"
+      ],
+      "fields": [
+        "secondary_structure_representations",
+        "detection_methods[0].name"
+      ],
+      "reason": "DSSP T is a residue-assignment state, whereas topology_string represents a normalized element arrangement. Subsequent motif classification is not required to identify the T assignment itself.",
+      "proposed_representation": {
+        "method": "DSSP state definition",
+        "state_alphabet": "DSSP_8",
+        "ss_string": "T",
+        "evidence_source": "PMID:6667333"
+      },
+      "proposed_method_name": "DSSP coordinate-based assignment of the T turn state",
+      "source_ids": [
+        "dssp"
+      ],
+      "implementation_note": "If existing rendering requires topology_string for compatibility, retain it temporarily but add ss_string and state that it is symbolic class notation, not a measured sequence. Keep PPII/version differences outside this bounded T-state repair."
+    },
+    {
+      "id": "evidence-note-prose",
+      "severity": "minor",
+      "target_ids": [
+        "proteintraitsmech:BETA_ALPHA_BETA",
+        "proteintraitsmech:GREEK_KEY",
+        "proteintraitsmech:BETA_HAIRPIN",
+        "proteintraitsmech:BETA_TURN",
+        "proteintraitsmech:SUPER_SECONDARY_MOTIF",
+        "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF",
+        "proteintraitsmech:TURN"
+      ],
+      "fields": [
+        "evidence[0].notes"
+      ],
+      "reason": "Several proposed evidence notes contain curation instructions such as remove or move. Convert these to source-specific scientific support statements; keep unresolved actions in discussions or the review dossier.",
+      "example_replacements": {
+        "BETA_ALPHA_BETA": "The documented motif requires parallel paired strands joined through a helix; the E-H-E token alone does not encode strand pairing.",
+        "BETA_HAIRPIN": "The two strands are antiparallel and paired; the connecting loop need not be a four-residue beta turn.",
+        "BETA_TURN": "The geometric beta-turn convention can include motifs without the end-to-end hydrogen bond required by the narrower DSSP T assignment."
+      },
+      "source_ids": [
+        "promotif",
+        "so",
+        "dssp"
+      ]
+    },
+    {
+      "id": "rights-disposition-specificity",
+      "severity": "minor",
+      "target_ids": [
+        "proteintraitsmech:HELIX_TURN_HELIX",
+        "proteintraitsmech:BETA_TURN",
+        "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF"
+      ],
+      "fields": [
+        "license_disposition"
+      ],
+      "reason": "The boilerplate says assign source license only after review even where a reviewed SO CC-BY4 license is already assigned. Make the ledger disposition reflect the actual retained source basis.",
+      "proposed_value": "SO-derived/paraphrased definition and mapping use the inspected Sequence Ontology CC-BY-4.0 terms. Other cited papers and software retain their own terms; no figures, program code or full-text source prose are redistributed.",
+      "source_ids": [
+        "so"
+      ],
+      "implementation_note": "For the five records without a license assignment, retain the unresolved/source-specific disposition unless root separately establishes a project-authored-content rights basis. Do not copy a software license into the scientific content license."
+    }
+  ],
+  "greek_key_method_advice": {
+    "name": "PROMOTIF sheet-topology extraction followed by reviewed Greek-key connectivity classification",
+    "method_type": "STRUCTURAL_ALGORITHM",
+    "tool": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+    "reference": "PMID:8506258",
+    "recipe": "promotif {input.pdb}",
+    "evidence_note": "The command supplies sheet-topology data; a curator must inspect .sht/.str connectivity and confirm the stated four-strand convention. This is not an automatic Greek-key classification result. Authorized PROMOTIF installation and documented command alias/wrapper are prerequisites.",
+    "alternative": "Omit recipe if presenting only the manual adjudication step; preserve the explicit classifier gap."
+  },
+  "pdb1lmb_decision": {
+    "decision": "retain",
+    "scope": "Representative PDB entry containing a source-described HTH region, with no residue-range or qualified occurrence claim.",
+    "required_limits": [
+      "Retain chain C/D versus author3/4 identifiers.",
+      "Retain motif-bounds-unspecified language.",
+      "Do not treat whole-entry Foldseek or TM-score comparison as local-motif equivalence."
+    ],
+    "optional_refinement": "A future localized motif representation needs source-supported residue selection; do not guess ranges in this repair."
+  },
+  "limitations": [
+    "Primary full articles and all licensing terms were not re-inspected for every prior source. Hairpin PMC page was blocked; independent support came from inspected author manual.",
+    "This JSON is an implementation review input, not a replacement for the immutable initial review or a native post-curation certification.",
+    "No software recipe was executed or qualified occurrence produced.",
+    "No source or record absence claim was made; ignored-inclusive alias audit remains the separately captured motif audit."
+  ]
+}

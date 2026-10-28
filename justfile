@@ -721,6 +721,10 @@ seed-complexportal *args:
 repair-complexportal-errata *args:
     uv run python scripts/repair_complexportal_errata.py {{args}}
 
+# Bounded source-reviewed structural fields; dry-run unless --apply.
+curate-structural-traits *args:
+    uv run python scripts/curate_structural_traits.py {{args}}
+
 # --- Round-4 sources (research/protein-trait-sources-round4.md) ---
 
 # UniProtKB controlled-vocabulary Keywords (CC-BY 4.0) -> class-level

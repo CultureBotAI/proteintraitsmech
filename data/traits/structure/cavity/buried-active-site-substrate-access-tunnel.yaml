@@ -1,15 +1,15 @@
 identifier: proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
 label: "buried active-site substrate/product access tunnel"
 definition: >-
-  An internal structural tunnel connecting a deeply buried enzyme catalytic cavity to the bulk exterior solvent, characterized by a bottleneck radius, length, curvature, and gating residue lining that control substrate ingress, water/cosubstrate access, reaction-intermediate shielding, and product egress.
-definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+  A passage connecting a buried enzyme active-site region to exterior solvent that serves as a
+  route for substrate entry or product release.
+definition_source: PMID:23093919
 trait_axis: STRUCTURE
 trait_category: STRUCT_CAVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
-  - proteintraitsmech:CAVITY
-  - proteintraitsmech:TUNNEL
+- proteintraitsmech:TUNNEL
 synonyms:
   - synonym_text: "enzyme active-site access tunnel"
     synonym_type: EXACT_SYNONYM
@@ -17,80 +17,49 @@ synonyms:
     synonym_type: EXACT_SYNONYM
   - synonym_text: "gated catalytic access channel"
     synonym_type: RELATED_SYNONYM
-xrefs:
-  - CHEBI:24431
-  - GO:0036094
-  - GO:0003824
-  - GO:0008152
+
 detection_methods:
-  - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_0250
-    tool: "biotools:caver"
-    evidence_code: ECO:0007669
-    reference: PMID:23093919
-    recipe: "java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}"
-causal_graphs:
-  - graph_id: CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL
-    title: "Internal access tunnel geometry governs small-molecule exchange with buried catalytic sites"
-    description: "A buried active-site access tunnel provides the internal transport pathway for small-molecule substrates, ions, and solvent (CHEBI:24431) to reach and depart the occluded catalytic pocket, enabling small molecule binding (GO:0036094), regulating enzyme catalytic activity (GO:0003824), and supporting cellular metabolic processes (GO:0008152)."
-    nodes:
-      - node_id: "CHEBI:24431"
-        label: "chemical entity"
-        node_type: LIGAND
-        grounding: "CHEBI:24431"
-        description: "Small-molecule substrates, ions, and water solvent transported through the internal access tunnel"
-      - node_id: "GO:0036094"
-        label: "small molecule binding"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0036094"
-        description: "Transport and binding of small-molecule substrates and ligands into the buried enzyme active site"
-      - node_id: "GO:0003824"
-        label: "catalytic activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0003824"
-        description: "Enzyme catalysis within the buried active-site cavity governed by tunnel bottleneck geometry and gating kinetics"
-      - node_id: "GO:0008152"
-        label: "metabolic process"
-        node_type: BIOLOGICAL_PROCESS
-        grounding: "GO:0008152"
-        description: "Enzymatic metabolic conversions mediated by biocatalysts with buried active-site tunnels"
-    edges:
-      - subject: "CHEBI:24431"
-        predicate: "involved in"
-        predicate_id: RO:0002331
-        object: "GO:0036094"
-        description: "Internal protein tunnels facilitate the transport of small-molecule substrates, ions, and water between bulk solvent and buried binding sites."
-        evidence:
-          - reference: PMID:23093919
-            snippet: "Tunnels and channels facilitate the transport of small molecules, ions and water solvent in a large variety of proteins."
-            notes: "Tunnels facilitate small-molecule and solvent transport in proteins (PMID:23093919). (ECO:0000305)"
-      - subject: "GO:0036094"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
-        object: "GO:0003824"
-        description: "Pathway geometry, physicochemical lining, and dynamics of substrate/product transport pathways govern enzyme structure-function and catalytic activity."
-        evidence:
-          - reference: PMID:23093919
-            snippet: "Characteristics of individual transport pathways, including their geometry, physico-chemical properties and dynamics are instrumental for understanding of structure-function relationships of these proteins, for the design of new inhibitors and construction of improved biocatalysts."
-            notes: "Tunnel geometry and dynamics govern enzyme catalytic function (PMID:23093919). (ECO:0000305)"
-      - subject: "GO:0003824"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
-        object: "GO:0008152"
-        description: "Biocatalytic turnover in enzymes with buried active-site access tunnels drives metabolic transformations."
-        evidence:
-          - reference: PMID:23093919
-            snippet: "Characteristics of individual transport pathways, including their geometry, physico-chemical properties and dynamics are instrumental for understanding of structure-function relationships of these proteins, for the design of new inhibitors and construction of improved biocatalysts."
-            notes: "Biocatalytic function enabled by buried active-site tunnels (PMID:23093919). (ECO:0000305)"
+- name: CAVER 3.0 candidate transport-path geometry from a configured starting point
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:caver
+  reference: PMID:23093919
+  recipe: java -Xmx4g -cp ./lib -jar ./caver.jar -home . -pdb {input} -conf config.txt -out {output}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+
 evidence:
-  - reference: PMID:23093919
-    notes: "Tunnels and channels facilitate the transport of small molecules, ions, and water solvent between buried enzyme active sites and bulk solvent, governing substrate specificity and catalytic efficiency."
+- reference: PMID:23093919
+  notes: CAVER computes candidate pathways between internal regions and exterior solvent. The method
+    paper discusses their potential roles in molecular transport; geometry alone does not establish
+    substrate identity, flux or catalytic effects.
+- reference: PMID:23953065
+  notes: Connected passages and surface-to-surface pores are distinguished from enclosed voids; terminology
+    varies across methods.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
   action: EDIT
-  changes: Expanded CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL to a 4-node, 3-edge mechanism (CHEBI:24431 -> GO:0036094
-    -> GO:0003824 -> GO:0008152) with verbatim snippets from PMID:23093919 (Round 125).
+  changes: Expanded CG_CAVITY_SUBSTRATE_ACCESS_TUNNEL to a 4-node, 3-edge mechanism (CHEBI:24431 ->
+    GO:0036094 -> GO:0003824 -> GO:0008152) with verbatim snippets from PMID:23093919 (Round 125).
   llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated parent_traits, xrefs, detection_methods, definition, definition_source, evidence,
+    discussions, causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_CAVITY_SUBSTRATE_ACCESS_TUNNEL_DETECTION
+  prompt: A computed route becomes an access tunnel only with evidence connecting it to substrate/product
+    transport. CAVER {input} is a PDB-file directory; config.txt requires a starting point and stated
+    probe/shell/clustering parameters. Dynamics, gating and ligand chemistry can invalidate a path suggested
+    by one static model.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
 license: CC-BY-4.0
