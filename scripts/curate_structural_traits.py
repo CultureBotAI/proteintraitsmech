@@ -15,7 +15,9 @@ from pathlib import Path
 import yaml
 
 from record_io import RecordValidationError, is_curated, write_validated_record
-from structural_trait_curations import ROOT, apply_blocks, digest, load_curations, parse_record
+from structural_trait_curations import (
+    ROOT, apply_blocks, check_blocks_pin, digest, load_curations, parse_record,
+)
 from validate_strict import validate_one
 
 TRAITS_ROOT = ROOT / "data/traits"
@@ -55,7 +57,12 @@ def curate_record_text(text: str, entry: dict) -> str:
             or data.get("trait_category") != entry["trait_category"]
             or data.get("term_kind") != "CLASS"):
         raise ValueError("unexpected structural trait identity/scope; re-review required")
+    check_blocks_pin(entry)
     if digest(text) == entry["output_sha256"]:
+        # A separately repinned block edit still cannot reuse an old record pin.
+        # Compare values: block replacement can normalize unrelated blank lines.
+        if parse_record(apply_blocks(text, entry)) != data:
+            raise ValueError(f"{entry['identifier']}: completed output disagrees with reviewed ledger")
         return text
     if not reviewed_input(text, entry):
         raise ValueError(f"{entry['identifier']}: curated input requires re-review")

@@ -8,6 +8,7 @@ text; it cannot qualify examples, allocate identifiers, or write trait records.
 from __future__ import annotations
 
 import hashlib
+import json
 import re
 from functools import lru_cache
 from pathlib import Path
@@ -28,6 +29,16 @@ FIELDS = {
 
 def digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def blocks_digest(blocks: dict) -> str:
+    """Pin exact block strings and deletions, independent of YAML key order."""
+    return digest(json.dumps(blocks, sort_keys=True, separators=(",", ":"), ensure_ascii=True))
+
+
+def check_blocks_pin(entry: dict) -> None:
+    if blocks_digest(entry["blocks"]) != entry.get("blocks_sha256"):
+        raise ValueError(f"{entry['identifier']}: blocks do not match reviewed ledger; re-review required")
 
 
 def parse_record(text: str) -> dict:
@@ -57,7 +68,7 @@ def load_curations() -> dict[str, dict]:
                 or ".." in path.parts or path.suffix != ".yaml"
                 or path.parts[:3] != ("data", "traits", "structure")):
             raise ValueError(f"duplicate or unsafe curation target: {identifier}")
-        for key in ("input_sha256", "output_sha256"):
+        for key in ("input_sha256", "output_sha256", "blocks_sha256"):
             if not re.fullmatch(r"[0-9a-f]{64}", entry[key]):
                 raise ValueError(f"invalid {key}: {identifier}")
         if (entry.get("allow_proposed_followup") is True
@@ -69,6 +80,11 @@ def load_curations() -> dict[str, dict]:
             if (not re.fullmatch(r"seed_[a-z_]+", owner)
                     or not re.fullmatch(r"[0-9a-f]{64}", sha)):
                 raise ValueError(f"invalid seeder pin: {identifier}")
+        outputs = entry.get("seed_outputs")
+        if (not isinstance(outputs, dict) or outputs.keys() != entry["seed_preimages"].keys()
+                or any(not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha)
+                       for sha in outputs.values())):
+            raise ValueError(f"missing or invalid seeder output pins: {identifier}")
         blocks = entry["blocks"]
         if not isinstance(blocks, dict) or not blocks or set(blocks) - FIELDS:
             raise ValueError(f"unreviewed field in curation: {identifier}")
@@ -86,6 +102,7 @@ def load_curations() -> dict[str, dict]:
         if (not events or not events[-1].get("llm_assisted")
                 or events[-1].get("curator") != "codex-gpt-6-astra"):
             raise ValueError(f"missing honest agent attribution: {identifier}")
+        check_blocks_pin(entry)
         paths.add(entry["path"])
         result[identifier] = entry
     return result
@@ -131,7 +148,11 @@ def curate_seed(text: str, owner: str) -> str:
     entry = load_curations().get(identifier)
     if entry is None:
         return text
+    check_blocks_pin(entry)
     expected = entry["seed_preimages"].get(owner)
     if expected is None or digest(text) != expected:
         raise ValueError(f"{identifier}: {owner} source drift; re-review required")
-    return apply_blocks(text, entry)
+    out = apply_blocks(text, entry)
+    if digest(out) != entry.get("seed_outputs", {}).get(owner):
+        raise ValueError(f"{identifier}: {owner} output does not match reviewed ledger; re-review required")
+    return out

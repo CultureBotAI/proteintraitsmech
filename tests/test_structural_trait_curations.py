@@ -50,6 +50,8 @@ def entry():
         },
     }
     result["output_sha256"] = curations.digest(curations.apply_blocks(ORIGINAL, result))
+    result["blocks_sha256"] = curations.blocks_digest(result["blocks"])
+    result["seed_outputs"] = {"seed_test": result["output_sha256"]}
     return result
 
 
@@ -98,6 +100,38 @@ def test_output_pin_detects_changed_curated_fields(entry):
         editor.curate_record_text(ORIGINAL, entry)
 
 
+@pytest.mark.parametrize("repin_blocks", [False, True])
+def test_completed_output_rejects_stale_blocks(entry, repin_blocks):
+    out = editor.curate_record_text(ORIGINAL, entry)
+    entry["blocks"]["definition"] = "definition: Changed after review.\n"
+    if repin_blocks:
+        entry["blocks_sha256"] = curations.blocks_digest(entry["blocks"])
+    with pytest.raises(ValueError, match="reviewed ledger"):
+        editor.curate_record_text(out, entry)
+
+
+def test_seed_output_pin_rejects_separately_repinned_blocks(entry, monkeypatch):
+    entry["blocks"]["definition"] = "definition: Changed after review.\n"
+    entry["blocks_sha256"] = curations.blocks_digest(entry["blocks"])
+    monkeypatch.setattr(curations, "load_curations", lambda: {entry["identifier"]: entry})
+    with pytest.raises(ValueError, match="seed_test output does not match reviewed ledger"):
+        curations.curate_seed(ORIGINAL, "seed_test")
+
+
+@pytest.mark.parametrize("outputs", [None, {}, {"seed_other": "0" * 64}, {"seed_test": "bad"}])
+def test_ledger_requires_complete_valid_seed_output_pins(entry, outputs, tmp_path, monkeypatch):
+    entry["seed_outputs"] = outputs
+    ledger = tmp_path / "ledger.yaml"
+    ledger.write_text(yaml.safe_dump({"version": 1, "records": [entry]}))
+    monkeypatch.setattr(curations, "LEDGER", ledger)
+    curations.load_curations.cache_clear()
+    try:
+        with pytest.raises(ValueError, match="seeder output pins"):
+            curations.load_curations()
+    finally:
+        curations.load_curations.cache_clear()
+
+
 def test_exact_reviewed_seeded_history_is_preserved(entry):
     old_event = {"timestamp": "2026-10-01T00:00:00Z", "curator": "claude",
                  "action": "earlier_curation", "llm_assisted": True}
@@ -107,6 +141,7 @@ def test_exact_reviewed_seeded_history_is_preserved(entry):
         {"curation_history": [old_event, last_event]}, sort_keys=False)
     entry["input_sha256"] = curations.digest(original)
     entry["output_sha256"] = curations.digest(curations.apply_blocks(original, entry))
+    entry["blocks_sha256"] = curations.blocks_digest(entry["blocks"])
     with pytest.raises(ValueError, match="curated input"):
         editor.curate_record_text(original, entry)
     entry["allow_seeded_history"] = True
@@ -128,6 +163,7 @@ def test_existing_agent_event_cannot_substitute_for_a_new_change_event(entry):
     entry["input_sha256"] = curations.digest(original)
     entry["allow_seeded_history"] = True
     entry["output_sha256"] = curations.digest(curations.apply_blocks(original, entry))
+    entry["blocks_sha256"] = curations.blocks_digest(entry["blocks"])
     with pytest.raises(ValueError, match="exactly one history event"):
         editor.curate_record_text(original, entry)
 
@@ -143,6 +179,7 @@ def followup_entry(entry):
                     "action": "EDIT", "changes": "Resolve independent review.", "llm_assisted": True})
     revised["blocks"]["curation_history"] = yaml.safe_dump({"curation_history": history})
     revised["output_sha256"] = curations.digest(curations.apply_blocks(previous, revised))
+    revised["blocks_sha256"] = curations.blocks_digest(revised["blocks"])
     return previous, revised
 
 
@@ -230,6 +267,7 @@ def test_invalid_candidate_blocks_all_corpus_writes(entry, tmp_path, monkeypatch
     path.write_text(ORIGINAL)
     entry["blocks"]["detection_methods"] = "detection_methods:\n  - unknown_field: bad\n"
     entry["output_sha256"] = curations.digest(curations.apply_blocks(ORIGINAL, entry))
+    entry["blocks_sha256"] = curations.blocks_digest(entry["blocks"])
     monkeypatch.setattr(editor, "ROOT", tmp_path)
     monkeypatch.setattr(editor, "TRAITS_ROOT", tmp_path / "data/traits")
     monkeypatch.setattr(editor, "load_curations", lambda: {entry["identifier"]: entry})

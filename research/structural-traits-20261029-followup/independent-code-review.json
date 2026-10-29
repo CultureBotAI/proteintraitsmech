@@ -1,0 +1,136 @@
+{
+  "review_type": "independent_adversarial_code_writer_review",
+  "reviewer": "Codex /root/verify_scope",
+  "reviewed_at_utc": "2026-10-29T04:35:44.902946+00:00",
+  "repository": "CultureBotAI/proteintraitsmech",
+  "pull_request": 1202,
+  "reviewed_head": "93c1a021d76a94fd299e0a1e3cf8f1b9671a3703",
+  "reviewed_base": "c4147394c698324ae537c0c63c2c9f6647c4f4fc",
+  "comparison": "three-dot diff of exact pinned base/head",
+  "independence": "Reviewer did not author PR changes and performed separate local behavioral probes; inspected existing review reports only as context.",
+  "verdict": "changes_requested",
+  "findings": [
+    {
+      "id": "PTM1202-CODE-001",
+      "priority": "P2",
+      "severity": "major",
+      "status": "confirmed",
+      "category": "reviewed-ledger-integrity",
+      "title": "Bind reviewed block content before accepting seeder replay or an editor no-op",
+      "locations": [
+        {
+          "path": "scripts/structural_trait_curations.py",
+          "line": 128,
+          "end_line": 137
+        },
+        {
+          "path": "scripts/curate_structural_traits.py",
+          "line": 58,
+          "end_line": 59
+        },
+        {
+          "path": "scripts/structural_trait_curations.py",
+          "line": 72,
+          "end_line": 80
+        }
+      ],
+      "description": "The loader checks that hashes are syntactically valid and that field blocks have the expected shape, but does not bind the reviewed block values to those hashes. curate_seed checks only the original seeder input hash, then applies the blocks without a reviewed output check. A stale edit to a ledger block therefore changes valid regenerated scientific content while every existing review pin remains unchanged. On the same edited ledger, curate_record_text accepts the previously committed output as an unchanged success before examining the block values. This creates inconsistent results across the two maintained writer routes.",
+      "reproduction": {
+        "artifact": "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.py",
+        "result": "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.json",
+        "command": "PYTHONDONTWRITEBYTECODE=1 workspace/worktrees/ptm-structure-20261028-029cc7/worktree/.venv/bin/python workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.py",
+        "steps": [
+          "Load the actual 24-record ledger and change only HELIX_TURN_HELIX blocks.definition in a temporary ledger copy; preserve all input/output/seeder pins.",
+          "Point the real loader to that temporary file and run load_curations(); it succeeds.",
+          "Call actual seed_secondary_structure.emit() for HTH; it emits the changed definition.",
+          "Write the emitted record through write_validated_record() to a temporary path; strict validation returns no errors.",
+          "Call curate_record_text() for the committed original output and same stale ledger; it returns an unchanged success."
+        ],
+        "observed": {
+          "identifier": "proteintraitsmech:HELIX_TURN_HELIX",
+          "ledger_loader_accepted": true,
+          "original_output_pin_retained": true,
+          "seeded_definition": "Changed scientific definition without a new reviewed output hash.",
+          "schema_errors": [],
+          "guarded_temp_write_succeeded": true,
+          "record_editor_current_output_noop": true,
+          "temporary_paths_only": true
+        }
+      },
+      "impact": "An accidental or incomplete follow-up ledger edit can silently produce scientific seed output not covered by the stored reviewed output pin, and the normal editor dry-run can fail to identify the drift. The currently committed 24 records do match their output pins; this finding concerns enforcement of the reviewed-input contract, not a demonstrated mismatch in those committed records.",
+      "proposed_fix": "Validate a digest binding the reviewed blocks, or equivalent per-owner reviewed output pins, before either route accepts the entry; account for legitimate differences between source emission and corpus bytes. Do not treat the corpus output hash alone as a seed-output hash when unrelated retained fields differ.",
+      "acceptance_checks": [
+        "A temporary real ledger whose definition, evidence or causal_graphs block changes without matching reviewed integrity metadata must fail loader/editor/seeder paths before any record write.",
+        "Cover the editor path where the existing record already matches output_sha256; it must still detect stale ledger block content.",
+        "Exercise all three actual seeder integrations; retain rejection of original source drift.",
+        "Keep all 24 committed record outputs reproducible from pinned input snapshots, current replay idempotent, and all 25 source/owner emissions semantically consistent with committed records.",
+        "Rerun tests/test_structural_trait_curations.py, tests/test_seeder_structural_curations.py, tests/test_foundational_traits.py and tests/test_inplace_editor_guards.py."
+      ]
+    }
+  ],
+  "scope": [
+    "New guarded editor scripts/curate_structural_traits.py",
+    "New reviewed ledger loader/transform scripts/structural_trait_curations.py",
+    "Actual three seeder integrations",
+    "Ledger input/output/history replay and source drift",
+    "Changed tests and old-behavior regression sensitivity",
+    "Generated documentation ownership",
+    "Live PR review substance/issues1200-1201 and current exact-head CI coverage"
+  ],
+  "checks": [
+    {
+      "command": "git rev-parse HEAD; git status --short; git diff c414739...93c1a021; git show exact-head paths",
+      "result": "Exact head matched, worktree clean, 98 changed files inspected by scope."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -p no:cacheprovider -q tests/test_structural_trait_curations.py tests/test_seeder_structural_curations.py tests/test_foundational_traits.py tests/test_inplace_editor_guards.py",
+      "cwd": "owned PTM worktree",
+      "exit_code": 0,
+      "output": "92 passed in 3.44s"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 <owned-venv>/bin/python /Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/code-review-probes.py",
+      "exit_code": 0,
+      "evidence": "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/code-review-probes.json",
+      "result": "24 exact output hashes and editor no-ops; 24 outputs reproduced from pinned base/follow-up preimages; history appended exactly once; 25 seeder-owner emissions preserve committed semantics/history and reach byte-stable merge; all 24 records pass closed-schema validate_one."
+    },
+    {
+      "command": "Old-behavior mutation: replace each seeder hook with identity in memory, emit original seed, merge into current record",
+      "result": "All 25 source/owner cases regress current record semantics; the new hooks therefore address observable old behavior."
+    },
+    {
+      "command": "Real temporary-ledger stale-block reproduction",
+      "exit_code": 0,
+      "evidence": "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.json",
+      "result": "Confirmed finding PTM1202-CODE-001 without any PTM modifications."
+    },
+    {
+      "command": "gh pr view1202; gh issue view1200 and1201; gh api exact-head actions jobs123041264980 and123041271445",
+      "result": "PR head/base confirmed; all four required contexts green. checks job ran full just test, writer/schema/history-related gates, lint and DOM test. validate-strict ran changed-file strict/grounding/structural checks; full corpus validation steps were skipped."
+    }
+  ],
+  "positive_observations": [
+    "Current ledger output hashes agree with all24 changed records; retained input snapshots reproduce all24 outputs byte-for-byte.",
+    "The maintained seed hooks preserve current record semantics and exact history; no current regeneration regression found across25 owner/record emissions.",
+    "Tests replace unsupported graph-count assertions with explicit reviewed removals and scoped-graph identities; unrelated cohorts retain existing assertions.",
+    "docs/index.html edits lie in generated landing regions and refresh already-stale base counts. Browser JSON/shards are intentionally ignored and generated by the existing Pages workflow; absence from the PR is expected.",
+    "Shared authoritative schema, method registry, builder source and grounding provider code are not modified in this diff."
+  ],
+  "ci_limits": [
+    "Green changed-file validation is not full corpus strict/grounding validation.",
+    "Existing tests did not reject stale reviewed block content when seed input pins remain valid; additional regression tests requested.",
+    "Existing Pages deployment runs on main; independent review did not deploy or rebuild the complete browser corpus."
+  ],
+  "limitations": [
+    "Scientific literature entailment, licensing and biological detector execution belong to the separate scientific review and were not independently re-audited here.",
+    "No full8582-test suite rerun locally; focused92 tests and24 strict record checks were independently run, with full-suite execution verified from CI job steps.",
+    "The branch is concurrently owned by another worker; this report applies only to the recorded head, regardless of subsequent main/head movement.",
+    "No PTM edits, Git mutations, external messages, research API sweeps, launches, merges or cleanup performed. Only CLAW report files and temporary probe fixtures were written."
+  ],
+  "artifacts": [
+    "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/code-review-probes.py",
+    "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/code-review-probes.json",
+    "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.py",
+    "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/reproduce-stale-ledger.json"
+  ]
+}
