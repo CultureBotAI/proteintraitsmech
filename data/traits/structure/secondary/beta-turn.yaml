@@ -1,22 +1,55 @@
 identifier: proteintraitsmech:BETA_TURN
 label: beta turn
 definition: >-
-  Four-residue turn reversing the chain, often i→i+3 hydrogen bonded; the commonest turn.
-definition_source: DSSP (Kabsch & Sander 1983; mkdssp)
+  A local four-residue backbone turn with a compact, nonhelical central conformation; an i-to-i+3
+  backbone hydrogen bond may be present.
+definition_source: SO:0001133
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
-- proteintraitsmech:TURN
+- proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF
 secondary_structure_representations:
 - method: curated
   state_alphabet: TOPOLOGY
   topology_string: turn
-  evidence_source: research/cross-source-comparison-review-1.md
+  evidence_source: SO:0001133
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): turn.
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: In the PROMOTIF operational definition, four consecutive residues i through i+3 form a beta
+    turn when the C-alpha atoms of i and i+3 are separated by less than 7 angstroms and the two central
+    residues are nonhelical. Subtypes are classified by the central backbone torsions; the end-to-end
+    hydrogen bond is optional.
+  source: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  method: GENERATED
+xrefs:
+- SO:0001133
+detection_methods:
+- name: PROMOTIF coordinate motif classification (licensed external prerequisite)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  reference: PMID:8745398
+  recipe: promotif {input.pdb}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+evidence:
+- reference: SO:0001133
+  notes: The geometric beta-turn convention can include motifs without the end-to-end hydrogen bond
+    required by the narrower DSSP T assignment.
+- reference: https://github.com/The-Sequence-Ontology/SO-Ontologies/blob/master/LICENSE
+  notes: Sequence Ontology CC-BY-4.0 terms inspected 2026-10-28; definition paraphrased from the 2026-08-07
+    ontology. Cited papers and software retain their own terms.
+- reference: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  notes: PROMOTIF v2 manual documents the recipe and class-specific output. An authorized installation
+    is required under its academic-use terms; the program was neither installed nor run in this curation.
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, parent_traits, xrefs, mapping_status, definitions,
+    secondary_structure_representations, detection_methods, evidence, license using the cited sources
+    and data/curation/structural_trait_curations.yaml. Retained scoped evidence and method limits; no
+    canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

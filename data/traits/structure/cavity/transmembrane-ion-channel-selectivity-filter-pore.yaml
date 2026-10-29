@@ -1,15 +1,15 @@
 identifier: proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE
 label: "transmembrane ion-channel selectivity-filter pore"
 definition: >-
-  A specialized transmembrane channel cavity architecture consisting of a wide, water-filled central vestibule coupled to a narrow (~12 A long) constricted selectivity filter lined by backbone carbonyl oxygens or side-chain coordination rings that mimic the hydration shell of a specific permeant ion (such as K+, Na+, or Ca2+), enabling rapid, near-diffusion-limited conduction with high ionic selectivity.
-definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+  A transmembrane ion-conduction passage containing a localized structural region that
+  discriminates among permeating ion species.
+definition_source: PMID:9525859
 trait_axis: STRUCTURE
 trait_category: STRUCT_CAVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
-  - proteintraitsmech:CAVITY
-  - proteintraitsmech:TUNNEL
+- proteintraitsmech:TUNNEL
 synonyms:
   - synonym_text: "ion channel selectivity filter pore"
     synonym_type: EXACT_SYNONYM
@@ -17,75 +17,67 @@ synonyms:
     synonym_type: EXACT_SYNONYM
   - synonym_text: "selectivity filter and central cavity"
     synonym_type: RELATED_SYNONYM
-xrefs:
-  - SO:0000417
-  - GO:0046872
-  - GO:0005216
-  - GO:0034220
+
 detection_methods:
-  - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_0250
-    tool: "biotools:caver"
-    evidence_code: ECO:0007669
-    reference: PMID:23093919
-    recipe: "java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}"
+- name: CAVER 3.0 candidate transport-path geometry from a configured starting point
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:caver
+  reference: PMID:23093919
+  recipe: java -Xmx4g -cp ./lib -jar ./caver.jar -home . -pdb {input} -conf config.txt -out {output}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
 causal_graphs:
-  - graph_id: CG_CAVITY_SELECTIVITY_FILTER_PORE
-    title: "Backbone carbonyl coordination and multi-ion repulsion in the selectivity-filter pore drive selective ion conduction"
-    description: "The pore-lining selectivity-filter polypeptide domain (SO:0000417) holds backbone carbonyl oxygens at precise coordination distances to enable selective metal ion binding (GO:0046872) that dehydrates and coordinates permeant ions while excluding non-cognate ions, which is causally upstream of monoatomic ion channel activity (GO:0005216) and positively regulates monoatomic ion transmembrane transport (GO:0034220)."
-    nodes:
-      - node_id: "SO:0000417"
-        label: polypeptide_domain
-        node_type: DOMAIN
-        grounding: "SO:0000417"
-        description: "Pore-lining transmembrane selectivity-filter domain combining a central water-filled cavity with a narrow 12-A carbonyl-lined filter"
-      - node_id: "GO:0046872"
-        label: "metal ion binding"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0046872"
-        description: "Dehydrated metal ion coordination by the rings of main-chain carbonyl oxygen atoms lining the 12-A selectivity filter"
-      - node_id: "GO:0005216"
-        label: "monoatomic ion channel activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0005216"
-        description: "Selective catalysis of facilitated diffusion of monoatomic ions through a transmembrane aqueous pore"
-      - node_id: "GO:0034220"
-        label: "monoatomic ion transmembrane transport"
-        node_type: BIOLOGICAL_PROCESS
-        grounding: "GO:0034220"
-        description: "Selective conduction of monoatomic ions across the lipid bilayer driven by multi-ion electrostatic repulsion"
-    edges:
-      - subject: "SO:0000417"
-        predicate: enables
-        predicate_id: RO:0002327
-        object: "GO:0046872"
-        description: "Structurally constrained main-chain carbonyl oxygens in the selectivity-filter domain coordinate dehydrated K+ ions while excluding smaller Na+ ions."
-        evidence:
-          - reference: PMID:9525859
-            snippet: "Main chain carbonyl oxygen atoms from the K+ channel signature sequence line the selectivity filter, which is held open by structural constraints to coordinate K+ ions but not smaller Na+ ions."
-            notes: "Selectivity filter carbonyl geometry coordinates K+ selectively (PMID:9525859). (ECO:0000269)"
-      - subject: "GO:0046872"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "GO:0005216"
-        description: "Selective coordination of permeant ions in the filter pore drives selective monoatomic ion channel activity."
-        evidence:
-          - reference: PMID:9525859
-            snippet: "Main chain carbonyl oxygen atoms from the K+ channel signature sequence line the selectivity filter, which is held open by structural constraints to coordinate K+ ions but not smaller Na+ ions."
-            notes: "Carbonyl-lined selectivity filter enables selective monoatomic ion channel activity (PMID:9525859). (ECO:0000269)"
-      - subject: "GO:0005216"
-        predicate: "positively regulates"
-        predicate_id: RO:0002213
-        object: "GO:0034220"
-        description: "Electrostatic repulsion between simultaneously bound ions in the selectivity filter promotes rapid transmembrane ion conduction."
-        evidence:
-          - reference: PMID:9525859
-            snippet: "This configuration promotes ion conduction by exploiting electrostatic repulsive forces to overcome attractive forces between K+ ions and the selectivity filter."
-            notes: "Multi-ion electrostatic repulsion drives rapid selective conduction (PMID:9525859). (ECO:0000269)"
+- graph_id: CG_CAVITY_SELECTIVITY_FILTER_PORE
+  title: 'KcsA: selectivity-filter geometry supports selective potassium conduction'
+  description: Specific structural mechanism proposed for Streptomyces lividans KcsA in Doyle et al.
+    (1998), PMID:9525859. Carbonyl geometry supports K+ coordination and discrimination against Na+.
+    The source also proposes a multi-ion repulsion mechanism. These assertions do not describe every
+    ion-channel selectivity filter.
+  nodes:
+  - node_id: kcsa_selectivity_filter
+    label: KcsA selectivity filter
+    node_type: MOTIF
+    description: Selectivity-filter region in the KcsA structure studied by Doyle et al. (1998); no
+      residue bounds or independent polypeptide-domain identity asserted.
+    local: true
+  - node_id: GO:0046872
+    label: metal ion binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0046872
+    description: K+ coordination by backbone carbonyls in the studied KcsA selectivity filter.
+  - node_id: GO:0005216
+    label: monoatomic ion channel activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0005216
+    description: Selective potassium-channel function interpreted for the studied KcsA pore.
+  edges:
+  - subject: kcsa_selectivity_filter
+    predicate: enables
+    predicate_id: RO:0002327
+    object: GO:0046872
+    description: KcsA filter carbonyl geometry coordinates K+ while discriminating against smaller Na+.
+    evidence:
+    - reference: PMID:9525859
+      snippet: coordinate K+ ions but not smaller Na+ ions
+      notes: Structural interpretation of the studied KcsA filter, not every channel. (ECO:0000269)
+  - subject: GO:0046872
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: GO:0005216
+    description: In the source structural interpretation, selective K+ coordination contributes to KcsA
+      potassium-channel selectivity.
+    evidence:
+    - reference: PMID:9525859
+      snippet: selective K+ conduction
+      notes: Source abstract; mechanistic interpretation from KcsA structure. (ECO:0000305)
 evidence:
-  - reference: PMID:9525859
-    notes: "The KcsA potassium channel pore comprises a wide water-filled central cavity and a narrow 12-angstrom selectivity filter lined by main-chain carbonyl oxygens that coordinate dehydrated K+ ions for selective conduction."
+- reference: PMID:9525859
+  notes: The KcsA potassium channel pore comprises a wide water-filled central cavity and a narrow 12-angstrom
+    selectivity filter lined by main-chain carbonyl oxygens that coordinate dehydrated K+ ions for selective
+    conduction.
+- reference: PMID:23953065
+  notes: Connected passages and surface-to-surface pores are distinguished from enclosed voids; terminology
+    varies across methods.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
@@ -93,4 +85,24 @@ curation_history:
   changes: Expanded CG_CAVITY_SELECTIVITY_FILTER_PORE to a 4-node, 3-edge mechanism (SO:0000417 -> GO:0046872
     -> GO:0005216 -> GO:0034220) with verbatim snippets from PMID:9525859 (Round 125).
   llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated parent_traits, xrefs, detection_methods, definition, definition_source, evidence,
+    discussions, causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_CAVITY_SELECTIVITY_FILTER_PORE_DETECTION
+  prompt: Pore geometry does not identify the permeating ion or establish selectivity. Require ion-specific
+    functional evidence and an explicitly scoped structural model. The KcsA length, carbonyl arrangement
+    and K/Na discrimination in PMID9525859 are an example, not a universal Na/Ca-channel architecture.
+    CAVER input/configuration requirements are as documented in its manual.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
 license: CC-BY-4.0

@@ -1,11 +1,49 @@
 identifier: proteintraitsmech:TUNNEL
 label: tunnel
 definition: >-
-  An elongated, often buried, passage through the structure connecting two regions.
+  An elongated passage through a protein structure connecting an internal region to exterior
+  solvent or linking two regions of the structure.
 definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
 trait_axis: STRUCTURE
 trait_category: STRUCT_CAVITY
 term_kind: CLASS
-mapping_status: SEEDED
-xrefs:
-  - valuesets:LocalStructuralFeature
+mapping_status: PROPOSED
+detection_methods:
+- name: CAVER 3.0 candidate transport-path geometry from a configured starting point
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:caver
+  reference: PMID:23093919
+  recipe: java -Xmx4g -cp ./lib -jar ./caver.jar -home . -pdb {input} -conf config.txt -out {output}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+evidence:
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Class identity follows the named enum member; the enum identifier is source provenance, not
+    an equivalent trait.
+- reference: PMID:23093919
+  notes: CAVER detects candidate pathways in static structures or structural ensembles.
+- reference: PMID:23953065
+  notes: MOLE illustrates that channel, tunnel and cavity terminology is method-dependent.
+- reference: https://github.com/linkml/valuesets/blob/main/LICENSE
+  notes: The named LocalStructuralFeature enum member is distributed under Apache-2.0, inspected 2026-10-28.
+    Method papers retain their own terms.
+discussions:
+- discussion_id: STRUCTURE_20261028_TUNNEL_DETECTION
+  prompt: CAVER {input} is a directory of PDB files. Run from its installed directory with lib, bin
+    and caver.jar available; config.txt must define a starting point and probe/shell/clustering parameters.
+    Candidate geometry does not prove molecular transport.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, license, definition, detection_methods, evidence, discussions, mapping_status
+    using the cited sources and data/curation/structural_trait_curations.yaml. Retained scoped evidence
+    and method limits; no canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+license: Apache-2.0

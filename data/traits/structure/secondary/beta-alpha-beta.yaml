@@ -1,22 +1,53 @@
 identifier: proteintraitsmech:BETA_ALPHA_BETA
 label: beta-alpha-beta motif
 definition: >-
-  Two parallel beta strands connected by an alpha helix packed against the sheet (the Rossmann building block).
-definition_source: DSSP (Kabsch & Sander 1983; mkdssp)
+  A supersecondary motif with two parallel, hydrogen-bonded beta strands connected in sequence
+  through an intervening alpha helix.
+definition_source: PMID:8745398
 trait_axis: STRUCTURE
 trait_category: STRUCT_SECONDARY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
 - proteintraitsmech:SUPER_SECONDARY_MOTIF
 secondary_structure_representations:
 - method: curated
   state_alphabet: TOPOLOGY
   topology_string: E-H-E
-  evidence_source: research/cross-source-comparison-review-1.md
+  evidence_source: PMID:8745398
 definitions:
-  - kind: STRUCTURAL
-    text: >-
-      Secondary-structure arrangement (topology string): E-H-E.
-    source: "curated secondary-structure topology"
-    method: SOURCED
+- kind: STRUCTURAL
+  text: A supersecondary motif with two parallel, hydrogen-bonded beta strands connected in sequence
+    through an intervening alpha helix.
+  source: PMID:8745398
+  method: GENERATED
+detection_methods:
+- name: PROMOTIF coordinate motif classification (licensed external prerequisite)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  reference: PMID:8745398
+  recipe: promotif {input.pdb}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+evidence:
+- reference: PMID:8745398
+  notes: The documented motif requires parallel paired strands joined through a helix; the E-H-E token
+    alone does not encode strand pairing.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis, annotations and topology notation are CC-BY-4.0 under LICENSE/
+    LICENSE-DATA; this is not a license for the cited articles or tools. No article prose, figures,
+    matrices or software are redistributed. Source-specific terms and inspected sections are retained
+    in the evidence dossier.
+- reference: https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html
+  notes: PROMOTIF v2 manual documents the recipe and class-specific output. An authorized installation
+    is required under its academic-use terms; the program was neither installed nor run in this curation.
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated definition, definition_source, xrefs, mapping_status, definitions, secondary_structure_representations,
+    detection_methods, evidence, license using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+license: CC-BY-4.0

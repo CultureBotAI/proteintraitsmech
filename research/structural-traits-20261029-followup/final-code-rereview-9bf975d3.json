@@ -1,0 +1,92 @@
+{
+  "reviewer": "Codex /root/verify_scope; independent of PTM author",
+  "observed_at_utc": "2026-10-29T04:50:52.202127+00:00",
+  "reviewed_head": "9bf975d3b135ed72168451f0a670a16a7bb468f0",
+  "reviewed_delta_base": "93c1a021d76a94fd299e0a1e3cf8f1b9671a3703",
+  "original_pr_base": "c4147394c698324ae537c0c63c2c9f6647c4f4fc",
+  "scope": "Read-only adversarial code/writer review of exact guard-fix delta and affected final behavior for PR1202 / issue1203. No PTM writes, Git mutations, session input, research APIs, or full validation.",
+  "verdict": "PASS for exact guard fix at9bf; no new code findings. Provenance-only follow-up remains separately required by user.",
+  "findings": [],
+  "resolved_findings": [
+    {
+      "id": "PTM1202-CODE-001",
+      "issue": "https://github.com/CultureBotAI/proteintraitsmech/issues/1203",
+      "former_severity": "P2 / major",
+      "status": "resolved at reviewed_head",
+      "evidence": "Blocks are checked before loader/editor/seeder acceptance, each real seeder result is output-pinned, and the completed-output branch checks semantic consistency with the ledger. Independent stale/partly repinned mutation probes reject all24cases."
+    }
+  ],
+  "checks": [
+    {
+      "name": "Exact pinned source isolation",
+      "result": "pass",
+      "details": "All imports and record fixtures came from an immutable9bf archive, verified against Git blobs; mutable worker imports were avoided."
+    },
+    {
+      "name": "Focused regression tests",
+      "result": "pass",
+      "count": 111,
+      "command": "PYTHONDONTWRITEBYTECODE=1 <PTM>/.venv/bin/python -m pytest -q -p no:cacheprovider tests/test_structural_trait_curations.py tests/test_seeder_structural_curations.py tests/test_foundational_traits.py tests/test_inplace_editor_guards.py",
+      "cwd": "/Users/marcin/Documents/VIMSS/ontology/KG-Hub/KG-Microbe/culturebotai-claw/workspace/reports/ptm-structure-commit-20261028/pinned-9bf975d3",
+      "evidence": "final-code-rereview-pytest-complete-fixtures.txt",
+      "note": "Initial isolated fixture subset omitted unrelated clade-specific-protein.yaml, causing one category-count assertion while110tests passed. Added that exact9bf blob; unchanged111test suite passed. Both logs retained; this was a snapshot assembly issue, not a PTM defect."
+    },
+    {
+      "name": "Exact record replay and completed-output acceptance",
+      "result": "pass",
+      "count": 24,
+      "details": "Every output hash matches; corpus bytes unchanged from93c; input/followup-preimage replay recreates output exactly; completed-output call is a no-op; exactly one history event is appended."
+    },
+    {
+      "name": "Actual maintained seeder acceptance and old-behavior sensitivity",
+      "result": "pass",
+      "count": 25,
+      "details": "All3 real emission functions validate raw/output pins, preserve current record semantics and exact history on merge, and reach byte-stable second merge. All25 regress current semantics when the hook is disabled in memory.127unrelated emissions remain byte-identical."
+    },
+    {
+      "name": "Adversarial stale and block-only repinned ledgers",
+      "result": "pass",
+      "count": 24,
+      "details": "3real seeders x4definition/evidence/causal-graph/deletion cases x2pin modes. Stale loader rejects; repinned loader may accept its block digest but editor rejects both prior-input and completed-output routes, and actual seeder output rejects. Direct seeder guard also rejects with loader bypassed."
+    },
+    {
+      "name": "Provenance/helper retention at reviewed head",
+      "result": "pending required follow-up",
+      "details": "Bounded ignored-inclusive filesystem inventory and exact9bf tree inspected. replay-proof.py is retained byte-identical; temporary prepare-evidence.py and run-bounded-validation.py are not retained at9bf. Historical reproducibility and required metadata need follow-up."
+    }
+  ],
+  "provenance_followup": {
+    "classification": "User-requested retention requirement; not an unresolved guard correctness defect.",
+    "at_head": "9bf975d3b135ed72168451f0a670a16a7bb468f0",
+    "required": [
+      "Retain each task helper in scripts/adhoc or explicitly document the native research directory.",
+      "Provide purpose, inputs, outputs, date, and issue1203/PR1202 reference.",
+      "Explain that the historical stale-ledger reproducer expects old93c acceptance and now raises at fixed code; avoid presenting that as a failed fix.",
+      "Retain or map prepare-evidence.py dependencies on temporary inspection JSON/logs, or clearly mark the helper as historical/nonportable rather than claiming fresh replay."
+    ],
+    "inventory_artifact": "final-code-rereview-helper-inventory.json",
+    "future_head_checks": [
+      "Diff9bf..future head and verify only provenance/docs/history changes; if behavior changes, review that delta separately.",
+      "Verify all three task-named temporary helper bodies are retained or their source-preserving relocation is documented.",
+      "Check purpose/input/output/date/issue metadata and paths, including historical expected behavior.",
+      "Run appropriate native audits/checks for any new retained script registration; require final-head remote contexts via parent."
+    ],
+    "independent_probe_retained_here": "final-code-rereview-probes.py includes purpose/inputs/outputs/date/issue and uses the pinned local snapshot; parent decides how user-wide retention requirement applies to control-plane review artifacts."
+  },
+  "native_gate_limits": [
+    "This scoped re-review does not assert final-head CI readiness; parent verifies required contexts and the future provenance head.",
+    "No new full-corpus run was started. Prior clarification full-corpus-gate-clarification.json explains required unscoped strict/grounding/graph validation on the actual merge_group integration commit before merge.",
+    "No merge/queue entry/cleanup authorization is inferred.",
+    "Hash consistency is not authentication: intentionally replacing blocks and every relevant output pin is new trusted review metadata, not proof of human approval.",
+    "Scientific attribution and biology were delegated to the separate scientific review; these24record bytes are unchanged."
+  ],
+  "artifact_hashes": {
+    "final-code-rereview-probes.py": "3810a8208e4c03c770898f732dff02e1f7d363f41a016fd65f8785cfb6f1dad9",
+    "final-code-rereview-probes.json": "c95a315084f190ffd21d75dc4ad2867611ae1002bcb033925e37024fa8a97306",
+    "final-code-rereview-pytest-complete-fixtures.txt": "1239c1661c91419b475e15cfb60605cdbf3a82c45154a2a260d0dbbdc8f18cff",
+    "final-code-rereview-pytest.txt": "bd05adbac3d9d542f9149939a97e4857e565b1bbeccd503c4a471ed6284e92b3",
+    "snapshot-9bf975d3.json": "3dcc85c3fc89963b2dbace216682a1bae272386d19659e5eabba28d3e5da0e26",
+    "snapshot-additional-fixtures-9bf975d3.json": "e434b733f37bc30b86b2aa068c8849482f741816c51428b5a6419c6b3419b68f",
+    "final-code-rereview-helper-inventory.json": "7af18174e40d44d05f1341207a07c5847003641b97a2ea87d8694cc86c6014e3"
+  }
+}

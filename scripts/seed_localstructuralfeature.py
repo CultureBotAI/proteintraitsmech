@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from structural_trait_curations import curate_seed  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data" / "traits" / "structure"
@@ -623,7 +624,7 @@ def yaml_for(entry: dict) -> str:
     if entry.get("extra_blocks"):
         lines.append(entry["extra_blocks"])
 
-    return "\n".join(lines) + "\n"
+    return curate_seed("\n".join(lines) + "\n", "seed_localstructuralfeature")
 
 
 def target_path(entry: dict) -> Path:
@@ -652,7 +653,7 @@ def main() -> int:
         elif path.exists() and args.force:
             action = "OVERWRITE" if args.apply else "would-overwrite"
             if args.apply:
-                write_record(path, yaml_for(entry))
+                write_record(path, yaml_for(entry), validate=True)
                 written += 1
             else:
                 would_overwrite += 1
@@ -660,7 +661,7 @@ def main() -> int:
             action = "WRITE" if args.apply else "would-write"
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
-                write_record(path, yaml_for(entry))
+                write_record(path, yaml_for(entry), validate=True)
                 written += 1
 
         print(f"  [{action:16s}] {rel}")

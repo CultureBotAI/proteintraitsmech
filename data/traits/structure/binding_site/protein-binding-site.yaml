@@ -1,84 +1,40 @@
 identifier: proteintraitsmech:PROTEIN_BINDING_SITE
 label: protein binding site
 definition: >-
-  A contiguous or discontinuous structural patch of amino acid residues on a protein surface or domain that interacts selectively and non-covalently with a polypeptide or protein partner via shape complementarity, hydrogen bonds, salt bridges, and buried hydrophobic contacts to mediate protein-protein recognition and complex assembly.
-definition_source: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  A contiguous or discontinuous set of residues in a protein that forms a selective noncovalent
+  binding site for a polypeptide partner.
+definition_source: SO:0000410
 trait_axis: STRUCTURE
 trait_category: STRUCT_BINDING_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 xrefs:
 - SO:0000410
-- valuesets:LocalStructuralFeature
-- SO:0001091
-causal_graphs:
-- graph_id: CG_PROTEIN_BINDING_SITE
-  title: Surface binding-site residues mediate selective protein binding and complex assembly
-  description: Contact amino-acid residues (CHEBI:83228) within a protein binding site form complementary
-    non-covalent interactions that enable selective protein binding (GO:0005515), positively regulating
-    protein complex oligomerization (GO:0051259) to assemble a stable protein-containing complex (GO:0032991).
-  nodes:
-  - node_id: CHEBI:83228
-    label: amino-acid residue
-    node_type: RESIDUE
-    grounding: CHEBI:83228
-    description: Surface-exposed binding-site amino-acid residues forming non-covalent contacts with a
-      polypeptide partner
-  - node_id: GO:0005515
-    label: protein binding
-    node_type: MOLECULAR_FUNCTION
-    grounding: GO:0005515
-    description: Selective non-covalent recognition of a partner domain or linear peptide motif
-  - node_id: GO:0051259
-    label: protein complex oligomerization
-    node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0051259
-    description: Assembly of interacting polypeptide chains into a multiprotein oligomer or complex
-  - node_id: GO:0032991
-    label: protein-containing complex
-    node_type: CELLULAR_LOCALIZATION
-    grounding: GO:0032991
-    description: Stable or transient macromolecular complex formed by interacting protein subunits
-  edges:
-  - subject: CHEBI:83228
-    predicate: enables
-    predicate_id: RO:0002327
-    object: GO:0005515
-    description: Clustered interface residues at the binding site define conserved interaction topologies
-      that enable selective protein binding.
-    evidence:
-    - reference: PMID:24081580
-      snippet: For every interaction, 3did identifies and groups different binding modes by clustering
-        similar interfaces into 'interaction topologies'.
-      notes: Binding-site residue contacts define conserved protein-binding modes (PMID:24081580) (ECO:0000305)
-  - subject: GO:0005515
-    predicate: positively regulates
-    predicate_id: RO:0002213
-    object: GO:0051259
-    description: Selective domain-domain and domain-motif binding drives multiprotein complex assembly
-      across protein interaction networks.
-    evidence:
-    - reference: PMID:24081580
-      snippet: By maintaining a constantly updated collection of domain-based structural interaction templates,
-        3did is a reference source of information for the structural characterization of protein interaction
-        networks.
-      notes: Structural protein binding templates mediate protein interaction assembly (PMID:24081580)
-        (ECO:0000305)
-  - subject: GO:0051259
-    predicate: has output
-    predicate_id: RO:0002234
-    object: GO:0032991
-    description: Oligomerization of interacting subunits produces a functional protein-containing complex.
-    evidence:
-    - reference: PMID:24081580
-      snippet: By maintaining a constantly updated collection of domain-based structural interaction templates,
-        3did is a reference source of information for the structural characterization of protein interaction
-        networks.
-      notes: Assembled domain interactions form protein-containing complexes (PMID:24081580) (ECO:0000305)
 evidence:
 - reference: PMID:24081580
-  notes: Mosca et al. (2014) characterize domain-based and motif-based protein-protein binding sites and
-    interaction topologies across high-resolution 3D structures in 3did.
+  notes: Mosca et al. (2014) characterize domain-based and motif-based protein-protein binding sites
+    and interaction topologies across high-resolution 3D structures in 3did.
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Source enum member retained as provenance, not an equivalent identifier.
+- reference: https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so-edit.obo
+  notes: The native SO release2026-08-07 marks SO0001091 obsolete; its generic chemical-group binding
+    meaning is broader than this protein-partner site.
+- reference: PMID:17681537
+  notes: PISA infers assemblies and interfaces from structural data; its predictions require biological-context
+    review.
+- reference: https://www.ccp4.ac.uk/html/pisa.html
+  notes: Author CLI documentation specifies the session identifier, configuration file and XML export
+    command used here. An installed, configured PISA is a prerequisite; the command was not executed
+    in this curation.
+- reference: PMID:9020082
+  notes: The Bcl-xL/Bak peptide complex and interaction-disrupting variants support a representative
+    protein-binding interface. This does not establish a universal oligomerization mechanism.
+- reference: https://github.com/CultureBotAI/proteintraitsmech/blob/main/LICENSE
+  notes: Project-authored factual synthesis and annotations are CC-BY-4.0 under LICENSE/ LICENSE-DATA.
+    The SO:0000410-derived definition/mapping retains Sequence Ontology CC-BY-4.0 attribution. The legacy
+    valuesets source retains Apache-2.0 attribution. Cited 3did/PISA/Bcl-xL publications and PISA software
+    retain their own terms; PDB archive metadata are CC0-1.0. No article prose, figures, coordinates,
+    database export or software is redistributed.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
@@ -86,3 +42,44 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_PROTEIN_BINDING_SITE (CHEBI:83228
     -> GO:0005515 -> GO:0051259 -> GO:0032991) grounded in PMID:24081580 (Round 125).
   llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, definition, definition_source, evidence, discussions, detection_methods, structural_geometry_representations,
+    causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+- timestamp: '2026-10-28T19:04:33Z'
+  curator: codex-gpt-6-astra
+  action: EDIT
+  llm_assisted: true
+  changes: Recorded CC-BY-4.0 for project-authored factual synthesis/annotations after source-specific
+    rights review; retained upstream attributions and excluded third-party exports/software from that
+    license claim.
+discussions:
+- discussion_id: STRUCTURE_20261028_PROTEIN_BINDING_SITE_DETECTION
+  prompt: A structural contact requires biological-assembly and partner-context checks to distinguish
+    binding from crystal packing. Contact geometry or a homologous interface predicts a candidate; affinity,
+    specificity and oligomerization require separate evidence.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+detection_methods:
+- name: PISA interface and assembly analysis; biological binding requires review
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:pdbepisa
+  reference: PMID:17681537
+  edam_operation: EDAM:operation_2949
+  evidence_code: ECO:0007669
+  recipe: pisa {id} -analyse {input} {db.config} && pisa {id} -xml {db.config} > {output}
+structural_geometry_representations:
+- structure_ref: PDB:1BXL
+  structure_source: PDB, entry version 1.4
+  evidence_source: PMID:9020082; https://www.rcsb.org/structure/1BXL; inspected 2026-10-28. Solution-NMR
+    Bcl-xL chain A/Bak peptide chain B complex. Interface-containing representative; exact contact residues
+    unspecified. No qualified UniProt occurrence asserted.
+license: CC-BY-4.0

@@ -1,0 +1,66 @@
+identifier: proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE
+label: "subunit-interface allosteric site"
+definition: >-
+  An allosteric regulatory site formed at an interface between protein subunits, whose engagement
+  changes activity or affinity at a distinct functional site through coupling within the oligomer.
+definition_source: PMID:31665428
+trait_axis: STRUCTURE
+trait_category: STRUCT_ALLOSTERIC_SITE
+term_kind: CLASS
+mapping_status: PROPOSED
+parent_traits:
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+  - proteintraitsmech:INTERFACE
+synonyms:
+  - synonym_text: "inter-subunit allosteric pocket"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "quaternary interface allosteric site"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+- name: fpocket candidate surface-pocket detection (allosteric function requires independent evidence)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:fpocket
+  reference: PMID:19486540
+  recipe: fpocket -f {input}
+  edam_operation: EDAM:operation_2575
+  evidence_code: ECO:0007669
+
+evidence:
+- reference: PMID:42628823
+  notes: Interface-localized pockets across oligomeric enzyme ensembles serve as candidate regulatory
+    regions for allosteric modulation.
+- reference: PMID:42539251
+  notes: The FraB preprint studies substrate half-site reactivity in a dimer. It is context for intersubunit
+    coupling, not evidence for the generic effector-binding interface mechanism.
+- reference: PMID:19486540
+  notes: Candidate pocket geometry is computational evidence; allosteric coupling requires independent
+    support.
+- reference: PMID:31665428
+  notes: The ASD resource provides context for modulation at a site distinct from the orthosteric site;
+    it does not impose one conformational or kinetic model.
+curation_history:
+- timestamp: '2026-10-21T03:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits
+    hierarchy.
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated detection_methods, definition, definition_source, evidence, discussions, causal_graphs,
+    mapping_status using the cited sources and data/curation/structural_trait_curations.yaml. Retained
+    scoped evidence and method limits; no canonical protein qualification or human REVIEWED status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_ALLOSTERIC_SUBUNIT_INTERFACE_SITE_DETECTION
+  prompt: Use the biological oligomer and identify which chains form the site. Predicted interface cavities
+    do not demonstrate effector binding or causal coupling; homodimer mechanisms are not universal for
+    all oligomers.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+license: CC-BY-4.0

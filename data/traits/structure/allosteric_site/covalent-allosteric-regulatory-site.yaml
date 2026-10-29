@@ -1,83 +1,141 @@
 identifier: proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE
 label: "covalent allosteric regulatory site"
 definition: >-
-  An allosteric regulatory pocket containing a solvent-accessible or cryptically exposed nucleophilic residue (most commonly a reactive cysteine sulfhydryl, or lysine/tyrosine side chain) at which covalent adduct formation by an endogenous electrophile, reactive metabolite, or targeted covalent allosteric modulator allosterically shifts the protein conformational ensemble and regulates orthosteric ligand affinity, catalysis, or effector binding.
-definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+  An allosteric regulatory site at which covalent attachment of an effector to a protein residue
+  changes activity or affinity at a distinct functional site.
+definition_source: PMID:24256730
 trait_axis: STRUCTURE
 trait_category: STRUCT_ALLOSTERIC_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
   - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
 synonyms:
-  - synonym_text: "targeted covalent allosteric pocket"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "cysteine-reactive allosteric site"
-    synonym_type: NARROW_SYNONYM
-  - synonym_text: "electrophile-modified allosteric regulatory site"
-    synonym_type: RELATED_SYNONYM
+- synonym_text: targeted covalent allosteric pocket
+  synonym_type: NARROW_SYNONYM
+- synonym_text: cysteine-reactive allosteric site
+  synonym_type: NARROW_SYNONYM
+- synonym_text: electrophile-modified allosteric regulatory site
+  synonym_type: RELATED_SYNONYM
 detection_methods:
-  - name: "Fpocket / AlloSitePro allosteric & cryptic pocket geometry predictor"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_2575
-    tool: "biotools:fpocket"
-    evidence_code: ECO:0007669
-    reference: PMID:26950260
-    recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+- name: fpocket candidate surface-pocket detection (allosteric function requires independent evidence)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:fpocket
+  reference: PMID:19486540
+  recipe: fpocket -f {input}
+  edam_operation: EDAM:operation_2575
+  evidence_code: ECO:0007669
 causal_graphs:
-  - graph_id: covalent_allosteric_cysteine_adduct_regulation
-    title: "Covalent effector modification of a nucleophilic residue in an allosteric pocket shifts the conformational ensemble to regulate protein activity"
-    description: "An electrophilic allosteric effector binds within a topographically distinct allosteric pocket and forms a covalent bond with a nucleophilic cysteine side chain, remodeling surrounding switch loops to allosterically regulate nucleotide affinity and downstream effector or enzymatic activity."
-    nodes:
-      - node_id: "CHEBI:35224"
-        label: effector
-        node_type: LIGAND
-        grounding: "CHEBI:35224"
-        description: "Electrophilic small-molecule allosteric modulator that covalently modifies the allosteric pocket."
-      - node_id: "CHEBI:29950"
-        label: "L-cysteine residue"
-        node_type: RESIDUE
-        grounding: "CHEBI:29950"
-        description: "Nucleophilic cysteine residue positioned within the allosteric pocket that anchors covalent ligand binding."
-      - node_id: "GO:0036094"
-        label: "small molecule binding"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0036094"
-        description: "Covalent capture and pocket occupancy of the small-molecule effector within the allosteric site."
-      - node_id: "GO:0030234"
-        label: "enzyme regulator activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0030234"
-        description: "Allosteric regulation of nucleotide/substrate preference and downstream effector interaction."
-    edges:
-      - subject: "GO:0036094"
-        predicate: "has input"
-        predicate_id: RO:0002233
-        object: "CHEBI:35224"
-        description: "Allosteric pocket capture takes the covalent small-molecule effector as input."
-        evidence:
-          - reference: PMID:24256730
-            snippet: "Here we report the development of small molecules that irreversibly bind to a common oncogenic mutant, K-Ras(G12C)."
-            notes: "Ostrem et al. 2013 demonstrate irreversible small-molecule binding to the switch-II allosteric pocket of K-Ras(G12C). (ECO:0000269)"
-      - subject: "CHEBI:29950"
-        predicate: "participates in"
-        predicate_id: RO:0000056
-        object: "GO:0036094"
-        description: "The nucleophilic L-cysteine residue in the allosteric pocket forms the covalent bond that anchors small-molecule binding."
-        evidence:
-          - reference: PMID:24256730
-            snippet: "These compounds rely on the mutant cysteine for binding and therefore do not affect the wild-type protein."
-            notes: "Covalent tethering or electrophilic reaction at the pocket cysteine residue is required for allosteric modulator binding. (ECO:0000269)"
-      - subject: "GO:0036094"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "GO:0030234"
-        description: "Covalent occupancy of the allosteric pocket remodels switch-I and switch-II conformations to regulate nucleotide preference and effector binding."
-        evidence:
-          - reference: PMID:24256730
-            snippet: "Binding of these inhibitors to K-Ras(G12C) disrupts both switch-I and switch-II, subverting the native nucleotide preference to favour GDP over GTP and impairing binding to Raf."
-            notes: "Covalent binding in the switch-II pocket allosterically controls nucleotide affinity and effector interactions. (ECO:0000269)"
+- graph_id: covalent_allosteric_cysteine_adduct_regulation
+  title: 'KRAS(G12C): covalent inhibitor binding changes nucleotide preference and Raf interaction'
+  description: Specific-study mechanism from Ostrem et al. (2013), PMID:24256730, for the tested KRAS(G12C)
+    mutant/inhibitors. Cysteine-dependent capture alters switch regions and observed nucleotide/Raf
+    binding. This is an example associated with the class, not a universal mechanism or qualified protein
+    occurrence.
+  nodes:
+  - node_id: kras_g12c_inhibitors
+    label: Tested KRAS(G12C) inhibitors
+    node_type: LIGAND
+    description: The tested inhibitor molecules in Ostrem et al. (2013). This local node groups that
+      study set; it does not assert a single chemical identity or equate a biochemical role with a molecule.
+    local: true
+  - node_id: CHEBI:29950
+    label: KRAS(G12C) mutant cysteine residue
+    node_type: RESIDUE
+    grounding: CHEBI:29950
+    description: Mutant Cys12 in the source study numbering; no UniProt residue mapping or qualified
+      trait occurrence is asserted.
+  - node_id: kras_g12c_covalent_capture
+    label: Covalent inhibitor capture by KRAS(G12C)
+    node_type: BIOLOGICAL_PROCESS
+    description: Covalent attachment of the tested inhibitors to mutant Cys12 in Ostrem et al. (2013).
+      This is a study-scoped process, not GO noncovalent binding.
+    local: true
+  - node_id: kras_g12c_altered_binding_state
+    label: Altered nucleotide preference and Raf binding in KRAS(G12C)
+    node_type: STATE
+    description: Observed inhibitor-dependent preference shift toward GDP and impaired Raf binding in
+      Ostrem et al. (2013).
+    local: true
+  edges:
+  - subject: kras_g12c_covalent_capture
+    predicate: has input
+    predicate_id: RO:0002233
+    object: kras_g12c_inhibitors
+    description: The tested inhibitors bind covalently to KRAS(G12C).
+    evidence:
+    - reference: PMID:24256730
+      snippet: irreversibly bind
+      notes: Source abstract; tested compounds and mutant only. (ECO:0000269)
+  - subject: CHEBI:29950
+    predicate: participates in
+    predicate_id: RO:0000056
+    object: kras_g12c_covalent_capture
+    description: The mutant cysteine is required for binding of the tested inhibitors.
+    evidence:
+    - reference: PMID:24256730
+      snippet: rely on the mutant cysteine for binding
+      notes: Source abstract; Cys12 in paper numbering, no UniProt coordinate assertion. (ECO:0000269)
+  - subject: kras_g12c_covalent_capture
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: kras_g12c_altered_binding_state
+    description: Inhibitor binding changes KRAS(G12C) nucleotide preference and impairs its Raf interaction.
+    evidence:
+    - reference: PMID:24256730
+      snippet: impairing binding to Raf
+      notes: Source abstract also reports preference for GDP over GTP; claim is scoped to tested KRAS(G12C)
+        inhibitors. (ECO:0000269)
 evidence:
-  - reference: PMID:24256730
-    notes: "Small molecules that irreversibly bind to a reactive cysteine in the K-Ras(G12C) switch-II allosteric pocket subvert nucleotide preference and impair effector interactions."
+- reference: PMID:24256730
+  notes: Small molecules that irreversibly bind to a reactive cysteine in the K-Ras(G12C) switch-II
+    allosteric pocket subvert nucleotide preference and impair effector interactions.
+- reference: PMID:19486540
+  notes: Candidate pocket geometry is computational evidence; allosteric coupling requires independent
+    support.
+- reference: PMID:31665428
+  notes: The ASD resource provides context for modulation at a site distinct from the orthosteric site;
+    it does not impose one conformational or kinetic model.
+- reference: https://amigo.geneontology.org/amigo/term/GO:0005488
+  notes: GO binding is defined as noncovalent; its small-molecule-binding descendant GO:0036094 does
+    not describe covalent attachment. The scoped graph uses a local process node for the observed KRAS(G12C)
+    inhibitor capture.
+- reference: https://www.ebi.ac.uk/chebi/searchId.do?chebiId=CHEBI:35224
+  notes: ChEBI effector denotes a biochemical role rather than a material entity. The KRAS graph represents
+    the tested inhibitor molecules as a local ligand set without assigning that role identifier as their
+    chemical identity.
+discussions:
+- discussion_id: STRUCTURE_20261028_ALLOSTERIC_COVALENT_REGULATORY_SITE_DETECTION
+  prompt: Pocket detection does not establish residue reactivity, covalent attachment or allosteric
+    function. Verify the adduct/site and a coupled functional effect; the cited KRAS study is specific
+    to mutant G12C.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+curation_history:
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated detection_methods, definition, synonyms, definition_source, evidence, discussions,
+    causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+- timestamp: '2026-10-28T18:57:26Z'
+  curator: codex-gpt-6-astra
+  action: EDIT
+  changes: Replaced noncovalent GO:0036094 grounding with a local study-scoped covalent-capture process;
+    preserved the three supported KRAS(G12C) edges. Independent post-curation review correction; no
+    human sign-off or protein qualification.
+  llm_assisted: true
+- timestamp: '2026-10-28T19:04:03Z'
+  curator: codex-gpt-6-astra
+  action: EDIT
+  llm_assisted: true
+  changes: 'Resolved independent graph review: replaced the ChEBI effector role used as a material input
+    with a local study-scoped inhibitor-set LIGAND. Preserved all three experimental-scope edges and
+    prior history; no qualification or human sign-off.'
 license: CC-BY-4.0

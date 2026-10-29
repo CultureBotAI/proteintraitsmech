@@ -1,0 +1,115 @@
+{
+  "artifact_kind": "independent_writer_review",
+  "created_at": "2026-10-28T18:46:06+00:00",
+  "reviewer": "codex-gpt-6-astra in-process independent grounding_route_audit agent",
+  "scope": "New structural curation writer/module, focused tests, editor registration and just recipe. No science ledger existed at first review; this is not a scientific review or final exact-commit PR review.",
+  "verdict": "needs_changes",
+  "source_state": "working_tree",
+  "source_hashes_at_probe": {
+    "scripts/structural_trait_curations.py": "19332a509b90bb258190d481e239baae3450649b79f006a61a8dda950f2da688",
+    "scripts/curate_structural_traits.py": "f8ac2392095043070d51e16c0314eaf3c563ecdef4c1b743149a819be7983da0",
+    "tests/test_structural_trait_curations.py": "bca5f5072bae0f0c94de0ecbe275e1282dc572e99df95ff1e3f34562437362f9",
+    "tests/test_inplace_editor_guards.py": "36c226f575b73ec5cd8163ea4a2911fb56947070453efb7be14a14343d6f6b2b",
+    "justfile": "4d19d5d7ce2ee16a91d9ca0356faeb3fbbdf2132faddac91bcc97fccc83fc0da",
+    "scripts/audit_writers.py": "7988f4b5c1a6540172829fdc118cbd3972a38257feb1ddae0ce9d384525c40d8"
+  },
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest --rootdir=. -o cache_dir=.pytest_cache tests/test_structural_trait_curations.py tests/test_inplace_editor_guards.py -q",
+      "exit_code": 0,
+      "result": "67 passed in 0.80s; run preceded concurrent seeded-history fix."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/audit_writers.py",
+      "exit_code": 0,
+      "result": "620 scripts; 51 seeders, 9 registered editors, 2 validated promoters, 52 declared bypasses; no undeclared writers."
+    }
+  ],
+  "fixture_probes": {
+    "fixture_only": true,
+    "wrong_identity_helper": {
+      "accepted": false,
+      "exception": "unexpected structural trait identity/scope; re-review required"
+    },
+    "wrong_identity_cli_exit": 1,
+    "fixture_file_unchanged": true,
+    "missing_new_history": {
+      "accepted": false,
+      "exception": "curation must append exactly one history event"
+    }
+  },
+  "findings": [
+    {
+      "finding_id": "SW-001",
+      "issue_key": "proteintraitsmech:structural-writer:seeded-history-preservation",
+      "priority": "P1",
+      "severity": "major",
+      "status": "partially_addressed_pending_rereview",
+      "owner_paths": [
+        "scripts/structural_trait_curations.py",
+        "scripts/curate_structural_traits.py",
+        "tests/test_structural_trait_curations.py"
+      ],
+      "description": "Initial code rejected any already-historied SEEDED target and required all history events to name the new agent, preventing enrichment of existing catalytic/protein-binding/metal seeds while preserving their earlier events. Root has added an exact-preimage SEEDED exception and history-prefix check during this review.",
+      "evidence": "Existing three generic binding/site records contain historical claude events. Initial should_enrich calls is_curated; initial ledger loader required all events to be codex-gpt-6-astra. Current implementation now checks allow_seeded_history only for exact SEEDED bytes.",
+      "acceptance": [
+        "An explicitly authorized exact SEEDED preimage with old history is editable and retains old events unchanged.",
+        "PROPOSED/REVIEWED and any changed input remain rejected.",
+        "New event is appended exactly once with honest agent attribution."
+      ]
+    },
+    {
+      "finding_id": "SW-002",
+      "issue_key": "proteintraitsmech:structural-writer:noop-identity-bypass",
+      "priority": "P2",
+      "severity": "major",
+      "status": "open",
+      "owner_paths": [
+        "scripts/curate_structural_traits.py",
+        "tests/test_structural_trait_curations.py"
+      ],
+      "description": "The output-hash idempotence branch returns text before checking identifier, axis, category and term-kind. A structurally valid file whose hash is placed under a different ledger identifier is counted as that wrong target unchanged. No corpus bytes are changed, but target-identity and coverage claims can be false.",
+      "evidence": "Fixture helper accepted wrong.identifier=proteintraitsmech:DIFFERENT_TRAIT while the output record contains REVIEW_PROBE. Canonical-path CLI fixture also exercises the full dry-run path; exact result is recorded in fixture_probes.",
+      "acceptance": [
+        "Validate all target identity/scope fields before accepting an exact-output no-op.",
+        "Test wrong identifier/category/axis/term kind on exact output hashes, plus correct idempotent replay.",
+        "Wrong-identity CLI must return nonzero without changing target bytes."
+      ]
+    },
+    {
+      "finding_id": "SW-003",
+      "issue_key": "proteintraitsmech:structural-writer:history-delta-required",
+      "priority": "P2",
+      "severity": "major",
+      "status": "open",
+      "owner_paths": [
+        "scripts/curate_structural_traits.py",
+        "scripts/structural_trait_curations.py",
+        "tests/test_structural_trait_curations.py"
+      ],
+      "description": "The new history-prefix guard permits a substantive edit with zero appended events when the final existing event already has the accepted agent attribution. It also does not bound additional appended events. History should describe the actual curation change, not silently reuse an older event.",
+      "evidence": "Fixture SEEDED record with one existing codex event, exact input hash and allow_seeded_history=True changed its definition/status while retaining exactly that single Previous edit event.",
+      "acceptance": [
+        "On the in-place editor path require unchanged old history followed by exactly one newly added honest agent event for a substantive diff.",
+        "Refuse missing event, changed/reordered/deleted old events and unrelated multiple new events.",
+        "Keep seed emission handling separate if fresh seed history differs from the inspected corpus history.",
+        "Idempotent replays do not append any event."
+      ]
+    }
+  ],
+  "positive_assessments": [
+    "Dry-run default and explicit --apply; unknown exact target IDs fail closed.",
+    "All schema-invalid candidate outputs are preflighted before corpus writes.",
+    "Writer uses write_validated_record and refuses missing/symlink/outside-root target paths.",
+    "Input/output hashes reject changed input and changed curated blocks.",
+    "Allowed field set excludes canonical_examples and identity fields; transformation checks no semantic changes outside reviewed blocks.",
+    "Unchanged label/evidence bytes and trailing comments are covered by focused tests.",
+    "Registration is in the native EDITORS registry, and audit-writers sees the registered route."
+  ],
+  "limitations": [
+    "The parent edited the same files between the initial inspection and probes; current probe hashes are pinned, initial 67-test outcome is explicitly prior to that change.",
+    "No scientific ledger, source-claim support, seeder integration or final PR head reviewed here.",
+    "Multi-record apply is not a transaction across the entire batch; per-record writes are atomic and current code documents partial repair through exact hashes.",
+    "Single-target invalid-output test should be strengthened with an earlier valid and later invalid target to prove all-target preflight in behavior."
+  ]
+}

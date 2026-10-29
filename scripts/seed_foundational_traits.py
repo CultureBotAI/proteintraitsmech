@@ -39,6 +39,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import append_to_section, write_record  # noqa: E402
+from structural_trait_curations import curate_seed  # noqa: E402
 from yaml_emit import folded, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -8090,7 +8091,7 @@ def emit_record(spec: TraitSpec) -> str:
             lines.append(f"  - reference: {ref}")
             lines.append(f"    notes: {yaml_escape(notes)}")
     lines.append(f"license: {LICENSE}")
-    return "\n".join(lines) + "\n"
+    return curate_seed("\n".join(lines) + "\n", "seed_foundational_traits")
 
 
 def go_0016937_seed() -> tuple[Path, str | None]:

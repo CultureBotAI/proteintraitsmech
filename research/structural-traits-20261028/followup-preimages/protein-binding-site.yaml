@@ -1,0 +1,72 @@
+identifier: proteintraitsmech:PROTEIN_BINDING_SITE
+label: protein binding site
+definition: >-
+  A contiguous or discontinuous set of residues in a protein that forms a selective noncovalent
+  binding site for a polypeptide partner.
+definition_source: SO:0000410
+trait_axis: STRUCTURE
+trait_category: STRUCT_BINDING_SITE
+term_kind: CLASS
+mapping_status: PROPOSED
+xrefs:
+- SO:0000410
+
+evidence:
+- reference: PMID:24081580
+  notes: Mosca et al. (2014) characterize domain-based and motif-based protein-protein binding sites
+    and interaction topologies across high-resolution 3D structures in 3did.
+- reference: https://linkml.io/valuesets/elements/LocalStructuralFeature/
+  notes: Source enum member retained as provenance, not an equivalent identifier.
+- reference: https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so-edit.obo
+  notes: The native SO release2026-08-07 marks SO0001091 obsolete; its generic chemical-group binding
+    meaning is broader than this protein-partner site.
+- reference: PMID:17681537
+  notes: PISA infers assemblies and interfaces from structural data; its predictions require biological-context
+    review.
+- reference: https://www.ccp4.ac.uk/html/pisa.html
+  notes: Author CLI documentation specifies the session identifier, configuration file and XML export
+    command used here. An installed, configured PISA is a prerequisite; the command was not executed
+    in this curation.
+- reference: PMID:9020082
+  notes: The Bcl-xL/Bak peptide complex and interaction-disrupting variants support a representative
+    protein-binding interface. This does not establish a universal oligomerization mechanism.
+curation_history:
+- timestamp: '2026-10-22T18:55:00Z'
+  curator: claude
+  action: EDIT
+  changes: Enriched definition and added 4-node, 3-edge causal graph CG_PROTEIN_BINDING_SITE (CHEBI:83228
+    -> GO:0005515 -> GO:0051259 -> GO:0032991) grounded in PMID:24081580 (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated xrefs, definition, definition_source, evidence, discussions, detection_methods, structural_geometry_representations,
+    causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_PROTEIN_BINDING_SITE_DETECTION
+  prompt: A structural contact requires biological-assembly and partner-context checks to distinguish
+    binding from crystal packing. Contact geometry or a homologous interface predicts a candidate; affinity,
+    specificity and oligomerization require separate evidence.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
+detection_methods:
+- name: PISA interface and assembly analysis; biological binding requires review
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:pdbepisa
+  reference: PMID:17681537
+  edam_operation: EDAM:operation_2949
+  evidence_code: ECO:0007669
+  recipe: pisa {id} -analyse {input} {db.config} && pisa {id} -xml {db.config} > {output}
+structural_geometry_representations:
+- structure_ref: PDB:1BXL
+  structure_source: PDB, entry version 1.4
+  evidence_source: PMID:9020082; https://www.rcsb.org/structure/1BXL; inspected 2026-10-28. Solution-NMR
+    Bcl-xL chain A/Bak peptide chain B complex. Interface-containing representative; exact contact residues
+    unspecified. No qualified UniProt occurrence asserted.

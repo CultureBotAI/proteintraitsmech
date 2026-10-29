@@ -1,89 +1,70 @@
 identifier: proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET
 label: "cryptic allosteric pocket"
 definition: >-
-  A transient allosteric binding cavity that is occluded or absent in the unliganded ground-state structure and opens only through thermal conformational fluctuations or induced-fit side-chain/loop rearrangements upon ligand encounter.
-definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+  An allosteric ligand-binding pocket that is absent or occluded in a specified reference
+  unliganded conformation and accessible in another conformational state.
+definition_source: PMID:24256730
 trait_axis: STRUCTURE
 trait_category: STRUCT_ALLOSTERIC_SITE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: PROPOSED
 parent_traits:
-  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+- proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+- proteintraitsmech:POCKET
 synonyms:
-  - synonym_text: "cryptic binding pocket"
-    synonym_type: EXACT_SYNONYM
-  - synonym_text: "transient allosteric cavity"
-    synonym_type: EXACT_SYNONYM
+- synonym_text: cryptic binding pocket
+  synonym_type: BROAD_SYNONYM
+- synonym_text: transient allosteric cavity
+  synonym_type: RELATED_SYNONYM
 detection_methods:
-  - name: "Fpocket / AlloSitePro allosteric & cryptic pocket geometry predictor"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_2575
-    tool: "biotools:fpocket"
-    evidence_code: ECO:0007669
-    reference: PMID:26950260
-    recipe: "fpocket -f {input} -d && mv {input}_out {output}"
-causal_graphs:
-  - graph_id: cryptic_pocket_opening_and_capture
-    title: "Conformational fluctuation opens transient cryptic cavity for ligand capture and allosteric regulation"
-    description: "Thermal loop/side-chain fluctuations expose a transient small molecule binding cavity (GO:0036094) that captures an effector ligand (CHEBI:35224), stabilizing the open-pocket state to enable enzyme regulator activity (GO:0030234) on orthosteric catalytic activity (GO:0003824)."
-    nodes:
-      - node_id: "CHEBI:35224"
-        label: effector
-        node_type: LIGAND
-        grounding: "CHEBI:35224"
-        description: "Ligand capturing the transiently open cryptic pocket."
-      - node_id: "GO:0036094"
-        label: "small molecule binding"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0036094"
-        description: "Ligand recognition within the transiently exposed cryptic cavity."
-      - node_id: "GO:0030234"
-        label: "enzyme regulator activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0030234"
-        description: "Allosteric regulation stabilized by cryptic pocket occupancy."
-      - node_id: "GO:0003824"
-        label: "catalytic activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: "GO:0003824"
-        description: "Orthosteric enzyme activity modulated by cryptic pocket engagement."
-    edges:
-      - subject: "GO:0036094"
-        predicate: "has input"
-        predicate_id: RO:0002233
-        object: "CHEBI:35224"
-        description: "Small molecule binding at the transiently exposed cryptic pocket captures the effector ligand."
-        evidence:
-          - reference: PMID:42734533
-            snippet: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change, making them difficult to identify and exploit in structure-based ligand discovery."
-            notes: "Cryptic pocket opening and ligand binding (PMID:42734533). (ECO:0000305)"
-      - subject: "GO:0036094"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "GO:0030234"
-        description: "Ligand capture in the open cryptic pocket stabilizes a regulatory conformational state."
-        evidence:
-          - reference: PMID:42734533
-            snippet: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change, making them difficult to identify and exploit in structure-based ligand discovery."
-            notes: "Cryptic pocket conformational capture (PMID:42734533). (ECO:0000305)"
-      - subject: "GO:0030234"
-        predicate: regulates
-        predicate_id: RO:0002211
-        object: "GO:0003824"
-        description: "Cryptic-pocket-mediated enzyme regulator activity modulates target catalytic activity."
-        evidence:
-          - reference: PMID:42821008
-            snippet: "Allosteric and cryptic binding pockets represent a vast underexploited frontier in drug discovery, offering routes to biological targets historically considered undruggable."
-            notes: "Modulation of target activity via cryptic pockets (PMID:42821008). (ECO:0000305)"
+- name: fpocket candidate surface-pocket detection (allosteric function requires independent evidence)
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:fpocket
+  reference: PMID:19486540
+  recipe: fpocket -f {input}
+  edam_operation: EDAM:operation_2575
+  evidence_code: ECO:0007669
+
 evidence:
-  - reference: PMID:42734533
-    notes: "Cryptic pockets are transient ligand-binding sites that remain hidden in apo protein structures and become accessible only through conformational change."
-  - reference: PMID:42821008
-    notes: "Allosteric and cryptic binding pockets offer routes to modulate biological targets historically considered undruggable."
+- reference: PMID:42734533
+  notes: 'Computational pocket-opening study: cryptic ligand-binding sites are inaccessible in a reference
+    apo conformation and accessible after conformational change. This does not establish allosteric
+    function.'
+- reference: PMID:42821008
+  notes: Perspective on allosteric and cryptic pockets as drug-target opportunities; contextual discussion,
+    not a primary causal experiment.
+- reference: PMID:19486540
+  notes: Candidate pocket geometry is computational evidence; allosteric coupling requires independent
+    support.
+- reference: PMID:31665428
+  notes: The ASD resource provides context for modulation at a site distinct from the orthosteric site;
+    it does not impose one conformational or kinetic model.
+- reference: PMID:24256730
+  notes: The KRAS(G12C) switch-II pocket supplies one experimentally studied example of a previously
+    unobserved pocket with effects on nucleotide preference and Raf interaction.
 curation_history:
-  - timestamp: '2026-10-21T03:30:00Z'
-    curator: claude
-    action: EDIT
-    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
-    llm_assisted: true
+- timestamp: '2026-10-21T03:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits
+    hierarchy.
+  llm_assisted: true
+- timestamp: '2026-10-28T18:52:22Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_evidence_curation_20261028
+  changes: Updated detection_methods, definition, parent_traits, synonyms, definition_source, evidence,
+    discussions, causal_graphs, mapping_status using the cited sources and data/curation/structural_trait_curations.yaml.
+    Retained scoped evidence and method limits; no canonical protein qualification or human REVIEWED
+    status conferred.
+  llm_assisted: true
+discussions:
+- discussion_id: STRUCTURE_20261028_ALLOSTERIC_CRYPTIC_POCKET_DETECTION
+  prompt: Crypticity is relative to explicit conformations. Compare apo/ligand-bound states or an adequately
+    sampled ensemble, and establish allosteric function independently; one static pocket call is insufficient.
+  kind: KNOWLEDGE_GAP
+  status: OPEN
+  attaches_to:
+  - detection_methods
+  posed_by: Codex
+  posed_date: '2026-10-28'
 license: CC-BY-4.0

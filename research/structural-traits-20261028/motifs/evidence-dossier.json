@@ -1,0 +1,446 @@
+{
+  "schema_version": "1.0",
+  "created_at": "2026-10-28T18:41:34Z",
+  "reviewer": "codex-gpt-6-astra",
+  "scope": "Eight existing motif/parent classes; recommendations only; no scientific record writes",
+  "sources": [
+    {
+      "id": "so",
+      "url": "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/Ontology_Files/so.obo",
+      "type": "source_native_ontology",
+      "version": "2026-08-07",
+      "inspected": "SO:0001079, SO:0001081, SO:0001114, SO:0001128, SO:0001133 stanzas",
+      "supports": "Class identities and exact HTH/beta-turn labels. SO:0001114 denotes peptide_helix. SO:0001128 and its beta-turn child differ about obligatory hydrogen bonding.",
+      "license": "CC-BY-4.0",
+      "license_url": "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/LICENSE",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "valuesets",
+      "url": "https://linkml.io/valuesets/elements/LocalStructuralFeature/",
+      "type": "source_native_enumeration",
+      "inspected": "BETA_HAIRPIN and POLYPEPTIDE_STRUCTURAL_MOTIF entries and schema source",
+      "supports": "Hairpin entry has an ontology-gap flag, not SO:0001114; enum identifier denotes a vocabulary rather than a motif.",
+      "license": "Apache-2.0 repository license",
+      "license_url": "https://raw.githubusercontent.com/linkml/valuesets/main/LICENSE",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "promotif",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2143354/",
+      "reference": "PMID:8745398",
+      "doi": "10.1002/pro.5560050204",
+      "type": "primary_computational_method",
+      "inspected": "Abstract; full PDF inaccessible",
+      "supports": "Coordinate-based motif analyses include beta turns, hairpins, beta-alpha-beta units, and beta-sheet topology.",
+      "license": "No permissive article license inspected; no full-text redistribution",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "promotif-manual",
+      "url": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+      "type": "author_software_documentation",
+      "inspected": "Availability; Running; Secondary Structure; Beta Turns; strands/sheets/BAB; Hairpins",
+      "supports": "Beta turn criterion: four residues, C-alpha(i)-C-alpha(i+3) below 7 angstroms, central residues nonhelical. Hairpin requires antiparallel pairing. BAB requires parallel hydrogen-bonded strands with intervening helix. Outputs .bturns, .hpin, .bab, .sht; script invocation promotif pdbfile.",
+      "license": "Academic-use terms require signed LICENSE; industrial use requires contacting authors. Software neither installed nor licensed by this task.",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "greek-key",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8506258/",
+      "reference": "PMID:8506258",
+      "doi": "10.1093/protein/6.3.233",
+      "type": "primary_comparative_analysis",
+      "inspected": "PubMed abstract",
+      "supports": "Four-strand +3,-1,-1 connectivity; three groups based on hydrogen bonding, with differing 3D shapes.",
+      "license": "Article reuse terms unresolved; no prose copied",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "hairpin-analysis",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7888580/",
+      "reference": "PMID:33389765",
+      "doi": "10.1002/pro.4020",
+      "type": "primary_computational_analysis",
+      "inspected": "Figure 1; sections 2.1 and 4.1",
+      "supports": "Two antiparallel strands linked by a loop. This study supplements DSSP screening with contact filtering; its restricted length/contact thresholds are study selection criteria, not universal class limits.",
+      "license": "Copyright The Protein Society 2021; permissive article license not inspected",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "beta-beta-context",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10949314/",
+      "reference": "PMID:38501461",
+      "doi": "10.1002/pro.4936",
+      "type": "primary_computational_design",
+      "inspected": "Section 2.1 and Figure 1 caption",
+      "supports": "Uses beta-beta loops for both paired-strand hairpin and unpaired-strand arch connections. Thus bare beta-beta does not specify hairpin topology.",
+      "license": "CC-BY-NC-ND-4.0 shown on article; cited factual distinction only, no source prose/figures redistributed",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "hth-primary",
+      "url": "https://www.nature.com/articles/298718a0",
+      "reference": "DOI:10.1038/298718a0",
+      "doi": "10.1038/298718a0",
+      "type": "primary_structure_based_interpretation",
+      "inspected": "Publisher abstract, accessed through its cookies_not_supported URL",
+      "supports": "Cro structural study associates a two-helix unit with DNA recognition. Does not establish universal DNA-binding activity for every geometrical H-turn-H segment.",
+      "license": "Subscription article; no permissive redistribution terms verified",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "hth-matrix",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/2402433/",
+      "reference": "PMID:2402433",
+      "doi": "10.1093/nar/18.17.5019",
+      "type": "primary_prediction_method",
+      "inspected": "PubMed abstract",
+      "supports": "A sequence scoring matrix based on 91 presumed HTH sequences estimates motif likelihood; prediction does not demonstrate geometry or DNA binding.",
+      "license": "Article reuse terms unresolved; no prose copied",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "emboss",
+      "url": "https://emboss.bioinformatics.nl/cgi-bin/emboss/help/helixturnhelix",
+      "type": "author_software_documentation",
+      "inspected": "Description and command-line qualifiers",
+      "supports": "Executable uses Dodd-Egan method and reports putative motif locations and scores; -sequence, -outfile, -minsd, -auto documented.",
+      "license": "Software redistribution not evaluated; no installation or source redistribution proposed",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    },
+    {
+      "id": "dssp",
+      "url": "https://github.com/PDB-REDO/dssp/blob/trunk/doc/mkdssp.md",
+      "reference": "PMID:6667333",
+      "doi": "10.1002/bip.360221211",
+      "type": "author_software_documentation",
+      "inspected": "Synopsis, options, details; PMID metadata independently resolved but article has no PubMed abstract",
+      "supports": "Assigns per-residue secondary states from coordinates; --output-format=dssp selects legacy output. Does not itself assign the named supersecondary classes.",
+      "license": "BSD-2-Clause repository license; separate from original article rights",
+      "accessed_at": "2026-10-28T18:41:34Z"
+    }
+  ],
+  "proposals": [
+    {
+      "identifier": "proteintraitsmech:HELIX_TURN_HELIX",
+      "proposed_fields": {
+        "definition": "A recurring structural motif comprising two alpha helices linked by a short turn.",
+        "definition_source": "SO:0001081",
+        "parent_traits": [
+          "proteintraitsmech:SUPER_SECONDARY_MOTIF"
+        ],
+        "xrefs": [
+          "SO:0001081"
+        ],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A recurring structural motif comprising two alpha helices linked by a short turn.",
+            "source": "SO:0001081",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "TOPOLOGY",
+            "topology_string": "H-turn-H",
+            "evidence_source": "SO:0001081"
+          }
+        ],
+        "detection_methods": [
+          {
+            "name": "EMBOSS helixturnhelix sequence-screen prediction; geometry confirmation required",
+            "method_type": "PROFILE_MATRIX",
+            "tool": "https://emboss.bioinformatics.nl/cgi-bin/emboss/help/helixturnhelix",
+            "reference": "PMID:2402433",
+            "recipe": "helixturnhelix -sequence {input.fasta} -outfile {output.hth} -minsd 2.5 -auto"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "so",
+        "hth-primary",
+        "hth-matrix",
+        "emboss"
+      ],
+      "limits_and_acceptance": "Keep DNA-binding examples and predictions separate from the geometrical class. No generic geometry-complete HTH classifier was verified.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_ALPHA_BETA",
+      "proposed_fields": {
+        "definition": "A supersecondary motif with two parallel, hydrogen-bonded beta strands connected in sequence through an intervening alpha helix.",
+        "definition_source": "PMID:8745398",
+        "parent_traits": [
+          "proteintraitsmech:SUPER_SECONDARY_MOTIF"
+        ],
+        "xrefs": [],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A supersecondary motif with two parallel, hydrogen-bonded beta strands connected in sequence through an intervening alpha helix.",
+            "source": "PMID:8745398",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "TOPOLOGY",
+            "topology_string": "E-H-E",
+            "evidence_source": "PMID:8745398"
+          }
+        ],
+        "detection_methods": [
+          {
+            "name": "PROMOTIF coordinate motif classification (licensed external prerequisite)",
+            "method_type": "STRUCTURAL_ALGORITHM",
+            "tool": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+            "reference": "PMID:8745398",
+            "recipe": "promotif {input.pdb}"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "promotif",
+        "promotif-manual"
+      ],
+      "limits_and_acceptance": "Read .bab output. E-H-E alone omits strand pairing/orientation. Remove Rossmann parenthesis from defining criterion; it is contextual, not class identity.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:GREEK_KEY",
+      "proposed_fields": {
+        "definition": "A four-strand beta-structural motif with Greek-key connectivity, conventionally described by the topology +3,-1,-1.",
+        "definition_source": "PMID:8506258",
+        "parent_traits": [
+          "proteintraitsmech:SUPER_SECONDARY_MOTIF"
+        ],
+        "xrefs": [],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A four-strand beta-structural motif with Greek-key connectivity, conventionally described by the topology +3,-1,-1.",
+            "source": "PMID:8506258",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "TOPOLOGY",
+            "topology_string": "E-E-E-E(greek-key)",
+            "evidence_source": "PMID:8506258"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "greek-key"
+      ],
+      "limits_and_acceptance": "Keep canonical token for compatibility; put connectivity in the STRUCTURAL definition. PROMOTIF .sht is an input for reviewed connectivity classification, not a verified automatic Greek-key call.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_HAIRPIN",
+      "proposed_fields": {
+        "definition": "A structural motif formed by two sequence-adjacent beta strands that pair antiparallel and are joined by a connecting loop.",
+        "definition_source": "PMID:33389765",
+        "parent_traits": [
+          "proteintraitsmech:SUPER_SECONDARY_MOTIF"
+        ],
+        "xrefs": [],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A structural motif formed by two sequence-adjacent beta strands that pair antiparallel and are joined by a connecting loop.",
+            "source": "PMID:33389765",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "TOPOLOGY",
+            "topology_string": "E-turn-E",
+            "evidence_source": "PMID:33389765"
+          }
+        ],
+        "detection_methods": [
+          {
+            "name": "PROMOTIF coordinate motif classification (licensed external prerequisite)",
+            "method_type": "STRUCTURAL_ALGORITHM",
+            "tool": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+            "reference": "PMID:8745398",
+            "recipe": "promotif {input.pdb}"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "hairpin-analysis",
+        "promotif-manual",
+        "beta-beta-context"
+      ],
+      "limits_and_acceptance": "Read .hpin output. In the existing token, turn denotes a connector, not a necessary four-residue beta turn; keep this explicit. Do not add bare beta-beta as exact synonym.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:BETA_TURN",
+      "proposed_fields": {
+        "definition": "A local four-residue backbone motif classified by the conformation of its two central residues; an i-to-i+3 backbone hydrogen bond may be present.",
+        "definition_source": "SO:0001133",
+        "parent_traits": [
+          "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF"
+        ],
+        "xrefs": [
+          "SO:0001133"
+        ],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A local four-residue backbone motif classified by the conformation of its two central residues; an i-to-i+3 backbone hydrogen bond may be present.",
+            "source": "SO:0001133",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "TOPOLOGY",
+            "topology_string": "turn",
+            "evidence_source": "SO:0001133"
+          }
+        ],
+        "detection_methods": [
+          {
+            "name": "PROMOTIF coordinate motif classification (licensed external prerequisite)",
+            "method_type": "STRUCTURAL_ALGORITHM",
+            "tool": "https://www.uoxray.uoregon.edu/local/manuals/promotif/document_2.html",
+            "reference": "PMID:8745398",
+            "recipe": "promotif {input.pdb}"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "so",
+        "promotif-manual"
+      ],
+      "limits_and_acceptance": "Read .bturns output. Move from DSSP-specific TURN to existing broader motif parent. Remove unsupported commonest-turn superlative. It need not join beta strands.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:SUPER_SECONDARY_MOTIF",
+      "proposed_fields": {
+        "definition": "A recurring arrangement of a small number of secondary-structure elements defined by their spatial relationships and connectivity.",
+        "definition_source": "PMID:8745398",
+        "parent_traits": [
+          "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF"
+        ],
+        "xrefs": [],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A recurring arrangement of a small number of secondary-structure elements defined by their spatial relationships and connectivity.",
+            "source": "PMID:8745398",
+            "method": "GENERATED"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "promotif",
+        "greek-key",
+        "beta-beta-context"
+      ],
+      "limits_and_acceptance": "Curator synthesis of inspected motif classes, not a quotation. Do not assert a universal fixed size or independent-folding rule. Classification requires a specified subtype rule; umbrella has no single topology matcher.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF",
+      "proposed_fields": {
+        "definition": "A recurring three-dimensional structural element within a polypeptide chain that need not form an independently stable globular unit.",
+        "definition_source": "SO:0001079",
+        "parent_traits": [],
+        "xrefs": [
+          "SO:0001079"
+        ],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A recurring three-dimensional structural element within a polypeptide chain that need not form an independently stable globular unit.",
+            "source": "SO:0001079",
+            "method": "GENERATED"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "so",
+        "valuesets"
+      ],
+      "limits_and_acceptance": "Repair does-not-form to need-not-form. Remove whole-enum and peptide-helix equivalence xrefs; retain source attribution separately.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    },
+    {
+      "identifier": "proteintraitsmech:TURN",
+      "proposed_fields": {
+        "definition": "A backbone region assigned the hydrogen-bonded turn state T by the DSSP secondary-structure algorithm.",
+        "definition_source": "PMID:6667333",
+        "parent_traits": [
+          "proteintraitsmech:SECONDARY_STRUCTURE_ELEMENT"
+        ],
+        "xrefs": [],
+        "mapping_status": "PROPOSED",
+        "definitions": [
+          {
+            "kind": "STRUCTURAL",
+            "text": "A backbone region assigned the hydrogen-bonded turn state T by the DSSP secondary-structure algorithm.",
+            "source": "PMID:6667333",
+            "method": "GENERATED"
+          }
+        ],
+        "secondary_structure_representations": [
+          {
+            "method": "curated",
+            "state_alphabet": "DSSP_8",
+            "topology_string": "T",
+            "evidence_source": "PMID:6667333"
+          }
+        ],
+        "detection_methods": [
+          {
+            "name": "DSSP secondary-state assignment; subsequent motif classification required",
+            "method_type": "STRUCTURAL_ALGORITHM",
+            "tool": "https://github.com/PDB-REDO/dssp",
+            "reference": "PMID:6667333",
+            "recipe": "mkdssp --output-format=dssp {input.pdb} {output.dssp}"
+          }
+        ]
+      },
+      "evidence_ids": [
+        "dssp"
+      ],
+      "limits_and_acceptance": "Preserve the original DSSP-state identity. This class is not the universal parent of geometrically defined beta turns; source SO:0001128 has the same hydrogen-bond tension and should not be inserted as an exact equivalent.",
+      "license_disposition": "Assign source license only after source-specific retention/attribution review; synthesized definition is marked GENERATED. No general license inferred from cited paper or tool license."
+    }
+  ],
+  "method_limits": [
+    "PROMOTIF is a documented external prerequisite with academic-use/license restrictions, not an installed or executed dependency.",
+    "No verified standalone Greek-key, SUPER_SECONDARY_MOTIF, or POLYPEPTIDE_STRUCTURAL_MOTIF executable classifier was established in this search. Leave method gaps explicit instead of claiming DSSP/InterProScan completes them.",
+    "Prediction output never qualifies a canonical example. No new coordinates, examples, mechanism graphs, identifiers or status REVIEWED are proposed."
+  ],
+  "beta_beta_decision": {
+    "decision": "defer exact synonym or new class",
+    "primary_evidence": "beta-beta-context",
+    "candidate": "beta-arch",
+    "search": "alias-search.json; ignored and hidden files included",
+    "reason": "Connectivity and strand pairing distinguish hairpins from arches; bare two-element notation is insufficient."
+  },
+  "licensing": "SO CC-BY-4.0 and valuesets Apache-2.0 licenses were inspected. These do not license literature or PROMOTIF software. No full texts, figures, matrices or restricted software copied into repository."
+}

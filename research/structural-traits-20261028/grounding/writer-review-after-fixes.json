@@ -1,0 +1,149 @@
+{
+  "artifact_kind": "independent_writer_rereview",
+  "created_at": "2026-10-28T18:55:10.747084+00:00",
+  "reviewer": "codex-gpt-6-astra grounding_route_audit subagent",
+  "verdict": "pass_for_reviewed_writer_and_ledger_safety",
+  "source_state": "working_tree_after_parent_applied_24_records",
+  "branch": "curate/structural-traits-20261028-029cc7",
+  "baseline_commit": "c4147394c698324ae537c0c63c2c9f6647c4f4fc",
+  "scope": "Independent implementation/safety re-review of bounded structural writer, module, tests, native registration, recipe and three seeder integrations; final applied-ledger identity/history/protected-field checks. This is not full scientific claim validation or exact-commit PR review.",
+  "source_hashes": {
+    "scripts/structural_trait_curations.py": "b08b6dcc44055ff7dd34673a28d57a7d15e5156987b9914db847534d3fe40cdc",
+    "scripts/curate_structural_traits.py": "f8ac2392095043070d51e16c0314eaf3c563ecdef4c1b743149a819be7983da0",
+    "tests/test_structural_trait_curations.py": "289d9b91781899696ff190fcf9d0c681155702baec30935200f49729a4f7f830",
+    "tests/test_inplace_editor_guards.py": "36c226f575b73ec5cd8163ea4a2911fb56947070453efb7be14a14343d6f6b2b",
+    "justfile": "4d19d5d7ce2ee16a91d9ca0356faeb3fbbdf2132faddac91bcc97fccc83fc0da",
+    "scripts/audit_writers.py": "7988f4b5c1a6540172829fdc118cbd3972a38257feb1ddae0ce9d384525c40d8",
+    "scripts/seed_foundational_traits.py": "8b829acf781e52e3e35e25510b024e785ff5d6ad04462b7e1e9cec3ee56f4b7f",
+    "scripts/seed_localstructuralfeature.py": "50969e6bdafaaf2eb57ada680868a8ef5417951654c2157f28122c60bfda9036",
+    "scripts/seed_secondary_structure.py": "21f0ad5a35c97ce6f448887a166e5afb31dc0f22bce777b0f318456875ea5064",
+    "scripts/record_io.py": "ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf",
+    "data/curation/structural_trait_curations.yaml": "0b73a73d5d86fc0190b57f89bff4c50eb060de70493c1d480faddcf19d44a5ae"
+  },
+  "prior_review": {
+    "path": "research/structural-traits-20261028/grounding/writer-review-initial.json",
+    "sha256": "0421abc9fc125146cd5f7616136a341a6ebde4a3158d163198cce3c763afcdad"
+  },
+  "supporting_artifacts": [
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-rereview-start.json",
+      "sha256": "30fa633cbdc63e44e363bbdbed7d1b4e1ed306e6f6dd8924fb4356788208319e"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-ledger-safety-inspection.json",
+      "sha256": "a4e239914d9449cfeb506006a7c1b99a7d1357eac56687153177d5fc55a03666"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-rereview-adversarial-checks.json",
+      "sha256": "50684741b0a008c6c9cb6bf852dd60afed7590425a6e6b0457138c031518ad58"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-rereview-seeder-checks.json",
+      "sha256": "00c739ed0e73efddba8b95f4d1771823921f8ce799140814a52a01b8072865f0"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-rereview-final-ledger.json",
+      "sha256": "6ce540cc8bb9eb0314634c5bd2685d74437e80449d9478777d13c95ee7fcd5ee"
+    }
+  ],
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest --rootdir=. -o cache_dir=.pytest_cache tests/test_structural_trait_curations.py tests/test_inplace_editor_guards.py -q",
+      "exit_code": 0,
+      "result": "70 passed in 1.68s; code/test hashes unchanged through final rereview."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/audit_writers.py",
+      "exit_code": 0,
+      "result": "620 scripts, 51 seeders, 9 registered editors, 2 validated promoters, 52 declared bypasses; no undeclared writer."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/curate_structural_traits.py",
+      "exit_code": 0,
+      "result": "Pre-apply dry-run accepted 24 targets; all closed-schema candidates preflighted. Ledger at this earlier check was subsequently refined; final applied safety is separately pinned."
+    },
+    {
+      "kind": "independent_adversarial_probes",
+      "count": 10,
+      "all_passed": true,
+      "coverage": [
+        "No-op wrong identifier/category/axis/term kind",
+        "Repinned PROPOSED/REVIEWED deny SEEDED exception",
+        "Two extra history events rejected",
+        "Existing canonical_examples block preserved",
+        "Invalid second target prevents any first-target write",
+        "Symlink target rejected"
+      ]
+    },
+    {
+      "kind": "all_current_ledger_targets",
+      "record_count": 24,
+      "ledger_sha256": "0b73a73d5d86fc0190b57f89bff4c50eb060de70493c1d480faddcf19d44a5ae",
+      "ledger_stable_during_check": true,
+      "result": "Git HEAD preimages match ledger input pins; applied bytes match output pins and in-memory transforms; correct exact-output replay for all targets; unchanged identity/history prefixes/canonical examples; exactly one agent event; no semantic changes outside explicit reviewed blocks; all outputs PROPOSED."
+    },
+    {
+      "kind": "actual_seeder_emission_and_native_merge",
+      "record_owner_pairs": 25,
+      "expected_pairs": 25,
+      "owner_counts": {
+        "seed_foundational_traits": 8,
+        "seed_secondary_structure": 7,
+        "seed_localstructuralfeature": 10
+      },
+      "result": "All 25 real source emissions match their maintained-owner pins; every merged result strictly validates and equals reviewed output semantically; history and canonical examples preserved. 13 pair results differ in formatting under native merge_on_reseed."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "SW-001",
+      "issue_key": "proteintraitsmech:structural-writer:seeded-history-preservation",
+      "status": "resolved",
+      "prior_review": "research/structural-traits-20261028/grounding/writer-review-initial.json",
+      "verification": [
+        "Exact SEEDED preimages may opt in through allow_seeded_history=True; ordinary should_enrich remains unchanged.",
+        "History is an unchanged prefix in all 24 final transformations. All 10 previously historied SEEDED inputs retain their old events and receive one new event.",
+        "Focused regression and extra probes reject repinned PROPOSED and REVIEWED records. Input drift remains refused."
+      ]
+    },
+    {
+      "finding_id": "SW-002",
+      "issue_key": "proteintraitsmech:structural-writer:noop-identity-bypass",
+      "status": "resolved",
+      "prior_review": "research/structural-traits-20261028/grounding/writer-review-initial.json",
+      "verification": [
+        "curate_record_text parses and validates identifier, axis, category and CLASS scope before exact-output return.",
+        "Focused identifier regression and independent category/axis/term-kind exact-output probes all reject mismatches.",
+        "All 24 actual applied outputs pass identity checks and replay exactly unchanged."
+      ]
+    },
+    {
+      "finding_id": "SW-003",
+      "issue_key": "proteintraitsmech:structural-writer:history-delta-required",
+      "status": "resolved",
+      "prior_review": "research/structural-traits-20261028/grounding/writer-review-initial.json",
+      "verification": [
+        "The editor requires exactly one appended history event after the unchanged prefix.",
+        "Focused zero-new-event regression and independent two-new-events probe both fail closed.",
+        "All 24 final outputs append one event attributed to codex-gpt-6-astra with llm_assisted=true; replay appends none."
+      ]
+    }
+  ],
+  "new_blocking_findings": [],
+  "positive_assessments": [
+    "CLI is dry-run by default; only exact ledger IDs are accepted. Existing paths, symlinks, identity, pinned bytes and closed schema are checked before writes.",
+    "Canonical examples and identity fields are outside the ledger allowlist. Existing canonical examples are preserved; no examples were created/qualified.",
+    "All candidates preflight before corpus writes; independent two-target fixture confirms a later invalid candidate does not write an earlier valid target. Individual writes use native atomic strict-validation API.",
+    "Native EDITORS registration and just recipe are present; three seeders call shared pinned transformation and strict write_record validation.",
+    "Tests exercise meaningful drift, preservation, idempotence, history and invalid-write behaviors, rather than only mirroring happy-path output."
+  ],
+  "limitations": [
+    "Review is for these exact working-tree hashes, not a future commit or independently fetched PR head. Parent changed ledger during the review; final applied-ledger inspection is pinned to 0b73a73d5d86fc0190b57f89bff4c50eb060de70493c1d480faddcf19d44a5ae.",
+    "This review does not certify all scientific claims, taxonomy decisions, source licensing, detection arguments or example eligibility. Earlier grounding dossiers remain separate evidence.",
+    "Exact-byte editor idempotency is verified. Native merge_on_reseed preserves semantics but reformats 13 outputs; applying the editor after such formatting correctly requires re-review because exact output pins no longer match. No seeder byte-idempotency claim is made.",
+    "Apply is atomic per record, not a whole-batch filesystem transaction. A later I/O failure or concurrent change can leave earlier valid writes applied; exact input/output hashes support conservative recovery.",
+    "The existing canonical_examples preservation adversarial probe uses an empty block; actual 24 targets have zero examples. Protection of nonempty examples follows the allowlist and exact unchanged-key transform, not a newly qualified example integration test."
+  ],
+  "code_stable_since_start": true,
+  "writes_by_reviewer": "Own grounding research JSON artifacts, pytest cache and temporary fixture/preview files only. No code, scientific record, seeder, registry, branch, session or other checkout modifications."
+}

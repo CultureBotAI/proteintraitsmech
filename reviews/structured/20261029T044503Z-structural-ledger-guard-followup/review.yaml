@@ -1,0 +1,183 @@
+schema_version: 1.0.0
+review_id: 20261029T044503Z-structural-ledger-guard-followup
+kind: repository
+repository: CultureBotAI/proteintraitsmech
+title: Bounded local guard reassessment for structural ledger issue1203
+started_at: '2026-10-29T04:41:00Z'
+finished_at: '2026-10-29T04:45:03.491191Z'
+reviewer:
+  identity: Codex PTM structural worker
+  kind: agent
+  model: gpt-6-astra
+  independence: self_review
+  independence_basis: Author records local regression/provenance results and cites
+    a separate read-only delta reviewer. Parent final-commit review remains separate.
+skill: Native record review contract; bounded PR1202 follow-up brief
+completion: completed
+verdict: pass_with_limitations
+scientific_review: false
+summary: 'Local guard regressions and output-preservation checks pass for the five
+  changed implementation inputs. #1203 is fixed in this working tree and independently
+  probed. This observation covers local guard behavior; full-suite completion, final
+  committed-head review and remote checks are recorded separately before readiness.'
+source:
+  git_revision: 93c1a021d76a94fd299e0a1e3cf8f1b9671a3703
+  state: working_tree
+  inputs:
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: data/curation/structural_trait_curations.yaml
+    sha256: 00d7ef4561a8b4ebf1d6c909ade2829284b7c36259e544d8ea053d1725631723
+    role: target
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: scripts/curate_structural_traits.py
+    sha256: 360745d7f70f4c8b0572a1f889a26760e73026a28f19a8f16d269d71bd190d50
+    role: target
+  - path: scripts/structural_trait_curations.py
+    sha256: 6b1fa8cc5bdbceb0dfefce4349f1062781f2749a8115231101dc1cc5f47b7dfe
+    role: target
+  - path: tests/test_seeder_structural_curations.py
+    sha256: bbc1a41033524daf2c84ed71bbfd69757443bf79a89101fbdf73f52889090859
+    role: target
+  - path: tests/test_structural_trait_curations.py
+    sha256: a270b4b1c94a9d5784f8d4a27d2622d0c28bd643efdb259983a170967468f9fa
+    role: target
+scope:
+  description: Five changed editor/ledger/test inputs and their bounded behavioral
+    acceptance evidence.
+  selection: All five maintained paths modified for PTM1202-CODE-001.
+  coverage: full
+  population_size: 5
+  reviewed_target_ids:
+  - scripts/structural_trait_curations.py
+  - scripts/curate_structural_traits.py
+  - data/curation/structural_trait_curations.yaml
+  - tests/test_structural_trait_curations.py
+  - tests/test_seeder_structural_curations.py
+  exclusions:
+  - target: Scientific primary-source review and whole corpus
+    reason: Scientific records are byte-identical; independent initial science review
+      remains applicable. This is a guard assessment.
+  - target: Final remote readiness and merge integration
+    reason: Commit/push, final head re-review/checks and approved queue integration
+      are subsequent gates, not asserted here.
+targets:
+- target_id: scripts/structural_trait_curations.py
+  path: scripts/structural_trait_curations.py
+  label: structural_trait_curations.py
+  kind: maintained
+  ownership_note: Owned PR1202 structural curation editor, ledger or behavioral regression
+    coverage.
+- target_id: scripts/curate_structural_traits.py
+  path: scripts/curate_structural_traits.py
+  label: curate_structural_traits.py
+  kind: maintained
+  ownership_note: Owned PR1202 structural curation editor, ledger or behavioral regression
+    coverage.
+- target_id: data/curation/structural_trait_curations.yaml
+  path: data/curation/structural_trait_curations.yaml
+  label: structural_trait_curations.yaml
+  kind: maintained
+  ownership_note: Owned PR1202 structural curation editor, ledger or behavioral regression
+    coverage.
+- target_id: tests/test_structural_trait_curations.py
+  path: tests/test_structural_trait_curations.py
+  label: test_structural_trait_curations.py
+  kind: maintained
+  ownership_note: Owned PR1202 structural curation editor, ledger or behavioral regression
+    coverage.
+- target_id: tests/test_seeder_structural_curations.py
+  path: tests/test_seeder_structural_curations.py
+  label: test_seeder_structural_curations.py
+  kind: maintained
+  ownership_note: Owned PR1202 structural curation editor, ledger or behavioral regression
+    coverage.
+checks:
+- check_id: focused-regression
+  name: Focused behavioral guard and seeder regression suite
+  status: passed
+  required: true
+  summary: 111 tests passed, including stale blocks and completed-output rejection.
+  target_ids:
+  - scripts/structural_trait_curations.py
+  - scripts/curate_structural_traits.py
+  - data/curation/structural_trait_curations.yaml
+  - tests/test_structural_trait_curations.py
+  - tests/test_seeder_structural_curations.py
+  command: .venv/bin/python -m pytest --rootdir=. -o cache_dir=.pytest_cache -q tests/test_structural_trait_curations.py
+    tests/test_seeder_structural_curations.py tests/test_foundational_traits.py tests/test_inplace_editor_guards.py
+  exit_code: 0
+  evidence_ids:
+  - local-validation
+- check_id: preservation
+  name: Exact record and maintained source replay
+  status: passed
+  required: true
+  summary: 24 record files byte-identical;24 preimage replays;25 pinned source-owner
+    outputs;127 unrelated emissions unchanged.
+  target_ids:
+  - scripts/structural_trait_curations.py
+  - scripts/curate_structural_traits.py
+  - data/curation/structural_trait_curations.yaml
+  - tests/test_structural_trait_curations.py
+  - tests/test_seeder_structural_curations.py
+  evidence_ids:
+  - replay
+  - independent-delta
+evidence:
+- evidence_id: local-validation
+  kind: validation
+  reference: research/structural-traits-20261029-followup/native-validation.json
+  accessed_at: '2026-10-29T04:45:03.491191Z'
+  support: supports
+  summary: Scoped native validation and focused guard checks; retains initial sandbox
+    vendored failure and successful network retry.
+- evidence_id: replay
+  kind: validation
+  reference: research/structural-traits-20261029-followup/replay-verification.json
+  accessed_at: '2026-10-29T04:45:03.491191Z'
+  support: supports
+  summary: Exact byte and semantic invariants across all24 records and25 source-owner
+    emissions.
+- evidence_id: independent-delta
+  kind: prior_review
+  reference: research/structural-traits-20261029-followup/independent-delta-review.json
+  accessed_at: '2026-10-29T04:45:03.491191Z'
+  support: supports
+  summary: Separate read-only adversarial probe, exact five input hashes and explicit
+    trust limits.
+assessments:
+- assessment_id: reviewed-block-integrity
+  area: consistency
+  topic: Fail-closed replay of reviewed scientific blocks
+  outcome: supported
+  summary: Loader, editor and seeders reject retained-pin stale edits; completed output
+    must agree with block values, and each owner emission must match its own output
+    pin. The regression covers definitions/evidence/graphs/deletions and source drift.
+  target_ids:
+  - scripts/structural_trait_curations.py
+  - scripts/curate_structural_traits.py
+  - data/curation/structural_trait_curations.yaml
+  - tests/test_structural_trait_curations.py
+  - tests/test_seeder_structural_curations.py
+  evidence_ids:
+  - local-validation
+  - replay
+  - independent-delta
+findings: []
+actions: []
+limitations:
+- This is a focused local implementation review, not final remote readiness or human
+  scientific sign-off.
+- Independent parent re-review at the final committed head and all four final-head
+  checks remain required.
+- Full test suite is running; no completed full-suite claim is made here.
+- Hashes detect stale edits relative to maintained review metadata; deliberately replacing
+  relevant hashes is a new trusted review input.
+- Merge, queue entry, cleanup and goal/cycle advancement are not authorized.
+links:
+- https://github.com/CultureBotAI/proteintraitsmech/issues/1203
+- https://github.com/CultureBotAI/proteintraitsmech/pull/1202

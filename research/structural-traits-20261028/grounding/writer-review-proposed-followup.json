@@ -1,0 +1,169 @@
+{
+  "artifact_kind": "independent_writer_followup_review",
+  "created_at": "2026-10-28T18:59:22.970870+00:00",
+  "reviewer": "codex-gpt-6-astra grounding_route_audit subagent",
+  "verdict": "pass_for_reviewed_followup_guard_and_ledger_safety",
+  "scope": "Two exact agent-PROPOSED corrections and their narrow prior-output guard; no new corpus records, qualification or human status promotion. Separate from scientific sign-off and final exact-commit PR review.",
+  "source_hashes": {
+    "scripts/curate_structural_traits.py": "60fe9bf32d9d4f3801fba1342dc3bb5aa7e0e85c05f496dac710d75524204ddc",
+    "scripts/structural_trait_curations.py": "72226af447168758724b895c89d38d901ca7a20c4afe80229ee21b4d555989fc",
+    "tests/test_structural_trait_curations.py": "8313a7426caf3d4010c1e1dec2948c54421d1344640dd37d36ed1b9b54902826",
+    "tests/test_inplace_editor_guards.py": "36c226f575b73ec5cd8163ea4a2911fb56947070453efb7be14a14343d6f6b2b",
+    "data/curation/structural_trait_curations.yaml": "31716fb836efcf8971e19179970f0adafd7925bc6353cd44e4d5f763bd361fd4",
+    "scripts/seed_foundational_traits.py": "8b829acf781e52e3e35e25510b024e785ff5d6ad04462b7e1e9cec3ee56f4b7f",
+    "justfile": "4d19d5d7ce2ee16a91d9ca0356faeb3fbbdf2132faddac91bcc97fccc83fc0da"
+  },
+  "review_lineage": [
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-review-initial.json",
+      "sha256": "0421abc9fc125146cd5f7616136a341a6ebde4a3158d163198cce3c763afcdad"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-review-after-fixes.json",
+      "sha256": "57f042f8559916481c0b6a176e3cd936e00585bca8a664194d1179ee27b9bf27"
+    }
+  ],
+  "supporting_artifacts": [
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-followup-review-start.json",
+      "sha256": "be3800d475aca5f2effadbcedc14e611a9c5f8817f4772061ea5f2eea49e41f9"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-followup-ledger-checks.json",
+      "sha256": "aa26ab2cd4960b58c9a5d04dd1e722d0795394d0effed49182796701b0cfe20e"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-followup-adversarial-checks.json",
+      "sha256": "b933742bafdb1eb6880a5af6d53b904816b20b86c4826bbe7640e1a6fb21e8eb"
+    },
+    {
+      "path": "research/structural-traits-20261028/grounding/writer-followup-source-checks.json",
+      "sha256": "cbfbdb065795f1cbacec4f70a3c318218d57d8768703d2a9d5e2a0ba8c7730c7"
+    }
+  ],
+  "source_stable_during_review": true,
+  "test_result": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest --rootdir=. -o cache_dir=.pytest_cache tests/test_structural_trait_curations.py tests/test_inplace_editor_guards.py -q",
+    "exit_code": 0,
+    "result": "77 passed in 0.72s"
+  },
+  "independent_adversarial_checks": {
+    "count": 11,
+    "all_passed": true,
+    "coverage": [
+      "Boolean True opt-in required; string true, integer 1, None and missing flag refused.",
+      "Missing prior output, current byte drift, or mismatched prior/input pins refused.",
+      "PROPOSED without prior history refused; regression tests also reject repinned REVIEWED, other curator and llm_assisted=false.",
+      "Zero/two added events and changed old history refused.",
+      "Ledger loader rejects a mismatched prior-output pin."
+    ]
+  },
+  "cli_fixture_checks": [
+    {
+      "args": [],
+      "return_code": 0,
+      "output": "WOULD WRITE data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml\nWOULD WRITE data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml\n2 changed; 0 unchanged; dry-run\n",
+      "file_hashes": {
+        "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE": "93432c439995b29fb17feac28bdda1d77b344c6a39e90495c5fb44884b505754",
+        "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE": "558767b7edb38615804af7288437ac6ebfbcf50bf840f52d639106a9f1b5ee18"
+      }
+    },
+    {
+      "args": [
+        "--apply"
+      ],
+      "return_code": 0,
+      "output": "WROTE data/traits/structure/allosteric_site/covalent-allosteric-regulatory-site.yaml\nWROTE data/traits/structure/allosteric_site/subunit-interface-allosteric-site.yaml\n2 changed; 0 unchanged; applied\n",
+      "file_hashes": {
+        "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE": "c936a6c4d3a4df00ba7048e797e74a786ef97ada9e737467534d87360a8e9008",
+        "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE": "746fedb750c2f015bb3dd02c29cd285b2c7dff154343a95047e7bf50ce1a43b6"
+      }
+    },
+    {
+      "args": [
+        "--apply"
+      ],
+      "return_code": 0,
+      "output": "UNCHANGED proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE\nUNCHANGED proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE\n0 changed; 2 unchanged; applied\n",
+      "file_hashes": {
+        "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE": "c936a6c4d3a4df00ba7048e797e74a786ef97ada9e737467534d87360a8e9008",
+        "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE": "746fedb750c2f015bb3dd02c29cd285b2c7dff154343a95047e7bf50ce1a43b6"
+      }
+    }
+  ],
+  "guard_assessment": [
+    "Generic should_enrich remains not is_curated; the exception is local to this editor.",
+    "The follow-up exception requires explicit boolean flag, input SHA equal prior-output SHA equal current SHA, PROPOSED status, and last event by codex-gpt-6-astra with llm_assisted exactly True.",
+    "Identity/scope validation still precedes output-hash no-op; exact-output replay adds no event.",
+    "Old history must be an unchanged prefix and a substantive editor operation appends exactly one event.",
+    "Ledger allowlist still excludes canonical_examples and identity fields; strict native write preflight remains unchanged."
+  ],
+  "actual_ledger_assessment": {
+    "followup_record_count": 2,
+    "unchanged_other_record_count": 22,
+    "prior_output_matches_archived_review": true,
+    "saved_preimages_match_new_input_and_prior_output_pins": true,
+    "initial_input_pins_match_git_baseline": true,
+    "applied_outputs_match_pins_and_transforms": true,
+    "history_and_examples_preserved": true,
+    "history_delta_per_followup": 1,
+    "all_24_exact_replays_noop": true,
+    "status_remains": "PROPOSED",
+    "semantic_followup_changes": {
+      "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE": [
+        "causal_graphs",
+        "curation_history",
+        "evidence"
+      ],
+      "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE": [
+        "curation_history",
+        "synonyms"
+      ]
+    }
+  },
+  "source_replay": {
+    "ledger_sha256": "31716fb836efcf8971e19179970f0adafd7925bc6353cd44e4d5f763bd361fd4",
+    "records": [
+      {
+        "identifier": "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE",
+        "owner": "seed_foundational_traits",
+        "source_pin_accepted": true,
+        "strict_valid": true,
+        "semantic_equal": true,
+        "history_equal": true,
+        "canonical_examples_equal": true,
+        "byte_equal": false,
+        "second_merge_byte_idempotent": true,
+        "fresh_output_sha256": "8164d64b87ef9cfbe0658deff7a0d5aebd4e2e28fdf02a208d3ac8a365a5ae53",
+        "merged_output_sha256": "8164d64b87ef9cfbe0658deff7a0d5aebd4e2e28fdf02a208d3ac8a365a5ae53"
+      },
+      {
+        "identifier": "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
+        "owner": "seed_foundational_traits",
+        "source_pin_accepted": true,
+        "strict_valid": true,
+        "semantic_equal": true,
+        "history_equal": true,
+        "canonical_examples_equal": true,
+        "byte_equal": true,
+        "second_merge_byte_idempotent": true,
+        "fresh_output_sha256": "c936a6c4d3a4df00ba7048e797e74a786ef97ada9e737467534d87360a8e9008",
+        "merged_output_sha256": "c936a6c4d3a4df00ba7048e797e74a786ef97ada9e737467534d87360a8e9008"
+      }
+    ]
+  },
+  "findings": [],
+  "prior_findings_status": {
+    "SW-001": "resolved, preserved by follow-up guard",
+    "SW-002": "resolved, identity-before-noop retained",
+    "SW-003": "resolved, unchanged-prefix and +1 editor event retained"
+  },
+  "limitations": [
+    "Exact working-tree hashes reviewed, not an immutable PR commit.",
+    "initial_input_sha256 and followup_preimage are lineage metadata; runtime authority comes from explicit input/prior-output equality and current bytes. Their values were independently checked against Git baseline and archived prior review for these two entries.",
+    "Source replay preserves semantic content. Native merge reformats the subunit-interface record once and then repeats byte-identically; this remains distinct from the editor exact-byte no-op contract.",
+    "Batch writes remain individually atomic, without a whole-batch transaction; prior review limitations still apply.",
+    "Scientific changes were inspected for bounded field deltas, not independently re-researched in this implementation review."
+  ],
+  "reviewer_mutations": "Only new grounding JSON artifacts and temporary copied fixtures/cache; no code/corpus/session/branch changes."
+}

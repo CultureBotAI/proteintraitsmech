@@ -1,0 +1,175 @@
+{
+  "artifact_kind": "grounding_route_discovery",
+  "created_at": "2026-10-28T18:40:42+00:00",
+  "repository": "CultureBotAI/proteintraitsmech",
+  "git_base": "c4147394c698324ae537c0c63c2c9f6647c4f4fc",
+  "scientific_review": false,
+  "scope": {
+    "record_count": 21,
+    "records": [
+      "proteintraitsmech:HELIX_TURN_HELIX",
+      "proteintraitsmech:BETA_ALPHA_BETA",
+      "proteintraitsmech:GREEK_KEY",
+      "proteintraitsmech:BETA_HAIRPIN",
+      "proteintraitsmech:BETA_TURN",
+      "proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL",
+      "proteintraitsmech:CAVITY",
+      "proteintraitsmech:CLEFT",
+      "proteintraitsmech:GROOVE",
+      "proteintraitsmech:POCKET",
+      "proteintraitsmech:CAVITY_SELECTIVITY_FILTER_PORE",
+      "proteintraitsmech:TUNNEL",
+      "proteintraitsmech:ALLOSTERIC_ACTIVATOR_SITE",
+      "proteintraitsmech:ALLOSTERIC_INHIBITOR_SITE",
+      "proteintraitsmech:ALLOSTERIC_REGULATORY_SITE",
+      "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
+      "proteintraitsmech:ALLOSTERIC_CRYPTIC_POCKET",
+      "proteintraitsmech:ALLOSTERIC_SUBUNIT_INTERFACE_SITE",
+      "proteintraitsmech:PROTEIN_BINDING_SITE",
+      "proteintraitsmech:CATALYTIC_RESIDUE",
+      "proteintraitsmech:METAL_BINDING_SITE"
+    ],
+    "reviewed_surfaces": [
+      "canonical_examples",
+      "structural_geometry_representations",
+      "native producer dispatch",
+      "native provider qualification locks"
+    ],
+    "excluded": [
+      "full scientific claim audit",
+      "other worktrees and sessions",
+      "remote provider panels",
+      "promotion",
+      "new source/writer implementation"
+    ]
+  },
+  "local_asset_inventory": {
+    "ignored_files_included": true,
+    "method": "rg --files --no-ignore --hidden plus pathlib recursive listing; rg --no-ignore --hidden exact-ID content search",
+    "raw_files": [
+      "data/raw/.gitkeep",
+      "data/raw/README.md"
+    ],
+    "individual_profile_yaml_count": 1000,
+    "reports_directory_present": false,
+    "missing_needed_artifacts": [
+      "data/raw/align_cache/residue_frame.json",
+      "data/raw/align_cache/interpro_frame.json",
+      "data/profiles/profiles.jsonl",
+      "reports/uniprot-grounding/candidates.jsonl",
+      "reports/uniprot-grounding/review-batches/*",
+      "local SIFTS mapping/acquisition staging"
+    ],
+    "durable_registry_note": "Durable protein/evidence/binding registries exist; exact-ID search of data/grounding, data/profiles and data/cross_mech found no named generic motif/cavity/binding seed IDs. This is not an upstream absence claim."
+  },
+  "routes": [
+    {
+      "route": "InterPro exact match",
+      "status": "not applicable to direct internal motif IDs",
+      "owner": "scripts/ground_uniprot_examples.py:_resolve_occurrence; scripts/validate_uniprot_grounding.py:_provider_contract_errors",
+      "reason": "Source namespace proteintraitsmech is rejected as interpro_namespace_mismatch. A family/domain profile hit does not assert a local motif region. A part-of relationship cannot be relabeled as parent_traits subclass inheritance to force qualification."
+    },
+    {
+      "route": "UniProt exact whole-protein fact",
+      "status": "not applicable to these STRUCTURE records",
+      "owner": "scripts/ground_uniprot_examples.py:_whole_protein_allowed",
+      "reason": "WHOLE_PROTEIN is limited to FUNCTION, EVOLUTION, SEQ_FAMILY and SEQ_HOMOLOGOUS_SUPERFAMILY. Generic binding or functional membership cannot provide structural-site coordinates."
+    },
+    {
+      "route": "UNIPROT_FEATURE / SOURCE_NATIVE_COORDINATES / PATTERN_MATCH",
+      "status": "no generic producer in current resolver",
+      "owner": "scripts/ground_uniprot_examples.py:_resolve_occurrence",
+      "reason": "Schema enum presence is not producer support. Dispatch implements INTERPRO_MATCH, exact UniProt fact methods, and SIFTS_RESIDUE_MAPPING; other methods receive unsupported:mapping_method. SOURCE_DATABASE also fails closed without an exact source-specific contract and acquisition receipt."
+    },
+    {
+      "route": "SIFTS_RESIDUE_MAPPING",
+      "status": "source-specific staging only; qualification blocked",
+      "owner": "scripts/ground_uniprot_examples.py:_sifts_mapping_family/_load_sifts_mapping_registry; scripts/validate_uniprot_grounding.py:PENDING_PROVIDER_LOCKS/_provider_contract_errors",
+      "reason": "Only ECOD and BioLiP mapping-registry families are loaded. Generic PDB/publication motif rows are not supported. Validator preserves receipt-required locks for SIFTS, ECOD, SCOPe, CATH, 3did, BioLiP, M-CSA, MetalPDB and RepeatsDB."
+    },
+    {
+      "route": "PDB structural representation anchor",
+      "status": "schema-supported distinct representation; not canonical qualification",
+      "owner": "src/proteintraitsmech/schema/proteintraitsmech.yaml:SecondaryStructureRepresentation/StructuralGeometryRepresentation",
+      "reason": "Both representation classes accept structure_ref and evidence_source; geometry also accepts source and residue_range. A source-inspected representative can be selected through the guarded editor with honest chain/construct/version provenance, while unknown bounds remain absent. It cannot establish a QUALIFIED CanonicalExample or satisfy residue-mapping requirements. No dedicated chain/frame/version fields exist in these representation classes; source provenance must retain that context. Legacy enrich_structural_provenance.py illustrates representation semantics and is listed in audit_writers.py, but uses direct path.write_text. Its old bypass is not the validated, behaviorally tested route required by this launch brief for new edits; it was not invoked."
+    }
+  ],
+  "prerequisites_for_qualified_generic_structural_examples": [
+    "Coordinate with the current owners of grounding/qualification code before any implementation; root is refreshing remote PR state.",
+    "A source-specific, receipt-bound producer must select exact asserted motif/site residues and exact PDB revision/chain/construct; do not synthesize a generic source row by hand.",
+    "A supported source contract must replay complete residue-level SIFTS mapping against a release-matched UniProt ProteinReference, including insertion codes, missing residues, amino-acid identities and all trait-defining positions.",
+    "Candidate generation and source-aware content validation must assert the exact internal trait identity without equating domains, folds, motifs, geometry and function.",
+    "Persist immutable resolved rows/resolution digests, source-stratified scientific review and explicit decision ledgers before any separately authorized promotion.",
+    "Promotion must install matching evidence/bindings and pass require-qualified semantic validation, guarded-writer and registry-integrity gates."
+  ],
+  "actions_taken": {
+    "network_bulk_sweeps": 0,
+    "promotions": 0,
+    "scientific_record_writes": 0,
+    "provider_panel_downloads": 0,
+    "other_checkout_changes": 0
+  },
+  "limitations": [
+    "This dossier is discovery/route evidence, not a native completed scientific review bundle.",
+    "No fresh UniProt fetch receipt or SIFTS acquisition manifest was obtained.",
+    "Source-native PDB/raw header and PDBsum requests through the web tool failed; no exact coordinate assignment was invented.",
+    "Current local code at the pinned base is inspected; root owns remote overlap verification."
+  ],
+  "read_only_gate_probe": {
+    "fixture_only": true,
+    "meaning": "Private validator contract probe demonstrates code gates; not candidate evidence or qualification.",
+    "results": [
+      {
+        "method": "SIFTS_RESIDUE_MAPPING",
+        "provider": "SIFTS",
+        "errors": [
+          [
+            "sifts_provider_receipt_required",
+            "SIFTS evidence cannot qualify until its complete acquisition manifest and provider-entry receipt are represented and verified by the grounding boundary"
+          ],
+          [
+            "incomplete_sifts_provenance",
+            "structure-derived evidence requires structure_id"
+          ],
+          [
+            "incomplete_sifts_provenance",
+            "structure-derived evidence requires chain_id"
+          ],
+          [
+            "incomplete_sifts_mapping",
+            "structure-derived evidence requires mapping_completeness='COMPLETE'"
+          ],
+          [
+            "missing_sifts_counts",
+            "structure-derived evidence requires positive source and mapped residue counts"
+          ]
+        ]
+      },
+      {
+        "method": "SOURCE_NATIVE_COORDINATES",
+        "provider": "SOURCE_DATABASE",
+        "errors": [
+          [
+            "source_database_contract_required",
+            "SOURCE_DATABASE evidence cannot qualify until an exact source-specific contract and acquisition receipt are represented and verified by the grounding boundary"
+          ]
+        ]
+      },
+      {
+        "method": "INTERPRO_MATCH",
+        "provider": "INTERPRO",
+        "errors": [
+          [
+            "interpro_namespace_mismatch",
+            "'proteintraitsmech' is not an exact InterPro/member signature namespace"
+          ]
+        ]
+      },
+      {
+        "method": "UNIPROT_FEATURE",
+        "provider": "UNIPROT",
+        "errors": []
+      }
+    ]
+  }
+}
