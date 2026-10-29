@@ -59,6 +59,18 @@ jobs:
       # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
       - run: just lint
 
+      # PR1202 was squash-merged; this immutable review base is not an ancestor
+      # of main. Restore its exact object in this ephemeral checkout (#1206).
+      # Do not recreate retired refs or weaken the native provenance check.
+      - name: Restore inherited review Git base
+        run: |
+          set -euo pipefail
+          review_revision=93c1a021d76a94fd299e0a1e3cf8f1b9671a3703
+          if ! git cat-file -e "${review_revision}^{commit}" 2>/dev/null; then
+            git fetch --no-tags --no-write-fetch-head origin "$review_revision"
+          fi
+          test "$(git rev-parse --verify "${review_revision}^{commit}")" = "$review_revision"
+
       - name: Structured record review contract
         run: just test-record-reviews
 
