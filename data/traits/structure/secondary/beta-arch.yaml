@@ -1,0 +1,68 @@
+identifier: proteintraitsmech:BETA_ARCH
+label: beta arch
+definition: A supersecondary motif comprising two successive beta strands joined by a connecting segment,
+  without hydrogen-bond pairing between the two flanking strands.
+definition_source: DOI:10.1038/s41467-022-33004-6
+trait_axis: STRUCTURE
+trait_category: STRUCT_SECONDARY
+term_kind: CLASS
+mapping_status: PROPOSED
+parent_traits:
+- proteintraitsmech:SUPER_SECONDARY_MOTIF
+synonyms:
+- synonym_text: beta-arch
+  synonym_type: EXACT_SYNONYM
+  source: DOI:10.1038/s41467-022-33004-6
+- synonym_text: β-arch
+  synonym_type: EXACT_SYNONYM
+  source: DOI:10.1038/s41467-022-33004-6
+secondary_structure_representations:
+- method: Curated element connectivity; no per-residue assignment
+  state_alphabet: TOPOLOGY
+  topology_string: E-connection-E(no-flanking-strand-pairing)
+  evidence_source: DOI:10.1038/s41467-022-33004-6; Methods, beta-arch structural analysis
+detection_methods:
+- name: DSSP assignment followed by connected-strand and hydrogen-bond pairing review
+  method_type: STRUCTURAL_ALGORITHM
+  tool: https://github.com/PDB-REDO/dssp
+  reference: DOI:10.1038/s41467-022-33004-6
+  recipe: mkdssp --output-format=dssp {input.pdb} {output.dssp}
+  evidence_code: ECO:0007669
+structural_geometry_representations:
+- structure_ref: PDB:7SKO
+  structure_source: PDB, entry version 1.2, revised 2024-11-13
+  evidence_source: DOI:10.1038/s41467-022-33004-6, structural characterization and deposition section;
+    https://www.rcsb.org/structure/7SKO, inspected 2026-10-29. Synthetic dIG8-CC, X-ray 2.05 angstrom,
+    chains A-D in the asymmetric unit; deposited biological assemblies are dimers. Whole-structure representative
+    of the source-described arch connections; no residue boundaries or qualified protein occurrence asserted.
+evidence:
+- reference: DOI:10.1038/s41467-022-33004-6
+  notes: Chidyausiku et al. (2022) distinguish beta-arches from hydrogen-bonded beta-hairpin strand pairs.
+    Methods use DSSP and pairing inspection. The connecting segment can contain a helix; the study's short-loop
+    sampling restriction is not a universal class boundary. The motif is smaller than a complete immunoglobulin-like
+    domain.
+- reference: https://github.com/PDB-REDO/dssp
+  notes: The documented command produces secondary-structure and hydrogen-bond assignments, not automatic
+    beta-arch calls. Review successive strand segments in one continuous chain and exclude mutual hydrogen-bond
+    pairing; confirm connection geometry in coordinates. Chain breaks, missing backbone atoms and ambiguous
+    assignments remain unresolved. CLI syntax was checked with mkdssp 4.6.1; no structure detection was
+    executed for this record.
+- reference: DOI:10.1038/s41467-022-33004-6
+  notes: The source reports preservation of dIG8-CC arch connections in crystal models. Its Figure 5c
+    caption names 7SKP/chain C inconsistently with its deposition section and archive identity; 7SKO is
+    selected using the latter sources. No coordinate assertion is derived from that caption. Article CC-BY-4.0;
+    this record paraphrases facts with attribution and imports no figure.
+- reference: https://raw.githubusercontent.com/PDB-REDO/dssp/trunk/LICENSE
+  notes: DSSP software retains BSD-2-Clause terms. PDB archive metadata retain CC0-1.0 under https://www.wwpdb.org/about/usage-policies.
+    Record CC-BY-4.0 applies to the original project synthesis; no coordinates or software are copied
+    here.
+curation_history:
+- timestamp: '2026-10-29T07:10:11Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_discovery_20261028
+  changes: Created a new PROPOSED class after the bottleneck canary and ignored-inclusive corpus/alias/open-work
+    checks. Maintained source data/curation/structural_trait_discovery.yaml; writer scripts/seed_structural_discovery.py.
+    Evidence dossier research/structural-discovery-20261028/motifs/ranked-candidate-cards.json. Addresses
+    the missing beta-arch class in issue1200 without closing its residual scope.
+  llm_assisted: true
+license: CC-BY-4.0

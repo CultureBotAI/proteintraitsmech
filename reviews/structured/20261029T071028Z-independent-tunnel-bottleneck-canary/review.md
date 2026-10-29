@@ -1,0 +1,723 @@
+# Independent scientific review of the emitted protein tunnel bottleneck canary
+
+- Review: 20261029T071028Z-independent-tunnel-bottleneck-canary
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-29T07:07:43Z
+- Finished UTC: 2026-10-29T07:10:28Z
+- Reviewer: Codex /root/grounding_route_audit (independent)
+- Completion: completed
+- Verdict: pass_with_limitations
+- Scientific review: true
+
+## Summary
+
+One emitted PROPOSED geometric class is source-supported, schema-valid and semantically identical to its independently reviewed manifest row. No findings. Model-sensitive external detection is documented but unexecuted; no canonical protein occurrence, local residue boundary, transport function or gating mechanism is qualified.
+
+## Scope And Provenance
+
+Entire emitted protein tunnel bottleneck record under the native ten-area field rubric.
+
+Selection: Exact coordinator-named canary path and identifier, no sampling.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 7276814bdf3bed73569a202c5e2c4b404e43d8f1.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:TUNNEL_BOTTLENECK | data/traits/structure/cavity/tunnel-bottleneck.yaml | generated | protein tunnel bottleneck |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Native strict schema and semantic validation | passed | True | proteintraitsmech:TUNNEL_BOTTLENECK | One emitted file, zero errors; independently executed. |
+| Native graph audit | passed | True | proteintraitsmech:TUNNEL_BOTTLENECK | Zero graphs, errors and warnings; independently executed. This does not provide mechanistic evidence. |
+| Native grounding validator | passed | True | proteintraitsmech:TUNNEL_BOTTLENECK | Coordinator executed exit0; inspected complete log reports one target and zero findings. No require-qualified claim is made. |
+| Emitted versus independently reviewed content | passed | True | proteintraitsmech:TUNNEL_BOTTLENECK | Entire parsed mapping is identical to maintained manifest and frozen independent-review row, including history and examples. |
+| CAVER external execution | not_applicable | False | proteintraitsmech:TUNNEL_BOTTLENECK | Recipe is documented only; no local installation, detector run or output-based qualification is claimed. |
+| Structured expression adapter | not_applicable | False | proteintraitsmech:TUNNEL_BOTTLENECK | A geometric structural class with no expression, regulator or transcriptomic claim does not call for iModulonDB evidence. |
+
+## Scientific And Domain Assessments
+
+### identifier, label, definition, definition_source, term_kind
+
+identity: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+The proposal denotes a reusable geometric class, not a specific protein, residue set, entire tunnel, or radius measurement. Its coordinate/model dependence and path minimum are explicit. The primary CAVER paper defines its bottleneck as the narrowest ball along the path. The identifier reservation and full cross-corpus collision audit remain the coordinator's responsibility.
+
+### trait_axis, trait_category, mapping_status
+
+scope: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+STRUCTURE / STRUCT_CAVITY is consistent with the existing native tunnel class and the geometric object. CLASS / PROPOSED preserves the lack of human review and makes no qualification claim.
+
+### synonyms
+
+nomenclature: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+Tunnel bottleneck is an appropriate exact alias. Tunnel constriction is explicitly broader: a local narrowing need not be the global path minimum. The curator inference is labeled as such.
+
+### trait_relations
+
+consistency: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+The bottleneck region is part_of the tunnel, not a subclass of the entire tunnel. The referenced native target exists with identifier proteintraitsmech:TUNNEL. Omission of a whole-tunnel parent_traits assertion avoids a part/class error.
+
+### detection_methods
+
+representation: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+The recipe matches the official CAVER command interface and is a configurable executable template. The native schema explicitly treats recipe as documentation rather than an executed workflow. Registry identity biotools:caver resolves to CAVER and PMID23093919/DOI10.1371/journal.pcbi.1002708. EDAM operation_2406 is Protein structure analysis. ECO0007669 is computational evidence used in automatic assertion and is attached to the automatic detection method, not asserted as evidence from an execution performed here.
+
+### detection_methods.recipe, evidence[1]
+
+representation: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+Input is correctly documented as a directory of PDB models. Required starting-point configuration and probe/shell, atom/hydrogen and seed choices are acknowledged. The manual supports compute_bottleneck_residues yes and analysis/bottlenecks.csv. Nearby residue output is not mislabeled as an intrinsic residue boundary. Path identity and alternative/tied minima require checking. No run or detector performance is claimed.
+
+### structural_geometry_representations
+
+representation: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+PDB1CQW is the paper's hydrogen-added static-model input anchor, not a deposited bottleneck annotation. RCSB agrees on entry version1.4, revision2024-02-07, X-ray1.5angstrom and chainA/author monomer. The representation explicitly omits local residue coordinates and qualified protein occurrence. Native StructuralGeometryRepresentation permits a source-linked representative with optional residue_range; this object does not bypass canonical-example grounding.
+
+### evidence
+
+evidence: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+The paper's definition and static-model example are cited at the relevant locations. Evidence correctly separates calculated geometry from transport or gating function, and records rather than hides execution and rights limits.
+
+### license
+
+provenance: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+CC-BY-4.0 is explicitly scoped to original project-authored synthesis. The publisher carries a CC-BY notice without a version; the proposal does not assign it an invented version. CAVER software/manual GPL-3.0 and wwPDB archive CC0-1.0 are distinguished. No imported figures, source prose, or executable code are represented as project-licensed data.
+
+### curation_history
+
+provenance: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+The history identifies its model-assisted author, creation action, maintained manifest/writer and dossier, and explicitly denies human-review or protein-qualification status. Its corpus/open-work process statement is attributed provenance; this scientific assessment does not independently certify the coordinator's entire collision/open-work audit.
+
+### Examples and qualification
+
+grounding: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+Zero canonical examples and zero qualified occurrences are asserted. Whole-structure PDB representation is explicitly an input anchor; source-specific local coordinates and native qualification remain absent rather than invented.
+
+### Chemistry, function and causal graph
+
+graph: not_applicable. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+No chemistry/function participant or causal graph is asserted; the geometry class does not require an invented class-wide mechanism.
+
+### Discussions, datasets and bounded completeness
+
+completeness: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+Evidence notes are durable and actionable. Optional discussions/datasets are not required. Definition, geometric relation, documented method and source-linked representation suffice for this PROPOSED class; canonical example qualification remains an explicit limitation.
+
+### Maintained inputs, emission and audit history
+
+ownership: supported. Targets: proteintraitsmech:TUNNEL_BOTTLENECK.
+
+Emitted mapping equals the reviewed frozen row and maintained manifest, including all evidence, license and creation history. Future edits belong to the manifest and native emitter; PROPOSED status and LLM attribution are retained.
+
+## Findings
+
+No findings recorded within this review's declared scope.
+
+## Recommended Actions And Acceptance Checks
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/structure/cavity/tunnel-bottleneck.yaml; Entire emitted YAML | supports | Full record read; emitted mapping equals the independently reviewed frozen row and maintained manifest. PROPOSED, one model-assisted creation event, no canonical examples and no causal graph. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord, StructuralGeometryRepresentation, TraitRelation and DetectionMethod | supports | Schema permits source-linked representative geometry with optional residue ranges and documents detection recipe as an executable template rather than an executed workflow. |
+| rubric | .claude/skills/curate-yaml-record/references/review-checklist.md; All ten field-by-field audit areas | supports | Current native identity, axis, definition, relation, representation, function, example, graph, discussion and status rubric applied to the entire emitted record. |
+| PLOS2012 | https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002708; Design and Implementation section3; static-structure analysis; Figure4 caption; copyright notice | supports | Primary text defines the path bottleneck using the minimum-radius ball and identifies the hydrogen-added 1CQW p1 model. The publisher gives a version-unspecified CC-BY notice. |
+| CAVER_manual | https://www.caver.cz/fil/download/manual/caver_userguide.pdf; GPL notice; CLI pages6-7; starting point/probe/shell pages21-22; options page32; bottlenecks.csv pages48-49; seed; version3.01 notes | supports | Official manual supports the command template, PDB directory input, required starting point, model-sensitive configuration and output flag. Software and documentation retain GPL-3.0. |
+| RCSB1CQW | https://www.rcsb.org/structure/1CQW; Entry revision, experimental metadata, chain and author assembly; retained core entry API JSON | supports | 1CQW is DhaA, chainA with author monomer; X-ray1.5angstrom, revision1.4 dated2024-02-07. It is a whole-structure input anchor, not a deposited residue annotation. |
+| CAVER_registry | https://bio.tools/api/tool/caver/?format=json; biotoolsID, name, primary publication, license and version fields | supports | Registry confirms caver identity, primary DOI/PMID and GPL-3.0. Its currently listed3.02 version does not imply execution of the record's documented3.0/3.01 recipe. |
+| EDAM | https://raw.githubusercontent.com/edamontology/edamontology/master/EDAM_dev.owl; operation_2406 class | supports | Exact official class label Protein structure analysis inspected during immediate prewrite review; applies to CAVER geometry analysis. |
+| ECO | https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo; release2026-07-10; ECO0007669 stanza | supports | Exact official computational evidence used in automatic assertion class inspected during immediate prewrite review; method evidence type does not assert this detector was executed. |
+| wwPDB | https://www.wwpdb.org/about/usage-policies; Archive usage notice | supports | Archive data are CC0-1.0; this does not relicense the crystallography article. Notice inspected during immediate prewrite review. |
+| native_tunnel | data/traits/structure/cavity/tunnel.yaml; identifier, definition, axis/category and status | supports | The relation target exists and describes an entire tunnel. A minimum-width region is its part, not its subclass. |
+| prior | research/structural-discovery-20261028/motifs/bottleneck-canary-science-assessment-20261029T0705Z.json; Independent prewrite assessment and exact source hashes | supports | Prior scope-limited scientific input is retained; this native review covers the actual emitted record. No earlier finding disposition is claimed. |
+| validation | research/structural-discovery-20261028/motifs/canary-native-strict.tsv; Native actual-record strict result and observed graph audit output | supports | Independent strict validator exited0 with1file and0errors; graph audit exited0 with0graphs,0errors and0warnings. |
+| grounding_validation | research/structural-discovery-20261028/canary-grounding.log; Coordinator's completed command and full output | supports | Coordinator reported exit0; inspected log reports1file and0semantic findings. Validator registry counts are loaded context, not qualified examples on this record. |
+| ownership | data/curation/structural_trait_discovery.yaml; scripts/seed_structural_discovery.py; justfile; Manifest row and seed-structural-discovery recipe | supports | Maintained content and emitter owners are explicit. Native command is registered in justfile. This scientific review is not a separate implementation audit. |
+
+## Limits And Additional Notes
+
+- The CAVER command is a documented external template. No detector execution, performance claim, model-specific bottleneck residue assignment or source-qualified protein occurrence was produced.
+- The representative PDB entry is the whole-structure anchor for the paper's hydrogen-added model; original deposited coordinates are not the analyzed hydrogen-added model itself.
+- Source licenses remain distinct: version-unspecified publisher CC-BY, GPL-3.0 software/manual, CC0-1.0 archive metadata and original project-authored CC-BY-4.0 synthesis.
+- Scientific review does not confer human REVIEWED status, certify the writer implementation, reserve identifiers, certify all corpus/remote overlap checks, or authorize Git actions.
+- The prior prewrite JSON is related evidence, not a native review bundle or a finding-resolution predecessor. This input is prepared for coordinator use with the native saver; this script does not save an immutable bundle.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261029T071028Z-independent-tunnel-bottleneck-canary
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Independent scientific review of the emitted protein tunnel bottleneck canary
+started_at: '2026-10-29T07:07:43Z'
+finished_at: '2026-10-29T07:10:28Z'
+reviewer:
+  identity: Codex /root/grounding_route_audit
+  kind: agent
+  model: GPT-6
+  independence: independent
+  independence_basis: Reviewer authored neither cavity candidate proposal nor record/manifest/emitter;
+    independently inspected primary sources for the prewrite review and reread actual
+    emitted record under current native rubric.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: pass_with_limitations
+scientific_review: true
+summary: One emitted PROPOSED geometric class is source-supported, schema-valid and
+  semantically identical to its independently reviewed manifest row. No findings.
+  Model-sensitive external detection is documented but unexecuted; no canonical protein
+  occurrence, local residue boundary, transport function or gating mechanism is qualified.
+source:
+  git_revision: 7276814bdf3bed73569a202c5e2c4b404e43d8f1
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/SKILL.md
+    sha256: f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762
+    role: context
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: conf/record_review.yaml
+    sha256: a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b
+    role: context
+  - path: data/curation/structural_trait_discovery.yaml
+    sha256: d5b2a0b813eafe48f9bd18fbba5dd077095453b0360e31824dc41aab89c6b7bc
+    role: context
+  - path: data/traits/structure/cavity/tunnel-bottleneck.yaml
+    sha256: d4793579cd2dd1f5240deb43476c7f56bc0da359731094049a39c36d34f46ae2
+    role: target
+  - path: data/traits/structure/cavity/tunnel.yaml
+    sha256: 417421591621cda376ec2dad316eb15a884ce68df6fdd1e97343116e882ae344
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: justfile
+    sha256: 44ea312c36abbe090da0315b60a8c0727db9ba5c766607aa77c81bf85c025233
+    role: context
+  - path: research/structural-discovery-20261028/motifs/bottleneck-canary-science-assessment-20261029T0705Z.json
+    sha256: 9ca5a6999e1e0c65a2dd094ccbd3e964504b3641c2041eb3fa5433fe1a172f01
+    role: context
+  - path: research/structural-discovery-20261028/motifs/caver-biotools-registry.json
+    sha256: 40b1d74118b17fcfce93b469ccbd7284cd9e2b9e6a00c4818e2b0816ed369532
+    role: context
+  - path: research/structural-discovery-20261028/motifs/caver-discovery-userguide.pdf
+    sha256: 035f7cb504fde9d6a49250ca13e575780d934d3a45ebb48f9c942d5d54f83305
+    role: context
+  - path: research/structural-discovery-20261028/motifs/caver-discovery-userguide.txt
+    sha256: 8fb14bec46975c714c5ea04dfe20472b5815cd4dc779b763fb1b9aa5fd9d2a68
+    role: context
+  - path: research/structural-discovery-20261028/motifs/caver2012-plos-primary.html
+    sha256: 592d8162f78ae56b8a81b07c994643999c92209e0776f3ef1e64ce88be7c9a28
+    role: context
+  - path: research/structural-discovery-20261028/motifs/rcsb-1cqw-entry.json
+    sha256: ad4fb5afbb1cfbe1be7d732a03d5a3c14865caa7dd2d9de4a37bbdc0d7367b67
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/seed_structural_discovery.py
+    sha256: 7143fb829f46ea77a48a9976d27d3e31f78ac1c5e3e845968fa52ef84b75dbd3
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Entire emitted protein tunnel bottleneck record under the native ten-area
+    field rubric.
+  selection: Exact coordinator-named canary path and identifier, no sampling.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  exclusions:
+  - target: Other discovery candidates and the corpus
+    reason: Only this emitted canary is scientifically reviewed; no corpus-wide or
+      other-record inference.
+targets:
+- target_id: proteintraitsmech:TUNNEL_BOTTLENECK
+  path: data/traits/structure/cavity/tunnel-bottleneck.yaml
+  label: protein tunnel bottleneck
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/ProteinTraitsMech
+    path: data/curation/structural_trait_discovery.yaml
+    role: Maintained discovery record content
+  - repository: CultureBotAI/ProteinTraitsMech
+    path: scripts/seed_structural_discovery.py
+    role: Native fail-closed discovery record emitter
+checks:
+- check_id: strict
+  name: Native strict schema and semantic validation
+  status: passed
+  required: true
+  summary: One emitted file, zero errors; independently executed.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  command: .venv/bin/python scripts/validate_strict.py --workers 1 --out research/structural-discovery-20261028/motifs/canary-native-strict.tsv
+    data/traits/structure/cavity/tunnel-bottleneck.yaml
+  exit_code: 0
+  evidence_ids:
+  - validation
+- check_id: graphs
+  name: Native graph audit
+  status: passed
+  required: true
+  summary: Zero graphs, errors and warnings; independently executed. This does not
+    provide mechanistic evidence.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/structure/cavity/tunnel-bottleneck.yaml
+  exit_code: 0
+  evidence_ids:
+  - validation
+- check_id: grounding
+  name: Native grounding validator
+  status: passed
+  required: true
+  summary: Coordinator executed exit0; inspected complete log reports one target and
+    zero findings. No require-qualified claim is made.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  command: uv run python scripts/validate_uniprot_grounding.py data/traits/structure/cavity/tunnel-bottleneck.yaml
+    --out research/structural-discovery-20261028/canary-grounding-findings.tsv
+  exit_code: 0
+  evidence_ids:
+  - grounding_validation
+  scope_note: Execution by coordinator; full output independently inspected.
+- check_id: emitted_semantics
+  name: Emitted versus independently reviewed content
+  status: passed
+  required: true
+  summary: Entire parsed mapping is identical to maintained manifest and frozen independent-review
+    row, including history and examples.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - prior
+- check_id: external_execution
+  name: CAVER external execution
+  status: not_applicable
+  required: false
+  summary: Recipe is documented only; no local installation, detector run or output-based
+    qualification is claimed.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - CAVER_manual
+  - record
+- check_id: imodulondb
+  name: Structured expression adapter
+  status: not_applicable
+  required: false
+  summary: A geometric structural class with no expression, regulator or transcriptomic
+    claim does not call for iModulonDB evidence.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/structure/cavity/tunnel-bottleneck.yaml
+  locator: Entire emitted YAML
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Full record read; emitted mapping equals the independently reviewed frozen
+    row and maintained manifest. PROPOSED, one model-assisted creation event, no canonical
+    examples and no causal graph.
+  snapshot_sha256: d4793579cd2dd1f5240deb43476c7f56bc0da359731094049a39c36d34f46ae2
+- evidence_id: schema
+  kind: authority
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord, StructuralGeometryRepresentation, TraitRelation and
+    DetectionMethod
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Schema permits source-linked representative geometry with optional residue
+    ranges and documents detection recipe as an executable template rather than an
+    executed workflow.
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+- evidence_id: rubric
+  kind: authority
+  reference: .claude/skills/curate-yaml-record/references/review-checklist.md
+  locator: All ten field-by-field audit areas
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Current native identity, axis, definition, relation, representation, function,
+    example, graph, discussion and status rubric applied to the entire emitted record.
+  snapshot_sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+- evidence_id: PLOS2012
+  kind: primary_source
+  reference: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1002708
+  locator: Design and Implementation section3; static-structure analysis; Figure4
+    caption; copyright notice
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Primary text defines the path bottleneck using the minimum-radius ball
+    and identifies the hydrogen-added 1CQW p1 model. The publisher gives a version-unspecified
+    CC-BY notice.
+  snapshot_sha256: 592d8162f78ae56b8a81b07c994643999c92209e0776f3ef1e64ce88be7c9a28
+- evidence_id: CAVER_manual
+  kind: primary_source
+  reference: https://www.caver.cz/fil/download/manual/caver_userguide.pdf
+  locator: GPL notice; CLI pages6-7; starting point/probe/shell pages21-22; options
+    page32; bottlenecks.csv pages48-49; seed; version3.01 notes
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Official manual supports the command template, PDB directory input, required
+    starting point, model-sensitive configuration and output flag. Software and documentation
+    retain GPL-3.0.
+  snapshot_sha256: 035f7cb504fde9d6a49250ca13e575780d934d3a45ebb48f9c942d5d54f83305
+- evidence_id: RCSB1CQW
+  kind: database
+  reference: https://www.rcsb.org/structure/1CQW
+  locator: Entry revision, experimental metadata, chain and author assembly; retained
+    core entry API JSON
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: 1CQW is DhaA, chainA with author monomer; X-ray1.5angstrom, revision1.4
+    dated2024-02-07. It is a whole-structure input anchor, not a deposited residue
+    annotation.
+  snapshot_sha256: ad4fb5afbb1cfbe1be7d732a03d5a3c14865caa7dd2d9de4a37bbdc0d7367b67
+- evidence_id: CAVER_registry
+  kind: database
+  reference: https://bio.tools/api/tool/caver/?format=json
+  locator: biotoolsID, name, primary publication, license and version fields
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Registry confirms caver identity, primary DOI/PMID and GPL-3.0. Its currently
+    listed3.02 version does not imply execution of the record's documented3.0/3.01
+    recipe.
+  snapshot_sha256: 40b1d74118b17fcfce93b469ccbd7284cd9e2b9e6a00c4818e2b0816ed369532
+- evidence_id: EDAM
+  kind: authority
+  reference: https://raw.githubusercontent.com/edamontology/edamontology/master/EDAM_dev.owl
+  locator: operation_2406 class
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Exact official class label Protein structure analysis inspected during
+    immediate prewrite review; applies to CAVER geometry analysis.
+- evidence_id: ECO
+  kind: authority
+  reference: https://raw.githubusercontent.com/evidenceontology/evidenceontology/master/eco.obo
+  locator: release2026-07-10; ECO0007669 stanza
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Exact official computational evidence used in automatic assertion class
+    inspected during immediate prewrite review; method evidence type does not assert
+    this detector was executed.
+- evidence_id: wwPDB
+  kind: authority
+  reference: https://www.wwpdb.org/about/usage-policies
+  locator: Archive usage notice
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Archive data are CC0-1.0; this does not relicense the crystallography article.
+    Notice inspected during immediate prewrite review.
+- evidence_id: native_tunnel
+  kind: record_content
+  reference: data/traits/structure/cavity/tunnel.yaml
+  locator: identifier, definition, axis/category and status
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: The relation target exists and describes an entire tunnel. A minimum-width
+    region is its part, not its subclass.
+  snapshot_sha256: 417421591621cda376ec2dad316eb15a884ce68df6fdd1e97343116e882ae344
+- evidence_id: prior
+  kind: prior_review
+  reference: research/structural-discovery-20261028/motifs/bottleneck-canary-science-assessment-20261029T0705Z.json
+  locator: Independent prewrite assessment and exact source hashes
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Prior scope-limited scientific input is retained; this native review covers
+    the actual emitted record. No earlier finding disposition is claimed.
+  snapshot_sha256: 9ca5a6999e1e0c65a2dd094ccbd3e964504b3641c2041eb3fa5433fe1a172f01
+- evidence_id: validation
+  kind: validation
+  reference: research/structural-discovery-20261028/motifs/canary-native-strict.tsv
+  locator: Native actual-record strict result and observed graph audit output
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Independent strict validator exited0 with1file and0errors; graph audit
+    exited0 with0graphs,0errors and0warnings.
+- evidence_id: grounding_validation
+  kind: validation
+  reference: research/structural-discovery-20261028/canary-grounding.log
+  locator: Coordinator's completed command and full output
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Coordinator reported exit0; inspected log reports1file and0semantic findings.
+    Validator registry counts are loaded context, not qualified examples on this record.
+- evidence_id: ownership
+  kind: record_content
+  reference: data/curation/structural_trait_discovery.yaml; scripts/seed_structural_discovery.py;
+    justfile
+  locator: Manifest row and seed-structural-discovery recipe
+  accessed_at: '2026-10-29T07:10:28Z'
+  support: supports
+  summary: Maintained content and emitter owners are explicit. Native command is registered
+    in justfile. This scientific review is not a separate implementation audit.
+assessments:
+- assessment_id: A01
+  area: identity
+  topic: identifier, label, definition, definition_source, term_kind
+  outcome: supported
+  summary: The proposal denotes a reusable geometric class, not a specific protein,
+    residue set, entire tunnel, or radius measurement. Its coordinate/model dependence
+    and path minimum are explicit. The primary CAVER paper defines its bottleneck
+    as the narrowest ball along the path. The identifier reservation and full cross-corpus
+    collision audit remain the coordinator's responsibility.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - schema
+  - record
+  - rubric
+- assessment_id: A02
+  area: scope
+  topic: trait_axis, trait_category, mapping_status
+  outcome: supported
+  summary: STRUCTURE / STRUCT_CAVITY is consistent with the existing native tunnel
+    class and the geometric object. CLASS / PROPOSED preserves the lack of human review
+    and makes no qualification claim.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - schema
+  - native_tunnel
+  - record
+  - rubric
+- assessment_id: A03
+  area: nomenclature
+  topic: synonyms
+  outcome: supported
+  summary: 'Tunnel bottleneck is an appropriate exact alias. Tunnel constriction is
+    explicitly broader: a local narrowing need not be the global path minimum. The
+    curator inference is labeled as such.'
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - record
+  - rubric
+- assessment_id: A04
+  area: consistency
+  topic: trait_relations
+  outcome: supported
+  summary: The bottleneck region is part_of the tunnel, not a subclass of the entire
+    tunnel. The referenced native target exists with identifier proteintraitsmech:TUNNEL.
+    Omission of a whole-tunnel parent_traits assertion avoids a part/class error.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - native_tunnel
+  - record
+  - rubric
+- assessment_id: A05
+  area: representation
+  topic: detection_methods
+  outcome: supported
+  summary: The recipe matches the official CAVER command interface and is a configurable
+    executable template. The native schema explicitly treats recipe as documentation
+    rather than an executed workflow. Registry identity biotools:caver resolves to
+    CAVER and PMID23093919/DOI10.1371/journal.pcbi.1002708. EDAM operation_2406 is
+    Protein structure analysis. ECO0007669 is computational evidence used in automatic
+    assertion and is attached to the automatic detection method, not asserted as evidence
+    from an execution performed here.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - CAVER_manual
+  - CAVER_registry
+  - EDAM
+  - ECO
+  - schema
+  - record
+  - rubric
+- assessment_id: A06
+  area: representation
+  topic: detection_methods.recipe, evidence[1]
+  outcome: supported
+  summary: Input is correctly documented as a directory of PDB models. Required starting-point
+    configuration and probe/shell, atom/hydrogen and seed choices are acknowledged.
+    The manual supports compute_bottleneck_residues yes and analysis/bottlenecks.csv.
+    Nearby residue output is not mislabeled as an intrinsic residue boundary. Path
+    identity and alternative/tied minima require checking. No run or detector performance
+    is claimed.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - CAVER_manual
+  - record
+  - rubric
+- assessment_id: A07
+  area: representation
+  topic: structural_geometry_representations
+  outcome: supported
+  summary: PDB1CQW is the paper's hydrogen-added static-model input anchor, not a
+    deposited bottleneck annotation. RCSB agrees on entry version1.4, revision2024-02-07,
+    X-ray1.5angstrom and chainA/author monomer. The representation explicitly omits
+    local residue coordinates and qualified protein occurrence. Native StructuralGeometryRepresentation
+    permits a source-linked representative with optional residue_range; this object
+    does not bypass canonical-example grounding.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - RCSB1CQW
+  - schema
+  - record
+  - rubric
+- assessment_id: A08
+  area: evidence
+  topic: evidence
+  outcome: supported
+  summary: The paper's definition and static-model example are cited at the relevant
+    locations. Evidence correctly separates calculated geometry from transport or
+    gating function, and records rather than hides execution and rights limits.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - CAVER_manual
+  - wwPDB
+  - record
+  - rubric
+- assessment_id: A09
+  area: provenance
+  topic: license
+  outcome: supported
+  summary: CC-BY-4.0 is explicitly scoped to original project-authored synthesis.
+    The publisher carries a CC-BY notice without a version; the proposal does not
+    assign it an invented version. CAVER software/manual GPL-3.0 and wwPDB archive
+    CC0-1.0 are distinguished. No imported figures, source prose, or executable code
+    are represented as project-licensed data.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - PLOS2012
+  - CAVER_manual
+  - CAVER_registry
+  - wwPDB
+  - record
+  - rubric
+- assessment_id: A10
+  area: provenance
+  topic: curation_history
+  outcome: supported
+  summary: The history identifies its model-assisted author, creation action, maintained
+    manifest/writer and dossier, and explicitly denies human-review or protein-qualification
+    status. Its corpus/open-work process statement is attributed provenance; this
+    scientific assessment does not independently certify the coordinator's entire
+    collision/open-work audit.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - rubric
+- assessment_id: A11
+  area: grounding
+  topic: Examples and qualification
+  outcome: supported
+  summary: Zero canonical examples and zero qualified occurrences are asserted. Whole-structure
+    PDB representation is explicitly an input anchor; source-specific local coordinates
+    and native qualification remain absent rather than invented.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - RCSB1CQW
+  - grounding_validation
+- assessment_id: A12
+  area: graph
+  topic: Chemistry, function and causal graph
+  outcome: not_applicable
+  summary: No chemistry/function participant or causal graph is asserted; the geometry
+    class does not require an invented class-wide mechanism.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - rubric
+  - validation
+- assessment_id: A13
+  area: completeness
+  topic: Discussions, datasets and bounded completeness
+  outcome: supported
+  summary: Evidence notes are durable and actionable. Optional discussions/datasets
+    are not required. Definition, geometric relation, documented method and source-linked
+    representation suffice for this PROPOSED class; canonical example qualification
+    remains an explicit limitation.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - rubric
+- assessment_id: A14
+  area: ownership
+  topic: Maintained inputs, emission and audit history
+  outcome: supported
+  summary: Emitted mapping equals the reviewed frozen row and maintained manifest,
+    including all evidence, license and creation history. Future edits belong to the
+    manifest and native emitter; PROPOSED status and LLM attribution are retained.
+  target_ids:
+  - proteintraitsmech:TUNNEL_BOTTLENECK
+  evidence_ids:
+  - record
+  - ownership
+findings: []
+actions: []
+limitations:
+- The CAVER command is a documented external template. No detector execution, performance
+  claim, model-specific bottleneck residue assignment or source-qualified protein
+  occurrence was produced.
+- The representative PDB entry is the whole-structure anchor for the paper's hydrogen-added
+  model; original deposited coordinates are not the analyzed hydrogen-added model
+  itself.
+- 'Source licenses remain distinct: version-unspecified publisher CC-BY, GPL-3.0 software/manual,
+  CC0-1.0 archive metadata and original project-authored CC-BY-4.0 synthesis.'
+- Scientific review does not confer human REVIEWED status, certify the writer implementation,
+  reserve identifiers, certify all corpus/remote overlap checks, or authorize Git
+  actions.
+- The prior prewrite JSON is related evidence, not a native review bundle or a finding-resolution
+  predecessor. This input is prepared for coordinator use with the native saver; this
+  script does not save an immutable bundle.
+links:
+- research/structural-discovery-20261028/motifs/bottleneck-canary-science-assessment-20261029T0705Z.json
+tags:
+- structural-discovery
+- canary
+- independent-science
+```

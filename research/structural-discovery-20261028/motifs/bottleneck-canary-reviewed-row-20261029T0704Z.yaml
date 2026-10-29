@@ -1,0 +1,69 @@
+identifier: proteintraitsmech:TUNNEL_BOTTLENECK
+label: protein tunnel bottleneck
+definition: A region of a protein tunnel where the available radius along a specified
+  pathway reaches its minimum in a stated coordinate and geometric model.
+definition_source: DOI:10.1371/journal.pcbi.1002708
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: PROPOSED
+synonyms:
+- synonym_text: tunnel bottleneck
+  synonym_type: EXACT_SYNONYM
+  source: DOI:10.1371/journal.pcbi.1002708
+- synonym_text: tunnel constriction
+  synonym_type: BROAD_SYNONYM
+  source: Curator scope distinction; a local constriction need not be the path minimum
+trait_relations:
+- predicate: biolink:part_of
+  object: proteintraitsmech:TUNNEL
+  relation_source: DOI:10.1371/journal.pcbi.1002708; Design and Implementation, section
+    3
+detection_methods:
+- name: CAVER 3.0 configured pathway minimum-radius geometry
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:caver
+  reference: PMID:23093919
+  recipe: java -Xmx1200m -cp {caver_home}/lib -jar {caver_home}/caver.jar -home {caver_home}
+    -pdb {input} -conf {config} -out {output}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+structural_geometry_representations:
+- structure_ref: PDB:1CQW
+  structure_source: PDB, entry version 1.4, revised 2024-02-07
+  evidence_source: DOI:10.1371/journal.pcbi.1002708, Figure 4 and static-structure
+    analysis; https://www.rcsb.org/structure/1CQW, inspected 2026-10-29. DhaA chain
+    A, author-assigned monomer, X-ray 1.5 angstrom. Whole-structure anchor for the
+    paper's hydrogen-added computational model; no local residue bounds or qualified
+    protein occurrence asserted.
+evidence:
+- reference: DOI:10.1371/journal.pcbi.1002708
+  notes: Section 3 defines a pathway bottleneck through its minimum-radius ball; this
+    supports the part_of relation, not a subclass relation to whole tunnels. Figure
+    4 analyzes the p1 bottleneck in a hydrogen-added 1CQW model. Geometry alone establishes
+    neither transport nor gating function.
+- reference: https://www.caver.cz/fil/download/manual/caver_userguide.pdf
+  notes: The CAVER 3.0/3.01 guide documents this external command. Input is a directory
+    of PDB models. Configuration must specify a justified starting point and probe/shell
+    parameters; record executable hash, atom inclusion, hydrogen treatment and seed.
+    Enable compute_bottleneck_residues yes to emit analysis/bottlenecks.csv. Check
+    path identity and alternative or tied minima against the profiles. This recipe
+    was documented, not executed for this record.
+- reference: DOI:10.1371/journal.pcbi.1002708
+  notes: Publisher full text carries a Creative Commons Attribution notice; the inspected
+    notice does not specify its version. This record is original project-authored
+    CC-BY-4.0 synthesis. The CAVER software/manual retain GPL-3.0; no source prose,
+    figures or code are imported into this record.
+- reference: https://www.wwpdb.org/about/usage-policies
+  notes: PDB archive metadata are CC0-1.0. The crystallography article retains its
+    own terms. No coordinate data or canonical UniProt carrier is redistributed here.
+curation_history:
+- timestamp: '2026-10-29T06:57:25Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_discovery_20261028
+  changes: 'Created a new PROPOSED geometric class after corpus/alias/open-work review.
+    Maintained input is data/curation/structural_trait_discovery.yaml; native writer
+    scripts/seed_structural_discovery.py. Evidence and novelty dossier: research/structural-discovery-20261028/cavities/tunnel-bottleneck-card.json.
+    No human review status, residue annotation or protein qualification conferred.'
+  llm_assisted: true
+license: CC-BY-4.0
