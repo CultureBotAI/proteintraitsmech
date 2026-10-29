@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-29T07:01:22Z",
+  "reviewer": "preflight_boundary_review",
+  "review_kind": "independent_code_fix_rereview",
+  "independence": "Reviewer did not author or modify maintained seeder/tests; this reviewer authored temporary-fixture probes only.",
+  "repository": "CultureBotAI/proteintraitsmech",
+  "issue": {
+    "number": 1204,
+    "url": "https://github.com/CultureBotAI/proteintraitsmech/issues/1204",
+    "filing_source": "Parent reported filing; no reviewer GitHub access or mutation."
+  },
+  "source_kind": "working_tree_exact_file_hashes",
+  "verdict": "pass_with_limitations",
+  "new_confirmed_findings": [],
+  "task_binding": {
+    "mode": "standalone",
+    "run_id": null,
+    "cycle": null,
+    "stage": null
+  },
+  "inputs": {
+    "scripts/seed_structural_discovery.py": "7143fb829f46ea77a48a9976d27d3e31f78ac1c5e3e845968fa52ef84b75dbd3",
+    "tests/test_seed_structural_discovery.py": "863f49dbf21ecba26e1059289b19d7631ba13a23cf433db4797a892f62e0fec8",
+    "data/curation/structural_trait_discovery.yaml": "d5b2a0b813eafe48f9bd18fbba5dd077095453b0360e31824dc41aab89c6b7bc",
+    "scripts/record_io.py": "ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf"
+  },
+  "previous_review": {
+    "path": "research/structural-discovery-20261028/preflight/seeder-preliminary-code-review.json",
+    "sha256": "9371e10a73c8d4b2e2604bc23757df1d8ab2d8ca8661aa384df1bd50145a3527",
+    "negative_results": {
+      "path": "research/structural-discovery-20261028/preflight/seeder-preliminary-probes.json",
+      "sha256": "ab88795edfd1090cf780158ed09ef6de141032a21106a32494d5ab058ea4ca53"
+    },
+    "helper": {
+      "path": "research/structural-discovery-20261028/preflight/probe_discovery_seeder.py",
+      "sha256": "b0a5435bc0e1809e29aa6816698fdca37fce53d25eecd99c2b557a218f1fceab"
+    },
+    "history_preserved": true
+  },
+  "dispositions": [
+    {
+      "finding_id": "SDW-001",
+      "issue_key": "structural-discovery-decoded-id-collision",
+      "status": "resolved",
+      "previous_occurrence": "seeder-preliminary-code-review.json:SDW-001",
+      "fix": "Preflight parses every discovered YAML/YML under data/traits with CSafeLoader/SafeLoader rather than raw-text candidate filtering.",
+      "independent_result": "Strictly valid escaped identifier and escaped xref in an ignored hidden .yml file are both detected; creation refused and existing bytes preserved.",
+      "evidence": "seeder-fixed-probes.json:escaped_identifier,escaped_xref"
+    },
+    {
+      "finding_id": "SDW-002",
+      "issue_key": "structural-discovery-dryrun-report-clobber",
+      "status": "resolved",
+      "previous_occurrence": "seeder-preliminary-code-review.json:SDW-002",
+      "fix": "Resolved report path is checked before seed; restricted to a new .json within the task research directory, with existing/symlink targets refused and exclusive creation.",
+      "independent_result": "Real main entry refuses trait and manifest report destinations, existing evidence and a symlinked parent escape. Invalid --apply report request creates no candidate. A fresh allowed report succeeds and carries actual output SHA256.",
+      "evidence": "seeder-fixed-probes.json:report_paths"
+    },
+    {
+      "finding_id": "SDW-003",
+      "issue_key": "structural-discovery-replay-byte-hash-mismatch",
+      "status": "resolved",
+      "previous_occurrence": "seeder-preliminary-code-review.json:SDW-003",
+      "fix": "Existing destination is compared using read_bytes against exact emitted UTF-8 bytes.",
+      "independent_result": "CRLF-only edit is refused and preserved; byte-identical positive replay reports the exact actual SHA256.",
+      "evidence": "seeder-fixed-probes.json:crlf,positive_control"
+    }
+  ],
+  "additional_provenance_observation": {
+    "previous": "Manifest source was reread for its digest after generation.",
+    "status": "resolved",
+    "fix": "seed captures manifest_bytes once, parses that snapshot and reports its digest.",
+    "independent_result": "Injected later edit in the disposable fixture changes on-disk manifest bytes, but report remains bound to original consumed bytes; dry-run writes no candidate.",
+    "evidence": "seeder-fixed-probes.json:manifest_binding",
+    "limit": "Does not claim to prohibit concurrent source edits or provide a global transaction."
+  },
+  "validation": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python research/structural-discovery-20261028/preflight/probe_discovery_seeder_fixed.py",
+      "result": "PASS",
+      "scope": "Independent failure reproductions now refuse safely, plus manifest-binding and successful dry-run/apply/replay controls. All apply calls target disposable synthetic trees."
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest -q tests/test_seed_structural_discovery.py --rootdir=. -p no:cacheprovider",
+      "result": "13 passed in0.64s",
+      "exit_code": 0,
+      "scope": "Independent rerun of complete focused seeder test file."
+    },
+    {
+      "check": "Input stability",
+      "result": "Seeder/tests/manifest/native-writer hashes identical before and after independent probes; preliminary negative artifacts/helper hashes unchanged."
+    }
+  ],
+  "evidence": {
+    "helper": {
+      "path": "research/structural-discovery-20261028/preflight/probe_discovery_seeder_fixed.py",
+      "sha256": "b48a3e3f6d3916b0e0c427212996e783a973f6dbf3cf505d682baf7ef71c8571"
+    },
+    "results": {
+      "path": "research/structural-discovery-20261028/preflight/seeder-fixed-probes.json",
+      "sha256": "cf1b5aafac4e3a515d556d9f3463762ab05b5343005a8e1b8e4554c0220d6c1c"
+    }
+  },
+  "limits": [
+    "Code safety review only. The scientific manifest was hashed as contextual input, not scientifically accepted or applied. Candidate absence, biological definitions, sources, method execution, parent identity and licensing require separate review.",
+    "No full real-corpus preflight scan or full test suite was rerun here; root owns native canary and broader gates.",
+    "One-writer isolated-worktree contract remains explicit. No global reservation, distributed lock, multi-record transaction or concurrent-write guarantee is inferred.",
+    "Available tests cover the changed helper gates; independent probes additionally exercise actual main control-flow order and manifest digest capture.",
+    "Acceptance applies to the exact working-tree input hashes. It is not a final Git-head review, human REVIEWED sign-off, merge authorization or cycle binding."
+  ],
+  "actions": {
+    "maintained_code_edits": false,
+    "real_corpus_apply": false,
+    "git_or_github_actions": false,
+    "network": false,
+    "goal_tools": false,
+    "session_actions": false,
+    "only_new_outputs": "retained fixed-probe helper/results and this separate follow-up review under preflight/"
+  }
+}

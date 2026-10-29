@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-29T07:43:45.466123+00:00",
+  "reviewer": {
+    "identity": "Codex agent /root/preflight_boundary_review",
+    "independence": "independent",
+    "basis": "Parent authored checks.yml. This reviewer inspected the diff and independently authored/executed disposable local Git probes."
+  },
+  "issue": "https://github.com/CultureBotAI/proteintraitsmech/issues/1206",
+  "kind": "bounded_workflow_code_assessment",
+  "verdict": "pass_with_limitations",
+  "findings": [],
+  "target": ".github/workflows/checks.yml",
+  "target_sha256": "f9c06ca2c8022906f7b117ba02fe401e4328b58454130aa25b0675e9276ff2f9",
+  "reviewed_delta": "One step before native structured-review validation restores the literal historical commit only when absent, using git fetch --no-tags --no-write-fetch-head, then verifies exact commit identity under set -euo pipefail.",
+  "inputs": [
+    {
+      "path": ".github/workflows/checks.yml",
+      "sha256": "f9c06ca2c8022906f7b117ba02fe401e4328b58454130aa25b0675e9276ff2f9",
+      "bytes": 6156
+    },
+    {
+      "path": "research/structural-discovery-20261028/ci-followup/probe_review_base_restore.py",
+      "sha256": "33fb5cb0087a0ac0532f0de4863e9d191fbc6d37bc943354b59a2250caba4ba4",
+      "bytes": 9325
+    },
+    {
+      "path": "scripts/record_review.py",
+      "sha256": "95a4ec41e38ec47ba3578e76838c46a0adbf47e49ad3636524735d08cfcb1c4d",
+      "bytes": 41900
+    },
+    {
+      "path": "docs/record-reviews.md",
+      "sha256": "452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b",
+      "bytes": 10776
+    },
+    {
+      "path": "tests/test_record_review_contract.py",
+      "sha256": "7be08e684dcd235ddeae8f3c6a5d45b0ee74a60d1c1818cc81467e38901e5d56",
+      "bytes": 5959
+    },
+    {
+      "path": "reviews/structured/20261029T044503Z-structural-ledger-guard-followup/review.yaml",
+      "sha256": "f4f3400841b5e6ae69f91b9980fad19cebaf2a325b6c5e137c492de374dd0a3f",
+      "bytes": 7966
+    }
+  ],
+  "probe_evidence": {
+    "path": "research/structural-discovery-20261028/ci-followup/restore-base-probes-20261029T074218272665Z.json",
+    "sha256": "b695a0bd37557167ff18b73f123e525449ca94629290d5e62edc81ded8e5a925",
+    "cases": [
+      {
+        "case": "missing_commit_fetched_from_local_origin",
+        "exit_code": 0,
+        "object_available_before": false,
+        "object_available_after": true,
+        "head_refs_index_fetch_head_config_worktree_preserved": true,
+        "local_origin_refs_preserved": true
+      },
+      {
+        "case": "already_present_succeeds_with_unavailable_origin",
+        "exit_code": 0,
+        "object_available_before": true,
+        "object_available_after": true,
+        "head_refs_index_fetch_head_config_worktree_preserved": true,
+        "local_origin_refs_preserved": true
+      },
+      {
+        "case": "unavailable_pin_fails_closed",
+        "exit_code": 128,
+        "object_available_before": false,
+        "object_available_after": false,
+        "head_refs_index_fetch_head_config_worktree_preserved": true,
+        "local_origin_refs_preserved": true
+      }
+    ]
+  },
+  "assessment": [
+    "The production literal is exactly 93c1a021d76a94fd299e0a1e3cf8f1b9671a3703. Every fixture replaces only that literal; the remaining extracted shell body is unchanged.",
+    "A missing synthetic historical commit is fetched successfully from a disposable local filesystem origin. An existing commit succeeds despite an unavailable origin, proving the fetch branch is skipped. An unavailable commit fails closed.",
+    "All three cases preserve exact HEAD/index/FETCH_HEAD/config bytes, all client refs, dirty/staged/untracked fixture contents, and local-origin refs. Only required object availability changes in the successful missing-object case.",
+    "The step is a repository-owned CI availability repair. Native source-provenance semantics, append-only checks, immutable review bytes, permissions and scientific content are unchanged. It neither recreates retired refs nor mutates an actual remote.",
+    "The inherited failure and dedicated issue remain explicit. No review verdict is relabeled, no historical base is substituted in production, and no missing provenance is silently accepted."
+  ],
+  "helper_provenance": {
+    "path": "research/structural-discovery-20261028/ci-followup/probe_review_base_restore.py",
+    "purpose": "Independent exact-shell control-flow and side-effect probes for inherited Git-base availability",
+    "inputs": "Current checks.yml shell, fixed literal production pin, unchanged native policy/review bytes and disposable synthetic Git repositories",
+    "outputs": "research/structural-discovery-20261028/ci-followup/restore-base-probes-20261029T074218272665Z.json",
+    "date": "2026-10-29",
+    "issue": "#1206",
+    "historical_limits": "Temporary fixture paths in stderr are diagnostic and were removed. Synthetic SHAs do not claim GitHub availability of the production object."
+  },
+  "limitations": [
+    "This is a raw independent workflow code assessment, not a saved native scientific RecordReview or a superseding observation for earlier review findings.",
+    "No production fetch, GitHub request, scientific test, actual worktree Git mutation, goal/cycle/session action or merge/queue operation was performed by this reviewer.",
+    "Fixture success does not establish actual remote object availability. The new committed head must pass the existing native contract and all required CI checks before readiness.",
+    "Earlier private control-plane reports remain outside this substantive CI-fix commit. The original publication manifest and immutable review artifacts must remain unchanged."
+  ]
+}

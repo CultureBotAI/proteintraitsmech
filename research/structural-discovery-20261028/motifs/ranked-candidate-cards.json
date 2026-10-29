@@ -1,0 +1,161 @@
+{
+  "schema": "structural-discovery-evidence-cards-v1",
+  "prepared_at": "2026-10-29T06:59:00Z",
+  "author": "/root/grounding_route_audit",
+  "branch_observed": "discover/structural-traits-20261028-04f08f",
+  "head_observed": "7276814bdf3bed73569a202c5e2c4b404e43d8f1",
+  "scope": "Evidence-only class discovery. No trait records, IDs, shared code, schemas, Git/GitHub, goals or sessions changed. These are known published classes missing from PTM, not newly proposed scientific structures.",
+  "candidate_status_rule": "Class acceptance, runnable-screen availability, source rights and protein-occurrence qualification are separate decisions. A PDB anchor is not a qualified canonical example; no residue coordinates are promoted here.",
+  "collision_evidence": {
+    "ignored_files_included": true,
+    "refined_scan": "refined-collision-search-20261029T065431Z.json",
+    "initial_scan": "initial-collision-search.json",
+    "initial_raw_storage": "raw-search-compression-manifest.json",
+    "helper": "reproduce_collision_scan.py",
+    "interpretation": "No exact beta-arch/Asx-turn/ST-turn aliases were found in the scanned data/traits, data/raw, data/curation, data/mappings or docs/data files. Research matches are planning/context, not class records. Beta-architecture and first-turn substring matches in the initial scan were false positives.",
+    "exact_curie_scan": {
+      "command": "rg -l --no-ignore --hidden 'SO:0000912|SO:0001141|BS:00203|BS:00231' data/traits data/raw data/curation data/mappings docs/data research -g '*.yaml' -g '*.json' -g '*.tsv' -g '*.obo' -g '!research/structural-discovery-20261028/motifs/**'",
+      "returncode": 1,
+      "matched_files": []
+    }
+  },
+  "accepted_class_candidates": [
+    {
+      "rank": 1,
+      "candidate_key": "beta_arch",
+      "label": "beta arch",
+      "external_identity": null,
+      "identifier_action": "Root must apply native reservation if selecting this class. No internal identifier assigned by this audit.",
+      "ontology_search": "Current official SO data-version 2026-08-07 has no beta-arch name or synonym match. Broader web searches did not establish another exact CURIE; this is not a universal ontology absence claim.",
+      "definition_proposal": "A supersecondary motif in which two successive beta strands are connected by a segment and do not hydrogen-bond to one another as a beta-hairpin pair.",
+      "scope_note": "The connecting segment is the beta-arc/loop; the whole strand-connection-strand unit is the beta-arch. Do not make beta-arc or bare beta-beta exact synonyms of the full motif. A beta-arch need not contain only coil; the cited design study also describes helix-containing connections.",
+      "trait_axis": "STRUCTURE",
+      "trait_category": "STRUCT_SECONDARY",
+      "existing_parent": "proteintraitsmech:SUPER_SECONDARY_MOTIF",
+      "primary_source": "PMID:36192397",
+      "definition_source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9530121/",
+      "doi": "10.1038/s41467-022-33004-6",
+      "source_rights": "CC-BY-4.0 explicitly stated in the article. Chidyausiku et al. 2022; attribution and indication of paraphrase required.",
+      "inspected_locations": ["Introduction: Ig beta-hairpins versus beta-arches", "Methods: Structural analysis of beta-arch loops", "dIG8-CC structural characterization", "Article copyright/license block"],
+      "detection": {
+        "runnable_screen": "mkdssp --output-format=dssp {input.pdb} {output.dssp}",
+        "tool": "https://github.com/PDB-REDO/dssp",
+        "local_availability": "/opt/homebrew/bin/mkdssp exists; this audit did not execute a motif detector",
+        "classification_after_screen": "Enumerate connected successive strand segments in one continuous chain; inspect their strand-pairing/hydrogen-bond assignments and reject paired beta-hairpins. Confirm the complete strand-connection-strand geometry in coordinates. Missing backbone atoms, chain breaks or ambiguous secondary assignments remain unresolved.",
+        "source_sampling_not_class_definition": "The study selected loops shorter than 9 residues; do not impose that as a universal beta-arch length cutoff.",
+        "limit": "DSSP itself emits assignments and hydrogen-bond information, not a beta-arch call. A retained class filter or explicit manual discrimination remains required. No local execution/classifier validation claimed."
+      },
+      "structure_anchor": {
+        "pdb": "7SKO",
+        "url": "https://www.rcsb.org/structure/7SKO",
+        "archive_version": "1.2 (2024-11-13)",
+        "identity": "dIG8-CC synthetic designed immunoglobulin-like protein",
+        "method": "X-RAY DIFFRACTION",
+        "resolution_angstrom": 2.05,
+        "source_assertion": "The paper reports that the designed beta-arch loop and beta-arch helix are reproduced across dIG8-CC crystal monomers.",
+        "archive_crosscheck": "7SKO is dIG8-CC, chains A/B/C/D. Alternative 7SKN is dIG8-CC at 2.30 A. Figure5's 7SKP/chainC caption conflicts with the archive: 7SKP is dIG14 with chains A/B. Do not derive coordinates from that caption.",
+        "qualification": "Representative structure only; no sequence, residue bounds, UniProt mapping or source-qualified occurrence asserted."
+      },
+      "remaining_blockers": ["Native root-owned identifier reservation", "Execute and retain the chosen screen/manual or complete detector route before claiming tested detection", "Canonical-example grounding is absent"]
+    },
+    {
+      "rank": 2,
+      "candidate_key": "asx_turn",
+      "label": "Asx turn",
+      "external_identity": "SO:0000912",
+      "external_alt_id": "BS:00203",
+      "identifier_action": "Use the exact external class under native policy; do not mint an internal surrogate.",
+      "definition_proposal": "A three-residue structural motif whose first residue is aspartate or asparagine and whose side-chain oxygen accepts a hydrogen bond from the backbone NH of the third residue.",
+      "trait_axis": "STRUCTURE",
+      "trait_category": "STRUCT_SECONDARY",
+      "existing_parent": "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF",
+      "parent_caveat": "SO places it under SO:0001128. Native proteintraitsmech:TURN now denotes DSSP T-state and is not a valid equivalent parent for all side-chain turns.",
+      "definition_source_url": "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/Ontology_Files/so.obo",
+      "source_rights": "SO is CC-BY-4.0; official LICENSE inspected and retained. The compatible BMC2009 resource paper and its SQL supplement are CC-BY-2.0. Keep their original attribution/license, rather than relabeling the sources.",
+      "primary_method_source": "DOI:10.1186/1471-2105-10-60",
+      "identity_boundary": "Existing proteintraitsmech:ASX_MOTIF is a five-residue, two-hydrogen-bond class. Some instances contain an Asx turn, but the classes are not equivalent.",
+      "detection": {
+        "documented_external_screen": "hbplus {input.pdb}",
+        "output": "Input-basename .hb2 hydrogen-bond listing in the tool working directory; preserve input and output provenance.",
+        "tool": "https://github.com/RomanLas/HBPLUS",
+        "version_documented": "Official EBI page identifies v3.06; actual installed build must be recorded when run.",
+        "class_filter": "Require one continuous three-residue chain segment starting in ASP/ASN and a side-chain oxygen acceptor to main-chain N-H donor bond at i+2. Handle alternate conformers, missing atoms, Asn orientation and author/insertion numbering explicitly. A mere D/Nxx sequence match is insufficient.",
+        "subtype_filter": "The published supplement contains eight Asx-turn SQL queries separating Asp/Asn and four dihedral variants. Those queries are executable only against the defined Protein Motif Database tables, not directly against a PDB file.",
+        "local_status": "hbplus and reduce absent. Official manual retains academic confidentiality/copying restrictions despite current EBI free-download wording; software reuse terms need resolution before installing/redistributing. No execution claimed.",
+        "alternative": "An independently implemented, source-cited hydrogen-bond geometry screen with explicit manual confirmation could satisfy the native route without importing HBPLUS code; root must implement/test it if chosen."
+      },
+      "structure_anchor": {
+        "pdb": "1VJS",
+        "url": "https://www.rcsb.org/structure/1VJS",
+        "archive_version": "1.3 (2024-02-14)",
+        "identity": "Bacillus licheniformis alpha-amylase, chain A",
+        "method": "X-RAY DIFFRACTION",
+        "resolution_angstrom": 1.7,
+        "assertion_source": "https://motif.gla.ac.uk/",
+        "source_assertion": "The original authors' resource explicitly illustrates an Asx turn at the alpha-amylase active site in 1VJS.",
+        "rights_boundary": "The resource example is inspected factual context; its independent website/database data license was not established. Do not import its graphics or coordinate annotations under the BMC article license by assumption.",
+        "qualification": "Archive-linked representative candidate only; P06278 is an archive cross-reference, not a release-pinned trait occurrence. No residue bounds promoted."
+      },
+      "remaining_blockers": ["Runnable class-specific hydrogen-bond screen not executed", "Website example-rights and native canonical grounding unresolved"]
+    },
+    {
+      "rank": 3,
+      "candidate_key": "st_turn",
+      "label": "serine/threonine turn",
+      "external_identity": "SO:0001141",
+      "external_alt_id": "BS:00231",
+      "exact_aliases": ["ST turn", "serine/threonine turn"],
+      "identifier_action": "Use the exact external class under native policy; do not mint an internal surrogate.",
+      "definition_proposal": "A three-residue structural motif whose first residue is serine or threonine and whose side-chain oxygen accepts a hydrogen bond from the backbone NH of the third residue.",
+      "trait_axis": "STRUCTURE",
+      "trait_category": "STRUCT_SECONDARY",
+      "existing_parent": "proteintraitsmech:POLYPEPTIDE_STRUCTURAL_MOTIF",
+      "definition_source_url": "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/Ontology_Files/so.obo",
+      "source_rights": "SO CC-BY-4.0, verified official LICENSE. BMC2009 article/supplement CC-BY-2.0, verified copyright block.",
+      "primary_method_source": "DOI:10.1186/1471-2105-10-60",
+      "identity_boundary": "Not equivalent to the five-residue two-bond ST motif (SO:0001126), ST staple, serine/threonine kinase sequence motif, or DSSP T-state.",
+      "detection": {
+        "documented_external_screen": "hbplus {input.pdb}",
+        "class_filter": "Require SER/THR at the first position of a continuous three-residue segment, with its OG/OG1 side-chain oxygen accepting a backbone N-H hydrogen bond at i+2. Use actual chain adjacency and atom identities, not only integer author residue differences.",
+        "subtype_filter": "Eight published ST-turn SQL queries cover Ser/Thr and four geometry variants. The query framework requires source database tables; a command launching a database browser is not an arbitrary-PDB detector.",
+        "shared_prerequisites": "Same unexecuted HBPLUS availability/rights and coordinate-quality prerequisites as the Asx-turn card. A sequence-only S/Txx search or DSSP-only assignment cannot establish this motif."
+      },
+      "structure_anchor": null,
+      "contextual_structure_candidates": [
+        {
+          "pdb": "6D1U",
+          "url": "https://www.rcsb.org/structure/6D1U",
+          "archive_version": "2.2 (2024-11-06)",
+          "identity": "Human ADM2/intermedin antagonist fragment bound to the RAMP1-CLR extracellular construct; ADM2 chains D/E/F",
+          "method": "X-RAY DIFFRACTION; 2.05 A",
+          "primary_source": "PMID:30139742; DOI:10.1074/jbc.RA118.005062",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6187615/",
+          "source_claim_lead": "Paper text identifies the peptide S43 side-chain to H45 backbone ST-turn. Primary article copyright block and archive metadata inspected; source body claim was surfaced in indexed primary text but full passage retrieval was CAPTCHA-limited.",
+          "disposition": "Deferred contextual candidate: article is under exclusive ASBMB license, not verified permissive. No imported annotation, no residue-coordinate assignment, no qualified example."
+        },
+        {
+          "pdb": "9NZY",
+          "primary_source": "DOI:10.1093/femsmc/xtag011",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12978539/",
+          "disposition": "Deferred lead only: indexed primary text identifies an MtxX ST-turn, but article is CC-BY-NC-4.0; no imported annotation and no full primary-PDB verification completed."
+        }
+      ],
+      "remaining_blockers": ["Runnable class-specific hydrogen-bond screen not executed", "No compatible inspected example assertion selected", "Canonical grounding remains absent"]
+    }
+  ],
+  "additional_candidates_deferred": [
+    {"candidate": "Schellman loop", "status": "known published class, likely missing", "reason": "Compatible BMC2009 evidence and SQL exist, but six/seven-residue classic/wide definitions and seven/eight-residue resource selection conventions require explicit scope resolution; root narrowed current shortlist."},
+    {"candidate": "beta-bulge loop", "status": "known published class, likely missing", "reason": "Distinct from existing generic beta bulge. Compatible BMC2009 evidence, five/six-residue SQL and author-resource 1AYL illustration exist. Full card and example-rights verification deferred."},
+    {"candidate": "psi loop", "status": "known published topology, standalone class not found in bounded scan", "reason": "Many family/fold descriptions contain psi loops; they are not equivalent generic classes. ProSMoS-based topology detection lead and compatible source rights remain unverified."},
+    {"candidate": "ST motif", "status": "known published class", "reason": "SO:0001126 exact candidate identified; not included in the narrowed three-class delivery. Requires independent scope/collision/method/example completion."},
+    {"candidate": "niche", "status": "known published local motif", "reason": "Abundant unrelated ecological-niche text makes lexical counts uninformative. Full identity/geometry audit and examples deferred."}
+  ],
+  "excluded_existing_classes": ["beta bulge", "alpha turn", "pi turn", "alpha-alpha corner", "beta meander", "Asx motif", "helix cap", "helix-hairpin-helix", "nest"],
+  "restrictive_or_unresolved_sources_not_ingested": [
+    {"reference": "DOI:10.1002/pro.4936", "reason": "CC-BY-NC-ND; contextual only; root independently verified."},
+    {"reference": "DOI:10.1002/pro.70046; PMC11836897", "reason": "ExploreTurns / betaturn.com is a useful research lead, but redistribution license not cleared and no method invocation validated here."},
+    {"reference": "DOI:10.1110/ps.04920904; PMID:15459339", "reason": "2004 Protein Society copyright; primary definitions and methods inspected as scientific context, while accepted definition basis is compatible SO/BMC2009."}
+  ],
+  "retained_artifacts": ["fetch_primary_evidence.py", "primary-artifact-retrieval.json", "motivated-proteins-2009-supplement5.zip", "natcomm-2022-immunoglobulin.xml", "inspect_identity_and_tool_docs.py", "identity-tool-doc-retrieval.json", "so-20260807.obo", "so-license.txt", "hbplus-official-docs.tar.gz", "hbplus-official-doc-text.json", "reproduce_collision_scan.py"],
+  "research_storage_note": "Large original broad search outputs are preserved losslessly as gzip with checksums; they need not be included in a published PR. No other sessions or checkouts changed."
+}

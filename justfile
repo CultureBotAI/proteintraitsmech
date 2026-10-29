@@ -847,6 +847,11 @@ build-go2chebi:
 seed-secondary-structure *args:
     python3 scripts/seed_secondary_structure.py {{args}}
 
+# Bounded, evidence-reviewed new structural classes; dry-run by default.
+# See research/structural-discovery-20261028/ and writer findings #1204.
+seed-structural-discovery *args:
+    uv run python scripts/seed_structural_discovery.py {{args}}
+
 # Phase 2 — member-set (Jaccard) overlap between un-integrated signatures.
 # Fetches Swiss-Prot member sets from UniProt (cached), blocks on shared
 # members, emits data/equivalence/member_overlap.tsv + MERGE candidates.

@@ -1,0 +1,248 @@
+version: 1
+records:
+  - path: data/traits/structure/cavity/tunnel-bottleneck.yaml
+    record:
+      identifier: proteintraitsmech:TUNNEL_BOTTLENECK
+      label: protein tunnel bottleneck
+      definition: >-
+        A region of a protein tunnel where the available radius along a specified
+        pathway reaches its minimum in a stated coordinate and geometric model.
+      definition_source: DOI:10.1371/journal.pcbi.1002708
+      trait_axis: STRUCTURE
+      trait_category: STRUCT_CAVITY
+      term_kind: CLASS
+      mapping_status: PROPOSED
+      synonyms:
+        - synonym_text: tunnel bottleneck
+          synonym_type: EXACT_SYNONYM
+          source: DOI:10.1371/journal.pcbi.1002708
+        - synonym_text: tunnel constriction
+          synonym_type: BROAD_SYNONYM
+          source: Curator scope distinction; a local constriction need not be the path minimum
+      trait_relations:
+        - predicate: biolink:part_of
+          object: proteintraitsmech:TUNNEL
+          relation_source: DOI:10.1371/journal.pcbi.1002708; Design and Implementation, section 3
+      detection_methods:
+        - name: CAVER 3.0 configured pathway minimum-radius geometry
+          method_type: STRUCTURAL_ALGORITHM
+          tool: biotools:caver
+          reference: PMID:23093919
+          recipe: >-
+            java -Xmx1200m -cp {caver_home}/lib -jar {caver_home}/caver.jar
+            -home {caver_home} -pdb {input} -conf {config} -out {output}
+          edam_operation: EDAM:operation_2406
+          evidence_code: ECO:0007669
+      structural_geometry_representations:
+        - structure_ref: PDB:1CQW
+          structure_source: PDB, entry version 1.4, revised 2024-02-07
+          evidence_source: >-
+            DOI:10.1371/journal.pcbi.1002708, Figure 4 and static-structure analysis;
+            https://www.rcsb.org/structure/1CQW, inspected 2026-10-29.
+            DhaA chain A, author-assigned monomer, X-ray 1.5 angstrom.
+            Whole-structure anchor for the paper's hydrogen-added computational model;
+            no local residue bounds or qualified protein occurrence asserted.
+      evidence:
+        - reference: DOI:10.1371/journal.pcbi.1002708
+          notes: >-
+            Section 3 defines a pathway bottleneck through its minimum-radius ball;
+            this supports the part_of relation, not a subclass relation to whole tunnels.
+            Figure 4 analyzes the p1 bottleneck in a hydrogen-added 1CQW model.
+            Geometry alone establishes neither transport nor gating function.
+        - reference: https://www.caver.cz/fil/download/manual/caver_userguide.pdf
+          notes: >-
+            The CAVER 3.0/3.01 guide documents this external command. Input is a directory
+            of PDB models. Configuration must specify a justified starting point and
+            probe/shell parameters; record executable hash, atom inclusion, hydrogen
+            treatment and seed. Enable compute_bottleneck_residues yes to emit
+            analysis/bottlenecks.csv. Check path identity and alternative or tied minima
+            against the profiles. This recipe was documented, not executed for this record.
+        - reference: DOI:10.1371/journal.pcbi.1002708
+          notes: >-
+            Publisher full text carries a Creative Commons Attribution notice; the
+            inspected notice does not specify its version. This record is original
+            project-authored CC-BY-4.0 synthesis. The CAVER software/manual retain GPL-3.0;
+            no source prose, figures or code are imported into this record.
+        - reference: https://www.wwpdb.org/about/usage-policies
+          notes: >-
+            PDB archive metadata are CC0-1.0. The crystallography article retains its
+            own terms. No coordinate data or canonical UniProt carrier is redistributed here.
+      curation_history:
+        - timestamp: '2026-10-29T06:57:25Z'
+          curator: codex-gpt-6-astra
+          action: structural_trait_discovery_20261028
+          changes: >-
+            Created a new PROPOSED geometric class after corpus/alias/open-work review.
+            Maintained input is data/curation/structural_trait_discovery.yaml;
+            native writer scripts/seed_structural_discovery.py. Evidence and novelty
+            dossier: research/structural-discovery-20261028/cavities/tunnel-bottleneck-card.json.
+            No human review status, residue annotation or protein qualification conferred.
+          llm_assisted: true
+      license: CC-BY-4.0
+  - path: data/traits/structure/secondary/beta-arch.yaml
+    record:
+      identifier: proteintraitsmech:BETA_ARCH
+      label: beta arch
+      definition: >-
+        A supersecondary motif comprising two successive beta strands joined by a
+        connecting segment, without hydrogen-bond pairing between the two flanking strands.
+      definition_source: DOI:10.1038/s41467-022-33004-6
+      trait_axis: STRUCTURE
+      trait_category: STRUCT_SECONDARY
+      term_kind: CLASS
+      mapping_status: PROPOSED
+      parent_traits:
+        - proteintraitsmech:SUPER_SECONDARY_MOTIF
+      synonyms:
+        - synonym_text: beta-arch
+          synonym_type: EXACT_SYNONYM
+          source: DOI:10.1038/s41467-022-33004-6
+        - synonym_text: β-arch
+          synonym_type: EXACT_SYNONYM
+          source: DOI:10.1038/s41467-022-33004-6
+      secondary_structure_representations:
+        - method: Curated element connectivity; no per-residue assignment
+          state_alphabet: TOPOLOGY
+          topology_string: E-connection-E(no-flanking-strand-pairing)
+          evidence_source: DOI:10.1038/s41467-022-33004-6; Methods, beta-arch structural analysis
+      detection_methods:
+        - name: DSSP assignment followed by connected-strand and hydrogen-bond pairing review
+          method_type: STRUCTURAL_ALGORITHM
+          tool: https://github.com/PDB-REDO/dssp
+          reference: DOI:10.1038/s41467-022-33004-6
+          recipe: mkdssp --output-format=dssp {input.pdb} {output.dssp}
+          evidence_code: ECO:0007669
+      structural_geometry_representations:
+        - structure_ref: PDB:7SKO
+          structure_source: PDB, entry version 1.2, revised 2024-11-13
+          evidence_source: >-
+            DOI:10.1038/s41467-022-33004-6, structural characterization and deposition section;
+            https://www.rcsb.org/structure/7SKO, inspected 2026-10-29.
+            Synthetic dIG8-CC, X-ray 2.05 angstrom, chains A-D in the asymmetric unit;
+            deposited biological assemblies are dimers. Whole-structure representative
+            of the source-described arch connections; no residue boundaries or qualified
+            protein occurrence asserted.
+      evidence:
+        - reference: DOI:10.1038/s41467-022-33004-6
+          notes: >-
+            Chidyausiku et al. (2022) distinguish beta-arches from hydrogen-bonded
+            beta-hairpin strand pairs. Methods use DSSP and pairing inspection.
+            The connecting segment can contain a helix; the study's short-loop sampling
+            restriction is not a universal class boundary. The motif is smaller than
+            a complete immunoglobulin-like domain.
+        - reference: https://github.com/PDB-REDO/dssp
+          notes: >-
+            The documented command produces secondary-structure and hydrogen-bond
+            assignments, not automatic beta-arch calls. Review successive strand segments
+            in one continuous chain and exclude mutual hydrogen-bond pairing; confirm
+            connection geometry in coordinates. Chain breaks, missing backbone atoms and
+            ambiguous assignments remain unresolved. CLI syntax was checked with mkdssp
+            4.6.1; no structure detection was executed for this record.
+        - reference: DOI:10.1038/s41467-022-33004-6
+          notes: >-
+            The source reports preservation of dIG8-CC arch connections in crystal models.
+            Its Figure 5c caption names 7SKP/chain C inconsistently with its deposition
+            section and archive identity; 7SKO is selected using the latter sources.
+            No coordinate assertion is derived from that caption. Article CC-BY-4.0;
+            this record paraphrases facts with attribution and imports no figure.
+        - reference: https://raw.githubusercontent.com/PDB-REDO/dssp/trunk/LICENSE
+          notes: >-
+            DSSP software retains BSD-2-Clause terms. PDB archive metadata retain CC0-1.0
+            under https://www.wwpdb.org/about/usage-policies. Record CC-BY-4.0 applies
+            to the original project synthesis; no coordinates or software are copied here.
+      curation_history:
+        - timestamp: '2026-10-29T07:10:11Z'
+          curator: codex-gpt-6-astra
+          action: structural_trait_discovery_20261028
+          changes: >-
+            Created a new PROPOSED class after the bottleneck canary and ignored-inclusive
+            corpus/alias/open-work checks. Maintained source data/curation/structural_trait_discovery.yaml;
+            writer scripts/seed_structural_discovery.py. Evidence dossier
+            research/structural-discovery-20261028/motifs/ranked-candidate-cards.json.
+            Addresses the missing beta-arch class in issue1200 without closing its residual scope.
+          llm_assisted: true
+      license: CC-BY-4.0
+  - path: data/traits/structure/cavity/membrane-facing-channel-fenestration.yaml
+    record:
+      identifier: proteintraitsmech:MEMBRANE_FACING_CHANNEL_FENESTRATION
+      label: membrane-facing lateral channel fenestration
+      definition: >-
+        A lateral passage through the transmembrane wall of a protein channel connecting
+        its central pore cavity to the lipid-facing exterior, distinct from the main
+        transmembrane pore axis.
+      definition_source: DOI:10.1073/pnas.2401591121
+      trait_axis: STRUCTURE
+      trait_category: STRUCT_CAVITY
+      term_kind: CLASS
+      mapping_status: PROPOSED
+      parent_traits:
+        - proteintraitsmech:TUNNEL
+      synonyms:
+        - synonym_text: membrane-facing channel fenestration
+          synonym_type: EXACT_SYNONYM
+          source: Curator synthesis of DOI:10.1073/pnas.2401591121
+        - synonym_text: lateral fenestration
+          synonym_type: BROAD_SYNONYM
+          source: Curator scope distinction; lateral openings also occur in other contexts
+      detection_methods:
+        - name: CAVER tunnel candidates followed by membrane-frame endpoint review
+          method_type: STRUCTURAL_ALGORITHM
+          tool: biotools:caver
+          reference: PMID:23093919
+          recipe: >-
+            java -Xmx1200m -cp {caver_home}/lib -jar {caver_home}/caver.jar
+            -home {caver_home} -pdb {input} -conf {config} -out {output}
+          edam_operation: EDAM:operation_2406
+          evidence_code: ECO:0007669
+      structural_geometry_representations:
+        - structure_ref: PDB:7WLI
+          structure_source: PDB, entry version 1.2, revised 2024-10-30
+          evidence_source: >-
+            DOI:10.1073/pnas.2401591121, Results and SI Figure S1D cited in main text;
+            https://www.rcsb.org/structure/7WLI, inspected 2026-10-29.
+            Human CaV3.3, chain A, author-assigned monomer, cryo-EM 3.3 angstrom;
+            apo relative to the investigated inhibitors, with lipids and calcium present.
+            Only 1135 of 2223 deposited residues are modeled. Whole-structure anchor for
+            source-computed lateral geometry; no local residue boundaries or qualified
+            protein occurrence asserted.
+      evidence:
+        - reference: DOI:10.1073/pnas.2401591121
+          notes: >-
+            Schott et al. (2024), published PMID:38787877, analyze membrane-side passages
+            to the central cavity, including CaV3.3 structure 7WLI. This supports a
+            geometric tunnel subtype, not an enclosed disconnected cavity, cellular
+            fenestra, principal pore, or universal drug-binding mechanism.
+        - reference: https://www.caver.cz/fil/download/manual/caver_userguide.pdf
+          notes: >-
+            The documented CAVER command requires a PDB directory, source-justified
+            central-cavity starting point, probe/shell settings and retained executable
+            provenance. In an independently justified membrane frame, review continuous
+            paths ending laterally on the lipid-facing protein exterior; exclude paths
+            following the main pore axis or ending at aqueous mouths. The command alone
+            does not classify fenestrations. No CAVER analysis was executed for this record.
+        - reference: DOI:10.1073/pnas.2401591121
+          notes: >-
+            The published analysis used MOLE 2.5 plus explicit path filtering. The
+            CAVER-based candidate recipe is an alternative screening route, not a replay
+            of that analysis. Report coordinate state, missing atoms, membrane placement,
+            retained lipids and probe choices. Passage geometry does not establish
+            permeability, ligand access, selectivity or allostery.
+        - reference: DOI:10.1073/pnas.2401591121
+          notes: >-
+            The inspected published article is CC-BY-4.0. This record is an attributed
+            original factual synthesis. CAVER software/manual retain GPL-3.0; no upstream
+            software, article prose or figures are imported into this record.
+        - reference: https://www.wwpdb.org/about/usage-policies
+          notes: PDB archive metadata are CC0-1.0; the structure's primary article retains its own terms.
+      curation_history:
+        - timestamp: '2026-10-29T07:10:11Z'
+          curator: codex-gpt-6-astra
+          action: structural_trait_discovery_20261028
+          changes: >-
+            Created a new PROPOSED class after the bottleneck canary and ignored-inclusive
+            corpus/alias/open-work checks. Maintained source data/curation/structural_trait_discovery.yaml;
+            writer scripts/seed_structural_discovery.py. Evidence dossier
+            research/structural-discovery-20261028/cavities/membrane-fenestration-card.json.
+            No human review status, functional mechanism or qualified protein occurrence conferred.
+          llm_assisted: true
+      license: CC-BY-4.0
