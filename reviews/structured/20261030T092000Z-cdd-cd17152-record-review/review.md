@@ -1,0 +1,469 @@
+# Single-record scientific review of CDD:cd17152 (DCX2_DCDC2; doublecortin-like domain 2 found in doublecortin domain-containing protein 2)
+
+- Review: 20261030T092000Z-cdd-cd17152-record-review
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-30T09:05:00Z
+- Finished UTC: 2026-10-30T09:20:00Z
+- Reviewer: Antigravity (independent)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+CDD:cd17152 (label DCX2_DCDC2; opening definition phrase 'Doublecortin-like domain 2 found in doublecortin domain-containing protein 2 (DCDC2)') passes strict LinkML schema validation and represents a valid class-level sequence domain trait (SEQ_DOMAIN on SEQUENCE, parent_traits: [CDD:cl28922]) modeling the C-terminal second doublecortin-like (DCX2) repeat of DCDC2 (Homo sapiens UniProtKB:Q9UHG0 and Mus musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like beta-grasp DCX repeats whose human gene variants are associated with developmental dyslexia (PMID:16278295). However, its upstream CDD-seeded definition interpolates an off-target sentence defining the ubiquitin protein modifier ('Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair.') even though DCX domains only adopt a ubiquitin-like beta-grasp tertiary fold and do not function as ubiquitin protein modifiers, and the record lacks a literature evidence block citing PMID:16278295 — the exact upstream digression repaired on N-terminal first-repeat sibling CDD:cd17149 (label DCX1_DCDC2) in Cycle 2 Stage 5 (#1188). Preserved as open finding F19 for Cycle 3 Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+
+## Scope And Provenance
+
+Full single-record scientific review of CDD:cd17152 covering identity, axis/category placement, hierarchy, legacy protein examples, literature evidence, prose accuracy, sibling boundary contrast with CDD:cd17149, CDD:cd17153, and CDD:cd17154, and writer ownership.
+
+Selection: Selected from the frozen 14-record Cycle 3 Stage 4 CDD SEQ_DOMAIN sibling inventory as the unpromoted C-terminal second-repeat sibling of Cycle 2 record CDD:cd17149 exhibiting the upstream CDD ubiquitin protein-modifier digression.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: git_commit at Git base adef1252dc47d9fc25268e3f36ad2ade8adba1a2.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| CDD:cd17152 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml | generated | DCX2_DCDC2 |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Strict LinkML and OAK ontology-binding validation | passed | True | CDD:cd17152 | Record passes closed LinkML schema validation and OAK term-label bindings with 0 errors. |
+| Release-pinned UniProt grounding and binding replay | passed | True | CDD:cd17152 | Record has 2 legacy unverified Swiss-Prot seed examples (Q9UHG0, Q5DU00) and 0 QUALIFIED bindings; 22,635 corpus qualified_record_bindings verify across 13,293 registry proteins with 0 semantic findings. |
+| Causal-graph structural and semantic audit | passed | False | CDD:cd17152 | Record has no causal_graphs block (0 graphs, 0 errors); absence is expected for uncurated CDD sequence domain records. |
+| Registered write-route audit | passed | True | CDD:cd17152 | 620 scripts examined (51 seeders, 9 registered editors, 2 transactional promoters, 52 declared bypasses) with 0 unguarded writer findings. |
+
+## Scientific And Domain Assessments
+
+### Class-level C-terminal DCX2 repeat identity and CDD superfamily hierarchy
+
+identity: supported. Targets: CDD:cd17152.
+
+CDD:cd17152 is a valid class-level sequence domain trait (trait_axis: SEQUENCE, trait_category: SEQ_DOMAIN, label: DCX2_DCDC2, parent_traits: [CDD:cl28922]) representing the C-terminal second doublecortin-like repeat of DCDC2, distinct from N-terminal first-repeat sibling CDD:cd17149 (label: DCX1_DCDC2) and paralog repeat-2 profiles CDD:cd17153 (DCX2_DCDC2B) and CDD:cd17154 (DCX2_DCDC2C).
+
+### Legacy Swiss-Prot seed carriers Q9UHG0 and Q5DU00
+
+grounding: supported. Targets: CDD:cd17152.
+
+The two unpromoted Swiss-Prot seed examples on CDD:cd17152 — Homo sapiens DCDC2 (UniProtKB:Q9UHG0) and Mus musculus Dcdc2 (UniProtKB:Q5DU00) — are genuine mammalian DCDC2 orthologs containing the C-terminal second DCX repeat.
+
+### Upstream CDD interpolation of an off-target ubiquitin protein-modifier definition sentence and missing PMID:16278295 evidence block
+
+consistency: concern. Targets: CDD:cd17152.
+
+CDD:cd17152 inherits the upstream NCBI CDD description sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair' even though DCX domains only adopt a ubiquitin-like beta-grasp fold and do not act as ubiquitin protein modifiers, and lacks a literature evidence block citing PMID:16278295.
+
+## Findings
+
+### F19: CDD:cd17152 (DCX2_DCDC2) interpolates an off-target ubiquitin protein-modifier definition sentence into a microtubule-binding DCX repeat profile
+
+minor / open / confirmed; issue key: cdd-cd17152-dcdc2-rpt2-ubiquitin-modifier-digression.
+
+In data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml, the domain profile models the C-terminal second doublecortin-like domain (label DCX2_DCDC2, parent_traits: [CDD:cl28922]) of DCDC2 (human UniProtKB:Q9UHG0, mouse UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like beta-grasp DCX repeats associated with human reading disability/dyslexia (PMID:16278295). However, its upstream CDD definition interpolates the off-target sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair.' DCX domains only share a ubiquitin-like beta-grasp tertiary fold and do not function as ubiquitin protein modifiers, and CDD:cd17152 currently lacks an evidence block citing PMID:16278295. Preserved open in Stage 4 for Stage 5 grouped remediation via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.
+
+## Recommended Actions And Acceptance Checks
+
+### repair-cd17152-definition-and-evidence-via-cdd-errata
+
+Add an accession-keyed erratum for CDD:cd17152 in scripts/cdd_errata.py and apply it via scripts/repair_cdd_errata.py, replacing the off-target 'Ubiquitin (Ub) is a protein modifier in eukaryotes...' sentence with the tandem DCX ubiquitin-like beta-grasp repeat description and adding an evidence entry citing PMID:16278295.
+
+- CDD:cd17152 definition accurately describes the C-terminal second DCX repeat of DCDC2 adopting a ubiquitin-like beta-grasp tertiary fold without the off-target ubiquitin protein-modifier digression.
+- CDD:cd17152 evidence block is populated with PMID:16278295 and a verbatim DCDC2 doublecortin-domain/dyslexia snippet.
+- scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay the erratum idempotently and scripts/validate_strict.py passes with 0 errors.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| ev-cd17152-yaml | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml; identifier, label, definition, definition_source, parent_traits, canonical_examples | partial | CDD:cd17152 (label DCX2_DCDC2, parent_traits: [CDD:cl28922]) carries unpromoted Swiss-Prot seed examples UniProtKB:Q9UHG0 (Homo sapiens DCDC2) and UniProtKB:Q5DU00 (Mus musculus Dcdc2) and no evidence block, while its upstream CDD definition interpolates an off-target sentence defining the ubiquitin protein modifier even though DCX domains only share a ubiquitin-like beta-grasp fold. |
+| ev-cd17149-sibling | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; identifier, label, definition, parent_traits, canonical_examples, evidence (PMID:16278295) | supports | N-terminal first-repeat sibling CDD:cd17149 (label DCX1_DCDC2, parent_traits: [CDD:cl28922], carrying human UniProtKB:Q9UHG0) was repaired in Cycle 2 Stage 5 (#1188) to replace the off-target ubiquitin protein-modifier digression with the tandem DCX ubiquitin-like beta-grasp repeat description and cite PMID:16278295. |
+| ev-cd17153-cd17154-siblings | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml; CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) and CDD:cd17153 (label=DCX2_DCDC2B, parent_traits=[CDD:cl28922]) | supports | Paralog C-terminal second-repeat siblings CDD:cd17154 (DCX2_DCDC2C on human DCDC2C UniProtKB:A8MYV0, repaired in Cycle 2 Stage 5 under #1188) and CDD:cd17153 (DCX2_DCDC2B on DCDC2B) confirm that CDD:cd17152 is the distinct C-terminal DCX2 repeat profile specific to DCDC2. |
+| ev-pmid-16278295 | https://pubmed.ncbi.nlm.nih.gov/16278295/; PMID:16278295 (Meng et al., 2005, Proc Natl Acad Sci U S A 102:17053-17058) | supports | Primary human genetics and functional study (Meng et al., 2005, PNAS 102:17053-17058) establishing that DCDC2 (UniProtKB:Q9UHG0) is a doublecortin-domain microtubule-associated protein involved in neuronal migration and associated with developmental dyslexia. |
+| ev-cdd-errata-writer | scripts/cdd_errata.py; CDD_ERRATA table (18 entries) and scripts/repair_cdd_errata.py | supports | scripts/cdd_errata.py currently contains 18 accession-keyed entries (including N-terminal sibling CDD:cd17149) wired into scripts/seed_cdd.py and scripts/repair_cdd_errata.py, providing the exact registered repair route for adding CDD:cd17152 in Stage 5. |
+
+## Limits And Additional Notes
+
+- This single-record review covers CDD:cd17152 only; the full 14-record frozen Cycle 3 Stage 4 CDD sibling inventory is reviewed in companion category bundle 20261030T092100Z-cdd-cycle3-sibling-domain-cohort-review.
+- No edits to data/traits/ were performed in Stage 4; finding F19 is preserved open for Stage 5 grouped remediation.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261030T092000Z-cdd-cd17152-record-review
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Single-record scientific review of CDD:cd17152 (DCX2_DCDC2; doublecortin-like
+  domain 2 found in doublecortin domain-containing protein 2)
+started_at: '2026-10-30T09:05:00Z'
+finished_at: '2026-10-30T09:20:00Z'
+reviewer:
+  identity: Antigravity
+  kind: agent
+  model: Claude Opus 4.6
+  independence: independent
+  independence_basis: Cycle 3 Stage 4 single-record scientific audit of the committed
+    CDD:cd17152 record and its tandem-repeat and paralog sibling boundary context
+    (CDD:cd17149, CDD:cd17153, CDD:cd17154) without modifying scientific records.
+skill: review-yaml-record
+completion: completed
+verdict: needs_curation
+native_verdict: NEEDS_CURATION
+scientific_review: true
+summary: 'CDD:cd17152 (label DCX2_DCDC2; opening definition phrase ''Doublecortin-like
+  domain 2 found in doublecortin domain-containing protein 2 (DCDC2)'') passes strict
+  LinkML schema validation and represents a valid class-level sequence domain trait
+  (SEQ_DOMAIN on SEQUENCE, parent_traits: [CDD:cl28922]) modeling the C-terminal second
+  doublecortin-like (DCX2) repeat of DCDC2 (Homo sapiens UniProtKB:Q9UHG0 and Mus
+  musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like
+  beta-grasp DCX repeats whose human gene variants are associated with developmental
+  dyslexia (PMID:16278295). However, its upstream CDD-seeded definition interpolates
+  an off-target sentence defining the ubiquitin protein modifier (''Ubiquitin (Ub)
+  is a protein modifier in eukaryotes that is involved in various cellular processes,
+  including transcriptional regulation, cell cycle control, and DNA repair.'') even
+  though DCX domains only adopt a ubiquitin-like beta-grasp tertiary fold and do not
+  function as ubiquitin protein modifiers, and the record lacks a literature evidence
+  block citing PMID:16278295 — the exact upstream digression repaired on N-terminal
+  first-repeat sibling CDD:cd17149 (label DCX1_DCDC2) in Cycle 2 Stage 5 (#1188).
+  Preserved as open finding F19 for Cycle 3 Stage 5 grouped remediation via scripts/cdd_errata.py
+  and scripts/repair_cdd_errata.py.'
+source:
+  git_revision: adef1252dc47d9fc25268e3f36ad2ade8adba1a2
+  state: git_commit
+  inputs:
+  - path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+    sha256: e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b
+    role: target
+  - path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml
+    sha256: dc4f778b022ed8629d36eeeebe9a67b89437602f80da52cc2785c885b23f66dc
+    role: context
+  - path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+    sha256: 6ec1fd4e6c77d35fcd3c65b0387f517870965eeb622e47e122665a32b27c1f1d
+    role: context
+  - path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+    sha256: 47be01b784a9b7ce63f5b0a8bdcde6bc4aa040cc5bbadd27d3e480980d474bd5
+    role: context
+  - path: scripts/cdd_errata.py
+    sha256: ba9423a6dcdfb1c35f399ee298aa776e1d9f88d56794c80e2525f11c7b6ea51f
+    role: context
+  - path: scripts/record_io.py
+    sha256: ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf
+    role: context
+  - path: scripts/repair_cdd_errata.py
+    sha256: 33b0dd57b5f3e6edc04222b0a4629b6db855d5e6b8980210fd044cdbd4166c77
+    role: context
+  - path: scripts/seed_cdd.py
+    sha256: 4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Full single-record scientific review of CDD:cd17152 covering identity,
+    axis/category placement, hierarchy, legacy protein examples, literature evidence,
+    prose accuracy, sibling boundary contrast with CDD:cd17149, CDD:cd17153, and CDD:cd17154,
+    and writer ownership.
+  selection: Selected from the frozen 14-record Cycle 3 Stage 4 CDD SEQ_DOMAIN sibling
+    inventory as the unpromoted C-terminal second-repeat sibling of Cycle 2 record
+    CDD:cd17149 exhibiting the upstream CDD ubiquitin protein-modifier digression.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - CDD:cd17152
+targets:
+- target_id: CDD:cd17152
+  path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+  label: DCX2_DCDC2
+  kind: generated
+  record_class: ProteinTraitRecord
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  semantic_digest:
+    algorithm: sha256_file
+    sha256: e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b
+    description: SHA-256 digest of the canonical ProteinTraitRecord YAML file at source.git_revision.
+checks:
+- check_id: schema
+  name: Strict LinkML and OAK ontology-binding validation
+  command: .venv/bin/python scripts/validate_strict.py --out /tmp/instance_validation_failures.tsv
+    data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Record passes closed LinkML schema validation and OAK term-label bindings
+    with 0 errors.
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+- check_id: semantic
+  name: Release-pinned UniProt grounding and binding replay
+  command: .venv/bin/python scripts/validate_uniprot_grounding.py --out /tmp/uniprot_grounding_validation.tsv
+    data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Record has 2 legacy unverified Swiss-Prot seed examples (Q9UHG0, Q5DU00)
+    and 0 QUALIFIED bindings; 22,635 corpus qualified_record_bindings verify across
+    13,293 registry proteins with 0 semantic findings.
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+- check_id: graphs
+  name: Causal-graph structural and semantic audit
+  command: .venv/bin/python scripts/audit_causal_graphs.py data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+  exit_code: 0
+  status: passed
+  required: false
+  summary: Record has no causal_graphs block (0 graphs, 0 errors); absence is expected
+    for uncurated CDD sequence domain records.
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+- check_id: writer-audit
+  name: Registered write-route audit
+  command: .venv/bin/python scripts/audit_writers.py
+  exit_code: 0
+  status: passed
+  required: true
+  summary: 620 scripts examined (51 seeders, 9 registered editors, 2 transactional
+    promoters, 52 declared bypasses) with 0 unguarded writer findings.
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cdd-errata-writer
+evidence:
+- evidence_id: ev-cd17152-yaml
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml
+  locator: identifier, label, definition, definition_source, parent_traits, canonical_examples
+  accessed_at: '2026-10-30T09:10:00Z'
+  snapshot_sha256: e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b
+  support: partial
+  quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
+    2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with a stable ubiquitin-like tertiary fold. Ubiquitin (Ub) is a
+    protein modifier in eukaryotes that is involved in various cellular processes,
+    including transcriptional regulation, cell cycle control, and DNA repair. Microtubules
+    are key components of cytoskeleton that are involved in cell movement, shape determination,
+    division and transport. DCDC2 genetic variation in humans is associated with reading
+    disability, attention deficit hyperactivity disorder (ADHD), and difficulties
+    in mathematics. A genetic variant of DCDC2 associates with dyslexia, a common
+    neurobehavioral disorder of reading. DCDC2 protein interacts with many of the
+    same cytoskeleton related proteins that other members of the DCX family interact
+    with
+  summary: 'CDD:cd17152 (label DCX2_DCDC2, parent_traits: [CDD:cl28922]) carries unpromoted
+    Swiss-Prot seed examples UniProtKB:Q9UHG0 (Homo sapiens DCDC2) and UniProtKB:Q5DU00
+    (Mus musculus Dcdc2) and no evidence block, while its upstream CDD definition
+    interpolates an off-target sentence defining the ubiquitin protein modifier even
+    though DCX domains only share a ubiquitin-like beta-grasp fold.'
+- evidence_id: ev-cd17149-sibling
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
+  locator: identifier, label, definition, parent_traits, canonical_examples, evidence
+    (PMID:16278295)
+  accessed_at: '2026-10-30T09:11:00Z'
+  snapshot_sha256: 47be01b784a9b7ce63f5b0a8bdcde6bc4aa040cc5bbadd27d3e480980d474bd5
+  support: supports
+  quote: Doublecortin-like domain 1 found in doublecortin domain-containing protein
+    2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with stable double tandem DCX repeats adopting a ubiquitin-like
+    beta-grasp tertiary fold. Microtubules are key components of the cytoskeleton
+    that are involved in cell movement, shape determination, division and transport.
+    DCDC2 genetic variation in humans is associated with reading disability, attention
+    deficit hyperactivity disorder (ADHD), and difficulties in mathematics. A genetic
+    variant of DCDC2 associates with dyslexia, a common neurobehavioral disorder of
+    reading. DCDC2 protein interacts with many of the same cytoskeleton-related proteins
+    that other members of the DCX family interact with.
+  summary: 'N-terminal first-repeat sibling CDD:cd17149 (label DCX1_DCDC2, parent_traits:
+    [CDD:cl28922], carrying human UniProtKB:Q9UHG0) was repaired in Cycle 2 Stage
+    5 (#1188) to replace the off-target ubiquitin protein-modifier digression with
+    the tandem DCX ubiquitin-like beta-grasp repeat description and cite PMID:16278295.'
+- evidence_id: ev-cd17153-cd17154-siblings
+  kind: record_content
+  reference: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml
+  locator: CDD:cd17154 (label=DCX2_DCDC2C, parent_traits=[CDD:cl28922]) and CDD:cd17153
+    (label=DCX2_DCDC2B, parent_traits=[CDD:cl28922])
+  accessed_at: '2026-10-30T09:11:00Z'
+  snapshot_sha256: 6ec1fd4e6c77d35fcd3c65b0387f517870965eeb622e47e122665a32b27c1f1d
+  support: supports
+  quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
+    2C (DCDC2C). DCDC2C is a member of the doublecortin (DCX) family closely related
+    to its paralog DCDC2, a microtubule-associated protein (MAP) with stable double
+    tandem DCX repeats of a ubiquitin-like tertiary fold.
+  summary: 'Paralog C-terminal second-repeat siblings CDD:cd17154 (DCX2_DCDC2C on
+    human DCDC2C UniProtKB:A8MYV0, repaired in Cycle 2 Stage 5 under #1188) and CDD:cd17153
+    (DCX2_DCDC2B on DCDC2B) confirm that CDD:cd17152 is the distinct C-terminal DCX2
+    repeat profile specific to DCDC2.'
+- evidence_id: ev-pmid-16278295
+  kind: primary_source
+  reference: https://pubmed.ncbi.nlm.nih.gov/16278295/
+  locator: PMID:16278295 (Meng et al., 2005, Proc Natl Acad Sci U S A 102:17053-17058)
+  accessed_at: '2026-10-30T09:12:00Z'
+  support: supports
+  quote: DCDC2 contains a doublecortin peptide domain and is associated with reading
+    disability (dyslexia)
+  summary: Primary human genetics and functional study (Meng et al., 2005, PNAS 102:17053-17058)
+    establishing that DCDC2 (UniProtKB:Q9UHG0) is a doublecortin-domain microtubule-associated
+    protein involved in neuronal migration and associated with developmental dyslexia.
+- evidence_id: ev-cdd-errata-writer
+  kind: record_content
+  reference: scripts/cdd_errata.py
+  locator: CDD_ERRATA table (18 entries) and scripts/repair_cdd_errata.py
+  accessed_at: '2026-10-30T09:12:00Z'
+  snapshot_sha256: ba9423a6dcdfb1c35f399ee298aa776e1d9f88d56794c80e2525f11c7b6ea51f
+  support: supports
+  summary: scripts/cdd_errata.py currently contains 18 accession-keyed entries (including
+    N-terminal sibling CDD:cd17149) wired into scripts/seed_cdd.py and scripts/repair_cdd_errata.py,
+    providing the exact registered repair route for adding CDD:cd17152 in Stage 5.
+assessments:
+- assessment_id: identity-and-hierarchy
+  area: identity
+  topic: Class-level C-terminal DCX2 repeat identity and CDD superfamily hierarchy
+  outcome: supported
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+  - ev-cd17149-sibling
+  - ev-cd17153-cd17154-siblings
+  summary: 'CDD:cd17152 is a valid class-level sequence domain trait (trait_axis:
+    SEQUENCE, trait_category: SEQ_DOMAIN, label: DCX2_DCDC2, parent_traits: [CDD:cl28922])
+    representing the C-terminal second doublecortin-like repeat of DCDC2, distinct
+    from N-terminal first-repeat sibling CDD:cd17149 (label: DCX1_DCDC2) and paralog
+    repeat-2 profiles CDD:cd17153 (DCX2_DCDC2B) and CDD:cd17154 (DCX2_DCDC2C).'
+- assessment_id: grounding-and-carriers
+  area: grounding
+  topic: Legacy Swiss-Prot seed carriers Q9UHG0 and Q5DU00
+  outcome: supported
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+  - ev-pmid-16278295
+  summary: The two unpromoted Swiss-Prot seed examples on CDD:cd17152 — Homo sapiens
+    DCDC2 (UniProtKB:Q9UHG0) and Mus musculus Dcdc2 (UniProtKB:Q5DU00) — are genuine
+    mammalian DCDC2 orthologs containing the C-terminal second DCX repeat.
+- assessment_id: definition-and-citation-digression
+  area: consistency
+  topic: Upstream CDD interpolation of an off-target ubiquitin protein-modifier definition
+    sentence and missing PMID:16278295 evidence block
+  outcome: concern
+  target_ids:
+  - CDD:cd17152
+  evidence_ids:
+  - ev-cd17152-yaml
+  - ev-cd17149-sibling
+  - ev-pmid-16278295
+  - ev-cdd-errata-writer
+  summary: CDD:cd17152 inherits the upstream NCBI CDD description sentence 'Ubiquitin
+    (Ub) is a protein modifier in eukaryotes that is involved in various cellular
+    processes, including transcriptional regulation, cell cycle control, and DNA repair'
+    even though DCX domains only adopt a ubiquitin-like beta-grasp fold and do not
+    act as ubiquitin protein modifiers, and lacks a literature evidence block citing
+    PMID:16278295.
+findings:
+- finding_id: F19
+  issue_key: cdd-cd17152-dcdc2-rpt2-ubiquitin-modifier-digression
+  category: consistency
+  severity: minor
+  status: open
+  certainty: confirmed
+  title: CDD:cd17152 (DCX2_DCDC2) interpolates an off-target ubiquitin protein-modifier
+    definition sentence into a microtubule-binding DCX repeat profile
+  description: 'In data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml,
+    the domain profile models the C-terminal second doublecortin-like domain (label
+    DCX2_DCDC2, parent_traits: [CDD:cl28922]) of DCDC2 (human UniProtKB:Q9UHG0, mouse
+    UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like
+    beta-grasp DCX repeats associated with human reading disability/dyslexia (PMID:16278295).
+    However, its upstream CDD definition interpolates the off-target sentence ''Ubiquitin
+    (Ub) is a protein modifier in eukaryotes that is involved in various cellular
+    processes, including transcriptional regulation, cell cycle control, and DNA repair.''
+    DCX domains only share a ubiquitin-like beta-grasp tertiary fold and do not function
+    as ubiquitin protein modifiers, and CDD:cd17152 currently lacks an evidence block
+    citing PMID:16278295. Preserved open in Stage 4 for Stage 5 grouped remediation
+    via scripts/cdd_errata.py and scripts/repair_cdd_errata.py.'
+  target_ids:
+  - CDD:cd17152
+  field_paths:
+  - data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml#/definition
+  evidence_ids:
+  - ev-cd17152-yaml
+  - ev-cd17149-sibling
+  - ev-cd17153-cd17154-siblings
+  - ev-pmid-16278295
+  - ev-cdd-errata-writer
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+actions:
+- action_id: repair-cd17152-definition-and-evidence-via-cdd-errata
+  description: Add an accession-keyed erratum for CDD:cd17152 in scripts/cdd_errata.py
+    and apply it via scripts/repair_cdd_errata.py, replacing the off-target 'Ubiquitin
+    (Ub) is a protein modifier in eukaryotes...' sentence with the tandem DCX ubiquitin-like
+    beta-grasp repeat description and adding an evidence entry citing PMID:16278295.
+  finding_ids:
+  - F19
+  target_ids:
+  - CDD:cd17152
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  acceptance_checks:
+  - CDD:cd17152 definition accurately describes the C-terminal second DCX repeat of
+    DCDC2 adopting a ubiquitin-like beta-grasp tertiary fold without the off-target
+    ubiquitin protein-modifier digression.
+  - CDD:cd17152 evidence block is populated with PMID:16278295 and a verbatim DCDC2
+    doublecortin-domain/dyslexia snippet.
+  - scripts/seed_cdd.py and scripts/repair_cdd_errata.py replay the erratum idempotently
+    and scripts/validate_strict.py passes with 0 errors.
+limitations:
+- This single-record review covers CDD:cd17152 only; the full 14-record frozen Cycle
+  3 Stage 4 CDD sibling inventory is reviewed in companion category bundle 20261030T092100Z-cdd-cycle3-sibling-domain-cohort-review.
+- No edits to data/traits/ were performed in Stage 4; finding F19 is preserved open
+  for Stage 5 grouped remediation.
+links:
+- https://github.com/CultureBotAI/proteintraitsmech/issues/605
+```
