@@ -293,8 +293,8 @@ evidence:
     DCDC2 genetic variation in humans is associated with reading disability, attention
     deficit hyperactivity disorder (ADHD), and difficulties in mathematics. A genetic
     variant of DCDC2 associates with dyslexia, a common neurobehavioral disorder of
-    reading. DCDC2 protein interacts with many of the same cytoskeleton-related proteins
-    that other members of the DCX family interact with.
+    reading. DCDC2 protein interacts with many of the same cytoskeleton related proteins
+    that other members of the DCX family interact with
   summary: 'N-terminal first-repeat sibling CDD:cd17149 (label DCX1_DCDC2, parent_traits:
     [CDD:cl28922], carrying human UniProtKB:Q9UHG0) was repaired in Cycle 2 Stage
     5 (#1188) to replace the off-target ubiquitin protein-modifier digression with
@@ -310,7 +310,12 @@ evidence:
   quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
     2C (DCDC2C). DCDC2C is a member of the doublecortin (DCX) family closely related
     to its paralog DCDC2, a microtubule-associated protein (MAP) with stable double
-    tandem DCX repeats of a ubiquitin-like tertiary fold.
+    tandem DCX repeats of a ubiquitin-like tertiary fold. Microtubules are key components
+    of cytoskeleton that are involved in cell movement, shape determination, division
+    and transport. In the paralogous DCDC2 gene, human genetic variation is associated
+    with reading disability (dyslexia), attention deficit hyperactivity disorder (ADHD),
+    and difficulties in mathematics. DCDC2 protein interacts with many of the same
+    cytoskeleton related proteins that other members of the DCX family interact with
   summary: 'Paralog C-terminal second-repeat siblings CDD:cd17154 (DCX2_DCDC2C on
     human DCDC2C UniProtKB:A8MYV0, repaired in Cycle 2 Stage 5 under #1188) and CDD:cd17153
     (DCX2_DCDC2B on DCDC2B) confirm that CDD:cd17152 is the distinct C-terminal DCX2
