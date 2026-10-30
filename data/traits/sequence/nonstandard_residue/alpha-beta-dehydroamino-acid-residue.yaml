@@ -1,0 +1,86 @@
+identifier: proteintraitsmech:NONSTD_DEHYDROAMINO_ACID_RESIDUE
+label: "alpha,beta-dehydroamino acid residue (Dha/Dhb)"
+definition: >-
+  A post-translationally dehydrated nonstandard amino acid residue (2,3-didehydroalanine, Dha, or (Z)-2,3-didehydrobutyrine, Dhb) installed in ribosomally synthesized and post-translationally modified peptides (RiPPs) such as lanthipeptides and thiopeptides by enzymatic elimination of water from precursor L-serine or L-threonine residues, serving as an electrophilic Michael acceptor for macrocyclization or conferring conformational rigidity and proteolytic resistance.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_NONSTANDARD_RESIDUE
+term_kind: CLASS
+mapping_status: SEEDED
+synonyms:
+  - synonym_text: "dehydroalanine / dehydrobutyrine residue"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "2,3-didehydroalanine residue"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "2,3-didehydrobutyrine residue"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "Dha/Dhb nonstandard residue"
+    synonym_type: EXACT_SYNONYM
+xrefs:
+  - MOD:01168
+  - MOD:01703
+detection_methods:
+  - name: "HMMER profile search for lanthipeptide/RiPP Ser/Thr dehydratase biosynthesis domains (LanB / LanM / LanKC / LanL)"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_0300
+    tool: "biotools:hmmer3"
+    evidence_code: ECO:0000259
+    reference: PMID:28135077
+    recipe: "hmmsearch --cut_ga --domtblout {output} Lant_dehydr_N.hmm {input}"
+causal_graphs:
+  - graph_id: lanthipeptide_ser_thr_dehydration
+    title: "Enzymatic beta-elimination of water from Ser/Thr residues installs electrophilic dehydroamino acid residues"
+    description: "Lanthipeptide dehydratase hydro-lyase activity (GO:0016836) enables post-translational protein modification (GO:0036211) that dehydrates precursor L-alpha-amino acid residues (CHEBI:83228, Ser/Thr) to yield alpha,beta-unsaturated dehydroalanine (MOD:01168) and dehydrobutyrine residues for thioether cross-linking."
+    nodes:
+      - node_id: "GO:0016836"
+        label: "hydro-lyase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0016836"
+        description: "RiPP/lanthipeptide Ser/Thr dehydratase activity catalyzing beta-elimination of water."
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Core-peptide L-serine and L-threonine residues targeted for dehydration."
+      - node_id: "GO:0036211"
+        label: "protein modification process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0036211"
+        description: "Post-translational dehydration of Ser/Thr residues in ribosomally synthesized peptides."
+      - node_id: "MOD:01168"
+        label: dehydroalanine
+        node_type: RESIDUE
+        grounding: "MOD:01168"
+        description: "Dehydrated alpha,beta-unsaturated dehydroalanine (and dehydrobutyrine) residue serving as Michael acceptor."
+    edges:
+      - subject: "GO:0016836"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0036211"
+        description: "Peptide dehydratase hydro-lyase activity catalyzes post-translational modification of RiPP precursor peptides."
+        evidence:
+          - reference: PMID:28135077
+            snippet: "Lanthipeptides are ribosomally synthesized and post-translationally modified peptides (RiPPs) that display a wide variety of biological activities, from antimicrobial to antiallodynic."
+            notes: "Repka et al. (2017) Chem Rev 117:5457-5520 review RiPP lanthipeptide post-translational modification. (ECO:0000305)"
+      - subject: "GO:0036211"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:83228"
+        description: "Post-translational dehydration acts on ribosomally encoded Ser and Thr alpha-amino acid residues."
+        evidence:
+          - reference: PMID:28135077
+            snippet: "The post-translational modification reactions of lanthipeptides include dehydration of Ser and Thr residues to dehydroalanine and dehydrobutyrine, a transformation that is carried out in three unique ways in different classes of lanthipeptides."
+            notes: "Dehydration of precursor Ser and Thr residues across lanthipeptide classes. (ECO:0000305)"
+      - subject: "GO:0036211"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:01168"
+        description: "Dehydration yields electrophilic dehydroalanine (and dehydrobutyrine) residues that undergo Cys attack to form lanthionine cross-links."
+        evidence:
+          - reference: PMID:28135077
+            snippet: "In a cyclization process, Cys residues then attack the dehydrated residues to generate the lanthionine and methyllanthionine thioether cross-linked amino acids from which lanthipeptides derive their name."
+            notes: "Dehydrated Dha/Dhb residues act as electrophilic acceptors during lanthionine cyclization. (ECO:0000305)"
+evidence:
+  - reference: PMID:28135077
+    notes: "Lanthipeptide dehydratases catalyze post-translational dehydration of Ser and Thr residues to dehydroalanine (Dha) and dehydrobutyrine (Dhb) in ribosomally synthesized peptides."
+license: CC-BY-4.0

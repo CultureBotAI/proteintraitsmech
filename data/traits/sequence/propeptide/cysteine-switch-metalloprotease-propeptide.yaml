@@ -1,0 +1,84 @@
+identifier: proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE
+label: "cysteine-switch latency-maintaining metalloprotease propeptide"
+definition: >-
+  An N-terminal inhibitory propeptide domain of matrix metalloproteinases (MMPs) and related metzincin metalloproteases that harbors a conserved cysteine-switch motif (consensus PRCGXPD) whose thiol side chain coordinates the catalytic zinc(2+) ion as a fourth ligand to exclude water and maintain zymogen latency until proteolytic cleavage or conformational perturbation dissociates the Cys-Zn(2+) bond.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_PROPEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:PROPEPTIDE_ZYMOGEN_ACTIVATION
+synonyms:
+  - synonym_text: "MMP cysteine-switch propeptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "PRCGXPD latency propeptide"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "metzincin cysteine-switch prodomain"
+    synonym_type: EXACT_SYNONYM
+sequence_pattern: "PRCG[NV]PD"
+detection_methods:
+  - name: "EMBOSS fuzzpro scan for conserved MMP cysteine-switch PRCG[NV]PD propeptide motif"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0239
+    tool: "biotools:emboss"
+    evidence_code: ECO:0000255
+    reference: PMID:2164689
+    recipe: "fuzzpro -sequence {input} -pattern 'PRCG[NV]PD' -outfile {output}"
+causal_graphs:
+  - graph_id: cysteine_switch_metalloprotease_zymogen_latency
+    title: "Intramolecular coordination of catalytic zinc by the propeptide cysteine residue maintains metalloprotease zymogen latency"
+    description: "The N-terminal propeptide (SO:0001062) positions a conserved L-cysteine residue (CHEBI:29950) that participates in intramolecular active-site metal ion binding (GO:0046872) to block the catalytic zinc ion, whereas dissociation of this cysteine-zinc complex is causally upstream of zymogen activation (GO:0031638)."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "N-terminal metalloprotease propeptide domain containing the conserved PRCGXPD motif."
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Conserved cysteine-switch thiol residue within the propeptide domain."
+      - node_id: "GO:0046872"
+        label: "metal ion binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0046872"
+        description: "Intramolecular coordination of the catalytic zinc ion by the propeptide cysteine residue."
+      - node_id: "GO:0031638"
+        label: "zymogen activation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031638"
+        description: "Switch from latent proenzyme to active metalloprotease upon dissociation of the cysteine residue from the catalytic zinc."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0046872"
+        description: "The propeptide domain forms an intramolecular complex with the essential zinc atom in the catalytic domain."
+        evidence:
+          - reference: PMID:2164689
+            snippet: "Recent evidence suggests that this latency in human fibroblast collagenase (HFC) is the result of formation of an intramolecular complex between the single cysteine residue in its propeptide domain and the essential zinc atom in the catalytic domain, a complex that blocks the active site."
+            notes: "Van Wart & Birkedal-Hansen (1990) PNAS 87:5578-5582 establish the cysteine-switch mechanism of MMP latency. (ECO:0000269)"
+      - subject: "CHEBI:29950"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0046872"
+        description: "The conserved cysteine residue in the propeptide domain ligates the catalytic zinc site."
+        evidence:
+          - reference: PMID:2164689
+            snippet: "The propeptide domain that contains the critical cysteine residue and the catalytic domain that contains the zinc-binding site are the only two domains common to all of the MMPs."
+            notes: "Conservation of the propeptide cysteine residue and catalytic zinc-binding site across MMPs. (ECO:0000269)"
+      - subject: "GO:0046872"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0031638"
+        description: "Dissociation of the propeptide cysteine residue from the zinc-binding complex triggers zymogen activation."
+        evidence:
+          - reference: PMID:2164689
+            snippet: "Latent HFC can be activated by multiple means, all of which effect the dissociation of the cysteine residue from the complex."
+            notes: "Dissociation of the Cys-Zn complex switches the zymogen to the active state. (ECO:0000269)"
+evidence:
+  - reference: PMID:2164689
+    notes: "Matrix metalloproteinase propeptides maintain zymogen latency via a conserved cysteine residue that coordinates the catalytic zinc ion until dissociation triggers activation."
+license: CC-BY-4.0

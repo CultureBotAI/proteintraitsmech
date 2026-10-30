@@ -1,0 +1,81 @@
+identifier: proteintraitsmech:NONSTD_ALPHA_KETO_BETA_AMINO_ACID_RESIDUE
+label: "splicease-installed alpha-keto-beta-amino acid residue"
+definition: >-
+  A nonstandard backbone-extended alpha-keto-beta-amino acid residue installed post-translationally in ribosomally translated bacterial proteins by radical S-adenosylmethionine (rSAM) spliceases (PlpXY), which catalyze noncanonical protein splicing via backbone C-C bond cleavage and net excision of a tyramine equivalent from a conserved Xaa-Tyr motif.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_NONSTANDARD_RESIDUE
+term_kind: CLASS
+mapping_status: SEEDED
+synonyms:
+  - synonym_text: "PlpXY splicease beta-amino acid residue"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "ribosomally translated alpha-keto-beta-amino acid residue"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "tyramine-excised ketoamide backbone residue"
+    synonym_type: RELATED_SYNONYM
+detection_methods:
+  - name: "HMMER profile search for PlpX/PlpY radical-SAM splicease and spliceotide precursor families"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_0300
+    tool: "biotools:hmmer3"
+    evidence_code: ECO:0000259
+    reference: PMID:29590045
+    recipe: "hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}"
+causal_graphs:
+  - graph_id: radical_sam_splicease_beta_amino_acid_splicing
+    title: "Radical-SAM splicease tyramine excision converts standard alpha-amino acid backbone units into alpha-keto-beta-amino acid residues"
+    description: "Radical S-adenosylmethionine splicease catalytic activity (GO:0003824) enables noncanonical post-translational splicing (GO:0036211) of precursor L-alpha-amino acid residues (CHEBI:83228) via C-C bond cleavage and net tyramine excision, generating an alpha-keto-beta-amino-acid-containing mature protein region (SO:0000419)."
+    nodes:
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Radical S-adenosylmethionine splicease (PlpXY) activity catalyzing backbone C-C bond cleavage and tyramine excision."
+      - node_id: "CHEBI:83228"
+        label: "L-alpha-amino acid residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:83228"
+        description: "Precursor Xaa-Tyr L-alpha-amino acid dipeptide motif targeted for tyramine excision."
+      - node_id: "GO:0036211"
+        label: "protein modification process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0036211"
+        description: "Noncanonical post-translational protein splicing via net tyramine excision."
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Spliced polypeptide region containing an installed alpha-keto-beta-amino acid backbone unit."
+    edges:
+      - subject: "GO:0003824"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0036211"
+        description: "Radical S-adenosylmethionine splicease catalysis enables post-translational backbone splicing in bacteria."
+        evidence:
+          - reference: PMID:29590045
+            snippet: "The transformation is widespread in bacteria and is catalyzed by an enzyme belonging to a previously uncharacterized radical S-adenosylmethionine family."
+            notes: "Morinaka et al. (2018) Science 359:779-782 characterize bacterial radical-SAM spliceases. (ECO:0000269)"
+      - subject: "GO:0036211"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:83228"
+        description: "Splicease-mediated backbone splicing excises tyramine from precursor L-alpha-amino acid residues via C-C bond cleavage."
+        evidence:
+          - reference: PMID:29590045
+            snippet: "We show that the β-amino acids result from an unusual protein splicing process involving backbone carbon-carbon bond cleavage and net excision of tyramine."
+            notes: "Backbone C-C bond cleavage and net tyramine excision from tyrosine-containing motifs. (ECO:0000269)"
+      - subject: "GO:0036211"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Tyramine excision generates a mature protein region bearing an alpha-keto-beta-amino acid residue."
+        evidence:
+          - reference: PMID:29590045
+            snippet: "In addition to enlarging the set of basic amino acid components, the excision generates keto functions that are useful as orthogonal reaction sites for chemical diversification."
+            notes: "Installation of backbone alpha-keto-beta-amino acid residues with orthogonal keto groups. (ECO:0000269)"
+evidence:
+  - reference: PMID:29590045
+    notes: "Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated precursors."
+license: CC-BY-4.0

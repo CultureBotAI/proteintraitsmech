@@ -1,0 +1,83 @@
+identifier: proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY
+label: "internal buried hydration/packing microcavity"
+definition: >-
+  An enclosed internal structural void or microcavity buried within the tertiary core of a globular protein without direct bulk-solvent tunnel access, occurring either as an apolar empty packing defect or as a partially polar microcavity occupied by ordered structural water molecules that modulate core packing density, compressibility, and conformational stability.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:CAVITY
+synonyms:
+  - synonym_text: "buried internal protein void"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "internal hydration microcavity"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "enclosed core packing cavity"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "fpocket Voronoi alpha-sphere detection of buried internal protein cavities"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0250
+    tool: "biotools:fpocket"
+    evidence_code: ECO:0000255
+    reference: PMID:8073031
+    recipe: "fpocket -f {input} -o {output}"
+causal_graphs:
+  - graph_id: buried_core_cavity_hydration_packing
+    title: "Core side-chain polarity and packing geometry govern internal cavity solvation and native fold stability"
+    description: "A folded polypeptide_domain (SO:0000417) encloses internal microcavities whose lining-residue hydrophobicity (PATO:0001884) determines empty versus water-solvated cavity packing during protein folding (GO:0006457), which is causally upstream of regulation of protein stability (GO:0031647)."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Globular protein tertiary domain enclosing internal microcavities (>100 residues)."
+      - node_id: "PATO:0001884"
+        label: hydrophobicity
+        node_type: QUALITY
+        grounding: "PATO:0001884"
+        description: "Apolar versus polar surface character of the amino acid residues lining the internal cavity."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Tertiary core packing and internal water burial during native fold assembly."
+      - node_id: "GO:0031647"
+        label: "regulation of protein stability"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031647"
+        description: "Maintenance of rigid local packing environment around enclosed internal cavities."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0006457"
+        description: "Globular protein domains larger than 100 residues enclose internal core cavities during tertiary folding."
+        evidence:
+          - reference: PMID:8073031
+            snippet: "Overall cavity volume increases with protein size and yet constitutes only a small fraction of the total protein volume but cavities are nearly always present in proteins > 100 residues in size."
+            notes: "Hubbard et al. (1994) Protein Eng 7:613-626 analyze internal cavities across high-resolution protein structures. (ECO:0000269)"
+      - subject: "PATO:0001884"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0006457"
+        description: "Cavity surface polarity versus hydrophobicity governs whether internal cavities remain empty or encapsulate ordered water."
+        evidence:
+          - reference: PMID:8073031
+            snippet: "'Empty' and solvent-containing cavities have been compared and solvated cavities found to possess a more polar surface; the two classes are also seen to exhibit different amino acid type and secondary structural preferences."
+            notes: "Polar versus apolar cavity lining determines internal water solvation. (ECO:0000269)"
+      - subject: "GO:0006457"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0031647"
+        description: "Core packing around enclosed internal cavities maintains rigid local residue stability without excess mobility."
+        evidence:
+          - reference: PMID:8073031
+            snippet: "In general, residues that enclose cavities do not display any extra local mobility relative to their surrounding environments."
+            notes: "Residues enclosing internal microcavities maintain normal rigid packing stability. (ECO:0000269)"
+evidence:
+  - reference: PMID:8073031
+    notes: "Internal cavities in globular proteins reside within the tertiary core as empty hydrophobic voids or polar water-solvated microcavities that modulate packing density and stability."
+license: CC-BY-4.0

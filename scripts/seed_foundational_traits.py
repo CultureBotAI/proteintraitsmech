@@ -8013,6 +8013,1261 @@ SPECS: tuple[TraitSpec, ...] = (
             ),
         ),
     ),
+    # -----------------------------------------------------------------------
+    # 12. Cycle 4 Stage 1 Frontier Expansion: Sparse Subcategories (12 records)
+    # -----------------------------------------------------------------------
+    TraitSpec(
+        rel_dir="sequence/nonstandard_residue",
+        filename="alpha-beta-dehydroamino-acid-residue.yaml",
+        identifier="proteintraitsmech:NONSTD_DEHYDROAMINO_ACID_RESIDUE",
+        label="alpha,beta-dehydroamino acid residue (Dha/Dhb)",
+        definition=(
+            "A post-translationally dehydrated nonstandard amino acid residue "
+            "(2,3-didehydroalanine, Dha, or (Z)-2,3-didehydrobutyrine, Dhb) installed "
+            "in ribosomally synthesized and post-translationally modified peptides "
+            "(RiPPs) such as lanthipeptides and thiopeptides by enzymatic elimination "
+            "of water from precursor L-serine or L-threonine residues, serving as an "
+            "electrophilic Michael acceptor for macrocyclization or conferring "
+            "conformational rigidity and proteolytic resistance."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_NONSTANDARD_RESIDUE",
+        parent_traits=(),
+        synonyms=(
+            ("dehydroalanine / dehydrobutyrine residue", "EXACT_SYNONYM"),
+            ("2,3-didehydroalanine residue", "NARROW_SYNONYM"),
+            ("2,3-didehydrobutyrine residue", "NARROW_SYNONYM"),
+            ("Dha/Dhb nonstandard residue", "EXACT_SYNONYM"),
+        ),
+        xrefs=("MOD:01168", "MOD:01703"),
+        evidence=(
+            (
+                "PMID:28135077",
+                "Lanthipeptide dehydratases catalyze post-translational dehydration of Ser and Thr residues to dehydroalanine (Dha) and dehydrobutyrine (Dhb) in ribosomally synthesized peptides.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="HMMER profile search for lanthipeptide/RiPP Ser/Thr dehydratase biosynthesis domains (LanB / LanM / LanKC / LanL)",
+                method_type="HMM_PROFILE",
+                edam_operation="EDAM:operation_0300",
+                tool="biotools:hmmer3",
+                evidence_code="ECO:0000259",
+                reference="PMID:28135077",
+                recipe="hmmsearch --cut_ga --domtblout {output} Lant_dehydr_N.hmm {input}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="lanthipeptide_ser_thr_dehydration",
+                label="Enzymatic beta-elimination of water from Ser/Thr residues installs electrophilic dehydroamino acid residues",
+                mechanism_summary=(
+                    "Lanthipeptide dehydratase hydro-lyase activity (GO:0016836) enables "
+                    "post-translational protein modification (GO:0036211) that dehydrates "
+                    "precursor L-alpha-amino acid residues (CHEBI:83228, Ser/Thr) to yield "
+                    "alpha,beta-unsaturated dehydroalanine (MOD:01168) and dehydrobutyrine "
+                    "residues for thioether cross-linking."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0016836",
+                        label="hydro-lyase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0016836",
+                        description="RiPP/lanthipeptide Ser/Thr dehydratase activity catalyzing beta-elimination of water.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Core-peptide L-serine and L-threonine residues targeted for dehydration.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036211",
+                        label="protein modification process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0036211",
+                        description="Post-translational dehydration of Ser/Thr residues in ribosomally synthesized peptides.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="MOD:01168",
+                        label="dehydroalanine",
+                        node_type="RESIDUE",
+                        grounding="MOD:01168",
+                        description="Dehydrated alpha,beta-unsaturated dehydroalanine (and dehydrobutyrine) residue serving as Michael acceptor.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0016836",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0036211",
+                        description="Peptide dehydratase hydro-lyase activity catalyzes post-translational modification of RiPP precursor peptides.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28135077",
+                        snippet="Lanthipeptides are ribosomally synthesized and post-translationally modified peptides (RiPPs) that display a wide variety of biological activities, from antimicrobial to antiallodynic.",
+                        notes="Repka et al. (2017) Chem Rev 117:5457-5520 review RiPP lanthipeptide post-translational modification.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036211",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
+                        object="CHEBI:83228",
+                        description="Post-translational dehydration acts on ribosomally encoded Ser and Thr alpha-amino acid residues.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28135077",
+                        snippet="The post-translational modification reactions of lanthipeptides include dehydration of Ser and Thr residues to dehydroalanine and dehydrobutyrine, a transformation that is carried out in three unique ways in different classes of lanthipeptides.",
+                        notes="Dehydration of precursor Ser and Thr residues across lanthipeptide classes.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036211",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="MOD:01168",
+                        description="Dehydration yields electrophilic dehydroalanine (and dehydrobutyrine) residues that undergo Cys attack to form lanthionine cross-links.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28135077",
+                        snippet="In a cyclization process, Cys residues then attack the dehydrated residues to generate the lanthionine and methyllanthionine thioether cross-linked amino acids from which lanthipeptides derive their name.",
+                        notes="Dehydrated Dha/Dhb residues act as electrophilic acceptors during lanthionine cyclization.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/nonstandard_residue",
+        filename="splicease-installed-alpha-keto-beta-amino-acid-residue.yaml",
+        identifier="proteintraitsmech:NONSTD_ALPHA_KETO_BETA_AMINO_ACID_RESIDUE",
+        label="splicease-installed alpha-keto-beta-amino acid residue",
+        definition=(
+            "A nonstandard backbone-extended alpha-keto-beta-amino acid residue "
+            "installed post-translationally in ribosomally translated bacterial "
+            "proteins by radical S-adenosylmethionine (rSAM) spliceases (PlpXY), "
+            "which catalyze noncanonical protein splicing via backbone C-C bond "
+            "cleavage and net excision of a tyramine equivalent from a conserved "
+            "Xaa-Tyr motif."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_NONSTANDARD_RESIDUE",
+        parent_traits=(),
+        synonyms=(
+            ("PlpXY splicease beta-amino acid residue", "EXACT_SYNONYM"),
+            ("ribosomally translated alpha-keto-beta-amino acid residue", "EXACT_SYNONYM"),
+            ("tyramine-excised ketoamide backbone residue", "RELATED_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:29590045",
+                "Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated precursors.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="HMMER profile search for PlpX/PlpY radical-SAM splicease and spliceotide precursor families",
+                method_type="HMM_PROFILE",
+                edam_operation="EDAM:operation_0300",
+                tool="biotools:hmmer3",
+                evidence_code="ECO:0000259",
+                reference="PMID:29590045",
+                recipe="hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="radical_sam_splicease_beta_amino_acid_splicing",
+                label="Radical-SAM splicease tyramine excision converts standard alpha-amino acid backbone units into alpha-keto-beta-amino acid residues",
+                mechanism_summary=(
+                    "Radical S-adenosylmethionine splicease catalytic activity (GO:0003824) "
+                    "enables noncanonical post-translational splicing (GO:0036211) of precursor "
+                    "L-alpha-amino acid residues (CHEBI:83228) via C-C bond cleavage and net "
+                    "tyramine excision, generating an alpha-keto-beta-amino-acid-containing "
+                    "mature protein region (SO:0000419)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0003824",
+                        label="catalytic activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0003824",
+                        description="Radical S-adenosylmethionine splicease (PlpXY) activity catalyzing backbone C-C bond cleavage and tyramine excision.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="CHEBI:83228",
+                        label="L-alpha-amino acid residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:83228",
+                        description="Precursor Xaa-Tyr L-alpha-amino acid dipeptide motif targeted for tyramine excision.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036211",
+                        label="protein modification process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0036211",
+                        description="Noncanonical post-translational protein splicing via net tyramine excision.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Spliced polypeptide region containing an installed alpha-keto-beta-amino acid backbone unit.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0003824",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0036211",
+                        description="Radical S-adenosylmethionine splicease catalysis enables post-translational backbone splicing in bacteria.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:29590045",
+                        snippet="The transformation is widespread in bacteria and is catalyzed by an enzyme belonging to a previously uncharacterized radical S-adenosylmethionine family.",
+                        notes="Morinaka et al. (2018) Science 359:779-782 characterize bacterial radical-SAM spliceases.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036211",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
+                        object="CHEBI:83228",
+                        description="Splicease-mediated backbone splicing excises tyramine from precursor L-alpha-amino acid residues via C-C bond cleavage.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:29590045",
+                        snippet="We show that the β-amino acids result from an unusual protein splicing process involving backbone carbon-carbon bond cleavage and net excision of tyramine.",
+                        notes="Backbone C-C bond cleavage and net tyramine excision from tyrosine-containing motifs.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036211",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Tyramine excision generates a mature protein region bearing an alpha-keto-beta-amino acid residue.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:29590045",
+                        snippet="In addition to enlarging the set of basic amino acid components, the excision generates keto functions that are useful as orthogonal reaction sites for chemical diversification.",
+                        notes="Installation of backbone alpha-keto-beta-amino acid residues with orthogonal keto groups.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="evolution/conservation",
+        filename="taxonomically-restricted-orphan-protein.yaml",
+        identifier="proteintraitsmech:EVO_TAXONOMICALLY_RESTRICTED_ORPHAN",
+        label="taxonomically restricted orphan protein",
+        definition=(
+            "An evolutionary protein conservation trait in which a protein-coding "
+            "family lacks detectable sequence or structural homology outside a "
+            "single species or narrow taxonomic lineage (orphan / taxonomically "
+            "restricted gene, TRG), arising through de novo gene birth from "
+            "non-coding sequence or rapid sequence divergence beyond recognition "
+            "and often mediating lineage-specific ecological adaptations."
+        ),
+        trait_axis="EVOLUTION",
+        trait_category="EVO_CONSERVATION",
+        parent_traits=("proteintraitsmech:EVO_CLADE_SPECIFIC",),
+        synonyms=(
+            ("ORFan protein", "EXACT_SYNONYM"),
+            ("taxonomically restricted gene product", "EXACT_SYNONYM"),
+            ("lineage-specific orphan protein", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:19716618",
+                "Taxonomically restricted orphan genes (TRGs) lack detectable sequence homology outside a narrow clade and contribute to lineage-specific morphological and ecological adaptations.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="All-versus-all sequence similarity and phylostratigraphic BLAST/DIAMOND screening for lineage-restricted orphan proteins",
+                method_type="HOMOLOGY_TRANSFER",
+                edam_operation="EDAM:operation_0292",
+                tool="biotools:diamond",
+                evidence_code="ECO:0000247",
+                reference="PMID:19716618",
+                recipe="diamond blastp --query {input} --db nr.dmnd --out {output} --evalue 1e-3 --outfmt 6",
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="evolution/conservation",
+        filename="horizontally-transferred-xenologous-protein.yaml",
+        identifier="proteintraitsmech:EVO_HORIZONTALLY_TRANSFERRED_XENOLOG",
+        label="horizontally transferred xenologous protein",
+        definition=(
+            "An evolutionary protein conservation and phyletic-distribution trait "
+            "in which a protein family exhibits a discordant phylogenetic tree "
+            "topology or patchy taxonomic distribution across distantly related "
+            "lineages due to horizontal (lateral) gene transfer (HGT), including "
+            "acquisition of novel genes, paralog acquisition, or xenologous gene "
+            "displacement of an ancestral ortholog."
+        ),
+        trait_axis="EVOLUTION",
+        trait_category="EVO_CONSERVATION",
+        parent_traits=("proteintraitsmech:EVO_CLADE_SPECIFIC",),
+        synonyms=(
+            ("laterally transferred protein", "EXACT_SYNONYM"),
+            ("xenolog", "EXACT_SYNONYM"),
+            ("HGT-acquired protein family", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:11544372",
+                "Horizontal gene transfer in prokaryotes introduces xenologous proteins via acquisition of novel genes, paralog acquisition, or xenologous gene displacement across lineages.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="Maximum-likelihood gene-tree versus species-tree phylogenetic incongruence inference with IQ-TREE",
+                method_type="HOMOLOGY_TRANSFER",
+                edam_operation="EDAM:operation_0324",
+                tool="biotools:iq-tree",
+                evidence_code="ECO:0000247",
+                reference="PMID:11544372",
+                recipe="iqtree2 -s {input} -m MFP -B 1000 --prefix {output}",
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/initiator_methionine",
+        filename="non-aug-start-codon-decoded-initiator-methionine-site.yaml",
+        identifier="proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED",
+        label="non-AUG start-codon-decoded initiator methionine site",
+        definition=(
+            "An N-terminal initiator residue site translated from a near-cognate "
+            "non-AUG initiation codon (such as CUG, GUG, UUG, or ACG) that is "
+            "decoded by initiator Met-tRNAi during canonical or stress-regulated "
+            "translation initiation to insert an N-terminal L-methionine residue, "
+            "often generating N-terminally extended or regulatory protein isoforms."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_INITIATOR_METHIONINE",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",),
+        synonyms=(
+            ("near-cognate start codon initiator methionine", "EXACT_SYNONYM"),
+            ("CUG/GUG/UUG-initiated N-terminal methionine site", "NARROW_SYNONYM"),
+            ("non-canonical start codon initiator Met", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:28982758",
+                "Ribosome profiling reveals widespread translation initiation at near-cognate non-AUG start codons decoded by initiator Met-tRNAi to generate or regulate functional protein isoforms.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="N-terminal initiator methionine sequence motif and start-site context scan",
+                method_type="SEQUENCE_PATTERN",
+                edam_operation="EDAM:operation_0239",
+                tool="biotools:emboss",
+                evidence_code="ECO:0000255",
+                reference="PMID:28982758",
+                recipe="fuzzpro -sequence {input} -pattern '^M[ACDEFGHIKLMNPQRSTVWY]' -outfile {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="non_aug_initiator_methionine_decoding",
+                label="Near-cognate non-AUG translation initiation incorporates N-terminal methionine to generate regulated protein isoforms",
+                mechanism_summary=(
+                    "Translational initiation (GO:0006413) at near-cognate non-AUG start "
+                    "codons utilizes initiator L-methionine (CHEBI:16811) to drive N-terminal "
+                    "protein processing (GO:0016485) and produce distinct mature protein "
+                    "regions (SO:0000419) with regulated cellular functions."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0006413",
+                        label="translational initiation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006413",
+                        description="Translation initiation at near-cognate non-AUG start codons (CUG, GUG, UUG).",
+                    ),
+                    CausalNodeSpec(
+                        node_id="CHEBI:16811",
+                        label="L-methionine",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:16811",
+                        description="Initiator L-methionine incorporated at the N-terminus via Met-tRNAi decoding.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016485",
+                        label="protein processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016485",
+                        description="N-terminal isoform generation and processing following non-AUG start codon selection.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Resulting N-terminally extended or regulated mature protein isoform.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0006413",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
+                        object="CHEBI:16811",
+                        description="Eukaryotic and prokaryotic ribosomes initiate translation at non-AUG start codons using initiator methionine.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28982758",
+                        snippet="Although it was long thought that eukaryotic translation almost always initiates at an AUG start codon, recent advancements in ribosome footprint mapping have revealed that non-AUG start codons are used at an astonishing frequency.",
+                        notes="Kearse & Wilusz (2017) Genes Dev 31:1717-1731 review widespread non-AUG translation initiation.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006413",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0016485",
+                        description="Non-AUG translation initiation drives N-terminal protein isoform generation during development and stress.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28982758",
+                        snippet="These non-AUG initiation events are not simply errors but instead are used to generate or regulate proteins with key cellular functions; for example, during development or stress.",
+                        notes="Regulated non-AUG initiation generates distinct functional protein isoforms.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0016485",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="Regulated non-AUG initiation yields mature protein isoforms whose misregulation impacts cellular physiology.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:28982758",
+                        snippet="Misregulation of non-AUG initiation events contributes to multiple human diseases, including cancer and neurodegeneration, and modulation of non-AUG usage may represent a novel therapeutic strategy.",
+                        notes="Production of regulated mature protein isoforms from non-AUG initiation sites.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/mature_chain",
+        filename="sortase-cleaved-cell-wall-anchored-mature-chain.yaml",
+        identifier="proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED",
+        label="sortase-cleaved cell-wall-anchored mature polypeptide chain",
+        definition=(
+            "A mature surface-displayed polypeptide chain of Gram-positive bacteria "
+            "generated when a cysteine transpeptidase sortase (such as SrtA) "
+            "cleaves the C-terminal cell-wall sorting signal between the threonine "
+            "and glycine residues of a conserved LPXTG motif and forms an amide "
+            "bond linking the C-terminal threonine carboxyl group to the "
+            "peptidoglycan cross-bridge."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_MATURE_CHAIN",
+        parent_traits=("proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",),
+        synonyms=(
+            ("LPXTG-cleaved sortase-anchored mature chain", "EXACT_SYNONYM"),
+            ("peptidoglycan-tethered Gram-positive surface mature chain", "EXACT_SYNONYM"),
+            ("SrtA-processed mature surface protein chain", "NARROW_SYNONYM"),
+        ),
+        sequence_pattern="LP[ACDEFGHIKLMNPQRSTVWY]TG",
+        evidence=(
+            (
+                "PMID:10427003",
+                "Sortase (SrtA) cleaves the C-terminal LPXTG sorting motif of Gram-positive surface protein precursors and transpeptidates the mature polypeptide chain onto the peptidoglycan cell wall.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="EMBOSS fuzzpro scan for C-terminal LPXTG sortase cleavage motif",
+                method_type="SEQUENCE_PATTERN",
+                edam_operation="EDAM:operation_0239",
+                tool="biotools:emboss",
+                evidence_code="ECO:0000255",
+                reference="PMID:10427003",
+                recipe="fuzzpro -sequence {input} -pattern 'LPXTG' -outfile {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="sortase_lpxtg_cell_wall_anchoring",
+                label="Sortase endopeptidase/transpeptidase cleavage at the LPXTG motif anchors the mature polypeptide chain to peptidoglycan",
+                mechanism_summary=(
+                    "Sortase cysteine endopeptidase/transpeptidase activity (GO:0004175) "
+                    "enables C-terminal protein processing (GO:0016485) at the conserved "
+                    "LPXTG motif, generating a peptidoglycan-linked mature protein region "
+                    "(SO:0000419) that is causally upstream of cell-surface protein "
+                    "secretion and display (GO:0009306)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="GO:0004175",
+                        label="endopeptidase activity",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0004175",
+                        description="Sortase (SrtA) cysteine endopeptidase/transpeptidase activity cleaving between Thr and Gly of the LPXTG motif.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016485",
+                        label="protein processing",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0016485",
+                        description="Sortase-catalyzed C-terminal cleavage and transpeptidation onto the peptidoglycan cell wall.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="SO:0000419",
+                        label="mature_protein_region",
+                        node_type="DOMAIN",
+                        grounding="SO:0000419",
+                        description="Mature Gram-positive surface polypeptide chain covalently anchored via its C-terminal Thr residue.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0009306",
+                        label="protein secretion",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0009306",
+                        description="Cell-wall anchoring and surface display of exported Gram-positive virulence and adhesion proteins.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="GO:0004175",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0016485",
+                        description="Sortase endopeptidase activity cleaves the conserved C-terminal LPXTG motif during peptidoglycan assembly.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:10427003",
+                        snippet="Surface proteins of Gram-positive bacteria are linked to the bacterial cell wall by a mechanism that involves cleavage of a conserved Leu-Pro-X-Thr-Gly (LPXTG) motif and that occurs during assembly of the peptidoglycan cell wall.",
+                        notes="Mazmanian et al. (1999) Science 285:760-763 identify sortase (SrtA) LPXTG cleavage and cell-wall anchoring.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0016485",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="SO:0000419",
+                        description="SrtA-mediated processing produces the cell-wall-anchored mature surface polypeptide chain.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:10427003",
+                        snippet="A Staphylococcus aureus mutant defective in the anchoring of surface proteins was isolated and shown to carry a mutation in the srtA gene.",
+                        notes="Requirement of srtA for generating anchored mature surface proteins.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0016485",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0009306",
+                        description="Sortase processing rate directly controls surface protein anchoring and display in Gram-positive bacteria.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:10427003",
+                        snippet="Overexpression of srtA increased the rate of surface protein anchoring, and homologs of srtA were found in other pathogenic Gram-positive bacteria.",
+                        notes="Sortase processing drives covalent surface display across Gram-positive bacteria.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/propeptide",
+        filename="cysteine-switch-metalloprotease-propeptide.yaml",
+        identifier="proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE",
+        label="cysteine-switch latency-maintaining metalloprotease propeptide",
+        definition=(
+            "An N-terminal inhibitory propeptide domain of matrix metalloproteinases "
+            "(MMPs) and related metzincin metalloproteases that harbors a conserved "
+            "cysteine-switch motif (consensus PRCGXPD) whose thiol side chain "
+            "coordinates the catalytic zinc(2+) ion as a fourth ligand to exclude "
+            "water and maintain zymogen latency until proteolytic cleavage or "
+            "conformational perturbation dissociates the Cys-Zn(2+) bond."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_PROPEPTIDE",
+        parent_traits=("proteintraitsmech:PROPEPTIDE_ZYMOGEN_ACTIVATION",),
+        synonyms=(
+            ("MMP cysteine-switch propeptide", "EXACT_SYNONYM"),
+            ("PRCGXPD latency propeptide", "NARROW_SYNONYM"),
+            ("metzincin cysteine-switch prodomain", "EXACT_SYNONYM"),
+        ),
+        sequence_pattern="PRCG[NV]PD",
+        evidence=(
+            (
+                "PMID:2164689",
+                "Matrix metalloproteinase propeptides maintain zymogen latency via a conserved cysteine residue that coordinates the catalytic zinc ion until dissociation triggers activation.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="EMBOSS fuzzpro scan for conserved MMP cysteine-switch PRCG[NV]PD propeptide motif",
+                method_type="SEQUENCE_PATTERN",
+                edam_operation="EDAM:operation_0239",
+                tool="biotools:emboss",
+                evidence_code="ECO:0000255",
+                reference="PMID:2164689",
+                recipe="fuzzpro -sequence {input} -pattern 'PRCG[NV]PD' -outfile {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="cysteine_switch_metalloprotease_zymogen_latency",
+                label="Intramolecular coordination of catalytic zinc by the propeptide cysteine residue maintains metalloprotease zymogen latency",
+                mechanism_summary=(
+                    "The N-terminal propeptide (SO:0001062) positions a conserved "
+                    "L-cysteine residue (CHEBI:29950) that participates in intramolecular "
+                    "active-site metal ion binding (GO:0046872) to block the catalytic zinc "
+                    "ion, whereas dissociation of this cysteine-zinc complex is causally "
+                    "upstream of zymogen activation (GO:0031638)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0001062",
+                        label="propeptide",
+                        node_type="MOTIF",
+                        grounding="SO:0001062",
+                        description="N-terminal metalloprotease propeptide domain containing the conserved PRCGXPD motif.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="CHEBI:29950",
+                        label="L-cysteine residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:29950",
+                        description="Conserved cysteine-switch thiol residue within the propeptide domain.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0046872",
+                        label="metal ion binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0046872",
+                        description="Intramolecular coordination of the catalytic zinc ion by the propeptide cysteine residue.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0031638",
+                        label="zymogen activation",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0031638",
+                        description="Switch from latent proenzyme to active metalloprotease upon dissociation of the cysteine residue from the catalytic zinc.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0001062",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0046872",
+                        description="The propeptide domain forms an intramolecular complex with the essential zinc atom in the catalytic domain.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:2164689",
+                        snippet="Recent evidence suggests that this latency in human fibroblast collagenase (HFC) is the result of formation of an intramolecular complex between the single cysteine residue in its propeptide domain and the essential zinc atom in the catalytic domain, a complex that blocks the active site.",
+                        notes="Van Wart & Birkedal-Hansen (1990) PNAS 87:5578-5582 establish the cysteine-switch mechanism of MMP latency.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="CHEBI:29950",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0046872",
+                        description="The conserved cysteine residue in the propeptide domain ligates the catalytic zinc site.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:2164689",
+                        snippet="The propeptide domain that contains the critical cysteine residue and the catalytic domain that contains the zinc-binding site are the only two domains common to all of the MMPs.",
+                        notes="Conservation of the propeptide cysteine residue and catalytic zinc-binding site across MMPs.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0046872",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0031638",
+                        description="Dissociation of the propeptide cysteine residue from the zinc-binding complex triggers zymogen activation.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:2164689",
+                        snippet="Latent HFC can be activated by multiple means, all of which effect the dissociation of the cysteine residue from the complex.",
+                        notes="Dissociation of the Cys-Zn complex switches the zymogen to the active state.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="sequence/signal_peptide",
+        filename="srp-dependent-cotranslational-signal-peptide.yaml",
+        identifier="proteintraitsmech:SIGNAL_PEPTIDE_SRP_COTRANSLATIONAL",
+        label="SRP-dependent cotranslational secretory signal peptide",
+        definition=(
+            "An N-terminal secretory or membrane-targeting signal peptide featuring "
+            "a highly hydrophobic core (h-region) that is recognized as it emerges "
+            "from the ribosomal exit tunnel by the ribonucleoprotein Signal "
+            "Recognition Particle (SRP), arresting or coupling translation to "
+            "SRP-receptor-mediated delivery of the ribosome-nascent chain complex "
+            "to the SecYEG/Sec61 translocon for co-translational translocation."
+        ),
+        trait_axis="SEQUENCE",
+        trait_category="SEQ_SIGNAL_PEPTIDE",
+        parent_traits=("proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPI",),
+        synonyms=(
+            ("SRP-targeted co-translational signal sequence", "EXACT_SYNONYM"),
+            ("Signal Recognition Particle signal peptide", "EXACT_SYNONYM"),
+            ("Ffh/SRP54-recognized hydrophobic signal peptide", "NARROW_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:24513458",
+                "SRP-dependent signal sequences on ribosome-nascent chain complexes are recognized by the Signal Recognition Particle and targeted via its receptor to the SecYEG translocon for co-translational translocation.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="SignalP 6.0 neural network prediction of N-terminal secretory signal peptides",
+                method_type="ML_PREDICTOR",
+                edam_operation="EDAM:operation_0418",
+                tool="biotools:signalp",
+                evidence_code="ECO:0000255",
+                reference="PMID:24513458",
+                recipe="signalp6 --fastafile {input} --output_dir {output} --format txt --organism other",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="srp_cotranslational_sec_targeting",
+                label="SRP recognition of nascent hydrophobic signal peptides couples translation to SecYEG/Sec61 membrane translocation",
+                mechanism_summary=(
+                    "A hydrophobic N-terminal signal_peptide (SO:0000418) on a ribosome-nascent "
+                    "chain complex participates in SRP-dependent cotranslational protein "
+                    "targeting to membrane (GO:0006614), which is causally upstream of "
+                    "protein transport by the Sec complex (GO:0043952) into or across the "
+                    "target membrane (GO:0016020)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000418",
+                        label="signal_peptide",
+                        node_type="MOTIF",
+                        grounding="SO:0000418",
+                        description="Hydrophobic N-terminal signal sequence emerging on a ribosome-nascent chain complex.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006614",
+                        label="SRP-dependent cotranslational protein targeting to membrane",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006614",
+                        description="Co-translational recognition and delivery of ribosome-nascent chain complexes by the Signal Recognition Particle and its receptor.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0043952",
+                        label="protein transport by the Sec complex",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0043952",
+                        description="Co-translational translocation or integration through the SecYEG/Sec61 channel.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0016020",
+                        label="membrane",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0016020",
+                        description="Target cytoplasmic or endoplasmic reticulum membrane housing the Sec translocon.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000418",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0006614",
+                        description="Signal sequences on nascent polypeptides are recognized co-translationally by the Signal Recognition Particle.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24513458",
+                        snippet="Co-translational protein targeting by the Signal Recognition Particle (SRP) is an essential cellular pathway that couples the synthesis of nascent proteins to their proper cellular localization.",
+                        notes="Saraogi & Shan (2014) Biochim Biophys Acta 1843:1433-1441 review SRP-mediated co-translational targeting.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006614",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0043952",
+                        description="SRP targeting delivers the ribosome-nascent chain complex to the SecYEG translocon.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24513458",
+                        snippet="The bacterial SRP system—consisting of the universally conserved Ffh protein and 4.5S RNA—provides a simpler yet powerful model for understanding the universally conserved principles of co-translational targeting.",
+                        notes="Conserved Ffh/4.5S RNA SRP machinery mediates co-translational targeting to the Sec pathway.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0043952",
+                        predicate="RO:0002339",
+                        predicate_label="has target end location",
+                        object="GO:0016020",
+                        description="Co-translational handoff to the SecYEG translocon ensures fidelity of membrane protein biogenesis and translocation.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24513458",
+                        snippet="These components enable the targeting machinery to dynamically recognize signal sequences on ribosome-nascent chain complexes, sense and respond to biological effectors (such as the ribosome and the SecYEG translocon), coordinate GTP hydrolysis, and ensure the fidelity and efficiency of membrane protein biogenesis.",
+                        notes="Delivery of nascent chains to the SecYEG translocon at the membrane.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/disulfide",
+        filename="vicinal-cystine-disulfide-ring.yaml",
+        identifier="proteintraitsmech:DISULFIDE_VICINAL_CYSTINE_RING",
+        label="sequence-adjacent vicinal disulfide eight-membered ring",
+        definition=(
+            "A rare intrachain covalent disulfide crosslink formed between two "
+            "sequence-adjacent cysteine residues (Cys(i)-Cys(i+1)), cyclizing the "
+            "intervening peptide group and side chains into a strained eight-membered "
+            "ring that enforces a sharp backbone turn, stabilizes tightly packed "
+            "internal cores, or presents a rigid hydrophobic platform for "
+            "carbohydrate and multi-ring ligand binding."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DISULFIDE",
+        parent_traits=("proteintraitsmech:DISULFIDE_INTRACHAIN",),
+        synonyms=(
+            ("vicinal disulfide bond", "EXACT_SYNONYM"),
+            ("vicinal cystine ring", "EXACT_SYNONYM"),
+            ("sequence-adjacent Cys-Cys disulfide", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:28359877",
+                "Vicinal disulfides between sequence-adjacent cysteine residues adopt strained cis or trans eight-membered ring geometries that stabilize internal packing or form rigid hydrophobic ligand-binding surfaces.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="DSSP/mkdssp geometric identification of sequence-adjacent (i, i+1) cystine disulfide bridges",
+                method_type="STRUCTURAL_ALGORITHM",
+                edam_operation="EDAM:operation_0249",
+                tool="biotools:dssp",
+                evidence_code="ECO:0000255",
+                reference="PMID:28359877",
+                recipe="mkdssp --output-format dssp {input} {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="vicinal_disulfide_ring_ligand_binding",
+                label="Oxidation of sequence-adjacent cysteines forms an eight-membered vicinal disulfide ring that provides a rigid hydrophobic ligand-binding surface",
+                mechanism_summary=(
+                    "Sequence-adjacent L-cysteine residues (CHEBI:29950) participate in "
+                    "oxidative protein folding (GO:0006457) to form a strained eight-membered "
+                    "vicinal L-cystine (cross-link) ring (MOD:00034), which is causally "
+                    "upstream of specific small molecule binding (GO:0036094) via a rigid "
+                    "hydrophobic contact surface."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="CHEBI:29950",
+                        label="L-cysteine residue",
+                        node_type="RESIDUE",
+                        grounding="CHEBI:29950",
+                        description="Sequence-adjacent Cys(i)-Cys(i+1) residues in a polypeptide chain.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006457",
+                        label="protein folding",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006457",
+                        description="Folding and cyclization of sequence-adjacent cysteines into a tightly packed eight-membered ring.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="MOD:00034",
+                        label="L-cystine (cross-link)",
+                        node_type="PTM",
+                        grounding="MOD:00034",
+                        description="Vicinal Cys(i)-Cys(i+1) disulfide crosslink forming an eight-membered ring.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036094",
+                        label="small molecule binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0036094",
+                        description="Specific binding of carbohydrates or multi-ring ligands against the rigid hydrophobic vicinal cystine surface.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="CHEBI:29950",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0006457",
+                        description="Sequence-adjacent cysteine residues form rare vicinal disulfide features during structural assembly.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:28359877",
+                        snippet="Vicinal disulfides between sequence-adjacent cysteine residues are very rare and rather startling structural features which play a variety of functional roles.",
+                        notes="Richardson et al. (2017) J Mol Biol 429:1321-1335 survey the conformations and functions of vicinal disulfides.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006457",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="MOD:00034",
+                        description="Folding produces a vicinal cystine ring that stabilizes tightly packed internal regions or coupled motions.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:28359877",
+                        snippet="Some vicinal disulfides are essential to large, functionally coupled motions, whereas most form the centers of tightly packed internal regions.",
+                        notes="Formation of tightly packed or motion-coupled vicinal cystine rings.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="MOD:00034",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0036094",
+                        description="The vicinal cystine ring provides a rigid hydrophobic contact surface beneath sugar or multi-ring ligands.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:28359877",
+                        snippet="Their most widespread biological role is providing a rigid hydrophobic contact surface under the undecorated side of a sugar or multi-ring ligand, contributing an important aspect of binding specificity.",
+                        notes="Vicinal disulfide ring mediates hydrophobic ligand-binding specificity.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/cavity",
+        filename="internal-buried-hydration-packing-microcavity.yaml",
+        identifier="proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY",
+        label="internal buried hydration/packing microcavity",
+        definition=(
+            "An enclosed internal structural void or microcavity buried within the "
+            "tertiary core of a globular protein without direct bulk-solvent tunnel "
+            "access, occurring either as an apolar empty packing defect or as a "
+            "partially polar microcavity occupied by ordered structural water "
+            "molecules that modulate core packing density, compressibility, and "
+            "conformational stability."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_CAVITY",
+        parent_traits=("proteintraitsmech:CAVITY",),
+        synonyms=(
+            ("buried internal protein void", "EXACT_SYNONYM"),
+            ("internal hydration microcavity", "NARROW_SYNONYM"),
+            ("enclosed core packing cavity", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:8073031",
+                "Internal cavities in globular proteins reside within the tertiary core as empty hydrophobic voids or polar water-solvated microcavities that modulate packing density and stability.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="fpocket Voronoi alpha-sphere detection of buried internal protein cavities",
+                method_type="STRUCTURAL_ALGORITHM",
+                edam_operation="EDAM:operation_0250",
+                tool="biotools:fpocket",
+                evidence_code="ECO:0000255",
+                reference="PMID:8073031",
+                recipe="fpocket -f {input} -o {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="buried_core_cavity_hydration_packing",
+                label="Core side-chain polarity and packing geometry govern internal cavity solvation and native fold stability",
+                mechanism_summary=(
+                    "A folded polypeptide_domain (SO:0000417) encloses internal microcavities "
+                    "whose lining-residue hydrophobicity (PATO:0001884) determines empty versus "
+                    "water-solvated cavity packing during protein folding (GO:0006457), "
+                    "which is causally upstream of regulation of protein stability (GO:0031647)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Globular protein tertiary domain enclosing internal microcavities (>100 residues).",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001884",
+                        label="hydrophobicity",
+                        node_type="QUALITY",
+                        grounding="PATO:0001884",
+                        description="Apolar versus polar surface character of the amino acid residues lining the internal cavity.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0006457",
+                        label="protein folding",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0006457",
+                        description="Tertiary core packing and internal water burial during native fold assembly.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0031647",
+                        label="regulation of protein stability",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0031647",
+                        description="Maintenance of rigid local packing environment around enclosed internal cavities.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0006457",
+                        description="Globular protein domains larger than 100 residues enclose internal core cavities during tertiary folding.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:8073031",
+                        snippet="Overall cavity volume increases with protein size and yet constitutes only a small fraction of the total protein volume but cavities are nearly always present in proteins > 100 residues in size.",
+                        notes="Hubbard et al. (1994) Protein Eng 7:613-626 analyze internal cavities across high-resolution protein structures.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001884",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0006457",
+                        description="Cavity surface polarity versus hydrophobicity governs whether internal cavities remain empty or encapsulate ordered water.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:8073031",
+                        snippet="'Empty' and solvent-containing cavities have been compared and solvated cavities found to possess a more polar surface; the two classes are also seen to exhibit different amino acid type and secondary structural preferences.",
+                        notes="Polar versus apolar cavity lining determines internal water solvation.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0006457",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0031647",
+                        description="Core packing around enclosed internal cavities maintains rigid local residue stability without excess mobility.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:8073031",
+                        snippet="In general, residues that enclose cavities do not display any extra local mobility relative to their surrounding environments.",
+                        notes="Residues enclosing internal microcavities maintain normal rigid packing stability.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/dynamics",
+        filename="conditionally-unfolding-order-to-disorder-switch-region.yaml",
+        identifier="proteintraitsmech:DYNAMICS_ORDER_TO_DISORDER_REGULATORY_SWITCH",
+        label="conditionally unfolding order-to-disorder regulatory switch region",
+        definition=(
+            "A conditionally or transiently disordered protein region (cryptic "
+            "disorder segment) that adopts a well-ordered, autoinhibited or "
+            "chaperone-inactive tertiary conformation under resting conditions "
+            "but undergoes a reversible, stimulus-triggered order-to-disorder "
+            "transition (local or global unfolding induced by oxidative stress, "
+            "pH shifts, temperature, mechanical force, or post-translational "
+            "modification) to expose binding sites or activate holdase/signaling "
+            "function."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_DYNAMICS",
+        parent_traits=("PATO:0001543",),
+        synonyms=(
+            ("conditionally disordered protein switch", "EXACT_SYNONYM"),
+            ("dormant disorder regulatory segment", "EXACT_SYNONYM"),
+            ("regulated unfolding order-to-disorder switch", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:24707833",
+                "Conditionally and transiently disordered proteins harbor regions of dormant disorder that undergo reversible local or global unfolding in response to environmental or post-translational triggers to activate protein function.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="IUPred3 redox/conditional disorder and energy-profile prediction",
+                method_type="ML_PREDICTOR",
+                edam_operation="EDAM:operation_3904",
+                tool="biotools:iupred3",
+                evidence_code="ECO:0000255",
+                reference="PMID:24707833",
+                recipe="iupred3.py {input} long > {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="conditional_unfolding_cryptic_disorder_activation",
+                label="Transient environmental or post-translational modification awakens dormant disorder via local unfolding to activate protein binding",
+                mechanism_summary=(
+                    "A folded polypeptide_domain (SO:0000417) harboring dormant disorder "
+                    "undergoes transient protein modification or environmental perturbation "
+                    "(GO:0036211) that induces local unfolding and increased conformational "
+                    "flexibility (PATO:0001543), which is causally upstream of effector or "
+                    "client protein binding (GO:0005515)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="SO:0000417",
+                        label="polypeptide_domain",
+                        node_type="DOMAIN",
+                        grounding="SO:0000417",
+                        description="Ordered domain harboring a dormant, conditionally unfolding regulatory segment.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0036211",
+                        label="protein modification process",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0036211",
+                        description="Transient post-translational modification or environmental trigger initiating unfolding.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="PATO:0001543",
+                        label="flexibility",
+                        node_type="QUALITY",
+                        grounding="PATO:0001543",
+                        description="Transient order-to-disorder transition (local or global unfolding) awakening dormant disorder.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="Unmasking of cryptic client-chaperone or signaling partner interaction surfaces.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="SO:0000417",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0036211",
+                        description="Ordered protein domains contain regions of dormant disorder that respond to regulatory triggers.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24707833",
+                        snippet="In fact, many proteins possess regions of dormant disorder that need to be awakened to make these proteins functional.",
+                        notes="Jakob, Kriwacki & Uversky (2014) Chem Rev 114:6779-6805 review conditionally and transiently disordered proteins.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0036211",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="PATO:0001543",
+                        description="Regulatory modification or environmental shift induces local or global unfolding of the ordered structure.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24707833",
+                        snippet="In other words, some functions of ordered proteins require local or even global unfolding of a unique protein structure.",
+                        notes="Regulated order-to-disorder unfolding transitions in conditionally disordered proteins.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="PATO:0001543",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Reversible transient unfolding activates functional partner binding until the resting state is restored.",
+                        evidence_code="ECO:0000305",
+                        reference="PMID:24707833",
+                        snippet="In other words, the function-related changes in a protein are induced by transient alterations in its environment or by transient modification of its structure and are released as soon as the environment is restored or the modification is removed.",
+                        notes="Reversible order-to-disorder switching controls protein interaction and function.",
+                    ),
+                ),
+            ),
+        ),
+    ),
+    TraitSpec(
+        rel_dir="structure/surface",
+        filename="energetic-hot-spot-o-ring-surface-patch.yaml",
+        identifier="proteintraitsmech:SURFACE_HOT_SPOT_BINDING_EPITOPE_PATCH",
+        label="energetic hot-spot O-ring surface interface patch",
+        definition=(
+            "A localized cluster of surface-exposed interface residues (enriched "
+            "in tryptophan, tyrosine, and arginine) that contributes the majority "
+            "of the binding free energy (Delta-Delta-G >= 2.0 kcal/mol upon "
+            "alanine mutation) at a protein-protein interaction surface and is "
+            "surrounded by a concentric 'O-ring' of polar and charged residues "
+            "that occlude bulk solvent to lower the local dielectric constant."
+        ),
+        trait_axis="STRUCTURE",
+        trait_category="STRUCT_SURFACE",
+        parent_traits=("proteintraitsmech:SURFACE_HYDROPHOBIC_PATCH",),
+        synonyms=(
+            ("protein-protein interface binding hot spot", "EXACT_SYNONYM"),
+            ("O-ring solvent-occluded hot-spot patch", "EXACT_SYNONYM"),
+            ("energetic binding epitope hot spot", "EXACT_SYNONYM"),
+        ),
+        evidence=(
+            (
+                "PMID:9653027",
+                "Protein-protein interaction free energy is concentrated in interface hot spots enriched in Trp, Tyr, and Arg residues surrounded by a solvent-occluding O-ring of polar residues.",
+            ),
+        ),
+        detection_methods=(
+            MethodSpec(
+                name="FreeSASA solvent-accessible surface burial and interface hot-spot patch analysis",
+                method_type="STRUCTURAL_ALGORITHM",
+                edam_operation="EDAM:operation_0249",
+                tool="biotools:freesasa",
+                evidence_code="ECO:0000255",
+                reference="PMID:9653027",
+                recipe="freesasa --format=rsa {input} -o {output}",
+            ),
+        ),
+        causal_graphs=(
+            CausalGraphSpec(
+                graph_id="interface_hot_spot_o_ring_solvent_occlusion",
+                label="Solvent-occluded Trp/Tyr/Arg hot-spot patches concentrate binding free energy to drive protein complex assembly",
+                mechanism_summary=(
+                    "A solvent-occluded interface patch with localized aromatic/amphipathic "
+                    "hydrophobicity (PATO:0001884) surrounded by an O-ring of polar residues "
+                    "concentrates free energy for high-affinity protein binding (GO:0005515), "
+                    "driving protein-containing complex assembly (GO:0065003) into a stable "
+                    "protein-containing complex (GO:0032991)."
+                ),
+                nodes=(
+                    CausalNodeSpec(
+                        node_id="PATO:0001884",
+                        label="hydrophobicity",
+                        node_type="QUALITY",
+                        grounding="PATO:0001884",
+                        description="Solvent-occluded central hot-spot cluster enriched in Trp, Tyr, and Arg residues.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0005515",
+                        label="protein binding",
+                        node_type="MOLECULAR_FUNCTION",
+                        grounding="GO:0005515",
+                        description="High-affinity protein-protein interaction concentrated at interface hot spots.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0065003",
+                        label="protein-containing complex assembly",
+                        node_type="BIOLOGICAL_PROCESS",
+                        grounding="GO:0065003",
+                        description="Thermodynamic stabilization of protein dimer and oligomer association via O-ring solvent exclusion.",
+                    ),
+                    CausalNodeSpec(
+                        node_id="GO:0032991",
+                        label="protein-containing complex",
+                        node_type="CELLULAR_LOCALIZATION",
+                        grounding="GO:0032991",
+                        description="Assembled noncovalent protein-protein complex.",
+                    ),
+                ),
+                edges=(
+                    CausalEdgeSpec(
+                        subject="PATO:0001884",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0005515",
+                        description="Interface binding free energy is concentrated in a small subset of hot-spot residues.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9653027",
+                        snippet="We find that the free energy of binding is not evenly distributed across interfaces; instead, there are hot spots of binding energy made up of a small subset of residues in the dimer interface.",
+                        notes="Bogan & Thorn (1998) J Mol Biol 280:1-9 formulate the O-ring hypothesis of protein interface hot spots.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0005515",
+                        predicate="RO:0002411",
+                        predicate_label="causally upstream of",
+                        object="GO:0065003",
+                        description="Trp/Tyr/Arg-enriched hot spots surrounded by a solvent-occluding O-ring drive complex assembly.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9653027",
+                        snippet="These hot spots are enriched in tryptophan, tyrosine, and arginine, and are surrounded by energetically less important residues that most likely serve to occlude bulk solvent from the hot spot.",
+                        notes="Solvent occlusion by the surrounding O-ring stabilizes hot-spot interactions.",
+                    ),
+                    CausalEdgeSpec(
+                        subject="GO:0065003",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="GO:0032991",
+                        description="Hot-spot-driven association produces functional protein-protein complexes.",
+                        evidence_code="ECO:0000269",
+                        reference="PMID:9653027",
+                        snippet="Binding of one protein to another is involved in nearly all biological functions, yet the principles governing the interaction of proteins are not fully understood.",
+                        notes="Formation of functional protein-protein complexes via hot-spot interfaces.",
+                    ),
+                ),
+            ),
+        ),
+    ),
 )
 
 
