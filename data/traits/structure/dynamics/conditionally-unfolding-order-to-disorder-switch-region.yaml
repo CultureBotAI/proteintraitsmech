@@ -1,0 +1,83 @@
+identifier: proteintraitsmech:DYNAMICS_ORDER_TO_DISORDER_REGULATORY_SWITCH
+label: "conditionally unfolding order-to-disorder regulatory switch region"
+definition: >-
+  A conditionally or transiently disordered protein region (cryptic disorder segment) that adopts a well-ordered, autoinhibited or chaperone-inactive tertiary conformation under resting conditions but undergoes a reversible, stimulus-triggered order-to-disorder transition (local or global unfolding induced by oxidative stress, pH shifts, temperature, mechanical force, or post-translational modification) to expose binding sites or activate holdase/signaling function.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_DYNAMICS
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - PATO:0001543
+synonyms:
+  - synonym_text: "conditionally disordered protein switch"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "dormant disorder regulatory segment"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "regulated unfolding order-to-disorder switch"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "IUPred3 redox/conditional disorder and energy-profile prediction"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_3904
+    tool: "biotools:iupred3"
+    evidence_code: ECO:0000255
+    reference: PMID:24707833
+    recipe: "iupred3.py {input} long > {output}"
+causal_graphs:
+  - graph_id: conditional_unfolding_cryptic_disorder_activation
+    title: "Transient environmental or post-translational modification awakens dormant disorder via local unfolding to activate protein binding"
+    description: "A folded polypeptide_domain (SO:0000417) harboring dormant disorder undergoes transient protein modification or environmental perturbation (GO:0036211) that induces local unfolding and increased conformational flexibility (PATO:0001543), which is causally upstream of effector or client protein binding (GO:0005515)."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Ordered domain harboring a dormant, conditionally unfolding regulatory segment."
+      - node_id: "GO:0036211"
+        label: "protein modification process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0036211"
+        description: "Transient post-translational modification or environmental trigger initiating unfolding."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Transient order-to-disorder transition (local or global unfolding) awakening dormant disorder."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Unmasking of cryptic client-chaperone or signaling partner interaction surfaces."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0036211"
+        description: "Ordered protein domains contain regions of dormant disorder that respond to regulatory triggers."
+        evidence:
+          - reference: PMID:24707833
+            snippet: "In fact, many proteins possess regions of dormant disorder that need to be awakened to make these proteins functional."
+            notes: "Jakob, Kriwacki & Uversky (2014) Chem Rev 114:6779-6805 review conditionally and transiently disordered proteins. (ECO:0000305)"
+      - subject: "GO:0036211"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "PATO:0001543"
+        description: "Regulatory modification or environmental shift induces local or global unfolding of the ordered structure."
+        evidence:
+          - reference: PMID:24707833
+            snippet: "In other words, some functions of ordered proteins require local or even global unfolding of a unique protein structure."
+            notes: "Regulated order-to-disorder unfolding transitions in conditionally disordered proteins. (ECO:0000305)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Reversible transient unfolding activates functional partner binding until the resting state is restored."
+        evidence:
+          - reference: PMID:24707833
+            snippet: "In other words, the function-related changes in a protein are induced by transient alterations in its environment or by transient modification of its structure and are released as soon as the environment is restored or the modification is removed."
+            notes: "Reversible order-to-disorder switching controls protein interaction and function. (ECO:0000305)"
+evidence:
+  - reference: PMID:24707833
+    notes: "Conditionally and transiently disordered proteins harbor regions of dormant disorder that undergo reversible local or global unfolding in response to environmental or post-translational triggers to activate protein function."
+license: CC-BY-4.0

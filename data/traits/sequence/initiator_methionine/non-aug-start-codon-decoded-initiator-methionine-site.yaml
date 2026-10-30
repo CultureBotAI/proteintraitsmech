@@ -1,0 +1,83 @@
+identifier: proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED
+label: "non-AUG start-codon-decoded initiator methionine site"
+definition: >-
+  An N-terminal initiator residue site translated from a near-cognate non-AUG initiation codon (such as CUG, GUG, UUG, or ACG) that is decoded by initiator Met-tRNAi during canonical or stress-regulated translation initiation to insert an N-terminal L-methionine residue, often generating N-terminally extended or regulatory protein isoforms.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_INITIATOR_METHIONINE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE
+synonyms:
+  - synonym_text: "near-cognate start codon initiator methionine"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "CUG/GUG/UUG-initiated N-terminal methionine site"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "non-canonical start codon initiator Met"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "N-terminal initiator methionine sequence motif and start-site context scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0239
+    tool: "biotools:emboss"
+    evidence_code: ECO:0000255
+    reference: PMID:28982758
+    recipe: "fuzzpro -sequence {input} -pattern '^M[ACDEFGHIKLMNPQRSTVWY]' -outfile {output}"
+causal_graphs:
+  - graph_id: non_aug_initiator_methionine_decoding
+    title: "Near-cognate non-AUG translation initiation incorporates N-terminal methionine to generate regulated protein isoforms"
+    description: "Translational initiation (GO:0006413) at near-cognate non-AUG start codons utilizes initiator L-methionine (CHEBI:16811) to drive N-terminal protein processing (GO:0016485) and produce distinct mature protein regions (SO:0000419) with regulated cellular functions."
+    nodes:
+      - node_id: "GO:0006413"
+        label: "translational initiation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006413"
+        description: "Translation initiation at near-cognate non-AUG start codons (CUG, GUG, UUG)."
+      - node_id: "CHEBI:16811"
+        label: L-methionine
+        node_type: RESIDUE
+        grounding: "CHEBI:16811"
+        description: "Initiator L-methionine incorporated at the N-terminus via Met-tRNAi decoding."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "N-terminal isoform generation and processing following non-AUG start codon selection."
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Resulting N-terminally extended or regulated mature protein isoform."
+    edges:
+      - subject: "GO:0006413"
+        predicate: "has input"
+        predicate_id: RO:0002233
+        object: "CHEBI:16811"
+        description: "Eukaryotic and prokaryotic ribosomes initiate translation at non-AUG start codons using initiator methionine."
+        evidence:
+          - reference: PMID:28982758
+            snippet: "Although it was long thought that eukaryotic translation almost always initiates at an AUG start codon, recent advancements in ribosome footprint mapping have revealed that non-AUG start codons are used at an astonishing frequency."
+            notes: "Kearse & Wilusz (2017) Genes Dev 31:1717-1731 review widespread non-AUG translation initiation. (ECO:0000305)"
+      - subject: "GO:0006413"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0016485"
+        description: "Non-AUG translation initiation drives N-terminal protein isoform generation during development and stress."
+        evidence:
+          - reference: PMID:28982758
+            snippet: "These non-AUG initiation events are not simply errors but instead are used to generate or regulate proteins with key cellular functions; for example, during development or stress."
+            notes: "Regulated non-AUG initiation generates distinct functional protein isoforms. (ECO:0000305)"
+      - subject: "GO:0016485"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Regulated non-AUG initiation yields mature protein isoforms whose misregulation impacts cellular physiology."
+        evidence:
+          - reference: PMID:28982758
+            snippet: "Misregulation of non-AUG initiation events contributes to multiple human diseases, including cancer and neurodegeneration, and modulation of non-AUG usage may represent a novel therapeutic strategy."
+            notes: "Production of regulated mature protein isoforms from non-AUG initiation sites. (ECO:0000305)"
+evidence:
+  - reference: PMID:28982758
+    notes: "Ribosome profiling reveals widespread translation initiation at near-cognate non-AUG start codons decoded by initiator Met-tRNAi to generate or regulate functional protein isoforms."
+license: CC-BY-4.0

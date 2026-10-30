@@ -1,0 +1,84 @@
+identifier: proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED
+label: "sortase-cleaved cell-wall-anchored mature polypeptide chain"
+definition: >-
+  A mature surface-displayed polypeptide chain of Gram-positive bacteria generated when a cysteine transpeptidase sortase (such as SrtA) cleaves the C-terminal cell-wall sorting signal between the threonine and glycine residues of a conserved LPXTG motif and forms an amide bond linking the C-terminal threonine carboxyl group to the peptidoglycan cross-bridge.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_MATURE_CHAIN
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
+synonyms:
+  - synonym_text: "LPXTG-cleaved sortase-anchored mature chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "peptidoglycan-tethered Gram-positive surface mature chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "SrtA-processed mature surface protein chain"
+    synonym_type: NARROW_SYNONYM
+sequence_pattern: "LP[ACDEFGHIKLMNPQRSTVWY]TG"
+detection_methods:
+  - name: "EMBOSS fuzzpro scan for C-terminal LPXTG sortase cleavage motif"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0239
+    tool: "biotools:emboss"
+    evidence_code: ECO:0000255
+    reference: PMID:10427003
+    recipe: "fuzzpro -sequence {input} -pattern 'LPXTG' -outfile {output}"
+causal_graphs:
+  - graph_id: sortase_lpxtg_cell_wall_anchoring
+    title: "Sortase endopeptidase/transpeptidase cleavage at the LPXTG motif anchors the mature polypeptide chain to peptidoglycan"
+    description: "Sortase cysteine endopeptidase/transpeptidase activity (GO:0004175) enables C-terminal protein processing (GO:0016485) at the conserved LPXTG motif, generating a peptidoglycan-linked mature protein region (SO:0000419) that is causally upstream of cell-surface protein secretion and display (GO:0009306)."
+    nodes:
+      - node_id: "GO:0004175"
+        label: "endopeptidase activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0004175"
+        description: "Sortase (SrtA) cysteine endopeptidase/transpeptidase activity cleaving between Thr and Gly of the LPXTG motif."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Sortase-catalyzed C-terminal cleavage and transpeptidation onto the peptidoglycan cell wall."
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Mature Gram-positive surface polypeptide chain covalently anchored via its C-terminal Thr residue."
+      - node_id: "GO:0009306"
+        label: "protein secretion"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0009306"
+        description: "Cell-wall anchoring and surface display of exported Gram-positive virulence and adhesion proteins."
+    edges:
+      - subject: "GO:0004175"
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0016485"
+        description: "Sortase endopeptidase activity cleaves the conserved C-terminal LPXTG motif during peptidoglycan assembly."
+        evidence:
+          - reference: PMID:10427003
+            snippet: "Surface proteins of Gram-positive bacteria are linked to the bacterial cell wall by a mechanism that involves cleavage of a conserved Leu-Pro-X-Thr-Gly (LPXTG) motif and that occurs during assembly of the peptidoglycan cell wall."
+            notes: "Mazmanian et al. (1999) Science 285:760-763 identify sortase (SrtA) LPXTG cleavage and cell-wall anchoring. (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "SrtA-mediated processing produces the cell-wall-anchored mature surface polypeptide chain."
+        evidence:
+          - reference: PMID:10427003
+            snippet: "A Staphylococcus aureus mutant defective in the anchoring of surface proteins was isolated and shown to carry a mutation in the srtA gene."
+            notes: "Requirement of srtA for generating anchored mature surface proteins. (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009306"
+        description: "Sortase processing rate directly controls surface protein anchoring and display in Gram-positive bacteria."
+        evidence:
+          - reference: PMID:10427003
+            snippet: "Overexpression of srtA increased the rate of surface protein anchoring, and homologs of srtA were found in other pathogenic Gram-positive bacteria."
+            notes: "Sortase processing drives covalent surface display across Gram-positive bacteria. (ECO:0000269)"
+evidence:
+  - reference: PMID:10427003
+    notes: "Sortase (SrtA) cleaves the C-terminal LPXTG sorting motif of Gram-positive surface protein precursors and transpeptidates the mature polypeptide chain onto the peptidoglycan cell wall."
+license: CC-BY-4.0
