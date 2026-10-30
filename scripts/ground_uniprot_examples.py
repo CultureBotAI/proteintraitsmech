@@ -4838,6 +4838,8 @@ def promote(args: argparse.Namespace) -> int:
     candidates_to_write: dict[Path, tuple[str, str]] = {}
     prospective_records: dict[Path, dict[str, Any]] = {}
     prospective_sha256: dict[Path, str] = {}
+    pending_splices: list[tuple[Path, str, str, dict[str, Any]]] = []
+    record_install_errors: list[str] = []
     stale_selected_preimages: list[str] = []
     unchanged = 0
     for path in sorted(grouped):
@@ -4853,7 +4855,13 @@ def promote(args: argparse.Namespace) -> int:
         for row in sorted(grouped[path], key=lambda item: item["candidate_id"]):
             if record.get("identifier") != row.get("trait_id"):
                 raise GroundingError(f"{row['candidate_id']}: record identifier changed")
-            updated, row_changed = _install_example(record, row)
+            try:
+                updated, row_changed = _install_example(record, row)
+            except GroundingError as exc:
+                record_install_errors.append(
+                    f"{row['candidate_id']} ({row.get('trait_id')} / {row.get('protein_id')}): {exc}"
+                )
+                continue
             if row_changed and original_sha != row.get("record_sha256"):
                 stale_selected_preimages.append(
                     f"{row['candidate_id']}: stale:record_changed_since_resolve"
@@ -4865,6 +4873,10 @@ def promote(args: argparse.Namespace) -> int:
         if not changed:
             prospective_sha256[path] = original_sha
             continue
+        pending_splices.append((path, original_text, original_sha, record))
+    if record_install_errors:
+        raise GroundingError("\n".join([*record_install_errors, *stale_selected_preimages]))
+    for path, original_text, original_sha, record in pending_splices:
         candidate_text = _replace_examples_block(original_text, record)
         if candidate_text == original_text:
             raise GroundingError(f"{path}: canonical_examples splice made no change")
