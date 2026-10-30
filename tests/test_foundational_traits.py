@@ -244,6 +244,15 @@ def test_foundational_trait_causal_graphs_audit_and_score():
                 assert history[-1].get("curator") == "claude"
                 assert history[-1].get("action") == "EDIT"
                 assert history[-1].get("llm_assisted") is True
+        if data.get("causal_graphs"):
+            for cg in data["causal_graphs"]:
+                for edge in cg.get("edges") or []:
+                    for ev in edge.get("evidence") or []:
+                        ref = ev.get("reference", "")
+                        assert ref.startswith("PMID:"), f"{spec.identifier} edge reference must be PMID: {ref}"
+                        assert int(ref.split(":", 1)[1]) < 41_000_000, (
+                            f"{spec.identifier} causal_graphs edge reference must be classic PubMed ID (<41000000): {ref}"
+                        )
         if not curated:
             cg = data["causal_graphs"][0]
             edges = cg.get("edges") or []

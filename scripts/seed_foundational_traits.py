@@ -395,7 +395,7 @@ SPECS: tuple[TraitSpec, ...] = (
         xrefs=("SO:0001455", "MOD:00031", "CHEBI:30000"),
         evidence=(
             ("PMID:28192430", "Secmarker identifies tRNASec and UGA recoding across selenoprotein-encoding genomes."),
-            ("PMID:41997725", "Translation of UGA as selenocysteine relies heavily on a specific mRNA sequence (SECIS element) in the transcript."),
+            ("PMID:36316034", "Cotranslational insertion of selenocysteine proceeds by recoding UGA to a sense codon governed by the SECIS RNA element on the mRNA."),
         ),
         detection_methods=(M_SECIS,),
         causal_graphs=(
@@ -452,14 +452,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0000056",
                         predicate_label="participates in",
                         object="GO:0001514",
-                        description="The SECIS RNA stem-loop participates in SelB/EEFSEC recruitment for UGA recoding.",
-                        reference="PMID:41997725",
-                        evidence_code="ECO:0000305",
+                        description="The SECIS RNA structure on the mRNA governs UGA recoding during selenocysteine incorporation.",
+                        reference="PMID:36316034",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "Translation of UGA as selenocysteine relies heavily on the presence of "
-                            "a specific messenger RNA (mRNA) sequence found in the transcript."
+                            "This recoding is governed by the Sec insertion sequence (SECIS) "
+                            "element, an RNA structure on the mRNA, but size, location, structure "
+                            "determinants, and mechanism differ for Bacteria, Eukarya, and Archaea."
                         ),
-                        notes="mRNA SECIS sequence required for UGA translation as selenocysteine (PMID:41997725).",
+                        notes="mRNA SECIS element governs UGA recoding into selenocysteine (PMID:36316034).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000885",
@@ -526,7 +527,10 @@ SPECS: tuple[TraitSpec, ...] = (
             ("22nd amino acid residue", "RELATED_SYNONYM"),
         ),
         xrefs=("SO:0001456", "MOD:01187", "CHEBI:21860"),
-        evidence=(("PMID:41997725", "Pyrrolysine is synthesized as a free amino acid, charged onto tRNAPyl by pyrrolysyl-tRNA synthetase, and inserted cotranslationally at UAG codons."),),
+        evidence=(
+            ("PMID:41997725", "Pyrrolysine is synthesized as a free amino acid, charged onto tRNAPyl by pyrrolysyl-tRNA synthetase, and inserted cotranslationally at UAG codons."),
+            ("PMID:12029131", "Pyrrolysine is the 22nd genetically encoded natural amino acid, encoded by the UAG amber codon via pylS aminoacyl-tRNA synthetase and pylT tRNA(CUA)."),
+        ),
         detection_methods=(M_PYL,),
         causal_graphs=(
             CausalGraphSpec(
@@ -581,58 +585,57 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="CHEBI:21860",
-                        description="Pyrrolysyl-tRNA synthetase utilizes L-pyrrolysine as aminoacyl substrate.",
-                        reference="PMID:41997725",
-                        evidence_code="ECO:0000305",
+                        description="The pylS class II aminoacyl-tRNA synthetase charges the pylT-derived tRNA(CUA) substrate.",
+                        reference="PMID:12029131",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "Pyrrolysine is made as a free amino acid and then used to aminoacylate its "
-                            "specific tRNAPyl by pyrrolysyl-tRNAPyl synthetase."
+                            "The adjacent pylS gene encodes a class II aminoacyl-tRNA synthetase "
+                            "that charges the pylT-derived tRNA with lysine but is not closely "
+                            "related to known lysyl-tRNA synthetases."
                         ),
-                        notes="Pyrrolysine charging by pyrrolysyl-tRNA synthetase (PMID:41997725).",
+                        notes="pylS aminoacyl-tRNA synthetase charging of pylT tRNA (PMID:12029131).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0043767",
                         predicate="RO:0002327",
                         predicate_label="enables",
                         object="GO:0030631",
-                        description="Pyrrolysyl-tRNA synthetase activity enables cotranslational pyrrolysine incorporation at stop codons.",
-                        reference="PMID:41997725",
-                        evidence_code="ECO:0000305",
+                        description="Aminoacylation of tRNA(CUA) by PylS enables translation of UAG amber codons as pyrrolysine.",
+                        reference="PMID:12029131",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "Both selenocysteine and pyrrolysine are encoded in genes by what are "
-                            "otherwise stop codons."
+                            "Charging a tRNA(CUA) with lysine is a likely first step in "
+                            "translating UAG amber codons as pyrrolysine in certain methanogens."
                         ),
-                        notes="PylRS-enabled stop-codon recoding into pyrrolysine (PMID:41997725).",
+                        notes="tRNA(CUA) charging enables UAG translation as pyrrolysine (PMID:12029131).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000884",
                         predicate="RO:0000056",
                         predicate_label="participates in",
                         object="GO:0030631",
-                        description="In-frame UAG codon participates as the recoded codon in pyrrolysine incorporation.",
-                        reference="PMID:41997725",
-                        evidence_code="ECO:0000305",
+                        description="In-frame UAG codon participates as the recoded codon encoding pyrrolysine in methylamine methyltransferase genes.",
+                        reference="PMID:12029131",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "In contrast, local message context stimulates, but is not required for, "
-                            "relatively efficient translation of UAG as pyrrolysine."
+                            "Pyrrolysine is a lysine derivative encoded by the UAG codon in "
+                            "methylamine methyltransferase genes of Methanosarcina barkeri."
                         ),
-                        notes="In-frame UAG decoding into pyrrolysine residue (PMID:41997725).",
+                        notes="In-frame UAG decoding into pyrrolysine residue (PMID:12029131).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0030631",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="MOD:01187",
-                        description="Pyrrolysine incorporation results in an in-chain L-pyrrolysine residue.",
-                        reference="PMID:41997725",
-                        evidence_code="ECO:0000305",
+                        description="Pyrrolysine incorporation inserts the 22nd genetically encoded natural amino acid into the polypeptide.",
+                        reference="PMID:12029131",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "Although many naturally occurring modified amino acids have been identified "
-                            "in living organisms, only two, selenocysteine and pyrrolysine, are "
-                            "genetically encoded. Each amino acid is inserted cotranslationally into "
-                            "proteins imparting catalytic functionality."
+                            "Our results indicate that pyrrolysine is the 22nd genetically "
+                            "encoded natural amino acid."
                         ),
-                        notes="Cotranslationally inserted L-pyrrolysine residue (PMID:41997725).",
+                        notes="Cotranslationally inserted L-pyrrolysine residue (PMID:12029131).",
                     ),
                 ),
             ),
@@ -745,29 +748,32 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="MOD:00030",
-                        description="Translational initiation deposits an N-formyl-L-methionine residue at the N-terminus of the nascent polypeptide.",
-                        reference="PMID:42079159",
+                        description="Translational initiation in eubacteria, mitochondria, and chloroplasts deposits an N-formyl-L-methionine residue at the N-terminus of the nascent polypeptide.",
+                        reference="PMID:12101237",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The def gene encodes peptide deformylase (PDF, EC:3.5.1.88), an enzyme "
-                            "that contributes to protein processing by removing the formyl group from "
-                            "N-formylmethionine (fMet) on nascent peptides."
+                            "Protein synthesis in eukaryotic cytoplasm and in archaebacteria is "
+                            "initiated with methionine, whereas, that in eubacteria and in "
+                            "eukaryotic organelles, such as mitochondria and chloroplasts, is "
+                            "initiated with formylmethionine."
                         ),
-                        notes="Nascent N-terminal fMet residue (PMID:42079159).",
+                        notes="Nascent N-terminal fMet residue in eubacteria and organelles (PMID:12101237).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0008463",
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="MOD:00030",
-                        description="Formylmethionine deformylase acts on the N-formyl-L-methionine residue of nascent peptides unless decreased or bypassed.",
-                        reference="PMID:42079159",
+                        description="Polypeptide deformylase acts on the N-terminal N-formyl-L-methionine residue of a polypeptide unless absent or inactive.",
+                        reference="PMID:12101237",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The def evo allele has a single missense mutation that decreases PDF "
-                            "activity both in vitro and in vivo."
+                            "Coexpression of the E. coli polypeptide deformylase (DEF), which "
+                            "removes the formyl group from the N-terminal formylmethionine in a "
+                            "polypeptide, rescues the slow-growth phenotype, whereas, coexpression "
+                            "of an inactive mutant of DEF does not."
                         ),
-                        notes="Reduced PDF deformylase activity alters processing of nascent N-formylmethionine peptides (PMID:42079159).",
+                        notes="Polypeptide deformylase removes the formyl group from N-terminal formylmethionine (PMID:12101237).",
                     ),
                 ),
             ),
@@ -3644,6 +3650,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 "PMID:42829235",
                 "Protein disulfide isomerase catalyzes intramolecular disulfide bond formation during oxidative protein folding.",
             ),
+            (
+                "PMID:28044432",
+                "Disulfide bonds are essential to the structural stability of many proteins within the secretory pathway and can exist as intramolecular or inter-domain disulfides formed by protein disulfide isomerase (PDI) family members.",
+            ),
         ),
         detection_methods=(M_DSSP_SSBOND,),
         causal_graphs=(
@@ -3692,46 +3702,46 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="CHEBI:29950",
-                        description="Protein disulfide isomerase oxidizes paired intrachain L-cysteine thiolates.",
-                        reference="PMID:42829235",
-                        evidence_code="ECO:0000269",
+                        description="Protein disulfide isomerase family oxidases act on paired intrachain L-cysteine thiolates during folding.",
+                        reference="PMID:28044432",
+                        evidence_code="ECO:0000305",
                         snippet=(
-                            "Here, we developed an expression system for recombinant human serum "
-                            "albumin (rHSA) by fusing the a domain of human protein disulfide "
-                            "isomerase (PDI) to the N-terminus of HSA."
+                            "The proper formation of these bonds often relies on folding "
+                            "chaperones and oxidases such as members of the protein disulfide "
+                            "isomerase (PDI) family."
                         ),
-                        notes="Oxidation of paired intrachain cysteine residues by PDI (PMID:42829235).",
+                        notes="Oxidation of paired intrachain cysteine residues by PDI family oxidases (PMID:28044432).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0003756",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="MOD:00034",
-                        description="Oxidative thiol coupling yields covalent intramolecular L-cystine crosslinks.",
-                        reference="PMID:42829235",
-                        evidence_code="ECO:0000269",
+                        description="PDI family members catalyze disulfide-bond formation and isomerization to yield intramolecular L-cystine crosslinks.",
+                        reference="PMID:28044432",
+                        evidence_code="ECO:0000305",
                         snippet=(
-                            "Purified E. coli-rHSA was predominantly monomeric and had the "
-                            "molecular mass expected for HSA containing 17 intramolecular "
-                            "disulfide bonds."
+                            "Many of the PDI family members catalyze disulfide-bond formation, "
+                            "reduction, and isomerization through redox-active disulfides and "
+                            "perturbed PDI activity is characteristic of carcinomas and "
+                            "neurodegenerative diseases."
                         ),
-                        notes="Formation of intramolecular cystine crosslinks (PMID:42829235).",
+                        notes="Catalyzed formation of intramolecular cystine crosslinks (PMID:28044432).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0003756",
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0006457",
-                        description="PDI-catalyzed intramolecular disulfide bond formation promotes structurally native-like and functionally competent protein folding.",
-                        reference="PMID:42829235",
-                        evidence_code="ECO:0000269",
+                        description="Intramolecular disulfide bonds formed in the secretory pathway are essential to structural stability and native folding.",
+                        reference="PMID:28044432",
+                        evidence_code="ECO:0000305",
                         snippet=(
-                            "These results demonstrate that PDI(a)-mediated cis-fusion enables "
-                            "high-yield production of structurally native-like and functionally "
-                            "competent HSA in the bacterial cytosol and provides a practical "
-                            "platform for producing complex disulfide-rich proteins in E. coli."
+                            "Disulfide bonds are essential to the structural stability of many "
+                            "proteins within the secretory pathway and can exist as intramolecular "
+                            "or inter-domain disulfides."
                         ),
-                        notes="Intramolecular disulfide formation promotes native folding (PMID:42829235).",
+                        notes="Intramolecular disulfide bonds stabilize tertiary protein folding (PMID:28044432).",
                     ),
                 ),
             ),
@@ -3877,6 +3887,14 @@ SPECS: tuple[TraitSpec, ...] = (
                 "PMID:40763564",
                 "Three conserved disulfide linkages form a cystine knot motif that confers high thermal and chemical stability.",
             ),
+            (
+                "PMID:36007611",
+                "Cyclotides and knottins contain a cystine knot motif formed by three interlocked disulfide bonds.",
+            ),
+            (
+                "PMID:35168789",
+                "Cyclotides are built around a cystine knot core that makes them exceptionally stable scaffolds.",
+            ),
         ),
         detection_methods=(M_DSSP_SSBOND,),
         causal_graphs=(
@@ -3925,43 +3943,48 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="CHEBI:29950",
-                        description="Biosynthesis and oxidative folding of cyclotide cystine-knot peptides utilizes conserved L-cysteine residues.",
-                        reference="PMID:40763564",
+                        description="Oxidative folding of cystine-knot peptides couples conserved L-cysteine residues into three interlocked disulfide bonds.",
+                        reference="PMID:36007611",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "HMM-based searches were used to identify novel cyclotides and the "
-                            "enzymes involved in their biosynthesis, specifically asparaginyl "
-                            "endopeptidases (AEPs)."
+                            "These peptides contain a cystine knot motif formed by three "
+                            "interlocked disulfide bonds, with the main difference between the "
+                            "two classes being the presence or absence of a cyclic backbone, "
+                            "respectively."
                         ),
-                        notes="Biosynthesis of cyclotide cystine-knot peptides (PMID:40763564).",
+                        notes="Cystine knot motif formed by three interlocked disulfide bonds (PMID:36007611).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006457",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="MOD:00034",
-                        description="Oxidative folding produces three conserved L-cystine disulfide linkages in a cystine knot.",
-                        reference="PMID:40763564",
+                        description="Oxidative folding produces a three-disulfide cystine-knot core that makes the peptide exceptionally stable.",
+                        reference="PMID:35168789",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Cyclotides are plant-derived cyclic peptides with three conserved "
-                            "disulfide linkages, forming a cyclic cystine knot (CCK) motif."
+                            "These 27-37 amino acid peptides have a head-to-tail cyclic backbone "
+                            "and are built around a cystine knot core, which makes them "
+                            "exceptionally stable."
                         ),
-                        notes="Formation of three-disulfide cystine knot motif (PMID:40763564).",
+                        notes="Formation of the three-disulfide cystine-knot core (PMID:35168789).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006457",
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0031647",
-                        description="The cystine-knot topology confers ultra-high resistance to thermal and chemical degradation.",
-                        reference="PMID:40763564",
+                        description="The cystine-knot core confers exceptional stability and tolerance to sequence modifications.",
+                        reference="PMID:35168789",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "This CCK topology makes them ultra stable structures and resistant to "
-                            "thermal and chemical degradation."
+                            "This stability and their amenability to sequence modifications has "
+                            "made cyclotides attractive scaffolds in drug design, and many "
+                            "synthetic cyclotides have now been designed and synthesized to test "
+                            "their efficacy as leads for a wide range of diseases, including "
+                            "infectious disease, cancer, pain and multiple sclerosis."
                         ),
-                        notes="Ultrastability against thermal and chemical degradation (PMID:40763564).",
+                        notes="Cystine-knot stability confers scaffold resilience (PMID:35168789).",
                     ),
                 ),
             ),
@@ -3988,6 +4011,14 @@ SPECS: tuple[TraitSpec, ...] = (
             (
                 "PMID:42681370",
                 "Thiol isomerases modify allosteric disulfide bonds in intracellular and extracellular proteins, thereby controlling protein function.",
+            ),
+            (
+                "PMID:28044432",
+                "Redox-active disulfides are oxidized and reduced by reductases and regulate protein activity and localization in response to oxidative changes.",
+            ),
+            (
+                "PMID:35130281",
+                "Allosteric disulfide bonds permit transient switch-like regulation of protein function.",
             ),
         ),
         detection_methods=(M_DSSP_SSBOND,),
@@ -4044,59 +4075,63 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="MOD:00034",
-                        description="Thiol isomerases are oxidoreductases that act on protein disulfide bonds.",
-                        reference="PMID:42681370",
+                        description="PDI family oxidoreductases act on redox-active protein disulfide bonds.",
+                        reference="PMID:28044432",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Thiol isomerases are oxidoreductases that mediate disulfide bond "
-                            "formation in nascent proteins of the endoplasmic reticulum to ensure "
-                            "their structural integrity."
+                            "Many of the PDI family members catalyze disulfide-bond formation, "
+                            "reduction, and isomerization through redox-active disulfides and "
+                            "perturbed PDI activity is characteristic of carcinomas and "
+                            "neurodegenerative diseases."
                         ),
-                        notes="Thiol isomerase action on protein disulfide bonds (PMID:42681370).",
+                        notes="PDI family catalysis of disulfide reduction and isomerization (PMID:28044432).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0015035",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="CHEBI:29950",
-                        description="Redox-responsive disulfide bond cleavage converts the cystine crosslink into L-cysteine thiols.",
-                        reference="PMID:42681370",
+                        description="Reductases such as glutaredoxin and thioredoxin reduce redox-active disulfides into cysteine dithiols.",
+                        reference="PMID:28044432",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "The process of disulfide bond formation and cleavage is strictly "
-                            "regulated and responsive to redox conditions."
+                            "The oxidation and reduction of redox-active disulfides are mediated "
+                            "by cellular reactive oxygen species and activity of reductases, such "
+                            "as glutaredoxin and thioredoxin."
                         ),
-                        notes="Redox-responsive disulfide bond cleavage (PMID:42681370).",
+                        notes="Reductase-mediated reduction of redox-active disulfides (PMID:28044432).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0015035",
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0030234",
-                        description="Thiol isomerase modification of allosteric disulfides triggers an allosteric regulatory switch.",
-                        reference="PMID:42681370",
+                        description="Modification of redox-active disulfides acts as a regulatory switch responding to oxidative changes.",
+                        reference="PMID:28044432",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "In addition to its role in protein folding, thiol isomerases can "
-                            "modify allosteric disulfide bonds in both intracellular and "
-                            "extracellular proteins, thereby controlling protein function."
+                            "In addition to catalytic function in oxidoreductases, redox-active "
+                            "disulfides are also found on a diverse array of cellular proteins and "
+                            "act to regulate protein activity and localization in response to "
+                            "oxidative changes in the local environment."
                         ),
-                        notes="Allosteric control of protein function via disulfide modification (PMID:42681370).",
+                        notes="Redox-active disulfides regulate protein activity and localization (PMID:28044432).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0030234",
                         predicate="RO:0002211",
                         predicate_label="regulates",
                         object="GO:0003824",
-                        description="Disulfide bond regulation under different redox environments governs physiological and catalytic processes.",
-                        reference="PMID:42681370",
+                        description="Allosteric disulfide bonds provide responsive, transient switch-like regulation of protein function.",
+                        reference="PMID:35130281",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Understanding disulfide bond regulation under different redox "
-                            "environments is critical to understanding physiological and "
-                            "pathological processes related to disulfide bond chemistry."
+                            "Allosteric disulfide bonds permit highly responsive, transient "
+                            "'switch-like' properties that are ideal for processes like "
+                            "coagulation and inflammation that require rapid and localised "
+                            "responses to damage or injury."
                         ),
-                        notes="Regulation of protein function by allosteric disulfide switch (PMID:42681370).",
+                        notes="Switch-like regulation by allosteric disulfide bonds (PMID:35130281).",
                     ),
                 ),
             ),
