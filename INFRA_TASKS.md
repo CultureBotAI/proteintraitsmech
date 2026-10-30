@@ -113,6 +113,7 @@ tasks:
   - `research/cycle3-stage1-add-records-frontier.md`
   - `research/cycle4-stage1-add-records-frontier.md`
   - `research/causal-graphs-round126.md`
+  - `research/causal-graphs-round127.md`
   - `research/stage3-protein-examples-cycle2-coverage-2026-10-25.md`
   - `research/stage3-protein-examples-cycle3-coverage-2026-10-30.md`
 

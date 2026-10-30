@@ -393,7 +393,10 @@ SPECS: tuple[TraitSpec, ...] = (
             ("21st amino acid residue", "RELATED_SYNONYM"),
         ),
         xrefs=("SO:0001455", "MOD:00031", "CHEBI:30000"),
-        evidence=(("PMID:28192430", "Secmarker identifies tRNASec and UGA recoding across selenoprotein-encoding genomes."),),
+        evidence=(
+            ("PMID:28192430", "Secmarker identifies tRNASec and UGA recoding across selenoprotein-encoding genomes."),
+            ("PMID:41997725", "Translation of UGA as selenocysteine relies heavily on a specific mRNA sequence (SECIS element) in the transcript."),
+        ),
         detection_methods=(M_SECIS,),
         causal_graphs=(
             CausalGraphSpec(
@@ -450,14 +453,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="participates in",
                         object="GO:0001514",
                         description="The SECIS RNA stem-loop participates in SelB/EEFSEC recruitment for UGA recoding.",
-                        reference="PMID:28192430",
+                        reference="PMID:41997725",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Selenocysteine (Sec) is known as the 21st amino acid, a cysteine analogue "
-                            "with selenium replacing sulphur. Sec is inserted co-translationally in a "
-                            "small fraction of proteins called selenoproteins."
+                            "Translation of UGA as selenocysteine relies heavily on the presence of "
+                            "a specific messenger RNA (mRNA) sequence found in the transcript."
                         ),
-                        notes="SecMarker / selenocysteine incorporation mechanism (PMID:28192430).",
+                        notes="mRNA SECIS sequence required for UGA translation as selenocysteine (PMID:41997725).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000885",
@@ -482,9 +484,8 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:28192430",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Sec is inserted co-translationally in a small fraction of proteins called "
-                            "selenoproteins. In selenoprotein genes, the Sec specific tRNA (tRNASec) "
-                            "drives the recoding of highly specific UGA codons from stop signals to Sec."
+                            "Selenocysteine (Sec) is known as the 21st amino acid, a cysteine analogue "
+                            "with selenium replacing sulphur."
                         ),
                         notes="L-selenocysteine substrate input (PMID:28192430).",
                     ),
@@ -497,8 +498,8 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:28192430",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "In selenoprotein genes, the Sec specific tRNA (tRNASec) drives the recoding "
-                            "of highly specific UGA codons from stop signals to Sec."
+                            "Sec is inserted co-translationally in a small fraction of proteins called "
+                            "selenoproteins."
                         ),
                         notes="Polypeptide L-selenocysteine residue output (PMID:28192430).",
                     ),
@@ -594,14 +595,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002327",
                         predicate_label="enables",
                         object="GO:0030631",
-                        description="Pyrrolysyl-tRNA synthetase activity enables cotranslational pyrrolysine incorporation.",
+                        description="Pyrrolysyl-tRNA synthetase activity enables cotranslational pyrrolysine incorporation at stop codons.",
                         reference="PMID:41997725",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Pyrrolysine is made as a free amino acid and then used to aminoacylate its "
-                            "specific tRNAPyl by pyrrolysyl-tRNAPyl synthetase."
+                            "Both selenocysteine and pyrrolysine are encoded in genes by what are "
+                            "otherwise stop codons."
                         ),
-                        notes="PylRS-enabled pyrrolysine incorporation (PMID:41997725).",
+                        notes="PylRS-enabled stop-codon recoding into pyrrolysine (PMID:41997725).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000884",
@@ -655,7 +656,10 @@ SPECS: tuple[TraitSpec, ...] = (
             ("retained N-formylmethionine", "EXACT_SYNONYM"),
         ),
         xrefs=("MOD:00030", "CHEBI:16552"),
-        evidence=(("PMID:42079159", "Peptide deformylase (PDF, EC:3.5.1.88) removes the formyl group from N-formylmethionine (fMet) on nascent peptides."),),
+        evidence=(
+            ("PMID:42079159", "Peptide deformylase (PDF, EC:3.5.1.88) removes the formyl group from N-formylmethionine (fMet) on nascent peptides."),
+            ("PMID:12101237", "Methionyl-tRNA formyltransferase (MTF) formylates methionine attached to initiator tRNA for translation initiation in eubacteria and organelles."),
+        ),
         detection_methods=(M_FMET,),
         causal_graphs=(
             CausalGraphSpec(
@@ -712,14 +716,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="has output",
                         object="CHEBI:16552",
                         description="Methionyl-tRNA formyltransferase produces N-formyl-L-methionine on initiator tRNA.",
-                        reference="PMID:18718933",
+                        reference="PMID:12101237",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Because protein synthesis begins with N-formylmethionine in plant "
-                            "endosymbiotic organelles, removal of the formyl group by peptide "
-                            "deformylase (PDF) is essential to allowing the excision of the first methionine."
+                            "Expression of active MTF, but not of an inactive mutant, leads to "
+                            "formylation of methionine attached to the yeast cytoplasmic initiator "
+                            "tRNA to the extent of about 70%."
                         ),
-                        notes="Formylated initiator methionine synthesis (PMID:18718933).",
+                        notes="Formylation of initiator Met-tRNA by methionyl-tRNA formyltransferase (PMID:12101237).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006413",
@@ -756,15 +760,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="MOD:00030",
-                        description="Formylmethionine deformylase acts on the N-formyl-L-methionine residue of nascent peptides unless bypassed.",
+                        description="Formylmethionine deformylase acts on the N-formyl-L-methionine residue of nascent peptides unless decreased or bypassed.",
                         reference="PMID:42079159",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The def gene encodes peptide deformylase (PDF, EC:3.5.1.88), an enzyme "
-                            "that contributes to protein processing by removing the formyl group from "
-                            "N-formylmethionine (fMet) on nascent peptides."
+                            "The def evo allele has a single missense mutation that decreases PDF "
+                            "activity both in vitro and in vivo."
                         ),
-                        notes="PDF deformylation substrate (PMID:42079159).",
+                        notes="Reduced PDF deformylase activity alters processing of nascent N-formylmethionine peptides (PMID:42079159).",
                     ),
                 ),
             ),
@@ -2325,7 +2328,10 @@ SPECS: tuple[TraitSpec, ...] = (
             ("type I signal peptidase secretory leader", "EXACT_SYNONYM"),
         ),
         xrefs=("SO:0000418",),
-        evidence=(("PMID:34980915", "SignalP 6.0 predicts all five types of signal peptides across bacteria, archaea, and eukarya."),),
+        evidence=(
+            ("PMID:34980915", "SignalP 6.0 predicts all five types of signal peptides across bacteria, archaea, and eukarya."),
+            ("PMID:24333859", "Type I signal peptidase (SPase I) cleaves off the amino-terminal signal peptide from proteins secreted across the bacterial cytoplasmic membrane using an exo-cytoplasmic Ser/Lys catalytic dyad."),
+        ),
         detection_methods=(M_SIGNALP6,),
         causal_graphs=(
             CausalGraphSpec(
@@ -2377,7 +2383,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:34980915",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Signal peptides (SPs) are short N-terminal amino acid sequences that "
+                            "Signal peptides (SPs) are short amino acid sequences that "
                             "control protein secretion and translocation in all living organisms."
                         ),
                         notes="Sec targeting by N-terminal signal peptides (PMID:34980915).",
@@ -2388,10 +2394,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0004175",
                         description="Translocation across the Sec channel exposes the c-region cleavage site to signal peptidase I.",
-                        reference="PMID:34980915",
+                        reference="PMID:24333859",
                         evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Translocation precedes SPase I cleavage (PMID:34980915).",
+                        snippet="It is an essential membrane bound enzyme whose serine/lysine catalytic dyad resides on the exo-cytoplasmic surface of the bacterial membrane.",
+                        notes="Translocation exposes the preprotein cleavage site to the exo-cytoplasmic Ser/Lys dyad of SPase I (PMID:24333859).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -2399,13 +2405,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0009306",
                         description="Proteolytic removal of the signal peptide releases the mature secreted polypeptide.",
-                        reference="PMID:34980915",
+                        reference="PMID:24333859",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Signal peptides (SPs) are short N-terminal amino acid sequences that "
-                            "control protein secretion and translocation in all living organisms."
+                            "Type I signal peptidase is the enzyme responsible for cleaving off the "
+                            "amino-terminal signal peptide from proteins that are secreted across the "
+                            "bacterial cytoplasmic membrane."
                         ),
-                        notes="SPase I cleavage releases mature secreted protein (PMID:34980915).",
+                        notes="SPase I cleavage removes the N-terminal signal peptide from secreted proteins (PMID:24333859).",
                     ),
                 ),
             ),
@@ -2431,7 +2438,8 @@ SPECS: tuple[TraitSpec, ...] = (
         sequence_pattern="[LVI][ASTVI][GAS]C",
         evidence=(
             ("PMID:34980915", "SignalP 6.0 predicts all five types of signal peptides and cleavage sites across organisms."),
-            ("PMID:42050317", "Nascent bacterial lipoproteins are sequentially modified by Lgt, cleaved by LspA (signal peptidase II), and N-acylated."),
+            ("PMID:20572939", "Bacterial lipoproteins are translocated across the cytoplasmic membrane primarily by the Sec pathway, lipidated on a conserved cysteine by lipoprotein diacylglycerol transferase (Lgt), and cleaved by lipoprotein signal peptidase (Lsp)."),
+            ("PMID:26912896", "Posttranslational processing of bacterial lipoproteins requires signal peptidase II (LspA) to remove the signal peptide from the diacylglyceryl-modified prolipoprotein."),
         ),
         detection_methods=(M_SIGNALP6,),
         causal_graphs=(
@@ -2491,7 +2499,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:34980915",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Signal peptides (SPs) are short N-terminal amino acid sequences that "
+                            "Signal peptides (SPs) are short amino acid sequences that "
                             "control protein secretion and translocation in all living organisms."
                         ),
                         notes="Sec export of Sec/SPII prolipoproteins (PMID:34980915).",
@@ -2502,10 +2510,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0006497",
                         description="Sec translocation presents the lipobox cysteine to prolipoprotein diacylglyceryl transferase (Lgt).",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Lipobox S-diacylglyceryl modification precedes SPase II cleavage (PMID:34980915).",
+                        reference="PMID:20572939",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Lipoproteins are a distinct class of bacterial membrane proteins that are "
+                            "translocated across the cytoplasmic membrane primarily by the Sec general "
+                            "secretory pathway and then lipidated on a conserved cysteine by the enzyme "
+                            "lipoprotein diacylglycerol transferase (Lgt)."
+                        ),
+                        notes="Sec translocation precedes Lgt-catalyzed diacylglyceryl modification of the conserved lipobox cysteine (PMID:20572939).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006497",
@@ -2513,17 +2526,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0004175",
                         description="S-diacylglyceryl modification of the +1 cysteine is required for LspA (SPase II) cleavage.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
-                        snippet=(
-                            "In this work, we present SignalP 6.0, a machine learning model that detects "
-                            "all five known types of SPs and is applicable to all organisms, including "
-                            "metagenomic data. By using protein language models, SignalP 6.0 is able to "
-                            "predict types of SPs with limited training data, extrapolate to distantly "
-                            "related organisms and, without using explicit region annotation, identify "
-                            "the regions of SPs."
-                        ),
-                        notes="SPase II cleavage requires prior lipobox lipidation (PMID:34980915).",
+                        reference="PMID:26912896",
+                        evidence_code="ECO:0000269",
+                        snippet="Posttranslational processing requires a signal peptidase II (LspA) that removes the signal peptide.",
+                        notes="SPase II (LspA) removes the signal peptide from the diacylglyceryl-modified prolipoprotein (PMID:26912896).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -2531,10 +2537,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="has output",
                         object="MOD:00116",
                         description="SPase II cleavage exposes S-diacylglycerol-L-cysteine as the new N-terminal residue.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Mature N-terminal S-diacylglyceryl-cysteine lipoprotein (PMID:34980915).",
+                        reference="PMID:20572939",
+                        evidence_code="ECO:0000269",
+                        snippet="The signal peptide is cleaved by lipoprotein signal peptidase (Lsp) to leave the lipid-modified cysteine at the N-terminus of the mature lipoprotein.",
+                        notes="Lsp cleavage exposes the lipid-modified cysteine at the mature N-terminus (PMID:20572939).",
                     ),
                 ),
             ),
@@ -2561,6 +2567,8 @@ SPECS: tuple[TraitSpec, ...] = (
         evidence=(
             ("PMID:34980915", "Prediction of Tat/SPI twin-arginine signal peptides with SignalP 6.0."),
             ("PMID:34122494", "Secretory (Sec) and twin-arginine translocation (Tat) signal peptides direct protein export across membranes."),
+            ("PMID:22683878", "The twin-arginine translocation (Tat) protein export system in bacteria and archaea transports fully folded proteins across the cytoplasmic membrane."),
+            ("PMID:24333859", "Type I signal peptidase cleaves off the amino-terminal signal peptide from proteins secreted across the bacterial cytoplasmic membrane."),
         ),
         detection_methods=(M_SIGNALP6,),
         causal_graphs=(
@@ -2624,11 +2632,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0004175",
-                        description="Tat translocation exposes the c-region cleavage site to signal peptidase I.",
-                        reference="PMID:34980915",
+                        description="Tat translocation exports the folded preprotein across the cytoplasmic membrane to expose the cleavage site to signal peptidase I.",
+                        reference="PMID:22683878",
                         evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Tat export followed by SPase I cleavage (PMID:34980915).",
+                        snippet=(
+                            "The twin-arginine translocation (Tat) protein export system is present in the "
+                            "cytoplasmic membranes of most bacteria and archaea and has the highly unusual "
+                            "property of transporting fully folded proteins."
+                        ),
+                        notes="Tat export of folded proteins across the cytoplasmic membrane (PMID:22683878).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -2636,13 +2648,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0009306",
                         description="SPase I cleavage releases the mature folded protein into the periplasm or extracellular space.",
-                        reference="PMID:34980915",
+                        reference="PMID:24333859",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Signal peptides (SPs) are short N-terminal amino acid sequences that "
-                            "control protein secretion and translocation in all living organisms."
+                            "Type I signal peptidase is the enzyme responsible for cleaving off the "
+                            "amino-terminal signal peptide from proteins that are secreted across the "
+                            "bacterial cytoplasmic membrane."
                         ),
-                        notes="Release of mature Tat-exported protein (PMID:34980915).",
+                        notes="SPase I cleavage releases the mature Tat-exported protein (PMID:24333859).",
                     ),
                 ),
             ),
@@ -2668,6 +2681,7 @@ SPECS: tuple[TraitSpec, ...] = (
         evidence=(
             ("PMID:34980915", "Identification of Tat/SPII twin-arginine lipoprotein signal peptides by SignalP 6.0."),
             ("PMID:26341016", "Involvement of Sec-, Tat- and SRP-dependent protein targeting pathways in bacterial membranes."),
+            ("PMID:20572939", "Bacterial lipoproteins exported via the Tat or Sec pathway are lipidated on a conserved cysteine by Lgt and cleaved by lipoprotein signal peptidase (Lsp)."),
         ),
         detection_methods=(M_SIGNALP6,),
         causal_graphs=(
@@ -2739,26 +2753,31 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0006497",
-                        description="Tat export delivers the c-region lipobox to Lgt for S-diacylglycerylation.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
+                        description="Tat export delivers the c-region lipobox of Tat-dependent lipoproteins to Lgt for S-diacylglycerylation.",
+                        reference="PMID:20572939",
+                        evidence_code="ECO:0000269",
                         snippet=(
-                            "In this work, we present SignalP 6.0, a machine learning model that detects "
-                            "all five known types of SPs and is applicable to all organisms, including "
-                            "metagenomic data."
+                            "We report that Streptomyces species translocate large numbers of lipoproteins "
+                            "out via the Tat (twin arginine translocase) pathway and we present evidence "
+                            "that lipoprotein biogenesis might be an essential pathway in S. coelicolor."
                         ),
-                        notes="Lipidation of Tat-exported prolipoprotein (PMID:34980915).",
+                        notes="Translocation of bacterial prolipoproteins via the Tat pathway into the lipoprotein biogenesis pathway (PMID:20572939).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006497",
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0004175",
-                        description="Lipobox S-diacylglycerylation enables cleavage by SPase II (LspA).",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="SPase II cleavage of Tat/SPII leader (PMID:34980915).",
+                        description="Lgt-catalyzed diacylglyceryl modification of the conserved lipobox cysteine precedes cleavage by SPase II (Lsp).",
+                        reference="PMID:20572939",
+                        evidence_code="ECO:0000269",
+                        snippet=(
+                            "Lipoproteins are a distinct class of bacterial membrane proteins that are "
+                            "translocated across the cytoplasmic membrane primarily by the Sec general "
+                            "secretory pathway and then lipidated on a conserved cysteine by the enzyme "
+                            "lipoprotein diacylglycerol transferase (Lgt)."
+                        ),
+                        notes="Lgt lipidation of the conserved cysteine precedes SPase II cleavage (PMID:20572939).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -2766,10 +2785,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="has output",
                         object="MOD:00116",
                         description="SPase II cleavage yields the mature N-terminal S-diacylglycerol-L-cysteine anchor.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Mature lipid-anchored Tat/SPII lipoprotein (PMID:34980915).",
+                        reference="PMID:20572939",
+                        evidence_code="ECO:0000269",
+                        snippet="The signal peptide is cleaved by lipoprotein signal peptidase (Lsp) to leave the lipid-modified cysteine at the N-terminus of the mature lipoprotein.",
+                        notes="Mature lipid-anchored Tat/SPII lipoprotein generated by Lsp cleavage (PMID:20572939).",
                     ),
                 ),
             ),
@@ -2792,7 +2811,10 @@ SPECS: tuple[TraitSpec, ...] = (
             ("Sec/SPIII signal peptide", "EXACT_SYNONYM"),
             ("type IV prepilin leader peptide", "EXACT_SYNONYM"),
         ),
-        evidence=(("PMID:34980915", "Sec/SPIII prepilin signal peptide prediction in SignalP 6.0."),),
+        evidence=(
+            ("PMID:34980915", "Sec/SPIII prepilin signal peptide prediction in SignalP 6.0."),
+            ("PMID:9224881", "The bifunctional enzyme prepilin peptidase (PilD) cleaves the unique leader peptides of type-IV pilin precursors and catalyzes N-methylation of the newly exposed N-terminal amino acid residue."),
+        ),
         detection_methods=(M_SIGNALP6,),
         causal_graphs=(
             CausalGraphSpec(
@@ -2844,7 +2866,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:34980915",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Signal peptides (SPs) are short N-terminal amino acid sequences that "
+                            "Signal peptides (SPs) are short amino acid sequences that "
                             "control protein secretion and translocation in all living organisms."
                         ),
                         notes="Sec insertion of Sec/SPIII prepilins (PMID:34980915).",
@@ -2854,11 +2876,16 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0004175",
-                        description="Membrane insertion positions the n/h boundary on the cytoplasmic side for SPase III cleavage.",
-                        reference="PMID:34980915",
+                        description="Membrane insertion positions the prepilin leader peptide on the cytoplasmic side for PilD (SPase III) endopeptidase cleavage.",
+                        reference="PMID:9224881",
                         evidence_code="ECO:0000305",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Cytoplasmic-side cleavage by SPase III (PMID:34980915).",
+                        snippet=(
+                            "It is responsible for endopeptidic cleavage of the unique leader peptides that "
+                            "characterize type-IV pilin precursors, as well as proteins with homologous leader "
+                            "sequences that are essential components of the general secretion pathway found in "
+                            "a variety of Gram-negative pathogens."
+                        ),
+                        notes="Endopeptidic cleavage of type-IV prepilin leader peptides by PilD / SPase III (PMID:9224881).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -2866,14 +2893,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="causally upstream of",
                         object="GO:0051604",
                         description="SPase III leader excision and N-terminal methylation produce the mature pilin subunit.",
-                        reference="PMID:34980915",
+                        reference="PMID:9224881",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "In this work, we present SignalP 6.0, a machine learning model that detects "
-                            "all five known types of SPs and is applicable to all organisms, including "
-                            "metagenomic data."
+                            "Following removal of the leader peptides, the same enzyme is responsible for the "
+                            "second posttranslational modification that characterizes the type-IV pilins and "
+                            "their homologues, namely N-methylation of the newly exposed N-terminal amino acid residue."
                         ),
-                        notes="Prepilin maturation via SPase III (PMID:34980915).",
+                        notes="Prepilin maturation via PilD leader removal and N-methylation (PMID:9224881).",
                     ),
                 ),
             ),
@@ -3088,12 +3115,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002339",
                         predicate_label="has target end location",
                         object="GO:0009570",
-                        description="Chloroplast stromal import delivers the preprotein to the stromal side of the import machinery.",
+                        description="Chloroplast stromal import routes nuclear-encoded preproteins across the chloroplast envelope to the stroma.",
                         reference="PMID:37324391",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Once the preprotein emerges on the stromal side of the chloroplast protein "
-                            "import machinery, the transit peptide is cleaved by stromal processing peptidase."
+                            "This review summarizes the common features of targeting sequences and "
+                            "describes their role in routing preproteins to and across the chloroplast "
+                            "envelope as well as the thylakoid membrane and lumen."
                         ),
                         notes="Target end location in the chloroplast stroma (PMID:37324391).",
                     ),
@@ -3219,13 +3247,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002339",
                         predicate_label="has target end location",
                         object="GO:0009543",
-                        description="The second targeting signal guides thylakoid-localized proteins to the thylakoid lumen.",
+                        description="Targeting sequences route thylakoid-localized preproteins across the thylakoid membrane into the thylakoid lumen.",
                         reference="PMID:37324391",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "In the case of thylakoid-localized proteins, cleavage of the transit peptides "
-                            "may expose a second targeting signal guiding the protein to the thylakoid lumen "
-                            "or allow insertion into the thylakoid membrane by internal sequence information."
+                            "This review summarizes the common features of targeting sequences and "
+                            "describes their role in routing preproteins to and across the chloroplast "
+                            "envelope as well as the thylakoid membrane and lumen."
                         ),
                         notes="Target end location in the chloroplast thylakoid lumen (PMID:37324391).",
                     ),
@@ -3325,15 +3353,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002212",
                         predicate_label="negatively regulates",
                         object="GO:0003824",
-                        description="Intramolecular propeptide inhibition maintains the zymogen in an inactive state.",
-                        reference="PMID:31557781",
+                        description="Active-site binding by the propeptide inversely regulates zymogen catalytic activity.",
+                        reference="PMID:38421254",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "CatC is first synthetized as an inactive zymogen containing an intramolecular "
-                            "chain propeptide, the dimeric form of which is processed into the mature "
-                            "tetrameric form by proteolytic cleavages."
+                            "Quantitative analysis of the binding affinity of the mutated propeptides "
+                            "to the active site of MTG suggested an inverse relationship between the "
+                            "binding affinity and the catalytic activity of EzMTG."
                         ),
-                        notes="Negative regulation of catalysis in latent zymogen (PMID:31557781).",
+                        notes="Inverse relationship between propeptide active-site binding affinity and catalytic activity (PMID:38421254).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
@@ -3355,15 +3383,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0003824",
-                        description="Proteolytic removal of the propeptide produces the active mature enzyme.",
-                        reference="PMID:38421254",
+                        description="Proteolytic processing and activation of the proform yields the active mature enzyme.",
+                        reference="PMID:31557781",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The preparation of active recombinant MTG requires post-translational "
-                            "proteolytic digestion of a propeptide that functions as an intramolecular "
-                            "chaperone to assist the correct folding of the MTG zymogen (MTGz) in the biosynthesis."
+                            "Our in vitro experiments revealed that human proCatC was processed and "
+                            "activated by CatF, CatK, and CatV in two consecutive steps of maturation, "
+                            "as reported for CatL and CatS previously."
                         ),
-                        notes="Unmasking of mature catalytic activity (PMID:38421254).",
+                        notes="Stepwise proteolytic maturation activates proCatC (PMID:31557781).",
                     ),
                 ),
             ),
@@ -3464,15 +3492,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0031638",
-                        description="Cleavage and degradation of the IMC propeptide completes structural reorganization and activation.",
+                        description="Autocatalytic nucleophilic attack cleaves the IMC-subtilisin junction to yield active protease.",
                         reference="PMID:33569954",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "During the precursor folding, the cleavage of the peptide bond between the IMC "
-                            "and the subtilisin domain is the most important and rate-limiting step, which "
-                            "leads to the structural reorganization of the subtilisin domain and IMC's degradation."
+                            "It is speculated that the cleavage is fulfilled by the nucleophilic attack "
+                            "of Ser221, with the assistance of Asp32 positioning the correct tautomer "
+                            "of His64 and His64 accepting a proton from Ser221."
                         ),
-                        notes="IMC degradation completes enzyme activation (PMID:33569954).",
+                        notes="Catalytic-triad nucleophilic cleavage of the IMC-subtilisin junction (PMID:33569954).",
                     ),
                 ),
             ),
@@ -3578,13 +3606,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0051604",
-                        description="Proteolytic cleavage after dibasic residues drives maturation of secretory proteins.",
+                        description="Site-specific cleavage at Kex2p recognition sites removes propeptides/fusion partners to yield the mature protein.",
                         reference="PMID:37482809",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Kex2 protease (Kex2p) is a membrane-bound serine protease responsible for the "
-                            "proteolytic maturation of various secretory proteins by cleaving after dibasic "
-                            "residues in the late Golgi network."
+                            "To avoid in vivo processing of fusion proteins by Kex2p during "
+                            "secretion and to guarantee efficient removal of the fusion partners "
+                            "by in vitro Kex2p processing, P1', P2', P4, and P3 sites of Kex2p "
+                            "cleavage sites were elaborately manipulated."
                         ),
                         notes="Proteolytic maturation of secretory proteins (PMID:37482809).",
                     ),
@@ -3669,11 +3698,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         snippet=(
                             "Here, we developed an expression system for recombinant human serum "
                             "albumin (rHSA) by fusing the a domain of human protein disulfide "
-                            "isomerase (PDI) to the N-terminus of HSA. PDI(a)-mediated cis-fusion "
-                            "enabled high-level production of soluble rHSA in oxidizing E. coli "
-                            "strains under low-temperature conditions. Purified E. coli-rHSA was "
-                            "predominantly monomeric and had the molecular mass expected for HSA "
-                            "containing 17 intramolecular disulfide bonds."
+                            "isomerase (PDI) to the N-terminus of HSA."
                         ),
                         notes="Oxidation of paired intrachain cysteine residues by PDI (PMID:42829235).",
                     ),
@@ -3686,13 +3711,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:42829235",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Here, we developed an expression system for recombinant human serum "
-                            "albumin (rHSA) by fusing the a domain of human protein disulfide "
-                            "isomerase (PDI) to the N-terminus of HSA. PDI(a)-mediated cis-fusion "
-                            "enabled high-level production of soluble rHSA in oxidizing E. coli "
-                            "strains under low-temperature conditions. Purified E. coli-rHSA was "
-                            "predominantly monomeric and had the molecular mass expected for HSA "
-                            "containing 17 intramolecular disulfide bonds."
+                            "Purified E. coli-rHSA was predominantly monomeric and had the "
+                            "molecular mass expected for HSA containing 17 intramolecular "
+                            "disulfide bonds."
                         ),
                         notes="Formation of intramolecular cystine crosslinks (PMID:42829235).",
                     ),
@@ -3701,19 +3722,16 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0006457",
-                        description="PDI-catalyzed intramolecular disulfide bond formation promotes soluble monomeric protein folding.",
+                        description="PDI-catalyzed intramolecular disulfide bond formation promotes structurally native-like and functionally competent protein folding.",
                         reference="PMID:42829235",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Here, we developed an expression system for recombinant human serum "
-                            "albumin (rHSA) by fusing the a domain of human protein disulfide "
-                            "isomerase (PDI) to the N-terminus of HSA. PDI(a)-mediated cis-fusion "
-                            "enabled high-level production of soluble rHSA in oxidizing E. coli "
-                            "strains under low-temperature conditions. Purified E. coli-rHSA was "
-                            "predominantly monomeric and had the molecular mass expected for HSA "
-                            "containing 17 intramolecular disulfide bonds."
+                            "These results demonstrate that PDI(a)-mediated cis-fusion enables "
+                            "high-yield production of structurally native-like and functionally "
+                            "competent HSA in the bacterial cytosol and provides a practical "
+                            "platform for producing complex disulfide-rich proteins in E. coli."
                         ),
-                        notes="Intramolecular disulfide formation promotes soluble folding (PMID:42829235).",
+                        notes="Intramolecular disulfide formation promotes native folding (PMID:42829235).",
                     ),
                 ),
             ),
@@ -3789,14 +3807,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="CHEBI:29950",
-                        description="Oxidative disulfide formation consumes available cysteine thiols on partner subunits.",
+                        description="Oxidative disulfide formation consumes available cysteine thiols across identical and different subunits.",
                         reference="PMID:19005088",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Our results indicate that individual cysteine residues that remain "
-                            "available for disulfide bond formation in the folded monomer can form "
-                            "interchain disulfide bonds with a variety of different cysteine "
-                            "residues present in a companion subunit."
+                            "Here, we have addressed these issues by analyzing the formation of "
+                            "interchain disulfide bonds between identical and different LMW-GS "
+                            "and by studying the assembly of mutants lacking individual "
+                            "intrachain disulfides."
                         ),
                         notes="Inter-subunit cysteine oxidation (PMID:19005088).",
                     ),
@@ -3821,14 +3839,14 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0051259",
-                        description="Interchain disulfide bond formation covalently links companion subunits into oligomers.",
+                        description="Interchain disulfide bond formation covalently links companion subunits into polymeric structures.",
                         reference="PMID:19005088",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Our results indicate that individual cysteine residues that remain "
-                            "available for disulfide bond formation in the folded monomer can form "
-                            "interchain disulfide bonds with a variety of different cysteine "
-                            "residues present in a companion subunit."
+                            "These results imply that the coordinated expression of many "
+                            "different LMW-GS in wheat endosperm cells can potentially lead to "
+                            "the formation of a large set of distinct polymeric structures, in "
+                            "which subunits can be arranged in different configurations."
                         ),
                         notes="Covalent subunit cross-linking into oligomers (PMID:19005088).",
                     ),
@@ -3907,16 +3925,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="CHEBI:29950",
-                        description="Oxidative folding of cystine-knot peptides utilizes six conserved L-cysteine residues.",
+                        description="Biosynthesis and oxidative folding of cyclotide cystine-knot peptides utilizes conserved L-cysteine residues.",
                         reference="PMID:40763564",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Cyclotides are plant-derived cyclic peptides with three conserved "
-                            "disulfide linkages, forming a cyclic cystine knot (CCK) motif. This "
-                            "CCK topology makes them ultra stable structures and resistant to "
-                            "thermal and chemical degradation."
+                            "HMM-based searches were used to identify novel cyclotides and the "
+                            "enzymes involved in their biosynthesis, specifically asparaginyl "
+                            "endopeptidases (AEPs)."
                         ),
-                        notes="Conserved cysteine residues forming three disulfide linkages (PMID:40763564).",
+                        notes="Biosynthesis of cyclotide cystine-knot peptides (PMID:40763564).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006457",
@@ -3928,9 +3945,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         evidence_code="ECO:0000305",
                         snippet=(
                             "Cyclotides are plant-derived cyclic peptides with three conserved "
-                            "disulfide linkages, forming a cyclic cystine knot (CCK) motif. This "
-                            "CCK topology makes them ultra stable structures and resistant to "
-                            "thermal and chemical degradation."
+                            "disulfide linkages, forming a cyclic cystine knot (CCK) motif."
                         ),
                         notes="Formation of three-disulfide cystine knot motif (PMID:40763564).",
                     ),
@@ -3943,9 +3958,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:40763564",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Cyclotides are plant-derived cyclic peptides with three conserved "
-                            "disulfide linkages, forming a cyclic cystine knot (CCK) motif. This "
-                            "CCK topology makes them ultra stable structures and resistant to "
+                            "This CCK topology makes them ultra stable structures and resistant to "
                             "thermal and chemical degradation."
                         ),
                         notes="Ultrastability against thermal and chemical degradation (PMID:40763564).",
@@ -4031,36 +4044,29 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002233",
                         predicate_label="has input",
                         object="MOD:00034",
-                        description="Thiol isomerases / oxidoreductases act on allosteric cystine disulfide bonds.",
+                        description="Thiol isomerases are oxidoreductases that act on protein disulfide bonds.",
                         reference="PMID:42681370",
                         evidence_code="ECO:0000305",
                         snippet=(
                             "Thiol isomerases are oxidoreductases that mediate disulfide bond "
                             "formation in nascent proteins of the endoplasmic reticulum to ensure "
-                            "their structural integrity. In addition to its role in protein "
-                            "folding, thiol isomerases can modify allosteric disulfide bonds in "
-                            "both intracellular and extracellular proteins, thereby controlling "
-                            "protein function."
+                            "their structural integrity."
                         ),
-                        notes="Modification of allosteric disulfide bonds by thiol isomerases (PMID:42681370).",
+                        notes="Thiol isomerase action on protein disulfide bonds (PMID:42681370).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0015035",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="CHEBI:29950",
-                        description="Reductive cleavage converts the allosteric cystine crosslink into L-cysteine thiols.",
+                        description="Redox-responsive disulfide bond cleavage converts the cystine crosslink into L-cysteine thiols.",
                         reference="PMID:42681370",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Thiol isomerases are oxidoreductases that mediate disulfide bond "
-                            "formation in nascent proteins of the endoplasmic reticulum to ensure "
-                            "their structural integrity. In addition to its role in protein "
-                            "folding, thiol isomerases can modify allosteric disulfide bonds in "
-                            "both intracellular and extracellular proteins, thereby controlling "
-                            "protein function."
+                            "The process of disulfide bond formation and cleavage is strictly "
+                            "regulated and responsive to redox conditions."
                         ),
-                        notes="Reductive modification of allosteric disulfide bonds (PMID:42681370).",
+                        notes="Redox-responsive disulfide bond cleavage (PMID:42681370).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0015035",
@@ -4071,12 +4077,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         reference="PMID:42681370",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Thiol isomerases are oxidoreductases that mediate disulfide bond "
-                            "formation in nascent proteins of the endoplasmic reticulum to ensure "
-                            "their structural integrity. In addition to its role in protein "
-                            "folding, thiol isomerases can modify allosteric disulfide bonds in "
-                            "both intracellular and extracellular proteins, thereby controlling "
-                            "protein function."
+                            "In addition to its role in protein folding, thiol isomerases can "
+                            "modify allosteric disulfide bonds in both intracellular and "
+                            "extracellular proteins, thereby controlling protein function."
                         ),
                         notes="Allosteric control of protein function via disulfide modification (PMID:42681370).",
                     ),
@@ -4085,16 +4088,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002211",
                         predicate_label="regulates",
                         object="GO:0003824",
-                        description="Allosteric disulfide switching controls target protein function.",
+                        description="Disulfide bond regulation under different redox environments governs physiological and catalytic processes.",
                         reference="PMID:42681370",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Thiol isomerases are oxidoreductases that mediate disulfide bond "
-                            "formation in nascent proteins of the endoplasmic reticulum to ensure "
-                            "their structural integrity. In addition to its role in protein "
-                            "folding, thiol isomerases can modify allosteric disulfide bonds in "
-                            "both intracellular and extracellular proteins, thereby controlling "
-                            "protein function."
+                            "Understanding disulfide bond regulation under different redox "
+                            "environments is critical to understanding physiological and "
+                            "pathological processes related to disulfide bond chemistry."
                         ),
                         notes="Regulation of protein function by allosteric disulfide switch (PMID:42681370).",
                     ),
@@ -4204,9 +4204,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         snippet=(
                             "The active site Fe(III) of protocatechuate 3,4-dioxygenase (3,4-PCD) "
                             "from Pseudomonas putida is ligated axially by Tyr447 and His462 and "
-                            "equatorially by Tyr408, His460, and OH(-). Tyr447 and OH(-) are "
-                            "displaced as protocatechuate (3,4-dihydroxybenzoate, PCA) chelates "
-                            "the iron and appear to serve as in situ bases to promote this process."
+                            "equatorially by Tyr408, His460, and OH(-)."
                         ),
                         notes="Active-site Fe(III) coordination in 3,4-PCD (PMID:16101286).",
                     ),
@@ -4215,17 +4213,11 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002327",
                         predicate_label="enables",
                         object="GO:0018578",
-                        description="The PcaHG holoenzyme complex enables protocatechuate 3,4-dioxygenase catalysis.",
+                        description="The PcaHG holoenzyme complex enables ferric intradiol protocatechuate 3,4-dioxygenase catalysis.",
                         reference="PMID:11029436",
                         evidence_code="ECO:0000269",
-                        snippet=(
-                            "The nucleotide sequence of the A348 pcaHGB genes, which encode "
-                            "protocatechuate 3,4-dioxygenase (PcaHG) and "
-                            "beta-carboxy-cis,cis-muconate cycloisomerase (PcaB) for the first "
-                            "two steps in catabolism of the diphenolic protocatechuate, was "
-                            "determined."
-                        ),
-                        notes="PcaHG complex encodes protocatechuate 3,4-dioxygenase activity (PMID:11029436).",
+                        snippet="PcaHG is considered to be the prototypical ferric intradiol dioxygenase.",
+                        notes="PcaHG complex enables ferric intradiol dioxygenase activity (PMID:11029436).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0018578",
@@ -4264,17 +4256,16 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002331",
                         predicate_label="involved in",
                         object="GO:0019618",
-                        description="Protocatechuate 3,4-dioxygenase catalyzes the first step of protocatechuate ortho-cleavage catabolism.",
+                        description="Active-site residues of PcaHG are required for protocatechuate ortho-cleavage catabolism.",
                         reference="PMID:11029436",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The nucleotide sequence of the A348 pcaHGB genes, which encode "
-                            "protocatechuate 3,4-dioxygenase (PcaHG) and "
-                            "beta-carboxy-cis,cis-muconate cycloisomerase (PcaB) for the first "
-                            "two steps in catabolism of the diphenolic protocatechuate, was "
-                            "determined."
+                            "The missense mutations served to corroborate the significance of "
+                            "active site amino acid residues deduced from crystal structures of "
+                            "PcaHG from Pseudomonas putida and Acinetobacter sp. as well as of "
+                            "residues in other parts of the enzyme."
                         ),
-                        notes="First step of protocatechuate ortho-cleavage catabolic pathway (PMID:11029436).",
+                        notes="Active-site requirement in protocatechuate ortho-cleavage catabolism (PMID:11029436).",
                     ),
                 ),
             ),
@@ -4365,8 +4356,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         snippet=(
                             "In a significant fraction of the Escherichia coli cytosolic "
                             "proteins, the N-terminal methionine residue incorporated during the "
-                            "translation initiation step is excised. The N-terminal methionine "
-                            "excision is catalyzed by methionyl-aminopeptidase (MAP)."
+                            "translation initiation step is excised."
                         ),
                         notes="Translation initiation incorporates N-terminal Met1 (PMID:2682640).",
                     ),
@@ -4395,12 +4385,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Methionyl-aminopeptidase activity catalyzes N-terminal methionine excision during nascent polypeptide processing.",
                         reference="PMID:2682640",
                         evidence_code="ECO:0000269",
-                        snippet=(
-                            "In a significant fraction of the Escherichia coli cytosolic "
-                            "proteins, the N-terminal methionine residue incorporated during the "
-                            "translation initiation step is excised. The N-terminal methionine "
-                            "excision is catalyzed by methionyl-aminopeptidase (MAP)."
-                        ),
+                        snippet="The N-terminal methionine excision is catalyzed by methionyl-aminopeptidase (MAP).",
                         notes="MAP catalyzes N-terminal methionine excision (PMID:2682640).",
                     ),
                 ),
@@ -4492,8 +4477,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         snippet=(
                             "In a significant fraction of the Escherichia coli cytosolic "
                             "proteins, the N-terminal methionine residue incorporated during the "
-                            "translation initiation step is excised. The N-terminal methionine "
-                            "excision is catalyzed by methionyl-aminopeptidase (MAP)."
+                            "translation initiation step is excised."
                         ),
                         notes="Translation initiation incorporates N-terminal Met1 (PMID:2682640).",
                     ),
@@ -4519,17 +4503,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002327",
                         predicate_label="enables",
                         object="GO:0016485",
-                        description="Methionyl-aminopeptidase activity enables N-terminal methionine excision during protein processing, which is sterically blocked when the penultimate side chain is bulky.",
+                        description="Methionyl-aminopeptidase action on the N-terminus depends on the identity of the second amino acid residue in the polypeptide chain.",
                         reference="PMID:2682640",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "From our results, methionine excision catalyzed by MAP is shown to "
-                            "obey the following rule: the catalytic efficiency of MAP, and "
-                            "therefore the extent of cleavage, decreases in parallel with the "
-                            "increasing of the maximal side-chain length of the amino acid in "
-                            "the penultimate position."
+                            "Previous studies have suggested that the action of this enzyme "
+                            "could depend mainly on the nature of the second amino acid residue "
+                            "in the polypeptide chain."
                         ),
-                        notes="Suppressed MAP cleavage prevents N-terminal methionine excision (PMID:2682640).",
+                        notes="Penultimate residue identity governs MAP action on N-terminal processing (PMID:2682640).",
                     ),
                 ),
             ),
@@ -4628,32 +4610,29 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0004239",
-                        description="Deformylation of N-formylmethionine by PDF is required before methionyl-aminopeptidase can cleave the first methionine.",
+                        description="Organellar peptide deformylase localizes to chloroplasts and mitochondria to deformylate nascent chains for MAP cleavage.",
                         reference="PMID:18718933",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Because protein synthesis begins with N-formylmethionine in plant "
-                            "endosymbiotic organelles, removal of the formyl group by peptide "
-                            "deformylase (PDF) is essential to allowing the excision of the "
-                            "first methionine."
+                            "Transient expression of PDF-green fluorescent protein (GFP) fusion "
+                            "proteins in the protoplasts demonstrates that, unlike OsPDF1A, "
+                            "OsPDF1B is localized in both the chloroplasts and the mitochondria."
                         ),
-                        notes="Deformylation by PDF is essential for subsequent Met1 excision (PMID:18718933).",
+                        notes="Organellar localization of PDF1B for N-terminal deformylation (PMID:18718933).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004239",
                         predicate="RO:0002331",
                         predicate_label="involved in",
                         object="GO:0016485",
-                        description="Methionyl-aminopeptidase excision completes N-terminal protein processing of the deformylated nascent polypeptide.",
+                        description="Sequential PDF deformylation and MAP excision are essential for organellar protein maturation and development.",
                         reference="PMID:18718933",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Because protein synthesis begins with N-formylmethionine in plant "
-                            "endosymbiotic organelles, removal of the formyl group by peptide "
-                            "deformylase (PDF) is essential to allowing the excision of the "
-                            "first methionine."
+                            "Based on these results, we conclude that OsPDF1B is essential for "
+                            "the development of chloroplast and perhaps mitochondria."
                         ),
-                        notes="Sequential PDF and MAP action in N-terminal protein processing (PMID:18718933).",
+                        notes="Essential role of organellar N-terminal deformylation/processing (PMID:18718933).",
                     ),
                 ),
             ),
@@ -4752,14 +4731,13 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="MOD:00058",
-                        description="N-terminal acetylation of retained initiator methionine yields an N-acetyl-L-methionine (MOD:00058) residue at position 1.",
+                        description="N-terminal acetylation generates an N-acetylated N-terminus (MOD:00058) that can serve as a degradation signal in the Ac/N-end rule pathway.",
                         reference="PMID:27498224",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "N-terminal (Nt) acetylation is known to be a highly abundant "
-                            "co-translational protein modification, but the recent discovery of "
-                            "Golgi- and chloroplast-resident N-terminal acetyltransferases (NATs) "
-                            "revealed that it can also be added post-translationally."
+                            "Nt-acetylation may act as a degradation signal in a novel branch of "
+                            "the N-end rule pathway, whose functions include the regulation of "
+                            "human blood pressure."
                         ),
                         notes="N-terminal acetylation generates N-acetyl-L-methionine at the N-terminus (PMID:27498224).",
                     ),
@@ -4802,6 +4780,10 @@ SPECS: tuple[TraitSpec, ...] = (
             (
                 "PMID:34980915",
                 "Signal peptides control protein secretion and translocation in all living organisms and are cleaved off during translocation to release the mature polypeptide chain.",
+            ),
+            (
+                "PMID:24333859",
+                "Type I signal peptidase cleaves off the amino-terminal signal peptide from proteins that are secreted across the bacterial cytoplasmic membrane.",
             ),
         ),
         detection_methods=(M_SIGNALP6,),
@@ -4862,22 +4844,30 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="SO:0000419",
-                        description="Proteolytic removal of the signal peptide after membrane translocation releases the mature polypeptide chain.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000269",
-                        snippet="SPs can be cleaved off after the protein has been translocated across the membrane.",
-                        notes="Release of the mature polypeptide chain upon signal peptide cleavage (PMID:34980915).",
+                        description="Type I signal peptidase cleaves off the amino-terminal signal peptide after membrane translocation to release the mature polypeptide chain.",
+                        reference="PMID:24333859",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "Type I signal peptidase is the enzyme responsible for cleaving off "
+                            "the amino-terminal signal peptide from proteins that are secreted "
+                            "across the bacterial cytoplasmic membrane."
+                        ),
+                        notes="SPase I cleavage releases the mature polypeptide chain upon signal peptide removal (PMID:24333859).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000419",
                         predicate="RO:0002331",
                         predicate_label="involved in",
                         object="GO:0009306",
-                        description="The signal-peptidase-processed mature polypeptide chain is secreted across the membrane into its target compartment.",
-                        reference="PMID:34980915",
-                        evidence_code="ECO:0000269",
-                        snippet="Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms.",
-                        notes="Mature polypeptide translocation and secretion across the membrane (PMID:34980915).",
+                        description="The signal-peptidase-processed mature polypeptide chain is released at the exo-cytoplasmic surface of the membrane.",
+                        reference="PMID:24333859",
+                        evidence_code="ECO:0000305",
+                        snippet=(
+                            "It is an essential membrane bound enzyme whose serine/lysine "
+                            "catalytic dyad resides on the exo-cytoplasmic surface of the "
+                            "bacterial membrane."
+                        ),
+                        notes="Exo-cytoplasmic SPase I cleavage releases the mature polypeptide across the membrane (PMID:24333859).",
                     ),
                 ),
             ),
@@ -4958,17 +4948,17 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002213",
                         predicate_label="positively regulates",
                         object="GO:0016486",
-                        description="Proprotein convertases and processing endopeptidases catalyze proteolytic processing of prohormone precursors.",
+                        description="Secretory-vesicle cathepsin L and subtilisin-like proprotein convertases mediate proteolytic prohormone processing.",
                         reference="PMID:18184105",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Neuropeptides are synthesized from protein precursors (termed "
-                            "proneuropeptides or prohormones) that require proteolytic "
-                            "processing primarily within secretory vesicles that store and "
-                            "secrete the mature neuropeptides to control target cellular and "
-                            "organ systems."
+                            "This review describes interdisciplinary strategies that have "
+                            "elucidated two primary protease pathways for prohormone processing "
+                            "consisting of the cysteine protease pathway mediated by secretory "
+                            "vesicle cathepsin L and the well-known subtilisin-like proprotein "
+                            "convertase pathway that together support neuropeptide biosynthesis."
                         ),
-                        notes="Proteolytic processing of proneuropeptides and prohormones in secretory vesicles (PMID:18184105).",
+                        notes="Cathepsin L and subtilisin-like proprotein convertase pathways in prohormone processing (PMID:18184105).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0016486",
@@ -5109,15 +5099,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002331",
                         predicate_label="involved in",
                         object="GO:0051604",
-                        description="Formation of the spliced extein chain restores the mature functional host protein.",
+                        description="Precise single-turnover reaction coordination of covalently linked extein substrates completes host protein maturation.",
                         reference="PMID:24695729",
                         evidence_code="ECO:0000305",
                         snippet=(
-                            "Inteins are nature's escape artists; they facilitate their "
-                            "excision from flanking polypeptides (exteins) concomitant with "
-                            "extein ligation to produce a mature host protein."
+                            "Inteins require precise reaction coordination rather than rapid "
+                            "turnover or tight substrate binding because they are single "
+                            "turnover enzymes with covalently linked substrates."
                         ),
-                        notes="Extein ligation completes maturation of the host protein (PMID:24695729).",
+                        notes="Single-turnover reaction coordination completes host protein maturation (PMID:24695729).",
                     ),
                 ),
             ),
@@ -5146,7 +5136,7 @@ SPECS: tuple[TraitSpec, ...] = (
         xrefs=("SO:0000419", "GO:0002777", "GO:0042742"),
         evidence=(
             (
-                "PMID:11134217",
+                "PMID:11389039",
                 "Cathelicidins are synthesized as inactive holoproteins whose C-terminal antimicrobial peptide chain must be proteolytically cleaved by elastase or proteinase 3 to become active.",
             ),
         ),
@@ -5199,27 +5189,28 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="positively regulates",
                         object="GO:0002777",
                         description="Granule serine endoproteases such as neutrophil elastase or proteinase 3 cleave inactive cathelicidin holoproteins to initiate active antimicrobial peptide generation.",
-                        reference="PMID:11134217",
+                        reference="PMID:11389039",
                         evidence_code="ECO:0000269",
                         snippet=(
                             "Bovine and porcine cathelicidins are cleaved by elastase from the "
                             "azurophil granules to yield the active antimicrobial peptides."
                         ),
-                        notes="Elastase endopeptidase activity cleaves cathelicidin holoproteins (PMID:11134217).",
+                        notes="Elastase endopeptidase activity cleaves cathelicidin holoproteins (PMID:11389039).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0002777",
                         predicate="RO:0002234",
                         predicate_label="has output",
                         object="SO:0000419",
-                        description="Proteolytic processing of the holoprotein precursor liberates the active C-terminal antimicrobial peptide chain.",
-                        reference="PMID:11134217",
+                        description="Proteolytic processing of human cathelicidin hCAP-18 by proteinase 3 after exocytosis liberates the active C-terminal LL-37 antimicrobial peptide chain.",
+                        reference="PMID:11389039",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Bovine and porcine cathelicidins are cleaved by elastase from the "
-                            "azurophil granules to yield the active antimicrobial peptides."
+                            "Of the 3 known serine proteases from azurophil granules, "
+                            "proteinase 3 was solely responsible for cleavage of hCAP-18 after "
+                            "exocytosis."
                         ),
-                        notes="Proteolytic cleavage of cathelicidin holoprotein yields active antimicrobial peptide (PMID:11134217).",
+                        notes="Proteinase 3 cleavage of hCAP-18 holoprotein yields active antimicrobial peptide (PMID:11389039).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000419",
@@ -5227,7 +5218,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="involved in",
                         object="GO:0061844",
                         description="Once cleaved from the holoprotein precursor, the mature C-terminal peptide chain executes antimicrobial defense.",
-                        reference="PMID:11134217",
+                        reference="PMID:11389039",
                         evidence_code="ECO:0000269",
                         snippet=(
                             "Cathelicidins are a family of antimicrobial proteins found in the "
@@ -5235,7 +5226,7 @@ SPECS: tuple[TraitSpec, ...] = (
                             "functions reside in the C-terminus, which must be cleaved from the "
                             "holoprotein to become active."
                         ),
-                        notes="Biological antimicrobial activity resides in the cleaved C-terminal peptide chain (PMID:11134217).",
+                        notes="Biological antimicrobial activity resides in the cleaved C-terminal peptide chain (PMID:11389039).",
                     ),
                 ),
             ),
@@ -5352,15 +5343,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002339",
                         predicate_label="has target end location",
                         object="GO:0005758",
-                        description="Inner membrane protease maturation delivers the processed soluble protein to the mitochondrial intermembrane space.",
+                        description="The heterodimeric Imp1p/Imp2p inner membrane protease complex releases matured proteins into the mitochondrial intermembrane space.",
                         reference="PMID:8266095",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "The mitochondrial inner membrane protease is required for the "
-                            "maturation of mitochondrial proteins that are delivered to the "
-                            "intermembrane space."
+                            "In the yeast Saccharomyces cerevisiae, this protease is now shown "
+                            "to be a complex that contains two catalytic subunits, Imp2p and "
+                            "the previously identified Imp1p."
                         ),
-                        notes="Maturation of proteins delivered to the mitochondrial intermembrane space (PMID:8266095).",
+                        notes="Imp1p/Imp2p complex matures proteins in the mitochondrial intermembrane space (PMID:8266095).",
                     ),
                 ),
             ),
@@ -5469,16 +5460,11 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002339",
                         predicate_label="has target end location",
                         object="GO:0020011",
-                        description="Stepwise processing of the bipartite presequence delivers the mature protein into the apicoplast lumen.",
+                        description="Nucleus-encoded proteins processed by stepwise presequence removal are delivered into the apicoplast.",
                         reference="PMID:10775264",
                         evidence_code="ECO:0000269",
-                        snippet=(
-                            "We demonstrate that protein targeting is at least a two-step "
-                            "process mediated by bipartite N-terminal pre-sequences that consist "
-                            "of a signal peptide for entry into the secretory pathway and a "
-                            "plant-like transit peptide for subsequent import into the apicoplast."
-                        ),
-                        notes="Processed protein is delivered to the apicoplast lumen (PMID:10775264).",
+                        snippet="Similar to plant chloroplasts, the apicoplast is dependent on many nucleus-encoded genes to provide these functions.",
+                        notes="Nucleus-encoded proteins are delivered to the apicoplast lumen (PMID:10775264).",
                     ),
                 ),
             ),
@@ -5559,15 +5545,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002331",
                         predicate_label="involved in",
                         object="GO:0033365",
-                        description="N-terminal targeting signals on mitosomal and hydrogenosomal precursor proteins are necessary and sufficient for recognition by the organellar import and processing peptidase machinery.",
+                        description="Conserved inner-membrane translocase and processing peptidase components recognize N-terminal targeting presequences in Giardia and Trichomonas.",
                         reference="PMID:16040811",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Here, we report that proteins targeted into mitosomes of Giardia "
-                            "intestinalis have targeting signals necessary and sufficient to be "
-                            "recognized by the mitosomal protein import machinery."
+                            "We identify, in Giardia and Trichomonas, proteins related to the "
+                            "component of the translocase in the inner membrane from "
+                            "mitochondria and the processing peptidase."
                         ),
-                        notes="N-terminal targeting presequences direct import into mitosomes and hydrogenosomes (PMID:16040811).",
+                        notes="TIM and processing peptidase components mediate organellar import (PMID:16040811).",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0033365",
@@ -5832,15 +5818,15 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0051604",
-                        description="Covalent GPI-anchor attachment in the ER is essential for the maturation of GPI-anchored proteins.",
+                        description="Covalent GPI-anchor attachment in the ER tethers matured GPI-anchored proteins to the cell surface.",
                         reference="PMID:35165458",
                         evidence_code="ECO:0000269",
                         snippet=(
-                            "Attaching GPI to the protein in the endoplasmic reticulum (ER) is "
-                            "catalyzed by the transmembrane GPI transamidase (GPIT) complex, "
-                            "which is essential for maturation of the GPI-anchored proteins."
+                            "Glycosylphosphatidylinositol (GPI) molecules are complex "
+                            "glycophospholipids and serve as membrane anchors for tethering "
+                            "many proteins to the cell surface."
                         ),
-                        notes="GPI attachment is essential for maturation of GPI-anchored proteins (PMID:35165458).",
+                        notes="GPI anchoring tethers matured proteins to the cell surface (PMID:35165458).",
                     ),
                 ),
             ),
@@ -6505,7 +6491,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Recognition and polyubiquitination by the N-recognin E3 ubiquitin-protein transferase drives ubiquitin-dependent catabolism via the N-end rule pathway.",
                         reference="PMID:20110468",
                         evidence_code="ECO:0000269",
-                        snippet="Several examined proteins of diverse functions contained these N-terminal degrons, termed Ac N-degrons, which comprise a prevalent class of degradation signals in cellular proteins.",
+                        snippet="Several examined proteins of diverse functions contained these N-terminal degrons, termed AcN-degrons, which are a prevalent class of degradation signals in cellular proteins.",
                         notes="Doa10-mediated ubiquitination of Nt-acetylated Met initiates the Ac/N-end rule proteolytic pathway.",
                     ),
                     CausalEdgeSpec(
@@ -6761,7 +6747,7 @@ SPECS: tuple[TraitSpec, ...] = (
         sequence_pattern="C[A-Z]{2}C",
         evidence=(
             (
-                "PMID:9403310",
+                "PMID:9099998",
                 "Thiol:disulfide oxidoreductases contain a catalytic CXXC motif in which the low-pKa thiolate of the N-terminal cysteine initiates substrate disulfide reduction via nucleophilic attack.",
             ),
         ),
@@ -6814,10 +6800,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="participates in",
                         object="GO:0015035",
                         description="The thiolate form of the N-terminal cysteine residue in the CXXC motif performs the nucleophilic attack that initiates substrate disulfide reduction.",
-                        reference="PMID:9403310",
+                        reference="PMID:9099998",
                         evidence_code="ECO:0000269",
-                        snippet="To initiate the reduction of a substrate disulfide bond, the thiolate form of the N-terminal cysteine residue (CXXC) of this motif performs a nucleophilic attack.",
-                        notes="Chivers et al. 1997 establish the microscopic pKa and nucleophilic role of the N-terminal Cys32 in the E. coli thioredoxin CXXC motif.",
+                        snippet="The active-site CXXC motif of thiol:disulfide oxidoreductases is essential for their catalysis of redox reactions.",
+                        notes="Chivers et al. 1997 (PMID:9099998) establish the active-site CXXC motif and low-pKa N-terminal cysteine in E. coli thioredoxin.",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0015035",
@@ -6825,9 +6811,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="has output",
                         object="MOD:00034",
                         description="Resolution of the mixed-disulfide intermediate by the C-terminal CXXC cysteine releases the reduced substrate and yields an oxidized CXXC cystine cross-link.",
-                        reference="PMID:9403310",
+                        reference="PMID:9099998",
                         evidence_code="ECO:0000269",
-                        snippet="Thiol:disulfide oxidoreductases have a CXXC motif within their active sites.",
+                        snippet="The reduction potential is correlated with the acidity of the N-terminal cysteine residue of the CXXC motif.",
                         notes="Dithiol-disulfide exchange cycles the active-site CXXC motif between dithiol and intramolecular cystine disulfide states.",
                     ),
                     CausalEdgeSpec(
@@ -6836,9 +6822,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate_label="involved in",
                         object="GO:0045454",
                         description="CXXC-catalyzed protein-disulfide reduction maintains cellular thiol-disulfide redox homeostasis.",
-                        reference="PMID:9403310",
+                        reference="PMID:9099998",
                         evidence_code="ECO:0000269",
-                        snippet="Escherichia coli thioredoxin [Trx (CGPC)] is the best characterized thiol:disulfide oxidoreductase.",
+                        snippet="These intricacies enable CXXC motifs to vary widely in their capacity to assist electron flow, and thereby engender a family of thiol:disulfide oxidoreductases that play diverse roles in biochemistry.",
                         notes="Thioredoxin CGPC oxidoreductase activity is a primary effector of cellular dithiol-disulfide redox homeostasis.",
                     ),
                 ),
@@ -6976,7 +6962,7 @@ SPECS: tuple[TraitSpec, ...] = (
         ),
         evidence=(
             (
-                "PMID:14654279",
+                "PMID:14654694",
                 "DNA-binding and polyanion-binding sites on protein structures coincide with solvent-accessible surface patches exhibiting the largest positive electrostatic potential scores.",
             ),
         ),
@@ -7028,9 +7014,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="PATO:0002195",
                         description="Clustered basic surface residues excluding negatively charged residues form a positively charged surface patch.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:14654279",
+                        reference="PMID:14654694",
                         snippet="This knowledge led to the development of a prediction method in which patches of surface residues were selected such that they excluded residues with negative electrostatic scores.",
-                        notes="Jones et al. (2003) J Mol Biol 334:779-793 identify cationic surface patches excluding negative electrostatic scores.",
+                        notes="Jones et al. (2003) J Mol Biol 334:779-793 (PMID:14654694) identify cationic surface patches excluding negative electrostatic scores.",
                     ),
                     CausalEdgeSpec(
                         subject="PATO:0002195",
@@ -7039,7 +7025,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="GO:0003677",
                         description="Surface patches with the largest positive electrostatic scores mediate DNA binding.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:14654279",
+                        reference="PMID:14654694",
                         snippet="From this, it was observed that the DNA-binding sites were, in general, amongst the top 10% of patches with the largest positive electrostatic scores.",
                         notes="DNA-binding sites coincide with the most positively charged surface patches.",
                     ),
@@ -7050,7 +7036,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="GO:0065004",
                         description="DNA recognition at the cationic surface patch drives assembly of protein-DNA complexes.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:14654279",
+                        reference="PMID:14654694",
                         snippet="Surface patches and the DNA-binding sites were initially analysed for accessibility, electrostatic potential, residue propensity, hydrophobicity and residue conservation.",
                         notes="Electrostatic potential and accessibility of cationic surface patches govern protein-DNA complex formation.",
                     ),
@@ -7375,7 +7361,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Steric inhibition of antibody binding modulates the host humoral immune response.",
                         evidence_code="ECO:0000269",
                         reference="PMID:27114034",
-                        snippet="The HIV-1-envelope (Env) trimer is covered by a glycan shield of ~90 N-linked oligosaccharides, which comprises roughly half its mass and is a key component of HIV evasion from humoral immunity.",
+                        snippet="The HIV-1-envelope (Env) trimer is covered by a glycan shield of ∼90 N-linked oligosaccharides, which comprises roughly half its mass and is a key component of HIV evasion from humoral immunity.",
                         notes="The surface N-glycan shield is a primary determinant of humoral immune evasion.",
                     ),
                 ),
@@ -7687,7 +7673,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Catalytic turnover at the closed active site converts bound substrate to product.",
                         evidence_code="ECO:0000305",
                         reference="PMID:30703322",
-                        snippet="This Perspective presents evidence that the catalytic events for the turnover of enzyme-bound substrate to product occur at stiff protein active sites, and it describes the imperatives for the evolution of enzymes with flexible structures in their unliganded form that undergo large ligand-driven protein conformational changes to an active stiff form.",
+                        snippet="The requirement that a large fraction of the total substrate-binding energy be utilized to drive conformational changes of floppy enzymes is proposed to favor the selection and evolution of protein folds with multiple flexible unstructured loops, such as the TIM-barrel fold.",
                         notes="Cyclic gating loop closure and reopening enables rapid enzymatic substrate-to-product turnover.",
                     ),
                 ),
@@ -8107,7 +8093,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Peptide dehydratase hydro-lyase activity catalyzes post-translational modification of RiPP precursor peptides.",
                         evidence_code="ECO:0000305",
                         reference="PMID:28135077",
-                        snippet="Lanthipeptides are ribosomally synthesized and post-translationally modified peptides (RiPPs) that display a wide variety of biological activities, from antimicrobial to antiallodynic.",
+                        snippet="After installation of the characteristic thioether cross-links, tailoring enzymes introduce additional post-translational modifications that are unique to each lanthipeptide and that fine-tune their activities and/or stability.",
                         notes="Repka et al. (2017) Chem Rev 117:5457-5520 review RiPP lanthipeptide post-translational modification.",
                     ),
                     CausalEdgeSpec(
@@ -8159,7 +8145,7 @@ SPECS: tuple[TraitSpec, ...] = (
         ),
         evidence=(
             (
-                "PMID:29590045",
+                "PMID:29449488",
                 "Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated precursors.",
             ),
         ),
@@ -8170,7 +8156,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 edam_operation="EDAM:operation_0300",
                 tool="biotools:hmmer3",
                 evidence_code="ECO:0000259",
-                reference="PMID:29590045",
+                reference="PMID:29449488",
                 recipe="hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}",
             ),
         ),
@@ -8223,9 +8209,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="GO:0036211",
                         description="Radical S-adenosylmethionine splicease catalysis enables post-translational backbone splicing in bacteria.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:29590045",
+                        reference="PMID:29449488",
                         snippet="The transformation is widespread in bacteria and is catalyzed by an enzyme belonging to a previously uncharacterized radical S-adenosylmethionine family.",
-                        notes="Morinaka et al. (2018) Science 359:779-782 characterize bacterial radical-SAM spliceases.",
+                        notes="Morinaka et al. (2018) Science 359:779-782 (PMID:29449488) characterize bacterial radical-SAM spliceases.",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0036211",
@@ -8234,7 +8220,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="CHEBI:83228",
                         description="Splicease-mediated backbone splicing excises tyramine from precursor L-alpha-amino acid residues via C-C bond cleavage.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:29590045",
+                        reference="PMID:29449488",
                         snippet="We show that the β-amino acids result from an unusual protein splicing process involving backbone carbon-carbon bond cleavage and net excision of tyramine.",
                         notes="Backbone C-C bond cleavage and net tyramine excision from tyrosine-containing motifs.",
                     ),
@@ -8245,7 +8231,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="SO:0000419",
                         description="Tyramine excision generates a mature protein region bearing an alpha-keto-beta-amino acid residue.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:29590045",
+                        reference="PMID:29449488",
                         snippet="In addition to enlarging the set of basic amino acid components, the excision generates keto functions that are useful as orthogonal reaction sites for chemical diversification.",
                         notes="Installation of backbone alpha-keto-beta-amino acid residues with orthogonal keto groups.",
                     ),
@@ -8781,7 +8767,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="SRP targeting delivers the ribosome-nascent chain complex to the SecYEG translocon.",
                         evidence_code="ECO:0000305",
                         reference="PMID:24513458",
-                        snippet="The bacterial SRP system—consisting of the universally conserved Ffh protein and 4.5S RNA—provides a simpler yet powerful model for understanding the universally conserved principles of co-translational targeting.",
+                        snippet="The bacterial SRP, which contains the minimal ribonucleoprotein core of this universally conserved targeting machine, has served as a paradigm for understanding the molecular basis of protein localization in all cells.",
                         notes="Conserved Ffh/4.5S RNA SRP machinery mediates co-translational targeting to the Sec pathway.",
                     ),
                     CausalEdgeSpec(
@@ -8792,7 +8778,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Co-translational handoff to the SecYEG translocon ensures fidelity of membrane protein biogenesis and translocation.",
                         evidence_code="ECO:0000305",
                         reference="PMID:24513458",
-                        snippet="These components enable the targeting machinery to dynamically recognize signal sequences on ribosome-nascent chain complexes, sense and respond to biological effectors (such as the ribosome and the SecYEG translocon), coordinate GTP hydrolysis, and ensure the fidelity and efficiency of membrane protein biogenesis.",
+                        snippet="Collectively, these studies elucidate how an essential SRP RNA and two regulatory GTPases in the SRP and SRP receptor (SR) enable this targeting machinery to recognize, sense and respond to its biological effectors, i.e. the cargo protein, the target membrane and the translocation machinery, thus driving efficient and faithful co-translational protein targeting.",
                         notes="Delivery of nascent chains to the SecYEG translocon at the membrane.",
                     ),
                 ),
@@ -8822,7 +8808,7 @@ SPECS: tuple[TraitSpec, ...] = (
         ),
         evidence=(
             (
-                "PMID:28359877",
+                "PMID:28336403",
                 "Vicinal disulfides between sequence-adjacent cysteine residues adopt strained cis or trans eight-membered ring geometries that stabilize internal packing or form rigid hydrophobic ligand-binding surfaces.",
             ),
         ),
@@ -8833,7 +8819,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 edam_operation="EDAM:operation_0249",
                 tool="biotools:dssp",
                 evidence_code="ECO:0000255",
-                reference="PMID:28359877",
+                reference="PMID:28336403",
                 recipe="mkdssp --output-format dssp {input} {output}",
             ),
         ),
@@ -8886,9 +8872,9 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="GO:0006457",
                         description="Sequence-adjacent cysteine residues form rare vicinal disulfide features during structural assembly.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:28359877",
+                        reference="PMID:28336403",
                         snippet="Vicinal disulfides between sequence-adjacent cysteine residues are very rare and rather startling structural features which play a variety of functional roles.",
-                        notes="Richardson et al. (2017) J Mol Biol 429:1321-1335 survey the conformations and functions of vicinal disulfides.",
+                        notes="Richardson et al. (2017) J Mol Biol 429:1321-1335 (PMID:28336403) survey the conformations and functions of vicinal disulfides.",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006457",
@@ -8897,7 +8883,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         object="MOD:00034",
                         description="Folding produces a vicinal cystine ring that stabilizes tightly packed internal regions or coupled motions.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:28359877",
+                        reference="PMID:28336403",
                         snippet="Some vicinal disulfides are essential to large, functionally coupled motions, whereas most form the centers of tightly packed internal regions.",
                         notes="Formation of tightly packed or motion-coupled vicinal cystine rings.",
                     ),
@@ -8906,10 +8892,10 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0036094",
-                        description="The vicinal cystine ring provides a rigid hydrophobic contact surface beneath sugar or multi-ring ligands.",
+                        description="The vicinal cystine ring provides a rigid hydrophobic contact surface beneath sugar or multiring ligands.",
                         evidence_code="ECO:0000269",
-                        reference="PMID:28359877",
-                        snippet="Their most widespread biological role is providing a rigid hydrophobic contact surface under the undecorated side of a sugar or multi-ring ligand, contributing an important aspect of binding specificity.",
+                        reference="PMID:28336403",
+                        snippet="Their most widespread biological role is providing a rigid hydrophobic contact surface under the undecorated side of a sugar or multiring ligand, contributing an important aspect of binding specificity.",
                         notes="Vicinal disulfide ring mediates hydrophobic ligand-binding specificity.",
                     ),
                 ),
@@ -9057,8 +9043,12 @@ SPECS: tuple[TraitSpec, ...] = (
         ),
         evidence=(
             (
-                "PMID:24707833",
-                "Conditionally and transiently disordered proteins harbor regions of dormant disorder that undergo reversible local or global unfolding in response to environmental or post-translational triggers to activate protein function.",
+                "PMID:23018052",
+                "Conditionally disordered proteins adopt a fully folded, inactive conformation under non-stress conditions and undergo a reversible stress-triggered order-to-disorder transition to bind aggregation-sensitive client proteins.",
+            ),
+            (
+                "PMID:23477949",
+                "Redox-regulated conditionally disordered proteins use cysteine oxidation to reversibly convert folded structural domains into disordered regions that directly mediate protein function.",
             ),
         ),
         detection_methods=(
@@ -9068,7 +9058,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 edam_operation="EDAM:operation_3904",
                 tool="biotools:iupred3",
                 evidence_code="ECO:0000255",
-                reference="PMID:24707833",
+                reference="PMID:23018052",
                 recipe="iupred3.py {input} long > {output}",
             ),
         ),
@@ -9119,33 +9109,33 @@ SPECS: tuple[TraitSpec, ...] = (
                         predicate="RO:0000056",
                         predicate_label="participates in",
                         object="GO:0036211",
-                        description="Ordered protein domains contain regions of dormant disorder that respond to regulatory triggers.",
+                        description="Ordered protein domains contain regions of conditional disorder that respond to regulatory triggers.",
                         evidence_code="ECO:0000305",
-                        reference="PMID:24707833",
-                        snippet="In fact, many proteins possess regions of dormant disorder that need to be awakened to make these proteins functional.",
-                        notes="Jakob, Kriwacki & Uversky (2014) Chem Rev 114:6779-6805 review conditionally and transiently disordered proteins.",
+                        reference="PMID:23018052",
+                        snippet="Several molecular chaperones have now been identified as conditionally disordered proteins; fully folded and chaperone-inactive under non-stress conditions, they adopt a partially disordered conformation upon exposure to distinct stress conditions.",
+                        notes="Bardwell & Jakob (2012) Trends Biochem Sci 37:517-525 review conditionally disordered proteins activated by stress-induced unfolding.",
                     ),
                     CausalEdgeSpec(
                         subject="GO:0036211",
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="PATO:0001543",
-                        description="Regulatory modification or environmental shift induces local or global unfolding of the ordered structure.",
+                        description="Regulatory modification or redox oxidation induces reversible unfolding of ordered structural domains into disordered regions.",
                         evidence_code="ECO:0000305",
-                        reference="PMID:24707833",
-                        snippet="In other words, some functions of ordered proteins require local or even global unfolding of a unique protein structure.",
-                        notes="Regulated order-to-disorder unfolding transitions in conditionally disordered proteins.",
+                        reference="PMID:23477949",
+                        snippet="These proteins use oxidation of their redox-sensitive cysteines to reversibly convert large structural domains into more disordered regions or vice versa. These massive structural rearrangements are directly implicated in the functions of these proteins.",
+                        notes="Reichmann et al. (2012) Mol Biol Cell 23:2573-2582 demonstrate regulated order-to-disorder unfolding transitions.",
                     ),
                     CausalEdgeSpec(
                         subject="PATO:0001543",
                         predicate="RO:0002411",
                         predicate_label="causally upstream of",
                         object="GO:0005515",
-                        description="Reversible transient unfolding activates functional partner binding until the resting state is restored.",
+                        description="Stress-induced conditional disorder enables binding of aggregation-sensitive client proteins.",
                         evidence_code="ECO:0000305",
-                        reference="PMID:24707833",
-                        snippet="In other words, the function-related changes in a protein are induced by transient alterations in its environment or by transient modification of its structure and are released as soon as the environment is restored or the modification is removed.",
-                        notes="Reversible order-to-disorder switching controls protein interaction and function.",
+                        reference="PMID:23018052",
+                        snippet="This disorder appears to be vital for their ability to bind multiple aggregation-sensitive client proteins and to protect cells against the stressors.",
+                        notes="Reversible order-to-disorder switching controls client protein binding and function.",
                     ),
                 ),
             ),
@@ -9250,7 +9240,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Trp/Tyr/Arg-enriched hot spots surrounded by a solvent-occluding O-ring drive complex assembly.",
                         evidence_code="ECO:0000269",
                         reference="PMID:9653027",
-                        snippet="These hot spots are enriched in tryptophan, tyrosine, and arginine, and are surrounded by energetically less important residues that most likely serve to occlude bulk solvent from the hot spot.",
+                        snippet="These hot spots are enriched in tryptophan, tyrosine and arginine, and are surrounded by energetically less important residues that most likely serve to occlude bulk solvent from the hot spot.",
                         notes="Solvent occlusion by the surrounding O-ring stabilizes hot-spot interactions.",
                     ),
                     CausalEdgeSpec(
@@ -9261,7 +9251,7 @@ SPECS: tuple[TraitSpec, ...] = (
                         description="Hot-spot-driven association produces functional protein-protein complexes.",
                         evidence_code="ECO:0000269",
                         reference="PMID:9653027",
-                        snippet="Binding of one protein to another is involved in nearly all biological functions, yet the principles governing the interaction of proteins are not fully understood.",
+                        snippet="Occlusion of solvent is found to be a necessary condition for highly energetic interactions.",
                         notes="Formation of functional protein-protein complexes via hot-spot interfaces.",
                     ),
                 ),
