@@ -5840,3 +5840,117 @@ def test_resolver_parsers_refuse_abbreviated_flags(argv):
     # The batch recipes forbid fixed flags by exact name; a prefix must not slip past (#1080).
     with pytest.raises(SystemExit):
         ground._parser().parse_args(argv)
+
+
+def test_promote_aggregates_candidate_context_for_record_conflicts_and_stale_preimages(
+    local_sources, capsys
+):
+    second_record = local_sources["traits"] / "pfam2.yaml"
+    second_record.write_text(_record("Pfam:PF00002"), encoding="utf-8")
+    pf1_locations = [
+        [{"start": 2, "end": 4}],
+        [{"start": 3, "end": 5}],
+        [{"start": 4, "end": 6}],
+    ]
+    pf1_groups = [
+        [[interval["start"], interval["end"]] for interval in location]
+        for location in pf1_locations
+    ]
+    _sidecar(
+        local_sources["interpro"],
+        "InterPro",
+        "109.0",
+        {
+            "P12345": {
+                "Pfam:PF00001": sorted(
+                    interval for group in pf1_groups for interval in group
+                ),
+                "Pfam:PF00002": [[2, 5]],
+            }
+        },
+    )
+    _sidecar(
+        local_sources["interpro_grouped"],
+        "InterPro",
+        "109.0",
+        {
+            "P12345": {
+                "Pfam:PF00001": pf1_groups,
+                "Pfam:PF00002": [[[2, 5]]],
+            }
+        },
+    )
+    candidates = []
+    for intervals in pf1_locations:
+        candidate = {
+            **local_sources["candidate"],
+            "intervals": intervals,
+            "interpro_location_id": ground.derive_interpro_location_id(
+                "UniProtKB:P12345", "Pfam:PF00001", intervals
+            ),
+        }
+        candidate["candidate_id"] = ground.derive_candidate_id(candidate)
+        candidates.append(candidate)
+    second_candidate = {
+        **local_sources["candidate"],
+        "trait_id": "Pfam:PF00002",
+        "trait_label": "Fixture Pfam:PF00002",
+        "record_path": second_record.relative_to(local_sources["traits"]).as_posix(),
+        "source_trait_id": "Pfam:PF00002",
+        "intervals": [{"start": 2, "end": 5}],
+        "interpro_location_id": ground.derive_interpro_location_id(
+            "UniProtKB:P12345", "Pfam:PF00002", [{"start": 2, "end": 5}]
+        ),
+    }
+    second_candidate["candidate_id"] = ground.derive_candidate_id(second_candidate)
+    candidates.append(second_candidate)
+    _jsonl(local_sources["queue"], candidates)
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    approved = local_sources["review"].with_name("aggregate-conflicts-approved.tsv")
+    _write_decisions(
+        approved,
+        [
+            (
+                row,
+                "APPROVED"
+                if row["trait_id"] == "Pfam:PF00001"
+                and row["intervals"] == pf1_locations[0]
+                else "REJECTED",
+            )
+            for row in rows
+        ],
+    )
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 0
+
+    assert ground.main(_resolve_args(local_sources)) == 0
+    rows = _jsonl_rows(local_sources["resolved"])
+    _write_decisions(approved, [(row, "APPROVED") for row in rows])
+    second_record.write_text(
+        second_record.read_text(encoding="utf-8").replace(
+            "A fixture trait.", "A modified fixture trait."
+        ),
+        encoding="utf-8",
+    )
+
+    protected = ("record", "durable_registry", "durable_evidence", "durable_bindings")
+    before = {key: _artifact_image(local_sources[key]) for key in protected}
+    second_before = second_record.read_bytes()
+    assert ground.main(_promote_args(local_sources, approved, apply=True)) == 2
+    err = capsys.readouterr().err
+    conflicting_rows = [
+        row
+        for row in rows
+        if row["trait_id"] == "Pfam:PF00001" and row["intervals"] != pf1_locations[0]
+    ]
+    assert len(conflicting_rows) == 2
+    for row in conflicting_rows:
+        assert (
+            f"{row['candidate_id']} (Pfam:PF00001 / UniProtKB:P12345): "
+            "conflict:different_qualified_trait_occurrence"
+        ) in err
+    stale_row = next(row for row in rows if row["trait_id"] == "Pfam:PF00002")
+    assert f"{stale_row['candidate_id']}: stale:record_changed_since_resolve" in err
+    assert {key: _artifact_image(local_sources[key]) for key in protected} == before
+    assert second_record.read_bytes() == second_before
+

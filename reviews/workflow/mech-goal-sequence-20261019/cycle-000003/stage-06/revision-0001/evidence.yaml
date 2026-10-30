@@ -1,0 +1,40 @@
+schema_version: '1.0.0'
+repository_key: proteintraitsmech
+github_repository: CultureBotAI/proteintraitsmech
+run_id: mech-goal-sequence-20261019
+cycle: 3
+stage: 6
+revision: 1
+outcome: completed
+summary: 'Froze INFRA_TASKS.md at 2026-10-30T16:17:46Z (sha256 c70fb6b70f4531f1cb047aaad22ac72b68e48844dbedc18da2d731a9fb522921) across 3 pending tasks (proteintraitsmech-infra-0001, proteintraitsmech-infra-0002, proteintraitsmech-infra-0005); advanced proteintraitsmech-infra-0005 (#1191) by upgrading the promote record-install preflight in scripts/ground_uniprot_examples.py (lines 4838-4884) to collect all _install_example GroundingError failures with candidate/trait/protein context (record_install_errors) alongside stale_selected_preimages across the entire grouped batch before running _replace_examples_block YAML splices (covered by test_promote_aggregates_candidate_context_for_record_conflicts_and_stale_preimages in tests/test_ground_uniprot_examples.py) and inventorying all 13 remaining localized batches (cnp-017..020, cdd-042..050; 23,478 resolved rows, 12,248 APPROVED rows, 491 conflict:different_qualified_trait_occurrence rows, 181 stale:record_changed_since_resolve rows), while carrying forward proteintraitsmech-infra-0001 (#1114), proteintraitsmech-infra-0002 (#652), and batch re-resolution/promotion under proteintraitsmech-infra-0005 (#1191) as deferred.'
+source_revision: 028d303341152f1528dbf5f8db4dc7224c6dea69
+scope_frozen_at: '2026-10-30T16:17:46Z'
+artifacts:
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000003/stage-06/revision-0001/infra_snapshot.md
+  sha256: c70fb6b70f4531f1cb047aaad22ac72b68e48844dbedc18da2d731a9fb522921
+  kind: infra_snapshot
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000003/stage-06/revision-0001/implementation_plan.md
+  sha256: d3da1a08ff9e78543377e082103805fa6f75887df31fc9a1d706503f036d49f9
+  kind: implementation_plan
+- path: reviews/workflow/mech-goal-sequence-20261019/cycle-000003/stage-06/revision-0001/validation.md
+  sha256: 2b8b286c1bd25915e4ec2db21cbd8a148bb012a099895e677e15774b039b76a4
+  kind: validation
+findings: []
+groups: []
+carry_forward_ids: []
+infra_tasks:
+- task_id: proteintraitsmech-infra-0001
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1114
+  status: deferred
+  summary: 'Re-fetch cross-mech-complex-20261013 under v2 UniProt receipt with fragment status and re-resolve CPX-2267 after #1122 chemistry repair so ComplexPortal mechanism-graph subunit examples can be promoted.'
+  disposition: 'Blocked on live UniProt REST v2 fetch-generation refresh for cross-mech-complex-20261013 (to populate ProteinReference.fragment required by #1081/#1084) and independent scientific sign-off on the 36-candidate ComplexPortal partition (#1114, #1115, #1116).'
+- task_id: proteintraitsmech-infra-0002
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/652
+  status: deferred
+  summary: 'Acquire receipt-locked UniProt REST membership snapshots and expanded residue_frame.json sequences for mechanism-graph sources (RHEA, GO, M-CSA, ARO) and fail-closed signature/structure sources (SFLD, PRINTS, ECOD/SIFTS).'
+  disposition: 'Source-limited and network-fetch-gated: across 39,649 causal_graphs records (429,394 total records after Cycle 3 Stage 3; 22,135 unique QUALIFIED records and 22,635 durable bindings), RHEA (18,465 ungrounded of 18,558 with causal_graphs; 93 QUALIFIED on disk) and GO (GO:7770085) require receipt-locked UNIPROT_REST fetch generations; M-CSA (1,003 with causal_graphs: 265 resolved QUALIFIED in reports/uniprot-grounding/resolved.jsonl awaiting review-batch promotion, 732 blocked on missing residue_frame.json sequences, 6 lacking source residue coordinates) requires sequence cache expansion; ARO (7,342 with causal_graphs) uses NCBI/CARD model accessions without 1:1 reviewed UniProt mappings; EC (1,104 ungrounded of 6,888 with causal_graphs) and 52 on-disk proteintraitsmech:* mechanism-graph classes (50 from seed_foundational_traits.py + 2 from seed_localstructuralfeature.py after PR #1202) lack source-shipped UniProt residue-interval tables; SFLD, PRINTS, and ECOD/SIFTS remain fail-closed at promotion.'
+- task_id: proteintraitsmech-infra-0005
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1191
+  status: deferred
+  summary: 'Check stem-prefixed <batch>.protein_registry.jsonl siblings before unprefixed directory defaults in scripts/ground_uniprot_examples.py main() (lines 5330-5338) and re-resolve partially superseded localized review batches (cnp-017..020, cdd-042..050, prosite-065).'
+  disposition: 'Part (1) landed in Cycle 2 Stage 6 (#1191): added _default_promote_sibling in scripts/ground_uniprot_examples.py (lines 5337-5349; pre-Cycle-3-Stage-6 lines 5325-5337) and wired main() (args.command == "promote", lines 5357-5372; pre-PR lines 5330-5338 in the frozen summary) so promote checks stem-prefixed <batch>.protein_registry.jsonl, <batch>.occurrence_evidence.jsonl, <batch>.uniprot_memberships.jsonl, and <batch>.sifts_mappings.jsonl siblings beside --resolved before falling back to unprefixed directory defaults (covered by test_default_promote_sibling_prefers_stem_prefixed_batch_registries in tests/test_record_io.py). In Cycle 3 Stage 3 (goal-13975), repair-existing-local-review-065-2026-03-prosite (966 resolved rows across 360 PROSITE groups) was re-resolved with interpro_location_id, finalized (343 APPROVED, 17 DEFER_ALREADY_SATISFIED), and promoted across 321 written PROSITE records (+317 newly QUALIFIED records, +321 durable bindings). In Cycle 3 Stage 6 (#1191), upgraded promote record-install preflight in scripts/ground_uniprot_examples.py (lines 4838-4884) to collect all _install_example GroundingError failures with candidate/trait/protein context (record_install_errors) alongside stale_selected_preimages across the entire grouped batch before running _replace_examples_block splices (covered by test_promote_aggregates_candidate_context_for_record_conflicts_and_stale_preimages in tests/test_ground_uniprot_examples.py lines 5845-5956); across the remaining 13 historical localized batches (cnp-017..020, cdd-042..050; 23,478 resolved rows, 12,248 APPROVED rows), single-pass preflight surfaces 491 conflict:different_qualified_trait_occurrence rows and 181 stale:record_changed_since_resolve rows that remain deferred for Stage 3 re-resolution under #1191.'
