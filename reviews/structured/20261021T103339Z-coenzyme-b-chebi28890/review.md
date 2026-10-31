@@ -1,0 +1,815 @@
+# Review of requires coenzyme B
+
+- Review: 20261021T103339Z-coenzyme-b-chebi28890
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T10:24:34Z
+- Finished UTC: 2026-10-21T10:33:39Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The current coenzyme-B record coherently identifies CHEBI:28890 and its source coenzyme role. One confirmed major finding concerns chemical-to-protein-trait equivalence. The inspected substrate and methanogenic contexts do not qualify exact neutral CoB as a non-substrate protein requirement.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 4 in batch 015. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f) covers 138 record paths, leaving 429221 before this batch. 15 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml | generated | requires coenzyme B |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_28890 | CHEBI:28890 resolves and is nonobsolete in OLS. Its actual chemical identity, stated role, relevant structural parents and conjugate comparison were inspected. The local parent and cofactor ancestor were captured and read. Successful resolution does not establish protein requirement or equivalence. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The local label denotes a proposed reusable requirement for coenzyme B; CHEBI:28890 coherently identifies the molecular referent, not an equivalent protein-requirement class.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The ChEBI data licence is supported. The source supplies chemical descriptions and role assertions; the maintained role seeder synthesizes the protein-requirement wrapper. Current backend and OLS responses do not identify the original seed release.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+CHEBI:28890 in xrefs denotes a molecular entity while the target denotes a protein functional requirement. The schema requires true own-source equivalence; a chemical association is a different predicate.
+
+### Coenzyme B structure and stereochemical evidence
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+CHEBI:28890 denotes neutral C11H22NO7PS, a terminal thiol with an N-(7-sulfanylheptanoyl)-L-threonine phosphate scaffold, (2S,3R) stereochemistry, carboxylic acid and dihydrogen phosphate. Its trianion differs in phosphate/carboxyl protonation, not thiol oxidation. The null source definition is consistent with the absence of appended chemical background in the local target and is not automatically an incompleteness defect.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The directly asserted coenzyme role supports the intended candidate parent link to the captured coenzyme-requirement record and broader cofactor ancestor. Chemical stereochemistry and conjugacy remain distinct from requirement-class equivalence. This record is assessed on its own captured bytes and sources; no previous review or uncaptured sibling supplies its identity.
+
+### FUNCTION cofactor requirement representation
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_28890.
+
+The methanogenic activity and inactive MCR structures establish bounded biological context, including a source-described coenzyme-B substrate and heterodisulfide product. They do not qualify exact neutral CoB as a non-substrate requirement under this category. A role/scope adjudication is required before any protein qualification; substrate use alone does not establish absence of all other cofactor uses.
+
+## Findings
+
+### F1: Chemical entity is encoded as equivalent to a protein requirement class
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-28890.chemical-entity-equivalence.
+
+The local requires-coenzyme-B class denotes a protein functional requirement, while CHEBI:28890 denotes the neutral free-thiol coenzyme-B molecule. Its coherent source identity does not make the protein requirement equivalent to the chemical entity.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:28890 from trait-equivalence xrefs and retain its exact molecular identity through typed chemical grounding. Before emitting chemical_participants with role COFACTOR for a retained proposed requirement, adjudicate its non-substrate scope against the category definition; source roles and the inspected biological contexts alone do not qualify a protein. Preserve source attribution and candidate status. Do not use mapped_xrefs for this own-source association or silently substitute a conjugate, complex or reaction product.
+
+- The regenerated target preserves the exact CHEBI:28890 chemical referent without asserting chemical-to-protein-trait equality.
+- Preserve the (2S,3R) L-threonine scaffold, free thiol and neutral-versus-trianion distinction. Adjudicate category non-substrate scope explicitly; do not treat a reaction substrate, heterodisulfide or in-vitro methanogenesis activity as a qualified non-substrate requirement.
+- Any retained COFACTOR participant refers to the actual molecular entity and the intended candidate requirement; substrate, product and transport evidence is not silently promoted into non-substrate requirement evidence. No protein example is qualified.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml. These future curation checks do not imply the present finding has been fixed.
+- For maintained Python/writer changes add focused pytest coverage, then run just lint, just test and just audit-writers. Regenerate the scoped existing target through an audited route. Run full-corpus just validate-all before merging record changes and save a fresh structured scientific review against changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections | supports | The official Introduction describes chemical entities and the ontology; Licensing makes website data available under CC BY 4.0. This supports source-data licensing, not the locally synthesized protein requirement. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | OLS metadata reports ChEBI version 256 loaded 2026-10-16. This is the comparison ontology version, not a release assignment to live backend responses or the original seed. |
+| chemical | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_28890; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:28890 to nonobsolete coenzyme B. Actual labels, description fields and synonyms were inspected. The role/molecular denotation is assessed separately from the local protein requirement. |
+| chemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/28890/; name, definition, chemical_data, default_structure, names and ontology_relations.outgoing_relations | supports | The complete official response has a null definition field, but supplies the actual name, formula, net charge, stereochemical structure, synonyms, direct coenzyme role and conjugate relation. Absence of an appended chemical definition is not automatically a defect. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; definition and outgoing relations | supports | The cofactor source role describes an organic molecule or ion required by an enzyme; its parent is biochemical role. This source assertion is distinct from a protein requirement class. |
+| specific-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/; definition, chemical_data, default_structure and outgoing relations | supports | The coenzyme role describes a low-molecular-weight non-protein organic compound acting as a dissociable donor or acceptor of groups/electrons, and is-a cofactor. It is a role class, not a specific molecular structure. |
+| local-ancestor | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire captured ancestor YAML | supports | Complete captured broader cofactor-requirement ancestor inspected. Its requirement wrapper and source-role xref are distinguished; this review does not certify that ancestor. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58596/; name, definition, chemical_data, default_structure, names and ontology_relations.outgoing_relations | supports | The coenzyme-B trianion is C11H19NO7PS, net−3. Source structure deprotonates the phosphate twice and carboxyl once while retaining the terminal thiol; reciprocal conjugacy does not establish identical protein requirement scope. |
+| chemical-parent-1 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/84189/; name, definition and outgoing relations | supports | The structural parent is L-threonine derivative. Its definition/outgoing relations were inspected; that chemical parent is distinct from the local coenzyme-requirement parent. |
+| primary-isolation | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3086878%20AND%20SRC:MED&amp;format=json&amp;resultType=core; PMID3086878; DOI10.1073/pnas.83.12.4238; complete indexed abstract | supports | The complete primary abstract reports an isolated component-B mixed disulfide with 2-mercaptoethanol, and proposes the free-acid/free-thiol C11H22NO7PS structure as mercaptoheptanoylthreonine phosphate. The isolated mixed disulfide is not identical to the free thiol entry. |
+| primary-synthesis | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3100513%20AND%20SRC:MED&amp;format=json&amp;resultType=core; PMID3100513; DOI10.1016/S0021-9258(19)75808-6; complete indexed abstract | supports | The complete primary abstract reports synthesis using DL-threonine phosphate, analytical comparison to authentic component B and activity in an in-vitro methanogenic assay. It corroborates the constitutional structure but does not by itself prove absolute stereopurity of the L-threonine entry or an exact physiological protonation state. |
+| primary-reaction | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:9367957%20AND%20SRC:MED&amp;format=json&amp;resultType=core; PMID9367957; DOI10.1126/science.278.5342.1457; complete indexed abstract | supports | The complete primary abstract calls coenzyme B the second substrate of methyl-coenzyme M reductase and describes inactive crystal states, one containing the coenzyme-M/B heterodisulfide. Its radical/nickel-organic mechanism is explicitly proposed. This is reaction-substrate/structural context, not a qualified non-substrate requirement for exact neutral CoB. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml; Executed 2026-10-21T10:26:50Z through 2026-10-21T10:26:51Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/coelichelin-3-chebi84724.yaml data/traits/function/cofactor_requirement/chebi/coelichelin-chebi80049.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-a-chebi15346.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-f390-a-chebi62784.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-f390-g-chebi62786.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-3-chebi59543.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-chebi59536.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-f420-2-4-chebi59541.yaml; Executed 2026-10-21T10:25:03Z through 2026-10-21T10:26:36Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml; Executed 2026-10-21T10:26:51Z through 2026-10-21T10:26:51Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T10:26:36Z through 2026-10-21T10:26:38Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- All three cited primary papers were inspected at complete indexed-abstract level. The synthesis starts from DL-threonine phosphate; it is not used as sole proof of absolute L stereochemistry. The 1997 structures are inactive states and its mechanism is proposed. No exact neutral physiological population or universal role exclusivity is established.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T103339Z-coenzyme-b-chebi28890
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires coenzyme B
+started_at: '2026-10-21T10:24:34Z'
+finished_at: '2026-10-21T10:33:39Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The current coenzyme-B record coherently identifies CHEBI:28890 and its source
+  coenzyme role. One confirmed major finding concerns chemical-to-protein-trait equivalence.
+  The inspected substrate and methanogenic contexts do not qualify exact neutral CoB
+  as a non-substrate protein requirement.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+    sha256: f96fbcb66b9f1d848e18af00f6f21a31a7c81602ff110426fd89942f582aeeaa
+    role: target
+  - path: data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+    sha256: 07990ad9e631ce6d8171bf6835e20b59e1542d8fc1894161c2beb60f81711449
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 4 in batch 015. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f) covers 138 record paths,
+    leaving 429221 before this batch. 15 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+targets:
+- kind: generated
+  label: requires coenzyme B
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/coelichelin-3-chebi84724.yaml
+    data/traits/function/cofactor_requirement/chebi/coelichelin-chebi80049.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-a-chebi15346.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f390-a-chebi62784.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f390-g-chebi62786.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-3-chebi59543.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-chebi59536.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-2-4-chebi59541.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:28890 resolves and is nonobsolete in OLS. Its actual chemical identity,
+    stated role, relevant structural parents and conjugate comparison were inspected.
+    The local parent and cofactor ancestor were captured and read. Successful resolution
+    does not establish protein requirement or equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - specific-role
+  - cofactor-role
+  - licence
+  - release
+  - conjugate
+  - chemical-parent-1
+  - primary-isolation
+  - primary-synthesis
+  - primary-reaction
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: f96fbcb66b9f1d848e18af00f6f21a31a7c81602ff110426fd89942f582aeeaa
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: 07990ad9e631ce6d8171bf6835e20b59e1542d8fc1894161c2beb60f81711449
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections
+  summary: The official Introduction describes chemical entities and the ontology;
+    Licensing makes website data available under CC BY 4.0. This supports source-data
+    licensing, not the locally synthesized protein requirement.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS metadata reports ChEBI version 256 loaded 2026-10-16. This is the comparison
+    ontology version, not a release assignment to live backend responses or the original
+    seed.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_28890
+  accessed_at: '2026-10-21T10:10:50.123987Z'
+  snapshot_sha256: c0a18c1575c7aaae11d12b7410d3b3fe7033a5412e1996a82c1b97360a255fdb
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:28890 to nonobsolete coenzyme B. Actual labels, description
+    fields and synonyms were inspected. The role/molecular denotation is assessed
+    separately from the local protein requirement.
+- evidence_id: chemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/28890/
+  accessed_at: '2026-10-21T10:10:19.373512Z'
+  snapshot_sha256: a6e97c49d38a6058e8ca103e6876cd4312f259ad263a812d45e917bbe72c23b1
+  support: supports
+  locator: name, definition, chemical_data, default_structure, names and ontology_relations.outgoing_relations
+  summary: The complete official response has a null definition field, but supplies
+    the actual name, formula, net charge, stereochemical structure, synonyms, direct
+    coenzyme role and conjugate relation. Absence of an appended chemical definition
+    is not automatically a defect.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T08:48:04.105973Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: definition and outgoing relations
+  summary: The cofactor source role describes an organic molecule or ion required
+    by an enzyme; its parent is biochemical role. This source assertion is distinct
+    from a protein requirement class.
+- evidence_id: specific-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/
+  accessed_at: '2026-10-21T10:10:09.158129Z'
+  snapshot_sha256: e3e53a2e0b270a5522895f4ca11bb26e0f3021b2e3571a4949af9931db321ce5
+  support: supports
+  locator: definition, chemical_data, default_structure and outgoing relations
+  summary: The coenzyme role describes a low-molecular-weight non-protein organic
+    compound acting as a dissociable donor or acceptor of groups/electrons, and is-a
+    cofactor. It is a role class, not a specific molecular structure.
+- evidence_id: local-ancestor
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire captured ancestor YAML
+  accessed_at: '2026-10-21T10:24:34Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: Complete captured broader cofactor-requirement ancestor inspected. Its
+    requirement wrapper and source-role xref are distinguished; this review does not
+    certify that ancestor.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58596/
+  accessed_at: '2026-10-21T10:10:19.375557Z'
+  snapshot_sha256: a02060feee5b3d6ca140a3e200a5ec5f36b1dca634e1736d799ae0b67f4608bb
+  support: supports
+  locator: name, definition, chemical_data, default_structure, names and ontology_relations.outgoing_relations
+  summary: The coenzyme-B trianion is C11H19NO7PS, net−3. Source structure deprotonates
+    the phosphate twice and carboxyl once while retaining the terminal thiol; reciprocal
+    conjugacy does not establish identical protein requirement scope.
+- evidence_id: chemical-parent-1
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/84189/
+  accessed_at: '2026-10-21T10:26:09.855712Z'
+  snapshot_sha256: 57bf4bda752207ebb0e54cf92ebfc35ea114e10f3d6641aa18cdeb445bb46fe0
+  support: supports
+  locator: name, definition and outgoing relations
+  summary: The structural parent is L-threonine derivative. Its definition/outgoing
+    relations were inspected; that chemical parent is distinct from the local coenzyme-requirement
+    parent.
+- evidence_id: primary-isolation
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3086878%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:10:48.862610Z'
+  snapshot_sha256: a0fa835c9e914c7d9feca871e98c3532829c1065acccacb6015e2259da033041
+  support: supports
+  locator: PMID3086878; DOI10.1073/pnas.83.12.4238; complete indexed abstract
+  summary: The complete primary abstract reports an isolated component-B mixed disulfide
+    with 2-mercaptoethanol, and proposes the free-acid/free-thiol C11H22NO7PS structure
+    as mercaptoheptanoylthreonine phosphate. The isolated mixed disulfide is not identical
+    to the free thiol entry.
+- evidence_id: primary-synthesis
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3100513%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:10:48.763872Z'
+  snapshot_sha256: c96f9c465a73e1f57db9f3c8ccde41f68cf90ad0ab238185864ec82979bbef1d
+  support: supports
+  locator: PMID3100513; DOI10.1016/S0021-9258(19)75808-6; complete indexed abstract
+  summary: The complete primary abstract reports synthesis using DL-threonine phosphate,
+    analytical comparison to authentic component B and activity in an in-vitro methanogenic
+    assay. It corroborates the constitutional structure but does not by itself prove
+    absolute stereopurity of the L-threonine entry or an exact physiological protonation
+    state.
+- evidence_id: primary-reaction
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:9367957%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:26:18.165644Z'
+  snapshot_sha256: 469cfca1f581dbd5d5c009d124f429059f1aba5d1fb6aaf6ac6e9e1c862bfb60
+  support: supports
+  locator: PMID9367957; DOI10.1126/science.278.5342.1457; complete indexed abstract
+  summary: The complete primary abstract calls coenzyme B the second substrate of
+    methyl-coenzyme M reductase and describes inactive crystal states, one containing
+    the coenzyme-M/B heterodisulfide. Its radical/nickel-organic mechanism is explicitly
+    proposed. This is reaction-substrate/structural context, not a qualified non-substrate
+    requirement for exact neutral CoB.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  locator: Executed 2026-10-21T10:26:50Z through 2026-10-21T10:26:51Z; exit 0
+  accessed_at: '2026-10-21T10:26:51Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/coelichelin-3-chebi84724.yaml
+    data/traits/function/cofactor_requirement/chebi/coelichelin-chebi80049.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-a-chebi15346.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f390-a-chebi62784.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f390-g-chebi62786.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-3-chebi59543.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-1-chebi59536.yaml
+    data/traits/function/cofactor_requirement/chebi/coenzyme-f420-2-4-chebi59541.yaml
+  locator: Executed 2026-10-21T10:25:03Z through 2026-10-21T10:26:36Z; exit 0
+  accessed_at: '2026-10-21T10:26:36Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml
+  locator: Executed 2026-10-21T10:26:51Z through 2026-10-21T10:26:51Z; exit 0
+  accessed_at: '2026-10-21T10:26:51Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T10:26:36Z through 2026-10-21T10:26:38Z; exit 0
+  accessed_at: '2026-10-21T10:26:38Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The local label denotes a proposed reusable requirement for coenzyme B;
+    CHEBI:28890 coherently identifies the molecular referent, not an equivalent protein-requirement
+    class.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-5
+  topic: Chemical identity and protein requirement scope
+- area: provenance
+  outcome: supported
+  summary: The ChEBI data licence is supported. The source supplies chemical descriptions
+    and role assertions; the maintained role seeder synthesizes the protein-requirement
+    wrapper. Current backend and OLS responses do not identify the original seed release.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical-role
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-6
+  topic: ChEBI attribution and release provenance
+- area: grounding
+  outcome: concern
+  summary: CHEBI:28890 in xrefs denotes a molecular entity while the target denotes
+    a protein functional requirement. The schema requires true own-source equivalence;
+    a chemical association is a different predicate.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-7
+  topic: Chemical association versus trait equivalence
+- area: evidence
+  outcome: supported
+  summary: CHEBI:28890 denotes neutral C11H22NO7PS, a terminal thiol with an N-(7-sulfanylheptanoyl)-L-threonine
+    phosphate scaffold, (2S,3R) stereochemistry, carboxylic acid and dihydrogen phosphate.
+    Its trianion differs in phosphate/carboxyl protonation, not thiol oxidation. The
+    null source definition is consistent with the absence of appended chemical background
+    in the local target and is not automatically an incompleteness defect.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - chemical-parent-1
+  - conjugate
+  - primary-isolation
+  - primary-synthesis
+  topic: Coenzyme B structure and stereochemical evidence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-8
+- area: consistency
+  outcome: supported
+  summary: The directly asserted coenzyme role supports the intended candidate parent
+    link to the captured coenzyme-requirement record and broader cofactor ancestor.
+    Chemical stereochemistry and conjugacy remain distinct from requirement-class
+    equivalence. This record is assessed on its own captured bytes and sources; no
+    previous review or uncaptured sibling supplies its identity.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - local-ancestor
+  - specific-role
+  - cofactor-role
+  - chemical-role
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-9
+  topic: Chemical-role and protein-trait hierarchy
+- area: representation
+  outcome: unknown
+  summary: The methanogenic activity and inactive MCR structures establish bounded
+    biological context, including a source-described coenzyme-B substrate and heterodisulfide
+    product. They do not qualify exact neutral CoB as a non-substrate requirement
+    under this category. A role/scope adjudication is required before any protein
+    qualification; substrate use alone does not establish absence of all other cofactor
+    uses.
+  evidence_ids:
+  - record
+  - schema
+  - primary-isolation
+  - primary-synthesis
+  - primary-reaction
+  - chemical-role
+  - conjugate
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  assessment_id: assessment-10
+  topic: FUNCTION cofactor requirement representation
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-28890.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is encoded as equivalent to a protein requirement class
+  description: The local requires-coenzyme-B class denotes a protein functional requirement,
+    while CHEBI:28890 denotes the neutral free-thiol coenzyme-B molecule. Its coherent
+    source identity does not make the protein requirement equivalent to the chemical
+    entity.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The source molecular entity and its protein-requirement class
+    have different denotations; the intended candidate identity remains recoverable
+    through correctly typed grounding.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:28890
+    from trait-equivalence xrefs and retain its exact molecular identity through typed
+    chemical grounding. Before emitting chemical_participants with role COFACTOR for
+    a retained proposed requirement, adjudicate its non-substrate scope against the
+    category definition; source roles and the inspected biological contexts alone
+    do not qualify a protein. Preserve source attribution and candidate status. Do
+    not use mapped_xrefs for this own-source association or silently substitute a
+    conjugate, complex or reaction product.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_28890
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated target preserves the exact CHEBI:28890 chemical referent without
+    asserting chemical-to-protein-trait equality.
+  - Preserve the (2S,3R) L-threonine scaffold, free thiol and neutral-versus-trianion
+    distinction. Adjudicate category non-substrate scope explicitly; do not treat
+    a reaction substrate, heterodisulfide or in-vitro methanogenesis activity as a
+    qualified non-substrate requirement.
+  - Any retained COFACTOR participant refers to the actual molecular entity and the
+    intended candidate requirement; substrate, product and transport evidence is not
+    silently promoted into non-substrate requirement evidence. No protein example
+    is qualified.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/coenzyme-b-chebi28890.yaml.
+    These future curation checks do not imply the present finding has been fixed.
+  - For maintained Python/writer changes add focused pytest coverage, then run just
+    lint, just test and just audit-writers. Regenerate the scoped existing target
+    through an audited route. Run full-corpus just validate-all before merging record
+    changes and save a fresh structured scientific review against changed bytes.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- All three cited primary papers were inspected at complete indexed-abstract level.
+  The synthesis starts from DL-threonine phosphate; it is not used as sole proof of
+  absolute L stereochemistry. The 1997 structures are inactive states and its mechanism
+  is proposed. No exact neutral physiological population or universal role exclusivity
+  is established.
+tags:
+- unreviewed-path-order
+- batch-015
+- chebi-cofactor
+```
