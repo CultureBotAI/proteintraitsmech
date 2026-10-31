@@ -1,0 +1,91 @@
+identifier: proteintraitsmech:LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION
+label: "RGG/RG-rich low-complexity RNA-binding region"
+definition: >-
+  A low-complexity sequence region enriched in degenerate Arg-Gly-Gly (RGG) and Arg-Gly (RG) repeats (canonical tri-RGG or di-RGG/RG boxes with interspersed aromatic residues) that mediates multivalent RNA and protein interactions, biomolecular condensate assembly, and arginine-methylation-regulated ribonucleoprotein remodeling.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_LOW_COMPLEXITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:LOWCOMP_REGION
+synonyms:
+  - synonym_text: "RGG box"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "GAR glycine-arginine-rich domain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "RGG/RG repeat low-complexity motif"
+    synonym_type: RELATED_SYNONYM
+sequence_pattern: "(?:RGG|RG){3,}"
+detection_methods:
+  - name: "SEG / fLPS low-complexity sequence segmentation"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0000362
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 {input} > {output}"
+  - name: "fLPS2 compositional bias binomial P-value scan"
+    method_type: SEQUENCE_PATTERN
+    edam_operation: EDAM:operation_0234
+    tool: "biotools:flps"
+    evidence_code: ECO:0007669
+    reference: PMID:28851299
+    recipe: "fLPS -t 1e-5 -c default {input} > {output}"
+causal_graphs:
+  - graph_id: CG_LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION
+    title: "RGG/RG low-complexity motif mediation of methylation-regulated nucleic-acid and protein complex assembly"
+    description: "Positively charged arginine-glycine (RGG/RG) repeat tracts mediate nucleic-acid and partner-protein binding that is modulated by protein arginine methylation to control ribonucleoprotein complex assembly and cellular RNA processing."
+    nodes:
+      - node_id: "PATO:0002195"
+        label: "positive charge"
+        node_type: QUALITY
+        grounding: "PATO:0002195"
+        description: "Clustered positively charged guanidinium groups of arginine residues within RGG/RG repeats."
+      - node_id: "GO:0036211"
+        label: "protein modification process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0036211"
+        description: "Protein arginine methyltransferase (PRMT)-catalyzed methylation of RGG/RG arginine side chains."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Multivalent partner-protein and nucleic-acid recognition mediated by the RGG/RG box."
+      - node_id: "GO:0065003"
+        label: "protein-containing complex assembly"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0065003"
+        description: "Assembly of ribonucleoprotein complexes governing splicing, translation, and RNA metabolism."
+    edges:
+      - subject: "PATO:0002195"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Arginine- and glycine-rich RGG box tracts provide cationic guanidinium arrays for macromolecular recognition."
+        evidence:
+          - reference: PMID:23746349
+            snippet: "Motifs rich in arginines and glycines were recognized several decades ago to play functional roles and were termed glycine-arginine-rich (GAR) domains and/or RGG boxes."
+            notes: "Thandapani et al. (2013) Mol Cell 50:613-623 review functional GAR/RGG box domains. (ECO:0000305)"
+      - subject: "GO:0036211"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Arginine methylation of RGG/RG repeats regulates nucleic-acid and partner-protein interactions."
+        evidence:
+          - reference: PMID:23746349
+            snippet: "In particular, we discuss the role of the RGG/RG motif in mediating nucleic acid and protein interactions, a function that is often regulated by arginine methylation and partner-binding proteins."
+            notes: "Arginine methylation modulates RGG/RG-mediated macromolecular binding. (ECO:0000305)"
+      - subject: "GO:0005515"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0065003"
+        description: "RGG/RG-mediated interactions drive assembly of complexes controlling transcription, pre-mRNA splicing, and mRNA translation."
+        evidence:
+          - reference: PMID:23746349
+            snippet: "Greater than 1,000 human proteins harbor the RGG/RG motif, and these proteins influence numerous physiological processes such as transcription, pre-mRNA splicing, DNA damage signaling, mRNA translation, and the regulation of apoptosis."
+            notes: "RGG/RG-containing proteins assemble into functional ribonucleoprotein complexes across RNA processing pathways. (ECO:0000305)"
+evidence:
+  - reference: PMID:23746349
+    notes: "Thandapani et al. (2013) Mol Cell 50:613-623 define the RGG/RG motif classes (tri-RGG, di-RGG, tri-RG, di-RG) and review their regulation by arginine methylation in nucleic acid and protein interactions."
+license: CC-BY-4.0

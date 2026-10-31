@@ -1,0 +1,85 @@
+identifier: proteintraitsmech:MATURE_CHAIN_BACKBONE_CYCLIZED
+label: "head-to-tail backbone-cyclized mature polypeptide chain"
+definition: >-
+  A mature ribosomally synthesized polypeptide chain whose N-terminal alpha-amino group and C-terminal alpha-carboxylate are post-translationally ligated via a native amide bond into a seamless circular backbone lacking free termini (as in plant cyclotides, PawS-derived sunflower trypsin inhibitor SFTI-1, mammalian theta-defensins, and circular bacteriocins), catalyzed by asparaginyl endopeptidase (AEP / legumain / butelase-1) transpeptidation or PCY1 macrocyclase.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_MATURE_CHAIN
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN
+synonyms:
+  - synonym_text: "N-to-C macrocyclized mature polypeptide chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "circular backbone mature peptide chain"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "cyclotide/circulin-type cyclic mature chain"
+    synonym_type: NARROW_SYNONYM
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_MATURE_CHAIN_BACKBONE_CYCLIZED
+    title: "Transpeptidase-mediated N-to-C backbone macrocyclization confers proteolytic stability and defense activity"
+    description: "Site-specific transpeptidase processing excises flanking prosegments and ligates the N- and C-termini of the mature peptide region into a seamless head-to-tail macrocycle, conferring exceptional conformational/proteolytic stability for host defense."
+    nodes:
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Asparaginyl endopeptidase / peptide ligase transpeptidation cleaving the C-terminal follower and ligating the N- and C-termini."
+      - node_id: "SO:0000419"
+        label: mature_protein_region
+        node_type: DOMAIN
+        grounding: "SO:0000419"
+        description: "Head-to-tail backbone-cyclized mature polypeptide chain lacking free N- or C-termini."
+      - node_id: "GO:0031647"
+        label: "regulation of protein stability"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0031647"
+        description: "Enhanced resistance to exopeptidases, thermal denaturation, and chaotropes imparted by the circular backbone."
+      - node_id: "GO:0061844"
+        label: "antimicrobial humoral immune response mediated by antimicrobial peptide"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0061844"
+        description: "Host defense and antimicrobial/insecticidal activity of the mature cyclic peptide."
+    edges:
+      - subject: "GO:0016485"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "SO:0000419"
+        description: "Peptide ligase processing cyclizes linear precursor peptides into head-to-tail macrocyclic mature chains."
+        evidence:
+          - reference: PMID:25038786
+            snippet: "Instead, butelase 1 cyclizes various peptides of plant and animal origin with yields greater than 95%."
+            notes: "Nguyen et al. (2014) Nat Chem Biol 10:732-738 demonstrate high-yield N-to-C peptide cyclization by butelase 1. (ECO:0000269)"
+      - subject: "SO:0000419"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0031647"
+        description: "Seamless head-to-tail backbone cyclization embedded with a cystine knot creates the hyperstable cyclotide architecture."
+        evidence:
+          - reference: PMID:10600388
+            snippet: "We refer to these peptides as the cyclotide family and their embedded topology as the cyclic cystine knot (CCK) motif."
+            notes: "Craik et al. (1999) J Mol Biol 294:1327-1336 establish the cyclic backbone topology of cyclotides. (ECO:0000269)"
+      - subject: "GO:0031647"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0061844"
+        description: "Structural stabilization of the macrocyclic mature peptide supports its host-defense function."
+        evidence:
+          - reference: PMID:10600388
+            snippet: "Here we define the structural features of the two apparent subfamilies of the CCK peptides which may be significant for the likely defense related role of these peptides within plants."
+            notes: "Macrocyclic CCK stability underpins biological host defense. (ECO:0000269)"
+evidence:
+  - reference: PMID:25038786
+    notes: "Nguyen et al. (2014) Nat Chem Biol 10:732-738 characterize the Asx-specific peptide ligase butelase 1 that catalyzes high-efficiency head-to-tail backbone cyclization of linear precursor peptides."
+  - reference: PMID:10600388
+    notes: "Craik et al. (1999) J Mol Biol 294:1327-1336 define the cyclotide family of head-to-tail backbone-cyclized cystine-knot plant defense peptides and their exceptional stability."
+license: CC-BY-4.0

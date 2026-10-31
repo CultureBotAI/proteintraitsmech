@@ -1,0 +1,84 @@
+identifier: proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII_LOL_AVOIDANCE
+label: "Lol-avoidance inner-membrane lipoprotein signal peptide (SPase II, +2 Asp)"
+definition: >-
+  A Gram-negative bacterial Sec/SPII lipoprotein signal peptide and N-terminal sorting determinant carrying a conserved lipobox ([LVI][ASTVI][GAS]C) immediately followed by an aspartate residue at position +2 of the mature triacylated chain (the +2 rule / Lol-avoidance motif) that prevents recognition by the LolCDE ABC transporter and retains the mature lipoprotein anchored to the periplasmic leaflet of the inner (cytoplasmic) membrane.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_SIGNAL_PEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII
+synonyms:
+  - synonym_text: "+2 Asp inner-membrane lipoprotein sorting signal"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Lol-avoidance Sec/SPII lipoprotein leader"
+    synonym_type: EXACT_SYNONYM
+sequence_pattern: "[LVI][ASTVI][GAS]CD"
+detection_methods:
+  - name: "SignalP 6.0 Sec/Tat SPI/SPII/SPIII signal peptide & cleavage predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0418
+    tool: "biotools:signalp"
+    evidence_code: ECO:0000255
+    reference: PMID:34980915
+    recipe: "signalp6 --fastafile {input} --output_dir {output} --format txt --organism other"
+causal_graphs:
+  - graph_id: CG_SIGNAL_PEPTIDE_SEC_SPII_LOL_AVOIDANCE
+    title: "Lipobox processing and +2 Asp Lol-avoidance retention at the inner membrane"
+    description: "A Sec/SPII lipoprotein signal peptide with a +2 aspartate directs prolipoprotein processing into a mature N-terminal S-diacylglyceryl-cysteine lipoprotein whose +2 Asp evades LolCDE release, retaining the lipoprotein anchored to the cytoplasmic membrane."
+    nodes:
+      - node_id: "SO:0000418"
+        label: signal_peptide
+        node_type: MOTIF
+        grounding: "SO:0000418"
+        description: "Sec/SPII lipoprotein signal peptide carrying a [LVI][ASTVI][GAS]CD lipobox-plus-+2-Asp sorting motif."
+      - node_id: "GO:0006497"
+        label: "protein lipidation"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006497"
+        description: "Diacylglyceryl transfer, SPase II cleavage, and N-acylation at the cytoplasmic membrane."
+      - node_id: "MOD:00116"
+        label: S-diacylglycerol-L-cysteine
+        node_type: PTM
+        grounding: "MOD:00116"
+        description: "N-terminal lipidated cysteine anchor adjacent to the +2 aspartate Lol-avoidance determinant."
+      - node_id: "GO:0016020"
+        label: membrane
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0016020"
+        description: "Retention of the mature lipoprotein anchored to the periplasmic face of the cytoplasmic membrane."
+    edges:
+      - subject: "SO:0000418"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0006497"
+        description: "Precursor lipoproteins bearing an N-terminal signal peptide are translocated and lipid-modified on the cytoplasmic membrane."
+        evidence:
+          - reference: PMID:21663440
+            snippet: "Bacterial lipoproteins are synthesized as precursors in the cytoplasm and processed into mature forms on the cytoplasmic membrane."
+            notes: "Okuda & Tokuda (2011) Annu Rev Microbiol 65:239-259 describe prolipoprotein maturation on the cytoplasmic membrane. (ECO:0000305)"
+      - subject: "GO:0006497"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "MOD:00116"
+        description: "Lipoprotein processing yields an N-terminal fatty-acylated S-diacylglyceryl-cysteine membrane anchor."
+        evidence:
+          - reference: PMID:10564520
+            snippet: "Replacement of the natural signal peptide of preMalE by the signal peptide and the first four amino acids of a cytoplasmic membrane-anchored lipoprotein resulted in N-terminal fatty acylation of MalE (lipoMalE) and anchoring to the periplasmic face of the cytoplasmic membrane, where it could still function."
+            notes: "Seydel et al. (1999) Mol Microbiol 34:810-821 demonstrate N-terminal lipidation and cytoplasmic membrane anchoring. (ECO:0000269)"
+      - subject: "MOD:00116"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0016020"
+        description: "Presence of aspartate at position +2 adjacent to the lipidated cysteine prevents outer-membrane sorting and retains the lipoprotein in the cytoplasmic membrane."
+        evidence:
+          - reference: PMID:10564520
+            snippet: "When the aspartate at position +2 of this protein was replaced by a serine, lipoMalE was sorted to the outer membrane, where it could not function."
+            notes: "Substitution of +2 Asp with Ser abolishes cytoplasmic membrane retention and redirects the lipoprotein to the outer membrane. (ECO:0000269)"
+evidence:
+  - reference: PMID:10564520
+    notes: "Seydel, Gounon & Pugsley (1999) Mol Microbiol 34:810-821 demonstrate that an aspartate at position +2 after the lipobox cysteine retains acylated lipoproteins in the cytoplasmic membrane whereas +2 serine routes them to the outer membrane."
+  - reference: PMID:21663440
+    notes: "Okuda & Tokuda (2011) Annu Rev Microbiol 65:239-259 review Lol-system lipoprotein sorting and the +2 Asp Lol-avoidance mechanism in Gram-negative bacteria."
+license: CC-BY-4.0

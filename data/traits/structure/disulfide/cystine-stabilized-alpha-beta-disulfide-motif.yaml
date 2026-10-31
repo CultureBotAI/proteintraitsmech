@@ -1,0 +1,84 @@
+identifier: proteintraitsmech:DISULFIDE_CYSTINE_STABILIZED_ALPHA_BETA
+label: "cystine-stabilized alpha-helix/beta-sheet disulfide motif"
+definition: >-
+  A conserved structural disulfide-crosslinked scaffold (the CS-alpha-beta or cystine-stabilized alpha/beta motif) in which an alpha-helix carrying a Cys-Xaa3-Cys segment is covalently tethered via two parallel disulfide bridges to a central beta-strand carrying a Cys-Xaa-Cys segment (typically supplemented by a third N-terminal-to-beta-sheet disulfide), stabilizing invertebrate/plant/fungal defensins and scorpion neurotoxins.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_DISULFIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:DISULFIDE_INTRACHAIN
+synonyms:
+  - synonym_text: "CS-alpha-beta motif"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "CSab disulfide motif"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "cysteine-stabilized alpha-beta scaffold"
+    synonym_type: EXACT_SYNONYM
+sequence_pattern: "C[A-Z]{3}C[A-Z]+C[A-Z]C"
+detection_methods:
+  - name: "mkdssp / Geometry-based Sgamma-Sgamma disulfide bond & dihedral χ3 assignment"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_1836
+    tool: "biotools:dssp"
+    evidence_code: ECO:0007669
+    reference: PMID:25352545
+    recipe: "mkdssp -i {input} -o {output}"
+causal_graphs:
+  - graph_id: CG_DISULFIDE_CYSTINE_STABILIZED_ALPHA_BETA
+    title: "CS-alpha-beta disulfide bridges tether alpha-helix to beta-sheet to stabilize antimicrobial defensin fold"
+    description: "Paired cysteine residues in the CxxxC alpha-helix and CxC beta-strand oxidize into two parallel L-cystine cross-links that lock the CS-alpha-beta core fold, supporting antimicrobial membrane interaction."
+    nodes:
+      - node_id: "CHEBI:29950"
+        label: "L-cysteine residue"
+        node_type: RESIDUE
+        grounding: "CHEBI:29950"
+        description: "Conserved CxxxC helical and CxC beta-strand cysteine residues."
+      - node_id: "MOD:00034"
+        label: "L-cystine (cross-link)"
+        node_type: PTM
+        grounding: "MOD:00034"
+        description: "Two parallel intrachain disulfide bridges connecting the alpha-helix to the beta-sheet."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Stabilization of the compact cystine-stabilized alpha-beta (CS-alpha-beta) tertiary core."
+      - node_id: "GO:0061844"
+        label: "antimicrobial humoral immune response mediated by antimicrobial peptide"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0061844"
+        description: "Antimicrobial membrane interaction and host defense activity of CS-alpha-beta defensins."
+    edges:
+      - subject: "CHEBI:29950"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "MOD:00034"
+        description: "Two disulfide bridges connect the alpha-helix and beta-structure to form the cysteine-stabilized alpha-beta (CS alpha beta) motif."
+        evidence:
+          - reference: PMID:7663941
+            snippet: "The helix and the beta-structure are connected by two of the three disulphide bridges present in defensin A, forming a so-called 'cysteine-stabilized alpha beta' (CS alpha beta) motif."
+            notes: "Cornet et al. (1995) Structure 3:435-448 define the two-disulfide helix-to-sheet linkage of the CS-alpha-beta motif. (ECO:0000269)"
+      - subject: "MOD:00034"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0006457"
+        description: "The CS-alpha-beta disulfide cross-links form the conserved structural core shared across small toxic and antimicrobial proteins."
+        evidence:
+          - reference: PMID:7663941
+            snippet: "The CS alpha beta motif, which forms the core of the defensin A structure, appears to be a common organization for several families of small proteins with toxic properties."
+            notes: "The CS-alpha-beta disulfide core stabilizes the tertiary fold of defensins and scorpion toxins. (ECO:0000269)"
+      - subject: "GO:0006457"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0061844"
+        description: "The folded CS-alpha-beta scaffold positions cationic residues for antimicrobial interaction with acidic membrane phospholipids."
+        evidence:
+          - reference: PMID:7663941
+            snippet: "This leads us to propose that the initial step in the action of positively charged defensin A molecules with cytoplasmic membranes may involve interactions with acidic phospholipids."
+            notes: "Folded defensin A interacts with bacterial cytoplasmic membrane phospholipids during antimicrobial defense. (ECO:0000269)"
+evidence:
+  - reference: PMID:7663941
+    notes: "Cornet et al. (1995) Structure 3:435-448 resolve the 3D structure of insect defensin A and define the cysteine-stabilized alpha-beta (CS alpha beta) motif formed by two disulfide bridges linking the CxxxC alpha-helix to the CxC beta-strand."
+license: CC-BY-4.0

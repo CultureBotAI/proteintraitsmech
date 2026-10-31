@@ -1,0 +1,83 @@
+identifier: proteintraitsmech:DYNAMICS_COUPLED_FOLDING_AND_BINDING_TRANSITION
+label: "coupled folding-and-binding disorder-to-order transition region"
+definition: >-
+  A dynamically disordered polypeptide segment or domain that populates an ensemble of unfolded or partially preformed states in isolation and undergoes a concerted disorder-to-order conformational transition (via induced fit or conformational selection) into a well-defined alpha-helical, beta-strand, or irregular tertiary structure only upon engaging its cognate macromolecular binding partner.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_DYNAMICS
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - PATO:0001543
+synonyms:
+  - synonym_text: "disorder-to-order coupled folding and binding region"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "partner-induced folding transition segment"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "ProDy / ANM anisotropic network model & conformational ensemble PCA"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0244
+    tool: "biotools:prody"
+    evidence_code: ECO:0007669
+    reference: PMID:21471012
+    recipe: "prody anm {input} -n 20 -o {output}"
+causal_graphs:
+  - graph_id: CG_DYNAMICS_COUPLED_FOLDING_AND_BINDING_TRANSITION
+    title: "Target recognition triggers coupled disorder-to-order folding and macromolecular complex assembly"
+    description: "High intrinsic backbone flexibility allows an unbound region to engage a cognate macromolecular target, triggering coupled disorder-to-order protein folding that stabilizes specific protein-containing complex assembly."
+    nodes:
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "High conformational flexibility of the unbound intrinsically disordered ensemble."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "Engagement of the physiological macromolecular target via encounter complex formation."
+      - node_id: "GO:0006457"
+        label: "protein folding"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006457"
+        description: "Partner-templated disorder-to-order transition into a folded bound conformation."
+      - node_id: "GO:0065003"
+        label: "protein-containing complex assembly"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0065003"
+        description: "Formation of a high-specificity, tunable regulatory macromolecular complex."
+    edges:
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Intrinsically flexible disordered regions engage their cognate biological targets to initiate coupled folding."
+        evidence:
+          - reference: PMID:11839490
+            snippet: "In many cases, intrinsically disordered proteins adopt folded structures upon binding to their biological targets."
+            notes: "Dyson & Wright (2002) Curr Opin Struct Biol 12:54-60 describe target-induced folding of disordered proteins. (ECO:0000305)"
+      - subject: "GO:0005515"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0006457"
+        description: "Binding to physiological targets drives whole or partial folding of the disordered polypeptide segment."
+        evidence:
+          - reference: PMID:19157855
+            snippet: "Many cellular proteins are intrinsically disordered and undergo folding, in whole or in part, upon binding to their physiological targets."
+            notes: "Wright & Dyson (2009) Curr Opin Struct Biol 19:31-38 review coupled binding and folding. (ECO:0000305)"
+      - subject: "GO:0006457"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0065003"
+        description: "Coupled folding and binding of recognition elements mediates assembly of regulated signaling complexes."
+        evidence:
+          - reference: PMID:19157855
+            snippet: "Advances have been made in prediction of the recognition elements in disordered proteins, in elucidating the kinetics and mechanism of the coupled folding and binding process, and in understanding the role of post-translational modifications in tuning the biological response."
+            notes: "Coupled folding and binding governs regulatory complex assembly and signaling responses. (ECO:0000305)"
+evidence:
+  - reference: PMID:11839490
+    notes: "Dyson & Wright (2002) Curr Opin Struct Biol 12:54-60 establish the structural and thermodynamic principles of coupled folding and binding of intrinsically disordered proteins upon target recognition."
+  - reference: PMID:19157855
+    notes: "Wright & Dyson (2009) Curr Opin Struct Biol 19:31-38 dissect the kinetic mechanisms (induced fit vs conformational selection) of disorder-to-order coupled folding and binding transitions."
+license: CC-BY-4.0
