@@ -73,7 +73,7 @@ Six parent/paralog sibling CDD records (CDD:cd17071, CDD:cd16113, CDD:cd15855, C
 
 minor / resolved / confirmed; issue key: cdd-cd17152-dcdc2-rpt2-ubiquitin-modifier-digression.
 
-CDD:cd17152 (label=DCX2_DCDC2, parent_traits=[CDD:cl28922]) models the C-terminal second doublecortin-like domain (DCX2) of DCDC2 (unpromoted seed examples Homo sapiens UniProtKB:Q9UHG0 and Mus musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like beta-grasp DCX repeats associated with human reading disability/dyslexia (PMID:16278295). Its upstream CDD definition interpolated the off-target sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair.' and lacked a PMID:16278295 evidence block.
+CDD:cd17152 (label=DCX2_DCDC2, parent_traits=[CDD:cl28922]) models the C-terminal second doublecortin-like domain (DCX2) of DCDC2 (Homo sapiens UniProtKB:Q9UHG0 and Mus musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem ubiquitin-like beta-grasp DCX repeats associated with human reading disability/dyslexia (PMID:16278295). Its upstream CDD definition interpolated the off-target sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various cellular processes, including transcriptional regulation, cell cycle control, and DNA repair.' and lacked a PMID:16278295 evidence block.
 
 Disposition: Repaired CDD:cd17152 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the off-target ubiquitin protein-modifier sentence with the tandem DCX ubiquitin-like beta-grasp repeat description, added PMID:16278295 evidence, and recorded curation_history action source_erratum_cd17152.
 
@@ -89,17 +89,17 @@ Disposition: Repaired CDD:cd17153 in place via scripts/cdd_errata.py and scripts
 
 major / resolved / confirmed; issue key: cdd-cd15884-snap23c-transmembrane-domain-overclaim.
 
-CDD:cd15884 (label=SNARE_SNAP23C, parent_traits=[CDD:cl22856]) models the C-terminal Qc SNARE motif of SNAP23 (unpromoted seed examples Mus musculus UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines in its inter-motif linker (PMID:9159129, PMID:9759094).
+CDD:cd15884 (label=SNARE_SNAP23C, parent_traits=[CDD:cl22856]) models the C-terminal Qc SNARE motif of SNAP23 (Mus musculus UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines in its inter-motif linker (PMID:9759094, PMID:9159129).
 
-Disposition: Repaired CDD:cd15884 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9159129 evidence, and recorded curation_history action source_erratum_cd15884.
+Disposition: Repaired CDD:cd15884 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9759094 evidence, and recorded curation_history action source_erratum_cd15884.
 
 ### F22: CDD:cd15895 (SNARE_SNAP23N) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP23 is membrane-anchored via palmitoylated cysteines
 
 major / resolved / confirmed; issue key: cdd-cd15895-snap23n-transmembrane-domain-overclaim.
 
-CDD:cd15895 (label=SNARE_SNAP23N, parent_traits=[CDD:cl22856]) models the N-terminal Qb SNARE motif of SNAP23 (unpromoted seed examples Mus musculus UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines in its inter-motif linker (PMID:9159129, PMID:9759094).
+CDD:cd15895 (label=SNARE_SNAP23N, parent_traits=[CDD:cl22856]) models the N-terminal Qb SNARE motif of SNAP23 (Mus musculus UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines in its inter-motif linker (PMID:9759094, PMID:9159129).
 
-Disposition: Repaired CDD:cd15895 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9159129 evidence, and recorded curation_history action source_erratum_cd15895.
+Disposition: Repaired CDD:cd15895 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9759094 evidence, and recorded curation_history action source_erratum_cd15895.
 
 ### F23: CDD:cd18599 (ABC_6TM_MRP5_8_9_D2) misassigns MRP7 to ABCC7 (CFTR) instead of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9 members
 
@@ -145,13 +145,13 @@ CDD:cd15889 (label=SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], unpromoted se
 
 major / open / confirmed; issue key: cdd-cd15856-snap29c-transmembrane-domain-overclaim.
 
-CDD:cd15856 (label=SNARE_SNAP29C, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Allochromatium vinosum UniProtKB:P83351) models the C-terminal Qc SNARE motif of SNAP29, but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 specifically lacks both a transmembrane domain and the palmitoylated cysteine cluster of SNAP25/SNAP23, associating with membranes via protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
+CDD:cd15856 (label=SNARE_SNAP29C, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the C-terminal Qc SNARE motif of SNAP29, but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 specifically lacks both a transmembrane domain and the palmitoylated cysteine cluster of SNAP25/SNAP23, associating with membranes via protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
 
 ### F30: CDD:cd15887 (SNARE_SNAP29N) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane anchors
 
 major / open / confirmed; issue key: cdd-cd15887-snap29n-transmembrane-domain-overclaim.
 
-CDD:cd15887 (label=SNARE_SNAP29N, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Allochromatium vinosum UniProtKB:P83351) models the N-terminal Qb SNARE motif of SNAP29, and propagates the identical false upstream CDD template claim 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines (PMID:9736707, PMID:9759094).
+CDD:cd15887 (label=SNARE_SNAP29N, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the N-terminal Qb SNARE motif of SNAP29, and propagates the identical false upstream CDD template claim 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines (PMID:9736707, PMID:9759094).
 
 ## Recommended Actions And Acceptance Checks
 
@@ -175,16 +175,16 @@ Add accession-keyed errata entries for CDD:cd17071 (F25), CDD:cd16113 (F26), CDD
 | --- | --- | --- | --- |
 | ev-cd17152 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml; identifier, label, definition, evidence (PMID:16278295), mapping_status, curation_history (source_erratum_cd17152) | supports | CDD:cd17152 (label DCX2_DCDC2, parent_traits=[CDD:cl28922], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd17153 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml; identifier, label, definition, evidence (UniProtKB:A2VCK2), mapping_status, curation_history (source_erratum_cd17153) | supports | CDD:cd17153 (label DCX2_DCDC2B, parent_traits=[CDD:cl28922], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
-| ev-cd15884 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml; identifier, label, definition, evidence (PMID:9159129), mapping_status, curation_history (source_erratum_cd15884) | supports | CDD:cd15884 (label SNARE_SNAP23C, parent_traits=[CDD:cl22856], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
-| ev-cd15895 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml; identifier, label, definition, evidence (PMID:9159129), mapping_status, curation_history (source_erratum_cd15895) | supports | CDD:cd15895 (label SNARE_SNAP23N, parent_traits=[CDD:cl22856], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
+| ev-cd15884 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml; identifier, label, definition, evidence (PMID:9759094), mapping_status, curation_history (source_erratum_cd15884) | supports | CDD:cd15884 (label SNARE_SNAP23C, parent_traits=[CDD:cl22856], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
+| ev-cd15895 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml; identifier, label, definition, evidence (PMID:9759094), mapping_status, curation_history (source_erratum_cd15895) | supports | CDD:cd15895 (label SNARE_SNAP23N, parent_traits=[CDD:cl22856], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd18599 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml; identifier, label, definition, evidence (PMID:16984901), mapping_status, curation_history (source_erratum_cd18599) | supports | CDD:cd18599 (label ABC_6TM_MRP5_8_9_D2, parent_traits=[CDD:cl38913], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd18601 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml; identifier, label, definition, evidence (PMID:16984901), mapping_status, curation_history (source_erratum_cd18601) | supports | CDD:cd18601 (label ABC_6TM_MRP4_D2_like, parent_traits=[CDD:cl38913], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd17071 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml; identifier, label, definition, parent_traits | partial | CDD:cd17071 (label DCX1_DCDC2_like, parent_traits=[CDD:cl28922], SEEDED, 0 canonical_examples) models the N-terminal first DCX repeat subfamily profile of DCDC2 and similar proteins (grouping child profiles cd17149, cd17150, cd17151), but starts its definition with the typo 'Dublecortin-like domain 1...', interpolates an off-target sentence defining the ubiquitin protein modifier, and lacks a PMID:16278295 evidence block (finding F25). |
 | ev-cd16113 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml; identifier, label, definition, parent_traits | partial | CDD:cd16113 (label DCX2_DCDC2_like, parent_traits=[CDD:cl28922], SEEDED, 0 canonical_examples) models the C-terminal second DCX repeat subfamily profile of DCDC2 and similar proteins (grouping child profiles cd17152, cd17153, cd17154), but interpolates an off-target sentence defining the ubiquitin protein modifier and lacks a PMID:16278295 evidence block (finding F26). |
 | ev-cd15855 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml; identifier, label, definition, parent_traits | partial | CDD:cd15855 (label SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856], SEEDED, 0 canonical_examples) models the combined C-terminal Qc SNARE motif subfamily of SNAP25 and SNAP23 (grouping child profiles cd15885 and cd15884), but falsely states that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 and SNAP23 lack a transmembrane domain and are anchored to membranes via palmitoylated cysteines in their central inter-motif linker (PMID:9759094, PMID:9159129; finding F27). |
 | ev-cd15889 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml; identifier, label, definition, parent_traits, canonical_examples | partial | CDD:cd15889 (label SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], SEEDED, unpromoted seed example Drosophila melanogaster Snap25 UniProtKB:P36975) models the combined N-terminal Qb SNARE motif subfamily of SNAP25 and SNAP23 (grouping child profiles cd15894 and cd15895) and propagates the identical false claim that Qb/Qc SNAREs contain a transmembrane domain (PMID:9759094, PMID:9159129; finding F28). |
-| ev-cd15856 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml; identifier, label, definition, parent_traits, canonical_examples | partial | CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], SEEDED, unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0, and Allochromatium vinosum P83351) models the C-terminal Qc SNARE motif of SNAP29, but falsely states that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines and associates with membranes via protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094; finding F29). |
-| ev-cd15887 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml; identifier, label, definition, parent_traits, canonical_examples | partial | CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], SEEDED, unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0, and Allochromatium vinosum P83351) models the N-terminal Qb SNARE motif of SNAP29 and propagates the identical false claim that Qb/Qc SNAREs contain a transmembrane domain (PMID:9736707, PMID:9759094; finding F30). |
+| ev-cd15856 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml; identifier, label, definition, parent_traits, canonical_examples | partial | CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], SEEDED, unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0, and Caenorhabditis elegans SNAP29 P83351) models the C-terminal Qc SNARE motif of SNAP29, but falsely states that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines and associates with membranes via protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094; finding F29). |
+| ev-cd15887 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml; identifier, label, definition, parent_traits, canonical_examples | partial | CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], SEEDED, unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0, and Caenorhabditis elegans SNAP29 P83351) models the N-terminal Qb SNARE motif of SNAP29 and propagates the identical false claim that Qb/Qc SNAREs contain a transmembrane domain (PMID:9736707, PMID:9759094; finding F30). |
 | ev-dcx-child-siblings | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; CDD:cd17149 (DCX1_DCDC2), CDD:cd17150 (DCX1_DCDC2B), CDD:cd17151 (DCX1_DCDC2C), and CDD:cd17154 (DCX2_DCDC2C) | supports | Paralog-specific child repeat-1 profiles CDD:cd17149, CDD:cd17150, and CDD:cd17151 and repeat-2 profile CDD:cd17154 repaired in Cycles 1-2 (#1171, #1188), establishing the tandem DCX ubiquitin-like beta-grasp repeat wording and PMID:16278295 citation needed on subfamily parent profiles CDD:cd17071 (F25) and CDD:cd16113 (F26). |
 | ev-snap25-siblings | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; CDD:cd15885 (SNARE_SNAP25C) and CDD:cd15894 (SNARE_SNAP25N) | supports | Remediated SNAP25 child profiles CDD:cd15885 (#1188) and CDD:cd15894 (#1171) establishing the palmitoylated inter-motif linker membrane-anchoring wording for Qb/Qc SNAREs (PMID:9759094). |
 | ev-mrp-tmd1-siblings | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml; CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) and CDD:cd18593 (ABC_6TM_MRP4_D1_like) | supports | Remediated N-terminal TMD1 siblings CDD:cd18592 (#1171) and CDD:cd18593 (#1188) supporting verified resolved findings F23 (CDD:cd18599) and F24 (CDD:cd18601). |
@@ -846,7 +846,7 @@ evidence:
     2B (DCDC2B). DCDC2B is a member of the doublecortin (DCX) family closely related
     to its paralog DCDC2, a microtubule-associated protein (MAP) with stable double
     tandem DCX repeats of a ubiquitin-like tertiary fold. Microtubules are key components
-    of the cytoskeleton that are involved in cell movement, shape determination, division
+    of cytoskeleton that are involved in cell movement, shape determination, division
     and transport. In the paralogous DCDC2 gene, human genetic variation is associated
     with reading disability (dyslexia), attention deficit hyperactivity disorder (ADHD),
     and difficulties in mathematics. DCDC2 protein interacts with many of the same
@@ -856,7 +856,7 @@ evidence:
 - evidence_id: ev-cd15884
   kind: record_content
   reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml
-  locator: identifier, label, definition, evidence (PMID:9159129), mapping_status,
+  locator: identifier, label, definition, evidence (PMID:9759094), mapping_status,
     curation_history (source_erratum_cd15884)
   accessed_at: '2026-10-31T04:30:00Z'
   snapshot_sha256: e69d6f93c2ecb23a1f5ebf31407261c087a24b52333f171544127e919db95510
@@ -885,7 +885,7 @@ evidence:
 - evidence_id: ev-cd15895
   kind: record_content
   reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml
-  locator: identifier, label, definition, evidence (PMID:9159129), mapping_status,
+  locator: identifier, label, definition, evidence (PMID:9759094), mapping_status,
     curation_history (source_erratum_cd15895)
   accessed_at: '2026-10-31T04:30:00Z'
   snapshot_sha256: 5f6fbec3995ae2fb53b2b2bef97ec582cd8a651c9164a83a5bf59e0d2c99aa3b
@@ -922,7 +922,7 @@ evidence:
   quote: Six-transmembrane helical domain 2 (TMD2) of multidrug resistance-associated
     proteins (MRPs) 5, 8, and 9. This group represents the six-transmembrane domain
     2 (TMD2) of multidrug resistance-associated proteins (MRPs) 5, 8, and 9, all of
-    which belong to the subfamily C of the ATP-binding cassette (ABC) transporter
+    which are belonging to the subfamily C of the ATP-binding cassette (ABC) transporter
     superfamily. The human ABCC subfamily includes nine multidrug resistance-associated
     proteins (MRP1-MRP6 corresponding to ABCC1-ABCC6, and MRP7-MRP9 corresponding
     to ABCC10-ABCC12, whereas ABCC7 is the CFTR chloride channel and ABCC8/ABCC9 are
@@ -976,16 +976,16 @@ evidence:
   support: partial
   quote: Dublecortin-like domain 1 found in doublecortin domain-containing protein
     2 (DCDC2) and similar proteins. DCDC2 is a member of the doublecortin (DCX) family.
-    It is a microtubule-associated protein (MAP) with a stable ubiquitin-like tertiary
-    fold. Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various
-    cellular processes, including transcriptional regulation, cell cycle control,
-    and DNA repair. Microtubules are key components of cytoskeleton that are involved
-    in cell movement, shape determination, division and transport. DCDC2 genetic variation
-    in humans is associated with reading disability, attention deficit hyperactivity
-    disorder (ADHD), and difficulties in mathematics. A genetic variant of DCDC2 associates
-    with dyslexia, a common neurobehavioral disorder of reading. DCDC2 protein interacts
-    with many of the same cytoskeleton related proteins that other members of the
-    DCX family interact with
+    It is a microtubule-associated protein (MAP) with stable double tandem DCX repeats
+    of ubiquitin-like tertiary fold. Ubiquitin (Ub) is a protein modifier in eukaryotes
+    that is involved in various cellular processes, including transcriptional regulation,
+    cell cycle control, and DNA repair. Microtubules are key components of the cytoskeleton
+    that are involved in cell movement, shape determination, division and transport.
+    DCDC2 genetic variation in humans is associated with reading disability, attention
+    deficit hyperactivity disorder (ADHD), and difficulties in mathematics. A genetic
+    variant of DCDC2 associates with dyslexia, a common neurobehavioral disorder of
+    reading. DCDC2 protein interacts with many of the same cytoskeleton related proteins
+    that other members of the DCX family interact with
   summary: CDD:cd17071 (label DCX1_DCDC2_like, parent_traits=[CDD:cl28922], SEEDED,
     0 canonical_examples) models the N-terminal first DCX repeat subfamily profile
     of DCDC2 and similar proteins (grouping child profiles cd17149, cd17150, cd17151),
@@ -1000,8 +1000,8 @@ evidence:
   snapshot_sha256: d3e0f20833782f29d82b77caac4651d4d4f7a6948a18850f974003cacc36022f
   support: partial
   quote: Doublecortin-like domain 2 found in doublecortin domain-containing protein
-    2 (DCDC2) and similar proteins. DCDC2 is a member of the doublecortin (DCX) family.
-    It is a microtubule-associated protein (MAP) with a stable ubiquitin-like tertiary
+    2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) family. It is a microtubule-associated
+    protein (MAP) with stable double tandem DCX repeats of a ubiquitin-like tertiary
     fold. Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various
     cellular processes including transcriptional regulation, cell cycle control, and
     DNA repair. Microtubules are key components of cytoskeleton that are involved
@@ -1025,22 +1025,24 @@ evidence:
   support: partial
   quote: C-terminal SNARE motif of SNAP25 and SNAP23. C-terminal SNARE motifs of SNAP25
     and SNAP23, members of the Qb/Qc subfamily of SNARE (soluble N-ethylmaleimide-sensitive
-    factor attachment protein receptor) proteins. SNAP25 and SNAP23 play a role in
-    transport of secretory granule from trans-Golgi network to the plasma membrane
-    and in exocytosis of secretory granule. Qb/Qc SNAREs consist of 2 coiled-coil
-    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
-    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
-    and a transmembrane domain. In general, the SNARE complex mediates membrane fusion,
-    important for trafficking of newly synthesized proteins, recycling of pre-existing
-    proteins and organelle formation. SNARE proteins are classified into four groups,
-    Qa-, Qb-, Qc- and R-SNAREs, depending on whether the residue in the hydrophilic
-    center layer of the four-helical bundle is a glutamine (Q) or arginine (R). Qa-,
-    as well as Qb- and Qc-SNAREs, are localized to target organelle membranes, while
-    R-SNARE is localized to vesicle membranes. They form unique complexes consisting
-    of one member of each subgroup, that mediate fusion between a specific type of
-    vesicles and their target organelle. Their SNARE motifs form twisted and parallel
-    heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are SNAP29,
-    SNAP47 and SEC9
+    factor attachment protein receptor) proteins. SNAP23 interacts with STX4 (Qa)
+    and the lysosomal R-SNARE VAMP8. The complex plays a role in transport of secretory
+    granule from trans-Golgi network to the plasma membrane. SNAP25 interacts with
+    Syntaxin-1 (Qa) and the R-SNARE VAMP2 (also called synaptobrevin-2). The complex
+    plays a role in transport of secretory granule from trans-Golgi network to the
+    plasma membrane. Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs,
+    one belonging to the Qb subgroup and one belonging to the Qc subgroup), which
+    mediate the interactions with other SNARE proteins, and a transmembrane domain.
+    In general, the SNARE complex mediates membrane fusion, important for trafficking
+    of newly synthesized proteins, recycling of pre-existing proteins and organelle
+    formation. SNARE proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs,
+    depending on whether the residue in the hydrophilic center layer of the four-helical
+    bundle is a glutamine (Q) or arginine (R). Qa-, as well as Qb- and Qc-SNAREs,
+    are localized to target organelle membranes, while R-SNARE is localized to vesicle
+    membranes. They form unique complexes consisting of one member of each subgroup,
+    that mediate fusion between a specific type of vesicles and their target organelle.
+    Their SNARE motifs form twisted and parallel heterotetrameric helix bundles. Other
+    members of the Qb/Qc SNAREs are SNAP29, SNAP47 and SEC9
   summary: CDD:cd15855 (label SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856], SEEDED,
     0 canonical_examples) models the combined C-terminal Qc SNARE motif subfamily
     of SNAP25 and SNAP23 (grouping child profiles cd15885 and cd15884), but falsely
@@ -1056,22 +1058,24 @@ evidence:
   support: partial
   quote: N-terminal SNARE motif of SNAP25 and SNAP23. N-terminal SNARE motifs of SNAP25
     and SNAP23, members of the Qb/Qc subfamily of SNARE (soluble N-ethylmaleimide-sensitive
-    factor attachment protein receptor) proteins. SNAP25 and SNAP23 play a role in
-    transport of secretory granule from trans-Golgi network to the plasma membrane
-    and in exocytosis of secretory granule. Qb/Qc SNAREs consist of 2 coiled-coil
-    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
-    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
-    and a transmembrane domain. In general, the SNARE complex mediates membrane fusion,
-    important for trafficking of newly synthesized proteins, recycling of pre-existing
-    proteins and organelle formation. SNARE proteins are classified into four groups,
-    Qa-, Qb-, Qc- and R-SNAREs, depending on whether the residue in the hydrophilic
-    center layer of the four-helical bundle is a glutamine (Q) or arginine (R). Qa-,
-    as well as Qb- and Qc-SNAREs, are localized to target organelle membranes, while
-    R-SNARE is localized to vesicle membranes. They form unique complexes consisting
-    of one member of each subgroup, that mediate fusion between a specific type of
-    vesicles and their target organelle. Their SNARE motifs form twisted and parallel
-    heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are SNAP29,
-    SNAP47 and SEC9
+    factor attachment protein receptor) proteins. SNAP23 interacts with STX4 (Qa)
+    and the lysosomal R-SNARE VAMP8. The complex plays a role in transport of secretory
+    granule from trans-Golgi network to the plasma membrane. SNAP25 interacts with
+    Syntaxin-1 (Qa) and the R-SNARE VAMP2 (also called synaptobrevin-2). The complex
+    plays a role in transport of secretory granule from trans-Golgi network to the
+    plasma membrane. Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs,
+    one belonging to the Qb subgroup and one belonging to the Qc subgroup), which
+    mediate the interactions with other SNARE proteins, and a transmembrane domain.
+    In general, the SNARE complex mediates membrane fusion, important for trafficking
+    of newly synthesized proteins, recycling of pre-existing proteins and organelle
+    formation. SNARE proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs,
+    depending on whether the residue in the hydrophilic center layer of the four-helical
+    bundle is a glutamine (Q) or arginine (R). Qa-, as well as Qb- and Qc-SNAREs,
+    are localized to target organelle membranes, while R-SNARE is localized to vesicle
+    membranes. They form unique complexes consisting of one member of each subgroup,
+    that mediate fusion between a specific type of vesicles and their target organelle.
+    Their SNARE motifs form twisted and parallel heterotetrameric helix bundles. Other
+    members of the Qb/Qc SNAREs are SNAP29, SNAP47 and SEC9
   summary: CDD:cd15889 (label SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], SEEDED,
     unpromoted seed example Drosophila melanogaster Snap25 UniProtKB:P36975) models
     the combined N-terminal Qb SNARE motif subfamily of SNAP25 and SNAP23 (grouping
@@ -1087,11 +1091,12 @@ evidence:
   support: partial
   quote: C-terminal SNARE motif of SNAP29. C-terminal SNARE motif of SNAP29, a member
     of the Qb/Qc subfamily of SNARE (soluble N-ethylmaleimide-sensitive factor attachment
-    protein receptor) proteins. SNAP29 interacts with syntaxin-3, -4, -6, -7, -13
-    and VAMP8. It is involved in multiple membrane trafficking steps, for example,
-    in endocytic recycling and wrapper membrane maturation during autophagy. Qb/Qc
-    SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to
-    the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
+    protein receptor) proteins. SNAP29 interacts with STX17 (Qa) and the lysosomal
+    R-SNARE VAMP8. The complex plays a role in autophagosome-lysosome fusion. Autophagosome
+    transports cytoplasmic materials including cytoplasmic proteins, glycogen, lipids,
+    organelles, and invading bacteria to the lysosome for degradation. Qb/Qc SNAREs
+    consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb
+    subgroup and one belonging to the Qc subgroup), which mediate the interactions
     with other SNARE proteins, and a transmembrane domain. In general, the SNARE complex
     mediates membrane fusion, important for trafficking of newly synthesized proteins,
     recycling of pre-existing proteins and organelle formation. SNARE proteins are
@@ -1105,11 +1110,11 @@ evidence:
     Qb/Qc SNAREs are SNAP23, SNAP25, SNAP47 and SEC9
   summary: CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], SEEDED,
     unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0,
-    and Allochromatium vinosum P83351) models the C-terminal Qc SNARE motif of SNAP29,
-    but falsely states that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29
-    lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines
-    and associates with membranes via protein-protein interactions with syntaxins
-    and Rab GTPases (PMID:9736707, PMID:9759094; finding F29).
+    and Caenorhabditis elegans SNAP29 P83351) models the C-terminal Qc SNARE motif
+    of SNAP29, but falsely states that Qb/Qc SNAREs have a transmembrane domain whereas
+    SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring
+    cysteines and associates with membranes via protein-protein interactions with
+    syntaxins and Rab GTPases (PMID:9736707, PMID:9759094; finding F29).
 - evidence_id: ev-cd15887
   kind: record_content
   reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml
@@ -1119,11 +1124,12 @@ evidence:
   support: partial
   quote: N-terminal SNARE motif of SNAP29. N-terminal SNARE motif of SNAP29, a member
     of the Qb/Qc subfamily of SNARE (soluble N-ethylmaleimide-sensitive factor attachment
-    protein receptor) proteins. SNAP29 interacts with syntaxin-3, -4, -6, -7, -13
-    and VAMP8. It is involved in multiple membrane trafficking steps, for example,
-    in endocytic recycling and wrapper membrane maturation during autophagy. Qb/Qc
-    SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to
-    the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
+    protein receptor) proteins. SNAP29 interacts with STX17 (Qa) and the lysosomal
+    R-SNARE VAMP8. The complex plays a role in autophagosome-lysosome fusion. Autophagosome
+    transports cytoplasmic materials including cytoplasmic proteins, glycogen, lipids,
+    organelles, and invading bacteria to the lysosome for degradation. Qb/Qc SNAREs
+    consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb
+    subgroup and one belonging to the Qc subgroup), which mediate the interactions
     with other SNARE proteins, and a transmembrane domain. In general, the SNARE complex
     mediates membrane fusion, important for trafficking of newly synthesized proteins,
     recycling of pre-existing proteins and organelle formation. SNARE proteins are
@@ -1137,9 +1143,9 @@ evidence:
     Qb/Qc SNAREs are SNAP23, SNAP25, SNAP47 and SEC9
   summary: CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], SEEDED,
     unpromoted seed examples Homo sapiens SNAP29 O95721, Mus musculus Snap29 Q9ERB0,
-    and Allochromatium vinosum P83351) models the N-terminal Qb SNARE motif of SNAP29
-    and propagates the identical false claim that Qb/Qc SNAREs contain a transmembrane
-    domain (PMID:9736707, PMID:9759094; finding F30).
+    and Caenorhabditis elegans SNAP29 P83351) models the N-terminal Qb SNARE motif
+    of SNAP29 and propagates the identical false claim that Qb/Qc SNAREs contain a
+    transmembrane domain (PMID:9736707, PMID:9759094; finding F30).
 - evidence_id: ev-dcx-child-siblings
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
@@ -1362,13 +1368,13 @@ findings:
   title: CDD:cd17152 (DCX2_DCDC2) interpolates an off-target ubiquitin protein-modifier
     definition sentence into a microtubule-binding DCX repeat profile
   description: CDD:cd17152 (label=DCX2_DCDC2, parent_traits=[CDD:cl28922]) models
-    the C-terminal second doublecortin-like domain (DCX2) of DCDC2 (unpromoted seed
-    examples Homo sapiens UniProtKB:Q9UHG0 and Mus musculus UniProtKB:Q5DU00), a microtubule-associated
-    protein with tandem ubiquitin-like beta-grasp DCX repeats associated with human
-    reading disability/dyslexia (PMID:16278295). Its upstream CDD definition interpolated
-    the off-target sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that
-    is involved in various cellular processes, including transcriptional regulation,
-    cell cycle control, and DNA repair.' and lacked a PMID:16278295 evidence block.
+    the C-terminal second doublecortin-like domain (DCX2) of DCDC2 (Homo sapiens UniProtKB:Q9UHG0
+    and Mus musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem
+    ubiquitin-like beta-grasp DCX repeats associated with human reading disability/dyslexia
+    (PMID:16278295). Its upstream CDD definition interpolated the off-target sentence
+    'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various
+    cellular processes, including transcriptional regulation, cell cycle control,
+    and DNA repair.' and lacked a PMID:16278295 evidence block.
   target_ids:
   - CDD:cd17152
   field_paths:
@@ -1472,11 +1478,11 @@ findings:
   title: CDD:cd15884 (SNARE_SNAP23C) asserts that Qb/Qc SNAREs have a transmembrane
     domain whereas SNAP23 is membrane-anchored via palmitoylated cysteines
   description: CDD:cd15884 (label=SNARE_SNAP23C, parent_traits=[CDD:cl22856]) models
-    the C-terminal Qc SNARE motif of SNAP23 (unpromoted seed examples Mus musculus
-    UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition
-    falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23
-    lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines
-    in its inter-motif linker (PMID:9159129, PMID:9759094).
+    the C-terminal Qc SNARE motif of SNAP23 (Mus musculus UniProtKB:O09044 and Homo
+    sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that
+    Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane
+    domain and attaches to membranes via palmitoylated cysteines in its inter-motif
+    linker (PMID:9759094, PMID:9159129).
   target_ids:
   - CDD:cd15884
   field_paths:
@@ -1506,7 +1512,7 @@ findings:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
   disposition_reason: 'Repaired CDD:cd15884 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain
-    claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9159129
+    claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9759094
     evidence, and recorded curation_history action source_erratum_cd15884.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
@@ -1524,11 +1530,11 @@ findings:
   title: CDD:cd15895 (SNARE_SNAP23N) asserts that Qb/Qc SNAREs have a transmembrane
     domain whereas SNAP23 is membrane-anchored via palmitoylated cysteines
   description: CDD:cd15895 (label=SNARE_SNAP23N, parent_traits=[CDD:cl22856]) models
-    the N-terminal Qb SNARE motif of SNAP23 (unpromoted seed examples Mus musculus
-    UniProtKB:O09044 and Homo sapiens UniProtKB:O00161), and its upstream CDD definition
-    falsely stated that Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23
-    lacks a transmembrane domain and attaches to membranes via palmitoylated cysteines
-    in its inter-motif linker (PMID:9159129, PMID:9759094).
+    the N-terminal Qb SNARE motif of SNAP23 (Mus musculus UniProtKB:O09044 and Homo
+    sapiens UniProtKB:O00161), and its upstream CDD definition falsely stated that
+    Qb/Qc SNAREs contain a transmembrane domain whereas SNAP23 lacks a transmembrane
+    domain and attaches to membranes via palmitoylated cysteines in its inter-motif
+    linker (PMID:9759094, PMID:9159129).
   target_ids:
   - CDD:cd15895
   field_paths:
@@ -1558,7 +1564,7 @@ findings:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
   disposition_reason: 'Repaired CDD:cd15895 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain
-    claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9159129
+    claim with palmitoylated inter-motif linker membrane anchoring, added PMID:9759094
     evidence, and recorded curation_history action source_erratum_cd15895.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
@@ -1852,14 +1858,14 @@ findings:
     anchors
   description: CDD:cd15856 (label=SNARE_SNAP29C, parent_traits=[CDD:cl22856], unpromoted
     seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0,
-    and Allochromatium vinosum UniProtKB:P83351) models the C-terminal Qc SNARE motif
-    of SNAP29, but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil
-    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
-    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
-    and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29
-    specifically lacks both a transmembrane domain and the palmitoylated cysteine
-    cluster of SNAP25/SNAP23, associating with membranes via protein-protein interactions
-    with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
+    and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the C-terminal Qc SNARE
+    motif of SNAP29, but its upstream CDD definition states 'Qb/Qc SNAREs consist
+    of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup
+    and one belonging to the Qc subgroup), which mediate the interactions with other
+    SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane
+    domain, and SNAP29 specifically lacks both a transmembrane domain and the palmitoylated
+    cysteine cluster of SNAP25/SNAP23, associating with membranes via protein-protein
+    interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
   target_ids:
   - CDD:cd15856
   field_paths:
@@ -1895,10 +1901,10 @@ findings:
     anchors
   description: CDD:cd15887 (label=SNARE_SNAP29N, parent_traits=[CDD:cl22856], unpromoted
     seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0,
-    and Allochromatium vinosum UniProtKB:P83351) models the N-terminal Qb SNARE motif
-    of SNAP29, and propagates the identical false upstream CDD template claim 'Qb/Qc
-    SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to
-    the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
+    and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the N-terminal Qb SNARE
+    motif of SNAP29, and propagates the identical false upstream CDD template claim
+    'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging
+    to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions
     with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane
     domain, and SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring
     cysteines (PMID:9736707, PMID:9759094).

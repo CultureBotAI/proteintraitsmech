@@ -13,10 +13,10 @@
 
 | Review ID | Kind | Skill | Verdict | Artifact Path | SHA-256 |
 | --- | --- | --- | --- | --- | --- |
-| `20261031T043800Z-cdd-cd17071-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.yaml` | `e4e47b687541f015b054760d98e234e54730730bba53e8ce77332af8844c8eff` |
-| `20261031T043800Z-cdd-cd17071-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.md` | `30e010325f2173c7acba490269ed7bf50847e12b1a4984426e9148561772cd19` |
-| `20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.yaml` | `d1208d56b10cce1538205e954117013a0a355faa3a8ef8ea8e5baa42da529aab` |
-| `20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.md` | `4393950327ba92619483a2befa7db11a276917a8c1a02ad089b030580b2c4178` |
+| `20261031T043800Z-cdd-cd17071-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.yaml` | `10afd869879cbb047607bc097928b707a0585991a6e0ef04f83dc84b54ed2e22` |
+| `20261031T043800Z-cdd-cd17071-record-review` | `record` | `review-yaml-record` | `needs_curation` | `reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.md` | `9156ce0b4e988c19053439d95d61c5fe08bc79cf487ecf13af812751f01f4910` |
+| `20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.yaml` | `1ff58108810922c05c3db0d4dd013c79ae909a516a5eacdac29eb3e10e9dc743` |
+| `20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review` | `category` | `review-yaml-category` | `needs_curation` | `reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.md` | `08bd96595a1e4f2d648b90eacbb6357dd383f6536c741007d8a1880ca7b9ca5d` |
 
 ## Frozen Inventory & Coverage
 
