@@ -1,0 +1,3627 @@
+id: https://w3id.org/proteintraitsmech
+name: proteintraitsmech
+title: ProteinTraitsMech - Protein Sequence & Structure Trait Schema
+description: |
+  LinkML schema for modeling protein *sequence*, *structure*, and
+  *function* traits and their mechanisms. Each ProteinTraitRecord is a
+  single trait along one of four axes:
+
+    - SEQUENCE traits — motifs, signal peptides, propeptides, transit
+      peptides, initiator methionine, mature chain / peptide products,
+      non-standard residues, low-complexity / disordered regions,
+      compositional biases, tandem repeats, conserved regions, epitopes,
+      PTM sites (modified residues, glycosylation, lipidation, crosslinks).
+    - STRUCTURE traits — CATH-style class / architecture / topology /
+      homologous-superfamily / fold hierarchy, structural domains,
+      secondary-structure arrangements, quaternary state, subunit
+      interfaces, active / binding / allosteric / metal sites, disulfide
+      bonds, cavities, dynamics, symmetry, structural stability features.
+    - SEQUENCE_STRUCTURE traits — traits meaningful in both axes:
+      transmembrane spans, coiled coils, structural tandem repeats.
+    - FUNCTION traits — entry-level (non-localised) traits: enzymatic
+      activity, binding capacity, cofactor requirement, subcellular
+      localisation, environmental response, interaction partner.
+      Complements (does not replace) the localised sequence/structure
+      records: an FT BINDING record captures *where* ATP binds; a
+      FUNC_BINDING_CAPACITY record captures *that* the protein binds ATP
+      as a class-level assertion.
+
+  Records anchor to authoritative resources — Pfam, InterPro, PROSITE,
+  SMART, MEROPS, CATH, SCOP, PDB, GO, PR, UniProtKB, HAMAP — with
+  evidence-backed causal mechanism graphs where curator-asserted.
+
+  Curation model mirrors the sibling Mech repos (dismech, TraitMech,
+  CultureMech, MediaIngredientMech): one YAML per trait, evidence-bearing
+  audit trail, validation via `just validate-all`.
+
+license: BSD-3-Clause
+
+prefixes:
+  linkml: https://w3id.org/linkml/
+  proteintraitsmech: https://w3id.org/proteintraitsmech/
+  biolink: https://w3id.org/biolink/vocab/
+  valuesets: https://w3id.org/linkml/valuesets/
+  # Protein-centric ontologies
+  PR: http://purl.obolibrary.org/obo/PR_
+  GO: http://purl.obolibrary.org/obo/GO_
+  PATO: http://purl.obolibrary.org/obo/PATO_
+  UBERON: http://purl.obolibrary.org/obo/UBERON_
+  CL: http://purl.obolibrary.org/obo/CL_
+  CHEBI: http://purl.obolibrary.org/obo/CHEBI_
+  RHEA: http://purl.obolibrary.org/obo/RHEA_
+  SO: http://purl.obolibrary.org/obo/SO_
+  UO: http://purl.obolibrary.org/obo/UO_
+  IAO: http://purl.obolibrary.org/obo/IAO_
+  RO: http://purl.obolibrary.org/obo/RO_
+  OBI: http://purl.obolibrary.org/obo/OBI_
+  MOD: http://purl.obolibrary.org/obo/MOD_
+  MONDO: http://purl.obolibrary.org/obo/MONDO_
+  HP: http://purl.obolibrary.org/obo/HP_
+  # Protein databases (URL prefixes; not OBO)
+  UniProtKB: https://www.uniprot.org/uniprotkb/
+  Pfam: https://www.ebi.ac.uk/interpro/entry/pfam/
+  InterPro: https://www.ebi.ac.uk/interpro/entry/InterPro/
+  PROSITE: https://prosite.expasy.org/
+  SMART: http://smart.embl-heidelberg.de/smart/do_annotation.pl?ACC=
+  CATH: https://www.cathdb.info/version/latest/superfamily/
+  SCOP: http://scop.mrc-lmb.cam.ac.uk/term/
+  MEROPS: https://www.ebi.ac.uk/merops/cgi-bin/pepsum?id=
+  TED: https://ted.cathdb.info/
+  ECOD: http://prodata.swmed.edu/ecod/complete/domain?id=
+  PDB: https://www.rcsb.org/structure/
+  Unimod: https://www.unimod.org/modifications_view.php?editid1=
+  RESID: https://proteininformationresource.org/cgi-bin/resid?id=
+  DisProt: https://disprot.org/
+  IDPO: https://disprot.org/browse?ontology=IDPO&term=
+  MCSA: https://www.ebi.ac.uk/thornton-srv/m-csa/entry/
+  AlphaFoldDB: https://alphafold.ebi.ac.uk/entry/
+  HAMAP: https://hamap.expasy.org/signature/
+  EC: https://enzyme.expasy.org/EC/
+  KEGG: https://www.kegg.jp/entry/
+  Reactome: https://reactome.org/content/detail/
+  NCBIGene: https://www.ncbi.nlm.nih.gov/gene/
+  HGNC: https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/
+  # Taxonomy
+  NCBITaxon: http://purl.obolibrary.org/obo/NCBITaxon_
+  # Provenance
+  PMID: http://www.ncbi.nlm.nih.gov/pubmed/
+  DOI: https://doi.org/
+  dcterms: http://purl.org/dc/terms/
+  skos: http://www.w3.org/2004/02/skos/core#
+
+default_prefix: proteintraitsmech
+default_range: string
+
+imports:
+  - linkml:types
+  # Shared, byte-identical Mech module: Discussion (knowledge gaps) + Dataset.
+  # Vendored from CultureBotAI/culturebotai-claw at the full commit in
+  # `scripts/.vendored_canon_ref` and guarded by `just check-vendored-sync`,
+  # which compares it against claw's pinned manifest. DO NOT EDIT THE LOCAL COPY:
+  # a one-repository fix is exactly what the drift check exists to catch (#484).
+  - mech_shared
+
+# ================================================================
+# ROOT CLASS — one YAML file per ProteinTraitRecord
+# ================================================================
+
+classes:
+
+  AminoAcidPropertyCatalog:
+    tree_root: true
+    description: >-
+      Source-pinned reference chemistry for the 20 standard peptide residues.
+      Links existing residue/quality trait classes without assigning a protein
+      trait or proving a molecular mechanism. Modified and ambiguous residues
+      are outside this catalog, not equivalent to their unmodified parents.
+    attributes:
+      catalog_id: {range: string, required: true}
+      version: {range: string, required: true}
+      scope: {range: string, required: true}
+      sources:
+        range: ResiduePropertySource
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      property_definitions:
+        range: ResiduePropertyDefinition
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      amino_acids:
+        range: AminoAcidChemistry
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      review:
+        range: ResidueCatalogReview
+        inlined: true
+
+  ResiduePropertySource:
+    description: Hash and reuse terms of the exact primary reference file.
+    attributes:
+      source_id: {range: string, required: true}
+      reference: {range: string, required: true, pattern: '^https://\S+$'}
+      sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      version: {range: string, required: true}
+      license: {range: string, required: true}
+      license_url: {range: string, required: true, pattern: '^https://\S+$'}
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  ResiduePropertyDefinition:
+    description: Operational meaning of a residue property; not a causal relation.
+    attributes:
+      property_id: {range: ResiduePropertyEnum, required: true}
+      label: {range: string, required: true}
+      unit: {range: string, required: true}
+      method: {range: string, required: true}
+      conditions: {range: string, required: true}
+      limitations: {range: string, required: true}
+      quality_trait_refs: {range: string, multivalued: true}
+
+  AminoAcidChemistry:
+    description: >-
+      Chemical-component projection plus reference parameters, not a free-amino-acid
+      measurement or an observed state at a protein position. CCD hydrogens/formal
+      charges are a reference representation, not physiological protonation.
+    attributes:
+      one_letter: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      three_letter: {range: string, required: true, pattern: '^[A-Z]{3}$'}
+      label: {range: string, required: true}
+      residue_trait_ref: {range: string, required: true, pattern: '^MOD:[0-9]{5}$'}
+      residue_chemical_ref: {range: string, required: true, pattern: '^CHEBI:[0-9]+$'}
+      trait_record_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      structure_source_id: {range: string, required: true}
+      atoms:
+        range: ResidueReferenceAtom
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      bonds:
+        range: ResidueReferenceBond
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      chemical_groups:
+        range: ResidueChemicalGroup
+        multivalued: true
+        inlined_as_list: true
+      ionization_type: {range: ResidueIonizationTypeEnum, required: true}
+      properties:
+        range: ResiduePropertyValue
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  ResidueReferenceAtom:
+    description: CCD atom flags in a reference component, not protein coordinates.
+    attributes:
+      atom_name: {range: string, required: true}
+      element: {range: string, required: true, pattern: '^[CHNOS]$'}
+      aromatic: {range: boolean, required: true}
+      backbone: {range: boolean, required: true}
+      leaving: {range: boolean, required: true}
+
+  ResidueReferenceBond:
+    attributes:
+      atom_1: {range: string, required: true}
+      atom_2: {range: string, required: true}
+      bond_order: {range: ResidueReferenceBondOrderEnum, required: true}
+
+  ResidueChemicalGroup:
+    description: Explicit atom set derived from reference bonds; not a protein interaction.
+    attributes:
+      group_type: {range: ResidueChemicalGroupEnum, required: true}
+      atom_names: {range: string, required: true, multivalued: true}
+
+  ResiduePropertyValue:
+    attributes:
+      property_id: {range: ResiduePropertyEnum, required: true}
+      value: {range: double}
+      value_status: {range: ResiduePropertyValueStatusEnum, required: true}
+      source_id: {range: string, required: true}
+      evidence_origin: {range: ResiduePropertyEvidenceEnum, required: true}
+
+  ResidueCatalogReview:
+    description: >-
+      Source-transcription/chemical-rule review of an exact catalog content digest.
+      Does not certify clinical use or an experimentally established mechanism.
+      An LLM-assisted review must say so; it is not independent human approval.
+    attributes:
+      content_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      reviewed_on: {range: string, required: true, pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}$'}
+      reviewer: {range: string, required: true}
+      llm_assisted: {range: boolean, required: true}
+      scope: {range: string, required: true}
+      checks: {range: string, required: true, multivalued: true}
+      limitations: {range: string, required: true}
+
+  MolecularEvidenceBundle:
+    tree_root: true
+    description: >-
+      Versioned research evidence about exact proteins, linked to trait classes.
+      Observations, derived comparisons, and mechanistic interpretations are
+      distinct. This bundle is not a trait record, a grounding registry, or an
+      authorization to qualify an occurrence or assign a GO annotation.
+      Explicit null values are not supported by semantic validation; omit an
+      optional field instead of assigning null.
+    attributes:
+      amino_acid_catalog:
+        description: Reviewed reference chemistry embedded in the immutable bundle; never mechanism evidence by itself.
+        range: AminoAcidPropertyCatalog
+        inlined: true
+      residue_environments:
+        range: MolecularResidueEnvironment
+        multivalued: true
+        inlined_as_list: true
+      residue_simulations:
+        range: MolecularResidueSimulation
+        multivalued: true
+        inlined_as_list: true
+      residue_reasoning:
+        range: MolecularResidueReasoning
+        multivalued: true
+        inlined_as_list: true
+      bundle_id:
+        range: string
+        required: true
+      version:
+        range: string
+        required: true
+      trait_refs:
+        description: Related trait classes, not a declaration that every panel protein instantiates every class.
+        range: string
+        multivalued: true
+        required: true
+      scope_note:
+        description: Explicit panel boundaries and source-classification caveats; no occurrence qualification.
+        range: string
+        required: true
+      protein_references:
+        range: ProteinReference
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      sources:
+        range: MolecularSourceArtifact
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      sites:
+        range: MolecularSite
+        multivalued: true
+        inlined_as_list: true
+        required: true
+      comparisons:
+        range: MolecularSiteComparison
+        multivalued: true
+        inlined_as_list: true
+      model_comparisons:
+        range: MolecularModelComparison
+        multivalued: true
+        inlined_as_list: true
+      functional_observations:
+        range: MolecularFunctionalObservation
+        multivalued: true
+        inlined_as_list: true
+      explanations:
+        range: MolecularExplanation
+        multivalued: true
+        inlined_as_list: true
+      mechanisms:
+        range: MolecularMechanism
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularResidueEnvironment:
+    is_a: MolecularAssertion
+    description: >-
+      Computed intrachain heavy-atom neighborhood in one deposited reference
+      conformation. Includes covalently adjacent residues; not a hydrogen-bond
+      assignment, variant structure, conformational ensemble or causal effect.
+    attributes:
+      position: {range: integer, required: true, minimum_value: 1}
+      residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      structure_id: {range: string, required: true}
+      structure_source: {range: string, required: true}
+      mapping_source: {range: string, required: true}
+      structure_state: {range: string, required: true}
+      model_number: {range: integer, required: true, minimum_value: 1}
+      auth_chain: {range: string, required: true}
+      distance_cutoff_angstrom: {range: double, required: true, minimum_value: 0, maximum_value: 10}
+      method: {range: string, required: true}
+      focus_atoms:
+        range: MolecularAtom
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      neighbors:
+        range: MolecularResidueNeighbor
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularResidueNeighbor:
+    description: One atom pair with a second residue of the same pinned protein and deposited chain.
+    attributes:
+      partner_position: {range: integer, required: true, minimum_value: 1}
+      partner_residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      focus_atom_id: {range: string, required: true}
+      partner_atom: {range: MolecularAtom, required: true, inlined: true}
+      distance_angstrom: {range: double, required: true, minimum_value: 0}
+
+  MolecularResidueSimulation:
+    is_a: MolecularAssertion
+    description: >-
+      A source-reported variant-specific molecular interaction from simulation,
+      not a simulation independently replayed here or an experimental result.
+    attributes:
+      position: {range: integer, required: true, minimum_value: 1}
+      residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      substituted_residue: {range: string, required: true, pattern: '^[ACDEFGHIKLMNPQRSTVWY]$'}
+      partner_id: {range: string, required: true}
+      claim: {range: string, required: true}
+      method: {range: string, required: true}
+      conditions: {range: string, required: true}
+      coordinate_frame: {range: string, required: true}
+      source_locator: {range: string, required: true}
+
+  MolecularResidueReasoning:
+    description: >-
+      Explicit evidence ledger connecting an exact graph residue binding to
+      reference properties, local context and measured outcomes. This is not
+      automatic causal-path composition; unresolved links remain unresolved.
+    attributes:
+      reasoning_id: {range: string, required: true}
+      mechanism_id: {range: string, required: true}
+      residue_binding: {range: MolecularResidueBinding, required: true, inlined: true}
+      catalog_sha256: {range: string, required: true, pattern: '^[0-9a-f]{64}$'}
+      property_context_links:
+        range: ResiduePropertyContextLink
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      context_trait_links:
+        range: ResidueContextTraitLink
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      limitations: {range: string, required: true}
+
+  ResiduePropertyContextLink:
+    attributes:
+      property_ids: {range: ResiduePropertyEnum, required: true, multivalued: true}
+      context_ref: {range: string, required: true}
+      partner_id:
+        description: Required for simulation context, must match its exact molecular partner.
+        range: string
+      assessment: {range: ResiduePropertyContextAssessmentEnum, required: true}
+      description: {range: string, required: true}
+      limitations: {range: string, required: true}
+
+  ResidueContextTraitLink:
+    description: >-
+      The measured consequence is independently supported by its assay. A
+      molecular mediation hypothesis needs its own source; context alone does
+      not establish it. No experimentally-proven mediation value is offered
+      until an explicit intervention-evidence model is supported.
+    attributes:
+      context_refs: {range: string, required: true, multivalued: true}
+      observation_ref: {range: string, required: true}
+      assessment: {range: ResidueContextTraitAssessmentEnum, required: true}
+      description: {range: string, required: true}
+      evidence:
+        range: EvidenceItem
+        multivalued: true
+        inlined_as_list: true
+      limitations: {range: string, required: true}
+
+  MolecularSourceArtifact:
+    description: Immutable identity and role of an upstream input; raw downloads remain outside git.
+    attributes:
+      source_id:
+        range: string
+        required: true
+      artifact_kind:
+        range: MolecularArtifactKindEnum
+        required: true
+      protein_id:
+        description: Exact protein owner, required for sequence and predicted-structure artifacts.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      structure_id:
+        description: Deposited structure identity, required for experimental structures and residue mappings.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
+      reference:
+        range: string
+        required: true
+      sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      source_version:
+        range: string
+        required: true
+      license:
+        range: string
+        required: true
+      license_url:
+        range: string
+        required: true
+
+  MolecularAssertion:
+    abstract: true
+    description: >-
+      An assertion anchored to one exact reference sequence. An assay construct
+      is described separately and can carry explicit substitutions; the reference
+      checksum does not certify the complete historical construct sequence.
+      Review status and evidence origin are orthogonal; a computation is not an experiment.
+    attributes:
+      assertion_id:
+        range: string
+        required: true
+      protein_id:
+        range: string
+        required: true
+      sequence_sha256:
+        description: Checksum of the reference coordinate frame, not of a substituted or tagged assay construct.
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      evidence_origin:
+        range: MolecularEvidenceOriginEnum
+        required: true
+      review_status:
+        range: MolecularReviewStatusEnum
+        required: true
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      limitations:
+        range: string
+        required: true
+
+  MolecularAtom:
+    description: Exact deposited atom identity and coordinates, before any model superposition.
+    attributes:
+      atom_id:
+        range: string
+        required: true
+      atom_name:
+        range: string
+        required: true
+      element:
+        range: string
+        required: true
+      residue_name:
+        range: string
+        required: true
+      auth_chain:
+        range: string
+        required: true
+      label_chain:
+        range: string
+        required: true
+      auth_seq_id:
+        range: string
+        required: true
+      label_seq_id:
+        range: integer
+      insertion_code:
+        range: string
+      altloc:
+        range: string
+      occupancy:
+        range: float
+        required: true
+        minimum_value: 0
+        maximum_value: 1
+      x:
+        range: float
+        required: true
+      y:
+        range: float
+        required: true
+      z:
+        range: float
+        required: true
+
+  MolecularAtomContact:
+    description: >-
+      A heavy-atom distance candidate, not proof of bonding, coordination,
+      necessity, or sufficiency. UniProt coordinates require a source mapping.
+    attributes:
+      protein_position:
+        range: integer
+        minimum_value: 1
+        required: true
+      protein_residue:
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      protein_atom:
+        range: MolecularAtom
+        required: true
+      ligand_atom:
+        range: MolecularAtom
+        required: true
+      atom_role:
+        range: MolecularAtomRoleEnum
+        required: true
+      distance_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+
+  MolecularSite:
+    is_a: MolecularAssertion
+    description: >-
+      A reusable, state-specific site definition on a reference protein.
+      Distinct ligand instances and conformations never silently merge.
+      There is deliberately no geometry-derived required_for assertion.
+    attributes:
+      label:
+        range: string
+        required: true
+      structure_id:
+        range: string
+        required: true
+      structure_source:
+        range: string
+        required: true
+      mapping_source:
+        range: string
+        required: true
+      structure_state:
+        range: string
+        required: true
+      model_number:
+        range: integer
+        minimum_value: 1
+        required: true
+      assembly_scope:
+        range: string
+        required: true
+        description: Exact assembly or asymmetric unit used; no unstated symmetry expansion.
+      conformer_policy:
+        range: string
+        required: true
+        description: How alternate atoms are represented; no implicit joint-conformer assertion.
+      ligand_id:
+        range: string
+        required: true
+      ligand_instance:
+        range: string
+        required: true
+      distance_cutoff_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+      contacts:
+        range: MolecularAtomContact
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      cutoff_sensitivity:
+        range: MolecularContactThreshold
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularContactThreshold:
+    description: Recomputed shell size at an alternate cutoff, with the same source and ligand instance as its parent site.
+    attributes:
+      cutoff_angstrom:
+        range: float
+        minimum_value: 0
+        required: true
+      atom_pair_count:
+        range: integer
+        minimum_value: 0
+        required: true
+      residue_positions:
+        range: integer
+        minimum_value: 1
+        multivalued: true
+        required: true
+      sidechain_heteroatom_positions:
+        description: Residues with a side-chain N/O/S atom in the shell; proximity alone still does not prove coordination.
+        range: integer
+        minimum_value: 1
+        multivalued: true
+
+  MolecularResidueComparison:
+    description: >-
+      Correspondence is a derived hypothesis. Unresolved mappings must not
+      assert a definitive target residue, even if one alignment supplies one.
+    attributes:
+      anchor_position:
+        range: integer
+        minimum_value: 1
+        required: true
+      anchor_residue:
+        range: string
+        required: true
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+      target_position:
+        range: integer
+        minimum_value: 1
+      target_residue:
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+      status:
+        range: MolecularResidueComparisonStatusEnum
+        required: true
+      mapping_note:
+        range: string
+        required: true
+
+  MolecularSiteComparison:
+    is_a: MolecularAssertion
+    description: >-
+      A protein-specific comparison against one site. Neither identical nor
+      changed residues automatically establish an activity or its absence.
+    attributes:
+      site_ref:
+        range: string
+        required: true
+      method:
+        range: string
+        required: true
+      residues:
+        range: MolecularResidueComparison
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularModelPair:
+    is_a: MolecularResidueComparison
+    description: Sequence-selected CA pair; fitted displacement does not establish biological correspondence or activity.
+    attributes:
+      anchor_ca:
+        range: MolecularAtom
+        inlined: true
+      target_ca:
+        range: MolecularAtom
+        inlined: true
+      target_plddt:
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+      used_in_fit:
+        range: boolean
+        required: true
+      ca_displacement_angstrom:
+        range: float
+        minimum_value: 0
+      geometry_note:
+        range: string
+        required: true
+
+  MolecularModelComparison:
+    is_a: MolecularAssertion
+    description: Apo predicted model compared with an experimental reference; contains no inferred target ligand occupancy.
+    attributes:
+      anchor_protein_id:
+        range: string
+        required: true
+      anchor_structure_id:
+        description: Explicit deposited reference identity shared by the structure and mapping sources.
+        range: string
+        pattern: ^PDB:[A-Za-z0-9]{4}$
+        required: true
+      anchor_structure_source:
+        range: string
+        required: true
+      mapping_source:
+        range: string
+        required: true
+      model_source:
+        range: string
+        required: true
+      method:
+        range: string
+        required: true
+      confidence_threshold:
+        range: float
+        minimum_value: 0
+        maximum_value: 100
+        required: true
+      minimum_fit_pairs:
+        range: integer
+        minimum_value: 3
+        required: true
+      fit_status:
+        range: string
+        pattern: ^(ALIGNED|INSUFFICIENT_PAIRS)$
+        required: true
+      fit_residue_count:
+        range: integer
+        minimum_value: 0
+        required: true
+      rotation:
+        description: Nine row-major entries; transformed row coordinate equals target times rotation plus translation.
+        range: float
+        multivalued: true
+      translation:
+        range: float
+        multivalued: true
+      fit_rmsd_angstrom:
+        range: float
+        minimum_value: 0
+      pairs:
+        range: MolecularModelPair
+        multivalued: true
+        inlined_as_list: true
+        required: true
+
+  MolecularFunctionalObservation:
+    is_a: MolecularAssertion
+    description: A scoped assay result; not detected is not universal lack of function.
+    attributes:
+      activity:
+        range: string
+        required: true
+      activity_id:
+        range: string
+      substrate:
+        range: string
+        required: true
+      substrate_id:
+        description: Explicit curated molecular identity, required when a simulation partner is linked to this assay; no automatic name/protonation normalization.
+        range: string
+        pattern: '^(CHEBI|UniProtKB|PR|RNAcentral|PDBCCD):\S+$'
+      outcome:
+        range: MolecularOutcomeEnum
+        required: true
+      assay:
+        range: string
+        required: true
+      conditions:
+        range: string
+        required: true
+      construct:
+        range: string
+        required: true
+      sequence_substitutions:
+        description: >-
+          Source-reported substitutions relative to the pinned reference sequence.
+          Absence means no substitutions curated, not a verified full construct match.
+          Tags, deletions and other unresolved construct differences remain in construct.
+        range: MolecularSequenceSubstitution
+        multivalued: true
+        inlined_as_list: true
+      expression_localization_controls:
+        range: string
+        required: true
+      source_locator:
+        range: string
+        required: true
+
+  MolecularSequenceSubstitution:
+    description: One source-reported substitution in the exact reference coordinate frame; not a full construct sequence.
+    attributes:
+      position:
+        range: integer
+        minimum_value: 1
+        required: true
+      residue:
+        description: Residue in the pinned reference, before substitution.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      substituted_residue:
+        description: Different residue reported for the assay construct.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+
+  MolecularExplanation:
+    is_a: MolecularAssertion
+    description: >-
+      An explicit interpretation, referencing observations without confusing
+      contradiction of one mechanism with demonstration of another.
+    attributes:
+      claim:
+        range: string
+        required: true
+      assessment:
+        range: MolecularClaimAssessmentEnum
+        required: true
+      supporting_assertions:
+        range: string
+        multivalued: true
+      challenging_assertions:
+        range: string
+        multivalued: true
+      context_assertions:
+        description: >-
+          Observations or computations needed to understand the question, without
+          counting as support for or a challenge to this explanation. Cannot refer
+          to another explanation or establish the assessment by themselves.
+        range: string
+        multivalued: true
+      unresolved_questions:
+        range: string
+        required: true
+        multivalued: true
+
+  MolecularMechanism:
+    description: An existing CausalGraph with explicit instance and site scope.
+    attributes:
+      mechanism_id:
+        range: string
+        required: true
+      review_status:
+        range: MolecularReviewStatusEnum
+        required: true
+      limitations:
+        range: string
+        required: true
+      trait_ref:
+        range: string
+        required: true
+      protein_ids:
+        range: string
+        multivalued: true
+        required: true
+      assertion_refs:
+        range: string
+        multivalued: true
+        required: true
+      graph:
+        range: CausalGraph
+        inlined: true
+        required: true
+      residue_bindings:
+        description: Exact sequence addresses for every RESIDUE node; labels alone are insufficient.
+        range: MolecularResidueBinding
+        multivalued: true
+        inlined_as_list: true
+
+  MolecularResidueBinding:
+    description: One member of a graph residue node, in pinned reference coordinates, optionally identifying a tested substitution.
+    attributes:
+      node_id:
+        range: string
+        required: true
+      protein_id:
+        range: string
+        required: true
+      sequence_sha256:
+        range: string
+        pattern: ^[0-9a-f]{64}$
+        required: true
+      position:
+        range: integer
+        minimum_value: 1
+        required: true
+      residue:
+        description: Residue in the pinned reference, not the altered construct.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+        required: true
+      substituted_residue:
+        description: When present, the node denotes a substitution supported by a linked assay observation.
+        range: string
+        pattern: ^[ACDEFGHIKLMNPQRSTVWYUOBZJX]$
+
+  BiophysicalDescriptorCatalog:
+    tree_root: true
+    description: Operational descriptors independent of the five trait axes. Quality anchors remain
+      ontology classes; descriptor methods produce observations, not automatic trait assignments.
+    attributes:
+      descriptors:
+        range: BiophysicalDescriptor
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  BiophysicalDescriptor:
+    description: Definition of one versioned numerical descriptor family in the biophysical pilot.
+    attributes:
+      descriptor_id:
+        range: string
+        required: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      inventory_id:
+        range: string
+        required: true
+        pattern: ^B[0-9]{2}$
+      label:
+        range: string
+        required: true
+      definition:
+        range: string
+        required: true
+      family:
+        range: string
+        required: true
+      value_kind:
+        range: BiophysicalValueKindEnum
+        required: true
+      unit:
+        range: string
+        required: true
+      quality_anchors:
+        range: string
+        multivalued: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      interpretation_limits:
+        range: string
+        required: true
+      references:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+
+  BiophysicalObservation:
+    tree_root: true
+    description: Content-addressed result on an exact release-pinned ProteinReference or contiguous
+      region. Kept in a separate JSONL store. It never qualifies a canonical example or asserts a qualitative
+      state automatically. Semantic validation dereferences the registry and catalog and verifies coordinates,
+      result shapes, and hashes.
+    attributes:
+      observation_id:
+        range: string
+        required: true
+        pattern: ^ptm-observation:[0-9a-f]{64}$
+      descriptor_id:
+        range: string
+        required: true
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      protein_id:
+        range: string
+        required: true
+        pattern: ^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$
+      sequence_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      sequence_length:
+        range: integer
+        required: true
+        minimum_value: 1
+      uniprot_release:
+        range: string
+        required: true
+        pattern: ^[0-9]{4}_[0-9]{2}$
+      sequence_version:
+        range: integer
+        minimum_value: 1
+      scope:
+        range: BiophysicalScopeEnum
+        required: true
+      region:
+        range: SequenceInterval
+        description: Required only for REGION; 1-indexed inclusive in the full reference sequence, including
+          isoforms.
+      analyzed_sequence_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      proteoform:
+        range: string
+        required: true
+        description: Explicit construct/modification assumption; sequence calculations do not observe
+          maturation or PTMs.
+      trait_occurrence_evidence_id:
+        range: string
+        pattern: ^ug-evidence:[0-9a-f]{64}$
+        description: Optional exact GroundingEvidence key; must independently resolve to this protein,
+          hash and scope.
+      evidence_mode:
+        range: BiophysicalEvidenceModeEnum
+        required: true
+      status:
+        range: BiophysicalStatusEnum
+        required: true
+      missing_reason:
+        range: string
+        description: Required for UNDEFINED or NOT_AVAILABLE; no numerical result may accompany a missing
+          status.
+      value:
+        range: double
+      components:
+        range: BiophysicalComponent
+        multivalued: true
+        inlined_as_list: true
+      profile:
+        range: BiophysicalProfilePoint
+        multivalued: true
+        inlined_as_list: true
+      intervals:
+        range: SequenceInterval
+        multivalued: true
+        inlined_as_list: true
+        description: Derived positive segments, for example predicted disorder; never observed disorder
+          by implication.
+      unit:
+        range: string
+        required: true
+      scale:
+        range: string
+      normalization:
+        range: string
+      method:
+        range: BiophysicalMethod
+        required: true
+      conditions:
+        range: BiophysicalConditions
+      uncertainty:
+        range: BiophysicalUncertainty
+      comparator:
+        range: BiophysicalComparator
+      evidence:
+        range: EvidenceItem
+        required: true
+        multivalued: true
+        inlined_as_list: true
+  BiophysicalComponent:
+    description: One named component of a vector (for example an amino-acid fraction).
+    attributes:
+      label:
+        range: string
+        required: true
+      value:
+        range: double
+        required: true
+  BiophysicalProfilePoint:
+    description: Numerical value over a 1-indexed inclusive window in the full protein frame. Residue
+      profiles have start=end. Windows may overlap.
+    attributes:
+      start:
+        range: integer
+        required: true
+        minimum_value: 1
+      end:
+        range: integer
+        required: true
+        minimum_value: 1
+      value:
+        range: double
+        required: true
+  BiophysicalMethod:
+    description: Reproducible method provenance. Parameters are named strings to preserve literal conventions
+      and avoid untyped nested objects.
+    attributes:
+      name:
+        range: string
+        required: true
+      version:
+        range: string
+        required: true
+      reference:
+        range: string
+        required: true
+      implementation:
+        range: string
+        required: true
+      implementation_sha256:
+        range: string
+        required: true
+        pattern: ^[0-9a-f]{64}$
+      parameters:
+        range: BiophysicalParameter
+        required: true
+        multivalued: true
+        inlined_as_list: true
+      source_artifact_sha256:
+        range: string
+        pattern: ^[0-9a-f]{64}$
+      structure_id:
+        range: string
+        pattern: ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
+      chain_id:
+        range: string
+      conformer:
+        range: string
+  BiophysicalParameter:
+    description: One explicit algorithm or assay setting; names must be unique within the method.
+    attributes:
+      name:
+        range: string
+        required: true
+      value:
+        range: string
+        required: true
+  BiophysicalConditions:
+    description: Conditions actually used or assumed. Omit unknown conditions, never populate them with
+      a default experimental value.
+    attributes:
+      ph:
+        range: double
+        minimum_value: 0
+        maximum_value: 14
+      temperature_celsius:
+        range: double
+        minimum_value: -273.15
+      ionic_strength_molar:
+        range: double
+        minimum_value: 0
+      concentration_molar:
+        range: double
+        minimum_value: 0
+      buffer:
+        range: string
+      solvent:
+        range: string
+      redox_state:
+        range: string
+      partners:
+        range: string
+        multivalued: true
+      ligands:
+        range: string
+        multivalued: true
+  BiophysicalUncertainty:
+    description: Uncertainty in the result unit, with an explicit interpretation (SD, SE, interval or
+      instrument resolution).
+    attributes:
+      kind:
+        range: string
+        required: true
+      value:
+        range: double
+        minimum_value: 0
+      lower:
+        range: double
+      upper:
+        range: double
+      description:
+        range: string
+        required: true
+  BiophysicalComparator:
+    description: Baseline for a relative claim, in the same unit as the result.
+    attributes:
+      description:
+        range: string
+        required: true
+      observation_id:
+        range: string
+        pattern: ^ptm-observation:[0-9a-f]{64}$
+      value:
+        range: double
+
+  ProteinTraitRecord:
+    class_uri: proteintraitsmech:ProteinTraitRecord
+    description: >-
+      A single protein *sequence* or *structure* trait with provenance
+      and optional evidence-backed causal mechanism graphs. One YAML per
+      record.
+    attributes:
+      identifier:
+        description: >-
+          Stable CURIE for this trait. Prefer an existing resource CURIE
+          (InterPro: for families/domains, Pfam: for HMM families, PROSITE:
+          for motifs, CATH: / SCOP: for folds, MEROPS: for peptidase
+          clans, PR: for protein-form terms) when the trait corresponds
+          1:1 to an existing entry. Curator-minted records use the
+          `proteintraitsmech:` prefix.
+        identifier: true
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      label:
+        description: Human-readable trait label.
+        required: true
+        range: string
+
+      definition:
+        description: >-
+          Textual definition. For records anchored to an ontology term,
+          seed from the term's IAO:0000115 annotation; curator can extend.
+        range: string
+
+      definition_source:
+        description: >-
+          IAO:0000119 — citation for the definition (PMID:..., DOI:...,
+          or the source ontology CURIE).
+        range: string
+
+      definitions:
+        description: >-
+          Layered definitions beyond the single `definition` string: a GENERAL
+          statement of what the trait is, plus a STRUCTURAL (elements + how they
+          are arranged) and/or MECHANISTIC (how it works) layer. `definition`
+          remains the general fallback for tools that read one string.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitDefinition
+
+      synonyms:
+        description: >-
+          Alternate labels (oboInOwl:hasExactSynonym, hasNarrowSynonym,
+          hasBroadSynonym, hasRelatedSynonym).
+        multivalued: true
+        inlined_as_list: true
+        range: TraitSynonym
+
+      parent_traits:
+        description: >-
+          rdfs:subClassOf parents — CURIEs of broader ontology classes
+          or ProteinTraitRecords. Multivalued because protein traits
+          typically span multiple axes (function + localization + family).
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      xrefs:
+        description: >-
+          oboInOwl:hasDbXref — equivalents asserted by the trait's **own
+          source record** (PR / GO / EC / Pfam / InterPro / UniProtKB /
+          Reactome / ChEBI). Use for *true*, source-direct equivalences;
+          record broader/narrower relations as `parent_traits:` instead, and
+          associations asserted by an *external mapping product* (ec2go,
+          interpro2go, pfam2go, …) in `mapped_xrefs:` — not here.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+      mapped_xrefs:
+        description: >-
+          Cross-references asserted not by the trait's own source but by an
+          external **mapping product** (e.g. ec2go, interpro2go, pfam2go,
+          pfam2interpro, interpro2ec, rhea2ec). Kept separate from `xrefs`
+          so the provenance and trust of a mapping-derived association is
+          explicit and auditable. See `MappedXref`.
+        multivalued: true
+        inlined_as_list: true
+        range: MappedXref
+
+      chemical_participants:
+        description: >-
+          Chemical entities a FUNCTION trait acts on — reaction
+          substrates/products, transported substrates, cofactors — each
+          grounded in ChEBI and semantically typed by `role`. A substrate is
+          an attribute of the activity, not an equivalence, so it lives here
+          rather than in `xrefs`. Molecular formula / InChIKey / mass / CAS
+          are NOT copied per-record; they resolve from the ChEBI id via the
+          shared `docs/data/chebi.json` sidecar. See `ChemicalParticipant`.
+        multivalued: true
+        inlined_as_list: true
+        range: ChemicalParticipant
+
+      trait_relations:
+        description: >-
+          Typed trait↔trait / trait↔entity relationships, each carrying an
+          explicit **Biolink Model predicate** (RO only where Biolink lacks a
+          slot) — e.g. `biolink:member_of` (Pfam family → clan, COG → category),
+          `biolink:part_of`, `biolink:has_participant`. Complements
+          `parent_traits`, which stays the backward-compatible
+          `biolink:subclass_of` path. Most edges are derived at docs-build time
+          from source + parent namespace; this slot is for explicit curation.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitRelation
+
+      detection_methods:
+        description: >-
+          Record-specific methods/tools/recipes for detecting this trait on a
+          real protein — an override of the by-source / by-category catalogue in
+          `data/methods/methods.yaml` (which the docs browser resolves and shows
+          for every record). Grounded in EDAM (operation), bio.tools (tool),
+          ECO (evidence). See `DetectionMethod`.
+        multivalued: true
+        inlined_as_list: true
+        range: DetectionMethod
+
+      secondary_structure_representations:
+        description: >-
+          Comparable **secondary-structure** representation for STRUCT_SECONDARY
+          and related local structural motifs — the 2D analogue of
+          `sequence_pattern`. Holds DSSP/STRIDE 3- or 8-state strings, a
+          normalised SS-element topology string (e.g. `E-turn-E` for a beta
+          hairpin, `H-loop-H` for helix-loop-helix), or a local structural
+          alphabet (Foldseek 3Di). Lets cross-source comparison operate in
+          SS-string / topology space. See `SecondaryStructureRepresentation`.
+        multivalued: true
+        inlined_as_list: true
+        range: SecondaryStructureRepresentation
+
+      structural_geometry_representations:
+        description: >-
+          Comparable **3D-geometry** representation for STRUCTURE-axis traits
+          (fold / topology / domain / site) — a representative structure
+          reference (PDB / AlphaFold / TED / CATH domain), an optional Foldseek
+          3Di descriptor, or a contact-map reference — so structural comparison
+          (Foldseek / TM-score) has something on-record to compare. See
+          `StructuralGeometryRepresentation`.
+        multivalued: true
+        inlined_as_list: true
+        range: StructuralGeometryRepresentation
+
+      sequence_fingerprint_representations:
+        description: >-
+          Content-addressed ordered multi-motif source summaries, such as a
+          PRINTS fingerprint. The compact motif order/count/length summary is
+          inlined for comparison and validation; aligned training instances and
+          derived position-frequency matrices remain in the pinned source
+          artefact identified by the representation. A PRINTS summary alone is
+          not a replayable InterProScan acceptance model: it does not bind a
+          versioned matcher or the separate PRINTS post-processing relation
+          policy. This is deliberately distinct from `sequence_pattern`, which
+          is a single symbolic PROSITE/regex/ELM pattern.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFingerprintRepresentation
+
+      sequence_profile_representations:
+        description: >-
+          Content-addressed source-native profile models whose meaning depends
+          on more than an accession label. For SFLD this binds one HMMER3 model
+          and its GA thresholds to the release's correlated site-residue tuples
+          and complete hierarchy. Site rules are model-level evidence and are
+          not interchangeable with a single `sequence_pattern` or a canonical
+          protein example.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceProfileRepresentation
+
+      evolutionary_scope:
+        description: >-
+          The taxon scope + distribution threshold + method that DEFINE an
+          EVOLUTION-axis trait (EVO_CONSERVATION / EVO_PANGENOME). Two evolution
+          traits are only equivalent when their scope, threshold and method all
+          match; nested thresholds/taxa are containment, not identity (see
+          research/equivalence-cutoffs-evolution.md). Without this a pangenome /
+          conservation class is undecidable for equivalence. See
+          `EvolutionaryScope`.
+        range: EvolutionaryScope
+        inlined: true
+
+      sequence_pattern:
+        description: >-
+          Raw sequence pattern for SEQUENCE-axis traits — e.g. a PROSITE
+          pattern string (`N-{P}-[ST]-{P}.`), a regex, or an ELM linear
+          motif syntax. Optional; profiles (HMM/PSSM matrices) are usually
+          too large to embed here and should be linked via `xrefs` to
+          their source database instead. Use `residue_sequence` for the
+          concrete amino-acid substring of a specific occurrence — this
+          slot is reserved for symbolic patterns.
+        range: string
+
+      residue_sequence:
+        description: >-
+          Concrete amino-acid substring covered by this trait, taken
+          verbatim from the source sequence — e.g. the residues of a
+          UniProt FT MOTIF, SIGNAL, DOMAIN, transmembrane span, or PTM
+          site. One-letter IUPAC codes only, no separators. Complements
+          `sequence_pattern`: `sequence_pattern` is the symbolic
+          motif/regex; `residue_sequence` is a single realised instance.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+
+      canonical_examples:
+        description: >-
+          Canonical exemplar proteins for this trait — the textbook /
+          reference sequences a curator would point to as archetypal.
+          Each example carries a UniProtKB accession, an organism, an
+          optional role note, and an optional citation.
+        multivalued: true
+        inlined_as_list: true
+        range: CanonicalExample
+
+      replaces:
+        description: >-
+          dcterms:replaces — CURIEs of records that this trait supersedes.
+          The replaced record is left in place with
+          `mapping_status: DEPRECATED` so downstream references remain
+          resolvable.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+        slot_uri: dcterms:replaces
+
+      trait_axis:
+        description: >-
+          Primary axis for this trait — SEQUENCE, STRUCTURE, or
+          SEQUENCE_STRUCTURE (traits that meaningfully live in both,
+          e.g. transmembrane spans, coiled coils).
+        range: TraitAxisEnum
+        required: true
+
+      trait_category:
+        description: >-
+          Fine-grained bucket within the axis — used for filesystem
+          organisation and reporting (data/traits/<axis>/<category>/).
+        range: ProteinTraitCategoryEnum
+        recommended: true
+
+      term_kind:
+        description: >-
+          Whether this entry is an OWL Class (most trait terms) or a
+          DatatypeProperty / ObjectProperty (value-bearing companions
+          like "has kinetic Km").
+        range: TermKindEnum
+
+      domain:
+        description: >-
+          For DatatypeProperty / ObjectProperty entries — the typed subject
+          (typically biolink:Protein or biolink:GeneOrGeneProduct).
+        range: string
+
+      range_:
+        description: >-
+          For DatatypeProperty / ObjectProperty entries — the value range
+          (e.g. xsd:decimal, xsd:string, or a ProteinTraitRecord identifier).
+        range: string
+        slot_uri: proteintraitsmech:property_range
+
+      priority:
+        description: Editorial priority for the curation backlog.
+        range: PriorityEnum
+
+      created_by:
+        description: IAO:0000117 — original term author.
+        range: string
+
+      contributors:
+        description: Additional curators who have edited this record.
+        multivalued: true
+        range: string
+
+      evidence:
+        description: >-
+          Optional citation list — populated when a curator backs the
+          trait with literature support beyond the anchoring ontology's
+          own provenance. Causal-edge evidence is required separately
+          (see CausalEdge.evidence).
+        multivalued: true
+        inlined_as_list: true
+        range: EvidenceItem
+
+      mapping_status:
+        description: >-
+          Lifecycle flag. SEEDED rows came from a source ontology import;
+          PROPOSED rows are literature-sourced candidates; REVIEWED rows
+          have curator sign-off; DEPRECATED rows are retained for
+          traceability but flagged as superseded.
+        range: MappingStatusEnum
+
+      curation_history:
+        description: Append-only audit trail.
+        multivalued: true
+        inlined_as_list: true
+        range: CurationEvent
+
+      causal_graphs:
+        description: >-
+          Optional causal mechanism graphs for this trait. Nodes represent
+          proteins, domains, PTMs, ligands, pathways, molecular functions,
+          biological processes, phenotypes, or diseases. Edges must carry
+          evidence.
+        multivalued: true
+        inlined_as_list: true
+        range: CausalGraph
+      discussions:
+        description: >-
+          Open questions, knowledge gaps, controversies and curation todos
+          attached to this trait (shared Discussion supertype). `attaches_to`
+          anchors point into this record's own sections -- e.g.
+          `causal_graphs#<graph_id>` or `evidence#<n>` -- so a gap says WHERE it
+          bites rather than floating at record level.
+        multivalued: true
+        inlined_as_list: true
+        range: Discussion
+      datasets:
+        description: >-
+          Public datasets (omics / sequence / structure / phenotype) relevant to
+          this trait.
+        multivalued: true
+        inlined_as_list: true
+        range: Dataset
+
+      license:
+        description: >-
+          Per-record source license tag. Preserve the source's terms,
+          including CC-BY / CC-BY-SA / CC-BY-NC-SA / DSL / share-alike
+          obligations, so downstream consumers can filter or honour them
+          without inspecting the whole corpus. Project-authored data use
+          CC-BY-4.0; an absent source license does not override upstream
+          terms or establish redistribution permission. Use a
+          well-known SPDX identifier (`CC-BY-4.0`, `CC-BY-SA-4.0`,
+          `CC-BY-NC-SA-4.0`) or a canonical URL.
+        range: string
+
+    rules:
+      # Axis/category pairing — the category prefix pins the axis. UPPER
+      # and OTHER are administrative and may appear on any axis; they are
+      # excluded from these rules by construction (their names don't
+      # match any of the four category-prefix patterns below).
+      - title: seq_categories_require_sequence_axis
+        description: >-
+          Categories named `SEQ_*` are SEQUENCE-axis traits by
+          definition; the axis and category must agree.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^SEQ_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: SEQUENCE
+      - title: struct_categories_require_structure_axis
+        description: >-
+          Categories named `STRUCT_*` are STRUCTURE-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^STRUCT_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: STRUCTURE
+      - title: mixed_categories_require_sequence_structure_axis
+        description: >-
+          Categories named `MIXED_*` are SEQUENCE_STRUCTURE-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^MIXED_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: SEQUENCE_STRUCTURE
+      - title: func_categories_require_function_axis
+        description: >-
+          Categories named `FUNC_*` are FUNCTION-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^FUNC_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: FUNCTION
+      - title: evo_categories_require_evolution_axis
+        description: >-
+          Categories named `EVO_*` are EVOLUTION-axis traits by
+          definition.
+        preconditions:
+          slot_conditions:
+            trait_category:
+              pattern: "^EVO_"
+        postconditions:
+          slot_conditions:
+            trait_axis:
+              equals_string: EVOLUTION
+
+  TraitSynonym:
+    description: A synonym entry with its scope.
+    attributes:
+      synonym_text:
+        required: true
+        range: string
+      synonym_type:
+        range: SynonymTypeEnum
+      source:
+        description: Where the synonym came from (e.g. "UniProtKB", "PMID:...").
+        range: string
+
+  TraitDefinition:
+    description: >-
+      One definition layer for a trait. A record may carry several — a plain
+      GENERAL statement of what it is, plus a STRUCTURAL (elements + their
+      arrangement) and/or MECHANISTIC (how it works) layer.
+    attributes:
+      kind:
+        description: Which layer this definition provides.
+        required: true
+        range: DefinitionKindEnum
+      text:
+        required: true
+        range: string
+      source:
+        description: >-
+          IAO:0000119 — where the text came from (source CURIE/name, PMID:/DOI:),
+          or the generating model when method is GENERATED.
+        range: string
+      method:
+        description: Whether the text was taken from a source or LLM-generated.
+        range: DefinitionMethodEnum
+
+  EvidenceItem:
+    description: A literature or database citation supporting a claim.
+    attributes:
+      reference:
+        description: PMID:..., DOI:..., a database CURIE, or an opaque URL.
+        required: true
+        range: string
+      snippet:
+        description: Verbatim quote from the source supporting the claim.
+        range: string
+      notes:
+        range: string
+
+  CanonicalExample:
+    description: >-
+      An exemplar protein for a trait — a reference sequence that
+      exhibits it. Several provenance-bearing selection routes coexist on a
+      record, including curator-picked archetypes, API-fetched hits, profile
+      selections, and examples promoted through the fail-closed UniProt
+      grounding pipeline. Instance-level fields
+      (`sequence_length`, `reviewed`, `annotation_score`,
+      `family_classifications`) let downstream consumers rank / filter
+      the API-fetched set without re-querying UniProt. `protein_id` is also
+      the key into the release-pinned ProteinReference registry. Existing
+      examples without `qualification_status` are interpreted as
+      LEGACY_UNVERIFIED; they are not evidence that this exact record trait
+      occurs on the protein.
+    attributes:
+      protein_id:
+        description: >-
+          UniProtKB accession for the exemplar protein (e.g. UniProtKB:P00533),
+          optionally with an isoform suffix (`-2`). The pattern is UniProt's own
+          accession syntax rather than a loose alphanumeric match: the looser
+          form accepted MetalPDB's `UNS…` placeholders for PDB chains with no
+          UniProt mapping, which validated cleanly and then 400'd every service
+          that tried to resolve them.
+        required: true
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      protein_label:
+        description: Recommended name of the exemplar protein.
+        required: true
+        range: string
+      taxon_id:
+        description: NCBITaxon CURIE for the source organism (e.g. NCBITaxon:9606).
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        description: Scientific name of the source organism.
+        range: string
+      sequence_length:
+        description: Full-length residue count of the exemplar protein.
+        range: integer
+        minimum_value: 1
+      reviewed:
+        description: >-
+          True if the UniProt entry is Swiss-Prot reviewed; false if it is
+          a TrEMBL unreviewed entry.
+        range: boolean
+      annotation_score:
+        description: >-
+          UniProt annotation score (1–5, higher = more evidence). Useful
+          for ranking API-fetched examples when picking a shortlist.
+        range: integer
+        minimum_value: 1
+        maximum_value: 5
+      family_classifications:
+        description: >-
+          Family / domain CURIEs cross-referenced on this specific example
+          entry — Pfam, InterPro, PROSITE, SMART, CATH, HAMAP, etc.
+          Snapshotted from the entry's DR lines at fetch time; gives
+          downstream users a taxonomy-independent classification of what
+          the example protein *is* without needing to re-query UniProt.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      note:
+        description: >-
+          Free-text note — curator picks explain why the protein is
+          archetypal; API-fetched picks may record the UniProt query used.
+        range: string
+      reference:
+        description: IAO:0000119-style citation (PMID:..., DOI:..., URL).
+        range: string
+      source:
+        description: >-
+          Provenance route by which this example was selected or promoted.
+          Record-specific occurrence evidence and its release are stored on
+          TraitOccurrence rather than inferred from this broad route.
+        range: ExampleSourceEnum
+      fetched_at:
+        description: >-
+          ISO-8601 UTC date the API-fetched example was retrieved. Empty
+          for curator picks.
+        range: string
+        pattern: "^\\d{4}-\\d{2}-\\d{2}$"
+      sequence:
+        description: >-
+          Amino-acid sequence of the exemplar protein (one-letter IUPAC
+          codes, no separators). Optional legacy snapshot used by the docs
+          browser for sequence overlays. Current fetch/suggest commands write
+          candidate ledgers only; a newly promoted example uses
+          `UNIPROT_GROUNDING`, and its authoritative sequence is dereferenced
+          from ProteinReference rather than trusted from this inline copy.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      sequence_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact full sequence in the referenced
+          ProteinReference. Required by semantic validation for a QUALIFIED
+          example, so a later sequence-version change cannot silently retain
+          old occurrence coordinates.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      uniprot_release:
+        description: >-
+          UniProt release from which the example metadata and sequence were
+          resolved (for example `2026_02`). Required for QUALIFIED examples.
+        range: string
+        pattern: "^[0-9]{4}_[0-9]{2}$"
+      sequence_version:
+        description: UniProt sequence version of the resolved entry.
+        range: integer
+        minimum_value: 1
+      qualification_status:
+        description: >-
+          Grounding state of this example. Absence means LEGACY_UNVERIFIED.
+          Candidate and intermediate states belong in the external grounding
+          ledger rather than in canonical_examples; only QUALIFIED assertions
+          may be promoted as new canonical examples.
+        range: GroundingQualificationStatusEnum
+      trait_occurrences:
+        description: >-
+          Record-specific assertions locating or otherwise instantiating this
+          exact trait on the example protein. These differ from `features`,
+          which is the protein's generic UniProt feature track and is not by
+          itself evidence for this record's trait.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitOccurrence
+      features:
+        description: >-
+          UniProt FT-line annotations parsed from the exemplar protein's
+          flat file. One entry per supported feature range; each carries
+          the axis / category routing that would apply if the feature
+          were promoted to its own ProteinTraitRecord. The docs browser
+          uses this list to colour-code the residues shown in `sequence`.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFeatureAnnotation
+
+  ProteinReference:
+    tree_root: true
+    description: >-
+      One release-pinned UniProt protein or explicitly resolved UniProt
+      isoform. ProteinReference objects live in an external JSONL registry,
+      keyed by the exact `protein_id`; trait records refer to them by that key
+      rather than repeating the full sequence on every record.
+    attributes:
+      protein_id:
+        identifier: true
+        required: true
+        description: Exact UniProtKB accession, including an isoform suffix when applicable.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      protein_label:
+        required: true
+        description: Recommended protein name from the resolved UniProt entry.
+        range: string
+      taxon_id:
+        required: true
+        description: NCBITaxon CURIE from the resolved UniProt entry.
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        required: true
+        description: Scientific organism name from the resolved UniProt entry.
+        range: string
+      sequence:
+        required: true
+        description: Full sequence in the resolved canonical or isoform frame.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      sequence_length:
+        required: true
+        description: Full sequence length; semantic validation requires `len(sequence)`.
+        range: integer
+        minimum_value: 1
+      sequence_sha256:
+        required: true
+        description: Lower-case SHA-256 of `sequence` encoded as ASCII.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      isoform:
+        description: >-
+          Positive numeric isoform designator. Required when `protein_id` has
+          an isoform suffix and forbidden for a canonical accession by the
+          semantic validator.
+        range: integer
+        minimum_value: 1
+      reviewed:
+        required: true
+        description: True for a Swiss-Prot reviewed entry; false for TrEMBL.
+        range: boolean
+      fragment:
+        description: >-
+          Fetch-staging only. True when the pinned UniProt entry is flagged
+          Fragment or Fragments (proteinDescription.flag), false when it is not.
+          Written on every row of a schema-v2 UniProt registry fetch and read by
+          the resolver as a WHOLE_PROTEIN qualification input. Staged and durable
+          ProteinReference rows never carry it, and the grounding validator
+          rejects it there. On a fetch-staging row from an older (v1) fetch it is
+          absent, which means unknown, never complete.
+        range: boolean
+      uniprot_release:
+        required: true
+        description: UniProt release used to resolve this registry object.
+        range: string
+        pattern: "^[0-9]{4}_[0-9]{2}$"
+      sequence_version:
+        description: >-
+          UniProt sequence version when the pinned release artefact exposes it.
+          A release-pinned sequence and checksum remain authoritative when a
+          local release sidecar does not carry this per-entry value.
+        range: integer
+        minimum_value: 1
+
+  SequenceInterval:
+    description: >-
+      One 1-indexed inclusive interval in a declared UniProt coordinate frame.
+      Discontinuous occurrences use several intervals rather than a collapsed
+      minimum-to-maximum span.
+    attributes:
+      start:
+        required: true
+        range: integer
+        minimum_value: 1
+      end:
+        required: true
+        range: integer
+        minimum_value: 1
+      expected_sequence:
+        description: >-
+          Optional source-asserted sequence for this interval. Semantic
+          validation compares it exactly with the registry sequence.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+
+  TraitOccurrence:
+    description: >-
+      Evidence that one exact ProteinTraitRecord is instantiated by one exact,
+      versioned UniProt protein. LOCALIZED assertions carry UniProt-frame
+      coordinates; WHOLE_PROTEIN assertions carry exact annotation or
+      membership evidence and must not fabricate a 1..length interval.
+    attributes:
+      trait_id:
+        required: true
+        description: Identifier of the ProteinTraitRecord containing this occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      protein_id:
+        required: true
+        description: Exact ProteinReference key; must equal the containing example's key.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      scope:
+        required: true
+        range: TraitOccurrenceScopeEnum
+      coordinate_frame:
+        description: Required for LOCALIZED and absent for WHOLE_PROTEIN occurrences.
+        range: ProteinCoordinateFrameEnum
+      intervals:
+        description: Ordered, non-overlapping 1-indexed inclusive intervals.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceInterval
+      residue_positions:
+        description: >-
+          Ordered, unique 1-indexed positions for a discontinuous residue set.
+          Do not replace a residue set with a bounding interval.
+        multivalued: true
+        range: integer
+        minimum_value: 1
+      expected_residues:
+        description: >-
+          Source-asserted residues aligned one-for-one with residue_positions.
+          Semantic validation compares them with the registry sequence.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      source_trait_id:
+        required: true
+        description: Exact source identifier asserted on this protein occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      inheritance_path:
+        description: >-
+          Ordered source-descendant to record-ancestor CURIE path, inclusive of
+          both endpoints. Required when source_trait_id differs from trait_id;
+          an undocumented parent-family hit cannot qualify an example.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_method:
+        required: true
+        range: TraitOccurrenceMappingMethodEnum
+      evidence_source:
+        required: true
+        description: Database, file, API, or publication supporting this occurrence.
+        range: string
+      source_release:
+        required: true
+        description: Release/version of the occurrence evidence source.
+        range: string
+      source_evidence_id:
+        description: >-
+          Content-addressed key into the external GroundingEvidence registry.
+          Semantic validation requires this field for a QUALIFIED occurrence
+          and verifies that every occurrence fact is reproduced exactly by the
+          dereferenced evidence object. It remains optional in LinkML so legacy
+          examples and candidate-ledger objects remain backward compatible.
+        range: string
+        pattern: "^ug-evidence:[0-9a-f]{64}$"
+      sequence_sha256:
+        required: true
+        description: Checksum of the exact ProteinReference sequence used for verification.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      qualification_status:
+        required: true
+        range: GroundingQualificationStatusEnum
+      structure_id:
+        description: Structure CURIE (normally PDB:xxxx) for structure-derived mapping.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      chain_id:
+        description: Source structure chain identifier used for residue mapping.
+        range: string
+      mapping_completeness:
+        description: >-
+          Completeness of source-residue mapping. SIFTS-derived QUALIFIED
+          occurrences require COMPLETE and equal source/mapped residue counts.
+        range: ResidueMappingCompletenessEnum
+      source_residue_count:
+        description: Number of trait-defining residues in the source coordinate frame.
+        range: integer
+        minimum_value: 1
+      mapped_residue_count:
+        description: Number of trait-defining residues mapped into the UniProt frame.
+        range: integer
+        minimum_value: 1
+
+  GroundingEvidence:
+    tree_root: true
+    description: >-
+      Immutable, content-addressed source evidence for one TraitOccurrence.
+      Objects live one per line in the external occurrence-evidence JSONL
+      registry. `evidence_id` is `ug-evidence:` followed by the lower-case
+      SHA-256 of the validator's canonical JSON projection of every other
+      field. The provider-entry digest binds this normalized assertion to the
+      exact upstream row or object inspected by the resolver.
+    attributes:
+      evidence_id:
+        identifier: true
+        required: true
+        range: string
+        pattern: "^ug-evidence:[0-9a-f]{64}$"
+      trait_id:
+        required: true
+        description: Exact ProteinTraitRecord asserted by the occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      protein_id:
+        required: true
+        description: Exact canonical or isoform-qualified ProteinReference key.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      source_trait_id:
+        required: true
+        description: Exact identifier found in the source provider entry.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      inheritance_path:
+        description: >-
+          Exact inclusive source-descendant to record-ancestor path copied to
+          the TraitOccurrence and checked against the record hierarchy.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_method:
+        required: true
+        range: TraitOccurrenceMappingMethodEnum
+      scope:
+        required: true
+        range: TraitOccurrenceScopeEnum
+      coordinate_frame:
+        range: ProteinCoordinateFrameEnum
+      intervals:
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceInterval
+      residue_positions:
+        multivalued: true
+        range: integer
+        minimum_value: 1
+      expected_residues:
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      evidence_source:
+        required: true
+        description: Exact logical database/source name copied to the occurrence.
+        range: string
+      source_release:
+        required: true
+        description: Exact release of the logical occurrence-evidence source.
+        range: string
+      sequence_sha256:
+        required: true
+        description: Checksum of the exact ProteinReference sequence used for verification.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      structure_id:
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      chain_id:
+        range: string
+      mapping_completeness:
+        range: ResidueMappingCompletenessEnum
+      source_residue_count:
+        range: integer
+        minimum_value: 1
+      mapped_residue_count:
+        range: integer
+        minimum_value: 1
+      interpro_location_id:
+        description: >-
+          Internal content-addressed key for the exact grouped InterPro match
+          location. It disambiguates repeated provider locations with the same
+          trait and protein without adding resolver-only fields to public
+          TraitOccurrence objects.
+        range: string
+        pattern: "^interpro-location:[0-9a-f]{64}$"
+      provider_kind:
+        required: true
+        description: Machine-checkable class of upstream evidence provider.
+        range: GroundingEvidenceProviderKindEnum
+      provider_source:
+        required: true
+        description: >-
+          Stable source artefact identifier or path used by the resolver; this
+          is deliberately distinct from the human-facing evidence_source.
+        range: string
+      provider_release:
+        required: true
+        description: Release/version recorded on the exact provider artefact.
+        range: string
+      provider_entry_sha256:
+        required: true
+        description: >-
+          Lower-case SHA-256 of the resolver's canonical projection of the
+          exact upstream provider entry.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+
+  SequenceFeatureAnnotation:
+    description: >-
+      A single UniProt FT-line annotation on a CanonicalExample protein.
+      Coordinates are 1-indexed, inclusive of both endpoints; a single-
+      residue feature has `start == end`. `feature_type` is the raw
+      UniProt FT keyword (SIGNAL, DOMAIN, ACT_SITE, …); `trait_axis` and
+      `trait_category` mirror the routing used by seed_uniprot.py's
+      FT_TYPE_MAP so downstream renderers can group by axis for
+      colour-coding.
+    attributes:
+      start:
+        description: 1-indexed start residue (inclusive).
+        required: true
+        range: integer
+        minimum_value: 1
+      end:
+        description: 1-indexed end residue (inclusive).
+        required: true
+        range: integer
+        minimum_value: 1
+      feature_type:
+        description: >-
+          Raw UniProt FT keyword — `SIGNAL`, `DOMAIN`, `ACT_SITE`,
+          `BINDING`, `TRANSMEM`, `MOD_RES`, etc.
+        required: true
+        range: string
+      trait_axis:
+        description: >-
+          Mirror of the trait axis that would apply if this feature were
+          seeded as a ProteinTraitRecord (SEQUENCE / STRUCTURE /
+          SEQUENCE_STRUCTURE). Used by the docs browser to colour-code
+          overlays.
+        range: TraitAxisEnum
+      trait_category:
+        description: >-
+          Mirror of the fine-grained trait category (SEQ_MOTIF /
+          STRUCT_DOMAIN / MIXED_TRANSMEMBRANE / etc.).
+        range: ProteinTraitCategoryEnum
+      note:
+        description: >-
+          UniProt `/note=` text from the FT line — for `MOTIF` this is
+          often the motif name ("DEAD box"); for `DOMAIN` the domain
+          label; for `ACT_SITE` the mechanistic role.
+        range: string
+
+  CausalGraph:
+    description: A directed causal mechanism graph associated with a trait.
+    attributes:
+      graph_id:
+        description: Stable local graph identifier within the ProteinTraitRecord.
+        identifier: true
+        required: true
+        range: string
+      title:
+        description: Human-readable graph title.
+        range: string
+      description:
+        description: Short scope note for the graph.
+        range: string
+      nodes:
+        description: Nodes participating in the causal graph.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CausalNode
+      edges:
+        description: Evidence-backed directed causal or mechanistic edges.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: CausalEdge
+
+  CausalNode:
+    description: A node in a trait causal graph.
+    attributes:
+      node_id:
+        description: Stable local node identifier used by graph edges.
+        identifier: true
+        required: true
+        range: string
+      label:
+        description: Human-readable node label.
+        required: true
+        range: string
+      node_type:
+        description: Broad semantic category used for rendering and curation.
+        required: true
+        range: CausalNodeTypeEnum
+      grounding:
+        description: >-
+          Preferred ontology or database CURIE for the node when available.
+          Label-only draft nodes are permitted in v1.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      xrefs:
+        description: Additional ontology/database CURIEs for this node.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      local:
+        description: >-
+          True when this is an intentionally record-local mechanism node with no
+          stable external ontology or database CURIE. Local nodes must include a
+          description explaining their scope.
+        range: boolean
+      description:
+        description: Optional node-specific scope note.
+        range: string
+
+  CausalEdge:
+    description: An evidence-backed directed relationship in a trait causal graph.
+    attributes:
+      subject:
+        description: Local node_id of the upstream/source node.
+        required: true
+        range: string
+      predicate:
+        description: Human-readable predicate label or relation CURIE.
+        required: true
+        range: string
+      predicate_id:
+        description: Optional ontology CURIE grounding the predicate (e.g. RO:0002211).
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      object:
+        description: Local node_id of the downstream/target node.
+        required: true
+        range: string
+      description:
+        description: Short explanation of the causal claim.
+        range: string
+      evidence:
+        description: >-
+          Edge-level literature or database support. Required — every
+          curator-asserted mechanism edge must carry at least one citation.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: EvidenceItem
+
+  MappedXref:
+    description: >-
+      A cross-reference asserted by an external **mapping product** rather
+      than by the trait's own source record. Distinguished from a direct
+      `xrefs` entry so that the provenance of a mapping-derived association
+      (which curated mapping asserts it, and under what relation) is explicit
+      and auditable.
+    attributes:
+      object:
+        description: CURIE of the mapped ontology/database term (e.g. GO:0004672).
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_source:
+        description: >-
+          The mapping product that asserts this association — e.g. ec2go,
+          interpro2go, pfam2go, pfam2interpro, interpro2ec, rhea2ec.
+        required: true
+        range: string
+      predicate:
+        description: >-
+          Optional relation CURIE qualifying the association (e.g. RO / skos).
+          Absent means an unspecified, mapping-defined relatedness.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+
+  ChemicalParticipant:
+    description: >-
+      A chemical entity a FUNCTION trait acts on, grounded in ChEBI and typed
+      by its role (substrate, product, transported substrate, cofactor, …).
+      Molecular formula / InChIKey / mass / CAS are resolved from `chebi` via
+      the shared ChEBI sidecar, not stored here.
+    attributes:
+      chebi:
+        description: ChEBI CURIE of the chemical entity (e.g. CHEBI:29033).
+        required: true
+        range: string
+        pattern: "^CHEBI:[0-9]+$"
+      role:
+        description: Role of this entity relative to the trait's activity.
+        required: true
+        range: ChemicalRoleEnum
+      name:
+        description: >-
+          Source-provided label for the entity (the ChEBI canonical name is
+          resolved in the sidecar). Optional.
+        range: string
+
+  TraitRelation:
+    description: >-
+      A typed relationship from this trait to another trait or entity, carrying
+      an explicit Biolink Model predicate (RO fallback allowed). Edge-typing is
+      Biolink-first, mirroring KG-Microbe.
+    attributes:
+      predicate:
+        description: >-
+          Biolink predicate CURIE (e.g. biolink:member_of, biolink:part_of,
+          biolink:has_participant, biolink:subclass_of); an RO CURIE only where
+          Biolink has no suitable slot.
+        required: true
+        range: string
+        pattern: "^(biolink|RO):[A-Za-z0-9_]+$"
+      object:
+        description: CURIE of the related trait / entity.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      relation_source:
+        description: Where the relation comes from (source name, mapping, or "derived").
+        range: string
+
+  DetectionMethod:
+    description: >-
+      A method/tool/recipe for detecting, predicting, or computing a trait on a
+      protein. Grounded in EDAM (operation), bio.tools (tool identity) and ECO
+      (evidence kind); `recipe` is a runnable command template — documentation,
+      not an executed workflow.
+    attributes:
+      name:
+        description: Human name of the method/tool (e.g. "MobiDB-lite", "hmmsearch").
+        required: true
+        range: string
+      method_type:
+        description: Broad method kind (maps to ECO).
+        range: MethodTypeEnum
+      edam_operation:
+        description: EDAM operation CURIE for what the method does (e.g. EDAM:operation_0472).
+        range: string
+      tool:
+        description: bio.tools CURIE (biotools:<id>) or tool URL.
+        range: string
+      reference:
+        description: PMID / DOI CURIE for the method.
+        range: string
+      evidence_code:
+        description: ECO CURIE for the kind of evidence the method yields.
+        range: string
+      recipe:
+        description: A runnable command template ({input}/{db}/{output} placeholders).
+        range: string
+
+  SecondaryStructureRepresentation:
+    description: >-
+      A comparable secondary-structure representation of a trait — DSSP/STRIDE
+      state string, normalised SS-element topology string, or a local structural
+      alphabet — used to compare STRUCT_SECONDARY entries across sources.
+    attributes:
+      method:
+        description: Assignment method / source (e.g. DSSP, STRIDE, PDBsum/PROMOTIF, curated).
+        required: true
+        range: string
+      state_alphabet:
+        description: >-
+          Representation alphabet — one of DSSP_8, DSSP_3, STRIDE_8, STRIDE_3,
+          TOPOLOGY (element grammar), FOLDSEEK_3DI.
+        required: true
+        range: string
+      ss_string:
+        description: Per-residue secondary-structure string, when available.
+        range: string
+      topology_string:
+        description: >-
+          Normalised SS-element grammar, e.g. `E-turn-E`, `H-loop-H`,
+          `E-H-E` (beta-alpha-beta). The canonical comparable token for a motif.
+        range: string
+      residue_start:
+        description: 1-indexed start residue of the assignment (inclusive), if localised.
+        range: integer
+        minimum_value: 1
+      residue_end:
+        description: 1-indexed end residue of the assignment (inclusive), if localised.
+        range: integer
+        minimum_value: 1
+      structure_ref:
+        description: PDB / AlphaFold / TED / CATH domain reference used for the assignment.
+        range: string
+      evidence_source:
+        description: CURIE, URL, or source file for the assignment.
+        range: string
+
+  StructuralGeometryRepresentation:
+    description: >-
+      A comparable 3D-geometry representation of a STRUCTURE-axis trait — a
+      representative structure plus optional structural-alphabet / contact
+      descriptors — so Foldseek / TM-score comparison has an on-record anchor.
+    attributes:
+      structure_ref:
+        description: >-
+          Representative structure reference — a PDB id, AlphaFoldDB accession,
+          TED domain id, or CATH/SCOPe/ECOD representative domain identifier.
+        required: true
+        range: string
+      structure_source:
+        description: Provenance of the representative (e.g. PDB, AlphaFoldDB, TED, CATH, SCOPe, ECOD).
+        range: string
+      residue_range:
+        description: Domain chopping / residue range within the structure (e.g. `2-139`).
+        range: string
+      foldseek_3di:
+        description: Foldseek 3Di structural-alphabet descriptor of the representative, if computed.
+        range: string
+      contact_map_ref:
+        description: Reference (URL / file / CURIE) to a contact map or distance matrix, if available.
+        range: string
+      evidence_source:
+        description: CURIE, URL, or source file for the representative selection.
+        range: string
+
+  SequenceFingerprintRepresentation:
+    description: >-
+      A content-addressed ordered multi-motif sequence-fingerprint summary. The
+      exact KDAT release and raw record are bound and ordered motif metadata is
+      carried inline without duplicating aligned training rows. This is not by
+      itself an executable or fully replayable PRINTS matching model: the
+      versioned matcher, derived matrices, and separate InterProScan
+      post-processing relation policy are not bound here.
+    attributes:
+      source_accession:
+        description: CURIE of the source-native fingerprint record.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      source_release:
+        description: Release/version of the exact source artefact.
+        required: true
+        range: string
+      representation_type:
+        description: Machine-checkable kind of fingerprint representation.
+        required: true
+        range: SequenceFingerprintRepresentationTypeEnum
+      source_artifact:
+        description: Stable repository-relative path or URL for the complete source artefact.
+        required: true
+        range: string
+      source_artifact_sha256:
+        description: Lower-case SHA-256 of the complete source artefact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw source record bytes, from its
+          record-opening tag up to (but not including) the next record.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      compatible_derivation_tool_hint:
+        description: >-
+          Non-provenance compatibility hint for a tool family that can derive
+          an EMBOSS pscan matrix from PRINTS final motif sets. This field does
+          not claim that the tool ran, does not bind a tool version, and does
+          not describe InterProScan's fingerPRINTScan/prints.pval matcher.
+        required: true
+        range: string
+      motif_count:
+        description: Declared number of ordered motifs in the fingerprint.
+        required: true
+        range: integer
+        minimum_value: 2
+      motifs:
+        description: Motifs in their source-declared fingerprint order.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFingerprintMotif
+
+  SequenceFingerprintMotif:
+    description: >-
+      Compact, content-addressed summary of one motif in an ordered sequence
+      fingerprint. Training peptide rows remain in the representation's pinned
+      source artefact.
+    attributes:
+      ordinal:
+        description: 1-based position of this motif in the fingerprint.
+        required: true
+        range: integer
+        minimum_value: 1
+      motif_code:
+        description: Source-native code of this motif block.
+        required: true
+        range: string
+        pattern: "^[A-Za-z0-9._ -]+$"
+      length:
+        description: Number of aligned amino-acid positions in this motif.
+        required: true
+        range: integer
+        minimum_value: 1
+      description:
+        description: Source-native motif description, when supplied.
+        range: string
+      training_instance_count:
+        description: Number of aligned final-set training peptides in the source motif block.
+        required: true
+        range: integer
+        minimum_value: 1
+      source_motif_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw fc/fl/ft/fd/KD lines for this
+          source motif block, excluding the inter-block bb separator.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      training_distance_from_previous_min:
+        description: >-
+          Minimum distance observed in the source motif's aligned fd training
+          rows. For the first motif this is the source training row's N-terminal
+          offset. Negative values are valid for overlapping motif windows. This
+          is an observed training-set extremum, not the source KD constraint.
+        required: true
+        range: integer
+      training_distance_from_previous_max:
+        description: >-
+          Maximum distance observed in the source motif's aligned fd training
+          rows. For the first motif this is the source training row's N-terminal
+          offset. Negative values are valid for overlapping motif windows. This
+          is an observed training-set extremum, not the source KD constraint.
+        required: true
+        range: integer
+      inter_motif_distance_constraint:
+        description: >-
+          Optional source-declared KD inter-motif distance constraint for this
+          motif. This preserves PRINTS source metadata; serialization alone does
+          not claim that a matcher enforces the constraint.
+        range: SequenceFingerprintInterMotifDistanceConstraint
+
+  SequenceFingerprintInterMotifDistanceConstraint:
+    description: >-
+      A parsed PRINTS KD INTER_MOTIF_DISTANCE constraint. Region ordinals bind
+      the constraint to one motif transition; the repeat qualifier is preserved
+      literally and is not interpreted here as runtime matching behaviour.
+    attributes:
+      region_start_ordinal:
+        description: Source KD REGION start ordinal; zero denotes the N terminus.
+        required: true
+        range: integer
+        minimum_value: 0
+      region_end_ordinal:
+        description: Source KD REGION end motif ordinal.
+        required: true
+        range: integer
+        minimum_value: 1
+      minimum:
+        description: Source-declared inclusive minimum inter-motif distance.
+        required: true
+        range: integer
+      maximum:
+        description: Source-declared inclusive maximum inter-motif distance.
+        required: true
+        range: integer
+      repeat_qualified:
+        description: >-
+          True exactly when the source KD line ends in /R. This preserves the
+          qualifier without claiming that repository validators enforce its
+          operational matching semantics.
+        required: true
+        range: boolean
+
+  SequenceProfileRepresentation:
+    description: >-
+      A replayable, content-addressed source-native sequence profile. SFLD 4
+      profiles bind an HMMER3/f model and GA thresholds to the matching site
+      block and hierarchy artifact. FEATURE strings remain whole ordered
+      residue tuples: treating their positions as independent allowed-residue
+      sets would create combinations absent from the source.
+    attributes:
+      source_accession:
+        description: CURIE of the source-native profile model.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      source_release:
+        description: Release/version shared by all artifacts in this representation.
+        required: true
+        range: string
+      representation_type:
+        description: Machine-checkable kind of source-native profile representation.
+        required: true
+        range: SequenceProfileRepresentationTypeEnum
+      source_model_artifact:
+        description: Stable repository-relative path or URL for the complete profile artifact.
+        required: true
+        range: string
+      source_model_artifact_sha256:
+        description: Lower-case SHA-256 of the complete profile artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_model_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw HMM record bytes, including its
+          HMMER3 opener and // terminator.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_sites_artifact:
+        description: Stable repository-relative path or URL for the complete site artifact.
+        required: true
+        range: string
+      source_sites_artifact_sha256:
+        description: Lower-case SHA-256 of the complete site artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_site_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact source ACC site block bytes up to,
+          but not including, the next ACC block.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_hierarchy_artifact:
+        description: Stable repository-relative path or URL for the complete hierarchy artifact.
+        required: true
+        range: string
+      source_hierarchy_artifact_sha256:
+        description: Lower-case SHA-256 of the complete hierarchy artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      native_classification_level:
+        description: >-
+          Source-declared nominal level of this exact model. In SFLD this is
+          encoded by the S/G/F accession class; it does not substitute for
+          replaying the hierarchy artifact, which can contain nested subgroups.
+        required: true
+        range: SequenceProfileClassificationLevelEnum
+      model_length:
+        description: Number of HMM match states in the source profile.
+        required: true
+        range: integer
+        minimum_value: 1
+      gathering_sequence_score:
+        description: Source HMMER3 GA sequence-score threshold.
+        required: true
+        range: float
+      gathering_domain_score:
+        description: Source HMMER3 GA domain-score threshold.
+        required: true
+        range: float
+      training_sequence_count:
+        description: Source HMM NSEQ value.
+        required: true
+        range: integer
+        minimum_value: 1
+      hmm_checksum:
+        description: Source HMMER3 CKSUM value.
+        required: true
+        range: integer
+        minimum_value: 1
+      profile_search_mode:
+        description: Exact score-cutoff semantics used to search this profile.
+        required: true
+        range: SequenceProfileSearchModeEnum
+      site_coordinate_system:
+        description: Coordinate system used by the inlined site positions.
+        required: true
+        range: SequenceProfileSiteCoordinateSystemEnum
+      site_evidence_scope:
+        description: >-
+          Whether the inlined sites belong to only this directly matched model
+          or can be inherited when a match is propagated through a hierarchy.
+        required: true
+        range: SequenceProfileSiteEvidenceScopeEnum
+      site_count:
+        description: Declared number of ordered SITE rows in the source block.
+        required: true
+        range: integer
+        minimum_value: 0
+      sites:
+        description: Ordered source SITE rows in HMM match-state coordinates.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceProfileSite
+      site_feature_pattern_count:
+        description: Declared number of correlated FEATURE residue tuples.
+        required: true
+        range: integer
+        minimum_value: 0
+      site_feature_patterns:
+        description: >-
+          Whole ordered amino-acid tuples, one character per SITE row. Each
+          string is one allowed correlated combination; positions must not be
+          flattened into independent residue sets.
+        multivalued: true
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWY]+$"
+
+  SequenceProfileSite:
+    description: One source-native functional site in a sequence-profile coordinate system.
+    attributes:
+      ordinal:
+        description: 1-based source order within the profile's site block.
+        required: true
+        range: integer
+        minimum_value: 1
+      model_position:
+        description: 1-based HMM match-state position, not a protein residue coordinate.
+        required: true
+        range: integer
+        minimum_value: 1
+      description:
+        description: Source-native site description, when present.
+        range: string
+
+  EvolutionaryScope:
+    description: >-
+      The scope + threshold + method that make an EVOLUTION-axis trait
+      (conservation / pangenome partition) computable for equivalence. Per
+      research/equivalence-cutoffs-evolution.md, two evolution traits are the
+      same only if taxon scope AND the distribution threshold AND the method all
+      match; a stricter prevalence band or a narrower taxon is *contained in*
+      (narrow_match), not equal to, a looser one.
+    attributes:
+      taxon_scope:
+        description: >-
+          The taxon / genome set the distribution is measured over — an
+          NCBITaxon CURIE or clade name (e.g. `NCBITaxon:561`, "genus Escherichia").
+          Empty on a generic band-definition class; set when scoped to a real pangenome.
+        range: string
+      taxon_rank:
+        description: NCBI rank of the scope (e.g. species, genus, family, phylum).
+        range: string
+      min_prevalence:
+        description: >-
+          Lower bound of the presence-frequency band, as a fraction of genomes
+          in scope (0-1). E.g. core = 0.99, shell = 0.15. The numeric
+          distribution threshold — not just a label.
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      max_prevalence:
+        description: Upper bound of the presence-frequency band, fraction of genomes in scope (0-1).
+        range: float
+        minimum_value: 0.0
+        maximum_value: 1.0
+      definition_method:
+        description: >-
+          The tool / algorithm that defines the partition — e.g. "Roary -cd 99%
+          frequency band", "PPanGGOLiN (statistical partition)", "BUSCO",
+          "dN/dS". PPanGGOLiN partitions are NOT interchangeable with fixed-%
+          Roary bands even at the same taxon.
+        range: string
+      conservation_metric:
+        description: >-
+          What "conserved/variable" is measured by — `presence-breadth`
+          (ortholog presence across the taxon set) or `dN/dS` (selection);
+          these are distinct definitions and must not be merged.
+        range: string
+      orthology_basis:
+        description: >-
+          The orthology method used to call presence/absence (e.g. OrthoFinder,
+          eggNOG, reciprocal best hits, Roary BLASTp identity cutoff).
+        range: string
+
+  CurationEvent:
+    description: A timestamped curator action on a ProteinTraitRecord.
+    attributes:
+      timestamp:
+        range: datetime
+        required: true
+        pattern: "^20[0-9]{2}-"
+      curator:
+        range: string
+      action:
+        range: string
+      changes:
+        range: string
+      emitted_for:
+        description: >-
+          The family CURIE whose config produced this event's content. A record can be
+          claimed by two or three family configs (5,433 of 7,211 promoter-owned records
+          are), so `emitted_hash` alone answers "the generator wrote this" and not "THIS
+          config wrote this" -- and the broader family would then treat a narrower
+          family's work as its own to overwrite.
+        range: string
+      emitted_hash:
+        description: >-
+          sha256 of the content this event emitted, when the event was written by a
+          GENERATOR rather than a person. It answers one question a re-run cannot
+          otherwise answer: is what is on disk still what I wrote, or has someone
+          improved it since? Without it, "the record no longer matches my config"
+          conflates a curator's edit with a change to the config itself, and a
+          re-promotion silently destroys the first while legitimately performing the
+          second (#204).
+
+          Its own slot rather than a marker inside `changes`, because `changes` is prose
+          a curator may write, and a fingerprint that a human edit can overwrite is not a
+          fingerprint.
+        range: string
+      llm_assisted:
+        range: boolean
+
+  ProteinProfile:
+    class_uri: proteintraitsmech:ProteinProfile
+    description: >-
+      A Swiss-Prot protein and the corpus trait classes it carries, plus its
+      GO / EC groundings — the per-protein view used for trait-to-function
+      correlation and multi-trait-family clustering (issue #7). One YAML per
+      protein; complements the trait-class corpus (ProteinTraitRecord = one YAML
+      per trait) rather than replacing it.
+    attributes:
+      accession:
+        description: UniProtKB accession (e.g. UniProtKB:P00533).
+        identifier: true
+        required: true
+        range: string
+        pattern: "^UniProtKB:[A-Z0-9]+([-][0-9]+)?$"
+      protein_name:
+        description: Recommended protein name.
+        required: true
+        range: string
+      taxon_id:
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        range: string
+      sequence_length:
+        range: integer
+        minimum_value: 1
+      reviewed:
+        description: True for Swiss-Prot (reviewed) entries.
+        range: boolean
+      go_terms:
+        description: GO CURIEs annotated on the entry.
+        multivalued: true
+        range: string
+        pattern: "^GO:[0-9]{7}$"
+      ec_numbers:
+        description: EC numbers annotated on the entry.
+        multivalued: true
+        range: string
+      traits:
+        description: >-
+          Corpus trait classes this protein carries, resolved by matching the
+          entry's signature/classification cross-references (Pfam, InterPro,
+          CATH/Gene3D, PROSITE, SMART, CDD, NCBIfam, SUPERFAMILY, EC, GO)
+          against the identifiers of existing ProteinTraitRecords.
+        multivalued: true
+        inlined_as_list: true
+        range: ProfileTrait
+      profile_source:
+        description: Provenance (e.g. "UniProtKB Swiss-Prot; build_swissprot_profiles.py").
+        range: string
+
+  ProfileTrait:
+    description: One corpus trait class a protein carries, with its axis/category.
+    attributes:
+      trait:
+        description: CURIE of the corpus trait class (a ProteinTraitRecord identifier).
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      trait_axis:
+        description: The trait's axis, copied from the matched record.
+        range: string
+      trait_category:
+        description: The trait's fine-grained category, copied from the matched record.
+        range: string
+      via:
+        description: The entry cross-reference that matched this trait (e.g. Pfam:PF00069).
+        range: string
+
+# ================================================================
+# ENUMS
+# ================================================================
+
+enums:
+
+  ResiduePropertyEnum:
+    permissible_values:
+      SIDE_CHAIN_HEAVY_ATOM_COUNT:
+      SIDE_CHAIN_AROMATIC_ATOM_COUNT:
+      SIDE_CHAIN_HETEROATOM_COUNT:
+      SIDE_CHAIN_HYDROXYL_COUNT:
+      BACKBONE_RING_CLOSURE:
+      KYTE_DOOLITTLE_HYDROPATHY:
+      SIDE_CHAIN_PKA:
+      REFERENCE_SIDE_CHAIN_CHARGE_PH7:
+
+  ResiduePropertyValueStatusEnum:
+    permissible_values:
+      DEFINED:
+      NOT_APPLICABLE:
+
+  ResiduePropertyEvidenceEnum:
+    permissible_values:
+      CHEMICAL_GRAPH_DERIVATION:
+      PUBLISHED_PARAMETER:
+      REFERENCE_IONIZATION_MODEL:
+
+  ResidueIonizationTypeEnum:
+    permissible_values:
+      ACID:
+      BASE:
+      NO_TITRATABLE_GROUP_IN_MODEL:
+
+  ResidueReferenceBondOrderEnum:
+    permissible_values:
+      SING:
+      DOUB:
+      TRIP:
+
+  ResidueChemicalGroupEnum:
+    permissible_values:
+      AROMATIC_ATOMS:
+      HYDROXYL:
+      CARBOXYL:
+      CARBOXAMIDE:
+      GUANIDINO:
+      PRIMARY_AMINO_GROUP:
+        description: Aliphatic primary amino group, including neutral amine and protonated ammonium representations; excludes amide and guanidino nitrogens.
+      THIOL:
+      THIOETHER:
+      BACKBONE_RING_CLOSURE:
+
+  MolecularArtifactKindEnum:
+    description: Role used to validate cross-assertion source bindings, independently of a source's filename.
+    permissible_values:
+      PROTEIN_SEQUENCE:
+        description: Reference sequence source for an exact protein.
+      EXPERIMENTAL_STRUCTURE:
+        description: Deposited experimental coordinates for an identified structure.
+      RESIDUE_MAPPING:
+        description: Mapping from residues in an identified structure to protein sequences.
+      PREDICTED_STRUCTURE:
+        description: Predicted coordinates for an exact protein, not an experimental structure.
+
+  MolecularEvidenceOriginEnum:
+    permissible_values:
+      PUBLISHED_SIMULATION:
+        description: Source-reported computation; neither independently replayed here nor experimental evidence.
+      COMPUTED_CONTACTS:
+        description: Distances calculated from experimental coordinates, not an assay.
+      COMPUTED_COMPARISON:
+        description: Derived correspondence between pinned sequences or models.
+      EXPERIMENTAL_ASSAY:
+        description: Functional measurement in the stated experimental context.
+      CURATOR_INTERPRETATION:
+        description: Reasoned synthesis with explicit supporting/challenging assertions.
+
+  ResiduePropertyContextAssessmentEnum:
+    permissible_values:
+      REFERENCE_CONTEXT_ONLY:
+        description: Chemistry and reference coordinates juxtaposed without a variant-effect claim.
+      COMPUTATIONAL_HYPOTHESIS:
+        description: A published variant simulation, not generic chemistry, supports the local interaction hypothesis.
+
+  ResidueContextTraitAssessmentEnum:
+    permissible_values:
+      UNRESOLVED:
+        description: Measured outcome does not isolate the proposed molecular intermediate.
+      SOURCE_PROPOSED_HYPOTHESIS:
+        description: A cited source proposes this specific mediation; not experimentally established.
+
+  MolecularReviewStatusEnum:
+    permissible_values:
+      PROPOSED:
+      REVIEWED:
+
+  MolecularAtomRoleEnum:
+    permissible_values:
+      MAINCHAIN:
+      SIDECHAIN:
+
+  MolecularResidueComparisonStatusEnum:
+    permissible_values:
+      IDENTICAL:
+      CHANGED:
+      UNRESOLVED:
+
+  MolecularOutcomeEnum:
+    permissible_values:
+      DETECTED:
+      NOT_DETECTED:
+      NOT_ASSESSED:
+
+  MolecularClaimAssessmentEnum:
+    permissible_values:
+      SUPPORTED:
+      CHALLENGED:
+      UNRESOLVED:
+
+  BiophysicalValueKindEnum:
+    description: Allowed result shapes.
+    permissible_values:
+      SCALAR:
+        description: One numerical value.
+      VECTOR:
+        description: Named numerical components.
+      PROFILE:
+        description: Values with residue windows.
+      SCALAR_PROFILE:
+        description: A summary value plus a residue profile and derived intervals.
+  BiophysicalScopeEnum:
+    description: Subject analyzed in the full reference coordinate frame.
+    permissible_values:
+      WHOLE_PROTEIN:
+        description: Entire pinned sequence.
+      REGION:
+        description: One contiguous region; chain cleavage assumptions must be declared separately.
+  BiophysicalEvidenceModeEnum:
+    description: How the result was obtained.
+    permissible_values:
+      SEQUENCE_CALCULATION:
+        description: Deterministic calculation from sequence.
+      STRUCTURE_CALCULATION:
+        description: Calculation from an explicitly identified structural model.
+      MODEL_PREDICTION:
+        description: Named predictive model with version and parameters.
+      EXPERIMENT:
+        description: Direct experimental observation with assay conditions.
+  BiophysicalStatusEnum:
+    description: Missingness is distinct from a numerical zero.
+    permissible_values:
+      OK:
+        description: A defined result is available.
+      UNDEFINED:
+        description: Method is undefined for this input or scope.
+      NOT_AVAILABLE:
+        description: Required prediction or experimental evidence was not supplied.
+
+  TraitAxisEnum:
+    description: Primary axis of a ProteinTraitRecord.
+    permissible_values:
+      SEQUENCE:
+        description: Trait defined on the linear amino-acid sequence.
+      STRUCTURE:
+        description: Trait defined on the 3D structure (fold, contact, geometry).
+      SEQUENCE_STRUCTURE:
+        description: >-
+          Trait meaningful in both axes — e.g. transmembrane spans (sequence
+          hydrophobicity + membrane-embedded helix), coiled coils (heptad
+          repeat + supercoiled helical bundle), disulfides (Cys pattern +
+          spatial bond).
+      FUNCTION:
+        description: >-
+          Entry-level *functional* trait — not localised to a specific
+          residue range. Covers enzymatic activity, binding capacity,
+          cofactor requirement, subcellular localisation, environmental
+          response, and interaction partners. Grounded by GO (F/P/C),
+          EC, Rhea, ChEBI, or UniProt SubCell where available. Complements
+          the localised sequence/structure records rather than replacing
+          them: an FT BINDING record captures *where* ATP binds; a
+          FUNC_BINDING_CAPACITY record captures *that* the protein binds
+          ATP as a class-level assertion.
+      EVOLUTION:
+        description: >-
+          Comparative-genomics / phylogenomic trait describing a protein's
+          conservation or distribution across taxa, rather than its own
+          sequence, structure, or molecular function — e.g. conserved,
+          clade-specific, variable, or a pangenome partition (core / soft-core
+          / shell / cloud / persistent / singleton). Taxon scope, when
+          relevant, is given by an NCBITaxon xref.
+
+  ProteinTraitCategoryEnum:
+    description: >-
+      Fine-grained trait category — used for filesystem layout beneath
+      `data/traits/<axis>/<category>/`. SEQ_* values sit under the
+      SEQUENCE axis, STRUCT_* under STRUCTURE, MIXED_* under
+      SEQUENCE_STRUCTURE.
+    permissible_values:
+      # ---- SEQUENCE ----
+      SEQ_MOTIF:
+        description: >-
+          Short sequence motif — PROSITE pattern, ELM linear motif, active-site
+          consensus, targeting signal, kinase-recognition sequence, etc.
+      SEQ_SIGNAL_PEPTIDE:
+        description: N-terminal secretion / targeting signal peptide (UniProt FT SIGNAL).
+      SEQ_TRANSIT_PEPTIDE:
+        description: >-
+          Organelle-targeting transit peptide — mitochondrial, chloroplast,
+          peroxisome, etc. (UniProt FT TRANSIT).
+      SEQ_PROPEPTIDE:
+        description: Propeptide or zymogen activation segment (UniProt FT PROPEP).
+      SEQ_INITIATOR_METHIONINE:
+        description: >-
+          Initiator methionine that is post-translationally removed
+          (UniProt FT INIT_MET).
+      SEQ_MATURE_CHAIN:
+        description: >-
+          Mature polypeptide product — the chain remaining after signal /
+          transit / propeptide removal, or a discrete released peptide
+          (UniProt FT CHAIN and PEPTIDE).
+      SEQ_NONSTANDARD_RESIDUE:
+        description: >-
+          Non-standard amino acid encoded at a specific position —
+          selenocysteine, pyrrolysine, or curator-annotated modified
+          residues (UniProt FT NON_STD).
+      SEQ_CLEAVAGE_SITE:
+        description: Endoproteolytic cleavage site (MEROPS-annotated or curator-defined).
+      SEQ_TARGETING_SIGNAL:
+        description: >-
+          Short linear targeting / localization signal — nuclear
+          localization/export (NLS/NES), peroxisomal (PTS1/PTS2), ER retention
+          (KDEL), cell-wall sorting (LPXTG), etc. Grounded by ELM TRG classes.
+      SEQ_LEADER_PEPTIDE:
+        description: >-
+          N-terminal leader peptide of a ribosomally synthesized precursor
+          (RiPP / bacteriocin leader, lanthipeptide/lasso/sactipeptide leader)
+          that is cleaved to release the mature peptide. Grounded by MIBiG /
+          BAGEL4 / antiSMASH RiPP families.
+      SEQ_LOW_COMPLEXITY:
+        description: Low-complexity region or compositionally biased segment.
+      SEQ_DISORDER:
+        description: Intrinsically disordered region (predicted or experimentally validated).
+      SEQ_REPEAT:
+        description: Tandem sequence repeat (ankyrin, leucine-rich, WD40 sequence repeat, etc.).
+      SEQ_DOMAIN:
+        description: >-
+          Domain family defined by a sequence signature — a profile HMM,
+          PSSM, or pattern (Pfam / InterPro / CDD / NCBIfam domain models,
+          MEROPS). The trait's *representation is in sequence space*, so it
+          lives on the SEQUENCE axis even though a domain is a structural
+          unit. Structure-derived domain classifications (CATH / SCOP / ECOD /
+          TED) instead use STRUCT_DOMAIN.
+      SEQ_FAMILY:
+        description: >-
+          Protein family defined by a sequence signature (Pfam `Family`-type
+          entries, MEROPS peptidase families). Whole-protein grouping by
+          sequence homology rather than a single domain; representation is a
+          sequence profile. Whole-protein families whose defining property is
+          a conserved *function* (NCBIfam/TIGRFAM equivalog, subfamily) use
+          FUNC_PROTEIN_FAMILY instead.
+      SEQ_HOMOLOGOUS_SUPERFAMILY:
+        description: >-
+          Homologous superfamily defined by a sequence signature — Pfam clan,
+          InterPro homologous superfamily, CDD superfamily (cl*). Sequence-space
+          analog of STRUCT_HOMOLOGOUS_SUPERFAMILY (CATH/SCOP), which is reserved
+          for structure-derived superfamilies.
+      SEQ_COMPOSITION:
+        description: Amino-acid composition trait (e.g. Cys-rich, His-tract, GC-tail).
+      SEQ_CONSERVATION:
+        description: Conserved sequence region or ultraconserved element.
+      SEQ_ACTIVE_SITE:
+        description: >-
+          Catalytic active-site signature detected in sequence — a short
+          conserved residue pattern (e.g. an InterPro Active_site entry).
+          Sequence-local; contrast STRUCT_ACTIVE_SITE (structure-derived,
+          M-CSA-style catalytic residue sets with geometry).
+      SEQ_BINDING_SITE:
+        description: >-
+          Ligand/substrate binding-site signature detected in sequence — a short
+          conserved residue pattern (e.g. an InterPro Binding_site entry).
+          Sequence-local; contrast STRUCT_BINDING_SITE (structure/geometry-derived).
+      SEQ_EPITOPE:
+        description: Linear B-cell or T-cell epitope.
+      SEQ_PTM_SITE:
+        description: >-
+          Generic sequence-level PTM site — kept as an umbrella bucket for
+          PTM records whose specific modification class is unknown or
+          heterogeneous (e.g. PROSITE patterns that flag multiple PTM
+          families at once). Prefer the specific SEQ_MODIFIED_RESIDUE /
+          SEQ_GLYCOSYLATION_SITE / SEQ_LIPIDATION_SITE / SEQ_CROSSLINK_SITE
+          categories when the modification class is known.
+      SEQ_MODIFIED_RESIDUE:
+        description: >-
+          Post-translationally modified residue — phosphorylation,
+          methylation, acetylation, hydroxylation, sulfation, etc.
+          (UniProt FT MOD_RES).
+      SEQ_GLYCOSYLATION_SITE:
+        description: >-
+          Glycosylation site — N-linked, O-linked, C-mannosylation, or
+          GPI anchor attachment (UniProt FT CARBOHYD).
+      SEQ_LIPIDATION_SITE:
+        description: >-
+          Lipidation site — myristoylation, palmitoylation, prenylation,
+          GPI-lipid anchor, N-acylation (UniProt FT LIPID).
+      SEQ_CROSSLINK_SITE:
+        description: >-
+          Inter- or intra-chain cross-link that isn't a disulfide —
+          isopeptide bonds, ubiquitin / SUMO branch points, sortase
+          crosslinks (UniProt FT CROSSLNK).
+      SEQ_OTHER:
+
+      # ---- STRUCTURE ----
+      #
+      # Hierarchy roughly follows CATH (Class → Architecture → Topology →
+      # Homologous Superfamily → Domain) and SCOP (Class → Fold →
+      # Superfamily → Family). STRUCT_FOLD covers SCOP's "fold" level and
+      # is a synonym of the CATH topology grouping at that level.
+      STRUCT_CLASS:
+        description: >-
+          Top-level structural class — CATH Class (mainly-α, mainly-β,
+          α/β, few secondary structures) or SCOP class (all-α, all-β,
+          α/β, α+β, multi-domain, membrane, small).
+      STRUCT_ARCHITECTURE:
+        description: >-
+          Overall shape of the secondary-structure arrangement, ignoring
+          connectivity — CATH Architecture level (bundle, sandwich,
+          barrel, roll, etc.).
+      STRUCT_TOPOLOGY:
+        description: >-
+          Fold topology / connectivity class (TIM barrel, Ig-like,
+          jellyroll, greek key, etc.) — CATH Topology level.
+      STRUCT_HOMOLOGOUS_SUPERFAMILY:
+        description: >-
+          Structural + evolutionary grouping below topology — CATH
+          Homologous Superfamily / SCOP Superfamily; members share a
+          common ancestor. Structure-derived only; sequence-signature
+          superfamilies (Pfam clans, InterPro/CDD superfamilies) use
+          SEQ_HOMOLOGOUS_SUPERFAMILY.
+      STRUCT_FOLD:
+        description: >-
+          Overall fold cluster (SCOP fold; also emitted for TED novel or
+          highly-symmetric fold representatives). Sibling of STRUCT_TOPOLOGY;
+          use STRUCT_TOPOLOGY when the record is explicitly the CATH
+          topology-level term.
+      STRUCT_DOMAIN:
+        description: >-
+          Structure-derived domain classification (CATH domain, SCOP/ECOD
+          domain, TED domain). Domain families defined by a *sequence* signature
+          (Pfam / InterPro / CDD / NCBIfam) use SEQ_DOMAIN instead — the axis
+          follows the representation, not the biology.
+      STRUCT_SECONDARY:
+        description: Secondary-structure element or arrangement (helix bundle, beta sheet topology).
+      STRUCT_QUATERNARY:
+        description: Oligomeric / quaternary state (homodimer, hexameric ring, filament).
+      STRUCT_INTERFACE:
+        description: Subunit or protein-protein interface with defined geometry.
+      STRUCT_ACTIVE_SITE:
+        description: Catalytic active site with 3D geometry.
+      STRUCT_BINDING_SITE:
+        description: Ligand, cofactor, metal, or nucleic-acid binding site.
+      STRUCT_ALLOSTERIC_SITE:
+        description: Allosteric or regulatory binding site.
+      STRUCT_DISULFIDE:
+        description: Disulfide bond or disulfide-bond pattern.
+      STRUCT_METAL_SITE:
+        description: Metal-coordinating site (Zn finger, Fe-S cluster, Ca site, etc.).
+      STRUCT_CAVITY:
+        description: Cavity, pocket, or channel.
+      STRUCT_SYMMETRY:
+        description: Internal or quaternary symmetry (Cn, Dn, icosahedral).
+      STRUCT_DYNAMICS:
+        description: Flexibility, hinge motion, order-disorder transition.
+      STRUCT_STABILITY:
+        description: Structural stability feature (thermal, mechanical, proteolytic).
+      STRUCT_SURFACE:
+        description: Surface property (electrostatic patch, hydrophobicity, glycosylation shield).
+      STRUCT_OTHER:
+
+      # ---- MIXED (SEQUENCE + STRUCTURE) ----
+      MIXED_TRANSMEMBRANE:
+        description: Transmembrane span — sequence hydrophobicity + membrane-embedded helix / strand.
+      MIXED_COILED_COIL:
+        description: Coiled-coil region — heptad-repeat sequence signature + supercoiled bundle.
+      MIXED_STRUCTURAL_REPEAT:
+        description: Structural tandem repeat with both sequence and 3D periodicity (Ig, LRR, ankyrin).
+      MIXED_OTHER:
+
+      # ---- FUNCTION ----
+      FUNC_ENZYMATIC_ACTIVITY:
+        description: >-
+          Catalytic activity — a chemical reaction the protein performs.
+          Grounded by EC, Rhea, GO MF "*activity", and participant ChEBIs.
+      FUNC_BINDING_CAPACITY:
+        description: >-
+          Entry-level ability to bind a class of molecule (ATP-binding,
+          RNA-binding, DNA-binding, etc.). Distinct from
+          STRUCT_BINDING_SITE, which localises the binding to residues.
+          Grounded by GO MF "* binding" or UniProt KW keywords.
+      FUNC_COFACTOR_REQUIREMENT:
+        description: >-
+          Non-substrate small molecule (metal ion, prosthetic group,
+          organic cofactor) required for activity. Grounded by ChEBI +
+          UniProt `CC COFACTOR` block.
+      FUNC_MOLECULAR_FUNCTION:
+        description: >-
+          A molecular-level activity of a gene product (GO molecular_function) —
+          catalytic, binding, transporter, molecular-carrier, etc. Seeded from
+          the GO MF branch; finer function categories (FUNC_ENZYMATIC_ACTIVITY,
+          FUNC_BINDING_CAPACITY, FUNC_TRANSPORT) capture specific sub-types.
+      FUNC_LOCALIZATION:
+        description: >-
+          Subcellular / cellular-component localisation — cytoplasm,
+          plasma membrane, nucleus, extracellular, etc. Grounded by
+          UniProt SubCell and GO CC.
+      FUNC_ENVIRONMENTAL_RESPONSE:
+        description: >-
+          Response to (or requirement for) an environmental condition —
+          temperature (cold, heat), pH, salinity, oxygen availability,
+          osmotic pressure, UV, DNA damage, oxidative stress, starvation.
+          Grounded by GO BP `response_to_*` or the UniProt `CC INDUCTION`
+          block.
+      FUNC_INTERACTION_PARTNER:
+        description: >-
+          A specific protein-, nucleic-acid-, or complex-partner the
+          protein interacts with (entry-level, not necessarily
+          structurally localised). Distinct from STRUCT_INTERFACE, which
+          captures the interface geometry, and from FUNC_INTERACTION_TYPE
+          (the *kind* of interaction). Grounded by UniProt `CC SUBUNIT`
+          and cross-refs to IntAct / BioGRID / STRING.
+      FUNC_INTERACTION_TYPE:
+        description: >-
+          The *kind* of molecular interaction the protein participates in —
+          direct interaction, physical/genetic association, a covalent
+          reaction (ubiquitination, phosphorylation reaction), etc. Grounded
+          by the PSI-MI `interaction type` branch (MI:0190). Distinct from
+          FUNC_INTERACTION_PARTNER, which names *who* is interacted with.
+      FUNC_TRANSPORT:
+        description: >-
+          Membrane-transport / translocation capacity — the class of solute or
+          substrate a protein moves across a membrane (channel, carrier, pump,
+          group translocator). Grounded by TCDB, GO MF "* transmembrane
+          transporter activity", and ChEBI substrate.
+      FUNC_RESISTANCE:
+        description: >-
+          Antimicrobial-resistance function — the drug/class a protein confers
+          resistance to and the mechanism (efflux, inactivating enzyme, target
+          alteration/protection). Grounded by CARD/ARO, and drug ChEBIs.
+      FUNC_PATHWAY:
+        description: >-
+          Membership in a metabolic or signalling pathway / module — an
+          entry-level assertion that the protein participates in a named
+          pathway. Grounded by KEGG (pathway / module / KO), MetaCyc,
+          UniPathway, Reactome, or GO biological-process.
+      FUNC_ORTHOLOG_GROUP:
+        description: >-
+          Membership in a cluster of orthologous genes / functional
+          category — the protein belongs to a named orthologous group whose
+          members share a conserved function across taxa. Grounded by COG
+          (NCBI Clusters of Orthologous Genes) and its 26 functional
+          categories, or eggNOG / KEGG Orthology.
+      FUNC_PROTEIN_FAMILY:
+        description: >-
+          Whole-protein family whose defining property is a conserved specific
+          *function* — NCBIfam / TIGRFAM `equivalog`, `subfamily`, `exception`,
+          `paralog` models and equivalent full-length functional families.
+          Distinct from FUNC_ORTHOLOG_GROUP (taxon-spanning ortholog cluster)
+          and from SEQ_DOMAIN / SEQ_FAMILY (sequence-signature domain/family
+          whose defining property is the signature, not the function).
+
+      # ---- EVOLUTION ----
+      # Coarse categories; the specific evolutionary states (conserved,
+      # clade-specific, variable / core, soft-core, shell, cloud, persistent,
+      # singleton) are individual records WITHIN these categories, not
+      # categories themselves.
+      EVO_CONSERVATION:
+        description: >-
+          Cross-taxon conservation state of a protein — conserved (orthologues
+          retained across taxa, optionally scoped to a clade by an NCBITaxon
+          xref), clade-specific / taxonomically restricted (TRG / orphan), or
+          variable / hypervariable / fast-evolving.
+      EVO_PANGENOME:
+        description: >-
+          Pangenome partition of a protein within a species/clade pangenome —
+          core, soft-core, shell / accessory, cloud, persistent (PPanGGOLiN),
+          or singleton / strain-specific.
+
+      # ---- ADMINISTRATIVE ----
+      UPPER:
+        description: Upper-level classifier used to organise the hierarchy.
+      OTHER:
+
+  TermKindEnum:
+    permissible_values:
+      CLASS:
+      DATATYPE_PROPERTY:
+      OBJECT_PROPERTY:
+      ANNOTATION_PROPERTY:
+
+  DefinitionKindEnum:
+    permissible_values:
+      GENERAL:
+        description: Plainly what the trait is.
+      STRUCTURAL:
+        description: The structural elements and how they are arranged.
+      MECHANISTIC:
+        description: How the trait works (catalytic / binding / interaction mechanism).
+
+  DefinitionMethodEnum:
+    permissible_values:
+      SOURCED:
+        description: Taken verbatim or lightly edited from an authoritative source.
+      GENERATED:
+        description: LLM-generated from the record's own content; flagged as synthetic.
+
+  SequenceFingerprintRepresentationTypeEnum:
+    description: Supported source-native ordered sequence-fingerprint representations.
+    permissible_values:
+      PRINTS_FINAL_ORDERED_MOTIF_SETS:
+        description: >-
+          Ordered PRINTS final motif sets (fc/fl/ft/fd/KD) summarized from a
+          pinned KDAT record. Operational matching additionally needs a
+          versioned matrix derivation/matcher and the PRINTS post-processing
+          policy, neither of which this value claims to bind.
+
+  SequenceProfileRepresentationTypeEnum:
+    description: Supported content-addressed source-native profile representations.
+    permissible_values:
+      SFLD_4_HMMER3_PROFILE_WITH_CORRELATED_SITES:
+        description: >-
+          One SFLD 4 HMMER3/f model plus its GA thresholds, exact site block,
+          correlated FEATURE residue tuples, and release hierarchy provenance.
+
+  SequenceProfileClassificationLevelEnum:
+    description: Source-native nominal classification level of a sequence profile.
+    permissible_values:
+      SUPERFAMILY:
+        description: SFLD S-class superfamily model.
+      SUBGROUP:
+        description: SFLD G-class subgroup model; subgroups may be nested.
+      FAMILY:
+        description: SFLD F-class family model.
+
+  SequenceProfileSearchModeEnum:
+    description: Supported profile-search threshold semantics.
+    permissible_values:
+      HMMSEARCH_CUT_GA:
+        description: HMMER hmmsearch using the source model's GA sequence/domain thresholds.
+
+  SequenceProfileSiteCoordinateSystemEnum:
+    description: Supported coordinate systems for source profile sites.
+    permissible_values:
+      HMM_MODEL_MATCH_STATE:
+        description: 1-based HMM match-state number in the source model.
+
+  SequenceProfileSiteEvidenceScopeEnum:
+    description: Propagation scope of site evidence attached to a profile match.
+    permissible_values:
+      DIRECT_MODEL_MATCH_ONLY:
+        description: >-
+          Sites belong only to the directly matched source model and are
+          cleared from matches propagated to hierarchy ancestors.
+
+  SynonymTypeEnum:
+    permissible_values:
+      EXACT_SYNONYM:
+      NARROW_SYNONYM:
+      BROAD_SYNONYM:
+      RELATED_SYNONYM:
+
+  MethodTypeEnum:
+    description: Broad kind of a DetectionMethod (aligns to ECO evidence classes).
+    permissible_values:
+      SEQUENCE_PATTERN:
+        description: Regex / PROSITE-style pattern scan (→ ECO:0000203).
+      HMM_PROFILE:
+        description: Profile-HMM search, e.g. hmmsearch/hmmscan (→ ECO:0000203).
+      PROFILE_MATRIX:
+        description: PSSM / position-specific matrix search, e.g. RPS-BLAST (→ ECO:0000203).
+      STRUCTURAL_ALGORITHM:
+        description: Structure-based computation (DSSP, Foldseek, fpocket) (→ ECO:0000041).
+      ML_PREDICTOR:
+        description: Machine-learning predictor (→ ECO:0007653).
+      HOMOLOGY_TRANSFER:
+        description: Annotation transferred from a characterised homolog (→ ECO:0000250).
+      EXPERIMENTAL:
+        description: Experimentally determined (→ ECO:0000269).
+
+  ChemicalRoleEnum:
+    description: Role of a ChemicalParticipant relative to a trait's activity.
+    permissible_values:
+      SUBSTRATE:
+        description: Consumed by the activity.
+      PRODUCT:
+        description: Produced by the activity.
+      SUBSTRATE_OR_PRODUCT:
+        description: >-
+          A participant of a reaction whose direction is not fixed (e.g. a
+          Rhea master reaction) — on one side or the other.
+      COFACTOR:
+        description: Required cofactor / prosthetic group / metal.
+      TRANSPORTED:
+        description: Substrate moved across a membrane (transport activity).
+      INHIBITOR:
+        description: Inhibits the activity.
+
+  PriorityEnum:
+    permissible_values:
+      CRITICAL:
+      HIGH:
+      MEDIUM:
+      LOW:
+
+  MappingStatusEnum:
+    permissible_values:
+      SEEDED:
+        description: Imported verbatim from a source ontology / database; not yet reviewed.
+      PROPOSED:
+        description: >-
+          Candidate trait proposed from literature research; not yet
+          curator-reviewed. Should carry >= 2 distinct literature citations.
+      REVIEWED:
+        description: Curator has signed off on label / definition / parents.
+      DEPRECATED:
+        description: Superseded by another ProteinTraitRecord.
+
+  ExampleSourceEnum:
+    description: >-
+      Provenance of a CanonicalExample entry — how the example got onto
+      this record.
+    permissible_values:
+      CURATOR:
+        description: Curator-picked archetype (textbook exemplar).
+      UNIPROTKB_API:
+        description: >-
+          Legacy provenance value for examples historically written directly
+          from a UniProtKB REST search. Current fetch commands emit candidates
+          only; any newly promoted example uses UNIPROT_GROUNDING after strict
+          protein and occurrence-evidence validation.
+      SWISSPROT_PROFILE:
+        description: >-
+          Legacy provenance value for examples historically selected directly
+          from the Swiss-Prot protein × trait profile matrix. Current suggest
+          commands emit candidates only; profile co-occurrence is not
+          occurrence evidence, and a newly promoted example uses
+          UNIPROT_GROUNDING after strict validation.
+      UNIPROT_GROUNDING:
+        description: >-
+          Promoted by `scripts/ground_uniprot_examples.py` after resolving an
+          exact release-pinned ProteinReference and verifying record-specific
+          occurrence evidence. The occurrence records the evidence provider;
+          this value records the promotion route.
+
+  GroundingQualificationStatusEnum:
+    description: >-
+      State of a protein/trait grounding assertion. Intermediate states are
+      used by the external candidate ledger. Existing canonical examples with
+      no value are interpreted as LEGACY_UNVERIFIED; only QUALIFIED assertions
+      may be newly promoted into canonical_examples.
+    permissible_values:
+      LEGACY_UNVERIFIED:
+        description: Existing example without record-specific verified evidence.
+      CANDIDATE_PROTEIN:
+      PROTEIN_RESOLVED:
+      SEQUENCE_VERIFIED:
+      LOCATION_SOURCED:
+      LOCATION_VERIFIED:
+      WHOLE_PROTEIN_EVIDENCE_VERIFIED:
+      QUALIFIED:
+      REJECTED:
+
+  TraitOccurrenceScopeEnum:
+    permissible_values:
+      LOCALIZED:
+        description: Trait occurs at one or more declared sequence positions or intervals.
+      WHOLE_PROTEIN:
+        description: >-
+          Entry/entity-level trait supported by exact annotation or membership;
+          no residue interval is asserted.
+
+  ProteinCoordinateFrameEnum:
+    permissible_values:
+      UNIPROT_CANONICAL:
+        description: Coordinates refer to the resolved canonical UniProt sequence.
+      UNIPROT_ISOFORM:
+        description: Coordinates refer to the exact resolved UniProt isoform sequence.
+
+  TraitOccurrenceMappingMethodEnum:
+    permissible_values:
+      UNIPROT_FEATURE:
+        description: Exact trait-specific UniProt feature annotation.
+      INTERPRO_MATCH:
+        description: Exact InterPro/member-database signature match on the protein.
+      SOURCE_NATIVE_COORDINATES:
+        description: Exact source occurrence already expressed in UniProt coordinates.
+      SIFTS_RESIDUE_MAPPING:
+        description: Chain-aware PDB/source residues mapped residue-by-residue through SIFTS.
+      PATTERN_MATCH:
+        description: Sequence pattern or peptide matched on a source-confirmed carrier.
+      SOURCE_MEMBERSHIP:
+        description: Exact whole-protein membership in the defining source class.
+      SOURCE_ANNOTATION:
+        description: Exact whole-protein annotation to the defining source term.
+
+  ResidueMappingCompletenessEnum:
+    permissible_values:
+      NOT_APPLICABLE:
+      COMPLETE:
+        description: Every trait-defining source residue maps to the target UniProt frame.
+      PARTIAL:
+        description: At least one trait-defining source residue is unmapped; cannot qualify.
+
+  GroundingEvidenceProviderKindEnum:
+    description: Upstream provider class for immutable TraitOccurrence evidence.
+    permissible_values:
+      UNIPROT:
+        description: Release-pinned UniProtKB entry or feature table.
+      INTERPRO:
+        description: Release-pinned InterPro protein-match artefact.
+      SIFTS:
+        description: Release-pinned chain-aware SIFTS residue mapping.
+      SOURCE_DATABASE:
+        description: >-
+          Release-pinned native source database entry for non-structure-derived
+          exact coordinates, membership, annotation, or pattern evidence.
+
+  CausalNodeTypeEnum:
+    description: Broad categories for nodes in protein-trait causal graphs.
+    permissible_values:
+      PROTEIN:
+        description: A protein, gene product, isoform, or protein complex.
+      DOMAIN:
+        description: A protein domain or region (Pfam / InterPro / CATH / SCOP entry).
+      MOTIF:
+        description: A sequence or structural motif (e.g. PROSITE pattern, active-site loop).
+      RESIDUE:
+        description: A specific residue or residue set (active site, binding site, mutation locus).
+      PTM:
+        description: A post-translational modification (phosphorylation, glycosylation, etc.).
+      LIGAND:
+        description: A small-molecule ligand, cofactor, or substrate.
+      NUCLEIC_ACID:
+        description: A DNA or RNA molecule participating in the mechanism.
+      CHEMICAL:
+        description: A chemical entity (ChEBI) not otherwise classified as ligand or substrate.
+      PATHWAY:
+        description: A metabolic or signaling pathway.
+      MOLECULAR_FUNCTION:
+        description: A GO molecular function.
+      BIOLOGICAL_PROCESS:
+        description: A GO biological process.
+      CELLULAR_LOCALIZATION:
+        description: A GO cellular component or subcellular location.
+      PHENOTYPE:
+        description: A phenotypic outcome (HP or organism-specific phenotype term).
+      DISEASE:
+        description: A disease term (MONDO or equivalent).
+      TRAIT:
+        description: Another ProteinTraitRecord.
+      STATE:
+        description: A biochemical or conformational state (e.g. active, inactive, phosphorylated).
+      QUALITY:
+        description: A measurable attribute (PATO-style) modulating the trait mechanism.
+      ENVIRONMENTAL_FACTOR:
+        description: An environmental exposure or condition.
+      EXPERIMENTAL_FACTOR:
+        description: An assay, perturbation, or experimental condition.
+      OTHER:

@@ -45,10 +45,15 @@ def load_candidates(manifest: Path, root: Path, *, content: bytes | None = None)
         destination = root / relative
         if (relative.is_absolute() or ".." in relative.parts
                 or relative.parts[:3] != ("data", "traits", "structure")
+                or len(relative.parts) != 5
                 or relative.suffix != ".yaml"
                 or destination.resolve() != root.resolve() / relative):
             raise ValueError(f"Unsafe or non-structural destination: {relative}")
         identifier = rec["identifier"]
+        if not isinstance(identifier, str) or identifier.lower().startswith("uniprotkb:"):
+            raise ValueError("Protein carriers cannot be discovery class identifiers")
+        if rec.get("trait_category") != "STRUCT_" + relative.parts[3].upper():
+            raise ValueError(f"Discovery category/path mismatch: {relative}")
         if identifier in identifiers or destination in destinations:
             raise ValueError("Duplicate manifest ID or destination")
         identifiers.add(identifier)
@@ -63,8 +68,9 @@ def load_candidates(manifest: Path, root: Path, *, content: bytes | None = None)
         if not rec.get("definition_source") or not rec.get("evidence"):
             raise ValueError(f"Missing source evidence: {identifier}")
         methods = rec.get("detection_methods") or []
-        if not any(str(m.get("recipe", "")).strip()
-                   and not str(m.get("recipe", "")).lstrip().startswith("#") for m in methods):
+        if not any(isinstance(m, dict) and isinstance(m.get("recipe"), str)
+                   and any(line.strip() and not line.lstrip().startswith("#")
+                           for line in m["recipe"].splitlines()) for m in methods):
             raise ValueError(f"Missing record-specific executable detection recipe: {identifier}")
         text = yaml.safe_dump(rec, sort_keys=False, allow_unicode=True, width=100)
         prepared.append((destination, rec, text))
@@ -129,9 +135,12 @@ def seed(*, manifest: Path = MANIFEST, root: Path = ROOT, only: str | None = Non
 
 def check_report_destination(path: Path, root: Path = ROOT) -> None:
     """Reject protected paths before invoking the record writer, even on dry-run."""
-    allowed = (root / "research/structural-discovery-20261028").resolve()
-    if (not path.resolve().is_relative_to(allowed) or path.suffix != ".json"
-            or path.exists() or path.is_symlink()):
+    # Anchor to the repository, not to the potentially redirected report root.
+    allowed = root.resolve() / "research/structural-discovery-20261028"
+    candidate = path.absolute()
+    if (not candidate.is_relative_to(allowed) or candidate != candidate.resolve()
+            or path.suffix != ".json" or path.exists() or path.is_symlink()
+            or any(parent.exists() and not parent.is_dir() for parent in candidate.parents)):
         raise ValueError("Report must be a new .json file under research/structural-discovery-20261028")
 
 
@@ -143,9 +152,13 @@ def main() -> None:
     args = parser.parse_args()
     if args.report:
         check_report_destination(args.report)
+        # Fail on an unusable parent before any record write. This is preflight,
+        # not a guarantee against subsequent I/O failures or concurrent changes.
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryFile(dir=args.report.parent):
+            pass
     report = json.dumps(seed(only=args.only, apply=args.apply), indent=2) + "\n"
     if args.report:
-        args.report.parent.mkdir(parents=True, exist_ok=True)
         with args.report.open("x", encoding="utf-8") as stream:
             stream.write(report)
     print(report, end="")

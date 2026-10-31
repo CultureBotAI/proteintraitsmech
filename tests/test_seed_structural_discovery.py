@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import os
 from pathlib import Path
 import sys
 
@@ -11,6 +12,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from seed_structural_discovery import check_report_destination, seed  # noqa: E402
+import seed_structural_discovery as discovery  # noqa: E402
 
 
 @pytest.fixture
@@ -157,3 +159,86 @@ def test_report_symlink_cannot_escape_owned_evidence(batch):
     (folder / "escape").symlink_to(root / "data/traits", target_is_directory=True)
     with pytest.raises(ValueError, match="Report must be a new"):
         check_report_destination(folder / "escape/new.json", root)
+
+
+@pytest.mark.parametrize("recipe", [None, True, 7, [], {}, "", " \n", "# explanation\n # only"])
+def test_non_executable_recipe_in_late_row_prevents_entire_batch(batch, recipe):
+    root, manifest, rows = batch
+    rows[1]["record"]["detection_methods"][0]["recipe"] = recipe
+    manifest.write_text(yaml.safe_dump({"version": 1, "records": rows}))
+    with pytest.raises(ValueError, match="executable detection recipe"):
+        seed(root=root, manifest=manifest, apply=True)
+    assert all(not (root / row["path"]).exists() for row in rows)
+
+
+def test_recipe_with_comment_header_and_command_is_accepted(batch):
+    root, manifest, rows = batch
+    rows[0]["record"]["detection_methods"][0]["recipe"] = "# Fixture\nfixture {input}"
+    manifest.write_text(yaml.safe_dump({"version": 1, "records": rows}))
+    result = seed(root=root, manifest=manifest, apply=True)
+    assert all(row["action"] == "created" for row in result["records"])
+
+
+@pytest.mark.parametrize("identifier", ["UniProtKB:P12345", "uniprotkb:P12345"])
+def test_primary_protein_carrier_in_late_row_prevents_entire_batch(batch, identifier):
+    root, manifest, rows = batch
+    rows[1]["record"]["identifier"] = identifier
+    manifest.write_text(yaml.safe_dump({"version": 1, "records": rows}))
+    with pytest.raises(ValueError, match="carriers cannot"):
+        seed(root=root, manifest=manifest, apply=True)
+    assert all(not (root / row["path"]).exists() for row in rows)
+
+
+def test_wrong_category_directory_in_late_row_prevents_entire_batch(batch):
+    root, manifest, rows = batch
+    rows[1]["record"]["trait_category"] = "STRUCT_CAVITY"
+    manifest.write_text(yaml.safe_dump({"version": 1, "records": rows}))
+    with pytest.raises(ValueError, match="category/path mismatch"):
+        seed(root=root, manifest=manifest, apply=True)
+    assert all(not (root / row["path"]).exists() for row in rows)
+
+
+@pytest.mark.parametrize("bad_parent", ["owned_root_symlink", "file_parent", "internal_symlink", "unwritable_parent"])
+def test_cli_refuses_bad_report_ancestry_before_seeding(batch, monkeypatch, bad_parent):
+    root, manifest, rows = batch
+    if bad_parent == "unwritable_parent" and (not hasattr(os, "geteuid") or os.geteuid() == 0):
+        pytest.skip("Requires an unprivileged POSIX user to exercise directory permissions")
+    folder = root / "research/structural-discovery-20261028"
+    folder.parent.mkdir()
+    protected = root / "retained-evidence.json"
+    protected.write_text('{"retain": true}\n')
+    if bad_parent == "owned_root_symlink":
+        folder.symlink_to(root / "data/traits", target_is_directory=True)
+        output = folder / "new.json"
+    else:
+        folder.mkdir()
+        if bad_parent == "file_parent":
+            (folder / "parent").write_text("existing evidence\n")
+        elif bad_parent == "internal_symlink":
+            (folder / "real").mkdir()
+            (folder / "parent").symlink_to(folder / "real", target_is_directory=True)
+        else:
+            (folder / "parent").mkdir(mode=0o555)
+        output = folder / "parent/new.json"
+    calls = []
+
+    def seed_fixture(**kwargs):
+        calls.append(kwargs)
+        return seed(root=root, manifest=manifest, **kwargs)
+
+    monkeypatch.setattr(discovery, "check_report_destination",
+                        lambda path: check_report_destination(path, root))
+    monkeypatch.setattr(discovery, "seed", seed_fixture)
+    monkeypatch.setattr(sys, "argv", ["seed_structural_discovery.py", "--apply", "--report", str(output)])
+    try:
+        with pytest.raises((ValueError, PermissionError)):
+            discovery.main()
+    finally:
+        if bad_parent == "unwritable_parent":
+            (folder / "parent").chmod(0o755)
+    assert calls == []
+    assert all(not (root / row["path"]).exists() for row in rows)
+    assert not output.exists()
+    assert protected.read_text() == '{"retain": true}\n'
+    if bad_parent == "file_parent":
+        assert (folder / "parent").read_text() == "existing evidence\n"
