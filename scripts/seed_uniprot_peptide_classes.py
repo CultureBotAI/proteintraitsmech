@@ -68,9 +68,9 @@ MECHANISM_BLOCKS = {
 - graph_id: CG_UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
   title: N-terminal signal peptide directs Sec/Tat membrane translocation and signal peptidase cleavage
     for secretion
-  description: An N-terminal secretory signal peptide (SO:0000418) directs nascent preproteins to the
-    Sec translocon for membrane translocation (GO:0043952), which is causally upstream of signal peptidase
-    endopeptidase cleavage (GO:0004175) that releases the mature polypeptide for protein secretion (GO:0009306).
+  description: An N-terminal secretory signal peptide (SO:0000418) participates in Sec-mediated membrane
+    translocation (GO:0043952), which is causally upstream of signal peptidase endopeptidase cleavage
+    (GO:0004175) that releases the mature polypeptide for protein secretion (GO:0009306).
   nodes:
   - node_id: SO:0000418
     label: signal_peptide
@@ -97,8 +97,8 @@ MECHANISM_BLOCKS = {
       milieu
   edges:
   - subject: SO:0000418
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0043952
     description: N-terminal signal peptides govern protein targeting and translocation across the Sec
       (or Tat) membrane machinery.
@@ -112,36 +112,39 @@ MECHANISM_BLOCKS = {
     predicate_id: RO:0002411
     object: GO:0004175
     description: Translocation exposes the signal peptide cleavage site at the trans side of the membrane
-      for cleavage by signal peptidase I, II, or IV.
+      for cleavage by signal peptidase.
     evidence:
-    - reference: PMID:34980915
-      snippet: SignalP 6.0 is based on protein language models (LMs) that use information from millions
-        of unannotated protein sequences across all domains of life to predict all five SP types and their
-        cleavage sites.
-      notes: Translocated signal peptides are cleaved at their signal peptidase cleavage sites (PMID:34980915)
+    - reference: PMID:24333859
+      snippet: Type I signal peptidase is the enzyme responsible for cleaving off the amino-terminal signal
+        peptide from proteins that are secreted across the bacterial cytoplasmic membrane.
+      notes: Secreted preproteins are cleaved at their N-terminal signal peptide by signal peptidase (PMID:24333859)
         (ECO:0000305)
   - subject: GO:0004175
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0009306
-    description: Signal peptidase cleavage excises the membrane-tethered leader peptide to complete protein
-      secretion.
+    description: Signal peptidase catalytic cleavage at the extracytoplasmic membrane surface excises
+      the membrane-tethered leader peptide to complete protein secretion.
     evidence:
-    - reference: PMID:34980915
-      snippet: Signal peptides (SPs) are short amino acid sequences that control protein secretion and
-        translocation in all living organisms.
-      notes: Signal peptide cleavage releases the secreted protein (PMID:34980915) (ECO:0000305)
+    - reference: PMID:24333859
+      snippet: It is an essential membrane bound enzyme whose serine/lysine catalytic dyad resides on
+        the exo-cytoplasmic surface of the bacterial membrane.
+      notes: Extracytoplasmic signal peptidase catalysis releases secreted proteins from the membrane
+        (PMID:24333859) (ECO:0000305)
 evidence:
 - reference: PMID:34980915
   notes: Teufel et al. (2022) characterize the five major classes of secretory signal peptides (Sec/SPase
     I, Sec/SPase II, Sec/SPase IV, Tat/SPase I, and Tat/SPase II) and their translocation and cleavage
-    mechanisms.""",
+    mechanisms.
+- reference: PMID:24333859
+  notes: Rao et al. (2014) review bacterial type I signal peptidase cleavage of N-terminal signal peptides
+    at the extracytoplasmic surface of the cytoplasmic membrane during protein secretion.""",
     "SEQ_TRANSIT_PEPTIDE": """causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
   title: N-terminal transit peptide directs organellar translocon import and processing-peptidase maturation
-  description: An N-terminal organelle transit peptide (SO:0000725) interacts with outer- and inner-membrane
-    translocons to drive organellar protein import such as chloroplast stroma import (GO:0045037), followed
-    by processing endopeptidase cleavage (GO:0004175) that releases the mature protein in the target organellar
+  description: An N-terminal organelle transit peptide (SO:0000725) participates in organellar protein
+    import such as chloroplast stroma import across the TOC-TIC translocons (GO:0045037), followed by
+    processing endopeptidase cleavage (GO:0004175) that releases the mature protein in the target organellar
     compartment (GO:0009570).
   nodes:
   - node_id: SO:0000725
@@ -169,28 +172,29 @@ evidence:
     description: Target organellar lumen where the cleaved mature protein folds and functions
   edges:
   - subject: SO:0000725
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0045037
-    description: The N-terminal chloroplast transit peptide is necessary and sufficient to direct precursor
-      protein import across the plastid envelope.
+    description: The N-terminal chloroplast transit peptide contains targeting motifs recognized by cytosolic
+      factors and outer/inner envelope import components to mediate plastid import.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: N-terminal transit peptide mediates plastid protein import (PMID:37324391) (ECO:0000269)
+      snippet: Transit peptides contain specific motifs and domains initially recognized by cytosolic
+        factors followed by the chloroplast import components at the outer and inner envelope of the chloroplast
+        membrane.
+      notes: Transit peptide motifs engage chloroplast envelope import machinery (PMID:37324391) (ECO:0000305)
   - subject: GO:0045037
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: GO:0004175
-    description: Translocation of the N-terminal transit peptide into the stroma exposes its cleavage
-      site to stromal processing peptidase.
+    description: Emergence of the translocated preprotein on the stromal side of the import machinery
+      exposes the transit peptide for cleavage by stromal processing peptidase.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: Imported transit peptides are proteolytically cleaved upon reaching the stroma (PMID:37324391)
-        (ECO:0000269)
+      snippet: Once the preprotein emerges on the stromal side of the chloroplast protein import machinery,
+        the transit peptide is cleaved by stromal processing peptidase.
+      notes: Imported transit peptides are proteolytically cleaved upon emerging into the stroma (PMID:37324391)
+        (ECO:0000305)
   - subject: GO:0004175
     predicate: has target end location
     predicate_id: RO:0002339
@@ -199,10 +203,11 @@ evidence:
       stroma.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: Transit-peptide-mediated import delivers mature proteins to the chloroplast stroma (PMID:37324391)
-        (ECO:0000269)
+      snippet: This review summarizes the common features of targeting sequences and describes their role
+        in routing preproteins to and across the chloroplast envelope as well as the thylakoid membrane
+        and lumen.
+      notes: Transit-peptide-mediated import and processing deliver preproteins across the chloroplast
+        envelope into the stroma (PMID:37324391) (ECO:0000305)
 evidence:
 - reference: PMID:37324391
   notes: Chloroplast transit peptides (cTPs) mediate post-translational import of plastid precursor proteins
@@ -210,9 +215,9 @@ evidence:
     "SEQ_PROPEPTIDE": """causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_PROPEPTIDE
   title: Intramolecular chaperone folding and proteolytic propeptide removal drive zymogen activation
-  description: A transient propeptide (SO:0001062) acts as an intramolecular chaperone that positively
-    regulates zymogen protein folding (GO:0006457) while maintaining latency until endopeptidase cleavage
-    (GO:0004175) excises the pro-region to trigger zymogen activation (GO:0031638).
+  description: A transient propeptide (SO:0001062) participates as an intramolecular chaperone in zymogen
+    protein folding (GO:0006457) while maintaining latency until endopeptidase cleavage (GO:0004175) excises
+    the pro-region to trigger zymogen activation (GO:0031638).
   nodes:
   - node_id: SO:0001062
     label: propeptide
@@ -240,8 +245,8 @@ evidence:
       protein
   edges:
   - subject: SO:0001062
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0006457
     description: The propeptide functions as an intramolecular chaperone that assists correct folding
       of the zymogen during biosynthesis.
@@ -255,14 +260,14 @@ evidence:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: GO:0004175
-    description: Proper folding of the propeptide-bearing zymogen positions the propeptide cleavage site
-      for post-translational endopeptidase digestion.
+    description: Folding and dimerization of the propeptide-bearing zymogen organize the precursor for
+      subsequent proteolytic processing.
     evidence:
-    - reference: PMID:38421254
-      snippet: The preparation of active recombinant MTG requires post-translational proteolytic digestion
-        of a propeptide that functions as an intramolecular chaperone to assist the correct folding of
-        the MTG zymogen (MTGz) in the biosynthesis.
-      notes: Folded zymogen undergoes proteolytic digestion of the propeptide (PMID:38421254) (ECO:0000269)
+    - reference: PMID:31557781
+      snippet: A molecular modeling analysis of proCatC indicated that its propeptide displayed a similar
+        fold to those of other lysosomal cysteine cathepsins, and could be involved in dimer formation.
+      notes: Folded propeptide conformation supports pro-enzyme dimer assembly upstream of proteolytic
+        maturation (PMID:31557781) (ECO:0000269)
   - subject: GO:0004175
     predicate: positively regulates
     predicate_id: RO:0002213
@@ -284,9 +289,9 @@ evidence:
     "SEQ_MATURE_CHAIN": """causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_MATURE_CHAIN
   title: Proprotein convertase cleavage excises mature bioactive polypeptide chains from precursors
-  description: Proprotein convertase endopeptidase activity (GO:0004175) positively regulates proteolytic
-    protein processing (GO:0016485) of precursor polyproteins, releasing a defined mature protein/peptide
-    region (SO:0000419) that completes functional protein maturation (GO:0051604).
+  description: Proprotein convertase and secretory protease endopeptidase activity (GO:0004175) positively
+    regulates proteolytic protein processing (GO:0016485) of precursor polyproteins, releasing a defined
+    mature protein/peptide region (SO:0000419) that participates in functional protein maturation (GO:0051604).
   nodes:
   - node_id: GO:0004175
     label: endopeptidase activity
@@ -315,44 +320,45 @@ evidence:
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0016485
-    description: Proprotein convertases catalyze site-specific endoproteolytic processing of secretory
-      precursor proteins.
+    description: Subtilisin-like proprotein convertases and secretory vesicle cathepsin L catalyze endoproteolytic
+      processing of secretory prohormone precursors.
     evidence:
     - reference: PMID:18184105
-      snippet: The proprotein convertases (PCs) are a family of nine secretory serine proteases related
-        to bacterial subtilisin and yeast kexin.
-      notes: Proprotein convertases are secretory serine endopeptidases that process precursors (PMID:18184105)
-        (ECO:0000305)
+      snippet: This review describes interdisciplinary strategies that have elucidated two primary protease
+        pathways for prohormone processing consisting of the cysteine protease pathway mediated by secretory
+        vesicle cathepsin L and the well-known subtilisin-like proprotein convertase pathway that together
+        support neuropeptide biosynthesis.
+      notes: Secretory endopeptidases mediate prohormone proteolytic processing (PMID:18184105) (ECO:0000305)
   - subject: GO:0016485
     predicate: has output
     predicate_id: RO:0002234
     object: SO:0000419
-    description: Proteolytic processing at basic or non-basic cleavage sites releases the mature polypeptide
-      chain or bioactive peptide.
+    description: Proteolytic processing of protein precursors within secretory vesicles releases the mature
+      bioactive peptide or polypeptide chain.
     evidence:
     - reference: PMID:18184105
-      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
-        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
-        residues or self-cleave, respectively.
-      notes: Cleavage at defined recognition sites excises mature chains and peptides (PMID:18184105)
+      snippet: Neuropeptides are synthesized from protein precursors (termed proneuropeptides or prohormones)
+        that require proteolytic processing primarily within secretory vesicles that store and secrete
+        the mature neuropeptides to control target cellular and organ systems.
+      notes: Proteolytic processing of prohormone precursors generates mature peptides (PMID:18184105)
         (ECO:0000305)
   - subject: SO:0000419
-    predicate: involved in
-    predicate_id: RO:0002331
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0051604
-    description: Release of the excised mature region completes post-translational maturation of hormones,
-      neuropeptides, and secreted proteins.
+    description: Excised mature neuropeptides and peptide hormones represent the functional products of
+      protein maturation required for intercellular signaling and endocrine regulation.
     evidence:
     - reference: PMID:18184105
-      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
-        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
-        residues or self-cleave, respectively.
-      notes: Excised mature chains represent the processed products of proprotein maturation (PMID:18184105)
-        (ECO:0000305)
+      snippet: Peptide neurotransmitters and peptide hormones, collectively known as neuropeptides, are
+        required for cell-cell communication in neurotransmission and for regulation of endocrine functions.
+      notes: Mature excised peptides execute cell-cell signaling and endocrine functions upon maturation
+        (PMID:18184105) (ECO:0000305)
 evidence:
 - reference: PMID:18184105
-  notes: Seidah et al. (2008) review the proprotein convertase family of serine endopeptidases that cleave
-    precursor proteins at dibasic or monobasic sites to release mature bioactive peptides and hormones.""",
+  notes: Hook et al. (2008) review the subtilisin-like proprotein convertase and secretory vesicle cathepsin
+    L protease pathways that process prohormone precursors into mature bioactive neuropeptides and peptide
+    hormones.""",
     "SEQ_INITIATOR_METHIONINE": """causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_INITIATOR_METHIONINE
   title: Co-translational initiator methionine incorporation and excision by methionine aminopeptidase
@@ -385,41 +391,40 @@ evidence:
       the mature N-terminus
   edges:
   - subject: GO:0006413
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: has input
+    predicate_id: RO:0002233
     object: CHEBI:16811
-    description: Ribosomal translational initiation installs L-methionine at the N-terminus of newly synthesized
-      cytosolic proteins.
+    description: Ribosomal translational initiation incorporates an N-terminal L-methionine residue into
+      newly synthesized cytosolic proteins.
     evidence:
     - reference: PMID:2682640
-      snippet: The side-chain length of the penultimate amino acid strongly influences the cleavage of
-        the terminal methionine residue in vivo (the probability of cleavage decreases as the size of
-        the side chain increases).
-      notes: Nascent polypeptides carry an N-terminal initiator methionine subject to in vivo cleavage
-        (PMID:2682640) (ECO:0000269)
+      snippet: In a significant fraction of the Escherichia coli cytosolic proteins, the N-terminal methionine
+        residue incorporated during the translation initiation step is excised.
+      notes: Translation initiation incorporates the N-terminal methionine residue that is subsequently
+        excised (PMID:2682640) (ECO:0000269)
   - subject: CHEBI:16811
     predicate: participates in
     predicate_id: RO:0000056
     object: GO:0004239
-    description: An N-terminal initiator methionine followed by a small penultimate residue participates in
-      MetAP substrate recognition and hydrolysis.
+    description: An N-terminal initiator methionine followed by a small penultimate residue participates
+      in MetAP substrate recognition and hydrolysis.
     evidence:
     - reference: PMID:2682640
-      snippet: We have studied the cleavage of the NH2-terminal methionine residue from 20 mutants of
-        Escherichia coli methionyl-tRNA synthetase differing only at the second amino acid position, both
-        in vivo and in vitro with purified methionyl aminopeptidase.
-      notes: Methionyl aminopeptidase cleaves the N-terminal methionine residue (PMID:2682640) (ECO:0000269)
+      snippet: The N-terminal methionine excision is catalyzed by methionyl-aminopeptidase (MAP).
+      notes: Methionyl-aminopeptidase catalyzes excision of the N-terminal methionine residue (PMID:2682640)
+        (ECO:0000269)
   - subject: GO:0004239
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0016485
-    description: Methionyl aminopeptidase catalysis excises Met1 during co-translational N-terminal protein
-      processing.
+    description: Methionyl aminopeptidase catalytic efficiency governs the extent of N-terminal methionine
+      cleavage during protein processing as a function of penultimate side-chain length.
     evidence:
     - reference: PMID:2682640
-      snippet: The in vitro study strongly suggests that the rules governing the NH2-terminal methionine
-        excision in vivo reflect the substrate specificity of the methionyl aminopeptidase alone.
-      notes: MetAP substrate specificity governs in vivo N-terminal methionine processing (PMID:2682640)
+      snippet: 'From our results, methionine excision catalyzed by MAP is shown to obey the following
+        rule: the catalytic efficiency of MAP, and therefore the extent of cleavage, decreases in parallel
+        with the increasing of the maximal side-chain length of the amino acid in the penultimate position.'
+      notes: MAP catalytic efficiency governs the extent of N-terminal methionine cleavage (PMID:2682640)
         (ECO:0000269)
 evidence:
 - reference: PMID:2682640

@@ -15,24 +15,17 @@ synonyms:
   - synonym_text: "tyramine-excised ketoamide backbone residue"
     synonym_type: RELATED_SYNONYM
 detection_methods:
-- name: HMMER profile search for PlpX/PlpY radical-SAM splicease and spliceotide precursor families
-  method_type: HMM_PROFILE
-  edam_operation: EDAM:operation_0300
-  tool: biotools:hmmer3
-  evidence_code: ECO:0000259
-  reference: PMID:29590045
-  recipe: hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}
-- name: HMMER profile search for PlpX/PlpY radical-SAM splicease and spliceotide precursor families
-  method_type: HMM_PROFILE
-  edam_operation: EDAM:operation_0300
-  tool: biotools:hmmer3
-  evidence_code: ECO:0000259
-  reference: PMID:29449488
-  recipe: hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}
+  - name: "HMMER profile search for PlpX/PlpY radical-SAM splicease and spliceotide precursor families"
+    method_type: HMM_PROFILE
+    edam_operation: EDAM:operation_0300
+    tool: "biotools:hmmer3"
+    evidence_code: ECO:0000259
+    reference: PMID:29449488
+    recipe: "hmmsearch --cut_ga --domtblout {output} TIGR04517_PlpX_splicease.hmm {input}"
 causal_graphs:
   - graph_id: radical_sam_splicease_beta_amino_acid_splicing
     title: "Radical-SAM splicease tyramine excision converts standard alpha-amino acid backbone units into alpha-keto-beta-amino acid residues"
-    description: "Radical S-adenosylmethionine splicease catalytic activity (GO:0003824) enables noncanonical post-translational splicing (GO:0036211) of precursor L-alpha-amino acid residues (CHEBI:83228) via C-C bond cleavage and net tyramine excision, generating an alpha-keto-beta-amino-acid-containing mature protein region (SO:0000419)."
+    description: "Radical S-adenosylmethionine splicease catalytic activity (GO:0003824) positively regulates noncanonical post-translational splicing (GO:0036211) of precursor L-alpha-amino acid residues (CHEBI:83228) via C-C bond cleavage and net tyramine excision, generating an alpha-keto-beta-amino-acid-containing mature protein region (SO:0000419)."
     nodes:
       - node_id: "GO:0003824"
         label: "catalytic activity"
@@ -56,10 +49,10 @@ causal_graphs:
         description: "Spliced polypeptide region containing an installed alpha-keto-beta-amino acid backbone unit."
     edges:
       - subject: "GO:0003824"
-        predicate: enables
-        predicate_id: RO:0002327
+        predicate: "positively regulates"
+        predicate_id: RO:0002213
         object: "GO:0036211"
-        description: "Radical S-adenosylmethionine splicease catalysis enables post-translational backbone splicing in bacteria."
+        description: "Radical S-adenosylmethionine splicease catalysis positively regulates post-translational backbone splicing in bacteria."
         evidence:
           - reference: PMID:29449488
             snippet: "The transformation is widespread in bacteria and is catalyzed by an enzyme belonging to a previously uncharacterized radical S-adenosylmethionine family."
@@ -83,19 +76,19 @@ causal_graphs:
             snippet: "In addition to enlarging the set of basic amino acid components, the excision generates keto functions that are useful as orthogonal reaction sites for chemical diversification."
             notes: "Installation of backbone alpha-keto-beta-amino acid residues with orthogonal keto groups. (ECO:0000269)"
 evidence:
-- reference: PMID:29590045
-  notes: Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage
-    and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated
-    precursors.
-- reference: PMID:29449488
-  notes: Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage
-    and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated
-    precursors.
+  - reference: PMID:29449488
+    notes: "Radical-SAM spliceases catalyze noncanonical protein splicing via backbone C-C bond cleavage and net tyramine excision to install alpha-keto-beta-amino acid residues in ribosomally translated precursors."
 curation_history:
 - timestamp: '2026-10-30T22:25:00Z'
   curator: claude
   action: EDIT
   changes: Upgraded causal_graph radical_sam_splicease_beta_amino_acid_splicing (4 nodes, 3 edges) so
     every edge carries a distinct verbatim PubMed abstract sentence from PMID:29449488 (Round 127).
+  llm_assisted: true
+- timestamp: '2026-10-31T16:10:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced occurrent-subject RO:0002327 (enables) with RO:0002213 (positively regulates) on GO:0003824
+    -> GO:0036211 (Round 128).
   llm_assisted: true
 license: CC-BY-4.0
