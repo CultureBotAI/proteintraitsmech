@@ -61,7 +61,7 @@ causal_graphs:
         description: "The Sec/SPII leader directs the prolipoprotein across the Sec translocon."
         evidence:
           - reference: PMID:34980915
-            snippet: "Signal peptides (SPs) are short N-terminal amino acid sequences that control protein secretion and translocation in all living organisms."
+            snippet: "Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms."
             notes: "Sec export of Sec/SPII prolipoproteins (PMID:34980915). (ECO:0000305)"
       - subject: "GO:0043952"
         predicate: "causally upstream of"
@@ -69,36 +69,52 @@ causal_graphs:
         object: "GO:0006497"
         description: "Sec translocation presents the lipobox cysteine to prolipoprotein diacylglyceryl transferase (Lgt)."
         evidence:
-          - reference: PMID:34980915
-            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
-            notes: "Lipobox S-diacylglyceryl modification precedes SPase II cleavage (PMID:34980915). (ECO:0000305)"
+          - reference: PMID:20572939
+            snippet: "Lipoproteins are a distinct class of bacterial membrane proteins that are translocated across the cytoplasmic membrane primarily by the Sec general secretory pathway and then lipidated on a conserved cysteine by the enzyme lipoprotein diacylglycerol transferase (Lgt)."
+            notes: "Sec translocation precedes Lgt-catalyzed diacylglyceryl modification of the conserved lipobox cysteine (PMID:20572939). (ECO:0000269)"
       - subject: "GO:0006497"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0004175"
         description: "S-diacylglyceryl modification of the +1 cysteine is required for LspA (SPase II) cleavage."
         evidence:
-          - reference: PMID:34980915
-            snippet: "In this work, we present SignalP 6.0, a machine learning model that detects all five known types of SPs and is applicable to all organisms, including metagenomic data. By using protein language models, SignalP 6.0 is able to predict types of SPs with limited training data, extrapolate to distantly related organisms and, without using explicit region annotation, identify the regions of SPs."
-            notes: "SPase II cleavage requires prior lipobox lipidation (PMID:34980915). (ECO:0000305)"
+          - reference: PMID:26912896
+            snippet: "Posttranslational processing requires a signal peptidase II (LspA) that removes the signal peptide."
+            notes: "SPase II (LspA) removes the signal peptide from the diacylglyceryl-modified prolipoprotein (PMID:26912896). (ECO:0000269)"
       - subject: "GO:0004175"
         predicate: "has output"
         predicate_id: RO:0002234
         object: "MOD:00116"
         description: "SPase II cleavage exposes S-diacylglycerol-L-cysteine as the new N-terminal residue."
         evidence:
-          - reference: PMID:34980915
-            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
-            notes: "Mature N-terminal S-diacylglyceryl-cysteine lipoprotein (PMID:34980915). (ECO:0000305)"
+          - reference: PMID:20572939
+            snippet: "The signal peptide is cleaved by lipoprotein signal peptidase (Lsp) to leave the lipid-modified cysteine at the N-terminus of the mature lipoprotein."
+            notes: "Lsp cleavage exposes the lipid-modified cysteine at the mature N-terminus (PMID:20572939). (ECO:0000269)"
 evidence:
-  - reference: PMID:34980915
-    notes: "SignalP 6.0 predicts all five types of signal peptides and cleavage sites across organisms."
-  - reference: PMID:42050317
-    notes: "Nascent bacterial lipoproteins are sequentially modified by Lgt, cleaved by LspA (signal peptidase II), and N-acylated."
+- reference: PMID:34980915
+  notes: SignalP 6.0 predicts all five types of signal peptides and cleavage sites across organisms.
+- reference: PMID:42050317
+  notes: Nascent bacterial lipoproteins are sequentially modified by Lgt, cleaved by LspA (signal peptidase
+    II), and N-acylated.
+- reference: PMID:20572939
+  notes: Bacterial lipoproteins are translocated across the cytoplasmic membrane primarily by the Sec
+    pathway, lipidated on a conserved cysteine by lipoprotein diacylglycerol transferase (Lgt), and cleaved
+    by lipoprotein signal peptidase (Lsp).
+- reference: PMID:26912896
+  notes: Posttranslational processing of bacterial lipoproteins requires signal peptidase II (LspA) to
+    remove the signal peptide from the diacylglyceryl-modified prolipoprotein.
 curation_history:
-  - timestamp: '2026-10-21T03:30:00Z'
-    curator: claude
-    action: EDIT
-    changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits hierarchy.
-    llm_assisted: true
+- timestamp: '2026-10-21T03:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Added literature-grounded causal_graphs mechanism representation and verified parent_traits
+    hierarchy.
+  llm_assisted: true
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph sec_spii_lipobox_diacylglyceryl_cleavage (5 nodes, 4 edges) so every
+    edge carries a distinct verbatim PubMed abstract sentence from PMID:20572939, PMID:26912896, PMID:34980915
+    (Round 127).
+  llm_assisted: true
 license: CC-BY-4.0

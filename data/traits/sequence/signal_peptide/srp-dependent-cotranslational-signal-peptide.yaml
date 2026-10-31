@@ -1,0 +1,90 @@
+identifier: proteintraitsmech:SIGNAL_PEPTIDE_SRP_COTRANSLATIONAL
+label: "SRP-dependent cotranslational secretory signal peptide"
+definition: >-
+  An N-terminal secretory or membrane-targeting signal peptide featuring a highly hydrophobic core (h-region) that is recognized as it emerges from the ribosomal exit tunnel by the ribonucleoprotein Signal Recognition Particle (SRP), arresting or coupling translation to SRP-receptor-mediated delivery of the ribosome-nascent chain complex to the SecYEG/Sec61 translocon for co-translational translocation.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_SIGNAL_PEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPI
+synonyms:
+  - synonym_text: "SRP-targeted co-translational signal sequence"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Signal Recognition Particle signal peptide"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "Ffh/SRP54-recognized hydrophobic signal peptide"
+    synonym_type: NARROW_SYNONYM
+detection_methods:
+  - name: "SignalP 6.0 neural network prediction of N-terminal secretory signal peptides"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0418
+    tool: "biotools:signalp"
+    evidence_code: ECO:0000255
+    reference: PMID:24513458
+    recipe: "signalp6 --fastafile {input} --output_dir {output} --format txt --organism other"
+causal_graphs:
+  - graph_id: srp_cotranslational_sec_targeting
+    title: "SRP recognition of nascent hydrophobic signal peptides couples translation to SecYEG/Sec61 membrane translocation"
+    description: "A hydrophobic N-terminal signal_peptide (SO:0000418) on a ribosome-nascent chain complex participates in SRP-dependent cotranslational protein targeting to membrane (GO:0006614), which is causally upstream of protein transport by the Sec complex (GO:0043952) into or across the target membrane (GO:0016020)."
+    nodes:
+      - node_id: "SO:0000418"
+        label: signal_peptide
+        node_type: MOTIF
+        grounding: "SO:0000418"
+        description: "Hydrophobic N-terminal signal sequence emerging on a ribosome-nascent chain complex."
+      - node_id: "GO:0006614"
+        label: "SRP-dependent cotranslational protein targeting to membrane"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0006614"
+        description: "Co-translational recognition and delivery of ribosome-nascent chain complexes by the Signal Recognition Particle and its receptor."
+      - node_id: "GO:0043952"
+        label: "protein transport by the Sec complex"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0043952"
+        description: "Co-translational translocation or integration through the SecYEG/Sec61 channel."
+      - node_id: "GO:0016020"
+        label: membrane
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0016020"
+        description: "Target cytoplasmic or endoplasmic reticulum membrane housing the Sec translocon."
+    edges:
+      - subject: "SO:0000418"
+        predicate: "participates in"
+        predicate_id: RO:0000056
+        object: "GO:0006614"
+        description: "Signal sequences on nascent polypeptides are recognized co-translationally by the Signal Recognition Particle."
+        evidence:
+          - reference: PMID:24513458
+            snippet: "Co-translational protein targeting by the Signal Recognition Particle (SRP) is an essential cellular pathway that couples the synthesis of nascent proteins to their proper cellular localization."
+            notes: "Saraogi & Shan (2014) Biochim Biophys Acta 1843:1433-1441 review SRP-mediated co-translational targeting. (ECO:0000305)"
+      - subject: "GO:0006614"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0043952"
+        description: "SRP targeting delivers the ribosome-nascent chain complex to the SecYEG translocon."
+        evidence:
+          - reference: PMID:24513458
+            snippet: "The bacterial SRP, which contains the minimal ribonucleoprotein core of this universally conserved targeting machine, has served as a paradigm for understanding the molecular basis of protein localization in all cells."
+            notes: "Conserved Ffh/4.5S RNA SRP machinery mediates co-translational targeting to the Sec pathway. (ECO:0000305)"
+      - subject: "GO:0043952"
+        predicate: "has target end location"
+        predicate_id: RO:0002339
+        object: "GO:0016020"
+        description: "Co-translational handoff to the SecYEG translocon ensures fidelity of membrane protein biogenesis and translocation."
+        evidence:
+          - reference: PMID:24513458
+            snippet: "Collectively, these studies elucidate how an essential SRP RNA and two regulatory GTPases in the SRP and SRP receptor (SR) enable this targeting machinery to recognize, sense and respond to its biological effectors, i.e. the cargo protein, the target membrane and the translocation machinery, thus driving efficient and faithful co-translational protein targeting."
+            notes: "Delivery of nascent chains to the SecYEG translocon at the membrane. (ECO:0000305)"
+evidence:
+  - reference: PMID:24513458
+    notes: "SRP-dependent signal sequences on ribosome-nascent chain complexes are recognized by the Signal Recognition Particle and targeted via its receptor to the SecYEG translocon for co-translational translocation."
+curation_history:
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph srp_cotranslational_sec_targeting (4 nodes, 3 edges) so every edge carries
+    a distinct verbatim PubMed abstract sentence from PMID:24513458 (Round 127).
+  llm_assisted: true
+license: CC-BY-4.0

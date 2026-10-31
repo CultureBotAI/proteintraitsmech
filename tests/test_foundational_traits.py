@@ -36,15 +36,27 @@ MECHANISM_BEARING_CATEGORIES = {
 MECHANISM_BEARING_LOWCOMP_IDS = {
     "proteintraitsmech:LOWCOMP_POLYAMPHOLYTIC_CHARGE_BLOCK",
     "proteintraitsmech:LOWCOMP_FG_NUCLEOPORIN_REPEAT_REGION",
+    "proteintraitsmech:LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION",
 }
 
 ROUND_124_EDITED_IDS = {spec.identifier for spec in sft.SPECS[:66] if spec.causal_graphs}
 STAGE1_UNCHANGED_IDS = {
-    "proteintraitsmech:INIT_METHIONINE_ACETYLATED",
-    "proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
     "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
     "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
-    "proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
+    "proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED",
+    "proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED",
+    "proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE",
+    "proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY",
+    "proteintraitsmech:CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL",
+    "proteintraitsmech:LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION",
+    "proteintraitsmech:ALLOSTERIC_METAL_ION_REGULATORY_SITE",
+    "proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII_LOL_AVOIDANCE",
+    "proteintraitsmech:TRANSIT_PEPTIDE_SECONDARY_PLASTID_ASAFAP",
+    "proteintraitsmech:PROPEPTIDE_ANTIMICROBIAL_PEPTIDE_ANIONIC_SHIELD",
+    "proteintraitsmech:DISULFIDE_CYSTINE_STABILIZED_ALPHA_BETA",
+    "proteintraitsmech:INIT_METHIONINE_M1_LINEAR_UBIQUITINATED",
+    "proteintraitsmech:MATURE_CHAIN_BACKBONE_CYCLIZED",
+    "proteintraitsmech:DYNAMICS_COUPLED_FOLDING_AND_BINDING_TRANSITION",
 }
 
 # Explicit dispositions from the independent structural graph audit. Optional
@@ -125,7 +137,7 @@ def assert_scoped_graph(data):
 
 def test_foundational_trait_records_exist_and_validate():
     """Every record defined in seed_foundational_traits must exist on disk and pass strict validation."""
-    assert len(sft.SPECS) == 101
+    assert len(sft.SPECS) == 125
     seen_ids: set[str] = set()
     for spec in sft.SPECS:
         assert spec.identifier not in seen_ids, f"duplicate identifier: {spec.identifier}"
@@ -180,22 +192,22 @@ def test_disulfide_infer_source_distinguishes_lsf_parent_from_curated_subtypes()
 def test_previously_empty_class_categories_are_populated():
     """All previously empty and single-record class-level categories now have populated directories."""
     expected_dirs = {
-        "SEQ_NONSTANDARD_RESIDUE": (sft.TRAITS_DIR / "sequence/nonstandard_residue", 4),
-        "SEQ_LOW_COMPLEXITY": (sft.TRAITS_DIR / "sequence/low_complexity", 6),
+        "SEQ_NONSTANDARD_RESIDUE": (sft.TRAITS_DIR / "sequence/nonstandard_residue", 6),
+        "SEQ_LOW_COMPLEXITY": (sft.TRAITS_DIR / "sequence/low_complexity", 7),
         "SEQ_COMPOSITION": (sft.TRAITS_DIR / "sequence/composition", 10),
         "STRUCT_QUATERNARY": (sft.TRAITS_DIR / "structure/quaternary", 11),
-        "STRUCT_ALLOSTERIC_SITE": (sft.TRAITS_DIR / "structure/allosteric_site", 6),
+        "STRUCT_ALLOSTERIC_SITE": (sft.TRAITS_DIR / "structure/allosteric_site", 7),
         "STRUCT_SYMMETRY": (sft.TRAITS_DIR / "structure/symmetry", 9),
-        "MIXED_COILED_COIL": (sft.TRAITS_DIR / "sequence_structure/coiled_coil", 7),
-        "SEQ_INITIATOR_METHIONINE": (sft.TRAITS_DIR / "sequence/initiator_methionine", 6),
-        "SEQ_MATURE_CHAIN": (sft.TRAITS_DIR / "sequence/mature_chain", 6),
-        "SEQ_TRANSIT_PEPTIDE": (sft.TRAITS_DIR / "sequence/transit_peptide", 7),
-        "SEQ_PROPEPTIDE": (sft.TRAITS_DIR / "sequence/propeptide", 6),
-        "STRUCT_DISULFIDE": (sft.TRAITS_DIR / "structure/disulfide", 6),
-        "STRUCT_CAVITY": (sft.TRAITS_DIR / "structure/cavity", 7),
-        "STRUCT_SURFACE": (sft.TRAITS_DIR / "structure/surface", 6),
-        "STRUCT_DYNAMICS": (sft.TRAITS_DIR / "structure/dynamics", 6),
-        "EVO_CONSERVATION": (sft.TRAITS_DIR / "evolution/conservation", 6),
+        "MIXED_COILED_COIL": (sft.TRAITS_DIR / "sequence_structure/coiled_coil", 8),
+        "SEQ_INITIATOR_METHIONINE": (sft.TRAITS_DIR / "sequence/initiator_methionine", 8),
+        "SEQ_MATURE_CHAIN": (sft.TRAITS_DIR / "sequence/mature_chain", 8),
+        "SEQ_TRANSIT_PEPTIDE": (sft.TRAITS_DIR / "sequence/transit_peptide", 8),
+        "SEQ_PROPEPTIDE": (sft.TRAITS_DIR / "sequence/propeptide", 8),
+        "STRUCT_DISULFIDE": (sft.TRAITS_DIR / "structure/disulfide", 8),
+        "STRUCT_CAVITY": (sft.TRAITS_DIR / "structure/cavity", 9),
+        "STRUCT_SURFACE": (sft.TRAITS_DIR / "structure/surface", 7),
+        "STRUCT_DYNAMICS": (sft.TRAITS_DIR / "structure/dynamics", 8),
+        "EVO_CONSERVATION": (sft.TRAITS_DIR / "evolution/conservation", 9),
     }
     for cat, (d, min_count) in expected_dirs.items():
         files = list(d.glob("*.yaml"))
@@ -203,7 +215,7 @@ def test_previously_empty_class_categories_are_populated():
 
 
 def test_foundational_trait_causal_graphs_audit_and_score():
-    """Audit retained graphs and explicit removals in the historical 57-trait cohort."""
+    """Audit retained graphs and explicit removals in the 77-trait mechanism-bearing cohort."""
     valid_types = acg.node_type_enum()
     assert valid_types
     mech_specs = [
@@ -216,8 +228,8 @@ def test_foundational_trait_causal_graphs_audit_and_score():
         for s in sft.SPECS
         if s.trait_category not in MECHANISM_BEARING_CATEGORIES and s.identifier not in MECHANISM_BEARING_LOWCOMP_IDS
     ]
-    assert len(mech_specs) == 57
-    assert len(non_mech_specs) == 44
+    assert len(mech_specs) == 77
+    assert len(non_mech_specs) == 48
     assert len(ROUND_124_EDITED_IDS) == 25
 
     for spec in mech_specs:
@@ -243,10 +255,25 @@ def test_foundational_trait_causal_graphs_audit_and_score():
                 assert history[-1].get("curator") == "claude"
                 assert history[-1].get("action") == "EDIT"
                 assert history[-1].get("llm_assisted") is True
-        if not curated and spec.identifier not in ROUND_124_EDITED_IDS:
+        if data.get("causal_graphs"):
+            for cg in data["causal_graphs"]:
+                for edge in cg.get("edges") or []:
+                    for ev in edge.get("evidence") or []:
+                        ref = ev.get("reference", "")
+                        assert ref.startswith("PMID:"), f"{spec.identifier} edge reference must be PMID: {ref}"
+                        assert int(ref.split(":", 1)[1]) < 41_000_000, (
+                            f"{spec.identifier} causal_graphs edge reference must be classic PubMed ID (<41000000): {ref}"
+                        )
+        if not curated:
             cg = data["causal_graphs"][0]
-            assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
-            assert len(cg.get("edges") or []) == 3, f"{spec.identifier} expected 3 edges"
+            edges = cg.get("edges") or []
+            snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+            assert len(set(snippets)) == len(edges), (
+                f"{spec.identifier} must have distinct verbatim snippets across all {len(edges)} edges"
+            )
+            if spec.identifier not in ROUND_124_EDITED_IDS:
+                assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+                assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
         errors: list[str] = []
         warns: list[acg.AuditWarning] = []
         stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
@@ -290,7 +317,7 @@ def test_foundational_trait_causal_graphs_audit_and_score():
 
 
 def test_foundational_trait_parent_traits_resolve_to_corpus_records():
-    """Every parent_traits CURIE on the 101 foundational traits resolves to an on-disk corpus record."""
+    """Every parent_traits CURIE on the 125 foundational traits resolves to an on-disk corpus record."""
     known_parent_files = {
         "proteintraitsmech:COILED_COIL": (
             sft.TRAITS_DIR / "structure/secondary/coiled-coil.yaml"
@@ -330,6 +357,9 @@ def test_foundational_trait_parent_traits_resolve_to_corpus_records():
         ),
         "proteintraitsmech:EVO_VARIABLE": (
             sft.TRAITS_DIR / "evolution/conservation/variable-protein.yaml"
+        ),
+        "proteintraitsmech:EVO_CLADE_SPECIFIC": (
+            sft.TRAITS_DIR / "evolution/conservation/clade-specific-protein.yaml"
         ),
         "IDPO:0000002": (
             sft.TRAITS_DIR / "sequence/disorder/disorder-idpo-0000002.yaml"
@@ -410,7 +440,7 @@ def test_cycle2_stage1_records_have_verified_pmids_and_initiator_met_hierarchy()
 
 def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
     """Cycle 3 Stage 1 foundational traits have verified PMIDs, resolved recipes, and valid parent_traits."""
-    cycle3_specs = {spec.identifier: spec for spec in sft.SPECS[84:]}
+    cycle3_specs = {spec.identifier: spec for spec in sft.SPECS[84:101]}
     assert len(cycle3_specs) == 17
     assert cycle3_specs["proteintraitsmech:INIT_METHIONINE_N_DEGRON"].parent_traits == (
         "proteintraitsmech:INIT_METHIONINE_RETAINED",
@@ -453,6 +483,144 @@ def test_cycle3_stage1_records_have_verified_pmids_and_hierarchy():
                     ref = ev["reference"]
                     if ref.startswith("PMID:"):
                         assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+
+
+def test_cycle4_stage1_records_have_verified_pmids_and_hierarchy():
+    """Cycle 4 Stage 1 foundational traits have verified PMIDs, resolved recipes, and valid parent_traits."""
+    cycle4_specs = {spec.identifier: spec for spec in sft.SPECS[101:113]}
+    assert len(cycle4_specs) == 12
+    assert cycle4_specs["proteintraitsmech:NONSTD_DEHYDROAMINO_ACID_RESIDUE"].parent_traits == ()
+    assert cycle4_specs["proteintraitsmech:NONSTD_ALPHA_KETO_BETA_AMINO_ACID_RESIDUE"].parent_traits == ()
+    assert cycle4_specs["proteintraitsmech:EVO_TAXONOMICALLY_RESTRICTED_ORPHAN"].parent_traits == (
+        "proteintraitsmech:EVO_CLADE_SPECIFIC",
+    )
+    assert cycle4_specs["proteintraitsmech:EVO_HORIZONTALLY_TRANSFERRED_XENOLOG"].parent_traits == (
+        "proteintraitsmech:EVO_CLADE_SPECIFIC",
+    )
+    assert cycle4_specs["proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_INITIATOR_METHIONINE",
+    )
+    assert cycle4_specs["proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",
+    )
+    assert cycle4_specs["proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE"].parent_traits == (
+        "proteintraitsmech:PROPEPTIDE_ZYMOGEN_ACTIVATION",
+    )
+    assert cycle4_specs["proteintraitsmech:SIGNAL_PEPTIDE_SRP_COTRANSLATIONAL"].parent_traits == (
+        "proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPI",
+    )
+    assert cycle4_specs["proteintraitsmech:DISULFIDE_VICINAL_CYSTINE_RING"].parent_traits == (
+        "proteintraitsmech:DISULFIDE_INTRACHAIN",
+    )
+    assert cycle4_specs["proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY"].parent_traits == (
+        "proteintraitsmech:CAVITY",
+    )
+    assert cycle4_specs["proteintraitsmech:DYNAMICS_ORDER_TO_DISORDER_REGULATORY_SWITCH"].parent_traits == (
+        "PATO:0001543",
+    )
+    assert cycle4_specs["proteintraitsmech:SURFACE_HOT_SPOT_BINDING_EPITOPE_PATCH"].parent_traits == (
+        "proteintraitsmech:SURFACE_HYDROPHOBIC_PATCH",
+    )
+
+    for spec in cycle4_specs.values():
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for m in data.get("detection_methods") or []:
+            assert "{pat}" not in m["recipe"], f"{spec.identifier} recipe still contains unresolved {{pat}}"
+            ref = m["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for ev in data.get("evidence") or []:
+            ref = ev["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        cgs = data.get("causal_graphs") or []
+        if spec.trait_category in MECHANISM_BEARING_CATEGORIES:
+            assert len(cgs) == 1, f"{spec.identifier} must carry a causal_graph"
+            for cg in cgs:
+                edges = cg.get("edges") or []
+                assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+                assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
+                snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+                assert len(set(snippets)) == 3, f"{spec.identifier} must have 3 distinct verbatim snippets"
+                for edge in edges:
+                    for ev in edge.get("evidence") or []:
+                        ref = ev["reference"]
+                        if ref.startswith("PMID:"):
+                            assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        else:
+            assert not cgs, f"{spec.identifier} should not carry causal_graphs"
+
+
+def test_cycle5_stage1_records_have_verified_pmids_and_hierarchy():
+    """Cycle 5 Stage 1 foundational traits have verified PMIDs, resolved recipes, and valid parent_traits."""
+    cycle5_specs = {spec.identifier: spec for spec in sft.SPECS[113:]}
+    assert len(cycle5_specs) == 12
+    assert cycle5_specs["proteintraitsmech:CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL"].parent_traits == (
+        "proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL",
+    )
+    assert cycle5_specs["proteintraitsmech:EVO_SUBFUNCTIONALIZED_DUPLICATE_PARALOG"].parent_traits == (
+        "proteintraitsmech:EVO_CONSERVED",
+    )
+    assert cycle5_specs["proteintraitsmech:LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION"].parent_traits == (
+        "proteintraitsmech:LOWCOMP_REGION",
+    )
+    assert cycle5_specs["proteintraitsmech:ALLOSTERIC_METAL_ION_REGULATORY_SITE"].parent_traits == (
+        "proteintraitsmech:ALLOSTERIC_REGULATORY_SITE",
+    )
+    assert cycle5_specs["proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII_LOL_AVOIDANCE"].parent_traits == (
+        "proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII",
+    )
+    assert cycle5_specs["proteintraitsmech:TRANSIT_PEPTIDE_SECONDARY_PLASTID_ASAFAP"].parent_traits == (
+        "proteintraitsmech:TRANSIT_PEPTIDE_CHLOROPLAST_STROMA",
+    )
+    assert cycle5_specs["proteintraitsmech:PROPEPTIDE_ANTIMICROBIAL_PEPTIDE_ANIONIC_SHIELD"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE",
+    )
+    assert cycle5_specs["proteintraitsmech:DISULFIDE_CYSTINE_STABILIZED_ALPHA_BETA"].parent_traits == (
+        "proteintraitsmech:DISULFIDE_INTRACHAIN",
+    )
+    assert cycle5_specs["proteintraitsmech:INIT_METHIONINE_M1_LINEAR_UBIQUITINATED"].parent_traits == (
+        "proteintraitsmech:INIT_METHIONINE_RETAINED",
+    )
+    assert cycle5_specs["proteintraitsmech:MATURE_CHAIN_BACKBONE_CYCLIZED"].parent_traits == (
+        "proteintraitsmech:UNIPROT_FT_SEQ_MATURE_CHAIN",
+    )
+    assert cycle5_specs["proteintraitsmech:DYNAMICS_COUPLED_FOLDING_AND_BINDING_TRANSITION"].parent_traits == (
+        "PATO:0001543",
+    )
+    assert cycle5_specs["proteintraitsmech:COILED_COIL_PENTAMER_BARREL"].parent_traits == (
+        "proteintraitsmech:COILED_COIL_HEPTAD_REPEAT",
+    )
+
+    for spec in cycle5_specs.values():
+        path = sft.TRAITS_DIR / spec.rel_dir / spec.filename
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for m in data.get("detection_methods") or []:
+            assert "{pat}" not in m["recipe"], f"{spec.identifier} recipe still contains unresolved {{pat}}"
+            ref = m["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        for ev in data.get("evidence") or []:
+            ref = ev["reference"]
+            if ref.startswith("PMID:"):
+                assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        cgs = data.get("causal_graphs") or []
+        if spec.trait_category in MECHANISM_BEARING_CATEGORIES or spec.identifier in MECHANISM_BEARING_LOWCOMP_IDS:
+            assert len(cgs) == 1, f"{spec.identifier} must carry a causal_graph"
+            for cg in cgs:
+                edges = cg.get("edges") or []
+                assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+                assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
+                snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+                assert len(set(snippets)) == 3, f"{spec.identifier} must have 3 distinct verbatim snippets"
+                for edge in edges:
+                    for ev in edge.get("evidence") or []:
+                        ref = ev["reference"]
+                        if ref.startswith("PMID:"):
+                            assert int(ref.split(":", 1)[1]) < 41_000_000, f"out-of-range PMID {ref} on {spec.identifier}"
+        else:
+            assert not cgs, f"{spec.identifier} should not carry causal_graphs"
 
 
 def test_root_local_structural_and_peptide_class_causal_graphs():

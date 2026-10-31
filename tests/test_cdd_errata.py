@@ -1,4 +1,4 @@
-"""The 18 Stage 4 CDD scientific repairs and future seed generation must agree (#1171, #1172, #1188)."""
+"""The 30 Stage 4 CDD scientific repairs and future seed generation must agree (#1171, #1172, #1188, #1210, #1217)."""
 
 from __future__ import annotations
 
@@ -521,9 +521,9 @@ def test_prepare_qualified_rebindings_rejects_stripped_qualified_yaml_when_bound
     )
 
 
-def test_errata_table_covers_all_eighteen_stage4_targets():
+def test_errata_table_covers_all_thirty_stage4_targets():
     assert {item.finding_id for item in errata.ERRATA.values()} == {
-        f"F{idx}" for idx in range(1, 19)
+        f"F{idx}" for idx in range(1, 31)
     }
     for acc, path in repair.TARGETS.items():
         assert path.is_file(), f"missing target record for CDD:{acc}: {path}"

@@ -2,11 +2,12 @@
 
 Shared by `seed_cdd.py` and `repair_cdd_errata.py`; this is not a global prose
 replacement. Each entry corresponds to one Stage 4 scientific review finding
-(`F1` through `F18`, tracked in #1171, #1172, and #1188) on an NCBI CDD
-`SEQ_DOMAIN` record. Sixteen targets (`F3` through `F12` in #1171, and `F13`
-through `F18` in #1188) had zero qualified occurrences at repair time; the two
-remaining Stage 4 targets (`F1` on `CDD:cd00104` and `F2` on `CDD:cd00959`,
-#1172) carried qualified occurrences whose `record_sha256` receipts in
+(`F1` through `F30`, tracked in #1171, #1172, #1188, #1210, and #1217) on an NCBI CDD
+`SEQ_DOMAIN` record. Twenty-eight targets (`F3` through `F12` in #1171, `F13`
+through `F18` in #1188, `F19` through `F24` in #1210, and `F25` through `F30` in
+#1217) had zero qualified occurrences at repair time; the two remaining Stage 4
+targets (`F1` on `CDD:cd00104` and `F2` on `CDD:cd00959`, #1172) carried
+qualified occurrences whose `record_sha256` receipts in
 `data/grounding/qualified_record_bindings.jsonl.d/` are transactionally
 re-bound by `repair_cdd_errata.py`.
 
@@ -23,6 +24,8 @@ from yaml_emit import yaml_escape
 
 CURATION_TIMESTAMP = "2026-10-22T07:35:00Z"
 CYCLE2_CURATION_TIMESTAMP = "2026-10-25T23:10:00Z"
+CYCLE3_CURATION_TIMESTAMP = "2026-10-30T11:50:00Z"
+CYCLE4_CURATION_TIMESTAMP = "2026-10-31T08:10:00Z"
 
 
 @dataclass(frozen=True)
@@ -387,6 +390,214 @@ ERRATA: dict[str, CddErratum] = {
             "mammalian arterial preparations (#1171, #952, Stage 4 finding F5)."
         ),
     ),
+    "cd15855": CddErratum(
+        accession="cd15855",
+        finding_id="F27",
+        label="SNARE_SNAP25C_23C",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml"
+        ),
+        source_description=(
+            "C-terminal SNARE motif of SNAP25 and SNAP23. C-terminal SNARE motifs "
+            "of SNAP25 and SNAP23, members of the Qb/Qc subfamily of SNARE "
+            "(soluble N-ethylmaleimide-sensitive factor attachment protein "
+            "receptor) proteins. SNAP23 interacts with STX4 (Qa) and the lysosomal "
+            "R-SNARE VAMP8. The complex plays a role in transport of secretory "
+            "granule from trans-Golgi network to the plasma membrane. SNAP25 "
+            "interacts with Syntaxin-1 (Qa) and the R-SNARE VAMP2 (also called "
+            "synaptobrevin-2). The complex plays a role in transport of secretory "
+            "granule from trans-Golgi network to the plasma membrane. Qb/Qc SNAREs "
+            "consist of 2 coiled-coil helices (called SNARE motifs, one belonging "
+            "to the Qb subgroup and one belonging to the Qc subgroup), which "
+            "mediate the interactions with other SNARE proteins, and a "
+            "transmembrane domain. In general, the SNARE complex mediates membrane "
+            "fusion, important for trafficking of newly synthesized proteins, "
+            "recycling of pre-existing proteins and organelle formation. SNARE "
+            "proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs, "
+            "depending on whether the residue in the hydrophilic center layer of "
+            "the four-helical bundle is a glutamine (Q) or arginine (R). Qa-, as "
+            "well as Qb- and Qc-SNAREs, are localized to target organelle "
+            "membranes, while R-SNARE is localized to vesicle membranes. They form "
+            "unique complexes consisting of one member of each subgroup, that "
+            "mediate fusion between a specific type of vesicles and their target "
+            "organelle. Their SNARE motifs form twisted and parallel "
+            "heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are "
+            "SNAP29, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; SNAP25 and SNAP23 are anchored to "
+                "target membranes via palmitoylated cysteine residues in the "
+                "linker between their two SNARE motifs.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F27; PMID:9759094; UniProtKB:P60880; UniProtKB:O00161)"
+        ),
+        evidence=(
+            (
+                "PMID:9759094",
+                "Four parallel alpha-helices... SNAP-25 contributes two helices (Sn1 and Sn2) connected by a palmitoylated linker and lacks a transmembrane anchor",
+                "Sutton et al. (1998, Nature 395:347-353), UniProtKB:P60880 "
+                "(SNAP25), and UniProtKB:O00161 (SNAP23) establish that Qbc-SNAREs "
+                "(SNAP25, SNAP23, SNAP29, SNAP47, Sec9) contribute both Qb and Qc "
+                "SNARE motifs and lack a transmembrane domain, with SNAP25 and "
+                "SNAP23 anchored to target membranes via S-palmitoylated cysteine "
+                "residues in their inter-motif linker.",
+            ),
+        ),
+        event_action="source_erratum_cd15855",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP25, SNAP23, and Qb/Qc SNAREs lack a "
+            "transmembrane domain, and SNAP25/SNAP23 are membrane-anchored via "
+            "palmitoylated cysteines in the linker between their two SNARE motifs "
+            "(#1217, Cycle 4 Stage 4 finding F27)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
+    ),
+    "cd15856": CddErratum(
+        accession="cd15856",
+        finding_id="F29",
+        label="SNARE_SNAP29C",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml"
+        ),
+        source_description=(
+            "C-terminal SNARE motif of SNAP29. C-terminal SNARE motif of SNAP29, "
+            "a member of the Qb/Qc subfamily of SNARE (soluble "
+            "N-ethylmaleimide-sensitive factor attachment protein receptor) "
+            "proteins. SNAP29 interacts with STX17 (Qa) and the lysosomal R-SNARE "
+            "VAMP8. The complex plays a role in autophagosome-lysosome fusion. "
+            "Autophagosome transports cytoplasmic materials including cytoplasmic "
+            "proteins, glycogen, lipids, organelles, and invading bacteria to the "
+            "lysosome for degradation. Qb/Qc SNAREs consist of 2 coiled-coil "
+            "helices (called SNARE motifs, one belonging to the Qb subgroup and "
+            "one belonging to the Qc subgroup), which mediate the interactions "
+            "with other SNARE proteins, and a transmembrane domain. In general, "
+            "the SNARE complex mediates membrane fusion, important for trafficking "
+            "of newly synthesized proteins, recycling of pre-existing proteins and "
+            "organelle formation. SNARE proteins are classified into four groups, "
+            "Qa-, Qb-, Qc- and R-SNAREs, depending on whether the residue in the "
+            "hydrophilic center layer of the four-helical bundle is a glutamine "
+            "(Q) or arginine (R). Qa-, as well as Qb- and Qc-SNAREs, are localized "
+            "to target organelle membranes, while R-SNARE is localized to vesicle "
+            "membranes. They form unique complexes consisting of one member of "
+            "each subgroup, that mediate fusion between a specific type of "
+            "vesicles and their target organelle. Their SNARE motifs form twisted "
+            "and parallel heterotetrameric helix bundles. Other members of the "
+            "Qb/Qc SNAREs are SNAP23, SNAP25, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 "
+                "also lacks palmitoylated membrane-anchoring cysteines and "
+                "associates with membranes through protein-protein interactions.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F29; PMID:9736707; PMID:9759094; UniProtKB:O95721)"
+        ),
+        evidence=(
+            (
+                "PMID:9736707",
+                "SNAP-29 lacks both a hydrophobic transmembrane anchor and the conserved cysteine cluster required for palmitoylation in SNAP-25 and SNAP-23",
+                "Steegmaier et al. (1998, J Biol Chem 273:34171-34179), Sutton "
+                "et al. (1998, Nature 395:347-353, PMID:9759094), and "
+                "UniProtKB:O95721 (SNAP29) establish that SNAP29 and Qbc-SNAREs "
+                "lack a transmembrane domain and that SNAP29 also lacks "
+                "S-palmitoylated membrane-anchoring cysteines, associating with "
+                "membranes via syntaxin/SNARE protein-protein interactions.",
+            ),
+        ),
+        event_action="source_erratum_cd15856",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP29 and Qb/Qc SNAREs lack a transmembrane "
+            "domain, and SNAP29 also lacks palmitoylated membrane-anchoring "
+            "cysteines (#1217, Cycle 4 Stage 4 finding F29)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
+    ),
+    "cd15884": CddErratum(
+        accession="cd15884",
+        finding_id="F21",
+        label="SNARE_SNAP23C",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml"
+        ),
+        source_description=(
+            "C-terminal SNARE motif of SNAP23. C-terminal SNARE motifs of SNAP23, "
+            "a member of the Qb/Qc subfamily of SNARE (soluble "
+            "N-ethylmaleimide-sensitive factor attachment protein receptor) "
+            "proteins. SNAP23 interacts with Syntaxin-4 (Qa) and the R-SNARE VAMP8. "
+            "The complex plays a role in exocytosis of secretory granule. Qb/Qc "
+            "SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one "
+            "belonging to the Qb subgroup and one belonging to the Qc subgroup), "
+            "which mediate the interactions with other SNARE proteins, and a "
+            "transmembrane domain. In general, the SNARE complex mediates membrane "
+            "fusion, important for trafficking of newly synthesized proteins, "
+            "recycling of pre-existing proteins and organelle formation. SNARE "
+            "proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs, "
+            "depending on whether the residue in the hydrophilic center layer of "
+            "the four-helical bundle is a glutamine (Q) or arginine (R). Qa-, as "
+            "well as Qb- and Qc-SNAREs, are localized to target organelle "
+            "membranes, while R-SNARE is localized to vesicle membranes. They form "
+            "unique complexes consisting of one member of each subgroup, that "
+            "mediate fusion between a specific type of vesicles and their target "
+            "organelle. Their SNARE motifs form twisted and parallel "
+            "heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are "
+            "SNAP25, SNAP29, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; SNAP23 is anchored to target membranes "
+                "via palmitoylated cysteine residues in the linker between its two "
+                "SNARE motifs.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F21; PMID:9759094; UniProtKB:O00161)"
+        ),
+        evidence=(
+            (
+                "PMID:9759094",
+                "Four parallel alpha-helices... SNAP-25 contributes two helices (Sn1 and Sn2) connected by a palmitoylated linker and lacks a transmembrane anchor",
+                "Sutton et al. (1998, Nature 395:347-353) and UniProtKB:O00161 "
+                "(SNAP23) establish that Qbc-SNAREs (SNAP25, SNAP23, SNAP29, SNAP47, "
+                "Sec9) contribute both Qb and Qc SNARE motifs and lack a "
+                "transmembrane domain, with SNAP23 anchored to membranes via "
+                "S-palmitoylated cysteine residues in its inter-motif linker.",
+            ),
+        ),
+        event_action="source_erratum_cd15884",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP23 and Qb/Qc SNAREs lack a transmembrane "
+            "domain, and SNAP23 is membrane-anchored via palmitoylated cysteines "
+            "in the linker between its two SNARE motifs (#1210, Cycle 3 Stage 4 "
+            "finding F21)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
+    ),
     "cd15885": CddErratum(
         accession="cd15885",
         finding_id="F14",
@@ -455,6 +666,147 @@ ERRATA: dict[str, CddErratum] = {
         ),
         curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
     ),
+    "cd15887": CddErratum(
+        accession="cd15887",
+        finding_id="F30",
+        label="SNARE_SNAP29N",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml"
+        ),
+        source_description=(
+            "N-terminal SNARE motif of SNAP29. N-terminal SNARE motif of SNAP29, "
+            "a member of the Qb/Qc subfamily of SNARE (soluble "
+            "N-ethylmaleimide-sensitive factor attachment protein receptor) "
+            "proteins. SNAP29 interacts with STX17 (Qa) and the lysosomal R-SNARE "
+            "VAMP8. The complex plays a role in autophagosome-lysosome fusion. "
+            "Autophagosome transports cytoplasmic materials including cytoplasmic "
+            "proteins, glycogen, lipids, organelles, and invading bacteria to the "
+            "lysosome for degradation. Qb/Qc SNAREs consist of 2 coiled-coil "
+            "helices (called SNARE motifs, one belonging to the Qb subgroup and "
+            "one belonging to the Qc subgroup), which mediate the interactions "
+            "with other SNARE proteins, and a transmembrane domain. In general, "
+            "the SNARE complex mediates membrane fusion, important for trafficking "
+            "of newly synthesized proteins, recycling of pre-existing proteins and "
+            "organelle formation. SNARE proteins are classified into four groups, "
+            "Qa-, Qb-, Qc- and R-SNAREs, depending on whether the residue in the "
+            "hydrophilic center layer of the four-helical bundle is a glutamine "
+            "(Q) or arginine (R). Qa-, as well as Qb- and Qc-SNAREs, are localized "
+            "to target organelle membranes, while R-SNARE is localized to vesicle "
+            "membranes. They form unique complexes consisting of one member of "
+            "each subgroup, that mediate fusion between a specific type of "
+            "vesicles and their target organelle. Their SNARE motifs form twisted "
+            "and parallel heterotetrameric helix bundles. Other members of the "
+            "Qb/Qc SNAREs are SNAP23, SNAP25, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 "
+                "also lacks palmitoylated membrane-anchoring cysteines and "
+                "associates with membranes through protein-protein interactions.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F30; PMID:9736707; PMID:9759094; UniProtKB:O95721)"
+        ),
+        evidence=(
+            (
+                "PMID:9736707",
+                "SNAP-29 lacks both a hydrophobic transmembrane anchor and the conserved cysteine cluster required for palmitoylation in SNAP-25 and SNAP-23",
+                "Steegmaier et al. (1998, J Biol Chem 273:34171-34179), Sutton "
+                "et al. (1998, Nature 395:347-353, PMID:9759094), and "
+                "UniProtKB:O95721 (SNAP29) establish that SNAP29 and Qbc-SNAREs "
+                "lack a transmembrane domain and that SNAP29 also lacks "
+                "S-palmitoylated membrane-anchoring cysteines, associating with "
+                "membranes via syntaxin/SNARE protein-protein interactions.",
+            ),
+        ),
+        event_action="source_erratum_cd15887",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP29 and Qb/Qc SNAREs lack a transmembrane "
+            "domain, and SNAP29 also lacks palmitoylated membrane-anchoring "
+            "cysteines (#1217, Cycle 4 Stage 4 finding F30)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
+    ),
+    "cd15889": CddErratum(
+        accession="cd15889",
+        finding_id="F28",
+        label="SNARE_SNAP25N_23N",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml"
+        ),
+        source_description=(
+            "N-terminal SNARE motif of SNAP25 and SNAP23. N-terminal SNARE motifs "
+            "of SNAP25 and SNAP23, members of the Qb/Qc subfamily of SNARE "
+            "(soluble N-ethylmaleimide-sensitive factor attachment protein "
+            "receptor) proteins. SNAP23 interacts with STX4 (Qa) and the lysosomal "
+            "R-SNARE VAMP8. The complex plays a role in transport of secretory "
+            "granule from trans-Golgi network to the plasma membrane. SNAP25 "
+            "interacts with Syntaxin-1 (Qa) and the R-SNARE VAMP2 (also called "
+            "synaptobrevin-2). The complex plays a role in transport of secretory "
+            "granule from trans-Golgi network to the plasma membrane. Qb/Qc SNAREs "
+            "consist of 2 coiled-coil helices (called SNARE motifs, one belonging "
+            "to the Qb subgroup and one belonging to the Qc subgroup), which "
+            "mediate the interactions with other SNARE proteins, and a "
+            "transmembrane domain. In general, the SNARE complex mediates membrane "
+            "fusion, important for trafficking of newly synthesized proteins, "
+            "recycling of pre-existing proteins and organelle formation. SNARE "
+            "proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs, "
+            "depending on whether the residue in the hydrophilic center layer of "
+            "the four-helical bundle is a glutamine (Q) or arginine (R). Qa-, as "
+            "well as Qb- and Qc-SNAREs, are localized to target organelle "
+            "membranes, while R-SNARE is localized to vesicle membranes. They form "
+            "unique complexes consisting of one member of each subgroup, that "
+            "mediate fusion between a specific type of vesicles and their target "
+            "organelle. Their SNARE motifs form twisted and parallel "
+            "heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are "
+            "SNAP29, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; SNAP25 and SNAP23 are anchored to "
+                "target membranes via palmitoylated cysteine residues in the "
+                "linker between their two SNARE motifs.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F28; PMID:9759094; UniProtKB:P60880; UniProtKB:O00161)"
+        ),
+        evidence=(
+            (
+                "PMID:9759094",
+                "Four parallel alpha-helices... SNAP-25 contributes two helices (Sn1 and Sn2) connected by a palmitoylated linker and lacks a transmembrane anchor",
+                "Sutton et al. (1998, Nature 395:347-353), UniProtKB:P60880 "
+                "(SNAP25), and UniProtKB:O00161 (SNAP23) establish that Qbc-SNAREs "
+                "(SNAP25, SNAP23, SNAP29, SNAP47, Sec9) contribute both Qb and Qc "
+                "SNARE motifs and lack a transmembrane domain, with SNAP25 and "
+                "SNAP23 anchored to target membranes via S-palmitoylated cysteine "
+                "residues in their inter-motif linker.",
+            ),
+        ),
+        event_action="source_erratum_cd15889",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP25, SNAP23, and Qb/Qc SNAREs lack a "
+            "transmembrane domain, and SNAP25/SNAP23 are membrane-anchored via "
+            "palmitoylated cysteines in the linker between their two SNARE motifs "
+            "(#1217, Cycle 4 Stage 4 finding F28)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
+    ),
     "cd15894": CddErratum(
         accession="cd15894",
         finding_id="F6",
@@ -520,6 +872,136 @@ ERRATA: dict[str, CddErratum] = {
             "domain, and SNAP25 is membrane-anchored via palmitoylated cysteines "
             "in the linker between its two SNARE motifs (#1171, Stage 4 finding F6)."
         ),
+    ),
+    "cd15895": CddErratum(
+        accession="cd15895",
+        finding_id="F22",
+        label="SNARE_SNAP23N",
+        parent="cl22856",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml"
+        ),
+        source_description=(
+            "N-terminal SNARE motif of SNAP23. N-terminal SNARE motifs of SNAP23, "
+            "a member of the Qb/Qc subfamily of SNARE (soluble "
+            "N-ethylmaleimide-sensitive factor attachment protein receptor) "
+            "proteins. SNAP23 interacts with Syntaxin-4 (Qa) and the R-SNARE VAMP8. "
+            "The complex plays a role in exocytosis of secretory granule. Qb/Qc "
+            "SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one "
+            "belonging to the Qb subgroup and one belonging to the Qc subgroup), "
+            "which mediate the interactions with other SNARE proteins, and a "
+            "transmembrane domain. In general, the SNARE complex mediates membrane "
+            "fusion, important for trafficking of newly synthesized proteins, "
+            "recycling of pre-existing proteins and organelle formation. SNARE "
+            "proteins are classified into four groups, Qa-, Qb-, Qc- and R-SNAREs, "
+            "depending on whether the residue in the hydrophilic center layer of "
+            "the four-helical bundle is a glutamine (Q) or arginine (R). Qa-, as "
+            "well as Qb- and Qc-SNAREs, are localized to target organelle "
+            "membranes, while R-SNARE is localized to vesicle membranes. They form "
+            "unique complexes consisting of one member of each subgroup, that "
+            "mediate fusion between a specific type of vesicles and their target "
+            "organelle. Their SNARE motifs form twisted and parallel "
+            "heterotetrameric helix bundles. Other members of the Qb/Qc SNAREs are "
+            "SNAP25, SNAP29, SNAP47 and SEC9"
+        ),
+        replacements=(
+            (
+                ", which mediate the interactions with other SNARE proteins, and a "
+                "transmembrane domain.",
+                ", which mediate the interactions with other SNARE proteins, and "
+                "lack a transmembrane domain; SNAP23 is anchored to target membranes "
+                "via palmitoylated cysteine residues in the linker between its two "
+                "SNARE motifs.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F22; PMID:9759094; UniProtKB:O00161)"
+        ),
+        evidence=(
+            (
+                "PMID:9759094",
+                "Four parallel alpha-helices... SNAP-25 contributes two helices (Sn1 and Sn2) connected by a palmitoylated linker and lacks a transmembrane anchor",
+                "Sutton et al. (1998, Nature 395:347-353) and UniProtKB:O00161 "
+                "(SNAP23) establish that Qbc-SNAREs (SNAP25, SNAP23, SNAP29, SNAP47, "
+                "Sec9) contribute both Qb and Qc SNARE motifs and lack a "
+                "transmembrane domain, with SNAP23 anchored to membranes via "
+                "S-palmitoylated cysteine residues in its inter-motif linker.",
+            ),
+        ),
+        event_action="source_erratum_cd15895",
+        event_changes=(
+            "Corrected the false statement that Qb/Qc SNAREs contain a "
+            "transmembrane domain: SNAP23 and Qb/Qc SNAREs lack a transmembrane "
+            "domain, and SNAP23 is membrane-anchored via palmitoylated cysteines "
+            "in the linker between its two SNARE motifs (#1210, Cycle 3 Stage 4 "
+            "finding F22)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
+    ),
+    "cd16113": CddErratum(
+        accession="cd16113",
+        finding_id="F26",
+        label="DCX2_DCDC2_like",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml"
+        ),
+        source_description=(
+            "Doublecortin-like domain 2 found in doublecortin domain-containing "
+            "protein 2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) "
+            "family. It is a microtubule-associated protein (MAP) with stable "
+            "double tandem DCX repeats of a ubiquitin-like tertiary fold. "
+            "Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved "
+            "in various cellular processes including transcriptional regulation, "
+            "cell cycle control, and DNA repair. Microtubules are key components "
+            "of cytoskeleton that are involved in cell movement, shape "
+            "determination, division and transport. DCDC2 genetic variation in "
+            "humans is associated with reading disability, attention deficit "
+            "hyperactivity disorder (ADHD), and difficulties in mathematics. A "
+            "genetic variant of DCDC2 associates with dyslexia, a common "
+            "neurobehavioral disorder of reading. DCDC2 protein interacts with "
+            "many of the same cytoskeleton related proteins that other members "
+            "of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "It is a microtubule-associated protein (MAP) with stable double "
+                "tandem DCX repeats of a ubiquitin-like tertiary fold. Ubiquitin "
+                "(Ub) is a protein modifier in eukaryotes that is involved in "
+                "various cellular processes including transcriptional regulation, "
+                "cell cycle control, and DNA repair. Microtubules are key "
+                "components of cytoskeleton",
+                "It is a microtubule-associated protein (MAP) with stable double "
+                "tandem DCX repeats adopting a ubiquitin-like beta-grasp tertiary "
+                "fold. Microtubules are key components of the cytoskeleton",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F26; PMID:16278295; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "PMID:16278295",
+                "DCDC2 contains a doublecortin peptide domain, similar to the DCX gene mutated in X-linked lissencephaly and double cortex syndrome",
+                "Meng et al. (2005, Proc Natl Acad Sci USA 102:17053-17058) and "
+                "reviewed human UniProtKB/Swiss-Prot entry Q9UHG0 (DCDC2, HGNC:18141) "
+                "characterize DCDC2 as a microtubule-associated protein containing "
+                "tandem doublecortin (DCX) domains with a ubiquitin-like beta-grasp "
+                "fold, replacing the off-target ubiquitin protein-modifier digression "
+                "in CDD:cd16113.",
+            ),
+        ),
+        event_action="source_erratum_cd16113",
+        event_changes=(
+            "Replaced the off-target ubiquitin protein-modifier digression in "
+            "CDD:cd16113 with the tandem DCX ubiquitin-like beta-grasp repeat "
+            "description (#1217, Cycle 4 Stage 4 finding F26)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
     ),
     "cd16523": CddErratum(
         accession="cd16523",
@@ -644,6 +1126,73 @@ ERRATA: dict[str, CddErratum] = {
             "enzymes targeted by the GID E3 ligase complex (#1171, Stage 4 "
             "finding F8)."
         ),
+    ),
+    "cd17071": CddErratum(
+        accession="cd17071",
+        finding_id="F25",
+        label="DCX1_DCDC2_like",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml"
+        ),
+        source_description=(
+            "Dublecortin-like domain 1 found in doublecortin domain-containing "
+            "protein 2 (DCDC2) and similar proteins. DCDC2 is a member of the "
+            "doublecortin (DCX) family. It is a microtubule-associated protein "
+            "(MAP) with stable double tandem DCX repeats of ubiquitin-like "
+            "tertiary fold. Ubiquitin (Ub) is a protein modifier in eukaryotes "
+            "that is involved in various cellular processes, including "
+            "transcriptional regulation, cell cycle control, and DNA repair. "
+            "Microtubules are key components of the cytoskeleton that are "
+            "involved in cell movement, shape determination, division and "
+            "transport. DCDC2 genetic variation in humans is associated with "
+            "reading disability, attention deficit hyperactivity disorder (ADHD), "
+            "and difficulties in mathematics. A genetic variant of DCDC2 "
+            "associates with dyslexia, a common neurobehavioral disorder of "
+            "reading. DCDC2 protein interacts with many of the same cytoskeleton "
+            "related proteins that other members of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "Dublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2 (DCDC2) and similar proteins. DCDC2 is a member of the "
+                "doublecortin (DCX) family. It is a microtubule-associated protein "
+                "(MAP) with stable double tandem DCX repeats of ubiquitin-like "
+                "tertiary fold. Ubiquitin (Ub) is a protein modifier in eukaryotes "
+                "that is involved in various cellular processes, including "
+                "transcriptional regulation, cell cycle control, and DNA repair.",
+                "Doublecortin-like domain 1 found in doublecortin domain-containing "
+                "protein 2 (DCDC2) and similar proteins. DCDC2 is a member of the "
+                "doublecortin (DCX) family. It is a microtubule-associated protein "
+                "(MAP) with stable double tandem DCX repeats adopting a "
+                "ubiquitin-like beta-grasp tertiary fold.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1217 "
+            "(Cycle 4 Stage 4 finding F25; PMID:16278295; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "PMID:16278295",
+                "DCDC2 contains a doublecortin peptide domain, similar to the DCX gene mutated in X-linked lissencephaly and double cortex syndrome",
+                "Meng et al. (2005, Proc Natl Acad Sci USA 102:17053-17058) and "
+                "reviewed human UniProtKB/Swiss-Prot entry Q9UHG0 (DCDC2, HGNC:18141) "
+                "characterize DCDC2 as a microtubule-associated protein containing "
+                "tandem doublecortin (DCX) domains with a ubiquitin-like beta-grasp "
+                "fold, correcting the 'Dublecortin-like' spelling error and removing "
+                "the off-target ubiquitin protein-modifier digression in CDD:cd17071.",
+            ),
+        ),
+        event_action="source_erratum_cd17071",
+        event_changes=(
+            "Corrected the 'Dublecortin-like' spelling error and replaced the "
+            "off-target ubiquitin protein-modifier digression in CDD:cd17071 with "
+            "the tandem DCX ubiquitin-like beta-grasp repeat description (#1217, "
+            "Cycle 4 Stage 4 finding F25)."
+        ),
+        curation_timestamp=CYCLE4_CURATION_TIMESTAMP,
     ),
     "cd17149": CddErratum(
         accession="cd17149",
@@ -847,6 +1396,136 @@ ERRATA: dict[str, CddErratum] = {
             "summary (#1188, Cycle 2 Stage 4 finding F15)."
         ),
         curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
+    "cd17152": CddErratum(
+        accession="cd17152",
+        finding_id="F19",
+        label="DCX2_DCDC2",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml"
+        ),
+        source_description=(
+            "Doublecortin-like domain 2 found in doublecortin domain-containing "
+            "protein 2 (DCDC2). DCDC2 is a member of the doublecortin (DCX) "
+            "family. It is a microtubule-associated protein (MAP) with a stable "
+            "ubiquitin-like tertiary fold. Ubiquitin (Ub) is a protein modifier in "
+            "eukaryotes that is involved in various cellular processes, including "
+            "transcriptional regulation, cell cycle control, and DNA repair. "
+            "Microtubules are key components of cytoskeleton that are involved in "
+            "cell movement, shape determination, division and transport. DCDC2 "
+            "genetic variation in humans is associated with reading disability, "
+            "attention deficit hyperactivity disorder (ADHD), and difficulties in "
+            "mathematics. A genetic variant of DCDC2 associates with dyslexia, a "
+            "common neurobehavioral disorder of reading. DCDC2 protein interacts "
+            "with many of the same cytoskeleton related proteins that other "
+            "members of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "It is a microtubule-associated protein (MAP) with a stable "
+                "ubiquitin-like tertiary fold. Ubiquitin (Ub) is a protein modifier "
+                "in eukaryotes that is involved in various cellular processes, "
+                "including transcriptional regulation, cell cycle control, and DNA "
+                "repair. Microtubules are key components of cytoskeleton",
+                "It is a microtubule-associated protein (MAP) with stable double "
+                "tandem DCX repeats adopting a ubiquitin-like beta-grasp tertiary "
+                "fold. Microtubules are key components of the cytoskeleton",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F19; PMID:16278295; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "PMID:16278295",
+                "DCDC2 contains a doublecortin peptide domain, similar to the DCX gene mutated in X-linked lissencephaly and double cortex syndrome",
+                "Meng et al. (2005, Proc Natl Acad Sci USA 102:17053-17058) and "
+                "reviewed human UniProtKB/Swiss-Prot entry Q9UHG0 (DCDC2, HGNC:18141) "
+                "characterize DCDC2 as a microtubule-associated protein containing "
+                "tandem doublecortin (DCX) domains with a ubiquitin-like beta-grasp "
+                "fold, replacing the off-target ubiquitin protein-modifier digression "
+                "in CDD:cd17152.",
+            ),
+        ),
+        event_action="source_erratum_cd17152",
+        event_changes=(
+            "Replaced the off-target ubiquitin protein-modifier digression in "
+            "CDD:cd17152 with the tandem DCX ubiquitin-like beta-grasp repeat "
+            "description (#1210, Cycle 3 Stage 4 finding F19)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
+    ),
+    "cd17153": CddErratum(
+        accession="cd17153",
+        finding_id="F20",
+        label="DCX2_DCDC2B",
+        parent="cl28922",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml"
+        ),
+        source_description=(
+            "Doublecortin-like domain 2 found in doublecortin domain-containing "
+            "protein 2B (DCDC2B). DCDC2 is a member of the doublecortin (DCX) "
+            "family. It is a microtubule-associated protein (MAP) with stable "
+            "double tandem DCX repeats of a ubiquitin-like tertiary fold. "
+            "Microtubules are key components of cytoskeleton that are involved in "
+            "cell movement, shape determination, division and transport. DCDC2 "
+            "genetic variation in humans is associated with reading disability, "
+            "attention deficit hyperactivity disorder (ADHD), and difficulties in "
+            "mathematics. A genetic variant of DCDC2 associates with dyslexia, a "
+            "common neurobehavioral disorder of reading. DCDC2 protein interacts "
+            "with many of the same cytoskeleton related proteins that other "
+            "members of the DCX family interact with"
+        ),
+        replacements=(
+            (
+                "Doublecortin-like domain 2 found in doublecortin domain-containing "
+                "protein 2B (DCDC2B). DCDC2 is a member of the doublecortin (DCX) "
+                "family. It is a microtubule-associated protein (MAP) with stable "
+                "double tandem DCX repeats of a ubiquitin-like tertiary fold.",
+                "Doublecortin-like domain 2 found in doublecortin domain-containing "
+                "protein 2B (DCDC2B). DCDC2B is a member of the doublecortin (DCX) "
+                "family closely related to its paralog DCDC2, a "
+                "microtubule-associated protein (MAP) with stable double tandem DCX "
+                "repeats of a ubiquitin-like tertiary fold.",
+            ),
+            (
+                "DCDC2 genetic variation in humans is associated with reading "
+                "disability, attention deficit hyperactivity disorder (ADHD), and "
+                "difficulties in mathematics. A genetic variant of DCDC2 associates "
+                "with dyslexia, a common neurobehavioral disorder of reading.",
+                "In the paralogous DCDC2 gene, human genetic variation is "
+                "associated with reading disability (dyslexia), attention deficit "
+                "hyperactivity disorder (ADHD), and difficulties in mathematics.",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F20; UniProtKB:A2VCK2; UniProtKB:Q9UHG0)"
+        ),
+        evidence=(
+            (
+                "UniProtKB:A2VCK2",
+                "Protein Name: Doublecortin domain-containing protein 2B; Gene Name: DCDC2B; DR CDD; cd17153; DCX2_DCDC2B; 1.",
+                "Reviewed human UniProtKB/Swiss-Prot entry A2VCK2 (DCDC2B, "
+                "HGNC:33489) carries the C-terminal DCX2 domain modeled by "
+                "CDD:cd17153 (DCX2_DCDC2B), whereas human DCDC2 (UniProtKB:Q9UHG0, "
+                "HGNC:18141) is a distinct paralog whose C-terminal DCX2 domain is "
+                "modeled by CDD:cd17152 (DCX2_DCDC2).",
+            ),
+        ),
+        event_action="source_erratum_cd17153",
+        event_changes=(
+            "Distinguished DCDC2B (UniProtKB:A2VCK2, modeled by CDD:cd17153) from "
+            "its paralog DCDC2 (UniProtKB:Q9UHG0, modeled by CDD:cd17152) in the "
+            "domain description and human genetics phenotype summary (#1210, "
+            "Cycle 3 Stage 4 finding F20)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
     ),
     "cd17154": CddErratum(
         accession="cd17154",
@@ -1067,6 +1746,158 @@ ERRATA: dict[str, CddErratum] = {
             "(#1188, Cycle 2 Stage 4 finding F18)."
         ),
         curation_timestamp=CYCLE2_CURATION_TIMESTAMP,
+    ),
+    "cd18599": CddErratum(
+        accession="cd18599",
+        finding_id="F23",
+        label="ABC_6TM_MRP5_8_9_D2",
+        parent="cl38913",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml"
+        ),
+        source_description=(
+            "Six-transmembrane helical domain 2 (TMD2) of multidrug "
+            "resistance-associated proteins (MRPs) 5, 8, and 9. This group "
+            "represents the six-transmembrane domain 2 (TMD2) of multidrug "
+            "resistance-associated proteins (MRPs) 5, 8, and 9, all of which are "
+            "belonging to the subfamily C of the ATP-binding cassette (ABC) "
+            "transporter superfamily. The MRP subfamily (ABCC subfamily) is "
+            "composed of 13 members, of which MRP1 to MRP9 are the major "
+            "transporters that cause multidrug resistance in tumor cells by pumping "
+            "anticancer drugs out of the cell. These nine MRP members function as "
+            "ATP-dependent exporters for endogenous substances and xenobiotics. MRP "
+            "family can be divided into two groups, depending on their structural "
+            "architecture. MRP4, MRP5, MRP8, and MRP9 (ABCC4, 5, 11 and 12, "
+            "respectively) have a typical ABC transporter structure and each "
+            "composed of two transmembrane domains (TMD1 and TMD2) and two "
+            "nucleotide domains (NBD1 and NBD2). On the other hand, MRP1, 2, 3, 6 "
+            "and 7 (ABCC1, 2, 3, 6 and 7, respectively) have an additional "
+            "N-terminal five transmembrane segments in a single domain (TMD0) "
+            "connected to the core (TMD-NBD) by a cytoplasmic linker (L0)"
+        ),
+        replacements=(
+            (
+                "The MRP subfamily (ABCC subfamily) is composed of 13 members, of "
+                "which MRP1 to MRP9 are the major transporters that cause multidrug "
+                "resistance in tumor cells by pumping anticancer drugs out of the "
+                "cell. These nine MRP members function as ATP-dependent exporters "
+                "for endogenous substances and xenobiotics.",
+                "The human ABCC subfamily includes nine multidrug "
+                "resistance-associated proteins (MRP1-MRP6 corresponding to "
+                "ABCC1-ABCC6, and MRP7-MRP9 corresponding to ABCC10-ABCC12, whereas "
+                "ABCC7 is the CFTR chloride channel and ABCC8/ABCC9 are the "
+                "sulfonylurea receptors SUR1/SUR2). Several MRP members (notably "
+                "MRP1-MRP5, MRP7/ABCC10, and MRP8/ABCC11) function as ATP-dependent "
+                "efflux pumps for endogenous organic anions, cyclic nucleotides, and "
+                "xenobiotics, whereas physiological substrates and transport "
+                "activity of MRP9 (ABCC12) remain less characterized.",
+            ),
+            (
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 7, "
+                "respectively)",
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 10, "
+                "respectively)",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F23; PMID:16984901; UniProtKB:Q96J65)"
+        ),
+        evidence=(
+            (
+                "PMID:16984901",
+                "The human ABCC subfamily contains 12 full transporters, including nine MRPs (MRP1-6/ABCC1-6 and MRP7-9/ABCC10-12), CFTR (ABCC7), and SUR1/SUR2 (ABCC8/9)",
+                "Deeley et al. (2006, Physiol Rev 86:849-899) and UniProtKB:Q96J65 "
+                "(ABCC12/MRP9) establish that MRP7 is ABCC10 (whereas ABCC7 is the "
+                "CFTR chloride channel) and that MRP9/ABCC12 has not been shown to "
+                "act as a broad tumor multidrug resistance efflux pump.",
+            ),
+        ),
+        event_action="source_erratum_cd18599",
+        event_changes=(
+            "Corrected the false mapping of MRP7 to ABCC7 (MRP7 is ABCC10; ABCC7 "
+            "is CFTR) and qualified the overgeneralized claim that all MRP1-MRP9 "
+            "members are characterized tumor multidrug resistance efflux pumps "
+            "(#1210, Cycle 3 Stage 4 finding F23)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
+    ),
+    "cd18601": CddErratum(
+        accession="cd18601",
+        finding_id="F24",
+        label="ABC_6TM_MRP4_D2_like",
+        parent="cl38913",
+        rel_path=(
+            "sequence/domain/cdd/"
+            "six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml"
+        ),
+        source_description=(
+            "Six-transmembrane helical domain 2 (TMD2) of multidrug "
+            "resistance-associated protein 4 (MRP4) and similar proteins. This "
+            "group represents the six-transmembrane domain 2 (TMD2) of multidrug "
+            "resistance-associated protein 4 (MRP4), which belongs to the "
+            "subfamily C of the ATP-binding cassette (ABC) transporter "
+            "superfamily. The MRP subfamily (ABCC subfamily) is composed of 13 "
+            "members, of which MRP1 to MRP9 are the major transporters that cause "
+            "multidrug resistance in tumor cells by pumping anticancer drugs out "
+            "of the cell. These nine MRP members function as ATP-dependent "
+            "exporters for endogenous substances and xenobiotics. MRP family can "
+            "be divided into two groups, depending on their structural "
+            "architecture. MRP4, MRP5, MRP8, and MRP9 (ABCC4, 5, 11 and 12, "
+            "respectively) have a typical ABC transporter structure and each "
+            "composed of two transmembrane domains (TMD1 and TMD2) and two "
+            "nucleotide domains (NBD1 and NBD2). On the other hand, MRP1, 2, 3, 6 "
+            "and 7 (ABCC1, 2, 3, 6 and 7, respectively) have an additional "
+            "N-terminal five transmembrane segments in a single domain (TMD0) "
+            "connected to the core (TMD-NBD) by a cytoplasmic linker (L0)"
+        ),
+        replacements=(
+            (
+                "The MRP subfamily (ABCC subfamily) is composed of 13 members, of "
+                "which MRP1 to MRP9 are the major transporters that cause multidrug "
+                "resistance in tumor cells by pumping anticancer drugs out of the "
+                "cell. These nine MRP members function as ATP-dependent exporters "
+                "for endogenous substances and xenobiotics.",
+                "The human ABCC subfamily includes nine multidrug "
+                "resistance-associated proteins (MRP1-MRP6 corresponding to "
+                "ABCC1-ABCC6, and MRP7-MRP9 corresponding to ABCC10-ABCC12, whereas "
+                "ABCC7 is the CFTR chloride channel and ABCC8/ABCC9 are the "
+                "sulfonylurea receptors SUR1/SUR2). Several MRP members (notably "
+                "MRP1-MRP5, MRP7/ABCC10, and MRP8/ABCC11) function as ATP-dependent "
+                "efflux pumps for endogenous organic anions, cyclic nucleotides, and "
+                "xenobiotics, whereas physiological substrates and transport "
+                "activity of MRP9 (ABCC12) remain less characterized.",
+            ),
+            (
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 7, "
+                "respectively)",
+                "On the other hand, MRP1, 2, 3, 6 and 7 (ABCC1, 2, 3, 6 and 10, "
+                "respectively)",
+            ),
+        ),
+        definition_source=(
+            "NCBI CDD; PTM source-definition erratum #1210 "
+            "(Cycle 3 Stage 4 finding F24; PMID:16984901; UniProtKB:O15439)"
+        ),
+        evidence=(
+            (
+                "PMID:16984901",
+                "The human ABCC subfamily contains 12 full transporters, including nine MRPs (MRP1-6/ABCC1-6 and MRP7-9/ABCC10-12), CFTR (ABCC7), and SUR1/SUR2 (ABCC8/9)",
+                "Deeley et al. (2006, Physiol Rev 86:849-899) and UniProtKB:O15439 "
+                "(ABCC4/MRP4) establish that MRP7 is ABCC10 (whereas ABCC7 is the "
+                "CFTR chloride channel) and that MRP9/ABCC12 has not been shown to "
+                "act as a broad tumor multidrug resistance efflux pump.",
+            ),
+        ),
+        event_action="source_erratum_cd18601",
+        event_changes=(
+            "Corrected the false mapping of MRP7 to ABCC7 (MRP7 is ABCC10; ABCC7 "
+            "is CFTR) and qualified the overgeneralized claim that all MRP1-MRP9 "
+            "members are characterized tumor multidrug resistance efflux pumps "
+            "(#1210, Cycle 3 Stage 4 finding F24)."
+        ),
+        curation_timestamp=CYCLE3_CURATION_TIMESTAMP,
     ),
     "cd20534": CddErratum(
         accession="cd20534",

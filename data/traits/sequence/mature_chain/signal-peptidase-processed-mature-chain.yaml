@@ -65,28 +65,36 @@ causal_graphs:
         predicate: "has output"
         predicate_id: RO:0002234
         object: "SO:0000419"
-        description: "Proteolytic removal of the signal peptide after membrane translocation releases the mature polypeptide chain."
+        description: "Type I signal peptidase cleaves off the amino-terminal signal peptide after membrane translocation to release the mature polypeptide chain."
         evidence:
-          - reference: PMID:34980915
-            snippet: "SPs can be cleaved off after the protein has been translocated across the membrane."
-            notes: "Release of the mature polypeptide chain upon signal peptide cleavage (PMID:34980915). (ECO:0000269)"
+          - reference: PMID:24333859
+            snippet: "Type I signal peptidase is the enzyme responsible for cleaving off the amino-terminal signal peptide from proteins that are secreted across the bacterial cytoplasmic membrane."
+            notes: "SPase I cleavage releases the mature polypeptide chain upon signal peptide removal (PMID:24333859). (ECO:0000305)"
       - subject: "SO:0000419"
         predicate: "involved in"
         predicate_id: RO:0002331
         object: "GO:0009306"
-        description: "The signal-peptidase-processed mature polypeptide chain is secreted across the membrane into its target compartment."
+        description: "The signal-peptidase-processed mature polypeptide chain is released at the exo-cytoplasmic surface of the membrane."
         evidence:
-          - reference: PMID:34980915
-            snippet: "Signal peptides (SPs) are short amino acid sequences that control protein secretion and translocation in all living organisms."
-            notes: "Mature polypeptide translocation and secretion across the membrane (PMID:34980915). (ECO:0000269)"
+          - reference: PMID:24333859
+            snippet: "It is an essential membrane bound enzyme whose serine/lysine catalytic dyad resides on the exo-cytoplasmic surface of the bacterial membrane."
+            notes: "Exo-cytoplasmic SPase I cleavage releases the mature polypeptide across the membrane (PMID:24333859). (ECO:0000305)"
 evidence:
   - reference: PMID:34980915
     notes: "Signal peptides control protein secretion and translocation in all living organisms and are cleaved off during translocation to release the mature polypeptide chain."
+  - reference: PMID:24333859
+    notes: "Type I signal peptidase cleaves off the amino-terminal signal peptide from proteins that are secreted across the bacterial cytoplasmic membrane."
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
   action: EDIT
   changes: Expanded CG_MATURE_CHAIN_SECRETED to a 4-node, 3-edge mechanism (SO:0000418 -> GO:0016485 ->
     SO:0000419 -> GO:0009306) with verbatim snippets from PMID:34980915 (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph CG_MATURE_CHAIN_SECRETED (4 nodes, 3 edges) so every edge carries a distinct
+    verbatim PubMed abstract sentence from PMID:24333859, PMID:34980915 (Round 127).
   llm_assisted: true
 license: CC-BY-4.0

@@ -1,0 +1,90 @@
+identifier: proteintraitsmech:SURFACE_HOT_SPOT_BINDING_EPITOPE_PATCH
+label: "energetic hot-spot O-ring surface interface patch"
+definition: >-
+  A localized cluster of surface-exposed interface residues (enriched in tryptophan, tyrosine, and arginine) that contributes the majority of the binding free energy (Delta-Delta-G >= 2.0 kcal/mol upon alanine mutation) at a protein-protein interaction surface and is surrounded by a concentric 'O-ring' of polar and charged residues that occlude bulk solvent to lower the local dielectric constant.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_SURFACE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:SURFACE_HYDROPHOBIC_PATCH
+synonyms:
+  - synonym_text: "protein-protein interface binding hot spot"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "O-ring solvent-occluded hot-spot patch"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "energetic binding epitope hot spot"
+    synonym_type: EXACT_SYNONYM
+detection_methods:
+  - name: "FreeSASA solvent-accessible surface burial and interface hot-spot patch analysis"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0249
+    tool: "biotools:freesasa"
+    evidence_code: ECO:0000255
+    reference: PMID:9653027
+    recipe: "freesasa --format=rsa {input} -o {output}"
+causal_graphs:
+  - graph_id: interface_hot_spot_o_ring_solvent_occlusion
+    title: "Solvent-occluded Trp/Tyr/Arg hot-spot patches concentrate binding free energy to drive protein complex assembly"
+    description: "A solvent-occluded interface patch with localized aromatic/amphipathic hydrophobicity (PATO:0001884) surrounded by an O-ring of polar residues concentrates free energy for high-affinity protein binding (GO:0005515), driving protein-containing complex assembly (GO:0065003) into a stable protein-containing complex (GO:0032991)."
+    nodes:
+      - node_id: "PATO:0001884"
+        label: hydrophobicity
+        node_type: QUALITY
+        grounding: "PATO:0001884"
+        description: "Solvent-occluded central hot-spot cluster enriched in Trp, Tyr, and Arg residues."
+      - node_id: "GO:0005515"
+        label: "protein binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0005515"
+        description: "High-affinity protein-protein interaction concentrated at interface hot spots."
+      - node_id: "GO:0065003"
+        label: "protein-containing complex assembly"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0065003"
+        description: "Thermodynamic stabilization of protein dimer and oligomer association via O-ring solvent exclusion."
+      - node_id: "GO:0032991"
+        label: "protein-containing complex"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0032991"
+        description: "Assembled noncovalent protein-protein complex."
+    edges:
+      - subject: "PATO:0001884"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0005515"
+        description: "Interface binding free energy is concentrated in a small subset of hot-spot residues."
+        evidence:
+          - reference: PMID:9653027
+            snippet: "We find that the free energy of binding is not evenly distributed across interfaces; instead, there are hot spots of binding energy made up of a small subset of residues in the dimer interface."
+            notes: "Bogan & Thorn (1998) J Mol Biol 280:1-9 formulate the O-ring hypothesis of protein interface hot spots. (ECO:0000269)"
+      - subject: "GO:0005515"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0065003"
+        description: "Trp/Tyr/Arg-enriched hot spots surrounded by a solvent-occluding O-ring drive complex assembly."
+        evidence:
+          - reference: PMID:9653027
+            snippet: "These hot spots are enriched in tryptophan, tyrosine and arginine, and are surrounded by energetically less important residues that most likely serve to occlude bulk solvent from the hot spot."
+            notes: "Solvent occlusion by the surrounding O-ring stabilizes hot-spot interactions. (ECO:0000269)"
+      - subject: "GO:0065003"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "GO:0032991"
+        description: "Hot-spot-driven association produces functional protein-protein complexes."
+        evidence:
+          - reference: PMID:9653027
+            snippet: "Occlusion of solvent is found to be a necessary condition for highly energetic interactions."
+            notes: "Formation of functional protein-protein complexes via hot-spot interfaces. (ECO:0000269)"
+evidence:
+  - reference: PMID:9653027
+    notes: "Protein-protein interaction free energy is concentrated in interface hot spots enriched in Trp, Tyr, and Arg residues surrounded by a solvent-occluding O-ring of polar residues."
+curation_history:
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph interface_hot_spot_o_ring_solvent_occlusion (4 nodes, 3 edges) so every
+    edge carries a distinct verbatim PubMed abstract sentence from PMID:9653027 (Round 127).
+  llm_assisted: true
+license: CC-BY-4.0

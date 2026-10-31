@@ -4081,9 +4081,12 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         args.interpro_grouped_frame,
         args.profiles,
         args.sifts_registry,
+        args.fetch_request_plan,
+        args.fetch_receipt,
         args.interpro_xml,
         args.pfam_clans,
         args.pfam_types,
+        args.panther_classifications,
         args.go_obo,
     ):
         if optional is not None:
@@ -4838,6 +4841,8 @@ def promote(args: argparse.Namespace) -> int:
     candidates_to_write: dict[Path, tuple[str, str]] = {}
     prospective_records: dict[Path, dict[str, Any]] = {}
     prospective_sha256: dict[Path, str] = {}
+    pending_splices: list[tuple[Path, str, str, dict[str, Any]]] = []
+    record_install_errors: list[str] = []
     stale_selected_preimages: list[str] = []
     unchanged = 0
     for path in sorted(grouped):
@@ -4853,7 +4858,13 @@ def promote(args: argparse.Namespace) -> int:
         for row in sorted(grouped[path], key=lambda item: item["candidate_id"]):
             if record.get("identifier") != row.get("trait_id"):
                 raise GroundingError(f"{row['candidate_id']}: record identifier changed")
-            updated, row_changed = _install_example(record, row)
+            try:
+                updated, row_changed = _install_example(record, row)
+            except GroundingError as exc:
+                record_install_errors.append(
+                    f"{row['candidate_id']} ({row.get('trait_id')} / {row.get('protein_id')}): {exc}"
+                )
+                continue
             if row_changed and original_sha != row.get("record_sha256"):
                 stale_selected_preimages.append(
                     f"{row['candidate_id']}: stale:record_changed_since_resolve"
@@ -4865,6 +4876,10 @@ def promote(args: argparse.Namespace) -> int:
         if not changed:
             prospective_sha256[path] = original_sha
             continue
+        pending_splices.append((path, original_text, original_sha, record))
+    if record_install_errors:
+        raise GroundingError("\n".join([*record_install_errors, *stale_selected_preimages]))
+    for path, original_text, original_sha, record in pending_splices:
         candidate_text = _replace_examples_block(original_text, record)
         if candidate_text == original_text:
             raise GroundingError(f"{path}: canonical_examples splice made no change")
@@ -5337,6 +5352,21 @@ def _default_promote_sibling(resolved: Path, filename: str) -> Path:
     return parent / filename
 
 
+def _default_optional_promote_sibling(resolved: Path, filename: str) -> Path | None:
+    """Resolve an optional stem-prefixed batch artifact beside ``--resolved`` when present."""
+
+    resolved_path = resolved.resolve()
+    parent = resolved_path.parent
+    name = resolved_path.name
+    suffix = ".resolved.jsonl"
+    if name.endswith(suffix) and len(name) > len(suffix):
+        stem = name[: -len(suffix)]
+        prefixed = parent / f"{stem}.{filename}"
+        if prefixed.is_file():
+            return prefixed
+    return None
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "resolve" and args.protein_registry:
@@ -5357,6 +5387,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "promote" and args.sifts_registry is None:
         args.sifts_registry = _default_promote_sibling(
             args.resolved, "sifts_mappings.jsonl"
+        )
+    if args.command == "promote" and args.fetch_request_plan is None:
+        args.fetch_request_plan = _default_optional_promote_sibling(
+            args.resolved, "uniprot_fetch_plan.json"
+        )
+    if args.command == "promote" and args.fetch_receipt is None:
+        args.fetch_receipt = _default_optional_promote_sibling(
+            args.resolved, "uniprot_fetch_receipt.json"
         )
     try:
         if args.command == "promote" and args.apply:
