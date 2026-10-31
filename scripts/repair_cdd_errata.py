@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply the 24 reviewed NCBI CDD source-definition errata (#1171, #1172, #1188, #1210, Stage 4 F1-F24).
+"""Apply the 30 reviewed NCBI CDD source-definition errata (#1171, #1172, #1188, #1210, #1217, Stage 4 F1-F30).
 
 Dry-run by default. Refuses curated, unexpected, or partially repaired records;
 preflights the full target set before writing any file; preserves all non-target
