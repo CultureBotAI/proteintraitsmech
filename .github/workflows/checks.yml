@@ -59,6 +59,21 @@ jobs:
       # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
       - run: just lint
 
+      # Squash merges leave immutable review bases outside main's ancestry.
+      # Restore the explicit PR1202 and PR1205 bases in this checkout (#1206).
+      # Do not recreate retired refs or weaken the native provenance check.
+      - name: Restore inherited review Git base
+        run: |
+          set -euo pipefail
+          for review_revision in \
+            93c1a021d76a94fd299e0a1e3cf8f1b9671a3703 \
+            bc0c6d97aaab0ba20fcf8be28bc1527430679ccb; do
+            if ! git cat-file -e "${review_revision}^{commit}" 2>/dev/null; then
+              git fetch --no-tags --no-write-fetch-head origin "$review_revision"
+            fi
+            test "$(git rev-parse --verify "${review_revision}^{commit}")" = "$review_revision"
+          done
+
       - name: Structured record review contract
         run: just test-record-reviews
 

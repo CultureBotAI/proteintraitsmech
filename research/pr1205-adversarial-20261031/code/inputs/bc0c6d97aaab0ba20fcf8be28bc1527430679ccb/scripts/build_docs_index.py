@@ -1,0 +1,978 @@
+#!/usr/bin/env python3
+"""Build the sharded JSON indexes used by the client-side trait browser.
+
+The browser fetches lean record shards lazily from the active facet filters, then
+fetches a bucketed detail sidecar only when a record is opened. Nothing is
+generated per record, which keeps the Pages file count bounded as the corpus changes.
+
+Run:
+  python3 scripts/build_docs_index.py
+
+Output:
+  docs/data/records.<AXIS>.<CATEGORY>[.NN].json — lean records partitioned by
+                                  axis and category. The shard manifest lists
+                                  filter coverage so the browser can fetch only
+                                  intersecting shards.
+  docs/data/detail/NNN.json     — bucketed sidecars holding every field the
+                                  list + facet views don't need: the full
+                                  definition, path, parent_traits, xrefs,
+                                  mapped_xrefs, chemical_participants, example
+                                  proteins (with their heavy sequences + feature
+                                  tracks), residue_sequence, and pattern. The
+                                  browser fetches a record's bucket only when its
+                                  detail view is opened. Records are hashed into
+                                  a dynamically sized set of files (one file per record would
+                                  make Pages deployment scale with corpus size). Each
+                                  bucket is `{record_id: detail}`; the record
+                                  stores its bucket path in `"df"` (e.g.
+                                  "detail/023.json"). This keeps the upfront
+                                  list/facet payload ~5× smaller than inlining
+                                  everything.
+  docs/data/graphs/NNN.json.gz  — bounded, lossless causal-graph buckets, fetched only
+                                  for records with published causal assertions.
+  docs/data/lookup/NNNN.json    — bounded accession-to-record-shard routes.
+  docs/data/map-coverage.json  — retained map/current corpus identity comparison.
+  docs/data/facets.json         — pre-computed facet counts + a `shards`
+                                  manifest listing each shard's filter coverage.
+
+Record shape:
+  {
+    "id": "<identifier>",
+    "label": "...",
+    "def": "...",                     # truncated to ~500 chars
+    "axis": "SEQUENCE" | "STRUCTURE" | "SEQUENCE_STRUCTURE" | "FUNCTION" | "EVOLUTION",
+    "cat": "SEQ_MOTIF" | ...,
+    "src": "PROSITE" | "TED" | "UniProtKB" | "LinkML LSF" | "manual",
+    "sta": "SEEDED" | "REVIEWED" | ...,
+    "pat": "<sequence_pattern or null>",
+    "rs":  "<residue_sequence or null>",     # concrete residues
+    "pt":  [["<parent_curie>", "biolink:predicate"], ...],  # typed parent edges
+    "xr":  ["<xref>", ...],                  # source-direct cross-references
+    "mx":  [["<object>", "<mapping_source>", "biolink:predicate"], ...],
+    "cp":  [["<chebi>", "<role>"], ...],     # chemical_participants (ChEBI+role)
+    "ex":  [                                 # canonical_examples (lean projection)
+      {
+        "id":    "UniProtKB:P62258",
+        "label": "14-3-3 protein epsilon",
+        "tax":   "Homo sapiens (NCBITaxon:9606)",
+        "len":   255,
+        "rev":   true,
+        "asc":   5,                          # annotation_score
+        "fams":  ["Pfam:PF00244", ...],
+        "src":   "UNIPROTKB_API",
+        "seq":   "MDDREDLVYQAK...",          # full amino-acid sequence
+        # QUALIFIED examples load seq from the validated registry and also have:
+        "seqsrc": "ProteinReference",
+        "seqsha": "<sha256>", "rel": "2026_03", "sv": 2,
+        "feats": [                           # [start, end, ft_type, axis, note]
+          [1, 255, "CHAIN", "SEQUENCE", "14-3-3 protein epsilon"],
+          [234, 255, "REGION", "SEQUENCE", "Disordered"],
+          [57, 57, "SITE", "STRUCTURE", "Interaction with phosphoserine"],
+          ...
+        ],
+        "occ": [                             # qualified locations for this trait
+          {"ranges": [[118, 127]], "positions": [120, 122],
+           "mapping_method": "PATTERN_MATCH", "evidence_source": "IEDB",
+           "source_trait_id": "IEDB:10012", "source_release": "2026_03",
+           "coordinate_frame": "UNIPROT_CANONICAL"}
+        ]
+      }, ...
+    ],
+    "path": "data/traits/.../slug.yaml"     # for GitHub raw link
+  }
+"""
+
+from __future__ import annotations
+
+import hashlib
+import gzip
+import json
+import re
+import sys
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+SAFE_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from docs_protein_sequences import ProteinSequenceRegistry  # noqa: E402
+
+# The bucket count is calculated from serialized detail size. This target sits below the
+# post-build 1 MB hard budget so a successful build cannot require a multi-megabyte fetch.
+DETAIL_BUCKET_TARGET_BYTES = 900_000
+MIN_DETAIL_BUCKETS = 256
+
+# Ceiling on the facet contingency cube (docs/data/facets.json "cube"), which is
+# what makes subset-aware facet counts exact without a record scan. One row per
+# observed (axis, cat, src, sta) combination: 112 rows / 6,200 B raw / 1,261 B
+# gzipped over 429,271 records, because the corpus occupies a tiny corner of the
+# 5x56x33x3 cross-product. Nothing bounds that sparsity, so it is bounded here
+# rather than discovered as a quietly enormous facets.json. See issue #638.
+MAX_CUBE_ROWS = 50_000
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+TRAITS_DIR = REPO_ROOT / "data" / "traits"
+OUT_DIR = REPO_ROOT / "docs" / "data"
+PROTEIN_REGISTRY = REPO_ROOT / "data" / "grounding" / "protein_registry.jsonl"
+DEF_TRUNC = 500
+
+
+def display_path(path: Path) -> str:
+    """Repository-relative when possible, absolute for explicit test/build outputs."""
+    try:
+        return path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def infer_source(identifier: str, path: Path) -> str:
+    if identifier.startswith("proteintraitsmech:ELIFE109154_"):
+        return "eLife metallophores"
+    if identifier.startswith("PROSITE:"):
+        return "PROSITE"
+    if identifier.startswith("TED:"):
+        return "TED"
+    if identifier.startswith("MOD:"):
+        return "PSI-MOD"
+    if identifier.startswith("MI:"):
+        return "PSI-MI"
+    if identifier.startswith("PATO:"):
+        return "PATO"
+    if identifier.startswith("METPO:"):
+        return "METPO"
+    if identifier.startswith("InterPro:"):
+        return "InterPro"
+    if identifier.startswith("PANTHER:"):
+        return "PANTHER"
+    if identifier.startswith("Pfam:"):
+        return "Pfam"
+    if identifier.startswith("CATH:"):
+        return "CATH"
+    if identifier.startswith("SCOP:"):
+        return "SCOPe"
+    if identifier.startswith("ECOD:"):
+        return "ECOD"
+    if identifier.startswith("DisProt:"):
+        return "DisProt"
+    if identifier.startswith("IDEAL:") or identifier == "proteintraitsmech:IDEAL_PROS":
+        return "IDEAL"
+    if identifier.startswith("IDPO:") or identifier.startswith("proteintraitsmech:IDPO_"):
+        return "DisProt"
+    if identifier.startswith("ELM:"):
+        return "ELM"
+    if identifier.startswith("MCSA:"):
+        return "M-CSA"
+    if identifier.startswith("EC:"):
+        return "ExPASy ENZYME"
+    if identifier.startswith("Reactome:"):
+        return "Reactome"
+    if identifier.startswith("ARO:"):
+        return "CARD/ARO"
+    if identifier.startswith("TCDB:"):
+        return "TCDB"
+    if identifier.startswith("RHEA:"):
+        return "Rhea"
+    if identifier.startswith("RepeatsDB:"):
+        return "RepeatsDB"
+    if identifier.startswith("COG:") or identifier.startswith("proteintraitsmech:COG_CATEGORY_"):
+        return "COG"
+    if identifier.startswith("NCBIfam:"):
+        return "NCBIfam"
+    if identifier.startswith("CDD:"):
+        return "CDD"
+    # InterPro member databases seeded from the EBI API (#162).
+    if identifier.startswith("PIRSF:"):
+        return "PIRSF"
+    if identifier.startswith("SMART:"):
+        return "SMART"
+    if identifier.startswith("HAMAP:"):
+        return "HAMAP"
+    if identifier.startswith("PRINTS:"):
+        return "PRINTS"
+    if identifier.startswith("SUPERFAMILY:"):
+        return "SUPERFAMILY"
+    if identifier.startswith("SFLD:"):
+        return "SFLD"
+    if identifier.startswith("MEROPS:"):
+        return "MEROPS"
+    if identifier.startswith(("proteintraitsmech:UNIPROTKB_", "proteintraitsmech:UNIPROT_FT_")):
+        return "UniProtKB"
+    if identifier.startswith((
+        "proteintraitsmech:STABILITY_",
+        "proteintraitsmech:EVO_",
+        "proteintraitsmech:RIPP_LEADER_",
+        "proteintraitsmech:NONSTD_",
+        "proteintraitsmech:LOWCOMP_",
+        "proteintraitsmech:COMPBIAS_",
+        "proteintraitsmech:QUATERNARY_",
+        "proteintraitsmech:ALLOSTERIC_",
+        "proteintraitsmech:SYMMETRY_",
+        "proteintraitsmech:COILED_COIL_",
+        "proteintraitsmech:SIGNAL_PEPTIDE_",
+        "proteintraitsmech:TRANSIT_PEPTIDE_",
+        "proteintraitsmech:PROPEPTIDE_",
+        "proteintraitsmech:INIT_METHIONINE_",
+        "proteintraitsmech:MATURE_CHAIN_",
+        "proteintraitsmech:CAVITY_",
+        "proteintraitsmech:SURFACE_",
+        "proteintraitsmech:DYNAMICS_",
+    )) or (
+        identifier.startswith("proteintraitsmech:DISULFIDE_")
+        and identifier != "proteintraitsmech:DISULFIDE_BOND"
+    ):
+        return "curated"
+    if identifier.startswith("proteintraitsmech:"):
+        # LSF seed used bare TERM names; UniProt uses UNIPROTKB_ prefix.
+        return "LinkML LSF"
+    return "manual"
+
+
+# Biolink-first edge typing (per research/schema-hierarchy-review-1.md). Most
+# parent_traits edges are subclass_of, but a few source patterns are really
+# membership — derived here so the browser/KG can type them correctly without
+# re-seeding 276k records.
+def parent_predicate(rec_id: str, parent: str) -> str:
+    rp = rec_id.split(":", 1)[0]
+    if rp == "Pfam" and parent.startswith("Pfam:CL"):
+        return "biolink:member_of"          # family → clan
+    if rec_id.startswith("COG:") and parent.startswith("proteintraitsmech:COG_CATEGORY_"):
+        return "biolink:member_of"          # ortholog group → functional category
+    if rp == "PROSITE" and parent.startswith("PROSITE:PDOC"):
+        return "biolink:member_of"          # signature → documentation group
+    return "biolink:subclass_of"
+
+
+_MX_PRED = {
+    "pfam2interpro": "biolink:close_match",
+    # The SAME relation -- a member signature and the entry that integrates it -- written
+    # by seed_interpro_members and seed_panther under their own label. Without this line it
+    # fell through to biolink:related_to, so identical facts left the KB with two different
+    # predicates depending on which seeder wrote the record (#344 review).
+    "interpro-member-list": "biolink:close_match",
+    "rhea2ec": "biolink:close_match",
+    "interpro2go": "biolink:related_to",
+    "pfam2go": "biolink:related_to",
+    "ec2go": "biolink:related_to",
+}
+
+
+def mx_predicate(mapping_source: str) -> str:
+    return _MX_PRED.get(mapping_source, "biolink:related_to")
+
+
+# Cross-source equivalence overlays (data/equivalence/*.tsv) — Biolink
+# close_match / narrow_match edges from the merge-methods work (Phase 1
+# scripts/build_equivalence.py, Phase 2 build_member_overlap.py, Phase 3
+# build_structural_equivalence.py). All *.tsv files share the schema
+# `subject<TAB>predicate<TAB>object<TAB>relation_source` and are loaded
+# bidirectionally so both ends of each edge show the equivalence.
+EQUIV: dict[str, list] = {}
+
+# ChEBI id → display name, from docs/data/chebi.json (built by the chemistry
+# step). Used to put chemical NAMES on the record so search/browse can find a
+# trait by the molecule it acts on (not just its label/definition).
+CHEBI_NAMES: dict[str, str] = {}
+
+
+def load_chebi_names() -> None:
+    p = OUT_DIR / "chebi.json"
+    if not p.is_file():
+        return
+    try:
+        for cid, meta in json.loads(p.read_text(encoding="utf-8")).items():
+            if isinstance(meta, dict) and meta.get("name"):
+                CHEBI_NAMES[cid] = re.sub(r"<[^>]+>", "", meta["name"])  # strip ChEBI name HTML
+    except Exception:  # noqa: BLE001
+        pass
+
+
+# RHEA reaction → its ChEBI participants, from the Rhea records' own
+# chemical_participants. Lets a record that reaches a reaction only THROUGH a
+# mapping (EC → RHEA via rhea2ec) inherit that reaction's chemistry as a
+# MAPPING-DERIVED association (vs the reaction's own direct participants).
+RHEA_CHEBI: dict[str, list[str]] = {}
+
+
+def load_rhea_chebi() -> None:
+    base = REPO_ROOT / "data" / "traits" / "function" / "enzymatic_activity" / "rhea"
+    if not base.is_dir():
+        return
+    idre = re.compile(r"^identifier:\s*(RHEA:\d+)", re.M)
+    chre = re.compile(r"chebi:\s*(CHEBI:\d+)")
+    for p in base.rglob("*.yaml"):
+        t = p.read_text(encoding="utf-8", errors="replace")
+        m = idre.search(t)
+        ch = chre.findall(t)
+        if m and ch:
+            RHEA_CHEBI[m.group(1)] = list(dict.fromkeys(ch))
+
+
+# GO term → ChEBI from the go-plus logical-definition cross-products
+# (data/mappings/go2chebi.tsv). Lets a record grounded to a GO molecular-function
+# term (via ec2go / interpro2go / pfam2go) inherit that term's ChEBI as a
+# MAPPING-DERIVED chemical association.
+GO_CHEBI: dict[str, list[str]] = {}
+
+
+def load_go_chebi() -> None:
+    p = REPO_ROOT / "data" / "mappings" / "go2chebi.tsv"
+    if not p.is_file():
+        return
+    for line in p.read_text(encoding="utf-8").splitlines():
+        if line.startswith("#") or "\t" not in line:
+            continue
+        gid, chebis = line.split("\t", 1)
+        GO_CHEBI[gid] = chebis.split(";")
+
+
+def load_equivalence() -> None:
+    eq_dir = REPO_ROOT / "data" / "equivalence"
+    if not eq_dir.is_dir():
+        return
+    seen: set = set()  # (subj, obj, pred) — dedup across overlays
+    n_edges = 0
+    for path in sorted(eq_dir.glob("*.tsv")):
+        for i, line in enumerate(path.read_text(encoding="utf-8").splitlines()):
+            if i == 0 or not line.strip():
+                continue
+            c = line.split("\t")
+            if len(c) < 4 or not c[1].startswith("biolink:"):
+                continue  # skip non-edge tsvs (e.g. structural_reps manifest)
+            subj, pred, obj, src = c[0], c[1], c[2], c[3]
+            for a, b in ((subj, obj), (obj, subj)):
+                key = (a, b, pred)
+                if key in seen:
+                    continue
+                seen.add(key)
+                EQUIV.setdefault(a, []).append([b, pred, src])
+                n_edges += 1
+    if EQUIV:
+        print(f"equivalence overlays: {len(EQUIV):,} records, "
+              f"{n_edges:,} directed edges")
+
+
+def truncate(text: str, limit: int = DEF_TRUNC) -> str:
+    text = " ".join((text or "").split())
+    if len(text) <= limit:
+        return text
+    return text[: limit - 1].rstrip() + "…"
+
+
+# exemplars projected into the browser payload per record (the record itself
+# keeps every one it has)
+DOCS_MAX_EXAMPLES = 5
+
+
+# Qualified examples precede legacy examples, even when appended by the guarded
+# promoter after older profile suggestions. Within each qualification stratum,
+# preserve the existing curator/API/profile preference and stable file order.
+# This changes display priority only; it never qualifies an example.
+_EXAMPLE_RANK = {
+    "CURATOR": 0,
+    "UNIPROT_GROUNDING": 1,
+    "UNIPROTKB_API": 2,
+    "SWISSPROT_PROFILE": 3,
+}
+
+
+def _docs_examples(examples: list, trait_id: str = "") -> list:
+    """Verified exemplars first (localized coordinates prioritized), then existing source rank; retain the display cap."""
+    def _rank(p: tuple[int, dict]) -> tuple:
+        idx, ex = p
+        is_qualified = ex.get("qualification_status") == "QUALIFIED"
+        has_localized = False
+        if is_qualified:
+            for occ in ex.get("trait_occurrences") or []:
+                if (occ.get("qualification_status") == "QUALIFIED"
+                        and occ.get("scope") == "LOCALIZED"
+                        and (not trait_id or occ.get("trait_id") == trait_id)
+                        and (not ex.get("protein_id") or occ.get("protein_id") == ex.get("protein_id"))):
+                    has_localized = True
+                    break
+        return (not is_qualified, not has_localized, _EXAMPLE_RANK.get(ex.get("source"), 4), idx)
+
+    ordered = sorted(enumerate(examples), key=_rank)
+    return [e for _i, e in ordered[:DOCS_MAX_EXAMPLES]]
+
+
+def _project_example(ex: dict, trait_id: str = "", *,
+                     protein_sequences: ProteinSequenceRegistry | None = None,
+                     record_path: str = "<memory>") -> dict:
+    """Lean projection of a CanonicalExample suitable for the browser
+    detail view. Skips empty fields to keep records.json small."""
+    sequence_payload = {}
+    if ex.get("qualification_status") == "QUALIFIED":
+        if protein_sequences is None:
+            raise ValueError(f"{record_path}: QUALIFIED example requires a protein sequence registry")
+        sequence_payload = protein_sequences.project(ex, trait_id=trait_id, record_path=record_path)
+    proj: dict = {}
+    if ex.get("protein_id"):
+        proj["id"] = ex["protein_id"]
+    if ex.get("protein_label"):
+        proj["label"] = ex["protein_label"]
+    tax = ex.get("taxon_label") or ""
+    if ex.get("taxon_id"):
+        tax = f"{tax} ({ex['taxon_id']})" if tax else ex["taxon_id"]
+    if tax:
+        proj["tax"] = tax
+    if ex.get("sequence_length"):
+        proj["len"] = ex["sequence_length"]
+    if "reviewed" in ex:
+        proj["rev"] = bool(ex["reviewed"])
+    if ex.get("annotation_score"):
+        proj["asc"] = ex["annotation_score"]
+    if ex.get("family_classifications"):
+        proj["fams"] = list(ex["family_classifications"])
+    if ex.get("source"):
+        proj["src"] = ex["source"]
+    if ex.get("note"):
+        proj["note"] = ex["note"]
+    if ex.get("sequence"):
+        proj["seq"] = ex["sequence"]
+    feats = ex.get("features") or []
+    if feats:
+        # Compact tuple form to keep JSON small — the browser expands
+        # into objects: [start, end, feature_type, trait_axis, note?]
+        proj["feats"] = [
+            [f["start"], f["end"], f["feature_type"],
+             f.get("trait_axis") or "", f.get("note") or ""]
+            for f in feats
+        ]
+    # Trait locations are distinct from the generic feature track. Keep disjoint
+    # intervals and residue sets intact, and show only qualified assertions for
+    # this record on this exact protein. Do not overlay the optional legacy
+    # sequence: it is not the authoritative ProteinReference sequence.
+    occurrences = []
+    if ex.get("qualification_status") == "QUALIFIED":
+        for occurrence in ex.get("trait_occurrences") or []:
+            if (occurrence.get("qualification_status") != "QUALIFIED"
+                    or occurrence.get("trait_id") != trait_id
+                    or occurrence.get("protein_id") != ex.get("protein_id")
+                    or occurrence.get("scope") != "LOCALIZED"):
+                continue
+            ranges = [[r["start"], r["end"]] for r in occurrence.get("intervals") or []]
+            positions = list(occurrence.get("residue_positions") or [])
+            if not ranges and not positions:
+                continue
+            item = {key: occurrence[key] for key in (
+                "coordinate_frame", "mapping_method", "evidence_source",
+                "source_trait_id", "source_release",
+            ) if occurrence.get(key)}
+            if ranges:
+                item["ranges"] = ranges
+            if positions:
+                item["positions"] = positions
+            occurrences.append(item)
+    if occurrences:
+        proj["occ"] = occurrences
+        if ex.get("sequence_version"):
+            proj["sv"] = ex["sequence_version"]
+        if ex.get("uniprot_release"):
+            proj["rel"] = ex["uniprot_release"]
+    proj.update(sequence_payload)
+    return proj
+
+
+def _chem_fields(data: dict) -> dict:
+    """Direct vs mapping-derived chemical names, keyed chem / chemx. Present only
+    when non-empty (keeps the shard lean)."""
+    direct_ids = [c.get("chebi") for c in (data.get("chemical_participants") or []) if c.get("chebi")]
+    chem = list(dict.fromkeys(n for cid in direct_ids if (n := CHEBI_NAMES.get(cid))))
+    directset = set(direct_ids)
+    mapped_ids: list[str] = []
+    for m in (data.get("mapped_xrefs") or []):
+        obj = m.get("object") or ""
+        if obj.startswith("CHEBI:"):
+            mapped_ids.append(obj)
+        elif obj.startswith("RHEA:"):
+            mapped_ids.extend(RHEA_CHEBI.get(obj, []))
+        elif obj.startswith("GO:"):
+            mapped_ids.extend(GO_CHEBI.get(obj, []))
+    chemx = list(dict.fromkeys(
+        n for cid in mapped_ids if cid not in directset and (n := CHEBI_NAMES.get(cid))))
+    out = {}
+    if chem:
+        out["chem"] = chem
+    if chemx:
+        out["chemx"] = chemx
+    return out
+
+
+def load_record(path: Path, *,
+                protein_sequences: ProteinSequenceRegistry | None = None) -> dict[str, Any] | None:
+    try:
+        with path.open("r", encoding="utf-8") as fh:
+            data = yaml.load(fh, Loader=SAFE_YAML_LOADER)
+    except yaml.YAMLError as exc:
+        print(f"WARN: {path.relative_to(REPO_ROOT)}: {exc}", file=sys.stderr)
+        return None
+    if not isinstance(data, dict):
+        return None
+    identifier = data.get("identifier") or ""
+    if not identifier:
+        return None
+    rel = path.relative_to(REPO_ROOT).as_posix()
+    return {
+        "id": identifier,
+        "label": (data.get("label") if str(data.get("label") or "").strip() not in {"", "-"}
+                  else identifier),
+        "def": truncate(data.get("definition") or ""),
+        "axis": data.get("trait_axis") or "",
+        "cat": data.get("trait_category") or "",
+        "src": infer_source(identifier, path),
+        "sta": data.get("mapping_status") or "",
+        "pat": data.get("sequence_pattern") or None,
+        "rs": data.get("residue_sequence") or None,
+        # Parent edges as [curie, biolink_predicate] pairs (subclass_of by
+        # default; member_of for family→clan / COG→category / signature→PDOC).
+        # Explicit trait_relations are appended with their own predicate.
+        "pt": ([[p, parent_predicate(identifier, p)]
+                for p in (data.get("parent_traits") or [])]
+               + [[r.get("object"), r.get("predicate")]
+                  for r in (data.get("trait_relations") or []) if r.get("object")]),
+        "xr": list(data.get("xrefs") or []),
+        # Mapping-derived xrefs as [object, mapping_source, biolink_predicate].
+        "mx": [[m.get("object"), m.get("mapping_source"), mx_predicate(m.get("mapping_source"))]
+               for m in (data.get("mapped_xrefs") or []) if m.get("object")],
+        # Chemistry the trait acts on, as [chebi, role] pairs; formula/InChIKey
+        # resolve from docs/data/chebi.json in the browser.
+        "cp": [[c.get("chebi"), c.get("role")]
+               for c in (data.get("chemical_participants") or []) if c.get("chebi")],
+        # Chemical NAMES (resolved from chebi.json), split by provenance so the
+        # index mirrors direct-vs-mapping like xrefs/mapped_xrefs. Kept in the
+        # main shard so a trait is findable by the molecule it acts on.
+        #   chem  = DIRECT: the source's own chemical_participants
+        #   chemx = MAPPING-DERIVED: ChEBI reached via a mapping — a CHEBI in
+        #           mapped_xrefs, or a reaction the record reaches only through a
+        #           RHEA mapped_xref (EC→RHEA via rhea2ec) inheriting its ChEBI.
+        **_chem_fields(data),
+        # Only the top few exemplars reach the browser. Phase 14 raised
+        # suggest_canonical_examples --max-examples 3 -> 8 for a *data* reason —
+        # more protein sharing between records, which is what the residue-frame
+        # aligner needs — not so the detail page could list eight. Projecting all
+        # of them took canonical_examples from 28% to 58% of every detail bucket.
+        # The record keeps all 8; the page shows the best DOCS_MAX_EXAMPLES,
+        # which are first because they are rank-ordered.
+        "ex": [_project_example(e, identifier, protein_sequences=protein_sequences,
+                                record_path=str(path))
+               for e in _docs_examples(data.get("canonical_examples") or [], identifier)],
+        # Cross-source equivalence [object, predicate, relation_source] from the
+        # overlay (not stored on the YAML). Empty for most records.
+        "eq": EQUIV.get(identifier, []),
+        # Comparable representations: secondary-structure topology/state strings
+        # and 3D-geometry representative refs (mostly empty).
+        "ss": [s.get("topology_string") or s.get("ss_string") or s.get("state_alphabet")
+               for s in (data.get("secondary_structure_representations") or [])
+               if isinstance(s, dict)],
+        "geo": [g.get("structure_ref") for g in (data.get("structural_geometry_representations") or [])
+                if isinstance(g, dict) and g.get("structure_ref")],
+        # Literature citations as [reference, notes] pairs (DOI:/PMID:/CURIE).
+        "ev": [[e.get("reference"), e.get("notes")]
+               for e in (data.get("evidence") or []) if isinstance(e, dict) and e.get("reference")],
+        # EVOLUTION scope (taxon + prevalence band + method) — the axis's
+        # comparable representation.
+        "escope": (data.get("evolutionary_scope")
+                   if isinstance(data.get("evolutionary_scope"), dict) else None),
+        # Layered definitions [kind, text, source] beyond the single `definition`
+        # (GENERAL / STRUCTURAL / MECHANISTIC).
+        "defs": [[d.get("kind"), d.get("text"), d.get("source")]
+                 for d in (data.get("definitions") or [])
+                 if isinstance(d, dict) and d.get("text")],
+        # Synonyms stay complete for search and record display.
+        "syn": list(dict.fromkeys(s.get("synonym_text") for s in (data.get("synonyms") or [])
+                                 if isinstance(s, dict) and s.get("synonym_text"))),
+        "dm": [m for m in (data.get("detection_methods") or [])
+               if isinstance(m, dict) and m.get("name")],
+        "cg": data.get("causal_graphs") or [],
+        "history": data.get("curation_history") or [],
+        "path": rel,
+    }
+
+
+# Axis display/shard order. Records with an unknown/empty axis fall into
+# an "OTHER" shard so nothing is silently dropped.
+AXIS_ORDER = ["STRUCTURE", "SEQUENCE", "SEQUENCE_STRUCTURE", "FUNCTION", "EVOLUTION"]
+
+# Max records per shard file. Keeps each records.<AXIS>[.NN].json well under
+# the git 50 MB warning (at ~0.5-1 KB/record in the lean projection).
+MAX_SHARD_RECORDS = 25000
+
+
+# Fields the list + facet views never touch — they exist only in the record
+# detail view, so they move to a lazy per-record detail sidecar to keep the
+# upfront payload small as the corpus changes.
+# `def` is special-cased: the list keeps a short snippet (card preview +
+# search); the full text goes to the sidecar.
+DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "dm", "cg", "history", "gf")
+LIST_DEF = 140
+
+
+def split_detail(records: list[dict]) -> list[tuple[dict, dict]]:
+    """Move detail-only fields (and the full definition, keeping a short
+    snippet inline) out of each record into a sidecar dict. Mutates records
+    in place. Returns [(record, detail), …] for every record."""
+    pairs: list[tuple[dict, dict]] = []
+    for rec in records:
+        detail: dict = {}
+        full = rec.get("def") or ""
+        if full:
+            detail["def"] = full                 # full text → sidecar
+            rec["def"] = truncate(full, LIST_DEF)  # short snippet stays inline
+        for k in DETAIL_ONLY:
+            v = rec.pop(k, None)
+            if v not in (None, [], "", 0):
+                detail[k] = v
+        pairs.append((rec, detail))
+    return pairs
+
+
+def detail_bucket_count(
+    pairs: list[tuple[dict, dict]], target_bytes: int = DETAIL_BUCKET_TARGET_BYTES
+) -> int:
+    """Choose a deterministic bucket count whose estimated largest JSON file fits."""
+    if target_bytes < 1:
+        raise ValueError("detail bucket target must be positive")
+    entries: list[tuple[int, int, str]] = []
+    total = 2
+    for rec, detail in pairs:
+        encoded = (
+            json.dumps(rec["id"], ensure_ascii=False)
+            + ":"
+            + json.dumps(detail, separators=(",", ":"), ensure_ascii=False)
+        ).encode("utf-8")
+        size = len(encoded)
+        if size + 2 > target_bytes:
+            raise ValueError(
+                f"detail for {rec['id']} is {size + 2:,} bytes, above the "
+                f"{target_bytes:,}-byte bucket target"
+            )
+        digest = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
+        entries.append((digest, size, rec["id"]))
+        total += size + 1
+
+    # Start at 75% average occupancy to leave room for hash-distribution variance.
+    bucket_count = max(
+        MIN_DETAIL_BUCKETS,
+        (total * 4 + 3 * target_bytes - 1) // (3 * target_bytes),
+    )
+    while entries:
+        sizes = [2] * bucket_count
+        counts = [0] * bucket_count
+        for digest, size, _identifier in entries:
+            bucket = digest % bucket_count
+            sizes[bucket] += size + int(counts[bucket] > 0)
+            counts[bucket] += 1
+        if max(sizes) <= target_bytes:
+            break
+        bucket_count = (bucket_count * 5 + 3) // 4
+    return bucket_count
+
+
+def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float, int]:
+    """Write bucketed detail sidecars under docs/data/detail/, clearing stale
+    files first. Each record is hashed (stable md5 of its identifier) into a
+    dynamically calculated number of files; the record stores its bucket path in
+    `rec["df"]` and each bucket is `{record_id: detail}`. Heavy
+    example sequences ride along inside each detail's `ex`, so a detail view is
+    a single lazy fetch. Returns (record_count, file_count, total_MB, max_bytes)."""
+    # Validate and size the new layout before touching the previous usable build.
+    bucket_count = detail_bucket_count(pairs)
+    det_dir = OUT_DIR / "detail"
+    if det_dir.exists():
+        for old in det_dir.glob("*.json"):
+            old.unlink()
+    det_dir.mkdir(parents=True, exist_ok=True)
+
+    width = max(3, len(str(bucket_count - 1)))
+    buckets: dict[str, dict[str, dict]] = {}
+    for rec, detail in pairs:
+        h = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
+        name = f"detail/{h % bucket_count:0{width}d}.json"
+        rec["df"] = name
+        buckets.setdefault(name, {})[rec["id"]] = detail
+
+    total = 0
+    largest = 0
+    for name, obj in buckets.items():
+        path = OUT_DIR / name
+        with path.open("w", encoding="utf-8") as fh:
+            json.dump(obj, fh, separators=(",", ":"), ensure_ascii=False)
+        size = path.stat().st_size
+        total += size
+        largest = max(largest, size)
+    return len(pairs), len(buckets), total / (1024 * 1024), largest
+
+
+def write_shards(records: list[dict]) -> list[dict]:
+    """Partition records by axis/category and return filter-aware shard metadata."""
+    legacy = OUT_DIR / "records.json"
+    if legacy.exists():
+        legacy.unlink()
+
+    grouped: dict[tuple[str, str], list[dict]] = {}
+    for rec in records:
+        key = (rec.get("axis") or "OTHER", rec.get("cat") or "OTHER")
+        grouped.setdefault(key, []).append(rec)
+
+    def axis_key(a: str) -> tuple[int, str]:
+        return (AXIS_ORDER.index(a) if a in AXIS_ORDER else 99, a)
+
+    manifest: list[dict] = []
+    written: set[str] = set()
+    routes: dict[str, str] = {}
+    for axis, category in sorted(grouped, key=lambda key: (axis_key(key[0]), key[1])):
+        recs = sorted(grouped[(axis, category)], key=lambda r: r["id"])
+        # Chunk large categories so no single browser fetch approaches the
+        # configured Pages artifact budget.
+        chunks = [recs[i:i + MAX_SHARD_RECORDS]
+                  for i in range(0, len(recs), MAX_SHARD_RECORDS)] or [[]]
+        for idx, chunk in enumerate(chunks):
+            stem = f"records.{axis}.{category}"
+            fname = f"{stem}.json" if len(chunks) == 1 else f"{stem}.{idx:02d}.json"
+            path = OUT_DIR / fname
+            with path.open("w", encoding="utf-8") as fh:
+                json.dump(chunk, fh, separators=(",", ":"), ensure_ascii=False)
+            written.add(fname)
+            for rec in chunk:
+                if rec["id"] in routes:
+                    raise ValueError(f"duplicate record identifier: {rec['id']}")
+                routes[rec["id"]] = fname
+            manifest.append({
+                "file": fname,
+                "axis": axis,
+                "categories": [category],
+                "sources": sorted({rec.get("src") for rec in chunk if rec.get("src")}),
+                "statuses": sorted({rec.get("sta") for rec in chunk if rec.get("sta")}),
+                "count": len(chunk),
+                "bytes": path.stat().st_size,
+            })
+    # Drop stale shards from a prior build (empty axis, or a re-chunk that
+    # changed the shard count).
+    for old in OUT_DIR.glob("records.*.json"):
+        if old.name not in written:
+            old.unlink()
+    write_lookup(routes)
+    return manifest
+
+
+def lookup_count(total: int) -> int:
+    """About 4,000 accession-to-shard entries per small exact-lookup request."""
+    return 1 << (max(1, (total + 3999) // 4000) - 1).bit_length()
+
+
+def write_lookup(routes: dict[str, str]) -> None:
+    count = lookup_count(len(routes))
+    buckets: list[dict[str, str]] = [{} for _ in range(count)]
+    for identifier, filename in routes.items():
+        index = int(hashlib.sha256(identifier.encode("utf-8")).hexdigest()[:4], 16) % count
+        buckets[index][identifier] = filename
+    destination = OUT_DIR / "lookup"
+    destination.mkdir(exist_ok=True)
+    written = set()
+    for index, bucket in enumerate(buckets):
+        name = f"{index:04d}.json"
+        payload = json.dumps(bucket, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        if len(payload.encode("utf-8")) > 900_000:
+            raise ValueError("exact lookup bucket exceeds the 900 KB fetch budget")
+        (destination / name).write_text(payload, encoding="utf-8")
+        written.add(name)
+    for stale in destination.glob("*.json"):
+        if stale.name not in written:
+            stale.unlink()
+
+
+def write_graphs(records: list[dict]) -> None:
+    """Publish full existing causal assertions in bounded, lossless gzip sidecars.
+
+    Graphs account for hundreds of MB of repeated evidence text. They are fetched
+    only for records with a populated graph; all other details stay ordinary JSON.
+    The compressed and expanded limits bound both network and browser memory use.
+    """
+    buckets: dict[str, dict] = {}
+    for record in records:
+        graphs = record.pop("cg", [])
+        if not graphs:
+            continue
+        bucket = int(hashlib.sha256(record["id"].encode()).hexdigest()[:4], 16) % 128
+        name = f"graphs/{bucket:03d}.json.gz"
+        record["gf"] = name
+        buckets.setdefault(name, {})[record["id"]] = graphs
+    encoded = {}
+    for name, payload in buckets.items():
+        raw = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
+        compressed = gzip.compress(raw, mtime=0)
+        if len(raw) > 8_000_000 or len(compressed) > 900_000:
+            raise ValueError(f"Graph bucket exceeds expanded/transfer budget: {name}")
+        encoded[name] = compressed
+    destination = OUT_DIR / "graphs"
+    destination.mkdir(exist_ok=True)
+    for path in destination.glob("*.json.gz"):
+        if str(path.relative_to(OUT_DIR)) not in encoded:
+            path.unlink()
+    for name, compressed in encoded.items():
+        (OUT_DIR / name).write_bytes(compressed)
+
+
+def write_map_coverage(records: list[dict]) -> None:
+    """Compare retained map identities with the current browser, without moving points."""
+    current = {record["id"] for record in records}
+    coverage = {}
+    for path in sorted(OUT_DIR.glob("corpus_map*.json")):
+        raw = path.read_bytes()
+        data = json.loads(raw)
+        plotted = {point[3] for point in data["points"]}
+        coverage[path.name] = {
+            "plotted": len(data["points"]), "browser_total": len(current),
+            "current_plotted": len(plotted & current), "not_plotted": len(current - plotted),
+            "outside_current": len(plotted - current), "sha256": hashlib.sha256(raw).hexdigest(),
+            "embedding_date": data.get("generated_at") or data.get("date"),
+            "scope": "Retained embedding snapshot; records outside this snapshot are not plotted. "
+                     "The snapshot does not record per-record exclusion reasons.",
+        }
+    (OUT_DIR / "map-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n", encoding="utf-8")
+
+
+def main() -> int:
+    protein_sequences = ProteinSequenceRegistry(PROTEIN_REGISTRY)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    load_equivalence()
+    load_chebi_names()
+    load_rhea_chebi()
+    load_go_chebi()
+    records: list[dict] = []
+    skipped = 0
+    for path in sorted(TRAITS_DIR.rglob("*.yaml")):
+        rec = load_record(path, protein_sequences=protein_sequences)
+        if rec is None:
+            skipped += 1
+            continue
+        records.append(rec)
+
+    # Stable sort by identifier so JSON diffs stay small.
+    records.sort(key=lambda r: r["id"])
+
+    # Facets are computed before the seq split (which only removes example
+    # payload, not any faceted field).
+    facets = {
+        "axis": _tally(records, "axis"),
+        "cat": _tally(records, "cat"),
+        "src": _tally(records, "src"),
+        "sta": _tally(records, "sta"),
+    }
+    cube = _cube(records)
+
+    write_labels(records)
+    write_map_coverage(records)
+
+    write_graphs(records)
+    pairs = split_detail(records)
+    det_count, det_files, det_mb, det_max = write_detail(pairs)
+    shards = write_shards(records)
+
+    facets_path = OUT_DIR / "facets.json"
+    with facets_path.open("w", encoding="utf-8") as fh:
+        json.dump(
+            {
+                "total": len(records),
+                "counts": facets,
+                "cube": cube,
+                "shards": shards,
+                "detailDir": "detail",
+                "lookup": {"directory": "lookup", "buckets": lookup_count(len(records)),
+                           "algorithm": "sha256-first16-mod"},
+            },
+            fh,
+            indent=2,
+        )
+
+    print(f"Wrote {len(records)} records across {len(shards)} filter-aware shard(s):")
+    for s in shards:
+        print(f"  {s['file']:34s} {s['count']:>7,}  ({s['bytes'] / (1024 * 1024):.2f} MB)")
+    print(f"Wrote {det_count:,} detail sidecars into {det_files} bucket file(s) → "
+          f"docs/data/detail/ ({det_mb:.2f} MB total; largest {det_max / 1024:.1f} KiB)")
+    print(f"Wrote facet index → {display_path(facets_path)}")
+    if cube is None:
+        print(f"  facet cube omitted: over {MAX_CUBE_ROWS:,} rows; counts fall back to "
+              "global corpus totals")
+    else:
+        print(f"  facet cube: {len(cube):,} of {MAX_CUBE_ROWS:,} rows")
+    if skipped:
+        print(f"Skipped {skipped} unparseable files")
+    return 0
+
+
+def write_labels(records: list[dict]) -> Path:
+    """Emit docs/data/labels.json = {id: label} for every corpus record, so the
+    browser can render every id it shows — xrefs, parent_traits, mapped_xrefs,
+    equivalence, geometry refs, semantic neighbours, and the record's own
+    identifier — as `<CURIE> — <label>` (curieLink / idLink), independent of
+    which filter-aware shards are lazily loaded. ~4.3 MB gzipped, fetched once on first
+    detail view and cached.
+
+    CHEBI ids are *not* here (they are not corpus record identifiers) — the
+    browser resolves those to names via the existing chebi.json sidecar. Any id
+    with no corpus label (PDB / AlphaFoldDB structure refs, PMIDs, per-protein
+    UniProtKB accessions, xref targets not seeded as their own record) is
+    absent, so it renders as the bare id — correct, since no label exists."""
+    labels = {r["id"]: r["label"] for r in records}
+    path = OUT_DIR / "labels.json"
+    with path.open("w", encoding="utf-8") as fh:
+        json.dump(labels, fh, ensure_ascii=False, sort_keys=True,
+                  separators=(",", ":"))
+    print(f"Wrote {len(labels):,} id→label entries → "
+          f"{display_path(path)} ({path.stat().st_size/(1024*1024):.2f} MB)")
+    return path
+
+
+def _cube(records: list[dict]) -> list[list] | None:
+    """Joint distribution of the four faceted fields, or None if it is too large.
+
+    With AND-across-groups / OR-within-group facet semantics, exact counts for any
+    selection are a sum over this cube -- no record scan, and nothing that depends
+    on which shards the browser happens to have loaded. That is the whole reason
+    it exists: counts computed from the partially loaded record array hid valid
+    choices after a narrow query (#544), and global-always counts offer dozens of
+    clickable dead ends (#638).
+
+    Rows are [axis, cat, src, sta, count], positional, matching KEYS in
+    docs/facet-counts.js. A field the record does not have is null, not dropped
+    (#641): filterRecords() only tests groups that carry a selection, so a record
+    with a source but no category is still reachable by selecting that source, and
+    dropping it would under-count the source -- possibly to zero, which hides a
+    genuinely reachable value. null matches no selection, so the record is still
+    correctly excluded the moment its empty group is constrained. This is what
+    keeps each cube marginal equal to the _tally beside it.
+
+    A record with no faceted field at all is dropped: no selection can reach it.
+
+    Returning None rather than raising keeps a cardinality explosion from blocking
+    the whole docs build over a display concern -- the browser falls back to global
+    counts and relabels itself. The builder says so on stdout either way.
+    """
+    counts: dict[tuple, int] = {}
+    for r in records:
+        key = tuple(r.get(f) or None for f in ("axis", "cat", "src", "sta"))
+        if not any(key):
+            continue
+        counts[key] = counts.get(key, 0) + 1
+        if len(counts) > MAX_CUBE_ROWS:
+            return None
+    # None sorts before every string rather than raising on the comparison.
+    ordered = sorted(counts.items(), key=lambda kv: tuple("" if v is None else v for v in kv[0]))
+    return [list(k) + [v] for k, v in ordered]
+
+
+def _tally(records: list[dict], key: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for r in records:
+        v = r.get(key)
+        if not v:
+            continue
+        counts[v] = counts.get(v, 0) + 1
+    return dict(sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])))
+
+
+if __name__ == "__main__":
+    sys.exit(main())

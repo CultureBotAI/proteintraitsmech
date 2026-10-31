@@ -1,0 +1,75 @@
+{
+  "reviewed_on": "2026-10-29",
+  "reviewer": "/root/cavity_binding_evidence",
+  "author_independence": "Reviewer did not author the motif candidate cards",
+  "kind": "candidate_science_and_acceptance_audit",
+  "scope": "Two candidate cards, beta arch and Asx turn; evidence only, not scientific record recertification or canonical-example qualification",
+  "candidate_cards_path": "research/structural-discovery-20261028/motifs/ranked-candidate-cards.json",
+  "candidate_cards_sha256": "018248a01699d2f79e6cad2a4229e3f7ac8d06d528ce34528629b614279bb6ee",
+  "inputs": [
+    {"path": "research/structural-discovery-20261028/motifs/natcomm-2022-immunoglobulin.xml", "sha256": "dfa9c2b981217c80a2f99329c1ea10f6dd4a68522054ec1e1960efd90e27ce17", "source": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9530121/fullTextXML"},
+    {"path": "research/structural-discovery-20261028/motifs/so-20260807.obo", "sha256": "22a8f3ec2b49125dbb6cee8456f0bca86dd8c98f433165ffa4b554da4f155204"},
+    {"path": "data/traits/structure/secondary/super-secondary-motif.yaml", "sha256": "6cd335a8aff68fa61c254d1b0f948b05aca163cedda30b6019df0af1f48a0cac"},
+    {"path": "data/traits/structure/secondary/polypeptide-structural-motif.yaml", "sha256": "4f2e3c1f9464fbd703efd2ab7a7e3f6f3de2021eb72d5550c1bcc836d003cd19"},
+    {"path": "data/traits/structure/secondary/asx-motif.yaml", "sha256": "b63aa83c5bcefcbe63ef03bc68c3504c198d454e8721bb25e8fbb53a7736e8e5"}
+  ],
+  "novelty_check": {
+    "ignored_files_included": true,
+    "command": "rg --no-ignore --hidden -l -i 'SO:0000912|BS:00203|SO:0001128|\\b(?:beta|β)[ _-]arch(?:es)?\\b|\\basx[ _-]turns?\\b' data/traits data/raw data/curation data/mappings docs/data --glob '*.yaml' --glob '*.json' --glob '*.obo' --glob '*.tsv'",
+    "returncode": 0,
+    "matched_paths": ["data/curation/structural_trait_curations.yaml"],
+    "adjudication": "The sole match is a TURN limitation rejecting SO:0001128 as an exact equivalent; it does not define either candidate. No candidate record/exact alias was found in these roots. The author's broader refined ignored-inclusive scan was also inspected. This remains bounded lexical plus local semantic review, not a proof over every possible synonym or external ontology."
+  },
+  "beta_arch": {
+    "verdict": "ACCEPT_SCIENTIFIC_CANDIDATE_WITH_SCOPED_DETECTION; final authored row still requires independent inspection",
+    "identity": "The proposed whole strand-connection-strand motif is distinct from a beta hairpin. Two consecutive strands in chain order have no hydrogen-bond pairing with one another. Beta-arc denotes the connection, so it must not be an exact alias for the whole motif. Bare beta-beta remains ambiguous.",
+    "hierarchy": "proteintraitsmech:SUPER_SECONDARY_MOTIF is an existing, scientifically valid parent. STRUCTURE/STRUCT_SECONDARY is appropriate. No exact SO identifier was established, so native internal-ID governance remains required.",
+    "primary_support": {
+      "reference": "PMID:36192397; DOI:10.1038/s41467-022-33004-6",
+      "inspected": "Full retained primary XML: introduction, beta-arch loop analysis methods, dIG8-CC structural characterization, structure deposition/data availability, and license",
+      "findings": "The source distinguishes nonpaired cross-sheet connections from hairpins, analyzes DSSP assignments and strand pairing, and experimentally confirms loop- and helix-containing connections in dIG8-CC. The less-than-nine-residue sampling restriction is not a universal definition.",
+      "rights": "CC-BY-4.0 explicitly verified in the primary article. Attribute the source and identify the project definition as a synthesis."
+    },
+    "example": {
+      "structure_ref": "PDB:7SKO",
+      "source_url": "https://www.rcsb.org/structure/7SKO",
+      "metadata": "v1.2, revised 2024-11-13; dIG8-CC synthetic construct; X-ray 2.05 angstrom; chains A/B/C/D, 73-residue entities",
+      "grounding_verdict": "Adequate source-backed representative for this geometric class. The source's structural characterization plus deposition section connects dIG8-CC beta-arches to 7SKO; no inference from a generic protein name alone is needed.",
+      "caption_conflict": "Figure 5c says 7SKP chain C, but source deposition/data-availability sections and archive assign 7SKO/7SKN to dIG8-CC and 7SKP to dIG14. Retain this conflict and use 7SKO without inventing residue bounds or relying on the faulty caption.",
+      "assembly_caution": "Archive biological assemblies are C2 homodimers; the motif is intrachain. Calling individual chain copies monomers must not be turned into a claim that the biological protein is strictly monomeric.",
+      "qualification": "Representative structure only; zero release-pinned QUALIFIED canonical examples. Synthetic construct must remain explicit."
+    },
+    "detection": {
+      "local_tool_check": "Read-only mkdssp --version and --help: mkdssp 4.6.1, documented input-file/output-file positional syntax and --output-format=dssp option",
+      "recipe": "mkdssp --output-format=dssp {input.pdb} {output.dssp}",
+      "review_needed_after_recipe": "Locate successive strand segments in a continuous chain; inspect their pairing and coordinate topology. Confirm lack of strand pairing rather than treating missing backbone data or absent DSSP assignments as a negative result. Connections containing a helix are allowed.",
+      "claim_limit": "The command is runnable secondary-structure/pairing screening, not a standalone beta-arch classifier. This reviewer checked command availability/syntax but did not run a structure or validate motif detection. Preserve an explicit manual classification step; do not call this a tested automatic detector.",
+      "official_docs": "https://github.com/PDB-REDO/dssp"
+    },
+    "precise_actions": [
+      "Keep the proposed nonpaired-strand definition and existing supersecondary parent.",
+      "Keep the 7SKO representative with synthetic-construct and caption-conflict notes; omit unverified residue ranges.",
+      "Retain partial screening/manual discrimination scope and report executed versus unexecuted checks precisely.",
+      "Complete native ID reservation and inspect the final manifest row before writing."
+    ]
+  },
+  "asx_turn": {
+    "verdict": "DEFER_CURRENT_BATCH_REASONABLE; do not count an unresolved example/detector as completed",
+    "identity": "SO:0000912 and alt_id BS:00203 are exact. Its three-residue side-chain-O to i+2 backbone-NH motif is distinct from SO:0001106 Asx motif, which spans five residues and requires two hydrogen bonds. Use POLYPEPTIDE_STRUCTURAL_MOTIF as the available broad native parent; current TURN is a DSSP state and should not become its parent by name similarity.",
+    "source_support": "Official retained SO definition and license verified. Independently inspected Leader and Milner-White 2009 BMC primary resource article: DOI:10.1186/1471-2105-10-60, CC-BY-2.0, hydrogen-bond/dihedral pipeline and source-specific SQL. The article text does not identify 1VJS.",
+    "example_assessment": "https://motif.gla.ac.uk/ explicitly labels an Asx turn at the active site of alpha-amylase 1VJS. The archive verifies Bacillus licheniformis chain A, v1.3, X-ray 1.7 angstrom. That is a real source assertion, not an inferred sequence hit. However, its website-specific annotation license is unresolved and cannot be inherited from the BMC article. The factual pointer may be retained as a research lead, but parent is justified in requiring a cleared example route before accepting this trait in the current batch.",
+    "mdtraj_alternative": {
+      "status": "DOCUMENTED_FUTURE_SCREEN_ONLY; not installed, implemented, or executed",
+      "docs": "https://mdtraj.readthedocs.io/en/stable/_modules/mdtraj/geometry/hbond.html",
+      "docs_version_observed": "1.11.2",
+      "source_license": "LGPL-2.1-or-later, stated in official source header",
+      "function": "mdtraj.baker_hubbard(traj, freq=0.0, exclude_water=True, periodic=False, sidechain_only=False, distance_cutoff=0.25, angle_cutoff=120)",
+      "geometry": "Hydrogen-to-acceptor distance strictly below 0.25 nm and donor-hydrogen-acceptor angle strictly above 120 degrees. This is a stated screening geometry, not a claim of equivalence to HBPLUS or the published database assignments.",
+      "necessary_class_filter": "Require backbone N-H donor at i+2, ASN OD1 or ASP OD1/OD2 acceptor at i, and actual two-peptide-bond continuity in the same chain. Check hydrogen/protonation state, Asn side-chain orientation, alternate conformers, missing atoms and author/insertion numbering. Do not use a D/Nxx pattern or integer residue-label difference alone.",
+      "critical_failure_mode": "Official source returns an empty bond array when no donor hydrogens are present. A future wrapper must fail closed on missing protonated topology instead of interpreting zero output as absence of Asx turns.",
+      "completion_gate": "A new detector need not be forced into this bounded batch. The documented alternative does not resolve current execution, class-filter validation or representative source-rights gates."
+    },
+    "adjacent_out_of_scope_finding": "Existing data/traits/structure/secondary/asx-motif.yaml xrefs SO:0001114, whose current SO identity is peptide_helix. This is an unrelated exact-looking xref and should be recorded for separate curation; it does not make Asx turn a duplicate. No adjacent record was edited."
+  },
+  "final_scope_note": "This supports selecting beta arch and retaining Asx/ST deferrals. It does not claim the entire discovery goal complete, confer human REVIEWED status, or transform PDB representatives into qualified canonical examples."
+}

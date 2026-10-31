@@ -1,0 +1,67 @@
+identifier: proteintraitsmech:MEMBRANE_FACING_CHANNEL_FENESTRATION
+label: membrane-facing lateral channel fenestration
+definition: A lateral passage through the transmembrane wall of a protein channel connecting its central
+  pore cavity to the lipid-facing exterior, distinct from the main transmembrane pore axis.
+definition_source: DOI:10.1073/pnas.2401591121
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: PROPOSED
+parent_traits:
+- proteintraitsmech:TUNNEL
+synonyms:
+- synonym_text: membrane-facing channel fenestration
+  synonym_type: EXACT_SYNONYM
+  source: Curator synthesis of DOI:10.1073/pnas.2401591121
+- synonym_text: lateral fenestration
+  synonym_type: BROAD_SYNONYM
+  source: Curator scope distinction; lateral openings also occur in other contexts
+detection_methods:
+- name: CAVER tunnel candidates followed by membrane-frame endpoint review
+  method_type: STRUCTURAL_ALGORITHM
+  tool: biotools:caver
+  reference: PMID:23093919
+  recipe: java -Xmx1200m -cp {caver_home}/lib -jar {caver_home}/caver.jar -home {caver_home} -pdb {input}
+    -conf {config} -out {output}
+  edam_operation: EDAM:operation_2406
+  evidence_code: ECO:0007669
+structural_geometry_representations:
+- structure_ref: PDB:7WLI
+  structure_source: PDB, entry version 1.2, revised 2024-10-30
+  evidence_source: DOI:10.1073/pnas.2401591121, Results and SI Figure S1D cited in main text; https://www.rcsb.org/structure/7WLI,
+    inspected 2026-10-29. Human CaV3.3, chain A, author-assigned monomer, cryo-EM 3.3 angstrom; apo relative
+    to the investigated inhibitors, with lipids and calcium present. Only 1135 of 2223 deposited residues
+    are modeled. Whole-structure anchor for source-computed lateral geometry; no local residue boundaries
+    or qualified protein occurrence asserted.
+evidence:
+- reference: DOI:10.1073/pnas.2401591121
+  notes: Schott et al. (2024), published PMID:38787877, analyze membrane-side passages to the central
+    cavity, including CaV3.3 structure 7WLI. This supports a geometric tunnel subtype, not an enclosed
+    disconnected cavity, cellular fenestra, principal pore, or universal drug-binding mechanism.
+- reference: https://www.caver.cz/fil/download/manual/caver_userguide.pdf
+  notes: The documented CAVER command requires a PDB directory, source-justified central-cavity starting
+    point, probe/shell settings and retained executable provenance. In an independently justified membrane
+    frame, review continuous paths ending laterally on the lipid-facing protein exterior; exclude paths
+    following the main pore axis or ending at aqueous mouths. The command alone does not classify fenestrations.
+    No CAVER analysis was executed for this record.
+- reference: DOI:10.1073/pnas.2401591121
+  notes: The published analysis used MOLE 2.5 plus explicit path filtering. The CAVER-based candidate
+    recipe is an alternative screening route, not a replay of that analysis. Report coordinate state,
+    missing atoms, membrane placement, retained lipids and probe choices. Passage geometry does not establish
+    permeability, ligand access, selectivity or allostery.
+- reference: DOI:10.1073/pnas.2401591121
+  notes: The inspected published article is CC-BY-4.0. This record is an attributed original factual synthesis.
+    CAVER software/manual retain GPL-3.0; no upstream software, article prose or figures are imported
+    into this record.
+- reference: https://www.wwpdb.org/about/usage-policies
+  notes: PDB archive metadata are CC0-1.0; the structure's primary article retains its own terms.
+curation_history:
+- timestamp: '2026-10-29T07:10:11Z'
+  curator: codex-gpt-6-astra
+  action: structural_trait_discovery_20261028
+  changes: Created a new PROPOSED class after the bottleneck canary and ignored-inclusive corpus/alias/open-work
+    checks. Maintained source data/curation/structural_trait_discovery.yaml; writer scripts/seed_structural_discovery.py.
+    Evidence dossier research/structural-discovery-20261028/cavities/membrane-fenestration-card.json.
+    No human review status, functional mechanism or qualified protein occurrence conferred.
+  llm_assisted: true
+license: CC-BY-4.0

@@ -1,0 +1,636 @@
+{
+  "created_utc": "2026-10-31T20:50:30.769628+00:00",
+  "issue": 1206,
+  "pr": 1205,
+  "purpose": "Materialize historical review blobs in the isolated partial clone.\n\nPurpose/date/issues: native provenance environment preparation, 2026-10-31,\nPR1205 and #1206. Inputs: all existing native review.yaml source git_commit\npins, including hidden/ignored bundles, and this checkout's configured origin.\nOutputs: Git objects (never refs or worktree files) plus a new timestamped JSON\nreceipt beside this retained helper. Native record_review.py intentionally sets\nGIT_NO_LAZY_FETCH=1; this explicit preparation does not weaken that validator.\nHistorical absence/mismatch is an error. Requires network if a blob is missing;\nnot a claim that remote historical objects will remain available indefinitely.\n",
+  "inputs": [
+    {
+      "path": "reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml",
+      "sha256": "f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9"
+    },
+    {
+      "path": "reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml",
+      "sha256": "ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e"
+    },
+    {
+      "path": "reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.yaml",
+      "sha256": "3350c8a9e1f827e75f8586e63b061e22165dd7668b71af380c71c87e85b61a57"
+    },
+    {
+      "path": "reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.yaml",
+      "sha256": "2722da7d2d32c603f417b4efaefc9001bc2fa2751bc3184b5ba2f23a8cdcb7b0"
+    },
+    {
+      "path": "reviews/structured/20261028T184648Z-protein-binding-obsolete-xref/review.yaml",
+      "sha256": "a5876794577128ca561443362e160d5f58f08fd081d3244cac0171ba597166c5"
+    },
+    {
+      "path": "reviews/structured/20261030T092000Z-cdd-cd17152-record-review/review.yaml",
+      "sha256": "c06176c3073f1ec5d26954550500e22ecb07649a53c18e3700fd1ee352ada514"
+    },
+    {
+      "path": "reviews/structured/20261030T092100Z-cdd-cycle3-sibling-domain-cohort-review/review.yaml",
+      "sha256": "2d8fe1c367294f3e5660badc28211c13c97763d788ce0eb9ca3ef1cd134587f8"
+    },
+    {
+      "path": "reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.yaml",
+      "sha256": "10afd869879cbb047607bc097928b707a0585991a6e0ef04f83dc84b54ed2e22"
+    },
+    {
+      "path": "reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.yaml",
+      "sha256": "1ff58108810922c05c3db0d4dd013c79ae909a516a5eacdac29eb3e10e9dc743"
+    },
+    {
+      "path": "reviews/structured/20261031T204742Z-pr1205-science-beta-arch/review.yaml",
+      "sha256": "38e7694b5695402ffcf882b0bf6935e71cb5e82f81f9e3d1cef8dff00a2c5f18"
+    },
+    {
+      "path": "reviews/structured/20261031T204742Z-pr1205-science-membrane-facing-channel-fenestration/review.yaml",
+      "sha256": "04ae61995bbac3412192ca3fd76984419e15ee2423370cc76f7ffb791b331583"
+    },
+    {
+      "path": "reviews/structured/20261031T204742Z-pr1205-science-tunnel-bottleneck/review.yaml",
+      "sha256": "00da44c1bb6dadd8fb2204d9dc2ec57dcf6b54cd604bca9547009353937dbb16"
+    }
+  ],
+  "materialized": [
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:INFRA_TASKS.md",
+      "sha256": "8393fd14c2c14e94415284edce027f2365cdc11d34db1a8fa65c4843240bfc38"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml",
+      "sha256": "e131f3ec97c0e75830bc67a3f73046509ce0ddd3fc148f7b8e5f3cf05eba5ab0"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml",
+      "sha256": "91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/degenerated-ring-dring-finger-found-in-saccharomyces-cerevisiae-requir-cd16652.yaml",
+      "sha256": "e15b95997315b996a6488ab375071f3e7db65f626e84d91703a9d6168e6b0029"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml",
+      "sha256": "587b8c22dc5e29192acb9f1b74ffeeb815729223f478bc32020aacb8e6fe6e0b"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml",
+      "sha256": "6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml",
+      "sha256": "e960b87e4e30cb1624627e3a4b8e01ac2a181c0ffe6bdedba3082edd7fa06f11"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml",
+      "sha256": "d610ab5380c1acad721ab560c9bcbde995d73d47906cc947f56ada7b20158e52"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/myotubularian-mtm-related-7-protein-mtmr7-pleckstrin-homology-glucosyl-cd13344.yaml",
+      "sha256": "25f25b4811e49099c08936c3489d0d1d02339cc8449e5621d2452941c9d6d2d2"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml",
+      "sha256": "1c763a03debd0194ab731f4cd1facdc5a506578a252388a409fe3ceb9f30425d"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/ring-finger-hc-subclass-found-in-myosin-regulatory-light-chain-interac-cd16523.yaml",
+      "sha256": "3620b0d7f29bbc2778450e3a9730a1433348af1f13ba8786e3a09106ca0583e4"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/sam-domain-of-sam-neurabin-like-subfamily-sam-sterile-alpha-motif-doma-cd09512.yaml",
+      "sha256": "93169846893c6adcec5e674c004b89357f4a2cef1001e5137d1e76a980c312e4"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/sam-domain-of-samd14-subfamily-sam-sterile-alpha-motif-domain-of-samd1-cd09530.yaml",
+      "sha256": "36e62ccee26da135fc9a3d26f625be68fcdbf7966d35fabb13971dd13c443957"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml",
+      "sha256": "8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml",
+      "sha256": "819db68ddb4bd173baa067ff5908f9a7e90de8781735097ff24bed8e2c7f4c1f"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml",
+      "sha256": "5bfd6d04f6c15aad7dd69ca34e3c88ae6dbad3d07023a8e1cba85eee3a719274"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/urotensin-ii-receptor-member-of-the-class-a-family-of-seven-transmembr-cd14999.yaml",
+      "sha256": "29cb639a3bbf2158faa5680b179a1d1e4c6c392928321359db55344eb23e5df5"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:data/traits/sequence/domain/cdd/vefs-vrn2-emf2-fis2-su-z-12-box-found-in-suppressor-of-zeste-12-protei-cd21551.yaml",
+      "sha256": "ff603a20dd777948e50bd44c88575bdd8b4cf442e46f70d3df62bfba5a85e7d4"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:scripts/record_io.py",
+      "sha256": "ef18d4a2224810768232337f1007cb757425bff87aa96edd1e6b193da14863bf"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:scripts/seed_cdd.py",
+      "sha256": "09dfcecfb251e8b86a9b15de1a07e63c5c28fcd81ca5f4a13c91f32091729274"
+    },
+    {
+      "git_blob": "32b4f33a71b846acf59b96b7da7282f293ea2165:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml",
+      "sha256": "e69d6f93c2ecb23a1f5ebf31407261c087a24b52333f171544127e919db95510"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml",
+      "sha256": "306f687472e4fb91d6dcad19fa7ea13f99eb85fbafb7e86440302296b710b267"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml",
+      "sha256": "78aed7842aa5e709350266838df7ec4f82495dd329040a99a8e9f79ae5433b1b"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml",
+      "sha256": "84d8d25d5f6ce8934609c55719a0d4a09b385e2ba1cbb5134c2649573d8327c0"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml",
+      "sha256": "d3e0f20833782f29d82b77caac4651d4d4f7a6948a18850f974003cacc36022f"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml",
+      "sha256": "082daf8401d1f220c913762740af284d558cee384794debc8ad4ae783946083c"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml",
+      "sha256": "d7e0a360b5933d431cc9f738a686058b165b1c12aeafeae856359140c4a56f75"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml",
+      "sha256": "6ec1fd4e6c77d35fcd3c65b0387f517870965eeb622e47e122665a32b27c1f1d"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml",
+      "sha256": "deaeaef82093e32e314b0cb69b61a4a3a34da7a0f93922309babf7ef18ffea50"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml",
+      "sha256": "47be01b784a9b7ce63f5b0a8bdcde6bc4aa040cc5bbadd27d3e480980d474bd5"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml",
+      "sha256": "fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml",
+      "sha256": "6ec151fa12937392cbaf557d7f62d497d3c8d05471ec24b16d9efc2210769a8d"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml",
+      "sha256": "5f6fbec3995ae2fb53b2b2bef97ec582cd8a651c9164a83a5bf59e0d2c99aa3b"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml",
+      "sha256": "a7de1d8068c056d075c9ddfc6e5f1a0cb9f9bb4102e6779f92fd06fd75acbd6e"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml",
+      "sha256": "d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml",
+      "sha256": "edd0ed8a35d333d4f87c1ac2a4aee0d30f5af17a5a6c9a169007401798101519"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml",
+      "sha256": "fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml",
+      "sha256": "5c4fe1cf626fe5a1819aa98dfd15eff180d6f722dc872acbbe6e0410ae2ddcfb"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml",
+      "sha256": "ce5da2ef4ffd83652c48b1ad5c2e744aafcf51ce4eb011e3b601f842cf0d3585"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml",
+      "sha256": "d7973623d9d52e02a34f979e416688e94444ddc1a30fb6fe88dc56afa62f7099"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:reviews/structured/20261030T092000Z-cdd-cd17152-record-review/review.yaml",
+      "sha256": "c06176c3073f1ec5d26954550500e22ecb07649a53c18e3700fd1ee352ada514"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:reviews/structured/20261030T092100Z-cdd-cycle3-sibling-domain-cohort-review/review.yaml",
+      "sha256": "2d8fe1c367294f3e5660badc28211c13c97763d788ce0eb9ca3ef1cd134587f8"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:reviews/structured/20261030T115500Z-cdd-cycle3-stage5-remediation-review/review.yaml",
+      "sha256": "3b8044daaa98388d401119aa8f726fe0aa55ccf798ba732e629822c042d2944a"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:reviews/workflow/mech-goal-sequence-20261019/cycle-000003/stage-04/revision-0001/evidence.yaml",
+      "sha256": "675d9c6efc52c8ad25d7e0a13f9306fe0d92d901a3f629ec9a5328230feec9e9"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:reviews/workflow/mech-goal-sequence-20261019/cycle-000003/stage-05/revision-0001/evidence.yaml",
+      "sha256": "b2fff9f04946591e53a630873434c36df162f32a1e75d2eda4a425686b49e8dc"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:scripts/cdd_errata.py",
+      "sha256": "332155e8c1f1a119ca0f3c4394b49fa775bcc8d9f4c68e1f43183bd97b64d962"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:scripts/record_io.py",
+      "sha256": "ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:scripts/repair_cdd_errata.py",
+      "sha256": "0a7fcce6f8f00a4d20b1a4f94a6ec77f32c6ab62d9edc2fd4a228fbda48cea9d"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:scripts/seed_cdd.py",
+      "sha256": "4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a"
+    },
+    {
+      "git_blob": "5869b9c877b532972a405523c7c6e21945c177e4:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml",
+      "sha256": "3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml",
+      "sha256": "91529c2545061d6f49418adfef6db7d2ab2e530d5c7eee801862fb0a3255edea"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml",
+      "sha256": "e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml",
+      "sha256": "92a423f28b256ec77c726a51a6bce8725e24218cf6f1d94c80fc8a1cfd115941"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml",
+      "sha256": "74a1c7b8bb284513e28bce564a5705142f643fa1bfe1c199bf6c338631bb2e76"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml",
+      "sha256": "fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml",
+      "sha256": "6b23146bd71c843c2675704f6fbbea6b32f4fe113894c8bbeebf85ab6cb8438d"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml",
+      "sha256": "72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml",
+      "sha256": "62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml",
+      "sha256": "d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml",
+      "sha256": "8424b28b9d91f750c4edcdb8cafa59d9d340f4cacb46938cc3355f2d65457074"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml",
+      "sha256": "fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml",
+      "sha256": "7f72a55f63a4f82d87f7f4456ea7b3085585eb2f7461b79fd3752ca19d368b9a"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml",
+      "sha256": "5bfd6d04f6c15aad7dd69ca34e3c88ae6dbad3d07023a8e1cba85eee3a719274"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml",
+      "sha256": "f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml",
+      "sha256": "ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml",
+      "sha256": "438b6712ef02fc88990c1bf5e054fc2b901925f85b2eed0f4da2cc3015be6330"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-05/revision-0001/evidence.yaml",
+      "sha256": "10d01ef913b4531b80bd3b42ae8eea21f3c61872bc753196411b9e0c16b25a93"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/evidence.yaml",
+      "sha256": "3cded5bbfd329238d0e695ce9bc64098886a7724b03dacd1b524f91ca7903201"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:scripts/cdd_errata.py",
+      "sha256": "5cc563845168a79aa0859d58257052a4f2d0fc8fc0a6687c0d967e8d55a8a303"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:scripts/record_io.py",
+      "sha256": "ef18d4a2224810768232337f1007cb757425bff87aa96edd1e6b193da14863bf"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:scripts/repair_cdd_errata.py",
+      "sha256": "b44d0face51dbabbe7e31ddd980074a184781ec8834f5170509d3ab4125c2fa3"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:scripts/seed_cdd.py",
+      "sha256": "4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a"
+    },
+    {
+      "git_blob": "66e8f479733907dc0792e481f41bb2f0fbb9dc27:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/2-deoxyribose-5-phosphate-aldolase-dera-of-the-deoc-family-2-deoxyribo-cd00959.yaml",
+      "sha256": "3cdf985be034ecc04e92d01fb9c9adae688453821d1efdfad8f9909907169b8f"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml",
+      "sha256": "25c96270182b7deb52e5f9572354a19ecf9a4475a56315cb32367a69c45c0d04"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml",
+      "sha256": "78aed7842aa5e709350266838df7ec4f82495dd329040a99a8e9f79ae5433b1b"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml",
+      "sha256": "e417b4fe9e69deec13282e792245d3746f15f29e609572f083a8cbc4fd68b11b"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml",
+      "sha256": "dc4f778b022ed8629d36eeeebe9a67b89437602f80da52cc2785c885b23f66dc"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17154.yaml",
+      "sha256": "6ec1fd4e6c77d35fcd3c65b0387f517870965eeb622e47e122665a32b27c1f1d"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml",
+      "sha256": "47be01b784a9b7ce63f5b0a8bdcde6bc4aa040cc5bbadd27d3e480980d474bd5"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17150.yaml",
+      "sha256": "fe5af61fd44b4a50b6c9f0ab06ddd1d717895a010f788b8096ff64d3f68e4756"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17151.yaml",
+      "sha256": "6ec151fa12937392cbaf557d7f62d497d3c8d05471ec24b16d9efc2210769a8d"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/first-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protein-cd20534.yaml",
+      "sha256": "72fbd3487668c097281cf6ee45a4daf0366a2bcc80866330f8ed4832141d7e88"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/kazal-type-serine-protease-inhibitors-and-follistatin-like-domains-kaz-cd00104.yaml",
+      "sha256": "62603604963ddda74e8d1b60d200f4e840556af07e4f5d0a4df182c57c441f26"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml",
+      "sha256": "615522b360750919bbe4a9ad8005ccc1aa29ea684fab698cc0cf869838151e9d"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-n-terminal-snare-motifs-of-snap25-a-m-cd15894.yaml",
+      "sha256": "d11a67560ebb84bf867f67027f23109a5631b72953aa870075b96116cd599368"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/second-cyclin-box-found-in-cyclin-m-ccnm-family-the-ccnm-family-protei-cd20535.yaml",
+      "sha256": "5d4cdbce834a6183b6fa860b8ee439da3c8ea5eb44634f692c08d320180b0249"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml",
+      "sha256": "fad0b6039c5386b3caf40fc650099ec7bfd126ff7854d42aeb805708a18c3f9a"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18593.yaml",
+      "sha256": "5c4fe1cf626fe5a1819aa98dfd15eff180d6f722dc872acbbe6e0410ae2ddcfb"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml",
+      "sha256": "55248bf08f405c7fb665974fecef9c1fcdd05a5b67774e4753a6dbf3cb53faea"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml",
+      "sha256": "04c649ce8b0463952a711aa86cc477e9f4a130717a1e930e3e280ef478f4a080"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:data/traits/sequence/domain/cdd/two-tandem-repeats-of-the-cystathionine-beta-synthase-cbs-pair-domains-cd04590.yaml",
+      "sha256": "5bfd6d04f6c15aad7dd69ca34e3c88ae6dbad3d07023a8e1cba85eee3a719274"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261022T052200Z-cdd-cd00104-record-review/review.yaml",
+      "sha256": "f8340019e447b9a37ab1eb333826a61f818c58aa365e43480917f69d87da8fa9"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261022T052300Z-cdd-stage3-domain-cohort-review/review.yaml",
+      "sha256": "ce693cda666fcc7f5ad2d22b11e67b9a9d0b9d32859b1d0ca5e3e982f04dfa8e"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261022T081000Z-cdd-stage5-remediation-review/review.yaml",
+      "sha256": "438b6712ef02fc88990c1bf5e054fc2b901925f85b2eed0f4da2cc3015be6330"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261025T202200Z-cdd-cd20535-record-review/review.yaml",
+      "sha256": "3350c8a9e1f827e75f8586e63b061e22165dd7668b71af380c71c87e85b61a57"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261025T202300Z-cdd-cycle2-sibling-domain-cohort-review/review.yaml",
+      "sha256": "2722da7d2d32c603f417b4efaefc9001bc2fa2751bc3184b5ba2f23a8cdcb7b0"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/structured/20261025T233000Z-cdd-cycle2-stage5-remediation-review/review.yaml",
+      "sha256": "513cb559af7f1c2dfa19a4307c1fd06a164ea68ec5f07770649038200ed1899e"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/workflow/mech-goal-sequence-20261019/cycle-000001/stage-06/revision-0001/evidence.yaml",
+      "sha256": "3cded5bbfd329238d0e695ce9bc64098886a7724b03dacd1b524f91ca7903201"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-04/revision-0001/evidence.yaml",
+      "sha256": "60a2374cb7b0c3289dbcf5c785da8aaf475658639107d70766e5e19fd92b49d9"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:reviews/workflow/mech-goal-sequence-20261019/cycle-000002/stage-05/revision-0001/evidence.yaml",
+      "sha256": "37cf6670f427c35fabdccb772c188323d7d5128d595e571f39561fab61fc709c"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:scripts/cdd_errata.py",
+      "sha256": "ba9423a6dcdfb1c35f399ee298aa776e1d9f88d56794c80e2525f11c7b6ea51f"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:scripts/record_io.py",
+      "sha256": "ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:scripts/repair_cdd_errata.py",
+      "sha256": "33b0dd57b5f3e6edc04222b0a4629b6db855d5e6b8980210fd044cdbd4166c77"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:scripts/seed_cdd.py",
+      "sha256": "4fd337316239794623aaa2ad8afed44bb96ead33a1b387921272f26f8731365a"
+    },
+    {
+      "git_blob": "adef1252dc47d9fc25268e3f36ad2ade8adba1a2:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:.claude/skills/curate-yaml-record/SKILL.md",
+      "sha256": "f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:.claude/skills/curate-yaml-record/references/review-checklist.md",
+      "sha256": "59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:.claude/skills/review-yaml-record/SKILL.md",
+      "sha256": "ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:AGENTS.md",
+      "sha256": "8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:conf/record_review.yaml",
+      "sha256": "a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/curation/structural_trait_discovery.yaml",
+      "sha256": "c08c4170529368497d507c91d42f2dfccbd7e08d770ab65b187468ffe47c091d"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/traits/structure/cavity/membrane-facing-channel-fenestration.yaml",
+      "sha256": "7ba68696bc371b02f6d8f1abcfe18f20d91df74f7beb237e45c0f9ec4965aa2f"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/traits/structure/cavity/tunnel-bottleneck.yaml",
+      "sha256": "d4793579cd2dd1f5240deb43476c7f56bc0da359731094049a39c36d34f46ae2"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/traits/structure/cavity/tunnel.yaml",
+      "sha256": "417421591621cda376ec2dad316eb15a884ce68df6fdd1e97343116e882ae344"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/traits/structure/secondary/beta-arch.yaml",
+      "sha256": "1bb789e933dd0e208159a2b171f3b0c5fef3b7e10a2462bb931648d77654e4ae"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:data/traits/structure/secondary/super-secondary-motif.yaml",
+      "sha256": "6cd335a8aff68fa61c254d1b0f948b05aca163cedda30b6019df0af1f48a0cac"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:docs/record-review-profile.md",
+      "sha256": "06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:docs/record-reviews.md",
+      "sha256": "452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:justfile",
+      "sha256": "44ea312c36abbe090da0315b60a8c0727db9ba5c766607aa77c81bf85c025233"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/caver-biotools-registry.json",
+      "sha256": "40b1d74118b17fcfce93b469ccbd7284cd9e2b9e6a00c4818e2b0816ed369532"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/caver-discovery-userguide.pdf",
+      "sha256": "035f7cb504fde9d6a49250ca13e575780d934d3a45ebb48f9c942d5d54f83305"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/caver-discovery-userguide.txt",
+      "sha256": "8fb14bec46975c714c5ea04dfe20472b5815cd4dc779b763fb1b9aa5fd9d2a68"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/caver2012-plos-primary.html",
+      "sha256": "592d8162f78ae56b8a81b07c994643999c92209e0776f3ef1e64ce88be7c9a28"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/fenestration-pdf-provenance.json",
+      "sha256": "926b72c64409063dafae43d4f46c0c560a3aee3c6f8ab94c910fca3543bdd1b2"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/fenestration-pnas-published.pdf",
+      "sha256": "2e41cc55e593194f998f2656d2d0101ce9d5a9d5236e5673f02abc4638498b8b"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/fenestration-pnas-published.txt",
+      "sha256": "d23cb8a6bdd5cf7b9285dd3209f973bf2ff5b810a2d3a47a51c234c833a43179"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/fenestration-rcsb-7wli-entry.json",
+      "sha256": "2feec67f877492e531affe7a5f7e82445eb0c56ff099fe1f39a6726efa18b3f8"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/fenestration-source-retrieval.json",
+      "sha256": "8498a1e6916e1d0f5b4a89734250a945ae55ceb500bcb8601441cfb58c622ab2"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/natcomm-2022-immunoglobulin.xml",
+      "sha256": "dfa9c2b981217c80a2f99329c1ea10f6dd4a68522054ec1e1960efd90e27ce17"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/primary-artifact-retrieval.json",
+      "sha256": "70fe41170a96502050d3513c4724c434852402616a8a269819ebaf49a6210eb8"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:research/structural-discovery-20261028/motifs/rcsb-1cqw-entry.json",
+      "sha256": "ad4fb5afbb1cfbe1be7d732a03d5a3c14865caa7dd2d9de4a37bbdc0d7367b67"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:schema/record_review.yaml",
+      "sha256": "229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:scripts/audit_causal_graphs.py",
+      "sha256": "01a02ad6bb0264ff5e839c1a850d6bbd8b6004b9b1ab646c9f3c6a1459ab2c60"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:scripts/record_review.py",
+      "sha256": "95a4ec41e38ec47ba3578e76838c46a0adbf47e49ad3636524735d08cfcb1c4d"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:scripts/seed_structural_discovery.py",
+      "sha256": "7143fb829f46ea77a48a9976d27d3e31f78ac1c5e3e845968fa52ef84b75dbd3"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:scripts/validate_strict.py",
+      "sha256": "a36652f276ee85a3b9328172ff3f8a3661713860b66c8b3ca8ca715665683b26"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:scripts/validate_uniprot_grounding.py",
+      "sha256": "a132a63415a37d215d13a230b0a218809ad4986bedb1d8611bb09c54ce5a0711"
+    },
+    {
+      "git_blob": "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    },
+    {
+      "git_blob": "c4147394c698324ae537c0c63c2c9f6647c4f4fc:data/traits/structure/binding_site/protein-binding-site.yaml",
+      "sha256": "7dbd5cee351c560cb2348e0fc3ebdefb2b529a0353e1d62c1b381ff26c340760"
+    },
+    {
+      "git_blob": "c4147394c698324ae537c0c63c2c9f6647c4f4fc:scripts/seed_localstructuralfeature.py",
+      "sha256": "dea0ca33c86dc9cdc8597de859fe1db5ae92d3fb265e3f10b1074e5c2652415b"
+    },
+    {
+      "git_blob": "c4147394c698324ae537c0c63c2c9f6647c4f4fc:src/proteintraitsmech/schema/proteintraitsmech.yaml",
+      "sha256": "7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418"
+    }
+  ],
+  "helper_sha256": "8b11a7a2c2348265e07bc180d0c2ff3f73cb1daadf1c8f3c40ac2978323a1457",
+  "note": "Object preparation only; separate native check remains mandatory."
+}

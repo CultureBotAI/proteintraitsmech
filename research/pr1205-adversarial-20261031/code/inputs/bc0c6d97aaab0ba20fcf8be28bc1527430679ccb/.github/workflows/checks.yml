@@ -1,0 +1,125 @@
+# Runs the two gates that do not need the source releases.
+#
+# Issue #107 is that ruff was a declared dev dependency with config in pyproject.toml
+# that NOTHING ever ran, so the error count could only go up — and it had, to 63. A
+# `just lint` recipe alone would not have fixed that: a gate nobody runs is the thing
+# being complained about. This is what makes it a gate.
+#
+# Both halves of `validate-all` — strict record validation and UniProt grounding
+# validation — and `audit-graphs` run in .github/workflows/validate-strict.yaml
+# instead, not because they need data/raw (none does; that claim was false, #485),
+# but because the ~430K-record corpus makes them too slow to bundle here on every PR.
+# That workflow invokes the scripts directly rather than the recipes, so check it
+# against script names: naming the recipe here was accurate until `validate-all`
+# grew a second half, and then said "covered" about something nothing ran (#606).
+# Source-registry structure is checked here; licence dispositions explicitly marked
+# pending remain notices until the owner/legal decision in #517.
+name: checks
+
+on:
+  # Required checks report on every PR and on the combined queue commit.
+  pull_request:
+  merge_group:
+    types: [checks_requested]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  RECORD_REVIEW_BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event_name == 'merge_group' && github.event.merge_group.base_sha || github.event_name == 'push' && github.event.before || github.event_name == 'workflow_dispatch' && 'HEAD' }}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.13"
+          enable-cache: true
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      - run: uv sync --extra dev
+
+      # Lint first: it is seconds, and it catches the class of defect that the tests
+      # structurally cannot. A NameError inside a function body only fires when that
+      # line runs, so the import-time test added in #108 passes over it — exactly how
+      # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
+      - run: just lint
+
+      # PR1202 was squash-merged; this immutable review base is not an ancestor
+      # of main. Restore its exact object in this ephemeral checkout (#1206).
+      # Do not recreate retired refs or weaken the native provenance check.
+      - name: Restore inherited review Git base
+        run: |
+          set -euo pipefail
+          review_revision=93c1a021d76a94fd299e0a1e3cf8f1b9671a3703
+          if ! git cat-file -e "${review_revision}^{commit}" 2>/dev/null; then
+            git fetch --no-tags --no-write-fetch-head origin "$review_revision"
+          fi
+          test "$(git rev-parse --verify "${review_revision}^{commit}")" = "$review_revision"
+
+      - name: Structured record review contract
+        run: just test-record-reviews
+
+      # Enforce download.yaml's script roles and fail on unclassified seeders, missing
+      # scripts, invalid statuses/roles, or restrictive terms lacking a review state.
+      - run: just sources-check
+      # Gates the two classes this repository can fix -- its manifest disagreeing
+      # with its own schema, and its enum dropping a token it agreed to govern.
+      # Cross-Mech description drift stays a NOTICE and is printed on every run:
+      # TraitMech can reword its own description at any time, and that must not
+      # fail pull requests here until someone reconciles a vocabulary they may not
+      # own (#585). `--fail-on any` blocks on that too, when the fleet wants it.
+      # --check-remote compares the reviewed TraitMech pin against the live
+      # repository, so pin staleness is visible here instead of waiting for
+      # someone to run --refresh (#584). Same host this repo already fetches for
+      # the canonical hub. Both remote classes are NOTICES: a sibling repository
+      # editing its own vocabulary, or an unreachable network, must not fail a
+      # pull request here.
+      - run: just audit-cross-mech-categories --check-remote
+
+      # The tracked sibling-Mech protein snapshot (#652): integrity and channel-rule
+      # currency fail the job, because both are this repository's own files. --remote
+      # compares each pinned sibling commit and the pinned claw fleet manifest with the
+      # live default branches; that drift is a NOTICE, since siblings move daily and an
+      # unreachable network must not fail a pull request here.
+      - run: just check-cross-mech-proteins --remote
+
+      # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
+      # of the repo pointing at a script that was never written, and because nothing ran
+      # it, nothing was ever red. A recipe nobody runs is indistinguishable from a passing
+      # one -- which is the same argument this workflow's own header makes about ruff.
+      # Needs no data/raw; it reads the schema and counts enum usage in data/traits.
+      - run: just audit-schema
+
+      # Writer-safety audit (#492). Same reason, same cost: no data/raw, seconds to run.
+      - run: just audit-writers
+
+      # Actionable id-label gate (#493). Offline and self-contained: resolves
+      # proteintraitsmech: causal nodes against committed record labels and pins
+      # both mismatch count and identity.
+      - run: just validate-internal-id-labels
+
+      # Validate the external observation store and every derived pilot artifact.
+      - run: just check-biophysical-pilot
+
+      # Reference chemistry is reviewed/pinned data, not a mechanism predictor.
+      - run: just check-amino-acid-properties
+
+      - run: just test
+
+      # Offline DOM contract; this does not claim real-browser visual inspection.
+      - run: node tests/slc10_dom_test.cjs

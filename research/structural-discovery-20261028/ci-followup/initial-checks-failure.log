@@ -1,0 +1,47 @@
+checks	Structured record review contract	﻿2026-10-29T07:34:38.0593967Z ##[group]Run just test-record-reviews
+checks	Structured record review contract	2026-10-29T07:34:38.0594537Z ^[[36;1mjust test-record-reviews^[[0m
+checks	Structured record review contract	2026-10-29T07:34:38.0626663Z shell: /usr/bin/bash -e {0}
+checks	Structured record review contract	2026-10-29T07:34:38.0627107Z env:
+checks	Structured record review contract	2026-10-29T07:34:38.0627577Z   RECORD_REVIEW_BASE: 7276814bdf3bed73569a202c5e2c4b404e43d8f1
+checks	Structured record review contract	2026-10-29T07:34:38.0628179Z   UV_PYTHON: 3.13
+checks	Structured record review contract	2026-10-29T07:34:38.0628769Z   VIRTUAL_ENV: /home/runner/work/proteintraitsmech/proteintraitsmech/.venv
+checks	Structured record review contract	2026-10-29T07:34:38.0629548Z   UV_CACHE_DIR: /home/runner/work/_temp/setup-uv-cache
+checks	Structured record review contract	2026-10-29T07:34:38.0630090Z ##[endgroup]
+checks	Structured record review contract	2026-10-29T07:34:38.0772228Z uv run pytest tests/test_record_review_contract.py -q
+checks	Structured record review contract	2026-10-29T07:34:47.2349776Z .F..                                                                     [100%]
+checks	Structured record review contract	2026-10-29T07:34:47.2350920Z =================================== FAILURES ===================================
+checks	Structured record review contract	2026-10-29T07:34:47.2351891Z _________________ test_every_saved_structured_bundle_is_valid __________________
+checks	Structured record review contract	2026-10-29T07:34:47.2352364Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2353063Z reviews = <module 'shared_record_reviews' from '/home/runner/work/proteintraitsmech/proteintraitsmech/scripts/record_review.py'>
+checks	Structured record review contract	2026-10-29T07:34:47.2353792Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2354015Z     def test_every_saved_structured_bundle_is_valid(reviews):
+checks	Structured record review contract	2026-10-29T07:34:47.2354558Z         identity = reviews.repository_identity(ROOT)
+checks	Structured record review contract	2026-10-29T07:34:47.2355764Z         reviews.assert_append_only(ROOT, os.environ.get("RECORD_REVIEW_BASE", "HEAD"))
+checks	Structured record review contract	2026-10-29T07:34:47.2356516Z         for path in reviews.review_paths(ROOT):
+checks	Structured record review contract	2026-10-29T07:34:47.2356975Z >           review = reviews.read_review(ROOT, path)
+checks	Structured record review contract	2026-10-29T07:34:47.2357425Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+checks	Structured record review contract	2026-10-29T07:34:47.2357683Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2357845Z tests/test_record_review_contract.py:44: 
+checks	Structured record review contract	2026-10-29T07:34:47.2358313Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+checks	Structured record review contract	2026-10-29T07:34:47.2358658Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2358943Z root = PosixPath('/home/runner/work/proteintraitsmech/proteintraitsmech')
+checks	Structured record review contract	2026-10-29T07:34:47.2359849Z relative = 'reviews/structured/20261029T044503Z-structural-ledger-guard-followup/review.yaml'
+checks	Structured record review contract	2026-10-29T07:34:47.2360787Z schema_path = PosixPath('/home/runner/work/proteintraitsmech/proteintraitsmech/schema/record_review.yaml')
+checks	Structured record review contract	2026-10-29T07:34:47.2361353Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2361688Z     def read_review(root: Path, relative: str, schema_path: Path = SCHEMA_PATH) -> dict:
+checks	Structured record review contract	2026-10-29T07:34:47.2362271Z         path = relative_path(relative)
+checks	Structured record review contract	2026-10-29T07:34:47.2362744Z         review = parse_review_bundle(relative, read_bytes(root, relative),
+checks	Structured record review contract	2026-10-29T07:34:47.2363397Z                                      read_bytes(root, str(path.with_name("review.md"))), schema_path)
+checks	Structured record review contract	2026-10-29T07:34:47.2363983Z         provenance = source_provenance(root, review)
+checks	Structured record review contract	2026-10-29T07:34:47.2364448Z         if provenance["status"] in {"invalid", "unverified"}:
+checks	Structured record review contract	2026-10-29T07:34:47.2365371Z >           raise ReviewError(f"source provenance {provenance['status']}: {provenance['reason']}")
+checks	Structured record review contract	2026-10-29T07:34:47.2366588Z E           shared_record_reviews.ReviewError: source provenance unverified: Git provenance check failed: rev-parse --verify 93c1a021d76a94fd299e0a1e3cf8f1b9671a3703^{commit}
+checks	Structured record review contract	2026-10-29T07:34:47.2367439Z 
+checks	Structured record review contract	2026-10-29T07:34:47.2367586Z scripts/record_review.py:666: ReviewError
+checks	Structured record review contract	2026-10-29T07:34:47.2368075Z ------------------------------ Captured log call -------------------------------
+checks	Structured record review contract	2026-10-29T07:34:47.2368863Z WARNING  linkml.generators.jsonschemagen:jsonschemagen.py:290 topClass is deprecated - use top_class
+checks	Structured record review contract	2026-10-29T07:34:47.2369601Z =========================== short test summary info ============================
+checks	Structured record review contract	2026-10-29T07:34:47.2371188Z FAILED tests/test_record_review_contract.py::test_every_saved_structured_bundle_is_valid - shared_record_reviews.ReviewError: source provenance unverified: Git provenance check failed: rev-parse --verify 93c1a021d76a94fd299e0a1e3cf8f1b9671a3703^{commit}
+checks	Structured record review contract	2026-10-29T07:34:47.2372218Z 1 failed, 3 passed in 8.33s
+checks	Structured record review contract	2026-10-29T07:34:47.5489428Z error: recipe `test-record-reviews` failed on line 90 with exit code 1
+checks	Structured record review contract	2026-10-29T07:34:47.5510884Z ##[error]Process completed with exit code 1.

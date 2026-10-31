@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-29T06:57:50Z",
+  "reviewer": "preflight_boundary_review",
+  "independence": "Reviewer did not author the seeder or its tests.",
+  "review_kind": "preliminary_independent_code_review",
+  "repository": "CultureBotAI/proteintraitsmech",
+  "source_kind": "working_tree_exact_file_hashes",
+  "task_binding": {
+    "mode": "standalone",
+    "run_id": null,
+    "cycle": null,
+    "stage": null
+  },
+  "verdict": "changes_requested",
+  "scope": "New bounded structural-discovery seeder and its8 initial tests; manifest not yet authored and its absence is not a finding.",
+  "inputs": {
+    "scripts/seed_structural_discovery.py": "96cc0749a8791d599bafeefe3eea9bf2258f900e25d078416fe8553edf9c6e4a",
+    "tests/test_seed_structural_discovery.py": "b516c6afbc86b5c704a3b311d257bc0c1e8636f4740f10237de9f8952e8b33eb",
+    "scripts/record_io.py": "ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf",
+    "AGENTS.md": "8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349",
+    ".claude/skills/add-record/SKILL.md": "c4cf4fe01c66c294ab66a5b99f574a670fdec2dcfe221d390a72ba95e23fd821"
+  },
+  "findings": [
+    {
+      "finding_id": "SDW-001",
+      "issue_key": "structural-discovery-decoded-id-collision",
+      "severity": "major",
+      "status": "open",
+      "certainty": "confirmed",
+      "title": "Raw-text candidate prefilter misses schema-valid escaped YAML identities",
+      "path": "scripts/seed_structural_discovery.py",
+      "lines": "78-94",
+      "trigger": "An existing ignored/hidden YAML record has identifier: \"proteintraitsmech:TEST_DISCOVERY_\\u004fNE\". YAML decoding yields the exact proposed ID, but the literal candidate string is absent from its raw bytes.",
+      "observed": "Existing fixture passes native strict validation. rg reports0hit files, preflight accepts, and apply creates a second record with the same decoded identifier.",
+      "evidence": "seeder-preliminary-probes.json:escaped_identifier_collision",
+      "fix": "Inventory all corpus YAML/YML files including ignored/hidden entries and inspect their decoded identifier/xref values. Do not rely on raw literal-ID matches as a completeness-preserving parser filter. Fail closed on unreadable/invalid inputs relevant to the declared scan.",
+      "meaningful_regression": "Place a strictly valid ignored record with an escaped identifier, then an escaped xref, and assert refusal before any batch destination is written; retain the ordinary literal-ID/xref cases."
+    },
+    {
+      "finding_id": "SDW-002",
+      "issue_key": "structural-discovery-dryrun-report-clobber",
+      "severity": "major",
+      "status": "open",
+      "certainty": "confirmed",
+      "title": "Unrestricted report path bypasses record validation and dry-run preservation",
+      "path": "scripts/seed_structural_discovery.py",
+      "lines": "134-139",
+      "trigger": "Run the real main entry function without --apply, with --report pointing at an existing fixture trait YAML.",
+      "observed": "The seeder first reports the existing record unchanged, then Path.write_text replaces it with JSON. The resulting file fails native strict validation. No apply flag is required.",
+      "evidence": "seeder-preliminary-probes.json:dryrun_report_overwrite",
+      "fix": "Validate/restrict the resolved report destination before invoking seed, including symlink/escape handling. Refuse scientific corpus/manifests/code targets; use the task-owned evidence destination. An invalid report request must fail before an apply-mode canary writes anything.",
+      "meaningful_regression": "Exercise dry-run report-to-trait refusal preserving exact bytes; exercise apply with an invalid report path and assert that no candidate was created; cover a symlinked report path or parent escaping the allowed evidence root."
+    },
+    {
+      "finding_id": "SDW-003",
+      "issue_key": "structural-discovery-replay-byte-hash-mismatch",
+      "severity": "moderate",
+      "status": "open",
+      "certainty": "confirmed",
+      "title": "Text newline normalization accepts a nonidentical output and reports its wrong hash",
+      "path": "scripts/seed_structural_discovery.py",
+      "lines": "97-98,118-126",
+      "trigger": "After a valid apply, rewrite only the destination line endings as CRLF and replay.",
+      "observed": "read_text normalizes CRLF to LF, so the record is accepted as unchanged. The record bytes are preserved but their SHA256 is521f5963f020bf04bd2f36b1a7064b96e6cc2dfdaae8254356f945947a334842 while the emitted report claims009ec82290ce3eb5b29bc74f51c97d840310119d57d969bdadef5b8d8b0e2051.",
+      "evidence": "seeder-preliminary-probes.json:crlf_replay_hash",
+      "fix": "Compare exact bytes under the stated byte-identical replay contract and bind reported output hashes to those exact accepted bytes.",
+      "meaningful_regression": "A CRLF-only existing edit must be refused without replacing it, or an explicitly changed semantic-replay contract must truthfully report actual bytes; current documented contract requires refusal."
+    }
+  ],
+  "additional_provenance_observation": {
+    "status": "static_review_observation_not_independently_reproduced",
+    "path": "scripts/seed_structural_discovery.py",
+    "lines": "36,126",
+    "description": "The manifest is loaded via read_text but its reported SHA256 is computed from a fresh read after execution. A mid-run edit could bind the report to bytes that did not produce the output.",
+    "recommendation": "Read and hash one immutable byte snapshot, parse those same bytes, and report that digest. If source drift is forbidden, recheck before writes and fail without claiming the new hash.",
+    "boundary": "This is a source-binding observation, not an assertion of parallel writers within the explicitly single-writer worktree."
+  },
+  "positive_assessment": [
+    "The eight initial tests exercise real native validation, ignored literal identifier/xref collisions, full selected-batch validation before writes, edited-output preservation, default dry-run, replay, traversal refusal, status restriction and unknown canary selection.",
+    "Audited write_record(validate=True) is used for candidate creation. Whole selected-batch preflight avoids the demonstrated late-schema-error partial install.",
+    "The seeder accurately disclaims semantic-alias arbitration, cross-worker reservation and a global transaction; these absent guarantees are not findings.",
+    "No pending scientific manifest, source selection, detector recipe content, corpus novelty or parent identity was assessed."
+  ],
+  "independent_reproduction": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python research/structural-discovery-20261028/preflight/probe_discovery_seeder.py",
+    "helper": "research/structural-discovery-20261028/preflight/probe_discovery_seeder.py",
+    "helper_sha256": "b0a5435bc0e1809e29aa6816698fdca37fce53d25eecd99c2b557a218f1fceab",
+    "results": "research/structural-discovery-20261028/preflight/seeder-preliminary-probes.json",
+    "results_sha256": "ab88795edfd1090cf780158ed09ef6de141032a21106a32494d5ab058ea4ca53",
+    "outcome": "All3 targeted failure modes reproduced.",
+    "method": "Compiled exact unchanged seeder bytes with __file__ rooted in disposable fixture trees; imported actual native validator/writer. CLI main entry function exercised in-process, not an OS subprocess. No real corpus or pending scientific manifest required.",
+    "helper_reuse_limit": "Helper intentionally demonstrates old behavior and may stop/raise after guards are fixed; preserve this historical result rather than overwrite it to imply the original code passed."
+  },
+  "followup": "Root owns issue filing, fixes and new independent review. No finding is closed by this preliminary report.",
+  "limits": [
+    "Original8 tests and writer audit were read/reported by root, not rerun by this reviewer; the independent evidence is the3 retained probes.",
+    "No full suite, native scientific record review or future manifest acceptance performed.",
+    "Review binds exact input hashes, not any later working-tree edits or Git commit.",
+    "No global race/transaction guarantee is requested beyond the stated one-writer isolated-worktree contract."
+  ],
+  "actions": {
+    "maintained_code_edits": false,
+    "real_corpus_edits": false,
+    "git_or_github_actions": false,
+    "network": false,
+    "session_actions": false,
+    "goal_tools": false,
+    "temporary_fixtures_only": true
+  }
+}

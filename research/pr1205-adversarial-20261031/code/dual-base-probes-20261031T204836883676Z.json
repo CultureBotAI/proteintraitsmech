@@ -1,0 +1,169 @@
+{
+  "created_utc": "2026-10-31T20:48:36.883676+00:00",
+  "reviewer": "Codex agent /root/preflight_boundary_review",
+  "context": "PR1205 adversarial follow-up; issue1206 explicit historical-base retention",
+  "production_pins": [
+    "93c1a021d76a94fd299e0a1e3cf8f1b9671a3703",
+    "bc0c6d97aaab0ba20fcf8be28bc1527430679ccb"
+  ],
+  "production_shell": "set -euo pipefail\nfor review_revision in \\\n  93c1a021d76a94fd299e0a1e3cf8f1b9671a3703 \\\n  bc0c6d97aaab0ba20fcf8be28bc1527430679ccb; do\n  if ! git cat-file -e \"${review_revision}^{commit}\" 2>/dev/null; then\n    git fetch --no-tags --no-write-fetch-head origin \"$review_revision\"\n  fi\n  test \"$(git rev-parse --verify \"${review_revision}^{commit}\")\" = \"$review_revision\"\ndone\n",
+  "workflow_sha256": "76332ffc89286571359a109a8e1b3f7177fddac05a89c3adfe72403940c3a7f2",
+  "helper_sha256": "43d602cf44d239fcbcc43c2987eb24fb13e0e2ff99775c532548a7672e73a19e",
+  "reused_helper": {
+    "path": "research/structural-discovery-20261028/ci-followup/probe_review_base_restore.py",
+    "sha256": "33fb5cb0087a0ac0532f0de4863e9d191fbc6d37bc943354b59a2250caba4ba4"
+  },
+  "cases": [
+    {
+      "case": "both_missing",
+      "fixture_pins": [
+        "ae4f43664f01f9c981374ee00f9c881699dbeca0",
+        "09c40765846d8b875a3f93e0790a4b56aa4ee535"
+      ],
+      "only_literal_pins_substituted": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "available_before": [
+        false,
+        false
+      ],
+      "available_after": [
+        true,
+        true
+      ],
+      "head_refs_index_fetch_head_config_and_worktree_preserved": true,
+      "origin_refs_preserved": true,
+      "protected_state_before_and_after": {
+        "head_commit": "321dd1ddb777d75b3352657edf942051ecdb134d",
+        "refs": "refs/heads/main 321dd1ddb777d75b3352657edf942051ecdb134d\nrefs/remotes/origin/main 321dd1ddb777d75b3352657edf942051ecdb134d\n",
+        "protected_bytes": {
+          "HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "index": "24bb43a236693fa7466bcd6e3bcead5c9b5e11972515eaa59e72e1723d33bc36",
+          "FETCH_HEAD": "a0c14ff6361171f11812def6a91a39a75ff7aae489b9eec1b49de1070b144892",
+          "config": "7fe18d4ba6924b875a0f68ee87084487ef46edeaadbe81378b36242bf88997fa"
+        },
+        "worktree_bytes": {
+          "tracked.txt": "075d48147f9722130f35457f2a34501944ae9223e827bd5648637f9a5ad6dc16",
+          "staged.txt": "eab4f6c3ac8c621f44a1e014acdfa819979ee8e2701582523b28edcd1874cabb",
+          "untracked.txt": "7fdb0ba0bb86392963957a043e3c23fc2b8aafb267d61bc992f5d7fc98ddc4c4"
+        }
+      }
+    },
+    {
+      "case": "both_present_offline",
+      "fixture_pins": [
+        "ae4f43664f01f9c981374ee00f9c881699dbeca0",
+        "09c40765846d8b875a3f93e0790a4b56aa4ee535"
+      ],
+      "only_literal_pins_substituted": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "available_before": [
+        true,
+        true
+      ],
+      "available_after": [
+        true,
+        true
+      ],
+      "head_refs_index_fetch_head_config_and_worktree_preserved": true,
+      "origin_refs_preserved": true,
+      "protected_state_before_and_after": {
+        "head_commit": "321dd1ddb777d75b3352657edf942051ecdb134d",
+        "refs": "refs/heads/main 321dd1ddb777d75b3352657edf942051ecdb134d\nrefs/remotes/origin/main 321dd1ddb777d75b3352657edf942051ecdb134d\n",
+        "protected_bytes": {
+          "HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "index": "24bb43a236693fa7466bcd6e3bcead5c9b5e11972515eaa59e72e1723d33bc36",
+          "FETCH_HEAD": "a0c14ff6361171f11812def6a91a39a75ff7aae489b9eec1b49de1070b144892",
+          "config": "7d069af106f49a78b4506a54a8be54f89f6e88a259f2d534824a388582357791"
+        },
+        "worktree_bytes": {
+          "tracked.txt": "075d48147f9722130f35457f2a34501944ae9223e827bd5648637f9a5ad6dc16",
+          "staged.txt": "eab4f6c3ac8c621f44a1e014acdfa819979ee8e2701582523b28edcd1874cabb",
+          "untracked.txt": "7fdb0ba0bb86392963957a043e3c23fc2b8aafb267d61bc992f5d7fc98ddc4c4"
+        }
+      }
+    },
+    {
+      "case": "first_present_second_missing",
+      "fixture_pins": [
+        "ae4f43664f01f9c981374ee00f9c881699dbeca0",
+        "09c40765846d8b875a3f93e0790a4b56aa4ee535"
+      ],
+      "only_literal_pins_substituted": true,
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "available_before": [
+        true,
+        false
+      ],
+      "available_after": [
+        true,
+        true
+      ],
+      "head_refs_index_fetch_head_config_and_worktree_preserved": true,
+      "origin_refs_preserved": true,
+      "protected_state_before_and_after": {
+        "head_commit": "321dd1ddb777d75b3352657edf942051ecdb134d",
+        "refs": "refs/heads/main 321dd1ddb777d75b3352657edf942051ecdb134d\nrefs/remotes/origin/main 321dd1ddb777d75b3352657edf942051ecdb134d\n",
+        "protected_bytes": {
+          "HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "index": "7582f556265d80640a4486cf05ccbd4f010f5acb2edd563ebcba0007b995c719",
+          "FETCH_HEAD": "a0c14ff6361171f11812def6a91a39a75ff7aae489b9eec1b49de1070b144892",
+          "config": "7fe18d4ba6924b875a0f68ee87084487ef46edeaadbe81378b36242bf88997fa"
+        },
+        "worktree_bytes": {
+          "tracked.txt": "075d48147f9722130f35457f2a34501944ae9223e827bd5648637f9a5ad6dc16",
+          "staged.txt": "eab4f6c3ac8c621f44a1e014acdfa819979ee8e2701582523b28edcd1874cabb",
+          "untracked.txt": "7fdb0ba0bb86392963957a043e3c23fc2b8aafb267d61bc992f5d7fc98ddc4c4"
+        }
+      }
+    },
+    {
+      "case": "unavailable_second_fails",
+      "fixture_pins": [
+        "ae4f43664f01f9c981374ee00f9c881699dbeca0",
+        "ffffffffffffffffffffffffffffffffffffffff"
+      ],
+      "only_literal_pins_substituted": true,
+      "exit_code": 128,
+      "stdout": "",
+      "stderr": "fatal: git upload-pack: not our ref ffffffffffffffffffffffffffffffffffffffff\nfatal: remote error: upload-pack: not our ref ffffffffffffffffffffffffffffffffffffffff\n",
+      "available_before": [
+        false,
+        false
+      ],
+      "available_after": [
+        true,
+        false
+      ],
+      "head_refs_index_fetch_head_config_and_worktree_preserved": true,
+      "origin_refs_preserved": true,
+      "protected_state_before_and_after": {
+        "head_commit": "321dd1ddb777d75b3352657edf942051ecdb134d",
+        "refs": "refs/heads/main 321dd1ddb777d75b3352657edf942051ecdb134d\nrefs/remotes/origin/main 321dd1ddb777d75b3352657edf942051ecdb134d\n",
+        "protected_bytes": {
+          "HEAD": "28d25bf82af4c0e2b72f50959b2beb859e3e60b9630a5e8c603dad4ddb2b6e80",
+          "index": "008723a32fff6f0b28c107e5e07d6795c4b90252ecb32e683e8bf8515d5dbcda",
+          "FETCH_HEAD": "a0c14ff6361171f11812def6a91a39a75ff7aae489b9eec1b49de1070b144892",
+          "config": "7fe18d4ba6924b875a0f68ee87084487ef46edeaadbe81378b36242bf88997fa"
+        },
+        "worktree_bytes": {
+          "tracked.txt": "075d48147f9722130f35457f2a34501944ae9223e827bd5648637f9a5ad6dc16",
+          "staged.txt": "eab4f6c3ac8c621f44a1e014acdfa819979ee8e2701582523b28edcd1874cabb",
+          "untracked.txt": "7fdb0ba0bb86392963957a043e3c23fc2b8aafb267d61bc992f5d7fc98ddc4c4"
+        }
+      }
+    }
+  ],
+  "all_passed": true,
+  "limits": [
+    "Only disposable local Git repositories were mutated.",
+    "Production SHA literals were asserted separately; only those literals were substituted.",
+    "A failed second fetch may retain the first fetched object; it must still fail the step and preserves protected refs/HEAD/index/FETCH_HEAD.",
+    "Actual GitHub object retrieval and full exact-head CI remain root-owned verification."
+  ]
+}

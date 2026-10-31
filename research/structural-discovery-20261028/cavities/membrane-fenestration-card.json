@@ -1,0 +1,99 @@
+{
+  "created_on": "2026-10-28",
+  "goal_reference": "Parent-owned new structural discovery goal; discover/structural-traits-20261028-04f08f",
+  "rank": 2,
+  "status": "scientifically_supported_candidate_with_explicit_manual_geometry_discriminator; exact_publication_replay_not_claimed",
+  "candidate_label": "membrane-facing lateral channel fenestration",
+  "identifier": null,
+  "trait_axis": "STRUCTURE",
+  "trait_category": "STRUCT_CAVITY",
+  "term_kind": "CLASS",
+  "definition_proposal": "A lateral passage through the transmembrane wall of a protein channel that connects the central pore cavity to the lipid-facing exterior of the protein, distinct from the principal transmembrane pore axis.",
+  "scope": "Geometric membrane-facing channel fenestrations. Excludes extracellular vestibular access openings, capillary endothelial fenestrae, superficial grooves, the main transmembrane pore, and hypothetical drug routes without demonstrated geometry. Occlusion, permeability and ligand accessibility are state-dependent and separate assertions.",
+  "parent_traits_proposal": ["proteintraitsmech:TUNNEL"],
+  "hierarchy_rationale": "This candidate is a complete connecting passage, so it is a geometrically specialized tunnel under the existing broad TUNNEL definition. It is not a subclass of an enclosed disconnected CAVITY and is not necessarily an allosteric site or drug-binding pocket.",
+  "synonyms_proposal": [
+    {"synonym_text": "membrane-facing channel fenestration", "synonym_type": "EXACT_SYNONYM", "source": "Curator synthesis of DOI:10.1073/pnas.2401591121"},
+    {"synonym_text": "lateral fenestration", "synonym_type": "BROAD_SYNONYM", "source": "Term also occurs for non-membrane-facing openings"}
+  ],
+  "novelty": {
+    "artifact": "research/structural-discovery-20261028/cavities/alias-inventory.json",
+    "ignored_files_included": true,
+    "result_key": "membrane_fenestration",
+    "record_identity_matches": 2,
+    "adjudication": "Both identity matches are synonyms of GO:0036053, glomerular endothelium fenestra, a cellular anatomical opening rather than a passage in a protein channel. No equivalent protein structural class was found in the bounded ignored-inclusive corpus, staging/context or label-index search.",
+    "external_identifier_disposition": "No one-to-one external structural CURIE established; do not reuse GO:0036053. Parent owns ID decision and reservation."
+  },
+  "primary_evidence": {
+    "reference": "PMID:38787877",
+    "doi": "10.1073/pnas.2401591121",
+    "title": "Unplugging lateral fenestrations of NALCN reveals a hidden drug binding site within the pore region",
+    "authors": "Schott et al.",
+    "year": 2024,
+    "canonical_url": "https://www.pnas.org/doi/10.1073/pnas.2401591121",
+    "inspected_published_pdf": "https://pdfs.semanticscholar.org/9044/6796fd3bbb5d18c8921be8d527eeaa8a3a10.pdf",
+    "pmid_doi_verified_at": "https://pubmed.ncbi.nlm.nih.gov/38787877/",
+    "support": "The primary study defines lateral access from membrane to central cavity, computes these paths in apo 6UZ3 and 7WLI, and filters detected paths by central-cavity origin and membrane-parallel direction. This supplies an independently analyzed positive representative without importing the restricted Nature 2011 source.",
+    "license": "CC-BY-4.0",
+    "license_locator": "Published PDF page 1 explicitly states Creative Commons Attribution License 4.0",
+    "important_identifier_distinction": "PMID:38328210 is a different preprint version and is not the published article identifier."
+  },
+  "detection": {
+    "class_discriminator": "Generate tunnel candidates from a justified central-cavity seed. Retain a continuous path through the transmembrane protein wall whose lateral endpoint lies on the lipid-facing exterior, using an independently justified membrane frame. Exclude paths following the principal pore axis or ending at aqueous extracellular/intracellular mouths.",
+    "published_method": "MOLE 2.5 tunnel detection followed by explicit geometry filtering. The PNAS methods report minimum bottleneck radius 1.2 angstrom, probe 3 angstrom, surface-cover radius 10 angstrom, origin radius 5 angstrom. These are study settings, not universal class boundaries. Reporting sub-1.2-angstrom minima elsewhere in that paper must not be silently converted into a strict minimum-radius classifier.",
+    "runnable_candidate_generator": {
+      "name": "CAVER 3.0 tunnel geometry followed by membrane-facing endpoint review",
+      "operation": "EDAM:operation_2406",
+      "evidence_kind": "ECO:0007669",
+      "recipe": "java -Xmx1200m -cp {caver_home}/lib -jar {caver_home}/caver.jar -home {caver_home} -pdb {input} -conf {config} -out {output}",
+      "documentation": "https://www.caver.cz/fil/download/manual/caver_userguide.pdf",
+      "requirements": "Use the verified CAVER configuration requirements in tunnel-bottleneck-card.json, with source-justified central-cavity starting coordinates and explicit membrane orientation. Preserve assembly, coordinates, atom selection and probe settings. The command computes candidate paths; manual endpoint and orientation review performs the class-specific discrimination.",
+      "scope": "Runnable geometry candidate generation, not an automatic fenestration classifier or exact replay of the MOLE-based published analysis.",
+      "executed": false
+    },
+    "native_mole_route": {
+      "repository": "https://github.com/sb-ncbr/MOLE",
+      "license": "MIT; https://raw.githubusercontent.com/sb-ncbr/MOLE/main/LICENSE inspected",
+      "manual": "https://raw.githubusercontent.com/sb-ncbr/MOLE/main/Mole2_manual.pdf",
+      "documented_command": "mono {mole_home}/mole2.exe {config}",
+      "config_requirements": "XML Tunnels root, Input PDB path, WorkingDirectory output path, Params including OriginRadius/SurfaceCoverRadius/ProbeRadius, Export options, Origin with source-justified Point or ExactPoint. Native guide labels itself MOLE 2.0; repository README and whatsnew.md identify 2.5 and document extensions. No 2.5 binary replay was performed, so exact publication reproduction remains unverified.",
+      "release_notes": "https://raw.githubusercontent.com/sb-ncbr/MOLE/main/whatsnew.md"
+    },
+    "limitations": [
+      "The native runnable command alone does not classify fenestrations; endpoint connectivity and membrane orientation must be reviewed explicitly.",
+      "Neither a membrane frame nor a central-cavity seed is supplied automatically by the proposed record. No coordinates are invented here.",
+      "Geometry depends on structure state, lipid inclusion, missing atoms, radii, probe and pathway search settings.",
+      "No generic minimum width establishes drug permeability; occluded geometrical side passages and solvent-accessible passages require separate state reporting.",
+      "Do not generalize a fenestration drug effect in NALCN mutants to all membrane channels or build a universal causal graph from it."
+    ]
+  },
+  "representative": {
+    "structure_ref": "PDB:7WLI",
+    "structure_source": "PDB",
+    "evidence_source": "DOI:10.1073/pnas.2401591121; Results and SI Figure S1D reference in main text",
+    "role": "Source-computed geometric representative; not a qualified canonical protein example",
+    "metadata_url": "https://www.rcsb.org/structure/7WLI",
+    "entry_version": "1.2",
+    "entry_revision_date": "2024-10-30",
+    "chain": "A",
+    "organism": "Homo sapiens",
+    "protein": "CaV3.3, voltage-dependent T-type calcium channel alpha-1I",
+    "method": "Cryo-EM",
+    "resolution_angstrom": 3.3,
+    "state": "Apo relative to the investigated drug inhibitors; lipids and calcium are present",
+    "assembly": "1; author-assigned monomer",
+    "mutation_annotation": "No",
+    "modeled_residues": 1135,
+    "deposited_residues": 2223,
+    "construct_caution": "Partially modeled chain; no full-length completeness or exact fenestration residue boundaries are asserted",
+    "structure_primary_reference": "PMID:35440630; DOI:10.1038/s41467-022-29728-0",
+    "structure_primary_fulltext_status": "Publisher fetch blocked; no new claim or prose imported from that article. The inspected PNAS computational study supplies fenestration evidence.",
+    "residue_range": null,
+    "source_rights": "PDB archive CC0-1.0 per https://www.wwpdb.org/about/usage-policies; primary articles retain their own terms",
+    "canonical_examples_added": 0,
+    "qualification_status": "NOT_QUALIFIED"
+  },
+  "alternative_representative_rejected_for_preference": "PDB:6UZ3 is also directly analyzed in the PNAS source, but is a rat sodium channel/GFP chimeric entity. 7WLI offers simpler construct attribution. PDB:3RVY has strong original structural evidence but the previously inspected Nature 2011 article did not provide compatible source licensing; it is not used for this card.",
+  "record_license_proposal": "CC-BY-4.0 for original project synthesis and annotations; PNAS CC-BY-4.0, CAVER software/manual GPL-3.0, MOLE software/docs MIT, PDB archive CC0-1.0 retain source terms",
+  "causal_graph_disposition": "Geometry only for this candidate; no universal function inferred."
+}
