@@ -140,7 +140,7 @@ major / resolved / confirmed; issue key: cdd-cd15855-snap25c-23c-transmembrane-d
 
 CDD:cd15855 (label=SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856], 0 canonical_examples) models the combined C-terminal Qc SNARE motif subfamily of SNAP25 and SNAP23 (grouping child profiles CDD:cd15885 and CDD:cd15884), but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' SNAP25/SNAP23-family Qb/Qc t-SNAREs lack a transmembrane domain and attach to membranes via palmitoylated cysteine residues in the central linker between their N-terminal Qb and C-terminal Qc SNARE motifs (PMID:9759094, PMID:9159129).
 
-Disposition: Repaired CDD:cd15855 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated cysteine residues in the linker between their two SNARE motifs, added PMID:9159129 and PMID:9759094 evidence, advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15855.
+Disposition: Repaired CDD:cd15855 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes via palmitoylated cysteine residues in their central linker region, added PMID:9759094 evidence (with definition_source citing PMID:9759094; UniProtKB:P60880; UniProtKB:O00161), advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15855.
 
 ### F28: CDD:cd15889 (SNARE_SNAP25N_23N) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP25 and SNAP23 are membrane-anchored via palmitoylated cysteines
 
@@ -148,7 +148,7 @@ major / resolved / confirmed; issue key: cdd-cd15889-snap25n-23n-transmembrane-d
 
 CDD:cd15889 (label=SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], unpromoted seed example Drosophila melanogaster Snap25 UniProtKB:P36975) models the combined N-terminal Qb SNARE motif subfamily of SNAP25 and SNAP23 (grouping child profiles CDD:cd15894 and CDD:cd15895), but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' SNAP25/SNAP23-family Qb/Qc t-SNAREs lack a transmembrane domain and attach to membranes via palmitoylated cysteine residues in the central linker between their N-terminal Qb and C-terminal Qc SNARE motifs (PMID:9759094, PMID:9159129).
 
-Disposition: Repaired CDD:cd15889 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated cysteine residues in the linker between their two SNARE motifs, added PMID:9159129 and PMID:9759094 evidence, advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15889.
+Disposition: Repaired CDD:cd15889 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes via palmitoylated cysteine residues in their central linker region, added PMID:9759094 evidence (with definition_source citing PMID:9759094; UniProtKB:P60880; UniProtKB:O00161), advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15889.
 
 ### F29: CDD:cd15856 (SNARE_SNAP29C) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane anchors
 
@@ -156,7 +156,7 @@ major / resolved / confirmed; issue key: cdd-cd15856-snap29c-transmembrane-domai
 
 CDD:cd15856 (label=SNARE_SNAP29C, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the C-terminal Qc SNARE motif of SNAP29, but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 specifically lacks both a transmembrane domain and the palmitoylated cysteine cluster of SNAP25/SNAP23, associating with membranes via protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
 
-Disposition: Repaired CDD:cd15856 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteine residues and associates with membranes via interactions with syntaxins and other SNARE regulators, added PMID:9920888 and PMID:23217709 evidence, advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15856.
+Disposition: Repaired CDD:cd15856 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with membranes through protein-protein interactions, added PMID:9736707 evidence (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721), advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15856.
 
 ### F30: CDD:cd15887 (SNARE_SNAP29N) asserts that Qb/Qc SNAREs have a transmembrane domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane anchors
 
@@ -164,7 +164,7 @@ major / resolved / confirmed; issue key: cdd-cd15887-snap29n-transmembrane-domai
 
 CDD:cd15887 (label=SNARE_SNAP29N, parent_traits=[CDD:cl22856], unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29 UniProtKB:Q9ERB0, and Caenorhabditis elegans SNAP29 UniProtKB:P83351) models the N-terminal Qb SNARE motif of SNAP29, and propagates the identical false upstream CDD template claim 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate the interactions with other SNARE proteins, and a transmembrane domain.' Qb/Qc SNAREs lack a transmembrane domain, and SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring cysteines (PMID:9736707, PMID:9759094).
 
-Disposition: Repaired CDD:cd15887 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteine residues and associates with membranes via interactions with syntaxins and other SNARE regulators, added PMID:9920888 and PMID:23217709 evidence, advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15887.
+Disposition: Repaired CDD:cd15887 in place via scripts/cdd_errata.py and scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with membranes through protein-protein interactions, added PMID:9736707 evidence (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721), advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15887.
 
 ## Recommended Actions And Acceptance Checks
 
@@ -184,12 +184,12 @@ Disposition: Repaired CDD:cd15887 in place via scripts/cdd_errata.py and scripts
 | ev-cd15895 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml; identifier, label, definition, evidence (PMID:9759094), mapping_status, curation_history (source_erratum_cd15895) | supports | CDD:cd15895 (label SNARE_SNAP23N, parent_traits=[CDD:cl22856], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd18599 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml; identifier, label, definition, evidence (PMID:16984901), mapping_status, curation_history (source_erratum_cd18599) | supports | CDD:cd18599 (label ABC_6TM_MRP5_8_9_D2, parent_traits=[CDD:cl38913], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
 | ev-cd18601 | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml; identifier, label, definition, evidence (PMID:16984901), mapping_status, curation_history (source_erratum_cd18601) | supports | CDD:cd18601 (label ABC_6TM_MRP4_D2_like, parent_traits=[CDD:cl38913], PROPOSED) remains verified resolved on disk after Cycle 3 Stage 5 (#1210) errata repair. |
-| ev-cd17071 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml; identifier, label, definition, evidence (PMID:16278295), mapping_status, curation_history (source_erratum_cd17071) | supports | CDD:cd17071 (label DCX1_DCDC2-like, parent_traits=[CDD:cl28922], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: 'Dublecortin-like' is corrected to 'Doublecortin-like', the off-target ubiquitin protein-modifier digression has been replaced with the accurate tandem DCX ubiquitin-like beta-grasp fold description, PMID:16278295 evidence is attached, and curation_history records source_erratum_cd17071. |
-| ev-cd16113 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml; identifier, label, definition, evidence (PMID:16278295), mapping_status, curation_history (source_erratum_cd16113) | supports | CDD:cd16113 (label DCX2_DCDC2-like, parent_traits=[CDD:cl28922], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the off-target ubiquitin protein-modifier digression has been replaced with the accurate tandem DCX ubiquitin-like beta-grasp fold description, PMID:16278295 evidence is attached, and curation_history records source_erratum_cd16113. |
-| ev-cd15855 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml; identifier, label, definition, evidence (PMID:9159129, PMID:9759094), mapping_status, curation_history (source_erratum_cd15855) | supports | CDD:cd15855 (label SNARE_SNAP25_23C, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated cysteine residues in their inter-motif linker, PMID:9159129 and PMID:9759094 evidence items are attached, and curation_history records source_erratum_cd15855. |
-| ev-cd15889 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml; identifier, label, definition, evidence (PMID:9159129, PMID:9759094), mapping_status, curation_history (source_erratum_cd15889) | supports | CDD:cd15889 (label SNARE_SNAP25_23N, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated cysteine residues in their inter-motif linker, PMID:9159129 and PMID:9759094 evidence items are attached, and curation_history records source_erratum_cd15889. |
-| ev-cd15856 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml; identifier, label, definition, evidence (PMID:9920888, PMID:23217709), mapping_status, curation_history (source_erratum_cd15856) | supports | CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP29 also lacks palmitoylated membrane-anchoring cysteine residues and associates with membranes via interactions with syntaxins and other SNARE regulators, PMID:9920888 and PMID:23217709 evidence items are attached, and curation_history records source_erratum_cd15856. |
-| ev-cd15887 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml; identifier, label, definition, evidence (PMID:9920888, PMID:23217709), mapping_status, curation_history (source_erratum_cd15887) | supports | CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP29 also lacks palmitoylated membrane-anchoring cysteine residues and associates with membranes via interactions with syntaxins and other SNARE regulators, PMID:9920888 and PMID:23217709 evidence items are attached, and curation_history records source_erratum_cd15887. |
+| ev-cd17071 | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml; identifier, label, definition, definition_source, evidence (PMID:16278295), mapping_status, curation_history (source_erratum_cd17071) | supports | CDD:cd17071 (label DCX1_DCDC2_like, parent_traits=[CDD:cl28922], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: 'Dublecortin-like' is corrected to 'Doublecortin-like', the off-target ubiquitin protein-modifier digression has been replaced with the accurate tandem DCX ubiquitin-like beta-grasp fold description, PMID:16278295 evidence is attached, and curation_history records source_erratum_cd17071. |
+| ev-cd16113 | data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml; identifier, label, definition, definition_source, evidence (PMID:16278295), mapping_status, curation_history (source_erratum_cd16113) | supports | CDD:cd16113 (label DCX2_DCDC2_like, parent_traits=[CDD:cl28922], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the off-target ubiquitin protein-modifier digression has been replaced with the accurate tandem DCX ubiquitin-like beta-grasp fold description, PMID:16278295 evidence is attached, and curation_history records source_erratum_cd16113. |
+| ev-cd15855 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml; identifier, label, definition, definition_source, evidence (PMID:9759094), mapping_status, curation_history (source_erratum_cd15855) | supports | CDD:cd15855 (label SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes via palmitoylated cysteine residues in their central linker region, PMID:9759094 evidence is attached (with definition_source citing PMID:9759094; UniProtKB:P60880; UniProtKB:O00161), and curation_history records source_erratum_cd15855. |
+| ev-cd15889 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml; identifier, label, definition, definition_source, evidence (PMID:9759094), mapping_status, curation_history (source_erratum_cd15889) | supports | CDD:cd15889 (label SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes via palmitoylated cysteine residues in their central linker region, PMID:9759094 evidence is attached (with definition_source citing PMID:9759094; UniProtKB:P60880; UniProtKB:O00161), and curation_history records source_erratum_cd15889. |
+| ev-cd15856 | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml; identifier, label, definition, definition_source, evidence (PMID:9736707), mapping_status, curation_history (source_erratum_cd15856) | supports | CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with membranes through protein-protein interactions, PMID:9736707 evidence is attached (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721), and curation_history records source_erratum_cd15856. |
+| ev-cd15887 | data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml; identifier, label, definition, definition_source, evidence (PMID:9736707), mapping_status, curation_history (source_erratum_cd15887) | supports | CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], PROPOSED) is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation: the false Qb/Qc transmembrane-domain claim has been replaced with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with membranes through protein-protein interactions, PMID:9736707 evidence is attached (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721), and curation_history records source_erratum_cd15887. |
 | ev-dcx-child-siblings | data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml; CDD:cd17149 (DCX1_DCDC2), CDD:cd17150 (DCX1_DCDC2B), CDD:cd17151 (DCX1_DCDC2C), and CDD:cd17154 (DCX2_DCDC2C) | supports | Paralog-specific child repeat-1 profiles CDD:cd17149, CDD:cd17150, and CDD:cd17151 and repeat-2 profile CDD:cd17154 repaired in Cycles 1-2 (#1171, #1188), establishing the tandem DCX ubiquitin-like beta-grasp repeat wording and PMID:16278295 citation needed on subfamily parent profiles CDD:cd17071 (F25) and CDD:cd16113 (F26). |
 | ev-snap25-siblings | data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-c-terminal-snare-motifs-of-snap25-a-m-cd15885.yaml; CDD:cd15885 (SNARE_SNAP25C) and CDD:cd15894 (SNARE_SNAP25N) | supports | Remediated SNAP25 child profiles CDD:cd15885 (#1188) and CDD:cd15894 (#1171) establishing the palmitoylated inter-motif linker membrane-anchoring wording for Qb/Qc SNAREs (PMID:9759094). |
 | ev-mrp-tmd1-siblings | data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18592.yaml; CDD:cd18592 (ABC_6TM_MRP5_8_9_D1) and CDD:cd18593 (ABC_6TM_MRP4_D1_like) | supports | Remediated N-terminal TMD1 siblings CDD:cd18592 (#1171) and CDD:cd18593 (#1188) supporting verified resolved findings F23 (CDD:cd18599) and F24 (CDD:cd18601). |
@@ -1028,8 +1028,8 @@ evidence:
 - evidence_id: ev-cd17071
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml
-  locator: identifier, label, definition, evidence (PMID:16278295), mapping_status,
-    curation_history (source_erratum_cd17071)
+  locator: identifier, label, definition, definition_source, evidence (PMID:16278295),
+    mapping_status, curation_history (source_erratum_cd17071)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: 1aff2abcd815c6155a36d63abf731f22dc6644f6f673e5286f407d0476f35266
   support: supports
@@ -1043,7 +1043,7 @@ evidence:
     A genetic variant of DCDC2 associates with dyslexia, a common neurobehavioral
     disorder of reading. DCDC2 protein interacts with many of the same cytoskeleton
     related proteins that other members of the DCX family interact with
-  summary: 'CDD:cd17071 (label DCX1_DCDC2-like, parent_traits=[CDD:cl28922], PROPOSED)
+  summary: 'CDD:cd17071 (label DCX1_DCDC2_like, parent_traits=[CDD:cl28922], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     ''Dublecortin-like'' is corrected to ''Doublecortin-like'', the off-target ubiquitin
     protein-modifier digression has been replaced with the accurate tandem DCX ubiquitin-like
@@ -1052,8 +1052,8 @@ evidence:
 - evidence_id: ev-cd16113
   kind: record_content
   reference: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml
-  locator: identifier, label, definition, evidence (PMID:16278295), mapping_status,
-    curation_history (source_erratum_cd16113)
+  locator: identifier, label, definition, definition_source, evidence (PMID:16278295),
+    mapping_status, curation_history (source_erratum_cd16113)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: 2ddc254725899c6217899f51342f7d9b86610b95d0c2a3df0dd2943d715f7a4b
   support: supports
@@ -1067,7 +1067,7 @@ evidence:
     variant of DCDC2 associates with dyslexia, a common neurobehavioral disorder of
     reading. DCDC2 protein interacts with many of the same cytoskeleton related proteins
     that other members of the DCX family interact with
-  summary: 'CDD:cd16113 (label DCX2_DCDC2-like, parent_traits=[CDD:cl28922], PROPOSED)
+  summary: 'CDD:cd16113 (label DCX2_DCDC2_like, parent_traits=[CDD:cl28922], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     the off-target ubiquitin protein-modifier digression has been replaced with the
     accurate tandem DCX ubiquitin-like beta-grasp fold description, PMID:16278295
@@ -1075,8 +1075,8 @@ evidence:
 - evidence_id: ev-cd15855
   kind: record_content
   reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml
-  locator: identifier, label, definition, evidence (PMID:9159129, PMID:9759094), mapping_status,
-    curation_history (source_erratum_cd15855)
+  locator: identifier, label, definition, definition_source, evidence (PMID:9759094),
+    mapping_status, curation_history (source_erratum_cd15855)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: fd7dc3af4c9120523b0d00017a4c8b631bcd635468f031a23fc9ef480646ab06
   support: supports
@@ -1102,18 +1102,18 @@ evidence:
     between a specific type of vesicles and their target organelle. Their SNARE motifs
     form twisted and parallel heterotetrameric helix bundles. Other members of the
     Qb/Qc SNAREs are SNAP29, SNAP47 and SEC9
-  summary: 'CDD:cd15855 (label SNARE_SNAP25_23C, parent_traits=[CDD:cl22856], PROPOSED)
+  summary: 'CDD:cd15855 (label SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     the false Qb/Qc transmembrane-domain claim has been replaced with the accurate
-    statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23
-    are anchored to target membranes via palmitoylated cysteine residues in their
-    inter-motif linker, PMID:9159129 and PMID:9759094 evidence items are attached,
-    and curation_history records source_erratum_cd15855.'
+    statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes
+    via palmitoylated cysteine residues in their central linker region, PMID:9759094
+    evidence is attached (with definition_source citing PMID:9759094; UniProtKB:P60880;
+    UniProtKB:O00161), and curation_history records source_erratum_cd15855.'
 - evidence_id: ev-cd15889
   kind: record_content
   reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml
-  locator: identifier, label, definition, evidence (PMID:9159129, PMID:9759094), mapping_status,
-    curation_history (source_erratum_cd15889)
+  locator: identifier, label, definition, definition_source, evidence (PMID:9759094),
+    mapping_status, curation_history (source_erratum_cd15889)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: e01a1f77672ae59b19218bc22b8d7970c2cc3bc2517b6bad56e5ed3c19453b4a
   support: supports
@@ -1139,17 +1139,17 @@ evidence:
     between a specific type of vesicles and their target organelle. Their SNARE motifs
     form twisted and parallel heterotetrameric helix bundles. Other members of the
     Qb/Qc SNAREs are SNAP29, SNAP47 and SEC9
-  summary: 'CDD:cd15889 (label SNARE_SNAP25_23N, parent_traits=[CDD:cl22856], PROPOSED)
+  summary: 'CDD:cd15889 (label SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     the false Qb/Qc transmembrane-domain claim has been replaced with the accurate
-    statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP25 and SNAP23
-    are anchored to target membranes via palmitoylated cysteine residues in their
-    inter-motif linker, PMID:9159129 and PMID:9759094 evidence items are attached,
-    and curation_history records source_erratum_cd15889.'
+    statement that Qb/Qc SNAREs lack a transmembrane domain and are anchored to membranes
+    via palmitoylated cysteine residues in their central linker region, PMID:9759094
+    evidence is attached (with definition_source citing PMID:9759094; UniProtKB:P60880;
+    UniProtKB:O00161), and curation_history records source_erratum_cd15889.'
 - evidence_id: ev-cd15856
   kind: record_content
   reference: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml
-  locator: identifier, label, definition, evidence (PMID:9920888, PMID:23217709),
+  locator: identifier, label, definition, definition_source, evidence (PMID:9736707),
     mapping_status, curation_history (source_erratum_cd15856)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: c5c11e86520d19d5bd1fccc934f8d80f4fa927e64cbd53e8d0f8e3ffa8315c0a
@@ -1178,14 +1178,15 @@ evidence:
   summary: 'CDD:cd15856 (label SNARE_SNAP29C, parent_traits=[CDD:cl22856], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     the false Qb/Qc transmembrane-domain claim has been replaced with the accurate
-    statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP29 also lacks
-    palmitoylated membrane-anchoring cysteine residues and associates with membranes
-    via interactions with syntaxins and other SNARE regulators, PMID:9920888 and PMID:23217709
-    evidence items are attached, and curation_history records source_erratum_cd15856.'
+    statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23,
+    SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with
+    membranes through protein-protein interactions, PMID:9736707 evidence is attached
+    (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721),
+    and curation_history records source_erratum_cd15856.'
 - evidence_id: ev-cd15887
   kind: record_content
   reference: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml
-  locator: identifier, label, definition, evidence (PMID:9920888, PMID:23217709),
+  locator: identifier, label, definition, definition_source, evidence (PMID:9736707),
     mapping_status, curation_history (source_erratum_cd15887)
   accessed_at: '2026-10-31T08:12:00Z'
   snapshot_sha256: 5fb03c07b2e0d6dd1bea53f4c87b478dd9021fb9a970f64876c5d3a26e4519a4
@@ -1214,10 +1215,11 @@ evidence:
   summary: 'CDD:cd15887 (label SNARE_SNAP29N, parent_traits=[CDD:cl22856], PROPOSED)
     is verified repaired on disk after Cycle 4 Stage 5 (#1217) errata remediation:
     the false Qb/Qc transmembrane-domain claim has been replaced with the accurate
-    statement that Qb/Qc SNAREs lack a transmembrane domain and that SNAP29 also lacks
-    palmitoylated membrane-anchoring cysteine residues and associates with membranes
-    via interactions with syntaxins and other SNARE regulators, PMID:9920888 and PMID:23217709
-    evidence items are attached, and curation_history records source_erratum_cd15887.'
+    statement that Qb/Qc SNAREs lack a transmembrane domain; unlike SNAP25 and SNAP23,
+    SNAP29 also lacks palmitoylated membrane-anchoring cysteines and associates with
+    membranes through protein-protein interactions, PMID:9736707 evidence is attached
+    (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721),
+    and curation_history records source_erratum_cd15887.'
 - evidence_id: ev-dcx-child-siblings
   kind: record_content
   reference: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17149.yaml
@@ -1874,6 +1876,9 @@ findings:
     SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd17071.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261031T043800Z-cdd-cd17071-record-review
+    finding_id: F25
+  - repository: CultureBotAI/proteintraitsmech
     review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review
     finding_id: F25
 - finding_id: F26
@@ -1979,10 +1984,10 @@ findings:
   disposition_reason: 'Repaired CDD:cd15855 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain
     claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain
-    and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated
-    cysteine residues in the linker between their two SNARE motifs, added PMID:9159129
-    and PMID:9759094 evidence, advanced mapping_status from SEEDED to PROPOSED, and
-    recorded curation_history action source_erratum_cd15855.'
+    and are anchored to membranes via palmitoylated cysteine residues in their central
+    linker region, added PMID:9759094 evidence (with definition_source citing PMID:9759094;
+    UniProtKB:P60880; UniProtKB:O00161), advanced mapping_status from SEEDED to PROPOSED,
+    and recorded curation_history action source_erratum_cd15855.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review
@@ -2035,10 +2040,10 @@ findings:
   disposition_reason: 'Repaired CDD:cd15889 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain
     claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain
-    and that SNAP25 and SNAP23 are anchored to target membranes via palmitoylated
-    cysteine residues in the linker between their two SNARE motifs, added PMID:9159129
-    and PMID:9759094 evidence, advanced mapping_status from SEEDED to PROPOSED, and
-    recorded curation_history action source_erratum_cd15889.'
+    and are anchored to membranes via palmitoylated cysteine residues in their central
+    linker region, added PMID:9759094 evidence (with definition_source citing PMID:9759094;
+    UniProtKB:P60880; UniProtKB:O00161), advanced mapping_status from SEEDED to PROPOSED,
+    and recorded curation_history action source_erratum_cd15889.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review
@@ -2091,11 +2096,12 @@ findings:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
   disposition_reason: 'Repaired CDD:cd15856 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain
-    claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain
-    and that unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring
-    cysteine residues and associates with membranes via interactions with syntaxins
-    and other SNARE regulators, added PMID:9920888 and PMID:23217709 evidence, advanced
-    mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15856.'
+    claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain;
+    unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines
+    and associates with membranes through protein-protein interactions, added PMID:9736707
+    evidence (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721),
+    advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history
+    action source_erratum_cd15856.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review
@@ -2147,11 +2153,12 @@ findings:
   - https://github.com/CultureBotAI/proteintraitsmech/issues/605
   disposition_reason: 'Repaired CDD:cd15887 in place via scripts/cdd_errata.py and
     scripts/repair_cdd_errata.py (#1217): replaced the false transmembrane-domain
-    claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain
-    and that unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring
-    cysteine residues and associates with membranes via interactions with syntaxins
-    and other SNARE regulators, added PMID:9920888 and PMID:23217709 evidence, advanced
-    mapping_status from SEEDED to PROPOSED, and recorded curation_history action source_erratum_cd15887.'
+    claim with the accurate statement that Qb/Qc SNAREs lack a transmembrane domain;
+    unlike SNAP25 and SNAP23, SNAP29 also lacks palmitoylated membrane-anchoring cysteines
+    and associates with membranes through protein-protein interactions, added PMID:9736707
+    evidence (with definition_source citing PMID:9736707; PMID:9759094; UniProtKB:O95721),
+    advanced mapping_status from SEEDED to PROPOSED, and recorded curation_history
+    action source_erratum_cd15887.'
   previous_occurrences:
   - repository: CultureBotAI/proteintraitsmech
     review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review

@@ -28,7 +28,7 @@ All 12 findings in the Cycle 4 Stage 4 review bundle (`20261031T043900Z-cdd-cycl
    - Updated module docstring and ran `.venv/bin/python scripts/repair_cdd_errata.py --apply`, updating all 6 Group `G5` records in place via `record_io.write_record(..., RegisteredEditor("scripts/repair_cdd_errata.py"))` while leaving all 24 previously repaired CDD records unchanged.
    - Re-ran `.venv/bin/python scripts/repair_cdd_errata.py` (dry-run) to verify idempotence (`already corrected; no history appended` across all 30 entries).
 3. **`tests/test_cdd_errata.py` (`sha256: eecb43cd493750086aca8dbb47fb9dd8d9a5cd4574867663bd4392d018ed5807`)**:
-   - Expanded expected accession set to all 30 CDD accessions (`F1`–`F30`) and added `test_cycle4_sibling_errata_fixes` verifying exact post-repair definitions, removal of bad substrings, grounded `evidence` accessions, `mapping_status: PROPOSED`, and `curation_history` actions `source_erratum_<accession>`.
+   - Expanded `test_errata_table_covers_all_thirty_stage4_targets` and parametrized errata tests to cover all 30 CDD accessions (`F1`–`F30`), verifying exact post-repair definitions, removal of bad substrings, grounded `evidence` accessions, `mapping_status: PROPOSED`, and `curation_history` actions `source_erratum_<accession>`.
 
 ---
 
@@ -36,10 +36,10 @@ All 12 findings in the Cycle 4 Stage 4 review bundle (`20261031T043900Z-cdd-cycl
 
 | Finding | Identifier | Label | Path | Pre-Repair SHA-256 | Post-Repair SHA-256 |
 | --- | --- | --- | --- | --- | --- |
-| `F25` | `CDD:cd17071` | `DCX1_DCDC2-like` | `data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml` | `deaeaef82093e32e314b0cb69b61a4a3a34da7a0f93922309babf7ef18ffea50` | `1aff2abcd815c6155a36d63abf731f22dc6644f6f673e5286f407d0476f35266` |
-| `F26` | `CDD:cd16113` | `DCX2_DCDC2-like` | `data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml` | `d3e0f20833782f29d82b77caac4651d4d4f7a6948a18850f974003cacc36022f` | `2ddc254725899c6217899f51342f7d9b86610b95d0c2a3df0dd2943d715f7a4b` |
-| `F27` | `CDD:cd15855` | `SNARE_SNAP25_23C` | `data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml` | `306f687472e4fb91d6dcad19fa7ea13f99eb85fbafb7e86440302296b710b267` | `fd7dc3af4c9120523b0d00017a4c8b631bcd635468f031a23fc9ef480646ab06` |
-| `F28` | `CDD:cd15889` | `SNARE_SNAP25_23N` | `data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml` | `a7de1d8068c056d075c9ddfc6e5f1a0cb9f9bb4102e6779f92fd06fd75acbd6e` | `e01a1f77672ae59b19218bc22b8d7970c2cc3bc2517b6bad56e5ed3c19453b4a` |
+| `F25` | `CDD:cd17071` | `DCX1_DCDC2_like` | `data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml` | `deaeaef82093e32e314b0cb69b61a4a3a34da7a0f93922309babf7ef18ffea50` | `1aff2abcd815c6155a36d63abf731f22dc6644f6f673e5286f407d0476f35266` |
+| `F26` | `CDD:cd16113` | `DCX2_DCDC2_like` | `data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml` | `d3e0f20833782f29d82b77caac4651d4d4f7a6948a18850f974003cacc36022f` | `2ddc254725899c6217899f51342f7d9b86610b95d0c2a3df0dd2943d715f7a4b` |
+| `F27` | `CDD:cd15855` | `SNARE_SNAP25C_23C` | `data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml` | `306f687472e4fb91d6dcad19fa7ea13f99eb85fbafb7e86440302296b710b267` | `fd7dc3af4c9120523b0d00017a4c8b631bcd635468f031a23fc9ef480646ab06` |
+| `F28` | `CDD:cd15889` | `SNARE_SNAP25N_23N` | `data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml` | `a7de1d8068c056d075c9ddfc6e5f1a0cb9f9bb4102e6779f92fd06fd75acbd6e` | `e01a1f77672ae59b19218bc22b8d7970c2cc3bc2517b6bad56e5ed3c19453b4a` |
 | `F29` | `CDD:cd15856` | `SNARE_SNAP29C` | `data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml` | `84d8d25d5f6ce8934609c55719a0d4a09b385e2ba1cbb5134c2649573d8327c0` | `c5c11e86520d19d5bd1fccc934f8d80f4fa927e64cbd53e8d0f8e3ffa8315c0a` |
 | `F30` | `CDD:cd15887` | `SNARE_SNAP29N` | `data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml` | `edd0ed8a35d333d4f87c1ac2a4aee0d30f5af17a5a6c9a169007401798101519` | `5fb03c07b2e0d6dd1bea53f4c87b478dd9021fb9a970f64876c5d3a26e4519a4` |
 
