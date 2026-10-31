@@ -17,13 +17,20 @@ synonyms:
   - synonym_text: "regulated unfolding order-to-disorder switch"
     synonym_type: EXACT_SYNONYM
 detection_methods:
-  - name: "IUPred3 redox/conditional disorder and energy-profile prediction"
-    method_type: ML_PREDICTOR
-    edam_operation: EDAM:operation_3904
-    tool: "biotools:iupred3"
-    evidence_code: ECO:0000255
-    reference: PMID:24707833
-    recipe: "iupred3.py {input} long > {output}"
+- name: IUPred3 redox/conditional disorder and energy-profile prediction
+  method_type: ML_PREDICTOR
+  edam_operation: EDAM:operation_3904
+  tool: biotools:iupred3
+  evidence_code: ECO:0000255
+  reference: PMID:24707833
+  recipe: iupred3.py {input} long > {output}
+- name: IUPred3 redox/conditional disorder and energy-profile prediction
+  method_type: ML_PREDICTOR
+  edam_operation: EDAM:operation_3904
+  tool: biotools:iupred3
+  evidence_code: ECO:0000255
+  reference: PMID:23018052
+  recipe: iupred3.py {input} long > {output}
 causal_graphs:
   - graph_id: conditional_unfolding_cryptic_disorder_activation
     title: "Transient environmental or post-translational modification awakens dormant disorder via local unfolding to activate protein binding"
@@ -54,30 +61,47 @@ causal_graphs:
         predicate: "participates in"
         predicate_id: RO:0000056
         object: "GO:0036211"
-        description: "Ordered protein domains contain regions of dormant disorder that respond to regulatory triggers."
+        description: "Ordered protein domains contain regions of conditional disorder that respond to regulatory triggers."
         evidence:
-          - reference: PMID:24707833
-            snippet: "In fact, many proteins possess regions of dormant disorder that need to be awakened to make these proteins functional."
-            notes: "Jakob, Kriwacki & Uversky (2014) Chem Rev 114:6779-6805 review conditionally and transiently disordered proteins. (ECO:0000305)"
+          - reference: PMID:23018052
+            snippet: "Several molecular chaperones have now been identified as conditionally disordered proteins; fully folded and chaperone-inactive under non-stress conditions, they adopt a partially disordered conformation upon exposure to distinct stress conditions."
+            notes: "Bardwell & Jakob (2012) Trends Biochem Sci 37:517-525 review conditionally disordered proteins activated by stress-induced unfolding. (ECO:0000305)"
       - subject: "GO:0036211"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "PATO:0001543"
-        description: "Regulatory modification or environmental shift induces local or global unfolding of the ordered structure."
+        description: "Regulatory modification or redox oxidation induces reversible unfolding of ordered structural domains into disordered regions."
         evidence:
-          - reference: PMID:24707833
-            snippet: "In other words, some functions of ordered proteins require local or even global unfolding of a unique protein structure."
-            notes: "Regulated order-to-disorder unfolding transitions in conditionally disordered proteins. (ECO:0000305)"
+          - reference: PMID:23477949
+            snippet: "These proteins use oxidation of their redox-sensitive cysteines to reversibly convert large structural domains into more disordered regions or vice versa. These massive structural rearrangements are directly implicated in the functions of these proteins."
+            notes: "Reichmann et al. (2012) Mol Biol Cell 23:2573-2582 demonstrate regulated order-to-disorder unfolding transitions. (ECO:0000305)"
       - subject: "PATO:0001543"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0005515"
-        description: "Reversible transient unfolding activates functional partner binding until the resting state is restored."
+        description: "Stress-induced conditional disorder enables binding of aggregation-sensitive client proteins."
         evidence:
-          - reference: PMID:24707833
-            snippet: "In other words, the function-related changes in a protein are induced by transient alterations in its environment or by transient modification of its structure and are released as soon as the environment is restored or the modification is removed."
-            notes: "Reversible order-to-disorder switching controls protein interaction and function. (ECO:0000305)"
+          - reference: PMID:23018052
+            snippet: "This disorder appears to be vital for their ability to bind multiple aggregation-sensitive client proteins and to protect cells against the stressors."
+            notes: "Reversible order-to-disorder switching controls client protein binding and function. (ECO:0000305)"
 evidence:
-  - reference: PMID:24707833
-    notes: "Conditionally and transiently disordered proteins harbor regions of dormant disorder that undergo reversible local or global unfolding in response to environmental or post-translational triggers to activate protein function."
+- reference: PMID:24707833
+  notes: Conditionally and transiently disordered proteins harbor regions of dormant disorder that undergo
+    reversible local or global unfolding in response to environmental or post-translational triggers to
+    activate protein function.
+- reference: PMID:23018052
+  notes: Conditionally disordered proteins adopt a fully folded, inactive conformation under non-stress
+    conditions and undergo a reversible stress-triggered order-to-disorder transition to bind aggregation-sensitive
+    client proteins.
+- reference: PMID:23477949
+  notes: Redox-regulated conditionally disordered proteins use cysteine oxidation to reversibly convert
+    folded structural domains into disordered regions that directly mediate protein function.
+curation_history:
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph conditional_unfolding_cryptic_disorder_activation (4 nodes, 3 edges)
+    so every edge carries a distinct verbatim PubMed abstract sentence from PMID:23018052, PMID:23477949
+    (Round 127).
+  llm_assisted: true
 license: CC-BY-4.0

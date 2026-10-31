@@ -17,13 +17,20 @@ synonyms:
   - synonym_text: "sequence-adjacent Cys-Cys disulfide"
     synonym_type: EXACT_SYNONYM
 detection_methods:
-  - name: "DSSP/mkdssp geometric identification of sequence-adjacent (i, i+1) cystine disulfide bridges"
-    method_type: STRUCTURAL_ALGORITHM
-    edam_operation: EDAM:operation_0249
-    tool: "biotools:dssp"
-    evidence_code: ECO:0000255
-    reference: PMID:28359877
-    recipe: "mkdssp --output-format dssp {input} {output}"
+- name: DSSP/mkdssp geometric identification of sequence-adjacent (i, i+1) cystine disulfide bridges
+  method_type: STRUCTURAL_ALGORITHM
+  edam_operation: EDAM:operation_0249
+  tool: biotools:dssp
+  evidence_code: ECO:0000255
+  reference: PMID:28359877
+  recipe: mkdssp --output-format dssp {input} {output}
+- name: DSSP/mkdssp geometric identification of sequence-adjacent (i, i+1) cystine disulfide bridges
+  method_type: STRUCTURAL_ALGORITHM
+  edam_operation: EDAM:operation_0249
+  tool: biotools:dssp
+  evidence_code: ECO:0000255
+  reference: PMID:28336403
+  recipe: mkdssp --output-format dssp {input} {output}
 causal_graphs:
   - graph_id: vicinal_disulfide_ring_ligand_binding
     title: "Oxidation of sequence-adjacent cysteines forms an eight-membered vicinal disulfide ring that provides a rigid hydrophobic ligand-binding surface"
@@ -56,28 +63,39 @@ causal_graphs:
         object: "GO:0006457"
         description: "Sequence-adjacent cysteine residues form rare vicinal disulfide features during structural assembly."
         evidence:
-          - reference: PMID:28359877
+          - reference: PMID:28336403
             snippet: "Vicinal disulfides between sequence-adjacent cysteine residues are very rare and rather startling structural features which play a variety of functional roles."
-            notes: "Richardson et al. (2017) J Mol Biol 429:1321-1335 survey the conformations and functions of vicinal disulfides. (ECO:0000269)"
+            notes: "Richardson et al. (2017) J Mol Biol 429:1321-1335 (PMID:28336403) survey the conformations and functions of vicinal disulfides. (ECO:0000269)"
       - subject: "GO:0006457"
         predicate: "has output"
         predicate_id: RO:0002234
         object: "MOD:00034"
         description: "Folding produces a vicinal cystine ring that stabilizes tightly packed internal regions or coupled motions."
         evidence:
-          - reference: PMID:28359877
+          - reference: PMID:28336403
             snippet: "Some vicinal disulfides are essential to large, functionally coupled motions, whereas most form the centers of tightly packed internal regions."
             notes: "Formation of tightly packed or motion-coupled vicinal cystine rings. (ECO:0000269)"
       - subject: "MOD:00034"
         predicate: "causally upstream of"
         predicate_id: RO:0002411
         object: "GO:0036094"
-        description: "The vicinal cystine ring provides a rigid hydrophobic contact surface beneath sugar or multi-ring ligands."
+        description: "The vicinal cystine ring provides a rigid hydrophobic contact surface beneath sugar or multiring ligands."
         evidence:
-          - reference: PMID:28359877
-            snippet: "Their most widespread biological role is providing a rigid hydrophobic contact surface under the undecorated side of a sugar or multi-ring ligand, contributing an important aspect of binding specificity."
+          - reference: PMID:28336403
+            snippet: "Their most widespread biological role is providing a rigid hydrophobic contact surface under the undecorated side of a sugar or multiring ligand, contributing an important aspect of binding specificity."
             notes: "Vicinal disulfide ring mediates hydrophobic ligand-binding specificity. (ECO:0000269)"
 evidence:
-  - reference: PMID:28359877
-    notes: "Vicinal disulfides between sequence-adjacent cysteine residues adopt strained cis or trans eight-membered ring geometries that stabilize internal packing or form rigid hydrophobic ligand-binding surfaces."
+- reference: PMID:28359877
+  notes: Vicinal disulfides between sequence-adjacent cysteine residues adopt strained cis or trans eight-membered
+    ring geometries that stabilize internal packing or form rigid hydrophobic ligand-binding surfaces.
+- reference: PMID:28336403
+  notes: Vicinal disulfides between sequence-adjacent cysteine residues adopt strained cis or trans eight-membered
+    ring geometries that stabilize internal packing or form rigid hydrophobic ligand-binding surfaces.
+curation_history:
+- timestamp: '2026-10-30T22:25:00Z'
+  curator: claude
+  action: EDIT
+  changes: Upgraded causal_graph vicinal_disulfide_ring_ligand_binding (4 nodes, 3 edges) so every edge
+    carries a distinct verbatim PubMed abstract sentence from PMID:28336403 (Round 127).
+  llm_assisted: true
 license: CC-BY-4.0

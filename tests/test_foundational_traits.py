@@ -40,21 +40,12 @@ MECHANISM_BEARING_LOWCOMP_IDS = {
 
 ROUND_124_EDITED_IDS = {spec.identifier for spec in sft.SPECS[:66] if spec.causal_graphs}
 STAGE1_UNCHANGED_IDS = {
-    "proteintraitsmech:INIT_METHIONINE_ACETYLATED",
-    "proteintraitsmech:MATURE_CHAIN_PROPROTEIN_CLEAVED",
     "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
     "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
-    "proteintraitsmech:DISULFIDE_CATALYTIC_CXXC",
-    "proteintraitsmech:NONSTD_DEHYDROAMINO_ACID_RESIDUE",
-    "proteintraitsmech:NONSTD_ALPHA_KETO_BETA_AMINO_ACID_RESIDUE",
     "proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED",
     "proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED",
     "proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE",
-    "proteintraitsmech:SIGNAL_PEPTIDE_SRP_COTRANSLATIONAL",
-    "proteintraitsmech:DISULFIDE_VICINAL_CYSTINE_RING",
     "proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY",
-    "proteintraitsmech:DYNAMICS_ORDER_TO_DISORDER_REGULATORY_SWITCH",
-    "proteintraitsmech:SURFACE_HOT_SPOT_BINDING_EPITOPE_PATCH",
 }
 
 # Explicit dispositions from the independent structural graph audit. Optional
@@ -253,10 +244,25 @@ def test_foundational_trait_causal_graphs_audit_and_score():
                 assert history[-1].get("curator") == "claude"
                 assert history[-1].get("action") == "EDIT"
                 assert history[-1].get("llm_assisted") is True
-        if not curated and spec.identifier not in ROUND_124_EDITED_IDS:
+        if data.get("causal_graphs"):
+            for cg in data["causal_graphs"]:
+                for edge in cg.get("edges") or []:
+                    for ev in edge.get("evidence") or []:
+                        ref = ev.get("reference", "")
+                        assert ref.startswith("PMID:"), f"{spec.identifier} edge reference must be PMID: {ref}"
+                        assert int(ref.split(":", 1)[1]) < 41_000_000, (
+                            f"{spec.identifier} causal_graphs edge reference must be classic PubMed ID (<41000000): {ref}"
+                        )
+        if not curated:
             cg = data["causal_graphs"][0]
-            assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
-            assert len(cg.get("edges") or []) == 3, f"{spec.identifier} expected 3 edges"
+            edges = cg.get("edges") or []
+            snippets = [edge["evidence"][0]["snippet"] for edge in edges]
+            assert len(set(snippets)) == len(edges), (
+                f"{spec.identifier} must have distinct verbatim snippets across all {len(edges)} edges"
+            )
+            if spec.identifier not in ROUND_124_EDITED_IDS:
+                assert len(cg.get("nodes") or []) == 4, f"{spec.identifier} expected 4 nodes"
+                assert len(edges) == 3, f"{spec.identifier} expected 3 edges"
         errors: list[str] = []
         warns: list[acg.AuditWarning] = []
         stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0, "grounded": 0, "snippet_edges": 0}
