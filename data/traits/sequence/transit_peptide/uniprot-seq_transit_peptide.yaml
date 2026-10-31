@@ -191,9 +191,9 @@ canonical_examples:
 causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
   title: N-terminal transit peptide directs organellar translocon import and processing-peptidase maturation
-  description: An N-terminal organelle transit peptide (SO:0000725) interacts with outer- and inner-membrane
-    translocons to drive organellar protein import such as chloroplast stroma import (GO:0045037), followed
-    by processing endopeptidase cleavage (GO:0004175) that releases the mature protein in the target organellar
+  description: An N-terminal organelle transit peptide (SO:0000725) participates in organellar protein
+    import such as chloroplast stroma import across the TOC-TIC translocons (GO:0045037), followed by
+    processing endopeptidase cleavage (GO:0004175) that releases the mature protein in the target organellar
     compartment (GO:0009570).
   nodes:
   - node_id: SO:0000725
@@ -221,28 +221,29 @@ causal_graphs:
     description: Target organellar lumen where the cleaved mature protein folds and functions
   edges:
   - subject: SO:0000725
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0045037
-    description: The N-terminal chloroplast transit peptide is necessary and sufficient to direct precursor
-      protein import across the plastid envelope.
+    description: The N-terminal chloroplast transit peptide contains targeting motifs recognized by cytosolic
+      factors and outer/inner envelope import components to mediate plastid import.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: N-terminal transit peptide mediates plastid protein import (PMID:37324391) (ECO:0000269)
+      snippet: Transit peptides contain specific motifs and domains initially recognized by cytosolic
+        factors followed by the chloroplast import components at the outer and inner envelope of the chloroplast
+        membrane.
+      notes: Transit peptide motifs engage chloroplast envelope import machinery (PMID:37324391) (ECO:0000305)
   - subject: GO:0045037
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: GO:0004175
-    description: Translocation of the N-terminal transit peptide into the stroma exposes its cleavage
-      site to stromal processing peptidase.
+    description: Emergence of the translocated preprotein on the stromal side of the import machinery
+      exposes the transit peptide for cleavage by stromal processing peptidase.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: Imported transit peptides are proteolytically cleaved upon reaching the stroma (PMID:37324391)
-        (ECO:0000269)
+      snippet: Once the preprotein emerges on the stromal side of the chloroplast protein import machinery,
+        the transit peptide is cleaved by stromal processing peptidase.
+      notes: Imported transit peptides are proteolytically cleaved upon emerging into the stroma (PMID:37324391)
+        (ECO:0000305)
   - subject: GO:0004175
     predicate: has target end location
     predicate_id: RO:0002339
@@ -251,10 +252,11 @@ causal_graphs:
       stroma.
     evidence:
     - reference: PMID:37324391
-      snippet: Import of most plastid proteins is mediated by a sequence-diverse N-terminal targeting
-        signal, the chloroplast transit peptide (cTP).
-      notes: Transit-peptide-mediated import delivers mature proteins to the chloroplast stroma (PMID:37324391)
-        (ECO:0000269)
+      snippet: This review summarizes the common features of targeting sequences and describes their role
+        in routing preproteins to and across the chloroplast envelope as well as the thylakoid membrane
+        and lumen.
+      notes: Transit-peptide-mediated import and processing deliver preproteins across the chloroplast
+        envelope into the stroma (PMID:37324391) (ECO:0000305)
 evidence:
 - reference: PMID:37324391
   notes: Chloroplast transit peptides (cTPs) mediate post-translational import of plastid precursor proteins
@@ -266,5 +268,12 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_TRANSIT_PEPTIDE
     (SO:0000725 -> GO:0045037 -> GO:0004175 -> GO:0009570) grounded in PMID:37324391 while preserving
     all 15 canonical_examples (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-31T15:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced MOTIF-subject RO:0002213 with RO:0000056 (participates in) on SO:0000725 -> GO:0045037
+    and replaced non-verbatim/duplicate snippets with 3 distinct verbatim PubMed abstract sentences from
+    PMID:37324391 (Round 128).
   llm_assisted: true
 license: CC-BY 4.0

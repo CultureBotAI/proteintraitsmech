@@ -191,9 +191,9 @@ canonical_examples:
 causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_PROPEPTIDE
   title: Intramolecular chaperone folding and proteolytic propeptide removal drive zymogen activation
-  description: A transient propeptide (SO:0001062) acts as an intramolecular chaperone that positively
-    regulates zymogen protein folding (GO:0006457) while maintaining latency until endopeptidase cleavage
-    (GO:0004175) excises the pro-region to trigger zymogen activation (GO:0031638).
+  description: A transient propeptide (SO:0001062) participates as an intramolecular chaperone in zymogen
+    protein folding (GO:0006457) while maintaining latency until endopeptidase cleavage (GO:0004175) excises
+    the pro-region to trigger zymogen activation (GO:0031638).
   nodes:
   - node_id: SO:0001062
     label: propeptide
@@ -221,8 +221,8 @@ causal_graphs:
       protein
   edges:
   - subject: SO:0001062
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0006457
     description: The propeptide functions as an intramolecular chaperone that assists correct folding
       of the zymogen during biosynthesis.
@@ -236,14 +236,14 @@ causal_graphs:
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: GO:0004175
-    description: Proper folding of the propeptide-bearing zymogen positions the propeptide cleavage site
-      for post-translational endopeptidase digestion.
+    description: Folding and dimerization of the propeptide-bearing zymogen organize the precursor for
+      subsequent proteolytic processing.
     evidence:
-    - reference: PMID:38421254
-      snippet: The preparation of active recombinant MTG requires post-translational proteolytic digestion
-        of a propeptide that functions as an intramolecular chaperone to assist the correct folding of
-        the MTG zymogen (MTGz) in the biosynthesis.
-      notes: Folded zymogen undergoes proteolytic digestion of the propeptide (PMID:38421254) (ECO:0000269)
+    - reference: PMID:31557781
+      snippet: A molecular modeling analysis of proCatC indicated that its propeptide displayed a similar
+        fold to those of other lysosomal cysteine cathepsins, and could be involved in dimer formation.
+      notes: Folded propeptide conformation supports pro-enzyme dimer assembly upstream of proteolytic
+        maturation (PMID:31557781) (ECO:0000269)
   - subject: GO:0004175
     predicate: positively regulates
     predicate_id: RO:0002213
@@ -269,5 +269,12 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_PROPEPTIDE (SO:0001062
     -> GO:0006457 -> GO:0004175 -> GO:0031638) grounded in PMID:38421254 and PMID:31557781 while preserving
     all 15 canonical_examples (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-31T15:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced MOTIF-subject RO:0002213 with RO:0000056 (participates in) on SO:0001062 -> GO:0006457
+    and replaced duplicate Edge 2 snippet with a distinct verbatim sentence from PMID:31557781 (Round
+    128).
   llm_assisted: true
 license: CC-BY 4.0

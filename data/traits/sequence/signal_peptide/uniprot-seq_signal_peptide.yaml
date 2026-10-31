@@ -192,9 +192,9 @@ causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
   title: N-terminal signal peptide directs Sec/Tat membrane translocation and signal peptidase cleavage
     for secretion
-  description: An N-terminal secretory signal peptide (SO:0000418) directs nascent preproteins to the
-    Sec translocon for membrane translocation (GO:0043952), which is causally upstream of signal peptidase
-    endopeptidase cleavage (GO:0004175) that releases the mature polypeptide for protein secretion (GO:0009306).
+  description: An N-terminal secretory signal peptide (SO:0000418) participates in Sec-mediated membrane
+    translocation (GO:0043952), which is causally upstream of signal peptidase endopeptidase cleavage
+    (GO:0004175) that releases the mature polypeptide for protein secretion (GO:0009306).
   nodes:
   - node_id: SO:0000418
     label: signal_peptide
@@ -221,8 +221,8 @@ causal_graphs:
       milieu
   edges:
   - subject: SO:0000418
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0043952
     description: N-terminal signal peptides govern protein targeting and translocation across the Sec
       (or Tat) membrane machinery.
@@ -236,30 +236,33 @@ causal_graphs:
     predicate_id: RO:0002411
     object: GO:0004175
     description: Translocation exposes the signal peptide cleavage site at the trans side of the membrane
-      for cleavage by signal peptidase I, II, or IV.
+      for cleavage by signal peptidase.
     evidence:
-    - reference: PMID:34980915
-      snippet: SignalP 6.0 is based on protein language models (LMs) that use information from millions
-        of unannotated protein sequences across all domains of life to predict all five SP types and their
-        cleavage sites.
-      notes: Translocated signal peptides are cleaved at their signal peptidase cleavage sites (PMID:34980915)
+    - reference: PMID:24333859
+      snippet: Type I signal peptidase is the enzyme responsible for cleaving off the amino-terminal signal
+        peptide from proteins that are secreted across the bacterial cytoplasmic membrane.
+      notes: Secreted preproteins are cleaved at their N-terminal signal peptide by signal peptidase (PMID:24333859)
         (ECO:0000305)
   - subject: GO:0004175
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0009306
-    description: Signal peptidase cleavage excises the membrane-tethered leader peptide to complete protein
-      secretion.
+    description: Signal peptidase catalytic cleavage at the extracytoplasmic membrane surface excises
+      the membrane-tethered leader peptide to complete protein secretion.
     evidence:
-    - reference: PMID:34980915
-      snippet: Signal peptides (SPs) are short amino acid sequences that control protein secretion and
-        translocation in all living organisms.
-      notes: Signal peptide cleavage releases the secreted protein (PMID:34980915) (ECO:0000305)
+    - reference: PMID:24333859
+      snippet: It is an essential membrane bound enzyme whose serine/lysine catalytic dyad resides on
+        the exo-cytoplasmic surface of the bacterial membrane.
+      notes: Extracytoplasmic signal peptidase catalysis releases secreted proteins from the membrane
+        (PMID:24333859) (ECO:0000305)
 evidence:
 - reference: PMID:34980915
   notes: Teufel et al. (2022) characterize the five major classes of secretory signal peptides (Sec/SPase
     I, Sec/SPase II, Sec/SPase IV, Tat/SPase I, and Tat/SPase II) and their translocation and cleavage
     mechanisms.
+- reference: PMID:24333859
+  notes: Rao et al. (2014) review bacterial type I signal peptidase cleavage of N-terminal signal peptides
+    at the extracytoplasmic surface of the cytoplasmic membrane during protein secretion.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
@@ -267,5 +270,12 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_SIGNAL_PEPTIDE
     (SO:0000418 -> GO:0043952 -> GO:0004175 -> GO:0009306) grounded in PMID:34980915 while preserving
     all 15 canonical_examples (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-31T15:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced MOTIF-subject RO:0002213 with RO:0000056 (participates in) on SO:0000418 -> GO:0043952
+    and replaced duplicate edge snippet with distinct verbatim PubMed abstract sentences from PMID:24333859
+    for signal peptidase cleavage (Round 128).
   llm_assisted: true
 license: CC-BY 4.0

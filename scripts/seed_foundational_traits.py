@@ -597,17 +597,17 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0043767",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0030631",
-                        description="Aminoacylation of tRNA(CUA) by PylS enables translation of UAG amber codons as pyrrolysine.",
+                        description="Aminoacylation of tRNA(CUA) by PylS positively regulates translation of UAG amber codons as pyrrolysine.",
                         reference="PMID:12029131",
                         evidence_code="ECO:0000269",
                         snippet=(
                             "Charging a tRNA(CUA) with lysine is a likely first step in "
                             "translating UAG amber codons as pyrrolysine in certain methanogens."
                         ),
-                        notes="tRNA(CUA) charging enables UAG translation as pyrrolysine (PMID:12029131).",
+                        notes="tRNA(CUA) charging positively regulates UAG translation as pyrrolysine (PMID:12029131).",
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000884",
@@ -842,8 +842,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0016855",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0036211",
                         description="Peptide epimerase catalyzes post-translational C-alpha stereoinversion.",
                         reference="PMID:30521081",
@@ -3298,8 +3298,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 mechanism_summary=(
                     "An uncleaved propeptide (SO:0001062) participates in zymogen activation (GO:0031638) "
                     "while intramolecular enzyme inhibitor activity (GO:0004857) negatively regulates "
-                    "catalytic activity (GO:0003824); endopeptidase activity (GO:0004175) enables "
-                    "zymogen activation (GO:0031638), positively regulating catalytic activity."
+                    "catalytic activity (GO:0003824); endopeptidase activity (GO:0004175) positively "
+                    "regulates zymogen activation (GO:0031638), positively regulating catalytic activity."
                 ),
                 nodes=(
                     CausalNodeSpec(
@@ -3371,8 +3371,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0031638",
                         description="Post-translational proteolytic digestion of the propeptide triggers zymogen activation.",
                         reference="PMID:38421254",
@@ -3542,7 +3542,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 label="Proprotein convertase cleavage at dibasic (KR/RR/RxxR) motifs excises propeptide for hormone maturation",
                 mechanism_summary=(
                     "A dibasic-flanked propeptide (SO:0001062) participates in proteolytic "
-                    "protein processing (GO:0016485) enabled by subtilisin/kexin-like "
+                    "protein processing (GO:0016485) positively regulated by subtilisin/kexin-like "
                     "proprotein convertase endopeptidase activity (GO:0004175), driving secretory "
                     "protein maturation (GO:0051604)."
                 ),
@@ -3594,8 +3594,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004175",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0016485",
                         description="Subtilisin/kexin serine protease activity cleaves after dibasic residues in the late Golgi network.",
                         reference="PMID:37482809",
@@ -4382,8 +4382,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0006413",
-                        predicate="RO:0002213",
-                        predicate_label="positively regulates",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
                         object="CHEBI:16811",
                         description="Translational initiation incorporates the N-terminal methionine residue at position 1 of the nascent polypeptide.",
                         reference="PMID:2682640",
@@ -4503,8 +4503,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0006413",
-                        predicate="RO:0002213",
-                        predicate_label="positively regulates",
+                        predicate="RO:0002233",
+                        predicate_label="has input",
                         object="CHEBI:16811",
                         description="Translational initiation incorporates the N-terminal methionine residue at position 1 of the nascent polypeptide.",
                         reference="PMID:2682640",
@@ -4535,8 +4535,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0004239",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002331",
+                        predicate_label="involved in",
                         object="GO:0016485",
                         description="Methionyl-aminopeptidase action on the N-terminus depends on the identity of the second amino acid residue in the polypeptide chain.",
                         reference="PMID:2682640",
@@ -8083,8 +8083,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 graph_id="lanthipeptide_ser_thr_dehydration",
                 label="Enzymatic beta-elimination of water from Ser/Thr residues installs electrophilic dehydroamino acid residues",
                 mechanism_summary=(
-                    "Lanthipeptide dehydratase hydro-lyase activity (GO:0016836) enables "
-                    "post-translational protein modification (GO:0036211) that dehydrates "
+                    "Lanthipeptide dehydratase hydro-lyase activity (GO:0016836) positively "
+                    "regulates post-translational protein modification (GO:0036211) that dehydrates "
                     "precursor L-alpha-amino acid residues (CHEBI:83228, Ser/Thr) to yield "
                     "alpha,beta-unsaturated dehydroalanine (MOD:01168) and dehydrobutyrine "
                     "residues for thioether cross-linking."
@@ -8122,8 +8122,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0016836",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0036211",
                         description="Peptide dehydratase hydro-lyase activity catalyzes post-translational modification of RiPP precursor peptides.",
                         evidence_code="ECO:0000305",
@@ -8201,7 +8201,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 label="Radical-SAM splicease tyramine excision converts standard alpha-amino acid backbone units into alpha-keto-beta-amino acid residues",
                 mechanism_summary=(
                     "Radical S-adenosylmethionine splicease catalytic activity (GO:0003824) "
-                    "enables noncanonical post-translational splicing (GO:0036211) of precursor "
+                    "positively regulates noncanonical post-translational splicing (GO:0036211) of precursor "
                     "L-alpha-amino acid residues (CHEBI:83228) via C-C bond cleavage and net "
                     "tyramine excision, generating an alpha-keto-beta-amino-acid-containing "
                     "mature protein region (SO:0000419)."
@@ -8239,10 +8239,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0003824",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0036211",
-                        description="Radical S-adenosylmethionine splicease catalysis enables post-translational backbone splicing in bacteria.",
+                        description="Radical S-adenosylmethionine splicease catalysis positively regulates post-translational backbone splicing in bacteria.",
                         evidence_code="ECO:0000269",
                         reference="PMID:29449488",
                         snippet="The transformation is widespread in bacteria and is catalyzed by an enzyme belonging to a previously uncharacterized radical S-adenosylmethionine family.",
@@ -8512,7 +8512,7 @@ SPECS: tuple[TraitSpec, ...] = (
                 label="Sortase endopeptidase/transpeptidase cleavage at the LPXTG motif anchors the mature polypeptide chain to peptidoglycan",
                 mechanism_summary=(
                     "Sortase cysteine endopeptidase/transpeptidase activity (GO:0004175) "
-                    "enables C-terminal protein processing (GO:0016485) at the conserved "
+                    "positively regulates C-terminal protein processing (GO:0016485) at the conserved "
                     "LPXTG motif, generating a peptidoglycan-linked mature protein region "
                     "(SO:0000419) that is causally upstream of cell-surface protein "
                     "secretion and display (GO:0009306)."
@@ -8550,8 +8550,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="GO:0004175",
-                        predicate="RO:0002327",
-                        predicate_label="enables",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0016485",
                         description="Sortase endopeptidase activity cleaves the conserved C-terminal LPXTG motif during peptidoglycan assembly.",
                         evidence_code="ECO:0000269",
@@ -9329,9 +9329,10 @@ SPECS: tuple[TraitSpec, ...] = (
                 graph_id="CG_CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL",
                 label="Intramolecular tunnel translocation of reactive intermediates between coupled active sites",
                 mechanism_summary=(
-                    "An internal molecular tunnel traversing the polypeptide domain connects two "
-                    "catalytic active sites, shielding reactive chemical intermediates from bulk "
-                    "solvent diffusion to enhance coupled catalytic activity and metabolic flux."
+                    "A bifunctional polypeptide_domain (SO:0000417) enclosing an inter-active-site "
+                    "molecular tunnel enables coupled catalytic activity (GO:0003824) that produces "
+                    "and channels a reactive chemical entity intermediate (CHEBI:24431) without "
+                    "bulk-solvent loss so that it participates in metabolic process (GO:0008152)."
                 ),
                 nodes=(
                     CausalNodeSpec(
@@ -9366,32 +9367,32 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0000417",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
-                        object="CHEBI:24431",
-                        description="Internal molecular tunnels within multidomain enzymes connect one active site with another to conduct reactive intermediates.",
+                        predicate="RO:0002327",
+                        predicate_label="enables",
+                        object="GO:0003824",
+                        description="Internal molecular tunnels within multidomain enzymes connect one active site with another to enable coupled two-site catalysis.",
                         evidence_code="ECO:0000305",
                         reference="PMID:12859215",
                         snippet="For those enzymes with multiple catalytic sites, a common theme is beginning to emerge; the existence of molecular tunnels that connect one active site with another.",
                         notes="Raushel, Thoden & Holden (2003) Acc Chem Res 36:539-548 describe intramolecular tunnels connecting paired catalytic sites.",
                     ),
                     CausalEdgeSpec(
-                        subject="CHEBI:24431",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
-                        object="GO:0003824",
-                        description="Sequestering unstable intermediates inside the molecular conduit blocks bulk-solvent loss and improves catalytic efficiency.",
+                        subject="GO:0003824",
+                        predicate="RO:0002234",
+                        predicate_label="has output",
+                        object="CHEBI:24431",
+                        description="Coupled active-site catalysis produces and sequesters unstable chemical intermediates inside the molecular conduit, blocking bulk-solvent loss.",
                         evidence_code="ECO:0000305",
                         reference="PMID:12859215",
                         snippet="The apparent mechanistic advantages rendered by these molecular conduits include the protection of unstable intermediates and an improvement in catalytic efficiency by blocking the diffusion of intermediates into the bulk solvent.",
                         notes="Protection of labile intermediates from bulk solvent diffusion increases coupled catalytic efficiency.",
                     ),
                     CausalEdgeSpec(
-                        subject="GO:0003824",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        subject="CHEBI:24431",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0008152",
-                        description="Channeled translocation of nascent ammonia or other intermediates supports downstream biosynthetic metabolism.",
+                        description="Channeled translocation of nascent ammonia or other reactive intermediates participates directly in downstream biosynthetic metabolism.",
                         evidence_code="ECO:0000305",
                         reference="PMID:12859215",
                         snippet="The translocation of ammonia, derived from the hydrolysis of glutamine, is the most abundant functional requirement for a protein tunnel identified thus far.",
@@ -9533,8 +9534,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0005515",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0065003",
                         description="RGG/RG-mediated interactions drive assembly of complexes controlling transcription, pre-mRNA splicing, and mRNA translation.",
                         evidence_code="ECO:0000305",
@@ -9636,8 +9637,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0008047",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0003824",
                         description="Allosteric Na+ and K+ occupancy provides a thermodynamic driving force for substrate binding and catalysis.",
                         evidence_code="ECO:0000305",
@@ -9724,8 +9725,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0000418",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0006497",
                         description="Precursor lipoproteins bearing an N-terminal signal peptide are translocated and lipid-modified on the cytoplasmic membrane.",
                         evidence_code="ECO:0000305",
@@ -9746,8 +9747,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="MOD:00116",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0001025",
+                        predicate_label="located in",
                         object="GO:0016020",
                         description="Presence of aspartate at position +2 adjacent to the lipidated cysteine prevents outer-membrane sorting and retains the lipoprotein in the cytoplasmic membrane.",
                         evidence_code="ECO:0000269",
@@ -9830,8 +9831,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0000725",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0016485",
                         description="Bipartite plastid targeting presequences consist of an anterior ER signal domain and a downstream transit peptide domain processed upon ER entry.",
                         evidence_code="ECO:0000269",
@@ -9852,8 +9853,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0045037",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002339",
+                        predicate_label="has target end location",
                         object="GO:0009570",
                         description="The conserved phenylalanine within the cleavage-site motif is essential for transport into the plastid stroma in vivo.",
                         evidence_code="ECO:0000269",
@@ -9939,8 +9940,8 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="SO:0001062",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0000086",
+                        predicate_label="has quality",
                         object="PATO:0002196",
                         description="Preprodefensins contain a 44-45 residue anionic propiece that neutralizes the cationic mature peptide prior to cleavage.",
                         evidence_code="ECO:0000269",
@@ -9961,8 +9962,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0016485",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0061844",
                         description="Stepwise proteolytic processing packages mature microbicidal defensins into azurophil granules for antimicrobial defense.",
                         evidence_code="ECO:0000269",
@@ -10056,8 +10057,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="MOD:00034",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0006457",
                         description="The CS-alpha-beta disulfide cross-links form the conserved structural core shared across small toxic and antimicrobial proteins.",
                         evidence_code="ECO:0000269",
@@ -10164,8 +10165,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="CHEBI:16811",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0005515",
                         description="Met1-linked linear (head-to-tail) ubiquitin chains are selectively recognized and bound by the UBAN motif of NEMO.",
                         evidence_code="ECO:0000269",
@@ -10175,8 +10176,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0005515",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0006955",
                         description="Binding of NEMO to linear ubiquitin chains is required for NF-kappaB activation and immune competence.",
                         evidence_code="ECO:0000269",
@@ -10274,8 +10275,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="SO:0000419",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
                         object="GO:0031647",
                         description="Seamless head-to-tail backbone cyclization embedded with a cystine knot creates the hyperstable cyclotide architecture.",
                         evidence_code="ECO:0000269",
@@ -10285,8 +10286,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0031647",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0061844",
                         description="Structural stabilization of the macrocyclic mature peptide supports its host-defense function.",
                         evidence_code="ECO:0000269",
@@ -10392,8 +10393,8 @@ SPECS: tuple[TraitSpec, ...] = (
                     ),
                     CausalEdgeSpec(
                         subject="GO:0006457",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
+                        predicate="RO:0002213",
+                        predicate_label="positively regulates",
                         object="GO:0065003",
                         description="Coupled folding and binding of recognition elements mediates assembly of regulated signaling complexes.",
                         evidence_code="ECO:0000305",

@@ -336,9 +336,9 @@ canonical_examples:
 causal_graphs:
 - graph_id: CG_UNIPROT_FT_SEQ_MATURE_CHAIN
   title: Proprotein convertase cleavage excises mature bioactive polypeptide chains from precursors
-  description: Proprotein convertase endopeptidase activity (GO:0004175) positively regulates proteolytic
-    protein processing (GO:0016485) of precursor polyproteins, releasing a defined mature protein/peptide
-    region (SO:0000419) that completes functional protein maturation (GO:0051604).
+  description: Proprotein convertase and secretory protease endopeptidase activity (GO:0004175) positively
+    regulates proteolytic protein processing (GO:0016485) of precursor polyproteins, releasing a defined
+    mature protein/peptide region (SO:0000419) that participates in functional protein maturation (GO:0051604).
   nodes:
   - node_id: GO:0004175
     label: endopeptidase activity
@@ -367,44 +367,45 @@ causal_graphs:
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0016485
-    description: Proprotein convertases catalyze site-specific endoproteolytic processing of secretory
-      precursor proteins.
+    description: Subtilisin-like proprotein convertases and secretory vesicle cathepsin L catalyze endoproteolytic
+      processing of secretory prohormone precursors.
     evidence:
     - reference: PMID:18184105
-      snippet: The proprotein convertases (PCs) are a family of nine secretory serine proteases related
-        to bacterial subtilisin and yeast kexin.
-      notes: Proprotein convertases are secretory serine endopeptidases that process precursors (PMID:18184105)
-        (ECO:0000305)
+      snippet: This review describes interdisciplinary strategies that have elucidated two primary protease
+        pathways for prohormone processing consisting of the cysteine protease pathway mediated by secretory
+        vesicle cathepsin L and the well-known subtilisin-like proprotein convertase pathway that together
+        support neuropeptide biosynthesis.
+      notes: Secretory endopeptidases mediate prohormone proteolytic processing (PMID:18184105) (ECO:0000305)
   - subject: GO:0016485
     predicate: has output
     predicate_id: RO:0002234
     object: SO:0000419
-    description: Proteolytic processing at basic or non-basic cleavage sites releases the mature polypeptide
-      chain or bioactive peptide.
+    description: Proteolytic processing of protein precursors within secretory vesicles releases the mature
+      bioactive peptide or polypeptide chain.
     evidence:
     - reference: PMID:18184105
-      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
-        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
-        residues or self-cleave, respectively.
-      notes: Cleavage at defined recognition sites excises mature chains and peptides (PMID:18184105)
+      snippet: Neuropeptides are synthesized from protein precursors (termed proneuropeptides or prohormones)
+        that require proteolytic processing primarily within secretory vesicles that store and secrete
+        the mature neuropeptides to control target cellular and organ systems.
+      notes: Proteolytic processing of prohormone precursors generates mature peptides (PMID:18184105)
         (ECO:0000305)
   - subject: SO:0000419
-    predicate: involved in
-    predicate_id: RO:0002331
+    predicate: participates in
+    predicate_id: RO:0000056
     object: GO:0051604
-    description: Release of the excised mature region completes post-translational maturation of hormones,
-      neuropeptides, and secreted proteins.
+    description: Excised mature neuropeptides and peptide hormones represent the functional products of
+      protein maturation required for intercellular signaling and endocrine regulation.
     evidence:
     - reference: PMID:18184105
-      snippet: Seven of them (PC1/3, PC2, furin, PC4, PC5/6, PACE4, and PC7) cleave secretory precursors
-        at specific single or paired basic amino acids, whereas SKI-1/S1P and PCSK9 cleave at nonbasic
-        residues or self-cleave, respectively.
-      notes: Excised mature chains represent the processed products of proprotein maturation (PMID:18184105)
-        (ECO:0000305)
+      snippet: Peptide neurotransmitters and peptide hormones, collectively known as neuropeptides, are
+        required for cell-cell communication in neurotransmission and for regulation of endocrine functions.
+      notes: Mature excised peptides execute cell-cell signaling and endocrine functions upon maturation
+        (PMID:18184105) (ECO:0000305)
 evidence:
 - reference: PMID:18184105
-  notes: Seidah et al. (2008) review the proprotein convertase family of serine endopeptidases that cleave
-    precursor proteins at dibasic or monobasic sites to release mature bioactive peptides and hormones.
+  notes: Hook et al. (2008) review the subtilisin-like proprotein convertase and secretory vesicle cathepsin
+    L protease pathways that process prohormone precursors into mature bioactive neuropeptides and peptide
+    hormones.
 curation_history:
 - timestamp: '2026-10-22T18:55:00Z'
   curator: claude
@@ -412,5 +413,12 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_MATURE_CHAIN (GO:0004175
     -> GO:0016485 -> SO:0000419 -> GO:0051604) grounded in PMID:18184105 while preserving all 15 canonical_examples
     (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-31T15:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced generic RO:0002331 with RO:0000056 (participates in) on SO:0000419 -> GO:0051604 and
+    replaced non-verbatim/duplicate snippets with 3 distinct verbatim PubMed abstract sentences from PMID:18184105
+    (Round 128).
   llm_assisted: true
 license: CC-BY 4.0

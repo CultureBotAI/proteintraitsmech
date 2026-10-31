@@ -44,19 +44,8 @@ STAGE1_UNCHANGED_IDS = {
     "proteintraitsmech:PROPEPTIDE_VKD_GLA_RECOGNITION",
     "proteintraitsmech:ALLOSTERIC_COVALENT_REGULATORY_SITE",
     "proteintraitsmech:INIT_METHIONINE_NON_AUG_DECODED",
-    "proteintraitsmech:MATURE_CHAIN_SORTASE_CELL_WALL_ANCHORED",
     "proteintraitsmech:PROPEPTIDE_CYSTEINE_SWITCH_METALLOPROTEASE",
     "proteintraitsmech:CAVITY_BURIED_HYDRATION_MICROCAVITY",
-    "proteintraitsmech:CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL",
-    "proteintraitsmech:LOWCOMP_RGG_RG_RNA_BINDING_BOX_REGION",
-    "proteintraitsmech:ALLOSTERIC_METAL_ION_REGULATORY_SITE",
-    "proteintraitsmech:SIGNAL_PEPTIDE_SEC_SPII_LOL_AVOIDANCE",
-    "proteintraitsmech:TRANSIT_PEPTIDE_SECONDARY_PLASTID_ASAFAP",
-    "proteintraitsmech:PROPEPTIDE_ANTIMICROBIAL_PEPTIDE_ANIONIC_SHIELD",
-    "proteintraitsmech:DISULFIDE_CYSTINE_STABILIZED_ALPHA_BETA",
-    "proteintraitsmech:INIT_METHIONINE_M1_LINEAR_UBIQUITINATED",
-    "proteintraitsmech:MATURE_CHAIN_BACKBONE_CYCLIZED",
-    "proteintraitsmech:DYNAMICS_COUPLED_FOLDING_AND_BINDING_TRANSITION",
 }
 
 # Explicit dispositions from the independent structural graph audit. Optional
@@ -667,6 +656,8 @@ def test_root_local_structural_and_peptide_class_causal_graphs():
             assert len(cgs) == 1
             assert len(cgs[0].get("nodes") or []) == 4
             assert len(cgs[0].get("edges") or []) == 3
+            snippets = [edge["evidence"][0]["snippet"] for edge in cgs[0]["edges"]]
+            assert len(set(snippets)) == 3, f"{ident} must have 3 distinct verbatim snippets"
         history = data.get("curation_history") or []
         assert history, f"{ident} missing curation_history"
         if not removed:
