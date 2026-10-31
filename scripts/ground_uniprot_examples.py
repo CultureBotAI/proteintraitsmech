@@ -4081,9 +4081,12 @@ def _validate_durable_paths(args: argparse.Namespace, traits_root: Path) -> None
         args.interpro_grouped_frame,
         args.profiles,
         args.sifts_registry,
+        args.fetch_request_plan,
+        args.fetch_receipt,
         args.interpro_xml,
         args.pfam_clans,
         args.pfam_types,
+        args.panther_classifications,
         args.go_obo,
     ):
         if optional is not None:
@@ -5349,6 +5352,21 @@ def _default_promote_sibling(resolved: Path, filename: str) -> Path:
     return parent / filename
 
 
+def _default_optional_promote_sibling(resolved: Path, filename: str) -> Path | None:
+    """Resolve an optional stem-prefixed batch artifact beside ``--resolved`` when present."""
+
+    resolved_path = resolved.resolve()
+    parent = resolved_path.parent
+    name = resolved_path.name
+    suffix = ".resolved.jsonl"
+    if name.endswith(suffix) and len(name) > len(suffix):
+        stem = name[: -len(suffix)]
+        prefixed = parent / f"{stem}.{filename}"
+        if prefixed.is_file():
+            return prefixed
+    return None
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "resolve" and args.protein_registry:
@@ -5369,6 +5387,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "promote" and args.sifts_registry is None:
         args.sifts_registry = _default_promote_sibling(
             args.resolved, "sifts_mappings.jsonl"
+        )
+    if args.command == "promote" and args.fetch_request_plan is None:
+        args.fetch_request_plan = _default_optional_promote_sibling(
+            args.resolved, "uniprot_fetch_plan.json"
+        )
+    if args.command == "promote" and args.fetch_receipt is None:
+        args.fetch_receipt = _default_optional_promote_sibling(
+            args.resolved, "uniprot_fetch_receipt.json"
         )
     try:
         if args.command == "promote" and args.apply:

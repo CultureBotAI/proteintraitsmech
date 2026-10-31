@@ -5954,3 +5954,55 @@ def test_promote_aggregates_candidate_context_for_record_conflicts_and_stale_pre
     assert {key: _artifact_image(local_sources[key]) for key in protected} == before
     assert second_record.read_bytes() == second_before
 
+
+def test_promote_main_defaults_stem_prefixed_fetch_plan_and_receipt_and_protects_optional_inputs(
+    local_sources, tmp_path, monkeypatch
+):
+    batch_resolved = tmp_path / "batch-cnp-020.resolved.jsonl"
+    batch_resolved.write_text("", encoding="utf-8")
+    approved = tmp_path / "batch-cnp-020.approved.tsv"
+    approved.write_text("candidate_id\n", encoding="utf-8")
+    plan = tmp_path / "batch-cnp-020.uniprot_fetch_plan.json"
+    receipt = tmp_path / "batch-cnp-020.uniprot_fetch_receipt.json"
+    plan.write_text("{}", encoding="utf-8")
+    receipt.write_text("{}", encoding="utf-8")
+
+    captured: list[object] = []
+
+    def capture_promote(args):
+        captured.append(args)
+        return 0
+
+    monkeypatch.setattr(ground, "promote", capture_promote)
+    assert (
+        ground.main(
+            [
+                "promote",
+                "--resolved",
+                str(batch_resolved),
+                "--approved",
+                str(approved),
+                "--traits",
+                str(local_sources["traits"]),
+            ]
+        )
+        == 0
+    )
+    assert len(captured) == 1
+    parsed = captured[0]
+    assert parsed.fetch_request_plan == plan.resolve()
+    assert parsed.fetch_receipt == receipt.resolve()
+
+    for attr, colliding in (
+        ("fetch_request_plan", plan),
+        ("fetch_receipt", receipt),
+        ("panther_classifications", parsed.panther_classifications),
+    ):
+        args = ground._parser().parse_args(
+            _promote_args(local_sources, local_sources["traits"].parent / "approved.tsv")
+        )
+        setattr(args, attr, colliding)
+        args.durable_protein_registry = colliding
+        with pytest.raises(ground.GroundingError, match="differ from staging/review input"):
+            ground._validate_durable_paths(args, args.traits.resolve())
+

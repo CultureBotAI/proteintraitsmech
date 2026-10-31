@@ -1637,3 +1637,26 @@ def test_default_promote_sibling_prefers_stem_prefixed_batch_registries(tmp_path
         == (tmp_path / "protein_registry.jsonl").resolve()
     )
 
+    prefixed_plan = tmp_path / "batch-039.uniprot_fetch_plan.json"
+    prefixed_receipt = tmp_path / "batch-039.uniprot_fetch_receipt.json"
+    assert gue._default_optional_promote_sibling(batch_resolved, "uniprot_fetch_plan.json") is None
+    assert (
+        gue._default_optional_promote_sibling(batch_resolved, "uniprot_fetch_receipt.json")
+        is None
+    )
+    prefixed_plan.write_text("{}", encoding="utf-8")
+    prefixed_receipt.write_text("{}", encoding="utf-8")
+    assert (
+        gue._default_optional_promote_sibling(batch_resolved, "uniprot_fetch_plan.json")
+        == prefixed_plan.resolve()
+    )
+    assert (
+        gue._default_optional_promote_sibling(batch_resolved, "uniprot_fetch_receipt.json")
+        == prefixed_receipt.resolve()
+    )
+    (tmp_path / "uniprot_fetch_plan.json").write_text("{}", encoding="utf-8")
+    assert (
+        gue._default_optional_promote_sibling(unprefixed_resolved, "uniprot_fetch_plan.json")
+        is None
+    )
+
