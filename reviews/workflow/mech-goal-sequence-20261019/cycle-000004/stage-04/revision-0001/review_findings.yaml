@@ -1,0 +1,563 @@
+schema_version: 1.0.0
+repository_key: proteintraitsmech
+github_repository: CultureBotAI/proteintraitsmech
+run_id: mech-goal-sequence-20261019
+cycle: 4
+stage: 4
+revision: 1
+source_revision: 5869b9c877b532972a405523c7c6e21945c177e4
+native_review_bundles:
+- review_id: 20261031T043800Z-cdd-cd17071-record-review
+  kind: record
+  skill: review-yaml-record
+  verdict: needs_curation
+  review_yaml_path: reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.yaml
+  review_yaml_sha256: e4e47b687541f015b054760d98e234e54730730bba53e8ce77332af8844c8eff
+  review_md_path: reviews/structured/20261031T043800Z-cdd-cd17071-record-review/review.md
+  review_md_sha256: 30e010325f2173c7acba490269ed7bf50847e12b1a4984426e9148561772cd19
+- review_id: 20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review
+  kind: category
+  skill: review-yaml-category
+  verdict: needs_curation
+  review_yaml_path: reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.yaml
+  review_yaml_sha256: d1208d56b10cce1538205e954117013a0a355faa3a8ef8ea8e5baa42da529aab
+  review_md_path: reviews/structured/20261031T043900Z-cdd-cycle4-sibling-domain-cohort-review/review.md
+  review_md_sha256: 4393950327ba92619483a2befa7db11a276917a8c1a02ad089b030580b2c4178
+findings:
+- finding_id: F19
+  issue_key: cdd-cd17152-dcdc2-rpt2-ubiquitin-modifier-digression
+  category: consistency
+  severity: minor
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd17152 (DCX2_DCDC2) interpolates an off-target ubiquitin protein-modifier
+    definition sentence into a microtubule-binding DCX repeat profile
+  description: CDD:cd17152 (label=DCX2_DCDC2, parent_traits=[CDD:cl28922]) models
+    the C-terminal second doublecortin-like domain (DCX2) of DCDC2 (Homo sapiens UniProtKB:Q9UHG0
+    and Mus musculus UniProtKB:Q5DU00), a microtubule-associated protein with tandem
+    ubiquitin-like beta-grasp DCX repeats associated with human reading disability/dyslexia
+    (PMID:16278295). Its upstream CDD definition interpolated the off-target sentence
+    'Ubiquitin (Ub) is a protein modifier in eukaryotes that is involved in various
+    cellular processes, including transcriptional regulation, cell cycle control,
+    and DNA repair.' and lacked a PMID:16278295 evidence block.
+  target_ids:
+  - CDD:cd17152
+  field_paths:
+  - data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17152.yaml#/definition
+  evidence_ids:
+  - ev-cd17152
+  - ev-dcx-child-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd17152 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the off-target ubiquitin
+    protein-modifier sentence with the tandem DCX ubiquitin-like beta-grasp repeat
+    description, added PMID:16278295 evidence, and recorded curation_history action
+    source_erratum_cd17152.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F20
+  issue_key: cdd-cd17153-dcdc2b-rpt2-dcdc2-paralog-disease-switch
+  category: consistency
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd17153 (DCX2_DCDC2B) switches mid-definition from DCDC2B to paralog
+    DCDC2 reading-disability and ADHD genetics
+  description: CDD:cd17153 (label=DCX2_DCDC2B, parent_traits=[CDD:cl28922]) models
+    the C-terminal second doublecortin-like domain (DCX2) of DCDC2B (Homo sapiens
+    UniProtKB:A2VCK2, HGNC:33489), but sentence 2 switched without qualification to
+    paralog DCDC2 reading-disability/ADHD/dyslexia genetics and lacked a grounded
+    evidence block.
+  target_ids:
+  - CDD:cd17153
+  field_paths:
+  - data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd17153.yaml#/definition
+  evidence_ids:
+  - ev-cd17153
+  - ev-dcx-child-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd17153 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): distinguished DCDC2B (UniProtKB:A2VCK2)
+    from its paralog DCDC2 (UniProtKB:Q9UHG0), added UniProtKB:A2VCK2 evidence, and
+    recorded curation_history action source_erratum_cd17153.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F21
+  issue_key: cdd-cd15884-snap23c-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd15884 (SNARE_SNAP23C) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP23 is membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15884 (label=SNARE_SNAP23C, parent_traits=[CDD:cl22856]) models
+    the C-terminal Qc SNARE motif of SNAP23 (Homo sapiens UniProtKB:O00161 and Mus
+    musculus UniProtKB:O09044), but its upstream CDD definition stated 'Qb/Qc SNAREs
+    consist of 2 coiled-coil helices ... and a transmembrane domain.' SNAP23- and
+    SNAP25-family Qb/Qc SNAREs lack a transmembrane domain and attach to membranes
+    via palmitoylated cysteines in their central inter-motif linker (PMID:9759094,
+    PMID:9159129).
+  target_ids:
+  - CDD:cd15884
+  field_paths:
+  - data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap23-c-terminal-snare-motifs-of-snap23-a-m-cd15884.yaml#/definition
+  evidence_ids:
+  - ev-cd15884
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd15884 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain
+    claim with the palmitoylated central inter-motif linker membrane-anchoring mechanism
+    of SNAP23, added PMID:9759094 evidence, and recorded curation_history action source_erratum_cd15884.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F22
+  issue_key: cdd-cd15895-snap23n-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd15895 (SNARE_SNAP23N) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP23 is membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15895 (label=SNARE_SNAP23N, parent_traits=[CDD:cl22856]) models
+    the N-terminal Qb SNARE motif of SNAP23 (Homo sapiens UniProtKB:O00161 and Mus
+    musculus UniProtKB:O09044), but its upstream CDD definition stated 'Qb/Qc SNAREs
+    consist of 2 coiled-coil helices ... and a transmembrane domain.' SNAP23 lacks
+    a transmembrane domain and is anchored to membranes via palmitoylated cysteines
+    in its central linker (PMID:9759094, PMID:9159129).
+  target_ids:
+  - CDD:cd15895
+  field_paths:
+  - data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap23-n-terminal-snare-motifs-of-snap23-a-m-cd15895.yaml#/definition
+  evidence_ids:
+  - ev-cd15895
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd15895 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): replaced the false transmembrane-domain
+    claim with the palmitoylated central inter-motif linker membrane-anchoring mechanism
+    of SNAP23, added PMID:9759094 evidence, and recorded curation_history action source_erratum_cd15895.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F23
+  issue_key: cdd-cd18599-mrp5-8-9-d2-abcc-mrp7-cftr-misassignment-and-mdr-overclaim
+  category: consistency
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd18599 (ABC_6TM_MRP5_8_9_D2) misassigns MRP7 to ABCC7 (CFTR) instead
+    of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9
+    members
+  description: CDD:cd18599 (label=ABC_6TM_MRP5_8_9_D2, parent_traits=[CDD:cl38913])
+    models the C-terminal six-helix transmembrane domain 2 (TMD2) of MRPs 5, 8, and
+    9 (ABCC5, ABCC11, ABCC12), but its upstream CDD definition misassigned MRP7 to
+    ABCC7 (CFTR) instead of ABCC10 and overclaimed tumor multidrug-resistance efflux
+    across all MRP1-MRP9 members (PMID:16984901).
+  target_ids:
+  - CDD:cd18599
+  field_paths:
+  - data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18599.yaml#/definition
+  evidence_ids:
+  - ev-cd18599
+  - ev-mrp-tmd1-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd18599 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): corrected MRP7=ABCC10 vs ABCC7=CFTR,
+    qualified the tumor multidrug-resistance efflux claim, added PMID:16984901 evidence,
+    and recorded curation_history action source_erratum_cd18599.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F24
+  issue_key: cdd-cd18601-mrp4-d2-abcc-mrp7-cftr-misassignment-and-mdr-overclaim
+  category: consistency
+  severity: major
+  status: resolved
+  certainty: confirmed
+  title: CDD:cd18601 (ABC_6TM_MRP4_D2_like) misassigns MRP7 to ABCC7 (CFTR) instead
+    of ABCC10 and overclaims anticancer multidrug-resistance efflux across all MRP1-MRP9
+    members
+  description: CDD:cd18601 (label=ABC_6TM_MRP4_D2_like, parent_traits=[CDD:cl38913])
+    models the C-terminal six-helix transmembrane domain 2 (TMD2) of MRP4 (ABCC4),
+    but its upstream CDD definition misassigned MRP7 to ABCC7 (CFTR) instead of ABCC10
+    and overclaimed tumor multidrug-resistance efflux across all MRP1-MRP9 members
+    (PMID:16984901).
+  target_ids:
+  - CDD:cd18601
+  field_paths:
+  - data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18601.yaml#/definition
+  evidence_ids:
+  - ev-cd18601
+  - ev-mrp-tmd1-siblings
+  - ev-cdd-errata-infrastructure
+  - ev-cycle3-stage4-cohort
+  - ev-cycle3-stage5-cohort
+  - ev-cycle3-stage5-evidence
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  disposition_reason: 'Repaired CDD:cd18601 in place via scripts/cdd_errata.py and
+    scripts/repair_cdd_errata.py (#1210, PR #1211): corrected MRP7=ABCC10 vs ABCC7=CFTR,
+    qualified the tumor multidrug-resistance efflux claim, added PMID:16984901 evidence,
+    and recorded curation_history action source_erratum_cd18601.'
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F25
+  issue_key: cdd-cd17071-dcx1-dcdc2-like-typo-and-ubiquitin-modifier-digression
+  category: consistency
+  severity: minor
+  status: open
+  certainty: confirmed
+  title: CDD:cd17071 (DCX1_DCDC2_like) misspells Doublecortin-like as Dublecortin-like
+    in definition and interpolates an off-target ubiquitin protein-modifier sentence
+  description: CDD:cd17071 (label=DCX1_DCDC2_like, parent_traits=[CDD:cl28922], SEEDED,
+    0 canonical_examples) models the N-terminal first doublecortin-like domain (DCX1)
+    subfamily profile of doublecortin domain-containing protein 2 (DCDC2) and similar
+    proteins (parent of paralog-specific profiles CDD:cd17149 DCX1_DCDC2, CDD:cd17150
+    DCX1_DCDC2B, and CDD:cd17151 DCX1_DCDC2C), but its definition begins with the
+    typo 'Dublecortin-like domain 1 found in doublecortin domain-containing protein
+    2 (DCDC2) and similar proteins.', interpolates the off-target sentence 'Ubiquitin
+    (Ub) is a protein modifier in eukaryotes that is involved in various cellular
+    processes, including transcriptional regulation, cell cycle control, and DNA repair.'
+    even though DCX domains only share a ubiquitin-like beta-grasp fold and do not
+    act as ubiquitin protein modifiers, and lacks a literature evidence block citing
+    PMID:16278295.
+  target_ids:
+  - CDD:cd17071
+  field_paths:
+  - data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml#/definition
+  evidence_ids:
+  - ev-cd17071
+  - ev-dcx-child-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F26
+  issue_key: cdd-cd16113-dcx2-dcdc2-like-ubiquitin-modifier-digression
+  category: consistency
+  severity: minor
+  status: open
+  certainty: confirmed
+  title: CDD:cd16113 (DCX2_DCDC2_like) interpolates an off-target ubiquitin protein-modifier
+    definition sentence into a microtubule-binding DCX repeat profile
+  description: CDD:cd16113 (label=DCX2_DCDC2_like, parent_traits=[CDD:cl28922], SEEDED,
+    0 canonical_examples) models the C-terminal second doublecortin-like domain (DCX2)
+    subfamily profile of doublecortin domain-containing protein 2 (DCDC2) and similar
+    proteins (parent of paralog-specific profiles CDD:cd17152 DCX2_DCDC2, CDD:cd17153
+    DCX2_DCDC2B, and CDD:cd17154 DCX2_DCDC2C), but its definition interpolates the
+    off-target sentence 'Ubiquitin (Ub) is a protein modifier in eukaryotes that is
+    involved in various cellular processes including transcriptional regulation, cell
+    cycle control, and DNA repair.' into a microtubule-binding DCX beta-grasp repeat
+    profile and lacks a literature evidence block citing PMID:16278295.
+  target_ids:
+  - CDD:cd16113
+  field_paths:
+  - data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml#/definition
+  evidence_ids:
+  - ev-cd16113
+  - ev-cd17152
+  - ev-dcx-child-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F27
+  issue_key: cdd-cd15855-snap25c-23c-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd15855 (SNARE_SNAP25C_23C) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP25 and SNAP23 are membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15855 (label=SNARE_SNAP25C_23C, parent_traits=[CDD:cl22856],
+    SEEDED, 0 canonical_examples) models the combined C-terminal Qc SNARE motif subfamily
+    profile of SNAP25 and SNAP23 (parent of paralog-specific profiles CDD:cd15885
+    SNARE_SNAP25C and CDD:cd15884 SNARE_SNAP23C), but its upstream CDD definition
+    states 'Qb/Qc SNAREs consist of 2 coiled-coil helices (called SNARE motifs, one
+    belonging to the Qb subgroup and one belonging to the Qc subgroup), which mediate
+    the interactions with other SNARE proteins, and a transmembrane domain.' In fact,
+    Qb/Qc SNAP-25 family SNAREs lack a transmembrane domain; SNAP25 and SNAP23 attach
+    to membranes via palmitoylated cysteine residues in the central linker between
+    their N-terminal Qb and C-terminal Qc SNARE motifs (PMID:9759094, PMID:9159129).
+  target_ids:
+  - CDD:cd15855
+  field_paths:
+  - data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml#/definition
+  evidence_ids:
+  - ev-cd15855
+  - ev-cd15884
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F28
+  issue_key: cdd-cd15889-snap25n-23n-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd15889 (SNARE_SNAP25N_23N) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP25 and SNAP23 are membrane-anchored via palmitoylated cysteines
+  description: CDD:cd15889 (label=SNARE_SNAP25N_23N, parent_traits=[CDD:cl22856],
+    SEEDED, unpromoted seed example Drosophila melanogaster Snap25 UniProtKB:P36975)
+    models the combined N-terminal Qb SNARE motif subfamily profile of SNAP25 and
+    SNAP23 (parent of paralog-specific profiles CDD:cd15894 SNARE_SNAP25N and CDD:cd15895
+    SNARE_SNAP23N), but its upstream CDD definition states 'Qb/Qc SNAREs consist of
+    2 coiled-coil helices (called SNARE motifs, one belonging to the Qb subgroup and
+    one belonging to the Qc subgroup), which mediate the interactions with other SNARE
+    proteins, and a transmembrane domain.' In fact, Qb/Qc SNAP-25 family SNAREs lack
+    a transmembrane domain; SNAP25 and SNAP23 attach to membranes via palmitoylated
+    cysteine residues in the central linker between their N-terminal Qb and C-terminal
+    Qc SNARE motifs (PMID:9759094, PMID:9159129).
+  target_ids:
+  - CDD:cd15889
+  field_paths:
+  - data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml#/definition
+  evidence_ids:
+  - ev-cd15889
+  - ev-cd15895
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F29
+  issue_key: cdd-cd15856-snap29c-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd15856 (SNARE_SNAP29C) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring
+    cysteines
+  description: CDD:cd15856 (label=SNARE_SNAP29C, parent_traits=[CDD:cl22856], SEEDED,
+    unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29
+    UniProtKB:Q9ERB0, and Allochromatium vinosum UniProtKB:P83351) models the C-terminal
+    Qc SNARE motif of SNAP29 (sibling of N-terminal Qb SNARE motif CDD:cd15887 SNARE_SNAP29N),
+    but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil
+    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
+    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
+    and a transmembrane domain.' In fact, Qb/Qc SNAP-25 family SNAREs lack a transmembrane
+    domain, and unlike SNAP25 and SNAP23, SNAP29 (UniProtKB:O95721) also lacks the
+    central cluster of palmitoylated cysteines and associates with membranes through
+    protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
+  target_ids:
+  - CDD:cd15856
+  field_paths:
+  - data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml#/definition
+  evidence_ids:
+  - ev-cd15856
+  - ev-cd15887
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+- finding_id: F30
+  issue_key: cdd-cd15887-snap29n-transmembrane-domain-overclaim
+  category: consistency
+  severity: major
+  status: open
+  certainty: confirmed
+  title: CDD:cd15887 (SNARE_SNAP29N) asserts that Qb/Qc SNAREs have a transmembrane
+    domain whereas SNAP29 lacks both a transmembrane domain and palmitoylated membrane-anchoring
+    cysteines
+  description: CDD:cd15887 (label=SNARE_SNAP29N, parent_traits=[CDD:cl22856], SEEDED,
+    unpromoted seed examples Homo sapiens SNAP29 UniProtKB:O95721, Mus musculus Snap29
+    UniProtKB:Q9ERB0, and Allochromatium vinosum UniProtKB:P83351) models the N-terminal
+    Qb SNARE motif of SNAP29 (sibling of C-terminal Qc SNARE motif CDD:cd15856 SNARE_SNAP29C),
+    but its upstream CDD definition states 'Qb/Qc SNAREs consist of 2 coiled-coil
+    helices (called SNARE motifs, one belonging to the Qb subgroup and one belonging
+    to the Qc subgroup), which mediate the interactions with other SNARE proteins,
+    and a transmembrane domain.' In fact, Qb/Qc SNAP-25 family SNAREs lack a transmembrane
+    domain, and unlike SNAP25 and SNAP23, SNAP29 (UniProtKB:O95721) also lacks the
+    central cluster of palmitoylated cysteines and associates with membranes through
+    protein-protein interactions with syntaxins and Rab GTPases (PMID:9736707, PMID:9759094).
+  target_ids:
+  - CDD:cd15887
+  field_paths:
+  - data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml#/definition
+  evidence_ids:
+  - ev-cd15887
+  - ev-cd15856
+  - ev-snap25-siblings
+  - ev-cdd-errata-infrastructure
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/cdd_errata.py
+    role: Canonical accession-keyed CDD source-definition errata table
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/repair_cdd_errata.py
+    role: Registered in-place CDD errata repair writer
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_cdd.py
+    role: Maintained CDD seeder transform wired to cdd_errata
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/record_io.py
+    role: Guarded validated record writer
+  external_issues:
+  - https://github.com/CultureBotAI/proteintraitsmech/issues/605
+carry_forward_ids:
+- F25
+- F26
+- F27
+- F28
+- F29
+- F30
