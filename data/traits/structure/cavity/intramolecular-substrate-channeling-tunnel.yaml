@@ -1,0 +1,83 @@
+identifier: proteintraitsmech:CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL
+label: "intramolecular intermediate-channeling tunnel"
+definition: >-
+  An internal molecular tunnel connecting two spatially separated catalytic active sites within a bifunctional enzyme or multienzyme complex (such as carbamoyl phosphate synthetase, tryptophan synthase, glucosamine-6-phosphate synthase, or glutamine phosphoribosylpyrophosphate amidotransferase) that directly translocates a reactive metabolic intermediate (such as nascent ammonia or indole) from the donor active site to the acceptor active site while sequestering it from bulk solvent.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_CAVITY
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:CAVITY_SUBSTRATE_ACCESS_TUNNEL
+synonyms:
+  - synonym_text: "intramolecular substrate-channeling tunnel"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "inter-active-site molecular conduit"
+    synonym_type: RELATED_SYNONYM
+  - synonym_text: "ammonia/indole channeling protein tunnel"
+    synonym_type: NARROW_SYNONYM
+detection_methods:
+  - name: "CAVER 3.0 / MOLE 2.5 Voronoi tunnel, pore & channel geometry calculation"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0250
+    tool: "biotools:caver"
+    evidence_code: ECO:0007669
+    reference: PMID:23093919
+    recipe: "java -Xmx4g -jar caver.jar -home . -pdb {input} -conf config.txt -out {output}"
+causal_graphs:
+  - graph_id: CG_CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL
+    title: "Intramolecular tunnel translocation of reactive intermediates between coupled active sites"
+    description: "An internal molecular tunnel traversing the polypeptide domain connects two catalytic active sites, shielding reactive chemical intermediates from bulk solvent diffusion to enhance coupled catalytic activity and metabolic flux."
+    nodes:
+      - node_id: "SO:0000417"
+        label: polypeptide_domain
+        node_type: DOMAIN
+        grounding: "SO:0000417"
+        description: "Bifunctional or multidomain enzyme architecture enclosing an inter-active-site molecular tunnel."
+      - node_id: "CHEBI:24431"
+        label: "chemical entity"
+        node_type: LIGAND
+        grounding: "CHEBI:24431"
+        description: "Labile or reactive metabolic intermediate (such as ammonia or indole) translocated through the internal conduit."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Coupled two-site enzymatic catalysis enhanced by direct intermediate channeling."
+      - node_id: "GO:0008152"
+        label: "metabolic process"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0008152"
+        description: "Cellular biosynthetic or metabolic pathway step driven by channeled intermediate transfer."
+    edges:
+      - subject: "SO:0000417"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "CHEBI:24431"
+        description: "Internal molecular tunnels within multidomain enzymes connect one active site with another to conduct reactive intermediates."
+        evidence:
+          - reference: PMID:12859215
+            snippet: "For those enzymes with multiple catalytic sites, a common theme is beginning to emerge; the existence of molecular tunnels that connect one active site with another."
+            notes: "Raushel, Thoden & Holden (2003) Acc Chem Res 36:539-548 describe intramolecular tunnels connecting paired catalytic sites. (ECO:0000305)"
+      - subject: "CHEBI:24431"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0003824"
+        description: "Sequestering unstable intermediates inside the molecular conduit blocks bulk-solvent loss and improves catalytic efficiency."
+        evidence:
+          - reference: PMID:12859215
+            snippet: "The apparent mechanistic advantages rendered by these molecular conduits include the protection of unstable intermediates and an improvement in catalytic efficiency by blocking the diffusion of intermediates into the bulk solvent."
+            notes: "Protection of labile intermediates from bulk solvent diffusion increases coupled catalytic efficiency. (ECO:0000305)"
+      - subject: "GO:0003824"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0008152"
+        description: "Channeled translocation of nascent ammonia or other intermediates supports downstream biosynthetic metabolism."
+        evidence:
+          - reference: PMID:12859215
+            snippet: "The translocation of ammonia, derived from the hydrolysis of glutamine, is the most abundant functional requirement for a protein tunnel identified thus far."
+            notes: "Intramolecular ammonia translocation from glutamine hydrolysis is a widespread metabolic function of protein tunnels. (ECO:0000305)"
+evidence:
+  - reference: PMID:12859215
+    notes: "Raushel, Thoden & Holden (2003) Acc Chem Res 36:539-548 characterize intramolecular molecular tunnels connecting multiple catalytic sites that shield reactive intermediates from bulk solvent and enhance catalytic efficiency."
+license: CC-BY-4.0

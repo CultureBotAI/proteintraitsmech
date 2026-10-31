@@ -1,0 +1,85 @@
+identifier: proteintraitsmech:PROPEPTIDE_ANTIMICROBIAL_PEPTIDE_ANIONIC_SHIELD
+label: "anionic charge-neutralizing antimicrobial propeptide"
+definition: >-
+  An acidic (Asp/Glu-enriched, net negatively charged) N-terminal propeptide domain of cationic antimicrobial peptide precursors (such as mammalian alpha-defensins, human neutrophil peptides HNP-1..3, Paneth-cell HD5, and cathelicidins) that intramolecularly neutralizes the polycationic mature peptide domain during biosynthesis and vesicular trafficking to prevent autocytotoxicity and assist folding until proteolytic excision in storage granules or upon secretion.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_PROPEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:UNIPROT_FT_SEQ_PROPEPTIDE
+synonyms:
+  - synonym_text: "anionic defensin propiece"
+    synonym_type: NARROW_SYNONYM
+  - synonym_text: "charge-neutralizing antimicrobial peptide proregion"
+    synonym_type: EXACT_SYNONYM
+xrefs:
+  - SO:0001062
+detection_methods:
+  - name: "ProP 1.0 / InterProScan propeptide cleavage & zymogen domain detector"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0422
+    tool: "biotools:prop"
+    evidence_code: ECO:0000255
+    reference: PMID:15019782
+    recipe: "interproscan.sh -i {input} -appl ProSiteProfiles,Pfam -f tsv -o {output}"
+causal_graphs:
+  - graph_id: CG_PROPEPTIDE_ANTIMICROBIAL_PEPTIDE_ANIONIC_SHIELD
+    title: "Anionic propeptide electrostatic masking and proteolytic activation of antimicrobial peptides"
+    description: "An anionic propeptide domain provides negative charge neutralization and trafficking competence to the cationic prodefensin precursor prior to stepwise proteolytic cleavage that releases the mature microbicidal peptide."
+    nodes:
+      - node_id: "SO:0001062"
+        label: propeptide
+        node_type: MOTIF
+        grounding: "SO:0001062"
+        description: "44-45 residue anionic propiece of a prepro-antimicrobial peptide precursor."
+      - node_id: "PATO:0002196"
+        label: "negative charge"
+        node_type: QUALITY
+        grounding: "PATO:0002196"
+        description: "Anionic charge density that counterbalances the polycationic mature defensin domain."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Granule sorting and stepwise proteolytic excision of the anionic propiece."
+      - node_id: "GO:0061844"
+        label: "antimicrobial humoral immune response mediated by antimicrobial peptide"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0061844"
+        description: "Microbicidal membrane-permeabilizing defense activity of the mature packaged defensin."
+    edges:
+      - subject: "SO:0001062"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "PATO:0002196"
+        description: "Preprodefensins contain a 44-45 residue anionic propiece that neutralizes the cationic mature peptide prior to cleavage."
+        evidence:
+          - reference: PMID:7849297
+            snippet: "The peptides are produced from 94 amino acid (aa) prepropeptides by proteolytic cleavage of the signal sequence and stepwise removal of the 44-45 aa anionic propiece."
+            notes: "Liu & Ganz (1995) Blood 85:1095-1103 describe the 44-45 aa anionic propiece of human alpha-defensins. (ECO:0000269)"
+      - subject: "PATO:0002196"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0016485"
+        description: "Intact carboxy-terminal anionic propiece segments are required for prodefensin synthesis, secretion, and granule accumulation."
+        evidence:
+          - reference: PMID:7849297
+            snippet: "Deletions in the carboxyterminal three-fifths of the propiece (delta 21-51 and delta 21-64) diminished net defensin synthesis, blocked constitutive secretion of prodefensin in both cell lines, and interfered with defensin accumulation in cytoplasmic granules of 32D cl3 cells."
+            notes: "Truncation of the anionic propiece disrupts prodefensin processing and granule targeting. (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0061844"
+        description: "Stepwise proteolytic processing packages mature microbicidal defensins into azurophil granules for antimicrobial defense."
+        evidence:
+          - reference: PMID:1339298
+            snippet: "Human neutrophil promyelocytes synthesize, process, and package several microbicidal proteins, including the highly abundant defensins, into their azurophil granules."
+            notes: "Valore & Ganz (1992) Blood 79:1538-1544 show post-translational propiece cleavage yields mature microbicidal defensins. (ECO:0000269)"
+evidence:
+  - reference: PMID:7849297
+    notes: "Liu & Ganz (1995) Blood 85:1095-1103 demonstrate that the 45-amino-acid anionic propiece of human neutrophil alpha-defensins is required for normal biosynthesis, folding, and granule targeting of the cationic mature peptide."
+  - reference: PMID:1339298
+    notes: "Valore & Ganz (1992) Blood 79:1538-1544 characterize the stepwise proteolytic removal of the charge-neutralizing anionic propiece during packaging of mature microbicidal defensins into azurophil granules."
+license: CC-BY-4.0

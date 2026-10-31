@@ -1,0 +1,82 @@
+identifier: proteintraitsmech:TRANSIT_PEPTIDE_SECONDARY_PLASTID_ASAFAP
+label: "secondary plastid bipartite ASAFAP transit peptide"
+definition: >-
+  A bipartite N-terminal targeting presequence of secondary-endosymbiotic complex plastids (diatoms, cryptophytes, haptophytes, and peridinin-lacking chromalveolates) comprising an anterior endoplasmic-reticulum signal peptide followed immediately at the signal-peptidase cleavage junction by a conserved aromatic-rich ASAFAP motif (canonical consensus A-S-A-F/W/Y-A-P with an invariant +1 aromatic residue) and a hydrophilic stroma transit peptide that mediates translocation across four envelope membranes via the symbiont-specific ERAD-like machinery (SELMA) and TOC/TIC.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE
+trait_category: SEQ_TRANSIT_PEPTIDE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:TRANSIT_PEPTIDE_CHLOROPLAST_STROMA
+synonyms:
+  - synonym_text: "bipartite ASAFAP plastid targeting sequence"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "diatom/stramenopile bipartite plastid presequence"
+    synonym_type: RELATED_SYNONYM
+sequence_pattern: "A[SGA]A[FWY][AGP]P"
+detection_methods:
+  - name: "TargetP 2.0 mitochondrial / chloroplast / thylakoid transit peptide predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_2489
+    tool: "biotools:targetp"
+    evidence_code: ECO:0000255
+    reference: PMID:31601689
+    recipe: "targetp -fasta {input} -org pl -format short -prefix {output}"
+causal_graphs:
+  - graph_id: CG_TRANSIT_PEPTIDE_SECONDARY_PLASTID_ASAFAP
+    title: "Bipartite signal-plus-ASAFAP transit peptide cleavage and import into complex plastid stroma"
+    description: "An N-terminal bipartite presequence undergoes ER signal-peptide cleavage to expose the conserved aromatic ASAFAP transit-peptide N-terminus, driving translocation across the periplastid membranes into the plastid stroma."
+    nodes:
+      - node_id: "SO:0000725"
+        label: transit_peptide
+        node_type: MOTIF
+        grounding: "SO:0000725"
+        description: "Bipartite signal-peptide plus ASAFAP transit-peptide presequence targeting four-membrane secondary plastids."
+      - node_id: "GO:0016485"
+        label: "protein processing"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0016485"
+        description: "Co-translational cleavage of the anterior ER signal peptide exposing the +1 Phe of the ASAFAP transit domain."
+      - node_id: "GO:0045037"
+        label: "protein import into chloroplast stroma"
+        node_type: BIOLOGICAL_PROCESS
+        grounding: "GO:0045037"
+        description: "Translocation across the periplastid and inner plastid envelope membranes mediated by the exposed ASAFAP transit peptide."
+      - node_id: "GO:0009570"
+        label: "chloroplast stroma"
+        node_type: CELLULAR_LOCALIZATION
+        grounding: "GO:0009570"
+        description: "Final localization of the imported nuclear-encoded protein within the complex plastid stroma."
+    edges:
+      - subject: "SO:0000725"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0016485"
+        description: "Bipartite plastid targeting presequences consist of an anterior ER signal domain and a downstream transit peptide domain processed upon ER entry."
+        evidence:
+          - reference: PMID:15634195
+            snippet: "Protein targeting into plastids of these organisms depends on N-terminal bipartite presequences consisting of a signal and a transit peptide domain."
+            notes: "Kilian & Kroth (2005) Plant J 41:175-183 characterize bipartite signal-plus-transit presequences in secondary plastids. (ECO:0000269)"
+      - subject: "GO:0016485"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0045037"
+        description: "Signal-peptide cleavage in the chloroplast ER exposes the transit peptide domain required for subsequent plastid import."
+        evidence:
+          - reference: PMID:15634195
+            snippet: "We also provide experimental data about the minimal requirements of a diatom plastid targeting presequence and demonstrate that the signal peptides of plastid preproteins and of endoplasmic reticulum-targeted preproteins in diatoms are functionally equivalent."
+            notes: "Functional equivalence of ER and plastid signal peptides confirms ER entry and cleavage precede transit-peptide-driven import. (ECO:0000269)"
+      - subject: "GO:0045037"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0009570"
+        description: "The conserved phenylalanine within the cleavage-site motif is essential for transport into the plastid stroma in vivo."
+        evidence:
+          - reference: PMID:15634195
+            snippet: "We expressed several diatom plastid presequence:GFP fusion proteins with or without modifications within that motif in the diatom Phaeodactylum tricornutum and found that a single conserved phenylalanine is crucial for protein transport into the diatom plastids in vivo, thus indicating the presence of a so far unknown new type of targeting signal."
+            notes: "In vivo GFP targeting assays demonstrate the conserved aromatic residue is required for import into the diatom plastid. (ECO:0000269)"
+evidence:
+  - reference: PMID:15634195
+    notes: "Kilian & Kroth (2005) Plant J 41:175-183 demonstrate that bipartite plastid presequences in the diatom Phaeodactylum tricornutum require a conserved phenylalanine at the signal-to-transit peptide cleavage junction (ASAFAP motif) for import across the four-membrane plastid envelope."
+license: CC-BY-4.0

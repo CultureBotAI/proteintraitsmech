@@ -1,0 +1,81 @@
+identifier: proteintraitsmech:ALLOSTERIC_METAL_ION_REGULATORY_SITE
+label: "allosteric metal-ion regulatory binding site"
+definition: >-
+  A topographically distinct metal-cation coordination pocket (such as the Na+-binding allosteric activation loop of thrombin and clotting proteases, or monovalent/divalent cation regulatory sites in pyruvate kinase and ribonucleotide reductase) where metal ion binding outside the catalytic center stabilizes the active conformational ensemble to modulate substrate affinity or turnover.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: STRUCTURE
+trait_category: STRUCT_ALLOSTERIC_SITE
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:ALLOSTERIC_REGULATORY_SITE
+synonyms:
+  - synonym_text: "allosteric cation-activation site"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "monovalent/divalent cation allosteric site"
+    synonym_type: RELATED_SYNONYM
+detection_methods:
+  - name: "Fpocket / AlloSitePro allosteric & cryptic pocket geometry predictor"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_2575
+    tool: "biotools:fpocket"
+    evidence_code: ECO:0007669
+    reference: PMID:26950260
+    recipe: "fpocket -f {input} -d && mv {input}_out {output}"
+causal_graphs:
+  - graph_id: CG_ALLOSTERIC_METAL_ION_REGULATORY_SITE
+    title: "Allosteric metal-cation coordination shifts conformational flexibility to activate catalysis"
+    description: "Coordination of a regulatory metal cation at a non-orthosteric binding site reorders local loop flexibility and propagates an activating conformational shift that enhances substrate binding and catalytic turnover."
+    nodes:
+      - node_id: "GO:0046872"
+        label: "metal ion binding"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0046872"
+        description: "Coordination of a regulatory monovalent or divalent metal cation (such as Na+ or K+) at the allosteric site."
+      - node_id: "PATO:0001543"
+        label: flexibility
+        node_type: QUALITY
+        grounding: "PATO:0001543"
+        description: "Conformational ordering of the allosteric activation loop and coupled active-site architecture."
+      - node_id: "GO:0008047"
+        label: "enzyme activator activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0008047"
+        description: "Allosteric stabilization of the high-activity enzyme conformation by cation occupancy."
+      - node_id: "GO:0003824"
+        label: "catalytic activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: "GO:0003824"
+        description: "Enhanced orthosteric substrate affinity and catalytic turnover."
+    edges:
+      - subject: "GO:0046872"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "PATO:0001543"
+        description: "Coordination of monovalent cations at dedicated regulatory sites modulates the conformational ensemble of cation-activated enzymes."
+        evidence:
+          - reference: PMID:16267046
+            snippet: "Enzymes activated by monovalent cations are abundantly represented in plants and the animal world."
+            notes: "Di Cera (2006) J Biol Chem 281:1305-1308 reviews monovalent cation-activated enzymes. (ECO:0000305)"
+      - subject: "PATO:0001543"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0008047"
+        description: "Structural reorganization upon selective cation binding drives the molecular mechanism of enzyme activation."
+        evidence:
+          - reference: PMID:16267046
+            snippet: "Recent progress in the structural biology of such enzymes has answered long standing questions about the molecular mechanism of activation and the origin of monovalent cation selectivity."
+            notes: "Structural transition from the cation-free slow form to the cation-bound fast form mediates activation. (ECO:0000305)"
+      - subject: "GO:0008047"
+        predicate: "causally upstream of"
+        predicate_id: RO:0002411
+        object: "GO:0003824"
+        description: "Allosteric Na+ and K+ occupancy provides a thermodynamic driving force for substrate binding and catalysis."
+        evidence:
+          - reference: PMID:16267046
+            snippet: "They have evolved to exploit Na+ and K+, readily available in biological environments, as major driving forces for substrate binding and catalysis."
+            notes: "Monovalent cation allostery enhances orthosteric substrate binding and catalytic rate. (ECO:0000305)"
+evidence:
+  - reference: PMID:16267046
+    notes: "Di Cera (2006) J Biol Chem 281:1305-1308 establishes the structural and mechanistic basis of enzyme activation by monovalent cations (Na+, K+) binding at allosteric regulatory sites."
+license: CC-BY-4.0

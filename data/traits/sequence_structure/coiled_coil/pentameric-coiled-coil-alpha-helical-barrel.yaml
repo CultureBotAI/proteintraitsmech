@@ -1,0 +1,39 @@
+identifier: proteintraitsmech:COILED_COIL_PENTAMER_BARREL
+label: "pentameric coiled-coil alpha-helical barrel"
+definition: >-
+  A five-stranded parallel supercoiled alpha-helical coiled-coil bundle (type II alpha-helical barrel, exemplified by cartilage oligomeric matrix protein COMPcc and phospholamban) stabilized by expanded knobs-into-holes packing around a continuous central axial pore (~7 Angstrom diameter) capable of binding hydrophobic signaling lipids, retinoids, vitamin D3, or conducting ions.
+definition_source: "ProteinTraitsMech curated protein-trait taxonomy"
+trait_axis: SEQUENCE_STRUCTURE
+trait_category: MIXED_COILED_COIL
+term_kind: CLASS
+mapping_status: SEEDED
+parent_traits:
+  - proteintraitsmech:COILED_COIL_HEPTAD_REPEAT
+synonyms:
+  - synonym_text: "five-stranded coiled-coil bundle"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "pentameric alpha-helical barrel coiled coil"
+    synonym_type: EXACT_SYNONYM
+  - synonym_text: "COMP-type pentameric coiled coil"
+    synonym_type: NARROW_SYNONYM
+detection_methods:
+  - name: "DeepCoil2 / Marcoil / LOGICOIL coiled-coil & oligomeric state predictor"
+    method_type: ML_PREDICTOR
+    edam_operation: EDAM:operation_0268
+    tool: "biotools:marcoil"
+    evidence_code: ECO:0007669
+    reference: PMID:30590416
+    recipe: "deepcoil -i {input} -o {output}"
+  - name: "SOCKET2 knobs-into-holes coiled-coil geometry assignment"
+    method_type: STRUCTURAL_ALGORITHM
+    edam_operation: EDAM:operation_0268
+    tool: "biotools:socket2"
+    evidence_code: ECO:0007669
+    reference: PMID:34643705
+    recipe: "socket2 -f {input} -c 7.0 -o {output}"
+evidence:
+  - reference: PMID:8864111
+    notes: "Malashkevich et al. (1996) Science 274:761-765 determine the 2.0-Angstrom crystal structure of the five-stranded coiled-coil domain of cartilage oligomeric matrix protein (COMP) enclosing a 73-Angstrom-long axial hydrophobic pore."
+  - reference: PMID:25342807
+    notes: "Thomson et al. (2014) Science 346:485-488 establish the sequence-to-structure packing rules of pentameric and higher-order coiled-coil alpha-helical barrels with chemically defined central channels."
+license: CC-BY-4.0
