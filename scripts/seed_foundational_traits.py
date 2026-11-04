@@ -10046,9 +10046,9 @@ SPECS: tuple[TraitSpec, ...] = (
                 edges=(
                     CausalEdgeSpec(
                         subject="CHEBI:29950",
-                        predicate="RO:0002411",
-                        predicate_label="causally upstream of",
-                        object="MOD:00034",
+                        predicate="RO:0000056",
+                        predicate_label="participates in",
+                        object="GO:0006457",
                         description="Two disulfide bridges connect the alpha-helix and beta-structure to form the cysteine-stabilized alpha-beta (CS alpha beta) motif.",
                         evidence_code="ECO:0000269",
                         reference="PMID:7663941",
