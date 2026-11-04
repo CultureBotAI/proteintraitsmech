@@ -1,0 +1,904 @@
+# Review of requires glutathione
+
+- Review: 20261021T123805Z-glutathione-chebi16856
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T12:31:21Z
+- Finished UTC: 2026-10-21T12:38:05Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The neutral source drawing of reduced L-gamma-glutamyl-L-cysteinylglycine is supported and distinct from its monoanion. One confirmed major finding concerns chemical-to-protein-trait equivalence. Positive glutathione cofactor activity is preserved with explicit free-versus-bound and activity-relative limits.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 2 in batch 023. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths, leaving 429141 before this batch. 23 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml | generated | requires glutathione |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16856 | CHEBI:16856, its conjugate and asserted source hierarchy resolve. Current solution chemistry and bounded positive cofactor context were independently checked; chemical-to-protein-trait equivalence remains invalid. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Glutathione linkage, stereochemistry and protonation
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+CHEBI:16856 is reduced glutathione, C10H17N3O6S, net 0 in the source drawing. L-glutamic acid is attached through its gamma carboxyl to L-cysteinylglycine; the two stereocentres, thiol, two COOH groups and neutral amino group are explicit. Direct roles include cofactor, antioxidant and organism-metabolite contexts; structural parents are tripeptide, L-cysteine derivative and thiol. Its conjugate base is CHEBI:57925. The chemical formula/charge are not a claim about every solution or protein-bound microstate.
+
+### Positive glutathione cofactor context and distinct adduct roles
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The primary MPI abstract explicitly supports a cofactor role in one bacterial isomerisation; the glyoxalase experiment concerns a glutathione-derived hemithioacetal substrate. These are compatible activity-relative roles, not evidence for a universal substrate-only or cofactor-only interpretation.
+
+### Free glutathione acid-base state near pH 7.3
+
+quantity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The primary solution titration places the two carboxyl dissociations well below pH 7.3 and the next two dissociations above it, supporting predominant free monoanion under comparable conditions. This is consistent with the source state assignment; the GST experiment shows why a protein-bound thiol cannot simply inherit that solution assignment.
+
+### Exact free chemical state versus activity-relative protein requirement
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+Positive cofactor use is retained, but the inspected abstract and intermediate-analogue structure do not separately qualify every proton in the free chemical state as an obligatory non-substrate protein requirement. Thiolate formation, adduct formation and cycling can differ by activity. No automatic state replacement or mandatory protein example is justified.
+
+### Direct cofactor role and local requirement parent
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The source directly assigns cofactor role and the captured local broader cofactor-requirement parent resolves. Structural chemical ancestry and organism roles are separate; source role explains candidate selection without certifying equivalence or all proteins.
+
+### Chemical source and maintained ChEBI emitter
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+The exact chemical identity and copied definition resolve in current official sources. The maintained ChEBI emitter synthesizes the requirement wrapper. Current source chemistry and CC BY 4.0 licensing do not identify the original seed release or turn model/bibliographic citations into protein qualification.
+
+### Chemical entity versus protein requirement
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16856.
+
+CHEBI:16856 denotes the inspected chemical entity or chemical class, while the local identifier denotes a protein functional requirement. Correct source identity, authentic roles and bounded functional context do not establish the true own-source equivalence asserted by xrefs.
+
+## Findings
+
+### F1: Chemical source entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-16856.chemical-entity-equivalence.
+
+CHEBI:16856 denotes the inspected chemical entity or chemical class, while the local identifier denotes a protein functional requirement. Correct source identity, authentic roles and bounded functional context do not establish the true own-source equivalence asserted by xrefs.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build in scripts/seed_chebi_cofactor.py to remove chemical-to-protein-trait equality while preserving exact supported chemical scope and source provenance. Adjudicate the activity-relative role and chemical state before adding any typed COFACTOR participant. If that role is unsupported, retain provenance and explicit uncertainty without inventing a participant. Do not move the equality to mapped_xrefs, merge chemical states, require optional examples or promote native status.
+
+- The regenerated xrefs no longer equate the source chemical or biochemical role with the protein requirement. Provenance and the intended requirement scope remain explicit; optional participant absence is not itself a defect.
+- Run just validate data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections | supports | The inspected official Introduction and Licensing sections establish ChEBI chemical-entity/role scope and CC BY 4.0 licensing. This supports ChEBI attribution, not chemical-to-protein equivalence or licensing of an uninspected MGA table. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16. Original access time and digest are preserved. This is distinct from the live backend and does not identify the original seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16856/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | CHEBI:16856 is reduced glutathione, C10H17N3O6S, net 0 in the source drawing. L-glutamic acid is attached through its gamma carboxyl to L-cysteinylglycine; the two stereocentres, thiol, two COOH groups and neutral amino group are explicit. Direct roles include cofactor, antioxidant and organism-metabolite contexts; structural parents are tripeptide, L-cysteine derivative and thiol. Its conjugate base is CHEBI:57925. The chemical formula/charge are not a claim about every solution or protein-bound microstate. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:16856; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:16856 as nonobsolete. Its actual names, definition or empty description, and available chemical annotations were inspected; a null field is not filled by assumption. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion required for enzyme activity, under biochemical role CHEBI:52206. This role is distinct from a protein class requiring a cofactor. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/57925/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | CHEBI:57925 is glutathionate(1−), C10H16N3O6S, net −1. The explicit structure retains the L-glutamyl/L-cysteinyl stereochemistry and gamma-glutamyl peptide linkage, has two carboxylates and a glutamyl NH3+ group, and retains an S-H thiol. It is not a thiolate or a disulfide. The source assigns predominance at pH 7.3, direct cofactor/human/yeast-metabolite roles, peptide-anion ancestry and conjugate-acid comparison CHEBI:16856. |
+| isomerase-function | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A18824004%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full article not independently inspected | supports | PMID:18824004; DOI:10.1016/j.jmb.2008.09.028. The Ralstonia maleyl-pyruvate isomerase paper explicitly identifies glutathione as a cofactor rather than a substrate for this isomerisation. Its 1.3 Å structure is a complex with dicarboxyethyl glutathione, an analogue of a proposed intermediate. The abstract supports positive bounded cofactor context and a proposed thiolate mechanism, not a complete proton inventory or qualification of the free neutral/monoanion state. |
+| glyoxalase-context | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11306074%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full article not independently inspected | supports | PMID:11306074; DOI:10.1016/S0009-2797(00)00298-2. The study identifies the spontaneously formed methylglyoxal-glutathione hemithioacetal as the actual glyoxalase-I substrate and reports altered aldose-reductase behaviour in the presence of glutathione. This distinguishes free glutathione, its adduct and enzyme substrates; it neither denies the isomerase cofactor role nor independently establishes an exact free-state requirement. |
+| bound-thiolate | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A2742854%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID/DOI and available indexed abstract, explicitly truncated at 250 words; full article not inspected | supports | PMID:2742854; DOI:10.1021/bi00434a062. The available abstract reports spectroscopy of rat liver GST isozyme 4-4 and a bound-glutathione thiol pKa of 6.6, approximately 2.4 units below free solution. This is explicit evidence that a particular bound thiol can ionize differently; it is not a universal enzyme value. The indexed abstract ends with an explicit truncation notice, so only the displayed results are used. |
+| solution-ionization | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8041291/fullTextXML; Successful full XML: Experimental Potentiometric Titration, complete Acid–Base Properties of GSH and PCs section, Table 1, and related speciation-method discussion; other metal-complex results and supplements not used | supports | PMID:33736430; DOI:10.1021/acs.inorgchem.0c03639. The primary potentiometric study measured GSH acid-base constants at 25 °C and ionic strength 0.1 M (KNO3). Table 1 and the acid-base results give stepwise pKa values 1.95, 3.64, 8.76 and 9.65, with the carboxyl and basic groups discussed separately. These free-ligand measurements support predominant monoanion near pH 7.3; they do not establish a universal protein-bound protonation state or directly measure all site-specific microconstants. |
+| early-thiol-esters | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A4200890%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Bibliographic PMID/DOI/title inspected; abstract is absent and full text was not inspected | supports | PMID:4200890; DOI:10.1021/bi00744a024 resolves to the glutathione thiol-ester preparation/assay and human-liver survey paper. The response has no abstract, so it is retained as verified source-linked bibliography only. |
+| early-glyoxalase | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A4745654%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Bibliographic PMID/DOI/title inspected; abstract is absent and full text was not inspected | supports | PMID:4745654; DOI:10.1021/bi00744a025 resolves to human-liver glyoxalase-II purification/characterization. Its indexed abstract is absent; no enzyme mechanism or exact-state claim is inferred from its title. |
+| tripeptide-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/47923/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Tripeptide CHEBI:47923 is defined by three amino-acid residues joined through peptide linkages. Its R-group drawing is a generic representation, not a fixed glutathione structure. |
+| cysteine-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/83824/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | L-cysteine derivative CHEBI:83824 describes formal derivatization at cysteine amino, carboxyl or thiol groups or hydrogen replacement; it is structural ancestry, not an enzyme requirement. |
+| thiol-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/29256/; Exact identity, names, definition or null, formula/charge, structure and complete outgoing relations; incoming relations inspected for target scope | supports | Thiol CHEBI:29256 is an organosulfur compound with an S-H group attached to carbon. This supports the reduced thiol identity, not an oxidized disulfide. |
+| bacterial-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21988831%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Complete indexed model-paper abstract | context_only | PMID:21988831; DOI:10.1038/msb.2011.65. The complete iJO1366 abstract concerns E. coli metabolic reconstruction and a knockout screen; it does not independently establish the exact neutral glutathione state. |
+| mouse-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A19425150%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Complete indexed model-paper abstract | context_only | PMID:19425150. The complete mouse metabolic-model abstract is provenance context rather than a neutral-glutathione protonation or protein requirement experiment. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml; Executed 2026-10-21T12:32:00Z through 2026-10-21T12:32:03Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml; Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml; Executed 2026-10-21T12:32:03Z through 2026-10-21T12:32:04Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Primary biological claims are bounded to the inspected complete MPI/glyoxalase abstracts; the GST abstract is explicitly truncated and only its displayed results are used. The acid-base paper was read in its relevant full-text methods/results/Table 1 sections, not its supplements. Historical source-linked papers without abstracts are bibliography only. No new protein example or all-protein protonation rule is asserted.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T123805Z-glutathione-chebi16856
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires glutathione
+started_at: '2026-10-21T12:31:21Z'
+finished_at: '2026-10-21T12:38:05Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The neutral source drawing of reduced L-gamma-glutamyl-L-cysteinylglycine
+  is supported and distinct from its monoanion. One confirmed major finding concerns
+  chemical-to-protein-trait equivalence. Positive glutathione cofactor activity is
+  preserved with explicit free-versus-bound and activity-relative limits.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+    sha256: 4d9b8bf12102922c963f716b26ccd38fdfbae7a0bd07dafbc367cb6b902850bf
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 2 in batch 023. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths,
+    leaving 429141 before this batch. 23 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+targets:
+- kind: generated
+  label: requires glutathione
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:16856, its conjugate and asserted source hierarchy resolve. Current
+    solution chemistry and bounded positive cofactor context were independently checked;
+    chemical-to-protein-trait equivalence remains invalid.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  evidence_ids:
+  - licence
+  - release
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - conjugate
+  - isomerase-function
+  - glyoxalase-context
+  - bound-thiolate
+  - solution-ionization
+  - early-thiol-esters
+  - early-glyoxalase
+  - tripeptide-parent
+  - cysteine-parent
+  - thiol-parent
+  - bacterial-origin
+  - mouse-origin
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T12:31:21Z'
+  snapshot_sha256: 4d9b8bf12102922c963f716b26ccd38fdfbae7a0bd07dafbc367cb6b902850bf
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T12:31:21Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T12:31:21Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T12:31:21Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T12:31:21Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections
+  summary: The inspected official Introduction and Licensing sections establish ChEBI
+    chemical-entity/role scope and CC BY 4.0 licensing. This supports ChEBI attribution,
+    not chemical-to-protein equivalence or licensing of an uninspected MGA table.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16.
+    Original access time and digest are preserved. This is distinct from the live
+    backend and does not identify the original seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16856/
+  accessed_at: '2026-10-21T12:32:16.811635Z'
+  snapshot_sha256: fa7a320233d31b7c31d8346ac24a22710d0b5ca23fce649b659925a966965def
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: CHEBI:16856 is reduced glutathione, C10H17N3O6S, net 0 in the source drawing.
+    L-glutamic acid is attached through its gamma carboxyl to L-cysteinylglycine;
+    the two stereocentres, thiol, two COOH groups and neutral amino group are explicit.
+    Direct roles include cofactor, antioxidant and organism-metabolite contexts; structural
+    parents are tripeptide, L-cysteine derivative and thiol. Its conjugate base is
+    CHEBI:57925. The chemical formula/charge are not a claim about every solution
+    or protein-bound microstate.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:16856
+  accessed_at: '2026-10-21T12:32:16.640538Z'
+  snapshot_sha256: d5e41a75aa07d9bdd2dcc4d3cee56ac6f51f7ff022abb6d04e28d37743c77fa8
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:16856 as nonobsolete. Its actual names, definition or
+    empty description, and available chemical annotations were inspected; a null field
+    is not filled by assumption.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion
+    required for enzyme activity, under biochemical role CHEBI:52206. This role is
+    distinct from a protein class requiring a cofactor.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/57925/
+  accessed_at: '2026-10-21T12:32:16.666519Z'
+  snapshot_sha256: 9a0de9b61b3570a5b5192d352d8c9ebdf811e65310e52130cd5ad12f7ad86023
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: CHEBI:57925 is glutathionate(1−), C10H16N3O6S, net −1. The explicit structure
+    retains the L-glutamyl/L-cysteinyl stereochemistry and gamma-glutamyl peptide
+    linkage, has two carboxylates and a glutamyl NH3+ group, and retains an S-H thiol.
+    It is not a thiolate or a disulfide. The source assigns predominance at pH 7.3,
+    direct cofactor/human/yeast-metabolite roles, peptide-anion ancestry and conjugate-acid
+    comparison CHEBI:16856.
+- evidence_id: isomerase-function
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A18824004%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:33:20.720605Z'
+  snapshot_sha256: 0b28fd901b309a458a99c8572490a54ea09e63c0568f2a221b7318896c872eac
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full article not independently
+    inspected
+  summary: PMID:18824004; DOI:10.1016/j.jmb.2008.09.028. The Ralstonia maleyl-pyruvate
+    isomerase paper explicitly identifies glutathione as a cofactor rather than a
+    substrate for this isomerisation. Its 1.3 Å structure is a complex with dicarboxyethyl
+    glutathione, an analogue of a proposed intermediate. The abstract supports positive
+    bounded cofactor context and a proposed thiolate mechanism, not a complete proton
+    inventory or qualification of the free neutral/monoanion state.
+- evidence_id: glyoxalase-context
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11306074%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:33:20.766390Z'
+  snapshot_sha256: 4366d43cc39dfb8f6ecab1d611ff9627550a172017207481523d9adb753b0931
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full article not independently
+    inspected
+  summary: PMID:11306074; DOI:10.1016/S0009-2797(00)00298-2. The study identifies
+    the spontaneously formed methylglyoxal-glutathione hemithioacetal as the actual
+    glyoxalase-I substrate and reports altered aldose-reductase behaviour in the presence
+    of glutathione. This distinguishes free glutathione, its adduct and enzyme substrates;
+    it neither denies the isomerase cofactor role nor independently establishes an
+    exact free-state requirement.
+- evidence_id: bound-thiolate
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A2742854%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:33:20.751199Z'
+  snapshot_sha256: 0b6d5540da10e0de8517c85bfc8dc7b28b8dba5bdc80dd013075405bd98ac7a5
+  support: supports
+  locator: Verified PMID/DOI and available indexed abstract, explicitly truncated
+    at 250 words; full article not inspected
+  summary: PMID:2742854; DOI:10.1021/bi00434a062. The available abstract reports spectroscopy
+    of rat liver GST isozyme 4-4 and a bound-glutathione thiol pKa of 6.6, approximately
+    2.4 units below free solution. This is explicit evidence that a particular bound
+    thiol can ionize differently; it is not a universal enzyme value. The indexed
+    abstract ends with an explicit truncation notice, so only the displayed results
+    are used.
+- evidence_id: solution-ionization
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8041291/fullTextXML
+  accessed_at: '2026-10-21T12:33:22.083682Z'
+  snapshot_sha256: 3492c25373ad4319900221630f568b8ad8a4ac5d7f3e5f92e3e4495986c23255
+  support: supports
+  locator: 'Successful full XML: Experimental Potentiometric Titration, complete Acid–Base
+    Properties of GSH and PCs section, Table 1, and related speciation-method discussion;
+    other metal-complex results and supplements not used'
+  summary: PMID:33736430; DOI:10.1021/acs.inorgchem.0c03639. The primary potentiometric
+    study measured GSH acid-base constants at 25 °C and ionic strength 0.1 M (KNO3).
+    Table 1 and the acid-base results give stepwise pKa values 1.95, 3.64, 8.76 and
+    9.65, with the carboxyl and basic groups discussed separately. These free-ligand
+    measurements support predominant monoanion near pH 7.3; they do not establish
+    a universal protein-bound protonation state or directly measure all site-specific
+    microconstants.
+- evidence_id: early-thiol-esters
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A4200890%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:32:54.045606Z'
+  snapshot_sha256: e91beef38c0becf21a9f2a6d66ae4a2cc26a24bb09e908e7465cef46a8bf797d
+  support: supports
+  locator: Bibliographic PMID/DOI/title inspected; abstract is absent and full text
+    was not inspected
+  summary: PMID:4200890; DOI:10.1021/bi00744a024 resolves to the glutathione thiol-ester
+    preparation/assay and human-liver survey paper. The response has no abstract,
+    so it is retained as verified source-linked bibliography only.
+- evidence_id: early-glyoxalase
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A4745654%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:32:54.041234Z'
+  snapshot_sha256: d7e396c79300f5d46be76733ec1be2e53bd2a80dd092b2b06abd423bb647b84c
+  support: supports
+  locator: Bibliographic PMID/DOI/title inspected; abstract is absent and full text
+    was not inspected
+  summary: PMID:4745654; DOI:10.1021/bi00744a025 resolves to human-liver glyoxalase-II
+    purification/characterization. Its indexed abstract is absent; no enzyme mechanism
+    or exact-state claim is inferred from its title.
+- evidence_id: tripeptide-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/47923/
+  accessed_at: '2026-10-21T12:32:53.722081Z'
+  snapshot_sha256: b16e2b7a75e30f8b775f420edcac0538792f5b842cc1ac80b76731ac42b802dc
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Tripeptide CHEBI:47923 is defined by three amino-acid residues joined through
+    peptide linkages. Its R-group drawing is a generic representation, not a fixed
+    glutathione structure.
+- evidence_id: cysteine-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/83824/
+  accessed_at: '2026-10-21T12:32:51.978903Z'
+  snapshot_sha256: 97b77fbd9c54105f9955215539a922e1749dd16b9ab5252ed8b4749389af7043
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: L-cysteine derivative CHEBI:83824 describes formal derivatization at cysteine
+    amino, carboxyl or thiol groups or hydrogen replacement; it is structural ancestry,
+    not an enzyme requirement.
+- evidence_id: thiol-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/29256/
+  accessed_at: '2026-10-21T12:32:51.978935Z'
+  snapshot_sha256: 215dd317988cec50435f7d122262b435d514bd2ccee315c3abdbf137c6d8a5a5
+  support: supports
+  locator: Exact identity, names, definition or null, formula/charge, structure and
+    complete outgoing relations; incoming relations inspected for target scope
+  summary: Thiol CHEBI:29256 is an organosulfur compound with an S-H group attached
+    to carbon. This supports the reduced thiol identity, not an oxidized disulfide.
+- evidence_id: bacterial-origin
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A21988831%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:37:45.903388Z'
+  snapshot_sha256: e25a797a813b88b0e3053e41aacefa22b641206af4570c409c52515a8233a3e0
+  support: context_only
+  locator: Complete indexed model-paper abstract
+  summary: PMID:21988831; DOI:10.1038/msb.2011.65. The complete iJO1366 abstract concerns
+    E. coli metabolic reconstruction and a knockout screen; it does not independently
+    establish the exact neutral glutathione state.
+- evidence_id: mouse-origin
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A19425150%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:58:03.279980Z'
+  snapshot_sha256: ac9747be911a86fd9ddca3187da9a837bb098a6e33461797277ff5a1e4ad0fcd
+  support: context_only
+  locator: Complete indexed model-paper abstract
+  summary: PMID:19425150. The complete mouse metabolic-model abstract is provenance
+    context rather than a neutral-glutathione protonation or protein requirement experiment.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  locator: Executed 2026-10-21T12:32:00Z through 2026-10-21T12:32:03Z; exit 0
+  accessed_at: '2026-10-21T12:32:03Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  locator: Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0
+  accessed_at: '2026-10-21T12:33:46Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+  locator: Executed 2026-10-21T12:32:03Z through 2026-10-21T12:32:04Z; exit 0
+  accessed_at: '2026-10-21T12:32:04Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0
+  accessed_at: '2026-10-21T12:33:47Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: CHEBI:16856 is reduced glutathione, C10H17N3O6S, net 0 in the source drawing.
+    L-glutamic acid is attached through its gamma carboxyl to L-cysteinylglycine;
+    the two stereocentres, thiol, two COOH groups and neutral amino group are explicit.
+    Direct roles include cofactor, antioxidant and organism-metabolite contexts; structural
+    parents are tripeptide, L-cysteine derivative and thiol. Its conjugate base is
+    CHEBI:57925. The chemical formula/charge are not a claim about every solution
+    or protein-bound microstate.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - conjugate
+  topic: Glutathione linkage, stereochemistry and protonation
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The primary MPI abstract explicitly supports a cofactor role in one bacterial
+    isomerisation; the glyoxalase experiment concerns a glutathione-derived hemithioacetal
+    substrate. These are compatible activity-relative roles, not evidence for a universal
+    substrate-only or cofactor-only interpretation.
+  evidence_ids:
+  - isomerase-function
+  - glyoxalase-context
+  - chemical
+  topic: Positive glutathione cofactor context and distinct adduct roles
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-6
+- area: quantity
+  outcome: supported
+  summary: The primary solution titration places the two carboxyl dissociations well
+    below pH 7.3 and the next two dissociations above it, supporting predominant free
+    monoanion under comparable conditions. This is consistent with the source state
+    assignment; the GST experiment shows why a protein-bound thiol cannot simply inherit
+    that solution assignment.
+  evidence_ids:
+  - solution-ionization
+  - bound-thiolate
+  - chemical
+  - conjugate
+  topic: Free glutathione acid-base state near pH 7.3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-7
+- area: representation
+  outcome: unknown
+  summary: Positive cofactor use is retained, but the inspected abstract and intermediate-analogue
+    structure do not separately qualify every proton in the free chemical state as
+    an obligatory non-substrate protein requirement. Thiolate formation, adduct formation
+    and cycling can differ by activity. No automatic state replacement or mandatory
+    protein example is justified.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - isomerase-function
+  - bound-thiolate
+  topic: Exact free chemical state versus activity-relative protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-8
+- area: consistency
+  outcome: supported
+  summary: The source directly assigns cofactor role and the captured local broader
+    cofactor-requirement parent resolves. Structural chemical ancestry and organism
+    roles are separate; source role explains candidate selection without certifying
+    equivalence or all proteins.
+  evidence_ids:
+  - chemical
+  - cofactor-role
+  - local-parent-1
+  - owner
+  topic: Direct cofactor role and local requirement parent
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-9
+- area: provenance
+  outcome: supported
+  summary: The exact chemical identity and copied definition resolve in current official
+    sources. The maintained ChEBI emitter synthesizes the requirement wrapper. Current
+    source chemistry and CC BY 4.0 licensing do not identify the original seed release
+    or turn model/bibliographic citations into protein qualification.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - owner
+  - licence
+  - release
+  topic: Chemical source and maintained ChEBI emitter
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-10
+- area: grounding
+  outcome: concern
+  summary: CHEBI:16856 denotes the inspected chemical entity or chemical class, while
+    the local identifier denotes a protein functional requirement. Correct source
+    identity, authentic roles and bounded functional context do not establish the
+    true own-source equivalence asserted by xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  topic: Chemical entity versus protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-16856.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical source entity is asserted equivalent to a protein requirement
+  description: CHEBI:16856 denotes the inspected chemical entity or chemical class,
+    while the local identifier denotes a protein functional requirement. Correct source
+    identity, authentic roles and bounded functional context do not establish the
+    true own-source equivalence asserted by xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The source denotation and the synthesized protein-requirement
+    class are distinct. This is a major grounding defect even when identity and biological
+    relevance are supported; it is not a finding about an absent optional representation.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Update build in scripts/seed_chebi_cofactor.py to remove chemical-to-protein-trait
+    equality while preserving exact supported chemical scope and source provenance.
+    Adjudicate the activity-relative role and chemical state before adding any typed
+    COFACTOR participant. If that role is unsupported, retain provenance and explicit
+    uncertainty without inventing a participant. Do not move the equality to mapped_xrefs,
+    merge chemical states, require optional examples or promote native status.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16856
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated xrefs no longer equate the source chemical or biochemical role
+    with the protein requirement. Provenance and the intended requirement scope remain
+    explicit; optional participant absence is not itself a defect.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Primary biological claims are bounded to the inspected complete MPI/glyoxalase abstracts;
+  the GST abstract is explicitly truncated and only its displayed results are used.
+  The acid-base paper was read in its relevant full-text methods/results/Table 1 sections,
+  not its supplements. Historical source-linked papers without abstracts are bibliography
+  only. No new protein example or all-protein protonation rule is asserted.
+tags:
+- unreviewed-path-order
+- batch-023
+- chebi-cofactor
+```

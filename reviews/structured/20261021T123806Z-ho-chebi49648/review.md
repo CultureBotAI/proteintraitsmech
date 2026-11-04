@@ -1,0 +1,897 @@
+# Review of requires Ho
+
+- Review: 20261021T123806Z-ho-chebi49648
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T12:31:37Z
+- Finished UTC: 2026-10-21T12:38:06Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Ho correctly identifies neutral holmium, distinct from Ho(III). Findings are confirmed major chemical-to-protein-trait equivalence and confirmed minor category-token synonym. Bounded ion-addition and mutant-growth results neither qualify the neutral-atom requirement nor prove universal absence of holmium biology.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 9 in batch 023. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths, leaving 429141 before this batch. 23 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml | generated | requires Ho |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_49648 | Official ChEBI/OLS resolve CHEBI:49648 and the exact chemical identity. The alignment owner and local crosswalk establish provenance, not a direct cofactor-role selection or independently verified neutral-Ho requirement. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Correct holmium element and atomic state
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+Ho and holmium agree with neutral CHEBI:49648. There is no wrong-element collision. Official Ho(III) is a distinct chemical comparison; ionic experiments do not silently alter the target identity.
+
+### Bounded holmium assay and growth evidence
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The primary studies report decreased late-lanthanide activity in a partially Eu-loaded artificial assay and no Ho-dependent rescue of the specified PA1 mutant. These observations are preserved with occupancy, strain and ion-addition limits. Neither establishes universal biological exclusion or a neutral-atom requirement.
+
+### Holmium state and activity-relative requirement
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The alignment category does not independently establish a neutral-Ho protein requirement. An ionic or complex scope would require its own chemical identity and activity-specific evidence; no automatic replacement is selected. The absence of a current direct cofactor role and the bounded negative studies do not prove every possible Ho requirement false.
+
+### Maintained alignment provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The captured alignment owner, ChEBI dependency and exact crosswalk row explain Ho/holmium/metals output. The original MGA source table and release remain uninspected. Chemical identity resolves, but source attribution does not independently demonstrate a protein requirement.
+
+### Alignment parent and requirement scope
+
+consistency: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The local cofactor parent resolves and was attached by the alignment emitter. The current atomic source parents describe chemical taxonomy, not a proven cofactor role or broader protein-class relationship. This uncertainty does not itself demonstrate an impossible requirement.
+
+### Chemical entity versus protein requirement
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_49648.
+
+The chemical xref and the synthesized protein-requirement class have different denotations. Exact chemical identity, a source role or bounded positive biology does not satisfy true own-source equivalence between them.
+
+## Findings
+
+### F1: Alignment category is emitted as a trait synonym
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-49648.category-token-synonym.
+
+The RELATED_SYNONYM metals is the copied broad MGA category, not an alternate label for the specific holmium requirement class. The separate holmium alias is scientifically compatible.
+
+### F2: Chemical entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-49648.chemical-entity-equivalence.
+
+The ChEBI entity in xrefs is a chemical, whereas the target is a protein functional requirement. This violates the schema's true own-source equivalence semantics independently of whether a biological requirement can ultimately be supported.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Keep the holmium alias where appropriate, but retain metals as provenance or category metadata rather than TraitSynonym text. Correct the maintained alignment transformation and use an audited route that selects this existing target; do not change element/state identity implicitly.
+
+- The regenerated alternate labels denote this requirement class; the source category remains traceable outside synonyms. Add a focused category-token fixture; no native protein or status promotion is automatic.
+- For maintained writer changes run just audit-writers, just lint and just test with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml. Run full just validate-all before merging record changes; capture changed inputs and save a fresh validated review rather than overwriting this observation.
+
+### A2
+
+Correct build_aligned and its maintained input/override while preserving the exact supported chemical identity and provenance. Remove chemical-to-protein-class equality. Adjudicate the activity-relative ChemicalParticipant.role and chemical state before adding a typed participant; if unsupported, retain source provenance and explicit uncertainty without inventing a role. Do not move equality into mapped_xrefs, automatically substitute an ion/conjugate/spirolactone, or promote proteins.
+
+- The regenerated record no longer asserts chemical-to-protein-trait equality. Any typed participant has a curator-adjudicated role and state; otherwise provenance and uncertainty remain explicit.
+- Use an audited regeneration route selecting the existing target and focused transformation coverage. The alignment main selects missing IDs before --force, so --force alone is insufficient. No native review status or protein requirement is automatically promoted.
+- For maintained writer changes run just audit-writers, just lint and just test with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml. Run full just validate-all before merging record changes; capture changed inputs and save a fresh validated review rather than overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml; Entire target YAML | supports | Entire YAML inspected: local identifier and requires-Ho label, alignment-synthesized definition, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, broad cofactor parent, ChEBI xref and licence, and MGA-attributed RELATED_SYNONYM values holmium and metals. No optional protein example, graph or chemical_participants is present. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Exact target CHEBI identifier row and header | supports | The exact chemical-ID row records the locally persisted alignment name, cofactor identifier and category. It is curation provenance, not an independently verified protein requirement or a release-pinned external source table. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections | supports | Official ChEBI Introduction and Licensing sections identify a chemical-entity/role resource under CC BY 4.0. This supports chemical-source attribution, not protein-trait equivalence. It does not certify the uninspected upstream MGA table. |
+| current-release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ontology version 256, loaded 2026-10-16. Original access UTC and digest are retained; this does not establish the live backend release or original seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/49648/; Complete identity, names, actual definition or null, formula/charge, structure, source origins/citations and outgoing relations | supports | CHEBI:49648 positively resolves to holmium atom, formula Ho, charge 0, SMILES [Ho], InChI=1S/Ho and InChIKey KJZYNXUDTRRSPN-UHFFFAOYSA-N. Its definition is null. Names Ho and holmium agree with the target; the secondary IDs include CHEBI:33378 and CHEBI:49647. Its structural parents are lanthanoid atom and f-block element atom. No direct cofactor relation occurs in the current complete outgoing list. This absence alone does not prove absence of all biological roles. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:49648; Inspected source response captured at the recorded UTC time | supports | OLS resolves the same nonobsolete ChEBI identifier and chemical name. The description is absent, and no invented source prose is supplied. Chemical resolution is distinct from validating a protein requirement. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition and complete outgoing relations | supports | Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion required for enzyme activity; its parent is biochemical role CHEBI:52206. This role and a protein class requiring the chemical have different denotations. |
+| context-33319 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33319/; Identity, actual definition or null, chemical data, structure and complete outgoing relations | supports | Lanthanoid atom CHEBI:33319 is an atomic structural class under rare-earth-metal atom, with null definition and fixed structure. This class is not a protein requirement. |
+| context-33562 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/33562/; Identity, actual definition or null, chemical data, structure and complete outgoing relations | supports | F-block element atom CHEBI:33562 is an atomic structural class under transition-element atom, with null definition and fixed structure. Atomic taxonomy does not identify a required protein-bound ion. |
+| context-49650 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/49650/; Identity, actual definition or null, chemical data, structure and complete outgoing relations | supports | Holmium(3+) CHEBI:49650 is formula Ho with charge +3, SMILES [Ho+3] and InChI=1S/Ho/q+3. Its monoatomic-trication and holmium-molecular-entity ancestry distinguishes it from neutral CHEBI:49648. It is a comparison, not an automatic replacement. |
+| holmium-enzyme-assay | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6085770/fullTextXML; Complete main text; Results around Figures 2–3, plate-reader Methods and figure/table captions; original verified access UTC retained | supports | The primary lanthanide-series study added 20 µM Ln(III) chloride, including Ho(III), to 200 nM partial-apo Eu-MDH from Methylacidiphilum fumariolicum SolV. The preparation retained about 70% Eu occupancy. Late lanthanides decreased activity relative to the no-addition baseline in an artificial dye-linked assay. This is neither a purified Ho-holoenzyme measurement nor universal absence of Ho-supported catalysis. |
+| holmium-growth-abstract | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1111%2Fmmi.14208&amp;resultType=core&amp;format=json; Verified PMID/DOI and complete indexed abstract; full paper not inspected through this response | supports | PMID:30653750; DOI:10.1111/mmi.14208. The complete abstract establishes REE-dependent regulation and uptake context in Methylobacterium extorquens PA1. It does not mention holmium specifically; the Ho result is inspected in the separately captured full text. |
+| holmium-growth-fulltext | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6850437/fullTextXML; Results: XoxF is required for La3+-dependent growth; Figure 2 caption; Strains and growth conditions; Growth assays in microtiter plates | supports | In Methylobacterium extorquens PA1 lacking mxaF, the tested Ho(III) supplementation did not restore methanol growth, whereas several light lanthanides did. The methods specify 10 µM chloride-salt supplementation and the strain/media conditions. This is a bounded negative growth result, not proof that no organism or protein can use holmium and not an experiment with a neutral atom. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml; Executed 2026-10-21T12:32:19Z through 2026-10-21T12:32:21Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml; Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml; Executed 2026-10-21T12:32:21Z through 2026-10-21T12:32:21Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- The candidate requirement originates in the MGA alignment emitter. The original sibling reference table, upstream evidence, licence and release were not inspected. The captured crosswalk records output provenance, not independent physiology or the emitter input. Current absence of a direct cofactor role alone does not refute all possible holmium roles.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The lanthanide-series full text was read with its experimental and computational claims separated. The separate PA1 full text was inspected in the cited Results, Figure 2 and growth Methods sections. Ho(III) addition, mixed Eu occupancy and growth phenotypes do not establish neutral-atom occupancy, coordination geometry or universal absence of activity.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T123806Z-ho-chebi49648
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires Ho
+started_at: '2026-10-21T12:31:37Z'
+finished_at: '2026-10-21T12:38:06Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Ho correctly identifies neutral holmium, distinct from Ho(III). Findings
+  are confirmed major chemical-to-protein-trait equivalence and confirmed minor category-token
+  synonym. Bounded ion-addition and mutant-growth results neither qualify the neutral-atom
+  requirement nor prove universal absence of holmium biology.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    sha256: 0604e5358a83352623fe52cb682ebe3321cb5ba2d5e42ce5cc0a4fc1e4be94c3
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 9 in batch 023. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5) covers 218 record paths,
+    leaving 429141 before this batch. 23 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+targets:
+- kind: generated
+  label: requires Ho
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official ChEBI/OLS resolve CHEBI:49648 and the exact chemical identity.
+    The alignment owner and local crosswalk establish provenance, not a direct cofactor-role
+    selection or independently verified neutral-Ho requirement.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - licence
+  - current-release
+  - cofactor-role
+  - context-33319
+  - context-33562
+  - context-49650
+  - holmium-enzyme-assay
+  - holmium-growth-abstract
+  - holmium-growth-fulltext
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: 0604e5358a83352623fe52cb682ebe3321cb5ba2d5e42ce5cc0a4fc1e4be94c3
+  support: supports
+  summary: 'Entire YAML inspected: local identifier and requires-Ho label, alignment-synthesized
+    definition, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, broad cofactor
+    parent, ChEBI xref and licence, and MGA-attributed RELATED_SYNONYM values holmium
+    and metals. No optional protein example, graph or chemical_participants is present.'
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Exact target CHEBI identifier row and header
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The exact chemical-ID row records the locally persisted alignment name,
+    cofactor identifier and category. It is curation provenance, not an independently
+    verified protein requirement or a release-pinned external source table.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T12:31:37Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections
+  summary: Official ChEBI Introduction and Licensing sections identify a chemical-entity/role
+    resource under CC BY 4.0. This supports chemical-source attribution, not protein-trait
+    equivalence. It does not certify the uninspected upstream MGA table.
+- evidence_id: current-release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ontology version 256, loaded 2026-10-16.
+    Original access UTC and digest are retained; this does not establish the live
+    backend release or original seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/49648/
+  accessed_at: '2026-10-21T12:32:02.914470Z'
+  snapshot_sha256: 5738cd3180545cd5bd033f45616f61de05b627e97784c595729fdd11602e9869
+  support: supports
+  locator: Complete identity, names, actual definition or null, formula/charge, structure,
+    source origins/citations and outgoing relations
+  summary: CHEBI:49648 positively resolves to holmium atom, formula Ho, charge 0,
+    SMILES [Ho], InChI=1S/Ho and InChIKey KJZYNXUDTRRSPN-UHFFFAOYSA-N. Its definition
+    is null. Names Ho and holmium agree with the target; the secondary IDs include
+    CHEBI:33378 and CHEBI:49647. Its structural parents are lanthanoid atom and f-block
+    element atom. No direct cofactor relation occurs in the current complete outgoing
+    list. This absence alone does not prove absence of all biological roles.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:49648
+  accessed_at: '2026-10-21T12:32:02.952310Z'
+  snapshot_sha256: 4e979a74a052208f7fe4a6606f9752bf76f4f6f512869d047f5f8982e5868a6d
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves the same nonobsolete ChEBI identifier and chemical name. The
+    description is absent, and no invented source prose is supplied. Chemical resolution
+    is distinct from validating a protein requirement.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition and complete outgoing relations
+  summary: Cofactor CHEBI:23357 is a biochemical role for an organic molecule or ion
+    required for enzyme activity; its parent is biochemical role CHEBI:52206. This
+    role and a protein class requiring the chemical have different denotations.
+- evidence_id: context-33319
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33319/
+  accessed_at: '2026-10-21T11:37:39.300777Z'
+  snapshot_sha256: dcdb76e4b6843482b687febb7c9b9d39d86bbe25ac53a40a744c9f433467332d
+  support: supports
+  locator: Identity, actual definition or null, chemical data, structure and complete
+    outgoing relations
+  summary: Lanthanoid atom CHEBI:33319 is an atomic structural class under rare-earth-metal
+    atom, with null definition and fixed structure. This class is not a protein requirement.
+- evidence_id: context-33562
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/33562/
+  accessed_at: '2026-10-21T11:37:39.306962Z'
+  snapshot_sha256: 5e91d035a028a4b18c486bfdebfa98fea090498a216b40b8a33ab956967d7679
+  support: supports
+  locator: Identity, actual definition or null, chemical data, structure and complete
+    outgoing relations
+  summary: F-block element atom CHEBI:33562 is an atomic structural class under transition-element
+    atom, with null definition and fixed structure. Atomic taxonomy does not identify
+    a required protein-bound ion.
+- evidence_id: context-49650
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/49650/
+  accessed_at: '2026-10-21T12:34:31.176034Z'
+  snapshot_sha256: d5ab6e2ecc4bcd00e6764a298bfb60aa6f64c6d89c9fc1f5d87e9e22b5c4f942
+  support: supports
+  locator: Identity, actual definition or null, chemical data, structure and complete
+    outgoing relations
+  summary: Holmium(3+) CHEBI:49650 is formula Ho with charge +3, SMILES [Ho+3] and
+    InChI=1S/Ho/q+3. Its monoatomic-trication and holmium-molecular-entity ancestry
+    distinguishes it from neutral CHEBI:49648. It is a comparison, not an automatic
+    replacement.
+- evidence_id: holmium-enzyme-assay
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6085770/fullTextXML
+  accessed_at: '2026-10-21T11:37:46.579717Z'
+  snapshot_sha256: 8c91c7a1644d6e75b94acc379485ef57487b04a3f7e48080cf987d89778980e0
+  support: supports
+  locator: Complete main text; Results around Figures 2–3, plate-reader Methods and
+    figure/table captions; original verified access UTC retained
+  summary: The primary lanthanide-series study added 20 µM Ln(III) chloride, including
+    Ho(III), to 200 nM partial-apo Eu-MDH from Methylacidiphilum fumariolicum SolV.
+    The preparation retained about 70% Eu occupancy. Late lanthanides decreased activity
+    relative to the no-addition baseline in an artificial dye-linked assay. This is
+    neither a purified Ho-holoenzyme measurement nor universal absence of Ho-supported
+    catalysis.
+- evidence_id: holmium-growth-abstract
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1111%2Fmmi.14208&resultType=core&format=json
+  accessed_at: '2026-10-21T12:34:31.176694Z'
+  snapshot_sha256: f2df4d302d1c7b2d79220bae38c909137f59fe16a6ca5cfa02230acc83e7aa82
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full paper not inspected
+    through this response
+  summary: PMID:30653750; DOI:10.1111/mmi.14208. The complete abstract establishes
+    REE-dependent regulation and uptake context in Methylobacterium extorquens PA1.
+    It does not mention holmium specifically; the Ho result is inspected in the separately
+    captured full text.
+- evidence_id: holmium-growth-fulltext
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6850437/fullTextXML
+  accessed_at: '2026-10-21T12:34:56.196684Z'
+  snapshot_sha256: d72d3b28f748528228a8d7a043b2d39687b88aac2c66c78c38b3dedeaadf0956
+  support: supports
+  locator: 'Results: XoxF is required for La3+-dependent growth; Figure 2 caption;
+    Strains and growth conditions; Growth assays in microtiter plates'
+  summary: In Methylobacterium extorquens PA1 lacking mxaF, the tested Ho(III) supplementation
+    did not restore methanol growth, whereas several light lanthanides did. The methods
+    specify 10 µM chloride-salt supplementation and the strain/media conditions. This
+    is a bounded negative growth result, not proof that no organism or protein can
+    use holmium and not an experiment with a neutral atom.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  locator: Executed 2026-10-21T12:32:19Z through 2026-10-21T12:32:21Z; exit 0
+  accessed_at: '2026-10-21T12:32:21Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/glutathionate-1-chebi57925.yaml
+    data/traits/function/cofactor_requirement/chebi/glutathione-chebi16856.yaml data/traits/function/cofactor_requirement/chebi/group-transfer-coenzymes-chebi24430.yaml
+    data/traits/function/cofactor_requirement/chebi/gtp-chebi15996.yaml data/traits/function/cofactor_requirement/chebi/heme-chebi30413.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-2-chebi62814.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-d-cis-diol-chebi62811.yaml
+    data/traits/function/cofactor_requirement/chebi/heme-o-chebi24480.yaml data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    data/traits/function/cofactor_requirement/chebi/hydrogen-peroxide-chebi16240.yaml
+  locator: Executed 2026-10-21T12:31:57Z through 2026-10-21T12:33:46Z; exit 0
+  accessed_at: '2026-10-21T12:33:46Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+  locator: Executed 2026-10-21T12:32:21Z through 2026-10-21T12:32:21Z; exit 0
+  accessed_at: '2026-10-21T12:32:21Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T12:33:46Z through 2026-10-21T12:33:47Z; exit 0
+  accessed_at: '2026-10-21T12:33:47Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: Ho and holmium agree with neutral CHEBI:49648. There is no wrong-element
+    collision. Official Ho(III) is a distinct chemical comparison; ionic experiments
+    do not silently alter the target identity.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - context-49650
+  topic: Correct holmium element and atomic state
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The primary studies report decreased late-lanthanide activity in a partially
+    Eu-loaded artificial assay and no Ho-dependent rescue of the specified PA1 mutant.
+    These observations are preserved with occupancy, strain and ion-addition limits.
+    Neither establishes universal biological exclusion or a neutral-atom requirement.
+  evidence_ids:
+  - holmium-enzyme-assay
+  - holmium-growth-fulltext
+  topic: Bounded holmium assay and growth evidence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-6
+- area: representation
+  outcome: unknown
+  summary: The alignment category does not independently establish a neutral-Ho protein
+    requirement. An ionic or complex scope would require its own chemical identity
+    and activity-specific evidence; no automatic replacement is selected. The absence
+    of a current direct cofactor role and the bounded negative studies do not prove
+    every possible Ho requirement false.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - context-49650
+  - holmium-enzyme-assay
+  - holmium-growth-fulltext
+  topic: Holmium state and activity-relative requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-7
+- area: provenance
+  outcome: supported
+  summary: The captured alignment owner, ChEBI dependency and exact crosswalk row
+    explain Ho/holmium/metals output. The original MGA source table and release remain
+    uninspected. Chemical identity resolves, but source attribution does not independently
+    demonstrate a protein requirement.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - chemical
+  - licence
+  - current-release
+  topic: Maintained alignment provenance
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-8
+- area: consistency
+  outcome: unknown
+  summary: The local cofactor parent resolves and was attached by the alignment emitter.
+    The current atomic source parents describe chemical taxonomy, not a proven cofactor
+    role or broader protein-class relationship. This uncertainty does not itself demonstrate
+    an impossible requirement.
+  evidence_ids:
+  - record
+  - local-parent-1
+  - owner
+  - chemical
+  - cofactor-role
+  topic: Alignment parent and requirement scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-9
+- area: grounding
+  outcome: concern
+  summary: The chemical xref and the synthesized protein-requirement class have different
+    denotations. Exact chemical identity, a source role or bounded positive biology
+    does not satisfy true own-source equivalence between them.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - owner
+  topic: Chemical entity versus protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  assessment_id: assessment-10
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-49648.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: Alignment category is emitted as a trait synonym
+  description: The RELATED_SYNONYM metals is the copied broad MGA category, not an
+    alternate label for the specific holmium requirement class. The separate holmium
+    alias is scientifically compatible.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: This is a minor alternate-label precision defect; Ho chemical
+    identity is intact, while exact physiological requirement remains explicitly unknown.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+- issue_key: chebi.cofactor-requirement.CHEBI-49648.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is asserted equivalent to a protein requirement
+  description: The ChEBI entity in xrefs is a chemical, whereas the target is a protein
+    functional requirement. This violates the schema's true own-source equivalence
+    semantics independently of whether a biological requirement can ultimately be
+    supported.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The chemical entity and protein-requirement class are different
+    entity types, a major grounding defect independent of exact-state physiology.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Keep the holmium alias where appropriate, but retain metals as provenance
+    or category metadata rather than TraitSynonym text. Correct the maintained alignment
+    transformation and use an audited route that selects this existing target; do
+    not change element/state identity implicitly.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated alternate labels denote this requirement class; the source category
+    remains traceable outside synonyms. Add a focused category-token fixture; no native
+    protein or status promotion is automatic.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh validated review rather than overwriting this observation.
+- action_id: A2
+  description: Correct build_aligned and its maintained input/override while preserving
+    the exact supported chemical identity and provenance. Remove chemical-to-protein-class
+    equality. Adjudicate the activity-relative ChemicalParticipant.role and chemical
+    state before adding a typed participant; if unsupported, retain source provenance
+    and explicit uncertainty without inventing a role. Do not move equality into mapped_xrefs,
+    automatically substitute an ion/conjugate/spirolactone, or promote proteins.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_49648
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated record no longer asserts chemical-to-protein-trait equality. Any
+    typed participant has a curator-adjudicated role and state; otherwise provenance
+    and uncertainty remain explicit.
+  - Use an audited regeneration route selecting the existing target and focused transformation
+    coverage. The alignment main selects missing IDs before --force, so --force alone
+    is insufficient. No native review status or protein requirement is automatically
+    promoted.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/ho-chebi49648.yaml.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh validated review rather than overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- The candidate requirement originates in the MGA alignment emitter. The original
+  sibling reference table, upstream evidence, licence and release were not inspected.
+  The captured crosswalk records output provenance, not independent physiology or
+  the emitter input. Current absence of a direct cofactor role alone does not refute
+  all possible holmium roles.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The lanthanide-series full text was read with its experimental and computational
+  claims separated. The separate PA1 full text was inspected in the cited Results,
+  Figure 2 and growth Methods sections. Ho(III) addition, mixed Eu occupancy and growth
+  phenotypes do not establish neutral-atom occupancy, coordination geometry or universal
+  absence of activity.
+tags:
+- unreviewed-path-order
+- batch-023
+- chebi-cofactor
+```
