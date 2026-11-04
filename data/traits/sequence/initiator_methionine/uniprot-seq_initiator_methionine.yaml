@@ -220,41 +220,40 @@ causal_graphs:
       the mature N-terminus
   edges:
   - subject: GO:0006413
-    predicate: positively regulates
-    predicate_id: RO:0002213
+    predicate: has input
+    predicate_id: RO:0002233
     object: CHEBI:16811
-    description: Ribosomal translational initiation installs L-methionine at the N-terminus of newly synthesized
-      cytosolic proteins.
+    description: Ribosomal translational initiation incorporates an N-terminal L-methionine residue into
+      newly synthesized cytosolic proteins.
     evidence:
     - reference: PMID:2682640
-      snippet: The side-chain length of the penultimate amino acid strongly influences the cleavage of
-        the terminal methionine residue in vivo (the probability of cleavage decreases as the size of
-        the side chain increases).
-      notes: Nascent polypeptides carry an N-terminal initiator methionine subject to in vivo cleavage
-        (PMID:2682640) (ECO:0000269)
+      snippet: In a significant fraction of the Escherichia coli cytosolic proteins, the N-terminal methionine
+        residue incorporated during the translation initiation step is excised.
+      notes: Translation initiation incorporates the N-terminal methionine residue that is subsequently
+        excised (PMID:2682640) (ECO:0000269)
   - subject: CHEBI:16811
     predicate: participates in
     predicate_id: RO:0000056
     object: GO:0004239
-    description: An N-terminal initiator methionine followed by a small penultimate residue participates in
-      MetAP substrate recognition and hydrolysis.
+    description: An N-terminal initiator methionine followed by a small penultimate residue participates
+      in MetAP substrate recognition and hydrolysis.
     evidence:
     - reference: PMID:2682640
-      snippet: We have studied the cleavage of the NH2-terminal methionine residue from 20 mutants of
-        Escherichia coli methionyl-tRNA synthetase differing only at the second amino acid position, both
-        in vivo and in vitro with purified methionyl aminopeptidase.
-      notes: Methionyl aminopeptidase cleaves the N-terminal methionine residue (PMID:2682640) (ECO:0000269)
+      snippet: The N-terminal methionine excision is catalyzed by methionyl-aminopeptidase (MAP).
+      notes: Methionyl-aminopeptidase catalyzes excision of the N-terminal methionine residue (PMID:2682640)
+        (ECO:0000269)
   - subject: GO:0004239
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0016485
-    description: Methionyl aminopeptidase catalysis excises Met1 during co-translational N-terminal protein
-      processing.
+    description: Methionyl aminopeptidase catalytic efficiency governs the extent of N-terminal methionine
+      cleavage during protein processing as a function of penultimate side-chain length.
     evidence:
     - reference: PMID:2682640
-      snippet: The in vitro study strongly suggests that the rules governing the NH2-terminal methionine
-        excision in vivo reflect the substrate specificity of the methionyl aminopeptidase alone.
-      notes: MetAP substrate specificity governs in vivo N-terminal methionine processing (PMID:2682640)
+      snippet: 'From our results, methionine excision catalyzed by MAP is shown to obey the following
+        rule: the catalytic efficiency of MAP, and therefore the extent of cleavage, decreases in parallel
+        with the increasing of the maximal side-chain length of the amino acid in the penultimate position.'
+      notes: MAP catalytic efficiency governs the extent of N-terminal methionine cleavage (PMID:2682640)
         (ECO:0000269)
 evidence:
 - reference: PMID:2682640
@@ -267,5 +266,12 @@ curation_history:
   changes: Enriched definition and added 4-node, 3-edge causal graph CG_UNIPROT_FT_SEQ_INITIATOR_METHIONINE
     (GO:0006413 -> CHEBI:16811 -> GO:0004239 -> GO:0016485) grounded in PMID:2682640 while preserving
     all 15 canonical_examples (Round 125).
+  llm_assisted: true
+- timestamp: '2026-10-31T15:30:00Z'
+  curator: claude
+  action: EDIT
+  changes: Replaced RESIDUE-object RO:0002213 with RO:0002233 (has input) on GO:0006413 -> CHEBI:16811
+    and replaced non-verbatim snippets with 3 distinct verbatim PubMed abstract sentences from PMID:2682640
+    (Round 128).
   llm_assisted: true
 license: CC-BY 4.0

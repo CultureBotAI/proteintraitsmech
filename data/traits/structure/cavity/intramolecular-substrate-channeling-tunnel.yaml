@@ -27,7 +27,7 @@ detection_methods:
 causal_graphs:
   - graph_id: CG_CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL
     title: "Intramolecular tunnel translocation of reactive intermediates between coupled active sites"
-    description: "An internal molecular tunnel traversing the polypeptide domain connects two catalytic active sites, shielding reactive chemical intermediates from bulk solvent diffusion to enhance coupled catalytic activity and metabolic flux."
+    description: "A bifunctional polypeptide_domain (SO:0000417) enclosing an inter-active-site molecular tunnel enables coupled catalytic activity (GO:0003824) that produces and channels a reactive chemical entity intermediate (CHEBI:24431) without bulk-solvent loss so that it participates in metabolic process (GO:0008152)."
     nodes:
       - node_id: "SO:0000417"
         label: polypeptide_domain
@@ -51,28 +51,28 @@ causal_graphs:
         description: "Cellular biosynthetic or metabolic pathway step driven by channeled intermediate transfer."
     edges:
       - subject: "SO:0000417"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "CHEBI:24431"
-        description: "Internal molecular tunnels within multidomain enzymes connect one active site with another to conduct reactive intermediates."
+        predicate: enables
+        predicate_id: RO:0002327
+        object: "GO:0003824"
+        description: "Internal molecular tunnels within multidomain enzymes connect one active site with another to enable coupled two-site catalysis."
         evidence:
           - reference: PMID:12859215
             snippet: "For those enzymes with multiple catalytic sites, a common theme is beginning to emerge; the existence of molecular tunnels that connect one active site with another."
             notes: "Raushel, Thoden & Holden (2003) Acc Chem Res 36:539-548 describe intramolecular tunnels connecting paired catalytic sites. (ECO:0000305)"
-      - subject: "CHEBI:24431"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
-        object: "GO:0003824"
-        description: "Sequestering unstable intermediates inside the molecular conduit blocks bulk-solvent loss and improves catalytic efficiency."
+      - subject: "GO:0003824"
+        predicate: "has output"
+        predicate_id: RO:0002234
+        object: "CHEBI:24431"
+        description: "Coupled active-site catalysis produces and sequesters unstable chemical intermediates inside the molecular conduit, blocking bulk-solvent loss."
         evidence:
           - reference: PMID:12859215
             snippet: "The apparent mechanistic advantages rendered by these molecular conduits include the protection of unstable intermediates and an improvement in catalytic efficiency by blocking the diffusion of intermediates into the bulk solvent."
             notes: "Protection of labile intermediates from bulk solvent diffusion increases coupled catalytic efficiency. (ECO:0000305)"
-      - subject: "GO:0003824"
-        predicate: "causally upstream of"
-        predicate_id: RO:0002411
+      - subject: "CHEBI:24431"
+        predicate: "participates in"
+        predicate_id: RO:0000056
         object: "GO:0008152"
-        description: "Channeled translocation of nascent ammonia or other intermediates supports downstream biosynthetic metabolism."
+        description: "Channeled translocation of nascent ammonia or other reactive intermediates participates directly in downstream biosynthetic metabolism."
         evidence:
           - reference: PMID:12859215
             snippet: "The translocation of ammonia, derived from the hydrolysis of glutamine, is the most abundant functional requirement for a protein tunnel identified thus far."
@@ -80,4 +80,12 @@ causal_graphs:
 evidence:
   - reference: PMID:12859215
     notes: "Raushel, Thoden & Holden (2003) Acc Chem Res 36:539-548 characterize intramolecular molecular tunnels connecting multiple catalytic sites that shield reactive intermediates from bulk solvent and enhance catalytic efficiency."
+curation_history:
+- timestamp: '2026-10-31T16:10:00Z'
+  curator: claude
+  action: EDIT
+  changes: Re-wired CG_CAVITY_INTRAMOLECULAR_CHANNELING_TUNNEL from RO:0002411 (causally upstream of)
+    to RO-compliant SO:0000417 -[RO:0002327 enables]-> GO:0003824 -[RO:0002234 has output]-> CHEBI:24431
+    -[RO:0000056 participates in]-> GO:0008152 (Round 128).
+  llm_assisted: true
 license: CC-BY-4.0

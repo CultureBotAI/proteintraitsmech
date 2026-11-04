@@ -333,30 +333,32 @@ evidence:
     predicate_id: RO:0000056
     object: GO:0003756
     description: Reduced cysteine thiol pairs in nascent polypeptides participate as substrates in protein
-      disulfide isomerase-catalyzed disulfide oxidation.
+      disulfide isomerase-catalyzed disulfide formation.
     evidence:
-    - reference: PMID:19005088
-      snippet: We show here that cysteine oxidation is catalyzed strictly by the enzyme Protein Disulfide
-        Isomerase (PDI) and not by other members of the PDI family.
-      notes: Protein disulfide isomerase catalyzes cysteine oxidation into disulfide bonds (PMID:19005088)
-        (ECO:0000269)
+    - reference: PMID:28044432
+      snippet: The proper formation of these bonds often relies on folding chaperones and oxidases such
+        as members of the protein disulfide isomerase (PDI) family.
+      notes: Protein disulfide isomerase family members assist proper disulfide bond formation (PMID:28044432)
+        (ECO:0000305)
   - subject: GO:0003756
     predicate: has output
     predicate_id: RO:0002234
     object: MOD:00034
-    description: Protein disulfide isomerase catalysis generates covalent L-cystine (S-S) cross-links.
+    description: Protein disulfide isomerase redox-active disulfide catalysis generates covalent L-cystine
+      (S-S) cross-links.
     evidence:
-    - reference: PMID:19005088
-      snippet: We show here that cysteine oxidation is catalyzed strictly by the enzyme Protein Disulfide
-        Isomerase (PDI) and not by other members of the PDI family.
-      notes: PDI-catalyzed cysteine oxidation produces covalent L-cystine disulfide bonds (PMID:19005088)
-        (ECO:0000269)
+    - reference: PMID:28044432
+      snippet: Many of the PDI family members catalyze disulfide-bond formation, reduction, and isomerization
+        through redox-active disulfides and perturbed PDI activity is characteristic of carcinomas and
+        neurodegenerative diseases.
+      notes: PDI redox-active disulfides catalyze disulfide-bond formation and isomerization (PMID:28044432)
+        (ECO:0000305)
   - subject: MOD:00034
     predicate: positively regulates
     predicate_id: RO:0002213
     object: GO:0006457
     description: Covalent disulfide cross-links stabilize native tertiary and quaternary protein folding
-      and can act as redox-regulated allosteric switches.
+      and subunit assembly.
     evidence:
     - reference: PMID:19005088
       snippet: Our results indicate that individual cysteine residues that remain available for disulfide
@@ -367,9 +369,9 @@ evidence:
 - reference: PMID:19005088
   notes: Protein disulfide isomerase (PDI) catalyzes cysteine oxidation and disulfide bond formation during
     oxidative protein folding and subunit assembly.
-- reference: PMID:16959969
-  notes: Disulfide bonds form structural cross-links and redox-sensitive allosteric switches that regulate
-    mature protein function when cleaved or isomerized by oxidoreductases.""",
+- reference: PMID:28044432
+  notes: Bechtel and Weerapana (2017) review structural, catalytic, and allosteric disulfide bonds and
+    their formation, reduction, and isomerization by protein disulfide isomerase (PDI) family oxidoreductases.""",
     },
     {
         "term": "METAL_BINDING_SITE",
@@ -554,19 +556,20 @@ evidence:
     predicate: enables
     predicate_id: RO:0002327
     object: GO:0005515
-    description: Residue contact patches on the subunit surface cluster into conserved interaction topologies
-      that mediate protein binding.
+    description: Residue contact patches on the subunit surface provide the molecular contact details
+      that mediate domain-domain protein binding.
     evidence:
     - reference: PMID:24081580
-      snippet: For every interaction, 3did identifies and groups different binding modes by clustering
-        similar interfaces into 'interaction topologies'.
-      notes: Interface residue patches cluster into conserved binding topologies (PMID:24081580) (ECO:0000305)
+      snippet: 3did collects and classifies all structural templates of domain-domain interactions in
+        the Protein Data Bank, providing molecular details for such interactions.
+      notes: Interface residue contacts provide the molecular details of domain-domain protein binding
+        (PMID:24081580) (ECO:0000305)
   - subject: GO:0005515
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: GO:0046983
-    description: Complementary inter-chain binding across the interface drives homomeric and heteromeric
-      subunit dimerization.
+    description: Complementary inter-chain binding across the interface clusters into conserved interaction
+      topologies that drive homomeric and heteromeric subunit dimerization.
     evidence:
     - reference: PMID:24081580
       snippet: For every interaction, 3did identifies and groups different binding modes by clustering
