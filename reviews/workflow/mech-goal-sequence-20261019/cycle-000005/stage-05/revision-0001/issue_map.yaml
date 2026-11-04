@@ -1,0 +1,204 @@
+schema_version: 1.0.0
+run_id: mech-goal-sequence-20261019
+cycle: 5
+stage: 5
+revision: 1
+source_revision: 568e78869fb08b86849d13f6a23b3a32ec27cd08
+scope_frozen_at: '2026-11-04T10:35:00Z'
+previous_evidence:
+  path: reviews/workflow/mech-goal-sequence-20261019/cycle-000005/stage-04/revision-0001/evidence.yaml
+  sha256: 4cd876b721db95144afe6a86ac6565842fb32498b5c40715b7a985b4f7a4961d
+native_review_inputs:
+- review_id: 20261104T072000Z-cdd-cd15854-record-review
+  path: reviews/structured/20261104T072000Z-cdd-cd15854-record-review/review.yaml
+  sha256: 17af0701972082f308bd9fe27f189bc0b18df3f102f6b993dfa906db00b67db7
+- review_id: 20261104T072100Z-cdd-cycle5-sibling-domain-cohort-review
+  path: reviews/structured/20261104T072100Z-cdd-cycle5-sibling-domain-cohort-review/review.yaml
+  sha256: 0d3c39044a19ff7d80cb1d4a97e17f09c691c2cce83599aa839a7a7b4b00d9db
+post_remediation_review:
+  review_id: 20261104T105000Z-cdd-cycle5-stage5-remediation-review
+  yaml_path: reviews/structured/20261104T105000Z-cdd-cycle5-stage5-remediation-review/review.yaml
+  md_path: reviews/structured/20261104T105000Z-cdd-cycle5-stage5-remediation-review/review.md
+  verdict: pass
+  native_verdict: COHORT_PASS_ALL_12_FINDINGS_RESOLVED
+umbrella_context_issues:
+- issue_number: 605
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/605
+  title: Review and enrich thin/stub definitions across seeded records
+  relationship: Parent umbrella issue for CDD definition errata curation; not closed by this cohort slice.
+- issue_number: 1172
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1172
+  title: 'chore(cdd): repair CDD source-definition errata on promoted records cd00104 and cd00959 and
+    re-bind grounding receipts'
+  relationship: 'Cycle 1 Stage 6 resolved issue (closed by PR #1175) covering promoted CDD records F1
+    (CDD:cd00104) and F2 (CDD:cd00959).'
+- issue_number: 1188
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1188
+  title: 'fix(cdd): repair 6 Cycle 2 Stage 4 reviewed NCBI CDD sibling-domain source-definition errata
+    (F13-F18) via cdd_errata'
+  relationship: 'Cycle 2 Stage 5 resolved issue (closed by PR #1189) covering sibling CDD records F13-F18.'
+- issue_number: 1210
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1210
+  title: 'fix(cdd): repair 6 Cycle 3 Stage 4 reviewed NCBI CDD sibling-domain source-definition errata
+    (F19-F24) via cdd_errata'
+  relationship: 'Cycle 3 Stage 5 resolved issue (closed by PR #1211) covering sibling CDD records F19-F24
+    (Group G4).'
+- issue_number: 1217
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1217
+  title: 'fix(cdd): repair 6 Cycle 4 Stage 4 reviewed NCBI CDD parent/paralog sibling-domain source-definition
+    errata (F25-F30) via cdd_errata'
+  relationship: 'Cycle 4 Stage 5 resolved issue (closed by PR #1218) covering parent/paralog sibling CDD
+    records F25-F30 (Group G5).'
+- issue_number: 1233
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1233
+  title: 'fix(reviews): align Cycle 5 Stage 5 workflow evidence and validation report with repaired CDD
+    records (PR #1232)'
+  relationship: 'Cycle 5 Stage 5 adversarial review follow-up issue tracking alignment of issue_map.yaml,
+    validation.md, and evidence.yaml with the repaired CDD records and review.yaml.'
+groups:
+- group_id: G5
+  title: Cycle 4 Stage 4/5 resolved parent and paralog-subfamily sibling CDD sequence-domain source-definition
+    errata (F25-F30)
+  cause: Upstream NCBI CDD family/subfamily boilerplate templates propagated the 'Dublecortin-like' spelling
+    error and off-target ubiquitin protein-modifier digressions onto the parent DCDC2-like profiles (cd17071,
+    cd16113) and propagated the false Qb/Qc SNARE transmembrane-domain claim onto the combined SNAP25/SNAP23
+    profiles (cd15855, cd15889) and paralog SNAP29 profiles (cd15856, cd15887).
+  repair_owner:
+    repository: CultureBotAI/proteintraitsmech
+    paths:
+    - scripts/cdd_errata.py
+    - scripts/repair_cdd_errata.py
+    - scripts/seed_cdd.py
+    - scripts/record_io.py
+    - tests/test_cdd_errata.py
+  issue_action: reused_closed
+  issue_number: 1217
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1217
+  finding_ids:
+  - F25
+  - F26
+  - F27
+  - F28
+  - F29
+  - F30
+  target_records:
+  - finding_id: F25
+    identifier: CDD:cd17071
+    label: DCX1_DCDC2_like
+    path: data/traits/sequence/domain/cdd/dublecortin-like-domain-1-found-in-doublecortin-domain-containing-prot-cd17071.yaml
+    pre_sha256: deaeaef82093e32e314b0cb69b61a4a3a34da7a0f93922309babf7ef18ffea50
+    post_sha256: 1aff2abcd815c6155a36d63abf731f22dc6644f6f673e5286f407d0476f35266
+    status: resolved
+  - finding_id: F26
+    identifier: CDD:cd16113
+    label: DCX2_DCDC2_like
+    path: data/traits/sequence/domain/cdd/doublecortin-like-domain-2-found-in-doublecortin-domain-containing-pro-cd16113.yaml
+    pre_sha256: d3e0f20833782f29d82b77caac4651d4d4f7a6948a18850f974003cacc36022f
+    post_sha256: 2ddc254725899c6217899f51342f7d9b86610b95d0c2a3df0dd2943d715f7a4b
+    status: resolved
+  - finding_id: F27
+    identifier: CDD:cd15855
+    label: SNARE_SNAP25C_23C
+    path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap25-and-snap23-c-terminal-snare-motifs-of-cd15855.yaml
+    pre_sha256: 306f687472e4fb91d6dcad19fa7ea13f99eb85fbafb7e86440302296b710b267
+    post_sha256: fd7dc3af4c9120523b0d00017a4c8b631bcd635468f031a23fc9ef480646ab06
+    status: resolved
+  - finding_id: F28
+    identifier: CDD:cd15889
+    label: SNARE_SNAP25N_23N
+    path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap25-and-snap23-n-terminal-snare-motifs-of-cd15889.yaml
+    pre_sha256: a7de1d8068c056d075c9ddfc6e5f1a0cb9f9bb4102e6779f92fd06fd75acbd6e
+    post_sha256: e01a1f77672ae59b19218bc22b8d7970c2cc3bc2517b6bad56e5ed3c19453b4a
+    status: resolved
+  - finding_id: F29
+    identifier: CDD:cd15856
+    label: SNARE_SNAP29C
+    path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap29-c-terminal-snare-motif-of-snap29-a-me-cd15856.yaml
+    pre_sha256: 84d8d25d5f6ce8934609c55719a0d4a09b385e2ba1cbb5134c2649573d8327c0
+    post_sha256: c5c11e86520d19d5bd1fccc934f8d80f4fa927e64cbd53e8d0f8e3ffa8315c0a
+    status: resolved
+  - finding_id: F30
+    identifier: CDD:cd15887
+    label: SNARE_SNAP29N
+    path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap29-n-terminal-snare-motif-of-snap29-a-me-cd15887.yaml
+    pre_sha256: edd0ed8a35d333d4f87c1ac2a4aee0d30f5af17a5a6c9a169007401798101519
+    post_sha256: 5fb03c07b2e0d6dd1bea53f4c87b478dd9021fb9a970f64876c5d3a26e4519a4
+    status: resolved
+  status: resolved
+  disposition: 'All 6 Group G5 records were repaired in Cycle 4 Stage 5 (#1217, PR #1218, merge commit
+    bd6a1d06ce745ca49e3966e0a5cb7d06b5c6fa91) and remain verified resolved on disk.'
+- group_id: G6
+  title: Cycle 5 Stage 4 paralog/ortholog Qbc-SNARE (SNAP47/Sec9p) and tandem-domain ABCC10/MRP7 (TMD1/TMD2)
+    sibling CDD sequence-domain source-definition errata (F31-F36)
+  cause: Upstream NCBI CDD family/subfamily boilerplate templates propagated the false Qb/Qc SNARE transmembrane-domain
+    claim onto the paralogous SNAP47 C- and N-terminal SNARE motif profiles (cd15854, cd15888) and fungal
+    Sec9p ortholog SNARE motif profiles (cd15857, cd15886), and propagated the false MRP7=ABCC7/CFTR nomenclature
+    plus MRP1-MRP9 multidrug-resistance efflux overclaims onto the MRP7/ABCC10 TMD1 and TMD2 profiles (cd18598,
+    cd18605).
+  repair_owner:
+    repository: CultureBotAI/proteintraitsmech
+    paths:
+    - scripts/cdd_errata.py
+    - scripts/repair_cdd_errata.py
+    - scripts/seed_cdd.py
+    - scripts/record_io.py
+    - tests/test_cdd_errata.py
+  issue_action: created
+  issue_number: 1230
+  issue_url: https://github.com/CultureBotAI/proteintraitsmech/issues/1230
+  finding_ids:
+  - F31
+  - F32
+  - F33
+  - F34
+  - F35
+  - F36
+  target_records:
+  - finding_id: F31
+    identifier: CDD:cd15854
+    label: SNARE_SNAP47C
+    path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-snap47-c-terminal-snare-motif-of-snap47-a-me-cd15854.yaml
+    pre_sha256: fb37dabacc4f6c4f10e99ff638b2e76c36427c397ba7ee485d767b0ce06658a8
+    post_sha256: b2b582af0716d16c276e7fde6366d344d63578d8e246cbb78de47c596bea7740
+    status: resolved
+  - finding_id: F32
+    identifier: CDD:cd15888
+    label: SNARE_SNAP47N
+    path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-snap47-n-terminal-snare-motif-of-snap47-a-me-cd15888.yaml
+    pre_sha256: 5efe3d638e0e2553214d45509996fd6ced8e0cf4d336eb1fee3988ab415a54db
+    post_sha256: 6d175da7d6247a9340f86327114222cf3d74fa80d424aabcf32554c714ce9be1
+    status: resolved
+  - finding_id: F33
+    identifier: CDD:cd15857
+    label: SNARE_SEC9C
+    path: data/traits/sequence/domain/cdd/c-terminal-snare-motif-of-sec9-c-terminal-snare-motif-of-fungal-sec9-a-cd15857.yaml
+    pre_sha256: 69d841bb6da236a30c02b81fbf0708146b3990591a3a41741a3cab2a248ca9c2
+    post_sha256: 51521fa63229b60f7e17e777f17b855e6f99f5e91d508fe42dada46de24fbe5b
+    status: resolved
+  - finding_id: F34
+    identifier: CDD:cd15886
+    label: SNARE_SEC9N
+    path: data/traits/sequence/domain/cdd/n-terminal-snare-motif-of-sec9-n-terminal-snare-motif-of-fungal-sec9-a-cd15886.yaml
+    pre_sha256: 5fa48242c7a2fd0003ebdd908526675e43c8c3539430e142a77c257cd82e7bb1
+    post_sha256: fae776ea05c2febd604647864e11a21e90d2be1ceba4a39becf5ec56aeffb75b
+    status: resolved
+  - finding_id: F35
+    identifier: CDD:cd18598
+    label: ABC_6TM_MRP7_D1_like
+    path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-1-tmd1-of-multidrug-resistance-associ-cd18598.yaml
+    pre_sha256: 1dfa8217dad328d5dce76325c19c8068f57f254be6c7d32f3e3d47c6e8c26857
+    post_sha256: 9ec4e325fa97ccee8614f49fd8a8af8badb85f134f0f4f0dad78156963a75e7d
+    status: resolved
+  - finding_id: F36
+    identifier: CDD:cd18605
+    label: ABC_6TM_MRP7_D2_like
+    path: data/traits/sequence/domain/cdd/six-transmembrane-helical-domain-2-tmd2-of-multidrug-resistance-associ-cd18605.yaml
+    pre_sha256: b3b65c3771652b48ea340b2dcb16a69228a1e5994d97b8c5044fb21412b34486
+    post_sha256: 4851b3e2623cce8ef03b5c832ff6d047655897a5238c25fe7fefa2829906679e
+    status: resolved
+  status: resolved
+  disposition: Extended scripts/cdd_errata.py with all 6 Group G6 errata entries (bringing total ERRATA
+    to 36), applied in-place repairs via registered writer scripts/repair_cdd_errata.py (wired into scripts/seed_cdd.py),
+    advanced all 6 records from SEEDED to PROPOSED with literature-backed evidence and append-only curation_history,
+    and verified via strict LinkML/OAK validation, UniProt grounding replay, writer audit, and 238 pytest
+    unit tests (#1230).
