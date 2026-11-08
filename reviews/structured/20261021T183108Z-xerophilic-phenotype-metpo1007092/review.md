@@ -1,0 +1,860 @@
+# Review of xerophilic phenotype
+
+- Review: 20261021T183108Z-xerophilic-phenotype-metpo1007092
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T18:18:51Z
+- Finished UTC: 2026-10-21T18:31:08Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The xerophilic phenotype identity and qualified low-water-activity source wording are supported. One confirmed major concerns organism-phenotype domain placement. Typical 0.85, exact alias scope and distinctions from saline/osmotic growth remain bounded, without a disjointness or protein-stability inference.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 7 in batch 042. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb; c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4; 756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb; ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9; b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd, the union covers 408 record paths, leaving 428951 before this batch. 42 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| METPO:1007092 | data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml | generated | xerophilic phenotype |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | METPO:1007092 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | METPO:1007092 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | METPO:1007092 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | METPO:1007092 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | METPO:1007092 | Read the entire exact target and captured recursive ancestors, actual maintained emitter/dependencies, schema, catalogue and checklist. Exact current METPO target/ancestor stanzas and fresh source metadata, licence/project scope and cited context objects were inspected; any primary evidence is bounded to the complete captured abstract. Source resolution is not proof of original emission provenance or every underlying biological generalization. |
+
+## Scientific And Domain Assessments
+
+### Exact source phenotype identity
+
+identity: supported. Targets: METPO:1007092.
+
+METPO:1007092 resolves as xerophilic phenotype; current complete source and target agree. This positive identity assessment is separate from domain eligibility.
+
+### Source synonym scopes
+
+nomenclature: supported. Targets: METPO:1007092.
+
+xerophile and xerotolerant are copied as source EXACT synonyms. The review verifies this provenance but does not infer that growth preference, tolerance and desiccation survival are universally interchangeable.
+
+### Defining phenotype subject
+
+evidence: supported. Targets: METPO:1007092.
+
+The source denotes a microbe thriving at low water activity, typically aw &lt; 0.85, and distinguishes its water-activity focus from halophily and osmotic tolerance. This is an organism phenotype, not protein hydration stability.
+
+### Temperature or water-activity qualification
+
+quantity: unknown. Targets: METPO:1007092.
+
+The typical 0.85 qualifier remains attributed to METPO. Wikidata is secondary entity context, not a quantitative assay. The primary abstract reports selected saline and non-saline low-aw growth, and separates measured limits from extrapolations; it does not validate a universal class cutoff. Distinct source labels are not treated as disjoint organism sets: low-aw growth can overlap halophily, and solute composition can affect water activity and other stresses. Exact xerotolerant alias equivalence is not independently established.
+
+### Source hierarchy and inclusive routing
+
+consistency: supported. Targets: METPO:1007092.
+
+The captured parents agree with the source. Inclusive route selection and same-source parent copying are distinct operations; no extra local parent or absent-corpus finding is made.
+
+### Organism phenotype versus protein trait
+
+representation: concern. Targets: METPO:1007092.
+
+The source denotes a microbe thriving at low water activity, typically aw &lt; 0.85, and distinguishes its water-activity focus from halophily and osmotic tolerance. This is an organism phenotype, not protein hydration stability. The maintained emitter places this unchanged organism predicate in a ProteinTraitRecord. Protein contributions may exist, but the defining class is not thereby a protein capability.
+
+### Actual maintained owner and repair behavior
+
+ownership: supported. Targets: METPO:1007092.
+
+SOURCES routes METPO:1007092; build_routing includes the root and is_a descendants. build_yaml copies same-source parents independently of route membership, definitions and non-label synonyms. read_release_stamp uses the header; seed_source is dry-run by default and skips existing output unless force is used. Route exclusion alone does not retire existing files. Future route changes must separately handle already emitted output.
+
+### Current source versus original emission
+
+provenance: unknown. Targets: METPO:1007092.
+
+Fresh current source identity, metadata and licensing are supported; source agreement and present access/release dates do not reconstruct the original seed run or input release.
+
+### Class content and optional enrichment
+
+completeness: concern. Targets: METPO:1007092.
+
+The entire target has a coherent reusable definition and source identity. Material findings concern the stated category, mapping or wording, not the absence of mandatory examples, coordinates, chemical participants or causal graphs. No protein instance is newly qualified.
+
+### No asserted molecular mechanism
+
+graph: not_applicable. Targets: METPO:1007092.
+
+The complete target asserts no causal graph, reaction, residues or protein coordinates. No mechanistic graph is invented or made mandatory.
+
+### Unchanged status and expression context
+
+scope: supported. Targets: METPO:1007092.
+
+The record remains CLASS/SEEDED with no promotion, history event or canonical protein qualification. iModulonDB is not applicable without a specific gene, organism/dataset or expression-component claim; this is not negative biological evidence.
+
+## Findings
+
+### F1: Organism phenotype is emitted as a protein trait
+
+major / open / confirmed; issue key: metpo.environmental-response.METPO-1007092.organism-growth-as-protein-trait.
+
+The source denotes a microbe thriving at low water activity, typically aw &lt; 0.85, and distinguishes its water-activity focus from halophily and osmotic tolerance. This is an organism phenotype, not protein hydration stability. The source class is selected by an inclusive route and emitted as FUNCTION/FUNC_ENVIRONMENTAL_RESPONSE without an independent protein-level defining predicate. Correct source identity does not repair this domain mismatch, and an associated protein would not alone redefine the source class.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Adjudicate the exact METPO:1007092 class in the maintained METPO:1007092 route. Preserve the organism phenotype meaning and qualifiers. If excluded from protein-trait emission, document audited migration/retirement of existing output and references; route exclusion does not remove existing files. If a separate protein response class is justified, give it independent identity and protein-scoped evidence rather than silently reusing the organism identifier.
+
+- Document the source-class disposition for METPO:1007092 and inspect the inclusive METPO:1007092 route on pinned source bytes in dry-run mode.
+- Preserve all source qualifiers and distinguish protein activity/stability from organism growth. Do not require optional examples or mechanisms merely to populate fields.
+- Audit old and resulting paths/references after any authorized migration. A distinct protein class requires independent evidence and identity.
+- For a future writer change run just lint, focused pytest, just test and just audit-writers; run just sources-check if the catalogue changes. Validate the actual resulting path(s) with just validate, just validate-all and just audit-graphs; for the unchanged target these are just validate data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml, just validate-all data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml, and just audit-graphs data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml. If moved, document resulting paths and retire/map old paths with an audit trail rather than silently changing identity. Run full just validate-all before merge and just validate-history, then add a fresh immutable review.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml; Entire target YAML | supports | Entire METPO:1007092 (xerophilic phenotype) YAML read: complete definition, source stamp, FUNCTION/FUNC_ENVIRONMENTAL_RESPONSE, CLASS/SEEDED, licence and all hierarchy, synonym and xref fields. No protein exemplar, coordinates, chemical participant or causal graph is present in these exact bytes. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord; xrefs/mapped_xrefs/parent_traits; FUNC_ENVIRONMENTAL_RESPONSE, FUNC_RESISTANCE, FUNC_PATHWAY | supports | ProteinTraitRecord models protein trait classes. FUNC_ENVIRONMENTAL_RESPONSE denotes response or requirement to environmental conditions, with GO response-to or induction grounding. FUNC_RESISTANCE specifically represents antimicrobial resistance. xrefs requires true own-source equivalence; external mapping products have a distinct mapped_xrefs provenance surface. Optional examples, molecular graphs and structures are not universally mandatory. |
+| project-rules | CLAUDE.md; Project purpose/invariants; curation and generated-data rules | supports | The protein-trait domain, defining-representation category rule, maintained generated-input ownership and validation gates govern the review. Deterministic validation is not independent scientific proof. |
+| checklist | .claude/skills/curate-yaml-record/references/review-checklist.md; Entire field-by-field checklist | supports | The full field checklist requires precise identity, source scope, hierarchy, representations, evidence, ownership and honest limitations. Optional enrichment is evaluated for relevance rather than required by absence. |
+| owner | scripts/seed_obo.py; SOURCES metpo; build_routing inclusive BFS; build_yaml same-source parents; read_release_stamp; seed_source | supports | SOURCES routes METPO:1007092; build_routing includes the root and is_a descendants. build_yaml copies same-source parents independently of route membership, definitions and non-label synonyms. read_release_stamp uses the header; seed_source is dry-run by default and skips existing output unless force is used. Route exclusion alone does not retire existing files. |
+| yaml-helper | scripts/yaml_emit.py; yaml_escape, folded, slugify | supports | yaml_escape and folded preserve scalar identity and collapse definition whitespace. Lexical formatting does not establish biological domain, category or equivalence. |
+| registry | download.yaml; METPO source block | supports | The source catalogue declares official download, licence, seeded categories and maintained generator. These declarations identify provenance and intended routing, not independent proof of every emitted category or mapping. |
+| obo-helper | scripts/obo_syntax.py; Quoted-string and suffix parsing helpers | supports | OBO quoted-string, escape and comment parsing is lexical and does not convert an organism phenotype into a protein trait. |
+| grouping-owner | scripts/seed_grouping_parents.py; TARGETS METPO:1000059; parse_obo; child_stamp; main | supports | The captured phenotype ancestor has a distinct explicit grouping emitter with a deliberate upstream-parent boundary. This is contextual ownership, not a missing-parent finding for the reviewed target. |
+| local-ancestor-1 | data/traits/function/environmental_response/metpo/phenotype-metpo1000059.yaml; Entire ancestor YAML | supports | Entire local ancestor METPO:1000059 (phenotype) read, including definition, category, source, hierarchy and status. This supplies scoped parent context and does not certify all descendants. |
+| metpo-ontology | https://raw.githubusercontent.com/berkeleybop/metpo/8fddadb3fbd79058e22fbd519e36ab43b3496923/metpo.obo; METPO:1007092, METPO:1000059; header; commit 8fddadb3fbd79058e22fbd519e36ab43b3496923 | supports | Complete exact target and relevant ancestor stanzas, header and source annotations read. The current local identity, definition and retained synonym/parent fields agree. Source definition citations are not automatic equivalence axioms or independent experimental proof. |
+| metpo-main | https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo; Full body digest comparison with pinned OBO; header | supports | Fresh main and pinned raw OBO bodies have identical SHA256. This compares current source bytes, not historical seed input. |
+| metpo-project | https://raw.githubusercontent.com/berkeleybop/metpo/main/README.md; Complete README purpose, identifiers, versions and licence | supports | The official project README identifies microbial ecophysiological traits/phenotypes, namespace and CC-BY 4.0 licensing. Exact term stanzas, rather than an assumed redirect, establish source identity. |
+| metpo-license | https://raw.githubusercontent.com/berkeleybop/metpo/main/LICENSE; Licence identification and public terms | supports | The official licence body identifies Creative Commons Attribution 4.0 International, consistent with the local field. The entire cited-source licensing chain is not independently audited. |
+| metpo-commit | https://api.github.com/repos/berkeleybop/metpo/commits?path=metpo.obo&amp;per_page=1; Returned commit identity/date and path-scoped request | context_only | The path-scoped current commit response identifies 8fddadb3fbd79058e22fbd519e36ab43b3496923 dated 2026-09-03, while the OBO header is 2026-06-12. These dates and actual access UTC remain distinct from original emission provenance. |
+| xerophile-context | https://www.wikidata.org/wiki/Special:EntityData/Q980491.json; English label/description, revision and complete claims; external identifiers not followed | context_only | The captured secondary Wikidata entity Q980491, revision 2515890386 modified 2026-07-10, was inspected for its English metadata and claims. It is labelled xerophile and describes an organism that grows/reproduces with low water availability. Those inspected fields do not independently establish a 0.85 threshold, exact xerotolerant synonym scope, or a protein mechanism; no complete multilingual reading is claimed. |
+| water-activity-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A25500507+AND+SRC%3AMED&amp;format=json&amp;resultType=core&amp;pageSize=1; PMID:25500507; DOI:10.1038/ismej.2014.219; title, publication metadata and complete abstractText; full article not inspected | supports | The complete primary abstract reports low-water-activity growth across selected halophilic prokaryotes and xerophilic fungi, with measured growth distinguished from extrapolated theoretical limits. Manipulating chaotropic/kosmotropic stressors changes fungal growth limits. This supports organism-level low-water-activity biology and overlapping saline/non-saline contexts, not a universal 0.85 class cutoff or a protein stability threshold. |
+| validation-1 | just validate data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml; Executed 2026-10-21T18:19:33Z through 2026-10-21T18:19:33Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/environmental_response/metpo/slightly-halophilic-metpo1000625.yaml data/traits/function/environmental_response/metpo/stenohaline-metpo1000626.yaml data/traits/function/environmental_response/metpo/strictly-anaerobic-metpo1000611.yaml data/traits/function/environmental_response/metpo/temperature-preference-metpo1000613.yaml data/traits/function/environmental_response/metpo/thermophilic-metpo1000616.yaml data/traits/function/environmental_response/metpo/thermotolerant-metpo1000619.yaml data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml data/traits/function/environmental_response/uniprot_keywords/antibiotic-resistance-kw-0046.yaml data/traits/function/environmental_response/uniprot_keywords/antiviral-defense-kw-0051.yaml data/traits/function/environmental_response/uniprot_keywords/modulation-of-host-virulence-by-virus-kw-1254.yaml; Executed 2026-10-21T18:19:27Z through 2026-10-21T18:20:57Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml; Executed 2026-10-21T18:19:33Z through 2026-10-21T18:19:33Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T18:20:57Z through 2026-10-21T18:20:58Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The typical 0.85 qualifier remains attributed to METPO. Wikidata is secondary entity context, not a quantitative assay. The primary abstract reports selected saline and non-saline low-aw growth, and separates measured limits from extrapolations; it does not validate a universal class cutoff. Distinct source labels are not treated as disjoint organism sets: low-aw growth can overlap halophily, and solute composition can affect water activity and other stresses. Exact xerotolerant alias equivalence is not independently established.
+- Current source agreement does not reconstruct original seed bytes or historical execution. Citation annotations and secondary entities are not primary experimental validation.
+- Only the exact named target and captured local ancestors/owners are reviewed; no corpus-wide absence or whole-source certification is claimed.
+- Source bodies retain resolved URLs, actual access UTC and SHA256. Source acquisition and draft preparation were read-only; native validation and bundle persistence are recorded separately in the assembled review and saver receipts.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T183108Z-xerophilic-phenotype-metpo1007092
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of xerophilic phenotype
+started_at: '2026-10-21T18:18:51Z'
+finished_at: '2026-10-21T18:31:08Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The xerophilic phenotype identity and qualified low-water-activity source
+  wording are supported. One confirmed major concerns organism-phenotype domain placement.
+  Typical 0.85, exact alias scope and distinctions from saline/osmotic growth remain
+  bounded, without a disjointness or protein-stability inference.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/environmental_response/metpo/phenotype-metpo1000059.yaml
+    sha256: 903daba1e34fdc7cace6ae639bd6bab85f0fb9acb6dfd33979ed8e1970992ddc
+    role: context
+  - path: data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+    sha256: 1008985a417b92fcaef6ee2e121cc79afa67ba813530a41a82549ed976c5fce6
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/obo_syntax.py
+    sha256: 86cd5936ecb214f41073fc5ac56425efe647b56bf9a663dad62f6edfad3fbc0e
+    role: context
+  - path: scripts/seed_grouping_parents.py
+    sha256: 504e4630cce0d19e86fe47a55b02008a77ebc8cfb6f4cdfddf487f1401a724f7
+    role: context
+  - path: scripts/seed_obo.py
+    sha256: 8b33fbdac45c28420b3e6ca31d0d9feb16c90701eb77c392b571f1b3261c7a9f
+    role: context
+  - path: scripts/yaml_emit.py
+    sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 7 in batch 042. Fresh main inventory has 429359 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb;
+    c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4;
+    756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb;
+    ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9;
+    b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd,
+    the union covers 408 record paths, leaving 428951 before this batch. 42 inventories
+    were combined. Unpublished local coverage is explicitly not published or merged
+    main coverage. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - METPO:1007092
+targets:
+- kind: generated
+  label: xerophilic phenotype
+  owner_paths:
+  - path: scripts/seed_obo.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained METPO route selection, OBO parsing, provenance and class-record
+      emission
+  path: data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  record_class: ProteinTraitRecord
+  target_id: METPO:1007092
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - METPO:1007092
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/environmental_response/metpo/slightly-halophilic-metpo1000625.yaml
+    data/traits/function/environmental_response/metpo/stenohaline-metpo1000626.yaml
+    data/traits/function/environmental_response/metpo/strictly-anaerobic-metpo1000611.yaml
+    data/traits/function/environmental_response/metpo/temperature-preference-metpo1000613.yaml
+    data/traits/function/environmental_response/metpo/thermophilic-metpo1000616.yaml
+    data/traits/function/environmental_response/metpo/thermotolerant-metpo1000619.yaml
+    data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+    data/traits/function/environmental_response/uniprot_keywords/antibiotic-resistance-kw-0046.yaml
+    data/traits/function/environmental_response/uniprot_keywords/antiviral-defense-kw-0051.yaml
+    data/traits/function/environmental_response/uniprot_keywords/modulation-of-host-virulence-by-virus-kw-1254.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - METPO:1007092
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - METPO:1007092
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - METPO:1007092
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Read the entire exact target and captured recursive ancestors, actual maintained
+    emitter/dependencies, schema, catalogue and checklist. Exact current METPO target/ancestor
+    stanzas and fresh source metadata, licence/project scope and cited context objects
+    were inspected; any primary evidence is bounded to the complete captured abstract.
+    Source resolution is not proof of original emission provenance or every underlying
+    biological generalization.
+  target_ids:
+  - METPO:1007092
+  evidence_ids:
+  - record
+  - schema
+  - project-rules
+  - checklist
+  - owner
+  - yaml-helper
+  - registry
+  - obo-helper
+  - grouping-owner
+  - local-ancestor-1
+  - metpo-ontology
+  - metpo-main
+  - metpo-project
+  - metpo-license
+  - metpo-commit
+  - xerophile-context
+  - water-activity-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 1008985a417b92fcaef6ee2e121cc79afa67ba813530a41a82549ed976c5fce6
+  support: supports
+  summary: 'Entire METPO:1007092 (xerophilic phenotype) YAML read: complete definition,
+    source stamp, FUNCTION/FUNC_ENVIRONMENTAL_RESPONSE, CLASS/SEEDED, licence and
+    all hierarchy, synonym and xref fields. No protein exemplar, coordinates, chemical
+    participant or causal graph is present in these exact bytes.'
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord; xrefs/mapped_xrefs/parent_traits; FUNC_ENVIRONMENTAL_RESPONSE,
+    FUNC_RESISTANCE, FUNC_PATHWAY
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: ProteinTraitRecord models protein trait classes. FUNC_ENVIRONMENTAL_RESPONSE
+    denotes response or requirement to environmental conditions, with GO response-to
+    or induction grounding. FUNC_RESISTANCE specifically represents antimicrobial
+    resistance. xrefs requires true own-source equivalence; external mapping products
+    have a distinct mapped_xrefs provenance surface. Optional examples, molecular
+    graphs and structures are not universally mandatory.
+- evidence_id: project-rules
+  kind: record_content
+  reference: CLAUDE.md
+  locator: Project purpose/invariants; curation and generated-data rules
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+  support: supports
+  summary: The protein-trait domain, defining-representation category rule, maintained
+    generated-input ownership and validation gates govern the review. Deterministic
+    validation is not independent scientific proof.
+- evidence_id: checklist
+  kind: record_content
+  reference: .claude/skills/curate-yaml-record/references/review-checklist.md
+  locator: Entire field-by-field checklist
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+  support: supports
+  summary: The full field checklist requires precise identity, source scope, hierarchy,
+    representations, evidence, ownership and honest limitations. Optional enrichment
+    is evaluated for relevance rather than required by absence.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_obo.py
+  locator: SOURCES metpo; build_routing inclusive BFS; build_yaml same-source parents;
+    read_release_stamp; seed_source
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 8b33fbdac45c28420b3e6ca31d0d9feb16c90701eb77c392b571f1b3261c7a9f
+  support: supports
+  summary: SOURCES routes METPO:1007092; build_routing includes the root and is_a
+    descendants. build_yaml copies same-source parents independently of route membership,
+    definitions and non-label synonyms. read_release_stamp uses the header; seed_source
+    is dry-run by default and skips existing output unless force is used. Route exclusion
+    alone does not retire existing files.
+- evidence_id: yaml-helper
+  kind: record_content
+  reference: scripts/yaml_emit.py
+  locator: yaml_escape, folded, slugify
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+  support: supports
+  summary: yaml_escape and folded preserve scalar identity and collapse definition
+    whitespace. Lexical formatting does not establish biological domain, category
+    or equivalence.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: METPO source block
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: The source catalogue declares official download, licence, seeded categories
+    and maintained generator. These declarations identify provenance and intended
+    routing, not independent proof of every emitted category or mapping.
+- evidence_id: obo-helper
+  kind: record_content
+  reference: scripts/obo_syntax.py
+  locator: Quoted-string and suffix parsing helpers
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 86cd5936ecb214f41073fc5ac56425efe647b56bf9a663dad62f6edfad3fbc0e
+  support: supports
+  summary: OBO quoted-string, escape and comment parsing is lexical and does not convert
+    an organism phenotype into a protein trait.
+- evidence_id: grouping-owner
+  kind: record_content
+  reference: scripts/seed_grouping_parents.py
+  locator: TARGETS METPO:1000059; parse_obo; child_stamp; main
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 504e4630cce0d19e86fe47a55b02008a77ebc8cfb6f4cdfddf487f1401a724f7
+  support: supports
+  summary: The captured phenotype ancestor has a distinct explicit grouping emitter
+    with a deliberate upstream-parent boundary. This is contextual ownership, not
+    a missing-parent finding for the reviewed target.
+- evidence_id: local-ancestor-1
+  kind: record_content
+  reference: data/traits/function/environmental_response/metpo/phenotype-metpo1000059.yaml
+  locator: Entire ancestor YAML
+  accessed_at: '2026-10-21T18:18:51Z'
+  snapshot_sha256: 903daba1e34fdc7cace6ae639bd6bab85f0fb9acb6dfd33979ed8e1970992ddc
+  support: supports
+  summary: Entire local ancestor METPO:1000059 (phenotype) read, including definition,
+    category, source, hierarchy and status. This supplies scoped parent context and
+    does not certify all descendants.
+- evidence_id: metpo-ontology
+  kind: database
+  reference: https://raw.githubusercontent.com/berkeleybop/metpo/8fddadb3fbd79058e22fbd519e36ab43b3496923/metpo.obo
+  accessed_at: '2026-10-21T18:17:40.682638Z'
+  snapshot_sha256: 951019bb3917cd48105e4b3e1cc745af697e0d60a50d5292925310d615108b32
+  support: supports
+  locator: METPO:1007092, METPO:1000059; header; commit 8fddadb3fbd79058e22fbd519e36ab43b3496923
+  summary: Complete exact target and relevant ancestor stanzas, header and source
+    annotations read. The current local identity, definition and retained synonym/parent
+    fields agree. Source definition citations are not automatic equivalence axioms
+    or independent experimental proof.
+- evidence_id: metpo-main
+  kind: database
+  reference: https://raw.githubusercontent.com/berkeleybop/metpo/main/metpo.obo
+  accessed_at: '2026-10-21T18:17:40.456528Z'
+  snapshot_sha256: 951019bb3917cd48105e4b3e1cc745af697e0d60a50d5292925310d615108b32
+  support: supports
+  locator: Full body digest comparison with pinned OBO; header
+  summary: Fresh main and pinned raw OBO bodies have identical SHA256. This compares
+    current source bytes, not historical seed input.
+- evidence_id: metpo-project
+  kind: database
+  reference: https://raw.githubusercontent.com/berkeleybop/metpo/main/README.md
+  accessed_at: '2026-10-21T18:17:40.350503Z'
+  snapshot_sha256: 3fbbd78aef5c77e8dfa9c09447fed03c26211a52d79382b0ac763482500667f1
+  support: supports
+  locator: Complete README purpose, identifiers, versions and licence
+  summary: The official project README identifies microbial ecophysiological traits/phenotypes,
+    namespace and CC-BY 4.0 licensing. Exact term stanzas, rather than an assumed
+    redirect, establish source identity.
+- evidence_id: metpo-license
+  kind: authority
+  reference: https://raw.githubusercontent.com/berkeleybop/metpo/main/LICENSE
+  accessed_at: '2026-10-21T18:17:40.357491Z'
+  snapshot_sha256: 9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411
+  support: supports
+  locator: Licence identification and public terms
+  summary: The official licence body identifies Creative Commons Attribution 4.0 International,
+    consistent with the local field. The entire cited-source licensing chain is not
+    independently audited.
+- evidence_id: metpo-commit
+  kind: database
+  reference: https://api.github.com/repos/berkeleybop/metpo/commits?path=metpo.obo&per_page=1
+  accessed_at: '2026-10-21T18:17:40.376598Z'
+  snapshot_sha256: cb72f320df01d1039edd9d170b784ad1f2bd699bedaba0b3176a1d4ed22ccee1
+  support: context_only
+  locator: Returned commit identity/date and path-scoped request
+  summary: The path-scoped current commit response identifies 8fddadb3fbd79058e22fbd519e36ab43b3496923
+    dated 2026-09-03, while the OBO header is 2026-06-12. These dates and actual access
+    UTC remain distinct from original emission provenance.
+- evidence_id: xerophile-context
+  kind: database
+  reference: https://www.wikidata.org/wiki/Special:EntityData/Q980491.json
+  accessed_at: '2026-10-21T18:19:06.218785Z'
+  snapshot_sha256: 56de8face5688d1336883d29df19f9253858600f0a61fadd7294622e6f81ee4a
+  support: context_only
+  locator: English label/description, revision and complete claims; external identifiers
+    not followed
+  summary: The captured secondary Wikidata entity Q980491, revision 2515890386 modified
+    2026-07-10, was inspected for its English metadata and claims. It is labelled
+    xerophile and describes an organism that grows/reproduces with low water availability.
+    Those inspected fields do not independently establish a 0.85 threshold, exact
+    xerotolerant synonym scope, or a protein mechanism; no complete multilingual reading
+    is claimed.
+- evidence_id: water-activity-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A25500507+AND+SRC%3AMED&format=json&resultType=core&pageSize=1
+  accessed_at: '2026-10-21T18:20:52.883225Z'
+  snapshot_sha256: 9017cf3f54643c574c9ddf148b31aa4f38563a4210e64baf3d939b3e005518d9
+  support: supports
+  locator: PMID:25500507; DOI:10.1038/ismej.2014.219; title, publication metadata
+    and complete abstractText; full article not inspected
+  summary: The complete primary abstract reports low-water-activity growth across
+    selected halophilic prokaryotes and xerophilic fungi, with measured growth distinguished
+    from extrapolated theoretical limits. Manipulating chaotropic/kosmotropic stressors
+    changes fungal growth limits. This supports organism-level low-water-activity
+    biology and overlapping saline/non-saline contexts, not a universal 0.85 class
+    cutoff or a protein stability threshold.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  locator: Executed 2026-10-21T18:19:33Z through 2026-10-21T18:19:33Z; exit 0
+  accessed_at: '2026-10-21T18:19:33Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/environmental_response/metpo/slightly-halophilic-metpo1000625.yaml
+    data/traits/function/environmental_response/metpo/stenohaline-metpo1000626.yaml
+    data/traits/function/environmental_response/metpo/strictly-anaerobic-metpo1000611.yaml
+    data/traits/function/environmental_response/metpo/temperature-preference-metpo1000613.yaml
+    data/traits/function/environmental_response/metpo/thermophilic-metpo1000616.yaml
+    data/traits/function/environmental_response/metpo/thermotolerant-metpo1000619.yaml
+    data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+    data/traits/function/environmental_response/uniprot_keywords/antibiotic-resistance-kw-0046.yaml
+    data/traits/function/environmental_response/uniprot_keywords/antiviral-defense-kw-0051.yaml
+    data/traits/function/environmental_response/uniprot_keywords/modulation-of-host-virulence-by-virus-kw-1254.yaml
+  locator: Executed 2026-10-21T18:19:27Z through 2026-10-21T18:20:57Z; exit 0
+  accessed_at: '2026-10-21T18:20:57Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml
+  locator: Executed 2026-10-21T18:19:33Z through 2026-10-21T18:19:33Z; exit 0
+  accessed_at: '2026-10-21T18:19:33Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T18:20:57Z through 2026-10-21T18:20:58Z; exit 0
+  accessed_at: '2026-10-21T18:20:58Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: identity
+  outcome: supported
+  topic: Exact source phenotype identity
+  summary: METPO:1007092 resolves as xerophilic phenotype; current complete source
+    and target agree. This positive identity assessment is separate from domain eligibility.
+  evidence_ids:
+  - record
+  - metpo-ontology
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-1
+- area: nomenclature
+  outcome: supported
+  topic: Source synonym scopes
+  summary: xerophile and xerotolerant are copied as source EXACT synonyms. The review
+    verifies this provenance but does not infer that growth preference, tolerance
+    and desiccation survival are universally interchangeable.
+  evidence_ids:
+  - record
+  - owner
+  - metpo-ontology
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-2
+- area: evidence
+  outcome: supported
+  topic: Defining phenotype subject
+  summary: The source denotes a microbe thriving at low water activity, typically
+    aw < 0.85, and distinguishes its water-activity focus from halophily and osmotic
+    tolerance. This is an organism phenotype, not protein hydration stability.
+  evidence_ids:
+  - record
+  - metpo-ontology
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-3
+- area: quantity
+  outcome: unknown
+  topic: Temperature or water-activity qualification
+  summary: 'The typical 0.85 qualifier remains attributed to METPO. Wikidata is secondary
+    entity context, not a quantitative assay. The primary abstract reports selected
+    saline and non-saline low-aw growth, and separates measured limits from extrapolations;
+    it does not validate a universal class cutoff. Distinct source labels are not
+    treated as disjoint organism sets: low-aw growth can overlap halophily, and solute
+    composition can affect water activity and other stresses. Exact xerotolerant alias
+    equivalence is not independently established.'
+  evidence_ids:
+  - record
+  - metpo-ontology
+  - xerophile-context
+  - water-activity-primary
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-4
+- area: consistency
+  outcome: supported
+  topic: Source hierarchy and inclusive routing
+  summary: The captured parents agree with the source. Inclusive route selection and
+    same-source parent copying are distinct operations; no extra local parent or absent-corpus
+    finding is made.
+  evidence_ids:
+  - record
+  - owner
+  - metpo-ontology
+  - local-ancestor-1
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-5
+- area: representation
+  outcome: concern
+  topic: Organism phenotype versus protein trait
+  summary: The source denotes a microbe thriving at low water activity, typically
+    aw < 0.85, and distinguishes its water-activity focus from halophily and osmotic
+    tolerance. This is an organism phenotype, not protein hydration stability. The
+    maintained emitter places this unchanged organism predicate in a ProteinTraitRecord.
+    Protein contributions may exist, but the defining class is not thereby a protein
+    capability.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - metpo-ontology
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-6
+- area: ownership
+  outcome: supported
+  topic: Actual maintained owner and repair behavior
+  summary: SOURCES routes METPO:1007092; build_routing includes the root and is_a
+    descendants. build_yaml copies same-source parents independently of route membership,
+    definitions and non-label synonyms. read_release_stamp uses the header; seed_source
+    is dry-run by default and skips existing output unless force is used. Route exclusion
+    alone does not retire existing files. Future route changes must separately handle
+    already emitted output.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-7
+- area: provenance
+  outcome: unknown
+  topic: Current source versus original emission
+  summary: Fresh current source identity, metadata and licensing are supported; source
+    agreement and present access/release dates do not reconstruct the original seed
+    run or input release.
+  evidence_ids:
+  - record
+  - metpo-ontology
+  - metpo-main
+  - metpo-project
+  - metpo-license
+  - metpo-commit
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-8
+- area: completeness
+  outcome: concern
+  topic: Class content and optional enrichment
+  summary: The entire target has a coherent reusable definition and source identity.
+    Material findings concern the stated category, mapping or wording, not the absence
+    of mandatory examples, coordinates, chemical participants or causal graphs. No
+    protein instance is newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  - checklist
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-9
+- area: graph
+  outcome: not_applicable
+  topic: No asserted molecular mechanism
+  summary: The complete target asserts no causal graph, reaction, residues or protein
+    coordinates. No mechanistic graph is invented or made mandatory.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-10
+- area: scope
+  outcome: supported
+  topic: Unchanged status and expression context
+  summary: The record remains CLASS/SEEDED with no promotion, history event or canonical
+    protein qualification. iModulonDB is not applicable without a specific gene, organism/dataset
+    or expression-component claim; this is not negative biological evidence.
+  evidence_ids:
+  - record
+  - checklist
+  target_ids:
+  - METPO:1007092
+  assessment_id: assessment-11
+findings:
+- issue_key: metpo.environmental-response.METPO-1007092.organism-growth-as-protein-trait
+  category: scope
+  severity: major
+  certainty: confirmed
+  title: Organism phenotype is emitted as a protein trait
+  description: The source denotes a microbe thriving at low water activity, typically
+    aw < 0.85, and distinguishes its water-activity focus from halophily and osmotic
+    tolerance. This is an organism phenotype, not protein hydration stability. The
+    source class is selected by an inclusive route and emitted as FUNCTION/FUNC_ENVIRONMENTAL_RESPONSE
+    without an independent protein-level defining predicate. Correct source identity
+    does not repair this domain mismatch, and an associated protein would not alone
+    redefine the source class.
+  evidence_ids:
+  - record
+  - schema
+  - project-rules
+  - checklist
+  - owner
+  - metpo-ontology
+  field_paths:
+  - definition
+  - trait_category
+  - parent_traits
+  rule_id: 'ProteinTraitRecord checklist: identity, defining representation, source
+    scope and maintained ownership'
+  normalization_reason: 'Major: the defining category or equivalence claim materially
+    exceeds the supported scope; source identity remains resolved.'
+  finding_id: F1
+  status: open
+  target_ids:
+  - METPO:1007092
+  owner_paths:
+  - path: scripts/seed_obo.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained METPO route selection, OBO parsing, provenance and class-record
+      emission
+  native_severity: major
+actions:
+- action_id: A1
+  description: Adjudicate the exact METPO:1007092 class in the maintained METPO:1007092
+    route. Preserve the organism phenotype meaning and qualifiers. If excluded from
+    protein-trait emission, document audited migration/retirement of existing output
+    and references; route exclusion does not remove existing files. If a separate
+    protein response class is justified, give it independent identity and protein-scoped
+    evidence rather than silently reusing the organism identifier.
+  finding_ids:
+  - F1
+  target_ids:
+  - METPO:1007092
+  owner_paths:
+  - path: scripts/seed_obo.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained METPO route selection, OBO parsing, provenance and class-record
+      emission
+  acceptance_checks:
+  - Document the source-class disposition for METPO:1007092 and inspect the inclusive
+    METPO:1007092 route on pinned source bytes in dry-run mode.
+  - Preserve all source qualifiers and distinguish protein activity/stability from
+    organism growth. Do not require optional examples or mechanisms merely to populate
+    fields.
+  - Audit old and resulting paths/references after any authorized migration. A distinct
+    protein class requires independent evidence and identity.
+  - For a future writer change run just lint, focused pytest, just test and just audit-writers;
+    run just sources-check if the catalogue changes. Validate the actual resulting
+    path(s) with just validate, just validate-all and just audit-graphs; for the unchanged
+    target these are just validate data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml,
+    just validate-all data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml,
+    and just audit-graphs data/traits/function/environmental_response/metpo/xerophilic-phenotype-metpo1007092.yaml.
+    If moved, document resulting paths and retire/map old paths with an audit trail
+    rather than silently changing identity. Run full just validate-all before merge
+    and just validate-history, then add a fresh immutable review.
+limitations:
+- 'The typical 0.85 qualifier remains attributed to METPO. Wikidata is secondary entity
+  context, not a quantitative assay. The primary abstract reports selected saline
+  and non-saline low-aw growth, and separates measured limits from extrapolations;
+  it does not validate a universal class cutoff. Distinct source labels are not treated
+  as disjoint organism sets: low-aw growth can overlap halophily, and solute composition
+  can affect water activity and other stresses. Exact xerotolerant alias equivalence
+  is not independently established.'
+- Current source agreement does not reconstruct original seed bytes or historical
+  execution. Citation annotations and secondary entities are not primary experimental
+  validation.
+- Only the exact named target and captured local ancestors/owners are reviewed; no
+  corpus-wide absence or whole-source certification is claimed.
+- Source bodies retain resolved URLs, actual access UTC and SHA256. Source acquisition
+  and draft preparation were read-only; native validation and bundle persistence are
+  recorded separately in the assembled review and saver receipts.
+tags:
+- unreviewed-path-order
+- batch-042
+- metpo
+```
