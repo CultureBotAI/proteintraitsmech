@@ -1,0 +1,999 @@
+# Review of requires nicotinic acid
+
+- Review: 20261021T142844Z-nicotinic-acid-chebi15940
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T14:15:11Z
+- Finished UTC: 2026-10-21T14:28:44Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Nicotinic-acid identity and positive NAD-salvage/production context are supported. One confirmed major concerns chemical-to-protein-class equivalence and one minor concerns the vitamins category token used as a synonym. Alignment provenance and unresolved non-substrate role are explicit.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 2 in batch 029. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving 429081 before this batch. 29 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml | generated | requires nicotinic acid |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_15940 | Official ChEBI and OLS resolve the exact chemical identifier and definition, with material structures, outgoing relations and compound_origins inspected. The actual alignment provenance is distinguished from a current ChEBI cofactor-role selection. Primary evidence is retained at its stated activity, chemical-state and experimental scope. Source authenticity and licensing do not establish chemical/protein-class equivalence. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Nicotinic-acid identity and niacin alias
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The neutral pyridine-3-carboxylic-acid definition and graph agree, and niacin is a source-related alias. The broader vitamin B3 class and nicotinate conjugate do not erase exact acid identity. There is no wrong-element or wrong-molecule collision.
+
+### Nicotinate substrate and organism context
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The inspected NAPRT work provides positive substrate/precursor biology with a ligand-free experimental structure and modeled substrate binding. The Bacillus study independently supplies a bounded production example. Neither observation converts nicotinic acid into a demonstrated non-substrate protein cofactor.
+
+### Aligned non-substrate requirement scope
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The current chemical response does not directly assign a cofactor role, and the local category originates from alignment. The tested salvage reaction consumes nicotinate as substrate. This leaves the proposed non-substrate requirement unqualified, while neither role absence nor one substrate reaction proves universal nonmembership. An optional participant needs an activity-specific role decision.
+
+### Limits of source-linked compound origins
+
+provenance: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The complete compound_origins list was read, including organism, fluid and dataset associations. The Bacillus abstract directly identifies nicotinic acid; the Cordyceps and fecal abstracts do not. Uninspected source tables, older reference books and metabolomics datasets do not become independently verified exact-state evidence.
+
+### Alignment-derived local parent provenance
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The broad local cofactor-requirement parent is emitted by the alignment script and resolves. It is not attributed to a direct current ChEBI cofactor role for nicotinic acid, and does not independently validate the protein-requirement premise.
+
+### Maintained alignment and chemical attribution
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The actual alignment emitter synthesizes the opening requirement and imports the niacin and vitamins tokens. Its ChEBI dependency supplies chemical text and identifiers; current chemical source and licensing are verified. The original MicroGrowAgents table and release remain uninspected, and the persisted crosswalk is not an independent biological input.
+
+### Chemical entity versus protein-requirement equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_15940.
+
+The ChEBI identifier denotes a chemical entity or chemical family, whereas the local record denotes a protein requirement. The schema reserves xrefs for true source-direct equivalents. Positive activity context and source-role ancestry do not equate those different entities.
+
+## Findings
+
+### F1: Chemical entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-15940.chemical-entity-equivalence.
+
+The target places CHEBI:15940 in true-equivalence xrefs although that entry describes a chemical entity or chemical family and the local identifier describes a protein functional requirement. This violates the current equivalence semantics independently of whether a suitably scoped biological requirement can be supported.
+
+### F2: A broad import category is stored as an alternate name
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-15940.category-token-synonym.
+
+The RELATED_SYNONYM vitamins is the imported category token, not an alternate label for the specific nicotinic-acid requirement. Niacin remains a scientifically supported related name. The broad category can remain provenance without being treated as a synonym.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Correct build_aligned in scripts/seed_cofactor_alignment.py so a chemical association is not emitted as true equality to a protein-requirement class. Preserve exact chemical identity, stoichiometry, redox/protonation or polymer scope, source provenance and positive biological context. Adjudicate the intended activity and the role required if an optional ChemicalParticipant is added. If no supported role or representation is available, retain provenance and explicit uncertainty rather than inventing one. Do not move false equality into mapped_xrefs, automatically replace the chemical or qualify a protein instance.
+
+- The regenerated target no longer asserts chemical-to-protein-class equality. Any optional typed association has curator-adjudicated exact chemical scope and activity-relative role; otherwise source provenance and uncertainty remain explicit.
+- The alignment emitter selects missing IDs before --force, so repair this existing record through a controlled audited regeneration route; do not claim that --force alone selects it.
+- For maintained writer changes run just audit-writers, just lint and just test with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml. Run full just validate-all before merging record changes. Recapture changed inputs and save a fresh validated review rather than overwriting this observation.
+
+### A2
+
+Change the alignment synonym emission so the vitamins category is retained as appropriate provenance or categorization rather than an alternate name. Preserve the supported niacin related alias, exact chemical scope and attribution.
+
+- The regenerated target retains niacin as a supported related label and no longer presents vitamins as a synonym for this specific requirement. Category provenance remains auditable.
+- The alignment emitter selects missing IDs before --force, so repair this existing record through a controlled audited regeneration route; do not claim that --force alone selects it.
+- For maintained writer changes run just audit-writers, just lint and just test with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml. Run full just validate-all before merging record changes. Recapture changed inputs and save a fresh validated review rather than overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. The exact copied RELATED_SYNONYM values are niacin and vitamins, both attributed to MicroGrowAgents. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Exact target CHEBI identifier row and header | supports | The captured CHEBI:15940 row records nicotinic acid, cofactor_id niacin and category vitamins. It corroborates local alignment provenance, not a release-pinned original table or an independently established protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections; verified reused body retains original access UTC | supports | The official ChEBI Introduction and Licensing sections describe chemical entities and roles and state CC BY 4.0 availability. This supports chemical-source attribution, not chemical/protein-class equivalence. |
+| current-release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | The verified reused OLS metadata reports ChEBI version 256, loaded on 2026-10-16. This is the captured ontology metadata, not a claim that the backend and original seed use that same release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/15940/; Complete material identity fields, names, definition, chemical data/default structure, outgoing relations, citations and compound_origins | supports | CHEBI:15940 resolves to nicotinic acid: C6H5NO2, charge 0, pyridine-3-carboxylic acid, with graph O=C(O)c1cccnc1 and no stereocentre. Niacin is a source-related synonym. Structural parents include pyridinemonocarboxylic acid, pyridine alkaloid and vitamin B3; its conjugate base is nicotinate CHEBI:32544. The complete current outgoing list contains metabolite and pharmacological roles but no direct cofactor role. This does not disprove other biological uses; the local requirement was selected by alignment rather than by the current ChEBI role subtree. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:15940; Inspected source response captured at the recorded UTC time | supports | OLS resolves the same nonobsolete identifier and agrees on the source label, definition, names and structural annotations. This supports source identity and attribution, not an equivalence to the synthesized protein requirement. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition and complete outgoing relations; verified reused body retains original access UTC | supports | Cofactor CHEBI:23357 is an organic molecule or ion required by an enzyme for activity, with coenzyme and prosthetic-group attachment modes. Its outgoing parent is biochemical role CHEBI:52206. A source role supplies positive candidate context without qualifying a particular protein requirement. |
+| biochemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/; Definition and complete outgoing relations; verified reused body retains original access UTC | supports | Biochemical role CHEBI:52206 concerns an entity or part acting within a biochemical context. It is a role class, not a molecular species or a protein requirement. |
+| context-26420 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26420/; Definition, chemical data/default structure and complete outgoing relations | supports | Pyridinemonocarboxylic acid CHEBI:26420 denotes a pyridine carrying a carboxy group. Its generic structural ancestry supports nicotinic-acid classification without selecting a protein role. |
+| context-26416 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26416/; Definition, chemical data/default structure and complete outgoing relations | supports | Pyridine alkaloid CHEBI:26416 has a null definition and outgoing pyridines and alkaloid parents. Its pyridine-alkaloid classification is inferred from that label and ancestry rather than quoted from a source definition; it does not establish protein dependence. |
+| context-176839 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/176839/; Definition, chemical data/default structure and complete outgoing relations | supports | Vitamin B3 CHEBI:176839 is a class of pyridine vitamers with activity against vitamin B3 deficiency, including nicotinic acid, nicotinamide and their ions or salts. This broader class does not make its members chemically identical or turn the generic category token vitamins into an alternate name for one requirement. |
+| context-32544 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/32544/; Definition, chemical data/default structure and complete outgoing relations | supports | Nicotinate CHEBI:32544 is C6H4NO2, charge −1, with a deprotonated carboxyl group and a conjugate-acid relation to nicotinic acid. Its own pH 7.3 claim is not imported into the neutral-acid target, and protonation does not convert the acid into nicotinamide. |
+| naprt-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3APMC4442680%20OR%20PMCID%3APMC4442680&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:26042198; DOI:10.1016/j.fob.2015.05.002. Human nicotinate phosphoribosyltransferase converts nicotinic acid and PRPP to nicotinic acid mononucleotide and pyrophosphate. The 2.9 Å structure is ligand-free; substrate/product binding was investigated by docking, not a nicotinate-bound crystal in this study. |
+| naprt-fulltext | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4442680/fullTextXML; PMC4442680: complete main text; Introduction, Experimental procedures 2.1–2.3, Results and discussion 3.4—The active site, and Conclusion | supports | The human NAPRT study distinguishes nicotinic acid and nicotinamide as NAD-salvage precursors. Purified enzyme is active, but ligand binding in the reported structure is modeled. This supports a specific substrate/precursor use, not an obligatory non-substrate role of neutral free nicotinic acid. |
+| bacillus-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:34066686%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:34066686; DOI:10.3390/ani11051335. Bacillus subtilis 29784 produced nicotinic acid in vitro, and supplementation increased it in broiler intestinal contents. This is positive organism/metabolite context for the source origin, not evidence of a particular protein’s cofactor requirement. |
+| fungal-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21848266%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:21848266; DOI:10.1021/np100902f. The Cordyceps sinensis mycelial study identifies numerous compounds and tests anti-inflammatory fractions; its abstract does not name nicotinic acid. The precise source-origin association therefore remains unverified from this abstract alone. |
+| fecal-origin | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:24029555%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:24029555; DOI:10.1016/j.jchromb.2013.08.025. This study develops and validates human fecal metabolic profiling and examines blood-related confounding. Its abstract does not individually identify nicotinic acid or establish a protein requirement. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml; Executed 2026-10-21T14:16:11Z through 2026-10-21T14:16:12Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml; Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml; Executed 2026-10-21T14:16:12Z through 2026-10-21T14:16:12Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- This target was selected by the maintained MicroGrowAgents alignment emitter. The original external table and release were not independently inspected. The local crosswalk corroborates imported metadata but is not independent physiology or proof of a ChEBI cofactor-role selection.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The complete NAPRT article was inspected, but its ligand poses are docking models and do not establish neutral-acid binding or a non-substrate requirement. Compound-origin validation is explicitly partial. No universal absence of other nicotinic-acid roles is inferred, and no automatic NAD or nicotinate replacement is prescribed.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T142844Z-nicotinic-acid-chebi15940
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires nicotinic acid
+started_at: '2026-10-21T14:15:11Z'
+finished_at: '2026-10-21T14:28:44Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Nicotinic-acid identity and positive NAD-salvage/production context are supported.
+  One confirmed major concerns chemical-to-protein-class equivalence and one minor
+  concerns the vitamins category token used as a synonym. Alignment provenance and
+  unresolved non-substrate role are explicit.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    sha256: bf4fc293ba95d009666c624953c2fe9af0d2920c1b4e7a48d23d5d8e6dffa478
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 2 in batch 029. Fresh main inventory has 429359 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving
+    429081 before this batch. 29 inventories were combined. Unpublished local coverage
+    is explicitly not published or merged main coverage. Snapshot-row context paths
+    are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+targets:
+- kind: generated
+  label: requires nicotinic acid
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official ChEBI and OLS resolve the exact chemical identifier and definition,
+    with material structures, outgoing relations and compound_origins inspected. The
+    actual alignment provenance is distinguished from a current ChEBI cofactor-role
+    selection. Primary evidence is retained at its stated activity, chemical-state
+    and experimental scope. Source authenticity and licensing do not establish chemical/protein-class
+    equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - biochemical-role
+  - licence
+  - current-release
+  - context-26420
+  - context-26416
+  - context-176839
+  - context-32544
+  - naprt-primary
+  - naprt-fulltext
+  - bacillus-origin
+  - fungal-origin
+  - fecal-origin
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: bf4fc293ba95d009666c624953c2fe9af0d2920c1b4e7a48d23d5d8e6dffa478
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML. The exact copied RELATED_SYNONYM values are niacin
+    and vitamins, both attributed to MicroGrowAgents.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Exact target CHEBI identifier row and header
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The captured CHEBI:15940 row records nicotinic acid, cofactor_id niacin
+    and category vitamins. It corroborates local alignment provenance, not a release-pinned
+    original table or an independently established protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T14:15:11Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections; verified reused body retains original
+    access UTC
+  summary: The official ChEBI Introduction and Licensing sections describe chemical
+    entities and roles and state CC BY 4.0 availability. This supports chemical-source
+    attribution, not chemical/protein-class equivalence.
+- evidence_id: current-release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: The verified reused OLS metadata reports ChEBI version 256, loaded on 2026-10-16.
+    This is the captured ontology metadata, not a claim that the backend and original
+    seed use that same release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/15940/
+  accessed_at: '2026-10-21T14:16:03.869255Z'
+  snapshot_sha256: 6dc8c1860953796160255cd7275474212228f2ca2a8f2afcb62b23073fecdcea
+  support: supports
+  locator: Complete material identity fields, names, definition, chemical data/default
+    structure, outgoing relations, citations and compound_origins
+  summary: 'CHEBI:15940 resolves to nicotinic acid: C6H5NO2, charge 0, pyridine-3-carboxylic
+    acid, with graph O=C(O)c1cccnc1 and no stereocentre. Niacin is a source-related
+    synonym. Structural parents include pyridinemonocarboxylic acid, pyridine alkaloid
+    and vitamin B3; its conjugate base is nicotinate CHEBI:32544. The complete current
+    outgoing list contains metabolite and pharmacological roles but no direct cofactor
+    role. This does not disprove other biological uses; the local requirement was
+    selected by alignment rather than by the current ChEBI role subtree.'
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:15940
+  accessed_at: '2026-10-21T14:16:03.869391Z'
+  snapshot_sha256: c291a1c1bb0d6af05ac4005af0957534f430db47e7df9cec874f8a94d961dba1
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves the same nonobsolete identifier and agrees on the source label,
+    definition, names and structural annotations. This supports source identity and
+    attribution, not an equivalence to the synthesized protein requirement.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition and complete outgoing relations; verified reused body retains
+    original access UTC
+  summary: Cofactor CHEBI:23357 is an organic molecule or ion required by an enzyme
+    for activity, with coenzyme and prosthetic-group attachment modes. Its outgoing
+    parent is biochemical role CHEBI:52206. A source role supplies positive candidate
+    context without qualifying a particular protein requirement.
+- evidence_id: biochemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/
+  accessed_at: '2026-10-21T12:32:53.586758Z'
+  snapshot_sha256: a2618530e2ab2677b173b52b5754a4bba1796bb11e8f41a7a5b62e8874dc5227
+  support: supports
+  locator: Definition and complete outgoing relations; verified reused body retains
+    original access UTC
+  summary: Biochemical role CHEBI:52206 concerns an entity or part acting within a
+    biochemical context. It is a role class, not a molecular species or a protein
+    requirement.
+- evidence_id: context-26420
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26420/
+  accessed_at: '2026-10-21T14:17:25.236575Z'
+  snapshot_sha256: a6a79415aa6929c7e0cb492cb61c2d43f5af7b0a3c22043edc07afd23ad853b1
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Pyridinemonocarboxylic acid CHEBI:26420 denotes a pyridine carrying a carboxy
+    group. Its generic structural ancestry supports nicotinic-acid classification
+    without selecting a protein role.
+- evidence_id: context-26416
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26416/
+  accessed_at: '2026-10-21T14:17:25.235530Z'
+  snapshot_sha256: 9aef0c651d547426c227a1bafa5e550d1861115701c56004c91eadcd1bae2eeb
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Pyridine alkaloid CHEBI:26416 has a null definition and outgoing pyridines
+    and alkaloid parents. Its pyridine-alkaloid classification is inferred from that
+    label and ancestry rather than quoted from a source definition; it does not establish
+    protein dependence.
+- evidence_id: context-176839
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/176839/
+  accessed_at: '2026-10-21T14:17:25.236258Z'
+  snapshot_sha256: b09cc57c5f6ac36df9940e674f6f47dde3b8e87cb1a991f5e20965d2f54ea29f
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Vitamin B3 CHEBI:176839 is a class of pyridine vitamers with activity against
+    vitamin B3 deficiency, including nicotinic acid, nicotinamide and their ions or
+    salts. This broader class does not make its members chemically identical or turn
+    the generic category token vitamins into an alternate name for one requirement.
+- evidence_id: context-32544
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/32544/
+  accessed_at: '2026-10-21T14:17:26.069871Z'
+  snapshot_sha256: d7cb19b7e4ec77ff816304e699c3fe1c88ee947a923465ad569c3eeff15616b0
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Nicotinate CHEBI:32544 is C6H4NO2, charge −1, with a deprotonated carboxyl
+    group and a conjugate-acid relation to nicotinic acid. Its own pH 7.3 claim is
+    not imported into the neutral-acid target, and protonation does not convert the
+    acid into nicotinamide.
+- evidence_id: naprt-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3APMC4442680%20OR%20PMCID%3APMC4442680&format=json&resultType=core
+  accessed_at: '2026-10-21T14:17:28.712514Z'
+  snapshot_sha256: e77d45568d9833920671ae7b4a550271aa5e417c090c2ed36000b50bf98d0ceb
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:26042198; DOI:10.1016/j.fob.2015.05.002. Human nicotinate phosphoribosyltransferase
+    converts nicotinic acid and PRPP to nicotinic acid mononucleotide and pyrophosphate.
+    The 2.9 Å structure is ligand-free; substrate/product binding was investigated
+    by docking, not a nicotinate-bound crystal in this study.
+- evidence_id: naprt-fulltext
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC4442680/fullTextXML
+  accessed_at: '2026-10-21T14:17:45.903968Z'
+  snapshot_sha256: 4db4720088d2882d14402aba46147e6fead963fe7925ef7eeeff3c84ab5052fa
+  support: supports
+  locator: 'PMC4442680: complete main text; Introduction, Experimental procedures
+    2.1–2.3, Results and discussion 3.4—The active site, and Conclusion'
+  summary: The human NAPRT study distinguishes nicotinic acid and nicotinamide as
+    NAD-salvage precursors. Purified enzyme is active, but ligand binding in the reported
+    structure is modeled. This supports a specific substrate/precursor use, not an
+    obligatory non-substrate role of neutral free nicotinic acid.
+- evidence_id: bacillus-origin
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:34066686%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T14:17:28.081144Z'
+  snapshot_sha256: cabeda74d04fdc85722d4fef6382755a866b1cbade4a1cda9daa46e281f4371a
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:34066686; DOI:10.3390/ani11051335. Bacillus subtilis 29784 produced
+    nicotinic acid in vitro, and supplementation increased it in broiler intestinal
+    contents. This is positive organism/metabolite context for the source origin,
+    not evidence of a particular protein’s cofactor requirement.
+- evidence_id: fungal-origin
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21848266%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T14:17:28.166033Z'
+  snapshot_sha256: 6104463f8544d9f919f3875278df73f5f0bbcec4e025d4f2ae2e61386fc633fe
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:21848266; DOI:10.1021/np100902f. The Cordyceps sinensis mycelial study
+    identifies numerous compounds and tests anti-inflammatory fractions; its abstract
+    does not name nicotinic acid. The precise source-origin association therefore
+    remains unverified from this abstract alone.
+- evidence_id: fecal-origin
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:24029555%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T14:17:28.373608Z'
+  snapshot_sha256: 59e5d19b1932bcfeb04c4c515a32dcaa99dbff222072eb0d7f48046a25dcff1e
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:24029555; DOI:10.1016/j.jchromb.2013.08.025. This study develops and
+    validates human fecal metabolic profiling and examines blood-related confounding.
+    Its abstract does not individually identify nicotinic acid or establish a protein
+    requirement.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  locator: Executed 2026-10-21T14:16:11Z through 2026-10-21T14:16:12Z; exit 0
+  accessed_at: '2026-10-21T14:16:12Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  locator: Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0
+  accessed_at: '2026-10-21T14:17:43Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+  locator: Executed 2026-10-21T14:16:12Z through 2026-10-21T14:16:12Z; exit 0
+  accessed_at: '2026-10-21T14:16:12Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0
+  accessed_at: '2026-10-21T14:17:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The neutral pyridine-3-carboxylic-acid definition and graph agree, and
+    niacin is a source-related alias. The broader vitamin B3 class and nicotinate
+    conjugate do not erase exact acid identity. There is no wrong-element or wrong-molecule
+    collision.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - context-176839
+  - context-32544
+  topic: Nicotinic-acid identity and niacin alias
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The inspected NAPRT work provides positive substrate/precursor biology
+    with a ligand-free experimental structure and modeled substrate binding. The Bacillus
+    study independently supplies a bounded production example. Neither observation
+    converts nicotinic acid into a demonstrated non-substrate protein cofactor.
+  evidence_ids:
+  - naprt-primary
+  - naprt-fulltext
+  - bacillus-origin
+  topic: Nicotinate substrate and organism context
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-6
+- area: representation
+  outcome: unknown
+  summary: The current chemical response does not directly assign a cofactor role,
+    and the local category originates from alignment. The tested salvage reaction
+    consumes nicotinate as substrate. This leaves the proposed non-substrate requirement
+    unqualified, while neither role absence nor one substrate reaction proves universal
+    nonmembership. An optional participant needs an activity-specific role decision.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - naprt-fulltext
+  - alignment-crosswalk
+  topic: Aligned non-substrate requirement scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-7
+- area: provenance
+  outcome: unknown
+  summary: The complete compound_origins list was read, including organism, fluid
+    and dataset associations. The Bacillus abstract directly identifies nicotinic
+    acid; the Cordyceps and fecal abstracts do not. Uninspected source tables, older
+    reference books and metabolomics datasets do not become independently verified
+    exact-state evidence.
+  evidence_ids:
+  - chemical
+  - bacillus-origin
+  - fungal-origin
+  - fecal-origin
+  topic: Limits of source-linked compound origins
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-8
+- area: consistency
+  outcome: supported
+  summary: The broad local cofactor-requirement parent is emitted by the alignment
+    script and resolves. It is not attributed to a direct current ChEBI cofactor role
+    for nicotinic acid, and does not independently validate the protein-requirement
+    premise.
+  evidence_ids:
+  - record
+  - owner
+  - chemical
+  - alignment-crosswalk
+  - local-parent-1
+  topic: Alignment-derived local parent provenance
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-9
+- area: provenance
+  outcome: supported
+  summary: The actual alignment emitter synthesizes the opening requirement and imports
+    the niacin and vitamins tokens. Its ChEBI dependency supplies chemical text and
+    identifiers; current chemical source and licensing are verified. The original
+    MicroGrowAgents table and release remain uninspected, and the persisted crosswalk
+    is not an independent biological input.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - chemical
+  - licence
+  - current-release
+  topic: Maintained alignment and chemical attribution
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-10
+- area: grounding
+  outcome: concern
+  summary: The ChEBI identifier denotes a chemical entity or chemical family, whereas
+    the local record denotes a protein requirement. The schema reserves xrefs for
+    true source-direct equivalents. Positive activity context and source-role ancestry
+    do not equate those different entities.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  topic: Chemical entity versus protein-requirement equivalence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-15940.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is asserted equivalent to a protein requirement
+  description: The target places CHEBI:15940 in true-equivalence xrefs although that
+    entry describes a chemical entity or chemical family and the local identifier
+    describes a protein functional requirement. This violates the current equivalence
+    semantics independently of whether a suitably scoped biological requirement can
+    be supported.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The record equates different entity types, a major grounding
+    defect. This does not deny positive source-role or enzyme evidence and does not
+    force a molecular participant with an unsupported role.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-15940.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: A broad import category is stored as an alternate name
+  description: The RELATED_SYNONYM vitamins is the imported category token, not an
+    alternate label for the specific nicotinic-acid requirement. Niacin remains a
+    scientifically supported related name. The broad category can remain provenance
+    without being treated as a synonym.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  - chemical-ontology
+  - context-176839
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: 'This is a bounded naming defect: the exact chemical identity
+    remains coherent, while an imported category token is not an alternate label.
+    No blanket removal of scientific related synonyms is requested.'
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Correct build_aligned in scripts/seed_cofactor_alignment.py so a chemical
+    association is not emitted as true equality to a protein-requirement class. Preserve
+    exact chemical identity, stoichiometry, redox/protonation or polymer scope, source
+    provenance and positive biological context. Adjudicate the intended activity and
+    the role required if an optional ChemicalParticipant is added. If no supported
+    role or representation is available, retain provenance and explicit uncertainty
+    rather than inventing one. Do not move false equality into mapped_xrefs, automatically
+    replace the chemical or qualify a protein instance.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated target no longer asserts chemical-to-protein-class equality. Any
+    optional typed association has curator-adjudicated exact chemical scope and activity-relative
+    role; otherwise source provenance and uncertainty remain explicit.
+  - The alignment emitter selects missing IDs before --force, so repair this existing
+    record through a controlled audited regeneration route; do not claim that --force
+    alone selects it.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml.
+    Run full just validate-all before merging record changes. Recapture changed inputs
+    and save a fresh validated review rather than overwriting this observation.
+- action_id: A2
+  description: Change the alignment synonym emission so the vitamins category is retained
+    as appropriate provenance or categorization rather than an alternate name. Preserve
+    the supported niacin related alias, exact chemical scope and attribution.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_15940
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated target retains niacin as a supported related label and no longer
+    presents vitamins as a synonym for this specific requirement. Category provenance
+    remains auditable.
+  - The alignment emitter selects missing IDs before --force, so repair this existing
+    record through a controlled audited regeneration route; do not claim that --force
+    alone selects it.
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml.
+    Run full just validate-all before merging record changes. Recapture changed inputs
+    and save a fresh validated review rather than overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- This target was selected by the maintained MicroGrowAgents alignment emitter. The
+  original external table and release were not independently inspected. The local
+  crosswalk corroborates imported metadata but is not independent physiology or proof
+  of a ChEBI cofactor-role selection.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The complete NAPRT article was inspected, but its ligand poses are docking models
+  and do not establish neutral-acid binding or a non-substrate requirement. Compound-origin
+  validation is explicitly partial. No universal absence of other nicotinic-acid roles
+  is inferred, and no automatic NAD or nicotinate replacement is prescribed.
+tags:
+- unreviewed-path-order
+- batch-029
+- chebi-cofactor
+```
