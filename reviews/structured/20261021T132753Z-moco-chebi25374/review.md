@@ -1,0 +1,1115 @@
+# Review of requires MoCo
+
+- Review: 20261021T132753Z-moco-chebi25374
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T13:18:26Z
+- Finished UTC: 2026-10-21T13:27:53Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+One confirmed identity blocker concerns MoCo versus metal-free MGD CHEBI:25374/30404. A separate dependent major concerns chemical-to-trait equivalence, and one minor concerns metals as RELATED_SYNONYM. Identity and metal coordination must be resolved before participant or protein qualification.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 9 in batch 026. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) covers 248 record paths, leaving 429111 before this batch. 26 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml | generated | requires MoCo |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_25374 | Successful source inspection exposes a mismatch: obsolete CHEBI:25374 resolves to metal-free MGD 30404, while the target names MoCo. Canonical MGD, conjugate/parent context, Mo-cofactor comparison and complete primary ligand/complex abstracts were inspected. The asserted anchor is not certified as the named Mo-containing cofactor. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Structurally populated candidate with conflicting chemical identity
+
+completeness: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The YAML has a class-level requirement form, but its name and chemical anchor do not denote the same chemical. Populated fields and schema success do not repair this identity conflict. Optional examples, causal graphs and chemical participants are not mandatory, and no protein is newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Label–chemical anchor conflict
+
+identity: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The target names MoCo and molybdenum_cofactor, but CHEBI:25374 is obsolete and resolves to neutral metal-free MGD CHEBI:30404. The captured alignment row contains that pairing. The chemical source contains no Mo, whereas the relevant Mo-cofactor class explicitly coordinates Mo and the primary DMSO-reductase analyses distinguish two MGD ligands from their Mo-containing complex. This is an unresolved whole-cofactor versus organic-component identity collision, not merely a harmless old identifier.
+
+### Positive Mo-cofactor enzyme chemistry
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The primary chemical analysis and crystal-structure abstracts give positive Mo-dependent enzyme context and distinguish two coordinated MGD ligands from the whole cofactor. They do not make the free neutral ligand identical to that complex or establish the same geometry for every Mo enzyme.
+
+### Whole cofactor, free ligand and charge-state scope
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The present record does not coherently decide whole Mo cofactor versus organic MGD component. Ligand protonation and metal coordination are separate dimensions. Resolve identity first, then assess activity-relative non-substrate role before optional participant enrichment or protein qualification; no universal lack of MGD biological function is inferred.
+
+### Alignment hierarchy and component identity
+
+consistency: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The broad local cofactor parent comes from the alignment emitter. It cannot turn metal-free MGD into the named Mo-containing cofactor. Molybdopterin and dinucleotide chemical parents explain the resolved source entity, but are not automatically protein-trait subclass edges or a repair for the conflicting target.
+
+### Chemical entity versus protein requirement
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+CHEBI:25374 currently denotes the metal-free MGD chemical entity reached through an obsolete identifier, whereas the local COFACTOR_REQ record denotes a proposed protein functional requirement. The schema reserves xrefs for true own-source equivalence. A chemical entity or chemical class is not identical to a class of proteins requiring it, even when its identity and a positive cofactor context are supported. The separate identity conflict must be repaired first, but selecting a correct chemical identifier alone would still leave this emitter-level equivalence defect.
+
+### Source category in RELATED_SYNONYM
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The source alias molybdenum_cofactor supplies intended-name provenance, while metals is a copied category token. RELATED scope is retained in the diagnosis and is not misread as exact synonymy.
+
+### Source attribution, licence and maintained emitter
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_25374.
+
+The captured alignment emitter and exact local crosswalk row explain the label, cofactor identifier, category, synthesized requirement and RELATED_SYNONYM fields. The ChEBI helper is a dependency, not proof of source-role selection. This traceable emission path does not validate the conflicting chemical identity. ChEBI data are CC BY 4.0; the original MicroGrowAgents table release and independent terms remain unverified. Current backend resolution and OLS version 256 do not identify the original seed release.
+
+## Findings
+
+### F1: MoCo label is anchored to a metal-free MGD ligand
+
+blocker / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-25374.label-chemical-identity-conflict.
+
+The target names MoCo and molybdenum_cofactor, but CHEBI:25374 is obsolete and resolves to neutral metal-free MGD CHEBI:30404. The captured alignment row contains that pairing. The chemical source contains no Mo, whereas the relevant Mo-cofactor class explicitly coordinates Mo and the primary DMSO-reductase analyses distinguish two MGD ligands from their Mo-containing complex. This is an unresolved whole-cofactor versus organic-component identity collision, not merely a harmless old identifier.
+
+### F2: Chemical source entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-25374.chemical-entity-equivalence.
+
+CHEBI:25374 currently denotes the metal-free MGD chemical entity reached through an obsolete identifier, whereas the local COFACTOR_REQ record denotes a proposed protein functional requirement. The schema reserves xrefs for true own-source equivalence. A chemical entity or chemical class is not identical to a class of proteins requiring it, even when its identity and a positive cofactor context are supported. The separate identity conflict must be repaired first, but selecting a correct chemical identifier alone would still leave this emitter-level equivalence defect.
+
+### F3: Alignment category is stored as a target synonym
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-25374.category-token-synonym.
+
+The record presents metals as a MicroGrowAgents RELATED_SYNONYM alongside molybdenum_cofactor. The exact crosswalk row and build_aligned show that metals is a category value, not an alternate target name. RELATED_SYNONYM does not assert exact synonymy; this is bounded naming metadata pollution, independent of the separate label–identifier conflict.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Reconcile the maintained alignment name, cofactor identifier and chemical anchor, then add an identity/component-versus-complex guard in load_mg_cofactors/build_aligned. Adjudicate whether the intended trait concerns a broad Mo cofactor, a specific coordinated complex or the free MGD ligand, and document the selected authoritative identifier and activity scope. CHEBI:21437 is comparison evidence, not an automatic replacement. Do not merely update 25374 to 30404 or transfer the current metal-free ID into a MoCo participant. Regenerate the existing target through an audited scoped route and preserve mismatch provenance.
+
+- A curator records the intended whole-cofactor or ligand scope and an authoritative consistent identifier; labels, definition, synonyms, local identifier and provenance are regenerated coherently. The Mo-containing versus metal-free distinction is explicit.
+- A focused regression rejects this exact MoCo/MGD component collision and automatic obsolete-ID substitution without identity adjudication. No wrong-ligand participant or protein qualification is promoted.
+- After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+- For writer changes add focused regression coverage and run just audit-writers, just lint and just test. Regenerate this existing aligned target through an audited scoped route: alignment main selects only missing chemical IDs before force, so a plain rerun or --force alone does not select an existing target. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A2
+
+Update build_aligned in scripts/seed_cofactor_alignment.py so chemical source entities are not emitted as protein-trait equals. Resolve the separate whole-cofactor versus ligand identity blocker first. The eventual correct chemical identifier must not remain an asserted protein-trait equal. Do not transfer CHEBI:25374 or CHEBI:30404 as a participant for a Mo-containing requirement merely because the IDs are linked by obsolescence. Preserve source provenance. An optional chemical_participants association with role COFACTOR is appropriate only after the chemical identity and activity-relative non-substrate role are supported; otherwise retain explicit uncertainty without inventing a participant. Do not move the same false equality to mapped_xrefs, force optional protein examples or promote native status.
+
+- Regenerated xrefs no longer asserts equality between a chemical source entity and the protein requirement. Any identity prerequisite is resolved first, and source attribution remains traceable.
+- Any optional participant uses a curator-supported chemical identity and an activity-relative role; a source role or one experiment is not converted into universal protein qualification.
+- After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+- For writer changes add focused regression coverage and run just audit-writers, just lint and just test. Regenerate this existing aligned target through an audited scoped route: alignment main selects only missing chemical IDs before force, so a plain rerun or --force alone does not select an existing target. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A3
+
+Change build_aligned to preserve the category metals as provenance or appropriate classification context, not as a synonym. Preserve the source alias as evidence of the intended identity while the blocker is adjudicated; do not use that alias to validate the currently conflicting identifier.
+
+- The regenerated synonym list no longer treats the source category as a target name, while category provenance and the independently resolved identity remain traceable.
+- After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+- For writer changes add focused regression coverage and run just audit-writers, just lint and just test. Regenerate this existing aligned target through an audited scoped route: alignment main selects only missing chemical IDs before force, so a plain rerun or --force alone does not select an existing target. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; Entire target YAML | supports | Entire aligned target YAML inspected: requires-label, short requirement definition, CHEBI:25374 xref, composite ChEBI/MicroGrowAgents attribution, RELATED_SYNONYM values molybdenum_cofactor and metals, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED, broad local parent and stated ChEBI licence. Current source resolution conflicts with the named chemical; structural completeness does not establish identity coherence. No optional examples, mechanisms or chemical participants occur. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Header and exact CHEBI:25374 row 87 | supports | The exact chemical-ID row records the locally persisted alignment name, cofactor identifier and category. It is curation provenance, not an independently verified protein requirement or a release-pinned external source table. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing; reused bytes verified against original digest and access time | supports | The inspected official Introduction and Licensing sections describe chemical entities and biological roles and establish CC BY 4.0 for ChEBI data. This does not independently license or release-pin an uninspected MicroGrowAgents source table. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Digest-verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16. Original access time is retained. This ontology version and the live backend are separate comparison snapshots, not identification of the original seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/25374/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | The requested CHEBI:25374 backend response identifies CHEBI:30404 molybdopterin guanine dinucleotide (MGD), with 25374 among its secondary IDs. It is a neutral metal-free organic ligand, C20H26N10O13P2S2, with guanine, diphosphate, stereodefined pyranopterin and two thiol groups; no Mo atom occurs in its formula or graph. The prose definition is null. Its parents are molybdopterins and molybdopterin dinucleotide, and conjugate-base 60535 is distinct. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:25374; Exact requested term: label, description, synonyms/annotations, obsolete flag and any replacement annotation | supports | OLS CHEBI:25374 is obsolete with replacement CHEBI:30404. The replacement denotes metal-free MGD, not by itself a molybdenum-containing cofactor. This obsolete-ID resolution is part of the identity conflict, not a safe automatic repair. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Inspected source response captured at the recorded UTC time | supports | CHEBI:23357 is the biochemical role cofactor: an organic molecule or ion required by an enzyme for activity, loosely or tightly attached. Its parent is biochemical role CHEBI:52206; it is not a class of proteins. |
+| biochemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/; Inspected source response captured at the recorded UTC time | supports | CHEBI:52206 describes a role played by a molecular entity or part within a biochemical context. A role, the entity bearing it and a protein requirement class are distinct denotations. |
+| mgd-canonical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/30404/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | The fresh CHEBI:30404 MGD response is byte-identical to the response requested under 25374. Exact chemical data and structure encode a metal-free neutral ligand, not a whole Mo complex. |
+| mgd-conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/60535/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | CHEBI:60535 is the distinct MGD(3−) state, C20H23N10O13P2S2, with two phosphate anions and a sulfur deprotonation in the source graph. The source pH-7.3 wording is not independently certified here; this comparison distinguishes protonation from metal coordination. |
+| mpt-class | https://www.ebi.ac.uk/chebi/backend/api/public/compound/35203/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | Molybdopterins CHEBI:35203 is a variable chemical class with no fixed formula or structure, under organic phosphate, phosphoric ester and pyranopterin classes. This class does not itself specify a coordinated Mo atom. |
+| dinucleotide-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/37146/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | Molybdopterin dinucleotide CHEBI:37146 is a chemical class under dinucleotide, with no fixed formula, structure or prose definition. It classifies the organic ligand, not a protein requirement. |
+| mo-cofactor-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/21437/; Complete official compound response: identity, names, definition or null, chemical data, default structure, outgoing relations and relevant incoming context | supports | Mo-molybdopterin cofactor CHEBI:21437 explicitly means a molybdopterin cofactor with a coordinated mononuclear molybdenum or molybdate species. Its broad chemical class has no fixed formula or default structure and includes molybdenum cofactor/Moco naming. It is a relevant comparison, not an automatic selected replacement. |
+| mo-cofactor-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:21437; Inspected source response captured at the recorded UTC time | supports | Nonobsolete OLS CHEBI:21437 confirms the explicitly Mo-coordinated class definition, distinct from metal-free MGD. |
+| moco-analysis | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:8554338%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed primary abstract; full article not inspected | supports | PMID:8554338; DOI:10.1006/abbi.1996.0017. The complete abstract reports chemical analysis of Rhodobacter sphaeroides f. sp. denitrificans DMSO reductase containing two MGD ligands and one Mo atom per protein, with phosphate/guanine and derivative analyses. This directly distinguishes an organic ligand from the whole molybdenum cofactor. |
+| moco-structure | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:8658134%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed primary abstract; full article not inspected | supports | PMID:8658134; DOI:10.1126/science.272.5268.1615. The complete abstract reports R. sphaeroides DMSO reductase with monooxo Mo coordinated by two MGD dithiolene groups and Ser147, with redox-linked coordination changes. A proposed mechanism and family comparison are not universal experimental proof for every Mo cofactor. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; Executed 2026-10-21T13:19:03Z through 2026-10-21T13:19:05Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/magnesium-2-chebi18420.yaml data/traits/function/cofactor_requirement/chebi/manganese-2-chebi29035.yaml data/traits/function/cofactor_requirement/chebi/menaquinone-7-chebi44245.yaml data/traits/function/cofactor_requirement/chebi/metal-sulfur-cluster-chebi25214.yaml data/traits/function/cofactor_requirement/chebi/methanophenazine-chebi62733.yaml data/traits/function/cofactor_requirement/chebi/methylcobalamin-chebi28115.yaml data/traits/function/cofactor_requirement/chebi/mevalonyl-coa-chebi133868.yaml data/traits/function/cofactor_requirement/chebi/mfr-chebi24024.yaml data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml data/traits/function/cofactor_requirement/chebi/molybdopterin-cofactor-chebi25372.yaml; Executed 2026-10-21T13:18:40Z through 2026-10-21T13:20:44Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml; Executed 2026-10-21T13:19:05Z through 2026-10-21T13:19:05Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T13:20:44Z through 2026-10-21T13:20:46Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- This candidate was selected by the maintained MicroGrowAgents alignment emitter, not demonstrated to have been selected through a current ChEBI cofactor-role edge. The exact external source-table release and independent licensing were not inspected; the captured local crosswalk is provenance, not upstream validation. No sibling checkout was accessed. Current source resolution exposes an identity conflict, so role or requirement claims cannot be transferred to the conflicting chemical anchor.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The original external alignment table release remains unknown. The two Mo-enzyme papers were read as complete abstracts, not full structural data or coordinates. The current canonical Mo-cofactor class is a comparison candidate; it does not alone decide the intended historical trait or justify a replacement. No MGD pH population, every-protein geometry or obligatory physiological requirement is newly certified.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T132753Z-moco-chebi25374
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires MoCo
+started_at: '2026-10-21T13:18:26Z'
+finished_at: '2026-10-21T13:27:53Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: One confirmed identity blocker concerns MoCo versus metal-free MGD CHEBI:25374/30404.
+  A separate dependent major concerns chemical-to-trait equivalence, and one minor
+  concerns metals as RELATED_SYNONYM. Identity and metal coordination must be resolved
+  before participant or protein qualification.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+    sha256: 9d48c4393ffb03ec1ed0e2c91609eb54bb5fc9c1f59400ec8a225bfd33ef57c6
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 9 in batch 026. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    covers 248 record paths, leaving 429111 before this batch. 26 inventories were
+    combined. Published branch coverage is not described as merged main. Snapshot-row
+    context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+targets:
+- kind: generated
+  label: requires MoCo
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/magnesium-2-chebi18420.yaml
+    data/traits/function/cofactor_requirement/chebi/manganese-2-chebi29035.yaml data/traits/function/cofactor_requirement/chebi/menaquinone-7-chebi44245.yaml
+    data/traits/function/cofactor_requirement/chebi/metal-sulfur-cluster-chebi25214.yaml
+    data/traits/function/cofactor_requirement/chebi/methanophenazine-chebi62733.yaml
+    data/traits/function/cofactor_requirement/chebi/methylcobalamin-chebi28115.yaml
+    data/traits/function/cofactor_requirement/chebi/mevalonyl-coa-chebi133868.yaml
+    data/traits/function/cofactor_requirement/chebi/mfr-chebi24024.yaml data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+    data/traits/function/cofactor_requirement/chebi/molybdopterin-cofactor-chebi25372.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: 'Successful source inspection exposes a mismatch: obsolete CHEBI:25374
+    resolves to metal-free MGD 30404, while the target names MoCo. Canonical MGD,
+    conjugate/parent context, Mo-cofactor comparison and complete primary ligand/complex
+    abstracts were inspected. The asserted anchor is not certified as the named Mo-containing
+    cofactor.'
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - licence
+  - release
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: 9d48c4393ffb03ec1ed0e2c91609eb54bb5fc9c1f59400ec8a225bfd33ef57c6
+  support: supports
+  summary: 'Entire aligned target YAML inspected: requires-label, short requirement
+    definition, CHEBI:25374 xref, composite ChEBI/MicroGrowAgents attribution, RELATED_SYNONYM
+    values molybdenum_cofactor and metals, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED,
+    broad local parent and stated ChEBI licence. Current source resolution conflicts
+    with the named chemical; structural completeness does not establish identity coherence.
+    No optional examples, mechanisms or chemical participants occur.'
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Header and exact CHEBI:25374 row 87
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The exact chemical-ID row records the locally persisted alignment name,
+    cofactor identifier and category. It is curation provenance, not an independently
+    verified protein requirement or a release-pinned external source table.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T13:18:26Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing; reused bytes verified against original digest
+    and access time
+  summary: The inspected official Introduction and Licensing sections describe chemical
+    entities and biological roles and establish CC BY 4.0 for ChEBI data. This does
+    not independently license or release-pin an uninspected MicroGrowAgents source
+    table.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Digest-verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16.
+    Original access time is retained. This ontology version and the live backend are
+    separate comparison snapshots, not identification of the original seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/25374/
+  accessed_at: '2026-10-21T13:19:04.957756Z'
+  snapshot_sha256: 74fecd92b4d594f69977952a6182102bbc11f77df28d3118cbed87f501b07c77
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: The requested CHEBI:25374 backend response identifies CHEBI:30404 molybdopterin
+    guanine dinucleotide (MGD), with 25374 among its secondary IDs. It is a neutral
+    metal-free organic ligand, C20H26N10O13P2S2, with guanine, diphosphate, stereodefined
+    pyranopterin and two thiol groups; no Mo atom occurs in its formula or graph.
+    The prose definition is null. Its parents are molybdopterins and molybdopterin
+    dinucleotide, and conjugate-base 60535 is distinct.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:25374
+  accessed_at: '2026-10-21T13:19:04.918123Z'
+  snapshot_sha256: d015e98ff69b049855aee5ad37bf10ecca5c80be11efaecdbc294fdd438c8ac0
+  support: supports
+  locator: 'Exact requested term: label, description, synonyms/annotations, obsolete
+    flag and any replacement annotation'
+  summary: OLS CHEBI:25374 is obsolete with replacement CHEBI:30404. The replacement
+    denotes metal-free MGD, not by itself a molybdenum-containing cofactor. This obsolete-ID
+    resolution is part of the identity conflict, not a safe automatic repair.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: 'CHEBI:23357 is the biochemical role cofactor: an organic molecule or ion
+    required by an enzyme for activity, loosely or tightly attached. Its parent is
+    biochemical role CHEBI:52206; it is not a class of proteins.'
+- evidence_id: biochemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/
+  accessed_at: '2026-10-21T12:32:53.586758Z'
+  snapshot_sha256: a2618530e2ab2677b173b52b5754a4bba1796bb11e8f41a7a5b62e8874dc5227
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: CHEBI:52206 describes a role played by a molecular entity or part within
+    a biochemical context. A role, the entity bearing it and a protein requirement
+    class are distinct denotations.
+- evidence_id: mgd-canonical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/30404/
+  accessed_at: '2026-10-21T13:20:09.071521Z'
+  snapshot_sha256: 74fecd92b4d594f69977952a6182102bbc11f77df28d3118cbed87f501b07c77
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: The fresh CHEBI:30404 MGD response is byte-identical to the response requested
+    under 25374. Exact chemical data and structure encode a metal-free neutral ligand,
+    not a whole Mo complex.
+- evidence_id: mgd-conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/60535/
+  accessed_at: '2026-10-21T13:20:09.836576Z'
+  snapshot_sha256: f92d800071bb41b6e8efb657d62297713ebe23ae791595552ea5878ba24de559
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: CHEBI:60535 is the distinct MGD(3−) state, C20H23N10O13P2S2, with two phosphate
+    anions and a sulfur deprotonation in the source graph. The source pH-7.3 wording
+    is not independently certified here; this comparison distinguishes protonation
+    from metal coordination.
+- evidence_id: mpt-class
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/35203/
+  accessed_at: '2026-10-21T13:20:09.169397Z'
+  snapshot_sha256: e057ddba994c479c597941108a7353e842ab2a84cb03b510b326c60808015a4f
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: Molybdopterins CHEBI:35203 is a variable chemical class with no fixed formula
+    or structure, under organic phosphate, phosphoric ester and pyranopterin classes.
+    This class does not itself specify a coordinated Mo atom.
+- evidence_id: dinucleotide-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/37146/
+  accessed_at: '2026-10-21T13:20:09.692375Z'
+  snapshot_sha256: e13acab29a5b962a68fca2cd8d936a38368d5b5bd3fb26fe827228bf59ee1d4b
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: Molybdopterin dinucleotide CHEBI:37146 is a chemical class under dinucleotide,
+    with no fixed formula, structure or prose definition. It classifies the organic
+    ligand, not a protein requirement.
+- evidence_id: mo-cofactor-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/21437/
+  accessed_at: '2026-10-21T13:20:09.761102Z'
+  snapshot_sha256: d9ba9ee42920d9b89ad37fa13bb5a1a3b3d03e9a7dc36d2200d7f7522d416530
+  support: supports
+  locator: 'Complete official compound response: identity, names, definition or null,
+    chemical data, default structure, outgoing relations and relevant incoming context'
+  summary: Mo-molybdopterin cofactor CHEBI:21437 explicitly means a molybdopterin
+    cofactor with a coordinated mononuclear molybdenum or molybdate species. Its broad
+    chemical class has no fixed formula or default structure and includes molybdenum
+    cofactor/Moco naming. It is a relevant comparison, not an automatic selected replacement.
+- evidence_id: mo-cofactor-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:21437
+  accessed_at: '2026-10-21T13:20:10.479821Z'
+  snapshot_sha256: d3d2660bef294d896269451602b5ad0a405dcd6a01f2639df483015d9b22591a
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Nonobsolete OLS CHEBI:21437 confirms the explicitly Mo-coordinated class
+    definition, distinct from metal-free MGD.
+- evidence_id: moco-analysis
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:8554338%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T13:22:28.428166Z'
+  snapshot_sha256: 788ba882e83ad861bbfa3b126e5db2287118b3b432f44e1110d586590cbc96cf
+  support: supports
+  locator: Verified PMID/DOI and complete indexed primary abstract; full article not
+    inspected
+  summary: PMID:8554338; DOI:10.1006/abbi.1996.0017. The complete abstract reports
+    chemical analysis of Rhodobacter sphaeroides f. sp. denitrificans DMSO reductase
+    containing two MGD ligands and one Mo atom per protein, with phosphate/guanine
+    and derivative analyses. This directly distinguishes an organic ligand from the
+    whole molybdenum cofactor.
+- evidence_id: moco-structure
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:8658134%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T13:22:28.446680Z'
+  snapshot_sha256: 96b32c7ed9f63d0365b4c804839ce6b54efc0b28f896197dca2160027bb1525e
+  support: supports
+  locator: Verified PMID/DOI and complete indexed primary abstract; full article not
+    inspected
+  summary: PMID:8658134; DOI:10.1126/science.272.5268.1615. The complete abstract
+    reports R. sphaeroides DMSO reductase with monooxo Mo coordinated by two MGD dithiolene
+    groups and Ser147, with redox-linked coordination changes. A proposed mechanism
+    and family comparison are not universal experimental proof for every Mo cofactor.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  locator: Executed 2026-10-21T13:19:03Z through 2026-10-21T13:19:05Z; exit 0
+  accessed_at: '2026-10-21T13:19:05Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/magnesium-2-chebi18420.yaml
+    data/traits/function/cofactor_requirement/chebi/manganese-2-chebi29035.yaml data/traits/function/cofactor_requirement/chebi/menaquinone-7-chebi44245.yaml
+    data/traits/function/cofactor_requirement/chebi/metal-sulfur-cluster-chebi25214.yaml
+    data/traits/function/cofactor_requirement/chebi/methanophenazine-chebi62733.yaml
+    data/traits/function/cofactor_requirement/chebi/methylcobalamin-chebi28115.yaml
+    data/traits/function/cofactor_requirement/chebi/mevalonyl-coa-chebi133868.yaml
+    data/traits/function/cofactor_requirement/chebi/mfr-chebi24024.yaml data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+    data/traits/function/cofactor_requirement/chebi/molybdopterin-cofactor-chebi25372.yaml
+  locator: Executed 2026-10-21T13:18:40Z through 2026-10-21T13:20:44Z; exit 0
+  accessed_at: '2026-10-21T13:20:44Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml
+  locator: Executed 2026-10-21T13:19:05Z through 2026-10-21T13:19:05Z; exit 0
+  accessed_at: '2026-10-21T13:19:05Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T13:20:44Z through 2026-10-21T13:20:46Z; exit 0
+  accessed_at: '2026-10-21T13:20:46Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: concern
+  summary: The YAML has a class-level requirement form, but its name and chemical
+    anchor do not denote the same chemical. Populated fields and schema success do
+    not repair this identity conflict. Optional examples, causal graphs and chemical
+    participants are not mandatory, and no protein is newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - alignment-crosswalk
+  topic: Structurally populated candidate with conflicting chemical identity
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-2
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: concern
+  summary: The target names MoCo and molybdenum_cofactor, but CHEBI:25374 is obsolete
+    and resolves to neutral metal-free MGD CHEBI:30404. The captured alignment row
+    contains that pairing. The chemical source contains no Mo, whereas the relevant
+    Mo-cofactor class explicitly coordinates Mo and the primary DMSO-reductase analyses
+    distinguish two MGD ligands from their Mo-containing complex. This is an unresolved
+    whole-cofactor versus organic-component identity collision, not merely a harmless
+    old identifier.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - mgd-canonical
+  - mo-cofactor-comparison
+  - mo-cofactor-ontology
+  - moco-analysis
+  - moco-structure
+  - owner
+  - alignment-crosswalk
+  topic: Label–chemical anchor conflict
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The primary chemical analysis and crystal-structure abstracts give positive
+    Mo-dependent enzyme context and distinguish two coordinated MGD ligands from the
+    whole cofactor. They do not make the free neutral ligand identical to that complex
+    or establish the same geometry for every Mo enzyme.
+  evidence_ids:
+  - moco-analysis
+  - moco-structure
+  - mgd-canonical
+  - mo-cofactor-comparison
+  topic: Positive Mo-cofactor enzyme chemistry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-6
+- area: representation
+  outcome: unknown
+  summary: The present record does not coherently decide whole Mo cofactor versus
+    organic MGD component. Ligand protonation and metal coordination are separate
+    dimensions. Resolve identity first, then assess activity-relative non-substrate
+    role before optional participant enrichment or protein qualification; no universal
+    lack of MGD biological function is inferred.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - mgd-conjugate
+  - mo-cofactor-comparison
+  - moco-analysis
+  topic: Whole cofactor, free ligand and charge-state scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-7
+- area: consistency
+  outcome: concern
+  summary: The broad local cofactor parent comes from the alignment emitter. It cannot
+    turn metal-free MGD into the named Mo-containing cofactor. Molybdopterin and dinucleotide
+    chemical parents explain the resolved source entity, but are not automatically
+    protein-trait subclass edges or a repair for the conflicting target.
+  evidence_ids:
+  - record
+  - owner
+  - alignment-crosswalk
+  - local-parent-1
+  - chemical
+  - mpt-class
+  - dinucleotide-parent
+  - cofactor-role
+  topic: Alignment hierarchy and component identity
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-8
+- area: grounding
+  outcome: concern
+  summary: CHEBI:25374 currently denotes the metal-free MGD chemical entity reached
+    through an obsolete identifier, whereas the local COFACTOR_REQ record denotes
+    a proposed protein functional requirement. The schema reserves xrefs for true
+    own-source equivalence. A chemical entity or chemical class is not identical to
+    a class of proteins requiring it, even when its identity and a positive cofactor
+    context are supported. The separate identity conflict must be repaired first,
+    but selecting a correct chemical identifier alone would still leave this emitter-level
+    equivalence defect.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  - alignment-crosswalk
+  - mo-cofactor-comparison
+  - moco-analysis
+  topic: Chemical entity versus protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-9
+- area: nomenclature
+  outcome: concern
+  summary: The source alias molybdenum_cofactor supplies intended-name provenance,
+    while metals is a copied category token. RELATED scope is retained in the diagnosis
+    and is not misread as exact synonymy.
+  evidence_ids:
+  - record
+  - owner
+  - alignment-crosswalk
+  - schema
+  topic: Source category in RELATED_SYNONYM
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-10
+- area: provenance
+  outcome: supported
+  summary: The captured alignment emitter and exact local crosswalk row explain the
+    label, cofactor identifier, category, synthesized requirement and RELATED_SYNONYM
+    fields. The ChEBI helper is a dependency, not proof of source-role selection.
+    This traceable emission path does not validate the conflicting chemical identity.
+    ChEBI data are CC BY 4.0; the original MicroGrowAgents table release and independent
+    terms remain unverified. Current backend resolution and OLS version 256 do not
+    identify the original seed release.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - registry
+  - licence
+  - release
+  - chemical
+  - chemical-ontology
+  topic: Source attribution, licence and maintained emitter
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-25374.label-chemical-identity-conflict
+  category: identity
+  severity: blocker
+  title: MoCo label is anchored to a metal-free MGD ligand
+  description: The target names MoCo and molybdenum_cofactor, but CHEBI:25374 is obsolete
+    and resolves to neutral metal-free MGD CHEBI:30404. The captured alignment row
+    contains that pairing. The chemical source contains no Mo, whereas the relevant
+    Mo-cofactor class explicitly coordinates Mo and the primary DMSO-reductase analyses
+    distinguish two MGD ligands from their Mo-containing complex. This is an unresolved
+    whole-cofactor versus organic-component identity collision, not merely a harmless
+    old identifier.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - mgd-canonical
+  - mo-cofactor-comparison
+  - mo-cofactor-ontology
+  - moco-analysis
+  - moco-structure
+  - owner
+  - alignment-crosswalk
+  certainty: confirmed
+  field_paths:
+  - identifier
+  - label
+  - definition
+  - definition_source
+  - xrefs
+  - synonyms
+  normalization_reason: The maintained candidate combines a named cofactor with a
+    chemically different source entity, preventing a coherent interpretation or safe
+    downstream qualification. The blocker concerns scientific identity, not an inability
+    to complete this review; the review can be completed as needs_curation.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: blocker
+- issue_key: chebi.cofactor-requirement.CHEBI-25374.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical source entity is asserted equivalent to a protein requirement
+  description: CHEBI:25374 currently denotes the metal-free MGD chemical entity reached
+    through an obsolete identifier, whereas the local COFACTOR_REQ record denotes
+    a proposed protein functional requirement. The schema reserves xrefs for true
+    own-source equivalence. A chemical entity or chemical class is not identical to
+    a class of proteins requiring it, even when its identity and a positive cofactor
+    context are supported. The separate identity conflict must be repaired first,
+    but selecting a correct chemical identifier alone would still leave this emitter-level
+    equivalence defect.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  - alignment-crosswalk
+  - mo-cofactor-comparison
+  - moco-analysis
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The entity-to-trait type mismatch is an independently repairable
+    major grounding defect. It does not require proving that the chemical lacks biological
+    activity or that optional examples must be present.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-25374.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: Alignment category is stored as a target synonym
+  description: The record presents metals as a MicroGrowAgents RELATED_SYNONYM alongside
+    molybdenum_cofactor. The exact crosswalk row and build_aligned show that metals
+    is a category value, not an alternate target name. RELATED_SYNONYM does not assert
+    exact synonymy; this is bounded naming metadata pollution, independent of the
+    separate label–identifier conflict.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: 'The category-token naming defect has limited scope and minor
+    severity. This normalization does not claim that the core identity is intact:
+    the separately reported blocker covers the conflicting chemical anchor.'
+  finding_id: F3
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Reconcile the maintained alignment name, cofactor identifier and chemical
+    anchor, then add an identity/component-versus-complex guard in load_mg_cofactors/build_aligned.
+    Adjudicate whether the intended trait concerns a broad Mo cofactor, a specific
+    coordinated complex or the free MGD ligand, and document the selected authoritative
+    identifier and activity scope. CHEBI:21437 is comparison evidence, not an automatic
+    replacement. Do not merely update 25374 to 30404 or transfer the current metal-free
+    ID into a MoCo participant. Regenerate the existing target through an audited
+    scoped route and preserve mismatch provenance.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - A curator records the intended whole-cofactor or ligand scope and an authoritative
+    consistent identifier; labels, definition, synonyms, local identifier and provenance
+    are regenerated coherently. The Mo-containing versus metal-free distinction is
+    explicit.
+  - A focused regression rejects this exact MoCo/MGD component collision and automatic
+    obsolete-ID substitution without identity adjudication. No wrong-ligand participant
+    or protein qualification is promoted.
+  - After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+  - 'For writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. Regenerate this existing aligned target through an audited
+    scoped route: alignment main selects only missing chemical IDs before force, so
+    a plain rerun or --force alone does not select an existing target. Run full just
+    validate-all before merging record changes; recapture changed inputs and save
+    a fresh structured review without overwriting this observation.'
+- action_id: A2
+  description: Update build_aligned in scripts/seed_cofactor_alignment.py so chemical
+    source entities are not emitted as protein-trait equals. Resolve the separate
+    whole-cofactor versus ligand identity blocker first. The eventual correct chemical
+    identifier must not remain an asserted protein-trait equal. Do not transfer CHEBI:25374
+    or CHEBI:30404 as a participant for a Mo-containing requirement merely because
+    the IDs are linked by obsolescence. Preserve source provenance. An optional chemical_participants
+    association with role COFACTOR is appropriate only after the chemical identity
+    and activity-relative non-substrate role are supported; otherwise retain explicit
+    uncertainty without inventing a participant. Do not move the same false equality
+    to mapped_xrefs, force optional protein examples or promote native status.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - Regenerated xrefs no longer asserts equality between a chemical source entity
+    and the protein requirement. Any identity prerequisite is resolved first, and
+    source attribution remains traceable.
+  - Any optional participant uses a curator-supported chemical identity and an activity-relative
+    role; a source role or one experiment is not converted into universal protein
+    qualification.
+  - After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+  - 'For writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. Regenerate this existing aligned target through an audited
+    scoped route: alignment main selects only missing chemical IDs before force, so
+    a plain rerun or --force alone does not select an existing target. Run full just
+    validate-all before merging record changes; recapture changed inputs and save
+    a fresh structured review without overwriting this observation.'
+  depends_on:
+  - A1
+  blockers:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261021T132753Z-moco-chebi25374
+    finding_id: F1
+- action_id: A3
+  description: Change build_aligned to preserve the category metals as provenance
+    or appropriate classification context, not as a synonym. Preserve the source alias
+    as evidence of the intended identity while the blocker is adjudicated; do not
+    use that alias to validate the currently conflicting identifier.
+  finding_ids:
+  - F3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_25374
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated synonym list no longer treats the source category as a target
+    name, while category provenance and the independently resolved identity remain
+    traceable.
+  - After the scoped repair run just validate data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/moco-chebi25374.yaml.
+  - 'For writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. Regenerate this existing aligned target through an audited
+    scoped route: alignment main selects only missing chemical IDs before force, so
+    a plain rerun or --force alone does not select an existing target. Run full just
+    validate-all before merging record changes; recapture changed inputs and save
+    a fresh structured review without overwriting this observation.'
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- This candidate was selected by the maintained MicroGrowAgents alignment emitter,
+  not demonstrated to have been selected through a current ChEBI cofactor-role edge.
+  The exact external source-table release and independent licensing were not inspected;
+  the captured local crosswalk is provenance, not upstream validation. No sibling
+  checkout was accessed. Current source resolution exposes an identity conflict, so
+  role or requirement claims cannot be transferred to the conflicting chemical anchor.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The original external alignment table release remains unknown. The two Mo-enzyme
+  papers were read as complete abstracts, not full structural data or coordinates.
+  The current canonical Mo-cofactor class is a comparison candidate; it does not alone
+  decide the intended historical trait or justify a replacement. No MGD pH population,
+  every-protein geometry or obligatory physiological requirement is newly certified.
+tags:
+- unreviewed-path-order
+- batch-026
+- chebi-cofactor
+```
