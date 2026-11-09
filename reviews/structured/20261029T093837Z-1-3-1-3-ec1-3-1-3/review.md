@@ -1,0 +1,2379 @@
+# Review of Delta(4)-3-oxosteroid 5beta-reductase
+
+- Review: 20261029T093837Z-1-3-1-3-ec1-3-1-3
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-29T08:31:19Z
+- Finished UTC: 2026-10-29T09:38:37Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Delta(4)-3-oxosteroid 5beta-reductase is a FUNCTION/FUNC_ENZYMATIC_ACTIVITY class under EC 1.3.1.-, consistent with the exact classification and whole current ancestors. Findings require follow-up: 1 major, 2 minor (0 provisional). Supported class chemistry and valid protein associations are preserved; any unsupported protein linkage is identified explicitly with source-specific evidence limits.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 1 in batch 214. Fresh main inventory has 429394 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 290 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb; c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4; 756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb; ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9; b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd; 95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1; 08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661; 8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc; 2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad; cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3; 00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e; e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c; 18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739; 8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810; 91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac; 2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325; ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6; ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8; 02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff; c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b; 8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17; 9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e; b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3; 83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd; 544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54; 162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3; 751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210; c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6; 156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509; 916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704; 403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85; 4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067; fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356; 850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4; 817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385; e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d; f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666; 2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16; ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7; c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f; aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f; e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2; 81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540; bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a; 42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230; 43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0; 354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef; aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1; 036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019; 332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575; 71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad; f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a; e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73; 17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216; 50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc; f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5; b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560; 51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64; b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a; 954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73; 0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810; 21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215; efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978; 21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762; 19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff; f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0; 6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0; f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034; 24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8; 3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104; 28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421; 5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc; a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d; 248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898; bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362; 0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09; 611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62; 0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88; ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4; 9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee; b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843; 597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66; eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826; d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59; b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39; 7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead; 8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361; 3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846; 5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822; e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0; 3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631, the union covers 2170 record paths, leaving 427224 before this batch. 214 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 7276814bdf3bed73569a202c5e2c4b404e43d8f1.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| EC:1.3.1.3 | data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml | generated | Delta(4)-3-oxosteroid 5beta-reductase |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | EC:1.3.1.3 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | EC:1.3.1.3 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not establish scientific class semantics or independently qualify every legacy protein example. |
+| Causal graph integrity | passed | True | EC:1.3.1.3 | Structural causal-graph integrity was checked on the exact target; deterministic checks do not independently verify the scientific claims. |
+| Curation history validity | passed | True | EC:1.3.1.3 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | EC:1.3.1.3 | Whole target; 3 ancestor defining fieldsets; 5 captured local defining fieldsets; exact applicable authority, ontology, reaction, chemical, protein and indexed-literature scopes; 22 edges, 3 examples and 4 selected reaction balances. Original source tuples retained; complete delivered indexed abstracts or their explicit null fields were read, without a main-article-body claim; separately declared correction-article scope and bibliography-only citations are explicitly distinguished. No whole-archive claim. |
+
+## Scientific And Domain Assessments
+
+### Source identity and protein-trait scope
+
+identity: supported. Targets: EC:1.3.1.3.
+
+Delta(4)-3-oxosteroid 5beta-reductase is a FUNCTION/FUNC_ENZYMATIC_ACTIVITY class under EC 1.3.1.-, consistent with the exact classification and whole current ancestors.
+
+### Definition and reaction scope
+
+other: supported. Targets: EC:1.3.1.3.
+
+The complete IUBMB entry supports the generic delta4-3-oxosteroid 5beta-reductase class, steroid substrate breadth and older cortisone/androstenedione names. Its accepted class is broader than any one substrate-specific alias or one sequence family. The general and mechanistic definitions serve distinct classification and net-reaction roles.
+
+### Trait nomenclature
+
+nomenclature: concern. Targets: EC:1.3.1.3.
+
+Source-supported substrate-specific names are too narrowly scoped to remain unconditional EXACT_SYNONYM labels for the whole generic steroid class. Their valid historical use and multisubstrate enzyme evidence are preserved.
+
+### Trait hierarchy and source relationships
+
+consistency: supported. Targets: EC:1.3.1.3.
+
+The exact classification rows and captured ancestor defining fields agree with the focal activity class. Actual captured local defining fields were compared separately; official mappings do not override source-specific definition differences.
+
+### Defining representation and axis/category
+
+representation: supported. Targets: EC:1.3.1.3.
+
+FUNCTION/FUNC_ENZYMATIC_ACTIVITY/CLASS represents an activity class rather than a protein instance, chemical entity or sequence family. The graph records net chemistry rather than an asserted elementary mechanism.
+
+### Source grounding and trait associations
+
+grounding: supported. Targets: EC:1.3.1.3.
+
+Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current source annotates additional steroid reactions, but one class association does not assert every steroid was tested on this preparation. Two linked Phytochemistry errata were identified bibliographically; all supplied publisher routes yielded redirects or challenges, so their effects remain unknown. Human AKR1D1 has direct recombinant activity and structural support. The 1994 COS-cell study PMID 7508385 reports no progesterone or androstenedione turnover under its conditions, whereas the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593 support those substrates in different preparations. These source-specific differences do not negate the class association. The explicit erratum to PMID 19075558 is identified, but its ACS response is a 403 challenge and its effect was not read. Mouse AKR1D1 function and catalytic annotations are transferred from human P51857, which is separately captured and directly studied. Mouse sequence/protein existence and family evidence are not a direct focal turnover experiment. The supported association retains its similarity tier and legacy-unverified qualification.
+
+### Causal mechanism evidence
+
+graph: supported. Targets: EC:1.3.1.3.
+
+All 22 stored edges were individually compared to complete current source objects. Edge 0: The exact Rhea EC-membership triple supports this particular curated reaction within the EC class. Its substrate set is not asserted for every class member; the mapping is not an elementary causal mechanism. Edge 1: Exact substrate participant CHEBI:16074 of RHEA:11524, coefficient 1, formula C27H46O and charge 0; native equation/evidence agree with RHEA:11525. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 2: Exact substrate participant CHEBI:58349 of RHEA:11524, coefficient 1, formula C21H25N7O17P3 and charge -3; native equation/evidence agree with RHEA:11525. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 3: Exact product participant CHEBI:16175 of RHEA:11524, coefficient 1, formula C27H44O and charge 0; native equation/evidence agree with RHEA:11525. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 4: Exact product participant CHEBI:57783 of RHEA:11524, coefficient 1, formula C21H26N7O17P3 and charge -4; native equation/evidence agree with RHEA:11525. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 5: Exact product participant CHEBI:15378 of RHEA:11524, coefficient 1, formula H and charge 1; native equation/evidence agree with RHEA:11525. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 6: The exact Rhea EC-membership triple supports this particular curated reaction within the EC class. Its substrate set is not asserted for every class member; the mapping is not an elementary causal mechanism. Edge 7: Exact substrate participant CHEBI:18093 of RHEA:14037, coefficient 1, formula C21H30O5 and charge 0; native equation/evidence agree with RHEA:14038. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 8: Exact substrate participant CHEBI:58349 of RHEA:14037, coefficient 1, formula C21H25N7O17P3 and charge -3; native equation/evidence agree with RHEA:14038. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 9: Exact product participant CHEBI:16962 of RHEA:14037, coefficient 1, formula C21H28O5 and charge 0; native equation/evidence agree with RHEA:14038. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 10: Exact product participant CHEBI:57783 of RHEA:14037, coefficient 1, formula C21H26N7O17P3 and charge -4; native equation/evidence agree with RHEA:14038. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 11: Exact product participant CHEBI:15378 of RHEA:14037, coefficient 1, formula H and charge 1; native equation/evidence agree with RHEA:14038. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 12: The exact Rhea EC-membership triple supports this particular curated reaction within the EC class. Its substrate set is not asserted for every class member; the mapping is not an elementary causal mechanism. Edge 13: Exact substrate participant CHEBI:2150 of RHEA:46636, coefficient 1, formula C19H30O2 and charge 0; native equation/evidence agree with RHEA:46637. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 14: Exact substrate participant CHEBI:58349 of RHEA:46636, coefficient 1, formula C21H25N7O17P3 and charge -3; native equation/evidence agree with RHEA:46637. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 15: Exact product participant CHEBI:17347 of RHEA:46636, coefficient 1, formula C19H28O2 and charge 0; native equation/evidence agree with RHEA:46637. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 16: Exact product participant CHEBI:57783 of RHEA:46636, coefficient 1, formula C21H26N7O17P3 and charge -4; native equation/evidence agree with RHEA:46637. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 17: Exact product participant CHEBI:15378 of RHEA:46636, coefficient 1, formula H and charge 1; native equation/evidence agree with RHEA:46637. The undirected master and displayed oxidation convention do not prove physiological flux or reversibility. Edge 18: Complete current GO responses and the exact EC2GO row support this named molecular-function correspondence. The current closeMatch is retained without upgrading it to OWL class identity or experimental protein evidence. Edge 19: Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current source annotates additional steroid reactions, but one class association does not assert every steroid was tested on this preparation. Two linked Phytochemistry errata were identified bibliographically; all supplied publisher routes yielded redirects or challenges, so their effects remain unknown. Edge 20: Human AKR1D1 has direct recombinant activity and structural support. The 1994 COS-cell study PMID 7508385 reports no progesterone or androstenedione turnover under its conditions, whereas the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593 support those substrates in different preparations. These source-specific differences do not negate the class association. The explicit erratum to PMID 19075558 is identified, but its ACS response is a 403 challenge and its effect was not read. Edge 21: Mouse AKR1D1 function and catalytic annotations are transferred from human P51857, which is separately captured and directly studied. Mouse sequence/protein existence and family evidence are not a direct focal turnover experiment. The supported association retains its similarity tier and legacy-unverified qualification.
+
+### Trait quantity
+
+quantity: supported. Targets: EC:1.3.1.3.
+
+RHEA:11524 has equal atom/charge totals {"C": 48, "H": 71, "N": 7, "O": 18, "P": 3, "charge": -3}. RHEA:14037 has equal atom/charge totals {"C": 42, "H": 55, "N": 7, "O": 22, "P": 3, "charge": -3}. RHEA:46636 has equal atom/charge totals {"C": 40, "H": 55, "N": 7, "O": 19, "P": 3, "charge": -3}. RHEA:54412 has equal atom/charge totals {"C": 40, "H": 54, "N": 7, "O": 18, "P": 3, "R": 1, "charge": -3}. All coefficients are one; checked chemical forms match the current ChEBI responses. Generic R groups are symbolic and preserve the same unspecified steroid substituent on both sides.
+
+### Class-level evidence and scientific scope
+
+evidence: supported. Targets: EC:1.3.1.3.
+
+Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current source annotates additional steroid reactions, but one class association does not assert every steroid was tested on this preparation. Two linked Phytochemistry errata were identified bibliographically; all supplied publisher routes yielded redirects or challenges, so their effects remain unknown. Human AKR1D1 has direct recombinant activity and structural support. The 1994 COS-cell study PMID 7508385 reports no progesterone or androstenedione turnover under its conditions, whereas the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593 support those substrates in different preparations. These source-specific differences do not negate the class association. The explicit erratum to PMID 19075558 is identified, but its ACS response is a 403 challenge and its effect was not read. Mouse AKR1D1 function and catalytic annotations are transferred from human P51857, which is separately captured and directly studied. Mouse sequence/protein existence and family evidence are not a direct focal turnover experiment. The supported association retains its similarity tier and legacy-unverified qualification.
+
+### Source attribution and release provenance
+
+provenance: concern. Targets: EC:1.3.1.3.
+
+Current history explicitly records automatic SEEDED-to-REVIEWED promotion by graph generation. The maintained owner performs that promotion without a separate curator sign-off check. All stored examples are automatically selected ENZYME DR pointers labeled CURATOR; biological support does not establish curator selection.
+
+### Maintained trait emitter
+
+ownership: supported. Targets: EC:1.3.1.3.
+
+All 36 captured input occurrences were rehashed. Own retained guidance/owner reading applies only to identical current bytes and exact scopes. Maintained seed, definition and graph routes identify the relevant ownership. No trait mutation or protein promotion is part of this review.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: EC:1.3.1.3.
+
+The whole target, 3 ancestor defining fieldsets, 5 captured local defining fieldsets, 3 examples, 22 stored edges and 4 selected reaction balances were assessed. Optional extra proteins, coordinates, mappings or elementary detail are not imposed as requirements.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: EC:1.3.1.3.
+
+Four actual selected leaf records after root native inspection; whole targets and ancestors, twelve complete local defining fieldsets and all local edge-evidence arrays, current authority/policy scopes, eleven full focal comment/reference/GO arrays, 41 indexed publication/correction/access tiers and 184 distinct complete RDF blocks for 55 target edges/eight balances. Three positively supplied errata were resolved bibliographically; final publisher responses are challenges, so correction effects remain unavailable. The exact KYE1 DOI query returned zero hits. No trait mutation, protein promotion or publication.
+
+## Findings
+
+### F1: Graph generation automatically assigns reviewed status
+
+major / open / confirmed; issue key: ec-1-3-1-3-automatic-reviewed-promotion.
+
+The target history and maintained graph writer show automatic SEEDED-to-REVIEWED promotion. Positive activity evidence does not establish the separately required curator approval basis.
+
+### F2: Automated ENZYME examples are labeled curator selections
+
+minor / open / confirmed; issue key: ec-1-3-1-3-imported-curator.
+
+The stored examples are ENZYME DR cross-references with source CURATOR. The maintained seeder automatically takes up to the first three DR entries, while CURATOR denotes curator-picked archetypes. Supported protein associations and their explicit direct/inferred evidence tiers do not establish that selection route.
+
+### F3: Substrate-specific names are marked exact synonyms of the generic class
+
+minor / open / confirmed; issue key: ec-1-3-1-3-substrate-synonym-scope.
+
+The names are source-supported, but all are typed EXACT_SYNONYM. Current GO:0047787 explicitly marks androstenedione-, cholestenone-, cortisone- and testosterone-specific activity names as narrow. These identify substrate-specific activities within the generic steroid class, even when one enzyme catalyzes several of them. The issue is synonym scope, not invented names or incorrect protein chemistry.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Reconcile the status with a separately documented curator approval basis and prevent graph generation alone from assigning REVIEWED.
+
+- Any retained REVIEWED state has a separate documented curator approval basis.
+- Graph construction alone no longer promotes status.
+- Supported identity, chemistry, protein associations and original history are preserved.
+- Required native validation passes after authorized curation.
+
+### A2
+
+Represent the actual automatic selection provenance or document individual curator selection; preserve supported associations and legacy-unverified qualification.
+
+- The recorded source reflects the actual selection route.
+- No DR pointer is silently promoted to a qualified protein occurrence.
+- Direct assay, inference and source-preparation limits remain explicit.
+
+### A3
+
+Retain the valid substrate-specific labels with narrower or appropriately qualified synonym scope instead of unconditional exact class equivalence.
+
+- Substrate-specific labels are not asserted coextensive with the generic steroid activity class.
+- Supported names, accepted identity and protein associations are retained.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml; Complete target: identity, definitions, synonyms, hierarchy, mappings, examples, every graph node/edge/evidence and history. | supports | Complete current EC:1.3.1.3 target supports its source activity identity and class structure; status, selection provenance and any declared scope defects are assessed separately. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; Exact SynonymType lines 3419–3435, MappingStatusEnum and ExampleSourceEnum lines 3473–3511 and CausalNodeTypeEnum lines 3586–3627. | supports | REVIEWED requires curator sign-off; ExampleSourceEnum records how an example was selected and defines CURATOR as curator-picked. SynonymType enumerates lexical labels. CausalNodeTypeEnum distinguishes chemical entities, residues and ligands/cofactors; a net reaction participant is not thereby a bound-site cofactor. |
+| review-guide | docs/record-reviews.md; Immutable observations, source scope and follow-up contract. | supports | The review records observations without changing the trait. |
+| checklist | .claude/skills/curate-yaml-record/references/review-checklist.md; Identity, source support, representation and completeness checks. | supports | Optional examples, mappings and mechanistic detail are not automatic requirements. |
+| seed-owner | scripts/seed_ec.py; Exact lines176–215: EC identity, alternate names and up-to-first-three DR example construction. | supports | The maintained seeder supplies source-derived identity, names and example pointers. |
+| general-owner | scripts/enrich_ec_general_defs.py; Exact lines38–65: class-name loading and EC hierarchy GENERAL definition composition. | supports | The composer supplies class-level classification context. |
+| mechanism-owner | scripts/enrich_mechanistic_defs.py; Exact lines32–57: folded source definition extraction and EC reaction MECHANISTIC definition construction. | supports | The composer restates source reaction chemistry. |
+| graph-owner | scripts/build_ec_causal_graphs.py; Exact lines85–298 and320–379: participant/reactivePart construction, mapping and generic exemplar edges, graph description and automatic SEEDED-to-REVIEWED branch. | supports | The maintained graph writer supplies generic equivalence wording and promotes status automatically when generating graphs. |
+| ancestor-1 | data/traits/function/enzymatic_activity/ec/1-3-1-ec1-3-1--.yaml; Complete selected ancestor identity, label, definition/source, axis/category/kind/status, definitions, synonyms, parents, mappings, references and xrefs where present; ancestor examples, graphs and history excluded. | supports | This subclass acts on CH-CH groups with NAD+ or NADP+ as acceptor. |
+| ancestor-2 | data/traits/function/enzymatic_activity/ec/1-3-ec1-3----.yaml; Complete selected ancestor identity, label, definition/source, axis/category/kind/status, definitions, synonyms, parents, mappings, references and xrefs where present; ancestor examples, graphs and history excluded. | supports | This class acts on CH-CH groups of donors. |
+| ancestor-3 | data/traits/function/enzymatic_activity/ec/1-ec1------.yaml; Complete selected ancestor identity, label, definition/source, axis/category/kind/status, definitions, synonyms, parents, mappings, references and xrefs where present; ancestor examples, graphs and history excluded. | supports | The broadest ancestor is the oxidoreductase class. |
+| local-reference-1 | data/traits/function/molecular_function/go/delta4-3-oxosteroid-5beta-reductase-activity-go0047787.yaml; Complete selected identifier, label, definition, definition_source, trait_axis, trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence where present, plus all local graph edge-evidence objects; other local fields, neighboring examples, nodes and history excluded. | supports | The local GO or Rhea defining fields provide the focal representation comparison. |
+| local-reference-2 | data/traits/function/enzymatic_activity/rhea/5beta-cholestan-3-one-nadp-cholest-4-en-3-one-nadph-h-rhea11524.yaml; Complete selected identifier, label, definition, definition_source, trait_axis, trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence where present, plus all local graph edge-evidence objects; other local fields, neighboring examples, nodes and history excluded. | supports | The local GO or Rhea defining fields provide the focal representation comparison. |
+| local-reference-3 | data/traits/function/enzymatic_activity/rhea/4-5beta-dihydrocortisone-nadp-cortisone-nadph-h-rhea14037.yaml; Complete selected identifier, label, definition, definition_source, trait_axis, trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence where present, plus all local graph edge-evidence objects; other local fields, neighboring examples, nodes and history excluded. | supports | The local GO or Rhea defining fields provide the focal representation comparison. |
+| local-reference-4 | data/traits/function/enzymatic_activity/rhea/5beta-dihydrotestosterone-nadp-testosterone-nadph-h-rhea46636.yaml; Complete selected identifier, label, definition, definition_source, trait_axis, trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence where present, plus all local graph edge-evidence objects; other local fields, neighboring examples, nodes and history excluded. | supports | The local GO or Rhea defining fields provide the focal representation comparison. |
+| local-reference-5 | data/traits/function/enzymatic_activity/rhea/a-3-oxo-5beta-steroid-nadp-a-3-oxo-delta-4-steroid-nadph-h-rhea54412.yaml; Complete selected identifier, label, definition, definition_source, trait_axis, trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence where present, plus all local graph edge-evidence objects; other local fields, neighboring examples, nodes and history excluded. | supports | The local GO or Rhea defining fields provide the focal representation comparison. |
+| provenance-search | /private/tmp/ptm-record-reviews-20261021/batch-214/independent-provenance-search-evidence.json; Position 1; complete identifier_slug_synonym_search and label_search commands, outputs and completion times. | context_only | The separately executed bounded searches returned no hits in their declared directories. This does not establish that historical approval is absent everywhere. |
+| enzclass | https://ftp.expasy.org/databases/enzyme/enzclass.txt; Exact current focal parent class entry when applicable, and all actual ancestral classification rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzclass.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzclass.meta.json. | supports | The selected rows establish the actual oxidoreductase hierarchy and the focal donor/acceptor classification. |
+| ec2go | https://current.geneontology.org/ontology/external2go/ec2go; All exact EC 1.3.1.3 rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-ec2go.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-ec2go.meta.json. | supports | The selected row positively associates the class with GO:0047787. |
+| rhea2ec | https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv; All exact EC 1.3.1.3 selected rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea2ec.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea2ec.meta.json. | supports | The selected reaction masters are RHEA:11524, RHEA:14037, RHEA:46636, RHEA:54412. |
+| enzyme | https://ftp.expasy.org/databases/enzyme/enzyme.dat; All non-DR fields of the exact EC 1.3.1.3 stanza, plus the complete matching focal DR rows; unrelated DR rows excluded. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme.meta.json. | supports | The complete exact ENZYME stanza supports the accepted activity name, alternate names, formal reaction and current DR pointers. It does not supply local curator sign-off or qualified protein occurrence evidence. |
+| rhea-rdf | https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz; Complete recursive all-property closures for RHEA:11524, RHEA:14037, RHEA:46636, RHEA:54412, including directional forms, participants, coefficients, formulas/charges, mappings and citations. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-rdf.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-rdf.meta.json. | supports | The current RDF provides source reaction assertions, participant identities and coefficients; citation content and direct experimental support are assessed separately. |
+| iubmb | https://iubmb.qmul.ac.uk/enzyme/EC1/3/1/3.html; Complete normalized entry text excluding script/style. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-IUBMB-1.3.1.3.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-IUBMB-1.3.1.3.meta.json. | supports | The complete IUBMB entry supports the generic delta4-3-oxosteroid 5beta-reductase class, steroid substrate breadth and older cortisone/androstenedione names. Its accepted class is broader than any one substrate-specific alias or one sequence family. |
+| go | https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:0047787; Complete delivered QuickGO JSON. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-QuickGO-0047787.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-QuickGO-0047787.meta.json. | supports | The complete current QuickGO response supports GO:0047787 and the stated reaction. The existing graph mapping is retained; class correspondence is not an accession-specific assay. |
+| go-ols | https://www.ebi.ac.uk/ols4/api/ontologies/go/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGO_0047787; Complete delivered OLS JSON, including definition, annotations, mappings and synonym scopes. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-OLS-GO-0047787.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-OLS-GO-0047787.meta.json. | supports | The complete OLS response supports GO:0047787 and explicitly marks the substrate-specific steroid activity labels as narrow synonyms; the generic class is not coextensive with each substrate-specific activity. |
+| chemical-15378 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-15378.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-15378.meta.json. | supports | CHEBI:15378 is hydron, formula H, charge 1. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-16074 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16074/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16074.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16074.meta.json. | supports | CHEBI:16074 is 5beta-cholestan-3-one, formula C27H46O, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-16175 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16175/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-160/sources/ec-first-CHEBI-16175.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16175.meta.json. | supports | CHEBI:16175 is cholest-4-en-3-one, formula C27H44O, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-1624 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/1624/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-1624.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-1624.meta.json. | supports | CHEBI:1624 is 3-oxo-5beta-steroid, formula C19H29OR, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-16962 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16962/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16962.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16962.meta.json. | supports | CHEBI:16962 is cortisone, formula C21H28O5, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-17347 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/17347/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-143/sources/ec-middle-CHEBI-17347.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-middle-CHEBI-17347.meta.json. | supports | CHEBI:17347 is testosterone, formula C19H28O2, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-18093 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/18093/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-18093.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-18093.meta.json. | supports | CHEBI:18093 is 17,21-dihydroxy-5beta-pregnane-3,11,20-trione, formula C21H30O5, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-2150 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/2150/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-2150.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-2150.meta.json. | supports | CHEBI:2150 is 5beta-dihydrotestosterone, formula C19H30O2, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-47909 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/47909/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-213/sources/ec-middle-CHEBI-47909.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-middle-CHEBI-47909.meta.json. | supports | CHEBI:47909 is 3-oxo-Delta(4) steroid, formula C19H27OR, charge 0. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-57783 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/57783/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-57783.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-57783.meta.json. | supports | CHEBI:57783 is NADPH(4-), formula C21H26N7O17P3, charge -4. Chemical identity, formula and charge describe this specific captured form. |
+| chemical-58349 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58349/; Complete selected identity/definition/all names/formula/charge/default structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-58349.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-58349.meta.json. | supports | CHEBI:58349 is NADP(3-), formula C21H25N7O17P3, charge -3. Chemical identity, formula and charge describe this specific captured form. |
+| protein-Q6PQJ9 | https://rest.uniprot.org/uniprotkb/Q6PQJ9.json; Identity/release/organism/protein description/genes/existence/length; all comment objects, material family crossreferences and complete reference array including authors and referenceComments. All GO crossreferences included; other crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q6PQJ9.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q6PQJ9.meta.json. | supports | Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current source annotates additional steroid reactions, but one class association does not assert every steroid was tested on this preparation. Two linked Phytochemistry errata were identified bibliographically; all supplied publisher routes yielded redirects or challenges, so their effects remain unknown. |
+| protein-P51857 | https://rest.uniprot.org/uniprotkb/P51857.json; Identity/release/organism/protein description/genes/existence/length; all comment objects, material family crossreferences and complete reference array including authors and referenceComments. All GO crossreferences included; other crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-P51857.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-P51857.meta.json. | supports | Human AKR1D1 has direct recombinant activity and structural support. The 1994 COS-cell study PMID 7508385 reports no progesterone or androstenedione turnover under its conditions, whereas the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593 support those substrates in different preparations. These source-specific differences do not negate the class association. The explicit erratum to PMID 19075558 is identified, but its ACS response is a 403 challenge and its effect was not read. |
+| protein-Q8VCX1 | https://rest.uniprot.org/uniprotkb/Q8VCX1.json; Identity/release/organism/protein description/genes/existence/length; all comment objects, material family crossreferences and complete reference array including authors and referenceComments. All GO crossreferences included; other crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q8VCX1.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q8VCX1.meta.json. | supports | Mouse AKR1D1 function and catalytic annotations are transferred from human P51857, which is separately captured and directly studied. Mouse sequence/protein existence and family evidence are not a direct focal turnover experiment. The supported association retains its similarity tier and legacy-unverified qualification. |
+| primary-11342103 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11342103%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-11342103.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-11342103.meta.json. | supports | The 2001 indexed study reports human AKR1D1 expression in stable HEK293 cells, efficiently transforming progesterone, androstenedione, 17alpha-hydroxyprogesterone and testosterone, less efficiently several 11beta-hydroxylated steroids. Gene organization and a pseudogene are separate context. These preparation-specific positive assays differ from the earlier COS-cell negatives. |
+| primary-13376613 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13376613%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13376613.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13376613.meta.json. | context_only | The 1956 indexed record names separation of delta4-5alpha-hydrogenases from rat liver, but has no abstract. It is bibliography-only context and is not treated as direct 5beta activity evidence from the title. |
+| primary-13416214 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13416214%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13416214.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13416214.meta.json. | context_only | The 1957 indexed record identifies enzymatic reduction of delta4-3-ketosteroids, with no delivered abstract. No species, substrate breadth or stereochemical experiment is inferred beyond its bibliography. |
+| primary-13805063 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13805063%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13805063.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13805063.meta.json. | context_only | The 1960 indexed record identifies guinea-pig adrenal delta4-hydrogenases, with no delivered abstract. It supplies bibliography rather than an inspected assay result. |
+| primary-16386278 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:16386278%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-16386278.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-16386278.meta.json. | supports | The 2006 indexed abstract reports recombinant Digitalis lanata progesterone 5beta-reductase, formation of the 5beta rather than alpha product, and kinetic measurements for progesterone, cortisol, cortexone, androstenedione and NADPH. Its two Erratum-in references were resolved to 2006 and 2008 publisher DOIs, but captured access responses provide no correction text or effect. |
+| primary-18032383 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18032383%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18032383.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18032383.meta.json. | supports | The 2008 Digitalis structure/mutagenesis abstract reports an extended SDR fold, NADP-bound structures and loss of activity after Tyr179 substitutions. Tyr179 and Lys147 occupy unusual active-site positions. The proposed 1,4-addition explanation is an interpretation supported by those experiments, not a mechanism asserted for every class member. |
+| primary-18407998 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18407998%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18407998.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18407998.meta.json. | supports | The 2008 human AKR1D1 study reports NADP and steroid structures plus inactive Y58F/E120A mutants. Cortisone/progesterone productive orientations and nonproductive testosterone binding support the stated substrate-binding interpretation, not identical behavior of plant SDR homologs. |
+| primary-18848863 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18848863%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18848863.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18848863.meta.json. | context_only | The 2009 mechanistic article discusses competing AKR1D1 double-bond-reduction models and supports the Y58/E120 positioning model through mutagenesis; it explicitly rejects support for a proposed K87 proton relay. This is mechanism-specific literature context, not an independent universal class rule. |
+| primary-19166903 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19166903%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-19166903.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-19166903.meta.json. | supports | The 2009 Arabidopsis VEP1 study reports functional recombinant steroid 5beta-reductase and tests several steroid substrates; tested delta5,6 steroids were not accepted. It is an Arabidopsis homolog experiment rather than the Digitalis accession itself. |
+| primary-20522910 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:20522910%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20522910.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20522910.meta.json. | supports | The 2010 human AKR1D1 mutant study reports altered enzyme abundance, stability and activity after E. coli or HEK293 expression, with purified P133R characterized using a bile-acid intermediate. Disease-linked mutant behavior is separated from wild-type class identity. |
+| primary-20598327 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:20598327%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20598327.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20598327.meta.json. | supports | The 2010 angiosperm study expresses eight of eleven isolated ortholog genes and finds progesterone 5beta reduction; Digitalis canariensis and Arabidopsis enzymes also reduce smaller enones. This supports a broad plant enzyme family and cautions against restricting every homolog to cardenolide biosynthesis. |
+| primary-21255593 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21255593%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-21255593.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-21255593.meta.json. | supports | The 2011 study uses homogeneous recombinant human AKR1D1 and reports reduction of all tested C18/C19/C21/C27 delta4-ketosteroids, substrate-dependent inhibition and bile-acid inhibition. Its explicit preparation and tested panel qualify the broad result; it does not erase the earlier COS-cell negative observations. |
+| primary-22357344 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22357344%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-22357344.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-22357344.meta.json. | supports | The 2012 Digitalis/Arabidopsis comparison measures progesterone and cyclohexenone kinetics and modifies Digitalis residues to improve activity or alter preference. Mutant performance and cross-species differences are not assigned automatically to the wild-type focal protein. |
+| primary-2278855 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:2278855%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-2278855.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-2278855.meta.json. | supports | The 1990 study purifies chicken liver 5beta-reductase and tests testosterone, androstenedione and progesterone with NADPH. It is direct reaction-family evidence in chicken, not a focal human, mouse or Digitalis accession assay. |
+| primary-3828348 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3828348%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-3828348.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-3828348.meta.json. | supports | The 1987 rat-liver purification study finds cortisone and androstenedione 5beta reduction inseparable through purification, denaturation and competition, supporting a shared catalytic site in that enzyme. A single protein accepting both substrates does not make each substrate-specific activity label coextensive with the generic class. |
+| primary-6736016 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:6736016%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-6736016.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-6736016.meta.json. | supports | The 1984 rat-liver study purifies a roughly 37-kDa NADPH-dependent steroid 5beta-reductase and tests multiple steroid substrates. Its spectrum does not indicate a flavin prosthetic group. This is rat enzyme evidence, not a direct mouse-accession assay. |
+| primary-7508385 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:7508385%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-7508385.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-7508385.meta.json. | supports | The 1994 human COS-expression study reports high activity on bile-acid intermediates, small cortisol/testosterone activity and no observed progesterone/androstenedione activity. Later HEK293 and homogeneous-enzyme positives are retained as preparation-specific differences, rather than rewriting these delivered negatives. |
+| primary-18624455 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18624455%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-18624455.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-18624455.meta.json. | supports | The 2008 human AKR1D1 crystallographic abstract reports an NADP/product complex and proposes a role for Glu120 in substrate positioning. It is structural/mechanistic support and its proposal is not promoted to a universal catalytic mechanism. |
+| primary-19075558 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19075558%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19075558.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19075558.meta.json. | supports | The 2009 human AKR1D1 study directly reports progesterone/androstenedione kinetics and substrate inhibition, associated with loop B and an alternative binding site. A Val309 mutant removes the inhibition in that experiment. Its explicit Biochemistry 48(5):1144 erratum resolves to DOI 10.1021/bi900016y, but the captured publisher response is a 403 challenge and the correction effect remains unavailable. |
+| primary-19515843 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19515843%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19515843.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19515843.meta.json. | supports | The 2009 human AKR1D1 study finds finasteride is a competitive micromolar inhibitor rather than the mechanism-based inactivator seen with steroid 5alpha-reductase; an NADP/finasteride structure supports its binding interpretation. |
+| primary-22437839 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22437839%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access and publication-date fields; no full primary article or unprojected API fields. Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-22437839.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-22437839.meta.json. | supports | The 2012 AKR1D1 E120H mutation abolishes 5beta-reductase activity and introduces 3beta-hydroxysteroid-dehydrogenase activity. This is a mutation-specific switch, not reassignment of wild-type class identity. |
+| notice-query-2006 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh%22%20AND%20PUB_YEAR%3A2006&amp;format=json&amp;resultType=core; Complete delivered query response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2006.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2006.meta.json. | context_only | Exact title/year query returned only the parent record, not the erratum. |
+| notice-Crossref-2006 | https://api.crossref.org/works?query.bibliographic=Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh.%20Erratum%20Phytochemistry%202006%2067%201554&amp;filter=from-pub-date:2006-01-01,until-pub-date:2006-12-31&amp;rows=5; Complete matching Crossref item 0 plus all five returned identity envelopes and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2006.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2006.meta.json. | context_only | The complete matching bibliographic object resolves the supplied Phytochemistry erratum to 10.1016/j.phytochem.2006.05.030; no scientific correction effect is supplied. |
+| notice-publisher-2006 | https://linkinghub.elsevier.com/retrieve/pii/S0031942206002998; Complete normalized visible text, all HTML metadata and links; script/style/font payload not scientific content. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2006.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2006.meta.json. | context_only | The captured HTTP 200 LinkingHub page contains only a redirect destination, not correction text. |
+| notice-query-2008 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh%22%20AND%20PUB_YEAR%3A2008&amp;format=json&amp;resultType=core; Complete delivered query response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2008.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2008.meta.json. | context_only | Exact title/year query returned zero hits; this is not proof of no erratum. |
+| notice-Crossref-2008 | https://api.crossref.org/works?query.bibliographic=Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh.%20Erratum%20Phytochemistry%202008%2069%202411&amp;filter=from-pub-date:2008-01-01,until-pub-date:2008-12-31&amp;rows=5; Complete matching Crossref item 0 plus all five returned identity envelopes and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2008.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2008.meta.json. | context_only | The complete matching bibliographic object resolves the supplied Phytochemistry erratum to 10.1016/j.phytochem.2008.05.022; no scientific correction effect is supplied. |
+| notice-publisher-2008 | https://linkinghub.elsevier.com/retrieve/pii/S0031942208002604; Complete normalized visible text, all HTML metadata and links; script/style/font payload not scientific content. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2008.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2008.meta.json. | context_only | The captured HTTP 200 LinkingHub page contains only a redirect destination, not correction text. |
+| AKR-notice-discovery | https://api.crossref.org/works?query.bibliographic=Erratum+Crystal+structures+of+human+Delta4-3-ketosteroid+5beta-reductase+%28AKR1D1%29+reveal+the+presence+of+an+alternative+binding+site+responsible+for+substrate+inhibition.+Biochemistry+2009+48+5+1144&amp;filter=from-pub-date%3A2009-01-01%2Cuntil-pub-date%3A2009-12-31&amp;rows=5; Complete matching Crossref item 0 plus four other returned identity envelopes and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-AKR-notice-Crossref-19075558-2009.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-AKR-notice-Crossref-19075558-2009.meta.json. | context_only | The explicit Biochemistry 2009;48(5):1144 erratum to PMID 19075558 resolves bibliographically to DOI 10.1021/bi900016y; the response supplies no effect text. |
+| enzyme-manual | https://ftp.expasy.org/databases/enzyme/enzuser.txt; Complete ENZYME user manual. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme-enzuser.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme-enzuser.meta.json. | supports | AN lines record names used in the literature and DR entries are protein pointers; neither specifies a direct assay tier. |
+| rhea-release | https://ftp.expasy.org/databases/rhea/rhea-release.properties; Complete two release/date lines of release.properties. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-properties.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-properties.meta.json. | supports | The retained snapshot reports Rhea release 142 dated 2026-09-02; its original capture time is retained separately. |
+| has-input | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002233; Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002233.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002233.meta.json. | supports | Has input relates the process to a participant changed during that process. |
+| has-output | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002234; Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002234.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002234.meta.json. | supports | Has output relates the process to a participant present in a changed state at its end. |
+| part-of | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FBFO_0000050; Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-BFO_0000050.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-BFO_0000050.meta.json. | supports | The property defines a core relation between a part and its whole, with class-compatibility and temporal notes. |
+| enables | https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002327; Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002327.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002327.meta.json. | supports | The property states that the bearer is capable of the process and acts to execute it; the curator note distinguishes realized enabling from capability alone. |
+| skos | https://www.w3.org/TR/skos-reference/; Complete Section 10 Mapping Properties. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-skos-reference.body; metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-skos-reference.meta.json. | supports | Close mapping permits qualified conceptual alignment and does not require identity of every displayed reaction detail. |
+| validation-1 | just validate data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml; Executed 2026-10-29T08:32:30Z through 2026-10-29T08:32:31Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml data/traits/function/enzymatic_activity/ec/1-3-1-31-ec1-3-1-31.yaml data/traits/function/enzymatic_activity/ec/1-3-1-32-ec1-3-1-32.yaml data/traits/function/enzymatic_activity/ec/1-3-1-33-ec1-3-1-33.yaml data/traits/function/enzymatic_activity/ec/1-3-1-34-ec1-3-1-34.yaml data/traits/function/enzymatic_activity/ec/1-3-1-36-ec1-3-1-36.yaml data/traits/function/enzymatic_activity/ec/1-3-1-37-ec1-3-1-37.yaml data/traits/function/enzymatic_activity/ec/1-3-1-38-ec1-3-1-38.yaml data/traits/function/enzymatic_activity/ec/1-3-1-39-ec1-3-1-39.yaml data/traits/function/enzymatic_activity/ec/1-3-1-40-ec1-3-1-40.yaml; Executed 2026-10-29T08:32:30Z through 2026-10-29T08:33:34Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 13208<br>source evidence objects: 22314<br>qualified record bindings: 22314<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml; Executed 2026-10-29T08:32:31Z through 2026-10-29T08:32:32Z; exit 0 | supports | causal-graph audit: 1 records, 1 graphs, 23 nodes, 22 edges &#124; grounded nodes 23/23, snippet-cited edges 22/22 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-29T08:33:34Z through 2026-10-29T08:33:35Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- All initial and supplemental selected indexed fields were read, including explicit null abstracts and correction/access metadata. No main-paper full text is claimed.
+- The displayed Rhea left-to-right directions are formal source conventions; net equations do not prove reversibility, physiological direction or elementary mechanisms.
+- Both Phytochemistry errata and the AKR1D1 Biochemistry erratum are bibliographically identified, but all final public notice destinations returned challenge/error responses. Their scientific effects remain unavailable; redirects and HTTP 200 discovery pages are not article evidence.
+- Human COS-cell negative substrate observations and later HEK293/purified-enzyme positives remain preparation-specific. Mouse activity is transferred from human, not directly assayed here.
+- Three explicit steroid Rhea reaction subgraphs do not exhaust all four current mapped masters; the generic fourth master is checked without inventing a required extra graph.
+- The three failed notice bodies remain immutable in the complete source-reading ledger: ec-first-notice-destination-16386278-2006, ec-first-notice-destination-16386278-2008 and ec-first-AKR-notice-publisher-19075558-2009. They document access limitations and are not judgment evidence rows.
+- Source URLs, original access times and body hashes are preserved; retained captures are not new downloads.
+- Complete bibliography arrays do not imply full article reading or acquisition of every linked paper.
+- All stored proteins remain legacy-unverified examples; source support is not a release-pinned occurrence qualification, coordinate addition or promotion.
+- Ignored-inclusive searches cover only the declared owned scope and do not prove global absence of historical evidence.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261029T093837Z-1-3-1-3-ec1-3-1-3
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of Delta(4)-3-oxosteroid 5beta-reductase
+started_at: '2026-10-29T08:31:19Z'
+finished_at: '2026-10-29T09:38:37Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: 'Delta(4)-3-oxosteroid 5beta-reductase is a FUNCTION/FUNC_ENZYMATIC_ACTIVITY
+  class under EC 1.3.1.-, consistent with the exact classification and whole current
+  ancestors. Findings require follow-up: 1 major, 2 minor (0 provisional). Supported
+  class chemistry and valid protein associations are preserved; any unsupported protein
+  linkage is identified explicitly with source-specific evidence limits.'
+source:
+  git_revision: 7276814bdf3bed73569a202c5e2c4b404e43d8f1
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/SKILL.md
+    sha256: f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762
+    role: context
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: AGENTS.md
+    sha256: 8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b
+    role: context
+  - path: data/grounding/README.md
+    sha256: 83155f235a0cefa98dfaf88ea888f4d65a1ba056587f9869b4fbbd92df1a91c3
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+    sha256: 6ebad0037cd9ece730be164fe4d78e336b238738ff325a8ae1ab42ad3e8def6a
+    role: target
+  - path: data/traits/function/enzymatic_activity/ec/1-3-1-ec1-3-1--.yaml
+    sha256: c5740ec2d2e70f6a333e9f865964c76d5a6f15151f6e16ca1af80cf63bf42cec
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/1-3-ec1-3----.yaml
+    sha256: 13e5ebc4e62aef95f4b7443dd2441172a7d529cf39a34eaa5dd938da3f4eb140
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/1-ec1------.yaml
+    sha256: f61053223eeff4b7f57499893ab0f080ddfe2b3b145b52d47b58cfcaee9267b4
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/4-5beta-dihydrocortisone-nadp-cortisone-nadph-h-rhea14037.yaml
+    sha256: f861290e7ce08177dc040d91a1149a91fff7d1c55426b3f97ca25e5bdd99a958
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/5beta-cholestan-3-one-nadp-cholest-4-en-3-one-nadph-h-rhea11524.yaml
+    sha256: eebd853268e465900cdf982ab54fb21fd75da03efcdb3386da2e52471ea18939
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/5beta-dihydrotestosterone-nadp-testosterone-nadph-h-rhea46636.yaml
+    sha256: 62eb3177bcb7a0fa486af054fa71ec459e170659a17f0be946f335b3a36a72bc
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/a-3-oxo-5beta-steroid-nadp-a-3-oxo-delta-4-steroid-nadph-h-rhea54412.yaml
+    sha256: 4c03b00fe60663047b921a6e8f90dd825faba0f04c9fa2ca32babda30cda6cef
+    role: context
+  - path: data/traits/function/molecular_function/go/delta4-3-oxosteroid-5beta-reductase-activity-go0047787.yaml
+    sha256: cf0ac28da8719f08d02e57b0483e18ce0611bd2b0e20aa920e630656e79ca5ce
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 4d19d5d7ce2ee16a91d9ca0356faeb3fbbdf2132faddac91bcc97fccc83fc0da
+    role: context
+  - path: research/uniprot-organism-protein-grounding-plan.md
+    sha256: 99f0eded9310561155198b863c6c9ea05aeb145b1d4f76109df000646d2b1a7f
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 6d1f4b70648cddb3147fe22233c1111e51ac514552444f193c4f2f03dfa6c1ea
+    role: context
+  - path: scripts/build_ec_causal_graphs.py
+    sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+    role: context
+  - path: scripts/build_rhea_causal_graphs.py
+    sha256: ac1785a1d65e4f747f3e0f6661a2c97cea8df20aefdbab9bbe12c7e236ded5f8
+    role: context
+  - path: scripts/deflib.py
+    sha256: 5dbb70e6812fef6a19b77b044235cfe31c88369078e2399efa32cfec0aafd929
+    role: context
+  - path: scripts/enrich_ec_general_defs.py
+    sha256: 45708aa03e049d2ab395e6be0d5f5b1816c9ae4707a478a9e3b321ebb675ad97
+    role: context
+  - path: scripts/enrich_mechanistic_defs.py
+    sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+    role: context
+  - path: scripts/record_io.py
+    sha256: ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf
+    role: context
+  - path: scripts/rhea_rdf.py
+    sha256: 4a7a05bfdedce442e38cd3da5d4dc83ea5c2796ea1099c6fc804321c4a4c5af9
+    role: context
+  - path: scripts/seed_ec.py
+    sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+    role: context
+  - path: scripts/yaml_emit.py
+    sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 1 in batch 214. Fresh main inventory has 429394 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 290 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb;
+    c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4;
+    756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb;
+    ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9;
+    b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd;
+    95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1;
+    08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661;
+    8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc;
+    2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad;
+    cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3;
+    00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e;
+    e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c;
+    18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739;
+    8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810;
+    91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac;
+    2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325;
+    ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6;
+    ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8;
+    02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff;
+    c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b;
+    8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17;
+    9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e;
+    b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3;
+    83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd;
+    544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54;
+    162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3;
+    751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210;
+    c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6;
+    156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509;
+    916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704;
+    403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85;
+    4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067;
+    fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356;
+    850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4;
+    817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385;
+    e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d;
+    f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666;
+    2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16;
+    ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7;
+    c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f;
+    aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f;
+    e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2;
+    81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540;
+    bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a;
+    42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230;
+    43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0;
+    354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef;
+    aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1;
+    036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019;
+    332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575;
+    71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad;
+    f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a;
+    e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73;
+    17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216;
+    50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc;
+    f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5;
+    b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560;
+    51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64;
+    b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a;
+    954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73;
+    0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810;
+    21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215;
+    efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978;
+    21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762;
+    19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff;
+    f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0;
+    6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0;
+    f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034;
+    24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8;
+    3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104;
+    28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421;
+    5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc;
+    a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d;
+    248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898;
+    bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362;
+    0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09;
+    611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62;
+    0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88;
+    ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4;
+    9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee;
+    b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843;
+    597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66;
+    eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826;
+    d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59;
+    b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39;
+    7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead;
+    8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361;
+    3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846;
+    5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822;
+    e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0;
+    3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631,
+    the union covers 2170 record paths, leaving 427224 before this batch. 214 inventories
+    were combined. Unpublished local coverage is explicitly not published or merged
+    main coverage. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - EC:1.3.1.3
+targets:
+- target_id: EC:1.3.1.3
+  path: data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  label: Delta(4)-3-oxosteroid 5beta-reductase
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - EC:1.3.1.3
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-31-ec1-3-1-31.yaml data/traits/function/enzymatic_activity/ec/1-3-1-32-ec1-3-1-32.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-33-ec1-3-1-33.yaml data/traits/function/enzymatic_activity/ec/1-3-1-34-ec1-3-1-34.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-36-ec1-3-1-36.yaml data/traits/function/enzymatic_activity/ec/1-3-1-37-ec1-3-1-37.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-38-ec1-3-1-38.yaml data/traits/function/enzymatic_activity/ec/1-3-1-39-ec1-3-1-39.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-40-ec1-3-1-40.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not establish scientific class semantics or independently qualify
+    every legacy protein example.
+  target_ids:
+  - EC:1.3.1.3
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Structural causal-graph integrity was checked on the exact target; deterministic
+    checks do not independently verify the scientific claims.
+  target_ids:
+  - EC:1.3.1.3
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - EC:1.3.1.3
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Whole target; 3 ancestor defining fieldsets; 5 captured local defining
+    fieldsets; exact applicable authority, ontology, reaction, chemical, protein and
+    indexed-literature scopes; 22 edges, 3 examples and 4 selected reaction balances.
+    Original source tuples retained; complete delivered indexed abstracts or their
+    explicit null fields were read, without a main-article-body claim; separately
+    declared correction-article scope and bibliography-only citations are explicitly
+    distinguished. No whole-archive claim.
+  target_ids:
+  - EC:1.3.1.3
+  evidence_ids:
+  - record
+  - schema
+  - review-guide
+  - checklist
+  - seed-owner
+  - general-owner
+  - mechanism-owner
+  - graph-owner
+  - ancestor-1
+  - ancestor-2
+  - ancestor-3
+  - local-reference-1
+  - local-reference-2
+  - local-reference-3
+  - local-reference-4
+  - local-reference-5
+  - provenance-search
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - chemical-15378
+  - chemical-16074
+  - chemical-16175
+  - chemical-1624
+  - chemical-16962
+  - chemical-17347
+  - chemical-18093
+  - chemical-2150
+  - chemical-47909
+  - chemical-57783
+  - chemical-58349
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - primary-11342103
+  - primary-13376613
+  - primary-13416214
+  - primary-13805063
+  - primary-16386278
+  - primary-18032383
+  - primary-18407998
+  - primary-18848863
+  - primary-19166903
+  - primary-20522910
+  - primary-20598327
+  - primary-21255593
+  - primary-22357344
+  - primary-2278855
+  - primary-3828348
+  - primary-6736016
+  - primary-7508385
+  - primary-18624455
+  - primary-19075558
+  - primary-19515843
+  - primary-22437839
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - enzyme-manual
+  - rhea-release
+  - has-input
+  - has-output
+  - part-of
+  - enables
+  - skos
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  locator: 'Complete target: identity, definitions, synonyms, hierarchy, mappings,
+    examples, every graph node/edge/evidence and history.'
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 6ebad0037cd9ece730be164fe4d78e336b238738ff325a8ae1ab42ad3e8def6a
+  support: supports
+  summary: Complete current EC:1.3.1.3 target supports its source activity identity
+    and class structure; status, selection provenance and any declared scope defects
+    are assessed separately.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: Exact SynonymType lines 3419–3435, MappingStatusEnum and ExampleSourceEnum
+    lines 3473–3511 and CausalNodeTypeEnum lines 3586–3627.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: REVIEWED requires curator sign-off; ExampleSourceEnum records how an example
+    was selected and defines CURATOR as curator-picked. SynonymType enumerates lexical
+    labels. CausalNodeTypeEnum distinguishes chemical entities, residues and ligands/cofactors;
+    a net reaction participant is not thereby a bound-site cofactor.
+- evidence_id: review-guide
+  kind: record_content
+  reference: docs/record-reviews.md
+  locator: Immutable observations, source scope and follow-up contract.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+  support: supports
+  summary: The review records observations without changing the trait.
+- evidence_id: checklist
+  kind: record_content
+  reference: .claude/skills/curate-yaml-record/references/review-checklist.md
+  locator: Identity, source support, representation and completeness checks.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+  support: supports
+  summary: Optional examples, mappings and mechanistic detail are not automatic requirements.
+- evidence_id: seed-owner
+  kind: record_content
+  reference: scripts/seed_ec.py
+  locator: 'Exact lines176–215: EC identity, alternate names and up-to-first-three
+    DR example construction.'
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+  support: supports
+  summary: The maintained seeder supplies source-derived identity, names and example
+    pointers.
+- evidence_id: general-owner
+  kind: record_content
+  reference: scripts/enrich_ec_general_defs.py
+  locator: 'Exact lines38–65: class-name loading and EC hierarchy GENERAL definition
+    composition.'
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 45708aa03e049d2ab395e6be0d5f5b1816c9ae4707a478a9e3b321ebb675ad97
+  support: supports
+  summary: The composer supplies class-level classification context.
+- evidence_id: mechanism-owner
+  kind: record_content
+  reference: scripts/enrich_mechanistic_defs.py
+  locator: 'Exact lines32–57: folded source definition extraction and EC reaction
+    MECHANISTIC definition construction.'
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+  support: supports
+  summary: The composer restates source reaction chemistry.
+- evidence_id: graph-owner
+  kind: record_content
+  reference: scripts/build_ec_causal_graphs.py
+  locator: 'Exact lines85–298 and320–379: participant/reactivePart construction, mapping
+    and generic exemplar edges, graph description and automatic SEEDED-to-REVIEWED
+    branch.'
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+  support: supports
+  summary: The maintained graph writer supplies generic equivalence wording and promotes
+    status automatically when generating graphs.
+- evidence_id: ancestor-1
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/1-3-1-ec1-3-1--.yaml
+  locator: Complete selected ancestor identity, label, definition/source, axis/category/kind/status,
+    definitions, synonyms, parents, mappings, references and xrefs where present;
+    ancestor examples, graphs and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: c5740ec2d2e70f6a333e9f865964c76d5a6f15151f6e16ca1af80cf63bf42cec
+  support: supports
+  summary: This subclass acts on CH-CH groups with NAD+ or NADP+ as acceptor.
+- evidence_id: ancestor-2
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/1-3-ec1-3----.yaml
+  locator: Complete selected ancestor identity, label, definition/source, axis/category/kind/status,
+    definitions, synonyms, parents, mappings, references and xrefs where present;
+    ancestor examples, graphs and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 13e5ebc4e62aef95f4b7443dd2441172a7d529cf39a34eaa5dd938da3f4eb140
+  support: supports
+  summary: This class acts on CH-CH groups of donors.
+- evidence_id: ancestor-3
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/ec/1-ec1------.yaml
+  locator: Complete selected ancestor identity, label, definition/source, axis/category/kind/status,
+    definitions, synonyms, parents, mappings, references and xrefs where present;
+    ancestor examples, graphs and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: f61053223eeff4b7f57499893ab0f080ddfe2b3b145b52d47b58cfcaee9267b4
+  support: supports
+  summary: The broadest ancestor is the oxidoreductase class.
+- evidence_id: local-reference-1
+  kind: record_content
+  reference: data/traits/function/molecular_function/go/delta4-3-oxosteroid-5beta-reductase-activity-go0047787.yaml
+  locator: Complete selected identifier, label, definition, definition_source, trait_axis,
+    trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence
+    where present, plus all local graph edge-evidence objects; other local fields,
+    neighboring examples, nodes and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: cf0ac28da8719f08d02e57b0483e18ce0611bd2b0e20aa920e630656e79ca5ce
+  support: supports
+  summary: The local GO or Rhea defining fields provide the focal representation comparison.
+- evidence_id: local-reference-2
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/rhea/5beta-cholestan-3-one-nadp-cholest-4-en-3-one-nadph-h-rhea11524.yaml
+  locator: Complete selected identifier, label, definition, definition_source, trait_axis,
+    trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence
+    where present, plus all local graph edge-evidence objects; other local fields,
+    neighboring examples, nodes and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: eebd853268e465900cdf982ab54fb21fd75da03efcdb3386da2e52471ea18939
+  support: supports
+  summary: The local GO or Rhea defining fields provide the focal representation comparison.
+- evidence_id: local-reference-3
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/rhea/4-5beta-dihydrocortisone-nadp-cortisone-nadph-h-rhea14037.yaml
+  locator: Complete selected identifier, label, definition, definition_source, trait_axis,
+    trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence
+    where present, plus all local graph edge-evidence objects; other local fields,
+    neighboring examples, nodes and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: f861290e7ce08177dc040d91a1149a91fff7d1c55426b3f97ca25e5bdd99a958
+  support: supports
+  summary: The local GO or Rhea defining fields provide the focal representation comparison.
+- evidence_id: local-reference-4
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/rhea/5beta-dihydrotestosterone-nadp-testosterone-nadph-h-rhea46636.yaml
+  locator: Complete selected identifier, label, definition, definition_source, trait_axis,
+    trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence
+    where present, plus all local graph edge-evidence objects; other local fields,
+    neighboring examples, nodes and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 62eb3177bcb7a0fa486af054fa71ec459e170659a17f0be946f335b3a36a72bc
+  support: supports
+  summary: The local GO or Rhea defining fields provide the focal representation comparison.
+- evidence_id: local-reference-5
+  kind: record_content
+  reference: data/traits/function/enzymatic_activity/rhea/a-3-oxo-5beta-steroid-nadp-a-3-oxo-delta-4-steroid-nadph-h-rhea54412.yaml
+  locator: Complete selected identifier, label, definition, definition_source, trait_axis,
+    trait_category, term_kind, mapping_status, definitions, mapped_xrefs and evidence
+    where present, plus all local graph edge-evidence objects; other local fields,
+    neighboring examples, nodes and history excluded.
+  accessed_at: '2026-10-29T09:38:28.157759Z'
+  snapshot_sha256: 4c03b00fe60663047b921a6e8f90dd825faba0f04c9fa2ca32babda30cda6cef
+  support: supports
+  summary: The local GO or Rhea defining fields provide the focal representation comparison.
+- evidence_id: provenance-search
+  kind: search
+  reference: /private/tmp/ptm-record-reviews-20261021/batch-214/independent-provenance-search-evidence.json
+  locator: Position 1; complete identifier_slug_synonym_search and label_search commands,
+    outputs and completion times.
+  search_scope: Ignored-inclusive and hidden-file-inclusive identifier/slug/available-synonym
+    and bounded-label searches in scripts, conf, data/mappings and history of the
+    owned checkout. Raw releases and sibling checkouts excluded; no global absence
+    claim.
+  accessed_at: '2026-10-29T08:54:14.806910Z'
+  snapshot_sha256: 20088e3fa2872f897f4258bf6a1d8496778ed1ac9ed43dc32e0782e79449c2df
+  support: context_only
+  summary: The separately executed bounded searches returned no hits in their declared
+    directories. This does not establish that historical approval is absent everywhere.
+- evidence_id: enzclass
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzclass.txt
+  locator: Exact current focal parent class entry when applicable, and all actual
+    ancestral classification rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzclass.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzclass.meta.json.
+  accessed_at: '2026-10-21T18:41:14.445710Z'
+  snapshot_sha256: a7e77777ac5260f6c86e6127211f036f202cbfb8e11bcc5e638979e538a14782
+  support: supports
+  summary: The selected rows establish the actual oxidoreductase hierarchy and the
+    focal donor/acceptor classification.
+- evidence_id: ec2go
+  kind: authority
+  reference: https://current.geneontology.org/ontology/external2go/ec2go
+  locator: All exact EC 1.3.1.3 rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-ec2go.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-ec2go.meta.json.
+  accessed_at: '2026-10-21T18:41:13.615524Z'
+  snapshot_sha256: 1df1674cdc5547d4d25e6a744f628710daa89c52f406374e9174c4f5c4fe6aed
+  support: supports
+  summary: The selected row positively associates the class with GO:0047787.
+- evidence_id: rhea2ec
+  kind: authority
+  reference: https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv
+  locator: All exact EC 1.3.1.3 selected rows. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea2ec.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea2ec.meta.json.
+  accessed_at: '2026-10-21T18:41:14.769302Z'
+  snapshot_sha256: 33a62d491eb9f56b4e9e9a5ec2e0b27f5d92432d1afcd3afe101a4b36df331f8
+  support: supports
+  summary: The selected reaction masters are RHEA:11524, RHEA:14037, RHEA:46636, RHEA:54412.
+- evidence_id: enzyme
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzyme.dat
+  locator: All non-DR fields of the exact EC 1.3.1.3 stanza, plus the complete matching
+    focal DR rows; unrelated DR rows excluded. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme.meta.json.
+  accessed_at: '2026-10-21T18:41:16.449142Z'
+  snapshot_sha256: 6e1f553fcaa15ba7018344d4181012002547cf15febeb9d3a03dacdd75963001
+  support: supports
+  summary: The complete exact ENZYME stanza supports the accepted activity name, alternate
+    names, formal reaction and current DR pointers. It does not supply local curator
+    sign-off or qualified protein occurrence evidence.
+- evidence_id: rhea-rdf
+  kind: authority
+  reference: https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz
+  locator: Complete recursive all-property closures for RHEA:11524, RHEA:14037, RHEA:46636,
+    RHEA:54412, including directional forms, participants, coefficients, formulas/charges,
+    mappings and citations. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-rdf.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-rdf.meta.json.
+  accessed_at: '2026-10-21T18:42:30.539193Z'
+  snapshot_sha256: 8ee48d7044cf3eef1001fa730dae2a491902ab25b259b519d6826796bb8acedf
+  support: supports
+  summary: The current RDF provides source reaction assertions, participant identities
+    and coefficients; citation content and direct experimental support are assessed
+    separately.
+- evidence_id: iubmb
+  kind: authority
+  reference: https://iubmb.qmul.ac.uk/enzyme/EC1/3/1/3.html
+  locator: Complete normalized entry text excluding script/style. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-IUBMB-1.3.1.3.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-IUBMB-1.3.1.3.meta.json.
+  accessed_at: '2026-10-29T08:44:34.437423Z'
+  snapshot_sha256: 32ce49e2549874eb6a8083f5df94d7c9aba21c4804335bc6aaa942e9b49fc33b
+  support: supports
+  summary: The complete IUBMB entry supports the generic delta4-3-oxosteroid 5beta-reductase
+    class, steroid substrate breadth and older cortisone/androstenedione names. Its
+    accepted class is broader than any one substrate-specific alias or one sequence
+    family.
+- evidence_id: go
+  kind: authority
+  reference: https://www.ebi.ac.uk/QuickGO/services/ontology/go/terms/GO:0047787
+  locator: Complete delivered QuickGO JSON. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-QuickGO-0047787.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-QuickGO-0047787.meta.json.
+  accessed_at: '2026-10-29T08:44:40.120343Z'
+  snapshot_sha256: 933948f6f374cad30be90e61f6afb5e210be25ea36a649bdfdeca0be89097a21
+  support: supports
+  summary: The complete current QuickGO response supports GO:0047787 and the stated
+    reaction. The existing graph mapping is retained; class correspondence is not
+    an accession-specific assay.
+- evidence_id: go-ols
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/go/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FGO_0047787
+  locator: Complete delivered OLS JSON, including definition, annotations, mappings
+    and synonym scopes. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-OLS-GO-0047787.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-OLS-GO-0047787.meta.json.
+  accessed_at: '2026-10-29T08:44:39.899495Z'
+  snapshot_sha256: 13ce87df78fb61f75cad5f3311613d84dae226f371f4224c3784fda87b4e8806
+  support: supports
+  summary: The complete OLS response supports GO:0047787 and explicitly marks the
+    substrate-specific steroid activity labels as narrow synonyms; the generic class
+    is not coextensive with each substrate-specific activity.
+- evidence_id: chemical-15378
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-15378.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-15378.meta.json.
+  accessed_at: '2026-10-21T18:41:44.104877Z'
+  snapshot_sha256: f34a9e435d0819031a1afea1406458164ca0b89f267c9bf5d2c612f9d3a10e5f
+  support: supports
+  summary: CHEBI:15378 is hydron, formula H, charge 1. Chemical identity, formula
+    and charge describe this specific captured form.
+- evidence_id: chemical-16074
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16074/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16074.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16074.meta.json.
+  accessed_at: '2026-10-29T08:44:40.520028Z'
+  snapshot_sha256: a9af6b115a076b4a23791602311d558e2f7725dece98f50981a0d99f8978b760
+  support: supports
+  summary: CHEBI:16074 is 5beta-cholestan-3-one, formula C27H46O, charge 0. Chemical
+    identity, formula and charge describe this specific captured form.
+- evidence_id: chemical-16175
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16175/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-160/sources/ec-first-CHEBI-16175.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16175.meta.json.
+  accessed_at: '2026-10-27T05:15:19.107685Z'
+  snapshot_sha256: 04d1e717262a54bf9b5ee90a4727e0c1e2225dcd255407e10914e8bdb692cb10
+  support: supports
+  summary: CHEBI:16175 is cholest-4-en-3-one, formula C27H44O, charge 0. Chemical
+    identity, formula and charge describe this specific captured form.
+- evidence_id: chemical-1624
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/1624/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-1624.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-1624.meta.json.
+  accessed_at: '2026-10-29T08:44:40.342328Z'
+  snapshot_sha256: 9629ceac09a13b59662880dce717d04d2d46f0e03e5dbd2e530ee0d533dbe926
+  support: supports
+  summary: CHEBI:1624 is 3-oxo-5beta-steroid, formula C19H29OR, charge 0. Chemical
+    identity, formula and charge describe this specific captured form.
+- evidence_id: chemical-16962
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16962/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16962.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-16962.meta.json.
+  accessed_at: '2026-10-29T08:44:40.546745Z'
+  snapshot_sha256: 0137fd6c2b3e92ce0686216f3096bb75190786e979049aa63c0c64a61148243c
+  support: supports
+  summary: CHEBI:16962 is cortisone, formula C21H28O5, charge 0. Chemical identity,
+    formula and charge describe this specific captured form.
+- evidence_id: chemical-17347
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/17347/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-143/sources/ec-middle-CHEBI-17347.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-middle-CHEBI-17347.meta.json.
+  accessed_at: '2026-10-26T17:48:40.215123Z'
+  snapshot_sha256: 808a4f943af73b7bc3d95b87b1f7c0fb82efc5e6534f073ac20667ea68a305b6
+  support: supports
+  summary: CHEBI:17347 is testosterone, formula C19H28O2, charge 0. Chemical identity,
+    formula and charge describe this specific captured form.
+- evidence_id: chemical-18093
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/18093/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-18093.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-18093.meta.json.
+  accessed_at: '2026-10-29T08:44:40.588431Z'
+  snapshot_sha256: c4e0747922b7a05596af1fe8e3ce00fc1b4c44d46db91ccc32e9cc24b1b77364
+  support: supports
+  summary: CHEBI:18093 is 17,21-dihydroxy-5beta-pregnane-3,11,20-trione, formula C21H30O5,
+    charge 0. Chemical identity, formula and charge describe this specific captured
+    form.
+- evidence_id: chemical-2150
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/2150/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-2150.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-CHEBI-2150.meta.json.
+  accessed_at: '2026-10-29T08:44:40.810393Z'
+  snapshot_sha256: a830130e9b74be3842a9e355abfedd8221d38cde7c17d99806d466fd70d1a3a1
+  support: supports
+  summary: CHEBI:2150 is 5beta-dihydrotestosterone, formula C19H30O2, charge 0. Chemical
+    identity, formula and charge describe this specific captured form.
+- evidence_id: chemical-47909
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/47909/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-213/sources/ec-middle-CHEBI-47909.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-middle-CHEBI-47909.meta.json.
+  accessed_at: '2026-10-29T07:14:31.318692Z'
+  snapshot_sha256: 71f299d17274f787df490b5807530a7f9322372e2accfa0ea5debf78fb55e602
+  support: supports
+  summary: CHEBI:47909 is 3-oxo-Delta(4) steroid, formula C19H27OR, charge 0. Chemical
+    identity, formula and charge describe this specific captured form.
+- evidence_id: chemical-57783
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/57783/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-57783.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-57783.meta.json.
+  accessed_at: '2026-10-21T18:41:45.177787Z'
+  snapshot_sha256: 7124b002e9f5f1ee1355bf49fda80cc96d3ac6fd19402c25942fa4b5ddb1a9df
+  support: supports
+  summary: CHEBI:57783 is NADPH(4-), formula C21H26N7O17P3, charge -4. Chemical identity,
+    formula and charge describe this specific captured form.
+- evidence_id: chemical-58349
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58349/
+  locator: Complete selected identity/definition/all names/formula/charge/default
+    structure/secondary IDs. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-58349.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-CHEBI-58349.meta.json.
+  accessed_at: '2026-10-21T18:41:45.423819Z'
+  snapshot_sha256: 98039e56178b1230bd55b2ae375bb093c74fe51e938c11498455f290641d7f49
+  support: supports
+  summary: CHEBI:58349 is NADP(3-), formula C21H25N7O17P3, charge -3. Chemical identity,
+    formula and charge describe this specific captured form.
+- evidence_id: protein-Q6PQJ9
+  kind: authority
+  reference: https://rest.uniprot.org/uniprotkb/Q6PQJ9.json
+  locator: Identity/release/organism/protein description/genes/existence/length; all
+    comment objects, material family crossreferences and complete reference array
+    including authors and referenceComments. All GO crossreferences included; other
+    crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured
+    body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q6PQJ9.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q6PQJ9.meta.json.
+  accessed_at: '2026-10-29T08:44:36.505589Z'
+  snapshot_sha256: bd87381eed9f70887ab4fe447856a0c0b59d8217d9f6132711dfc5bc1956a1de
+  support: supports
+  summary: Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione
+    assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current
+    source annotates additional steroid reactions, but one class association does
+    not assert every steroid was tested on this preparation. Two linked Phytochemistry
+    errata were identified bibliographically; all supplied publisher routes yielded
+    redirects or challenges, so their effects remain unknown.
+- evidence_id: protein-P51857
+  kind: authority
+  reference: https://rest.uniprot.org/uniprotkb/P51857.json
+  locator: Identity/release/organism/protein description/genes/existence/length; all
+    comment objects, material family crossreferences and complete reference array
+    including authors and referenceComments. All GO crossreferences included; other
+    crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured
+    body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-P51857.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-P51857.meta.json.
+  accessed_at: '2026-10-29T08:44:35.810279Z'
+  snapshot_sha256: 25538e596f6dfedfe0a7a2131b98a98ce1f38bf46452b54309ea60e4668707eb
+  support: supports
+  summary: Human AKR1D1 has direct recombinant activity and structural support. The
+    1994 COS-cell study PMID 7508385 reports no progesterone or androstenedione turnover
+    under its conditions, whereas the 2001 HEK293 study PMID 11342103 and homogeneous
+    recombinant study PMID 21255593 support those substrates in different preparations.
+    These source-specific differences do not negate the class association. The explicit
+    erratum to PMID 19075558 is identified, but its ACS response is a 403 challenge
+    and its effect was not read.
+- evidence_id: protein-Q8VCX1
+  kind: authority
+  reference: https://rest.uniprot.org/uniprotkb/Q8VCX1.json
+  locator: Identity/release/organism/protein description/genes/existence/length; all
+    comment objects, material family crossreferences and complete reference array
+    including authors and referenceComments. All GO crossreferences included; other
+    crossreferences, sequence residues/features and EMBL/RefSeq arrays excluded. Captured
+    body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q8VCX1.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-UniProt-Q8VCX1.meta.json.
+  accessed_at: '2026-10-29T08:44:36.685864Z'
+  snapshot_sha256: b5fda7a0539ccc6e58185e0176ededb2f5881933a3f81461d0aaca3d40632d20
+  support: supports
+  summary: Mouse AKR1D1 function and catalytic annotations are transferred from human
+    P51857, which is separately captured and directly studied. Mouse sequence/protein
+    existence and family evidence are not a direct focal turnover experiment. The
+    supported association retains its similarity tier and legacy-unverified qualification.
+- evidence_id: primary-11342103
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:11342103%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-11342103.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-11342103.meta.json.
+  accessed_at: '2026-10-29T08:44:36.250918Z'
+  snapshot_sha256: 9b16e0f2b078a3d02d08d34d4ad58bc3415f5ff00422e9769fa697b3933b494d
+  support: supports
+  summary: The 2001 indexed study reports human AKR1D1 expression in stable HEK293
+    cells, efficiently transforming progesterone, androstenedione, 17alpha-hydroxyprogesterone
+    and testosterone, less efficiently several 11beta-hydroxylated steroids. Gene
+    organization and a pseudogene are separate context. These preparation-specific
+    positive assays differ from the earlier COS-cell negatives.
+- evidence_id: primary-13376613
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13376613%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13376613.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13376613.meta.json.
+  accessed_at: '2026-10-29T08:44:36.553691Z'
+  snapshot_sha256: 6fd94512a10484bb7027831f409ef1f9f8ff960fedc8aae60d56edbfd3d14950
+  support: context_only
+  summary: The 1956 indexed record names separation of delta4-5alpha-hydrogenases
+    from rat liver, but has no abstract. It is bibliography-only context and is not
+    treated as direct 5beta activity evidence from the title.
+- evidence_id: primary-13416214
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13416214%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13416214.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13416214.meta.json.
+  accessed_at: '2026-10-29T08:44:36.435046Z'
+  snapshot_sha256: 048f4f984316e36e79cfe82ac22b0436e5ee37b75bb483d271f1a8d835f66fe0
+  support: context_only
+  summary: The 1957 indexed record identifies enzymatic reduction of delta4-3-ketosteroids,
+    with no delivered abstract. No species, substrate breadth or stereochemical experiment
+    is inferred beyond its bibliography.
+- evidence_id: primary-13805063
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:13805063%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13805063.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-13805063.meta.json.
+  accessed_at: '2026-10-29T08:44:36.872072Z'
+  snapshot_sha256: b0f75ede1948c015b06277756006372d4b63a2d602aefd0815a27e50714fc3c3
+  support: context_only
+  summary: The 1960 indexed record identifies guinea-pig adrenal delta4-hydrogenases,
+    with no delivered abstract. It supplies bibliography rather than an inspected
+    assay result.
+- evidence_id: primary-16386278
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:16386278%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-16386278.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-16386278.meta.json.
+  accessed_at: '2026-10-29T08:44:37.088886Z'
+  snapshot_sha256: c48b55ea082f6ba8c891452b359609e23194718ffe1f0a91b41542ca650878b0
+  support: supports
+  summary: The 2006 indexed abstract reports recombinant Digitalis lanata progesterone
+    5beta-reductase, formation of the 5beta rather than alpha product, and kinetic
+    measurements for progesterone, cortisol, cortexone, androstenedione and NADPH.
+    Its two Erratum-in references were resolved to 2006 and 2008 publisher DOIs, but
+    captured access responses provide no correction text or effect.
+- evidence_id: primary-18032383
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18032383%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18032383.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18032383.meta.json.
+  accessed_at: '2026-10-29T08:44:37.276481Z'
+  snapshot_sha256: 0911a77a0853386348f41a419a9058f3940efd1dc6816300ef95c764e9d74d87
+  support: supports
+  summary: The 2008 Digitalis structure/mutagenesis abstract reports an extended SDR
+    fold, NADP-bound structures and loss of activity after Tyr179 substitutions. Tyr179
+    and Lys147 occupy unusual active-site positions. The proposed 1,4-addition explanation
+    is an interpretation supported by those experiments, not a mechanism asserted
+    for every class member.
+- evidence_id: primary-18407998
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18407998%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18407998.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18407998.meta.json.
+  accessed_at: '2026-10-29T08:44:37.223956Z'
+  snapshot_sha256: ca1702840916bbc86d7b50b99dc7217c82e87845037862512f51244fa954a649
+  support: supports
+  summary: The 2008 human AKR1D1 study reports NADP and steroid structures plus inactive
+    Y58F/E120A mutants. Cortisone/progesterone productive orientations and nonproductive
+    testosterone binding support the stated substrate-binding interpretation, not
+    identical behavior of plant SDR homologs.
+- evidence_id: primary-18848863
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18848863%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18848863.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-18848863.meta.json.
+  accessed_at: '2026-10-29T08:44:37.279319Z'
+  snapshot_sha256: 317e2667689ddbfdacd2eff47661df24f76300bf0d4fd4726f50884f378866e2
+  support: context_only
+  summary: The 2009 mechanistic article discusses competing AKR1D1 double-bond-reduction
+    models and supports the Y58/E120 positioning model through mutagenesis; it explicitly
+    rejects support for a proposed K87 proton relay. This is mechanism-specific literature
+    context, not an independent universal class rule.
+- evidence_id: primary-19166903
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19166903%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-19166903.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-19166903.meta.json.
+  accessed_at: '2026-10-29T08:44:37.330225Z'
+  snapshot_sha256: 9b7c10205416a25cde0df0252f95225a321f4bab24e1a65f6571061543f2348d
+  support: supports
+  summary: The 2009 Arabidopsis VEP1 study reports functional recombinant steroid
+    5beta-reductase and tests several steroid substrates; tested delta5,6 steroids
+    were not accepted. It is an Arabidopsis homolog experiment rather than the Digitalis
+    accession itself.
+- evidence_id: primary-20522910
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:20522910%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20522910.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20522910.meta.json.
+  accessed_at: '2026-10-29T08:44:37.491721Z'
+  snapshot_sha256: 0e27d023eb922724e0be1a4e5d7da6ea366fcf42ec78efd33141e6d62ddb96fc
+  support: supports
+  summary: The 2010 human AKR1D1 mutant study reports altered enzyme abundance, stability
+    and activity after E. coli or HEK293 expression, with purified P133R characterized
+    using a bile-acid intermediate. Disease-linked mutant behavior is separated from
+    wild-type class identity.
+- evidence_id: primary-20598327
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:20598327%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20598327.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-20598327.meta.json.
+  accessed_at: '2026-10-29T08:44:37.755230Z'
+  snapshot_sha256: da2430f2cbba787bc854ee7449e1e541eb2e7c110d58df9c2ab070bef187b7ab
+  support: supports
+  summary: The 2010 angiosperm study expresses eight of eleven isolated ortholog genes
+    and finds progesterone 5beta reduction; Digitalis canariensis and Arabidopsis
+    enzymes also reduce smaller enones. This supports a broad plant enzyme family
+    and cautions against restricting every homolog to cardenolide biosynthesis.
+- evidence_id: primary-21255593
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21255593%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-21255593.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-21255593.meta.json.
+  accessed_at: '2026-10-29T08:44:37.841951Z'
+  snapshot_sha256: a4c698a621cc86a19051a35b66d036a2fba209dc9a9c5b7cdbe45af307cef73a
+  support: supports
+  summary: The 2011 study uses homogeneous recombinant human AKR1D1 and reports reduction
+    of all tested C18/C19/C21/C27 delta4-ketosteroids, substrate-dependent inhibition
+    and bile-acid inhibition. Its explicit preparation and tested panel qualify the
+    broad result; it does not erase the earlier COS-cell negative observations.
+- evidence_id: primary-22357344
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22357344%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-22357344.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-22357344.meta.json.
+  accessed_at: '2026-10-29T08:44:37.903624Z'
+  snapshot_sha256: 8f1647cee960d27ce91d179a700256f5f17a969e761c624815268a74029700be
+  support: supports
+  summary: The 2012 Digitalis/Arabidopsis comparison measures progesterone and cyclohexenone
+    kinetics and modifies Digitalis residues to improve activity or alter preference.
+    Mutant performance and cross-species differences are not assigned automatically
+    to the wild-type focal protein.
+- evidence_id: primary-2278855
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:2278855%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-2278855.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-2278855.meta.json.
+  accessed_at: '2026-10-29T08:44:37.892607Z'
+  snapshot_sha256: d96c0894685906c4f5f2f2e622954c1cd00be7690726d149eca8eb5969639a90
+  support: supports
+  summary: The 1990 study purifies chicken liver 5beta-reductase and tests testosterone,
+    androstenedione and progesterone with NADPH. It is direct reaction-family evidence
+    in chicken, not a focal human, mouse or Digitalis accession assay.
+- evidence_id: primary-3828348
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:3828348%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-3828348.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-3828348.meta.json.
+  accessed_at: '2026-10-29T08:44:38.485710Z'
+  snapshot_sha256: 383036c17ed94df1b15766cec2492b04397bb1248835b598b2bde7b53681d53f
+  support: supports
+  summary: The 1987 rat-liver purification study finds cortisone and androstenedione
+    5beta reduction inseparable through purification, denaturation and competition,
+    supporting a shared catalytic site in that enzyme. A single protein accepting
+    both substrates does not make each substrate-specific activity label coextensive
+    with the generic class.
+- evidence_id: primary-6736016
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:6736016%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-6736016.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-6736016.meta.json.
+  accessed_at: '2026-10-29T08:44:38.458223Z'
+  snapshot_sha256: 09b3b83167399c5b2bc512532d4c4bf81da6ca1761be56960ac773260029080c
+  support: supports
+  summary: The 1984 rat-liver study purifies a roughly 37-kDa NADPH-dependent steroid
+    5beta-reductase and tests multiple steroid substrates. Its spectrum does not indicate
+    a flavin prosthetic group. This is rat enzyme evidence, not a direct mouse-accession
+    assay.
+- evidence_id: primary-7508385
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:7508385%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-7508385.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-PMID-7508385.meta.json.
+  accessed_at: '2026-10-29T08:44:39.035280Z'
+  snapshot_sha256: 4353409fc9736bec84c8afe3441ef71c96987d94e18e65ce44b9be52dd506e92
+  support: supports
+  summary: The 1994 human COS-expression study reports high activity on bile-acid
+    intermediates, small cortisol/testosterone activity and no observed progesterone/androstenedione
+    activity. Later HEK293 and homogeneous-enzyme positives are retained as preparation-specific
+    differences, rather than rewriting these delivered negatives.
+- evidence_id: primary-18624455
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18624455%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-18624455.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-18624455.meta.json.
+  accessed_at: '2026-10-29T09:10:01.720319Z'
+  snapshot_sha256: 4e0ba4f8cee4271dc28dd6bcf1fcb94b462174e605080c37b8d7aabb00493437
+  support: supports
+  summary: The 2008 human AKR1D1 crystallographic abstract reports an NADP/product
+    complex and proposes a role for Glu120 in substrate positioning. It is structural/mechanistic
+    support and its proposal is not promoted to a universal catalytic mechanism.
+- evidence_id: primary-19075558
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19075558%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19075558.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19075558.meta.json.
+  accessed_at: '2026-10-29T09:10:01.720385Z'
+  snapshot_sha256: b1a3d036c4e1c25ba60e959004379ed94df539fa2949ac20deafbe278eae6c48
+  support: supports
+  summary: The 2009 human AKR1D1 study directly reports progesterone/androstenedione
+    kinetics and substrate inhibition, associated with loop B and an alternative binding
+    site. A Val309 mutant removes the inhibition in that experiment. Its explicit
+    Biochemistry 48(5):1144 erratum resolves to DOI 10.1021/bi900016y, but the captured
+    publisher response is a 403 challenge and the correction effect remains unavailable.
+- evidence_id: primary-19515843
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:19515843%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19515843.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-19515843.meta.json.
+  accessed_at: '2026-10-29T09:10:01.732159Z'
+  snapshot_sha256: 0470482f9fd57e9d91a94003cfed39e82c9370836b0ea8999946374907914d36
+  support: supports
+  summary: The 2009 human AKR1D1 study finds finasteride is a competitive micromolar
+    inhibitor rather than the mechanism-based inactivator seen with steroid 5alpha-reductase;
+    an NADP/finasteride structure supports its binding interpretation.
+- evidence_id: primary-22437839
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22437839%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete declared indexed id/pmcid/doi/title/authorString/journalInfo/year/pages/abstract/type/correction/access
+    and publication-date fields; no full primary article or unprojected API fields.
+    Complete indexed notice objects are separately declared. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-22437839.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-extra-PMID-22437839.meta.json.
+  accessed_at: '2026-10-29T09:10:01.704057Z'
+  snapshot_sha256: 742800efb22ddc2748b146ffa0557c3696bc4b5c3e35c7ac351b7fdacde9b0a8
+  support: supports
+  summary: The 2012 AKR1D1 E120H mutation abolishes 5beta-reductase activity and introduces
+    3beta-hydroxysteroid-dehydrogenase activity. This is a mutation-specific switch,
+    not reassignment of wild-type class identity.
+- evidence_id: notice-query-2006
+  kind: search
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh%22%20AND%20PUB_YEAR%3A2006&format=json&resultType=core
+  locator: Complete delivered query response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2006.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2006.meta.json.
+  accessed_at: '2026-10-29T08:57:21.225634Z'
+  snapshot_sha256: bb607b73e963815fb11f39a6d91b944c0b2c04510a5a7c9857be4fb61da5113e
+  support: context_only
+  summary: Exact title/year query returned only the parent record, not the erratum.
+  search_scope: Complete delivered query response.
+- evidence_id: notice-Crossref-2006
+  kind: search
+  reference: https://api.crossref.org/works?query.bibliographic=Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh.%20Erratum%20Phytochemistry%202006%2067%201554&filter=from-pub-date:2006-01-01,until-pub-date:2006-12-31&rows=5
+  locator: Complete matching Crossref item 0 plus all five returned identity envelopes
+    and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2006.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2006.meta.json.
+  accessed_at: '2026-10-29T09:00:49.156139Z'
+  snapshot_sha256: 7d053a37d81e5ede058ed25122ef12c271c8d657799f24f681c0bcdca62f6648
+  support: context_only
+  summary: The complete matching bibliographic object resolves the supplied Phytochemistry
+    erratum to 10.1016/j.phytochem.2006.05.030; no scientific correction effect is
+    supplied.
+  search_scope: Complete matching Crossref item 0 plus all five returned identity
+    envelopes and query envelope.
+- evidence_id: notice-publisher-2006
+  kind: database
+  reference: https://linkinghub.elsevier.com/retrieve/pii/S0031942206002998
+  locator: Complete normalized visible text, all HTML metadata and links; script/style/font
+    payload not scientific content. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2006.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2006.meta.json.
+  accessed_at: '2026-10-29T09:08:12.404310Z'
+  snapshot_sha256: f1a61f04170ca24cfbf6538ccbde2698c254170d291aac5f811ea23267f4885d
+  support: context_only
+  summary: The captured HTTP 200 LinkingHub page contains only a redirect destination,
+    not correction text.
+- evidence_id: notice-query-2008
+  kind: search
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh%22%20AND%20PUB_YEAR%3A2008&format=json&resultType=core
+  locator: Complete delivered query response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2008.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-query-16386278-2008.meta.json.
+  accessed_at: '2026-10-29T08:57:21.093596Z'
+  snapshot_sha256: e4198ba03efddce1d53b8a181a11f8861b6026b609d23c5ef1a03b1484cce7f8
+  support: context_only
+  summary: Exact title/year query returned zero hits; this is not proof of no erratum.
+  search_scope: Complete delivered query response.
+- evidence_id: notice-Crossref-2008
+  kind: search
+  reference: https://api.crossref.org/works?query.bibliographic=Molecular%20cloning%20and%20heterologous%20expression%20of%20progesterone%205beta-reductase%20from%20Digitalis%20lanata%20Ehrh.%20Erratum%20Phytochemistry%202008%2069%202411&filter=from-pub-date:2008-01-01,until-pub-date:2008-12-31&rows=5
+  locator: Complete matching Crossref item 0 plus all five returned identity envelopes
+    and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2008.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-Crossref-16386278-2008.meta.json.
+  accessed_at: '2026-10-29T09:00:49.232837Z'
+  snapshot_sha256: 4cb6192dc9a2a8b8d4bd45a980de4611a1498c7b5d19612df62dd71f80800831
+  support: context_only
+  summary: The complete matching bibliographic object resolves the supplied Phytochemistry
+    erratum to 10.1016/j.phytochem.2008.05.022; no scientific correction effect is
+    supplied.
+  search_scope: Complete matching Crossref item 0 plus all five returned identity
+    envelopes and query envelope.
+- evidence_id: notice-publisher-2008
+  kind: database
+  reference: https://linkinghub.elsevier.com/retrieve/pii/S0031942208002604
+  locator: Complete normalized visible text, all HTML metadata and links; script/style/font
+    payload not scientific content. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2008.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-notice-publisher-16386278-2008.meta.json.
+  accessed_at: '2026-10-29T09:08:12.395032Z'
+  snapshot_sha256: fdab6238202b6f24abb2d2efb345cf93285900fba962762ab8e4589bd3f7d497
+  support: context_only
+  summary: The captured HTTP 200 LinkingHub page contains only a redirect destination,
+    not correction text.
+- evidence_id: AKR-notice-discovery
+  kind: search
+  reference: https://api.crossref.org/works?query.bibliographic=Erratum+Crystal+structures+of+human+Delta4-3-ketosteroid+5beta-reductase+%28AKR1D1%29+reveal+the+presence+of+an+alternative+binding+site+responsible+for+substrate+inhibition.+Biochemistry+2009+48+5+1144&filter=from-pub-date%3A2009-01-01%2Cuntil-pub-date%3A2009-12-31&rows=5
+  locator: Complete matching Crossref item 0 plus four other returned identity envelopes
+    and query envelope. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-AKR-notice-Crossref-19075558-2009.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-first-AKR-notice-Crossref-19075558-2009.meta.json.
+  accessed_at: '2026-10-29T09:16:41.819324Z'
+  snapshot_sha256: d056ce78e8e3d9fa83474d087d1b294bd577e4093bcfcd48051d7c18ea13261d
+  support: context_only
+  summary: The explicit Biochemistry 2009;48(5):1144 erratum to PMID 19075558 resolves
+    bibliographically to DOI 10.1021/bi900016y; the response supplies no effect text.
+  search_scope: Complete matching Crossref item 0 plus four other returned identity
+    envelopes and query envelope.
+- evidence_id: enzyme-manual
+  kind: authority
+  reference: https://ftp.expasy.org/databases/enzyme/enzuser.txt
+  locator: Complete ENZYME user manual. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme-enzuser.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-enzyme-enzuser.meta.json.
+  accessed_at: '2026-10-21T18:41:48.862549Z'
+  snapshot_sha256: 60d7858058e9a18441be2aa389cbc1c65beef9e9e1b62e03369bbdc43a7a1b53
+  support: supports
+  summary: AN lines record names used in the literature and DR entries are protein
+    pointers; neither specifies a direct assay tier.
+- evidence_id: rhea-release
+  kind: authority
+  reference: https://ftp.expasy.org/databases/rhea/rhea-release.properties
+  locator: Complete two release/date lines of release.properties. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-properties.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-rhea-properties.meta.json.
+  accessed_at: '2026-10-21T18:47:36.398577Z'
+  snapshot_sha256: 4259110467406048a19f7dd797bc3f0506736d1cf2a8327f67ec7b10043fc5d4
+  support: supports
+  summary: The retained snapshot reports Rhea release 142 dated 2026-09-02; its original
+    capture time is retained separately.
+- evidence_id: has-input
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002233
+  locator: Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002233.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002233.meta.json.
+  accessed_at: '2026-10-21T18:48:12.705565Z'
+  snapshot_sha256: 517a4b1a0e53d9cfb54d4125d6ac5eb27642d4865487edcd529b96cbfdfb3471
+  support: supports
+  summary: Has input relates the process to a participant changed during that process.
+- evidence_id: has-output
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002234
+  locator: Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002234.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002234.meta.json.
+  accessed_at: '2026-10-21T18:48:12.705846Z'
+  snapshot_sha256: dce63cc8c8ebf5b8ec0f524b69eb8c3067ac8a38fb123b7aa4c87b22db632025
+  support: supports
+  summary: Has output relates the process to a participant present in a changed state
+    at its end.
+- evidence_id: part-of
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FBFO_0000050
+  locator: Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-BFO_0000050.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-BFO_0000050.meta.json.
+  accessed_at: '2026-10-21T18:48:12.705225Z'
+  snapshot_sha256: 5edb2a13402e9c1754585f30bd6cae1dd6fe956362c49f3a2e0fd738dd161098
+  support: supports
+  summary: The property defines a core relation between a part and its whole, with
+    class-compatibility and temporal notes.
+- evidence_id: enables
+  kind: authority
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/ro/properties?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FRO_0002327
+  locator: Complete delivered property response. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002327.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-property-RO_0002327.meta.json.
+  accessed_at: '2026-10-21T18:48:12.705614Z'
+  snapshot_sha256: 5bbceaccdeae417c68a2344aac455d7a7607b3f29b5295d909a16de496b49419
+  support: supports
+  summary: The property states that the bearer is capable of the process and acts
+    to execute it; the curator note distinguishes realized enabling from capability
+    alone.
+- evidence_id: skos
+  kind: authority
+  reference: https://www.w3.org/TR/skos-reference/
+  locator: Complete Section 10 Mapping Properties. Captured body /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-skos-reference.body;
+    metadata /private/tmp/ptm-record-reviews-20261021/batch-214/sources/ec-shared-skos-reference.meta.json.
+  accessed_at: '2026-10-21T18:47:36.600445Z'
+  snapshot_sha256: 3aa00cd16ee4d86d3a19b75501bb317d0b0c134e1f4029e9f3098c4dd3669e4c
+  support: supports
+  summary: Close mapping permits qualified conceptual alignment and does not require
+    identity of every displayed reaction detail.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  locator: Executed 2026-10-29T08:32:30Z through 2026-10-29T08:32:31Z; exit 0
+  accessed_at: '2026-10-29T08:32:31Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-31-ec1-3-1-31.yaml data/traits/function/enzymatic_activity/ec/1-3-1-32-ec1-3-1-32.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-33-ec1-3-1-33.yaml data/traits/function/enzymatic_activity/ec/1-3-1-34-ec1-3-1-34.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-36-ec1-3-1-36.yaml data/traits/function/enzymatic_activity/ec/1-3-1-37-ec1-3-1-37.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-38-ec1-3-1-38.yaml data/traits/function/enzymatic_activity/ec/1-3-1-39-ec1-3-1-39.yaml
+    data/traits/function/enzymatic_activity/ec/1-3-1-40-ec1-3-1-40.yaml
+  locator: Executed 2026-10-29T08:32:30Z through 2026-10-29T08:33:34Z; exit 0
+  accessed_at: '2026-10-29T08:33:34Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 13208\nsource evidence objects: 22314\n\
+    qualified record bindings: 22314\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/enzymatic_activity/ec/1-3-1-3-ec1-3-1-3.yaml
+  locator: Executed 2026-10-29T08:32:31Z through 2026-10-29T08:32:32Z; exit 0
+  accessed_at: '2026-10-29T08:32:32Z'
+  support: supports
+  summary: 'causal-graph audit: 1 records, 1 graphs, 23 nodes, 22 edges | grounded
+    nodes 23/23, snippet-cited edges 22/22 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-29T08:33:34Z through 2026-10-29T08:33:35Z; exit 0
+  accessed_at: '2026-10-29T08:33:35Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: identity
+  outcome: supported
+  summary: Delta(4)-3-oxosteroid 5beta-reductase is a FUNCTION/FUNC_ENZYMATIC_ACTIVITY
+    class under EC 1.3.1.-, consistent with the exact classification and whole current
+    ancestors.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - primary-11342103
+  - primary-13376613
+  - primary-13416214
+  - primary-13805063
+  - primary-16386278
+  - primary-18032383
+  - primary-18407998
+  - primary-18848863
+  - primary-19166903
+  - primary-20522910
+  - primary-20598327
+  - primary-21255593
+  - primary-22357344
+  - primary-2278855
+  - primary-3828348
+  - primary-6736016
+  - primary-7508385
+  - primary-18624455
+  - primary-19075558
+  - primary-19515843
+  - primary-22437839
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-1
+  topic: Source identity and protein-trait scope
+- area: other
+  outcome: supported
+  summary: The complete IUBMB entry supports the generic delta4-3-oxosteroid 5beta-reductase
+    class, steroid substrate breadth and older cortisone/androstenedione names. Its
+    accepted class is broader than any one substrate-specific alias or one sequence
+    family. The general and mechanistic definitions serve distinct classification
+    and net-reaction roles.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - primary-11342103
+  - primary-13376613
+  - primary-13416214
+  - primary-13805063
+  - primary-16386278
+  - primary-18032383
+  - primary-18407998
+  - primary-18848863
+  - primary-19166903
+  - primary-20522910
+  - primary-20598327
+  - primary-21255593
+  - primary-22357344
+  - primary-2278855
+  - primary-3828348
+  - primary-6736016
+  - primary-7508385
+  - primary-18624455
+  - primary-19075558
+  - primary-19515843
+  - primary-22437839
+  topic: Definition and reaction scope
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-2
+- area: nomenclature
+  outcome: concern
+  summary: Source-supported substrate-specific names are too narrowly scoped to remain
+    unconditional EXACT_SYNONYM labels for the whole generic steroid class. Their
+    valid historical use and multisubstrate enzyme evidence are preserved.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - schema
+  - enzyme-manual
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-3
+  topic: Trait nomenclature
+- area: consistency
+  outcome: supported
+  summary: The exact classification rows and captured ancestor defining fields agree
+    with the focal activity class. Actual captured local defining fields were compared
+    separately; official mappings do not override source-specific definition differences.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - ancestor-1
+  - ancestor-2
+  - ancestor-3
+  - skos
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-4
+  topic: Trait hierarchy and source relationships
+- area: representation
+  outcome: supported
+  summary: FUNCTION/FUNC_ENZYMATIC_ACTIVITY/CLASS represents an activity class rather
+    than a protein instance, chemical entity or sequence family. The graph records
+    net chemistry rather than an asserted elementary mechanism.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - schema
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-5
+  topic: Defining representation and axis/category
+- area: grounding
+  outcome: supported
+  summary: Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione
+    assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current
+    source annotates additional steroid reactions, but one class association does
+    not assert every steroid was tested on this preparation. Two linked Phytochemistry
+    errata were identified bibliographically; all supplied publisher routes yielded
+    redirects or challenges, so their effects remain unknown. Human AKR1D1 has direct
+    recombinant activity and structural support. The 1994 COS-cell study PMID 7508385
+    reports no progesterone or androstenedione turnover under its conditions, whereas
+    the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593
+    support those substrates in different preparations. These source-specific differences
+    do not negate the class association. The explicit erratum to PMID 19075558 is
+    identified, but its ACS response is a 403 challenge and its effect was not read.
+    Mouse AKR1D1 function and catalytic annotations are transferred from human P51857,
+    which is separately captured and directly studied. Mouse sequence/protein existence
+    and family evidence are not a direct focal turnover experiment. The supported
+    association retains its similarity tier and legacy-unverified qualification.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - skos
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-6
+  topic: Source grounding and trait associations
+- area: graph
+  outcome: supported
+  summary: 'All 22 stored edges were individually compared to complete current source
+    objects. Edge 0: The exact Rhea EC-membership triple supports this particular
+    curated reaction within the EC class. Its substrate set is not asserted for every
+    class member; the mapping is not an elementary causal mechanism. Edge 1: Exact
+    substrate participant CHEBI:16074 of RHEA:11524, coefficient 1, formula C27H46O
+    and charge 0; native equation/evidence agree with RHEA:11525. The undirected master
+    and displayed oxidation convention do not prove physiological flux or reversibility.
+    Edge 2: Exact substrate participant CHEBI:58349 of RHEA:11524, coefficient 1,
+    formula C21H25N7O17P3 and charge -3; native equation/evidence agree with RHEA:11525.
+    The undirected master and displayed oxidation convention do not prove physiological
+    flux or reversibility. Edge 3: Exact product participant CHEBI:16175 of RHEA:11524,
+    coefficient 1, formula C27H44O and charge 0; native equation/evidence agree with
+    RHEA:11525. The undirected master and displayed oxidation convention do not prove
+    physiological flux or reversibility. Edge 4: Exact product participant CHEBI:57783
+    of RHEA:11524, coefficient 1, formula C21H26N7O17P3 and charge -4; native equation/evidence
+    agree with RHEA:11525. The undirected master and displayed oxidation convention
+    do not prove physiological flux or reversibility. Edge 5: Exact product participant
+    CHEBI:15378 of RHEA:11524, coefficient 1, formula H and charge 1; native equation/evidence
+    agree with RHEA:11525. The undirected master and displayed oxidation convention
+    do not prove physiological flux or reversibility. Edge 6: The exact Rhea EC-membership
+    triple supports this particular curated reaction within the EC class. Its substrate
+    set is not asserted for every class member; the mapping is not an elementary causal
+    mechanism. Edge 7: Exact substrate participant CHEBI:18093 of RHEA:14037, coefficient
+    1, formula C21H30O5 and charge 0; native equation/evidence agree with RHEA:14038.
+    The undirected master and displayed oxidation convention do not prove physiological
+    flux or reversibility. Edge 8: Exact substrate participant CHEBI:58349 of RHEA:14037,
+    coefficient 1, formula C21H25N7O17P3 and charge -3; native equation/evidence agree
+    with RHEA:14038. The undirected master and displayed oxidation convention do not
+    prove physiological flux or reversibility. Edge 9: Exact product participant CHEBI:16962
+    of RHEA:14037, coefficient 1, formula C21H28O5 and charge 0; native equation/evidence
+    agree with RHEA:14038. The undirected master and displayed oxidation convention
+    do not prove physiological flux or reversibility. Edge 10: Exact product participant
+    CHEBI:57783 of RHEA:14037, coefficient 1, formula C21H26N7O17P3 and charge -4;
+    native equation/evidence agree with RHEA:14038. The undirected master and displayed
+    oxidation convention do not prove physiological flux or reversibility. Edge 11:
+    Exact product participant CHEBI:15378 of RHEA:14037, coefficient 1, formula H
+    and charge 1; native equation/evidence agree with RHEA:14038. The undirected master
+    and displayed oxidation convention do not prove physiological flux or reversibility.
+    Edge 12: The exact Rhea EC-membership triple supports this particular curated
+    reaction within the EC class. Its substrate set is not asserted for every class
+    member; the mapping is not an elementary causal mechanism. Edge 13: Exact substrate
+    participant CHEBI:2150 of RHEA:46636, coefficient 1, formula C19H30O2 and charge
+    0; native equation/evidence agree with RHEA:46637. The undirected master and displayed
+    oxidation convention do not prove physiological flux or reversibility. Edge 14:
+    Exact substrate participant CHEBI:58349 of RHEA:46636, coefficient 1, formula
+    C21H25N7O17P3 and charge -3; native equation/evidence agree with RHEA:46637. The
+    undirected master and displayed oxidation convention do not prove physiological
+    flux or reversibility. Edge 15: Exact product participant CHEBI:17347 of RHEA:46636,
+    coefficient 1, formula C19H28O2 and charge 0; native equation/evidence agree with
+    RHEA:46637. The undirected master and displayed oxidation convention do not prove
+    physiological flux or reversibility. Edge 16: Exact product participant CHEBI:57783
+    of RHEA:46636, coefficient 1, formula C21H26N7O17P3 and charge -4; native equation/evidence
+    agree with RHEA:46637. The undirected master and displayed oxidation convention
+    do not prove physiological flux or reversibility. Edge 17: Exact product participant
+    CHEBI:15378 of RHEA:46636, coefficient 1, formula H and charge 1; native equation/evidence
+    agree with RHEA:46637. The undirected master and displayed oxidation convention
+    do not prove physiological flux or reversibility. Edge 18: Complete current GO
+    responses and the exact EC2GO row support this named molecular-function correspondence.
+    The current closeMatch is retained without upgrading it to OWL class identity
+    or experimental protein evidence. Edge 19: Digitalis lanata 5beta-POR is directly
+    supported by recombinant progesterone-to-5beta-pregnane-3,20-dione assays in PMID
+    16386278 and structure/mutagenesis in PMID 18032383. The current source annotates
+    additional steroid reactions, but one class association does not assert every
+    steroid was tested on this preparation. Two linked Phytochemistry errata were
+    identified bibliographically; all supplied publisher routes yielded redirects
+    or challenges, so their effects remain unknown. Edge 20: Human AKR1D1 has direct
+    recombinant activity and structural support. The 1994 COS-cell study PMID 7508385
+    reports no progesterone or androstenedione turnover under its conditions, whereas
+    the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593
+    support those substrates in different preparations. These source-specific differences
+    do not negate the class association. The explicit erratum to PMID 19075558 is
+    identified, but its ACS response is a 403 challenge and its effect was not read.
+    Edge 21: Mouse AKR1D1 function and catalytic annotations are transferred from
+    human P51857, which is separately captured and directly studied. Mouse sequence/protein
+    existence and family evidence are not a direct focal turnover experiment. The
+    supported association retains its similarity tier and legacy-unverified qualification.'
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - has-input
+  - has-output
+  - enables
+  - part-of
+  - skos
+  - schema
+  - graph-owner
+  - chemical-15378
+  - chemical-16074
+  - chemical-16175
+  - chemical-1624
+  - chemical-16962
+  - chemical-17347
+  - chemical-18093
+  - chemical-2150
+  - chemical-47909
+  - chemical-57783
+  - chemical-58349
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-7
+  topic: Causal mechanism evidence
+- area: quantity
+  outcome: supported
+  summary: 'RHEA:11524 has equal atom/charge totals {"C": 48, "H": 71, "N": 7, "O":
+    18, "P": 3, "charge": -3}. RHEA:14037 has equal atom/charge totals {"C": 42, "H":
+    55, "N": 7, "O": 22, "P": 3, "charge": -3}. RHEA:46636 has equal atom/charge totals
+    {"C": 40, "H": 55, "N": 7, "O": 19, "P": 3, "charge": -3}. RHEA:54412 has equal
+    atom/charge totals {"C": 40, "H": 54, "N": 7, "O": 18, "P": 3, "R": 1, "charge":
+    -3}. All coefficients are one; checked chemical forms match the current ChEBI
+    responses. Generic R groups are symbolic and preserve the same unspecified steroid
+    substituent on both sides.'
+  evidence_ids:
+  - record
+  - rhea-rdf
+  - chemical-15378
+  - chemical-16074
+  - chemical-16175
+  - chemical-1624
+  - chemical-16962
+  - chemical-17347
+  - chemical-18093
+  - chemical-2150
+  - chemical-47909
+  - chemical-57783
+  - chemical-58349
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-8
+  topic: Trait quantity
+- area: evidence
+  outcome: supported
+  summary: Digitalis lanata 5beta-POR is directly supported by recombinant progesterone-to-5beta-pregnane-3,20-dione
+    assays in PMID 16386278 and structure/mutagenesis in PMID 18032383. The current
+    source annotates additional steroid reactions, but one class association does
+    not assert every steroid was tested on this preparation. Two linked Phytochemistry
+    errata were identified bibliographically; all supplied publisher routes yielded
+    redirects or challenges, so their effects remain unknown. Human AKR1D1 has direct
+    recombinant activity and structural support. The 1994 COS-cell study PMID 7508385
+    reports no progesterone or androstenedione turnover under its conditions, whereas
+    the 2001 HEK293 study PMID 11342103 and homogeneous recombinant study PMID 21255593
+    support those substrates in different preparations. These source-specific differences
+    do not negate the class association. The explicit erratum to PMID 19075558 is
+    identified, but its ACS response is a 403 challenge and its effect was not read.
+    Mouse AKR1D1 function and catalytic annotations are transferred from human P51857,
+    which is separately captured and directly studied. Mouse sequence/protein existence
+    and family evidence are not a direct focal turnover experiment. The supported
+    association retains its similarity tier and legacy-unverified qualification.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - primary-11342103
+  - primary-13376613
+  - primary-13416214
+  - primary-13805063
+  - primary-16386278
+  - primary-18032383
+  - primary-18407998
+  - primary-18848863
+  - primary-19166903
+  - primary-20522910
+  - primary-20598327
+  - primary-21255593
+  - primary-22357344
+  - primary-2278855
+  - primary-3828348
+  - primary-6736016
+  - primary-7508385
+  - primary-18624455
+  - primary-19075558
+  - primary-19515843
+  - primary-22437839
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-9
+  topic: Class-level evidence and scientific scope
+- area: provenance
+  outcome: concern
+  summary: Current history explicitly records automatic SEEDED-to-REVIEWED promotion
+    by graph generation. The maintained owner performs that promotion without a separate
+    curator sign-off check. All stored examples are automatically selected ENZYME
+    DR pointers labeled CURATOR; biological support does not establish curator selection.
+  evidence_ids:
+  - record
+  - schema
+  - provenance-search
+  - review-guide
+  - graph-owner
+  - seed-owner
+  - enzyme
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-10
+  topic: Source attribution and release provenance
+- area: ownership
+  outcome: supported
+  summary: All 36 captured input occurrences were rehashed. Own retained guidance/owner
+    reading applies only to identical current bytes and exact scopes. Maintained seed,
+    definition and graph routes identify the relevant ownership. No trait mutation
+    or protein promotion is part of this review.
+  evidence_ids:
+  - record
+  - seed-owner
+  - general-owner
+  - mechanism-owner
+  - graph-owner
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-11
+  topic: Maintained trait emitter
+- area: completeness
+  outcome: supported
+  summary: The whole target, 3 ancestor defining fieldsets, 5 captured local defining
+    fieldsets, 3 examples, 22 stored edges and 4 selected reaction balances were assessed.
+    Optional extra proteins, coordinates, mappings or elementary detail are not imposed
+    as requirements.
+  evidence_ids:
+  - record
+  - enzclass
+  - ec2go
+  - rhea2ec
+  - enzyme
+  - rhea-rdf
+  - iubmb
+  - go
+  - go-ols
+  - notice-query-2006
+  - notice-Crossref-2006
+  - notice-publisher-2006
+  - notice-query-2008
+  - notice-Crossref-2008
+  - notice-publisher-2008
+  - AKR-notice-discovery
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  - checklist
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-12
+  topic: Protein trait class completeness
+- area: scope
+  outcome: supported
+  summary: Four actual selected leaf records after root native inspection; whole targets
+    and ancestors, twelve complete local defining fieldsets and all local edge-evidence
+    arrays, current authority/policy scopes, eleven full focal comment/reference/GO
+    arrays, 41 indexed publication/correction/access tiers and 184 distinct complete
+    RDF blocks for 55 target edges/eight balances. Three positively supplied errata
+    were resolved bibliographically; final publisher responses are challenges, so
+    correction effects remain unavailable. The exact KYE1 DOI query returned zero
+    hits. No trait mutation, protein promotion or publication.
+  evidence_ids:
+  - record
+  - review-guide
+  target_ids:
+  - EC:1.3.1.3
+  assessment_id: assessment-13
+  topic: Requirement scope and scientific status
+findings:
+- issue_key: ec-1-3-1-3-automatic-reviewed-promotion
+  category: provenance
+  severity: major
+  certainty: confirmed
+  title: Graph generation automatically assigns reviewed status
+  description: The target history and maintained graph writer show automatic SEEDED-to-REVIEWED
+    promotion. Positive activity evidence does not establish the separately required
+    curator approval basis.
+  field_paths:
+  - mapping_status
+  - curation_history
+  evidence_ids:
+  - record
+  - schema
+  - graph-owner
+  - provenance-search
+  - review-guide
+  rule_id: MappingStatusEnum.REVIEWED
+  finding_id: F1
+  status: open
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  native_severity: major
+  normalization_reason: The finding materially changes the meaning, scope, grounding
+    or representation of a defining assertion.
+- issue_key: ec-1-3-1-3-imported-curator
+  category: provenance
+  severity: minor
+  certainty: confirmed
+  title: Automated ENZYME examples are labeled curator selections
+  description: The stored examples are ENZYME DR cross-references with source CURATOR.
+    The maintained seeder automatically takes up to the first three DR entries, while
+    CURATOR denotes curator-picked archetypes. Supported protein associations and
+    their explicit direct/inferred evidence tiers do not establish that selection
+    route.
+  field_paths:
+  - canonical_examples
+  evidence_ids:
+  - record
+  - schema
+  - seed-owner
+  - enzyme
+  - enzyme-manual
+  - protein-Q6PQJ9
+  - protein-P51857
+  - protein-Q8VCX1
+  rule_id: ExampleSourceEnum.CURATOR
+  finding_id: F2
+  status: open
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  native_severity: minor
+  normalization_reason: The core identity is intact; bounded wording, completeness
+    or interpretation needs follow-up.
+- issue_key: ec-1-3-1-3-substrate-synonym-scope
+  category: nomenclature
+  severity: minor
+  certainty: confirmed
+  title: Substrate-specific names are marked exact synonyms of the generic class
+  description: The names are source-supported, but all are typed EXACT_SYNONYM. Current
+    GO:0047787 explicitly marks androstenedione-, cholestenone-, cortisone- and testosterone-specific
+    activity names as narrow. These identify substrate-specific activities within
+    the generic steroid class, even when one enzyme catalyzes several of them. The
+    issue is synonym scope, not invented names or incorrect protein chemistry.
+  field_paths:
+  - synonyms[2]
+  - synonyms[3]
+  - synonyms[4]
+  - synonyms[5]
+  - synonyms[6]
+  - synonyms[11]
+  evidence_ids:
+  - record
+  - schema
+  - go-ols
+  - go
+  - iubmb
+  - enzyme
+  - primary-3828348
+  finding_id: F3
+  status: open
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+  normalization_reason: The core identity is intact; bounded wording, completeness
+    or interpretation needs follow-up.
+actions:
+- action_id: A1
+  description: Reconcile the status with a separately documented curator approval
+    basis and prevent graph generation alone from assigning REVIEWED.
+  finding_ids:
+  - F1
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  acceptance_checks:
+  - Any retained REVIEWED state has a separate documented curator approval basis.
+  - Graph construction alone no longer promotes status.
+  - Supported identity, chemistry, protein associations and original history are preserved.
+  - Required native validation passes after authorized curation.
+- action_id: A2
+  description: Represent the actual automatic selection provenance or document individual
+    curator selection; preserve supported associations and legacy-unverified qualification.
+  finding_ids:
+  - F2
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  acceptance_checks:
+  - The recorded source reflects the actual selection route.
+  - No DR pointer is silently promoted to a qualified protein occurrence.
+  - Direct assay, inference and source-preparation limits remain explicit.
+- action_id: A3
+  description: Retain the valid substrate-specific labels with narrower or appropriately
+    qualified synonym scope instead of unconditional exact class equivalence.
+  finding_ids:
+  - F3
+  target_ids:
+  - EC:1.3.1.3
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  acceptance_checks:
+  - Substrate-specific labels are not asserted coextensive with the generic steroid
+    activity class.
+  - Supported names, accepted identity and protein associations are retained.
+limitations:
+- All initial and supplemental selected indexed fields were read, including explicit
+  null abstracts and correction/access metadata. No main-paper full text is claimed.
+- The displayed Rhea left-to-right directions are formal source conventions; net equations
+  do not prove reversibility, physiological direction or elementary mechanisms.
+- Both Phytochemistry errata and the AKR1D1 Biochemistry erratum are bibliographically
+  identified, but all final public notice destinations returned challenge/error responses.
+  Their scientific effects remain unavailable; redirects and HTTP 200 discovery pages
+  are not article evidence.
+- Human COS-cell negative substrate observations and later HEK293/purified-enzyme
+  positives remain preparation-specific. Mouse activity is transferred from human,
+  not directly assayed here.
+- Three explicit steroid Rhea reaction subgraphs do not exhaust all four current mapped
+  masters; the generic fourth master is checked without inventing a required extra
+  graph.
+- 'The three failed notice bodies remain immutable in the complete source-reading
+  ledger: ec-first-notice-destination-16386278-2006, ec-first-notice-destination-16386278-2008
+  and ec-first-AKR-notice-publisher-19075558-2009. They document access limitations
+  and are not judgment evidence rows.'
+- Source URLs, original access times and body hashes are preserved; retained captures
+  are not new downloads.
+- Complete bibliography arrays do not imply full article reading or acquisition of
+  every linked paper.
+- All stored proteins remain legacy-unverified examples; source support is not a release-pinned
+  occurrence qualification, coordinate addition or promotion.
+- Ignored-inclusive searches cover only the declared owned scope and do not prove
+  global absence of historical evidence.
+tags:
+- unreviewed-path-order
+- batch-214
+- ec
+```
