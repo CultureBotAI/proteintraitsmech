@@ -1,0 +1,872 @@
+# Review of requires rhizobactin 1021
+
+- Review: 20261021T154824Z-rhizobactin-1021-chebi74252
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T15:36:04Z
+- Finished UTC: 2026-10-21T15:48:24Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+Rhizobactin 1021 identity and siderophore transport context are supported. One confirmed major concerns chemical-to-protein equivalence; one minor covers two copied spelling errors. Exact non-substrate protein dependence remains unqualified.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 1 in batch 033. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333, the union covers 318 record paths, leaving 429041 before this batch. 33 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml | generated | requires rhizobactin 1021 |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_74252 | Exact backend/OLS, citrate and hydroxy-acid context, current siderophore/cofactor ancestry and complete primary synthesis/transport abstracts were inspected; formula, charge, E geometry and unspecified absolute stereochemistry are preserved. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Exact chemical identity and state
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The local requires-label is anchored to rhizobactin 1021, not generic rhizobactin or its ferric complex. CHEBI:74252 gives C24H42N4O9, net charge 0, the asymmetric citrate-derived bis-hydroxamate connectivity and an E decenoyl chain. The graph does not specify an absolute configuration at the central asymmetric citrate carbon; none is inferred.
+
+### Chemical entity versus protein-requirement equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The chemical accession resolves, but it denotes a chemical entity rather than the class of proteins with a requirement for that entity. The emitted xrefs equality conflicts with the schema meaning of source-direct equivalence. An optional typed participant can be used only after an activity-relative role is justified.
+
+### Maintained owner and chemical-source provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The actual owner is scripts/seed_chebi_cofactor.py. It selects role-bearing chemicals, constructs the requirement prefix, appends source chemical prose and emits the chemical accession as an equivalent xref. Current chemical identity and licence are verified; the original seed release and independent protein qualification remain unestablished.
+
+### Chemical-role hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The local siderophore parent resolves and current ChEBI directly assigns that role to the chemical; siderophore has a verified cofactor ancestor. This documents the source hierarchy, not automatic equivalence between chemical-role and protein-requirement classes.
+
+### Siderophore synthesis and transport context
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+Source-linked experiments positively support synthesis, iron-chelation context and receptor/transport function in the tested systems. They do not independently qualify a protein as requiring the exact free neutral form as a non-substrate cofactor.
+
+### Activity-relative protein requirement
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_74252.
+
+The record has no qualified protein or specified activity. Optional examples are not required; the source siderophore role and transport results alone leave the exact non-substrate requirement undecided.
+
+## Findings
+
+### F1: Chemical entity is asserted as an equivalent protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-74252.chemical-entity-equivalence.
+
+The local class denotes a functional requirement for rhizobactin 1021, while CHEBI:74252 denotes the chemical itself. The source resolves and may assert a cofactor-related role, but that does not make these two classes equivalent. This is a semantic emitter defect, distinct from whether a particular activity can use the compound.
+
+### F2: Two copied spelling errors obscure otherwise coherent source prose
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-74252.source-spelling.
+
+Both the local definition and current ChEBI contain hydoxy instead of hydroxy and fromj instead of from. The intended hydroxy-acid chemistry and producer attribution remain clear from the structure, parent and primary synthesis context.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Curate the maintained ChEBI emitter and this exact output so CHEBI:74252 is not asserted as an equivalent protein-trait xref. Preserve its source identity and bounded role evidence. A chemical_participants entry is optional; if added, adjudicate the role required by that representation against a specific activity and preserve the exact chemical state. If a suitable activity-relative role cannot be supported, retain provenance and uncertainty without inventing a required role. Do not substitute a conjugate or derivative automatically. Keep ferric complexes distinct from free ligands. Use an audited scoped regeneration path: the current ChEBI main loop addresses the selected cohort, skips existing outputs without force, and writes only with apply.
+
+- The chemical is no longer represented as a true equivalent of the protein class; any optional participant has a curator-supported role, exact state and claim-specific evidence. Preserve class-level scope and SEEDED status until separately qualified. Run just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml, and just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml after scoped curation. For maintained writer changes, run focused tests plus just audit-writers, just lint and just test. Run full just validate-all before merge. Capture the changed inputs and create a fresh review; do not rewrite this immutable observation.
+
+### A2
+
+Correct the two words through an attributed curated source override or maintained emitter treatment, keeping the exact chemical identity and source attribution visible.
+
+- The readable definition uses hydroxy and from, with no unreviewed chemistry or taxonomic-scope change. Run just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml, and just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml after scoped curation. For maintained writer changes, run focused tests plus just audit-writers, just lint and just test. Run full just validate-all before merge. Capture the changed inputs and create a fresh review; do not rewrite this immutable observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; About ChEBI and Licensing paragraphs; verified reused response with original access UTC | supports | The inspected official ChEBI about page describes chemical entities and explicitly licenses its data under CC BY 4.0. This supports chemical-source attribution, not the synthesized protein-requirement assertion. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; ontologyId, version, loaded and config.versionIri; original access UTC retained | supports | The captured OLS ontology metadata identifies ChEBI version 256, loaded on 2026-10-16. It is an OLS release comparison, not a verified release pin for the original seed or the live backend. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/74252/; Exact accession, complete definition/names, chemical_data, default_structure, compound_origins, citations and outgoing ontology relations; broad incoming lists are not used to infer target membership | supports | CHEBI:74252 resolves to rhizobactin 1021, C24H42N4O9, charge 0. Its definition, IUPAC name and SMILES describe one acetyl and one (2E)-dec-2-enoyl hydroxamate on a citrate-derived framework with a remaining carboxylic acid. The source retains hydoxy and fromj. It directly asserts siderophore, functional-parent citric acid, and hydroxamic-acid/tertiary-alcohol/hydroxy-monocarboxylic-acid structural parents; compound_origins is empty and five PubMed citations are listed. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:74252; Exact term label, description, obo_id, is_obsolete, replacement and chemical annotations | supports | OLS resolves the exact CHEBI:74252 accession as a non-obsolete chemical term, with the same chemical description and stated charge/structure annotations. It does not identify a protein-requirement class. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition, null chemical_data/default_structure and outgoing is-a relation | supports | CHEBI:23357 is the abstract cofactor role: a molecule or ion required for enzyme activity, with loosely and tightly attached possibilities. Its fixed chemical_data/default_structure are null and its outgoing parent is biochemical role CHEBI:52206. |
+| siderophore-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26672/; Definition and all outgoing is-a relations | supports | The siderophore role concerns microbial iron(III) chelation and transport/sequestration. Its current outgoing relations include cofactor, iron(3+) chelator and iron ionophore; it has no fixed molecular structure. This supports source-role ancestry without qualifying a non-substrate protein requirement. |
+| citrate-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/30769/; Definition, formula, structure and outgoing relations | supports | Citric acid CHEBI:30769 is the hydroxy tricarboxylic acid functional parent. Its three-carboxyl structure is consistent with conversion of two arms to amides in the target; functional-parent linkage is not equivalence. |
+| hydroxy-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/35868/; Definition and outgoing relations | supports | CHEBI:35868 defines hydroxy monocarboxylic acids by a carboxylic acid plus a separate alcoholic or phenolic hydroxy group. It corroborates the intended hydroxy wording without changing the target structure. |
+| synthesis-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15990296%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID and returned bibliographic identifiers; complete indexed abstract inspected. Full text is not claimed unless separately linked. | supports | The primary synthesis abstract identifies rhizobactin 1021 as a citrate-based amphiphilic siderophore produced by Rhizobium meliloti 1021, reports syntheses and analogues, and describes modeling/monolayer results consistent with reorganization during iron chelation. It does not establish an exact neutral-state non-substrate protein requirement. |
+| biosynthesis-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11274118%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID and returned bibliographic identifiers; complete indexed abstract inspected. Full text is not claimed unless separately linked. | supports | Genetic analysis in Sinorhizobium meliloti identifies rhizobactin 1021 biosynthesis/regulation genes and the RhtA outer-membrane receptor. The paper reports effective nitrogen-fixing nodules for tested biosynthesis/transport mutants; the abstract supports pathway and transport context, not an obligatory neutral-ligand cofactor for nitrogenase. |
+| transport-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15126460%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID and returned bibliographic identifiers; complete indexed abstract inspected. Full text is not claimed unless separately linked. | supports | The primary study identifies RhtX and reports rhizobactin 1021 utilization/transport phenotypes, including RhtA as receptor for the ferrisiderophore and heterologous transport in E. coli. The transported ferric context must remain distinct from the iron-free neutral chemical graph. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml; Executed 2026-10-21T15:36:58Z through 2026-10-21T15:36:59Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml data/traits/function/cofactor_requirement/chebi/rhodotorulic-acid-chebi84731.yaml data/traits/function/cofactor_requirement/chebi/riboflavin-1-chebi57986.yaml data/traits/function/cofactor_requirement/chebi/riboflavin-chebi17015.yaml data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-homocysteine-chebi16680.yaml data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-chebi15414.yaml data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-zwitterion-chebi59789.yaml data/traits/function/cofactor_requirement/chebi/s-s-rhizoferrin-chebi747301.yaml data/traits/function/cofactor_requirement/chebi/sapropterin-chebi59560.yaml data/traits/function/cofactor_requirement/chebi/sapropterin-dihydrochloride-chebi32120.yaml; Executed 2026-10-21T15:37:45Z through 2026-10-21T15:39:21Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml; Executed 2026-10-21T15:36:59Z through 2026-10-21T15:36:59Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T15:39:21Z through 2026-10-21T15:39:23Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- Source-linked PMIDs 15899411 and 20210991 were inspected as regulation/swarming context, but are not used to infer direct protein-cofactor membership. The Agricola-only original-structure citation was not obtained as a complete paper.
+- The neutral free ligand, its protonation equilibria and iron-bound transport complex are not interchanged; no absolute central-carbon stereochemistry or universal protein dependence is inferred.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T154824Z-rhizobactin-1021-chebi74252
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires rhizobactin 1021
+started_at: '2026-10-21T15:36:04Z'
+finished_at: '2026-10-21T15:48:24Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: Rhizobactin 1021 identity and siderophore transport context are supported.
+  One confirmed major concerns chemical-to-protein equivalence; one minor covers two
+  copied spelling errors. Exact non-substrate protein dependence remains unqualified.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+    sha256: 4c9704a27fe0fe81a071d87bd5eb449a8adc1aa16f35d26bd00c35f850ce5812
+    role: target
+  - path: data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml
+    sha256: 175820a0774cc2ae713276150391b45b77c215ad3c0f31dcf2bea11969dcd51a
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 1 in batch 033. Fresh main inventory has 429359 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333, the union covers 318 record paths, leaving
+    429041 before this batch. 33 inventories were combined. Unpublished local coverage
+    is explicitly not published or merged main coverage. Snapshot-row context paths
+    are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+targets:
+- kind: generated
+  label: requires rhizobactin 1021
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+    data/traits/function/cofactor_requirement/chebi/rhodotorulic-acid-chebi84731.yaml
+    data/traits/function/cofactor_requirement/chebi/riboflavin-1-chebi57986.yaml data/traits/function/cofactor_requirement/chebi/riboflavin-chebi17015.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-homocysteine-chebi16680.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-chebi15414.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-zwitterion-chebi59789.yaml
+    data/traits/function/cofactor_requirement/chebi/s-s-rhizoferrin-chebi747301.yaml
+    data/traits/function/cofactor_requirement/chebi/sapropterin-chebi59560.yaml data/traits/function/cofactor_requirement/chebi/sapropterin-dihydrochloride-chebi32120.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Exact backend/OLS, citrate and hydroxy-acid context, current siderophore/cofactor
+    ancestry and complete primary synthesis/transport abstracts were inspected; formula,
+    charge, E geometry and unspecified absolute stereochemistry are preserved.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  evidence_ids:
+  - licence
+  - release
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - siderophore-role
+  - citrate-parent
+  - hydroxy-parent
+  - synthesis-primary
+  - biosynthesis-primary
+  - transport-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T15:36:04Z'
+  snapshot_sha256: 4c9704a27fe0fe81a071d87bd5eb449a8adc1aa16f35d26bd00c35f850ce5812
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T15:36:04Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T15:36:04Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T15:36:04Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/siderophore-chebi26672.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T15:36:04Z'
+  snapshot_sha256: 175820a0774cc2ae713276150391b45b77c215ad3c0f31dcf2bea11969dcd51a
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: About ChEBI and Licensing paragraphs; verified reused response with original
+    access UTC
+  summary: The inspected official ChEBI about page describes chemical entities and
+    explicitly licenses its data under CC BY 4.0. This supports chemical-source attribution,
+    not the synthesized protein-requirement assertion.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: ontologyId, version, loaded and config.versionIri; original access UTC
+    retained
+  summary: The captured OLS ontology metadata identifies ChEBI version 256, loaded
+    on 2026-10-16. It is an OLS release comparison, not a verified release pin for
+    the original seed or the live backend.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/74252/
+  accessed_at: '2026-10-21T15:36:56.518294Z'
+  snapshot_sha256: 7589839213859b644585623836529066088e43239af207693b3a90d74c3daf28
+  support: supports
+  locator: Exact accession, complete definition/names, chemical_data, default_structure,
+    compound_origins, citations and outgoing ontology relations; broad incoming lists
+    are not used to infer target membership
+  summary: CHEBI:74252 resolves to rhizobactin 1021, C24H42N4O9, charge 0. Its definition,
+    IUPAC name and SMILES describe one acetyl and one (2E)-dec-2-enoyl hydroxamate
+    on a citrate-derived framework with a remaining carboxylic acid. The source retains
+    hydoxy and fromj. It directly asserts siderophore, functional-parent citric acid,
+    and hydroxamic-acid/tertiary-alcohol/hydroxy-monocarboxylic-acid structural parents;
+    compound_origins is empty and five PubMed citations are listed.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:74252
+  accessed_at: '2026-10-21T15:36:56.518648Z'
+  snapshot_sha256: 0ec84a69d62dc96a8167fa27b8f7bcc7b4527dbdf22db570af8b91c80040a416
+  support: supports
+  locator: Exact term label, description, obo_id, is_obsolete, replacement and chemical
+    annotations
+  summary: OLS resolves the exact CHEBI:74252 accession as a non-obsolete chemical
+    term, with the same chemical description and stated charge/structure annotations.
+    It does not identify a protein-requirement class.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition, null chemical_data/default_structure and outgoing is-a relation
+  summary: 'CHEBI:23357 is the abstract cofactor role: a molecule or ion required
+    for enzyme activity, with loosely and tightly attached possibilities. Its fixed
+    chemical_data/default_structure are null and its outgoing parent is biochemical
+    role CHEBI:52206.'
+- evidence_id: siderophore-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26672/
+  accessed_at: '2026-10-21T14:38:28.742321Z'
+  snapshot_sha256: 1ac432c5ea916b157a4b958e8c38d8b955ede686142c49ead9c1e2ed5713154b
+  support: supports
+  locator: Definition and all outgoing is-a relations
+  summary: The siderophore role concerns microbial iron(III) chelation and transport/sequestration.
+    Its current outgoing relations include cofactor, iron(3+) chelator and iron ionophore;
+    it has no fixed molecular structure. This supports source-role ancestry without
+    qualifying a non-substrate protein requirement.
+- evidence_id: citrate-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/30769/
+  accessed_at: '2026-10-21T15:37:48.467524Z'
+  snapshot_sha256: 0b1c87485ddef7fcb0da3007571f643d3d892a07a9d4e36eb34330fbb9e58270
+  support: supports
+  locator: Definition, formula, structure and outgoing relations
+  summary: Citric acid CHEBI:30769 is the hydroxy tricarboxylic acid functional parent.
+    Its three-carboxyl structure is consistent with conversion of two arms to amides
+    in the target; functional-parent linkage is not equivalence.
+- evidence_id: hydroxy-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/35868/
+  accessed_at: '2026-10-21T15:37:48.468177Z'
+  snapshot_sha256: 9addfa837a179ba2256c95160d7c9eee9621416f401dd96817fca58e345bf244
+  support: supports
+  locator: Definition and outgoing relations
+  summary: CHEBI:35868 defines hydroxy monocarboxylic acids by a carboxylic acid plus
+    a separate alcoholic or phenolic hydroxy group. It corroborates the intended hydroxy
+    wording without changing the target structure.
+- evidence_id: synthesis-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15990296%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T15:37:51.262744Z'
+  snapshot_sha256: 3de169c14a76bf0f32a9f06a50297258b64894a55938b272a3e73bd21e4cb0cc
+  support: supports
+  locator: Verified PMID and returned bibliographic identifiers; complete indexed
+    abstract inspected. Full text is not claimed unless separately linked.
+  summary: The primary synthesis abstract identifies rhizobactin 1021 as a citrate-based
+    amphiphilic siderophore produced by Rhizobium meliloti 1021, reports syntheses
+    and analogues, and describes modeling/monolayer results consistent with reorganization
+    during iron chelation. It does not establish an exact neutral-state non-substrate
+    protein requirement.
+- evidence_id: biosynthesis-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11274118%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T15:37:50.633909Z'
+  snapshot_sha256: 895a06a5291469f2cf9ed5141769187d28b3794c4d51fe0d6d17924ef4aa4887
+  support: supports
+  locator: Verified PMID and returned bibliographic identifiers; complete indexed
+    abstract inspected. Full text is not claimed unless separately linked.
+  summary: Genetic analysis in Sinorhizobium meliloti identifies rhizobactin 1021
+    biosynthesis/regulation genes and the RhtA outer-membrane receptor. The paper
+    reports effective nitrogen-fixing nodules for tested biosynthesis/transport mutants;
+    the abstract supports pathway and transport context, not an obligatory neutral-ligand
+    cofactor for nitrogenase.
+- evidence_id: transport-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A15126460%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T15:37:51.179613Z'
+  snapshot_sha256: e1c557e01daf2db66e40a4f44ddfefb87f7f88bf8c3181563c984d69ba7963a0
+  support: supports
+  locator: Verified PMID and returned bibliographic identifiers; complete indexed
+    abstract inspected. Full text is not claimed unless separately linked.
+  summary: The primary study identifies RhtX and reports rhizobactin 1021 utilization/transport
+    phenotypes, including RhtA as receptor for the ferrisiderophore and heterologous
+    transport in E. coli. The transported ferric context must remain distinct from
+    the iron-free neutral chemical graph.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  locator: Executed 2026-10-21T15:36:58Z through 2026-10-21T15:36:59Z; exit 0
+  accessed_at: '2026-10-21T15:36:59Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+    data/traits/function/cofactor_requirement/chebi/rhodotorulic-acid-chebi84731.yaml
+    data/traits/function/cofactor_requirement/chebi/riboflavin-1-chebi57986.yaml data/traits/function/cofactor_requirement/chebi/riboflavin-chebi17015.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-homocysteine-chebi16680.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-chebi15414.yaml
+    data/traits/function/cofactor_requirement/chebi/s-adenosyl-l-methionine-zwitterion-chebi59789.yaml
+    data/traits/function/cofactor_requirement/chebi/s-s-rhizoferrin-chebi747301.yaml
+    data/traits/function/cofactor_requirement/chebi/sapropterin-chebi59560.yaml data/traits/function/cofactor_requirement/chebi/sapropterin-dihydrochloride-chebi32120.yaml
+  locator: Executed 2026-10-21T15:37:45Z through 2026-10-21T15:39:21Z; exit 0
+  accessed_at: '2026-10-21T15:39:21Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+  locator: Executed 2026-10-21T15:36:59Z through 2026-10-21T15:36:59Z; exit 0
+  accessed_at: '2026-10-21T15:36:59Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T15:39:21Z through 2026-10-21T15:39:23Z; exit 0
+  accessed_at: '2026-10-21T15:39:23Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  topic: Exact chemical identity and state
+  summary: The local requires-label is anchored to rhizobactin 1021, not generic rhizobactin
+    or its ferric complex. CHEBI:74252 gives C24H42N4O9, net charge 0, the asymmetric
+    citrate-derived bis-hydroxamate connectivity and an E decenoyl chain. The graph
+    does not specify an absolute configuration at the central asymmetric citrate carbon;
+    none is inferred.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-5
+- area: grounding
+  outcome: concern
+  topic: Chemical entity versus protein-requirement equivalence
+  summary: The chemical accession resolves, but it denotes a chemical entity rather
+    than the class of proteins with a requirement for that entity. The emitted xrefs
+    equality conflicts with the schema meaning of source-direct equivalence. An optional
+    typed participant can be used only after an activity-relative role is justified.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - chemical-ontology
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-6
+- area: provenance
+  outcome: supported
+  topic: Maintained owner and chemical-source provenance
+  summary: The actual owner is scripts/seed_chebi_cofactor.py. It selects role-bearing
+    chemicals, constructs the requirement prefix, appends source chemical prose and
+    emits the chemical accession as an equivalent xref. Current chemical identity
+    and licence are verified; the original seed release and independent protein qualification
+    remain unestablished.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-7
+- area: consistency
+  outcome: supported
+  topic: Chemical-role hierarchy
+  summary: The local siderophore parent resolves and current ChEBI directly assigns
+    that role to the chemical; siderophore has a verified cofactor ancestor. This
+    documents the source hierarchy, not automatic equivalence between chemical-role
+    and protein-requirement classes.
+  evidence_ids:
+  - chemical
+  - siderophore-role
+  - cofactor-role
+  - local-parent-1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-8
+- area: evidence
+  outcome: supported
+  topic: Siderophore synthesis and transport context
+  summary: Source-linked experiments positively support synthesis, iron-chelation
+    context and receptor/transport function in the tested systems. They do not independently
+    qualify a protein as requiring the exact free neutral form as a non-substrate
+    cofactor.
+  evidence_ids:
+  - synthesis-primary
+  - biosynthesis-primary
+  - transport-primary
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-9
+- area: representation
+  outcome: unknown
+  topic: Activity-relative protein requirement
+  summary: The record has no qualified protein or specified activity. Optional examples
+    are not required; the source siderophore role and transport results alone leave
+    the exact non-substrate requirement undecided.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - transport-primary
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  assessment_id: assessment-10
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-74252.chemical-entity-equivalence
+  severity: major
+  category: grounding
+  title: Chemical entity is asserted as an equivalent protein requirement
+  description: The local class denotes a functional requirement for rhizobactin 1021,
+    while CHEBI:74252 denotes the chemical itself. The source resolves and may assert
+    a cofactor-related role, but that does not make these two classes equivalent.
+    This is a semantic emitter defect, distinct from whether a particular activity
+    can use the compound.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - chemical-ontology
+  - siderophore-role
+  - transport-primary
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The record equates distinct entity types; this materially
+    misstates grounding even where chemical identity and a positive activity context
+    are correct.
+  certainty: confirmed
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-74252.source-spelling
+  severity: minor
+  category: nomenclature
+  title: Two copied spelling errors obscure otherwise coherent source prose
+  description: Both the local definition and current ChEBI contain hydoxy instead
+    of hydroxy and fromj instead of from. The intended hydroxy-acid chemistry and
+    producer attribution remain clear from the structure, parent and primary synthesis
+    context.
+  evidence_ids:
+  - record
+  - chemical
+  - hydroxy-parent
+  - synthesis-primary
+  field_paths:
+  - definition
+  normalization_reason: These are bounded prose defects; the resolved identity and
+    defining connectivity remain intact.
+  certainty: confirmed
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: 'Curate the maintained ChEBI emitter and this exact output so CHEBI:74252
+    is not asserted as an equivalent protein-trait xref. Preserve its source identity
+    and bounded role evidence. A chemical_participants entry is optional; if added,
+    adjudicate the role required by that representation against a specific activity
+    and preserve the exact chemical state. If a suitable activity-relative role cannot
+    be supported, retain provenance and uncertainty without inventing a required role.
+    Do not substitute a conjugate or derivative automatically. Keep ferric complexes
+    distinct from free ligands. Use an audited scoped regeneration path: the current
+    ChEBI main loop addresses the selected cohort, skips existing outputs without
+    force, and writes only with apply.'
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The chemical is no longer represented as a true equivalent of the protein class;
+    any optional participant has a curator-supported role, exact state and claim-specific
+    evidence. Preserve class-level scope and SEEDED status until separately qualified.
+    Run just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml,
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+    after scoped curation. For maintained writer changes, run focused tests plus just
+    audit-writers, just lint and just test. Run full just validate-all before merge.
+    Capture the changed inputs and create a fresh review; do not rewrite this immutable
+    observation.
+- action_id: A2
+  description: Correct the two words through an attributed curated source override
+    or maintained emitter treatment, keeping the exact chemical identity and source
+    attribution visible.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_74252
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The readable definition uses hydroxy and from, with no unreviewed chemistry or
+    taxonomic-scope change. Run just validate data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml,
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/rhizobactin-1021-chebi74252.yaml
+    after scoped curation. For maintained writer changes, run focused tests plus just
+    audit-writers, just lint and just test. Run full just validate-all before merge.
+    Capture the changed inputs and create a fresh review; do not rewrite this immutable
+    observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- Source-linked PMIDs 15899411 and 20210991 were inspected as regulation/swarming
+  context, but are not used to infer direct protein-cofactor membership. The Agricola-only
+  original-structure citation was not obtained as a complete paper.
+- The neutral free ligand, its protonation equilibria and iron-bound transport complex
+  are not interchanged; no absolute central-carbon stereochemistry or universal protein
+  dependence is inferred.
+tags:
+- unreviewed-path-order
+- batch-033
+- chebi-cofactor
+```
