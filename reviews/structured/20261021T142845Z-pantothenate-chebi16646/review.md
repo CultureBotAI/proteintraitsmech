@@ -1,0 +1,1126 @@
+# Review of requires pantothenate
+
+- Review: 20261021T142845Z-pantothenate-chebi16646
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T14:15:16Z
+- Finished UTC: 2026-10-21T14:28:45Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+One confirmed identity blocker concerns pantothenate versus carbohydrate CHEBI:16646. A separate dependent major concerns chemical-to-protein equivalence, and a minor concerns the vitamins category token. Identity adjudication precedes participant or protein qualification.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 9 in batch 029. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving 429081 before this batch. 29 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml | generated | requires pantothenate |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_16646 | Successful backend/OLS inspection confirms a mismatch: CHEBI:16646 is carbohydrate, not the local pantothenate label. Official acid/anion, R-specific and vitamin-family comparisons and a bounded primary metabolic abstract were inspected. No matching identity is certified for the asserted anchor. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+scripts/seed_cofactor_alignment.py owns this aligned requirement, with the captured ChEBI helper dependency and crosswalk provenance. No emitted record has been edited.
+
+### Populated class candidate with incompatible chemical identity
+
+completeness: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The YAML has a reusable requirement form but combines a pantothenate label with carbohydrate identity and definition. Structural completeness and native schema success cannot make this a coherent chemical requirement. Optional examples and representations are not the source of this defect.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Pantothenate label versus carbohydrate identifier
+
+identity: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The target labels pantothenate and supplies pantothenic_acid as an alias, but CHEBI:16646 and the copied second part of its definition denote carbohydrate. Both live backend and nonobsolete OLS confirm that different class. Independently inspected pantothenic acid/pantothenate structures contain the relevant nitrogen-bearing amide and distinct acid/anion/stereochemical scopes. The exact alignment row reproduces this collision, so the target cannot be safely interpreted as one chemically coherent requirement.
+
+### Positive related metabolic context without anchor qualification
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The CoA-pathway study supports related vitamin/precursor metabolism under specified organism conditions. The official acid/anion/vitamin comparisons resolve genuine chemical alternatives. None validates carbohydrate CHEBI:16646 as pantothenate or alone proves the intended activity-relative non-substrate requirement.
+
+### Identity prerequisite before participant or protein qualification
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+Identity must be reconciled before chemical enrichment. After that, a precursor, substrate or nutritional role cannot automatically become a non-substrate enzyme requirement; a supported activity-specific role may still exist. No optional protein example or participant is demanded and no universal biological absence is inferred.
+
+### Alignment parent does not repair chemical identity
+
+consistency: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The broad cofactor-requirement parent is emitted by the alignment. The current carbohydrate source and its structural ancestry do not explain the named pantothenate requirement through a direct cofactor edge. No automatic parent change is proposed before intended identity and requirement scope are adjudicated.
+
+### Chemical entity versus protein requirement
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+CHEBI:16646 denotes the broad carbohydrate chemical class, whereas the local COFACTOR_REQ record denotes a proposed protein functional requirement. The current schema reserves xrefs for true own-source equivalence. Chemical identity and an authentic source role or positive biological activity do not make these distinct entity types equivalent. Resolving the separate wrong-chemical identity is a prerequisite, but choosing a correct chemical ID alone would still leave the emitter-level equality defect.
+
+### Source category copied as a synonym
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The record stores vitamins as a MicroGrowAgents RELATED_SYNONYM alongside pantothenic_acid. The exact row and build_aligned show that vitamins is the source category, not an alternate name for this target. RELATED scope does not assert exact synonymy; this is a bounded naming-metadata defect separate from the chemical-identity blocker.
+
+### Maintained owner, source attribution, release and licence
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_16646.
+
+The captured alignment emitter, ChEBI dependency and exact crosswalk row37 explain the pantothenate label, pantothenic_acid/vitamins RELATED_SYNONYM fields and appended carbohydrate definition. This identifies the maintained emission path and its identity error; it is not independent inspection of the original MicroGrowAgents table release. ChEBI licensing is verified, while external table provenance/terms are not independently established.
+
+## Findings
+
+### F1: Pantothenate label is anchored to the carbohydrate class
+
+blocker / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-16646.label-chemical-identity-conflict.
+
+The target labels pantothenate and supplies pantothenic_acid as an alias, but CHEBI:16646 and the copied second part of its definition denote carbohydrate. Both live backend and nonobsolete OLS confirm that different class. Independently inspected pantothenic acid/pantothenate structures contain the relevant nitrogen-bearing amide and distinct acid/anion/stereochemical scopes. The exact alignment row reproduces this collision, so the target cannot be safely interpreted as one chemically coherent requirement.
+
+### F2: Chemical source entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-16646.chemical-entity-equivalence.
+
+CHEBI:16646 denotes the broad carbohydrate chemical class, whereas the local COFACTOR_REQ record denotes a proposed protein functional requirement. The current schema reserves xrefs for true own-source equivalence. Chemical identity and an authentic source role or positive biological activity do not make these distinct entity types equivalent. Resolving the separate wrong-chemical identity is a prerequisite, but choosing a correct chemical ID alone would still leave the emitter-level equality defect.
+
+### F3: Alignment category is stored as a target synonym
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-16646.category-token-synonym.
+
+The record stores vitamins as a MicroGrowAgents RELATED_SYNONYM alongside pantothenic_acid. The exact row and build_aligned show that vitamins is the source category, not an alternate name for this target. RELATED scope does not assert exact synonymy; this is a bounded naming-metadata defect separate from the chemical-identity blocker.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Repair the maintained alignment input and add a name–identifier consistency check in load_mg_cofactors/build_aligned. Adjudicate whether the intended requirement concerns unspecified pantothenate, a stereospecific acid/anion or a broader vitamin family before choosing an authoritative anchor. The inspected alternatives are comparisons, not an automatic replacement or merge. Regenerate the identifier, label, definition and source-name provenance coherently, preserving the historical mismatch. Do not transfer CHEBI:16646 to a pantothenate participant or qualify proteins before identity repair.
+
+- The curator records one justified intended chemical scope and matching identifier, with consistent regenerated label/definition and traceable alignment provenance. Acid/anion and unspecified/R stereochemistry are explicitly considered.
+- A focused emitter regression catches this exact carbohydrate–pantothenate collision; no wrong carbohydrate participant or protein qualification survives.
+- After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml. If identity repair changes the path, apply the same checks to the approved replacement and verify that stale references are reconciled.
+- For maintained writer changes add focused regression coverage and run just audit-writers, just lint and just test. The alignment main selects missing chemical IDs before force, so a plain rerun or --force alone does not select this existing target. Use an audited scoped existing-record route with pinned alignment inputs. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A2
+
+Correct build_aligned in scripts/seed_cofactor_alignment.py so a chemical association is not emitted as protein-trait equality. Resolve the separate identity blocker first. Do not transfer the wrong CHEBI:16646 carbohydrate anchor into a pantothenate chemical_participants entry. Selecting an adjudicated pantothenic acid/anion/family identifier must not simply recreate chemical-to-protein equality. Preserve chemical provenance and adjudicate the activity-relative non-substrate premise before any optional chemical_participants association with role COFACTOR. If identity, scope or role remains unresolved, retain explicit uncertainty without inventing a participant. Do not move the same false equality to mapped_xrefs, require optional protein examples or promote native status.
+
+- Regenerated xrefs no longer equates a chemical source entity or chemical class with a protein functional requirement; source attribution remains traceable.
+- Any optional typed participant follows identity adjudication and has a supported activity-relative role. Free chemical, protein-attached group, biosynthetic substrate and vitamin-family scopes are not silently interchanged.
+- After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml. If identity repair changes the path, apply the same checks to the approved replacement and verify that stale references are reconciled.
+- For maintained writer changes add focused regression coverage and run just audit-writers, just lint and just test. The alignment main selects missing chemical IDs before force, so a plain rerun or --force alone does not select this existing target. Use an audited scoped existing-record route with pinned alignment inputs. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A3
+
+Change build_aligned to preserve vitamins as category/provenance context instead of emitting it as a synonym. Keep pantothenic_acid as evidence of intended source naming while identity is adjudicated; do not use that alias to validate the current wrong anchor.
+
+- The regenerated synonym list excludes the vitamins category token while retaining traceable category provenance and independently reconciled target identity.
+- After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml. If identity repair changes the path, apply the same checks to the approved replacement and verify that stale references are reconciled.
+- For maintained writer changes add focused regression coverage and run just audit-writers, just lint and just test. The alignment main selects missing chemical IDs before force, so a plain rerun or --force alone does not select this existing target. Use an audited scoped existing-record route with pinned alignment inputs. Run full just validate-all before merging record changes; recapture changed inputs and save a fresh structured review without overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; Entire target YAML | supports | Entire aligned target inspected: requires pantothenate, CHEBI:16646 anchor/local identifier, appended carbohydrate definition, MicroGrowAgents attribution, pantothenic_acid and vitamins RELATED_SYNONYM fields, cofactor parent and CLASS/SEEDED status. These populated fields contain incompatible chemical identities; no optional participant, protein example or mechanism occurs. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| owner | scripts/seed_cofactor_alignment.py; load_mg_cofactors, build_aligned, main | supports | load_mg_cofactors reads sibling reference-table metadata; build_aligned synthesizes the protein requirement, attaches the broad cofactor parent, emits the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects only missing chemical IDs before considering force, so an existing-record repair requires an audited scoped route. This local review does not access the sibling checkout. |
+| chebi-dependency | scripts/seed_chebi_cofactor.py; load_names, rid, clean, LICENSE and imported helpers | supports | The alignment emitter imports ChEBI chemical-name/definition loading, identifiers, formatting, output location and ChEBI licensing from this module. This dependency does not itself establish a role for an alignment-selected chemical. |
+| alignment-crosswalk | data/mappings/cofactor_crosswalk.tsv; Header and exact CHEBI:16646 row37 | supports | The captured local row37 pairs CHEBI:16646 with pantothenate, pantothenic_acid and vitamins. This corroborates the maintained collision and source-field provenance, not a verified external table release or valid chemical identity. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing; reused bytes digest verified and original access UTC retained | supports | The official Introduction describes chemical entities, groups and classes; Licensing establishes CC BY 4.0 for ChEBI data. This supports chemical source attribution, not independent protein-requirement evidence or terms for an uninspected external alignment table. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Digest-verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16. The live backend and this ontology version are separate comparison snapshots; neither identifies the original seed release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16646/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:16646 is the nonobsolete broad carbohydrate class. Its long definition describes polyhydroxy aldehydes/ketones, lactols and carbohydrate derivatives/polymeric products; chemical_data and default_structure are null. Names are carbohydrate/saccharide variants, with parent carbohydrates and carbohydrate derivatives CHEBI:78616. The response is not pantothenate or pantothenic acid, and its outgoing array has no cofactor-role assertion. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:16646; Exact label, description, synonyms, is_obsolete, formula/charge and structural annotations | supports | The nonobsolete OLS CHEBI:16646 term resolves the exact source name, definition or its absence, synonyms and available chemical annotations. These agree with backend identity. Source resolution is not chemical-to-protein equality; for CHEBI:16646 it specifically confirms carbohydrate rather than the local pantothenate label. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Inspected source response captured at the recorded UTC time | supports | CHEBI:23357 is a role for an organic molecule or ion required by an enzyme for activity, loosely or tightly attached. Its outgoing parent is biochemical role CHEBI:52206; a chemical role is distinct from a class of proteins requiring the chemical. |
+| biochemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/; Inspected source response captured at the recorded UTC time | supports | CHEBI:52206 defines a role played by a molecular entity or part within a biochemical context. It does not by itself establish a specific protein requirement. |
+| acid-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/7916/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:7916 is pantothenic acid, C9H17NO5, charge0, with an unspecified pantoate stereocentre and an amide group. It is a member of pantothenic acids and conjugate acid of CHEBI:16454. |
+| anion-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16454/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:16454 is pantothenate, C9H16NO5, charge−1, with carboxylate deprotonation and unspecified stereochemistry. It is the conjugate base of CHEBI:7916, not carbohydrate CHEBI:16646. |
+| r-acid | https://www.ebi.ac.uk/chebi/backend/api/public/compound/46905/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:46905 is (R)-pantothenic acid, C9H17NO5, charge0, with explicit R stereochemistry; it is a child of pantothenic acid and vitamin B5 and conjugate acid of CHEBI:29032. |
+| r-anion | https://www.ebi.ac.uk/chebi/backend/api/public/compound/29032/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:29032 is (R)-pantothenate, C9H16NO5, charge−1 and specified R stereochemistry, with parent pantothenate/vitamin B5 and conjugate acid (R)-pantothenic acid. It is a comparison candidate, not an automatic chosen replacement. |
+| vitamin-family | https://www.ebi.ac.uk/chebi/backend/api/public/compound/176840/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:176840 is vitamin B5, defined as pantothenic-acid-class vitamers with anti-deficiency biological activity, including (R)-pantothenic acid and ionized/salt forms. It has no fixed formula or structure. A biological vitamin family and one exact acid or anion are distinct scopes. |
+| carbohydrate-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/78616/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:78616 is carbohydrates and carbohydrate derivatives, a broad organooxygen class. Its definition distinguishes carbohydrates containing C/H/O from derivatives that may contain other elements. This parent reinforces the actual carbohydrate scope; it is not the intended pantothenate identity. |
+| pantothenic-class | https://www.ebi.ac.uk/chebi/backend/api/public/compound/25848/; Exact identity, definition, names, chemical_data/default_structure, complete outgoing relations and relevant incoming chemical context | supports | CHEBI:25848 is the broad pantothenic-acids amide class formed from pantoic acid and beta-alanine and derivatives, with null fixed formula/structure and direct cofactor/water-soluble-vitamin roles. It is comparison context, not an automatically equivalent replacement for a particular anion. |
+| biosynthesis-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21551303%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed primary abstract; full article not inspected unless separately cited | supports | PMID:21551303; DOI:10.1128/JB.00334-11. The complete abstract establishes organism-specific pantethine utilization in CoA biosynthesis and pantothenate-kinase substrate-specificity context. This supports related vitamin/precursor biology, not carbohydrate identity or a qualified pantothenate non-substrate protein requirement. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; Executed 2026-10-21T14:16:19Z through 2026-10-21T14:16:21Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml; Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml; Executed 2026-10-21T14:16:21Z through 2026-10-21T14:16:21Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- This record was selected by the maintained MicroGrowAgents alignment emitter, not demonstrated current ChEBI cofactor-role selection. The external table release and independent licensing were not inspected; the exact local crosswalk is captured provenance. Current chemical identity conflicts with the intended label, so biological or role claims cannot be transferred to CHEBI:16646.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The current identity collision is established; the historical alignment’s intended acid, anion, stereochemistry or vitamin-family scope is not. No replacement identifier is chosen, no external source table is claimed inspected, and the metabolic primary paper was read through its complete abstract only.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T142845Z-pantothenate-chebi16646
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires pantothenate
+started_at: '2026-10-21T14:15:16Z'
+finished_at: '2026-10-21T14:28:45Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: One confirmed identity blocker concerns pantothenate versus carbohydrate
+  CHEBI:16646. A separate dependent major concerns chemical-to-protein equivalence,
+  and a minor concerns the vitamins category token. Identity adjudication precedes
+  participant or protein qualification.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/mappings/cofactor_crosswalk.tsv
+    sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    sha256: 076f1b8a841dc1753dd3fdced77c0e2f390782fa91c2404b1944bffeacb28f66
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: scripts/seed_cofactor_alignment.py
+    sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 9 in batch 029. Fresh main inventory has 429359 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving
+    429081 before this batch. 29 inventories were combined. Unpublished local coverage
+    is explicitly not published or merged main coverage. Snapshot-row context paths
+    are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+targets:
+- kind: generated
+  label: requires pantothenate
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  path: data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: 'Successful backend/OLS inspection confirms a mismatch: CHEBI:16646 is
+    carbohydrate, not the local pantothenate label. Official acid/anion, R-specific
+    and vitamin-family comparisons and a bounded primary metabolic abstract were inspected.
+    No matching identity is certified for the asserted anchor.'
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  evidence_ids:
+  - licence
+  - release
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - biochemical-role
+  - acid-comparison
+  - anion-comparison
+  - r-acid
+  - r-anion
+  - vitamin-family
+  - carbohydrate-parent
+  - pantothenic-class
+  - biosynthesis-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: 076f1b8a841dc1753dd3fdced77c0e2f390782fa91c2404b1944bffeacb28f66
+  support: supports
+  summary: 'Entire aligned target inspected: requires pantothenate, CHEBI:16646 anchor/local
+    identifier, appended carbohydrate definition, MicroGrowAgents attribution, pantothenic_acid
+    and vitamins RELATED_SYNONYM fields, cofactor parent and CLASS/SEEDED status.
+    These populated fields contain incompatible chemical identities; no optional participant,
+    protein example or mechanism occurs.'
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_cofactor_alignment.py
+  locator: load_mg_cofactors, build_aligned, main
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: b93c398484e659617770bc99f2116757bf0d9b25f731fd31c6e7c1e9c65536cf
+  support: supports
+  summary: load_mg_cofactors reads sibling reference-table metadata; build_aligned
+    synthesizes the protein requirement, attaches the broad cofactor parent, emits
+    the chemical xref, and copies cofactor_id/category as RELATED_SYNONYM. main selects
+    only missing chemical IDs before considering force, so an existing-record repair
+    requires an audited scoped route. This local review does not access the sibling
+    checkout.
+- evidence_id: chebi-dependency
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_names, rid, clean, LICENSE and imported helpers
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: The alignment emitter imports ChEBI chemical-name/definition loading, identifiers,
+    formatting, output location and ChEBI licensing from this module. This dependency
+    does not itself establish a role for an alignment-selected chemical.
+- evidence_id: alignment-crosswalk
+  kind: record_content
+  reference: data/mappings/cofactor_crosswalk.tsv
+  locator: Header and exact CHEBI:16646 row37
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: a1ebb2af5d9e39ae072efb1a0d6a4774272d6e0e881b3c792faae53b4fc748ba
+  support: supports
+  summary: The captured local row37 pairs CHEBI:16646 with pantothenate, pantothenic_acid
+    and vitamins. This corroborates the maintained collision and source-field provenance,
+    not a verified external table release or valid chemical identity.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T14:15:16Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing; reused bytes digest verified and original access
+    UTC retained
+  summary: The official Introduction describes chemical entities, groups and classes;
+    Licensing establishes CC BY 4.0 for ChEBI data. This supports chemical source
+    attribution, not independent protein-requirement evidence or terms for an uninspected
+    external alignment table.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Digest-verified reused OLS metadata reports ChEBI version 256, loaded 2026-10-16.
+    The live backend and this ontology version are separate comparison snapshots;
+    neither identifies the original seed release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16646/
+  accessed_at: '2026-10-21T14:16:06.807789Z'
+  snapshot_sha256: 45ba599771b0fdf175f103963e5e0c3f1472265eb20948158a0c04f4c80ce541
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:16646 is the nonobsolete broad carbohydrate class. Its long definition
+    describes polyhydroxy aldehydes/ketones, lactols and carbohydrate derivatives/polymeric
+    products; chemical_data and default_structure are null. Names are carbohydrate/saccharide
+    variants, with parent carbohydrates and carbohydrate derivatives CHEBI:78616.
+    The response is not pantothenate or pantothenic acid, and its outgoing array has
+    no cofactor-role assertion.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:16646
+  accessed_at: '2026-10-21T14:16:06.783187Z'
+  snapshot_sha256: 0956d7381bb26bd0c4b9e36870208e5f8c3a4a533a71ec50ba307cf9b7fa50b0
+  support: supports
+  locator: Exact label, description, synonyms, is_obsolete, formula/charge and structural
+    annotations
+  summary: The nonobsolete OLS CHEBI:16646 term resolves the exact source name, definition
+    or its absence, synonyms and available chemical annotations. These agree with
+    backend identity. Source resolution is not chemical-to-protein equality; for CHEBI:16646
+    it specifically confirms carbohydrate rather than the local pantothenate label.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: CHEBI:23357 is a role for an organic molecule or ion required by an enzyme
+    for activity, loosely or tightly attached. Its outgoing parent is biochemical
+    role CHEBI:52206; a chemical role is distinct from a class of proteins requiring
+    the chemical.
+- evidence_id: biochemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/
+  accessed_at: '2026-10-21T12:32:53.586758Z'
+  snapshot_sha256: a2618530e2ab2677b173b52b5754a4bba1796bb11e8f41a7a5b62e8874dc5227
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: CHEBI:52206 defines a role played by a molecular entity or part within
+    a biochemical context. It does not by itself establish a specific protein requirement.
+- evidence_id: acid-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/7916/
+  accessed_at: '2026-10-21T14:16:53.777677Z'
+  snapshot_sha256: e69f24d921cc94937172a65434bb0d86cae0046c1c7690976408f50b91449fc3
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:7916 is pantothenic acid, C9H17NO5, charge0, with an unspecified
+    pantoate stereocentre and an amide group. It is a member of pantothenic acids
+    and conjugate acid of CHEBI:16454.
+- evidence_id: anion-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16454/
+  accessed_at: '2026-10-21T14:19:27.305489Z'
+  snapshot_sha256: baa400fbcec24d55d009861ae8eedc7ecbc6bff3fe4ea66b4b72e105e0e0665d
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:16454 is pantothenate, C9H16NO5, charge−1, with carboxylate deprotonation
+    and unspecified stereochemistry. It is the conjugate base of CHEBI:7916, not carbohydrate
+    CHEBI:16646.
+- evidence_id: r-acid
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/46905/
+  accessed_at: '2026-10-21T14:19:27.368765Z'
+  snapshot_sha256: 00feef1a79f485c42370fc113aaaf204bdf519e0027d58c06f520f3975890783
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:46905 is (R)-pantothenic acid, C9H17NO5, charge0, with explicit R
+    stereochemistry; it is a child of pantothenic acid and vitamin B5 and conjugate
+    acid of CHEBI:29032.
+- evidence_id: r-anion
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/29032/
+  accessed_at: '2026-10-21T14:20:00.944581Z'
+  snapshot_sha256: 51063c24759ba8cbb398841becae3bed19d36ba26f7ac161690a3245eb4a1513
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:29032 is (R)-pantothenate, C9H16NO5, charge−1 and specified R stereochemistry,
+    with parent pantothenate/vitamin B5 and conjugate acid (R)-pantothenic acid. It
+    is a comparison candidate, not an automatic chosen replacement.
+- evidence_id: vitamin-family
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/176840/
+  accessed_at: '2026-10-21T14:20:00.844624Z'
+  snapshot_sha256: 8801582ae62df6b3058d48fdff73f53d39be2c19c37111b0df62cc2bb97a3a7f
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:176840 is vitamin B5, defined as pantothenic-acid-class vitamers
+    with anti-deficiency biological activity, including (R)-pantothenic acid and ionized/salt
+    forms. It has no fixed formula or structure. A biological vitamin family and one
+    exact acid or anion are distinct scopes.
+- evidence_id: carbohydrate-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/78616/
+  accessed_at: '2026-10-21T14:16:55.188601Z'
+  snapshot_sha256: c87e424d5d8dffa988b5edc4cc3019de0ec2fd7bbaff2f6afaa32257123db4bb
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:78616 is carbohydrates and carbohydrate derivatives, a broad organooxygen
+    class. Its definition distinguishes carbohydrates containing C/H/O from derivatives
+    that may contain other elements. This parent reinforces the actual carbohydrate
+    scope; it is not the intended pantothenate identity.
+- evidence_id: pantothenic-class
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/25848/
+  accessed_at: '2026-10-21T14:16:06.805455Z'
+  snapshot_sha256: eaa477c8c42b9745111a9c8baa348f7a3e4299f6a819937caf7e588a46094b9e
+  support: supports
+  locator: Exact identity, definition, names, chemical_data/default_structure, complete
+    outgoing relations and relevant incoming chemical context
+  summary: CHEBI:25848 is the broad pantothenic-acids amide class formed from pantoic
+    acid and beta-alanine and derivatives, with null fixed formula/structure and direct
+    cofactor/water-soluble-vitamin roles. It is comparison context, not an automatically
+    equivalent replacement for a particular anion.
+- evidence_id: biosynthesis-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21551303%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T14:16:56.057769Z'
+  snapshot_sha256: 432d5ac4f5bbf66473a95095eb5d6ee1f5f10bd7f3bc8293460c05765359729b
+  support: supports
+  locator: Verified PMID/DOI and complete indexed primary abstract; full article not
+    inspected unless separately cited
+  summary: PMID:21551303; DOI:10.1128/JB.00334-11. The complete abstract establishes
+    organism-specific pantethine utilization in CoA biosynthesis and pantothenate-kinase
+    substrate-specificity context. This supports related vitamin/precursor biology,
+    not carbohydrate identity or a qualified pantothenate non-substrate protein requirement.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  locator: Executed 2026-10-21T14:16:19Z through 2026-10-21T14:16:21Z; exit 0
+  accessed_at: '2026-10-21T14:16:21Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  locator: Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0
+  accessed_at: '2026-10-21T14:17:43Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+  locator: Executed 2026-10-21T14:16:21Z through 2026-10-21T14:16:21Z; exit 0
+  accessed_at: '2026-10-21T14:16:21Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0
+  accessed_at: '2026-10-21T14:17:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_cofactor_alignment.py owns this aligned requirement, with
+    the captured ChEBI helper dependency and crosswalk provenance. No emitted record
+    has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: concern
+  summary: The YAML has a reusable requirement form but combines a pantothenate label
+    with carbohydrate identity and definition. Structural completeness and native
+    schema success cannot make this a coherent chemical requirement. Optional examples
+    and representations are not the source of this defect.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - alignment-crosswalk
+  topic: Populated class candidate with incompatible chemical identity
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-2
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: concern
+  summary: The target labels pantothenate and supplies pantothenic_acid as an alias,
+    but CHEBI:16646 and the copied second part of its definition denote carbohydrate.
+    Both live backend and nonobsolete OLS confirm that different class. Independently
+    inspected pantothenic acid/pantothenate structures contain the relevant nitrogen-bearing
+    amide and distinct acid/anion/stereochemical scopes. The exact alignment row reproduces
+    this collision, so the target cannot be safely interpreted as one chemically coherent
+    requirement.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - owner
+  - alignment-crosswalk
+  - acid-comparison
+  - anion-comparison
+  - r-acid
+  - r-anion
+  - vitamin-family
+  - carbohydrate-parent
+  topic: Pantothenate label versus carbohydrate identifier
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-5
+- area: evidence
+  outcome: supported
+  summary: The CoA-pathway study supports related vitamin/precursor metabolism under
+    specified organism conditions. The official acid/anion/vitamin comparisons resolve
+    genuine chemical alternatives. None validates carbohydrate CHEBI:16646 as pantothenate
+    or alone proves the intended activity-relative non-substrate requirement.
+  evidence_ids:
+  - biosynthesis-primary
+  - acid-comparison
+  - anion-comparison
+  - vitamin-family
+  topic: Positive related metabolic context without anchor qualification
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-6
+- area: representation
+  outcome: unknown
+  summary: Identity must be reconciled before chemical enrichment. After that, a precursor,
+    substrate or nutritional role cannot automatically become a non-substrate enzyme
+    requirement; a supported activity-specific role may still exist. No optional protein
+    example or participant is demanded and no universal biological absence is inferred.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - acid-comparison
+  - anion-comparison
+  - biosynthesis-primary
+  topic: Identity prerequisite before participant or protein qualification
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-7
+- area: consistency
+  outcome: concern
+  summary: The broad cofactor-requirement parent is emitted by the alignment. The
+    current carbohydrate source and its structural ancestry do not explain the named
+    pantothenate requirement through a direct cofactor edge. No automatic parent change
+    is proposed before intended identity and requirement scope are adjudicated.
+  evidence_ids:
+  - record
+  - owner
+  - alignment-crosswalk
+  - local-parent-1
+  - chemical
+  - carbohydrate-parent
+  - cofactor-role
+  topic: Alignment parent does not repair chemical identity
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-8
+- area: grounding
+  outcome: concern
+  summary: CHEBI:16646 denotes the broad carbohydrate chemical class, whereas the
+    local COFACTOR_REQ record denotes a proposed protein functional requirement. The
+    current schema reserves xrefs for true own-source equivalence. Chemical identity
+    and an authentic source role or positive biological activity do not make these
+    distinct entity types equivalent. Resolving the separate wrong-chemical identity
+    is a prerequisite, but choosing a correct chemical ID alone would still leave
+    the emitter-level equality defect.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - chemical-ontology
+  - alignment-crosswalk
+  - acid-comparison
+  - anion-comparison
+  topic: Chemical entity versus protein requirement
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-9
+- area: nomenclature
+  outcome: concern
+  summary: The record stores vitamins as a MicroGrowAgents RELATED_SYNONYM alongside
+    pantothenic_acid. The exact row and build_aligned show that vitamins is the source
+    category, not an alternate name for this target. RELATED scope does not assert
+    exact synonymy; this is a bounded naming-metadata defect separate from the chemical-identity
+    blocker.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  topic: Source category copied as a synonym
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-10
+- area: provenance
+  outcome: supported
+  summary: The captured alignment emitter, ChEBI dependency and exact crosswalk row37
+    explain the pantothenate label, pantothenic_acid/vitamins RELATED_SYNONYM fields
+    and appended carbohydrate definition. This identifies the maintained emission
+    path and its identity error; it is not independent inspection of the original
+    MicroGrowAgents table release. ChEBI licensing is verified, while external table
+    provenance/terms are not independently established.
+  evidence_ids:
+  - record
+  - owner
+  - chebi-dependency
+  - alignment-crosswalk
+  - registry
+  - licence
+  - release
+  - chemical
+  topic: Maintained owner, source attribution, release and licence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-16646.label-chemical-identity-conflict
+  category: identity
+  severity: blocker
+  title: Pantothenate label is anchored to the carbohydrate class
+  description: The target labels pantothenate and supplies pantothenic_acid as an
+    alias, but CHEBI:16646 and the copied second part of its definition denote carbohydrate.
+    Both live backend and nonobsolete OLS confirm that different class. Independently
+    inspected pantothenic acid/pantothenate structures contain the relevant nitrogen-bearing
+    amide and distinct acid/anion/stereochemical scopes. The exact alignment row reproduces
+    this collision, so the target cannot be safely interpreted as one chemically coherent
+    requirement.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - owner
+  - alignment-crosswalk
+  - acid-comparison
+  - anion-comparison
+  - r-acid
+  - r-anion
+  - vitamin-family
+  - carbohydrate-parent
+  certainty: confirmed
+  field_paths:
+  - identifier
+  - label
+  - definition
+  - definition_source
+  - xrefs
+  - synonyms
+  normalization_reason: The current candidate combines different chemical identities,
+    preventing safe interpretation and downstream qualification. This is a scientific
+    identity blocker; the review itself is complete and can be saved as needs_curation.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: blocker
+- issue_key: chebi.cofactor-requirement.CHEBI-16646.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical source entity is asserted equivalent to a protein requirement
+  description: CHEBI:16646 denotes the broad carbohydrate chemical class, whereas
+    the local COFACTOR_REQ record denotes a proposed protein functional requirement.
+    The current schema reserves xrefs for true own-source equivalence. Chemical identity
+    and an authentic source role or positive biological activity do not make these
+    distinct entity types equivalent. Resolving the separate wrong-chemical identity
+    is a prerequisite, but choosing a correct chemical ID alone would still leave
+    the emitter-level equality defect.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - chemical-ontology
+  - alignment-crosswalk
+  - acid-comparison
+  - anion-comparison
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The chemical-to-protein-class type mismatch is an independently
+    repairable major grounding defect. It neither denies positive biological activity
+    nor makes optional representations mandatory.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-16646.category-token-synonym
+  category: nomenclature
+  severity: minor
+  title: Alignment category is stored as a target synonym
+  description: The record stores vitamins as a MicroGrowAgents RELATED_SYNONYM alongside
+    pantothenic_acid. The exact row and build_aligned show that vitamins is the source
+    category, not an alternate name for this target. RELATED scope does not assert
+    exact synonymy; this is a bounded naming-metadata defect separate from the chemical-identity
+    blocker.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - alignment-crosswalk
+  certainty: confirmed
+  field_paths:
+  - synonyms
+  normalization_reason: 'The category-token defect is a bounded minor naming issue.
+    This does not assert intact core identity: the independent blocker covers the
+    wrong chemical anchor.'
+  finding_id: F3
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Repair the maintained alignment input and add a name–identifier consistency
+    check in load_mg_cofactors/build_aligned. Adjudicate whether the intended requirement
+    concerns unspecified pantothenate, a stereospecific acid/anion or a broader vitamin
+    family before choosing an authoritative anchor. The inspected alternatives are
+    comparisons, not an automatic replacement or merge. Regenerate the identifier,
+    label, definition and source-name provenance coherently, preserving the historical
+    mismatch. Do not transfer CHEBI:16646 to a pantothenate participant or qualify
+    proteins before identity repair.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The curator records one justified intended chemical scope and matching identifier,
+    with consistent regenerated label/definition and traceable alignment provenance.
+    Acid/anion and unspecified/R stereochemistry are explicitly considered.
+  - A focused emitter regression catches this exact carbohydrate–pantothenate collision;
+    no wrong carbohydrate participant or protein qualification survives.
+  - After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml.
+    If identity repair changes the path, apply the same checks to the approved replacement
+    and verify that stale references are reconciled.
+  - For maintained writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. The alignment main selects missing chemical IDs before
+    force, so a plain rerun or --force alone does not select this existing target.
+    Use an audited scoped existing-record route with pinned alignment inputs. Run
+    full just validate-all before merging record changes; recapture changed inputs
+    and save a fresh structured review without overwriting this observation.
+- action_id: A2
+  description: Correct build_aligned in scripts/seed_cofactor_alignment.py so a chemical
+    association is not emitted as protein-trait equality. Resolve the separate identity
+    blocker first. Do not transfer the wrong CHEBI:16646 carbohydrate anchor into
+    a pantothenate chemical_participants entry. Selecting an adjudicated pantothenic
+    acid/anion/family identifier must not simply recreate chemical-to-protein equality.
+    Preserve chemical provenance and adjudicate the activity-relative non-substrate
+    premise before any optional chemical_participants association with role COFACTOR.
+    If identity, scope or role remains unresolved, retain explicit uncertainty without
+    inventing a participant. Do not move the same false equality to mapped_xrefs,
+    require optional protein examples or promote native status.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - Regenerated xrefs no longer equates a chemical source entity or chemical class
+    with a protein functional requirement; source attribution remains traceable.
+  - Any optional typed participant follows identity adjudication and has a supported
+    activity-relative role. Free chemical, protein-attached group, biosynthetic substrate
+    and vitamin-family scopes are not silently interchanged.
+  - After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml.
+    If identity repair changes the path, apply the same checks to the approved replacement
+    and verify that stale references are reconciled.
+  - For maintained writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. The alignment main selects missing chemical IDs before
+    force, so a plain rerun or --force alone does not select this existing target.
+    Use an audited scoped existing-record route with pinned alignment inputs. Run
+    full just validate-all before merging record changes; recapture changed inputs
+    and save a fresh structured review without overwriting this observation.
+  depends_on:
+  - A1
+  blockers:
+  - repository: CultureBotAI/proteintraitsmech
+    review_id: 20261021T142845Z-pantothenate-chebi16646
+    finding_id: F1
+- action_id: A3
+  description: Change build_aligned to preserve vitamins as category/provenance context
+    instead of emitting it as a synonym. Keep pantothenic_acid as evidence of intended
+    source naming while identity is adjudicated; do not use that alias to validate
+    the current wrong anchor.
+  finding_ids:
+  - F3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_16646
+  owner_paths:
+  - path: scripts/seed_cofactor_alignment.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained alignment table reader and build_aligned requirement-class emitter
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Imported ChEBI chemical-name/definition and formatting dependency
+  acceptance_checks:
+  - The regenerated synonym list excludes the vitamins category token while retaining
+    traceable category provenance and independently reconciled target identity.
+  - After scoped regeneration run just validate data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml.
+    If identity repair changes the path, apply the same checks to the approved replacement
+    and verify that stale references are reconciled.
+  - For maintained writer changes add focused regression coverage and run just audit-writers,
+    just lint and just test. The alignment main selects missing chemical IDs before
+    force, so a plain rerun or --force alone does not select this existing target.
+    Use an audited scoped existing-record route with pinned alignment inputs. Run
+    full just validate-all before merging record changes; recapture changed inputs
+    and save a fresh structured review without overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- This record was selected by the maintained MicroGrowAgents alignment emitter, not
+  demonstrated current ChEBI cofactor-role selection. The external table release and
+  independent licensing were not inspected; the exact local crosswalk is captured
+  provenance. Current chemical identity conflicts with the intended label, so biological
+  or role claims cannot be transferred to CHEBI:16646.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The current identity collision is established; the historical alignment’s intended
+  acid, anion, stereochemistry or vitamin-family scope is not. No replacement identifier
+  is chosen, no external source table is claimed inspected, and the metabolic primary
+  paper was read through its complete abstract only.
+tags:
+- unreviewed-path-order
+- batch-029
+- chebi-cofactor
+```

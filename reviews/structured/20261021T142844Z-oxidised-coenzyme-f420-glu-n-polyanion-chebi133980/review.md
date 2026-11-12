@@ -1,0 +1,867 @@
+# Review of requires oxidised coenzyme F420-(γ-Glu)n polyanion
+
+- Review: 20261021T142844Z-oxidised-coenzyme-f420-glu-n-polyanion-chebi133980
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T14:15:13Z
+- Finished UTC: 2026-10-21T14:28:44Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The generic oxidized F420 polyglutamyl polyanion and source coenzyme role are retained with positive redox-enzyme context. One confirmed major concerns chemical-to-protein-class equivalence. The pH claim, representative ring protonation and exact activity-relative requirement remain independently unresolved.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 5 in batch 029. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving 429081 before this batch. 29 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml | generated | requires oxidised coenzyme F420-(γ-Glu)n polyanion |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_133980 | Official ChEBI and OLS resolve the exact chemical identifier and definition, with material structures, outgoing relations and compound_origins inspected. The direct coenzyme role and local parent provenance are verified. Primary evidence is retained at its stated activity, chemical-state and experimental scope. Source authenticity and licensing do not establish chemical/protein-class equivalence. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Generic oxidized F420 polyglutamyl scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The label and source definition denote an oxidized gamma-glutamyl polyanion family, not one fixed chain length. The generalized formula, representative one-glutamate graph and fixed charge must be interpreted at their respective levels. Oxidized and reduced F420 states remain distinct, and no alpha-terminal glutamyl variant or exact free-state charge is substituted.
+
+### pH 7.3 and representative protonation
+
+scope: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The target’s pH 7.3 assertion is authentic to the current source. The representative graph includes a ring N anion and phenolic OH, but the inspected primary abstract addresses reduced F420H2 bound to Ddn. It does not independently determine oxidized-family solution populations, ring ionization or charge across all chain lengths. No confirmed microspecies contradiction is asserted from this evidence.
+
+### Bounded F420 redox-enzyme context
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The hydrogenase study supplies positive F420 reduction activity in the specified methanogen preparation. The separate Ddn study supplies reduced-state binding/protonation context. These observations are not transferred into an exact oxidized polyanion requirement for every F420-dependent protein.
+
+### Activity-relative role of the polymer family
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The direct coenzyme role supports positive source context. The redox studies do not by themselves decide whether the reviewed family is a retained cofactor or consumed/regenerated cosubstrate in a chosen activity, nor do they qualify a particular protein, glutamyl length or exact charge. An optional participant role requires explicit adjudication.
+
+### Source role and local parent provenance
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The direct coenzyme role and its cofactor ancestry explain the local coenzyme-requirement parent. The actual source transformation and parent resolve; this is provenance support, not proof of class equivalence or every candidate protein requirement.
+
+### Maintained ChEBI emitter and attribution
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The actual ChEBI emitter selects role-associated chemicals, synthesizes a requirement opening and appends chemical prose. Current official sources and CC BY 4.0 attribution are verified. The original seed release is unspecified, and the captured OLS metadata is not assumed to identify the backend or original seed release.
+
+### Chemical entity versus protein-requirement equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_133980.
+
+The ChEBI identifier denotes a chemical entity or chemical family, whereas the local record denotes a protein requirement. The schema reserves xrefs for true source-direct equivalents. Positive activity context and source-role ancestry do not equate those different entities.
+
+## Findings
+
+### F1: Chemical entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-133980.chemical-entity-equivalence.
+
+The target places CHEBI:133980 in true-equivalence xrefs although that entry describes a chemical entity or chemical family and the local identifier describes a protein functional requirement. This violates the current equivalence semantics independently of whether a suitably scoped biological requirement can be supported.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Correct build in scripts/seed_chebi_cofactor.py so a chemical association is not emitted as true equality to a protein-requirement class. Preserve exact chemical identity, stoichiometry, redox/protonation or polymer scope, source provenance and positive biological context. Adjudicate the intended activity and the role required if an optional ChemicalParticipant is added. If no supported role or representation is available, retain provenance and explicit uncertainty rather than inventing one. Do not move false equality into mapped_xrefs, automatically replace the chemical or qualify a protein instance.
+
+- The regenerated target no longer asserts chemical-to-protein-class equality. Any optional typed association has curator-adjudicated exact chemical scope and activity-relative role; otherwise source provenance and uncertainty remain explicit.
+- Use a controlled audited ChEBI regeneration route: --force permits existing-record overwrite and --apply writes the selected cohort, so avoid an unreviewed broad rewrite.
+- For maintained writer changes run just audit-writers, just lint and just test with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml and just audit-graphs data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml. Run full just validate-all before merging record changes. Recapture changed inputs and save a fresh validated review rather than overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing sections; verified reused body retains original access UTC | supports | The official ChEBI Introduction and Licensing sections describe chemical entities and roles and state CC BY 4.0 availability. This supports chemical-source attribution, not chemical/protein-class equivalence. |
+| current-release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | The verified reused OLS metadata reports ChEBI version 256, loaded on 2026-10-16. This is the captured ontology metadata, not a claim that the backend and original seed use that same release. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/133980/; Complete material identity fields, names, definition, chemical data/default structure, outgoing relations, citations and compound_origins | supports | CHEBI:133980 denotes the generic oxidised coenzyme F420-(gamma-Glu)n polyanion. Its definition asserts a polyanionic polymer and predominance at pH 7.3. The source combines the generalized formula (C5H6NO3)n.C19H19N3O12P with a displayed one-glutamate graph, charge −4 and a fixed InChI for that depiction. The graph preserves an oxidized deazaflavin scaffold and encoded side-chain stereochemistry; its charges include a ring N anion, phosphate and carboxylates. These representative fields are not a fixed composition or charge for every n. Direct coenzyme role and dialkyl-phosphate-anion, carboxylic-acid-anion and polyanionic-polymer ancestry are asserted, with functional parent FO(1−), CHEBI:59904. No compound_origins entries are returned. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:133980; Inspected source response captured at the recorded UTC time | supports | OLS resolves the same nonobsolete identifier and agrees on the source label, definition, names and structural annotations. This supports source identity and attribution, not an equivalence to the synthesized protein requirement. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition and complete outgoing relations; verified reused body retains original access UTC | supports | Cofactor CHEBI:23357 is an organic molecule or ion required by an enzyme for activity, with coenzyme and prosthetic-group attachment modes. Its outgoing parent is biochemical role CHEBI:52206. A source role supplies positive candidate context without qualifying a particular protein requirement. |
+| biochemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/; Definition and complete outgoing relations; verified reused body retains original access UTC | supports | Biochemical role CHEBI:52206 concerns an entity or part acting within a biochemical context. It is a role class, not a molecular species or a protein requirement. |
+| context-59904 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/59904/; Definition, chemical data/default structure and complete outgoing relations | supports | FO(1−) CHEBI:59904 is the deazaflavin-ribityl chromophore anion whose definition specifies N3 deprotonation and pH 7.3 predominance. Its formula is C16H16N3O7 and charge −1. This source assertion is functional-parent context, not independent acid-base evidence for an entire F420 polyglutamyl family or equivalence to it. |
+| context-58944 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58944/; Definition, chemical data/default structure and complete outgoing relations | supports | Dialkyl phosphate oxoanion CHEBI:58944 is the conjugate-base class of dialkyl phosphates and has organophosphate-oxoanion ancestry. It is generic rather than one fixed molecular species. |
+| context-29067 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/29067/; Definition, chemical data/default structure and complete outgoing relations | supports | Carboxylic acid anion CHEBI:29067 is the generic deprotonated carboxylic-acid class; its R-group depiction is not a specific F420 chain or a physiological population measurement. |
+| context-61469 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/61469/; Definition, chemical data/default structure and complete outgoing relations | supports | Polyanionic polymer CHEBI:61469 is a polymer composed of polyanionic macromolecules, with ionic-polymer ancestry and a has-part link to polyanionic macromolecule. This generic class does not require one chain length, molecular mass or fixed net charge. |
+| coenzyme-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/; Definition and complete outgoing relations; verified reused body retains original access UTC | supports | Coenzyme CHEBI:23354 is a low-molecular-weight non-protein organic compound acting as a dissociable donor or acceptor of groups or electrons in enzyme reactions. Its cofactor ancestry explains the source-role lineage but is not identical to the local non-substrate requirement predicate. |
+| f420-reduction | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:2007552%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:2007552; DOI:10.1128/jb.173.7.2283-2288.1991. In Methanobacterium thermoautotrophicum strain delta H extracts, F390-reducing activity copurifies with F420-dependent hydrogenase, with substantially greater activity toward F420. This provides positive F420 reduction context without resolving a particular glutamyl length, ring protonation or a retained rather than dissociable cofactor role. |
+| reduced-f420-context | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Protonation%20state%20of%20F420H2%22&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full experimental article not inspected through this response | supports | PMID:26876228; DOI:10.1039/C6MB00033A. UV-visible spectroscopy and calculations support deprotonated reduced F420H2 in the Ddn enzyme complex. The inspected abstract concerns a reduced, bound cofactor and cannot establish the exact oxidized-polymer microspecies distribution at pH 7.3. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml; Executed 2026-10-21T14:16:14Z through 2026-10-21T14:16:15Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml; Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml; Executed 2026-10-21T14:16:15Z through 2026-10-21T14:16:15Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The pH 7.3 population statement and precise ring-site assignment remain independently unresolved. The 2016 publisher full-text request returned HTTP 403 and is excluded; the 1984 DOI bibliographic query returned no result and is not evidence. PMC8498797 is a secondary review used only for discovery. No free-flavin pKa is extrapolated to F420, and the representative graph is not treated as a fixed formula or charge for all n. The prior F420 hydrogenase abstract was reused only after digest verification, with its original access time retained.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T142844Z-oxidised-coenzyme-f420-glu-n-polyanion-chebi133980
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires oxidised coenzyme F420-(γ-Glu)n polyanion
+started_at: '2026-10-21T14:15:13Z'
+finished_at: '2026-10-21T14:28:44Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The generic oxidized F420 polyglutamyl polyanion and source coenzyme role
+  are retained with positive redox-enzyme context. One confirmed major concerns chemical-to-protein-class
+  equivalence. The pH claim, representative ring protonation and exact activity-relative
+  requirement remain independently unresolved.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+    sha256: 07990ad9e631ce6d8171bf6835e20b59e1542d8fc1894161c2beb60f81711449
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    sha256: e4d65a12028b094d8df5544ad2f42dc55411fd881f89db53d5775eb3b2a391e7
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 5 in batch 029. Fresh main inventory has 429359 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099, the union covers 278 record paths, leaving
+    429081 before this batch. 29 inventories were combined. Unpublished local coverage
+    is explicitly not published or merged main coverage. Snapshot-row context paths
+    are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+targets:
+- kind: generated
+  label: requires oxidised coenzyme F420-(γ-Glu)n polyanion
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official ChEBI and OLS resolve the exact chemical identifier and definition,
+    with material structures, outgoing relations and compound_origins inspected. The
+    direct coenzyme role and local parent provenance are verified. Primary evidence
+    is retained at its stated activity, chemical-state and experimental scope. Source
+    authenticity and licensing do not establish chemical/protein-class equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - biochemical-role
+  - licence
+  - current-release
+  - context-59904
+  - context-58944
+  - context-29067
+  - context-61469
+  - coenzyme-role
+  - f420-reduction
+  - reduced-f420-context
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T14:15:13Z'
+  snapshot_sha256: e4d65a12028b094d8df5544ad2f42dc55411fd881f89db53d5775eb3b2a391e7
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T14:15:13Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T14:15:13Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T14:15:13Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/coenzyme-chebi23354.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T14:15:13Z'
+  snapshot_sha256: 07990ad9e631ce6d8171bf6835e20b59e1542d8fc1894161c2beb60f81711449
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing sections; verified reused body retains original
+    access UTC
+  summary: The official ChEBI Introduction and Licensing sections describe chemical
+    entities and roles and state CC BY 4.0 availability. This supports chemical-source
+    attribution, not chemical/protein-class equivalence.
+- evidence_id: current-release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: The verified reused OLS metadata reports ChEBI version 256, loaded on 2026-10-16.
+    This is the captured ontology metadata, not a claim that the backend and original
+    seed use that same release.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/133980/
+  accessed_at: '2026-10-21T14:16:05.433679Z'
+  snapshot_sha256: 04831e800d4e15c55495105193de507de69a804875f1610de33fed27154f5801
+  support: supports
+  locator: Complete material identity fields, names, definition, chemical data/default
+    structure, outgoing relations, citations and compound_origins
+  summary: CHEBI:133980 denotes the generic oxidised coenzyme F420-(gamma-Glu)n polyanion.
+    Its definition asserts a polyanionic polymer and predominance at pH 7.3. The source
+    combines the generalized formula (C5H6NO3)n.C19H19N3O12P with a displayed one-glutamate
+    graph, charge −4 and a fixed InChI for that depiction. The graph preserves an
+    oxidized deazaflavin scaffold and encoded side-chain stereochemistry; its charges
+    include a ring N anion, phosphate and carboxylates. These representative fields
+    are not a fixed composition or charge for every n. Direct coenzyme role and dialkyl-phosphate-anion,
+    carboxylic-acid-anion and polyanionic-polymer ancestry are asserted, with functional
+    parent FO(1−), CHEBI:59904. No compound_origins entries are returned.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:133980
+  accessed_at: '2026-10-21T14:16:05.458676Z'
+  snapshot_sha256: 03bcb53620d51b0db17cefc1b9562dafffffae57d0a9d333f205a3d5aeb63e7b
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves the same nonobsolete identifier and agrees on the source label,
+    definition, names and structural annotations. This supports source identity and
+    attribution, not an equivalence to the synthesized protein requirement.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition and complete outgoing relations; verified reused body retains
+    original access UTC
+  summary: Cofactor CHEBI:23357 is an organic molecule or ion required by an enzyme
+    for activity, with coenzyme and prosthetic-group attachment modes. Its outgoing
+    parent is biochemical role CHEBI:52206. A source role supplies positive candidate
+    context without qualifying a particular protein requirement.
+- evidence_id: biochemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/52206/
+  accessed_at: '2026-10-21T12:32:53.586758Z'
+  snapshot_sha256: a2618530e2ab2677b173b52b5754a4bba1796bb11e8f41a7a5b62e8874dc5227
+  support: supports
+  locator: Definition and complete outgoing relations; verified reused body retains
+    original access UTC
+  summary: Biochemical role CHEBI:52206 concerns an entity or part acting within a
+    biochemical context. It is a role class, not a molecular species or a protein
+    requirement.
+- evidence_id: context-59904
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/59904/
+  accessed_at: '2026-10-21T14:17:26.258570Z'
+  snapshot_sha256: d7ed12ed203ecff72a75d1c418c07a316f7df86dfaa046021fe74aa22e746b4e
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: FO(1−) CHEBI:59904 is the deazaflavin-ribityl chromophore anion whose definition
+    specifies N3 deprotonation and pH 7.3 predominance. Its formula is C16H16N3O7
+    and charge −1. This source assertion is functional-parent context, not independent
+    acid-base evidence for an entire F420 polyglutamyl family or equivalence to it.
+- evidence_id: context-58944
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58944/
+  accessed_at: '2026-10-21T14:17:26.495422Z'
+  snapshot_sha256: 8b49fae437f36e16d4d8937d8e476e51718a3e68db625ab9175364b680454877
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Dialkyl phosphate oxoanion CHEBI:58944 is the conjugate-base class of dialkyl
+    phosphates and has organophosphate-oxoanion ancestry. It is generic rather than
+    one fixed molecular species.
+- evidence_id: context-29067
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/29067/
+  accessed_at: '2026-10-21T14:17:26.731259Z'
+  snapshot_sha256: 12a41abf9bdffa373941b0b114da81ff4783fe1a8ff5b5436c8b6a89df97d15c
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Carboxylic acid anion CHEBI:29067 is the generic deprotonated carboxylic-acid
+    class; its R-group depiction is not a specific F420 chain or a physiological population
+    measurement.
+- evidence_id: context-61469
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/61469/
+  accessed_at: '2026-10-21T14:17:26.898020Z'
+  snapshot_sha256: f7feb1eeaa628a02e32978a7560fa9a8346368f8b975b7159504e84466a43c1c
+  support: supports
+  locator: Definition, chemical data/default structure and complete outgoing relations
+  summary: Polyanionic polymer CHEBI:61469 is a polymer composed of polyanionic macromolecules,
+    with ionic-polymer ancestry and a has-part link to polyanionic macromolecule.
+    This generic class does not require one chain length, molecular mass or fixed
+    net charge.
+- evidence_id: coenzyme-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/
+  accessed_at: '2026-10-21T11:38:19.854129Z'
+  snapshot_sha256: e3e53a2e0b270a5522895f4ca11bb26e0f3021b2e3571a4949af9931db321ce5
+  support: supports
+  locator: Definition and complete outgoing relations; verified reused body retains
+    original access UTC
+  summary: Coenzyme CHEBI:23354 is a low-molecular-weight non-protein organic compound
+    acting as a dissociable donor or acceptor of groups or electrons in enzyme reactions.
+    Its cofactor ancestry explains the source-role lineage but is not identical to
+    the local non-substrate requirement predicate.
+- evidence_id: f420-reduction
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:2007552%20AND%20SRC:MED&format=json&resultType=core
+  accessed_at: '2026-10-21T10:27:04.826149Z'
+  snapshot_sha256: a170ae1d06c3fbcd605024682db5402d19cc140eef983e3118edee62b0ad77bd
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:2007552; DOI:10.1128/jb.173.7.2283-2288.1991. In Methanobacterium
+    thermoautotrophicum strain delta H extracts, F390-reducing activity copurifies
+    with F420-dependent hydrogenase, with substantially greater activity toward F420.
+    This provides positive F420 reduction context without resolving a particular glutamyl
+    length, ring protonation or a retained rather than dissociable cofactor role.
+- evidence_id: reduced-f420-context
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=TITLE%3A%22Protonation%20state%20of%20F420H2%22&format=json&resultType=core
+  accessed_at: '2026-10-21T14:17:45.903461Z'
+  snapshot_sha256: e59a9ecf8105c26dd6999a67bf63af510c55bf26345149fcb0c746b0d44b217e
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full experimental article
+    not inspected through this response
+  summary: PMID:26876228; DOI:10.1039/C6MB00033A. UV-visible spectroscopy and calculations
+    support deprotonated reduced F420H2 in the Ddn enzyme complex. The inspected abstract
+    concerns a reduced, bound cofactor and cannot establish the exact oxidized-polymer
+    microspecies distribution at pH 7.3.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  locator: Executed 2026-10-21T14:16:14Z through 2026-10-21T14:16:15Z; exit 0
+  accessed_at: '2026-10-21T14:16:15Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/nicotinamide-chebi17154.yaml
+    data/traits/function/cofactor_requirement/chebi/nicotinic-acid-chebi15940.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s4-cluster-chebi47739.yaml
+    data/traits/function/cofactor_requirement/chebi/nife4s5-cluster-chebi177874.yaml
+    data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-2-chebi47942.yaml
+    data/traits/function/cofactor_requirement/chebi/pantetheine-4-phosphate-chebi16858.yaml
+    data/traits/function/cofactor_requirement/chebi/pantethine-chebi31959.yaml data/traits/function/cofactor_requirement/chebi/pantothenate-chebi16646.yaml
+    data/traits/function/cofactor_requirement/chebi/pantothenic-acids-chebi25848.yaml
+  locator: Executed 2026-10-21T14:16:10Z through 2026-10-21T14:17:43Z; exit 0
+  accessed_at: '2026-10-21T14:17:43Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+  locator: Executed 2026-10-21T14:16:15Z through 2026-10-21T14:16:15Z; exit 0
+  accessed_at: '2026-10-21T14:16:15Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T14:17:43Z through 2026-10-21T14:17:44Z; exit 0
+  accessed_at: '2026-10-21T14:17:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The label and source definition denote an oxidized gamma-glutamyl polyanion
+    family, not one fixed chain length. The generalized formula, representative one-glutamate
+    graph and fixed charge must be interpreted at their respective levels. Oxidized
+    and reduced F420 states remain distinct, and no alpha-terminal glutamyl variant
+    or exact free-state charge is substituted.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - context-61469
+  - context-58944
+  - context-29067
+  topic: Generic oxidized F420 polyglutamyl scope
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-5
+- area: scope
+  outcome: unknown
+  summary: The target’s pH 7.3 assertion is authentic to the current source. The representative
+    graph includes a ring N anion and phenolic OH, but the inspected primary abstract
+    addresses reduced F420H2 bound to Ddn. It does not independently determine oxidized-family
+    solution populations, ring ionization or charge across all chain lengths. No confirmed
+    microspecies contradiction is asserted from this evidence.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - context-59904
+  - reduced-f420-context
+  topic: pH 7.3 and representative protonation
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-6
+- area: evidence
+  outcome: supported
+  summary: The hydrogenase study supplies positive F420 reduction activity in the
+    specified methanogen preparation. The separate Ddn study supplies reduced-state
+    binding/protonation context. These observations are not transferred into an exact
+    oxidized polyanion requirement for every F420-dependent protein.
+  evidence_ids:
+  - f420-reduction
+  - reduced-f420-context
+  topic: Bounded F420 redox-enzyme context
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-7
+- area: representation
+  outcome: unknown
+  summary: The direct coenzyme role supports positive source context. The redox studies
+    do not by themselves decide whether the reviewed family is a retained cofactor
+    or consumed/regenerated cosubstrate in a chosen activity, nor do they qualify
+    a particular protein, glutamyl length or exact charge. An optional participant
+    role requires explicit adjudication.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - coenzyme-role
+  - f420-reduction
+  topic: Activity-relative role of the polymer family
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-8
+- area: consistency
+  outcome: supported
+  summary: The direct coenzyme role and its cofactor ancestry explain the local coenzyme-requirement
+    parent. The actual source transformation and parent resolve; this is provenance
+    support, not proof of class equivalence or every candidate protein requirement.
+  evidence_ids:
+  - record
+  - owner
+  - chemical
+  - cofactor-role
+  - biochemical-role
+  - local-parent-1
+  - coenzyme-role
+  topic: Source role and local parent provenance
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-9
+- area: provenance
+  outcome: supported
+  summary: The actual ChEBI emitter selects role-associated chemicals, synthesizes
+    a requirement opening and appends chemical prose. Current official sources and
+    CC BY 4.0 attribution are verified. The original seed release is unspecified,
+    and the captured OLS metadata is not assumed to identify the backend or original
+    seed release.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical
+  - chemical-ontology
+  - licence
+  - current-release
+  topic: Maintained ChEBI emitter and attribution
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-10
+- area: grounding
+  outcome: concern
+  summary: The ChEBI identifier denotes a chemical entity or chemical family, whereas
+    the local record denotes a protein requirement. The schema reserves xrefs for
+    true source-direct equivalents. Positive activity context and source-role ancestry
+    do not equate those different entities.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  topic: Chemical entity versus protein-requirement equivalence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  assessment_id: assessment-11
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-133980.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is asserted equivalent to a protein requirement
+  description: The target places CHEBI:133980 in true-equivalence xrefs although that
+    entry describes a chemical entity or chemical family and the local identifier
+    describes a protein functional requirement. This violates the current equivalence
+    semantics independently of whether a suitably scoped biological requirement can
+    be supported.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The record equates different entity types, a major grounding
+    defect. This does not deny positive source-role or enzyme evidence and does not
+    force a molecular participant with an unsupported role.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Correct build in scripts/seed_chebi_cofactor.py so a chemical association
+    is not emitted as true equality to a protein-requirement class. Preserve exact
+    chemical identity, stoichiometry, redox/protonation or polymer scope, source provenance
+    and positive biological context. Adjudicate the intended activity and the role
+    required if an optional ChemicalParticipant is added. If no supported role or
+    representation is available, retain provenance and explicit uncertainty rather
+    than inventing one. Do not move false equality into mapped_xrefs, automatically
+    replace the chemical or qualify a protein instance.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_133980
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated target no longer asserts chemical-to-protein-class equality. Any
+    optional typed association has curator-adjudicated exact chemical scope and activity-relative
+    role; otherwise source provenance and uncertainty remain explicit.
+  - 'Use a controlled audited ChEBI regeneration route: --force permits existing-record
+    overwrite and --apply writes the selected cohort, so avoid an unreviewed broad
+    rewrite.'
+  - For maintained writer changes run just audit-writers, just lint and just test
+    with focused coverage. Run just validate data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/oxidised-coenzyme-f420-glu-n-polyanion-chebi133980.yaml.
+    Run full just validate-all before merging record changes. Recapture changed inputs
+    and save a fresh validated review rather than overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The pH 7.3 population statement and precise ring-site assignment remain independently
+  unresolved. The 2016 publisher full-text request returned HTTP 403 and is excluded;
+  the 1984 DOI bibliographic query returned no result and is not evidence. PMC8498797
+  is a secondary review used only for discovery. No free-flavin pKa is extrapolated
+  to F420, and the representative graph is not treated as a fixed formula or charge
+  for all n. The prior F420 hydrogenase abstract was reused only after digest verification,
+  with its original access time retained.
+tags:
+- unreviewed-path-order
+- batch-029
+- chebi-cofactor
+```
