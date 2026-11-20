@@ -1,0 +1,818 @@
+# Review of requires thiamine(1+) diphosphate(3−)
+
+- Review: 20261021T162814Z-thiamine-1-diphosphate-3-chebi58937
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T16:16:26Z
+- Finished UTC: 2026-10-21T16:28:14Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The thiamine/diphosphate fragment charges correctly yield a dianion, and established positive ThDP enzyme-cofactor context is retained. One confirmed major finding concerns chemical-to-protein-trait equivalence; no charge-error or pH-speciation finding is warranted.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 10 in batch 035. Fresh main inventory has 429359 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 248 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb; c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585, the union covers 338 record paths, leaving 429021 before this batch. 35 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml | generated | requires thiamine(1+) diphosphate(3−) |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58937 | Exact current chemical and OLS identifiers, definitions or explicit nulls, structures where applicable, roles and the cited chemical comparisons were inspected. The official licence and OLS release metadata were checked. The cited complete primary abstracts and any explicitly identified full-text material were read at their stated scopes. Source chemical identity inspection does not establish equivalence to the synthesized protein requirement or qualify optional protein examples. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The captured current official source and its CC BY 4.0 licence support chemical provenance. The seeder creates the local requirement sentence; it is not a verbatim source assertion about a protein. OLS version 256 and the separately timed live backend are distinguished, and the original seed release remains unspecified.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The exact name and copied dianion definition are charge-consistent: +1 on thiamine and −3 on diphosphate sum to−2. The verified source graph, formula and acid/conjugate relation support the chemical identity. This is not a charge typo.
+
+### Formal charge versus unasserted pH-dependent speciation
+
+quantity: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+Neither this target nor its copied definition states a pH 7.3 population claim. The formal charge identifies a chemical state; no numerical free-solution or protein-bound speciation claim is added.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The local cofactor requirement parent follows the direct source role. Vitamin and organophosphate parents describe chemical classifications rather than additional automatically required protein-trait parents.
+
+### Positive ThDP catalysis and bound tautomer evidence
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+Primary spectroscopy supplies positive ThDP enzyme-cofactor evidence in four experimental systems. Aminopyrimidine tautomerism and adduct formation are distinct from the phosphate fragment’s formal charge and do not establish a universal free dianion state for all bound catalytic intermediates.
+
+### FUNCTION cofactor requirement representation
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+A protein-specific requirement for the exact 58937 state needs activity and bound-state qualification. The broader established ThDP cofactor biology is preserved; neither optional examples nor automatic participant population is demanded.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58937.
+
+The exact dianionic ThDP molecule CHEBI:58937 is not the protein requirement class synthesized around it. Charge-consistent chemistry and positive ThDP catalysis do not license their equivalence through xrefs.
+
+## Findings
+
+### F1: Chemical entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-58937.chemical-entity-equivalence.
+
+The exact dianionic ThDP molecule CHEBI:58937 is not the protein requirement class synthesized around it. Charge-consistent chemistry and positive ThDP catalysis do not license their equivalence through xrefs.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Fix the maintained emitter so that the local protein-requirement class is not asserted equivalent to CHEBI:58937, which denotes a chemical entity/class. Preserve source attribution and the intended class-level requirement. Preserve the +1/−3 fragment nomenclature and total−2 identity, distinguish acid-base states and catalytic tautomers/adducts, and independently qualify any exact-state protein requirement before adding an optional participant. A chemical_participants entry is optional; if used after that adjudication, it must identify the supported chemical entity and an activity-appropriate COFACTOR role. Do not automatically move the own-source identifier to mapped_xrefs, which would retain an equivalence implication, and do not create a protein example from the chemical source alone.
+
+- The resulting requirement class no longer has a true-equivalence xref to the chemical entity CHEBI:58937; source provenance is retained with schema-compatible semantics.
+- Preserve the +1/−3 fragment nomenclature and total−2 identity, distinguish acid-base states and catalytic tautomers/adducts, and independently qualify any exact-state protein requirement before adding an optional participant. If no activity/state-qualified participant is established, leave that optional representation absent and record the unresolved scope without asserting a universal negative.
+- Run just validate data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml, just validate-all data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml, and just audit-graphs data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml; before merging a record change run full just validate-all, then save a fresh structured scientific review of the resulting bytes.
+- For changes to the maintained seeder, run just audit-writers and applicable native code checks. Use an audited, explicitly scoped regeneration route for scripts/seed_chebi_cofactor.py and inspect the target diff; do not apply a cohort-wide rewrite merely to repair this record.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58937/; Complete current official compound JSON: identity, names, definition, chemical_data, default_structure, ontology_relations and cited references | supports | CHEBI:58937 is thiamine(1+) diphosphate(3−), formula C12H16N4O7P2S and total charge −2. Its graph has one thiazolium positive charge and three phosphate negative charges. The source and local definition correctly call it a dianion; the name’s−3 describes the diphosphate fragment, not the total molecule. Direct cofactor role and conjugate-base relation to 45931 are present. |
+| chemical-ols | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:58937; Exact term response: obo_id, label, description, synonyms, is_obsolete and ontology metadata | supports | OLS resolves the exact requested CHEBI identifier and corresponding chemical label; its non-obsolete term is a chemical entity/class, not the local protein-requirement class. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Definition and outgoing is-a biochemical role relation; role hierarchy context | supports | ChEBI cofactor is a biochemical role for an organic molecule or ion required by an enzyme; coenzyme and prosthetic group are role subclasses. This is chemical-role context, not a direct assertion qualifying a particular protein. |
+| licence | https://www.ebi.ac.uk/chebi/about/; About ChEBI: data availability and Creative Commons CC BY 4.0 statement | supports | The official ChEBI About page states that its website data are available under CC BY 4.0. The local licence attribution is supported. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; version, config.versionIri, loaded and updated | supports | OLS exposes ChEBI version 256, versionIRI ending /chebi/256/chebi.owl and October16 loading metadata. This pins the inspected OLS view; the independently captured live backend does not thereby become the same release. |
+| conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/45931/; Definition, chemical_data/default_structure where present and outgoing relations | supports | CHEBI:45931 is thiamine(1+) diphosphate(1−), net 0, with reciprocal conjugate-acid relation to 58937 and conjugate-base relation to 9532. |
+| acid | https://www.ebi.ac.uk/chebi/backend/api/public/compound/9532/; Definition, chemical_data/default_structure where present and outgoing relations | supports | CHEBI:9532 is thiamine(1+) diphosphate, net +1 with three phosphate OH groups. Removing all three acidic protons gives total−2; its broad active-vitamin/cofactor description is not a measurement of every bound protonation state. |
+| vitamin-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/26948/; Definition, chemical_data/default_structure where present and outgoing relations | supports | Vitamin B1 is a vitamer class including thiamine and derivatives and their ionized/salt/hydrate forms; it has no single fixed formula/structure. |
+| phosphate-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58945/; Definition, chemical_data/default_structure where present and outgoing relations | supports | Organophosphate oxoanion describes phosphate oxygen deprotonation in an organic phosphoric-acid derivative. It is structural chemical ancestry, not a protein requirement. |
+| thdp-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A17182735%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core&amp;pageSize=10; PMID17182735, DOI10.1073/pnas.0609973104; complete indexed abstract, full article not inspected | supports | Electronic spectroscopy in four ThDP-dependent pyruvate-decarboxylating enzymes identifies aminopyrimidine/iminopyrimidine tautomer states and a substrate-analogue adduct. It gives positive enzyme-cofactor context while illustrating bound-state transformations. It does not quantify free 58937 abundance at a specified pH or qualify every enzyme-bound diphosphate protonation state. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml; Executed 2026-10-21T16:17:17Z through 2026-10-21T16:17:19Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/sodium-ascorbate-chebi113451.yaml data/traits/function/cofactor_requirement/chebi/staphyloferrin-a-chebi84711.yaml data/traits/function/cofactor_requirement/chebi/staphyloferrin-b-chebi134612.yaml data/traits/function/cofactor_requirement/chebi/strontium-2-chebi35104.yaml data/traits/function/cofactor_requirement/chebi/sulfate-chebi16189.yaml data/traits/function/cofactor_requirement/chebi/tb-chebi33377.yaml data/traits/function/cofactor_requirement/chebi/tetra-3-sulfido-tetrairon-chebi49883.yaml data/traits/function/cofactor_requirement/chebi/tetrahydrodictyopterin-chebi52447.yaml data/traits/function/cofactor_requirement/chebi/tetrahydromonapterin-chebi71177.yaml data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml; Executed 2026-10-21T16:17:04Z through 2026-10-21T16:18:28Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml; Executed 2026-10-21T16:17:19Z through 2026-10-21T16:17:19Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T16:18:28Z through 2026-10-21T16:18:29Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The ThDP paper was inspected as its complete indexed abstract. Its positive activity/state context is not independent measurement of a universal free dianion population or every protein-bound protonation state.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T162814Z-thiamine-1-diphosphate-3-chebi58937
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires thiamine(1+) diphosphate(3−)
+started_at: '2026-10-21T16:16:26Z'
+finished_at: '2026-10-21T16:28:14Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The thiamine/diphosphate fragment charges correctly yield a dianion, and
+  established positive ThDP enzyme-cofactor context is retained. One confirmed major
+  finding concerns chemical-to-protein-trait equivalence; no charge-error or pH-speciation
+  finding is warranted.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+    sha256: 06300bfc546082ca69e9c0c64a9364c4cbcce92efc5deff506a376e02ec9bf43
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 10 in batch 035. Fresh main inventory has 429359
+    records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 248 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb;
+    c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585, the union covers 338 record paths, leaving
+    429021 before this batch. 35 inventories were combined. Unpublished local coverage
+    is explicitly not published or merged main coverage. Snapshot-row context paths
+    are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+targets:
+- kind: generated
+  label: requires thiamine(1+) diphosphate(3−)
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/sodium-ascorbate-chebi113451.yaml
+    data/traits/function/cofactor_requirement/chebi/staphyloferrin-a-chebi84711.yaml
+    data/traits/function/cofactor_requirement/chebi/staphyloferrin-b-chebi134612.yaml
+    data/traits/function/cofactor_requirement/chebi/strontium-2-chebi35104.yaml data/traits/function/cofactor_requirement/chebi/sulfate-chebi16189.yaml
+    data/traits/function/cofactor_requirement/chebi/tb-chebi33377.yaml data/traits/function/cofactor_requirement/chebi/tetra-3-sulfido-tetrairon-chebi49883.yaml
+    data/traits/function/cofactor_requirement/chebi/tetrahydrodictyopterin-chebi52447.yaml
+    data/traits/function/cofactor_requirement/chebi/tetrahydromonapterin-chebi71177.yaml
+    data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Exact current chemical and OLS identifiers, definitions or explicit nulls,
+    structures where applicable, roles and the cited chemical comparisons were inspected.
+    The official licence and OLS release metadata were checked. The cited complete
+    primary abstracts and any explicitly identified full-text material were read at
+    their stated scopes. Source chemical identity inspection does not establish equivalence
+    to the synthesized protein requirement or qualify optional protein examples.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - registry
+  - local-parent-1
+  - chemical
+  - chemical-ols
+  - cofactor-role
+  - licence
+  - release
+  - conjugate
+  - acid
+  - vitamin-parent
+  - phosphate-parent
+  - thdp-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T16:16:26Z'
+  snapshot_sha256: 06300bfc546082ca69e9c0c64a9364c4cbcce92efc5deff506a376e02ec9bf43
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T16:16:26Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T16:16:26Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T16:16:26Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T16:16:26Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58937/
+  accessed_at: '2026-10-21T16:17:45.640592Z'
+  snapshot_sha256: 56ef08d585fca4068ad71dfc261561c405a01d2b0b40eb1955475e24fe0c75c6
+  support: supports
+  locator: 'Complete current official compound JSON: identity, names, definition,
+    chemical_data, default_structure, ontology_relations and cited references'
+  summary: CHEBI:58937 is thiamine(1+) diphosphate(3−), formula C12H16N4O7P2S and
+    total charge −2. Its graph has one thiazolium positive charge and three phosphate
+    negative charges. The source and local definition correctly call it a dianion;
+    the name’s−3 describes the diphosphate fragment, not the total molecule. Direct
+    cofactor role and conjugate-base relation to 45931 are present.
+- evidence_id: chemical-ols
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:58937
+  accessed_at: '2026-10-21T16:17:45.620546Z'
+  snapshot_sha256: 252bc81de11e6f198182923004427588cc461e4f83d8fd83cafa284d40939fbe
+  support: supports
+  locator: 'Exact term response: obo_id, label, description, synonyms, is_obsolete
+    and ontology metadata'
+  summary: OLS resolves the exact requested CHEBI identifier and corresponding chemical
+    label; its non-obsolete term is a chemical entity/class, not the local protein-requirement
+    class.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Definition and outgoing is-a biochemical role relation; role hierarchy
+    context
+  summary: ChEBI cofactor is a biochemical role for an organic molecule or ion required
+    by an enzyme; coenzyme and prosthetic group are role subclasses. This is chemical-role
+    context, not a direct assertion qualifying a particular protein.
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: 'About ChEBI: data availability and Creative Commons CC BY 4.0 statement'
+  summary: The official ChEBI About page states that its website data are available
+    under CC BY 4.0. The local licence attribution is supported.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: version, config.versionIri, loaded and updated
+  summary: OLS exposes ChEBI version 256, versionIRI ending /chebi/256/chebi.owl and
+    October16 loading metadata. This pins the inspected OLS view; the independently
+    captured live backend does not thereby become the same release.
+- evidence_id: conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/45931/
+  accessed_at: '2026-10-21T16:18:55.708739Z'
+  snapshot_sha256: cdc760090aa0113d4c48f6dac945b1c8f83731d9f0338919ffcd351013d81618
+  support: supports
+  locator: Definition, chemical_data/default_structure where present and outgoing
+    relations
+  summary: CHEBI:45931 is thiamine(1+) diphosphate(1−), net 0, with reciprocal conjugate-acid
+    relation to 58937 and conjugate-base relation to 9532.
+- evidence_id: acid
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/9532/
+  accessed_at: '2026-10-21T16:18:55.663280Z'
+  snapshot_sha256: 7ccce7a4d41b90c24d8bd6461f2609de43896dfb1bc8687c82200c0c551566d6
+  support: supports
+  locator: Definition, chemical_data/default_structure where present and outgoing
+    relations
+  summary: CHEBI:9532 is thiamine(1+) diphosphate, net +1 with three phosphate OH
+    groups. Removing all three acidic protons gives total−2; its broad active-vitamin/cofactor
+    description is not a measurement of every bound protonation state.
+- evidence_id: vitamin-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/26948/
+  accessed_at: '2026-10-21T16:18:56.205117Z'
+  snapshot_sha256: 9a678077dae59ac9e2a4af044474569561da68e091717d18eaf2cf2a0ed100b0
+  support: supports
+  locator: Definition, chemical_data/default_structure where present and outgoing
+    relations
+  summary: Vitamin B1 is a vitamer class including thiamine and derivatives and their
+    ionized/salt/hydrate forms; it has no single fixed formula/structure.
+- evidence_id: phosphate-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58945/
+  accessed_at: '2026-10-21T16:18:57.123659Z'
+  snapshot_sha256: 733cbcbcb3a5175945e932e5163713b8a7d10fa8c5d71729fc95ac74e8f254f9
+  support: supports
+  locator: Definition, chemical_data/default_structure where present and outgoing
+    relations
+  summary: Organophosphate oxoanion describes phosphate oxygen deprotonation in an
+    organic phosphoric-acid derivative. It is structural chemical ancestry, not a
+    protein requirement.
+- evidence_id: thdp-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A17182735%20AND%20SRC%3AMED&format=json&resultType=core&pageSize=10
+  accessed_at: '2026-10-21T16:21:29.033292Z'
+  snapshot_sha256: 6357e9637f3a7768b0cce73822e7d472912229615b68ec4efa929ecbfadac903
+  support: supports
+  locator: PMID17182735, DOI10.1073/pnas.0609973104; complete indexed abstract, full
+    article not inspected
+  summary: Electronic spectroscopy in four ThDP-dependent pyruvate-decarboxylating
+    enzymes identifies aminopyrimidine/iminopyrimidine tautomer states and a substrate-analogue
+    adduct. It gives positive enzyme-cofactor context while illustrating bound-state
+    transformations. It does not quantify free 58937 abundance at a specified pH or
+    qualify every enzyme-bound diphosphate protonation state.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  locator: Executed 2026-10-21T16:17:17Z through 2026-10-21T16:17:19Z; exit 0
+  accessed_at: '2026-10-21T16:17:19Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/sodium-ascorbate-chebi113451.yaml
+    data/traits/function/cofactor_requirement/chebi/staphyloferrin-a-chebi84711.yaml
+    data/traits/function/cofactor_requirement/chebi/staphyloferrin-b-chebi134612.yaml
+    data/traits/function/cofactor_requirement/chebi/strontium-2-chebi35104.yaml data/traits/function/cofactor_requirement/chebi/sulfate-chebi16189.yaml
+    data/traits/function/cofactor_requirement/chebi/tb-chebi33377.yaml data/traits/function/cofactor_requirement/chebi/tetra-3-sulfido-tetrairon-chebi49883.yaml
+    data/traits/function/cofactor_requirement/chebi/tetrahydrodictyopterin-chebi52447.yaml
+    data/traits/function/cofactor_requirement/chebi/tetrahydromonapterin-chebi71177.yaml
+    data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  locator: Executed 2026-10-21T16:17:04Z through 2026-10-21T16:18:28Z; exit 0
+  accessed_at: '2026-10-21T16:18:28Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml
+  locator: Executed 2026-10-21T16:17:19Z through 2026-10-21T16:17:19Z; exit 0
+  accessed_at: '2026-10-21T16:17:19Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T16:18:28Z through 2026-10-21T16:18:29Z; exit 0
+  accessed_at: '2026-10-21T16:18:29Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: provenance
+  outcome: supported
+  summary: The captured current official source and its CC BY 4.0 licence support
+    chemical provenance. The seeder creates the local requirement sentence; it is
+    not a verbatim source assertion about a protein. OLS version 256 and the separately
+    timed live backend are distinguished, and the original seed release remains unspecified.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical
+  - chemical-ols
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-5
+  topic: ChEBI attribution and release provenance
+- area: identity
+  outcome: supported
+  summary: 'The exact name and copied dianion definition are charge-consistent: +1
+    on thiamine and −3 on diphosphate sum to−2. The verified source graph, formula
+    and acid/conjugate relation support the chemical identity. This is not a charge
+    typo.'
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ols
+  - conjugate
+  - acid
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-6
+  topic: Chemical identity and protein requirement scope
+- area: quantity
+  outcome: not_applicable
+  summary: Neither this target nor its copied definition states a pH 7.3 population
+    claim. The formal charge identifies a chemical state; no numerical free-solution
+    or protein-bound speciation claim is added.
+  evidence_ids:
+  - record
+  - chemical
+  - thdp-primary
+  topic: Formal charge versus unasserted pH-dependent speciation
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-7
+- area: consistency
+  outcome: supported
+  summary: The local cofactor requirement parent follows the direct source role. Vitamin
+    and organophosphate parents describe chemical classifications rather than additional
+    automatically required protein-trait parents.
+  evidence_ids:
+  - record
+  - local-parent-1
+  - chemical
+  - cofactor-role
+  - vitamin-parent
+  - phosphate-parent
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-8
+  topic: Chemical-role and protein-trait hierarchy
+- area: evidence
+  outcome: supported
+  summary: Primary spectroscopy supplies positive ThDP enzyme-cofactor evidence in
+    four experimental systems. Aminopyrimidine tautomerism and adduct formation are
+    distinct from the phosphate fragment’s formal charge and do not establish a universal
+    free dianion state for all bound catalytic intermediates.
+  evidence_ids:
+  - thdp-primary
+  - chemical
+  - conjugate
+  topic: Positive ThDP catalysis and bound tautomer evidence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-9
+- area: representation
+  outcome: unknown
+  summary: A protein-specific requirement for the exact 58937 state needs activity
+    and bound-state qualification. The broader established ThDP cofactor biology is
+    preserved; neither optional examples nor automatic participant population is demanded.
+  evidence_ids:
+  - schema
+  - record
+  - chemical
+  - thdp-primary
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-10
+  topic: FUNCTION cofactor requirement representation
+- area: grounding
+  outcome: concern
+  summary: The exact dianionic ThDP molecule CHEBI:58937 is not the protein requirement
+    class synthesized around it. Charge-consistent chemistry and positive ThDP catalysis
+    do not license their equivalence through xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ols
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  assessment_id: assessment-11
+  topic: Chemical association versus trait equivalence
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-58937.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is asserted equivalent to a protein requirement
+  description: The exact dianionic ThDP molecule CHEBI:58937 is not the protein requirement
+    class synthesized around it. Charge-consistent chemistry and positive ThDP catalysis
+    do not license their equivalence through xrefs.
+  evidence_ids:
+  - record
+  - schema
+  - owner
+  - chemical
+  - chemical-ols
+  - conjugate
+  - acid
+  - thdp-primary
+  field_paths:
+  - xrefs
+  - definition
+  - trait_category
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  certainty: confirmed
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+  normalization_reason: The finding materially changes the meaning, scope, grounding
+    or representation of a defining assertion.
+actions:
+- action_id: A1
+  description: Fix the maintained emitter so that the local protein-requirement class
+    is not asserted equivalent to CHEBI:58937, which denotes a chemical entity/class.
+    Preserve source attribution and the intended class-level requirement. Preserve
+    the +1/−3 fragment nomenclature and total−2 identity, distinguish acid-base states
+    and catalytic tautomers/adducts, and independently qualify any exact-state protein
+    requirement before adding an optional participant. A chemical_participants entry
+    is optional; if used after that adjudication, it must identify the supported chemical
+    entity and an activity-appropriate COFACTOR role. Do not automatically move the
+    own-source identifier to mapped_xrefs, which would retain an equivalence implication,
+    and do not create a protein example from the chemical source alone.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58937
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The resulting requirement class no longer has a true-equivalence xref to the chemical
+    entity CHEBI:58937; source provenance is retained with schema-compatible semantics.
+  - Preserve the +1/−3 fragment nomenclature and total−2 identity, distinguish acid-base
+    states and catalytic tautomers/adducts, and independently qualify any exact-state
+    protein requirement before adding an optional participant. If no activity/state-qualified
+    participant is established, leave that optional representation absent and record
+    the unresolved scope without asserting a universal negative.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml,
+    just validate-all data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml,
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/thiamine-1-diphosphate-3-chebi58937.yaml;
+    before merging a record change run full just validate-all, then save a fresh structured
+    scientific review of the resulting bytes.
+  - For changes to the maintained seeder, run just audit-writers and applicable native
+    code checks. Use an audited, explicitly scoped regeneration route for scripts/seed_chebi_cofactor.py
+    and inspect the target diff; do not apply a cohort-wide rewrite merely to repair
+    this record.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The ThDP paper was inspected as its complete indexed abstract. Its positive activity/state
+  context is not independent measurement of a universal free dianion population or
+  every protein-bound protonation state.
+tags:
+- unreviewed-path-order
+- batch-035
+- chebi-cofactor
+```
