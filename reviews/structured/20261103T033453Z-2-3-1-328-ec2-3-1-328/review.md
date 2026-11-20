@@ -1,0 +1,1437 @@
+# Review of branched-chain 2-oxoacid:malonyl-[acyl-carrier protein] acyltransferase
+
+- Review: 20261103T033453Z-2-3-1-328-ec2-3-1-328
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-11-03T02:01:28Z
+- Finished UTC: 2026-11-03T03:34:53Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The NasB activity class and its carrier-based net chemistry are supported. Curation is needed for the generated REVIEWED transition, a physical CA-line join within 4-methyl-2-oxopentanoate, and graph introductory promises of exemplars and GO content that are absent.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 4 in batch 334. Fresh main inventory has 429421 records. Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df; batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242; batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98) cover 305 record paths. Including validated unpublished local review commit(s) da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd; f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18; ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7; b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb; c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4; 756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb; ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9; b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd; 95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1; 08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661; 8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc; 2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad; cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3; 00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e; e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c; 18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739; 8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810; 91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac; 2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325; ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6; ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8; 02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff; c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b; 8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17; 9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e; b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3; 83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd; 544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54; 162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3; 751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210; c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6; 156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509; 916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704; 403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85; 4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067; fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356; 850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4; 817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385; e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d; f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666; 2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16; ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7; c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f; aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f; e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2; 81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540; bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a; 42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230; 43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0; 354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef; aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1; 036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019; 332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575; 71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad; f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a; e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73; 17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216; 50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc; f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5; b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560; 51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64; b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a; 954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73; 0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810; 21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215; efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978; 21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762; 19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff; f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0; 6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0; f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034; 24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8; 3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104; 28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421; 5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc; a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d; 248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898; bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362; 0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09; 611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62; 0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88; ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4; 9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee; b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843; 597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66; eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826; d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59; b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39; 7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead; 8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361; 3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846; 5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822; e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0; 3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631; c447b4fc18bac3d18b9607df80a3936356f09b58; 9de4c998c671789cf2c9369899602d2303d1e2a3; 63e2656196b00e1497c8446f386bad9273686877; 2842e66a4ae40efdee18ba41b1f491696d9392f0; 6e776e17a17e09a5d7b19901fcf2ee906fde7b92; 85fdd1ce75643be5972849a5bbd197487c930b4e; ad04bb345d060f0a3517f4a5783082f70514cda5; 21b50f88622060b46500f3b117fe0f7de26c5b17; ec993f9363f25285aa1c4f567f06a2bde7f5e14d; 2ad2f8fbdc85436578896aced69aa7c83c99d678; 817614e1c96fe20b78dfa7b4c4cfb12991d20d7c; c5782509bc1db9f270562a417569c2c2b934dd4a; 8180fe9a9d695ea300cc6f8bc720d0cab0e1a1cc; 070eb4598dd41e4f5acbed0ca68e8a0b3a9f94d5; 7e5c4ea95c082b0d0cb0e7322689c215eee07ae8; 820c7994cb1859f761358897f712b65ff42a56fb; 428cff4b05b53375498ef07aeedfe0a2dfa2c4fb; 33da19e6ea67ef00aff4e3536e0f2f49a1fbd13d; 5dec321e9b23a7ab78730761d62a9b5b1daad927; e4890edadc9a2fa7fa820416e687e6e4cf63f454; b2900a4418acfe00980792e90f81a088fb4d6fd8; 8e71035988efb4723545de950ed5a131b29c1e80; ef2f637804e2252a473d517e8d14af9987d111e0; ed5c87a52c3eb446ecf95d7f9a17afdd097a1b1b; dc3c9d74c81a5e557906e1e3ff3a75d526666871; 838b48e27a4400d3b3440638a518403dbde94d20; f7ca899517ca61774913c60dc72902e4ae9be806; ac6351e1e40e4bb74c21c9b8d372ae9f19287c28; 620137f091c6e40fa9b196ceffb1df3bc02902c7; 87a104ced8dd1b59ec62b66bc9d99a452d1c098f; eadad94aaae34548b4f8adbec5f6020681e4f2ef; 8c50d6f27f80ff333e4264fa658994628519b5fb; 2712b40085970ae5f505ce0e4c8be3a524828623; 479e68c137bd48873272490aa71e2ce8e2356e68; b599f5fe918f9f12a80fb96bdf7748d6b9f359cd; 12c3bd18bd7a3da8bf79378838d2b1a26e7c71eb; b893093d791b7e7e2bd8793a2af91a1b2739c951; 3b48d9a7fc53f1caf33a2432a79500071c259be6; 2655f76966a53e5284cca5f8a19c05a33773c37f; c68d33dcd49e8c4c2afeed30f7f443839ad6577d; fd77168316d07965fc17452151fb6b4f91776012; a64e775a826191019b88d32cd7e364907c8a1903; e21434ea4bb5a0893c6b3b1a33c6cc946a493667; 9e8b419453b901b350334bb5b023f08260c8d607; 279083beb55618fc61f1831737d04b1a15a0a099; 399ff67a97ae224b78ab777f1d3cb7217018b554; d1ab9b3b71b3423bae499be9e26e259a6bcc7db8; 484be7398a72b4da712ef5b708a12f7d8cbd04c1; ebd7e9bdd3a22fc28c650f78e1417ccc70394516; 7d6c7fefdc093b05abfaf2140afaf3915d60f463; 8fb725a7025d0b39887a5d9bc0d9823ce45c892d; 7501eb6353515005fb04f3aa4520f9dc6cc76a1a; aac35cfe31a3c93e54f08c352428be086040930a; ed664312aefbbd5e6ea7be3b01ddc6b8296135e5; 25f4c94a66debdcac66a59d92c348be12a49eada; 3f9add4df33480bc16aea614a73cdd87a5394b48; 1c7d16c5ca873556c42f4f05554bf7e96ccee311; 2e181ef20b470cef1232af253b995d6f1128c7d5; 724298b92665cf35790d8d387b6b84f9d40d90ea; 431c5555df8a1bb3eff89c9d41536a7e1ba95dc1; 0e081bc847ae4c3ffd3e0147bc9942568ddf1505; 1c7fe11bd7b3d7b20efab772d1b1c23eed5a1a2a; f213276f14c7841377202054a80793ce828cbb6d; 1e6260782ba409ee31cac0e59592eb9b274b535e; 629d78ba5451ebb10b4e733d58d132ff0b057d99; 4933743899bde2ed693d71764b75ca05c77b0dbb; 766b82712db2fc2977d35ded4f8fb4ee5d1297e6; 4dfba713fb5be0f331eca20ff62f6d50466ebae0; 10b54a8d53dc093d18c574838933b4e4c3ea3995; 8dd5fc7527369c054d62ef48dd55eb7560be2cae; c70e29a9b5f87199cfdcf1500c4ecf2c405d920b; 22287aa252751c6ce68d3afe347a0a27c703da78; 9e20484994542f670db54037fbff1351c54483a5; 53648522d4e3ac086c10b596f6c6aae6243fb3a6; d51bf1c4a60d10bb25abae17c838a77c3093a809; 891c8f90f4004733f7b2906fcd76b0812831f3b0; aac9ff137b2ea80cb5bc21232d9725280ea66fe3; fefc6815dd39ebe2f3c89a15b4c6ec94c930830d; d9882ceeac71c12032c3443eb038f20a550f0cfa; 9617cdc3aa351467abe594674e2f5e800f9518a5; bf67191c56cc7a5af32ff0906c3298c15d31a2d5; 6b3d895753938d9bc6b968e5c7a8b4b04750331b; 4f719d1d50b599f12a1f439b02f0994649fc9a84; b5b9c28cd3958852546d03e30d342b27a1037683; 8d28c9631149e46d7d8efb5410bc3b7099877335; 0414ae49ed5f24319bbaff57822df2982a831556; 6c5a5fe2c30880910c387d7ed1501a7d241bc32f; 0da5ebd96a97cd1d76ec127b3c39508d39c433d5; f38c3dddf6a37a66ccfcd1f1f8f7fa47a37a6fa1; a76ae1a19293a7ee0cd339e8760a1189c83aabf1; 067ba56cb3455f7c3beefc58a07e9187e1687442; de40e727cbacfcbbfc89641bd428829d86a93ded; ce47a6915e0c8a88048fd344c9fc31b5527a1191; f8ae7b89de047da42328e17e4eb9197cf2e52896; 7fa6b32750d883677ca0624facda9514fa317ab5; 3d96e324d5f479215742d69caee86599982ab36a; 45fe14793997d438b8618b4ba0e24483fad26698; 602be370bb36d23f0afbe2fb1852de19e14c505a; 3be9f60e9c7f8c7c97ad7f612ff1cbed990bcbfc; 8f2dbea68ce4f7833fb41924e4411f17749897de; 48d8aae63aef21fc99cc5f543cebfa2f7f3d8af9; 8b3087ccf42b53fed872de54c44ceac680730933; a32c7399aac76261cf49084c735f5532cd2f50f7; 0a009605860ef6913680f469815d17665b89607b; dfff454b73224b296e3bef02409a1572918edb70; 856a1a40cfa7023ded3de834fc7e292320c53ebb; 8414e42bb2ac89af7e03ac53e4166bae44d87cf0; 14508149f87459d9ca22796c23df66c72f4d9d75; e255420332b55fa75a65faae569e5164029cfffa; d6174c13b570126f06e8c7d16bfbf0601ef9cee0; 38b44e1c49dbe2f9e6c8481dda1972511c2de094; 625b0efab9902792ea8ed864f2071efcc39ef924; 674dc55ee43396bd319e7949ad68145684180bee; b53d36a75b3c9b0e104beece4af5d6d15dce4d9d; 85bbd3f46d9dccc7ff996491c82a4313468bb50f; 141bdac51603cab11077ddc6408c4e07b4d08f59; 524725d90fd5a5b5abdc406d9e55303ac4276def; e3c4b037c254535c39c3dec4e95d0edf8e2a2c5e; 4b8db4ea46d68821c29e3d440d961e8c9771f04c; 393cb9c34d469249cf88fcd60dfa61cce595327a, the union covers 3385 record paths, leaving 426036 before this batch. 334 inventories were combined. Unpublished local coverage is explicitly not published or merged main coverage. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 04b0ba0c0f96865ee18438b4ec9a9bb206d896c8.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| EC:2.3.1.328 | data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml | generated | branched-chain 2-oxoacid:malonyl-[acyl-carrier protein] acyltransferase |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | EC:2.3.1.328 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | EC:2.3.1.328 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not establish scientific class semantics or independently qualify every legacy protein example. |
+| Causal graph integrity | passed | True | EC:2.3.1.328 | Structural causal-graph integrity was checked on the exact target; deterministic checks do not independently verify the scientific claims. |
+| Curation history validity | passed | True | EC:2.3.1.328 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | EC:2.3.1.328 | Current source identities, original metadata dates and full declared response scopes were checked. The optional full-text request returned HTTP500 and is recorded as an access limitation; conclusions stay within attained authority, provider and abstract scopes. |
+
+## Scientific And Domain Assessments
+
+### Source identity and protein-trait scope
+
+identity: supported. Targets: EC:2.3.1.328.
+
+EC 2.3.1.328/Rhea84087 is a branched-chain 2-oxoacid-to-malonyl-ACP transfer activity, with two decarboxylations and lipoyl reduction. It is distinct from downstream NasA amino-acid N-acylation; Paraburkholderia graminis is the expression host of a metagenomic enzyme, not an established native source organism.
+
+### Source grounding and trait associations
+
+grounding: supported. Targets: EC:2.3.1.328.
+
+There is no selected canonical protein. This is an enzyme-activity class with a metagenomic source characterization, not a particular host protein. No accession or residue coordinate is inferred from the generic carrier participants.
+
+### Class-level evidence and scientific scope
+
+evidence: supported. Targets: EC:2.3.1.328.
+
+Complete IUBMB/ENZYME and original Rhea parents support the activity and staged TPP/lipoyl mechanism at authority level. PMID 21714057 has no attained abstract and PMC3495001 returned HTTP500; no unseen primary methods or assay details are asserted.
+
+### Protein trait class completeness
+
+completeness: concern. Targets: EC:2.3.1.328.
+
+The single mapped reaction and all 11 edges are represented. The graph introduction nevertheless promises exemplar enzymes and GO equivalence while neither is present; fix the conditional description rather than inventing examples or mappings.
+
+### Trait schema
+
+schema: supported. Targets: EC:2.3.1.328.
+
+The captured target parses and the actual current target/shared native gates passed. These are schema, semantic and history checks at the captured state; they do not substitute for the scientific or human review required for lifecycle promotion.
+
+### Trait hierarchy and source relationships
+
+consistency: supported. Targets: EC:2.3.1.328.
+
+Rhea and ENZYME include two reactant protons and balance with the current carrier transformations. IUBMB omits those protons while describing the same organic transformation. This is an explicit source coefficient difference; no unverified protonation explanation or target balance defect is inferred.
+
+### Source attribution and release provenance
+
+provenance: supported. Targets: EC:2.3.1.328.
+
+The class and definitions identify their source authorities, and retained source metadata keeps its original acquisition dates. Generated history is distinguishable from human review; the status-promotion defect is addressed separately.
+
+### Requirement scope and scientific status
+
+scope: concern. Targets: EC:2.3.1.328.
+
+The inspected history records an automatic SEEDED-to-REVIEWED transition but documents no HUMAN sign-off; this agent assessment supplies none. No selected protein supports a locus-level iModulon query.
+
+### Causal mechanism evidence
+
+graph: supported. Targets: EC:2.3.1.328.
+
+All 11 edges were checked against their actual roles: net substrates/products and generic modified-residue parts. The graph is not a resolved elementary catalytic mechanism. TPP staging and an unknown lipoyl reoxidase remain bounded IUBMB/ENZYME context.
+
+### Trait nomenclature
+
+nomenclature: concern. Targets: EC:2.3.1.328.
+
+The accepted branched-chain acyltransferase name and NasB context are supported. The physical source join produces the malformed literal 4-methyl-2- oxopentanoate in the top definition, MECHANISTIC text and graph description; restore 4-methyl-2-oxopentanoate with a bounded CA continuation rule.
+
+### Trait quantity
+
+quantity: supported. Targets: EC:2.3.1.328.
+
+Current coefficients, stereochemical labels and charge/atom accounting were checked from complete retained Rhea participants and returned chemical fields. Assay kinetics, where available, remain source- and organism-specific; they are not generic class thresholds.
+
+### Maintained trait emitter
+
+ownership: concern. Targets: EC:2.3.1.328.
+
+The maintained EC graph builder owns the unconditional lifecycle transition and graph introduction; seed_ec.py owns physical CA assembly and imported DR provenance, while the MECHANISTIC enricher propagates the already seeded reaction text. Corrections belong in those producers followed by regenerated artifact review.
+
+### Defining representation and axis/category
+
+representation: supported. Targets: EC:2.3.1.328.
+
+Small molecules are distinguished from whole ACP/lipoyl-carrier proteins and modified serine/lysine reactive parts. Reactive-part formulas are not whole-protein formulas and no sequence position is implied. The GENERAL definition accurately supplies the EC ancestor breadcrumb.
+
+## Findings
+
+### F1: Graph generation automatically promotes review status
+
+major / open / confirmed; issue key: automated_review_status.
+
+The inspected history records automatic SEEDED-to-REVIEWED promotion when the graph was generated, but documents no HUMAN sign-off; this agent assessment supplies none.
+
+### F2: Physical source-line joins split chemical names
+
+minor / open / confirmed; issue key: physical_source_line_handling.
+
+Physical CA-line joining inserts a spurious space in the chemical token 4-methyl-2- oxopentanoate, propagated into three narrative fields.
+
+### F3: Graph description promises absent protein and GO content
+
+minor / open / confirmed; issue key: unrepresented_graph_content.
+
+The graph introduction promises exemplar enzymes and GO equivalence although neither is represented.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Remove unconditional lifecycle promotion from build_ec_causal_graphs.py. Preserve honest historical provenance and require explicit HUMAN sign-off before assigning REVIEWED.
+
+- Graph generation alone does not promote an unreviewed record.
+- Any future REVIEWED promotion links explicit HUMAN sign-off and accurate history; this agent review is not that approval.
+
+### A2
+
+Correct bounded ENZYME CA continuation handling in seed_ec.py; regenerate the top definition, then the MECHANISTIC layer and EC graph description from the corrected source text.
+
+- The affected chemical token is continuous and agrees with the source chemical identity.
+- Other word boundaries, coefficients and chemical names remain intact.
+- The top definition, MECHANISTIC text and graph description agree after regeneration.
+
+### A3
+
+Make build_ec_causal_graphs.py build-description clauses conditional on the actual selected exemplar and GO content; retain supported chemistry.
+
+- The introduction describes only content actually present in this graph.
+- No unsupported protein or GO node is added merely to satisfy boilerplate.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml; Entire selected YAML record | supports | Current complete EC:2.3.1.328 class record: definitions, exact mappings, examples, inspected history and all 11 graph edges. |
+| rules | /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/.claude/skills/curate-yaml-record/references/review-checklist.md; Complete status/audit row and review checklist | supports | The current review checklist requires REVIEWED status to have human sign-off and explicit LLM assistance. |
+| native | /private/tmp/ptm-record-reviews-20261021/batch-334/record-04/checks.json; Whole current checks array; bound ROOT exact-input and native acceptance receipts | supports | The two current target gate commands completed with exit code zero; the bound ROOT acceptance separately records all 22 current batch gates and exact captured inputs. |
+| ec-builder | /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/build_ec_causal_graphs.py; build description and main lifecycle branch | supports | The maintained build function emits the common graph introduction, and main promotes SEEDED records to REVIEWED while adding a generated graph history event. |
+| seed | /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/seed_ec.py; parse_enzyme and build_leaf_yaml | supports | parse_enzyme retains physical CA pieces; build_leaf_yaml joins them with spaces and labels imported ENZYME DR protein examples with source CURATOR. |
+| enricher | /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/enrich_mechanistic_defs.py; mechanistic_text EC branch | supports | The maintained MECHANISTIC-definition enricher extracts the already seeded 'Catalysed reaction' definition into the MECHANISTIC layer. |
+| enzyme | https://ftp.expasy.org/databases/enzyme/enzyme.dat; Complete ID 2.3.1.328 stanza through // | supports | The complete ENZYME 2.3.1.328 stanza gives the accepted name, physical CA lines, comments and 0 DR protein cross-references. |
+| enzclass | https://ftp.expasy.org/databases/enzyme/enzclass.txt; Complete EC 2.-.-.-, 2.3.-.- and 2.3.1.- rows | supports | The three applicable hierarchy rows are Transferases; Acyltransferases; Transferring groups other than amino-acyl groups. |
+| rhea-map | https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv; All exact EC 2.3.1.328 rows | supports | The current mapping row associates EC:2.3.1.328 with undirected Rhea master 84087. |
+| rhea | https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz; Master 84087, its exact directional children and complete declared recursive subject closure; superclass context kept separate | supports | Rhea 84087 supplies the complete equation, directional children, coefficients, participant identities, citations and recursively retained chemical/carrier context. |
+| chemistry | /private/tmp/ptm-record-reviews-20261021/batch-334/ec-contract-shared334-reading/current-chemistry-edge-proof.json; Complete record_correspondence position 4, equation 84087 and every position-4 edge; bound same-actor shared scientific reading | supports | This author's current original-RDF inverse and scientific reading check all 11 selected edges, typed participants and the complete 84087 atom/charge balance. Common unchanged carrier remainders cancel symbolically; this is not a whole-protein molecular formula claim. |
+| iubmb | https://iubmb.qmul.ac.uk/enzyme/EC2/3/1/328.html; Entire parsed HTML text, including all bibliography and source footers; original HTML pinned. | supports | IUBMB names NasB as a metagenome-derived branched-chain 2-oxoacid:malonyl-ACP acyltransferase, with Paraburkholderia graminis as expression host. Its overall equation has two CO2 products and no explicit proton term; comments describe TPP and lipoyl transfer stages and an unknown lipoyl reoxidation enzyme. |
+| pmid-21714057 | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21714057%20AND%20SRC:MED&amp;format=json&amp;resultType=core; Complete JSON envelope. | context_only | PMID 21714057, DOI 10.1002/cbic.201100215, identifies the metagenome-derived branched-chain acyl-ACP enzyme paper. This attained CORE response provides bibliographic fields and a PMC3495001 link but no abstract text. |
+| failed-PMC3495001 | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3495001/fullTextXML; Complete attained response and original metadata | context_only | The actual PMC3495001 fullTextXML request returned HTTP500 with a 150-byte JSON error response. It supplies no article content. |
+| chebi-15378 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:15378 is returned as hydron. The returned formula is H with charge 1. |
+| chebi-16526 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16526/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:16526 is returned as carbon dioxide. The returned formula is CO2 with charge 0. |
+| chebi-17865 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/17865/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:17865 is returned as 4-methyl-2-oxopentanoate. The returned formula is C6H9O3 with charge -1. |
+| chebi-78449 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/78449/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:78449 is returned as O-(S-malonylpantetheine-4'-phosphoryl)serine(2-) residue. The returned formula is C17H26N3O11PS with charge -2. |
+| chebi-78822 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/78822/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:78822 is returned as O-(S-3-oxo-5-methylhexanoylpantetheine-4'-phosphoryl)serine(1-) residue. The returned formula is C21H35N3O10PS with charge -1. |
+| chebi-83099 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/83099/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:83099 is returned as N(6)-[(R)-lipoyl]-L-lysine residue. The returned formula is C14H24N2O2S2 with charge 0. |
+| chebi-83100 | https://www.ebi.ac.uk/chebi/backend/api/public/compound/83100/; Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release fields; unrelated ontology/bibliography arrays excluded | supports | CHEBI:83100 is returned as N(6)-[(R)-dihydrolipoyl]-L-lysine residue. The returned formula is C14H26N2O2S2 with charge 0. |
+| catalogue | https://imodulondb.org/api/datasets; Complete 20-entry returned catalogue; exact selected organism-name comparison only, without cross-species or expression-host transfer | context_only | The retained iModulonDB catalogue contains 20 organism entries and their dataset names at its original 2026-11-02 capture time. |
+| validation-1 | just validate data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml; Executed 2026-11-03T02:02:36Z through 2026-11-03T02:02:37Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/enzymatic_activity/ec/2-3-1-325-ec2-3-1-325.yaml data/traits/function/enzymatic_activity/ec/2-3-1-326-ec2-3-1-326.yaml data/traits/function/enzymatic_activity/ec/2-3-1-327-ec2-3-1-327.yaml data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml data/traits/function/enzymatic_activity/ec/2-3-1-329-ec2-3-1-329.yaml data/traits/function/enzymatic_activity/ec/2-3-1-33-ec2-3-1-33.yaml data/traits/function/enzymatic_activity/ec/2-3-1-330-ec2-3-1-330.yaml data/traits/function/enzymatic_activity/ec/2-3-1-331-ec2-3-1-331.yaml data/traits/function/enzymatic_activity/ec/2-3-1-332-ec2-3-1-332.yaml data/traits/function/enzymatic_activity/ec/2-3-1-333-ec2-3-1-333.yaml; Executed 2026-11-03T02:03:36Z through 2026-11-03T02:04:42Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 13532<br>source evidence objects: 23062<br>qualified record bindings: 23062<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml; Executed 2026-11-03T02:02:37Z through 2026-11-03T02:02:37Z; exit 0 | supports | causal-graph audit: 1 records, 1 graphs, 12 nodes, 11 edges &#124; grounded nodes 12/12, snippet-cited edges 11/11 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-11-03T02:04:42Z through 2026-11-03T02:04:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The NasB source organism is unresolved in the metagenomic characterization; the reported expression host is not a native-organism assignment.
+- PMID 21714057 supplies no abstract in the attained CORE response and PMC3495001 returned HTTP500; primary full-text methods and figures were unavailable.
+- IUBMB omits the two protons represented by ENZYME/Rhea. This unresolved coefficient difference is disclosed without assuming a protonation explanation.
+- Lipoyl cofactor reoxidation is assigned to an unknown enzyme by the authority source.
+- The structured catalogue comparison is bounded to its retained 2026-11-02 snapshot and exact selected organisms; it establishes neither global dataset absence nor negative biological evidence.
+- This author performed read-only source/scientific work and pure scratch checks. ROOT separately acquired sources and executed the captured native gates; no publication or human approval is supplied by this assessment.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261103T033453Z-2-3-1-328-ec2-3-1-328
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of branched-chain 2-oxoacid:malonyl-[acyl-carrier protein] acyltransferase
+started_at: '2026-11-03T02:01:28Z'
+finished_at: '2026-11-03T03:34:53Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The NasB activity class and its carrier-based net chemistry are supported.
+  Curation is needed for the generated REVIEWED transition, a physical CA-line join
+  within 4-methyl-2-oxopentanoate, and graph introductory promises of exemplars and
+  GO content that are absent.
+source:
+  git_revision: 04b0ba0c0f96865ee18438b4ec9a9bb206d896c8
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/SKILL.md
+    sha256: f28b4fb7ad5b2891ba8569b2f923559e99cec7b18dd42557b6b0e4becb8f4762
+    role: context
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/edison-causal-graphs/SKILL.md
+    sha256: 2392f62014a428813a328f13e768eb3f08d4c853c9e0d2c439f5379d7f2cb66b
+    role: context
+  - path: .claude/skills/molecular-causal-graphs/SKILL.md
+    sha256: de35c69487283d2b28cae6048cf2c02953012aba41e897680999c4e3bde3dbc1
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: AGENTS.md
+    sha256: 8bfd4da2ecf01cbe56cdbfe1e7860a9f343eefdb984ef6775c7031a7c02a3349
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: a776553cee8cbe239d4d00ea27d728c271ee7462a42532ccf7e5bd2a9e285a2b
+    role: context
+  - path: data/grounding/README.md
+    sha256: 83155f235a0cefa98dfaf88ea888f4d65a1ba056587f9869b4fbbd92df1a91c3
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+    sha256: 26413f2cb2908eedfb383b57a0f4b499a297072cc9d7b60a7c81df5c95f78761
+    role: target
+  - path: data/traits/function/enzymatic_activity/ec/2-3-1-ec2-3-1--.yaml
+    sha256: cb04b7077610a9328e8166cc8bc726ef22689f5dd4c17458088e8d07da86e638
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-3-ec2-3----.yaml
+    sha256: c6bd8329bb383cd3741e3fd1cd18aafb5ab36be0de36bfa661df9eab65316d5d
+    role: context
+  - path: data/traits/function/enzymatic_activity/ec/2-ec2------.yaml
+    sha256: c6ae59fb7667626b2a578da2ae849b9b246a6690823e046c63f656b59026cabe
+    role: context
+  - path: data/traits/function/enzymatic_activity/rhea/n-6-r-lipoyl-l-lysyl-lipoyl-carrier-protein-4-methyl-2-oxopentanoate-m-rhea84087.yaml
+    sha256: 03a9f67df30f2bfd1b858fd48f560d31f237bf9e311f1d7cca990e14ca610b17
+    role: context
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 44ea312c36abbe090da0315b60a8c0727db9ba5c766607aa77c81bf85c025233
+    role: context
+  - path: research/uniprot-organism-protein-grounding-plan.md
+    sha256: 99f0eded9310561155198b863c6c9ea05aeb145b1d4f76109df000646d2b1a7f
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 6d1f4b70648cddb3147fe22233c1111e51ac514552444f193c4f2f03dfa6c1ea
+    role: context
+  - path: scripts/build_ec_causal_graphs.py
+    sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+    role: context
+  - path: scripts/build_rhea_causal_graphs.py
+    sha256: ac1785a1d65e4f747f3e0f6661a2c97cea8df20aefdbab9bbe12c7e236ded5f8
+    role: context
+  - path: scripts/deflib.py
+    sha256: 5dbb70e6812fef6a19b77b044235cfe31c88369078e2399efa32cfec0aafd929
+    role: context
+  - path: scripts/enrich_ec_general_defs.py
+    sha256: 45708aa03e049d2ab395e6be0d5f5b1816c9ae4707a478a9e3b321ebb675ad97
+    role: context
+  - path: scripts/enrich_mechanistic_defs.py
+    sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+    role: context
+  - path: scripts/record_io.py
+    sha256: ebe9153319474f2c7333b8b4709f32b00eddae1d2abe3d6a1420c74356e585bf
+    role: context
+  - path: scripts/rhea_rdf.py
+    sha256: 4a7a05bfdedce442e38cd3da5d4dc83ea5c2796ea1099c6fc804321c4a4c5af9
+    role: context
+  - path: scripts/seed_ec.py
+    sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+    role: context
+  - path: scripts/yaml_emit.py
+    sha256: 2507aaa5ed8f44634082183aecdde91f259b5700b6530f55a133507a2ca0a388
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 4 in batch 334. Fresh main inventory has 429421 records.
+    Main and validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df;
+    batch-022 at 484164d64a30c3578caabf4600044501f6c73ce5; batch-023 at bf8f281b87817f23531ae0fdd2aefa452f4c9242;
+    batch-024 at 01f60cc4160c18fe3e62768ca960a8c76bb60616; batch-025 at 0246872bdbfd520403011891f03194457ebd2b98)
+    cover 305 record paths. Including validated unpublished local review commit(s)
+    da9c0fc6fbdf249f87d3cceba1b83c6cb2ac975d; 2e4943d62d132241cbbe931c3347abb8e45719bd;
+    f67243be00c3d9c891c24c22a32c932ea7bee099; 55a71f32ee7c35ceb6449d1bd1d85954b9609d18;
+    ac3fcf7c6a5710b240a7aa0db1d09bcb2f09529b; 00702985331951f0990ffdc7b352b5a1657160b7;
+    b6ee361647a739487903ad0d184297a280189333; 94d787f848b7b9a1c123f7ae54f1cacedd7f55eb;
+    c6dacdf0e1f79554d56ebfff47b08d3ef1f4c585; 2713fb4cb42716b649bb40a055bf29cf2138dca4;
+    756ecaf67cacd45cb5bf9d7b5666b4fbde632e96; 6a22474e153e8283e66d85844806dbc27784eebb;
+    ee9a05771251fd84096ca40cfee30ea23e064f91; c589a5515b45e7337f41a032609859f3a20fb7f9;
+    b87f4bd08683d7d13c943c409fd2fc191918135b; 43b6868b10bbbe28d4030e9eaf0a06a4400f47dd;
+    95ad98ca67c636454fb543a53f9157b574d64cb6; 538ccd21f618ad8ae64adfe2667af153feae8ff1;
+    08a4a1d5e2d7457ce4696303db2cb67cf3f5f752; 68138e97c6706d7c0fbb0ab30f58d5fd179b6661;
+    8f8d7bc536c122a1caa0f9fe02bd19aa3af2e79b; 896749322d48bf0a8efd3b822d34ff9f6ada7ffc;
+    2d4dd0983f0604f70a485c085e43942b24e520ac; 6f9ec803cc5193aa056ad3e7b42678d05a11e1ad;
+    cad414749af988265991078a351e7bff329f012f; decc32c20475e07ec196d4fb3c930979344ca1f3;
+    00f14ceee7dff47cc5ebdea68fc434e6433bebba; 19ec1cc7e4b21f351a5cdc2b18611dd7361b088e;
+    e12f670fd4896cdce45b65eab2547ef679ef1cf7; 2af17182bdaaee828e308b030b76a675442fba5c;
+    18d3c2d4119314ba267f54e08397c1c889f6407c; 028198be440bc2ac7e50245c4444c30425798739;
+    8130eea18e4e9234bccbc8af19d08f040a3645c8; 0089dcf1bc90bc2737892baa2670dbe64b214810;
+    91b6b1b722fd89902ef210ed30beda1c94a5bd5f; 99d0578fb48bc77c11102c40e2989aa30b2a0dac;
+    2ba88a35fdb646bbe295cdad6c62826e0a187f44; 2f4bacaeedd95045a5e15c309d43c033e408e325;
+    ef616d50f93f5715042a1cd3562d34b2d7f9a127; f4cb59c32d03a12ea6736f618de5acf20a4439d6;
+    ff23e5df0c3487e32ffb957c67675c67c16b41c2; 75ad3a291726b092c359f97917a71cfe8e2e6af8;
+    02b349a5fd82cfb33d9194b5cc7a40ff50f366fd; cfb19dc9d57ec551c66101215d03f6e1d43d0eff;
+    c3d9c57c6538a844da118acc99853d274d0a4806; 8abfd5711bfe4893ca2a72758d6ed38497200e1b;
+    8dd1ec15880ec4357357dac79943ea67382c19bd; 612a48f9fee6d2a47670d8a9dcba8ba7a4a3ef17;
+    9b575fbbb6874c6a70f7461b3fce32d06141cf7a; c022030b5e1a201b57819eb42bb559638014fe9e;
+    b1d3cd26d82f923901ad03edbd671c0756d0ecbd; c95fe22c3576a31202663b274ea8ab708796f5b3;
+    83b626799fbe7a712b670a6cde18587c03c9b642; 67c32e6581cd85d000e501335ed1cea86edb64fd;
+    544e1d260461741d6e33957881d9397ee07b4159; fbc8060b3f156689ff1c9187c0a4f8fb58f02b54;
+    162ff91cc410b6d11c2a228a74fa1763d24eec61; f52add53b1d8cc6ce345f604c076223b6534aba3;
+    751989196f24b1f2a0c1fb0701d8a0812072232f; 5f2e76e40a672c9cff0869bd1603d3696314e210;
+    c2806d7e525fa0f7eb1c525da8c0a811f2a84f4d; 64b8692fe04e57d6de5e8f64d89d69fcf88f5cd6;
+    156c17ab70a878767ae231ed5f823055993c5a39; eec5f399f735fb4e6cfe372a210a6091b8af2509;
+    916ca112e82b09cf0741f3bedace363e4c164cdf; 1094e78cebf5eb94d5757d7a36ebdf535cb11704;
+    403388fd601f7e516781e19472be7d418ef9c678; 83cbeeb06066f2ae99b9e6239078863103e97e85;
+    4274276609c085aa059b09669b018cb10b7113da; feaa20463c425a3fcdcc782599f5ff3133a19067;
+    fcee8eb7470aeb0738fb65262f7c7bd82cf9a34e; 577ae0e39e5bde0e4da363cf41f9f39a37afb356;
+    850a910aabc759168f0e749d313e4c21fb2387ec; 3e66545b045adc938bf9b0b1471532cc0ae266c4;
+    817d5e6fe5d4ca5a9c4cd88ee035c6a3b5de5436; 39e70039bc443da8955862c4a845defe88c5c385;
+    e3e294c90026f72ef87acb583aef9b435dc08d8f; 853e2ca43ae9dc1812a20a68ccecfda15061109d;
+    f99a413f3ac540b5526af7d65c0fea82bb11c881; d03ea4ee80be28aa2fb34602f730170c9541a666;
+    2618b15c61d1e4061f3674a249db897d257b5a9e; 00a57e8acb204780df68a3d9d8429cbd43086c16;
+    ef0d145e14270698802dd649a9c346bab53ed2ca; aadecba057531eff15d0117aa957d71b6efbdcc7;
+    c2283b6ba39c7f66e7eede2a166c94c4692a3ff9; 2a98cb4271fbe15a6280c3039e86243248b7076f;
+    aade04271813734e76a5f381c5e6aa11c48c4586; 33622742735c62c57d5a2356634b6fc922db6f6f;
+    e9e6f0d1043c65d8302c284f41fda4a27fb7b873; 955219ebb51f49d6efeeaff398883ed6c96834a2;
+    81a8175da6a3f1e6fb5f4b4935657190723f9aa0; 272c2a8bd759243561d08a515732c631c8a91540;
+    bef507f5b340a81db4212994a8b0b91f37d806d3; 0eb23e8c8f3888995462c1f1b97cbd44694a823a;
+    42e54e3e2797a3a7b51417dbcebb0b9c4a7b0cf6; 4848fbf8933e623045babe4baed8e4e7c54f6230;
+    43eb98cf14f2542c7e7f602651ccf204a54da0f6; c6737819b8f5bd1a06ddd6853432cdee1bd1bfe0;
+    354bfc21667fb534f5eef295984647af689f6447; c38451d06601b7a1197e7a6962fe21ebf96e0fef;
+    aa7698d0ed63abad4280ed1bd0cdcabe114ed3c2; 83fa541c35bbc36c57ba253240b01ff6b5feade1;
+    036c6b1118d17a5cc3515176f914ef6bb0ec14d7; 40d259197445aa2f47c10bf4058835e362528019;
+    332dc98b4b9fdbedec00b1c809f18f03a630945c; 3f3d5320fdb0f5dbd33ea70f3d7a164eff403575;
+    71b0d4586ae89d103ce97b8e4289f07cb66dc249; 40156bc2beacbb7d4f4a88eea25bb8e63fce6fad;
+    f7235e5f4b93a3ef0a4d541180c1f7ef8fea00a3; 20085d9e39447af672fef4875299f6b8a921e34a;
+    e57f7a6fcdc244ee2c841c7bea6816fc21debd01; 2d3659a9e0f4b900b54ed58d6864f4c8c2685a73;
+    17fab5aa093f688b7742ad179f9c7ff49bbcf01e; 03fe3b878d21da8cf4309a6acfc1c04269daa216;
+    50e8fbee6f1ac7b66da1f68998cd0edbbed8b876; bdab443a280b4395e8ba21cef021465ae13475cc;
+    f6a810c1fb200ac9437dd7d4384ee11a65b8da34; ce1b420fc27a19254091e1be9e09b0113daa4ee5;
+    b553b959240a1f20c73054385ed1c5c034604b29; d17da9f5c93efb7ed50684364197776fcae59560;
+    51f60c7644920159d535217eeee96381a648646a; 3ca593a22c594f6071bb4e47ac3e99c98942bd64;
+    b2b89b7d3e2a195949c1dacb6ac82b9b0082f424; f83270ba96807bf8c58e206407a6b460a97f469a;
+    954dcd112c976a5ae0cc551e121f2f38cc57e469; c11015c15fefb635760fab2097c5eb94fecd4a73;
+    0d273e27cb68c70fcac80432fb25bcb436e6474e; b22e81db4c56b009c01e69fc35aac44fe8bcb810;
+    21a97e06f9e3d1642378903bbb0f46eeeea6cbe6; 8a7064ff6bae6e80524b23b2226166c1468b3215;
+    efb75211d4fe2244704e320456e1df86ee7b6ccc; 36c078b072e242d60b41b7745ea853f2ceb91978;
+    21cda0d469da7ea3344e2cff639769d3666bd720; 0b51d7ca3b8efacd55d046462e8724758561e762;
+    19944f198684bd9a58538009588bfbdc8984ec9d; 985c86c62e2f6efc63016a0199a9e70dd944e9ff;
+    f54bcd34f1d157dd2c670b2886de595577078992; 0ed5bdc586987619444370d7c764c83b5797f2e0;
+    6dab4d17475702064cc410ed6371922af04ccc30; ae199468dbb3c0fb62592d47dab70c4ab05772b0;
+    f6cd12055e2be21fbf493d4314df1dff81b372cc; 31ac56a47da7ed544ae4520fff7ce750813e7034;
+    24299fb4442d552e73b9aac83a0b426b04db996f; 31e5323dbc374acac5ea9457d8897c45e005cdd8;
+    3f88cf969298dc31ef6fb3989ef9848c30ddfe88; c4f7008a4b39a2d921620d4fd8a2911f200c5104;
+    28568157b84b5629cd35e5b5487f64e1ed8e40bd; b3c15845c50aaa2efa07bb959bf93aba57a90421;
+    5c9ba1962d5efa64846a7c2332bd3cc1ec6dea9a; 1121d6a268100f52cde004c841d816c54a1d9ccc;
+    a9415f6d43146eda508fd3cc23ad55e8334232f5; 0f111c6bb0eba1fdcfcb678f8f92e84671daa59d;
+    248b5c2c2d8a2b1afb7ea578fe26b674e4a034d7; 602431f959b4d6f11e7a5855910301a255106898;
+    bd43a4645a72e780a81bc105ad15558f0a01bf9e; b1cb9294920b1947ee7e4e6df5315af4fde29362;
+    0a7fdbc4220b22d292243d3c4deb2fd309acdf06; ac5c862980e9dd2d9a893561309dccb402ef9b09;
+    611619fccabe361dc8a1ec8bac20b8be4cfc3c7b; aa824df8210fc29896a767f92353b14b3d964a62;
+    0995dffcaf7e6ed77f47085503c6a952448078e3; ef7fb1c6811b84a2217f287140cafda7d428cd88;
+    ac227089fa9f0eb74629e2e38897dc8444543a52; 666e80780cd32cbbaee1f0829b34dbedaee4b9b4;
+    9b41564ebe52e7802c334edf61e9f881e116bb9f; f609a4476282f3c553edd935a4d8f9ac99a10fee;
+    b0b6c202330ebfd71d51ef0402796e5dd04f767e; b646dd4039d26d11f599e3561416d73c0be7b843;
+    597e9c2a55a0c9d8fa9e113f312a6173b2bc9f35; 82432688a348af43381148765d9b590f6aaf5a66;
+    eb58f15c55b045db935c8619ff96e710e6b7bec8; b87947eb687d77e3b9b86ef2d6ff4d6630da3826;
+    d0ad72ddf8830d559287e17bf4e00030f153a05c; a0f5e3995ca3019006fec3b5f7d3747a2f365b59;
+    b3d368fb8361b340b409591b008388104329229f; e7033c40002d286de9d2fe2d01a30167ba17ec39;
+    7afd28d004274091810d4ee4563dcedf5a68d41a; 6030deb8a421ae30d56116aacb5ea5b4b1a63ead;
+    8f8e58310c1b0eaa967427cd740a3947b39c4c94; 3e1f6595090a17f7d35e08563d7c46154cf64361;
+    3b0dbb660da34b19e0e030ca58de6d1399f0450d; 155a5d1838b02809edc68caa8ec4971989d86846;
+    5031b2b0b1c40c9f0a6883af6d760454a00a641f; bf5c254bb413a66f3d118185352bf44f69b35822;
+    e46ffbe1a49f9eabfeaba6c26ed81019f9bebd72; 050c5353e5e81f62051cedd24aea95a296b773d0;
+    3403c7e4683d98bbb736cf94f39533da97905bff; 1c9ef0b1e4d0dd4fcdd1f6fce6fb5d939936e631;
+    c447b4fc18bac3d18b9607df80a3936356f09b58; 9de4c998c671789cf2c9369899602d2303d1e2a3;
+    63e2656196b00e1497c8446f386bad9273686877; 2842e66a4ae40efdee18ba41b1f491696d9392f0;
+    6e776e17a17e09a5d7b19901fcf2ee906fde7b92; 85fdd1ce75643be5972849a5bbd197487c930b4e;
+    ad04bb345d060f0a3517f4a5783082f70514cda5; 21b50f88622060b46500f3b117fe0f7de26c5b17;
+    ec993f9363f25285aa1c4f567f06a2bde7f5e14d; 2ad2f8fbdc85436578896aced69aa7c83c99d678;
+    817614e1c96fe20b78dfa7b4c4cfb12991d20d7c; c5782509bc1db9f270562a417569c2c2b934dd4a;
+    8180fe9a9d695ea300cc6f8bc720d0cab0e1a1cc; 070eb4598dd41e4f5acbed0ca68e8a0b3a9f94d5;
+    7e5c4ea95c082b0d0cb0e7322689c215eee07ae8; 820c7994cb1859f761358897f712b65ff42a56fb;
+    428cff4b05b53375498ef07aeedfe0a2dfa2c4fb; 33da19e6ea67ef00aff4e3536e0f2f49a1fbd13d;
+    5dec321e9b23a7ab78730761d62a9b5b1daad927; e4890edadc9a2fa7fa820416e687e6e4cf63f454;
+    b2900a4418acfe00980792e90f81a088fb4d6fd8; 8e71035988efb4723545de950ed5a131b29c1e80;
+    ef2f637804e2252a473d517e8d14af9987d111e0; ed5c87a52c3eb446ecf95d7f9a17afdd097a1b1b;
+    dc3c9d74c81a5e557906e1e3ff3a75d526666871; 838b48e27a4400d3b3440638a518403dbde94d20;
+    f7ca899517ca61774913c60dc72902e4ae9be806; ac6351e1e40e4bb74c21c9b8d372ae9f19287c28;
+    620137f091c6e40fa9b196ceffb1df3bc02902c7; 87a104ced8dd1b59ec62b66bc9d99a452d1c098f;
+    eadad94aaae34548b4f8adbec5f6020681e4f2ef; 8c50d6f27f80ff333e4264fa658994628519b5fb;
+    2712b40085970ae5f505ce0e4c8be3a524828623; 479e68c137bd48873272490aa71e2ce8e2356e68;
+    b599f5fe918f9f12a80fb96bdf7748d6b9f359cd; 12c3bd18bd7a3da8bf79378838d2b1a26e7c71eb;
+    b893093d791b7e7e2bd8793a2af91a1b2739c951; 3b48d9a7fc53f1caf33a2432a79500071c259be6;
+    2655f76966a53e5284cca5f8a19c05a33773c37f; c68d33dcd49e8c4c2afeed30f7f443839ad6577d;
+    fd77168316d07965fc17452151fb6b4f91776012; a64e775a826191019b88d32cd7e364907c8a1903;
+    e21434ea4bb5a0893c6b3b1a33c6cc946a493667; 9e8b419453b901b350334bb5b023f08260c8d607;
+    279083beb55618fc61f1831737d04b1a15a0a099; 399ff67a97ae224b78ab777f1d3cb7217018b554;
+    d1ab9b3b71b3423bae499be9e26e259a6bcc7db8; 484be7398a72b4da712ef5b708a12f7d8cbd04c1;
+    ebd7e9bdd3a22fc28c650f78e1417ccc70394516; 7d6c7fefdc093b05abfaf2140afaf3915d60f463;
+    8fb725a7025d0b39887a5d9bc0d9823ce45c892d; 7501eb6353515005fb04f3aa4520f9dc6cc76a1a;
+    aac35cfe31a3c93e54f08c352428be086040930a; ed664312aefbbd5e6ea7be3b01ddc6b8296135e5;
+    25f4c94a66debdcac66a59d92c348be12a49eada; 3f9add4df33480bc16aea614a73cdd87a5394b48;
+    1c7d16c5ca873556c42f4f05554bf7e96ccee311; 2e181ef20b470cef1232af253b995d6f1128c7d5;
+    724298b92665cf35790d8d387b6b84f9d40d90ea; 431c5555df8a1bb3eff89c9d41536a7e1ba95dc1;
+    0e081bc847ae4c3ffd3e0147bc9942568ddf1505; 1c7fe11bd7b3d7b20efab772d1b1c23eed5a1a2a;
+    f213276f14c7841377202054a80793ce828cbb6d; 1e6260782ba409ee31cac0e59592eb9b274b535e;
+    629d78ba5451ebb10b4e733d58d132ff0b057d99; 4933743899bde2ed693d71764b75ca05c77b0dbb;
+    766b82712db2fc2977d35ded4f8fb4ee5d1297e6; 4dfba713fb5be0f331eca20ff62f6d50466ebae0;
+    10b54a8d53dc093d18c574838933b4e4c3ea3995; 8dd5fc7527369c054d62ef48dd55eb7560be2cae;
+    c70e29a9b5f87199cfdcf1500c4ecf2c405d920b; 22287aa252751c6ce68d3afe347a0a27c703da78;
+    9e20484994542f670db54037fbff1351c54483a5; 53648522d4e3ac086c10b596f6c6aae6243fb3a6;
+    d51bf1c4a60d10bb25abae17c838a77c3093a809; 891c8f90f4004733f7b2906fcd76b0812831f3b0;
+    aac9ff137b2ea80cb5bc21232d9725280ea66fe3; fefc6815dd39ebe2f3c89a15b4c6ec94c930830d;
+    d9882ceeac71c12032c3443eb038f20a550f0cfa; 9617cdc3aa351467abe594674e2f5e800f9518a5;
+    bf67191c56cc7a5af32ff0906c3298c15d31a2d5; 6b3d895753938d9bc6b968e5c7a8b4b04750331b;
+    4f719d1d50b599f12a1f439b02f0994649fc9a84; b5b9c28cd3958852546d03e30d342b27a1037683;
+    8d28c9631149e46d7d8efb5410bc3b7099877335; 0414ae49ed5f24319bbaff57822df2982a831556;
+    6c5a5fe2c30880910c387d7ed1501a7d241bc32f; 0da5ebd96a97cd1d76ec127b3c39508d39c433d5;
+    f38c3dddf6a37a66ccfcd1f1f8f7fa47a37a6fa1; a76ae1a19293a7ee0cd339e8760a1189c83aabf1;
+    067ba56cb3455f7c3beefc58a07e9187e1687442; de40e727cbacfcbbfc89641bd428829d86a93ded;
+    ce47a6915e0c8a88048fd344c9fc31b5527a1191; f8ae7b89de047da42328e17e4eb9197cf2e52896;
+    7fa6b32750d883677ca0624facda9514fa317ab5; 3d96e324d5f479215742d69caee86599982ab36a;
+    45fe14793997d438b8618b4ba0e24483fad26698; 602be370bb36d23f0afbe2fb1852de19e14c505a;
+    3be9f60e9c7f8c7c97ad7f612ff1cbed990bcbfc; 8f2dbea68ce4f7833fb41924e4411f17749897de;
+    48d8aae63aef21fc99cc5f543cebfa2f7f3d8af9; 8b3087ccf42b53fed872de54c44ceac680730933;
+    a32c7399aac76261cf49084c735f5532cd2f50f7; 0a009605860ef6913680f469815d17665b89607b;
+    dfff454b73224b296e3bef02409a1572918edb70; 856a1a40cfa7023ded3de834fc7e292320c53ebb;
+    8414e42bb2ac89af7e03ac53e4166bae44d87cf0; 14508149f87459d9ca22796c23df66c72f4d9d75;
+    e255420332b55fa75a65faae569e5164029cfffa; d6174c13b570126f06e8c7d16bfbf0601ef9cee0;
+    38b44e1c49dbe2f9e6c8481dda1972511c2de094; 625b0efab9902792ea8ed864f2071efcc39ef924;
+    674dc55ee43396bd319e7949ad68145684180bee; b53d36a75b3c9b0e104beece4af5d6d15dce4d9d;
+    85bbd3f46d9dccc7ff996491c82a4313468bb50f; 141bdac51603cab11077ddc6408c4e07b4d08f59;
+    524725d90fd5a5b5abdc406d9e55303ac4276def; e3c4b037c254535c39c3dec4e95d0edf8e2a2c5e;
+    4b8db4ea46d68821c29e3d440d961e8c9771f04c; 393cb9c34d469249cf88fcd60dfa61cce595327a,
+    the union covers 3385 record paths, leaving 426036 before this batch. 334 inventories
+    were combined. Unpublished local coverage is explicitly not published or merged
+    main coverage. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - EC:2.3.1.328
+targets:
+- target_id: EC:2.3.1.328
+  path: data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  label: branched-chain 2-oxoacid:malonyl-[acyl-carrier protein] acyltransferase
+  record_class: ProteinTraitRecord
+  kind: generated
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - EC:2.3.1.328
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/enzymatic_activity/ec/2-3-1-325-ec2-3-1-325.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-326-ec2-3-1-326.yaml data/traits/function/enzymatic_activity/ec/2-3-1-327-ec2-3-1-327.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml data/traits/function/enzymatic_activity/ec/2-3-1-329-ec2-3-1-329.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-33-ec2-3-1-33.yaml data/traits/function/enzymatic_activity/ec/2-3-1-330-ec2-3-1-330.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-331-ec2-3-1-331.yaml data/traits/function/enzymatic_activity/ec/2-3-1-332-ec2-3-1-332.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-333-ec2-3-1-333.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not establish scientific class semantics or independently qualify
+    every legacy protein example.
+  target_ids:
+  - EC:2.3.1.328
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Structural causal-graph integrity was checked on the exact target; deterministic
+    checks do not independently verify the scientific claims.
+  target_ids:
+  - EC:2.3.1.328
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - EC:2.3.1.328
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Current source identities, original metadata dates and full declared response
+    scopes were checked. The optional full-text request returned HTTP500 and is recorded
+    as an access limitation; conclusions stay within attained authority, provider
+    and abstract scopes.
+  target_ids:
+  - EC:2.3.1.328
+  evidence_ids:
+  - enzyme
+  - iubmb
+  - rhea
+  - pmid-21714057
+  - failed-PMC3495001
+evidence:
+- evidence_id: record
+  kind: record_content
+  support: supports
+  reference: data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  locator: Entire selected YAML record
+  search_scope: Entire selected YAML record
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: 26413f2cb2908eedfb383b57a0f4b499a297072cc9d7b60a7c81df5c95f78761
+  summary: 'Current complete EC:2.3.1.328 class record: definitions, exact mappings,
+    examples, inspected history and all 11 graph edges.'
+- evidence_id: rules
+  kind: authority
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/.claude/skills/curate-yaml-record/references/review-checklist.md
+  locator: Complete status/audit row and review checklist
+  search_scope: Complete status/audit row and review checklist
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+  summary: The current review checklist requires REVIEWED status to have human sign-off
+    and explicit LLM assistance.
+- evidence_id: native
+  kind: validation
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/batch-334/record-04/checks.json
+  locator: Whole current checks array; bound ROOT exact-input and native acceptance
+    receipts
+  search_scope: Whole current checks array; bound ROOT exact-input and native acceptance
+    receipts
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: 7cdd90987ebe43eb6a20f3bdd0726025c640ea6a11e56675f14195d5d9fbb9d7
+  summary: The two current target gate commands completed with exit code zero; the
+    bound ROOT acceptance separately records all 22 current batch gates and exact
+    captured inputs.
+- evidence_id: ec-builder
+  kind: record_content
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/build_ec_causal_graphs.py
+  locator: build description and main lifecycle branch
+  search_scope: build description and main lifecycle branch
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: d5fdfc7fab74cc3b50b3707669bddd6e58b58299a0178528c6748c6f05f37a2d
+  summary: The maintained build function emits the common graph introduction, and
+    main promotes SEEDED records to REVIEWED while adding a generated graph history
+    event.
+- evidence_id: seed
+  kind: record_content
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/seed_ec.py
+  locator: parse_enzyme and build_leaf_yaml
+  search_scope: parse_enzyme and build_leaf_yaml
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: 606eac99b5465ec95f40071de6421c79adcd0394e71d9e7acd7d92eb2b98c98e
+  summary: parse_enzyme retains physical CA pieces; build_leaf_yaml joins them with
+    spaces and labels imported ENZYME DR protein examples with source CURATOR.
+- evidence_id: enricher
+  kind: record_content
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/scripts/enrich_mechanistic_defs.py
+  locator: mechanistic_text EC branch
+  search_scope: mechanistic_text EC branch
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: e4238b8bffc0de3ce84ad0cec3691e0a1af5d45ee6553fca92a21ef04c3afdf3
+  summary: The maintained MECHANISTIC-definition enricher extracts the already seeded
+    'Catalysed reaction' definition into the MECHANISTIC layer.
+- evidence_id: enzyme
+  kind: authority
+  support: supports
+  reference: https://ftp.expasy.org/databases/enzyme/enzyme.dat
+  locator: Complete ID 2.3.1.328 stanza through //
+  search_scope: Complete ID 2.3.1.328 stanza through //
+  accessed_at: '2026-10-21T18:41:16.449142Z'
+  snapshot_sha256: 6e1f553fcaa15ba7018344d4181012002547cf15febeb9d3a03dacdd75963001
+  summary: The complete ENZYME 2.3.1.328 stanza gives the accepted name, physical
+    CA lines, comments and 0 DR protein cross-references.
+- evidence_id: enzclass
+  kind: authority
+  support: supports
+  reference: https://ftp.expasy.org/databases/enzyme/enzclass.txt
+  locator: Complete EC 2.-.-.-, 2.3.-.- and 2.3.1.- rows
+  search_scope: Complete EC 2.-.-.-, 2.3.-.- and 2.3.1.- rows
+  accessed_at: '2026-10-21T18:41:14.445710Z'
+  snapshot_sha256: a7e77777ac5260f6c86e6127211f036f202cbfb8e11bcc5e638979e538a14782
+  summary: The three applicable hierarchy rows are Transferases; Acyltransferases;
+    Transferring groups other than amino-acyl groups.
+- evidence_id: rhea-map
+  kind: authority
+  support: supports
+  reference: https://ftp.expasy.org/databases/rhea/tsv/rhea2ec.tsv
+  locator: All exact EC 2.3.1.328 rows
+  search_scope: All exact EC 2.3.1.328 rows
+  accessed_at: '2026-10-21T18:41:14.769302Z'
+  snapshot_sha256: 33a62d491eb9f56b4e9e9a5ec2e0b27f5d92432d1afcd3afe101a4b36df331f8
+  summary: The current mapping row associates EC:2.3.1.328 with undirected Rhea master
+    84087.
+- evidence_id: rhea
+  kind: database
+  support: supports
+  reference: https://ftp.expasy.org/databases/rhea/rdf/rhea.rdf.gz
+  locator: Master 84087, its exact directional children and complete declared recursive
+    subject closure; superclass context kept separate
+  search_scope: Master 84087, its exact directional children and complete declared
+    recursive subject closure; superclass context kept separate
+  accessed_at: '2026-10-21T18:42:30.539193Z'
+  snapshot_sha256: 8ee48d7044cf3eef1001fa730dae2a491902ab25b259b519d6826796bb8acedf
+  summary: Rhea 84087 supplies the complete equation, directional children, coefficients,
+    participant identities, citations and recursively retained chemical/carrier context.
+- evidence_id: chemistry
+  kind: validation
+  support: supports
+  reference: /private/tmp/ptm-record-reviews-20261021/batch-334/ec-contract-shared334-reading/current-chemistry-edge-proof.json
+  locator: Complete record_correspondence position 4, equation 84087 and every position-4
+    edge; bound same-actor shared scientific reading
+  search_scope: Complete record_correspondence position 4, equation 84087 and every
+    position-4 edge; bound same-actor shared scientific reading
+  accessed_at: '2026-11-03T02:48:20.664964Z'
+  snapshot_sha256: 33c4a1e692b5d96d8afcc9eacecd98441af588c87086d01424e2f0020c2f332d
+  summary: This author's current original-RDF inverse and scientific reading check
+    all 11 selected edges, typed participants and the complete 84087 atom/charge balance.
+    Common unchanged carrier remainders cancel symbolically; this is not a whole-protein
+    molecular formula claim.
+- evidence_id: iubmb
+  kind: authority
+  support: supports
+  reference: https://iubmb.qmul.ac.uk/enzyme/EC2/3/1/328.html
+  locator: Entire parsed HTML text, including all bibliography and source footers;
+    original HTML pinned.
+  search_scope: Entire parsed HTML text, including all bibliography and source footers;
+    original HTML pinned.
+  accessed_at: '2026-11-03T02:18:00.307967Z'
+  snapshot_sha256: 9b40a9b2eaf4bb60db6ae65dae03efca5e22d8853964c02cab0cf4b6024ad5e6
+  summary: IUBMB names NasB as a metagenome-derived branched-chain 2-oxoacid:malonyl-ACP
+    acyltransferase, with Paraburkholderia graminis as expression host. Its overall
+    equation has two CO2 products and no explicit proton term; comments describe TPP
+    and lipoyl transfer stages and an unknown lipoyl reoxidation enzyme.
+- evidence_id: pmid-21714057
+  kind: primary_source
+  support: context_only
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21714057%20AND%20SRC:MED&format=json&resultType=core
+  locator: Complete JSON envelope.
+  search_scope: Complete JSON envelope.
+  accessed_at: '2026-11-03T02:18:01.371845Z'
+  snapshot_sha256: 102a4806491f1360368d217ae45697854099b28b9d55da762cd25a4e17b5de7d
+  summary: PMID 21714057, DOI 10.1002/cbic.201100215, identifies the metagenome-derived
+    branched-chain acyl-ACP enzyme paper. This attained CORE response provides bibliographic
+    fields and a PMC3495001 link but no abstract text.
+- evidence_id: failed-PMC3495001
+  kind: search
+  support: context_only
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3495001/fullTextXML
+  locator: Complete attained response and original metadata
+  search_scope: Complete attained response and original metadata
+  accessed_at: '2026-11-03T02:34:53.622112Z'
+  snapshot_sha256: 3ea3565b1fe654f44df530f77821bf24c18a935ed6233d1bd3f4c8462573723a
+  summary: The actual PMC3495001 fullTextXML request returned HTTP500 with a 150-byte
+    JSON error response. It supplies no article content.
+- evidence_id: chebi-15378
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/15378/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-27T22:01:08.243003Z'
+  snapshot_sha256: f34a9e435d0819031a1afea1406458164ca0b89f267c9bf5d2c612f9d3a10e5f
+  summary: CHEBI:15378 is returned as hydron. The returned formula is H with charge
+    1.
+- evidence_id: chebi-16526
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16526/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-28T02:05:15.819158Z'
+  snapshot_sha256: 93f9fd87a6823a92a68e84d608072f9a0b0f8de6a7f37980ec180b89f13cb7c6
+  summary: CHEBI:16526 is returned as carbon dioxide. The returned formula is CO2
+    with charge 0.
+- evidence_id: chebi-17865
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/17865/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-28T07:50:59.645525Z'
+  snapshot_sha256: 85ac3855a98c60bd76d4a1e7f64eaffe47523a66aee907a23d7cc8637e75f516
+  summary: CHEBI:17865 is returned as 4-methyl-2-oxopentanoate. The returned formula
+    is C6H9O3 with charge -1.
+- evidence_id: chebi-78449
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/78449/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-31T18:39:54.241756Z'
+  snapshot_sha256: 5098e3e85ba2b460d88ae5ca38b3eb6c9155ca3bc28e56fcca915c70d3bffffb
+  summary: CHEBI:78449 is returned as O-(S-malonylpantetheine-4'-phosphoryl)serine(2-)
+    residue. The returned formula is C17H26N3O11PS with charge -2.
+- evidence_id: chebi-78822
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/78822/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-11-02T22:44:38.828722Z'
+  snapshot_sha256: 72b1715ae8aa1437b051525624da2dbfd129c54c27d24a8790eaa575dedc79fe
+  summary: CHEBI:78822 is returned as O-(S-3-oxo-5-methylhexanoylpantetheine-4'-phosphoryl)serine(1-)
+    residue. The returned formula is C21H35N3O10PS with charge -1.
+- evidence_id: chebi-83099
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/83099/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-28T19:04:04.952877Z'
+  snapshot_sha256: 9a68a0ab379eb751091ec25389f177607c1a2392222534e693209d30f46251f1
+  summary: CHEBI:83099 is returned as N(6)-[(R)-lipoyl]-L-lysine residue. The returned
+    formula is C14H24N2O2S2 with charge 0.
+- evidence_id: chebi-83100
+  kind: database
+  support: supports
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/83100/
+  locator: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  search_scope: Complete identity/name/definition/chemical_data/default_structure/secondary_ids/names/release
+    fields; unrelated ontology/bibliography arrays excluded
+  accessed_at: '2026-10-31T04:17:23.536121Z'
+  snapshot_sha256: 461371caa923a8f97f9478641c5eda5414469e08b8a64b9e548345a22d41a81f
+  summary: CHEBI:83100 is returned as N(6)-[(R)-dihydrolipoyl]-L-lysine residue. The
+    returned formula is C14H26N2O2S2 with charge 0.
+- evidence_id: catalogue
+  kind: search
+  support: context_only
+  reference: https://imodulondb.org/api/datasets
+  locator: Complete 20-entry returned catalogue; exact selected organism-name comparison
+    only, without cross-species or expression-host transfer
+  search_scope: Complete 20-entry returned catalogue; exact selected organism-name
+    comparison only, without cross-species or expression-host transfer
+  accessed_at: '2026-11-02T19:45:50.086124Z'
+  snapshot_sha256: 155607e7023efdead5ebab3919279a0776d5665a7de9e28b67f02f8f521b0693
+  summary: The retained iModulonDB catalogue contains 20 organism entries and their
+    dataset names at its original 2026-11-02 capture time.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  locator: Executed 2026-11-03T02:02:36Z through 2026-11-03T02:02:37Z; exit 0
+  accessed_at: '2026-11-03T02:02:37Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/enzymatic_activity/ec/2-3-1-325-ec2-3-1-325.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-326-ec2-3-1-326.yaml data/traits/function/enzymatic_activity/ec/2-3-1-327-ec2-3-1-327.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml data/traits/function/enzymatic_activity/ec/2-3-1-329-ec2-3-1-329.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-33-ec2-3-1-33.yaml data/traits/function/enzymatic_activity/ec/2-3-1-330-ec2-3-1-330.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-331-ec2-3-1-331.yaml data/traits/function/enzymatic_activity/ec/2-3-1-332-ec2-3-1-332.yaml
+    data/traits/function/enzymatic_activity/ec/2-3-1-333-ec2-3-1-333.yaml
+  locator: Executed 2026-11-03T02:03:36Z through 2026-11-03T02:04:42Z; exit 0
+  accessed_at: '2026-11-03T02:04:42Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 13532\nsource evidence objects: 23062\n\
+    qualified record bindings: 23062\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo-recovery-322/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/enzymatic_activity/ec/2-3-1-328-ec2-3-1-328.yaml
+  locator: Executed 2026-11-03T02:02:37Z through 2026-11-03T02:02:37Z; exit 0
+  accessed_at: '2026-11-03T02:02:37Z'
+  support: supports
+  summary: 'causal-graph audit: 1 records, 1 graphs, 12 nodes, 11 edges | grounded
+    nodes 12/12, snippet-cited edges 11/11 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-11-03T02:04:42Z through 2026-11-03T02:04:44Z; exit 0
+  accessed_at: '2026-11-03T02:04:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: identity
+  outcome: supported
+  summary: EC 2.3.1.328/Rhea84087 is a branched-chain 2-oxoacid-to-malonyl-ACP transfer
+    activity, with two decarboxylations and lipoyl reduction. It is distinct from
+    downstream NasA amino-acid N-acylation; Paraburkholderia graminis is the expression
+    host of a metagenomic enzyme, not an established native source organism.
+  evidence_ids:
+  - record
+  - enzyme
+  - enzclass
+  - iubmb
+  - rhea-map
+  - rhea
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-1
+  topic: Source identity and protein-trait scope
+- area: grounding
+  outcome: supported
+  summary: There is no selected canonical protein. This is an enzyme-activity class
+    with a metagenomic source characterization, not a particular host protein. No
+    accession or residue coordinate is inferred from the generic carrier participants.
+  evidence_ids:
+  - record
+  - enzyme
+  - iubmb
+  - pmid-21714057
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-2
+  topic: Source grounding and trait associations
+- area: evidence
+  outcome: supported
+  summary: Complete IUBMB/ENZYME and original Rhea parents support the activity and
+    staged TPP/lipoyl mechanism at authority level. PMID 21714057 has no attained
+    abstract and PMC3495001 returned HTTP500; no unseen primary methods or assay details
+    are asserted.
+  evidence_ids:
+  - enzyme
+  - iubmb
+  - rhea
+  - pmid-21714057
+  - failed-PMC3495001
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-3
+  topic: Class-level evidence and scientific scope
+- area: completeness
+  outcome: concern
+  summary: The single mapped reaction and all 11 edges are represented. The graph
+    introduction nevertheless promises exemplar enzymes and GO equivalence while neither
+    is present; fix the conditional description rather than inventing examples or
+    mappings.
+  evidence_ids:
+  - record
+  - ec-builder
+  - enzyme
+  - rhea-map
+  - rhea
+  - chemistry
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-4
+  topic: Protein trait class completeness
+- area: schema
+  outcome: supported
+  summary: The captured target parses and the actual current target/shared native
+    gates passed. These are schema, semantic and history checks at the captured state;
+    they do not substitute for the scientific or human review required for lifecycle
+    promotion.
+  evidence_ids:
+  - record
+  - native
+  - rules
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-5
+  topic: Trait schema
+- area: consistency
+  outcome: supported
+  summary: Rhea and ENZYME include two reactant protons and balance with the current
+    carrier transformations. IUBMB omits those protons while describing the same organic
+    transformation. This is an explicit source coefficient difference; no unverified
+    protonation explanation or target balance defect is inferred.
+  evidence_ids:
+  - record
+  - enzyme
+  - iubmb
+  - rhea
+  - chemistry
+  - chebi-15378
+  - chebi-16526
+  - chebi-17865
+  - chebi-78449
+  - chebi-78822
+  - chebi-83099
+  - chebi-83100
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-6
+  topic: Trait hierarchy and source relationships
+- area: provenance
+  outcome: supported
+  summary: The class and definitions identify their source authorities, and retained
+    source metadata keeps its original acquisition dates. Generated history is distinguishable
+    from human review; the status-promotion defect is addressed separately.
+  evidence_ids:
+  - record
+  - seed
+  - enricher
+  - ec-builder
+  - enzyme
+  - rules
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-7
+  topic: Source attribution and release provenance
+- area: scope
+  outcome: concern
+  summary: The inspected history records an automatic SEEDED-to-REVIEWED transition
+    but documents no HUMAN sign-off; this agent assessment supplies none. No selected
+    protein supports a locus-level iModulon query.
+  evidence_ids:
+  - record
+  - ec-builder
+  - rules
+  - catalogue
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-8
+  topic: Requirement scope and scientific status
+- area: graph
+  outcome: supported
+  summary: 'All 11 edges were checked against their actual roles: net substrates/products
+    and generic modified-residue parts. The graph is not a resolved elementary catalytic
+    mechanism. TPP staging and an unknown lipoyl reoxidase remain bounded IUBMB/ENZYME
+    context.'
+  evidence_ids:
+  - record
+  - rhea
+  - chemistry
+  - enzyme
+  - iubmb
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-9
+  topic: Causal mechanism evidence
+- area: nomenclature
+  outcome: concern
+  summary: The accepted branched-chain acyltransferase name and NasB context are supported.
+    The physical source join produces the malformed literal 4-methyl-2- oxopentanoate
+    in the top definition, MECHANISTIC text and graph description; restore 4-methyl-2-oxopentanoate
+    with a bounded CA continuation rule.
+  evidence_ids:
+  - record
+  - seed
+  - enricher
+  - enzyme
+  - iubmb
+  - rhea
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-10
+  topic: Trait nomenclature
+- area: quantity
+  outcome: supported
+  summary: Current coefficients, stereochemical labels and charge/atom accounting
+    were checked from complete retained Rhea participants and returned chemical fields.
+    Assay kinetics, where available, remain source- and organism-specific; they are
+    not generic class thresholds.
+  evidence_ids:
+  - rhea
+  - chemistry
+  - chebi-15378
+  - chebi-16526
+  - chebi-17865
+  - chebi-78449
+  - chebi-78822
+  - chebi-83099
+  - chebi-83100
+  - pmid-21714057
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-11
+  topic: Trait quantity
+- area: ownership
+  outcome: concern
+  summary: The maintained EC graph builder owns the unconditional lifecycle transition
+    and graph introduction; seed_ec.py owns physical CA assembly and imported DR provenance,
+    while the MECHANISTIC enricher propagates the already seeded reaction text. Corrections
+    belong in those producers followed by regenerated artifact review.
+  evidence_ids:
+  - ec-builder
+  - seed
+  - enricher
+  - record
+  - rules
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-12
+  topic: Maintained trait emitter
+- area: representation
+  outcome: supported
+  summary: Small molecules are distinguished from whole ACP/lipoyl-carrier proteins
+    and modified serine/lysine reactive parts. Reactive-part formulas are not whole-protein
+    formulas and no sequence position is implied. The GENERAL definition accurately
+    supplies the EC ancestor breadcrumb.
+  evidence_ids:
+  - record
+  - enzclass
+  - rhea
+  - chemistry
+  - chebi-15378
+  - chebi-16526
+  - chebi-17865
+  - chebi-78449
+  - chebi-78822
+  - chebi-83099
+  - chebi-83100
+  target_ids:
+  - EC:2.3.1.328
+  assessment_id: assessment-13
+  topic: Defining representation and axis/category
+findings:
+- issue_key: automated_review_status
+  category: scope
+  severity: major
+  certainty: confirmed
+  description: The inspected history records automatic SEEDED-to-REVIEWED promotion
+    when the graph was generated, but documents no HUMAN sign-off; this agent assessment
+    supplies none.
+  field_paths:
+  - /mapping_status
+  - /curation_history/0/action
+  evidence_ids:
+  - record
+  - ec-builder
+  - rules
+  normalization_reason: Confirmed current producer/output issue; repair the maintained
+    source and review regenerated outputs without changing supported catalytic identity.
+  title: Graph generation automatically promotes review status
+  finding_id: F1
+  status: open
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: physical_source_line_handling
+  category: nomenclature
+  severity: minor
+  certainty: confirmed
+  description: Physical CA-line joining inserts a spurious space in the chemical token
+    4-methyl-2- oxopentanoate, propagated into three narrative fields.
+  field_paths:
+  - /definition
+  - /definitions/1/text
+  - /causal_graphs/0/description
+  evidence_ids:
+  - record
+  - seed
+  - enricher
+  - ec-builder
+  - enzyme
+  - rhea
+  normalization_reason: Confirmed current producer/output issue; repair the maintained
+    source and review regenerated outputs without changing supported catalytic identity.
+  title: Physical source-line joins split chemical names
+  finding_id: F2
+  status: open
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+- issue_key: unrepresented_graph_content
+  category: graph
+  severity: minor
+  certainty: confirmed
+  description: The graph introduction promises exemplar enzymes and GO equivalence
+    although neither is represented.
+  field_paths:
+  - /causal_graphs/0/description
+  evidence_ids:
+  - record
+  - ec-builder
+  - enzyme
+  - rhea-map
+  normalization_reason: Confirmed current producer/output issue; repair the maintained
+    source and review regenerated outputs without changing supported catalytic identity.
+  title: Graph description promises absent protein and GO content
+  finding_id: F3
+  status: open
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Remove unconditional lifecycle promotion from build_ec_causal_graphs.py.
+    Preserve honest historical provenance and require explicit HUMAN sign-off before
+    assigning REVIEWED.
+  finding_ids:
+  - F1
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  acceptance_checks:
+  - Graph generation alone does not promote an unreviewed record.
+  - Any future REVIEWED promotion links explicit HUMAN sign-off and accurate history;
+    this agent review is not that approval.
+- action_id: A2
+  description: Correct bounded ENZYME CA continuation handling in seed_ec.py; regenerate
+    the top definition, then the MECHANISTIC layer and EC graph description from the
+    corrected source text.
+  finding_ids:
+  - F2
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  acceptance_checks:
+  - The affected chemical token is continuous and agrees with the source chemical
+    identity.
+  - Other word boundaries, coefficients and chemical names remain intact.
+  - The top definition, MECHANISTIC text and graph description agree after regeneration.
+- action_id: A3
+  description: Make build_ec_causal_graphs.py build-description clauses conditional
+    on the actual selected exemplar and GO content; retain supported chemistry.
+  finding_ids:
+  - F3
+  target_ids:
+  - EC:2.3.1.328
+  owner_paths:
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/seed_ec.py
+    role: Maintained EC seed identity, base definition, synonyms, mapping and legacy
+      example emitter
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_ec_general_defs.py
+    role: Maintained GENERAL definition composer from the EC hierarchy
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/enrich_mechanistic_defs.py
+    role: Maintained MECHANISTIC layer composer from the existing reaction definition
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_ec_causal_graphs.py
+    role: Maintained reaction chemistry, mapping and exemplar graph builder with status/history
+      emission
+  - repository: CultureBotAI/proteintraitsmech
+    path: scripts/build_rhea_causal_graphs.py
+    role: Maintained ENZYME DE/CA/DR parser and reaction-quotation source imported
+      by the EC graph builder
+  - repository: CultureBotAI/proteintraitsmech
+    path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    role: Authoritative causal-node category schema and semantic contract
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/molecular-causal-graphs/SKILL.md
+    role: Maintained molecular graph construction and node-type guidance
+  - repository: CultureBotAI/proteintraitsmech
+    path: .claude/skills/edison-causal-graphs/SKILL.md
+    role: Maintained Edison graph construction, participant typing and status-transition
+      guidance
+  acceptance_checks:
+  - The introduction describes only content actually present in this graph.
+  - No unsupported protein or GO node is added merely to satisfy boilerplate.
+limitations:
+- The NasB source organism is unresolved in the metagenomic characterization; the
+  reported expression host is not a native-organism assignment.
+- PMID 21714057 supplies no abstract in the attained CORE response and PMC3495001
+  returned HTTP500; primary full-text methods and figures were unavailable.
+- IUBMB omits the two protons represented by ENZYME/Rhea. This unresolved coefficient
+  difference is disclosed without assuming a protonation explanation.
+- Lipoyl cofactor reoxidation is assigned to an unknown enzyme by the authority source.
+- The structured catalogue comparison is bounded to its retained 2026-11-02 snapshot
+  and exact selected organisms; it establishes neither global dataset absence nor
+  negative biological evidence.
+- This author performed read-only source/scientific work and pure scratch checks.
+  ROOT separately acquired sources and executed the captured native gates; no publication
+  or human approval is supplied by this assessment.
+tags:
+- unreviewed-path-order
+- batch-334
+- ec
+```
