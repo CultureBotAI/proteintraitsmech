@@ -1,0 +1,1078 @@
+# Review of requires FMN(3−)
+
+- Review: 20261021T121753Z-fmn-3-chebi58210
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T12:12:40Z
+- Finished UTC: 2026-10-21T12:17:53Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+FMN(3−) is a valid one-phosphate, N3-deprotonated oxidized species. Two confirmed major findings concern chemical/protein-trait equivalence and the incorrect unqualified pH 7.3 major-species assertion; one confirmed minor concerns diphosphate wording. Free-solution evidence does not determine every protein-bound state.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 5 in batch 022. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87; batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df) covers 208 record paths, leaving 429151 before this batch. 22 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml | generated | requires FMN(3−) |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_58210 | Official ChEBI/OLS resolve the exact oxidized FMN trianion, direct roles and conjugate state. Source-faithful inspection also reveals that the copied diphosphate wording conflicts with its structure and the pH 7.3 population claim conflicts with inspected primary free-solution results. Source model citations and positive OYE1 context are separately bounded. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Maintained ChEBI source transformation and release limits
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The captured ChEBI seeder selects role descendants or chemical entities with a cofactor-related role, synthesizes the requirement wrapper and emits the chemical xref. The current chemical identity, source attribution and licence resolve; the exact original seed release remains unassigned.
+
+### Oxidized FMN trianion and three-proton bookkeeping
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The exact trianion is chemically coherent: two negative phosphate oxygens plus deprotonated imide N3 give net −3, with one phosphorus atom and retained specified stereochemistry. It is neither a diphosphate molecule nor reduced FMNH2. The identifier and valid structural aliases remain intact.
+
+### One-phosphate structure versus diphosphate wording
+
+nomenclature: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The copied diphosphate wording conflicts with the one-phosphorus formula and single phosphate in the target structure and neutral conjugate. Two acidic phosphate OH groups do not create a diphosphate group. This is a bounded source-inherited definition error, not a wrong-identifier conclusion.
+
+### Free FMN speciation at pH 7.3
+
+evidence: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The current source and local definition assert that the N3-deprotonated trianion is the major species at pH 7.3. Primary aqueous fluorescence/CD titration instead places the N3 transition near pH 10.7–11, and the electrochemical paper distinguishes the near-neutral dianion from alkaline trianion. The unqualified physiological-pH predominance claim is therefore contradicted within free-solution scope. Neither source rules out stabilization of another state by a particular protein.
+
+### Positive FMN prosthetic-group context
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The OYE1 primary abstract links a bound FMN prosthetic group to tested structural/kinetic effects. This supports FMN biological relevance while leaving the exact target trianion and protein-dependent pKa unqualified.
+
+### Activity-relative role and bound chemical state
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+Chemical coenzyme/cofactor roles and model provenance do not independently establish a non-substrate requirement for this exact trianion. The free-solution contradiction should be repaired without declaring that no protein can stabilize FMN(3−), replacing the identifier automatically, or qualifying a new native protein example.
+
+### Source roles and broad local cofactor parent
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The source directly asserts both coenzyme and cofactor roles, with coenzyme under cofactor. The captured broad local cofactor parent remains compatible with that hierarchy. Chemical structural and organism-role context is kept separate from exact protein qualification.
+
+### Chemical entity versus protein-requirement equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_58210.
+
+The source chemical and the local protein functional requirement are different entity types. Correct chemistry, authentic source roles and bounded biological context do not establish true own-source equivalence.
+
+## Findings
+
+### F1: Chemical source entity is asserted equivalent to a protein requirement
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-58210.chemical-entity-equivalence.
+
+CHEBI:58210 denotes an exact oxidized chemical trianion, whereas the local class denotes a protein requirement. Authentic source roles do not make a chemical species equivalent to a class of proteins, independently of the definition errors.
+
+### F2: FMN trianion is incorrectly asserted predominant at pH 7.3
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-58210.physiological-ph-speciation.
+
+The definition copies a major-species-at-pH-7.3 claim for the N3-deprotonated FMN trianion. The inspected primary aqueous titration places the N3 transition near pH 10.7–11, and independent electrochemical work distinguishes near-neutral FMN(2−) from strongly alkaline FMN(3−). This is a material conflict in stated chemical speciation, not a refutation of the trianion identity or of every possible protein-bound state.
+
+### F3: Definition calls the single phosphate a diphosphate
+
+minor / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-58210.diphosphate-wording.
+
+The exact formula contains one phosphorus atom and the structure contains one phosphate with two deprotonated oxygens. The copied phrase diphosphate hydroxy groups incorrectly names that group. The identifier, net charge and valid monophosphate aliases remain intact.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build in scripts/seed_chebi_cofactor.py to remove chemical-to-protein-trait equality from xrefs while preserving source grounding and provenance. Retain the chemically valid trianion identity and its exact phosphate/N3 and stereochemical scope. Resolve the definition findings separately and do not silently substitute a dianion or reduced form. Adjudicate the activity-relative role before adding any COFACTOR chemical_participant. If that role cannot be supported, retain provenance and explicit uncertainty without inventing a participant. Do not relocate the equality to mapped_xrefs or promote a protein example or native status.
+
+- The regenerated xrefs no longer equate the chemical entity or chemical class with the requirement trait; exact supported scope and provenance remain auditable. Any participant has an adjudicated activity-relative role, and optional participant absence is not itself a defect.
+- Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A2
+
+Correct or explicitly qualify the source-derived population statement through the maintained ChEBI transform/input or a registered, provenance-preserving override. Preserve the exact trianion identifier and distinguish aqueous conditions from protein-specific protonation. Do not replace CHEBI:58210 automatically or infer that no protein can stabilize it.
+
+- The regenerated definition no longer states unconditional trianion predominance at pH 7.3. Any quantitative speciation claim names its solution conditions and evidence; bound-protein claims have their own support.
+- Original source wording and its conflict remain traceable, and the trianion structural identity is retained unless a separately evidenced scope decision changes it.
+- Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+### A3
+
+Correct the maintained source-derived definition or registered override to refer to the two acidic hydroxy groups of the single phosphate, together with the imide N3 proton. Preserve source provenance and keep this wording repair distinct from the pH population correction.
+
+- The regenerated definition accurately describes one phosphate and three total proton losses without changing the valid FMN(3−) identity, stereochemistry or oxidation state.
+- Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml after the scoped repair.
+- For maintained writer changes add focused pytest coverage and run just audit-writers, just lint and just test. Regenerate the existing target through an audited route. Run full just validate-all before merging record changes; capture changed inputs and save a fresh structured review without overwriting this observation.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing | supports | The official ChEBI Introduction and Licensing sections establish chemical-entity/role scope and CC BY 4.0 licensing. They do not equate a chemical with a synthesized protein requirement. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata identifies ChEBI version 256, loaded 2026-10-16. The original access timestamp and digest are retained; neither the live backend release nor the original seed release is established by this metadata. |
+| chemical-ontology | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:58210; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:58210 as nonobsolete; actual names, description and available chemical annotations were inspected. Empty fields are retained as empty rather than treated as a fixed chemical formula. |
+| chemical | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58210/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | CHEBI:58210 is oxidized FMN(3−), C17H18N4O9P, with one phosphate bearing two O− atoms and a third negative charge at imide N3. It preserves D-ribityl stereochemistry. The three-proton difference from neutral CHEBI:17621 is acid-base chemistry, not flavin reduction. The copied source definition nonetheless says diphosphate hydroxy groups and major species at pH 7.3. Direct roles are coenzyme, cofactor and human/yeast metabolite; structural parents are vitamin B2 and organophosphate oxoanion. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Cofactor is a biochemical role for an organic molecule or ion required by an enzyme for activity, under biochemical role CHEBI:52206. It is not itself a protein-requirement class. |
+| neutral-conjugate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/17621/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Neutral oxidized FMN CHEBI:17621 has formula C17H21N4O9P, one phosphate with two OH groups, imide N3-H and matching specified ribityl stereochemistry. Its explicit conjugate-base relation points to CHEBI:58210. |
+| reduced-comparison | https://www.ebi.ac.uk/chebi/backend/api/public/compound/16048/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | CHEBI:16048 is neutral reduced 1,5-dihydro FMN, C17H23N4O9P. Its reduced ring differs from the oxidized ring retained in CHEBI:58210; reduction and deprotonation are distinct. |
+| coenzyme-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Coenzyme is a low-molecular-weight non-protein organic compound participating as a dissociable acceptor/donor of chemical groups or electrons, under cofactor. This chemical role alone does not establish an activity-relative non-substrate protein requirement. |
+| vitamin-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/176838/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Vitamin B2 is a source class of flavin vitamers including riboflavin phosphate derivatives and salt, ionized and hydrate forms. This is broader context, not a pH-specific molecule population. |
+| oxoanion-parent | https://www.ebi.ac.uk/chebi/backend/api/public/compound/58945/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Organophosphate oxoanion is a phosphoric-acid derivative with one or more deprotonated phosphate oxygens. The exact target structure, not this broad class alone, locates the additional imide charge. |
+| human-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/77746/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Human metabolite is a mammalian metabolite produced during a human metabolic reaction; it does not establish an exact-state protein requirement. |
+| yeast-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/75772/; Exact identifier, names, actual definition field, formula/charge, structure and complete source relations | supports | Saccharomyces cerevisiae metabolite is a fungal metabolite produced during a metabolic reaction in Baker's yeast; this is source role context rather than measured pH speciation. |
+| human-model | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1038%2Fnbt.2488&amp;format=json&amp;resultType=core; Verified DOI/PMID and complete indexed abstract | context_only | DOI:10.1038/nbt.2488 resolves to PMID:23455439, the Recon 2 human metabolic reconstruction. The complete indexed abstract describes model integration and predictions, not an independent measurement of FMN(3−) population at pH 7.3. |
+| yeast-model | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A24678285%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Complete indexed abstract; verified reused raw bytes and original access timestamp | context_only | PMID:24678285, DOI:10.1089/ind.2013.0013 concerns revision of lipid representation in the yeast metabolic reconstruction. The complete abstract corroborates the type of source-origin citation, not an experimental FMN protonation equilibrium. |
+| free-fmn-titration | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11388723/fullTextXML; Actual XML: Experimental procedures, N3/pH results and discussion, Table 1, Fig. 1 and conclusions; supplementary material not inspected | refutes | PMID:39263436, DOI:10.1039/d4ra05540c. The primary free-flavin study reports FMN alkaline N3 transitions with fitted pKa 10.97 ± 0.12 by fluorescence and 10.73 ± 0.21 by circular dichroism (Table 1), using aqueous flavins and pH titration. Those observations conflict with an unqualified N3-deprotonated FMN(3−) predominance at pH 7.3. They do not determine the pKa of every protein-bound flavin. |
+| free-fmn-electrochemistry | https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5078740/fullTextXML; Complete main Results, Discussion and Methods; especially Effects of pH on FMN-Na redox and Figs. 1–3; supplementary files not inspected | refutes | PMID:27767026, DOI:10.1038/ncomms13230. The full primary paper distinguishes phosphate-derived FMN(2−) over the stated near-neutral/weakly basic interval from additional N3 deprotonation to FMN(3−) above pH 10.2. Its cyclic voltammetry compares aqueous solutions at pH 5.5, 8.6, 10.0 and 13.0; two-electron reduction in strong base is a separate process. It corroborates the free-solution scope and one-phosphate structure, not a protein requirement or universal bound-state pKa. |
+| oye-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11668181%20AND%20SRC%3AMED&amp;format=json&amp;resultType=core; Verified PMID/DOI and complete indexed abstract; full article not independently inspected | supports | PMID:11668181, DOI:10.1074/jbc.m108453200 reports OYE1 bound-FMN structural and kinetic effects after mutation near O2/N3. This is positive FMN prosthetic-group context and highlights a protein environment; the complete abstract does not specify the exact trianion or its pH population. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; Executed 2026-10-21T12:13:08Z through 2026-10-21T12:13:09Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/ferroheme-c-2-chebi61717.yaml data/traits/function/cofactor_requirement/chebi/ferroheme-c-chebi60562.yaml data/traits/function/cofactor_requirement/chebi/flavin-adenine-dinucleotide-chebi24040.yaml data/traits/function/cofactor_requirement/chebi/flavin-mononucleotide-chebi24041.yaml data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml data/traits/function/cofactor_requirement/chebi/fmn-chebi17621.yaml data/traits/function/cofactor_requirement/chebi/fmnh2-2-chebi57618.yaml data/traits/function/cofactor_requirement/chebi/fmnh2-chebi16048.yaml data/traits/function/cofactor_requirement/chebi/folic-acid-chebi27470.yaml data/traits/function/cofactor_requirement/chebi/gd-chebi33376.yaml; Executed 2026-10-21T12:13:03Z through 2026-10-21T12:14:24Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml; Executed 2026-10-21T12:13:09Z through 2026-10-21T12:13:09Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T12:14:24Z through 2026-10-21T12:14:24Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The primary pH studies concern free aqueous flavins under their stated buffers/concentrations, not every protein binding site. The 2024 methods, relevant pH results, Table 1, figure context and conclusions were inspected; the 2016 main Results, Discussion and Methods plus relevant figure legends were inspected. Supplementary files were not independently inspected. OYE1 and metabolic-model papers were inspected through complete indexed abstracts. No exact protein-bound state or new protein example is qualified.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T121753Z-fmn-3-chebi58210
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires FMN(3−)
+started_at: '2026-10-21T12:12:40Z'
+finished_at: '2026-10-21T12:17:53Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: FMN(3−) is a valid one-phosphate, N3-deprotonated oxidized species. Two confirmed
+  major findings concern chemical/protein-trait equivalence and the incorrect unqualified
+  pH 7.3 major-species assertion; one confirmed minor concerns diphosphate wording.
+  Free-solution evidence does not determine every protein-bound state.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+    sha256: 83c70defe823bf476e087941e3715387e25af28818fcc8953fbc0cb371b7111a
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 5 in batch 022. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c; batch-019 at a14da7a2c18c5f53a33fb69c8556ca6de9526a87;
+    batch-020 at 58ea13ba743688b992e16e34888a75384d259bc7; batch-021 at 27121a6951a72021e2037a04ee1e1424215a61df)
+    covers 208 record paths, leaving 429151 before this batch. 22 inventories were
+    combined. Published branch coverage is not described as merged main. Snapshot-row
+    context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+targets:
+- kind: generated
+  label: requires FMN(3−)
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/ferroheme-c-2-chebi61717.yaml
+    data/traits/function/cofactor_requirement/chebi/ferroheme-c-chebi60562.yaml data/traits/function/cofactor_requirement/chebi/flavin-adenine-dinucleotide-chebi24040.yaml
+    data/traits/function/cofactor_requirement/chebi/flavin-mononucleotide-chebi24041.yaml
+    data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml data/traits/function/cofactor_requirement/chebi/fmn-chebi17621.yaml
+    data/traits/function/cofactor_requirement/chebi/fmnh2-2-chebi57618.yaml data/traits/function/cofactor_requirement/chebi/fmnh2-chebi16048.yaml
+    data/traits/function/cofactor_requirement/chebi/folic-acid-chebi27470.yaml data/traits/function/cofactor_requirement/chebi/gd-chebi33376.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: Official ChEBI/OLS resolve the exact oxidized FMN trianion, direct roles
+    and conjugate state. Source-faithful inspection also reveals that the copied diphosphate
+    wording conflicts with its structure and the pH 7.3 population claim conflicts
+    with inspected primary free-solution results. Source model citations and positive
+    OYE1 context are separately bounded.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  evidence_ids:
+  - chemical
+  - chemical-ontology
+  - cofactor-role
+  - licence
+  - release
+  - neutral-conjugate
+  - reduced-comparison
+  - coenzyme-role
+  - vitamin-parent
+  - oxoanion-parent
+  - human-role
+  - yeast-role
+  - human-model
+  - yeast-model
+  - free-fmn-titration
+  - free-fmn-electrochemistry
+  - oye-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T12:12:40Z'
+  snapshot_sha256: 83c70defe823bf476e087941e3715387e25af28818fcc8953fbc0cb371b7111a
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T12:12:40Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T12:12:40Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T12:12:40Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T12:12:40Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing
+  summary: The official ChEBI Introduction and Licensing sections establish chemical-entity/role
+    scope and CC BY 4.0 licensing. They do not equate a chemical with a synthesized
+    protein requirement.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata identifies ChEBI version 256, loaded 2026-10-16.
+    The original access timestamp and digest are retained; neither the live backend
+    release nor the original seed release is established by this metadata.
+- evidence_id: chemical-ontology
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?obo_id=CHEBI:58210
+  accessed_at: '2026-10-21T12:13:27.137337Z'
+  snapshot_sha256: ba17b2303a74706b1d6998ff1a29812a61926330196bde30186c14081341497d
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:58210 as nonobsolete; actual names, description and
+    available chemical annotations were inspected. Empty fields are retained as empty
+    rather than treated as a fixed chemical formula.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58210/
+  accessed_at: '2026-10-21T12:13:27.080920Z'
+  snapshot_sha256: 46e13974031cce600e6a5cd31db4c85c9abfb1bbc33bef7185dd1ba1e0e4d938
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: CHEBI:58210 is oxidized FMN(3−), C17H18N4O9P, with one phosphate bearing
+    two O− atoms and a third negative charge at imide N3. It preserves D-ribityl stereochemistry.
+    The three-proton difference from neutral CHEBI:17621 is acid-base chemistry, not
+    flavin reduction. The copied source definition nonetheless says diphosphate hydroxy
+    groups and major species at pH 7.3. Direct roles are coenzyme, cofactor and human/yeast
+    metabolite; structural parents are vitamin B2 and organophosphate oxoanion.
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Cofactor is a biochemical role for an organic molecule or ion required
+    by an enzyme for activity, under biochemical role CHEBI:52206. It is not itself
+    a protein-requirement class.
+- evidence_id: neutral-conjugate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/17621/
+  accessed_at: '2026-10-21T12:13:13.162602Z'
+  snapshot_sha256: 589e34509edfa4691af56aea3af4adb42cfd2b81279ffcab42c6a0233d3ac534
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Neutral oxidized FMN CHEBI:17621 has formula C17H21N4O9P, one phosphate
+    with two OH groups, imide N3-H and matching specified ribityl stereochemistry.
+    Its explicit conjugate-base relation points to CHEBI:58210.
+- evidence_id: reduced-comparison
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/16048/
+  accessed_at: '2026-10-21T12:13:14.024725Z'
+  snapshot_sha256: 530d92331c28d9553c52e7b1447a6ec455db9e756b94bd35ac39ae04a266431c
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: CHEBI:16048 is neutral reduced 1,5-dihydro FMN, C17H23N4O9P. Its reduced
+    ring differs from the oxidized ring retained in CHEBI:58210; reduction and deprotonation
+    are distinct.
+- evidence_id: coenzyme-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23354/
+  accessed_at: '2026-10-21T11:38:19.854129Z'
+  snapshot_sha256: e3e53a2e0b270a5522895f4ca11bb26e0f3021b2e3571a4949af9931db321ce5
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Coenzyme is a low-molecular-weight non-protein organic compound participating
+    as a dissociable acceptor/donor of chemical groups or electrons, under cofactor.
+    This chemical role alone does not establish an activity-relative non-substrate
+    protein requirement.
+- evidence_id: vitamin-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/176838/
+  accessed_at: '2026-10-21T11:37:44.211162Z'
+  snapshot_sha256: 9845fe1a3e2f4b562d4ba3df549caf23b2063e0417864a6ddcd312c2494df2f3
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Vitamin B2 is a source class of flavin vitamers including riboflavin phosphate
+    derivatives and salt, ionized and hydrate forms. This is broader context, not
+    a pH-specific molecule population.
+- evidence_id: oxoanion-parent
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/58945/
+  accessed_at: '2026-10-21T12:14:07.074867Z'
+  snapshot_sha256: 733cbcbcb3a5175945e932e5163713b8a7d10fa8c5d71729fc95ac74e8f254f9
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Organophosphate oxoanion is a phosphoric-acid derivative with one or more
+    deprotonated phosphate oxygens. The exact target structure, not this broad class
+    alone, locates the additional imide charge.
+- evidence_id: human-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/77746/
+  accessed_at: '2026-10-21T12:14:08.244342Z'
+  snapshot_sha256: 1ef2b7a3d31fedcf864bedc43cbaee8d3e328f30c1902a4150143cda62df0ee4
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Human metabolite is a mammalian metabolite produced during a human metabolic
+    reaction; it does not establish an exact-state protein requirement.
+- evidence_id: yeast-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/75772/
+  accessed_at: '2026-10-21T12:14:07.076440Z'
+  snapshot_sha256: 01ed682b143522d0385bcb0145b8c98792a26b2ff980e281c92f7daf8730e3b5
+  support: supports
+  locator: Exact identifier, names, actual definition field, formula/charge, structure
+    and complete source relations
+  summary: Saccharomyces cerevisiae metabolite is a fungal metabolite produced during
+    a metabolic reaction in Baker's yeast; this is source role context rather than
+    measured pH speciation.
+- evidence_id: human-model
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:10.1038%2Fnbt.2488&format=json&resultType=core
+  accessed_at: '2026-10-21T11:58:04.192973Z'
+  snapshot_sha256: e6a50fe7a7ea11cdfc6ef2fcbc532577e913d89e2612fd95883a1f0cf422737d
+  support: context_only
+  locator: Verified DOI/PMID and complete indexed abstract
+  summary: DOI:10.1038/nbt.2488 resolves to PMID:23455439, the Recon 2 human metabolic
+    reconstruction. The complete indexed abstract describes model integration and
+    predictions, not an independent measurement of FMN(3−) population at pH 7.3.
+- evidence_id: yeast-model
+  kind: database
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A24678285%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T11:37:46.372647Z'
+  snapshot_sha256: 63d7c9e5b3bf0e254fe1f0772533f81459352eac455c08b143b519135bd8fccb
+  support: context_only
+  locator: Complete indexed abstract; verified reused raw bytes and original access
+    timestamp
+  summary: PMID:24678285, DOI:10.1089/ind.2013.0013 concerns revision of lipid representation
+    in the yeast metabolic reconstruction. The complete abstract corroborates the
+    type of source-origin citation, not an experimental FMN protonation equilibrium.
+- evidence_id: free-fmn-titration
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11388723/fullTextXML
+  accessed_at: '2026-10-21T11:37:46.690428Z'
+  snapshot_sha256: 813109f03d77524dc56ff7ca8b38e98335c1437f68a131dde03711f4e91fba49
+  support: refutes
+  locator: 'Actual XML: Experimental procedures, N3/pH results and discussion, Table
+    1, Fig. 1 and conclusions; supplementary material not inspected'
+  summary: PMID:39263436, DOI:10.1039/d4ra05540c. The primary free-flavin study reports
+    FMN alkaline N3 transitions with fitted pKa 10.97 ± 0.12 by fluorescence and 10.73
+    ± 0.21 by circular dichroism (Table 1), using aqueous flavins and pH titration.
+    Those observations conflict with an unqualified N3-deprotonated FMN(3−) predominance
+    at pH 7.3. They do not determine the pKa of every protein-bound flavin.
+- evidence_id: free-fmn-electrochemistry
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5078740/fullTextXML
+  accessed_at: '2026-10-21T12:14:40.510535Z'
+  snapshot_sha256: 3d368fb9fd9c95196d8c16812da3d4e9845e2f89ccb13940c911aeb2d2f41554
+  support: refutes
+  locator: Complete main Results, Discussion and Methods; especially Effects of pH
+    on FMN-Na redox and Figs. 1–3; supplementary files not inspected
+  summary: PMID:27767026, DOI:10.1038/ncomms13230. The full primary paper distinguishes
+    phosphate-derived FMN(2−) over the stated near-neutral/weakly basic interval from
+    additional N3 deprotonation to FMN(3−) above pH 10.2. Its cyclic voltammetry compares
+    aqueous solutions at pH 5.5, 8.6, 10.0 and 13.0; two-electron reduction in strong
+    base is a separate process. It corroborates the free-solution scope and one-phosphate
+    structure, not a protein requirement or universal bound-state pKa.
+- evidence_id: oye-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID%3A11668181%20AND%20SRC%3AMED&format=json&resultType=core
+  accessed_at: '2026-10-21T12:14:12.986271Z'
+  snapshot_sha256: 3f6d7588ffc25c0ab34870c46991617dd93885b2321d20a612145dc37f94eaec
+  support: supports
+  locator: Verified PMID/DOI and complete indexed abstract; full article not independently
+    inspected
+  summary: PMID:11668181, DOI:10.1074/jbc.m108453200 reports OYE1 bound-FMN structural
+    and kinetic effects after mutation near O2/N3. This is positive FMN prosthetic-group
+    context and highlights a protein environment; the complete abstract does not specify
+    the exact trianion or its pH population.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  locator: Executed 2026-10-21T12:13:08Z through 2026-10-21T12:13:09Z; exit 0
+  accessed_at: '2026-10-21T12:13:09Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/ferroheme-c-2-chebi61717.yaml
+    data/traits/function/cofactor_requirement/chebi/ferroheme-c-chebi60562.yaml data/traits/function/cofactor_requirement/chebi/flavin-adenine-dinucleotide-chebi24040.yaml
+    data/traits/function/cofactor_requirement/chebi/flavin-mononucleotide-chebi24041.yaml
+    data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml data/traits/function/cofactor_requirement/chebi/fmn-chebi17621.yaml
+    data/traits/function/cofactor_requirement/chebi/fmnh2-2-chebi57618.yaml data/traits/function/cofactor_requirement/chebi/fmnh2-chebi16048.yaml
+    data/traits/function/cofactor_requirement/chebi/folic-acid-chebi27470.yaml data/traits/function/cofactor_requirement/chebi/gd-chebi33376.yaml
+  locator: Executed 2026-10-21T12:13:03Z through 2026-10-21T12:14:24Z; exit 0
+  accessed_at: '2026-10-21T12:14:24Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+  locator: Executed 2026-10-21T12:13:09Z through 2026-10-21T12:13:09Z; exit 0
+  accessed_at: '2026-10-21T12:13:09Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T12:14:24Z through 2026-10-21T12:14:24Z; exit 0
+  accessed_at: '2026-10-21T12:14:24Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: provenance
+  outcome: supported
+  summary: The captured ChEBI seeder selects role descendants or chemical entities
+    with a cofactor-related role, synthesizes the requirement wrapper and emits the
+    chemical xref. The current chemical identity, source attribution and licence resolve;
+    the exact original seed release remains unassigned.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical
+  - chemical-ontology
+  - licence
+  - release
+  topic: Maintained ChEBI source transformation and release limits
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-5
+- area: identity
+  outcome: supported
+  summary: 'The exact trianion is chemically coherent: two negative phosphate oxygens
+    plus deprotonated imide N3 give net −3, with one phosphorus atom and retained
+    specified stereochemistry. It is neither a diphosphate molecule nor reduced FMNH2.
+    The identifier and valid structural aliases remain intact.'
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - neutral-conjugate
+  - reduced-comparison
+  topic: Oxidized FMN trianion and three-proton bookkeeping
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-6
+- area: nomenclature
+  outcome: concern
+  summary: The copied diphosphate wording conflicts with the one-phosphorus formula
+    and single phosphate in the target structure and neutral conjugate. Two acidic
+    phosphate OH groups do not create a diphosphate group. This is a bounded source-inherited
+    definition error, not a wrong-identifier conclusion.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - neutral-conjugate
+  topic: One-phosphate structure versus diphosphate wording
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-7
+- area: evidence
+  outcome: concern
+  summary: The current source and local definition assert that the N3-deprotonated
+    trianion is the major species at pH 7.3. Primary aqueous fluorescence/CD titration
+    instead places the N3 transition near pH 10.7–11, and the electrochemical paper
+    distinguishes the near-neutral dianion from alkaline trianion. The unqualified
+    physiological-pH predominance claim is therefore contradicted within free-solution
+    scope. Neither source rules out stabilization of another state by a particular
+    protein.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - free-fmn-titration
+  - free-fmn-electrochemistry
+  topic: Free FMN speciation at pH 7.3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-8
+- area: evidence
+  outcome: supported
+  summary: The OYE1 primary abstract links a bound FMN prosthetic group to tested
+    structural/kinetic effects. This supports FMN biological relevance while leaving
+    the exact target trianion and protein-dependent pKa unqualified.
+  evidence_ids:
+  - oye-primary
+  topic: Positive FMN prosthetic-group context
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-9
+- area: representation
+  outcome: unknown
+  summary: Chemical coenzyme/cofactor roles and model provenance do not independently
+    establish a non-substrate requirement for this exact trianion. The free-solution
+    contradiction should be repaired without declaring that no protein can stabilize
+    FMN(3−), replacing the identifier automatically, or qualifying a new native protein
+    example.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - coenzyme-role
+  - human-model
+  - yeast-model
+  - oye-primary
+  topic: Activity-relative role and bound chemical state
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-10
+- area: consistency
+  outcome: supported
+  summary: The source directly asserts both coenzyme and cofactor roles, with coenzyme
+    under cofactor. The captured broad local cofactor parent remains compatible with
+    that hierarchy. Chemical structural and organism-role context is kept separate
+    from exact protein qualification.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - chemical
+  - coenzyme-role
+  - cofactor-role
+  - vitamin-parent
+  - oxoanion-parent
+  - human-role
+  - yeast-role
+  topic: Source roles and broad local cofactor parent
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-11
+- area: grounding
+  outcome: concern
+  summary: The source chemical and the local protein functional requirement are different
+    entity types. Correct chemistry, authentic source roles and bounded biological
+    context do not establish true own-source equivalence.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  topic: Chemical entity versus protein-requirement equivalence
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  assessment_id: assessment-12
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-58210.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical source entity is asserted equivalent to a protein requirement
+  description: CHEBI:58210 denotes an exact oxidized chemical trianion, whereas the
+    local class denotes a protein requirement. Authentic source roles do not make
+    a chemical species equivalent to a class of proteins, independently of the definition
+    errors.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-ontology
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The candidate identity remains recognizable, but chemical
+    entities/classes and protein requirements have different denotations. This is
+    a major grounding defect even where biological relevance is supported; optional
+    representation absence is not the finding.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-58210.physiological-ph-speciation
+  category: consistency
+  severity: major
+  title: FMN trianion is incorrectly asserted predominant at pH 7.3
+  description: The definition copies a major-species-at-pH-7.3 claim for the N3-deprotonated
+    FMN trianion. The inspected primary aqueous titration places the N3 transition
+    near pH 10.7–11, and independent electrochemical work distinguishes near-neutral
+    FMN(2−) from strongly alkaline FMN(3−). This is a material conflict in stated
+    chemical speciation, not a refutation of the trianion identity or of every possible
+    protein-bound state.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - neutral-conjugate
+  - free-fmn-titration
+  - free-fmn-electrochemistry
+  certainty: confirmed
+  field_paths:
+  - definition
+  - definition_source
+  normalization_reason: An incorrect near-physiological major-species assertion materially
+    misstates the target chemical state and could misdirect requirement qualification.
+    Severity is major within free-solution scope; no universal protein-bound pKa is
+    asserted.
+  finding_id: F2
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+- issue_key: chebi.cofactor-requirement.CHEBI-58210.diphosphate-wording
+  category: nomenclature
+  severity: minor
+  title: Definition calls the single phosphate a diphosphate
+  description: The exact formula contains one phosphorus atom and the structure contains
+    one phosphate with two deprotonated oxygens. The copied phrase diphosphate hydroxy
+    groups incorrectly names that group. The identifier, net charge and valid monophosphate
+    aliases remain intact.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-ontology
+  - neutral-conjugate
+  certainty: confirmed
+  field_paths:
+  - definition
+  normalization_reason: The source identifier, formula and molecular structure still
+    identify the correct trianion. This is a bounded chemical-group wording error,
+    independently fixable from the material speciation claim.
+  finding_id: F3
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: minor
+actions:
+- action_id: A1
+  description: Update build in scripts/seed_chebi_cofactor.py to remove chemical-to-protein-trait
+    equality from xrefs while preserving source grounding and provenance. Retain the
+    chemically valid trianion identity and its exact phosphate/N3 and stereochemical
+    scope. Resolve the definition findings separately and do not silently substitute
+    a dianion or reduced form. Adjudicate the activity-relative role before adding
+    any COFACTOR chemical_participant. If that role cannot be supported, retain provenance
+    and explicit uncertainty without inventing a participant. Do not relocate the
+    equality to mapped_xrefs or promote a protein example or native status.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated xrefs no longer equate the chemical entity or chemical class with
+    the requirement trait; exact supported scope and provenance remain auditable.
+    Any participant has an adjudicated activity-relative role, and optional participant
+    absence is not itself a defect.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+- action_id: A2
+  description: Correct or explicitly qualify the source-derived population statement
+    through the maintained ChEBI transform/input or a registered, provenance-preserving
+    override. Preserve the exact trianion identifier and distinguish aqueous conditions
+    from protein-specific protonation. Do not replace CHEBI:58210 automatically or
+    infer that no protein can stabilize it.
+  finding_ids:
+  - F2
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated definition no longer states unconditional trianion predominance
+    at pH 7.3. Any quantitative speciation claim names its solution conditions and
+    evidence; bound-protein claims have their own support.
+  - Original source wording and its conflict remain traceable, and the trianion structural
+    identity is retained unless a separately evidenced scope decision changes it.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+- action_id: A3
+  description: Correct the maintained source-derived definition or registered override
+    to refer to the two acidic hydroxy groups of the single phosphate, together with
+    the imide N3 proton. Preserve source provenance and keep this wording repair distinct
+    from the pH population correction.
+  finding_ids:
+  - F3
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_58210
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated definition accurately describes one phosphate and three total
+    proton losses without changing the valid FMN(3−) identity, stereochemistry or
+    oxidation state.
+  - Run just validate data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/fmn-3-chebi58210.yaml
+    after the scoped repair.
+  - For maintained writer changes add focused pytest coverage and run just audit-writers,
+    just lint and just test. Regenerate the existing target through an audited route.
+    Run full just validate-all before merging record changes; capture changed inputs
+    and save a fresh structured review without overwriting this observation.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The primary pH studies concern free aqueous flavins under their stated buffers/concentrations,
+  not every protein binding site. The 2024 methods, relevant pH results, Table 1,
+  figure context and conclusions were inspected; the 2016 main Results, Discussion
+  and Methods plus relevant figure legends were inspected. Supplementary files were
+  not independently inspected. OYE1 and metabolic-model papers were inspected through
+  complete indexed abstracts. No exact protein-bound state or new protein example
+  is qualified.
+tags:
+- unreviewed-path-order
+- batch-022
+- chebi-cofactor
+```
