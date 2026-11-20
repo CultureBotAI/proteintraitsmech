@@ -1,0 +1,805 @@
+# Review of requires dihydrogenvanadate
+
+- Review: 20261021T112934Z-dihydrogenvanadate-chebi35169
+- Repository: CultureBotAI/proteintraitsmech
+- Started UTC: 2026-10-21T11:21:59Z
+- Finished UTC: 2026-10-21T11:29:34Z
+- Reviewer: Codex (unknown)
+- Completion: completed
+- Verdict: needs_curation
+- Scientific review: true
+
+## Summary
+
+The exact dihydrogenvanadate anion and relevant vanadium-enzyme context are supported. One confirmed major finding concerns chemical-to-protein-trait equivalence. Exact bound-state protonation and activity-specific requirement remain bounded.
+
+## Scope And Provenance
+
+Field-by-field scientific review of one complete ProteinTraitRecord.
+
+Selection: Path-order position 4 in batch 019. Fresh main inventory has 429359 records; union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d; batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a; batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc; batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5; batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618; batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5; batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb; batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50; batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9; batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c) covers 178 record paths, leaving 429181 before this batch. 19 inventories were combined. Published branch coverage is not described as merged main. Snapshot-row context paths are excluded.
+Coverage: full; 1 reviewed / 1 in the declared population.
+Source: working_tree at Git base 6cbcac34bb17f44ea7516dd3308d890367014e2b.
+Working-tree hashes do not imply those bytes were committed.
+
+| Target | Path / selector | Kind | Label |
+| --- | --- | --- | --- |
+| proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml | generated | requires dihydrogenvanadate |
+
+## Validation
+
+| Check | Status | Required | Targets | Result |
+| --- | --- | --- | --- | --- |
+| Closed schema | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | Single target validated in closed mode. |
+| Closed schema and applicable source semantics | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | One shared invocation scanned all ten listed batch targets; target SHA256 matches before and after execution. Source-specific checks apply where implemented; this gate does not qualify a protein requirement or prove semantic equivalence. |
+| Causal graph integrity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | No graphs in target; no molecular-mechanism coverage is inferred. |
+| Curation history validity | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | Full curation-history gate; this review adds no history event. |
+| Source reference inspection | passed | True | proteintraitsmech:COFACTOR_REQ_CHEBI_35169 | CHEBI:35169 resolves and is nonobsolete. Formula, net−1 charge, source structure/definition, cofactor role, both structural parents and both acid/base comparisons were inspected. The complete C. inaequalis primary abstract was read, with measured azide complex separated from proposed native hydrogenvanadate(V) coordination. |
+
+## Scientific And Domain Assessments
+
+### Maintained cofactor requirement emitter
+
+ownership: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+scripts/seed_chebi_cofactor.py owns generated target changes. Its source transformation is inspected; no emitted record has been edited.
+
+### Protein trait class completeness
+
+completeness: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The local identifier and requires-label denote a proposed reusable requirement class rather than a protein instance. Optional examples, sequence/structure representations and mechanisms are not automatically required; none are newly qualified.
+
+### Causal mechanism evidence
+
+graph: not_applicable. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+No causal graph or molecular mechanism is asserted by this YAML; graph validation does not constitute mechanism evidence.
+
+### Requirement scope and scientific status
+
+scope: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The target remains SEEDED, and no protein example, native review status or curation-history event is promoted by this observation.
+
+### Chemical identity and protein requirement scope
+
+identity: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The entire local record denotes a proposed reusable protein requirement for dihydrogenvanadate. CHEBI:35169 denotes the chemical referent, not an equivalent protein-requirement class.
+
+### ChEBI attribution and release provenance
+
+provenance: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+scripts/seed_chebi_cofactor.py owns the generated target and synthesizes its requirement wrapper from chemical-role selection and source chemical text. Official CC BY 4.0 licensing is verified. Current comparison snapshots do not establish the original seed release.
+
+### Chemical-role and protein-trait hierarchy
+
+consistency: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The actual source role relation explains the local broader requirement parent. Chemical-role taxonomy is not automatically a protein-requirement hierarchy or true equivalence; this one-record review does not certify the parent.
+
+### Chemical association versus trait equivalence
+
+grounding: concern. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+CHEBI:35169 in xrefs denotes a chemical entity, whereas the target denotes a protein functional requirement. The schema defines xrefs as true own-source equivalence, not chemical association.
+
+### Dihydrogenvanadate ionic state and acid/base relations
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+CHEBI:35169 is H2O4V, net−1, with two OH groups, one oxo and one O− in the source SMILES. The local monovalent-anion definition agrees with this exact chemical state and acid/base relations. Its overall ionic charge is not a vanadium oxidation-state assignment; the peculiar disconnected InChI charge/proton bookkeeping is not read as such.
+
+### Positive vanadium-enzyme evidence and native-state limits
+
+evidence: supported. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The vanadium chloroperoxidase primary study supplies genuine enzyme-cofactor context and explicitly discusses V(V). Its abstract reports an azide complex and a proposed native hydrogenvanadate arrangement. This positive context is not reduced to a generic inhibitor/substrate label, nor does it establish every enzyme or exact free-anion proton count.
+
+### FUNCTION cofactor requirement representation
+
+representation: unknown. Targets: proteintraitsmech:COFACTOR_REQ_CHEBI_35169.
+
+The chemical cofactor role and vanadium-enzyme evidence support candidate relevance, but bound coordination, protonation, solution speciation and exact H2VO4− non-substrate dependence require activity-specific adjudication. A native geometry proposed from an inhibited complex does not fix all these properties. No automatic replacement by HVO4(2−), acid or generic vanadium is justified.
+
+## Findings
+
+### F1: Chemical entity is encoded as equivalent to a protein requirement class
+
+major / open / confirmed; issue key: chebi.cofactor-requirement.CHEBI-35169.chemical-entity-equivalence.
+
+The local class denotes a protein requirement for dihydrogenvanadate, while CHEBI:35169 denotes the exact H2VO4− chemical anion. Even genuine vanadium-enzyme cofactor evidence does not make the chemical an equivalent protein-requirement class.
+
+## Recommended Actions And Acceptance Checks
+
+### A1
+
+Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:35169 from trait-equivalence xrefs and preserve the exact source identity through schema-compatible grounding. Preserve chemical-source provenance separately from the locally synthesized requirement. Before assigning a COFACTOR chemical_participant, adjudicate the activity-relative role against the non-substrate requirement category; if unresolved, retain that uncertainty and only a supported representation. Do not blindly move an own-source association to mapped_xrefs or qualify a protein from chemical-role membership alone.
+
+- The regenerated target preserves intended CHEBI:35169 chemistry without asserting equality to a protein requirement.
+- Preserve exact H2VO4− identity and distinguish total charge, vanadium oxidation state, protonation and protein coordination. Qualify any COFACTOR participant against an explicit activity and supported bound state; do not substitute another vanadate state from a generic name.
+- Any typed participant has an explicitly supported activity-relative role and exact chemical scope; no automatic chemical merge, universal requirement, unreviewed example or status promotion is introduced.
+- After repair run just validate data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml; just validate-all data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml; and just audit-graphs data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml. These are future curation acceptance checks, not claims that record bytes have already changed.
+- For maintained Python/writer changes add focused pytest coverage, then run just lint, just test and just audit-writers. Regenerate this existing target through an audited scoped route. Run full-corpus just validate-all before merging record changes and save a fresh structured scientific review against changed bytes.
+
+## Category Boundaries
+
+
+## Evidence
+
+| Evidence | Reference / locator | Support | Observation |
+| --- | --- | --- | --- |
+| record | data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml; Entire target YAML | supports | Complete YAML inspected, including local protein-requirement identifier and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT, CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence. No optional examples, causal graphs, qualified protein assertions or chemical_participants occur in this target YAML. |
+| schema | src/proteintraitsmech/schema/proteintraitsmech.yaml; ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum; FUNC_COFACTOR_REQUIREMENT | supports | FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required for activity. xrefs asserts true own-source equivalence; chemical_participants represents chemical entities with typed roles. parent_traits asserts a broader class. Optional examples and causal graphs are not mandatory class representations. |
+| owner | scripts/seed_chebi_cofactor.py; load_relations, load_names, build, main | supports | load_relations selects cofactor-role descendants and molecules with has_role; build synthesizes a protein-requirement label/definition, appends chemical source text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects one role-parent. The source chemical class and the synthesized requirement trait have different denotations. |
+| registry | download.yaml; ChEBI source entry | supports | ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role and chemistry as a typed per-trait attribute. This identifies maintained source provenance; it does not establish a particular protein requirement. |
+| local-parent-1 | data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml; Entire local parent YAML | supports | Entire local parent YAML inspected: local requirement identifier, definition, category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution does not establish that its own xrefs have equivalent-class semantics. |
+| licence | https://www.ebi.ac.uk/chebi/about/; Introduction and Licensing | supports | Official ChEBI Introduction describes chemical entities and chemical classes. Licensing states CC BY 4.0. It supports source licensing, not the synthesized protein-requirement wrapper. |
+| release | https://www.ebi.ac.uk/ols4/api/ontologies/chebi; Inspected source response captured at the recorded UTC time | supports | Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16. Its original access time is preserved; this is not a release assignment for the live backend or original seed. |
+| chemical | https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_35169; Inspected source response captured at the recorded UTC time | supports | OLS resolves CHEBI:35169 to nonobsolete dihydrogenvanadate. Identifiers, names and chemical annotations were inspected. The actual source definition was inspected. |
+| chemical-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/35169/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The complete exact-identity response was inspected: names, formula, charge, structure, incoming/outgoing relations and the chemical definition. The chemical-role assertions do not themselves qualify a protein. |
+| cofactor-role | https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The source defines cofactor as a biochemical role for an organic molecule or ion required by an enzyme; it is not a protein-requirement class. |
+| vanadium-oxoanion | https://www.ebi.ac.uk/chebi/backend/api/public/compound/30528/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The vanadium-oxoanion parent has a null prose definition and class-level chemistry. It does not specify a protein ligand state. |
+| monovalent-anion | https://www.ebi.ac.uk/chebi/backend/api/public/compound/79389/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The structural parent defines inorganic anions of valency one. |
+| vanadic-acid | https://www.ebi.ac.uk/chebi/backend/api/public/compound/27273/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The separate acid entry is H3O4V with charge0 and null prose definition; explicit source conjugacy connects it to35169. |
+| hydrogenvanadate | https://www.ebi.ac.uk/chebi/backend/api/public/compound/35168/; Actual name, definition field, names, chemical_data, default_structure and ontology_relations as applicable | supports | The separate hydrogenvanadate entry is HO4V with charge−2, described by loss of two vanadic-acid hydroxyl protons; it is an explicit conjugate base of35169. |
+| vcp-primary | https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1073/pnas.93.1.392&amp;format=json&amp;resultType=core; PMID8552646; DOI10.1073/pnas.93.1.392; complete indexed abstract | supports | The complete primary abstract describes the2.1Å azide complex of C. inaequalis vanadium chloroperoxidase. It identifies azide, three nonprotein oxygens and histidine ligands, and proposes native hydrogenvanadate(V) with trigonal-bipyramidal geometry. Measured inhibited-complex structure and proposed native coordination are kept distinct; neither alone fixes the free H2VO4− state bound in vivo. |
+| validation-1 | just validate data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml; Executed 2026-10-21T11:22:26Z through 2026-10-21T11:22:27Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      1<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv |
+| validation-2 | just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml; Executed 2026-10-21T11:22:22Z through 2026-10-21T11:23:43Z; exit 0 | supports | === validate-strict summary ===<br>  files scanned:      10<br>  files with ERROR:   0<br>  total ERROR rows:   0<br>  TSV:                reports/instance_validation_failures.tsv<br>files scanned: 10<br>registry proteins: 12700<br>source evidence objects: 21048<br>qualified record bindings: 21048<br>UniProt membership objects: 431<br>hierarchy records: 0<br>semantic findings: 0<br>TSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv |
+| validation-3 | just audit-graphs data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml; Executed 2026-10-21T11:22:27Z through 2026-10-21T11:22:27Z; exit 0 | supports | causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges &#124; grounded nodes 0/0, snippet-cited edges 0/0 &#124; 0 errors, 0 warnings |
+| validation-4 | just validate-history; Executed 2026-10-21T11:23:43Z through 2026-10-21T11:23:44Z; exit 0 | supports | No issues found |
+
+## Limits And Additional Notes
+
+- The reviewed record does not identify the exact ChEBI source release used for the seed. Current official responses are comparison snapshots, not proof of the original release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that a particular protein requires that chemical, that every related protein does, or that the chemical is an obligatory physiological cofactor. No such per-protein qualification is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle retains URLs, access times, digests and bounded observations rather than full response bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB is not applicable to this generic chemical requirement class without a gene, organism or expression dataset.
+- The chloroperoxidase paper was inspected at complete indexed-abstract level, not full structural methods or coordinates. Its inhibited azide complex and proposed native geometry do not establish a universal H2VO4− bound state or physiological solution population.
+
+## Complete Structured Record
+
+The sibling review.yaml is authoritative.
+
+```yaml
+schema_version: 1.0.0
+review_id: 20261021T112934Z-dihydrogenvanadate-chebi35169
+kind: record
+repository: CultureBotAI/proteintraitsmech
+title: Review of requires dihydrogenvanadate
+started_at: '2026-10-21T11:21:59Z'
+finished_at: '2026-10-21T11:29:34Z'
+reviewer:
+  identity: Codex
+  kind: agent
+  independence: unknown
+  independence_basis: Unchanged target bytes assessed against inspected primary sources
+    and repository rules, with independent source-acquisition and scope checks. Prior
+    authorship independence is not established; this is not human sign-off.
+skill: .claude/skills/review-yaml-record/SKILL.md
+completion: completed
+verdict: needs_curation
+scientific_review: true
+summary: The exact dihydrogenvanadate anion and relevant vanadium-enzyme context are
+  supported. One confirmed major finding concerns chemical-to-protein-trait equivalence.
+  Exact bound-state protonation and activity-specific requirement remain bounded.
+source:
+  git_revision: 6cbcac34bb17f44ea7516dd3308d890367014e2b
+  state: working_tree
+  inputs:
+  - path: .claude/skills/curate-yaml-record/references/review-checklist.md
+    sha256: 59f39fad3e6447e7be30da72667befd3d2e383b68bea5f497952f2ab080da90d
+    role: context
+  - path: .claude/skills/review-yaml-record/SKILL.md
+    sha256: ac1094d8aef512845dbe56ee041e62e62aeeed32326578ff3f7dd8455495f303
+    role: context
+  - path: CLAUDE.md
+    sha256: 0fe3358571b7e3fc0016a94bd514719202ddfb6b8ea020df4431348ed518bc42
+    role: context
+  - path: LICENSE
+    sha256: d920683ada4ab4646467cbe49944e08172d8f10c92ce3e631d6f3460b4b40a52
+    role: context
+  - path: LICENSE-DATA
+    sha256: 9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94
+    role: context
+  - path: conf/record_review.yaml
+    sha256: d3fd2e272546bf2505ded4ef86f7340753c4e422c691bd69f8e79f577b2c5f59
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+    sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+    role: context
+  - path: data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+    sha256: dd8427d3b26de10ca4db034183cd155106f1caaab74ffd7285ac6577a9fc4892
+    role: target
+  - path: docs/fetch-migration.md
+    sha256: 11718531ccc1346002cfafbe62e8cfdc3859271ded178c34a17e26dabc70b55c
+    role: context
+  - path: docs/record-review-profile.md
+    sha256: 06cec6693ded193231a378bba04e7c1ad3e295f88903ee8b7c30b3238daab9df
+    role: context
+  - path: docs/record-reviews.md
+    sha256: 452a19ab688276747b7c4308523a14d4d99c1c39ef6909ae8a90b85b7a9b3e9b
+    role: context
+  - path: download.yaml
+    sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+    role: context
+  - path: history/README.md
+    sha256: db3db1da49f08244c863689856f31bc764aadb6e629b25aff45b3b4598dbef2c
+    role: context
+  - path: justfile
+    sha256: 090b16ab565dbc137f589ab913e57efac5cb37bb7511547391267ba6ea96dd5b
+    role: context
+  - path: schema/record_review.yaml
+    sha256: 229baf9b69118a1fe318e4c31085c0820e4e3d1365e7b04d6ace451b7c35f9bb
+    role: context
+  - path: scripts/build_docs_index.py
+    sha256: 926f593f6d3c81b16ff72148f1777d0b6d81cabe5fe806f4667c5745f28bb818
+    role: context
+  - path: scripts/seed_chebi_cofactor.py
+    sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+    role: context
+  - path: src/proteintraitsmech/schema/proteintraitsmech.yaml
+    sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+    role: context
+scope:
+  description: Field-by-field scientific review of one complete ProteinTraitRecord.
+  selection: Path-order position 4 in batch 019. Fresh main inventory has 429359 records;
+    union with validated published review heads (batch-001 at b36c4b5ad6c1ee1f31f1cc8c4da5cad94651719d;
+    batch-002 at 357a22ff037976ab142a6bf2267191b5f4a98d21; batch-003 at cc32a8c59ea04af980930b521773705380a9d85a;
+    batch-004 at 23d5cee9fdad2ee701ca7d5cadfc76b54df242ca; batch-005 at 678797be94bf7bcf5673a5c9dcd2e779ec1c76cc;
+    batch-006 at 1696e53c414be3be3641f470a8eade2ec004b6b1; batch-007 at ecd1ed5f09754b6cee1695d813f62f9b23b6ccf5;
+    batch-008 at 914248190c8fd158835c16572946efde3dd87af4; batch-009 at 12d47e9145517b395c6ffdacd172003af66f5618;
+    batch-010 at d51f823a5de8645ec50586992dc9e2e27fdef83f; batch-011 at 3f0697b8989b56af606b2eee7248b55fa21cd4f5;
+    batch-012 at 86f94d00a00a8b0fbaa16d5301a35ff03fa8abc0; batch-013 at ef73f3abddbb3786a9d95cc0e4616aeaea5ca3fb;
+    batch-014 at dc70a3cb9267c42c78bc4c356ec28109fb45114f; batch-015 at 10d0148878b3b2e203d2f368ac3b3fd48c8b0e50;
+    batch-016 at 8a2bb4c2441c87fb0eeda6e7623c87c0e0a6c1fd; batch-017 at 952d4d2227f24b9d7a96481536971328f8c9e7c9;
+    batch-018 at 63c8c7d6546a6e5e23c634b191f7dbb9791c6a3c) covers 178 record paths,
+    leaving 429181 before this batch. 19 inventories were combined. Published branch
+    coverage is not described as merged main. Snapshot-row context paths are excluded.
+  coverage: full
+  population_size: 1
+  reviewed_target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+targets:
+- kind: generated
+  label: requires dihydrogenvanadate
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  path: data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  record_class: ProteinTraitRecord
+  target_id: proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+checks:
+- check_id: gate-1
+  name: Closed schema
+  command: just validate data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Single target validated in closed mode.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  evidence_ids:
+  - validation-1
+- check_id: gate-2
+  name: Closed schema and applicable source semantics
+  command: just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: One shared invocation scanned all ten listed batch targets; target SHA256
+    matches before and after execution. Source-specific checks apply where implemented;
+    this gate does not qualify a protein requirement or prove semantic equivalence.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  evidence_ids:
+  - validation-2
+- check_id: gate-3
+  name: Causal graph integrity
+  command: just audit-graphs data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  exit_code: 0
+  status: passed
+  required: true
+  summary: No graphs in target; no molecular-mechanism coverage is inferred.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  evidence_ids:
+  - validation-3
+- check_id: gate-4
+  name: Curation history validity
+  command: just validate-history
+  exit_code: 0
+  status: passed
+  required: true
+  summary: Full curation-history gate; this review adds no history event.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  evidence_ids:
+  - validation-4
+- check_id: source-resolution
+  name: Source reference inspection
+  status: passed
+  required: true
+  summary: CHEBI:35169 resolves and is nonobsolete. Formula, net−1 charge, source
+    structure/definition, cofactor role, both structural parents and both acid/base
+    comparisons were inspected. The complete C. inaequalis primary abstract was read,
+    with measured azide complex separated from proposed native hydrogenvanadate(V)
+    coordination.
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - cofactor-role
+  - licence
+  - release
+  - vanadium-oxoanion
+  - monovalent-anion
+  - vanadic-acid
+  - hydrogenvanadate
+  - vcp-primary
+evidence:
+- evidence_id: record
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  locator: Entire target YAML
+  accessed_at: '2026-10-21T11:21:59Z'
+  snapshot_sha256: dd8427d3b26de10ca4db034183cd155106f1caaab74ffd7285ac6577a9fc4892
+  support: supports
+  summary: Complete YAML inspected, including local protein-requirement identifier
+    and label, synthesized definition, ChEBI attribution, FUNCTION/FUNC_COFACTOR_REQUIREMENT,
+    CLASS/SEEDED status, local parent, chemical xref and stated CC-BY 4.0 licence.
+    No optional examples, causal graphs, qualified protein assertions or chemical_participants
+    occur in this target YAML.
+- evidence_id: schema
+  kind: record_content
+  reference: src/proteintraitsmech/schema/proteintraitsmech.yaml
+  locator: ProteinTraitRecord xrefs, parent_traits, chemical_participants; ChemicalParticipant/ChemicalRoleEnum;
+    FUNC_COFACTOR_REQUIREMENT
+  accessed_at: '2026-10-21T11:21:59Z'
+  snapshot_sha256: 7d29139f696497dffa018b8d68b3f72d4e1adbadd4f67f7904ddbb4b12275418
+  support: supports
+  summary: FUNC_COFACTOR_REQUIREMENT describes a non-substrate small molecule required
+    for activity. xrefs asserts true own-source equivalence; chemical_participants
+    represents chemical entities with typed roles. parent_traits asserts a broader
+    class. Optional examples and causal graphs are not mandatory class representations.
+- evidence_id: owner
+  kind: record_content
+  reference: scripts/seed_chebi_cofactor.py
+  locator: load_relations, load_names, build, main
+  accessed_at: '2026-10-21T11:21:59Z'
+  snapshot_sha256: c94f89132779ded0393c70a67ea35da9bc1d1d5a5adbc5212aeac144a124c802
+  support: supports
+  summary: load_relations selects cofactor-role descendants and molecules with has_role;
+    build synthesizes a protein-requirement label/definition, appends chemical source
+    text, attributes the composite to ChEBI and emits CHEBI as xrefs. main selects
+    one role-parent. The source chemical class and the synthesized requirement trait
+    have different denotations.
+- evidence_id: registry
+  kind: record_content
+  reference: download.yaml
+  locator: ChEBI source entry
+  accessed_at: '2026-10-21T11:21:59Z'
+  snapshot_sha256: 63a62092f919dc534d7b5d9087ada35dea39ed88579f3fd281f8f0ffe6ef4417
+  support: supports
+  summary: ChEBI is declared CC-BY 4.0 with seed_chebi_cofactor.py, enrichment status/role
+    and chemistry as a typed per-trait attribute. This identifies maintained source
+    provenance; it does not establish a particular protein requirement.
+- evidence_id: local-parent-1
+  kind: record_content
+  reference: data/traits/function/cofactor_requirement/chebi/cofactor-chebi23357.yaml
+  locator: Entire local parent YAML
+  accessed_at: '2026-10-21T11:21:59Z'
+  snapshot_sha256: d5a2579eae56a7b94424792e5694c0d1c58765e388630b1ab7807be0c8ded909
+  support: supports
+  summary: 'Entire local parent YAML inspected: local requirement identifier, definition,
+    category, hierarchy, source chemical-role xref and SEEDED status. Parent resolution
+    does not establish that its own xrefs have equivalent-class semantics.'
+- evidence_id: licence
+  kind: authority
+  reference: https://www.ebi.ac.uk/chebi/about/
+  accessed_at: '2026-10-21T08:48:05.571149Z'
+  snapshot_sha256: f541592fc56a6bda901699cf4a970e5129a18cdbd780e642ad5c36a5ad55251b
+  support: supports
+  locator: Introduction and Licensing
+  summary: Official ChEBI Introduction describes chemical entities and chemical classes.
+    Licensing states CC BY 4.0. It supports source licensing, not the synthesized
+    protein-requirement wrapper.
+- evidence_id: release
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi
+  accessed_at: '2026-10-21T08:47:19.026327Z'
+  snapshot_sha256: ec4c86fcec2d75393b2fd28d66fafbed591ab17b0a1cd58fbbf1bceb8bcefa22
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: Verified reused OLS metadata reports ChEBI version256 loaded2026-10-16.
+    Its original access time is preserved; this is not a release assignment for the
+    live backend or original seed.
+- evidence_id: chemical
+  kind: database
+  reference: https://www.ebi.ac.uk/ols4/api/ontologies/chebi/terms?iri=http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_35169
+  accessed_at: '2026-10-21T11:22:22.373146Z'
+  snapshot_sha256: 170598fcc1ba36dd70d49fc2431b8b96abba087e5e0be339c659a70a66d4f357
+  support: supports
+  locator: Inspected source response captured at the recorded UTC time
+  summary: OLS resolves CHEBI:35169 to nonobsolete dihydrogenvanadate. Identifiers,
+    names and chemical annotations were inspected. The actual source definition was
+    inspected.
+- evidence_id: chemical-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/35169/
+  accessed_at: '2026-10-21T11:22:22.364184Z'
+  snapshot_sha256: b448ea64f7c945ac4cd8ceadc494d6e6eaf02895cdc6237f2ed74d0cb27dd468
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: 'The complete exact-identity response was inspected: names, formula, charge,
+    structure, incoming/outgoing relations and the chemical definition. The chemical-role
+    assertions do not themselves qualify a protein.'
+- evidence_id: cofactor-role
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/23357/
+  accessed_at: '2026-10-21T10:41:31.355972Z'
+  snapshot_sha256: 4c04bfdbe6bd7fe5edd952eef8fbf70b950df6ab9693d629e1c6a1a7c00917a7
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The source defines cofactor as a biochemical role for an organic molecule
+    or ion required by an enzyme; it is not a protein-requirement class.
+- evidence_id: vanadium-oxoanion
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/30528/
+  accessed_at: '2026-10-21T11:23:15.468182Z'
+  snapshot_sha256: 1673891c0260560e89c6c5df4854f1a3919534911bb2aa09b3512be07b2b23f9
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The vanadium-oxoanion parent has a null prose definition and class-level
+    chemistry. It does not specify a protein ligand state.
+- evidence_id: monovalent-anion
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/79389/
+  accessed_at: '2026-10-21T11:23:15.591623Z'
+  snapshot_sha256: 8493a1c594f752013c3dda42b72fddc9dd08482648d29ae0654fcaf7c474c697
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The structural parent defines inorganic anions of valency one.
+- evidence_id: vanadic-acid
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/27273/
+  accessed_at: '2026-10-21T11:23:14.785593Z'
+  snapshot_sha256: 8ce90c31b9b5175a4346e9d8ea54f5cc30628b9d2203d1c2b0904498db09e91e
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The separate acid entry is H3O4V with charge0 and null prose definition;
+    explicit source conjugacy connects it to35169.
+- evidence_id: hydrogenvanadate
+  kind: database
+  reference: https://www.ebi.ac.uk/chebi/backend/api/public/compound/35168/
+  accessed_at: '2026-10-21T11:23:15.042806Z'
+  snapshot_sha256: 5bec8772f1cc1d8448a6c1c55f7446d2e88aa11f36bb3c8a1f407a306245e456
+  support: supports
+  locator: Actual name, definition field, names, chemical_data, default_structure
+    and ontology_relations as applicable
+  summary: The separate hydrogenvanadate entry is HO4V with charge−2, described by
+    loss of two vanadic-acid hydroxyl protons; it is an explicit conjugate base of35169.
+- evidence_id: vcp-primary
+  kind: primary_source
+  reference: https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI%3A10.1073/pnas.93.1.392&format=json&resultType=core
+  accessed_at: '2026-10-21T11:23:23.693002Z'
+  snapshot_sha256: c7cac6221ab3122edce34f0e07bae1b0728950b4263159a33fee99f3950115f9
+  support: supports
+  locator: PMID8552646; DOI10.1073/pnas.93.1.392; complete indexed abstract
+  summary: The complete primary abstract describes the2.1Å azide complex of C. inaequalis
+    vanadium chloroperoxidase. It identifies azide, three nonprotein oxygens and histidine
+    ligands, and proposes native hydrogenvanadate(V) with trigonal-bipyramidal geometry.
+    Measured inhibited-complex structure and proposed native coordination are kept
+    distinct; neither alone fixes the free H2VO4− state bound in vivo.
+- evidence_id: validation-1
+  kind: validation
+  reference: just validate data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  locator: Executed 2026-10-21T11:22:26Z through 2026-10-21T11:22:27Z; exit 0
+  accessed_at: '2026-10-21T11:22:27Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      1\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv"
+- evidence_id: validation-2
+  kind: validation
+  reference: just validate-all data/traits/function/cofactor_requirement/chebi/desferrioxamine-b-chebi4356.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-3-chebi84730.yaml
+    data/traits/function/cofactor_requirement/chebi/desferrioxamine-e-chebi50437.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+    data/traits/function/cofactor_requirement/chebi/dihydrolipoamide-chebi17694.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-4-chebi60342.yaml
+    data/traits/function/cofactor_requirement/chebi/dipyrromethane-cofactor-chebi42121.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-1-chebi73095.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-a-chebi73113.yaml
+    data/traits/function/cofactor_requirement/chebi/divinyl-chlorophyll-b-1-chebi73096.yaml
+  locator: Executed 2026-10-21T11:22:22Z through 2026-10-21T11:23:43Z; exit 0
+  accessed_at: '2026-10-21T11:23:43Z'
+  support: supports
+  summary: "=== validate-strict summary ===\n  files scanned:      10\n  files with\
+    \ ERROR:   0\n  total ERROR rows:   0\n  TSV:                reports/instance_validation_failures.tsv\n\
+    files scanned: 10\nregistry proteins: 12700\nsource evidence objects: 21048\n\
+    qualified record bindings: 21048\nUniProt membership objects: 431\nhierarchy records:\
+    \ 0\nsemantic findings: 0\nTSV: /private/tmp/ptm-record-reviews-20261021/repo/reports/uniprot-grounding/validation.tsv"
+- evidence_id: validation-3
+  kind: validation
+  reference: just audit-graphs data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml
+  locator: Executed 2026-10-21T11:22:27Z through 2026-10-21T11:22:27Z; exit 0
+  accessed_at: '2026-10-21T11:22:27Z'
+  support: supports
+  summary: 'causal-graph audit: 0 records, 0 graphs, 0 nodes, 0 edges | grounded nodes
+    0/0, snippet-cited edges 0/0 | 0 errors, 0 warnings'
+- evidence_id: validation-4
+  kind: validation
+  reference: just validate-history
+  locator: Executed 2026-10-21T11:23:43Z through 2026-10-21T11:23:44Z; exit 0
+  accessed_at: '2026-10-21T11:23:44Z'
+  support: supports
+  summary: No issues found
+assessments:
+- area: ownership
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns generated target changes. Its source
+    transformation is inspected; no emitted record has been edited.
+  evidence_ids:
+  - owner
+  - registry
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-1
+  topic: Maintained cofactor requirement emitter
+- area: completeness
+  outcome: supported
+  summary: The local identifier and requires-label denote a proposed reusable requirement
+    class rather than a protein instance. Optional examples, sequence/structure representations
+    and mechanisms are not automatically required; none are newly qualified.
+  evidence_ids:
+  - record
+  - schema
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-2
+  topic: Protein trait class completeness
+- area: graph
+  outcome: not_applicable
+  summary: No causal graph or molecular mechanism is asserted by this YAML; graph
+    validation does not constitute mechanism evidence.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-3
+  topic: Causal mechanism evidence
+- area: scope
+  outcome: supported
+  summary: The target remains SEEDED, and no protein example, native review status
+    or curation-history event is promoted by this observation.
+  evidence_ids:
+  - record
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-4
+  topic: Requirement scope and scientific status
+- area: identity
+  outcome: supported
+  summary: The entire local record denotes a proposed reusable protein requirement
+    for dihydrogenvanadate. CHEBI:35169 denotes the chemical referent, not an equivalent
+    protein-requirement class.
+  evidence_ids:
+  - record
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-5
+  topic: Chemical identity and protein requirement scope
+- area: provenance
+  outcome: supported
+  summary: scripts/seed_chebi_cofactor.py owns the generated target and synthesizes
+    its requirement wrapper from chemical-role selection and source chemical text.
+    Official CC BY 4.0 licensing is verified. Current comparison snapshots do not
+    establish the original seed release.
+  evidence_ids:
+  - record
+  - owner
+  - registry
+  - chemical-role
+  - licence
+  - release
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-6
+  topic: ChEBI attribution and release provenance
+- area: consistency
+  outcome: supported
+  summary: The actual source role relation explains the local broader requirement
+    parent. Chemical-role taxonomy is not automatically a protein-requirement hierarchy
+    or true equivalence; this one-record review does not certify the parent.
+  evidence_ids:
+  - record
+  - owner
+  - local-parent-1
+  - chemical-role
+  - cofactor-role
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-7
+  topic: Chemical-role and protein-trait hierarchy
+- area: grounding
+  outcome: concern
+  summary: CHEBI:35169 in xrefs denotes a chemical entity, whereas the target denotes
+    a protein functional requirement. The schema defines xrefs as true own-source
+    equivalence, not chemical association.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-8
+  topic: Chemical association versus trait equivalence
+- area: evidence
+  outcome: supported
+  summary: CHEBI:35169 is H2O4V, net−1, with two OH groups, one oxo and one O− in
+    the source SMILES. The local monovalent-anion definition agrees with this exact
+    chemical state and acid/base relations. Its overall ionic charge is not a vanadium
+    oxidation-state assignment; the peculiar disconnected InChI charge/proton bookkeeping
+    is not read as such.
+  evidence_ids:
+  - chemical
+  - chemical-role
+  - vanadium-oxoanion
+  - monovalent-anion
+  - vanadic-acid
+  - hydrogenvanadate
+  topic: Dihydrogenvanadate ionic state and acid/base relations
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-9
+- area: evidence
+  outcome: supported
+  summary: The vanadium chloroperoxidase primary study supplies genuine enzyme-cofactor
+    context and explicitly discusses V(V). Its abstract reports an azide complex and
+    a proposed native hydrogenvanadate arrangement. This positive context is not reduced
+    to a generic inhibitor/substrate label, nor does it establish every enzyme or
+    exact free-anion proton count.
+  evidence_ids:
+  - vcp-primary
+  - chemical-role
+  - cofactor-role
+  topic: Positive vanadium-enzyme evidence and native-state limits
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-10
+- area: representation
+  outcome: unknown
+  summary: The chemical cofactor role and vanadium-enzyme evidence support candidate
+    relevance, but bound coordination, protonation, solution speciation and exact
+    H2VO4− non-substrate dependence require activity-specific adjudication. A native
+    geometry proposed from an inhibited complex does not fix all these properties.
+    No automatic replacement by HVO4(2−), acid or generic vanadium is justified.
+  evidence_ids:
+  - record
+  - schema
+  - chemical-role
+  - vcp-primary
+  - vanadic-acid
+  - hydrogenvanadate
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  assessment_id: assessment-11
+  topic: FUNCTION cofactor requirement representation
+findings:
+- issue_key: chebi.cofactor-requirement.CHEBI-35169.chemical-entity-equivalence
+  category: grounding
+  severity: major
+  title: Chemical entity is encoded as equivalent to a protein requirement class
+  description: The local class denotes a protein requirement for dihydrogenvanadate,
+    while CHEBI:35169 denotes the exact H2VO4− chemical anion. Even genuine vanadium-enzyme
+    cofactor evidence does not make the chemical an equivalent protein-requirement
+    class.
+  evidence_ids:
+  - record
+  - schema
+  - chemical
+  - chemical-role
+  - owner
+  certainty: confirmed
+  field_paths:
+  - xrefs
+  - chemical_participants
+  normalization_reason: The chemical and a protein requirement for it have different
+    denotations. The intended candidate requirement is recoverable through correctly
+    typed grounding and activity-relative role adjudication.
+  finding_id: F1
+  status: open
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  rule_id: ProteinTraitRecord field checklist
+  native_severity: major
+actions:
+- action_id: A1
+  description: Update build() in scripts/seed_chebi_cofactor.py to remove CHEBI:35169
+    from trait-equivalence xrefs and preserve the exact source identity through schema-compatible
+    grounding. Preserve chemical-source provenance separately from the locally synthesized
+    requirement. Before assigning a COFACTOR chemical_participant, adjudicate the
+    activity-relative role against the non-substrate requirement category; if unresolved,
+    retain that uncertainty and only a supported representation. Do not blindly move
+    an own-source association to mapped_xrefs or qualify a protein from chemical-role
+    membership alone.
+  finding_ids:
+  - F1
+  target_ids:
+  - proteintraitsmech:COFACTOR_REQ_CHEBI_35169
+  owner_paths:
+  - path: scripts/seed_chebi_cofactor.py
+    repository: CultureBotAI/proteintraitsmech
+    role: Maintained ChEBI role parser, requirement-class synthesis, hierarchy selection
+      and YAML emitter
+  acceptance_checks:
+  - The regenerated target preserves intended CHEBI:35169 chemistry without asserting
+    equality to a protein requirement.
+  - Preserve exact H2VO4− identity and distinguish total charge, vanadium oxidation
+    state, protonation and protein coordination. Qualify any COFACTOR participant
+    against an explicit activity and supported bound state; do not substitute another
+    vanadate state from a generic name.
+  - Any typed participant has an explicitly supported activity-relative role and exact
+    chemical scope; no automatic chemical merge, universal requirement, unreviewed
+    example or status promotion is introduced.
+  - After repair run just validate data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml;
+    just validate-all data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml;
+    and just audit-graphs data/traits/function/cofactor_requirement/chebi/dihydrogenvanadate-chebi35169.yaml.
+    These are future curation acceptance checks, not claims that record bytes have
+    already changed.
+  - For maintained Python/writer changes add focused pytest coverage, then run just
+    lint, just test and just audit-writers. Regenerate this existing target through
+    an audited scoped route. Run full-corpus just validate-all before merging record
+    changes and save a fresh structured scientific review against changed bytes.
+limitations:
+- The reviewed record does not identify the exact ChEBI source release used for the
+  seed. Current official responses are comparison snapshots, not proof of the original
+  release.
+- A ChEBI chemical-role assertion supplies candidate class context, not evidence that
+  a particular protein requires that chemical, that every related protein does, or
+  that the chemical is an obligatory physiological cofactor. No such per-protein qualification
+  is claimed.
+- External sources were inspected and SHA256-captured in session scratch. This bundle
+  retains URLs, access times, digests and bounded observations rather than full response
+  bodies.
+- This one-record review does not certify its source cohort or parents. iModulonDB
+  is not applicable to this generic chemical requirement class without a gene, organism
+  or expression dataset.
+- The chloroperoxidase paper was inspected at complete indexed-abstract level, not
+  full structural methods or coordinates. Its inhibited azide complex and proposed
+  native geometry do not establish a universal H2VO4− bound state or physiological
+  solution population.
+tags:
+- unreviewed-path-order
+- batch-019
+- chebi-cofactor
+```
